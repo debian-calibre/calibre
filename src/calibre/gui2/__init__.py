@@ -171,13 +171,19 @@ class IconResourceManager:
             sq = f'{sq}-for-{self.color_palette}-theme{ext}'
             if sq in self.override_items['']:
                 ans = os.path.join(self.override_icon_path, sq)
-        elif len(parts) == 2:
-            entries = self.override_items.get(parts[0], ())
+        else:
+            subfolder = '/'.join(parts[:-1])
+            entries = self.override_items.get(subfolder)
+            if entries is None and self.override_icon_path:
+                try:
+                    self.override_items[subfolder] = entries = frozenset(os.listdir(os.path.join(self.override_icon_path, subfolder)))
+                except OSError:
+                    self.override_items[subfolder] = entries = frozenset()
             if entries:
-                sq, ext = os.path.splitext(parts[1])
+                sq, ext = os.path.splitext(parts[-1])
                 sq = f'{sq}-for-{self.color_palette}-theme{ext}'
                 if sq in entries:
-                    ans = os.path.join(self.override_icon_path, parts[0], sq)
+                    ans = os.path.join(self.override_icon_path, subfolder, sq)
         return ans
 
     def __call__(self, name):
@@ -624,10 +630,10 @@ def question_dialog(parent, title, msg, det_msg='', show_copy_button=False,
     # Set skip_dialog_msg to a message displayed to the user
     skip_dialog_name=None, skip_dialog_msg=_('Show this confirmation again'),
     skip_dialog_skipped_value=True, skip_dialog_skip_precheck=True,
-    # Override icon (QIcon to be used as the icon for this dialog or string for I())
+    # Override icon (QIcon to be used as the icon for this dialog or string for QIcon.ic())
     override_icon=None,
     # Change the text/icons of the yes and no buttons.
-    # The icons must be QIcon objects or strings for I()
+    # The icons must be QIcon objects or strings for QIcon.ic()
     yes_text=None, no_text=None, yes_icon=None, no_icon=None,
     # Add an Abort button which if clicked will cause this function to raise
     # the Aborted exception

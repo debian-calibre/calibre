@@ -4,6 +4,7 @@
 # 
 # Translators:
 # tarakbumba <tarakbumba@gmail.com>, 2015
+# Bora Atıcı, 2023
 # Emre Deniz, 2014
 # Emre Deniz, 2014
 # İşbaran Akçayır <isbaran@gmail.com>, 2015
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-02 16:49+0000\n"
+"POT-Creation-Date: 2023-09-21 06:34+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: tarakbumba <tarakbumba@gmail.com>, 2015\n"
+"Last-Translator: Bora Atıcı, 2023\n"
 "Language-Team: Turkish (http://app.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:4
 msgid "API documentation for plugins"
-msgstr ""
+msgstr "Eklentiler için API belgeleri"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:9
 msgid ""
@@ -43,12 +44,12 @@ msgstr "Bir calibre eklentisi. Kullanışlı üyeleri şunları içerir:"
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:3
 msgid "``self.installation_type``: Stores how the plugin was installed."
-msgstr ""
+msgstr "``self.installation_type``: Eklentinin nasıl kurulduğunu saklar."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:5
 msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
-msgstr ""
+msgstr "``self.plugin_path``: Aşağıdakileri içeren ZIP dosyasının yolunu saklar:"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:5
@@ -170,7 +171,7 @@ msgid ""
 "order of decreasing priority. Plugins with higher priority will be run "
 "first. The highest possible priority is ``sys.maxsize``. Default priority is"
 " 1."
-msgstr ""
+msgstr "Bir dosya türü için birden fazla eklenti mevcut olduğunda, eklentiler azalan öncelik sırasına göre çalıştırılır. Daha yüksek önceliğe sahip eklentiler ilk önce çalıştırılacaktır. Mümkün olan en yüksek öncelik \"sys.maxsize\"dir. Varsayılan öncelik 1'dir."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.minimum_calibre_version:1
@@ -180,7 +181,7 @@ msgstr "Bu eklentinin gerektirdiği en eski calibre sürümü"
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.installation_type:1
 msgid "The way this plugin is installed"
-msgstr ""
+msgstr "Bu eklentinin kurulma şekli"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.InterfaceActionBase.can_be_disabled:1
@@ -235,7 +236,7 @@ msgid ""
 "Perform any plugin specific initialization here, such as extracting "
 "resources from the plugin ZIP file. The path to the ZIP file is available as"
 " ``self.plugin_path``."
-msgstr ""
+msgstr "Eklenti ZIP dosyasından kaynakların çıkarılması gibi eklentiye özel herhangi bir başlatma işlemini burada gerçekleştirin. ZIP dosyasının yolu ``self.plugin_path`` olarak mevcuttur."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:10
@@ -415,7 +416,7 @@ msgstr "Örneğin bir resmi  yüklemek için::"
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.load_resources:10
 msgid "List of paths to resources in the ZIP file using / as separator"
-msgstr ""
+msgstr "Ayırıcı olarak / kullanılarak ZIP dosyasındaki kaynaklara giden yolların listesi"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:0
@@ -450,14 +451,14 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring of
 #: calibre.gui2.actions.InterfaceAction.load_resources:0
 msgid "Returns"
-msgstr ""
+msgstr "Returns"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:12
 msgid ""
 "A dictionary of the form ``{name: file_contents}``. Any names that were not "
 "found in the ZIP file will not be present in the dictionary."
-msgstr ""
+msgstr "``{name: file_contents}`` biçiminde bir sözlük. ZIP dosyasında bulunmayan adlar sözlükte de yer almayacaktır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:1
@@ -542,7 +543,7 @@ msgstr "FileTypePlugin"
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source:1
 msgid "Bases: :py:class:`~calibre.customize.Plugin`"
-msgstr ""
+msgstr "Temeller: :py:class:`~calibre.customize.Plugin`"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin:1
@@ -554,7 +555,7 @@ msgstr "Belirli bir dosya türü kümesiyle ilişkili eklenti."
 msgid ""
 "Set of file types for which this plugin should be run. Use '*' for all file "
 "types. For example: ``{'lit', 'mobi', 'prc'}``"
-msgstr ""
+msgstr "Bu eklentinin çalıştırılması gereken dosya türleri kümesi. Tüm dosya türleri için '*' kullanın. Örneğin: ``{'lit', 'mobi', 'prc'}``"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_import:1
@@ -566,21 +567,21 @@ msgstr "True ise, bu eklenti kitaplar veri tabanına eklendiğinde çalışır"
 msgid ""
 "If True, this plugin is run after books are added to the database. In this "
 "case the postimport and postadd methods of the plugin are called."
-msgstr ""
+msgstr "True ise bu eklenti kitaplar veritabanına eklendikten sonra çalıştırılır. Bu durumda eklentinin postimport ve postadd yöntemleri çağrılır."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_postconvert:1
 msgid ""
 "If True, this plugin is run after a book is converted. In this case the "
 "postconvert method of the plugin is called."
-msgstr ""
+msgstr "True ise bu eklenti kitap dönüştürüldükten sonra çalıştırılır. Bu durumda eklentinin postconvert yöntemi çağrılır."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_postdelete:1
 msgid ""
 "If True, this plugin is run after a book file is deleted from the database. "
 "In this case the postdelete method of the plugin is called."
-msgstr ""
+msgstr "True ise bu eklenti veritabanından bir kitap dosyası silindikten sonra çalıştırılır. Bu durumda eklentinin silme sonrası yöntemi çağrılır."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.FileTypePlugin.on_preprocess:1
@@ -604,24 +605,24 @@ msgid ""
 " raise an Exception. The default implementation simply return the path to "
 "the original e-book. Note that the path to the original file (before any "
 "file type plugins are run, is available as self.original_path_to_file)."
-msgstr ""
+msgstr "Eklentiyi çalıştırın. Alt sınıflarda uygulanmalıdır. E-kitapta yapılması gereken değişiklikleri yapmalı ve değiştirilen e-kitabın mutlak yolunu döndürmelidir. Herhangi bir değişiklik gerekmiyorsa, orijinal e-kitabın yolunu döndürmelidir. Bir hatayla karşılaşılırsa bir İstisna oluşturulmalıdır. Varsayılan uygulama yalnızca orijinal e-kitabın yolunu döndürür. Orijinal dosyanın yolunun (herhangi bir dosya türü eklentisi çalıştırılmadan önce self.original_path_to_file olarak mevcut olduğunu) unutmayın."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:11
 msgid ""
 "The modified e-book file should be created with the :meth:`temporary_file` "
 "method."
-msgstr ""
+msgstr "Değiştirilen e-kitap dosyası :meth:`temporary_file` yöntemiyle oluşturulmalıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:14
 msgid "Absolute path to the e-book."
-msgstr ""
+msgstr "E-kitabın mutlak yolu."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:16
 msgid "Absolute path to the modified e-book."
-msgstr ""
+msgstr "Değiştirilen e-kitabın mutlak yolu."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postimport:1
@@ -631,7 +632,7 @@ msgid ""
 "when the book record is created for the first time. This method is called "
 "whenever a new file is added to a book record. It is useful for modifying "
 "the book record based on the contents of the newly added file."
-msgstr ""
+msgstr "İçe aktarım sonrası denir, yani kitap dosyası veritabanına eklendikten sonra. Bunun, kitap kaydı ilk kez oluşturulduğunda çağrılan :meth:`postadd`den farklı olduğunu unutmayın. Bu yöntem, bir kitap kaydına yeni bir dosya eklendiğinde çağrılır. Yeni eklenen dosyanın içeriğine göre kitap kaydını değiştirmek için kullanışlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
@@ -669,7 +670,7 @@ msgid ""
 " added to the database. Note that it is run after a conversion only, not "
 "after a book is added. It is useful for modifying the book record based on "
 "the contents of the newly added file."
-msgstr ""
+msgstr "Dönüştürme sonrası olarak adlandırılır, yani dönüştürme çıktı kitabı dosyası veritabanına eklendikten sonra. Bunun bir kitap eklendikten sonra değil, yalnızca bir dönüşümden sonra çalıştırıldığını unutmayın. Yeni eklenen dosyanın içeriğine göre kitap kaydını değiştirmek için kullanışlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postdelete:1
@@ -678,7 +679,7 @@ msgid ""
 "database. Note that it is not run when a book record is deleted, only when "
 "one or more formats from the book are deleted. It is useful for modifying "
 "the book record based on the format of the deleted file."
-msgstr ""
+msgstr "Silme sonrası denir, yani kitap dosyası veritabanından silindikten sonra. Bir kitap kaydı silindiğinde çalıştırılmadığını, yalnızca kitaptan bir veya daha fazla format silindiğinde çalıştırıldığını unutmayın. Silinen dosyanın formatına göre kitap kaydını değiştirmek için kullanışlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:1
@@ -689,7 +690,7 @@ msgid ""
 "record with possibly more than one book file has been created for the first "
 "time. This is useful if you wish to modify the book record in the database "
 "when the book is first added to calibre."
-msgstr ""
+msgstr "Post add olarak adlandırılır, yani veri tabanına bir kitap eklendikten sonra. Bunun, tek bir kitap dosyası bir kitaba eklendikten sonra çağrılan :meth:`postimport`tan farklı olduğunu unutmayın. postadd() yalnızca muhtemelen birden fazla kitap dosyası içeren bir kitap kaydının tamamı ilk kez oluşturulduğunda çağrılır. Kitap calibre'ye ilk eklendiğinde veri tabanındaki kitap kaydını değiştirmek istiyorsanız bu kullanışlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:9
@@ -698,12 +699,12 @@ msgid ""
 "this might or might not point to an actual existing file, as sometimes files"
 " are added as streams. In which case it might be a dummy value or a non-"
 "existent path."
-msgstr ""
+msgstr "Dosya biçiminin, dosya biçiminin eklendiği yol ile haritası. Bazen dosyalar akış olarak eklendiğinden, bunun mevcut bir dosyaya işaret edebileceğini veya etmeyebileceğini unutmayın. Bu durumda sahte bir değer veya var olmayan bir yol olabilir."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:13
 msgid "Library database"
-msgstr ""
+msgstr "Kitaplık veri tabanı"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:39
 msgid "Metadata plugins"
@@ -723,7 +724,7 @@ msgstr "Bir dosya türü kümesinden metadata okumayı uygulayan bir eklenti."
 msgid ""
 "Set of file types for which this plugin should be run. For example: "
 "``set(['lit', 'mobi', 'prc'])``"
-msgstr ""
+msgstr "Bu eklentinin çalıştırılması gereken dosya türleri kümesi. Örneğin: ``set(['lit', 'mobi', 'prc'])``"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:1
@@ -731,7 +732,7 @@ msgid ""
 "Return metadata for the file represented by stream (a file like object that "
 "supports reading). Raise an exception when there is an error with the input "
 "data."
-msgstr ""
+msgstr "Akış tarafından temsil edilen dosyanın (okumayı destekleyen dosya benzeri bir nesne) meta verilerini döndürün. Giriş verilerinde bir hata olduğunda bir istisna oluşturun."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:5
@@ -739,14 +740,14 @@ msgstr ""
 #: calibre.customize.MetadataWriterPlugin.set_metadata:5
 msgid ""
 "The type of file. Guaranteed to be one of the entries in :attr:`file_types`."
-msgstr ""
+msgstr "Dosya türü. :attr:`file_types` içindeki girdilerden biri olduğu garanti edilir."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:7
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataWriterPlugin.set_metadata:7
 msgid "A :class:`calibre.ebooks.metadata.book.Metadata` object"
-msgstr ""
+msgstr "A :sınıf:`calibre.ebooks.metadata.book.Metadata` nesnesi"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataWriterPlugin.set_metadata:1
@@ -754,7 +755,7 @@ msgid ""
 "Set metadata for the file represented by stream (a file like object that "
 "supports reading). Raise an exception when there is an error with the input "
 "data."
-msgstr ""
+msgstr "Akış tarafından temsil edilen dosya için meta verileri ayarlayın (okumayı destekleyen dosya benzeri bir nesne). Giriş verilerinde bir hata olduğunda bir istisna oluşturun."
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:54
 msgid "Catalog plugins"
@@ -770,14 +771,14 @@ msgstr "Bir katalog üreteci uygulayan eklenti."
 msgid ""
 "Output file type for which this plugin should be run. For example: 'epub' or"
 " 'xml'"
-msgstr ""
+msgstr "Bu eklentinin çalıştırılması gereken çıktı dosyası türü. Örneğin: 'epub' veya 'xml'"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.CatalogPlugin.cli_options:1
 msgid ""
 "CLI parser options specific to this plugin, declared as `namedtuple` "
 "`Option`:"
-msgstr ""
+msgstr "Bu eklentiye özel CLI ayrıştırıcı seçenekleri, \"namedtuple\" \"Option\" olarak bildirildi:"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.CatalogPlugin.cli_options:3
@@ -787,7 +788,7 @@ msgid ""
 " Catalog', dest = 'catalog_title', help = (_('Title of generated catalog. "
 "\\nDefault:') + \" '\" + '%default' + \"'\"))] cli_options parsed in "
 "calibre.db.cli.cmd_catalog:option_parser()"
-msgstr ""
+msgstr "koleksiyonlardan içe aktar Nametuple Option = nametuple('Option', 'option, default, dest, help') cli_options = [Option('--catalog-title', default = 'Kataloğum', dest = 'catalog_title', help = (_('Oluşturulan kataloğun başlığı. \\nDefault:') + \" '\" + '%default' + \"'\"))] calibre.db.cli.cmd_catalog:option_parser() içinde ayrıştırılan cli_options"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.initialize:1
@@ -795,7 +796,7 @@ msgid ""
 "If plugin is not a built-in, copy the plugin's .ui and .py files from the "
 "ZIP file to $TMPDIR. Tab will be dynamically generated and added to the "
 "Catalog Options dialog in calibre.gui2.dialogs.catalog.py:Catalog"
-msgstr ""
+msgstr "Eklenti yerleşik değilse, eklentinin .ui ve .py dosyalarını ZIP dosyasından $TMPDIR'e kopyalayın. Sekme dinamik olarak oluşturulacak ve calibre.gui2.dialogs.catalog.py:Catalog'daki Katalog Seçenekleri iletişim kutusuna eklenecektir."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:1
@@ -857,14 +858,14 @@ msgid ""
 "Setting this to True means that the browser object will indicate that it "
 "supports gzip transfer encoding. This can speedup downloads but make sure "
 "that the source actually supports gzip transfer encoding correctly first"
-msgstr ""
+msgstr "Bunu True olarak ayarlamak, tarayıcı nesnesinin gzip aktarım kodlamasını desteklediğini belirteceği anlamına gelir. Bu, indirmeleri hızlandırabilir ancak öncelikle kaynağın gerçekten gzip aktarım kodlamasını doğru şekilde desteklediğinden emin olun."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.ignore_ssl_errors:1
 msgid ""
 "Set this to True to ignore HTTPS certificate errors when connecting to this "
 "source."
-msgstr ""
+msgstr "Bu kaynağa bağlanırken HTTPS sertifika hatalarını yok saymak için bunu True olarak ayarlayın."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.cached_cover_url_is_reliable:1
@@ -872,7 +873,7 @@ msgid ""
 "Cached cover URLs can sometimes be unreliable (i.e. the download could fail "
 "or the returned image could be bogus). If that is often the case with this "
 "source, set to False"
-msgstr ""
+msgstr "Önbelleğe alınan kapak URL'leri bazen güvenilmez olabilir (yani indirme işlemi başarısız olabilir veya döndürülen resim sahte olabilir). Bu kaynakta sıklıkla durum böyleyse Yanlış olarak ayarlayın"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.options:1
@@ -960,7 +961,7 @@ msgid ""
 "to easily visit the books page at this source. If no URL is found, return "
 "None. This method must be quick, and consistent, so only implement it if it "
 "is possible to construct the URL from a known scheme given identifiers."
-msgstr ""
+msgstr "3'lü bir grup veya Hiçbiri döndürün. 3'lü grup şu biçimdedir: (tanımlayıcı_tipi, tanımlayıcı_değeri, URL). URL, bu kaynaktaki tanımlayıcılar tarafından tanımlanan kitabın URL'sidir. tanımlayıcı_türü, tanımlayıcı_değer URL'ye karşılık gelen tanımlayıcıyı belirtir. Bu URL'ye tarayıcı kullanan bir kişi tarafından göz atılabilir olmalıdır. Kullanıcının bu kaynaktaki kitap sayfasını kolayca ziyaret edebilmesi için tıklanabilir bir bağlantı sağlanması amaçlanmaktadır. Hiçbir URL bulunamazsa Yok değerini döndürün. Bu yöntemin hızlı ve tutarlı olması gerekir; bu nedenle, yalnızca URL'yi bilinen bir şema verilen tanımlayıcılardan oluşturmak mümkünse uygulayın."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_url_name:1
@@ -973,14 +974,14 @@ msgid ""
 "Override this method if you would like to return multiple URLs for this "
 "book. Return a list of 3-tuples. By default this method simply calls "
 ":func:`get_book_url`."
-msgstr ""
+msgstr "Bu kitap için birden fazla URL döndürmek istiyorsanız bu yöntemi geçersiz kılın. 3'lü demetlerin listesini döndürün. Varsayılan olarak bu yöntem yalnızca :func:`get_book_url` öğesini çağırır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:1
 msgid ""
 "Return cached cover URL for the book identified by the identifiers "
 "dictionary or None if no such URL exists."
-msgstr ""
+msgstr "Tanımlayıcılar sözlüğü tarafından tanımlanan kitabın önbelleğe alınmış kapak URL'sini döndürün veya böyle bir URL yoksa Yok'u seçin."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:4
@@ -995,7 +996,7 @@ msgid ""
 "Parse a URL and return a tuple of the form: (identifier_type, "
 "identifier_value). If the URL does not match the pattern for the metadata "
 "source, return None."
-msgstr ""
+msgstr "Bir URL'yi ayrıştırın ve formun bir demetini döndürün: (tanımlayıcı_türü, tanımlayıcı_değer). URL, meta veri kaynağının modeliyle eşleşmiyorsa Yok değerini döndürün."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify_results_keygen:1
@@ -1021,7 +1022,7 @@ msgstr "Varsayılan algoritma detayları için bknz :class:`InternalMetadataComp
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:1
 msgid "Identify a book by its Title/Author/ISBN/etc."
-msgstr ""
+msgstr "Bir kitabı Başlığı/Yazar/ISBN/vb. ile tanımlayın."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:3
@@ -1056,7 +1057,7 @@ msgstr "Bu metod tarafından result_queue'ya konan her Metadata nesnesinin bu so
 msgid ""
 "Make sure that any cover/ISBN mapping information is cached before the "
 "Metadata object is put into result_queue."
-msgstr ""
+msgstr "Metadata nesnesi result_queue'ye yerleştirilmeden önce tüm kapak/ISBN eşleme bilgilerinin önbelleğe alındığından emin olun."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:22
@@ -1225,7 +1226,7 @@ msgstr "True ise, bu girdi eklentisi HTML dosyası başına bir resim koleksiyon
 msgid ""
 "Number of CPU cores used by this plugin. A value of -1 means that it uses "
 "all available cores"
-msgstr ""
+msgstr "Bu eklenti tarafından kullanılan CPU çekirdeği sayısı. -1 değeri, mevcut tüm çekirdekleri kullandığı anlamına gelir"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.conversion.InputFormatPlugin.for_viewer:1
@@ -1285,7 +1286,7 @@ msgid ""
 "contained in the current folder. If this plugin creates files outside the "
 "current folder they must be deleted/marked for deletion before this method "
 "returns."
-msgstr ""
+msgstr "Bu yöntemin alt sınıflarda uygulanması gerekir. Oluşturulan OPF dosyasının veya :class:`OEBBook` örneğinin yolunu döndürmelidir. Tüm çıktı geçerli klasörde bulunmalıdır. Bu eklenti geçerli klasörün dışında dosyalar oluşturursa, bu yöntem geri dönmeden önce bunların silinmesi/silinmek üzere işaretlenmesi gerekir."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.InputFormatPlugin.convert:8
@@ -1352,7 +1353,7 @@ msgstr "Bu eklentiyi calibre grafik arayüzünde yapılandırmaya yarayan pencer
 msgid ""
 "OutputFormatPlugins are responsible for converting an OEB document "
 "(OPF+HTML) into an output e-book."
-msgstr ""
+msgstr "OutputFormatPlugins, bir OEB belgesini (OPF+HTML) çıktı e-kitabına dönüştürmekten sorumludur."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin:4
@@ -1371,7 +1372,7 @@ msgstr "Bu eklentinin çıktıladığı dosya türü (noktasız son ek)"
 #: calibre.customize.conversion.OutputFormatPlugin.description:1
 msgid ""
 "str(object='') -> str str(bytes_or_buffer[, encoding[, errors]]) -> str"
-msgstr ""
+msgstr "str(object='') -> str str(bytes_or_buffer[, kodlama[, hatalar]]) -> str"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.description:4
@@ -1381,14 +1382,14 @@ msgid ""
 "using the given encoding and error handler. Otherwise, returns the result of"
 " object.__str__() (if defined) or repr(object). encoding defaults to "
 "sys.getdefaultencoding(). errors defaults to 'strict'."
-msgstr ""
+msgstr "Verilen nesneden yeni bir dize nesnesi oluşturun. Kodlama veya hatalar belirtilirse, nesnenin, verilen kodlama ve hata işleyicisi kullanılarak kodu çözülecek bir veri arabelleğini açığa çıkarması gerekir. Aksi halde, object.__str__() (tanımlanmışsa) veya repr(object) sonucunu döndürür. kodlama varsayılan olarak sys.getdefaultencoding() şeklindedir. hatalar varsayılan olarak 'katı'dır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.convert:1
 msgid ""
 "Render the contents of `oeb_book` (which is an instance of "
 ":class:`calibre.ebooks.oeb.OEBBook`) to the file specified by output."
-msgstr ""
+msgstr "`Oeb_book` içeriğini (bu, :class:`calibre.ebooks.oeb.OEBBook` örneğinin bir örneğidir) çıktı tarafından belirtilen dosyaya işleyin."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.convert:4
@@ -1397,7 +1398,7 @@ msgid ""
 " folder that may or may not exist. The output plugin should write its output"
 " into that folder. If it is a file like object, the output plugin should "
 "write its output into the file."
-msgstr ""
+msgstr "Ya nesneye benzer bir dosya ya da bir dize. Bu bir dize ise, var olan veya olmayan bir klasörün yoludur. Çıktı eklentisi çıktısını bu klasöre yazmalıdır. Dosya benzeri bir nesne ise, çıktı eklentisi çıktısını dosyaya yazmalıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.convert:8
@@ -1422,13 +1423,13 @@ msgstr "Günlük kaydedici. Hata ayıklama/bilgi vs. iletilerini bunu kullanarak
 msgid ""
 "Can be used to change the values of conversion options, as used by the "
 "conversion pipeline."
-msgstr ""
+msgstr "Dönüşüm hattı tarafından kullanıldığı şekliyle, dönüştürme seçeneklerinin değerlerini değiştirmek için kullanılabilir."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.specialize_css_for_output:1
 msgid ""
 "Can be used to make changes to the CSS during the CSS flattening process."
-msgstr ""
+msgstr "CSS düzleştirme işlemi sırasında CSS'de değişiklik yapmak için kullanılabilir."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin.specialize_css_for_output:4
@@ -1452,7 +1453,7 @@ msgstr "Bu eklentiyi calibre GUI'sinde yapılandırmak için kullanılan parçac
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:91
 msgid "Device drivers"
-msgstr ""
+msgstr "Aygıt sürücüleri"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:95
 msgid ""
@@ -1467,7 +1468,7 @@ msgstr "Tüm aygıt sürücüleri için taban sınıf :class:`DevicePlugin` dir.
 msgid ""
 "Defines the interface that should be implemented by backends that "
 "communicate with an e-book reader."
-msgstr ""
+msgstr "Bir e-kitap okuyucuyla iletişim kuran arka uçlar tarafından uygulanması gereken arayüzü tanımlar."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.FORMATS:1
@@ -1512,7 +1513,7 @@ msgid ""
 "Compression quality for thumbnails. Set this closer to 100 to have better "
 "quality thumbnails with fewer compression artifacts. Of course, the "
 "thumbnails get larger as well."
-msgstr ""
+msgstr "Küçük resimler için sıkıştırma kalitesi. Daha az sıkıştırma kusuruyla daha kaliteli küçük resimler elde etmek için bunu 100'e yaklaştırın. Elbette küçük resimler de büyüyor."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.WANTS_UPDATED_THUMBNAILS:1
@@ -1549,7 +1550,7 @@ msgstr "Bu aygıt için simge"
 msgid ""
 "GUI displays this as a message if not None in the status bar. Useful if "
 "opening can take a long time"
-msgstr ""
+msgstr "GUI, durum çubuğunda Hiçbiri değilse bunu bir mesaj olarak görüntüler. Açılışın uzun zaman alabileceği durumlarda kullanışlıdır"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.VIRTUAL_BOOK_EXTENSIONS:1
@@ -1562,7 +1563,7 @@ msgstr "Aygıtta \"sanal kitap\" olan ve bu yüzden kitaplıkta görüntüleneme
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.VIRTUAL_BOOK_EXTENSION_MESSAGE:1
 msgid "Message to display to user for virtual book extensions."
-msgstr ""
+msgstr "Sanal kitap uzantıları için kullanıcıya gösterilecek mesaj."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.devices.interface.DevicePlugin.NUKE_COMMENTS:1
@@ -2575,7 +2576,7 @@ msgstr "Kitap kapağını aygıta yükle. Varsayılan uygulama hiçbir şey yapm
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:3
 msgid "The full path to the folder where the associated book is located."
-msgstr ""
+msgstr "İlgili kitabın bulunduğu klasörün tam yolu."
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:4
@@ -2590,7 +2591,7 @@ msgstr "kitaba ait metadata. Kapak için metadata.thumbnail kullanın"
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.upload_cover:7
 msgid "The full path to the e-book file"
-msgstr ""
+msgstr "E-kitap dosyasının tam yolu"
 
 #: ../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring of
 #: calibre.devices.usbms.driver.USBMS.normalize_path:1
@@ -2599,7 +2600,7 @@ msgstr "Yolu platforma özel yol ayraçlarıyla döndür"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"
-msgstr ""
+msgstr "Kullanıcı arayüzü eylemleri"
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:159
 msgid ""
@@ -3037,7 +3038,7 @@ msgstr ":meth:`restore_to_defaults` metodu uygulanmışsa True olarak ayarla."
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults_desc:1
 msgid "The tooltip for the \"Restore defaults\" button"
-msgstr ""
+msgstr "\"Varsayılanları geri yükle\" düğmesine ilişkin ipucu"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetBase.restart_critical:1
@@ -3068,7 +3069,7 @@ msgid ""
 "Should set all config values to their initial values (the values stored in "
 "the config files). A \"return\" statement is optional. Return False if the "
 "dialog is not to be shown."
-msgstr ""
+msgstr "Tüm yapılandırma değerlerini başlangıç ​​değerlerine (yapılandırma dosyalarında saklanan değerler) ayarlamanız gerekir. Bir \"return\" ifadesi isteğe bağlıdır. İletişim kutusunun gösterilmemesi durumunda False değerini döndürün."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.restore_defaults:1
@@ -3101,7 +3102,7 @@ msgstr "Bu parçacık işlendikten sonra bir kere çağrılır. Gui'nin değişt
 msgid ""
 "Called if the initially displayed tab is changed before the widget is shown,"
 " but after it is initialized."
-msgstr ""
+msgstr "Başlangıçta görüntülenen sekme, widget gösterilmeden önce ancak başlatıldıktan sonra değiştirilirse çağrılır."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1

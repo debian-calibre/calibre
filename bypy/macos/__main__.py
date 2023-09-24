@@ -20,13 +20,14 @@ from functools import partial, reduce
 from itertools import repeat
 
 from bypy.constants import (
-    OUTPUT_DIR, PREFIX, PYTHON, SRC as CALIBRE_DIR, python_major_minor_version
+    OUTPUT_DIR, PREFIX, PYTHON, SRC as CALIBRE_DIR, python_major_minor_version,
 )
 from bypy.freeze import (
-    extract_extension_modules, fix_pycryptodome, freeze_python, path_to_freeze_dir
+    extract_extension_modules, fix_pycryptodome, freeze_python, is_package_dir,
+    path_to_freeze_dir,
 )
 from bypy.utils import (
-    current_dir, get_arches_in_binary, mkdtemp, py_compile, timeit, walk
+    current_dir, get_arches_in_binary, mkdtemp, py_compile, timeit, walk,
 )
 
 abspath, join, basename, dirname = os.path.abspath, os.path.join, os.path.basename, os.path.dirname
@@ -488,7 +489,7 @@ class Freeze:
     @flush
     def add_imaging_libs(self):
         print('\nAdding libjpeg, libpng, libwebp, optipng and mozjpeg')
-        for x in ('jpeg.8', 'png16.16', 'webp.7', 'webpmux.3', 'webpdemux.2'):
+        for x in ('jpeg.8', 'png16.16', 'webp.7', 'webpmux.3', 'webpdemux.2', 'sharpyuv.0'):
             self.install_dylib(join(PREFIX, 'lib', 'lib%s.dylib' % x))
         for x in 'optipng', 'JxrDecApp', 'cwebp':
             self.install_dylib(join(PREFIX, 'bin', x), set_id=False, dest=self.helpers_dir)
@@ -584,7 +585,7 @@ class Freeze:
     def add_packages_from_dir(self, src):
         for x in os.listdir(src):
             x = join(src, x)
-            if os.path.isdir(x) and os.path.exists(join(x, '__init__.py')):
+            if os.path.isdir(x) and is_package_dir(x):
                 if self.filter_package(basename(x)):
                     continue
                 self.add_package_dir(x)
