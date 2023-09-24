@@ -6,7 +6,7 @@ __copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 
-from qt.core import QAction
+from qt.core import QAction, QTimer
 
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.dialogs.quickview import Quickview
@@ -133,7 +133,8 @@ class ShowQuickviewAction(InterfaceAction):
             return
         self.qv_button.set_state_to_hide()
         index = self.gui.library_view.currentIndex()
-        self.current_instance = Quickview(self.gui, index, self.qaction.shortcut())
+        self.current_instance = Quickview(self.gui, index, self.qaction.shortcut(),
+                                          focus_booklist_shortcut=self.focus_bl_action.shortcut())
 
         self.current_instance.reopen_after_dock_change.connect(self.open_quickview)
         self.current_instance.show()
@@ -170,6 +171,10 @@ class ShowQuickviewAction(InterfaceAction):
         if show or (self.current_instance and not self.current_instance.is_closed):
             self.focus_quickview()
             self.current_instance.slave(idx)
+            # This is needed because if this method is invoked from the library
+            # view header context menu, the library view takes back the focus. I
+            # don't know if this happens for any context menu.
+            QTimer.singleShot(0, self.current_instance.set_focus)
 
     def library_changed(self, db):
         '''

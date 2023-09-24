@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "Eylül 08, 2023" "6.26.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Eylül 22, 2023" "6.27.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -50,7 +50,7 @@ girdi_dosyası girdi, çıktı_dosyası ise çıktıdır. Her ikisi de komutun i
 Giriş ve çıkış dosyasını belirledikten sonra, çeşitli seçenekler belirleyerek dönüştürmeyi özelleştirebilirsiniz. Kullanılabilir seçenekler, giriş ve çıkış dosyası türlerine bağlıdır. Bunlarla ilgili yardım almak için giriş ve çıkış dosyasını belirtin ve ardından \-h seçeneğini kullanın.
 .sp
 Dönüştürme sistemi dökümanları için bakınız:
-\fI\%E\-book conversion\fP
+\fI\%E\-kitap dönüşümü\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
@@ -226,7 +226,7 @@ Belirtilen yazı tipi ailesini kitaba göm. Bu kitap için kullanılan \fB\(dq\f
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Calibre varsayılan olarak kenar boşluğu, dolgu, kenarlık vb. gibi çeşitli CSS özellikleri için kısayol formunu kullanacaktır. Bu seçenek bunun yerine tam genişletilmiş formu kullanmasına neden olur. Nook steno CSS\fB\(aq\fPyi işleyemediğinden, çıktı profili Nook profillerinden birine ayarlanmış olarak EPUB dosyaları oluştururken CSS\fB\(aq\fPnin her zaman genişletildiğini unutmayın.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -271,12 +271,12 @@ Bazı kötü dizayn edilmiş dökümanlar sayfadaki metnin düzenlemesini kontro
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Alt kenar boşluğunu pt olarak ayarlayın. Varsayılan %darsayılandır. Bunu sıfırdan küçük bir değere ayarlamak, kenar boşluğunun ayarlanmamasına neden olur (orijinal belgedeki kenar boşluğu ayarı korunur). Not: PDF ve DOCX gibi sayfa odaklı formatların öncelikli olan kendi kenar boşluğu ayarları vardır.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Sol kenar boşluğunu pt olarak ayarlayın. Varsayılan %darsayılandır. Bunu sıfırdan küçük bir değere ayarlamak, kenar boşluğunun ayarlanmamasına neden olur (orijinal belgedeki kenar boşluğu ayarı korunur). Not: PDF ve DOCX gibi sayfa odaklı formatların öncelikli olan kendi kenar boşluğu ayarları vardır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -286,7 +286,7 @@ Set the right margin in pts. Default is 5.0. Setting this to less than zero will
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Üst kenar boşluğunu pt olarak ayarlayın. Varsayılan %darsayılandır. Bunu sıfırdan küçük bir değere ayarlamak, kenar boşluğunun ayarlanmamasına neden olur (orijinal belgedeki kenar boşluğu ayarı korunur). Not: PDF ve DOCX gibi sayfa odaklı formatların öncelikli olan kendi kenar boşluğu ayarları vardır.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -609,7 +609,7 @@ Dönüştürme  hatalarını bulmak için yardım seçenekleri
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Dönüşüm hattının farklı aşamalarındaki çıktıyı belirtilen klasöre kaydedin. Dönüştürme sürecinin hangi aşamasında bir hatanın oluştuğundan emin değilseniz kullanışlıdır.
 .UNINDENT
 .INDENT 0.0
 .TP

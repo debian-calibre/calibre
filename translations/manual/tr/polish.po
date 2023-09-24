@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Bora Atıcı, 2023
 # Ömer Kaan Gürbüz <omerkaan0101omerkaangrbz@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-02 15:47+0000\n"
-"PO-Revision-Date: 2021-11-23 15:50+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Turkish (http://www.transifex.com/calibre/calibre/language/tr/)\n"
+"POT-Creation-Date: 2023-09-21 06:34+0000\n"
+"PO-Revision-Date: 2014-07-05 16:50+0000\n"
+"Last-Translator: Bora Atıcı, 2023\n"
+"Language-Team: Turkish (http://app.transifex.com/calibre/calibre/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/polish.rst:4
 msgid "API documentation for the e-book editing tools"
-msgstr ""
+msgstr "E-kitap düzenleme araçları için API belgeleri"
 
 #: ../../__w/calibre/calibre/manual/polish.rst:6
 msgid ""
@@ -30,7 +31,7 @@ msgid ""
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr ""
+msgstr "E-kitap düzenleme araçları, bir kitabı HTML + kaynak dosyalarının bir koleksiyonu olarak temsil eden bir :class:`calibre.ebooks.oeb.polish.container.Container` nesnesinden ve üzerinde işlemler gerçekleştirmek için kullanılabilecek çeşitli araçlardan oluşur. konteyner. Tüm araçlar, çeşitli ``calibre.ebooks.oeb.polish.*`` modüllerindeki modül düzeyindeki işlevler biçimindedir."
 
 #: ../../__w/calibre/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
@@ -40,7 +41,7 @@ msgstr "Bir kitap için sahip olduğunuz bir kapsayıcı nesnenin yolu bunun gib
 msgid ""
 "If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
-msgstr ""
+msgstr "E-kitap editörü için bir eklenti yazıyorsanız, düzenlenen kitap için geçerli kapsayıcıyı şu şekilde alırsınız::"
 
 #: ../../__w/calibre/calibre/manual/polish.rst:30
 msgid "The Container object"
@@ -51,14 +52,14 @@ msgstr "Kapsayıcı nesne"
 msgid ""
 "A container represents an open e-book as a folder full of files and an OPF "
 "file. There are two important concepts:"
-msgstr ""
+msgstr "Bir kap, açık bir e-kitabı, dosyalar ve bir OPF dosyasıyla dolu bir klasör olarak temsil eder. İki önemli kavram var:"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
 "inside this folder or in its sub-folders."
-msgstr ""
+msgstr "Kök klasör. Bu e-kitabın temelidir. Tüm e-kitap dosyaları bu klasörün içinde veya alt klasörlerinde bulunur."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
@@ -67,7 +68,7 @@ msgid ""
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr ""
+msgstr "Adlar: Bunlar kitapların dosyalarının kök klasöre göre yollarıdır. Her zaman POSIX ayırıcıları içerirler ve alıntı yapılmazlar. Kitaptaki dosyalar için kurallı tanımlayıcılar olarak düşünülebilirler. Kapsayıcı nesnedeki yöntemlerin çoğu adlarla çalışır. Adlar her zaman NFC Unicode normal biçimindedir."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -77,7 +78,7 @@ msgid ""
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr ""
+msgstr "Klonlar: konteyner nesnesi, e-kitap düzenleyicide kontrol noktalarını uygulamak için kullanılan verimli disk üzerinde klonlamayı destekler. Bunun işe yaraması için dosya sistemindeki dosyalara asla doğrudan erişmemelisiniz. Bunun yerine, kitaptaki bileşen dosyalarını okumak/yazmak için :meth:`raw_data` veya :meth:`open` kullanın."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
@@ -97,28 +98,26 @@ msgstr "Bir mutlak yolu :attr:`root`a göre kurallanan bir isme dönüştür"
 #: of calibre.ebooks.oeb.polish.container.Container.commit:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.replace_links:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: of calibre.ebooks.oeb.polish.cover.set_cover:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
+#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:0
+#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: of calibre.ebooks.oeb.polish.replace.replace_links:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.split:0
+#: of calibre.ebooks.oeb.polish.split.merge:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.merge:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.set_cover:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:0
+#: of calibre.ebooks.oeb.polish.split.split:0
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
 #: calibre.ebooks.oeb.polish.toc.create_inline_toc:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
@@ -127,6 +126,8 @@ msgstr "Bir mutlak yolu :attr:`root`a göre kurallanan bir isme dönüştür"
 #: calibre.gui2.tweak_book.boss.Boss.open_book:0
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
+#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
 msgid "Parameters"
 msgstr "Parametreler"
 
@@ -134,7 +135,7 @@ msgstr "Parametreler"
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base folder. By default the root for this container object is used."
-msgstr ""
+msgstr "Temel klasör. Varsayılan olarak bu kapsayıcı nesnenin kökü kullanılır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
@@ -153,7 +154,7 @@ msgstr "Manifestoya belirtilen isme sahip bir dosya için girdi ekle. Manifesto 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
 msgid "Add the specified properties to the manifest item identified by name."
-msgstr ""
+msgstr "Belirtilen özellikleri ada göre tanımlanan bildirim öğesine ekleyin."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
@@ -161,7 +162,7 @@ msgid ""
 "Ensure that the specified properties are set on only the manifest item "
 "identified by name. You can pass None as the name to remove the property "
 "from all items."
-msgstr ""
+msgstr "Belirtilen özelliklerin yalnızca ada göre tanımlanan bildirim öğesi üzerinde ayarlandığından emin olun. Özelliği tüm öğelerden kaldırmak için ad olarak Yok'u iletebilirsiniz."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.oeb.polish.container.Container.book_type:1
@@ -173,20 +174,20 @@ msgstr "Kitabın türü (EPUB dosyalar için epub ve AZW3 dosyalar için azw3)"
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the e-book"
 " file at outpath."
-msgstr ""
+msgstr "Tüm kirli ayrıştırılmış nesneleri dosya sistemine kaydedin ve e-kitap dosyasını outpath'e yazın."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
 msgid ""
 "The path to write the saved e-book file to. If None, the path of the "
 "original book file is used."
-msgstr ""
+msgstr "Kaydedilen e-kitap dosyasının yazılacağı yol. Hiçbiri yoksa orijinal kitap dosyasının yolu kullanılır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
 msgid ""
 "If True the parsed representations of committed items are kept in the cache."
-msgstr ""
+msgstr "Doğruysa, taahhüt edilen öğelerin ayrıştırılmış temsilleri önbellekte tutulur."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
@@ -211,7 +212,7 @@ msgid ""
 " in particular case (in)sensitivity. So on a case insensitive filesystem "
 "this will return True even if the case of name is different from the case of"
 " the underlying filesystem file. See also :meth:`has_name`"
-msgstr ""
+msgstr "Kurallı ada karşılık gelen bir dosya/klasör mevcutsa doğrudur. Bu işlevin, temel işletim sistemi dosya sisteminin sınırlamalarından, özellikle de büyük/küçük harf duyarlılığından muzdarip olduğunu unutmayın. Bu nedenle, büyük/küçük harfe duyarlı olmayan bir dosya sisteminde, adın büyük/küçük harf durumu, temeldeki dosya sistemi dosyasının durumundan farklı olsa bile bu, True değerini döndürür. Ayrıca bakınız :meth:`has_name`"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.filesize:1
@@ -233,7 +234,7 @@ msgstr "Bir öğeyi manifestoya, verilen isimden türetilen href ile ekle. Href 
 msgid ""
 "Similar to open() except that it returns a file path, instead of an open "
 "file object."
-msgstr ""
+msgstr "Açık dosya nesnesi yerine bir dosya yolu döndürmesi dışında open()'a benzer."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
@@ -281,7 +282,7 @@ msgstr "İsimdeki tüm bağlantılar üzerinde dön. Eğer get_line_numbers Doğ
 msgid ""
 "Ensure that `name` does not already exist in this book. If it does, return a"
 " modified version that does not exist."
-msgstr ""
+msgstr "Bu kitapta 'ad'ın mevcut olmadığından emin olun. Eğer öyleyse, mevcut olmayan, değiştirilmiş bir sürümü döndürün."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
@@ -299,13 +300,13 @@ msgid ""
 "The names of all manifest items whose media-type matches predicate. "
 "`predicate` can be a set, a list, a string or a function taking a single "
 "argument, which will be called with the media-type."
-msgstr ""
+msgstr "Medya türü yüklemle eşleşen tüm bildirim öğelerinin adları. 'yüklem' medya türüyle çağrılacak olan bir küme, bir liste, bir dize veya tek bir argüman alan bir işlev olabilir."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.manifest_items_with_property:1
 msgid "All manifest items that have the specified property"
-msgstr ""
+msgstr "Belirtilen özelliğe sahip tüm bildirim öğeleri"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_type_map:1
@@ -324,7 +325,7 @@ msgstr "Bu kitabın metadata'sının Metadata nesnesi. Bu nesnenin bu özellik h
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_abspath:1
 msgid "Convert a canonical name to an absolute OS dependent path"
-msgstr ""
+msgstr "Kurallı bir adı mutlak işletim sistemine bağlı bir yola dönüştürme"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_href:1
@@ -338,7 +339,7 @@ msgstr "Bir ismi tabana göre yapılmış bir href'e çevir, base bir isim veya 
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
 "Set of names that must never be renamed. Depends on the e-book file format."
-msgstr ""
+msgstr "Asla yeniden adlandırılmaması gereken adlar kümesi. E-kitap dosya biçimine bağlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -346,7 +347,7 @@ msgstr ""
 msgid ""
 "Set of names that must never be deleted from the container. Depends on the "
 "e-book file format."
-msgstr ""
+msgstr "Kaptan asla silinmemesi gereken adlar kümesi. E-kitap dosya biçimine bağlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -354,7 +355,7 @@ msgstr ""
 msgid ""
 "Set of names that are allowed to be missing from the manifest. Depends on "
 "the e-book file format."
-msgstr ""
+msgstr "Bildiride eksik olmasına izin verilen adlar kümesi. E-kitap dosya biçimine bağlıdır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.open:1
@@ -386,7 +387,7 @@ msgstr "OPF'nin <package> öğesinde ayarlanmış sürüm"
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version_parsed:1
 msgid "The version set on the OPF's <package> element as a tuple of integers"
-msgstr ""
+msgstr "OPF'nin <package>öğesinde bir tamsayı dizisi olarak ayarlanan sürüm"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_xpath:1
@@ -403,7 +404,7 @@ msgid ""
 " returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr ""
+msgstr "Ada göre belirtilen dosyanın ayrıştırılmış bir temsilini döndürür. HTML ve XML dosyaları için bir lxml ağacı döndürülür. CSS dosyaları için bir css_parser stil sayfası döndürülür. Ayrıştırılan nesnelerin performans amacıyla önbelleğe alındığını unutmayın. Ayrıştırılan nesnede herhangi bir değişiklik yaparsanız kabın önbelleği güncellemesini bilmesi için :meth:`dirty` çağrısını yapmalısınız. Ayrıca bakınız :meth:`değiştir`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
@@ -415,7 +416,7 @@ msgstr "İsimle belirtilen dosyayla ilişkili ham veriyi döndürür"
 msgid ""
 "If True and the file has a text based MIME type, decode it and return a "
 "unicode object instead of raw bytes."
-msgstr ""
+msgstr "True ise ve dosya metin tabanlı bir MIME türüne sahipse, kodunu çözün ve ham baytlar yerine unicode bir nesne döndürün."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:4
@@ -462,7 +463,7 @@ msgid ""
 "links inside the file if the folder the file is in changes. Note however, "
 "that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr ""
+msgstr "Bir dosyayı geçerli_ad'dan yeni_ad'a yeniden adlandırır. Dosyanın bulunduğu klasör değişirse, dosya içindeki tüm bağlantıları otomatik olarak yeniden temellendirir. Ancak bu dosyaya referans verebilecek diğer dosyalardaki bağlantıların güncellenmediğini unutmayın. Bu performans içindir, bu tür güncellemelerin toplu olarak bir kez yapılması gerekir."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
@@ -502,7 +503,7 @@ msgstr "Omurgayı spine_items olacak şekilde ayarla, öyle ki spine_items (isim
 msgid ""
 "An iterator yielding the path for every item in the books' spine. See also: "
 ":attr:`spine_iter` and :attr:`spine_items`."
-msgstr ""
+msgstr "Kitapların omurgasındaki her öğenin yolunu gösteren bir yineleyici. Ayrıca bakınız: :attr:`spine_iter` ve :attr:`spine_items`."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_iter:1
@@ -668,7 +669,7 @@ msgid ""
 "Split the specified file at multiple locations (all tags that match the "
 "specified XPath expression). See also: :func:`split`. Splitting "
 "automatically migrates all links and references to the affected files."
-msgstr ""
+msgstr "Belirtilen dosyayı birden fazla konuma bölün (belirtilen XPath ifadesiyle eşleşen tüm etiketler). Ayrıca bakınız: :func:`split`. Bölme işlemi, etkilenen dosyalara yönelik tüm bağlantıları ve referansları otomatik olarak taşır."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:5
@@ -787,18 +788,18 @@ msgstr "True ise, HTML'deki herhangi bir CSS kuralıyla eşleşmeyen sınıf öz
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
 #: calibre.ebooks.oeb.polish.css.remove_unused_css:5
 msgid "If True, rules with identical selectors are merged."
-msgstr ""
+msgstr "True ise aynı seçicilere sahip kurallar birleştirilir."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
 #: calibre.ebooks.oeb.polish.css.remove_unused_css:6
 msgid "If True, rules with identical properties are merged."
-msgstr ""
+msgstr "True ise aynı özelliklere sahip kurallar birleştirilir."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
 #: calibre.ebooks.oeb.polish.css.remove_unused_css:7
 msgid ""
 "If True, stylesheets that are not referenced by any content are removed"
-msgstr ""
+msgstr "Doğruysa, herhangi bir içerik tarafından başvurulmayan stil sayfaları kaldırılır"
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
 #: calibre.ebooks.oeb.polish.css.filter_css:1
@@ -846,7 +847,7 @@ msgstr "Kitaptaki dosyalardan İçindekiler üret."
 msgid ""
 "Create an inline (HTML) Table of Contents from an existing NCX Table of "
 "Contents."
-msgstr ""
+msgstr "Mevcut bir NCX İçindekiler Tablosundan satır içi (HTML) bir İçindekiler Tablosu oluşturun."
 
 #: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
 #: calibre.ebooks.oeb.polish.toc.create_inline_toc:3
@@ -860,7 +861,7 @@ msgstr "Kitap düzenleme aracı"
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool:1
 msgid "Bases: :py:class:`object`"
-msgstr ""
+msgstr "Temeller: :py:sınıf:`nesne`"
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool:1
@@ -948,7 +949,7 @@ msgid ""
 "Register a keyboard shortcut that will trigger the specified ``qaction``. "
 "This keyboard shortcut will become automatically customizable by the user in"
 " the Keyboard shortcuts section of the editor preferences."
-msgstr ""
+msgstr "Belirtilen ``qaction``ı tetikleyecek bir klavye kısayolu kaydedin. Bu klavye kısayolu, düzenleyici tercihlerinin Klavye kısayolları bölümünde kullanıcı tarafından otomatik olarak özelleştirilebilir hale gelecektir."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
 #: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
@@ -1009,7 +1010,7 @@ msgid ""
 "The e-book editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
-msgstr ""
+msgstr "E-kitap düzenleyicinin kullanıcı arayüzü tek bir global *Boss* nesnesi tarafından kontrol edilir. Bu, ortak görevleri gerçekleştirmek için eklenti kodunda kullanılabilecek birçok yararlı yönteme sahiptir."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
@@ -1072,7 +1073,7 @@ msgstr "Açılan düzenleyiciyi ilklendirmek için bir şablon"
 msgid ""
 "Open the e-book at ``path`` for editing. Will show an error if the e-book is"
 " not in a supported format or the current book has unsaved changes."
-msgstr ""
+msgstr "Düzenlemek için e-kitabı ``path`` konumunda açın. E-kitap desteklenen bir formatta değilse veya mevcut kitapta kaydedilmemiş değişiklikler varsa bir hata gösterecektir."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
 #: calibre.gui2.tweak_book.boss.Boss.open_book:3
