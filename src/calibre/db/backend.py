@@ -1707,7 +1707,7 @@ class DB:
                         # Ensure that the file has the same case as dest
                         try:
                             os.rename(path, dest)
-                        except:
+                        except OSError:
                             pass  # Nothing too catastrophic happened, the cases mismatch, that's all
                 else:
                     if use_hardlink:
@@ -1716,7 +1716,7 @@ class DB:
                             return True
                         except:
                             pass
-                    with open(path, 'rb') as f, open(dest, 'wb') as d:
+                    with open(path, 'rb') as f, open(make_long_path_useable(dest), 'wb') as d:
                         shutil.copyfileobj(f, d)
         return True
 
@@ -2040,13 +2040,14 @@ class DB:
         for base in ('b', 'f'):
             base = os.path.join(self.trash_dir, base)
             for x in os.scandir(base):
-                try:
-                    st = x.stat(follow_symlinks=False)
-                    mtime = st.st_mtime
-                except OSError:
-                    mtime = 0
-                if mtime + expire_age_in_seconds <= now or expire_age_in_seconds <= 0:
-                    removals.append(x.path)
+                if x.is_dir(follow_symlinks=False):
+                    try:
+                        st = x.stat(follow_symlinks=False)
+                        mtime = st.st_mtime
+                    except OSError:
+                        mtime = 0
+                    if mtime + expire_age_in_seconds <= now or expire_age_in_seconds <= 0:
+                        removals.append(x.path)
         for x in removals:
             try:
                 rmtree_with_retry(x)
