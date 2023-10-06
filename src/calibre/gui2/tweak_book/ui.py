@@ -305,8 +305,10 @@ class Main(MainWindow):
         self.status_bar.addPermanentWidget(self.boss.save_manager.status_widget)
         self.cursor_position_widget = CursorPositionWidget(self)
         self.status_bar.addPermanentWidget(self.cursor_position_widget)
-        self.status_bar_default_msg = la = QLabel(' ' + _('{0} {1} created by {2}').format(__appname__, get_version(), 'Kovid Goyal'))
+        v = get_version()
+        self.status_bar_default_msg = la = QLabel(' ' + _('{0} {1} created by {2}').format(__appname__, v, 'Kovid Goyal'))
         la.base_template = str(la.text())
+        la.editing_template = _('{appname} {version} editing: {{path}}').format(appname=__appname__, version=v)
         self.status_bar.addWidget(la)
 
         self.boss(self)
@@ -331,6 +333,13 @@ class Main(MainWindow):
 
     def show_status_message(self, msg, timeout=5):
         self.status_bar.showMessage(msg, int(timeout*1000))
+
+    def update_status_bar_default_message(self, path=''):
+        m = self.status_bar_default_msg
+        if path:
+            m.setText(m.editing_template.format(path=path))
+        else:
+            m.setText(m.base_template)
 
     def elided_text(self, text, width=300):
         return elided_text(text, font=self.font(), width=width)
@@ -380,6 +389,10 @@ class Main(MainWindow):
         self.action_save = treg('save.png', _('&Save'), self.boss.save_book, 'save-book', 'Ctrl+S', _('Save book'))
         self.action_save.setEnabled(False)
         self.action_save_copy = treg('save.png', _('Save a &copy'), self.boss.save_copy, 'save-copy', 'Ctrl+Alt+S', _('Save a copy of the book'))
+        self.action_save_copy_edit = treg('save.png', _('Save a &copy and edit in new window'), partial(self.boss._save_copy, 'edit'), 'save-copy-edit',
+                                          'Ctrl+Shift+S', _( 'Save a copy of the book and edit it in a new window'))
+        self.action_save_copy_replace = treg('save.png', _('Save a &copy and edit here'), partial(self.boss._save_copy, 'replace'),
+                                             'save-copy-replace', 'Ctrl+Alt+Shift+S', _('Save a copy of the book and edit it in this window'))
         self.action_quit = treg('window-close.png', _('&Quit'), self.boss.quit, 'quit', 'Ctrl+Q', _('Quit'))
         self.action_preferences = treg('config.png', _('&Preferences'), self.boss.preferences, 'preferences', 'Ctrl+P', _('Preferences'))
         self.action_new_book = treg('plus.png', _('Create new, &empty book'), self.boss.new_book, 'new-book', (), _('Create a new, empty book'))
@@ -572,7 +585,10 @@ class Main(MainWindow):
         self.update_recent_books()
         f.addSeparator()
         f.addAction(self.action_save)
-        f.addAction(self.action_save_copy)
+        m = f.addMenu(_('Save a copy'))
+        m.addAction(self.action_save_copy)
+        m.addAction(self.action_save_copy_edit)
+        m.addAction(self.action_save_copy_replace)
         f.addSeparator()
         f.addAction(self.action_compare_book)
         f.addAction(self.action_quit)

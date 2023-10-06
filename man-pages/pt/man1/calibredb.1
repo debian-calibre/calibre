@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "setembro 22, 2023" "6.27.0" "calibre"
+.TH "CALIBREDB" "1" "outubro 06, 2023" "6.28.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -950,30 +950,26 @@ O número máximo de resultados a mostrar. A predefinição é todos os resultad
 .sp
 .nf
 .ft C
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [opções] enable/disable/status/reindex
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Controla o processo de indexação da pesquisa no texto completo (PTC).
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Ativa a indexação PTC nesta biblioteca
 .TP
 .B disable
-Turns off FTS indexing for this library
+Desativa a indexação PTC nesta biblioteca
 .TP
 .B status
-Shows the current indexing status
+Mostra o estado atual da indexação
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Pode ser utilizado para reindexar livros específicos ou toda a biblioteca. Para reindexar livros específicos, especifique os ID como um argumento adicional após o comando reindex. Se nenhum ID for especificado, será reindexada a biblioteca completa.
 .UNINDENT
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq

@@ -7208,6 +7208,7 @@ return this.__repr__();
             ρσ_d["window-error-foreground"] = c("red", "#C40233");
             ρσ_d["window-hover-foreground"] = c("red", "#C40233");
             ρσ_d["link-foreground"] = c("blue", "#6cb4ee");
+            ρσ_d["faded-text"] = c("#666", "#7f7f7f");
             ρσ_d["bar-background"] = c(DARK, DT_DARK_LIGHTER);
             ρσ_d["bar-foreground"] = c(LIGHT, DT_DARK_LIGTHER_CONTRAST);
             ρσ_d["bar-highlight"] = c("yellow");
@@ -22135,7 +22136,7 @@ return this.__repr__();
         ICON_SIZE_UNIT = "ex";
         ICON_SIZE = "" + ρσ_str.format("{}", ICON_SIZE_VAL) + "" + ρσ_str.format("{}", ICON_SIZE_UNIT) + "";
         builtin_colors_light = {"yellow": "#ffeb6b", "green": "#c0ed72", "blue": "#add8ff", "red": "#ffb0ca", "purple": "#d9b2ff"};
-        builtin_colors_dark = {"yellow": "#c18d18", "green": "#306f50", "blue": "#265589", "red": "#a23e5a", "purple": "#505088"};
+        builtin_colors_dark = {"yellow": "#906e00", "green": "#306f50", "blue": "#265589", "red": "#a23e5a", "purple": "#505088"};
         builtin_decorations_light = builtin_decorations_dark = {"wavy": {"text-decoration-style": "wavy", "text-decoration-color": "red", "text-decoration-line": "underline"}, "strikeout": {"text-decoration-line": "line-through", "text-decoration-color": "red"}};
         function builtin_friendly_name(kind, which) {
             if (kind === "color") {
@@ -25562,7 +25563,7 @@ return this.__repr__();
         });
 
         function current_cfi() {
-            var ans, left, right, ρσ_unpack, top, bottom, midx, deltax, deltay, midy, yidx, yb, ya, xidx, ys, xb, xa, xs, cfi, curx, cury, cnum;
+            var ans, left, right, ρσ_unpack, top, bottom, midx, deltax, deltay, midy, yidx, yb, ya, ys, xidx, xb, xa, xs, cfi, curx, cury, cnum;
             ans = null;
             if (in_paged_mode()) {
                 for (var ρσ_Index5 = 0; ρσ_Index5 < cols_per_screen; ρσ_Index5++) {
@@ -25585,25 +25586,27 @@ return this.__repr__();
                             break;
                         }
                         yidx += 1;
-                        xidx = 0;
                         ys = (ya === yb) ? [ya] : [yb, ya];
                         var ρσ_Iter6 = ρσ_Iterable(ys);
                         for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
                             cury = ρσ_Iter6[ρσ_Index6];
-                            ρσ_unpack = [midx - xidx * deltax, midx + xidx * deltax];
-                            xb = ρσ_unpack[0];
-                            xa = ρσ_unpack[1];
-                            if (xa <= left || xb >= right) {
-                                break;
-                            }
-                            xidx += 1;
-                            xs = (xa === xb) ? [xa] : [xb, xa];
-                            var ρσ_Iter7 = ρσ_Iterable(xs);
-                            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                                curx = ρσ_Iter7[ρσ_Index7];
-                                cfi = cfi_at_point(curx, cury);
-                                if (cfi) {
-                                    return cfi;
+                            xidx = 0;
+                            while (true) {
+                                ρσ_unpack = [midx - xidx * deltax, midx + xidx * deltax];
+                                xb = ρσ_unpack[0];
+                                xa = ρσ_unpack[1];
+                                if (xb <= left || xa >= right) {
+                                    break;
+                                }
+                                xidx += 1;
+                                xs = (xa === xb) ? [xa] : [xb, xa];
+                                var ρσ_Iter7 = ρσ_Iterable(xs);
+                                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                                    curx = ρσ_Iter7[ρσ_Index7];
+                                    cfi = cfi_at_point(curx, cury);
+                                    if (cfi) {
+                                        return cfi;
+                                    }
                                 }
                             }
                         }
@@ -25969,6 +25972,35 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
+        function get_bounding_client_rect_using_offset_properties(elem) {
+            var ans, ρσ_unpack;
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["left"] = 0;
+                ρσ_d["top"] = 0;
+                ρσ_d["width"] = elem.offsetWidth;
+                ρσ_d["height"] = elem.offsetHeight;
+                ρσ_d["x"] = 0;
+                ρσ_d["y"] = 0;
+                return ρσ_d;
+            }).call(this);
+            while (elem) {
+                ans.left += elem.offsetLeft;
+                ans.top += elem.offsetTop;
+                elem = elem.offsetParent;
+            }
+            ans.left -= window.scrollX;
+            ans.top -= window.scrollTop;
+            ρσ_unpack = [ans.left, ans.top];
+            ans.x = ρσ_unpack[0];
+            ans.y = ρσ_unpack[1];
+            return ans;
+        };
+        if (!get_bounding_client_rect_using_offset_properties.__argnames__) Object.defineProperties(get_bounding_client_rect_using_offset_properties, {
+            __argnames__ : {value: ["elem"]},
+            __module__ : {value: "read_book.paged_mode"}
+        });
+
         anchor_funcs = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["pos_for_elem"] = (function() {
@@ -25979,6 +26011,9 @@ return this.__repr__();
                     }
                     elem = scrollable_element(elem);
                     br = elem.getBoundingClientRect();
+                    if (br.left === 0 && br.top === 0 && br.width === 0 && br.height === 0) {
+                        br = get_bounding_client_rect_using_offset_properties(elem);
+                    }
                     pos = scroll_viewport.viewport_to_document_inline(scroll_viewport.rect_inline_start(br));
                     return column_at(pos);
                 };
@@ -26292,6 +26327,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
         ρσ_modules["read_book.paged_mode"].handle_gesture = handle_gesture;
+        ρσ_modules["read_book.paged_mode"].get_bounding_client_rect_using_offset_properties = get_bounding_client_rect_using_offset_properties;
         ρσ_modules["read_book.paged_mode"].ResizeManager = ResizeManager;
         ρσ_modules["read_book.paged_mode"].prepare_for_resize = prepare_for_resize;
         ρσ_modules["read_book.paged_mode"].resize_done = resize_done;
@@ -27399,7 +27435,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.27.0";
+        CALIBRE_VERSION = "6.28.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -35860,7 +35896,7 @@ return this.__repr__();
                     __module__ : {value: "book_list.book_details"}
                 });
 
-                table.appendChild(E.tr(E.td(name + ":"), E.td()));
+                table.appendChild(E.tr(E.td(name), E.td()));
                 if (is_html && /[<>]/.test(val + "")) {
                     table.lastChild.lastChild.appendChild(adjusting_sandboxed_html(val + "", iframe_css));
                 } else {
@@ -35927,7 +35963,7 @@ return this.__repr__();
             function process_formats(field, fm, name, val) {
                 var td, fmt;
                 if (val.length && (typeof book_id !== "undefined" && book_id !== null)) {
-                    table.appendChild(E.tr(E.td(name + ":"), E.td()));
+                    table.appendChild(E.tr(E.td(name), E.td()));
                     td = table.lastChild.lastChild;
                     var ρσ_Iter6 = ρσ_Iterable(val);
                     for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
@@ -35984,7 +36020,7 @@ return this.__repr__();
                         td.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [text].concat([ρσ_desugar_kwargs({class_: "blue-link", title: "{}:{}".format(k, idval), target: "_new", href: url})])));
                     }
                     if (td.childNodes.length) {
-                        table.appendChild(E.tr(E.td(name + ":"), td));
+                        table.appendChild(E.tr(E.td(name), td));
                     }
                 }
             };
@@ -36013,7 +36049,7 @@ return this.__repr__();
             function process_languages(field, fm, name, val) {
                 var td, lang, k;
                 if (val && val.length) {
-                    table.appendChild(E.tr(E.td(name + ":"), E.td()));
+                    table.appendChild(E.tr(E.td(name), E.td()));
                     td = table.lastChild.lastChild;
                     var ρσ_Iter8 = ρσ_Iterable(val);
                     for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
@@ -36065,7 +36101,7 @@ return this.__repr__();
                         }
                     }
                     ival = ρσ_interpolate_kwargs.call(this, fmt_sidx, [ival].concat([ρσ_desugar_kwargs({use_roman: interface_data.use_roman_numerals_for_series_number})]));
-                    table.appendChild(E.tr(E.td(name + ":"), E.td()));
+                    table.appendChild(E.tr(E.td(name), E.td()));
                     s = safe_set_inner_html(E.span(), _("{0} of <a>{1}</a>").format(ival, val));
                     a = s.getElementsByTagName("a");
                     if (a && a.length) {
@@ -36235,7 +36271,7 @@ return this.__repr__();
             var style;
             style = "";
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td"].concat([ρσ_desugar_kwargs({vertical_align: "top"})]));
-            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td:first-of-type"].concat([ρσ_desugar_kwargs({font_weight: "bold", padding_right: "1em", white_space: "nowrap"})]));
+            style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td:first-of-type"].concat([ρσ_desugar_kwargs({font_style: "italic", color: "var(--calibre-color-faded-text)", padding_right: "0.5em", white_space: "nowrap", text_align: "right"})]));
             style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + "table.metadata td:last-of-type"].concat([ρσ_desugar_kwargs({overflow_wrap: "break-word"})]));
             return style;
         };
