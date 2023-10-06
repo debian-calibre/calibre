@@ -22,10 +22,10 @@ This reverts commit 76fbbef9d08d4d335c5408584ed26bfc165b5fdc.
  13 files changed, 463 insertions(+), 454 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index 47b7889..128a0b4 100644
+index aa433b4..42acf21 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -231,12 +231,8 @@ class Environment(NamedTuple):
+@@ -234,12 +234,8 @@ class Environment(NamedTuple):
      def lib_dirs_to_ldflags(self, dirs) -> List[str]:
          return [self.libdir_prefix+x for x in dirs if x]
  

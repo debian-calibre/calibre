@@ -6,22 +6,25 @@ Forwarded: not-needed
 
 Allow hardening flags from debhelper.
 ---
- setup/build.py | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ setup/build.py | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/setup/build.py b/setup/build.py
-index 44b5d99..6a6e034 100644
+index 7bc9095..f0ce9d4 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -263,6 +263,7 @@ def init_env(debug=False, sanitize=False, compiling_for='native'):
-         ldflags = os.environ.get('OVERRIDE_LDFLAGS', '-Wall')
-         ldflags = shlex.split(ldflags)
-         cflags += shlex.split(os.environ.get('CFLAGS', ''))
-+        cflags += shlex.split(os.environ.get('CPPFLAGS', ''))
-         ldflags += shlex.split(os.environ.get('LDFLAGS', ''))
+@@ -268,6 +268,10 @@ def init_env(debug=False, sanitize=False, compiling_for='native'):
+         base_cflags = shlex.split(os.environ.get('CFLAGS', ''))
+         base_cxxflags = shlex.split(os.environ.get('CXXFLAGS', ''))
+         base_ldflags = shlex.split(os.environ.get('LDFLAGS', ''))
++
++        base_cflags += shlex.split(os.environ.get('CPPFLAGS', ''))
++        base_cxxflags += shlex.split(os.environ.get('CPPFLAGS', ''))
++
+         cflags += base_cflags
+         ldflags += base_ldflags
          cflags += ['-fvisibility=hidden']
-         if sanitize:
-@@ -714,6 +715,15 @@ sip-file = "{os.path.basename(sipf)}"
+@@ -733,6 +737,15 @@ sip-file = "{os.path.basename(sipf)}"
          cwd = os.getcwd()
          try:
              os.chdir(os.path.join(src_dir, 'build'))
