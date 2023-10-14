@@ -1,0 +1,52 @@
+From: Eli Schwartz <eschwartz93@gmail.com>
+Date: Wed, 27 Sep 2023 21:53:59 -0400
+Subject: fix crash in Get Books when regenerating UIC files (Closes:
+ #1053899)
+
+Forwarded: not-needed
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1053899
+Origin: backport, https://github.com/kovidgoyal/calibre/commit/f4fe3f254d3de0dd51722b3b5e08112ae82ebf51
+Author: Eli Schwartz <eschwartz93@gmail.com>
+
+Current versions of PyQt seem to generate code incompatible with our
+class definition:
+
+```
+Traceback (most recent call last):
+  File "/home/eschwartz/git/calibre/src/calibre/gui2/actions/store.py", line 49, in do_search
+    return self.search()
+           ^^^^^^^^^^^^^
+  File "/home/eschwartz/git/calibre/src/calibre/gui2/actions/store.py", line 55, in search
+    sd = SearchDialog(self.gui, self.gui, query)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eschwartz/git/calibre/src/calibre/gui2/store/search/search.py", line 38, in __init__
+    self.setupUi(self)
+  File "/home/eschwartz/git/calibre/src/calibre/gui2/store/search/search_ui.py", line 84, in setupUi
+    self.results_view = ResultsView(parent=self.verticalLayoutWidget)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ResultsView.__init__() got an unexpected keyword argument 'parent'
+```
+
+The issue is that arguments forwarded to the PyQt class are now being
+generated using keyword arguments rather than non-keyword args. As a
+direct wrapper over a class belonging to another project, we really
+should forward both types just in case.
+---
+ src/calibre/gui2/store/search/results_view.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/gui2/store/search/results_view.py b/src/calibre/gui2/store/search/results_view.py
+index 2d910ce..b449521 100644
+--- a/src/calibre/gui2/store/search/results_view.py
++++ b/src/calibre/gui2/store/search/results_view.py
+@@ -39,8 +39,8 @@ class ResultsView(QTreeView):
+     download_requested = pyqtSignal(object)
+     open_requested = pyqtSignal(object)
+ 
+-    def __init__(self, *args):
+-        QTreeView.__init__(self,*args)
++    def __init__(self, *args, **kwargs):
++        QTreeView.__init__(self,*args, **kwargs)
+ 
+         self._model = Matches()
+         self.setModel(self._model)
