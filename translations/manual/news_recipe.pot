@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 6.28.1\n"
+"Project-Id-Version: calibre 6.29.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-07 16:39+0530\n"
+"POT-Creation-Date: 2023-10-20 07:24+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,10 +117,10 @@ msgid "Return a :term:`URL` to the masthead image for this issue or `None`. By d
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
-msgid "If you set `articles_are_obfuscated` this method is called with every article URL. It should return the path to a file on the filesystem that contains the article HTML. That file is processed by the recursive HTML fetching engine, so it can contain links to pages/images on the web."
+msgid "If you set `articles_are_obfuscated` this method is called with every article URL. It should return the path to a file on the filesystem that contains the article HTML. That file is processed by the recursive HTML fetching engine, so it can contain links to pages/images on the web. Alternately, you can return a dictionary of the form: {'data': <HTML data>, 'url': <the resolved URL of the article>}. This avoids needing to create temporary files. The `url` key in the dictionary is useful if the effective URL of the article is different from the URL passed into this method, for example, because of redirects. It can be omitted if the URL is unchanged."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
 msgid "This method is typically useful for sites that try to make it difficult to access article content automatically."
 msgstr ""
 
