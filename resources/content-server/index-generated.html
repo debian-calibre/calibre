@@ -26712,7 +26712,7 @@ return this.__repr__();
             var ρσ_Iter1 = ρσ_Iterable(img_tags);
             for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
                 img_tag = ρσ_Iter1[ρσ_Index1];
-                bounding_rects.push(img_tag.getBoundingClientRect());
+                bounding_rects.push(get_bounding_client_rect(img_tag));
             }
             maxb = screen_block;
             for (var ρσ_Index2 = 0; ρσ_Index2 < img_tags.length; ρσ_Index2++) {
@@ -26996,10 +26996,10 @@ return this.__repr__();
                 if (!is_full_screen_layout) {
                     has_no_more_than_two_columns = scroll_viewport.paged_content_inline_size() < 2 * screen_inline + 10;
                     if (has_no_more_than_two_columns && single_screen) {
-                        if (only_img && imgs.length && imgs[0].getBoundingClientRect().left < screen_inline) {
+                        if (only_img && imgs.length && get_bounding_client_rect(imgs[0]).left < screen_inline) {
                             is_full_screen_layout = true;
                         }
-                        if (has_svg && (svgs.length === 1 || typeof svgs.length === "object" && ρσ_equals(svgs.length, 1)) && svgs[0].getBoundingClientRect().left < screen_inline) {
+                        if (has_svg && (svgs.length === 1 || typeof svgs.length === "object" && ρσ_equals(svgs.length, 1)) && get_bounding_client_rect(svgs[0]).left < screen_inline) {
                             is_full_screen_layout = true;
                         }
                     }
@@ -27300,7 +27300,7 @@ return this.__repr__();
             elem = scrollable_element(elem);
             scroll_viewport.scroll_into_view(elem);
             if (in_paged_mode()) {
-                br = elem.getBoundingClientRect();
+                br = get_bounding_client_rect(elem);
                 if (br.top < -100) {
                     if (scroll_viewport.horizontal_writing_mode) {
                         inline_start = (scroll_viewport.ltr) ? elem.scrollLeft : elem.scrollRight;
@@ -27794,31 +27794,17 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
-        function get_bounding_client_rect_using_offset_properties(elem) {
-            var ans, ρσ_unpack;
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["left"] = 0;
-                ρσ_d["top"] = 0;
-                ρσ_d["width"] = elem.offsetWidth;
-                ρσ_d["height"] = elem.offsetHeight;
-                ρσ_d["x"] = 0;
-                ρσ_d["y"] = 0;
-                return ρσ_d;
-            }).call(this);
-            while (elem) {
-                ans.left += elem.offsetLeft;
-                ans.top += elem.offsetTop;
-                elem = elem.offsetParent;
+        function get_bounding_client_rect(elem) {
+            var br, r;
+            br = elem.getBoundingClientRect();
+            if (br.width === 0 && br.height === 0) {
+                r = document.createRange();
+                r.selectNodeContents(elem);
+                br = r.getBoundingClientRect();
             }
-            ans.left -= window.scrollX;
-            ans.top -= window.scrollTop;
-            ρσ_unpack = [ans.left, ans.top];
-            ans.x = ρσ_unpack[0];
-            ans.y = ρσ_unpack[1];
-            return ans;
+            return br;
         };
-        if (!get_bounding_client_rect_using_offset_properties.__argnames__) Object.defineProperties(get_bounding_client_rect_using_offset_properties, {
+        if (!get_bounding_client_rect.__argnames__) Object.defineProperties(get_bounding_client_rect, {
             __argnames__ : {value: ["elem"]},
             __module__ : {value: "read_book.paged_mode"}
         });
@@ -27832,10 +27818,7 @@ return this.__repr__();
                         return 0;
                     }
                     elem = scrollable_element(elem);
-                    br = elem.getBoundingClientRect();
-                    if (br.left === 0 && br.top === 0 && br.width === 0 && br.height === 0) {
-                        br = get_bounding_client_rect_using_offset_properties(elem);
-                    }
+                    br = get_bounding_client_rect(elem);
                     pos = scroll_viewport.viewport_to_document_inline(scroll_viewport.rect_inline_start(br));
                     return column_at(pos);
                 };
@@ -28149,7 +28132,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
         ρσ_modules["read_book.paged_mode"].handle_gesture = handle_gesture;
-        ρσ_modules["read_book.paged_mode"].get_bounding_client_rect_using_offset_properties = get_bounding_client_rect_using_offset_properties;
+        ρσ_modules["read_book.paged_mode"].get_bounding_client_rect = get_bounding_client_rect;
         ρσ_modules["read_book.paged_mode"].ResizeManager = ResizeManager;
         ρσ_modules["read_book.paged_mode"].prepare_for_resize = prepare_for_resize;
         ρσ_modules["read_book.paged_mode"].resize_done = resize_done;
@@ -29257,7 +29240,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.28.1";
+        CALIBRE_VERSION = "6.29.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -47857,6 +47840,7 @@ return this.__repr__();
                     ρσ_d["empty"] = true;
                     return ρσ_d;
                 }).call(this);
+                ρσ_d["on_load"] = [];
                 return ρσ_d;
             }).call(this);
             self.book_scrollbar.apply_visibility();
@@ -49073,6 +49057,7 @@ return this.__repr__();
                     ρσ_d["empty"] = true;
                     return ρσ_d;
                 }).call(this);
+                ρσ_d["on_load"] = [];
                 return ρσ_d;
             }).call(this);
             self.show_loading();
@@ -49712,6 +49697,12 @@ return this.__repr__();
             if (self.read_aloud.is_visible) {
                 self.read_aloud.play();
             }
+            var ρσ_Iter11 = ρσ_Iterable(self.currently_showing.on_load);
+            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                x = ρσ_Iter11[ρσ_Index11];
+                x();
+            }
+            self.currently_showing.on_load = [];
         };
         if (!View.prototype.on_content_loaded.__argnames__) Object.defineProperties(View.prototype.on_content_loaded, {
             __argnames__ : {value: ["data"]},
@@ -49778,6 +49769,7 @@ return this.__repr__();
                     if (!self.search_result_discovery.discovered && self.search_result_discovery.first_search_result && self.search_result_discovery.queue.length === 0) {
                         sr = self.search_result_discovery.first_search_result;
                         sr.force_jump_to = true;
+                        self.search_result_discovery.jump_forced = true;
                         self.show_search_result(sr);
                     }
                 }
@@ -49792,6 +49784,7 @@ return this.__repr__();
                     ρσ_d["discovered"] = false;
                     ρσ_d["first_search_result"] = sr;
                     ρσ_d["finished"] = false;
+                    ρσ_d["jump_forced"] = false;
                     return ρσ_d;
                 }).call(this);
             }
@@ -49818,9 +49811,10 @@ return this.__repr__();
                     }
                 } else if (!self.search_result_discovery.discovered && self.search_result_discovery.queue.length) {
                     self.show_search_result(self.search_result_discovery.queue.shift());
-                } else if (!self.search_result_discovery.discovered && self.search_result_discovery.finished) {
+                } else if (!self.search_result_discovery.discovered && self.search_result_discovery.finished && !self.search_result_discovery.jump_forced) {
                     sr = self.search_result_discovery.first_search_result;
                     sr.force_jump_to = true;
+                    self.search_result_discovery.jump_forced = true;
                     self.show_search_result(sr);
                 }
             }
@@ -49851,7 +49845,11 @@ return this.__repr__();
         View.prototype.show_search_result = function show_search_result(sr) {
             var self = this;
             if (self.currently_showing.name === sr.file_name) {
-                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["show_search_result"].concat([ρσ_desugar_kwargs({search_result: sr})]));
+                if (self.currently_showing.loading) {
+                    self.currently_showing.on_load.push(self.show_search_result.bind(null, sr));
+                } else {
+                    ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["show_search_result"].concat([ρσ_desugar_kwargs({search_result: sr})]));
+                }
             } else {
                 ρσ_interpolate_kwargs.call(self, self.show_name, [sr.file_name].concat([ρσ_desugar_kwargs({initial_position: (function(){
                     var ρσ_d = Object.create(null);

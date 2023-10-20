@@ -6,6 +6,7 @@
 # Andrew Chen <751970186@qq.com>, 2016
 # Ben Liao <weibin.liao@gmail.com>, 2016
 # Dingyuan Wang <abcdoyle888@gmail.com>, 2016
+# tony shen <anthanny@hotmail.com>, 2023
 # Ennis W, 2021
 # xingling17777, 2023
 # 白夜咲雪, 2021
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:11+0000\n"
+"POT-Creation-Date: 2023-10-19 08:30+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: xingling17777, 2023\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2023\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -138,7 +139,7 @@ msgid ""
 " One is the traditional Table of Contents, like the ToC you find in paper "
 "books. This Table of Contents is part of the main document flow and can be "
 "styled however you like. This ToC is called the *content ToC*."
-msgstr ""
+msgstr "首先要意识到的是，大多数电子书都有两个目录。一种是传统的目录，就像你在纸质书中找到的ToC。此目录是主文档流的一部分，可以根据您的喜好进行样式设置。此ToC称为“内容ToC*”。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:58
 msgid ""
@@ -147,7 +148,7 @@ msgid ""
 "reader. For example, in the calibre E-book viewer, you use the Show Table of"
 " Contents button to see this ToC. This ToC cannot be styled by the book "
 "creator. How it is represented is up to the viewer program."
-msgstr ""
+msgstr "然后是元数据ToC*。元数据ToC是指不属于书籍文本的ToC，通常由阅读器上的某个特殊按钮访问。例如，在calibre电子书阅读器中，您可以使用“显示目录”按钮来查看此ToC。该ToC不能由图书创建者设置样式。它的表现方式取决于阅读器程序。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:60
 msgid ""
@@ -157,7 +158,7 @@ msgid ""
 "metadata ToC by putting an *extra* content ToC at the end of the book. When "
 "you click Goto Table of Contents on your Kindle, it is to this extra content"
 " ToC that the Kindle takes you."
-msgstr ""
+msgstr "在MOBI格式中，情况有点混乱。这是因为MOBI格式，在主流电子书格式中，*没有*对元数据ToC的良好支持。一本MOBI书通过在书的末尾放置一个额外的内容ToC来模拟元数据ToC的存在。当你在Kindle上点击“转到目录”时，Kindle就会把你带到这个额外的ToC内容中。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:62
 msgid ""
@@ -191,7 +192,7 @@ msgid ""
 "detection options in calibre to automatically generate the metadata ToC from"
 " it. See the conversion section of the User Manual for more details on how "
 "to use these options."
-msgstr ""
+msgstr "如果您在输入文档中有手动编辑的ToC，您可以使用calibre中的ToC检测选项自动从中生成元数据ToC。有关如何使用这些选项的更多详细信息，请参阅用户手册的转换部分。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:68
 msgid ""
@@ -199,7 +200,7 @@ msgid ""
 "ToC in your e-books. Metadata ToCs will give the people reading your e-books"
 " a much superior navigation experience (except on the Kindle, where they are"
 " essentially the same as a content ToC)."
-msgstr ""
+msgstr "最后，我鼓励你抛弃内容目录，在你的电子书中只有一个元数据目录。元数据目录将为阅读你的电子书的人提供更好的导航体验(除了在Kindle上，它们本质上与内容目录相同)。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:71
 msgid ""
@@ -209,11 +210,11 @@ msgid ""
 "ToC alone. If you create an AZW3 file with a metadata ToC and no end-of-file"
 " generated ToC, some features on the Kindle will not work, such as the Page "
 "Flip feature."
-msgstr ""
+msgstr "较新的AZW3格式对元数据目录有适当的支持。但是，如果您禁用文件结尾内联目录的生成，Kindle固件可能会出现故障。因此，建议您不要使用生成的TOC。如果您创建的AZW3文件包含元数据目录，并且没有文件结尾生成的目录，则Kindle上的某些功能将无法使用，例如翻页功能。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:79
 msgid "How do I convert a collection of HTML files in a specific order?"
-msgstr ""
+msgstr "如何按特定顺序转换一组HTML文件？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:80
 msgid ""
@@ -221,7 +222,7 @@ msgid ""
 " to create a table of contents file. That is, another HTML file that "
 "contains links to all the other files in the desired order. Such a file "
 "looks like::"
-msgstr ""
+msgstr "为了以特定的顺序转换一组HTML文件，您必须创建一个目录文件。也就是说，另一个包含以所需顺序指向所有其他文件的链接的HTML文件。这样的文件如下所示：："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:97
 msgid ""
@@ -229,7 +230,7 @@ msgid ""
 "button to create your e-book. You can use the option in the Table of "
 "Contents section in the conversion dialog to control how the Table of "
 "Contents is generated."
-msgstr ""
+msgstr "然后，只需将此HTML文件添加到图形用户界面，并使用：guiabel：`Convert`按钮创建您的电子书。您可以使用转换对话框中目录部分中的选项来控制如何生成目录。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:101
 msgid ""
@@ -241,11 +242,11 @@ msgid ""
 "files in *breadth first* order. Do this by going to "
 ":guilabel:`Preferences->Advanced->Plugins->File type` and customizing the "
 ":guilabel:`HTML to ZIP` plugin."
-msgstr ""
+msgstr "默认情况下，添加HTML文件时，Calibre会以*深度优先*的顺序跟随文件中的链接。这意味着，如果a.html文件链接到B.html、c.html和d.html，但B.html也链接到d.html，则这些文件将按a.html、B.html、d.html、c.html的顺序排列。如果您想要的顺序是a.html、B.html、c.html、d.html，那么您必须告诉Calibre以*广度优先*的顺序添加您的文件。要做到这一点，请转到：guilabel：`Preferences->Advanced->Plugins->File类型`并定制：guilabel：`Html to ZIP`插件。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:111
 msgid "The EPUB I produced with calibre is not valid?"
-msgstr ""
+msgstr "我用calibre 生成的EPUB是不是有效？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:113
 msgid ""
@@ -264,7 +265,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:126
 msgid "How do I use some of the advanced features of the conversion tools?"
-msgstr ""
+msgstr "如何使用转换工具的一些高级功能？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:127
 msgid ""
@@ -277,7 +278,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:134
 msgid "Device integration"
-msgstr ""
+msgstr "设备集成"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:141
 msgid "What devices does calibre support?"
@@ -290,27 +291,27 @@ msgid ""
 ":guilabel:`Connect to folder` function you can use it with any e-book reader"
 " that exports itself as a USB disk. Finally, you can connect wirelessly to "
 "any device that has a web browser using the calibre Content server."
-msgstr ""
+msgstr "Calibre可以直接连接到所有主要(和大多数次要的)电子书阅读设备、智能手机、平板电脑等。此外，使用：Guilabel：`连接到文件夹‘功能，您可以将其用于任何将自身导出为U盘的电子书阅读器。最后，您可以使用Calibre内容服务器无线连接到任何具有Web浏览器的设备。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:151
 msgid "How can I help get my device supported in calibre?"
-msgstr ""
+msgstr "我如何才能帮助我的设备获得calibre支持？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:153
 msgid ""
 "If your device appears as a USB disk to the operating system, adding support"
 " for it to calibre is very easy. We just need some information from you:"
-msgstr ""
+msgstr "如果您的设备在操作系统中显示为USB磁盘，则将对其的支持添加到Calibre非常容易。我们只需要你提供一些信息："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:156
 msgid "Complete list of e-book formats that your device supports."
-msgstr ""
+msgstr "您的设备支持的电子书格式的完整列表。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:157
 msgid ""
 "Is there a special folder on the device in which all e-book files should be "
 "placed? Also does the device detect files placed in sub-folders?"
-msgstr ""
+msgstr "设备上有没有一个特殊的文件夹来放置所有的电子书文件？此外，设备是否会检测子文件夹中的文件？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:158
 msgid ""
@@ -321,13 +322,13 @@ msgid ""
 "detection\" button. This will create some debug output. Copy it to a file "
 "and repeat the process, this time with your device disconnected from your "
 "computer."
-msgstr ""
+msgstr "我们还需要关于您的设备的信息，Calibre将自动收集这些信息。首先，如果您的设备支持SD卡，请插入SD卡。然后将您的设备连接到计算机。在Calibre中，转到：guiabel：`首选项->其他`，然后单击“调试设备检测”按钮。这将创建一些调试输出。将其复制到一个文件并重复该过程，这一次是在设备与计算机断开连接的情况下。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:162
 msgid ""
 "Send both the above outputs to us with the other information and we will "
 "write a device driver for your device."
-msgstr ""
+msgstr "将上述两个输出和其他信息发送给我们，我们将为您的设备编写设备驱动程序。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:165
 msgid ""
@@ -335,11 +336,11 @@ msgid ""
 "the device in that operating system will appear in the next release of "
 "calibre. To send us the output, open a bug report and attach the output to "
 "it. See :website:`how to report bugs <bugs>`."
-msgstr ""
+msgstr "一旦您向我们发送了特定操作系统的输出，该操作系统中对该设备的支持将出现在下一版本的Calibre中。要向我们发送输出，请打开错误报告并将输出附加到它。参见：网站：`如何报告错误1‘。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:170
 msgid "My device is not being detected by calibre?"
-msgstr ""
+msgstr "我的设备没有被calibre检测到吗？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:172
 msgid "Follow these steps to find the problem:"
@@ -350,20 +351,20 @@ msgid ""
 "Make sure that you are connecting only a single device to your computer at a"
 " time. Do not have another calibre supported device like an iPhone/iPad etc."
 " at the same time."
-msgstr ""
+msgstr "确保一次只将一台设备连接到您的计算机。不要同时拥有iPhone/iPad等支持另一种calibre的设备。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:177
 msgid ""
 "If you are connecting an Apple iDevice (iPad, iPod Touch, iPhone), Apple no "
 "longer allows third party software to connect to their devices using a USB "
 "cable. Instead use a wireless connection, via the calibre Content server."
-msgstr ""
+msgstr "如果您连接的是Apple iDevice(iPad、iPod Touch、iPhone)，Apple不再允许第三方软件使用USB电缆连接到他们的设备。取而代之的是使用无线连接，通过Calibre内容服务器。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:181
 msgid ""
 "If you are connecting a Kindle Fire or other Android device, read the note "
 "under :ref:`android_usb`."
-msgstr ""
+msgstr "如果您连接的是Kindle Fire或其他Android设备，请阅读：ref：`android_usb`下的说明。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:183
 #: ../../__w/calibre/calibre/manual/faq.rst:999
@@ -371,7 +372,7 @@ msgid ""
 "On macOS if you get permission errors when connecting a device to calibre, "
 "you can fix that by looking under :guilabel:`System Preferences > Security "
 "and Privacy > Privacy > Files and Folders`."
-msgstr ""
+msgstr "在MacOS上，如果你在将设备连接到Calibre时遇到权限错误，你可以通过查看以下内容来修复：guarabel：`系统首选项>安全和隐私>隐私>文件和文件夹`。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:186
 msgid ""
@@ -385,13 +386,13 @@ msgstr ""
 msgid ""
 "Ensure your operating system is seeing the device. That is, the device "
 "should show up in Windows Explorer (in Windows) or Finder (in macOS)."
-msgstr ""
+msgstr "确保您的操作系统正在检测到该设备。也就是说，设备应该显示在Windows资源管理器(Windows)或Finder(MacOS)中。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:193
 msgid ""
 "In calibre, go to :guilabel:`Preferences->Ignored Devices` and check that "
 "your device is not being ignored"
-msgstr ""
+msgstr "在Calibre中，转到：Guilabel：`首选项->忽略的设备`并检查您的设备是否未被忽略"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:195
 msgid ""
@@ -403,7 +404,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:200
 msgid "My device is non-standard or unusual. What can I do to connect to it?"
-msgstr ""
+msgstr "我的设备不是标准的或不寻常的。我可以做些什么来连接到它？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:202
 msgid ""
@@ -417,18 +418,18 @@ msgid ""
 " information. Note that if you are using the user defined plugin for a "
 "device normally detected by a builtin calibre plugin, you must disable the "
 "builtin plugin first, so that your user defined plugin is used instead."
-msgstr ""
+msgstr "除了：guiabel：`连接/共享`按钮下的：guiabel：`连接到文件夹`功能外，Calibre还提供了一个``用户定义的``设备插件，可用于连接到操作系统中显示为磁盘驱动器的任何USB设备。注：在Windows上，设备必须有驱动器号才能使用Calibre。查看设备插件``首选项->插件->设备插件->用户定义的``和``首选项->其他->获取设置用户定义的设备的信息``了解更多信息。请注意，如果您使用的是内置口径插件通常检测到的设备的用户定义插件，则必须首先禁用内置插件，以便使用您的用户定义插件。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:214
 msgid "How do I use calibre with my iPad/iPhone/iPod touch?"
-msgstr ""
+msgstr "如何在iPad/iPhone/iPod Touch中使用Calibre？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:216
 msgid ""
 "An easy way to browse your calibre collection from your Apple device is by "
 "using :doc:`server`, which makes your collection available over the net. "
 "First perform the following steps in calibre"
-msgstr ""
+msgstr "从你的苹果设备上浏览你的calibre收藏有一个简单的方法，就是使用：Doc：`server`，这样你的收藏就可以在网上获得。首先按calibre执行以下步骤"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:220
 msgid ""
@@ -466,13 +467,13 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:235
 msgid "Using the Content server"
-msgstr ""
+msgstr "使用内容服务器"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:237
 msgid ""
 "Start the Safari browser and type in the IP address and port of the computer"
 " running the calibre server, like this::"
-msgstr ""
+msgstr "启动Safari浏览器并输入运行Calibre服务器的计算机的IP地址和端口，如下所示："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:242
 #: ../../__w/calibre/calibre/manual/faq.rst:312
@@ -480,7 +481,7 @@ msgid ""
 "Replace ``192.168.1.2`` with the local IP address of the computer running "
 "calibre. See :doc:`server` for details on running the server and finding out"
 " the right IP address to use."
-msgstr ""
+msgstr "将``192.168.1.2`替换为运行Calibre的计算机的本地IP地址。有关运行服务器和找到正确的IP地址的详细信息，请参阅：DOC：`server`。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:246
 msgid ""
@@ -488,7 +489,7 @@ msgid ""
 "given the option to either download it, or read it in the browser itself. If"
 " you choose to download it, Safari will ask you if you want to open it with "
 "iBooks."
-msgstr ""
+msgstr "你会在Safari中看到一个图书列表，点击任何一本书，你就可以选择下载它，或者在浏览器中阅读它。如果你选择下载，Safari会询问你是否想用iBooks打开它。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:250
 #: ../../__w/calibre/calibre/manual/faq.rst:320
@@ -500,8 +501,8 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:256
-msgid "How do I use calibre with my Android phone/tablet or Kindle Fire HD?"
-msgstr ""
+msgid "How do I use calibre with my Android phone/tablet or Kindle Fire?"
+msgstr "如何在我的安卓手机/平板电脑或Kindle Fire上使用Calibre？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:258
 msgid ""
@@ -555,11 +556,11 @@ msgid ""
 "cable is plugged in, showing that the device is charging. Tap that and "
 "switch the device to data transfer mode, and then start calibre, it should "
 "then be detected."
-msgstr ""
+msgstr "对于Kindle Fire 8或更新版本，当插入USB数据线时会出现一个图标，表明设备正在充电。\n点击该按钮，将设备切换到数据传输模式，然后启动Calibre，然后应该会检测到它。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:298
 msgid "Over the air"
-msgstr ""
+msgstr "OTA升级"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:300
 msgid ""
@@ -567,7 +568,7 @@ msgid ""
 "collection available over the net. You can browse it on your device using a "
 "simple browser or a dedicated application. First perform the following steps"
 " in calibre:"
-msgstr ""
+msgstr "Calibre有一个内置的Web服务器：DOC：`server`。它使您的calibre收集在网上可用。您可以使用简单的浏览器或专用应用程序在您的设备上浏览它。首先按calibre执行以下步骤："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:304
 msgid ""
@@ -580,7 +581,7 @@ msgstr ""
 msgid ""
 "Convert the books you want to read on your device to EPUB/MOBI format by "
 "selecting them and clicking the :guilabel:`Convert` button."
-msgstr ""
+msgstr "将您想要在设备上阅读的图书转换为EPUB/MOBI格式，方法是选择它们并单击：guiabel：`转换`按钮。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:306
 msgid ""
@@ -590,7 +591,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:308
 msgid "Now on your Android device, open the browser and browse to"
-msgstr ""
+msgstr "现在，在您的Android设备上，打开浏览器并浏览到"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:310
 msgid "http://192.168.1.2:8080/"
@@ -601,13 +602,13 @@ msgid ""
 "You can now browse your book collection and download books from calibre to "
 "your device to open with whatever e-book reading software you have on your "
 "Android device."
-msgstr ""
+msgstr "你现在可以浏览你的图书收藏，并将图书从Calibre下载到你的设备上，然后用你Android设备上的任何电子书阅读软件打开。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:327
 msgid ""
 "Can I access my calibre books using the web browser in my Kindle or other "
 "reading device?"
-msgstr ""
+msgstr "我可以使用Kindle或其他阅读设备中的网络浏览器访问我的calibre图书吗？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:329
 msgid ""
@@ -630,11 +631,11 @@ msgid ""
 "Also some devices do not have browsers advanced enough to run the app-like "
 "interface used by the Content server. For such devices, you can simply add "
 "``/mobile`` to the server URL to get a simplified, non-JavaScript interface."
-msgstr ""
+msgstr "此外，一些设备没有足够高级的浏览器来运行内容服务器使用的类似APP的界面。对于这类设备，您只需在服务器URL上添加``/mobile`，就可以得到简化的、非JavaScript的界面。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:342
 msgid "I cannot send emails using calibre?"
-msgstr ""
+msgstr "我不能使用Calibre发送电子邮件？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:344
 msgid ""
@@ -664,7 +665,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:354
 msgid "calibre will then be able to use GMX to send the mail."
-msgstr ""
+msgstr "然后，Calibre将能够使用GMX发送邮件。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:355
 msgid ""
@@ -674,7 +675,7 @@ msgid ""
 "(KF8) MOBI files. Finally, Amazon recently started sending confirmation "
 "emails that you have to click on back to your GMX account before the book is"
 " actually delivered."
-msgstr ""
+msgstr "如果您正在向您的Kindle发送电子邮件，请记住更新您的Amazon Kindle页面上的电子邮件首选项，以允许从您的GMX电子邮件地址发送电子邮件。还要注意的是，亚马逊不允许通过电子邮件发送AZW3和新风格(KF8)MOBI文件。最后，亚马逊最近开始向你的GMX账户发送确认电子邮件，你必须点击这些电子邮件才能真正交付图书。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:362
 msgid ""
@@ -682,7 +683,7 @@ msgid ""
 "is that some poorly designed antivirus programs block calibre from opening a"
 " connection to send email. Try adding an exclusion for calibre in your "
 "antivirus program."
-msgstr ""
+msgstr "即使在这样做之后，您也可能会遇到问题。问题的一个常见来源是，一些设计糟糕的杀毒程序阻止了Calibre打开连接发送电子邮件。尝试在您的防病毒程序中添加口径排除项。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:367
 msgid ""
@@ -699,39 +700,39 @@ msgid ""
 "support in an attempt to force everyone to use their web interface so they "
 "can show you more ads. They are trying to claim that SMTP is insecure, that "
 "is incorrect and simply an excuse. Use some other email provider instead."
-msgstr ""
+msgstr "谷歌最近故意破坏了他们的电子邮件发送协议(SMTP)支持，试图迫使每个人使用他们的网络界面，这样他们就可以向你显示更多的广告。他们试图声称SMTP是不安全的，这是不正确的，只是一个借口。取而代之的是其他电子邮件提供商。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:381
 msgid ""
 "If you are concerned about giving calibre access to your email account, "
 "simply create a new free email account with GMX or Outlook and use it only "
 "for calibre."
-msgstr ""
+msgstr "如果你担心给你的电子邮件帐户提供Calibre访问权限，只需使用GMX或Outlook创建一个新的免费电子邮件帐户，并将其仅用于Calibre。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:387
 msgid ""
 "My device is getting mounted read-only in Linux, so calibre cannot connect "
 "to it?"
-msgstr ""
+msgstr "我的设备在Linux中以只读方式安装，因此Calibre无法连接到它？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:389
 msgid ""
 "Linux kernels mount devices read-only when their filesystems have errors. "
 "You can repair the filesystem with::"
-msgstr ""
+msgstr "Linux内核在其文件系统出现错误时以只读方式挂载设备。您可以使用：：修复文件系统"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:393
 msgid ""
 "Replace /dev/sdc with the path to the device node of your device. You can "
 "find the device node of your device, which will always be under /dev by "
 "examining the output of::"
-msgstr ""
+msgstr "将/dev/sdc替换为设备的设备节点的路径。通过检查以下命令的输出，您可以找到设备的设备节点，该节点将始终位于/dev下"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:400
 msgid ""
 "Why does calibre not support collections on the Kindle or shelves on the "
 "Nook?"
-msgstr ""
+msgstr "为什么Calibre不支持Kindle上的收藏或Nook上的货架？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:402
 msgid ""
@@ -740,7 +741,7 @@ msgid ""
 "urge you to sell your Kindle/Nook and get a Kobo.  Only Kobo seems to "
 "understand that life is too short to be entering collections one by one on "
 "an e-ink screen 😇"
-msgstr ""
+msgstr "Kindle和Nook都不提供通过USB连接操作收藏的任何方式。如果你真的关心使用收藏，我会敦促你卖掉你的Kindle/Nook，买一台Kobo。似乎只有Kobo明白，生命太短暂了，不能在电子墨水屏幕上一个接一个地输入收藏😇"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:407
 msgid ""
@@ -760,12 +761,12 @@ msgid ""
 "their newer models, like the Kindle Touch and Kindle Fire, making even the "
 "above plugin useless, unless you root your Kindle and install custom "
 "firmware."
-msgstr ""
+msgstr "亚马逊已经完全取消了在Kindle Touch和Kindle Fire等较新型号中操纵收藏的功能，即使是上面的插件也变得毫无用处，除非你扎根Kindle并安装定制固件。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:421
 msgid ""
 "I am getting an error when I try to use calibre with my Kobo Touch/Glo/etc.?"
-msgstr ""
+msgstr "当我尝试在我的Kobo Touch/Glo/等中使用Calibre时出现错误？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:423
 msgid ""
@@ -778,39 +779,39 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:429
 msgid "Connect the Kobo directly to your computer, not via USB Hub"
-msgstr ""
+msgstr "将Kobo直接连接到您的计算机，而不是通过USB集线器"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:430
 msgid "Try a different USB cable and a different USB port on your computer"
-msgstr ""
+msgstr "在您的计算机上尝试不同的USB数据线和不同的USB端口"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:431
 msgid ""
 "Log out of the Kobo and log in again, this causes it to rebuild the "
 "database, fixing corrupted database errors."
-msgstr ""
+msgstr "从Kobo注销并重新登录，这会导致它重建数据库，修复损坏的数据库错误。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:433
 msgid "Try upgrading the firmware on your Kobo Touch to the latest"
-msgstr ""
+msgstr "尝试将Kobo Touch上的固件升级到最新版本"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:434
 msgid ""
 "Try resetting the Kobo (sometimes this cures the problem for a little while,"
 " but then it re-appears, in which case you have to reset again and again)"
-msgstr ""
+msgstr "尝试重置Kobo(有时这会暂时解决问题，但它会再次出现，在这种情况下，您必须一次又一次地重置)"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:435
 msgid ""
 "Try only putting one or two books onto the Kobo at a time and do not keep "
 "large collections on the Kobo"
-msgstr ""
+msgstr "试着一次只放一两本书到Kobo上，不要在Kobo上放大量的藏书"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:439
 msgid ""
 "Covers for books I send to my e-ink Kindle show up momentarily and then are "
 "replaced by a generic cover?"
-msgstr ""
+msgstr "我发送到我的电子墨水Kindle上的书籍的封面会瞬间出现，然后被一个通用的封面取代？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:441
 msgid ""
@@ -826,15 +827,15 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:449
 msgid "Send the book to the Kindle with calibre"
-msgstr ""
+msgstr "把书送到有calibre的Kindle上"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:450
 msgid "Disconnect the Kindle and wait for Amazon to destroy the cover"
-msgstr ""
+msgstr "断开Kindle的连接，等待亚马逊销毁封面"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:451
 msgid "Reconnect the Kindle to calibre"
-msgstr ""
+msgstr "将Kindle重新连接到Calibre"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:453
 msgid ""
@@ -843,19 +844,19 @@ msgid ""
 "really want Amazon knowing every book you read anyway. I encourage you to "
 "contact Amazon customer support and complain loudly about this bug. Maybe "
 "Amazon will listen."
-msgstr ""
+msgstr "请注意，此解决方法仅适用于发送口径为4.17或更高版本的图书。或者，简单地把你的Kindle保持在飞行模式，你不会真的想让亚马逊知道你读过的每一本书。我鼓励您联系亚马逊客户支持，并大声抱怨此漏洞。也许亚马逊会听进去。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:460
 msgid ""
 "If the workaround is not working for you make sure you Kindle firmware is at"
 " least version 5.12.5, released in April 2020."
-msgstr ""
+msgstr "如果解决方法对您无效，请确保您的Kindle固件版本至少为5.12.5，于2020年4月发布。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:464
 msgid ""
 "The covers for my MOBI files have stopped showing up in Kindle for PC/Kindle"
 " for Android/iPad etc."
-msgstr ""
+msgstr "我的MOBI文件的封面已经不再出现在适用于PC的Kindle/适用于Android/iPad的Kindle等等。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:466
 msgid ""
@@ -886,7 +887,7 @@ msgid ""
 "to force authors to sell only through them. In other words, the Kindle only "
 "displays covers for books marked as Personal Documents or books bought "
 "directly from Amazon."
-msgstr ""
+msgstr "亚马逊软件的缺陷是，当你将一个MOBI文件放在Kindle上时，除非该文件被标记为个人文档，否则亚马逊会认为你是从它那里购买了这本书，并试图从它的服务器上为它下载封面缩略图。当下载失败时，它拒绝退回到MOBI文件中定义的封面。这很可能是亚马逊故意的，目的是试图迫使作者只能通过他们进行销售。换句话说，Kindle只显示标记为个人文档的书籍或直接从亚马逊购买的书籍的封面。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:487
 msgid ""
@@ -896,13 +897,13 @@ msgid ""
 " connection and sending with calibre. Note that if you send using email, "
 "Amazon will automatically mark the MOBI file as a Personal Document and the "
 "cover will work, but the book will show up in Personal Documents."
-msgstr ""
+msgstr "如果你使用USB连接将MOBI文件发送到拥有Calibre的电子墨水Kindle上，Calibre会通过上传封面缩略图本身来解决亚马逊的这个漏洞。但是，只有在使用USB连接并使用Calibre发送时，才有可能解决此问题。请注意，如果你使用电子邮件发送，亚马逊会自动将MOBI文件标记为个人文档，封面将起作用，但图书将显示在个人文档中。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:496
 msgid ""
 "I transferred some books to my Kindle using calibre and they did not show "
 "up?"
-msgstr ""
+msgstr "我用Calibre把一些书转移到我的Kindle上，它们没有出现吗？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:498
 msgid ""
@@ -917,15 +918,15 @@ msgid ""
 " problem book. Once you have found the problem book, delete it off the "
 "Kindle and do a MOBI to MOBI or MOBI to AZW3 conversion in calibre and then "
 "send it back. This will most likely take care of the problem."
-msgstr ""
+msgstr "发送到Kindle的图书只有在被Kindle*索引后才会显示在Kindle上。这可能需要一些时间。如果书在一段时间后仍然没有出现，那么很可能是Kindle索引器崩溃了。有时，一本特定的书会导致索引器崩溃。不幸的是，亚马逊没有提供任何方法来推断哪本书导致了Kindle的崩溃。你唯一的办法是要么重置Kindle，要么使用Windows资源管理器(或你使用的任何文件管理器)从它的内存中删除所有文件，然后再一本接一本地将图书发送给它，直到你发现问题图书。一旦你找到了问题书，把它从Kindle上删除，然后进行MOBI到MOBI或MOBI到AZW3的转换，然后再把它寄回来。这很可能会解决这个问题。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:511
 msgid "Library management"
-msgstr ""
+msgstr "书库管理"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:518
 msgid "Where are the book files stored?"
-msgstr ""
+msgstr "图书文件存放在哪里？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:519
 msgid ""
@@ -938,14 +939,14 @@ msgid ""
 "associated to a particular book, use the top right area of :guilabel:`Edit "
 "metadata` dialog to do so. Then, calibre will automatically put that file "
 "into the correct folder and move it around when the title/author changes."
-msgstr ""
+msgstr "当你第一次运行Calibre时，它会要求你提供一个文件夹来存储你的书。每当您将图书添加到Calibre时，它都会将图书复制到该文件夹中。文件夹中的书籍按作者和标题很好地排列在子文件夹中。请注意，此文件夹的内容是按口径自动管理的，**请勿**手动将任何文件/文件夹添加到此文件夹，因为它们可能会被自动删除。如果要添加与特定图书相关联的文件，请使用：guiabel：`编辑元数据‘对话框的右上角区域来执行此操作。然后，Calibre会自动将文件放到正确的文件夹中，并在标题/作者发生变化时移动它。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:521
 msgid ""
 "Metadata about the books is stored in the file ``metadata.db`` at the top "
 "level of the library folder. This file is a sqlite database. When backing up"
 " your library make sure you copy the entire folder and all its sub-folders."
-msgstr ""
+msgstr "关于图书的元数据存储在库文件夹顶层的文件``metadata.db``中。该文件是一个SQLite数据库。在备份存储库时，请确保复制整个文件夹及其所有子文件夹。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:523
 msgid ""
@@ -953,18 +954,18 @@ msgid ""
 "library. You can have multiple such libraries. To manage the libraries, "
 "click the calibre icon on the toolbar. You can create new libraries, "
 "remove/rename existing ones and switch between libraries easily."
-msgstr ""
+msgstr "库文件夹及其所有内容构成了所谓的calibre书库。您可以有多个这样的书库。要管理书库，请单击工具栏上的calibre图标。您可以轻松地创建新书库、删除/重命名现有书库以及在书库之间切换。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:525
 msgid ""
 "You can copy or move books between different libraries (once you have more "
 "than one library setup) by right clicking on a book and selecting the "
 ":guilabel:`Copy to library` action."
-msgstr ""
+msgstr "您可以在不同的书库之间复制或移动图书(如果您有多个图书馆设置)，方法是在图书上单击鼠标右键并选择：Guilabel：`复制到书库‘操作。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:528
 msgid "How does calibre manage author names and sorting?"
-msgstr ""
+msgstr "Calibre如何管理作者姓名和排序？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:530
 msgid ""
@@ -985,27 +986,27 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:543
 msgid "Now coming to author name sorting:"
-msgstr ""
+msgstr "现在来看作者姓名排序："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:545
 msgid ""
 "When a new author is added to calibre (this happens whenever a book by a new"
 " author is added), calibre automatically computes a sort string for both the"
 " book and the author."
-msgstr ""
+msgstr "当将新作者添加到Calibre中时(每当添加新作者的图书时都会发生这种情况)，Calibre会自动计算图书和作者的排序字符串。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:546
 msgid ""
 "Authors in the Tag browser are sorted by the sort value for the **authors**."
 " Remember that this is different from the Author sort field for a book."
-msgstr ""
+msgstr "标签浏览器中的作者按**作者**的排序值进行排序。请记住，这与图书的作者排序字段不同。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:547
 msgid ""
 "By default, this sort algorithm assumes that the author name is in ``First "
 "name Last name`` format and generates a ``Last name, First name`` sort "
 "value."
-msgstr ""
+msgstr "默认情况下，此排序算法假定作者姓名采用``姓氏``格式，并生成``姓氏，名字``排序值。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:548
 msgid ""
@@ -1020,7 +1021,7 @@ msgid ""
 " by right clicking on any author and selecting :guilabel:`Manage authors`, "
 "then pushing the :guilabel:`Recalculate all author sort values` button. Do "
 "this after you have set the author_sort_copy_method tweak to what you want."
-msgstr ""
+msgstr "您可以强制Calibre重新计算每个作者的作者排序值，方法是：右击任何作者并选择：Guilabel：`管理作者`，然后按下：Guilabel：`重新计算所有作者排序值`按钮。在将Author_Sort_Copy_方法调整设置为您想要的之后执行此操作。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:550
 msgid ""
@@ -1028,7 +1029,7 @@ msgid ""
 " using the bulk metadata edit dialog (select all books and click edit "
 "metadata, check the :guilabel:`Automatically set author sort` checkbox, then"
 " press OK)."
-msgstr ""
+msgstr "您可以使用批量元数据编辑对话框强制Calibre重新计算所有图书的作者排序值(选择所有图书并单击编辑元数据，选中：guiabel：`自动设置作者排序`复选框，然后按确定)。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:551
 msgid ""
@@ -1036,7 +1037,7 @@ msgid ""
 " sort values for each individual author. Therefore, ensure that the "
 "individual author sort values are correct before recalculating the books' "
 "author sort values."
-msgstr ""
+msgstr "在重新计算图书的作者排序值时，Calibre使用每个单独作者的作者排序值。因此，在重新计算图书的作者排序值之前，请确保单个作者的排序值是正确的。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:552
 msgid ""
@@ -1073,31 +1074,31 @@ msgstr ""
 msgid ""
 "Restart calibre. Do not change any book metadata before doing the remaining "
 "steps."
-msgstr ""
+msgstr "重新启动Calibre。在执行其余步骤之前，不要更改任何图书元数据。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:560
 msgid "Change all author names to LN, FN using the Manage authors dialog."
-msgstr ""
+msgstr "使用管理作者对话框将所有作者姓名更改为LN，FN。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:561
 msgid ""
 "After you have changed all the authors, press the `Recalculate all author "
 "sort values` button."
-msgstr ""
+msgstr "更改所有作者后，按`重新计算所有作者排序值‘按钮。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:562
 #: ../../__w/calibre/calibre/manual/faq.rst:571
 msgid ""
 "Press OK, at which point calibre will change the authors in all your books. "
 "This can take a while."
-msgstr ""
+msgstr "按下OK，此时Calibre将更改您所有图书中的作者。这可能需要一段时间。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:570
 msgid ""
 "When changing from FN LN to LN, FN, it is often the case that the values in "
 "author_sort are already in LN, FN format. If this is your case, then do the "
 "following:"
-msgstr ""
+msgstr "从FN LN更改为LN，FN时，通常AUTHER_SORT中的值已经是LN，FN格式。如果这是您的情况，请执行以下操作："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:569
 msgid ""
@@ -1921,11 +1922,11 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1004
 msgid "If the files have their owner set to a user other than you."
-msgstr ""
+msgstr "如果文件的所有者设置为您以外的用户。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1005
 msgid "If your file is open in another program."
-msgstr ""
+msgstr "如果您的文件已在其他程序中打开。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1006
 msgid ""
@@ -1933,18 +1934,18 @@ msgid ""
 " of 256 files in the root of the device. In this case you need to reformat "
 "the device/sd card referred to in the error message with a FAT32 filesystem,"
 " or delete some files from the SD card/device memory."
-msgstr ""
+msgstr "如果文件驻留在设备上，则可能已达到设备根目录中最多256个文件的限制。在这种情况下，您需要使用FAT32文件系统重新格式化错误消息中提到的设备/SD卡，或者从SD卡/设备内存中删除一些文件。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1008
 msgid ""
 "You will need to fix the underlying cause of the permissions error before "
 "resuming to use calibre. Read the error message carefully, see what file it "
 "points to and fix the permissions on that file or its containing folders."
-msgstr ""
+msgstr "在恢复使用Calibre之前，您需要修复权限错误的根本原因。仔细阅读错误消息，查看它指向的文件，并修复该文件或其包含的文件夹的权限。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1011
 msgid "Can I have the comment metadata show up on my reader?"
-msgstr ""
+msgstr "我可以让评论元数据显示在我的阅读器上吗？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1013
 msgid ""
@@ -1957,7 +1958,7 @@ msgid ""
 "that for this to have effect you have to *convert* the book. If your book is"
 " already in a format that does not need conversion, you can convert from "
 "that format to the same format."
-msgstr ""
+msgstr "大多数读者并不支持这一点。你应该向制造商投诉，如果有足够多的人投诉，情况就会改变。同时，您可以在转换过程中使用“将元数据作为页面插入图书开头”的选项，将元数据(包括注释)插入到电子书开头的“封套页面”中。该选项位于转换设置的：guilabel：`结构检测`部分。请注意，要使这一点生效，您必须对书进行“转换”。如果您的图书已采用不需要转换的格式，则可以从该格式转换为相同的格式。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1015
 msgid ""
@@ -1966,11 +1967,11 @@ msgid ""
 "Click-and-hold the :guilabel:`Convert` button to access the catalog creation"
 " tool. And before you ask, no you cannot have the catalog \"link directly "
 "to\" books on your reader."
-msgstr ""
+msgstr "另一种选择是创建一个电子书形式的目录，其中包含您的Calibre书库中所有图书的列表，以及它们的元数据。单击并按住：guiabel：`Convert`按钮以访问目录创建工具。\n在你问之前，不，你不能让目录直接链接到你的读者上的书。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1018
 msgid "How do I get calibre to use my HTTP proxy?"
-msgstr ""
+msgstr "我如何才能使用我的HTTP代理？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1020
 msgid ""
@@ -1987,11 +1988,11 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1031
 msgid "I want some feature added to calibre. What can I do?"
-msgstr ""
+msgstr "我想要一些功能增加到calibre。我能做什么?"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1034
 msgid "You have two choices:"
-msgstr ""
+msgstr "你有两个选择:"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1033
 msgid ""
@@ -2024,7 +2025,7 @@ msgid ""
 "works turn off the update notification and be on your merry way. Check back "
 "to see if you want to update once a year or so. There is a check box to turn"
 " off the update notification, on the update notification itself."
-msgstr ""
+msgstr "**无需每周更新**。如果你对Calibre的工作方式感到满意，关闭更新通知，继续你的快乐之路。回头看看你是否想要一年左右更新一次。在更新通知本身上有一个用于关闭更新通知的复选框。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1046
 msgid ""
@@ -2040,21 +2041,21 @@ msgid ""
 "of going to the website as it does now, that would save the most ardent "
 "calibre updater, *at most five clicks a week*. There are far higher priority"
 " things to do in calibre development."
-msgstr ""
+msgstr "如果我实现一个对话框来下载更新并启动它，而不是像现在那样访问网站，这将节省最热情的calibre更新器*每周最多点击五次*。在能力发展方面，有更优先的事情要做。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1056
 msgid ""
 "If you really, really hate downloading calibre every week but still want to "
 "be up to the latest, I encourage you to run from source, which makes "
 "updating trivial. Instructions are :ref:`available here <develop>`."
-msgstr ""
+msgstr "如果你真的，真的讨厌每周下载Calibre，但仍然想要更新到最新，我鼓励你从源码运行，这使得更新变得微不足道。说明如下：`可在此处查看 <develop>`."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1060
 msgid ""
 "There are third party automatic updaters for calibre made by calibre users "
 "in the `calibre forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
-msgstr ""
+msgstr "在Calibre论坛中，有第三方自动更新器，供Calibre用户使用<https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1064
 msgid "How is calibre licensed?"
@@ -2081,20 +2082,20 @@ msgstr "怎样在 U 盘上运行 Calibre？"
 msgid ""
 "A portable version of calibre is available :website:`here "
 "<download_portable>`."
-msgstr ""
+msgstr "便携版本的calibre这里下载 : <download_portable>`."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1073
 msgid ""
 "How do I run parts of calibre like news download and the Content server on "
 "my own Linux server?"
-msgstr ""
+msgstr "如何在我自己的Linux服务器上运行新闻下载和内容服务器等功能？"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1075
 msgid ""
 "First, you must install calibre onto your Linux server. If your server is "
 "using a modern Linux distribution, you should have no problems installing "
 "calibre onto it."
-msgstr ""
+msgstr "首先，您必须在您的Linux服务器上安装Calibre。如果您的服务器使用的是现代的Linux发行版，那么在其上安装Calibre应该没有问题。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1079
 msgid ""
@@ -2112,11 +2113,11 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1090
 msgid "You can run the calibre server via the command::"
-msgstr ""
+msgstr "您可以通过以下命令运行Calibre服务器：："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1094
 msgid "You can download news and convert it into an e-book with the command::"
-msgstr ""
+msgstr "您可以使用以下命令下载新闻并将其转换为电子书：："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1098
 msgid ""
@@ -2126,16 +2127,16 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1100
 msgid "You can email downloaded news with the command::"
-msgstr ""
+msgstr "You can email downloaded news with the command::"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1104
 msgid ""
 "I leave figuring out the exact command line as an exercise for the reader."
-msgstr ""
+msgstr "我把弄清楚确切的命令行作为读者的练习。"
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1106
 msgid "Finally, you can add downloaded news to the calibre library with::"
-msgstr ""
+msgstr "最后，您可以使用以下命令将下载的新闻添加到Calibre书库："
 
 #: ../../__w/calibre/calibre/manual/faq.rst:1110
 msgid ""

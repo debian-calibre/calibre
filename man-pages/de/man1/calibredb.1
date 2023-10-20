@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Oktober 07, 2023" "6.28.1" "calibre"
+.TH "CALIBREDB" "1" "Oktober 20, 2023" "6.29.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,42 +41,40 @@ calibredb Befehl [Optionen] [Argumente]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP ist die Befehlszeilenschnittstelle zur Calibre\-Datenbank. Es hat
+mehrere Unterbefehle, die nachfolgend dokumentiert sind.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP kann verwendet werden, um entweder eine Calibre\-Datenbank
+anzugeben, die durch den Pfad definiert ist, oder einen Calibre\-Content Server \- der entweder auf
+dem lokalen Rechner oder über das Internet läuft \- zu manipulieren. Sie können einen Calibre\-
+Content Server starten, indem Sie entweder \fBcalibre\-server\fP
+verwenden oder im Hauptprogramm von Calibre auf Connect/share  → 
+Start Content Server klicken. Da \fBcalibredb\fP Änderungen an Ihren
+Calibre\-Bibliotheken vornehmen kann, müssen Sie zuerst die Authentifizierung auf dem Server einrichten. Es
+gibt zwei Möglichkeiten, dies zu tun:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Wenn Sie planen, nur eine Verbindung zu einem Server herzustellen, der auf demselben Computer läuft,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+können Sie einfach die Option \fB\-\-enable\-local\-write\fP des
+Content Servers verwenden, um jedem Programm, einschließlich calibredb, das auf
+dem lokalen Computer läuft, Änderungen an Ihren Calibre\-Daten zu ermöglichen. Wenn Sie den Server im Hauptprogramm von Calibre ausführen, finden Sie diese Option unter
+Einstellungen → Über das Netzwerk freigeben → Erweitert\&.
+.INDENT 0.0
+.IP \(bu 2
+Wenn Sie den Zugriff über das Internet ermöglichen möchten, sollten Sie
+.UNINDENT
+.sp
+Benutzerkonten auf dem Server einrichten und \fI\%\-\-username\fP und \fI\%\-\-password\fP
+von \fBcalibredb\fP verwenden, um ihm den Zugriff zu ermöglichen. Sie können die
+Benutzerauthentifizierung für \fBcalibre\-server\fP aktivieren, indem Sie die Option \fB\-\-enable\-auth\fP
+verwenden und \fB\-\-manage\-users\fP verwenden, um die Benutzerkonten zu erstellen.
+Wenn Sie den Server im Hauptprogramm von Calibre ausführen, verwenden Sie
+Einstellungen → Über das Netzwerk freigeben → Benutzername/Passwort erforderlich\&.
+.sp
+Um eine Verbindung zu einem laufenden Content Server herzustellen, geben Sie die URL des Servers an die
+Option \fI\%\-\-with\-library\fP weiter. Weitere Informationen und Beispiele finden Sie in der Dokumentation dieser Option.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%Globale Optionen\fP

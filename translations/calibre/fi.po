@@ -6,7 +6,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010
 # G G, 2023
 # Hannu Lammi <hannu.lammi@gmail.com>, 2015
-# Jiri Grönroos <jiri.gronroos@iki.fi>, 2021
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2021,2023
 # Juha Karvonen, 2020
 # LINUX-SAUNA, 2022
 # lohkoa, 2015
@@ -20,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-10-04 09:49+UTC\n"
+"POT-Creation-Date: 2023-10-19 08:31+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
-"Last-Translator: G G, 2023\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>, 2021,2023\n"
 "Language-Team: Finnish (http://app.transifex.com/calibre/calibre/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -164,7 +164,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdb_input.py:28
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:309
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:311
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:331
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_input.py:346
 #: /__w/calibre/calibre/src/calibre/ebooks/covers.py:294
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/container.py:227
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:84
@@ -236,7 +236,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:491
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:278
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:280
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:984
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:993
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:91
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:319
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:322
@@ -310,7 +310,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:486
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:487
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:254
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:246
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:587
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:591
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:605
@@ -665,7 +665,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:29
 msgid "Show a menu of saved searches"
-msgstr ""
+msgstr "Näytä tallennettujen hakujen valikko"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid "Show a menu of actions to change calibre's layout"
@@ -1332,7 +1332,7 @@ msgstr "Palautetaan tietokantaa SQL:stä"
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:2517
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3001
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3313
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3314
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:215
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:381
 msgid "Completed"
@@ -1376,17 +1376,17 @@ msgstr ""
 msgid "[Error in Virtual library {0}: {1}]"
 msgstr "[Virhe virtuaalikirjastossa {0}: {1}]"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3299
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3300
 #, python-format
 msgid "Cover for %s"
 msgstr "%s:n kansi"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3303
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3304
 #, python-brace-format
 msgid "{0} format for {1}"
 msgstr "{1};n {0}-formaatti "
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3308
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3309
 #, python-brace-format
 msgid "Extra file {0} for book {1}"
 msgstr ""
@@ -1472,7 +1472,7 @@ msgstr "Tiedostopolku kansikuvaan lisäty(i)lle"
 msgid ""
 "A comma separated list of languages (best to use ISO639 language codes, "
 "though some language names may also be recognized)"
-msgstr "Pilkuin erotettu lista kieliä (miel. ISO639 muodossa)"
+msgstr "Pilkuin erotettu lista kieliä (miel. ISO639-muodossa)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:395
 msgid "ADDING FROM FOLDERS"
@@ -1624,7 +1624,7 @@ msgid ""
 msgstr "Suodata tulokset haulla. Hakulausekkeen muotoiluohjeet löytyvät Käyttöohjeesta.\nOletus: ei suodatusta"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:89
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:634
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:640
 msgid "Show detailed output information. Useful for debugging"
 msgstr "Näytä detaljoidut viennin tiedot. Hyödyksi virheenetsinnässä"
 
@@ -1873,7 +1873,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:219
 msgid "All books indexed!"
-msgstr ""
+msgstr "Kaikki kirjat indeksoitu!"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:14
 msgid ""
@@ -2610,7 +2610,7 @@ msgstr "hakumalli: puuttuva tai virheellinen erotin. Hyväksyttäviä erottimia 
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:445
 msgid "{} days"
-msgstr ""
+msgstr "{} päivää"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:447
 #: /__w/calibre/calibre/src/calibre/db/utils.py:449
@@ -2620,12 +2620,12 @@ msgstr "{} h"
 #: /__w/calibre/calibre/src/calibre/db/utils.py:451
 #: /__w/calibre/calibre/src/calibre/db/utils.py:453
 msgid "{} minutes"
-msgstr ""
+msgstr "{} minuuttia"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:455
 #: /__w/calibre/calibre/src/calibre/db/utils.py:457
 msgid "{} seconds"
-msgstr ""
+msgstr "{} sekuntia"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:490
 #: /__w/calibre/calibre/src/calibre/db/utils.py:494
@@ -2640,7 +2640,7 @@ msgstr "melkein valmis"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:499
 msgid "~{} left"
-msgstr ""
+msgstr "~{} jäljellä"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:30
 #, python-brace-format
@@ -3686,15 +3686,15 @@ msgstr "Syötä käytettävä alaotsikkomalli. Jos malli on tyhjä, alaotsikko t
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:614
 msgid "Book stats"
-msgstr ""
+msgstr "Kirjan tilastot"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:615
 msgid "Update the book stats "
-msgstr ""
+msgstr "Päivitä kirjan tilastot"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:620
 msgid "Words:"
-msgstr ""
+msgstr "Sanat:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:621
 msgid ""
@@ -3704,7 +3704,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:627
 msgid "Pages:"
-msgstr ""
+msgstr "Sivut:"
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/kobotouch_config.py:628
 msgid ""
@@ -4421,7 +4421,7 @@ msgstr "Laitetta ei voitu ottaa käyttöön"
 
 #: /__w/calibre/calibre/src/calibre/devices/usbms/deviceconfig.py:10
 msgid "Configure device"
-msgstr ""
+msgstr "Määritä laite"
 
 #: /__w/calibre/calibre/src/calibre/devices/usbms/deviceconfig.py:60
 msgid "settings for device drivers"
@@ -5313,7 +5313,7 @@ msgstr "Kaikki artikkelit"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/odt_input.py:16
 msgid "Convert ODT (LibreOffice) files to HTML"
-msgstr ""
+msgstr "Muunna ODT-tiedostot (LibreOffice) HTML-muotoon"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdb_input.py:14
 msgid "Convert PDB to HTML"
@@ -5338,7 +5338,7 @@ msgstr "Lisää sisällysluettelo kirjan alkuun."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdf_input.py:15
 msgid "Convert PDF files to HTML"
-msgstr ""
+msgstr "Muunna PDF-tiedostot HTML-muotoon"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/pdf_input.py:21
 msgid "Do not extract images from the document"
@@ -5772,7 +5772,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:25
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:282
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:417
 msgid "Plain text"
 msgstr "Muotoilematon teksti"
@@ -6635,8 +6635,8 @@ msgid ""
 msgstr "Jos ominaisuus {property} {match_type} {query}\n{action}"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:68
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1403
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:852
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1412
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:876
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:828
 msgid "Notes"
 msgstr "Muistiinpanot"
@@ -6644,7 +6644,7 @@ msgstr "Muistiinpanot"
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:406
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/links.py:170
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/toc.py:14
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1391
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1400
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:654
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:15
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/html_writer.py:784
@@ -6660,7 +6660,7 @@ msgstr "Sisällysluettelo"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/images.py:242
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/opf2.py:1735
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1389
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1398
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.py:416
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:547
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1215
@@ -7749,12 +7749,12 @@ msgid "This is an Amazon Topaz book. It cannot be processed."
 msgstr "Tämä on Amazonin Topaz-kirja. Sitä ei voida käsitellä."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/tweak.py:47
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1520
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1522
 msgid "This is not a MOBI file. It is a Topaz file."
 msgstr "Tämä ei ole MOBI-tiedosto. Se on Topaz-tiedosto."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/tweak.py:52
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1525
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1527
 msgid "This is not a MOBI file."
 msgstr "Tämä ei ole MOBI-tiedosto."
 
@@ -7780,71 +7780,71 @@ msgstr "Tämä MOBI sisältää sekä KF8- että vanhemmat Mobi6-tiedot. Tiedost
 msgid "No details available"
 msgstr "Ei yksityiskohtia saatavilla"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1390
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1399
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:814
 msgid "Title page"
 msgstr "Nimisivu"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1392
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1401
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:816
 msgid "Index"
 msgstr "Hakusanasto"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1393
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1402
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:817
 msgid "Glossary"
 msgstr "Sanasto"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1394
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1403
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:818
 msgid "Acknowledgements"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1395
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1404
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:819
 msgid "Bibliography"
 msgstr "Bibliografia"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1396
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1405
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:820
 msgid "Colophon"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1397
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1406
 msgid "Copyright"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1398
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1407
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:823
 msgid "Dedication"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1399
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:824
 msgid "Epigraph"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1400
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:825
 msgid "Foreword"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1401
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:826
 msgid "List of illustrations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1402
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1411
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:827
 msgid "List of tables"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1404
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1413
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:829
 msgid "Preface"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1405
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1414
 msgid "Main text"
 msgstr ""
 
@@ -8611,14 +8611,14 @@ msgstr "Body-tägin sisällä ei voi olla paljasta tekstiä. Teksti tulee sijoit
 msgid "Bare text in body tag"
 msgstr "Paljasta tekstiä body-tägin sisällä"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1533
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1535
 msgid ""
 "This MOBI file does not contain a KF8 format book. KF8 is the new format "
 "from Amazon. calibre can only edit MOBI files that contain KF8 books. Older "
 "MOBI files without KF8 are not editable."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1539
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.py:1541
 msgid ""
 "This MOBI file contains both KF8 and older Mobi6 data. calibre can only edit"
 " MOBI files that contain only KF8 data."
@@ -9075,7 +9075,7 @@ msgstr "Arvosana"
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:348
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:84
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:285
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:882
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:906
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:199
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1466
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:59
@@ -10790,7 +10790,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:100
 msgid "Stop Content server"
-msgstr ""
+msgstr "Pysäytä sisältöpalvelin"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:117
 #: /__w/calibre/calibre/src/calibre/gui2/actions/device.py:142
@@ -11055,7 +11055,7 @@ msgstr "&Katselmoi ladatut metatiedot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:347
 msgid "Some books changed"
-msgstr ""
+msgstr "Jotkin kirjat muuttuivat"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:348
 msgid ""
@@ -11219,7 +11219,7 @@ msgstr "Ei voi upottaa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:74
 msgid "Choose formats to be updated"
-msgstr ""
+msgstr "Valitse päivitettävät muodot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:80
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:1011
@@ -11300,7 +11300,7 @@ msgstr "Ohje"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:24
 msgid "Layout actions"
-msgstr ""
+msgstr "Asettelun toiminnot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:25
 msgid "Add/remove layout items: search bar, tag browser, etc."
@@ -11308,7 +11308,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:33
 msgid "Hide all"
-msgstr ""
+msgstr "Piilota kaikki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:37
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:1082
@@ -11340,11 +11340,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:55
 msgid "Enter a value:"
-msgstr ""
+msgstr "Anna arvo:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:75
 msgid "Value cannot be empty"
-msgstr ""
+msgstr "Arvo ei voi olla tyhjä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/mark_books.py:75
 msgid "You must provide a value"
@@ -11685,7 +11685,7 @@ msgstr "Valitse nimi näille asetuksille"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:187
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:103
 msgid "Remove saved settings"
-msgstr ""
+msgstr "Poista tallennetut asetukset"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:228
 msgid "Must update metadata"
@@ -11737,7 +11737,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:344
 msgid "View full &log"
-msgstr ""
+msgstr "Näytä koko &loki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:355
 msgid "Ignore remaining report"
@@ -11941,7 +11941,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_book_details.py:72
 msgid "Book not found"
-msgstr ""
+msgstr "Kirjaa ei löydy"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_quickview.py:22
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_quickview.py:62
@@ -12454,12 +12454,12 @@ msgstr "Tyhjennä viimeksi katseltujen lista"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:77
 msgid "Continue reading previous book"
-msgstr ""
+msgstr "Jatka edellisen kirjan lukemista"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:77
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:139
 msgid "Continue reading the last opened book"
-msgstr ""
+msgstr "Jatka viimeksi avatun kirjan lukemista"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:153
 msgid "E-book file missing"
@@ -12531,7 +12531,7 @@ msgstr "Kansiota ei voi avata"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:287
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:310
 msgid "Failed to create folder"
-msgstr ""
+msgstr "Kansion luominen epäonnistui"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:343
 msgid "This book no longer exists in your library"
@@ -12930,7 +12930,7 @@ msgstr "Lahjoita"
 
 #: /__w/calibre/calibre/src/calibre/gui2/bars.py:464
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:255
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:852
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:876
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -13066,7 +13066,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:470
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:485
 msgid "The text: {}"
-msgstr ""
+msgstr "Teksti: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:398
 msgid "&Author link"
@@ -13149,7 +13149,7 @@ msgstr "Valittu teksti"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:327
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/widgets.py:119
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:808
-#: /__w/calibre/calibre/src/calibre/linux.py:1327
+#: /__w/calibre/calibre/src/calibre/linux.py:1328
 #: /__w/calibre/calibre/src/calibre/srv/legacy.py:95
 msgid "Search"
 msgstr "Etsi"
@@ -13237,7 +13237,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:859
 msgid "Are you sure you want to delete the cover permanently?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa kannen pysyvästi?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:875
 msgid "Double click to open the Book details window"
@@ -13437,7 +13437,7 @@ msgstr "Kirjaston nimi"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:286
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:109
 msgid "Number"
-msgstr ""
+msgstr "Numero"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:27
 msgid "E-book options"
@@ -13597,7 +13597,7 @@ msgstr "Poista nykyinen esiasetus"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:704
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:258
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:153
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:145
 msgid "Delete"
 msgstr "Poista"
@@ -13640,7 +13640,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:367
 msgid "&Genres"
-msgstr ""
+msgstr "&Genret"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:368
 msgid "Field containing genres"
@@ -13761,7 +13761,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:388
 msgid "&Before"
-msgstr ""
+msgstr "&Ennen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:389
 msgid "Merge additional content after comments in descriptions section."
@@ -13769,7 +13769,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:390
 msgid "&After"
-msgstr ""
+msgstr "&Jälkeen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:391
 msgid ""
@@ -13779,11 +13779,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:392
 msgid "Include &separator"
-msgstr ""
+msgstr "Sisällytä &erotin"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:393
 msgid "&Merge with comments:"
-msgstr ""
+msgstr "&Yhdistä kommentein:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi_ui.py:394
 msgid "Catalog cover:"
@@ -14037,7 +14037,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:742
 msgid "F&older"
-msgstr ""
+msgstr "Kansi&o"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:744
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:379
@@ -14372,7 +14372,7 @@ msgstr "Lisätyn sisällysluettelon otsikko:"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/epub_output_ui.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:654
 msgid "Disabled"
-msgstr ""
+msgstr "Poissa käytöstä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/epub_output_ui.py:89
 msgid " KB"
@@ -15653,7 +15653,7 @@ msgid "Remove &indents at the beginning of lines"
 msgstr "Poista sisennykset rivien alusta"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_input_ui.py:101
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:247
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:283
 msgid "Markdown"
 msgstr ""
 
@@ -15680,6 +15680,13 @@ msgstr ""
 msgid "TXT output"
 msgstr ""
 
+#: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output.py:28
+msgid ""
+"Note that for images to be preserved, the formatting option above must be "
+"markdown or textile and also enable the setting to not remove image "
+"references."
+msgstr ""
+
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output_ui.py:90
 msgid "General"
 msgstr "Yleinen"
@@ -15690,7 +15697,7 @@ msgstr "Rivin lopun tyyli:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output_ui.py:93
 msgid "&Formatting:"
-msgstr ""
+msgstr "&Muotoilu:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output_ui.py:94
 msgid "Plain"
@@ -15722,7 +15729,8 @@ msgstr "Säilytä tekstin väri, kun mahdollista"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output_ui.py:102
 msgid ""
-"Note that images will not be preserved. For that, convert to TXTZ instead."
+"Note that images will not be preserved. For that, convert to TXTZ, with the "
+"Output format set to markdown."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txtz_output.py:11
@@ -16005,7 +16013,7 @@ msgid "My Color Scheme"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:416
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1019
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1043
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:992
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1155
 msgid "Cannot edit"
@@ -16086,7 +16094,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:568
 msgid "Theme name:"
-msgstr ""
+msgstr "Teeman nimi:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:24
 msgid ""
@@ -16814,7 +16822,7 @@ msgstr "Näytä laitetiedot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:427
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:223
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:293
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1024
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:459
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/view.py:168
@@ -17137,7 +17145,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:60
 msgid "Check the database file"
-msgstr ""
+msgstr "Tarkista tietokantatiedosto"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:63
 msgid "Vacuuming database to improve performance."
@@ -17153,7 +17161,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:130
 msgid "Open folder {}"
-msgstr ""
+msgstr "Avaa kansio {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:151
 msgid "Check library -- Problems found"
@@ -17321,7 +17329,7 @@ msgstr "Valitse muoto"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:32
 msgid "&Open with..."
-msgstr ""
+msgstr "&Avaa sovelluksella..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_format.py:69
 msgid "Edit \"Open with\" applications..."
@@ -17891,7 +17899,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:656
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
 msgid "&Sort by:"
-msgstr ""
+msgstr "&Järjestysperuste:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:224
 msgid "Recency"
@@ -18289,7 +18297,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:129
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:143
 msgid "Select a cell"
-msgstr ""
+msgstr "Valitse solu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:110
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/enum_values_edit.py:130
@@ -18346,11 +18354,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:95
 msgid "Total:"
-msgstr ""
+msgstr "Yhteensä:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:104
 msgid "Current:"
-msgstr ""
+msgstr "Nykyinen:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:168
 msgid ""
@@ -18428,7 +18436,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:290
 msgid "Content server running"
-msgstr ""
+msgstr "Sisältöpalvelin käynnissä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:291
 msgid ""
@@ -18514,7 +18522,7 @@ msgid "Active jobs"
 msgstr "Aktiiviset työt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:631
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:655
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:612
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:268
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:128
@@ -18853,7 +18861,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:622
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1383
 msgid "&Rating:"
-msgstr ""
+msgstr "&Arvosana:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:623
 msgid "&Apply rating"
@@ -19882,7 +19890,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:261
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:980
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1004
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:249
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:282
@@ -20400,7 +20408,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:192
 msgid "&Author:"
-msgstr ""
+msgstr "&Tekijä:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:138
 msgid "The series to search for"
@@ -20535,7 +20543,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/select_formats.py:56
 msgid "Choose formats"
-msgstr ""
+msgstr "Valitse muodot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:39
 msgid ""
@@ -20582,7 +20590,7 @@ msgstr "Virheellinen porttinumero"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:112
 msgid "You must provide a port number."
-msgstr ""
+msgstr "Anna porttinumero."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:118
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:123
@@ -20649,7 +20657,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:188
 msgid "(Not in library)"
-msgstr ""
+msgstr "(Ei kirjastossa)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_categories.py:190
 msgid "(Hidden in Tag browser)"
@@ -21489,7 +21497,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:201
 msgid "News:"
-msgstr ""
+msgstr "Uutiset:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:203
 #, python-format
@@ -21865,7 +21873,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:84
 msgid "Indexing is almost complete"
-msgstr ""
+msgstr "Indeksointi on melkein valmis"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:84
 msgid "Indexing is only {} done"
@@ -21883,15 +21891,15 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:44
 msgid "Indexing speed:"
-msgstr ""
+msgstr "Indeksointinopeus:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:45
 msgid "&Slow"
-msgstr ""
+msgstr "&Hidas"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:48
 msgid "&Fast"
-msgstr ""
+msgstr "&Nopea"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:55
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:37
@@ -21939,7 +21947,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:172
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:651
 msgid "Re-index"
-msgstr ""
+msgstr "Indeksoi uudelleen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:174
 msgid "Re-index all books in this library"
@@ -21992,26 +22000,26 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:434
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:683
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:378
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:402
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:256
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:231
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:199
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:565
 msgid "Expand all"
 msgstr "Laajenna kaikki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:435
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:684
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:379
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:403
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:257
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:712
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1137
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:232
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:200
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:566
 msgid "Collapse all"
 msgstr "Supista kaikki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:489
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:647
 msgid "Enter words to search for"
 msgstr ""
 
@@ -22027,7 +22035,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:500
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:938
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:962
 msgid "&Match on related words"
 msgstr ""
 
@@ -22205,11 +22213,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/html_transform_rules.py:341
 msgid "Current HTML file"
-msgstr ""
+msgstr "Nykyinen HTML-tiedosto"
 
 #: /__w/calibre/calibre/src/calibre/gui2/html_transform_rules.py:342
 msgid "All HTML files"
-msgstr ""
+msgstr "Kaikki HTML-tiedostot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/html_transform_rules.py:343
 msgid "Open HTML files"
@@ -22217,7 +22225,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/html_transform_rules.py:344
 msgid "Selected HTML files"
-msgstr ""
+msgstr "Valitut HTML-tiedostot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:216
 msgid "Create an icon theme"
@@ -22225,15 +22233,15 @@ msgstr "Luo kuvaketeema"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:223
 msgid "Use this theme in calibre"
-msgstr ""
+msgstr "Käytä tätä teemaa calibressa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:224
 msgid "Change the current calibre icon theme to this theme"
-msgstr ""
+msgstr "Vaihda calibren nykyinen kuvakteema tähän teemaan"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:229
 msgid "Theme Metadata"
-msgstr ""
+msgstr "Teeman metatiedot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:245
 msgid "&Version:"
@@ -22241,15 +22249,15 @@ msgstr "&Versio:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:248
 msgid "Light and Dark"
-msgstr ""
+msgstr "Vaalea ja tumma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:249
 msgid "Light only"
-msgstr ""
+msgstr "Vain vaalea"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:250
 msgid "Dark only"
-msgstr ""
+msgstr "Vain tumma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:251
 msgid "Specify the color palette this icon theme is suited for"
@@ -22257,7 +22265,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
 msgid "&Color palette:"
-msgstr ""
+msgstr "&Väripaletti:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:253
 msgid "&License:"
@@ -22366,7 +22374,7 @@ msgstr "Ladataan kuvakkeita, odota..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:619
 msgid "Use the calibre default icons"
-msgstr ""
+msgstr "Käytä calibren oletuskuvakkeita"
 
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:640
 msgid ""
@@ -22458,7 +22466,7 @@ msgstr "K&ierrä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:152
 msgid "F&ull screen"
-msgstr ""
+msgstr "&Koko näyttö"
 
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:175
 msgid "&Fit image"
@@ -22468,11 +22476,15 @@ msgstr "&Sovita kuva"
 msgid "Fit image inside the available space"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:229
+#: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:179
+msgid "&Remember zoom"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:238
 msgid "Choose a file to save to"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:293
+#: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:311
 #, python-brace-format
 msgid "Image: {name} {resolution}"
 msgstr "Kuva: {name} {resolution}"
@@ -22676,7 +22688,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/jobs.py:294
 msgid "Job has already run"
-msgstr ""
+msgstr "Työ on jo suoritettu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/jobs.py:297
 msgid "This job cannot be stopped"
@@ -22751,15 +22763,15 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:409
 msgid "&Custom"
-msgstr ""
+msgstr "&Mukautettu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:416
 msgid "&Alternate shortcut:"
-msgstr ""
+msgstr "&Vaihtoehtoinen pikanäppäin:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:416
 msgid "&Shortcut:"
-msgstr ""
+msgstr "&Pikanäppäin:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:433
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:182
@@ -22803,7 +22815,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:390
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1049
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1083
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:559
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:527
 msgid "No matches"
 msgstr "Ei tuloksia"
 
@@ -22857,7 +22869,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:219
 msgid "Sort"
-msgstr ""
+msgstr "Järjestä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:229
 msgid ""
@@ -22875,7 +22887,7 @@ msgid "Do quick search (you can also press the Enter key)"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:266
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:149
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:185
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:404
 msgid "Highlight"
 msgstr ""
@@ -22894,124 +22906,123 @@ msgstr ""
 msgid "This book is on the device in %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:141
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:88
+msgid "Unknown chapter"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:177
 msgid "Anonymous Content server user"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:179
 msgid "Local E-book viewer user"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:149
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:185
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:354
 msgid "Bookmark"
 msgstr "Kirjanmerkki"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:186
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:57
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:73
 msgid "Bookmarks"
 msgstr "Kirjanmerkit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:186
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:76
 msgid "Highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:271
 msgid "Export {} annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:274
 msgid "calibre annotation collection"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:241
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:277
 msgid "annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:253
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:289
 msgid "Format to export in:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:260
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:296
 msgid "Save to file"
 msgstr "Tallenna tiedostoon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:274
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:310
 msgid "File for exports"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:302
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:134
-msgid "Unknown chapter"
-msgstr ""
-
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:367
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:884
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:908
 msgid "Open in viewer"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:368
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:884
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:908
 msgid "Show in calibre"
 msgstr "Näytä calibressa"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:370
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:435
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:468
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:394
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:403
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:436
 msgid "Edit notes"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:374
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:398
 msgid "Export selected item"
 msgid_plural "Export {} selected items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:400
 msgid "Delete selected item"
 msgid_plural "Delete {} selected items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:532
 msgid "Restrict to"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:510
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:534
 msgid "Type:"
 msgstr "Tyyppi:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:517
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:541
 msgid "Show only annotations of the specified type"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:519
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:543
 msgid "User:"
 msgstr "Käyttäjä:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:526
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:550
 msgid "Show only annotations created by the specified user"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:532
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:556
 msgid ""
 "Only show annotations from books that have been selected in the calibre "
 "library"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:540
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:564
 msgid "&Show results from only selected books"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:543
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:567
 msgid "&Show results from only the selected book"
 msgid_plural "&Show results from only the {} selected books"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:638
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:662
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:274
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:501
@@ -23019,100 +23030,100 @@ msgstr[1] ""
 msgid "Find previous match"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:712
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:736
 msgid "Invalid search expression"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:713
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:737
 #, python-brace-format
 msgid ""
 "The search expression: {0} is invalid. The search syntax used is the SQLite "
 "Full text Search Query syntax, <a href=\"{1}\">described here</a>."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:852
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:876
 msgid "Edit the notes of this highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:856
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:880
 msgid "Add notes"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:856
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:880
 msgid "Add notes to this highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:882
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:906
 msgid "User"
 msgstr "Käyttäjä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:885
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:909
 msgid "Open the book at this annotation in the calibre E-book viewer"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:886
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:910
 msgid "Show this book in the main calibre book list"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:896
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:920
 msgid "Edit notes for highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:920
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:944
 msgid "Annotations browser"
 msgstr "Kommenttiselain"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:965
 msgid ""
 "With this option searching for words will also match on any related words "
 "(supported in several languages). For example, in the English language: "
 "<i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:970
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:994
 msgid "&Delete all selected"
 msgstr "&Poista kaikki valitut"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:971
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:995
 msgid "Delete the selected annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:974
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:998
 msgid "&Export all selected"
 msgstr "&Vie kaikki valitut"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:999
 msgid "Export the selected annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:983
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1007
 msgid "Rebuild search index"
 msgstr "Rakenna hakuindeksi uudelleen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:985
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1009
 msgid ""
 "Refresh annotations in case they have been changed since this window was "
 "opened"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:993
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1000
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1017
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1024
 msgid "No selected annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:994
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1001
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1018
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1025
 msgid "No annotations have been selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1006
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1030
 msgid "Are you sure you want to <b>permanently</b> delete this annotation?"
 msgid_plural ""
 "Are you sure you want to <b>permanently</b> delete these {} annotations?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1020
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1044
 msgid "Editing is only supported for the notes associated with highlights"
 msgstr ""
 
@@ -23254,15 +23265,15 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:245
 msgid "Original size:"
-msgstr ""
+msgstr "Alkuperäinen koko:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:248
 msgid "Minimum size:"
-msgstr ""
+msgstr "Vähimmäiskoko:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:251
 msgid "Maximum size:"
-msgstr ""
+msgstr "Enimmäiskoko:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:253
 msgid ""
@@ -24279,7 +24290,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:130
 msgid "This book has no pages"
-msgstr ""
+msgstr "Tässä kirjassa ei ole sivuja"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/pdf_covers.py:145
 #, python-format
@@ -24538,7 +24549,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:497
 #, python-format
 msgid "Authors: %s "
-msgstr ""
+msgstr "Tekijät: %s "
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:522
 msgid "Failed to download metadata. Click Show Details to see details"
@@ -24571,7 +24582,7 @@ msgstr "Kopioi tämä kansi leikepöydälle"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:836
 msgid "Save this cover to disk"
-msgstr ""
+msgstr "Tallenna tämä kansikuva levylle"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:838
 msgid "Save this cover in the book extra files"
@@ -24579,7 +24590,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:864
 msgid "Save cover image"
-msgstr ""
+msgstr "Tallenna kansikuva"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:884
 msgid "Too many covers"
@@ -25307,7 +25318,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:325
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:355
 msgid "Remove icons"
-msgstr ""
+msgstr "Poista kuvakkeet"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:328
 msgid ""
@@ -25739,11 +25750,11 @@ msgstr "Lisää &mukautettu sarake"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:104
 msgid "&Show all"
-msgstr ""
+msgstr "&Näytä kaikki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/columns_ui.py:105
 msgid "&Hide all"
-msgstr ""
+msgstr "&Piilota kaikki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/conversion.py:63
 msgid ""
@@ -25911,11 +25922,11 @@ msgstr "&Kuvaus:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:352
 msgid "&Icon"
-msgstr ""
+msgstr "&Kuvake"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:355
 msgid "&Both"
-msgstr ""
+msgstr "&Molemmat"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:361
 msgid "Choose whether an icon, text, or both is shown in the book list"
@@ -25923,7 +25934,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:365
 msgid "&Show:"
-msgstr ""
+msgstr "&Näytä:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:383
 msgid ""
@@ -26088,7 +26099,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:501
 msgid "&Default value:"
-msgstr ""
+msgstr "&Oletusarvo:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:539
 msgid "&Format for dates:"
@@ -26109,7 +26120,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:570
 msgid "&Format for numbers:"
-msgstr ""
+msgstr "&Numeroiden muoto:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:571
 msgid ""
@@ -26711,7 +26722,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:911
 msgid "Import layout"
-msgstr ""
+msgstr "Tuo asettelu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:912
 #, python-format
@@ -26752,15 +26763,15 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:816
 msgid "Enable s&ystem tray icon (needs restart)"
-msgstr ""
+msgstr "Kä&ytä ilmoitusalueen kuvaketta (vaatii uudelleenkäynnistyksen)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:817
 msgid "Change &font (needs restart)"
-msgstr ""
+msgstr "Vaihda &fontti (vaatii uudelleenkäynnistyksen)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:818
 msgid "Change &icon theme"
-msgstr ""
+msgstr "Vaihda &kuvaketeema"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:819
 msgid "E&xtra spacing to add between rows in the book list (can be negative):"
@@ -26776,7 +26787,7 @@ msgstr "Käyttöliittymän &fontti:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:823
 msgid "&User interface layout (needs restart):"
-msgstr ""
+msgstr "&Käyttöliittymän asettelu (vaatii uudelleenkäynnistyksen):"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:824
 msgid "Draw a &grid in the book list"
@@ -26784,7 +26795,7 @@ msgstr "Piirrä &ruudukko kirjalistaan"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:825
 msgid "User interface style (&needs restart):"
-msgstr ""
+msgstr "Käyttöliittymän tyyli (&vaatii uudelleenkäynnistyksen):"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:826
 msgid "Disable all animations. Useful if you have a slow/old computer."
@@ -26792,7 +26803,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:827
 msgid "Disable &animations"
-msgstr ""
+msgstr "Poista &animaatiot käytöstä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:828
 msgid "Allow using &drag and drop to merge books"
@@ -26837,11 +26848,11 @@ msgstr "Valitse &kieli (vaatii uudelleenkäynnistyksen):"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:837
 msgid "Show &tooltips in the book list"
-msgstr ""
+msgstr "Näytä &työkaluvihjeet kirjalistassa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:838
 msgid "Color &palette (needs restart):"
-msgstr ""
+msgstr "Väri&paletti (vaatii uudelleenkäynnistyksen):"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_ui.py:839
 msgid ""
@@ -27608,7 +27619,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:349
 msgid "Set as default"
-msgstr ""
+msgstr "Aseta oletukseksi"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:350
 msgid "Select default"
@@ -29022,7 +29033,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:292
 msgid "Name cannot be empty"
-msgstr ""
+msgstr "Nimi ei voi olla tyhjä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:296
 #, python-format
@@ -29451,7 +29462,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/qt_file_dialogs.py:37
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:541
 msgid "Choose files"
-msgstr ""
+msgstr "Valitse tiedostot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/save.py:88
 msgid "Collecting metadata..."
@@ -30094,7 +30105,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/results_view.py:65
 msgid "Download..."
-msgstr ""
+msgstr "Lataa..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/results_view.py:69
 msgid "Show in store"
@@ -30782,7 +30793,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1036
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1040
 msgid "Saved searches folder"
-msgstr ""
+msgstr "Tallennettujen hakujen kansio"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1038
 msgid "Restore Saved searches folder default icon"
@@ -30815,12 +30826,12 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1105
 msgid "Expand or collapse"
-msgstr ""
+msgstr "Laajenna tai supista"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1113
 #, python-brace-format
 msgid "Expand {0}"
-msgstr ""
+msgstr "Laajenna {0}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1116
 #, python-brace-format
@@ -30830,7 +30841,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/view.py:1136
 #, python-brace-format
 msgid "Collapse {0}"
-msgstr ""
+msgstr "Supista {0}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:55
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:168
@@ -31370,7 +31381,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1029
 #, python-format
 msgid "Loading %s, please wait..."
-msgstr ""
+msgstr "Ladataan %s..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1046
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:52
@@ -31385,7 +31396,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1073
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/toc.py:71
 msgid "Loading..."
-msgstr ""
+msgstr "Ladataan..."
 
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:1089
 #, python-format
@@ -31507,11 +31518,11 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:55
 #, python-brace-format
 msgid "Deleted: {when}"
-msgstr ""
+msgstr "Poistettu: {when}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:116
 msgid "Save \"{}\" to disk"
-msgstr ""
+msgstr "Tallenna \"{}\" levylle"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:126
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:132
@@ -31557,7 +31568,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:206
 msgid "&Books ({})"
-msgstr ""
+msgstr "&Kirjat ({})"
 
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:207
 msgid "&Formats ({})"
@@ -35267,11 +35278,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:113
 msgid "Embedded"
-msgstr ""
+msgstr "Upotettu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:113
 msgid "Font family"
-msgstr ""
+msgstr "Fonttiperhe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:181
 msgid "Change font"
@@ -36060,7 +36071,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:786
 #, python-brace-format
 msgid "Words: {2} :: Unique Words: :: {0} :: Languages: {1}"
-msgstr ""
+msgstr "Sanoja: {2} :: Yksilöllisiä sanoja: :: {0} :: Kieliä: {1}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:806
 msgid "Character"
@@ -36082,7 +36093,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1080
 msgid "Sort by:"
-msgstr ""
+msgstr "Järjestysperuste:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1081
 msgid "&Counts"
@@ -36284,12 +36295,12 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:695
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:103
 msgid "&Find:"
-msgstr ""
+msgstr "&Etsi:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:265
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:700
 msgid "&Replace:"
-msgstr ""
+msgstr "&Korvaa:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:267
 msgid "Clear replace &history"
@@ -36298,7 +36309,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:290
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:712
 msgid "Create/&edit"
-msgstr ""
+msgstr "Luo/&muokkaa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:292
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:713
@@ -36500,7 +36511,7 @@ msgid "Export saved searches"
 msgstr "Vie tallennetut haut"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1010
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
 msgid "Export"
 msgstr "Vie"
 
@@ -36663,7 +36674,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:94
 msgid "&Download"
-msgstr ""
+msgstr "&Lataa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/spell.py:95
 msgid "&Import from OXT file"
@@ -37348,7 +37359,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:408
 msgid "R&edo"
-msgstr ""
+msgstr "T&ee uudelleen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:409
 msgid "Redo typing"
@@ -37356,7 +37367,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:410
 msgid "Cut &text"
-msgstr ""
+msgstr "Leikkaa teks&ti"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:411
 msgid "Cut text"
@@ -37673,7 +37684,7 @@ msgstr "&Seuraava virhe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:527
 msgid "Show next error"
-msgstr ""
+msgstr "Näytä seuraava virhe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:528
 msgid "&Previous error"
@@ -37681,7 +37692,7 @@ msgstr "&Edellinen virhe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:529
 msgid "Show previous error"
-msgstr ""
+msgstr "Näytä edellinen virhe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:530
 msgid "&Next spelling mistake"
@@ -37770,11 +37781,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:584
 msgid "&Recently opened books"
-msgstr ""
+msgstr "&Viimeksi avatut kirjat"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:588
 msgid "Save a copy"
-msgstr ""
+msgstr "Tallenna kopio"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:612
 msgid "&Tools"
@@ -37782,7 +37793,7 @@ msgstr "T&yökalut"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:631
 msgid "External &links"
-msgstr ""
+msgstr "Ulkoiset &linkit"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:638
 msgid "&View"
@@ -37802,7 +37813,7 @@ msgstr "&Ohje"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:683
 msgid "&Donate to support calibre development"
-msgstr ""
+msgstr "&Lahjoita ja tue calibren kehitystä"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:705
 msgid "Book tool bar"
@@ -38014,7 +38025,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:406
 msgid "No results found"
-msgstr ""
+msgstr "Tuloksia ei löytynyt"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:425
 msgid "Choose file to edit"
@@ -38465,87 +38476,87 @@ msgstr ""
 msgid "Failed to bookmark"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:162
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:130
 msgid "calibre highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:165
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:133
 msgid "highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:191
 msgid "Modify this highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:192
 msgid "Edit notes for this highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:226
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:194
 msgid "Delete this highlight"
 msgid_plural "Delete selected highlights"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:230
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:198
 msgid "Export selected highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:264
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:607
 msgid "Table of Contents section:"
 msgid_plural "Table of Contents sections:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:503
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:471
 msgid "Double click to jump to an entry"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:495
 msgid "Modify"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:495
 msgid "Modify the selected highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
 msgid "Delete the selected highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:497
 msgid "Export all highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:560
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:528
 msgid "No highlights match the search: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:576
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:544
 msgid "No selected highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:577
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:545
 msgid "No highlight is currently selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:594
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:562
 msgid "Are you sure you want to delete this highlight permanently?"
 msgid_plural "Are you sure you want to delete all {} highlights permanently?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:605
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:573
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:579
 msgid "No highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:573
 msgid "This book has no highlights to export"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:579
 msgid "No highlights selected to export"
 msgstr ""
 
@@ -38708,11 +38719,17 @@ msgid ""
 "will search for the regular expression something after opening the book."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:216
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:141
+msgid ""
+"Open a new viewer window even when the option to use only a single viewer "
+"window is set"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:218
 msgid "Failed to start listener"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:217
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:219
 msgid ""
 "Could not start the listener used for single instance viewers. Try rebooting"
 " your computer."
@@ -38939,7 +38956,7 @@ msgstr "Tulosta kirja"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:66
 msgid "Show book metadata"
-msgstr ""
+msgstr "Näytä kirjan metatiedot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:67
 msgid "Read aloud"
@@ -38959,15 +38976,15 @@ msgstr "Muokkaa tätä kirjaa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:71
 msgid "Reload this book"
-msgstr ""
+msgstr "Lataa tämä kirja uudelleen"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:132
 msgid "Customize this toolbar"
-msgstr ""
+msgstr "Mukauta tätä työkalupalkkia"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:134
 msgid "Hide this toolbar"
-msgstr ""
+msgstr "Piilota tämä työkalupalkki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:249
 msgid "Switch to flow mode -- where the text is not broken into pages"
@@ -39047,15 +39064,15 @@ msgstr "Kirjan loppu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:243
 msgid "Start of current file"
-msgstr ""
+msgstr "Nykyisen tiedoston alku"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:244
 msgid "End of current file"
-msgstr ""
+msgstr "Nykyisen tiedoston loppu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:246
 msgid "Hide this scrollbar"
-msgstr ""
+msgstr "Piilota tämä vierityspalkki"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:329
 msgid "Search :: no matches"
@@ -39094,7 +39111,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:451
 msgid "Cannot print book"
-msgstr ""
+msgstr "Kirjaa ei voi tulostaa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:739
@@ -39103,7 +39120,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:477
 msgid "Book does not exist"
-msgstr ""
+msgstr "Kirjaa ei ole olemassa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:478
 msgid "Cannot open {} as it no longer exists"
@@ -39169,7 +39186,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:739
 msgid "Clear history"
-msgstr ""
+msgstr "Tyhjennä historia"
 
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:1046
 msgid "Drag to resize"
@@ -40436,24 +40453,26 @@ msgstr ""
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
-"are in :file:`/Applications/calibre.app/Contents/MacOS/`."
-msgstr ""
-
-#: /__w/calibre/calibre/src/calibre/linux.py:1325
-msgid "Documented commands"
-msgstr ""
-
-#: /__w/calibre/calibre/src/calibre/linux.py:1325
-msgid "Undocumented commands"
+"are in :file:`/Applications/calibre.app/Contents/MacOS/`. So, for example, "
+"to run :file:`ebook-convert`you would use: "
+":file:`/Applications/calibre.app/Contents/MacOS/ebook-convert`."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/linux.py:1326
+msgid "Documented commands"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/linux.py:1326
+msgid "Undocumented commands"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/linux.py:1327
 msgid ""
 "You can see usage for undocumented commands by executing them without "
 "arguments in a terminal."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/linux.py:1327
+#: /__w/calibre/calibre/src/calibre/linux.py:1328
 msgid "Change language"
 msgstr "Vaihda kieltä"
 
@@ -40576,7 +40595,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/srv/manage_users_cli.py:213
 msgid "What do you want to do?"
-msgstr ""
+msgstr "Mitä haluat tehdä?"
 
 #: /__w/calibre/calibre/src/calibre/srv/manage_users_cli.py:222
 msgid "default"
@@ -40771,7 +40790,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/srv/opds.py:288
 msgid "Books in your library"
-msgstr ""
+msgstr "Kirjat kirjastossasi"
 
 #: /__w/calibre/calibre/src/calibre/srv/opds.py:293
 msgid "By "
@@ -42956,7 +42975,7 @@ msgid "%s Document"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:128
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1589
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1604
 msgid "Unknown section"
 msgstr ""
 
@@ -42966,7 +42985,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:169
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:210
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1580
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1595
 msgid "Untitled article"
 msgstr ""
 
@@ -42983,114 +43002,114 @@ msgstr ""
 msgid "Failed to download %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:939
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:944
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1069
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1074
 msgid "Download finished"
 msgstr "Lataus valmistui"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1071
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1076
 msgid "Failed to download the following articles:"
 msgstr "Seuraavien artikkelien lataaminen epäonnistui:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1077
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1082
 msgid "Failed to download parts of the following articles:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1079
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1084
 msgid " from "
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1081
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1086
 msgid "\tFailed links:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1185
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1192
 msgid "Could not fetch article."
 msgstr "Artikkelia ei voitu noutaa."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1187
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1194
 msgid "The debug traceback is available earlier in this log"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1189
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1196
 msgid "Run with -vv to see the reason"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1234
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1249
 msgid "Fetching feeds..."
 msgstr "Noudetaan syötteitä..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1240
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1255
 msgid "Got feeds from index page"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1253
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1268
 msgid "Trying to download cover..."
 msgstr "Yritetään ladata kantta..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1255
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1270
 msgid "Generating masthead..."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1315
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1330
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1330
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1345
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1339
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1354
 #, python-format
 msgid "Could not download cover: %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1352
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1367
 #, python-format
 msgid "Downloading cover from %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1404
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1419
 msgid "Masthead image downloaded"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1504
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1519
 msgid "Articles in this issue:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1661
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1676
 #, python-format
 msgid "Article downloaded: %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1671
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1686
 #, python-format
 msgid "Article download aborted: %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1679
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1694
 #, python-format
 msgid "Article download failed: %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1701
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1716
 msgid "Fetching feed"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1877
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1892
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1893
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1908
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
@@ -43129,60 +43148,60 @@ msgstr "Kohdat"
 msgid "Articles"
 msgstr "Artikkelit"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:604
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:610
 msgid ""
 "%prog URL\n"
 "\n"
 "Where URL is for example https://google.com"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:607
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:613
 #, python-format
 msgid "Base folder into which URL is saved. Default is %default"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:610
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:616
 #, python-format
 msgid ""
 "Timeout in seconds to wait for a response from the server. Default: %default"
 " s"
 msgstr "Kuinka monta sekunttia odotetaan vastausta palvelimelta ennen yhteyden aikakatkaisua. Oletus: %default s"
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:613
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:619
 #, python-format
 msgid ""
 "Maximum number of levels to recurse i.e. depth of links to follow. Default "
 "%default"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:616
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:622
 #, python-format
 msgid ""
 "The maximum number of files to download. This only applies to files from <a "
 "href> tags. Default is %default"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:618
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:624
 #, python-format
 msgid ""
 "Minimum interval in seconds between consecutive fetches. Default is %default"
 " s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:620
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:626
 msgid ""
 "The character encoding for the websites you are trying to download. The "
 "default is to try and guess the encoding."
 msgstr "Noudettavien verkkosivujen merkkikoodaus. Oletuksena merkkikoodaus yritetään arvata."
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:622
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:628
 msgid ""
 "Only links that match this regular expression will be followed. This option "
 "can be specified multiple times, in which case as long as a link matches any"
 " one regexp, it will be followed. By default all links are followed."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:627
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:633
 msgid ""
 "Any link that matches this regular expression will be ignored. This option "
 "can be specified multiple times, in which case as long as any regexp matches"
@@ -43191,7 +43210,7 @@ msgid ""
 "first."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:633
+#: /__w/calibre/calibre/src/calibre/web/fetch/simple.py:639
 msgid "Do not download CSS stylesheets."
 msgstr "Älä nouda CSS-tyylisivuja."
 

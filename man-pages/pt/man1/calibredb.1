@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "outubro 07, 2023" "6.28.1" "calibre"
+.TH "CALIBREDB" "1" "outubro 20, 2023" "6.29.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -688,7 +688,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-display
-Um dicionário de opções para personalizar a forma como os dados nesta coluna serão interpretados. Esta é uma string JSON. Para colunas de enumeração, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Existem muitas opções que podem ir para as opções de variáveis de exibição. As opções por tipo de coluna são: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  A melhor maneira de encontrar combinações válidas é criar uma coluna personalizada do tipo apropriado na GUI e em seguida olhar para o backup OPF de um livro (assegure\-se que um novo OPF foi criado da coluna foi acrescentado). Vai ver o JSON da \fB\(dq\fPexibição\fB\(dq\fP para a nova coluna em OPF.
+Um dicionário de opções para personalizar a forma como os dados nesta coluna serão interpretados. Esta é uma string JSON. Para colunas de enumeração, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Existem muitas opções que podem ir para as opções de variáveis de exibição. As opções por tipo de coluna são: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  A melhor maneira de encontrar combinações válidas é criar uma coluna personalizada do tipo apropriado na IGU e em seguida olhar para o backup OPF de um livro (assegure\-se que um novo OPF foi criado da coluna foi acrescentado). Vai ver o JSON da \fB\(dq\fPexibição\fB\(dq\fP para a nova coluna em OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -832,8 +832,7 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produzir um relatório das informações da categoria na base de dados. A
-informação é equivalente à que é mostrada no navegador de conteúdos.
+Produz um relatório das informações da categoria na base de dados. A informação é equivalente à que é mostrada no navegador de conteúdos.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0

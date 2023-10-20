@@ -24890,7 +24890,7 @@ return this.__repr__();
             var ρσ_Iter1 = ρσ_Iterable(img_tags);
             for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
                 img_tag = ρσ_Iter1[ρσ_Index1];
-                bounding_rects.push(img_tag.getBoundingClientRect());
+                bounding_rects.push(get_bounding_client_rect(img_tag));
             }
             maxb = screen_block;
             for (var ρσ_Index2 = 0; ρσ_Index2 < img_tags.length; ρσ_Index2++) {
@@ -25174,10 +25174,10 @@ return this.__repr__();
                 if (!is_full_screen_layout) {
                     has_no_more_than_two_columns = scroll_viewport.paged_content_inline_size() < 2 * screen_inline + 10;
                     if (has_no_more_than_two_columns && single_screen) {
-                        if (only_img && imgs.length && imgs[0].getBoundingClientRect().left < screen_inline) {
+                        if (only_img && imgs.length && get_bounding_client_rect(imgs[0]).left < screen_inline) {
                             is_full_screen_layout = true;
                         }
-                        if (has_svg && (svgs.length === 1 || typeof svgs.length === "object" && ρσ_equals(svgs.length, 1)) && svgs[0].getBoundingClientRect().left < screen_inline) {
+                        if (has_svg && (svgs.length === 1 || typeof svgs.length === "object" && ρσ_equals(svgs.length, 1)) && get_bounding_client_rect(svgs[0]).left < screen_inline) {
                             is_full_screen_layout = true;
                         }
                     }
@@ -25478,7 +25478,7 @@ return this.__repr__();
             elem = scrollable_element(elem);
             scroll_viewport.scroll_into_view(elem);
             if (in_paged_mode()) {
-                br = elem.getBoundingClientRect();
+                br = get_bounding_client_rect(elem);
                 if (br.top < -100) {
                     if (scroll_viewport.horizontal_writing_mode) {
                         inline_start = (scroll_viewport.ltr) ? elem.scrollLeft : elem.scrollRight;
@@ -25972,31 +25972,17 @@ return this.__repr__();
             __module__ : {value: "read_book.paged_mode"}
         });
 
-        function get_bounding_client_rect_using_offset_properties(elem) {
-            var ans, ρσ_unpack;
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["left"] = 0;
-                ρσ_d["top"] = 0;
-                ρσ_d["width"] = elem.offsetWidth;
-                ρσ_d["height"] = elem.offsetHeight;
-                ρσ_d["x"] = 0;
-                ρσ_d["y"] = 0;
-                return ρσ_d;
-            }).call(this);
-            while (elem) {
-                ans.left += elem.offsetLeft;
-                ans.top += elem.offsetTop;
-                elem = elem.offsetParent;
+        function get_bounding_client_rect(elem) {
+            var br, r;
+            br = elem.getBoundingClientRect();
+            if (br.width === 0 && br.height === 0) {
+                r = document.createRange();
+                r.selectNodeContents(elem);
+                br = r.getBoundingClientRect();
             }
-            ans.left -= window.scrollX;
-            ans.top -= window.scrollTop;
-            ρσ_unpack = [ans.left, ans.top];
-            ans.x = ρσ_unpack[0];
-            ans.y = ρσ_unpack[1];
-            return ans;
+            return br;
         };
-        if (!get_bounding_client_rect_using_offset_properties.__argnames__) Object.defineProperties(get_bounding_client_rect_using_offset_properties, {
+        if (!get_bounding_client_rect.__argnames__) Object.defineProperties(get_bounding_client_rect, {
             __argnames__ : {value: ["elem"]},
             __module__ : {value: "read_book.paged_mode"}
         });
@@ -26010,10 +25996,7 @@ return this.__repr__();
                         return 0;
                     }
                     elem = scrollable_element(elem);
-                    br = elem.getBoundingClientRect();
-                    if (br.left === 0 && br.top === 0 && br.width === 0 && br.height === 0) {
-                        br = get_bounding_client_rect_using_offset_properties(elem);
-                    }
+                    br = get_bounding_client_rect(elem);
                     pos = scroll_viewport.viewport_to_document_inline(scroll_viewport.rect_inline_start(br));
                     return column_at(pos);
                 };
@@ -26327,7 +26310,7 @@ return this.__repr__();
         ρσ_modules["read_book.paged_mode"].scroll_to_extend_annotation = scroll_to_extend_annotation;
         ρσ_modules["read_book.paged_mode"].handle_shortcut = handle_shortcut;
         ρσ_modules["read_book.paged_mode"].handle_gesture = handle_gesture;
-        ρσ_modules["read_book.paged_mode"].get_bounding_client_rect_using_offset_properties = get_bounding_client_rect_using_offset_properties;
+        ρσ_modules["read_book.paged_mode"].get_bounding_client_rect = get_bounding_client_rect;
         ρσ_modules["read_book.paged_mode"].ResizeManager = ResizeManager;
         ρσ_modules["read_book.paged_mode"].prepare_for_resize = prepare_for_resize;
         ρσ_modules["read_book.paged_mode"].resize_done = resize_done;
@@ -27435,7 +27418,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "6.28.1";
+        CALIBRE_VERSION = "6.29.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -27891,9 +27874,9 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this));
             self.last_cfi = null;
-            var ρσ_Iter0 = ρσ_Iterable(self.blob_url_map);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                name = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter3 = ρσ_Iterable(self.blob_url_map);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                name = ρσ_Iter3[ρσ_Index3];
                 window.URL.revokeObjectURL((ρσ_expr_temp = self.blob_url_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
             document.body.style.removeProperty("font-family");
@@ -28199,8 +28182,8 @@ return this.__repr__();
             spine_index = csi.index;
             self.length_before = 0;
             if (spine_index > -1) {
-                for (var ρσ_Index1 = 0; ρσ_Index1 < spine_index; ρσ_Index1++) {
-                    i = ρσ_Index1;
+                for (var ρσ_Index4 = 0; ρσ_Index4 < spine_index; ρσ_Index4++) {
+                    i = ρσ_Index4;
                     si = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
                     if (si) {
                         self.length_before += ρσ_exists.d(files[(typeof si === "number" && si < 0) ? files.length + si : si]).length || 0;
@@ -28538,15 +28521,15 @@ return this.__repr__();
         IframeBoss.prototype.connect_links = function connect_links() {
             var self = this;
             var a;
-            var ρσ_Iter2 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "]"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                a = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter5 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "]"));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                a = ρσ_Iter5[ρσ_Index5];
                 a.addEventListener("click", self.link_activated);
             }
             if (runtime.is_standalone_viewer) {
-                var ρσ_Iter3 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    a = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter6 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
+                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                    a = ρσ_Iter6[ρσ_Index6];
                     a.removeAttribute("target");
                 }
             }
@@ -28557,9 +28540,9 @@ return this.__repr__();
         IframeBoss.prototype.listen_for_image_double_clicks = function listen_for_image_double_clicks() {
             var self = this;
             var img;
-            var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("img, image"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                img = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter7 = ρσ_Iterable(document.querySelectorAll("img, image"));
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                img = ρσ_Iter7[ρσ_Index7];
                 img.addEventListener("dblclick", self.image_double_clicked, (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["passive"] = true;
@@ -28812,9 +28795,9 @@ return this.__repr__();
                     intersecting_wrappers = [];
                 }
                 removed_highlights = Object.create(null);
-                var ρσ_Iter5 = ρσ_Iterable(intersecting_wrappers);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    crw = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter8 = ρσ_Iterable(intersecting_wrappers);
+                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                    crw = ρσ_Iter8[ρσ_Index8];
                     unwrap_crw(crw);
                     if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw]) {
                         if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] !== uuid) {
@@ -28879,9 +28862,9 @@ return this.__repr__();
                 self.scroll_to_extend_annotation(data.backwards);
             } else if (dtype === "edit-highlight") {
                 found_highlight_to_edit = false;
-                var ρσ_Iter6 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    ρσ_unpack = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter9 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
+                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                    ρσ_unpack = ρσ_Iter9[ρσ_Index9];
                     qcrw = ρσ_unpack[0];
                     quuid = ρσ_unpack[1];
                     if (quuid === data.uuid && select_crw(qcrw)) {
@@ -28905,9 +28888,9 @@ return this.__repr__();
                 }
             } else if (dtype === "notes-edited") {
                 cls = "crw-has-dot";
-                var ρσ_Iter7 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    ρσ_unpack = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter10 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
+                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                    ρσ_unpack = ρσ_Iter10[ρσ_Index10];
                     qcrw = ρσ_unpack[0];
                     quuid = ρσ_unpack[1];
                     if (quuid === data.uuid) {
@@ -28923,9 +28906,9 @@ return this.__repr__();
                 }
             } else if (dtype === "remove-highlight") {
                 found_highlight_to_remove = false;
-                var ρσ_Iter8 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    ρσ_unpack = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter11 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
+                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                    ρσ_unpack = ρσ_Iter11[ρσ_Index11];
                     qcrw = ρσ_unpack[0];
                     quuid = ρσ_unpack[1];
                     if (quuid === data.uuid) {
@@ -28978,9 +28961,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            var ρσ_Iter9 = ρσ_Iterable(highlights);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                h = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter12 = ρσ_Iterable(highlights);
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                h = ρσ_Iter12[ρσ_Index12];
                 r = range_from_cfi(h.start_cfi, h.end_cfi);
                 if (!r) {
                     continue;
@@ -28993,9 +28976,9 @@ return this.__repr__();
                 intersecting_wrappers = ρσ_unpack[1];
                 if (annot_id !== null) {
                     annot_id_uuid_map[(typeof annot_id === "number" && annot_id < 0) ? annot_id_uuid_map.length + annot_id : annot_id] = h.uuid;
-                    var ρσ_Iter10 = ρσ_Iterable(intersecting_wrappers);
-                    for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                        crw = ρσ_Iter10[ρσ_Index10];
+                    var ρσ_Iter13 = ρσ_Iterable(intersecting_wrappers);
+                    for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                        crw = ρσ_Iter13[ρσ_Index13];
                         unwrap_crw(crw);
                         delete annot_id_uuid_map[crw];
                     }
@@ -29054,8 +29037,8 @@ return this.__repr__();
             text = s.toString();
             if (text) {
                 container = document.createElement("div");
-                for (var ρσ_Index11 = 0; ρσ_Index11 < s.rangeCount; ρσ_Index11++) {
-                    i = ρσ_Index11;
+                for (var ρσ_Index14 = 0; ρσ_Index14 < s.rangeCount; ρσ_Index14++) {
+                    i = ρσ_Index14;
                     container.appendChild(s.getRangeAt(i).cloneContents());
                 }
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["copy_text_to_clipboard"].concat([ρσ_desugar_kwargs({text: text, html: container.innerHTML})]));
@@ -46864,6 +46847,7 @@ return this.__repr__();
                     ρσ_d["empty"] = true;
                     return ρσ_d;
                 }).call(this);
+                ρσ_d["on_load"] = [];
                 return ρσ_d;
             }).call(this);
             self.book_scrollbar.apply_visibility();
@@ -47033,9 +47017,9 @@ return this.__repr__();
                 ρσ_d["location"] = location;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                attr = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter15 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
+            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
+                attr = ρσ_Iter15[ρσ_Index15];
                 evt[(typeof attr === "number" && attr < 0) ? evt.length + attr : attr] = event[(typeof attr === "number" && attr < 0) ? event.length + attr : attr];
             }
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["fake_wheel_event"].concat([ρσ_desugar_kwargs({evt: evt})]));
@@ -47141,9 +47125,9 @@ return this.__repr__();
                 ui_operations.overlay_visibility_changed(visible);
             }
             if (visible) {
-                var ρσ_Iter1 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    x = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter16 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                    x = ρσ_Iter16[ρσ_Index16];
                     x.hide();
                 }
             } else {
@@ -47457,9 +47441,9 @@ return this.__repr__();
         View.prototype.focus_iframe = function focus_iframe() {
             var self = this;
             var x;
-            var ρσ_Iter2 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                x = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter17 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                x = ρσ_Iter17[ρσ_Index17];
                 if (x.is_visible) {
                     x.focus();
                     return;
@@ -47473,9 +47457,9 @@ return this.__repr__();
         View.prototype.start_read_aloud = function start_read_aloud(dont_start_talking) {
             var self = this;
             var x;
-            var ρσ_Iter3 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                x = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter18 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                x = ρσ_Iter18[ρσ_Index18];
                 if (x !== self.read_aloud) {
                     x.hide();
                 }
@@ -47506,9 +47490,9 @@ return this.__repr__();
             if (self.hints.is_visible) {
                 self.hints.hide();
             } else {
-                var ρσ_Iter4 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    x = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter19 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                    x = ρσ_Iter19[ρσ_Index19];
                     if (x !== self.hints) {
                         x.hide();
                     }
@@ -47711,9 +47695,9 @@ return this.__repr__();
                 iframe.style.colorScheme = (self.current_color_scheme.is_dark_theme) ? "dark" : "light";
             }
             is_dark_theme(self.current_color_scheme.is_dark_theme);
-            var ρσ_Iter5 = ρσ_Iterable("left top right bottom".split(" "));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                which = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter20 = ρσ_Iterable("left top right bottom".split(" "));
+            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
+                which = ρσ_Iter20[ρσ_Index20];
                 m = document.getElementById("book-{}-margin".format(which));
                 s = m.style;
                 mc = ans[ρσ_bound_index("margin_" + ρσ_str.format("{}", which) + "", ans)];
@@ -48080,6 +48064,7 @@ return this.__repr__();
                     ρσ_d["empty"] = true;
                     return ρσ_d;
                 }).call(this);
+                ρσ_d["on_load"] = [];
                 return ρσ_d;
             }).call(this);
             self.show_loading();
@@ -48140,9 +48125,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter6 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                name = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter21 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
+                name = ρσ_Iter21[ρσ_Index21];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -48320,9 +48305,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter7 = ρσ_Iterable(x.children);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    c = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter22 = ρσ_Iterable(x.children);
+                for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
+                    c = ρσ_Iter22[ρσ_Index22];
                     process_node(c);
                 }
             };
@@ -48608,9 +48593,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter8 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                edge = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter23 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
+                edge = ρσ_Iter23[ρσ_Index23];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -48652,9 +48637,9 @@ return this.__repr__();
             }
             if (runtime.is_standalone_viewer) {
                 r = [];
-                var ρσ_Iter9 = ρσ_Iterable(self.current_toc_families);
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    fam = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter24 = ρσ_Iterable(self.current_toc_families);
+                for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
+                    fam = ρσ_Iter24[ρσ_Index24];
                     if (fam.length) {
                         r.push(fam[fam.length-1].id);
                     }
@@ -48694,9 +48679,9 @@ return this.__repr__();
         View.prototype.on_content_loaded = function on_content_loaded(data) {
             var self = this;
             var x;
-            var ρσ_Iter10 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                x = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter25 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
+                x = ρσ_Iter25[ρσ_Index25];
                 if (!x.dont_hide_on_content_loaded) {
                     x.hide();
                 }
@@ -48719,6 +48704,12 @@ return this.__repr__();
             if (self.read_aloud.is_visible) {
                 self.read_aloud.play();
             }
+            var ρσ_Iter26 = ρσ_Iterable(self.currently_showing.on_load);
+            for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
+                x = ρσ_Iter26[ρσ_Index26];
+                x();
+            }
+            self.currently_showing.on_load = [];
         };
         if (!View.prototype.on_content_loaded.__argnames__) Object.defineProperties(View.prototype.on_content_loaded, {
             __argnames__ : {value: ["data"]},
@@ -48785,6 +48776,7 @@ return this.__repr__();
                     if (!self.search_result_discovery.discovered && self.search_result_discovery.first_search_result && self.search_result_discovery.queue.length === 0) {
                         sr = self.search_result_discovery.first_search_result;
                         sr.force_jump_to = true;
+                        self.search_result_discovery.jump_forced = true;
                         self.show_search_result(sr);
                     }
                 }
@@ -48799,6 +48791,7 @@ return this.__repr__();
                     ρσ_d["discovered"] = false;
                     ρσ_d["first_search_result"] = sr;
                     ρσ_d["finished"] = false;
+                    ρσ_d["jump_forced"] = false;
                     return ρσ_d;
                 }).call(this);
             }
@@ -48825,9 +48818,10 @@ return this.__repr__();
                     }
                 } else if (!self.search_result_discovery.discovered && self.search_result_discovery.queue.length) {
                     self.show_search_result(self.search_result_discovery.queue.shift());
-                } else if (!self.search_result_discovery.discovered && self.search_result_discovery.finished) {
+                } else if (!self.search_result_discovery.discovered && self.search_result_discovery.finished && !self.search_result_discovery.jump_forced) {
                     sr = self.search_result_discovery.first_search_result;
                     sr.force_jump_to = true;
+                    self.search_result_discovery.jump_forced = true;
                     self.show_search_result(sr);
                 }
             }
@@ -48858,7 +48852,11 @@ return this.__repr__();
         View.prototype.show_search_result = function show_search_result(sr) {
             var self = this;
             if (self.currently_showing.name === sr.file_name) {
-                ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["show_search_result"].concat([ρσ_desugar_kwargs({search_result: sr})]));
+                if (self.currently_showing.loading) {
+                    self.currently_showing.on_load.push(self.show_search_result.bind(null, sr));
+                } else {
+                    ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["show_search_result"].concat([ρσ_desugar_kwargs({search_result: sr})]));
+                }
             } else {
                 ρσ_interpolate_kwargs.call(self, self.show_name, [sr.file_name].concat([ρσ_desugar_kwargs({initial_position: (function(){
                     var ρσ_d = Object.create(null);

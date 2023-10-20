@@ -5,6 +5,7 @@
 # Translators:
 # Artur Chagas <aschagas98@gmail.com>, 2014
 # Artur de Carvalho Alves <arturcalves@gmail.com>, 2015
+# Cauan Henrique Zorzenon <cauanzorzenon@gmail.com>, 2023
 # Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020
 # Henrique Lucas França <hlucasfranca@gmail.com>, 2016
 # Paulo_Neto <layoutbr@lexxa.com.br>, 2014
@@ -13,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 10:34+0000\n"
+"POT-Creation-Date: 2023-10-19 08:30+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
+"Last-Translator: Cauan Henrique Zorzenon <cauanzorzenon@gmail.com>, 2023\n"
+"Language-Team: Portuguese (Brazil) (http://app.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,7 +37,7 @@ msgid ""
 "operating system of your choice. calibre is written primarily in `Python "
 "<https://www.python.org>`_ with some C/C++ code for speed and system "
 "interfacing. Note that calibre requires at least Python 3.8."
-msgstr ""
+msgstr "calibre é completamente open source, licenciado sob o 'GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>'_. Isso significa que você é livre para baixar e modificar o programa para o conteúdo do seu coração. Nesta seção, você aprenderá como configurar um ambiente de desenvolvimento de calibre no sistema operacional de sua escolha. calibre é escrito principalmente em 'Python <https://www.python.org>'_ com algum código C/C++ para velocidade e interface do sistema. Note que o calibre requer pelo menos Python 3.8."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:14
 msgid "Contents"
@@ -69,7 +70,7 @@ msgid ""
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
 "designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr ""
+msgstr "O design modular do calibre é expresso através de ''Plugins''. Há um :ref:'tutorial <customize>' sobre a escrita de plugins de calibre. Por exemplo, adicionar suporte para um novo dispositivo ao calibre normalmente envolve escrever menos de 100 linhas de código na forma de um plug-in de driver de dispositivo. Você pode navegar pelo 'built-in drivers <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>'_. Da mesma forma, adicionar suporte para novos formatos de conversão envolve escrever plugins de formato de entrada/saída. Outro exemplo do design modular é o sistema :ref:'recipe <news>' para buscar notícias. Para obter mais exemplos de plug-ins projetados para adicionar recursos ao calibre, consulte o 'Índice de plug-ins <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>'_."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:34
 msgid "Code layout"
@@ -79,7 +80,7 @@ msgstr "Layout do código"
 msgid ""
 "All the calibre Python code is in the ``calibre`` package. This package "
 "contains the following main sub-packages"
-msgstr ""
+msgstr "Todo o código Python calibre está no pacote ''calibre''. Este pacote contém os seguintes subpacotes principais"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:38
 msgid ""
@@ -93,7 +94,7 @@ msgid ""
 "supported by device drivers and ``devices.usbms`` which defines a generic "
 "driver that connects to a USBMS device. All USBMS based drivers in calibre "
 "inherit from it."
-msgstr ""
+msgstr "Para obter detalhes, consulte: ''devices.interface'' que define a interface suportada por drivers de dispositivo e ''devices.usbms'' que define um driver genérico que se conecta a um dispositivo USBMS. Todos os drivers baseados em USBMS em calibre herdam dele."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:43
 msgid ""
@@ -102,7 +103,7 @@ msgid ""
 ":command:`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
-msgstr ""
+msgstr "e-books - Todo o código de conversão/metadados do e-book. Um bom ponto de partida é ''calibre.ebooks.conversion.cli'', que é o módulo que alimenta o comando :command:'ebook-convert'. O processo de conversão é controlado através de ''conversion.plumber''. O código independente de formato está todo em ''ebooks.oeb'' e o código dependente de formato está em ''ebooks.format_name''."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:47
 msgid ""
@@ -121,44 +122,44 @@ msgid ""
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr ""
+msgstr "A conversão acontece em um pipeline, para a estrutura do pipeline, veja :ref:'conversion-introduction'. O pipeline consiste em um plugin de entrada, várias transformações e um plugin de saída. O código que constrói e conduz o pipeline está em :file:'plumber.py'. O pipeline funciona em uma representação de um e-book que é como um epub descompactado, com manifesto, coluna, toc, guia, conteúdo html, etc. A classe que gerencia essa representação é OEBBook em ''ebooks.oeb.base''. As várias transformações que são aplicadas ao livro durante as conversões vivem em :file:'oeb/transforms/*.py'. E os plugins de entrada e saída vivem em :file:'conversion/plugins/*.py'."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:58
 msgid ""
 "E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
-msgstr ""
+msgstr "A edição de e-book acontece usando um objeto de contêiner diferente. Está documentado em :ref:'polish_api'."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:61
 msgid ""
 "db - The database back-end. See :ref:`db_api` for the interface to the "
 "calibre library."
-msgstr ""
+msgstr "db - O back-end do banco de dados. Consulte :ref:'db_api' para a interface com a biblioteca de calibre."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:63
 msgid "Content server: ``srv`` is the calibre Content server."
-msgstr ""
+msgstr "Servidor de conteúdo: ''srv'' é o servidor de conteúdo de calibre."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:65
 msgid ""
 "gui2 - The Graphical User Interface. GUI initialization happens in "
 "``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
 "e-book editor is in ``gui2.tweak_book``."
-msgstr ""
+msgstr "gui2 - A Interface Gráfica do Usuário. A inicialização da GUI acontece em ''gui2.main'' e ''gui2.ui''. O e-book-viewer está em ''gui2.viewer''. O editor de e-book está em ''gui2.tweak_book''."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:67
 msgid ""
 "If you want to locate the entry points for all the various calibre "
 "executables, look at the ``entry_points`` structure in `linux.py "
 "<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_."
-msgstr ""
+msgstr "Se você quiser localizar os pontos de entrada para todos os vários executáveis de calibre, observe a estrutura ''entry_points'' em 'linux.py <https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>'_."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:71
 msgid ""
 "If you need help understanding the code, post in the `development forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
 "most likely get help from one of calibre's many developers."
-msgstr ""
+msgstr "Se você precisar de ajuda para entender o código, poste no 'fórum de desenvolvimento <https://www.mobileread.com/forums/forumdisplay.php?f=240>'_ e você provavelmente receberá ajuda de um dos muitos desenvolvedores do calibre."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:75
 msgid "Getting the code"
@@ -168,27 +169,27 @@ msgstr "Obtendo o código"
 msgid ""
 "You can get the calibre source code in two ways, using a version control "
 "system or directly downloading a :website_base:`tarball <dist/src>`."
-msgstr ""
+msgstr "Você pode obter o código-fonte do calibre de duas maneiras, usando um sistema de controle de versão ou baixando diretamente um :website_base:'tarball <dist/src>'."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:80
 msgid ""
 "calibre uses `Git <https://www.git-scm.com/>`_, a distributed version "
 "control system. Git is available on all the platforms calibre supports.  "
 "After installing Git, you can get the calibre source code with the command::"
-msgstr ""
+msgstr "calibre usa 'Git <https://www.git-scm.com/>'_, um sistema de controle de versão distribuído. O Git está disponível em todas as plataformas suportadas. Depois de instalar o Git, você pode obter o código-fonte do calibre com o comando::"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:86
 msgid ""
 "On Windows you will need the complete path name, that will be something like"
 " :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
-msgstr ""
+msgstr "No Windows, você precisará do nome completo do caminho, que será algo como :file:'C:\\\\Arquivos de Programas\\\\Git\\\\git.exe'."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:88
 msgid ""
 "calibre is a very large project with a very long source control history, so "
 "the above can take a while (10 mins to an hour depending on your internet "
 "speed)."
-msgstr ""
+msgstr "O calibre é um projeto muito grande com um histórico de controle de fonte muito longo, então o acima pode levar um tempo (10 minutos a uma hora, dependendo da velocidade da sua internet)."
 
 #: ../../__w/calibre/calibre/manual/develop.rst:91
 msgid ""

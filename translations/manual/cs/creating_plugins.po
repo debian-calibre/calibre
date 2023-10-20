@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 03:59+0000\n"
+"POT-Creation-Date: 2023-10-19 08:30+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Trottel <trottel09@gmail.com>, 2014-2017,2019-2023\n"
-"Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
+"Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -477,11 +477,17 @@ msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Nahraďte ``de`` kódem jazyka, který chcete otestovat."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:296
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:295
+msgid ""
+"For translations with plurals, use the ``ngettext()`` function instead of "
+"``_()``. For example::"
+msgstr "Pro překlady s množnými čísly použijte funkci ``ngettext()`` namísto ``_()``. Například::"
+
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
 msgstr "Rozhraní API modulu"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:298
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -489,36 +495,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Jak jste si možná všimli výše, modul Calibre je třída. V Calibre existují různé třídy pro různé typy modulů. Podrobnosti o každé třídě, včetně základní třídy všech modulů, lze nalézt v :ref:`moduly <plugins>`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Váš modul téměř určitě bude používat kód z Calibre. Abyste zjistili, jak najít různé kousky funkcí v základním kódu Calibre, přečtěte si část o :ref:`code_layout` Calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
 msgstr "Ladění modulů"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:308
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Prvním a nejdůležitějším krokem je spuštění Calibre v režimu ladění. To můžete udělat z příkazového řádku pomocí::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:312
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "Nebo z Calibre kliknutím pravým tlačítkem myši na tlačítko :guilabel:`Předvolby` nebo pomocí klávesové zkratky :kbd:`Ctrl+Shift+R`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:314
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Při spuštění z příkazového řádku, bude výstup ladění vypsán do konzole, při spuštění z Calibre, půjde výstup do textového souboru."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -526,33 +532,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Do kódu svého modulu můžete kamkoliv vložit příkazy tisku, budou mít výstup v režimu ladění. Nezapomeňte, že je to Python, neměli byste opravdu potřebovat nic víc než příkazy tisku pro ladění ;) Celé Celibre jsem vytvořil pouze pomocí této techniky ladění."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Změny ve svém modulu můžete rychle testovat pomocí následujícího příkazového řádku::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Toto vypne spuštěné Calibre, počkejte až bude vypnutí dokončeno, a pak aktualizujte svůj modul v Calibre a znovu spusťte Calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
 msgstr "Další příklady modulů"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Seznam mnoha propracovaných modulů Calibre můžete nalézt `zde <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
 msgstr "Sdílení vašeho modulu s ostatními"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
