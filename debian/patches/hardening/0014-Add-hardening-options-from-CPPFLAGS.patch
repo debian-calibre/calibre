@@ -13,12 +13,12 @@ like "-D_FORTIFY_SOURCE=2".
  1 file changed, 1 insertion(+)
 
 diff --git a/src/calibre/headless/CMakeLists.txt b/src/calibre/headless/CMakeLists.txt
-index 9de5e10..e805b98 100644
+index c2c8fa8..7bfb431 100644
 --- a/src/calibre/headless/CMakeLists.txt
 +++ b/src/calibre/headless/CMakeLists.txt
 @@ -1,6 +1,7 @@
- project(headless)
  cmake_minimum_required(VERSION 3.21)
+ project(headless)
  set(CMAKE_AUTOMOC ON)
 +set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} $ENV{CPPFLAGS}")
  find_package(Qt6Gui REQUIRED)
