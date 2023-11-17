@@ -17,6 +17,7 @@ import sys
 import time
 import uuid
 from contextlib import closing, suppress
+from typing import Optional
 from functools import partial
 
 from calibre import as_unicode, force_unicode, isbytestring, prints
@@ -27,7 +28,7 @@ from calibre.db import SPOOL_SIZE, FTSQueryError
 from calibre.db.annotations import annot_db_data, unicode_normalize
 from calibre.db.constants import (
     BOOK_ID_PATH_TEMPLATE, COVER_FILE_NAME, DEFAULT_TRASH_EXPIRY_TIME_SECONDS,
-    METADATA_FILE_NAME, TRASH_DIR_NAME, TrashEntry,
+    METADATA_FILE_NAME, NOTES_DIR_NAME, TRASH_DIR_NAME, TrashEntry,
 )
 from calibre.db.errors import NoSuchFormat
 from calibre.db.schema_upgrades import SchemaUpgrade
@@ -41,14 +42,13 @@ from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
 from calibre.utils import pickle_binary_string, unpickle_binary_string
 from calibre.utils.config import from_json, prefs, to_json, tweaks
 from calibre.utils.copy_files import (
-    copy_files, copy_tree, rename_files,
-    windows_check_if_files_in_use,
+    copy_files, copy_tree, rename_files, windows_check_if_files_in_use,
 )
 from calibre.utils.date import EPOCH, parse_date, utcfromtimestamp, utcnow
 from calibre.utils.filenames import (
     ascii_filename, atomic_rename, copyfile_using_links, copytree_using_links,
-    hardlink_file, is_case_sensitive, is_fat_filesystem, make_long_path_useable,
-    remove_dir_if_empty, samefile, get_long_path_name
+    get_long_path_name, hardlink_file, is_case_sensitive, is_fat_filesystem,
+    make_long_path_useable, remove_dir_if_empty, samefile,
 )
 from calibre.utils.formatter_functions import (
     compile_user_template_functions, formatter_functions, load_user_template_functions,
@@ -337,13 +337,12 @@ class Connection(apsw.Connection):  # {{{
         set_ui_language(get_lang())
         super().__init__(path)
         plugins.load_apsw_extension(self, 'sqlite_extension')
-        self.fts_dbpath = None
+        self.fts_dbpath = self.notes_dbpath = None
 
         self.setbusytimeout(self.BUSY_TIMEOUT)
-        self.execute('pragma cache_size=-5000')
-        self.execute('pragma temp_store=2')
+        self.execute('PRAGMA cache_size=-5000; PRAGMA temp_store=2; PRAGMA foreign_keys=ON;')
 
-        encoding = next(self.execute('pragma encoding'))[0]
+        encoding = next(self.execute('PRAGMA encoding'))[0]
         self.createcollation('PYNOCASE', partial(pynocase,
             encoding=encoding))
 
@@ -509,6 +508,7 @@ class DB:
             self.ensure_trash_dir(during_init=True)
         if load_user_formatter_functions:
             set_global_state(self)
+        self.initialize_notes()
 
     @property
     def last_expired_trash_at(self) -> float:
@@ -680,11 +680,11 @@ class DB:
 
     def initialize_custom_columns(self):  # {{{
         self.custom_columns_deleted = False
+        self.deleted_fields = []
         with self.conn:
             # Delete previously marked custom columns
-            for record in self.conn.get(
-                    'SELECT id FROM custom_columns WHERE mark_for_delete=1'):
-                num = record[0]
+            for (num, label) in self.conn.get(
+                    'SELECT id,label FROM custom_columns WHERE mark_for_delete=1'):
                 table, lt = self.custom_table_names(num)
                 self.execute('''\
                         DROP INDEX   IF EXISTS {table}_idx;
@@ -703,6 +703,7 @@ class DB:
                         '''.format(table=table, lt=lt)
                 )
                 self.prefs.set('update_all_last_mod_dates_on_start', True)
+                self.deleted_fields.append('#'+label)
             self.execute('DELETE FROM custom_columns WHERE mark_for_delete=1')
 
         # Load metadata for custom columns
@@ -944,6 +945,100 @@ class DB:
         self.field_metadata.set_field_record_index('in_tag_browser', base, prefer_custom=False)
 
     # }}}
+
+    def initialize_notes(self):
+        from .notes.connect import Notes
+        self.notes = Notes(self)
+
+    def clear_notes_for_category_items(self, field_name, item_map):
+        for item_id, item_val in item_map.items():
+            self.notes.set_note(self.conn, field_name, item_id, item_val or '')
+
+    def delete_category_items(self, field_name, table_name, item_map, link_table_name='', link_col_name=''):
+        self.clear_notes_for_category_items(field_name, item_map)
+        bindings = tuple((x,) for x in item_map)
+        if link_table_name and link_col_name:
+            self.executemany(f'DELETE FROM {link_table_name} WHERE {link_col_name}=?', bindings)
+        self.executemany(f'DELETE FROM {table_name} WHERE id=?', bindings)
+
+    def rename_category_item(self, field_name, table_name, link_table_name, link_col_name, old_item_id, new_item_id, new_item_value):
+        self.notes.rename_note(self.conn, field_name, old_item_id, new_item_id, new_item_value or '')
+        # For custom series this means that the series index can
+        # potentially have duplicates/be incorrect, but there is no way to
+        # handle that in this context.
+        self.execute(f'UPDATE {link_table_name} SET {link_col_name}=? WHERE {link_col_name}=?; DELETE FROM {table_name} WHERE id=?',
+                     (new_item_id, old_item_id, old_item_id))
+
+    def notes_for(self, field_name, item_id):
+        return self.notes.get_note(self.conn, field_name, item_id) or ''
+
+    def notes_data_for(self, field_name, item_id):
+        return self.notes.get_note_data(self.conn, field_name, item_id)
+
+    def get_all_items_that_have_notes(self, field_name):
+        return self.notes.get_all_items_that_have_notes(self.conn, field_name)
+
+    def set_notes_for(self, field, item_id, doc: str, searchable_text: str, resource_hashes, remove_unused_resources) -> int:
+        id_val = self.tables[field].id_map[item_id]
+        note_id = self.notes.set_note(self.conn, field, item_id, id_val, doc, resource_hashes, searchable_text)
+        if remove_unused_resources:
+            self.notes.remove_unreferenced_resources(self.conn)
+        return note_id
+
+    def unretire_note_for(self, field, item_id) -> int:
+        id_val = self.tables[field].id_map[item_id]
+        return self.notes.unretire(self.conn, field, item_id, id_val)
+
+    def add_notes_resource(self, path_or_stream, name, mtime=None) -> int:
+        return self.notes.add_resource(self.conn, path_or_stream, name, mtime=mtime)
+
+    def get_notes_resource(self, resource_hash) -> Optional[dict]:
+        return self.notes.get_resource_data(self.conn, resource_hash)
+
+    def notes_resources_used_by(self, field, item_id):
+        conn = self.conn
+        note_id = self.notes.note_id_for(conn, field, item_id)
+        if note_id is not None:
+            yield from self.notes.resources_used_by(conn, note_id)
+
+    def unretire_note(self, field, item_id, item_val):
+        return self.notes.unretire(self.conn, field, item_id, item_val)
+
+    def search_notes(self,
+        fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_fields, return_text, process_each_result, limit
+    ):
+        yield from self.notes.search(
+            self.conn, fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, restrict_to_fields, return_text,
+            process_each_result, limit)
+
+    def export_notes_data(self, outfile):
+        import zipfile
+        with zipfile.ZipFile(outfile, mode='w') as zf:
+            pt = PersistentTemporaryFile()
+            try:
+                pt.close()
+                self.backup_notes_database(pt.name)
+                with open(pt.name, 'rb') as dbf:
+                    zf.writestr('notes.db', dbf.read())
+            finally:
+                try:
+                    os.remove(pt.name)
+                except OSError:
+                    if not iswindows:
+                        raise
+                    time.sleep(1)
+                    os.remove(pt.name)
+            self.notes.export_non_db_data(zf)
+
+    def restore_notes(self, report_progress):
+        self.notes.restore(self.conn, self.tables, report_progress)
+
+    def import_note(self, field, item_id, html, basedir, ctime, mtime):
+        id_val = self.tables[field].id_map[item_id]
+        return self.notes.import_note(self.conn, field, item_id, id_val, html, basedir, ctime, mtime)
+
+    def export_note(self, field, item_id):
+        return self.notes.export_note(self.conn, field, item_id)
 
     def initialize_fts(self, dbref):
         self.fts = None
@@ -1276,6 +1371,7 @@ class DB:
         self.close(force=force, unload_formatter_functions=False)
         self._conn = None
         self.conn
+        self.notes.reopen(self)
 
     def dump_and_restore(self, callback=None, sql=None):
         import codecs
@@ -1308,19 +1404,21 @@ class DB:
                 finally:
                     self.reopen()
 
-    def vacuum(self, include_fts_db):
+    def vacuum(self, include_fts_db, include_notes_db):
         self.execute('VACUUM')
         if self.fts_enabled and include_fts_db:
             self.fts.vacuum()
+        if include_notes_db:
+            self.notes.vacuum(self.conn)
 
     @property
     def user_version(self):
         '''The user version of this database'''
-        return self.conn.get('pragma user_version;', all=False)
+        return self.conn.get('PRAGMA user_version;', all=False)
 
     @user_version.setter
     def user_version(self, val):
-        self.execute('pragma user_version=%d'%int(val))
+        self.execute('PRAGMA user_version=%d'%int(val))
 
     def initialize_database(self):
         metadata_sqlite = P('metadata_sqlite.sql', data=True,
@@ -1472,25 +1570,27 @@ class DB:
             return fmt_path
         if not fmt:
             return
-        candidates = ()
-        with suppress(OSError):
-            candidates = os.scandir(path)
         q = fmt.lower()
-        for x in candidates:
-            if x.name.endswith(q) and x.is_file():
-                if not do_file_rename:
-                    return x.path
-                x = x.path
-                with suppress(OSError):
-                    atomic_rename(x, fmt_path)
+        try:
+            candidates = os.scandir(path)
+        except OSError:
+            return
+        with candidates:
+            for x in candidates:
+                if x.name.endswith(q) and x.is_file():
+                    if not do_file_rename:
+                        return x.path
+                    x = x.path
+                    with suppress(OSError):
+                        atomic_rename(x, fmt_path)
+                        return fmt_path
+                    try:
+                        shutil.move(x, fmt_path)
+                    except (shutil.SameFileError, OSError):
+                        # some other process synced in the file since the last
+                        # os.path.exists()
+                        return x
                     return fmt_path
-                try:
-                    shutil.move(x, fmt_path)
-                except (shutil.SameFileError, OSError):
-                    # some other process synced in the file since the last
-                    # os.path.exists()
-                    return x
-                return fmt_path
 
     def cover_abspath(self, book_id, path):
         path = os.path.join(self.library_path, path)
@@ -2022,7 +2122,7 @@ class DB:
         os.makedirs(os.path.join(tdir, 'f'), exist_ok=True)
         if iswindows:
             import calibre_extensions.winutil as winutil
-            winutil.set_file_attributes(tdir, getattr(winutil, 'FILE_ATTRIBUTE_HIDDEN', 2) | getattr(winutil, 'FILE_ATTRIBUTE_NOT_CONTENT_INDEXED', 8192))
+            winutil.set_file_attributes(tdir, winutil.FILE_ATTRIBUTE_HIDDEN | winutil.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED)
         if time.time() - self.last_expired_trash_at >= 3600:
             self.expire_old_trash(during_init=during_init)
 
@@ -2454,7 +2554,7 @@ class DB:
     def get_top_level_move_items(self, all_paths):
         items = set(os.listdir(self.library_path))
         paths = set(all_paths)
-        paths.update({'metadata.db', 'full-text-search.db', 'metadata_db_prefs_backup.json'})
+        paths.update({'metadata.db', 'full-text-search.db', 'metadata_db_prefs_backup.json', NOTES_DIR_NAME})
         path_map = {x:x for x in paths}
         if not self.is_case_sensitive:
             for x in items:
@@ -2516,18 +2616,21 @@ class DB:
         self.conn  # Connect to the moved metadata.db
         progress(_('Completed'), total, total)
 
-    def backup_database(self, path):
+    def _backup_database(self, path, name, extra_sql=''):
         with closing(apsw.Connection(path)) as dest_db:
-            with dest_db.backup('main', self.conn, 'main') as b:
+            with dest_db.backup('main', self.conn, name) as b:
                 while not b.done:
                     with suppress(apsw.BusyError):
                         b.step(128)
-            dest_db.cursor().execute('DELETE FROM metadata_dirtied; VACUUM;')
+            if extra_sql:
+                dest_db.cursor().execute(extra_sql)
+
+    def backup_database(self, path):
+        self._backup_database(path, 'main', 'DELETE FROM metadata_dirtied; VACUUM;')
 
     def backup_fts_database(self, path):
-        with closing(apsw.Connection(path)) as dest_db:
-            with dest_db.backup('main', self.conn, 'fts_db') as b:
-                while not b.done:
-                    with suppress(apsw.BusyError):
-                        b.step(128)
+        self._backup_database(path, 'fts_db')
+
+    def backup_notes_database(self, path):
+        self._backup_database(path, 'notes_db')
     # }}}

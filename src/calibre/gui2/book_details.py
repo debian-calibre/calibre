@@ -8,14 +8,15 @@ from collections import namedtuple
 from contextlib import suppress
 from functools import lru_cache, partial
 from qt.core import (
-    QAction, QApplication, QClipboard, QColor, QDialog, QEasingCurve, QIcon, QPalette,
-    QKeySequence, QMenu, QMimeData, QPainter, QPen, QPixmap, QPropertyAnimation, QRect,
-    QSize, QSizePolicy, QSplitter, Qt, QTimer, QUrl, QWidget, pyqtProperty, pyqtSignal,
+    QAction, QApplication, QClipboard, QColor, QDialog, QEasingCurve, QIcon,
+    QKeySequence, QMenu, QMimeData, QPainter, QPalette, QPen, QPixmap,
+    QPropertyAnimation, QRect, QSize, QSizePolicy, QSplitter, Qt, QTimer, QUrl, QWidget,
+    pyqtProperty, pyqtSignal,
 )
 
 from calibre import fit_image, sanitize_file_name
 from calibre.constants import config_dir, iswindows
-from calibre.db.constants import DATA_DIR_NAME, DATA_FILE_PATTERN
+from calibre.db.constants import DATA_DIR_NAME, DATA_FILE_PATTERN, RESOURCE_URL_SCHEME
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata.book.base import Metadata, field_metadata
 from calibre.ebooks.metadata.book.render import mi_to_html
@@ -168,6 +169,23 @@ def init_manage_action(ac, field, value):
     return ac
 
 
+def add_edit_notes_action(menu, book_info, field, value):
+    from calibre.gui2.ui import get_gui
+    db = get_gui().current_db.new_api
+    if db.field_supports_notes(field):
+        item_id = db.get_item_id(field, value)
+        if item_id is not None:
+            def edit_note():
+                gui = get_gui()
+                from calibre.gui2.dialogs.edit_category_notes import EditNoteDialog
+                d = EditNoteDialog(field, item_id, gui.current_db.new_api, parent=book_info)
+                if d.exec() == QDialog.DialogCode.Accepted:
+                    gui.do_field_item_value_changed()
+            ac = menu.addAction(_('Edit note for {}').format(escape_for_menu(value)))
+            ac.triggered.connect(edit_note)
+            ac.setIcon(QIcon.ic('edit_input.png'))
+
+
 def init_find_in_tag_browser(menu, ac, field, value):
     from calibre.gui2.ui import get_gui
     hidden_cats = get_gui().tags_view.model().hidden_categories
@@ -302,11 +320,25 @@ def render_data(mi, use_roman_numbers=True, all_fields=False, pref_name='book_di
     field_list = get_field_list(getattr(mi, 'field_metadata', field_metadata),
                                 pref_name=pref_name, mi=mi)
     field_list = [(x, all_fields or display) for x, display in field_list]
+    db, _ = db_for_mi(mi)
+    db = db.new_api
+    field_maps = {}
+
+    def item_id_if_has_note(field, item_val):
+        if db.field_supports_notes(field):
+            nmap = field_maps.get(field)
+            if nmap is None:
+                nmap = field_maps[field] = db.get_item_name_map(field)
+            item_id = nmap.get(item_val)
+            if item_id is not None:
+                if db.notes_for(field, item_id):
+                    return item_id
+
     return mi_to_html(
         mi, field_list=field_list, use_roman_numbers=use_roman_numbers, rtl=is_rtl(),
         rating_font=rating_font(), default_author_link=default_author_link(),
         comments_heading_pos=gprefs['book_details_comments_heading_pos'], for_qt=True,
-        vertical_fields=vertical_fields, show_links=show_links
+        vertical_fields=vertical_fields, show_links=show_links, item_id_if_has_note=item_id_if_has_note
     )
 
 # }}}
@@ -401,6 +433,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
         init_find_in_tag_browser(search_menu, find_action, 'authors', author)
         init_find_in_grouped_search(search_menu, 'authors', author, book_info)
         menu.addAction(init_manage_action(book_info.manage_action, 'authors', author))
+        add_edit_notes_action(menu, book_info, 'authors', author)
         if hasattr(book_info, 'search_internet'):
             search_menu.addSeparator()
             search_menu.sim = create_search_internet_menu(book_info.search_internet, author)
@@ -461,6 +494,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
                 init_find_in_tag_browser(search_menu, find_action, field, value)
                 init_find_in_grouped_search(search_menu, field, value, book_info)
                 menu.addAction(init_manage_action(book_info.manage_action, field, value))
+                add_edit_notes_action(menu, book_info, field, value)
             elif field == 'languages':
                 remove_value = langnames_to_langcodes((value,)).get(value, 'Unknown')
                 init_find_in_tag_browser(search_menu, find_action, field, value)
@@ -496,43 +530,67 @@ def create_copy_links(menu, data=None):
     library_id = '_hex_-' + library_id.encode('utf-8').hex()
     book_id = get_gui().library_view.current_id
 
-    all_links = []
-    def link(text, url):
+    def copy_to_clipboard_action(menu_text, value_text, before_action=None):
         def doit():
-            QApplication.instance().clipboard().setText(url)
+            QApplication.instance().clipboard().setText(value_text)
+        if before_action is not None:
+            action = QWidget(menu).addAction(QIcon.ic('edit-copy.png'), menu_text, doit)
+            menu.insertAction(before_action, action)
+        else:
+            menu.addAction(QIcon.ic('edit-copy.png'), menu_text, doit)
+
+    all_links = []
+    def link_action(text, url):
         nonlocal all_links
         all_links.append(url)
-        menu.addAction(QIcon.ic('edit-copy.png'), text, doit)
+        copy_to_clipboard_action(text, url)
 
-    menu.addSeparator()
-    link(_('Link to show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
-    link(_('Link to show book details in a popup window'), f'calibre://book-details/{library_id}/{book_id}')
+    sep = menu.addSeparator() # Note: separators are really actions
+
+    link_action(_('Link to show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
+    link_action(_('Link to show book details in a popup window'),
+                f'calibre://book-details/{library_id}/{book_id}')
     mi = db.new_api.get_proxy_metadata(book_id)
     if mi and mi.path:
         with suppress(Exception):
             data_files = db.new_api.list_extra_files(book_id, use_cache=True, pattern=DATA_FILE_PATTERN)
             if data_files:
                 data_path = os.path.join(db.backend.library_path, mi.path, DATA_DIR_NAME)
-                link(_("Link to open book's data files folder"), bytes(QUrl.fromLocalFile(data_path).toEncoded()).decode('utf-8'))
+                link_action(_("Link to open book's data files folder"),
+                            bytes(QUrl.fromLocalFile(data_path).toEncoded()).decode('utf-8'))
     if data:
-        field = data.get('field')
-        if data['type'] == 'author':
-            field = 'authors'
-        if field and field in ('tags', 'series', 'publisher', 'authors') or is_category(field):
-            name = data['name' if data['type'] == 'author' else 'value']
-            eq = f'{field}:"={name}"'.encode().hex()
-            link(_('Link to show books matching {} in calibre').format(name),
-                 f'calibre://search/{library_id}?eq={eq}')
+        if data.get('kind', '') == 'notes':
+            field = data['field']
+            item_id = data['item_id']
+            note_data = db.notes_data_for(field, item_id)
+            if note_data is not None:
+                copy_to_clipboard_action(_('HTML for note'), note_data['doc'], sep)
+                copy_to_clipboard_action(_('Text for note'),
+                                         note_data['searchable_text'].partition('\n')[2], sep)
+            if field.startswith('#'):
+                field = '_' + field[1:]
+            url = f"calibre://show-note/{library_id}/{field}/id_{item_id}"
+            link_action(_('Link to show note in calibre'), url)
+        else:
+            field = data.get('field')
+            if data['type'] == 'author':
+                field = 'authors'
+            if field and field in ('tags', 'series', 'publisher', 'authors') or is_category(field):
+                name = data['name' if data['type'] == 'author' else 'value']
+                eq = f'{field}:"={name}"'.encode().hex()
+                link_action(_('Link to show books matching {} in calibre').format(name),
+                     f'calibre://search/{library_id}?eq={eq}')
 
     for fmt in db.formats(book_id):
         fmt = fmt.upper()
-        link(_('Link to view {} format of book').format(fmt.upper()), f'calibre://view-book/{library_id}/{book_id}/{fmt}')
+        link_action(_('Link to view {} format of book').format(fmt.upper()),
+                    f'calibre://view-book/{library_id}/{book_id}/{fmt}')
 
     if all_links:
         menu.addSeparator()
         all_links.insert(0, '')
         all_links.insert(0, mi.get('title') + ' - ' + ' & '.join(mi.get('authors')))
-        link(_('Copy all the above links'), '\n'.join(all_links))
+        link_action(_('Copy all the above links'), '\n'.join(all_links))
 
 
 def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit_metadata=None):
@@ -548,18 +606,31 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
     search_menu = QMenu(_('Search'), menu)
     search_menu.setIcon(QIcon.ic('search.png'))
     reindex_fmt_added = False
-    if url and url.startswith('action:'):
-        data = json_loads(from_hex_bytes(url.split(':', 1)[1]))
-        search_internet_added = add_item_specific_entries(menu, data, book_info, copy_menu, search_menu)
-        create_copy_links(copy_menu, data)
-        copy_links_added = True
-        reindex_fmt_added = 'reindex_fmt_added' in data
-    elif url and not url.startswith('#'):
-        ac = book_info.copy_link_action
-        ac.current_url = url
-        ac.setText(_('Copy link location'))
-        menu.addAction(ac)
-        menu.addAction(QIcon.ic('external-link'), _('Open associated link'), lambda : book_info.link_clicked.emit(url))
+    if url:
+        def get_data():
+            kind, _, rest = url.partition(':')
+            data = json_loads(from_hex_bytes(rest))
+            data['kind'] = kind
+            return data
+
+        if url.startswith('action:'):
+            data = get_data()
+            search_internet_added = add_item_specific_entries(menu, data, book_info, copy_menu, search_menu)
+            create_copy_links(copy_menu, data)
+            copy_links_added = True
+            reindex_fmt_added = 'reindex_fmt_added' in data
+        elif url.startswith('notes:'):
+            data = get_data()
+            create_copy_links(copy_menu, data)
+            copy_links_added = True
+            search_internet_added = True
+            add_edit_notes_action(menu, view, data['field'], data['value'])
+        elif not url.startswith('#'):
+            ac = book_info.copy_link_action
+            ac.current_url = url
+            ac.setText(_('Copy link location'))
+            menu.addAction(ac)
+            menu.addAction(QIcon.ic('external-link'), _('Open associated link'), lambda : book_info.link_clicked.emit(url))
     if not copy_links_added:
         create_copy_links(copy_menu)
 
@@ -898,9 +969,10 @@ class BookInfo(HTMLDisplay):
     edit_book = pyqtSignal(int, object)
     edit_identifiers = pyqtSignal()
     find_in_tag_browser = pyqtSignal(object, object)
+    notes_resource_scheme = RESOURCE_URL_SCHEME
 
     def __init__(self, vertical, parent=None):
-        HTMLDisplay.__init__(self, parent)
+        HTMLDisplay.__init__(self, parent=parent, save_resources_in_document=False)
         self.vertical = vertical
         self.anchor_clicked.connect(self.link_activated)
         for x, icon in [
@@ -1242,8 +1314,11 @@ class BookDetails(DetailsLayout):  # {{{
                 url = url_for_author_search(data.where, author=data.author)
             safe_open_url(url)
 
-    def handle_click(self, link):
+    def handle_click_from_popup(self, link, parent=None):
+        parent = parent or self
         typ, val = link.partition(':')[::2]
+        from calibre.gui2.ui import get_gui
+        db = get_gui().current_db.new_api
 
         def search_term(field, val):
             append = ''
@@ -1268,6 +1343,7 @@ class BookDetails(DetailsLayout):  # {{{
             data = json_loads(from_hex_bytes(val))
             dt = data['type']
             if dt == 'search':
+                field = data.get('field')
                 search_term(data['term'], data['value'])
             elif dt == 'author':
                 url = data['url']
@@ -1287,8 +1363,25 @@ class BookDetails(DetailsLayout):  # {{{
                 self.open_data_folder.emit(int(data['loc']))
             elif dt == 'devpath':
                 self.view_device_book.emit(data['loc'])
+        elif typ == 'notes':
+            data = json_loads(from_hex_bytes(val))
+            field = data.get('field')
+            # It shouldn't be possible for the field to be invalid or the
+            # note not to exist, but ...
+            if field and db.field_supports_notes(field):
+                item_id = data['item_id']
+                if item_id is not None and db.notes_for(field, item_id):
+                    return self.show_notes(field, item_id, parent)
         else:
             browse(link)
+
+    def handle_click(self, link):
+        self.handle_click_from_popup(link)
+
+    def show_notes(self, field, item_id, parent=None):
+        from calibre.gui2.dialogs.show_category_note import ShowNoteDialog
+        from calibre.gui2.ui import get_gui
+        ShowNoteDialog(field, item_id, get_gui().current_db.new_api, parent=parent or self).show()
 
     def mouseDoubleClickEvent(self, ev):
         ev.accept()

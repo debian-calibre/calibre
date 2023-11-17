@@ -256,18 +256,22 @@ def add_catalog(cache, path, title, dbapi=None):
             try:
                 mi = get_metadata(stream, fmt)
                 mi.authors = ['calibre']
-            except:
+            except Exception:
                 mi = Metadata(title, ['calibre'])
             mi.title, mi.authors = title, ['calibre']
             mi.author_sort = 'calibre'  # The MOBI/AZW3 format sets author sort to date
-            mi.tags = [_('Catalog')]
             mi.pubdate = mi.timestamp = utcnow()
             if fmt == 'mobi':
                 mi.cover, mi.cover_data = None, (None, None)
             if db_id is None:
+                mi.tags = [_('Catalog')]
                 db_id = cache._create_book_entry(mi, apply_import_tags=False)
                 new_book_added = True
             else:
+                tags = list(cache._field_for('tags', db_id) or ())
+                if _('Catalog') not in tags:
+                    tags.append(_('Catalog'))
+                mi.tags = tags
                 cache._set_metadata(db_id, mi)
         cache.add_format(db_id, fmt, stream, dbapi=dbapi)  # Can't keep write lock since post-import hooks might run
 

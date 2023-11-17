@@ -333,5 +333,10 @@ def run_cli(suite, verbosity=4, buffer=True):
     r.resultclass = unittest.TextTestResult if verbosity < 2 else TestResult
     init_env()
     result = r(verbosity=verbosity, buffer=buffer and not is_ci).run(suite)
-    if not result.wasSuccessful():
-        raise SystemExit(1)
+    rc = 0 if result.wasSuccessful() else 1
+    if is_ci:
+        # for some reason interpreter shutdown hangs probably some non-daemonic
+        # thread
+        os._exit(rc)
+    else:
+        raise SystemExit(rc)

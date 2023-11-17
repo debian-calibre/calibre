@@ -11,7 +11,7 @@ import threading
 from contextlib import contextmanager, suppress
 from functools import lru_cache
 from qt.core import (
-    QApplication, QBuffer, QByteArray, QColor, QDateTime, QDesktopServices, QDialog,
+    QApplication, QBuffer, QByteArray, QColor, QDesktopServices, QDialog,
     QDialogButtonBox, QEvent, QFile, QFileDialog, QFileIconProvider, QFileInfo, QFont,
     QFontDatabase, QFontInfo, QFontMetrics, QGuiApplication, QIcon, QImageReader,
     QImageWriter, QIODevice, QLocale, QNetworkProxyFactory, QObject, QPalette,
@@ -37,7 +37,7 @@ from calibre.gui2.qt_file_dialogs import FileDialog
 from calibre.ptempfile import base_dir
 from calibre.utils.config import Config, ConfigProxy, JSONConfig, dynamic
 from calibre.utils.config_base import tweaks
-from calibre.utils.date import UNDEFINED_DATE
+from calibre.utils.date import UNDEFINED_DATE, qt_from_dt
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.img import set_image_allocation_limit
 from calibre.utils.localization import get_lang
@@ -59,6 +59,7 @@ class IconResourceManager:
         self.user_any_theme_name = self.user_dark_theme_name = self.user_light_theme_name = None
         self.registered_user_resource_files = ()
         self.color_palette = 'light'
+        self.icon_cache = {}
 
     def user_theme_resource_file(self, which):
         return os.path.join(config_dir, f'icons-{which}.rcc')
@@ -125,6 +126,7 @@ class IconResourceManager:
     def initialize(self):
         if self.initialized:
             return
+        self.icon_cache = {}
         self.initialized = True
         QResource.registerResource(P('icons.rcc', allow_user_override=False))
         QIcon.setFallbackSearchPaths([])
@@ -186,6 +188,19 @@ class IconResourceManager:
                     ans = os.path.join(self.override_icon_path, subfolder, sq)
         return ans
 
+    def cached_icon(self, name=''):
+        '''
+        Keep these icons in a cache. This is intended to be used in dialogs like
+        manage categories where thousands of icon instances can be needed.
+
+        It is a new method to avoid breaking QIcon.ic() if names are reused
+        in different contexts. It isn't clear if this can ever happen.
+        '''
+        icon = self.icon_cache.get(name)
+        if icon is None:
+            icon = self.icon_cache[name] = self(name)
+        return icon
+
     def __call__(self, name):
         if isinstance(name, QIcon):
             return name
@@ -221,6 +236,7 @@ class IconResourceManager:
         return ba if as_bytearray else ba.data()
 
     def set_theme(self):
+        self.icon_cache = {}
         current = QIcon.themeName()
         is_dark = QApplication.instance().is_dark_theme
         self.color_palette = 'dark' if is_dark else 'light'
@@ -236,6 +252,7 @@ icon_resource_manager = IconResourceManager()
 QIcon.ic = icon_resource_manager
 QIcon.icon_as_png = icon_resource_manager.icon_as_png
 QIcon.is_ok = lambda self: not self.isNull() and len(self.availableSizes()) > 0
+QIcon.cached_icon = icon_resource_manager.cached_icon
 
 
 # Setup gprefs {{{
@@ -391,6 +408,7 @@ def create_defs():
     defs['browse_annots_restrict_to_user'] = None
     defs['browse_annots_restrict_to_type'] = None
     defs['browse_annots_use_stemmer'] = True
+    defs['browse_notes_use_stemmer'] = True
     defs['fts_library_use_stemmer'] = True
     defs['fts_library_restrict_books'] = False
     defs['annots_export_format'] = 'txt'
@@ -428,7 +446,7 @@ create_defs()
 del create_defs
 # }}}
 
-UNDEFINED_QDATETIME = QDateTime(UNDEFINED_DATE)
+UNDEFINED_QDATETIME = qt_from_dt(UNDEFINED_DATE, as_utc=True)
 QT_HIDDEN_CLEAR_ACTION = '_q_qlineeditclearaction'
 ALL_COLUMNS = ['title', 'ondevice', 'authors', 'size', 'timestamp', 'rating', 'publisher',
         'tags', 'series', 'pubdate']
@@ -1382,18 +1400,20 @@ def sanitize_env_vars():
     is needed to prevent library conflicts when launching external utilities.'''
 
     if islinux and isfrozen:
-        env_vars = {'LD_LIBRARY_PATH':'/lib'}
+        env_vars = {
+            'LD_LIBRARY_PATH':'/lib', 'OPENSSL_MODULES': '/lib/ossl-modules',
+        }
     elif iswindows:
-        env_vars = {}
+        env_vars = {'OPENSSL_MODULES': None}
     elif ismacos:
         env_vars = {k:None for k in (
-                    'FONTCONFIG_FILE FONTCONFIG_PATH SSL_CERT_FILE').split()}
+                    'FONTCONFIG_FILE FONTCONFIG_PATH SSL_CERT_FILE OPENSSL_ENGINES OPENSSL_MODULES').split()}
     else:
         env_vars = {}
 
     originals = {x:os.environ.get(x, '') for x in env_vars}
     changed = {x:False for x in env_vars}
-    for var, suffix in iteritems(env_vars):
+    for var, suffix in env_vars.items():
         paths = [x for x in originals[var].split(os.pathsep) if x]
         npaths = [] if suffix is None else [x for x in paths if x != (sys.frozen_path + suffix)]
         if len(npaths) < len(paths):
@@ -1406,7 +1426,7 @@ def sanitize_env_vars():
     try:
         yield
     finally:
-        for var, orig in iteritems(originals):
+        for var, orig in originals.items():
             if changed[var]:
                 if orig:
                     os.environ[var] = orig

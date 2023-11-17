@@ -14,7 +14,7 @@ from book_list.library_data import (
     current_virtual_library, download_url, library_data, load_status,
     set_book_metadata
 )
-from book_list.router import back, home, open_book, report_a_load_failure
+from book_list.router import back, home, open_book, report_a_load_failure, show_note
 from book_list.theme import (
     color_scheme, get_color, get_color_as_rgba, get_font_size
 )
@@ -124,7 +124,7 @@ def adjust_iframe_height(iframe):
 def setup_iframe(iframe):
     de = adjust_iframe_height(iframe)
     for a in de.querySelectorAll('a[href]'):
-        a.setAttribute('target', '_blank')
+        a.setAttribute('target', '_parent')
 
     def forward_touch_events(ev):
         container = window.top.document.getElementById(render_book.container_id)
@@ -158,9 +158,9 @@ def adjusting_sandboxed_html(html, extra_css):
     css =  f'\n\n:root {{ color-scheme: {color_scheme()} }}\n\nhtml, body {{ overflow: hidden; color: rgba({color[0]}, {color[1]}, {color[2]}, {color[3]}) }}'
     if extra_css:
         css += '\n\n' + extra_css
-    # allow-same-origin is needed for resizing and allow-popups is needed for
-    # target="_blank"
-    ans = sandboxed_html(html, css, 'allow-same-origin allow-popups allow-popups-to-escape-sandbox')
+    # allow-same-origin is needed for resizing and allow-top-navigation is
+    # needed for links with target="_parent"
+    ans = sandboxed_html(html, css, 'allow-same-origin allow-top-navigation-by-user-activation')
     ans.addEventListener('load', def(ev): setup_iframe(ev.target);)
     ans.style.height = '50vh'
     ans.dataset.last_window_width = '0'
@@ -192,6 +192,16 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
     comments = v'[]'
     link_maps = mi.link_maps or v'{}'
 
+    def show_note_action(field, item_id, item_val):
+        show_note(field, item_id, item_val)
+
+    def add_note_link(field, name, val, parent):
+        if mi.items_with_notes and mi.items_with_notes[field] and mi.items_with_notes[field][val]:
+            parent.appendChild(document.createTextNode(' '))
+            parent.appendChild(E.a(
+                svgicon('pencil'), title=_('Show notes for: {}').format(val), href='javascript:void(0)', onclick=show_note_action.bind(
+                    None, field, mi.items_with_notes[field][val], val), class_='blue-link'))
+
     def add_row(field, name, val, is_searchable=False, is_html=False, join=None, search_text=None, use_quotes=True):
         if val is undefined or val is None:
             return
@@ -219,6 +229,8 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
                     parent.appendChild(v)
                 else:
                     parent.appendChild(document.createTextNode(v))
+            if jstype(v) is 'string' and not is_html:
+                add_note_link(field, name, v, parent)
 
         table.appendChild(E.tr(E.td(name), E.td()))
         if is_html and /[<>]/.test(val + ''):
@@ -337,6 +349,7 @@ def render_metadata(mi, table, book_id, iframe_css):  # {{{
             else:
                 print("WARNING: Translation of series template is incorrect as it does not have an <a> tag")
             table.lastChild.lastChild.appendChild(s)
+            add_note_link(field, name, val, table.lastChild.lastChild)
 
     def process_field(field, fm):
         name = fm.name or field

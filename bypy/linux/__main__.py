@@ -13,7 +13,7 @@ import time
 from functools import partial
 
 from bypy.constants import (
-    OUTPUT_DIR, PREFIX, SRC as CALIBRE_DIR, python_major_minor_version,
+    LIBDIR, OUTPUT_DIR, PREFIX, SRC as CALIBRE_DIR, python_major_minor_version,
 )
 from bypy.freeze import (
     extract_extension_modules, fix_pycryptodome, freeze_python, is_package_dir,
@@ -47,7 +47,7 @@ def binary_includes():
             ('usb-1.0 mtp expat sqlite3 ffi z lzma openjp2 poppler dbus-1 iconv xml2 xslt jpeg png16'
              ' webp webpmux webpdemux sharpyuv exslt ncursesw readline chm hunspell-1.7 hyphen'
              ' icudata icui18n icuuc icuio stemmer gcrypt gpg-error uchardet graphite2'
-             ' brotlicommon brotlidec brotlienc zstd podofo'
+             ' brotlicommon brotlidec brotlienc zstd podofo ssl crypto tiff'
              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
         )) + [
             # debian/ubuntu for for some typical stupid reason use libpcre.so.3
@@ -58,7 +58,7 @@ def binary_includes():
             glob.glob('/usr/lib/*/libpcre.so.3')[0],
 
             get_dll_path('bz2', 2), j(PREFIX, 'lib', 'libunrar.so'),
-            get_dll_path('ssl', 2), get_dll_path('crypto', 2), get_dll_path('python' + py_ver, 2),
+            get_dll_path('python' + py_ver, 2), get_dll_path('jbig', 2),
 
             # We dont include libstdc++.so as the OpenGL dlls on the target
             # computer fail to load in the QPA xcb plugin if they were compiled
@@ -125,6 +125,8 @@ def copy_libs(env):
         os.chmod(j(
             dest, os.path.basename(x)),
             stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH)
+    for x in ('ossl-modules',):
+        shutil.copytree(os.path.join(LIBDIR, x), os.path.join(env.lib_dir, x))
 
     base = j(QT_PREFIX, 'plugins')
     dest = j(env.lib_dir, '..', 'plugins')
