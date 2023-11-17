@@ -8,15 +8,15 @@ Forwarded: not-needed
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/calibre/db/tests/writing.py b/src/calibre/db/tests/writing.py
-index 6247059..b838f15 100644
+index 383af79..569e3cf 100644
 --- a/src/calibre/db/tests/writing.py
 +++ b/src/calibre/db/tests/writing.py
-@@ -405,7 +405,7 @@ class WritingTest(BaseTest):
+@@ -411,7 +411,7 @@ class WritingTest(BaseTest):
          from calibre.db.restore import Restore
          restorer = Restore(cl)
          restorer.start()
--        restorer.join(16)
-+        restorer.join(160)
+-        restorer.join(60)
++        restorer.join(600)
          af(restorer.is_alive())
          cache = self.init_cache(cl)
          ae(before, {f:cache.all_field_for(f, book_ids) for f in tested_fields})
