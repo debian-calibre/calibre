@@ -58,6 +58,10 @@ class TheEconomicTimes(BasicNewsRecipe):
     ]
 
     def parse_index(self):
+        self.log(
+            '\n***\nif this recipe fails, report it on: '
+            'https://www.mobileread.com/forums/forumdisplay.php?f=228\n***\n'
+        )
         soup = self.index_to_soup(
             'https://economictimes.indiatimes.com/print_edition.cms'
         )
@@ -79,11 +83,10 @@ class TheEconomicTimes(BasicNewsRecipe):
             for h3 in section.findAll(("h1", "h3", "h4", "h5")):
                 span = h3.find(
                     'span',
-                    href=lambda x: x and x.startswith('/epaper/'),
+                    href=lambda x: x and x.startswith('https://economictimes.indiatimes.com/epaper/'),
                     attrs={'class': 'banner'}
                 )
                 url = span['href']
-                url = 'https://economictimes.indiatimes.com' + url
                 title = self.tag_to_string(span)
                 div = h3.find_next_sibling('div', attrs={'class': 'dsc'})
                 if div is not None:

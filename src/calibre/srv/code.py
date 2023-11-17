@@ -234,6 +234,7 @@ def get_library_init_data(ctx, rd, db, num, sorts, orders, vl):
         ans['book_display_fields'] = get_field_list(db)
         ans['fts_enabled'] = db.is_fts_enabled()
         ans['book_details_vertical_categories'] = db._pref('book_details_vertical_categories', ())
+        ans['fields_that_support_notes'] = tuple(db._field_supports_notes())
         mdata = ans['metadata'] = {}
         try:
             extra_books = {
@@ -297,6 +298,22 @@ def interface_data(ctx, rd):
         raise HTTPNotFound('Invalid number of books: %r' % rd.query.get('num'))
     ans.update(get_library_init_data(ctx, rd, db, num, sorts, orders, vl))
     return ans
+
+
+@endpoint('/interface-data/newly-added', postprocess=json)
+def newly_added(ctx, rd):
+    '''
+    Get newly added books.
+
+    Optional: ?num=3&library_id=<default library>
+    '''
+    db, library_id = get_library_data(ctx, rd)[:2]
+    count = int(rd.query.get('num', 3))
+    with db.safe_read_lock:
+        nbids = db._newly_added_book_ids(count)
+        titles = db._all_field_for('title', nbids)
+        authors = db._all_field_for('authors', nbids)
+        return {'library_id': library_id, 'books': nbids, 'titles': titles, 'authors': authors}
 
 
 @endpoint('/interface-data/more-books', postprocess=json, methods=POSTABLE)
@@ -443,5 +460,21 @@ def field_names(ctx, rd, field):
         ans = all_lang_names()
     else:
         db, library_id = get_library_data(ctx, rd)[:2]
-        ans = tuple(sorted(db.all_field_names(field), key=numeric_sort_key))
+        try:
+            ans = tuple(sorted(db.all_field_names(field), key=numeric_sort_key))
+        except ValueError:
+            raise HTTPNotFound(f'{field} is not a one-one or many-one field')
     return ans
+
+
+@endpoint('/interface-data/field-id-map/{field}', postprocess=json)
+def field_id_map(ctx, rd, field):
+    '''
+    Get a map of all ids:names for the specified field
+    Optional: ?library_id=<default library>
+    '''
+    db, library_id = get_library_data(ctx, rd)[:2]
+    try:
+        return db.get_id_map(field)
+    except ValueError:
+        raise HTTPNotFound(f'{field} is not a one-one or many-one field')

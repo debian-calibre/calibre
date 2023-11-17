@@ -13,7 +13,6 @@
 #define USING_SHARED_PODOFO
 #include <podofo.h>
 #include <unordered_set>
-#include <unordered_map>
 using namespace PoDoFo;
 using namespace std::literals;
 
@@ -130,9 +129,8 @@ object_as_reference(const PdfObject *o) {
     return o->IsReference() ? o->GetReference() : o->GetIndirectReference();
 }
 
-// Needed to avoid PoDoFo clobbering the /Info and XMP metadata with its own nonsense
-// rename to NoMetadataUdate after https://github.com/podofo/podofo/commit/96689eb6e45b71eae1577ecb2d4a796c52e9a813
-static const PdfSaveOptions save_options = PdfSaveOptions::NoModifyDateUpdate;
+// NoMetadataUpdate needed to avoid PoDoFo clobbering the /Info and XMP metadata with its own nonsense
+static const PdfSaveOptions save_options = PdfSaveOptions::NoMetadataUpdate;
 
 class PdfReferenceHasher {
     public:

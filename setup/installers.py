@@ -225,7 +225,7 @@ class ExportPackages(Command):
         base, bypy = get_paths()
         exe = get_exe()
         for which in ('linux', 'macos', 'windows'):
-            cmd = [exe, bypy, 'export'] + ['download.calibre-ebook.com:/srv/download/ci/calibre6'] + [which]
+            cmd = [exe, bypy, 'export'] + ['download.calibre-ebook.com:/srv/download/ci/calibre7'] + [which]
             ret = subprocess.Popen(cmd).wait()
             if ret != 0:
                 raise SystemExit(ret)
@@ -248,7 +248,7 @@ class ExtDev(Command):
             bin_dir = '/cygdrive/c/Program Files/Calibre2'
         elif which == 'macos':
             ext_dir = build_only(which, '', ext)
-            src = os.path.join(ext_dir, os.path.basename(path))
+            src = os.path.join(ext_dir, f'{ext}.so')
             print(
                 "\n\n\x1b[33;1mWARNING: This does not work on macOS, unless you use un-signed builds with ",
                 ' ./update-on-ox develop\x1b[m',

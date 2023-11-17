@@ -2,9 +2,8 @@
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
 
-from enum import IntEnum
 import textwrap
-
+from enum import IntEnum
 from qt.core import (
     QAction, QApplication, QBrush, QCheckBox, QDialog, QDialogButtonBox, QGridLayout,
     QHBoxLayout, QIcon, QKeySequence, QLabel, QListView, QModelIndex, QPalette, QPixmap,
@@ -13,6 +12,7 @@ from qt.core import (
 )
 
 from calibre import fit_image
+from calibre.db.constants import RESOURCE_URL_SCHEME
 from calibre.gui2 import NO_URL_FORMATTING, gprefs
 from calibre.gui2.book_details import (
     create_open_cover_with_menu, resolved_css, details_context_menu_event, render_html, set_html,
@@ -118,6 +118,8 @@ class Configure(Dialog):
 
 
 class Details(HTMLDisplay):
+
+    notes_resource_scheme = RESOURCE_URL_SCHEME
 
     def __init__(self, book_info, parent=None, allow_context_menu=True, is_locked=False):
         HTMLDisplay.__init__(self, parent)
@@ -301,7 +303,7 @@ class BookInfo(QDialog):
 
     def on_link_clicked(self, qurl):
         link = str(qurl.toString(NO_URL_FORMATTING))
-        self.link_delegate(link)
+        self.link_delegate(link, self)
 
     def done(self, r):
         self.save_geometry(gprefs, self.geometry_string('book_info_dialog_geometry'))

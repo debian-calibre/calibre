@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "oktober 20, 2023" "6.29.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "november 17, 2023" "7.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -133,7 +133,7 @@ Inaktivera delning vid sidbrytningar. Normalt delas inmatningsfilen automatiskt 
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-Det här alternativet behövs endast om du tänker använda EPUB:n med FBReaderJ. Det plattar ut filsystemet inuti EPUB:n och placerar alla filer i den översta nivån.
+Det här alternativet behövs endast om du tänker använda EPUB:en med FBReaderJ. Det plattar ut filsystemet inuti EPUB:en och placerar alla filer i den översta nivån.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,7 +143,7 @@ Infoga en indragsinnehållsförteckning som kommer att visas som en del av boken
 .INDENT 0.0
 .TP
 .B \-\-epub\-max\-image\-size
-Maximal bildstorlek (bredd x höjd). Ett värde på none betyder att du använder skärmstorleken från utmatningsprofilen. Ett värde på profile betyder att ingen maximal storlek har angetts. Till exempel kommer ett värde på 100x200 att göra att alla bilder ändras så att deras bredd inte är mer än 100 pixlar och deras höjd inte är mer än 200 pixlar. Observera att detta endast påverkar storleken på själva bildfilerna. Vilken bild som helst kan återges i en annan storlek beroende på formgivningen som tillämpas på den i dokumentet.
+Maximal bildstorlek (bredd x höjd). Ett värde på none betyder att du använder skärmstorleken från utmatningsprofilen. Ett värde på profile betyder att ingen maximal storlek har angetts. Till exempel kommer ett värde på 100x200 att göra att alla bilder ändras så att deras bredd inte är mer än 100 pixlar och deras höjd inte är mer än 200 pixlar. Observera att detta endast påverkar storleken på själva bildfilerna. Vilken bild som helst kan renderas i en annan storlek beroende på formgivningen som tillämpas på den i dokumentet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -168,7 +168,7 @@ Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödv
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Om inmatningsfilen inte har något omslag och du inte ställer in ett, skapas normalt ett standardomslag skapats med titel, författare o.s.v. Med det här alternativet aktiverat skapas inga standardomslag.
+Om inmatningsfilen inte har något omslag och du inte ställer in ett, skapas normalt ett standardomslag skapats med titel, författare osv. Med det här alternativet aktiverat skapas inga standardomslag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -226,7 +226,7 @@ Bädda in den angivna teckensnittsfamiljen i boken. Här anges \fB\(dq\fPbas\fB\
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Som standard kommer calibre att använda stenografiformen för olika CSS\-egenskaper som marginal, utfyllnad, kanter, o.s.v. Det här alternativet kommer att få den att använda hela expanderade formen istället. Observera att CSS alltid utökas vid skapande av EPUB\-filer med utmatningsprofilen inställd på en av Nook\-profilerna eftersom Nook inte kan hantera stenografisk CSS.
+Som standard kommer calibre att använda stenografiformen för olika CSS\-egenskaper som marginal, utfyllnad, kanter, osv. Det här alternativet kommer att få den att använda hela expanderade formen istället. Observera att CSS alltid utökas vid skapande av EPUB\-filer med utmatningsprofilen inställd på en av Nook\-profilerna eftersom Nook inte kan hantera stenografisk CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -256,7 +256,7 @@ Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mell
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell återgivning av ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de återges korrekt. Som standard konverterar calibre en ligatur till motsvarande par av normala tecken. Det här alternativet kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell rendering av ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de renderas korrekt. Som standard konverterar calibre en ligatur till motsvarande par av normala tecken. Det här alternativet kommer att bevara ligaturerna istället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -545,7 +545,7 @@ Ange e\-bokbeskrivning.
 .INDENT 0.0
 .TP
 .B \-\-cover
-Ställ in omslaget till den angivna filen eller URL:n
+Ställ in omslaget till den angivna filen eller URL:en
 .UNINDENT
 .INDENT 0.0
 .TP

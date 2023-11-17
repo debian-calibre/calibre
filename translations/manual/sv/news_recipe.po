@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-19 08:30+0000\n"
+"POT-Creation-Date: 2023-11-17 02:56+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Jonatan Nyberg, 2016-2017,2021-2023\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -28,7 +28,7 @@ msgstr "API-dokumentation för recept"
 
 #: ../../__w/calibre/calibre/manual/news_recipe.rst:9
 msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
-msgstr "API:n för skriva recept är definierade av :class:`BasicNewsRecipe`"
+msgstr "API:et för skriva recept är definierade av :class:`BasicNewsRecipe`"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe:1
@@ -81,7 +81,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr "Returnera en uppsättning kanoniska representationer av ``url``. Standardimplementeringen använder bara serverns värdnamn och sökväg för URL:en, utan att ignorerar eventuella frågeparametrar, fragment o.s.v. De kanoniska representationerna måste vara unika för alla URL:er för den här nyhetskällan. Om de inte är det kan interna länkar lösas felaktigt."
+msgstr "Returnera en uppsättning kanoniska representationer av ``url``. Standardimplementeringen använder bara serverns värdnamn och sökväg för URL:en, utan att ignorerar eventuella frågeparametrar, fragment osv. De kanoniska representationerna måste vara unika för alla URL:er för den här nyhetskällan. Om de inte är det kan interna länkar lösas felaktigt."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -108,7 +108,7 @@ msgstr "Är True om URL:en kommer från en intern länk i en HTML-fil. False om 
 msgid ""
 "Called after all articles have been download. Use it to do any cleanup like "
 "logging out of subscription sites, etc."
-msgstr "Anropas efter alla artiklar har hämtats. Använd den för att göra godtycklig sanering som att logga ut från prenumerationsplatser o.s.v."
+msgstr "Anropas efter alla artiklar har hämtats. Använd den för att göra godtycklig sanering som att logga ut från prenumerationsplatser osv."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
@@ -232,7 +232,7 @@ msgid ""
 "temporary files. The `url` key in the dictionary is useful if the effective "
 "URL of the article is different from the URL passed into this method, for "
 "example, because of redirects. It can be omitted if the URL is unchanged."
-msgstr ""
+msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikel-URL. Den ska returnera sökvägen till en fil i filsystemet som innehåller artikeln HTML. Den filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben. Alternativt kan du returnera en ordbok av formatet: {'data': <HTML data>, 'url': <the resolved URL of the article>}. Detta undviker att behöva skapa tillfälliga filer. `url`-nyckeln i ordboken är användbar om artikelns effektiva URL skiljer sig från URL-adressen som skickas till den här metoden, till exempel på grund av omdirigeringar. Den kan utelämnas om URL:en är oförändrad."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
@@ -266,7 +266,7 @@ msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the precessed URL. Return"
 " None or an empty string to skip fetching the image."
-msgstr "Utför en del bearbetning av bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder o.s.v.) och returnera den föregående URL:en. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
+msgstr "Utför en del bearbetning av bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder osv.) och returnera den föregående URL:en. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -348,7 +348,7 @@ msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
 "HTML (soup)."
-msgstr "Anropas när varje HTML-sida som tillhör artikel hämtas. Avsedd att användas för att få artikelns metadata som författare/sammanfattning/o.s.v. från den analyserad HTML:n (soap)."
+msgstr "Anropas när varje HTML-sida som tillhör artikel hämtas. Avsedd att användas för att få artikelns metadata som författare/sammanfattning/osv. från den analyserad HTML:en (soap)."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
@@ -410,7 +410,7 @@ msgid ""
 "before it is parsed for links and images. It is called after the cleanup as "
 "specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
 "processing on the :term:`HTML`. It should return `soup` after processing it."
-msgstr "Denna metod anropas med källan till varje hämtad :term:`HTML`-fil, innan den analyseras för länkar och bilder. Den anropas efter rensningen som specificerats av remove_tags o.s.v. Det kan användas för att göra godtyckligt kraftfull förbearbetning av :term:`HTML`. Det ska returnera `soup` efter bearbetning."
+msgstr "Denna metod anropas med källan till varje hämtad :term:`HTML`-fil, innan den analyseras för länkar och bilder. Den anropas efter rensningen som specificerats av remove_tags osv. Det kan användas för att göra godtyckligt kraftfull förbearbetning av :term:`HTML`. Det ska returnera `soup` efter bearbetning."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
@@ -437,7 +437,7 @@ msgid ""
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den analyseras i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML:n var hämtad."
+msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den analyseras i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML:en var hämtad."
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6

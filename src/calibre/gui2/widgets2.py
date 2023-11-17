@@ -9,8 +9,8 @@ from qt.core import (
     QFontInfo, QFontMetrics, QFrame, QIcon, QKeySequence, QLabel, QLayout, QMenu,
     QMimeData, QPainter, QPalette, QPixmap, QPoint, QPushButton, QRect, QScrollArea,
     QSize, QSizePolicy, QStyle, QStyledItemDelegate, QStyleOptionToolButton,
-    QStylePainter, Qt, QTabWidget, QTextBrowser, QTextCursor, QTimer, QToolButton,
-    QUndoCommand, QUndoStack, QUrl, QWidget, pyqtSignal,
+    QStylePainter, Qt, QTabWidget, QTextBrowser, QTextCursor, QTextDocument, QTimer,
+    QToolButton, QUndoCommand, QUndoStack, QUrl, QWidget, pyqtSignal,
 )
 
 from calibre import prepare_string_for_xml
@@ -518,9 +518,11 @@ class Separator(QWidget):  # {{{
 class HTMLDisplay(QTextBrowser):
 
     anchor_clicked = pyqtSignal(object)
+    notes_resource_scheme = ''  # set to scheme to use to load resources for notes from the current db
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, save_resources_in_document=True):
         QTextBrowser.__init__(self, parent)
+        self.save_resources_in_document = save_resources_in_document
         self.last_set_html = ''
         self.default_css = self.external_css = ''
         app = QApplication.instance()
@@ -579,16 +581,35 @@ class HTMLDisplay(QTextBrowser):
                     data = f.read()
             except OSError:
                 if path.rpartition('.')[-1].lower() in {'jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'}:
-                    return QByteArray(bytearray.fromhex(
+                    r = QByteArray(bytearray.fromhex(
                         '89504e470d0a1a0a0000000d49484452'
                         '000000010000000108060000001f15c4'
                         '890000000a49444154789c6300010000'
                         '0500010d0a2db40000000049454e44ae'
                         '426082'))
+                    if self.save_resources_in_document:
+                        self.document().addResource(rtype, qurl, r)
+                    return r
             else:
-                return QByteArray(data)
+                r = QByteArray(data)
+                if self.save_resources_in_document:
+                    self.document().addResource(rtype, qurl, r)
+                return r
         elif qurl.scheme() == 'calibre-icon':
-            return QIcon.icon_as_png(qurl.path().lstrip('/'), as_bytearray=True)
+            r = QIcon.icon_as_png(qurl.path().lstrip('/'), as_bytearray=True)
+            self.document().addResource(rtype, qurl, r)
+            return r
+        elif self.notes_resource_scheme and qurl.scheme() == self.notes_resource_scheme and int(rtype) == int(QTextDocument.ResourceType.ImageResource):
+            from calibre.gui2.ui import get_gui
+            gui = get_gui()
+            if gui is not None:
+                db = gui.current_db.new_api
+                resource = db.get_notes_resource(f'{qurl.host()}:{qurl.path()[1:]}')
+                if resource is not None:
+                    r = QByteArray(resource['data'])
+                    if self.save_resources_in_document:
+                        self.document().addResource(rtype, qurl, r)
+                    return r
         else:
             return QTextBrowser.loadResource(self, rtype, qurl)
 

@@ -1,5 +1,6 @@
 import json
 import re
+from calibre import browser
 from urllib.parse import quote
 from html5_parser import parse
 
@@ -20,6 +21,7 @@ class ft(BasicNewsRecipe):
     resolve_internal_links = True
     remove_attributes = ['style', 'width', 'height']
     masthead_url = 'https://im.ft-static.com/m/img/masthead_main.jpg'
+    simultaneous_downloads = 1
 
     extra_css = '''
         .article-info__time-byline {font-size:small; font-weight:bold; }
@@ -37,9 +39,15 @@ class ft(BasicNewsRecipe):
     ]
 
     remove_tags = [
+        dict(name=['source', 'svg', 'button']),
         dict(name='aside', attrs={'class':'n-content-recommended--single-story'}),
+        dict(attrs={'data-layout-name':'card'}),
         classes('in-article-advert')
     ]
+
+    def get_cover_url(self):
+        soup = self.index_to_soup('https://www.frontpages.com/financial-times/')
+        return 'https://www.frontpages.com' + soup.find('img', attrs={'id':'giornale-img'})['src']
 
     # needs_subscription = 'optional'
     #
@@ -57,22 +65,29 @@ class ft(BasicNewsRecipe):
     #     return br
 
     def get_browser(self, *args, **kwargs):
-        kwargs['user_agent'] = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-        br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
+        return self
+
+    def clone_browser(self, *args, **kwargs):
+        return self.get_browser()
+
+    def open_novisit(self, *args, **kwargs):
+        br = browser(user_agent='Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)')
         br.addheaders += [
             ('Referer', 'https://www.google.com/'),
             ('X-Forwarded-For', '66.249.66.1')
         ]
-        return br
+        return br.open_novisit(*args, **kwargs)
+
+    open = open_novisit
 
     feeds = [
+        ('Opinion', 'https://www.ft.com/opinion?format=rss'),
         ('World', 'https://www.ft.com/world?format=rss'),
         ('US', 'https://www.ft.com/us?format=rss'),
         ('Companies', 'https://www.ft.com/companies?format=rss'),
         ('Tech', 'https://www.ft.com/technology?format=rss'),
         ('Markets', 'https://www.ft.com/markets?format=rss'),
         ('Climate', 'https://www.ft.com/climate-capital?format=rss'),
-        ('Opinion', 'https://www.ft.com/opinion?format=rss'),
         ('Life & Arts', 'https://www.ft.com/life-arts?format=rss'),
         ('How to spend it', 'https://www.ft.com/htsi?format=rss'),
     ]
@@ -132,4 +147,6 @@ class ft(BasicNewsRecipe):
         for con in soup.findAll(attrs={'class':'n-content-layout__slot'}):
             if con.find('figure'):
                 con['id'] = 'fig'
+        if h3 := soup.find(**classes('o-topper__standfirst')):
+            h3.name = 'h3'
         return soup

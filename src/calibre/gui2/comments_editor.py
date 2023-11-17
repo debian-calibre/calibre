@@ -4,25 +4,29 @@
 
 import os
 import re
+import sys
 import weakref
 from collections import defaultdict
 from contextlib import contextmanager
+from functools import partial
 from html5_parser import parse
 from lxml import html
 from qt.core import (
     QAction, QApplication, QBrush, QByteArray, QCheckBox, QColor, QColorDialog, QDialog,
     QDialogButtonBox, QFont, QFontInfo, QFontMetrics, QFormLayout, QHBoxLayout, QIcon,
-    QKeySequence, QLabel, QLineEdit, QMenu, QPalette, QPlainTextEdit, QPushButton,
-    QSize, QSyntaxHighlighter, Qt, QTabWidget, QTextBlockFormat, QTextCharFormat,
-    QTextCursor, QTextEdit, QTextFormat, QTextListFormat, QTimer, QToolButton, QUrl,
+    QKeySequence, QLabel, QLineEdit, QMenu, QPalette, QPlainTextEdit, QPointF,
+    QPushButton, QSize, QSpinBox, QSyntaxHighlighter, Qt, QTabWidget, QTextBlockFormat,
+    QTextCharFormat, QTextCursor, QTextDocument, QTextEdit, QTextFormat,
+    QTextFrameFormat, QTextImageFormat, QTextListFormat, QTimer, QToolButton, QUrl,
     QVBoxLayout, QWidget, pyqtSignal, pyqtSlot,
 )
 
-from calibre import xml_replace_entities
+from calibre import fit_image, xml_replace_entities
 from calibre.db.constants import DATA_DIR_NAME
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.gui2 import (
     NO_URL_FORMATTING, choose_dir, choose_files, error_dialog, gprefs, is_dark_theme,
+    safe_open_url,
 )
 from calibre.gui2.book_details import resolved_css
 from calibre.gui2.flow_toolbar import create_flow_toolbar
@@ -35,6 +39,8 @@ from calibre.utils.imghdr import what
 from polyglot.builtins import iteritems, itervalues
 
 # Cleanup Qt markup {{{
+
+OBJECT_REPLACEMENT_CHAR = '\ufffc'
 
 
 def parse_style(style):
@@ -209,6 +215,13 @@ def cleanup_qt_markup(root):
                 if ts:
                     remove_margins(li, ts)
                     remove_zero_indents(ts)
+    for img in root.xpath('//img[@style]'):
+        s = style_map.get(img)
+        if s:
+            if s == {'float': 'left'}:
+                s['margin-right'] = '0.5em'
+            elif s == {'float': 'right'}:
+                s['margin-left'] = '0.5em'
     for style in itervalues(style_map):
         filter_qt_styles(style)
         fw = style.get('font-weight')
@@ -226,7 +239,7 @@ def cleanup_qt_markup(root):
 # }}}
 
 
-def fix_html(original_html, original_txt, remove_comments=True):
+def fix_html(original_html, original_txt, remove_comments=True, callback=None):
     raw = original_html
     raw = xml_to_unicode(raw, strip_encoding_pats=True, resolve_entities=True)[0]
     if remove_comments:
@@ -248,6 +261,8 @@ def fix_html(original_html, original_txt, remove_comments=True):
     except Exception:
         import traceback
         traceback.print_exc()
+    if callback is not None:
+        callback(root, original_txt)
     elems = []
     for body in root.xpath('//body'):
         if body.text:
@@ -266,6 +281,7 @@ def fix_html(original_html, original_txt, remove_comments=True):
 class EditorWidget(QTextEdit, LineEditECM):  # {{{
 
     data_changed = pyqtSignal()
+    insert_images_separately = False
 
     @property
     def readonly(self):
@@ -341,8 +357,9 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
 
         r('color', 'format-text-color', _('Foreground color'))
         r('background', 'format-fill-color', _('Background color'))
-        r('insert_link', 'insert-link', _('Insert link or image'),
+        r('insert_link', 'insert-link', _('Insert link') if self.insert_images_separately else _('Insert link or image'),
           shortcut=QKeySequence('Ctrl+l', QKeySequence.SequenceFormat.PortableText))
+        r('insert_image', 'view-image', _('Insert image'), shortcut=QKeySequence('Ctrl+p', QKeySequence.SequenceFormat.PortableText))
         r('insert_hr', 'format-text-hr', _('Insert separator'),)
         r('clear', 'trash', _('Clear'))
 
@@ -645,6 +662,14 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             c.movePosition(QTextCursor.MoveOperation.EndOfBlock, QTextCursor.MoveMode.MoveAnchor)
             c.insertHtml('<hr>')
 
+    def do_insert_image(self):
+        from calibre.gui2 import choose_images
+        files = choose_images(self, 'choose-image-for-comments-editor', _('Choose image'), formats='png jpeg jpg gif svg webp'.split())
+        if files:
+            self.focus_self()
+            with self.editing_cursor() as c:
+                c.insertImage(files[0])
+
     def do_insert_link(self, *args):
         link, name, is_image = self.ask_link()
         if not link:
@@ -808,7 +833,10 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
 
     @property
     def html(self):
-        return fix_html(self.toHtml(), self.toPlainText().strip())
+        return fix_html(self.toHtml(), self.toPlainText().strip(), callback=self.get_html_callback)
+
+    def get_html_callback(self, root, text):
+        pass
 
     @html.setter
     def html(self, val):
@@ -823,20 +851,23 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
             if qurl.isRelative():
                 qurl = self.base_url.resolved(qurl)
             if qurl.isLocalFile():
+                data = None
                 path = qurl.toLocalFile()
                 try:
                     with open(path, 'rb') as f:
                         data = f.read()
                 except OSError:
                     if path.rpartition('.')[-1].lower() in {'jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'}:
-                        return QByteArray(bytearray.fromhex(
+                        data = bytearray.fromhex(
                                     '89504e470d0a1a0a0000000d49484452'
                                     '000000010000000108060000001f15c4'
                                     '890000000a49444154789c6300010000'
                                     '0500010d0a2db40000000049454e44ae'
-                                    '426082'))
-                else:
-                    return QByteArray(data)
+                                    '426082')
+                if data is not None:
+                    r = QByteArray(data)
+                    self.document().addResource(rtype, qurl, r)
+                    return r
 
     def set_html(self, val, allow_undo=True):
         if not allow_undo or self.readonly:
@@ -877,8 +908,132 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         ans.setHtml(html)
         return ans
 
+    def remove_image_at(self, cursor_pos):
+        c = self.textCursor()
+        c.clearSelection()
+        c.setPosition(cursor_pos)
+        fmt = c.charFormat()
+        if fmt.isImageFormat():
+            c.deletePreviousChar()
+
+    def resize_image_at(self, cursor_pos):
+        c = self.textCursor()
+        c.clearSelection()
+        c.setPosition(cursor_pos)
+        c.movePosition(QTextCursor.MoveOperation.PreviousCharacter, QTextCursor.MoveMode.KeepAnchor)
+        fmt = c.charFormat()
+        if not fmt.isImageFormat():
+            return
+        fmt = fmt.toImageFormat()
+        from calibre.utils.img import image_from_data
+        img = image_from_data(self.loadResource(QTextDocument.ResourceType.ImageResource, QUrl(fmt.name())))
+        w, h = int(fmt.width()), int(fmt.height())
+        d = QDialog(self)
+        l = QVBoxLayout(d)
+        la = QLabel(_('Shrink image to fit within:'))
+        h = QHBoxLayout()
+        l.addLayout(h)
+        la = QLabel(_('&Width:'))
+        h.addWidget(la)
+        d.width = w = QSpinBox(self)
+        w.setRange(0, 10000), w.setSuffix(' px')
+        w.setValue(int(fmt.width()))
+        h.addWidget(w), la.setBuddy(w)
+        w.setSpecialValueText(' ')
+        la = QLabel(_('&Height:'))
+        h.addWidget(la)
+        d.height = w = QSpinBox(self)
+        w.setRange(0, 10000), w.setSuffix(' px')
+        w.setValue(int(fmt.height()))
+        h.addWidget(w), la.setBuddy(w)
+        w.setSpecialValueText(' ')
+        h.addStretch(10)
+        bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        bb.accepted.connect(d.accept), bb.rejected.connect(d.reject)
+        d.setWindowTitle(_('Enter new size for image'))
+        l.addWidget(bb)
+        d.resize(d.sizeHint())
+
+        if d.exec() == QDialog.DialogCode.Accepted:
+            page_width, page_height = (d.width.value() or sys.maxsize), (d.height.value() or sys.maxsize)
+            w, h = int(img.width()), int(img.height())
+            resized, nw, nh = fit_image(w, h, page_width, page_height)
+            if resized:
+                fmt.setWidth(nw), fmt.setHeight(nh)
+            else:
+                f = QTextImageFormat()
+                f.setName(fmt.name())
+                fmt = f
+            c.setCharFormat(fmt)
+
+    def align_image_at(self, cursor_pos, alignment):
+        c = self.textCursor()
+        c.clearSelection()
+        c.setPosition(cursor_pos)
+        fmt = c.charFormat()
+        if fmt.isImageFormat() and c.currentFrame():
+            f = self.frame_for_cursor(c)
+            if f is not None:
+                ff = f.frameFormat()
+                ff.setPosition(alignment)
+                f.setFrameFormat(ff)
+                self.document().markContentsDirty(cursor_pos-2, 5)
+            else:
+                c.deleteChar()
+                c.insertImage(fmt.toImageFormat(), alignment)
+
+    def first_image_replacement_char_position_for(self, image_name):
+        d = self.document()
+        c = self.textCursor()
+        c.setPosition(0)
+        while True:
+            c = d.find(OBJECT_REPLACEMENT_CHAR, c, QTextDocument.FindFlag.FindCaseSensitively)
+            if c.isNull():
+                break
+            fmt = c.charFormat()
+            if fmt.isImageFormat() and fmt.toImageFormat().name() == image_name:
+                return c.position()
+        return -1
+
+    def frame_for_cursor(self, c):
+        q = c.position()
+        for cf in c.currentFrame().childFrames():
+            a, b = cf.firstPosition(), cf.lastPosition()
+            a, b = min(a, b), max(a, b)
+            if a <= q <= b:
+                return cf
+
     def contextMenuEvent(self, ev):
         menu = QMenu(self)
+        img_name = self.document().documentLayout().imageAt(QPointF(ev.pos()))
+        if img_name:
+            pos = self.first_image_replacement_char_position_for(img_name)
+            if pos > -1:
+                c = self.textCursor()
+                c.clearSelection()
+                c.setPosition(pos)
+                pos = QTextFrameFormat.Position.InFlow
+                ff = self.frame_for_cursor(c)
+                if ff is not None:
+                    pos = ff.frameFormat().position()
+                align_menu = menu.addMenu(QIcon.ic('view-image.png'), _('Image...'))
+                def a(text, epos):
+                    ac = align_menu.addAction(text)
+                    ac.setCheckable(True)
+                    ac.triggered.connect(partial(self.align_image_at, c.position(), epos))
+                    if pos == epos:
+                        ac.setChecked(True)
+                cs = align_menu.addAction(QIcon.ic('resize.png'), _('Change size'))
+                cs.triggered.connect(partial(self.resize_image_at, c.position()))
+                align_menu.addSeparator()
+                a(_('Float to the left'), QTextFrameFormat.Position.FloatLeft)
+                a(_('Inline with text'), QTextFrameFormat.Position.InFlow)
+                a(_('Float to the right'), QTextFrameFormat.Position.FloatRight)
+                align_menu.addSeparator()
+                align_menu.addAction(QIcon.ic('trash.png'), _('Remove this image')).triggered.connect(partial(self.remove_image_at, c.position()))
+        link_name = self.document().documentLayout().anchorAt(QPointF(ev.pos()))
+        if link_name:
+            menu.addAction(QIcon.ic('insert-link.png'), _('Open link'), partial(safe_open_url, QUrl(link_name)))
         for ac in 'undo redo -- cut copy paste paste_and_match_style -- select_all'.split():
             if ac == '--':
                 menu.addSeparator()
@@ -901,6 +1056,8 @@ class EditorWidget(QTextEdit, LineEditECM):  # {{{
         menu.addMenu(am)
         am.addAction(self.action_block_style)
         am.addAction(self.action_insert_link)
+        if self.insert_images_separately:
+            am.addAction(self.action_insert_image)
         am.addAction(self.action_background)
         am.addAction(self.action_color)
         menu.addAction(_('Smarten punctuation'), parent.smarten_punctuation)
@@ -1137,12 +1294,13 @@ class Editor(QWidget):  # {{{
 
     toolbar_prefs_name = None
     data_changed = pyqtSignal()
+    editor_class = EditorWidget
 
     def __init__(self, parent=None, one_line_toolbar=False, toolbar_prefs_name=None):
         QWidget.__init__(self, parent)
         self.toolbar_prefs_name = toolbar_prefs_name or self.toolbar_prefs_name
         self.toolbar = create_flow_toolbar(self, restrict_to_single_line=one_line_toolbar, icon_size=18)
-        self.editor = EditorWidget(self)
+        self.editor = self.editor_class(self)
         self.editor.data_changed.connect(self.data_changed)
         self.set_base_url = self.editor.set_base_url
         self.set_html = self.editor.set_html
@@ -1199,6 +1357,8 @@ class Editor(QWidget):  # {{{
 
         self.toolbar.add_action(self.editor.action_block_style, popup_mode=QToolButton.ToolButtonPopupMode.InstantPopup)
         self.toolbar.add_action(self.editor.action_insert_link)
+        if self.editor.insert_images_separately:
+            self.toolbar.add_action(self.editor.action_insert_image)
         self.toolbar.add_action(self.editor.action_insert_hr)
         self.toolbar.add_separator()
 
@@ -1304,5 +1464,7 @@ if __name__ == '__main__':
     set <u>out</u> to have an <em>affair</em>, <span style="font-style:italic; background-color:red">
     much</span> less a <s>long-term</s>, <b>devoted</b> one.</span><p>hello'''
     w.html = '<div><p id="moo" align="justify">Testing <em>a</em> link.</p><p align="justify">\xa0</p><p align="justify">ss</p></div>'
+    i = 'file:///home/kovid/work/calibre/resources/images/'
+    w.html = f'<p>Testing <img src="{i}/donate.png"> img and another <img src="{i}/lt.png">file</p>'
     app.exec()
     # print w.html

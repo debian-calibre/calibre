@@ -3,6 +3,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import json
+import re
 from pprint import pformat
 
 from calibre.web.feeds.news import BasicNewsRecipe
@@ -41,13 +42,14 @@ def parse_lead_image(media):
         yield '<div class="cap">' + media['caption'] + '</div>'
     if 'credit' in media:
         yield '<div class="cred">' + media['credit'] + '</div>'
+    yield '</p>'
 
 
 def parse_body(item):
     c = item['cntnt']
     if item.get('type') == 'inline':
         if c.get('cmsType') == 'listicle':
-            if 'title' in c:	
+            if 'title' in c:
                 yield '<h3>' + escape(c['title']) + '</h3>'
             yield c['text']
         elif c.get('cmsType') == 'image':
@@ -55,7 +57,7 @@ def parse_body(item):
                 yield line
         elif c.get('cmsType') == 'imagegroup':
             for imgs in c['images']:
-                for line in parse_lead_image(imgs): 
+                for line in parse_lead_image(imgs):
                     yield line
         elif c.get('cmsType') == 'pullquote':
             if 'quote' in c:
@@ -124,6 +126,7 @@ class NatGeo(BasicNewsRecipe):
     masthead_url = 'https://i.natgeofe.com/n/e76f5368-6797-4794-b7f6-8d757c79ea5c/ng-logo-2fl.png?w=600&h=600'
     remove_empty_feeds = True
     resolve_internal_links = True
+    ignore_duplicate_articles = {'url'}
 
     extra_css = '''
         .sub, blockquote { color:#404040; }
@@ -132,6 +135,11 @@ class NatGeo(BasicNewsRecipe):
         .cred {text-align:center; font-size:small; color:#404040; }
         .auth, .time { font-size:small; color:#5c5c5c; }
     '''
+
+    def get_cover_url(self):
+        soup = self.index_to_soup('https://www.nationalgeographic.com/magazine/')
+        png = re.findall('https://i\.natgeofe\.com\S+?national-geographic-\S+?\.jpg', soup.decode('utf-8'))
+        return png[0] + '?w=1000&h=1000'
 
     def parse_index(self):
         pages = [
@@ -171,5 +179,12 @@ class NatGeo(BasicNewsRecipe):
 
     def preprocess_html(self, soup):
         for img in soup.findAll('img', src=True):
-            img['src'] = img['src'] + '?w=700&h=700'
+            # for high res images use '?w=2000&h=2000'
+            img['src'] = img['src'] + '?w=1000&h=1000'
         return soup
+
+    def populate_article_metadata(self, article, soup, first):
+        summ = soup.find(attrs={'class':'byline'})
+        if summ:
+            article.summary = self.tag_to_string(summ)
+            article.text_summary = self.tag_to_string(summ)

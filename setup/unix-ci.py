@@ -63,7 +63,15 @@ def run(*args):
     if len(args) == 1:
         args = shlex.split(args[0])
     print(' '.join(args), flush=True)
-    ret = subprocess.Popen(args).wait()
+    p = subprocess.Popen(args)
+    try:
+        ret = p.wait(timeout=600)
+    except subprocess.TimeoutExpired as err:
+        ret = 1
+        print(err, file=sys.stderr, flush=True)
+        print('Timed out running:', ' '.join(args), flush=True, file=sys.stderr)
+        p.kill()
+
     if ret != 0:
         raise SystemExit(ret)
 
@@ -130,7 +138,7 @@ def main():
 
         tball = 'macos-64' if ismacos else 'linux-64'
         download_and_decompress(
-            f'https://download.calibre-ebook.com/ci/calibre6/{tball}.tar.xz', SW
+            f'https://download.calibre-ebook.com/ci/calibre7/{tball}.tar.xz', SW
         )
         if not ismacos:
             install_linux_deps()
@@ -158,11 +166,13 @@ username = api
         run(sys.executable, 'setup.py', 'pot')
     elif action == 'test':
         os.environ['CI'] = 'true'
+        os.environ['OPENSSL_MODULES'] = os.path.join(SW, 'lib', 'ossl-modules')
         if ismacos:
             os.environ['SSL_CERT_FILE'] = os.path.abspath(
                 'resources/mozilla-ca-certs.pem')
             # needed to ensure correct libxml2 is loaded
             os.environ['DYLD_INSERT_LIBRARIES'] = ':'.join(os.path.join(SW, 'lib', x) for x in 'libxml2.dylib libxslt.dylib libexslt.dylib'.split())
+            os.environ['OPENSSL_ENGINES'] = os.path.join(SW, 'lib', 'engines-3')
 
         install_env()
         run_python('setup.py test')

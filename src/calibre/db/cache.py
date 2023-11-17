@@ -15,12 +15,13 @@ import traceback
 import weakref
 from collections import defaultdict
 from collections.abc import MutableSet, Set
+from contextlib import closing
 from functools import partial, wraps
 from io import DEFAULT_BUFFER_SIZE, BytesIO
 from queue import Queue
 from threading import Lock
-from time import monotonic, sleep, time
-from typing import NamedTuple, Tuple
+from time import mktime, monotonic, sleep, time
+from typing import NamedTuple, Optional, Tuple
 
 from calibre import as_unicode, detect_ncpus, isbytestring
 from calibre.constants import iswindows, preferred_encoding
@@ -31,6 +32,7 @@ from calibre.customize.ui import (
 from calibre.db import SPOOL_SIZE, _get_next_series_num_for_list
 from calibre.db.annotations import merge_annotations
 from calibre.db.categories import get_categories
+from calibre.db.constants import NOTES_DIR_NAME
 from calibre.db.errors import NoSuchBook, NoSuchFormat
 from calibre.db.fields import IDENTITY, InvalidLinkTable, create_field
 from calibre.db.lazy import FormatMetadata, FormatsList, ProxyMetadata
@@ -38,6 +40,7 @@ from calibre.db.listeners import EventDispatcher, EventType
 from calibre.db.locking import (
     DowngradeLockError, LockingError, SafeReadLock, create_locks, try_lock,
 )
+from calibre.db.notes.connect import copy_marked_up_text
 from calibre.db.search import Search
 from calibre.db.tables import VirtualTable
 from calibre.db.utils import type_safe_sort_key_function
@@ -646,7 +649,7 @@ class Cache:
             self._fts_start_measuring_rate()
         return changed
 
-    @write_api  # we need to use write locking as SQLITE gives a locked table error is multiple FTS queries are made at the same time
+    @write_api  # we need to use write locking as SQLITE gives a locked table error if multiple FTS queries are made at the same time
     def fts_search(
         self,
         fts_engine_query,
@@ -670,6 +673,123 @@ class Cache:
             process_each_result=process_each_result,
         ))
 
+    # }}}
+
+    # Notes API {{{
+    @read_api
+    def notes_for(self, field, item_id) -> str:
+        ' Return the notes document or an empty string if not found '
+        return self.backend.notes_for(field, item_id)
+
+    @read_api
+    def notes_data_for(self, field, item_id) -> str:
+        ' Return all notes data as a dict or None if note does not exist '
+        return self.backend.notes_data_for(field, item_id)
+
+    @read_api
+    def get_all_items_that_have_notes(self, field_name=None) -> set[int] | dict[str, set[int]]:
+        ' Return all item_ids for items that have notes in the specified field or all fields if field_name is None '
+        return self.backend.get_all_items_that_have_notes(field_name)
+
+    @read_api
+    def field_supports_notes(self, field=None) -> bool:
+        ' Return True iff the specified field supports notes. If field is None return frozenset of all fields that support notes. '
+        if field is None:
+            return self.backend.notes.allowed_fields
+        return field in self.backend.notes.allowed_fields
+
+    @read_api
+    def items_with_notes_in_book(self, book_id: int) -> dict[str, dict[int, str]]:
+        ' Return a dict of field to items that have associated notes for that field for the specified book '
+        ans = {}
+        for k in self.backend.notes.allowed_fields:
+            try:
+                field = self.fields[k]
+            except KeyError:
+                continue
+            v = {}
+            for item_id in field.ids_for_book(book_id):
+                if self.backend.notes_for(k, item_id):
+                    v[item_id] = field.table.id_map[item_id]
+            if v:
+                ans[k] = v
+        return ans
+
+    @write_api
+    def set_notes_for(self, field, item_id, doc: str, searchable_text: str = copy_marked_up_text, resource_hashes=(), remove_unused_resources=False) -> int:
+        '''
+        Set the notes document. If the searchable text is different from the document, specify it as searchable_text. If the document
+        references resources their hashes must be present in resource_hashes. Set remove_unused_resources to True to cleanup unused
+        resources, note that updating a note automatically cleans up resources pertaining to that note anyway.
+        '''
+        return self.backend.set_notes_for(field, item_id, doc, searchable_text, resource_hashes, remove_unused_resources)
+
+    @write_api
+    def add_notes_resource(self, path_or_stream_or_data, name: str, mtime: float = None) -> int:
+        ' Add the specified resource so it can be referenced by notes and return its content hash '
+        return self.backend.add_notes_resource(path_or_stream_or_data, name, mtime)
+
+    @read_api
+    def get_notes_resource(self, resource_hash) -> Optional[dict]:
+        ' Return a dict containing the resource data and name or None if no resource with the specified hash is found '
+        return self.backend.get_notes_resource(resource_hash)
+
+    @read_api
+    def notes_resources_used_by(self, field, item_id):
+        ' Return the set of resource hashes of all resources used by the note for the specified item '
+        return frozenset(self.backend.notes_resources_used_by(field, item_id))
+
+    @write_api
+    def unretire_note_for(self, field, item_id) -> int:
+        ' Unretire a previously retired note for the specified item. Notes are retired when an item is removed from the database '
+        return self.backend.unretire_note_for(field, item_id)
+
+    @read_api
+    def export_note(self, field, item_id) -> str:
+        ' Export the note as a single HTML document with embedded images as data: URLs '
+        return self.backend.export_note(field, item_id)
+
+    @write_api
+    def import_note(self, field, item_id, path_to_html_file, path_is_data=False):
+        ' Import a previously exported note or an arbitrary HTML file as the note for the specified item '
+        if path_is_data:
+            html = path_to_html_file
+            ctime = mtime = time()
+            basedir = base_dir()
+        else:
+            with open(path_to_html_file, 'rb') as f:
+                html = f.read()
+                st = os.stat(f.fileno())
+                ctime, mtime = st.st_ctime, st.st_mtime
+            basedir = os.path.dirname(os.path.abspath(path_to_html_file))
+        return self.backend.import_note(field, item_id, html, basedir, ctime, mtime)
+
+    @write_api  # we need to use write locking as SQLITE gives a locked table error if multiple FTS queries are made at the same time
+    def search_notes(
+        self,
+        fts_engine_query='',
+        use_stemming=True,
+        highlight_start=None,
+        highlight_end=None,
+        snippet_size=None,
+        restrict_to_fields=(),
+        return_text=True,
+        result_type=tuple,
+        process_each_result=None,
+        limit=None,
+    ):
+        ' Search the text of notes using an FTS index. If the query is empty return all notes. '
+        return result_type(self.backend.search_notes(
+            fts_engine_query,
+            use_stemming=use_stemming,
+            highlight_start=highlight_start,
+            highlight_end=highlight_end,
+            snippet_size=snippet_size,
+            return_text=return_text,
+            restrict_to_fields=restrict_to_fields,
+            process_each_result=process_each_result,
+            limit=limit,
+        ))
     # }}}
 
     # Cache Layer API {{{
@@ -834,17 +954,26 @@ class Cache:
     @read_api
     def get_item_id(self, field, item_name):
         ' Return the item id for item_name (case-insensitive) or None if not found '
+        q = icu_lower(item_name)
         try:
-            rmap = {icu_lower(v) if isinstance(v, str) else v:k for k, v in iteritems(self.fields[field].table.id_map)}
+            for item_id, item_val in self.fields[field].table.id_map.items():
+                if icu_lower(item_val) == q:
+                    return item_id
         except KeyError:
             return None
-        return rmap.get(icu_lower(item_name) if isinstance(item_name, str) else item_name, None)
 
     @read_api
     def get_item_ids(self, field, item_names):
         ' Return the item id for item_name (case-insensitive) '
         rmap = {icu_lower(v) if isinstance(v, str) else v:k for k, v in iteritems(self.fields[field].table.id_map)}
         return {name:rmap.get(icu_lower(name) if isinstance(name, str) else name, None) for name in item_names}
+
+    @read_api
+    def get_item_name_map(self, field, normalize_func=None):
+        ' Return mapping of item values to ids '
+        if normalize_func is None:
+            return {v:k for k, v in self.fields[field].table.id_map.items()}
+        return {normalize_func(v):k for k, v in self.fields[field].table.id_map.items()}
 
     @read_api
     def author_data(self, author_ids=None):
@@ -1008,6 +1137,7 @@ class Cache:
         if as_file:
             ret = SpooledTemporaryFile(SPOOL_SIZE)
             if not self.copy_cover_to(book_id, ret):
+                ret.close()
                 return
             ret.seek(0)
         elif as_path:
@@ -1257,6 +1387,7 @@ class Cache:
             try:
                 self.copy_format_to(book_id, fmt, ret)
             except NoSuchFormat:
+                ret.close()
                 return None
             ret.seek(0)
             # Various bits of code try to use the name as the default
@@ -1272,6 +1403,12 @@ class Cache:
             ret = buf.getvalue()
 
         return ret
+
+    @read_api
+    def newly_added_book_ids(self, count=5) -> list[int]:
+        ids_to_sort = self._all_book_ids(list)
+        ids_to_sort.sort(reverse=True)
+        return ids_to_sort[:count]
 
     @read_api
     def multisort(self, fields, ids_to_sort=None, virtual_fields=None):
@@ -1831,6 +1968,8 @@ class Cache:
                 name = None
 
             if name and not replace:
+                if needs_close:
+                    stream_or_path.close()
                 return False
 
             if hasattr(stream_or_path, 'read'):
@@ -1839,7 +1978,6 @@ class Cache:
                 stream = open(stream_or_path, 'rb')
                 needs_close = True
             try:
-                stream = stream_or_path if hasattr(stream_or_path, 'read') else open(stream_or_path, 'rb')
                 size, fname = self._do_add_format(book_id, fmt, stream, name)
             finally:
                 if needs_close:
@@ -2395,6 +2533,18 @@ class Cache:
         return {vm.get(fid):v for fid,v in lm.items() if v}
 
     @read_api
+    def link_for(self, field, item_id):
+        '''
+        Return the link, if any, for the specified item or None if no link is found
+        '''
+        f = self.fields.get(field)
+        if f is not None:
+            table = f.table
+            lm = getattr(table, 'link_map', None)
+            if lm is not None:
+                return lm.get(item_id)
+
+    @read_api
     def get_all_link_maps_for_book(self, book_id):
         '''
         Returns all links for all fields referenced by book identified by book_id.
@@ -2637,10 +2787,10 @@ class Cache:
         return self.backend.dump_and_restore(callback=callback, sql=sql)
 
     @write_api
-    def vacuum(self, include_fts_db=False):
+    def vacuum(self, include_fts_db=False, include_notes_db=True):
         self.is_doing_rebuild_or_vacuum = True
         try:
-            self.backend.vacuum(include_fts_db)
+            self.backend.vacuum(include_fts_db, include_notes_db)
         finally:
             self.is_doing_rebuild_or_vacuum = False
 
@@ -2902,7 +3052,26 @@ class Cache:
                 except:
                     continue
                 if name and path:
-                    new_size = self.backend.apply_to_format(book_id, path, name, fmt, partial(doit, fmt, mi))
+                    try:
+                        new_size = self.backend.apply_to_format(book_id, path, name, fmt, partial(doit, fmt, mi))
+                    except Exception as e:
+                        if report_error is not None:
+                            tb = traceback.format_exc()
+                            if iswindows and isinstance(e, PermissionError) and e.filename and isinstance(e.filename, str):
+                                from calibre_extensions import winutil
+                                try:
+                                    p = winutil.get_processes_using_files(e.filename)
+                                except OSError:
+                                    pass
+                                else:
+                                    path_map = {x['path']: x for x in p}
+                                    tb = _('Could not open the file: "{}". It is already opened in the following programs:').format(e.filename)
+                                    for path, x in path_map.items():
+                                        tb += '\n' + f'{x["app_name"]}: {path}'
+                            report_error(mi, fmt, tb)
+                            new_size = None
+                        else:
+                            raise
                     if new_size is not None:
                         self.format_metadata_cache[book_id].get(fmt, {})['size'] = new_size
                         max_size = self.fields['formats'].table.update_fmt(book_id, fmt, name, new_size, self.backend)
@@ -2939,12 +3108,18 @@ class Cache:
         from polyglot.binary import as_hex_unicode
         key_prefix = as_hex_unicode(library_key)
         book_ids = self._all_book_ids()
-        total = len(book_ids) + 1
+        total = len(book_ids) + 2
         has_fts = self.is_fts_enabled()
         if has_fts:
             total += 1
-        if progress is not None:
-            progress('metadata.db', 0, total)
+        poff = 0
+        def report_progress(fname):
+            nonlocal poff
+            if progress is not None:
+                progress(fname, poff, total)
+            poff += 1
+
+        report_progress('metadata.db')
         pt = PersistentTemporaryFile('-export.db')
         pt.close()
         self.backend.backup_database(pt.name)
@@ -2952,29 +3127,33 @@ class Cache:
         with open(pt.name, 'rb') as f:
             exporter.add_file(f, dbkey)
         os.remove(pt.name)
-        poff = 1
         if has_fts:
-            poff += 1
-            if progress is not None:
-                progress('full-text-search.db', 1, total)
+            report_progress('full-text-search.db')
             pt = PersistentTemporaryFile('-export.db')
             pt.close()
             self.backend.backup_fts_database(pt.name)
-            ftsdbkey = key_prefix + ':::' + 'full-text-search.db'
+            ftsdbkey = key_prefix + ':::full-text-search.db'
             with open(pt.name, 'rb') as f:
                 exporter.add_file(f, ftsdbkey)
             os.remove(pt.name)
+        notesdbkey = key_prefix + ':::notes.db'
+        with PersistentTemporaryFile('-export.db') as pt:
+            self.backend.export_notes_data(pt)
+            pt.flush()
+            pt.seek(0)
+            report_progress('notes.db')
+            exporter.add_file(pt, notesdbkey)
 
         format_metadata = {}
         extra_files = {}
-        metadata = {'format_data':format_metadata, 'metadata.db':dbkey, 'total':total, 'extra_files': extra_files}
+        metadata = {'format_data':format_metadata, 'metadata.db':dbkey, 'notes.db': notesdbkey, 'total':total, 'extra_files': extra_files}
         if has_fts:
             metadata['full-text-search.db'] = ftsdbkey
         for i, book_id in enumerate(book_ids):
             if abort is not None and abort.is_set():
                 return
             if progress is not None:
-                progress(self._field_for('title', book_id), i + poff, total)
+                report_progress(self._field_for('title', book_id))
             format_metadata[book_id] = fm = {}
             for fmt in self._formats(book_id):
                 mdata = self.format_metadata(book_id, fmt)
@@ -3265,9 +3444,13 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
     from calibre.db.backend import DB
     metadata = importer.metadata[library_key]
     total = metadata['total']
-    poff = 1
-    if progress is not None:
-        progress('metadata.db', 0, total)
+    poff = 0
+    def report_progress(fname):
+        nonlocal poff
+        if progress is not None:
+            progress(fname, poff, total)
+            poff += 1
+    report_progress('metadata.db')
     if abort is not None and abort.is_set():
         return
     with open(os.path.join(library_path, 'metadata.db'), 'wb') as f:
@@ -3284,8 +3467,24 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
             src = importer.start_file(metadata['full-text-search.db'], 'full-text-search.db for ' + library_path)
             shutil.copyfileobj(src, f)
             src.close()
+    if abort is not None and abort.is_set():
+        return
+    if 'notes.db' in metadata:
+        import zipfile
+        notes_dir = os.path.join(library_path, NOTES_DIR_NAME)
+        os.makedirs(notes_dir, exist_ok=True)
+        with closing(importer.start_file(metadata['notes.db'], 'notes.db for ' + library_path)) as stream:
+            stream.check_hash = False
+            with zipfile.ZipFile(stream) as zf:
+                for zi in zf.infolist():
+                    tpath = zf._extract_member(zi, notes_dir, None)
+                    date_time = mktime(zi.date_time + (0, 0, -1))
+                    os.utime(tpath, (date_time, date_time))
+    if abort is not None and abort.is_set():
+        return
     cache = Cache(DB(library_path, load_user_formatter_functions=False))
     cache.init()
+
     format_data = {int(book_id):data for book_id, data in iteritems(metadata['format_data'])}
     extra_files = {int(book_id):data for book_id, data in metadata.get('extra_files', {}).items()}
     for i, (book_id, fmt_key_map) in enumerate(iteritems(format_data)):
@@ -3297,18 +3496,17 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
         cache._update_path((book_id,), mark_as_dirtied=False)
         for fmt, fmtkey in iteritems(fmt_key_map):
             if fmt == '.cover':
-                stream = importer.start_file(fmtkey, _('Cover for %s') % title)
-                path = cache._field_for('path', book_id).replace('/', os.sep)
-                cache.backend.set_cover(book_id, path, stream, no_processing=True)
+                with closing(importer.start_file(fmtkey, _('Cover for %s') % title)) as stream:
+                    path = cache._field_for('path', book_id).replace('/', os.sep)
+                    cache.backend.set_cover(book_id, path, stream, no_processing=True)
             else:
-                stream = importer.start_file(fmtkey, _('{0} format for {1}').format(fmt.upper(), title))
-                size, fname = cache._do_add_format(book_id, fmt, stream, mtime=stream.mtime)
-                cache.fields['formats'].table.update_fmt(book_id, fmt, fname, size, cache.backend)
-            stream.close()
+                with closing(importer.start_file(fmtkey, _('{0} format for {1}').format(fmt.upper(), title))) as stream:
+                    size, fname = cache._do_add_format(book_id, fmt, stream, mtime=stream.mtime)
+                    cache.fields['formats'].table.update_fmt(book_id, fmt, fname, size, cache.backend)
         for relpath, efkey in extra_files.get(book_id, {}).items():
-            stream = importer.start_file(efkey, _('Extra file {0} for book {1}').format(relpath, title))
-            path = cache._field_for('path', book_id).replace('/', os.sep)
-            cache.backend.add_extra_file(relpath, stream, path)
+            with closing(importer.start_file(efkey, _('Extra file {0} for book {1}').format(relpath, title))) as stream:
+                path = cache._field_for('path', book_id).replace('/', os.sep)
+                cache.backend.add_extra_file(relpath, stream, path)
         cache.dump_metadata({book_id})
     if progress is not None:
         progress(_('Completed'), total, total)
