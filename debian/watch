@@ -6,12 +6,11 @@
 version=4
 
 opts="pgpmode=next, \
-      downloadurlmangle=s!/kovidgoyal/@PACKAGE@/releases/tag/v(\d+\.\d+\.\d+)!/kovidgoyal/@PACKAGE@/releases/download/v$1/@PACKAGE@-$1.tar.xz!, \
-      filenamemangle=s!v(\d+\.\d+\.\d+)!@PACKAGE@-$1.tar.xz!, \
+      searchmode=plain, \
       dversionmangle=s/\+ds//, \
       oversionmangle=s/$/+ds/" \
-  https://github.com/kovidgoyal/@PACKAGE@/releases \
-  /kovidgoyal/@PACKAGE@/releases/tag/v(\d+\.\d+\.\d+)
+  https://api.github.com/repos/kovidgoyal/@PACKAGE@/releases \
+  https://github.com/kovidgoyal/@PACKAGE@/releases/download/v\d+\.\d+\.\d+/@PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
 opts="pgpmode=previous" \
   https://calibre-ebook.com/signatures/ \
   @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig previous
