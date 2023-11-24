@@ -1,0 +1,82 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Tue, 21 Nov 2023 00:24:30 +0900
+Subject: Use automatic server address if listen_on value is ''
+
+---
+ src/calibre/gui2/actions/device.py     | 4 ++--
+ src/calibre/gui2/preferences/server.py | 4 ++--
+ src/calibre/srv/opts.py                | 3 +--
+ src/calibre/utils/network.py           | 7 +++++++
+ 4 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/src/calibre/gui2/actions/device.py b/src/calibre/gui2/actions/device.py
+index 656fc5b..295a5e3 100644
+--- a/src/calibre/gui2/actions/device.py
++++ b/src/calibre/gui2/actions/device.py
+@@ -17,10 +17,10 @@ from calibre.utils.smtp import config as email_config
+ 
+ def local_url_for_content_server():
+     from calibre.srv.opts import server_config
+-    from calibre.utils.network import is_ipv6_addr
++    from calibre.utils.network import is_ipv6_addr, get_fallback_server_addr
+ 
+     opts = server_config()
+-    interface = opts.listen_on or '0.0.0.0'
++    interface = opts.listen_on or get_fallback_server_addr()
+ 
+     addr_map = {'0.0.0.0': '127.0.0.1',
+                 '::':      '::1'}
+diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
+index 65aa700..d381237 100644
+--- a/src/calibre/gui2/preferences/server.py
++++ b/src/calibre/gui2/preferences/server.py
+@@ -1299,11 +1299,11 @@ class ConfigWidget(ConfigWidgetBase):
+         self.stopping_msg.accept()
+ 
+     def test_server(self):
+-        from calibre.utils.network import is_ipv6_addr
++        from calibre.utils.network import is_ipv6_addr, get_fallback_server_addr
+ 
+         prefix = self.advanced_tab.get('url_prefix') or ''
+         protocol = 'https' if self.advanced_tab.has_ssl else 'http'
+-        lo = self.advanced_tab.get('listen_on') or '0.0.0.0'
++        lo = self.advanced_tab.get('listen_on') or get_fallback_server_addr()
+ 
+         addr_map = {'0.0.0.0': '127.0.0.1',
+                     '::':      '::1'}
+diff --git a/src/calibre/srv/opts.py b/src/calibre/srv/opts.py
+index afc27af..a6a8f14 100644
+--- a/src/calibre/srv/opts.py
++++ b/src/calibre/srv/opts.py
+@@ -11,7 +11,6 @@ from collections import OrderedDict, namedtuple
+ from functools import partial
+ from itertools import zip_longest
+ from operator import attrgetter
+-from socket import has_dualstack_ipv6
+ 
+ from calibre.constants import config_dir
+ from calibre.utils.localization import _
+@@ -111,7 +110,7 @@ raw_options = (
+     ' there are more than this number of items. Set to zero to disable.'),
+ 
+     _('The interface on which to listen for connections'),
+-    'listen_on', '::' if has_dualstack_ipv6() else '0.0.0.0',
++    'listen_on', '',
+     _('The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for'
+     ' example, "127.0.0.1" to only listen for connections from the local machine, or'
+     ' to "::" to listen to all incoming IPv6 and IPv4 connections.'),
+diff --git a/src/calibre/utils/network.py b/src/calibre/utils/network.py
+index ca469f9..e2d071f 100644
+--- a/src/calibre/utils/network.py
++++ b/src/calibre/utils/network.py
+@@ -116,3 +116,10 @@ def is_ipv6_addr(addr):
+         return True
+     except OSError:
+         return False
++
++def get_fallback_server_addr():
++    from socket import has_dualstack_ipv6
++    if has_dualstack_ipv6():
++        return '::'
++    else:
++        return '0.0.0.0'
