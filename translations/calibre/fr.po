@@ -12,6 +12,7 @@
 # Daniel Luedemann, 2010
 # Dilshan Senaratne <tdilshansenaratne@gmail.com>, 2016
 # Druss Lahache <fouquetre+log@gmail.com>, 2019-2020
+# Walter Paterno <walter.paterno@gmail.com>, 2022
 # Erwan Amans <erwan.amans@gmail.com>, 2019
 # Franck, 2014-2015,2017
 # FX Bénard <fxb@wp-translations.org>, 2017
@@ -27,6 +28,7 @@
 # Michael Simard <simardm@gmail.com>, 2015
 # MYB, 2014
 # MYB, 2014
+# MYB, 2014
 # Nicolas F. <fernetn@gmail.com>, 2017-2018,2020
 # Philippe PERIN, 2016
 # Philippe PERIN, 2016
@@ -38,7 +40,7 @@
 # un_pogaz, 2020,2022-2023
 # un_pogaz, 2020,2022
 # Vincent Lhote <pcgen.masaru20100@antichef.net>, 2012
-# Dunhill <walter.paterno@gmail.com>, 2022
+# Walter Paterno <walter.paterno@gmail.com>, 2022
 # Xotes <alois.glibert@gmail.com>, 2015
 # Yannick Le Guen <leguen.yannick@gmail.com>, 2014
 # Yvan GODARD <godardyvan@gmail.com>, 2015
@@ -46,7 +48,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2023-11-17 02:58+UTC\n"
+"POT-Creation-Date: 2023-11-23 03:07+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: un_pogaz, 2020,2022-2023\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -155,8 +157,8 @@ msgstr "Ne fait absolument rien"
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:298
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:299
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:307
-#: /__w/calibre/calibre/src/calibre/db/tests/writing.py:252
-#: /__w/calibre/calibre/src/calibre/db/tests/writing.py:254
+#: /__w/calibre/calibre/src/calibre/db/tests/writing.py:253
+#: /__w/calibre/calibre/src/calibre/db/tests/writing.py:255
 #: /__w/calibre/calibre/src/calibre/db/write.py:177
 #: /__w/calibre/calibre/src/calibre/db/write.py:181
 #: /__w/calibre/calibre/src/calibre/devices/android/driver.py:399
@@ -283,14 +285,14 @@ msgstr "Ne fait absolument rien"
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/image_writer.py:21
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/render/links.py:144
 #: /__w/calibre/calibre/src/calibre/ebooks/txt/processor.py:145
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:818
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:826
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:819
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:827
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:345
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:905
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:358
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:418
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:474
-#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1406
+#: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1412
 #: /__w/calibre/calibre/src/calibre/gui2/convert/__init__.py:51
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:145
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:161
@@ -863,7 +865,7 @@ msgstr "Modèles de fonctions"
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1385
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1397
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1409
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1055
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1143
 msgid "Advanced"
 msgstr "Avancé"
 
@@ -2501,27 +2503,31 @@ msgstr "L'extraction du texte du fichier {0} de taille {1} a pris trop de temps"
 msgid "Invalid field: %s"
 msgstr "Champ invalide : %s"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:497
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:498
 #, python-brace-format
 msgid "Failed to read from document for {path} with error: {error}"
 msgstr "Échec de la lecture du document pour {path} avec l'erreur : {error}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:502
-msgid "Failed to parse document for: {}"
-msgstr "Échec de l'analyse du document pour : {}"
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:509
+#, python-brace-format
+msgid "Failed to parse document for: {0} with error: {1}"
+msgstr "Échec de l'analyse du document pour : {0} avec erreur : {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:507
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:515
+#, python-brace-format
+msgid ""
+"The item {old_item_val} does not exist in the {field} column in the restored"
+" database, could not restore its notes"
+msgstr "L'élément {old_item_val} n'existe pas dans la colonne {field} de la base de données restaurée, il n'a pas été possible de restaurer ses notes"
+
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:523
 msgid "Some resources for {} were missing"
 msgstr "Certaines ressources pour {} étaient manquantes"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:512
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:528
 #, python-brace-format
 msgid "Failed to set note for {path} with error: {error}"
 msgstr "Échec de la création de la note pour {path} avec l'erreur : {error}"
-
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:514
-msgid "Could not restore item: {} as not present in database"
-msgstr "Impossible de restaurer l'élément : {} n'est pas présent dans la base de données"
 
 #: /__w/calibre/calibre/src/calibre/db/restore.py:173
 #: /__w/calibre/calibre/src/calibre/library/restore.py:127
@@ -9240,151 +9246,151 @@ msgstr "Table des Matières :"
 msgid "Default icons"
 msgstr "Icônes par défaut"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:458
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:459
 msgid "Send file to storage card instead of main memory by default"
 msgstr "Par défaut, envoyer le fichier dans la carte mémoire plutôt que dans la mémoire principale"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:461
 msgid "Confirm before deleting"
 msgstr "Confirmer avant la suppression"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:462
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:463
 msgid "Main window geometry"
 msgstr "Géométrie de l’écran principal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:464
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:465
 msgid "Notify when a new version is available"
 msgstr "Avertir lorsqu’une nouvelle version est disponible"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:466
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:467
 msgid "Use Roman numerals for series number"
 msgstr "Utiliser les chiffres romains pour les numéros de séries"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:468
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:469
 msgid "Sort tags list by name, popularity, or rating"
 msgstr "Trier la liste des étiquettes par nom, popularité ou note"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:470
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:471
 msgid "Match tags by any or all."
 msgstr "Faire correspondre les étiquettes entre elles."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:472
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:473
 msgid "Number of covers to show in the cover browsing mode"
 msgstr "Nombre de couvertures à afficher dans le mode de navigation par couverture"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:474
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:475
 msgid "Defaults for conversion to LRF"
 msgstr "Valeurs par défaut pour la conversion vers LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:476
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:477
 msgid "Options for the LRF e-book viewer"
 msgstr "Options pour la visionneuse de livre numérique LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:480
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:481
 msgid "Formats that are viewed using the internal viewer"
 msgstr "Formats qui sont affichés par la visionneuse interne"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:482
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:483
 msgid "Columns to be displayed in the book list"
 msgstr "Colonnes à afficher dans la liste des livres"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:483
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:484
 msgid "Automatically launch Content server on application startup"
 msgstr "Démarrer automatiquement le Serveur de contenu au démarrage de l’application"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:485
 msgid "Oldest news kept in database"
 msgstr "Anciennes actualités conservées dans la base de données"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:485
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:486
 msgid "Show system tray icon"
 msgstr "Afficher l’icône dans la zone de notification"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:488
 msgid "Upload downloaded news to device"
 msgstr "Envoyer les actualités téléchargées vers le périphérique connecté"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:489
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:490
 msgid "Delete news books from library after uploading to device"
 msgstr "Effacer les actualités de la bibliothèque après l’envoi au périphérique"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:491
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:492
 msgid ""
 "Show the cover flow in a separate window instead of in the main calibre "
 "window"
 msgstr "Afficher la navigation par couverture dans une fenêtre séparée plutôt que dans la fenêtre principale de calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:494
 msgid "Disable notifications from the system tray icon"
 msgstr "Désactiver les alertes dans la zone de notification"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:496
 msgid "Default action to perform when the \"Send to device\" button is clicked"
 msgstr "Action par défaut à réaliser quand le bouton «Envoyer vers le périphérique connecté» est cliqué"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:500
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:501
 msgid ""
 "Start searching as you type. If this is disabled then search will only take "
 "place when the Enter key is pressed."
 msgstr "Démarrer la recherche lors de la frappe. Si non coché, la recherche ne sera lancée qu'après l'appui sur la touche Entrée."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:503
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:504
 msgid ""
 "When searching, show all books with search results highlighted instead of "
 "showing only the matches. You can use the N or F3 keys to go to the next "
 "match."
 msgstr "Lors d’une recherche, afficher tous les livres avec les résultats de la recherche mis en évidence au lieu d'afficher uniquement les résultats. Vous pouvez utiliser la touche N ou F3 pour vous déplacer jusqu'au résultat suivant."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:531
 msgid ""
 "Maximum number of simultaneous conversion/news download jobs. This number is"
 " twice the actual value for historical reasons."
 msgstr "Nombre maximum de téléchargements d'actualités et de conversions simultanés. Ce nombre est le double de la valeur actuelle pour des raisons historiques."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:533
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:534
 msgid "Download social metadata (tags/rating/etc.)"
 msgstr "Télécharger les métadonnées à dimension sociale (étiquettes, note, etc.)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:536
 msgid "Overwrite author and title with new metadata"
 msgstr "Remplacer l’auteur et le titre avec les nouvelles métadonnées"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:537
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:538
 msgid "Automatically download the cover, if available"
 msgstr "Télécharger automatiquement la couverture, si celle-ci est disponible"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:539
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:540
 msgid "Limit max simultaneous jobs to number of CPUs"
 msgstr "Limiter le nombre maximum de tâches simultanées au nombre de cœurs du processeur"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:542
 msgid ""
 "The layout of the user interface. Wide has the Book details panel on the "
 "right and narrow has it at the bottom."
 msgstr "La disposition de l’interface utilisateur. En mode large le panneau de Détails du livre est sur la droite et en mode condensé il est en bas."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:545
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:546
 msgid "Show the average rating per item indication in the Tag browser"
 msgstr "Afficher la note moyenne par article dans le Navigateur d’étiquettes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:547
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:548
 msgid "Disable UI animations"
 msgstr "Désactiver les animations de l’interface utilisateur"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:553
 msgid "Tag browser categories not to display"
 msgstr "Catégories du navigateur d’étiquettes à ne pas afficher"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:622
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:107
 msgid "WARNING:"
 msgstr "AVERTISSEMENT :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:633
 msgid "ERROR:"
 msgstr "ERREUR :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:650
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:77
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:415
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:498
@@ -9392,17 +9398,17 @@ msgstr "ERREUR :"
 msgid "Show this confirmation again"
 msgstr "Afficher cette confirmation à nouveau"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:707
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:708
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1404
 msgid "Restart needed"
 msgstr "Redémarrage nécessaire"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:709
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:710
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:422
 msgid "&Restart calibre now"
 msgstr "&Redémarrer calibre maintenant"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:933
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:934
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:170
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:253
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:164
@@ -9411,33 +9417,33 @@ msgstr "&Redémarrer calibre maintenant"
 msgid "All files"
 msgstr "Tous les fichiers"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1064
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1065
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "Détacher du terminal de contrôle, s'il y en a un (linux uniquement)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1069
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1070
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:133
 msgid "Click \"Show details\" for more information."
 msgstr "Cliquez sur \"Afficher les détails\" pour plus d'informations."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1071
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1072
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "La variable d'environnement %s est configurée. Essayez de la dé configurer."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1072
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1073
 msgid "Could not create temporary folder"
 msgstr "Impossible de créer le dossier temporaire"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1073
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1074
 msgid "Could not create temporary folder, calibre cannot start."
 msgstr "Impossible de créer le dossier temporaire, calibre ne peut pas démarrer."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1217
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1218
 msgid "Windows XP not supported"
 msgstr "Windows XP non supporté"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1218
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1219
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -9931,7 +9937,7 @@ msgid ""
 msgstr "Le livre \"{}\" n'est actuellement pas visible dans la bibliothèque calibre. Si vous avez fait une recherche ou si une bibliothèque virtuelle est appliquée, effacez-la d'abord."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_notes.py:11
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:411
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:412
 msgid "Browse notes"
 msgstr "Parcourir les notes"
 
@@ -10374,7 +10380,7 @@ msgstr "Créer un catalogue des livres de votre bibliothèque calibre"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:166
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1057
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1059
 msgid "Cannot convert"
 msgstr "Conversion impossible"
 
@@ -13048,13 +13054,13 @@ msgstr "Faire un don"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:446
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:480
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:876
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:367
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:368
 msgid "Edit"
 msgstr "Modifier"
 
 #: /__w/calibre/calibre/src/calibre/gui2/bars.py:466
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:599
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:350
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:354
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:431
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:462
@@ -13063,7 +13069,7 @@ msgid "Copy"
 msgstr "Copier"
 
 #: /__w/calibre/calibre/src/calibre/gui2/bars.py:467
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:355
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:399
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:436
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:467
@@ -13071,7 +13077,7 @@ msgid "Paste"
 msgstr "Coller"
 
 #: /__w/calibre/calibre/src/calibre/gui2/bars.py:468
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:356
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:360
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:116
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:347
 msgid "Select all"
@@ -13966,57 +13972,57 @@ msgstr "Pour les livres avec des auteurs multiples, lister chaque auteur sépar�
 msgid "Tab template for catalog.ui"
 msgstr "Gabarit d’étiquette pour catalog.ui"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:334
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:338
 msgid "Bold"
 msgstr "Gras"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:339
 msgid "Italic"
 msgstr "Italique"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:336
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:340
 msgid "Underline"
 msgstr "Souligné"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:337
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:341
 msgid "Strikethrough"
 msgstr "Barré"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:338
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:342
 msgid "Superscript"
 msgstr "Exposant"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:339
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:343
 msgid "Subscript"
 msgstr "Indice"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:344
 msgid "Ordered list"
 msgstr "Liste numérotée"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:345
 msgid "Unordered list"
 msgstr "Liste non ordonnée"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:343
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:81
 msgid "Align left"
 msgstr "Aligner à gauche"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:348
 msgid "Align center"
 msgstr "Centrer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:349
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:85
 msgid "Align right"
 msgstr "Aligner à droite"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:346
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:350
 msgid "Align justified"
 msgstr "Justifier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:351
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:402
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:252
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:441
@@ -14026,76 +14032,76 @@ msgstr "Justifier"
 msgid "Undo"
 msgstr "Annuler"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:352
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/canvas.py:293
 msgid "Redo"
 msgstr "Rétablir"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:349
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:353
 msgid "Remove formatting"
 msgstr "Effacer la mise en forme"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:352
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:356
 msgid "Paste and match style"
 msgstr "Coller et fusionner le style"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:353
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:357
 msgid "Cut"
 msgstr "Couper"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:354
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:358
 msgid "Increase indentation"
 msgstr "Augmenter l’indentation"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:359
 msgid "Decrease indentation"
 msgstr "Diminuer l’indentation"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:362
 msgid "Foreground color"
 msgstr "Couleur de police"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:363
 msgid "Background color"
 msgstr "Couleur d’arrière-plan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:360
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:364
 msgid "Insert link"
 msgstr "Insérer un lien"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:360
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:364
 msgid "Insert link or image"
 msgstr "Insérer un lien ou une image"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:366
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:80
 msgid "Insert image"
 msgstr "Insérer une image"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:363
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:367
 msgid "Insert separator"
 msgstr "Insérer un séparateur"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:364
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:368
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1118
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions_ui.py:152
 msgid "Clear"
 msgstr "Effacer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:367
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:371
 msgid "Style text block"
 msgstr "Appliquer le style au bloc de texte"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:369
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:373
 msgid "Style the selected text block"
 msgstr "Appliquer le style au bloc de texte sélectionné"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:377
 #, python-brace-format
 msgid "Heading {0}"
 msgstr "Titre {0}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:375
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:379
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:44
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:46
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:159
@@ -14104,57 +14110,88 @@ msgstr "Titre {0}"
 msgid "Normal"
 msgstr "Normal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:382
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:386
 msgid "Blockquote"
 msgstr "Citation"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:644
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:581
+msgid "Download images"
+msgstr "Télécharger des images"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:582
+msgid "Download all remote images in the pasted content?"
+msgstr "Télécharger toutes les images distantes dans le contenu collé ?"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:603
+msgid "Downloading images..."
+msgstr "Téléchargement des images…"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:614
+msgid "Downloading {}..."
+msgstr "Téléchargement {}…"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:645
+#, python-brace-format
+msgid "Could not download {0} with error:"
+msgstr "Impossible de {0} avec l'erreur :"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:646
+msgid "Failed to download some images"
+msgstr "Échec lors du téléchargement de certaines images"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:647
+msgid ""
+"Some images could not be downloaded, click \"Show details\" to see which "
+"ones"
+msgstr "Certaines images n'ont pas pu être téléchargées, cliquez sur « Afficher les détails » pour les voir"
+
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:726
 msgid "Choose foreground color"
 msgstr "Sélectionner la couleur de police"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:653
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:735
 msgid "Choose background color"
 msgstr "Sélectionner la couleur d’arrière-plan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:667
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:749
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:158
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:115
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:295
 msgid "Choose image"
 msgstr "Choisir une image"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:707
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:789
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:135
 msgid "Invalid URL"
 msgstr "URL invalide."
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:708
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:790
 #, python-format
 msgid "The URL %r is invalid"
 msgstr "L'URL %r est invalide"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:718
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:800
 msgid "Remote images not supported"
 msgstr "Images distantes non prises en charge"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:719
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:801
 msgid ""
 "You must download the image to your computer, URLs pointing to remote images"
 " are not supported."
 msgstr "Vous devez télécharger l'image sur votre ordinateur, les URLs pointant vers des images distantes ne sont pas supportées."
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:725
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:807
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:32
 msgid "Create link"
 msgstr "Insérer un lien"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:816
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:576
 msgid "&File"
 msgstr "&Fichier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:743
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:825
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:296
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:865
@@ -14170,8 +14207,8 @@ msgstr "&Fichier"
 msgid "Images"
 msgstr "Images"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:746
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:828
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:831
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1065
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1128
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1160
@@ -14183,24 +14220,24 @@ msgstr "Images"
 msgid "Choose file"
 msgstr "Choisir un fichier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:762
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:844
 msgid "&Data file"
 msgstr "Fichiers de &données"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:764
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:846
 msgid "A relative link to a data file associated with this book"
 msgstr "Un lien relatif vers un fichier de données associé à ce livre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:767
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:849
 msgid "F&older"
 msgstr "D&ossier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:769
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:851
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:379
 msgid "Choose folder"
 msgstr "Choisir un dossier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:775
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:857
 msgid ""
 "Enter a URL. If you check the \"Treat the URL as an image\" box then the URL"
 " will be added as an image reference instead of as a link. You can also "
@@ -14209,106 +14246,106 @@ msgid ""
 "moved."
 msgstr "Saisir un URL. Si vous cochez \"Considérer l'URL comme une image\", l'URL sera considérée comme la référence d'une image, et non comme un lien. Vous pouvez aussi créer un lien vers un fichier stocké sur votre ordinateur (attention, le lien sera mort si vous déplacez ensuite ce fichier)."
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:784
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:866
 msgid "Enter &URL:"
 msgstr "Saisir une &URL :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:785
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:867
 msgid "Treat the URL as an &image"
 msgstr "Considérer l'URL comme une &image"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:868
 msgid "Enter &name (optional):"
 msgstr "Saisir un &nom de remplacement (optionnel) :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:789
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:871
 msgid "Choose a file on your computer:"
 msgstr "Choisir un fichier sur l'ordinateur :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:933
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1015
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:127
 msgid "Shrink image to fit within:"
 msgstr "Réduire l'image pour l'adapter à l'espace disponible :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:936
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1018
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:131
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:35
 msgid "&Width:"
 msgstr "&Largeur :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:943
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1025
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:137
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:42
 msgid "&Height:"
 msgstr "&Hauteur :"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:953
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1035
 msgid "Enter new size for image"
 msgstr "Entrer une nouvelle taille pour l'image"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1019
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1107
 msgid "Image..."
 msgstr "Image…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1026
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1114
 msgid "Change size"
 msgstr "Modifier la taille"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1029
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1117
 msgid "Float to the left"
 msgstr "Ancrer a gauche"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1030
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1118
 msgid "Inline with text"
 msgstr "Dans la ligne avec le texte"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1031
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1119
 msgid "Float to the right"
 msgstr "Ancrer a droite"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1033
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1121
 msgid "Remove this image"
 msgstr "Supprimer cette image"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1036
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1124
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:478
 msgid "Open link"
 msgstr "Ouvrir le lien"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1044
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1132
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:62
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:95
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:376
 msgid "Fonts"
 msgstr "Polices"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1053
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1141
 #, python-format
 msgid "%s toolbars"
 msgstr "%s la barre d'outils"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1053
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1141
 #: /__w/calibre/calibre/src/calibre/gui2/layout_menu.py:69
 msgid "Hide"
 msgstr "Masquer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1053
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1141
 #: /__w/calibre/calibre/src/calibre/gui2/layout_menu.py:69
 msgid "Show"
 msgstr "Afficher"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1063
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1151
 #: /__w/calibre/calibre/src/calibre/gui2/markdown_editor.py:42
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:472
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:473
 msgid "Smarten punctuation"
 msgstr "Ponctuation améliorée"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1323
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1411
 msgid "&Normal view"
 msgstr "Vue &normale"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1324
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1412
 msgid "&HTML source"
 msgstr "Source &HTML"
 
@@ -16395,7 +16432,7 @@ msgid "Edit style transform rules"
 msgstr "Éditer les règles de transformation de style"
 
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:288
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:353
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1051
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1008
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:153
@@ -16408,7 +16445,7 @@ msgid "Export these rules to a file"
 msgstr "Exporter ces règles vers un fichier"
 
 #: /__w/calibre/calibre/src/calibre/gui2/css_transform_rules.py:292
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:342
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:354
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1055
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1004
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:157
@@ -18578,26 +18615,26 @@ msgstr "Impossible de coller"
 msgid "No image is present in the system clipboard"
 msgstr "Aucune image n'est présente dans le presse-papiers du système"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:334
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:346
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:111
 msgid "Edit notes for {}"
 msgstr "Éditer la note pour {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:359
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:263
 msgid "Export note to a file"
 msgstr "Exporter note vers un fichier"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:347
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:367
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:223
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1060
 msgid "HTML files"
 msgstr "Fichiers HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:355
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:367
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:267
 msgid "Import note from a file"
@@ -18857,13 +18894,13 @@ msgid "Failed to import data."
 msgstr "Échec à l'importation des données."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1185
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1187
 msgid "Active jobs"
 msgstr "Tâches en cours"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:655
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:318
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:319
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:669
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:268
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:128
@@ -20260,9 +20297,9 @@ msgstr "&Fermer"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/restore_library.py:22
 msgid ""
-"Restoring database from backups, do not interrupt, this will happen in three"
-" stages"
-msgstr "Restaurer la base de données à partir des sauvegardes. Ne pas interrompre le processus en trois étapes"
+"Restoring database from backups, do not interrupt, this will happen in "
+"multiple stages"
+msgstr "Restaurer la base de données à partir des sauvegardes. Ne pas interrompre le processus en plusieurs étapes"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/restore_library.py:24
 msgid "Restoring database"
@@ -20972,12 +21009,12 @@ msgid "The port must be a number between 8000 and 65535."
 msgstr "Le port doit être un nombre compris entre 8000 et 65535"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:491
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:493
 msgid "Problem starting the wireless device"
 msgstr "Problème lors du démarrage du périphérique sans fil"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:139
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:492
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
 #, python-format
 msgid "The wireless device driver had problems starting. It said \"%s\""
 msgstr "Le pilote du périphérique sans fil a eu des problèmes de démarrage. Message: \"%s\""
@@ -22442,7 +22479,7 @@ msgstr "Réduire tout"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:489
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:647
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:311
 msgid "Enter words to search for"
 msgstr "Entrez les mots à rechercher"
 
@@ -22459,7 +22496,7 @@ msgstr "Restreindre les résultats de la recherche aux seuls livres actuellement
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:500
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:962
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:441
 msgid "&Match on related words"
 msgstr "Correspondance à des &mots apparentés"
 
@@ -23451,7 +23488,7 @@ msgstr[1] "Afficher les résultats des {} livres &sélectionnés uniquement"
 msgstr[2] "Afficher les résultats des {} livres &sélectionnés uniquement"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:662
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:326
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:274
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:501
@@ -23460,12 +23497,12 @@ msgid "Find previous match"
 msgstr "Trouver la précédente occurrence"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:736
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:500
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:501
 msgid "Invalid search expression"
 msgstr "Expression de recherche invalide"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:737
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:501
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:502
 #, python-brace-format
 msgid ""
 "The search expression: {0} is invalid. The search syntax used is the SQLite "
@@ -23505,7 +23542,7 @@ msgid "Annotations browser"
 msgstr "Navigateur d'annotations"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:965
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:444
 msgid ""
 "With this option searching for words will also match on any related words "
 "(supported in several languages). For example, in the English language: "
@@ -23704,25 +23741,25 @@ msgstr "Ajouter des catégories auxquelles restreindre les résultats.\nSi aucun
 msgid "Remove"
 msgstr "Supprimer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:449
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:450
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1010
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:496
 msgid "Export"
 msgstr "Exporter"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:453
 msgid "Export the selected notes as HTML files"
 msgstr "Exporter les notes sélectionnées sous forme fichiers HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:459
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:460
 msgid "No results selected"
 msgstr "Aucun résultat sélectionné"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:461
 msgid "No results selected, nothing to export"
 msgstr "Aucun résultat sélectionné, rien à exporter"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:462
+#: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:463
 msgid "Choose folder for exported note"
 msgid_plural "Choose folder for {} exported notes"
 msgstr[0] "Choisir un dossier vers lequel exporter la note"
@@ -24148,7 +24185,7 @@ msgid ""
 msgstr "Une erreur s'est produite lors du démarrage de {0}. Certaines partie de {0} peuvent ne pas fonctionner. Cliquez sur \"Afficher les détails\" pour en savoir plus."
 
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:335
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:943
 msgid "Corrupted database"
 msgstr "Base de données corrompue"
 
@@ -29333,8 +29370,8 @@ msgid "&Search the internet"
 msgstr "Rechercher &sur Internet"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1272
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:541
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:543
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:617
 msgid "Failed to start Content server"
 msgstr "Échec du démarrage du Serveur de contenu"
 
@@ -38697,11 +38734,11 @@ msgstr "Nettoyez la Bibliothèque virtuelle"
 msgid "Clear the additional restriction"
 msgstr "Nettoyez la restriction additionnelle"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:455
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:457
 msgid "Debug mode"
 msgstr "Mode débogage"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:458
 #, python-format
 msgid ""
 "You have started calibre in debug mode. After you quit calibre, the debug "
@@ -38709,11 +38746,11 @@ msgid ""
 "automatically."
 msgstr "Vous avez lancé calibre en mode débogage. Une fois que vous quittez calibre, le journal de débogage sera disponible dans le fichier : %s<p>Le journal sera affiché automatiquement."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:505
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:507
 msgid "Content server changed!"
 msgstr "Serveur de contenu modifié !"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:506
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
 msgid ""
 "calibre 3 comes with a completely re-written Content server. As such any "
 "custom configuration you have for the content server no longer applies. You "
@@ -38721,7 +38758,7 @@ msgid ""
 " the net"
 msgstr "calibre 3 se présente avec un Serveur de contenu complètement réécrit. À ce titre, toute configuration personnalisée que vous avez pour le serveur de contenu ne s'applique plus. Vous devriez vérifier et mettre à jour vos paramètres dans Préférences->Partager->Partager sur le net"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:542
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
 #, python-format
 msgid ""
 "Could not start the Content server. Error:\n"
@@ -38729,15 +38766,15 @@ msgid ""
 "%s"
 msgstr "Impossible de démarrer le Serveur de contenu. Erreur :\n\n%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:595
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
 msgid "Hide main window"
 msgstr "Masquer la fenêtre principale"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:595
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
 msgid "Show main window"
 msgstr "Afficher la fenêtre principale"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:942
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:944
 #, python-format
 msgid ""
 "The library database at %s appears to be corrupted. Do you want calibre to "
@@ -38745,17 +38782,17 @@ msgid ""
 "successful."
 msgstr "La base de données de votre bibliothèque %s semble être corrompue. Voulez vous que calibre tente de la reconstruire automatiquement ? Cette reconstruction peut partiellement échouer."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1045
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1047
 msgid "Conversion error"
 msgstr "Erreur lors de la conversion"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1066
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1091
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1068
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1093
 #, python-format
 msgid "<p><b>Failed to convert: %s"
 msgstr "<p><b>Échec de la conversion de : %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1067
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1069
 msgid ""
 "\n"
 "                Many older e-book reader devices are incapable of displaying\n"
@@ -38772,51 +38809,51 @@ msgid ""
 "                        "
 msgstr "\n                Beaucoup d'anciennes liseuses ne peuvent pas afficher les\n                fichiers EPUB possédant des parties excédant une certaine taille.\n\t\t\t\tLors de la conversion au format EPUB, calibre essaie donc\n\t\t\t\tde les fragmenter en plusieurs parties de plus petites tailles. Dans\n\t\t\t\tle cas de certains fichiers consistant en de long blocs de texte\n\t\t\t\tnon différentiés, cette fragmentation échoue.\n\t\t\t\t<p>Vous pouvez <b>contourner ce problème</b> soit en augmentant la taille\n\t\t\t\tmaximale des fragments dans la section <i>Sortie EPUB</i> dans la boîte de dialogue\n\t\t\t\tde conversion, ou bien en activant le Traitement heuristique, également dans la \n\t\t\t\tboîte de dialogue de conversion. Notez bien que définir une taille maximale \n\t\t\t\ttrop grande peut créer des problèmes d'affichage de l'EPUB dans votre liseuse.\n                        "
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1081
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1095
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1083
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1097
 msgid "Conversion failed"
 msgstr "La conversion a échoué"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1093
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1095
 msgid "here"
 msgstr "ici"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1106
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1108
 msgid "Recipe Disabled"
 msgstr "Recette désactivée"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1139
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1141
 msgid "<b>Failed</b>"
 msgstr "<b>Échoué</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1178
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1180
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "Il y a des tâches en cours. Voulez-vous vraiment fermer l'application ?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1181
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1183
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr " communique avec le périphérique !<br>\n                      Annuler peut provoquer des corruptions dans le périphérique.<br>\n                      Êtes-vous sûr de vouloir annuler ?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1189
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1191
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr "Il y a des mises à jour de bibliothèque en attente. Voulez-vous vraiment fermer l'application ?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1190
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1192
 msgid "Library updates waiting"
 msgstr "Mises à jour de la bibliothèque en attente"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1209
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1211
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr "Exécution des extensions de fermeture de la base de donnée. Cela peut prendre quelques secondes..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1261
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1263
 msgid "Shutting down the Content server. This could take a while..."
 msgstr "Arrêt du Serveur de contenu. Ceci pourrait prendre un moment..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1300
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1302
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -39014,8 +39051,8 @@ msgstr "Aucune mise en évidence ne correspond à la recherche : {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:534
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:551
-msgid "highlight location"
-msgstr "emplacement de la mis en évidence"
+msgid "the location of this highlight"
+msgstr "l'emplacement de cette mise en évidence"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:546
 msgid "No selected highlight"
@@ -39339,8 +39376,8 @@ msgstr "Retournez à l'endroit où vous étiez avant les recherches"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:510
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:640
-msgid "search result location"
-msgstr "emplacement du résultat de recherche"
+msgid "the location of this search result"
+msgstr "l'emplacement de ce résultat de recherche"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:743
 msgid "This text is hidden in the book and cannot be displayed"
@@ -43485,7 +43522,7 @@ msgid ""
 "This computer is missing the Windows MediaPack, or the DLLs are corrupted. "
 "This is needed for Read aloud. Instructions for installing it are available "
 "at {}"
-msgstr "Il manque à cet ordinateur le Windows MediaPack, ou les DLL sont corrompues. Ce pack est nécessaire pour la lecture à voix haute. Les instructions pour l'installer sont disponibles à l'adresse suivante : {}"
+msgstr "Il manque à cet ordinateur le Windows MediaPack, ou les DLL sont corrompues. Ceci est nécessaire pour la lecture à voix haute. Les instructions pour l'installer sont disponibles à l'adresse suivante : {}"
 
 #: /__w/calibre/calibre/src/calibre/utils/winreg/default_programs.py:28
 msgid "The main calibre program, used to manage your collection of e-books"

@@ -768,6 +768,16 @@ def check_for_libOpenGl():
     raise SystemExit('You are missing the system library libOpenGL.so.0. Try installing packages such as libopengl0')
 
 
+def check_for_libxcb_cursor():
+    import ctypes
+    try:
+        ctypes.CDLL('libxcb-cursor.so.0')
+        return
+    except Exception:
+        pass
+    raise SystemExit('You are missing the system library libxcb-cursor.so.0. Try installing packages such as libxcb-cursor0 or xcb-cursor')
+
+
 def check_glibc_version(min_required=(2, 31), release_date='2020-02-01'):
     # See https://sourceware.org/glibc/wiki/Glibc%20Timeline
     import ctypes
@@ -809,6 +819,8 @@ def main(install_dir=None, isolated=False, bin_dir=None, share_dir=None, ignore_
     if q[0] >= 6:
         check_for_libEGL()
         check_for_libOpenGl()
+    if q[0] >= 7:
+        check_for_libxcb_cursor()
     run_installer(install_dir, isolated, bin_dir, share_dir, version)
 
 
@@ -819,7 +831,7 @@ except NameError:
     from_file = False
 
 
-def update_intaller_wrapper():
+def update_installer_wrapper():
     # To update: python3 -c "import runpy; runpy.run_path('setup/linux-installer.py', run_name='update_wrapper')"
     with open(__file__, 'rb') as f:
         src = f.read().decode('utf-8')
@@ -827,7 +839,7 @@ def update_intaller_wrapper():
     with open(wrapper, 'r+b') as f:
         raw = f.read().decode('utf-8')
         nraw = re.sub(r'^# HEREDOC_START.+^# HEREDOC_END', lambda m: '# HEREDOC_START\n{}\n# HEREDOC_END'.format(src), raw, flags=re.MULTILINE | re.DOTALL)
-        if 'update_intaller_wrapper()' not in nraw:
+        if 'update_installer_wrapper()' not in nraw:
             raise SystemExit('regex substitute of HEREDOC failed')
         f.seek(0), f.truncate()
         f.write(nraw.encode('utf-8'))
@@ -859,4 +871,4 @@ def script_launch():
 if __name__ == '__main__' and from_file:
     main()
 elif __name__ == 'update_wrapper':
-    update_intaller_wrapper()
+    update_installer_wrapper()

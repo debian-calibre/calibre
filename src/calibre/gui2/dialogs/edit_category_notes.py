@@ -202,6 +202,7 @@ class NoteEditorWidget(EditorWidget):
     insert_images_separately = True
     db = field = item_id = item_val = None
     images = None
+    can_store_images = True
 
     def resource_digest_from_qurl(self, qurl):
         alg = qurl.host()
@@ -240,13 +241,24 @@ class NoteEditorWidget(EditorWidget):
             self.document().addResource(rtype, qurl, r)  # cache the resource
             return r
 
+    def commit_downloaded_image(self, data, suggested_filename):
+        digest = hash_data(data)
+        if digest in self.images:
+            ir = self.images[digest]
+        else:
+            self.images[digest] = ir = ImageResource(suggested_filename, digest, data=data)
+        alg, digest = ir.digest.split(':', 1)
+        return RESOURCE_URL_SCHEME + f'://{alg}/{digest}?placement={uuid4()}'
+
     def get_html_callback(self, root, text):
         self.searchable_text = text.replace(OBJECT_REPLACEMENT_CHAR, '')
         self.referenced_resources = set()
         for fmt in self.document().allFormats():
             if fmt.isImageFormat():
-                digest = self.resource_digest_from_qurl(QUrl(fmt.toImageFormat().name()))
-                self.referenced_resources.add(digest)
+                qurl = QUrl(fmt.toImageFormat().name())
+                if qurl.scheme() == RESOURCE_URL_SCHEME:
+                    digest = self.resource_digest_from_qurl(qurl)
+                    self.referenced_resources.add(digest)
 
     def ask_link(self):
         c = self.textCursor()
