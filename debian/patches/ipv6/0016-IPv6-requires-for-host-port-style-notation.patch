@@ -8,15 +8,15 @@ ex)
   IPv4: 127.0.0.1:8080
   IPv6: [::1]:8080
 ---
- src/calibre/gui2/actions/device.py     | 12 ++++++++++++
+ src/calibre/gui2/actions/device.py     | 11 ++++++++++-
  src/calibre/gui2/preferences/server.py | 12 ++++++++++++
- 2 files changed, 24 insertions(+)
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/gui2/actions/device.py b/src/calibre/gui2/actions/device.py
-index 9779e05..ea636fe 100644
+index 9779e05..82d46e0 100644
 --- a/src/calibre/gui2/actions/device.py
 +++ b/src/calibre/gui2/actions/device.py
-@@ -16,10 +16,22 @@ from calibre.utils.smtp import config as email_config
+@@ -16,14 +16,23 @@ from calibre.utils.smtp import config as email_config
  
  
  def local_url_for_content_server():
@@ -33,12 +33,14 @@ index 9779e05..ea636fe 100644
      interface = opts.listen_on or '0.0.0.0'
      interface = {'0.0.0.0': '127.0.0.1', '::':'::1'}.get(interface)
 +
-+    if is_ipv6_addr(interface):
-+        interface = f'[{interface}]'
-+
      protocol = 'https' if opts.ssl_certfile and opts.ssl_keyfile else 'http'
      prefix = opts.url_prefix or ''
      port = opts.port
+-    if ':' in interface:
++    if is_ipv6_addr(interface):
+         interface = f'[{interface}]'
+     return f'{protocol}://{interface}:{port}{prefix}'
+ 
 diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
 index e7c10a8..ef9f130 100644
 --- a/src/calibre/gui2/preferences/server.py

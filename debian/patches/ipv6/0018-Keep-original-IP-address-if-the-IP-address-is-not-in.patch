@@ -11,7 +11,7 @@ dict.get() returns None if the key is not in dict.
  2 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/src/calibre/gui2/actions/device.py b/src/calibre/gui2/actions/device.py
-index ea636fe..1fc26ca 100644
+index 82d46e0..1c48917 100644
 --- a/src/calibre/gui2/actions/device.py
 +++ b/src/calibre/gui2/actions/device.py
 @@ -27,7 +27,11 @@ def local_url_for_content_server():
@@ -25,8 +25,8 @@ index ea636fe..1fc26ca 100644
 +    if interface in addr_map:
 +        interface = addr_map[interface]
  
-     if is_ipv6_addr(interface):
-         interface = f'[{interface}]'
+     protocol = 'https' if opts.ssl_certfile and opts.ssl_keyfile else 'http'
+     prefix = opts.url_prefix or ''
 diff --git a/src/calibre/gui2/preferences/server.py b/src/calibre/gui2/preferences/server.py
 index ef9f130..98a3b78 100644
 --- a/src/calibre/gui2/preferences/server.py
