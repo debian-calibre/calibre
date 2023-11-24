@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "de novembre 17, 2023" "7.0.0" "calibre"
+.TH "CALIBREDB" "1" "de novembre 24, 2023" "7.1.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -675,23 +675,23 @@ Reemplaça la portada existent quan es genera el catàleg. Per defecte: «False�
 .sp
 .nf
 .ft C
-calibredb saved_searches [opcions] (llista|afegeix|elimina)
+calibredb saved_searches [opcions] (list|add|remove)
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Gestiona les cerques guardades en aquesta base de dades.
+Gestiona les cerques desades en aquesta base de dades.
 Si proveu d\(aqafegir una cerca amb un nom que ja existeix, se
 substituirà.
 .sp
 Sintaxi per afegir:
 .sp
-calibredb \fBsaved_searches\fP afegir cerca_nom cerca_expressió
+calibredb \fBsaved_searches\fP add nom_cerca expressió_cerca
 .sp
 Sintaxi per eliminar:
 .sp
-calibredb \fBsaved_searches\fP elimina cerca_nom
+calibredb \fBsaved_searches\fP remove nom_cerca
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
@@ -856,14 +856,14 @@ Vacuum the full text search database. This can be very slow and memory intensive
 .sp
 .nf
 .ft C
-calibredb list_categories [options]
+calibredb list_categories [opcions]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Genera un informe de la informació de les categories de la base de dades. La
+informació equival al que es mostra al navegador d\(aqetiquetes.
 .sp
 Sempre que passeu arguments a calibredb i aquests tinguin espais en blanc, delimiteu els arguments amb cometes. Per exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
