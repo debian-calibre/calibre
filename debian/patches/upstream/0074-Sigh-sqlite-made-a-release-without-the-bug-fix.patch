@@ -1,0 +1,22 @@
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Fri, 24 Nov 2023 12:56:18 +0530
+Subject: Sigh sqlite made a release without the bug fix
+
+Forwarded: not-needed
+---
+ src/calibre/db/tests/fts.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/db/tests/fts.py b/src/calibre/db/tests/fts.py
+index 717a331..945714c 100644
+--- a/src/calibre/db/tests/fts.py
++++ b/src/calibre/db/tests/fts.py
+@@ -143,7 +143,7 @@ class FTSTest(BaseTest):
+         self.ae(conn.search('''"don't"'''), [("你>don't<叫mess",)])
+         self.ae(conn.search("你"), [(">你<don't叫mess",)])
+         import apsw
+-        if apsw.sqlitelibversion() != '3.44.0':
++        if apsw.sqlitelibversion() not in ('3.44.0', '3.44.1'):
+             # see https://www.sqlite.org/forum/forumpost/d16aeb397d
+             self.ae(conn.search("叫"), [("你don't>叫<mess",)])
+     # }}}
