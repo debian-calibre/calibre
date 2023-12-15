@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Antonino Ursino <ninus_@libero.it>, 2023
-# Michele Galimberti <galimbertimichele@gmail.com>, 2021-2022
+# Michele Galimberti <galimbertimichele@gmail.com>, 2021-2023
 # SKAL <sir_kalot@yahoo.it>, 2015
 # Stefano Avezzù <Opusprimo@gmail.com>, 2015
 # Vincenzo Reale <vinx.reale@gmail.com>, 2014,2022
@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-21 06:34+0000\n"
+"POT-Creation-Date: 2023-12-13 17:04+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Antonino Ursino <ninus_@libero.it>, 2023\n"
+"Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>, 2021-2023\n"
 "Language-Team: Italian (http://app.transifex.com/calibre/calibre/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,7 +140,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr "Poi inizia la parte davvero interessante. Ricordi quando ti ho detto che le espressioni regolari possono trovare più di una stringa? È qui che le cose si complicano. Poniamo, come esercizio un po' più concreto, che l'e-book che volevi convertire avesse un fastidioso piè di pagina con la conta delle pagine, come \"Pagina 5 di 423\". Ovviamente il numero di pagina salirebbe da 1 a 423, per cui dovresti trovare 423 stringhe differenti, giusto? Sbagliato in realtà: le espressioni regolari ti permettono di definire set di caratteri da trovare: per definirne uno, metti tutti i caratteri che vuoi avere nel set dentro parentesi quadre. Quindi, ad esempio, il set ``[abc]`` troverebbe sia il carattere \"a\", sia \"b\" sia \"c\". *I set troveranno sempre solamente uno dei caratteri del set.* Essi \"riconoscono\" gli intervalli, ovvero, se volessi trovare tutti i caratteri minuscoli dovresti usare il set ``[a-z]``, per tutti i caratteri minuscoli e maiuscoli dovresti usare ``[a-zA-Z]``, e così via. Chiaro il concetto? Quindi, ovviamente, usando l'espressione ``Pagina [0-9] di 423`` saresti in grado di trovare le prime 9 pagine, riducendo quindi il numero di espressioni necessarie a tre: la seconda espressione ``Pagina [0-9][0-9] di 423`` troverebbe tutti i numeri di pagina di due cifre, e sono sicuro che tu possa immaginare l'aspetto della terza espressione. Esatto, vai pure. Scrivila."
+msgstr "Poi inizia la parte davvero interessante. Ricordi quando ti ho detto che le espressioni regolari possono trovare più di una stringa? È qui che le cose si complicano. Poniamo, come esercizio un po' più concreto, che l'e-book che volevi convertire avesse un fastidioso piè di pagina con la conta delle pagine, come \"Pagina 5 di 423\". Ovviamente il numero di pagina salirebbe da 1 a 423, per cui dovresti trovare 423 stringhe differenti, giusto? Sbagliato in realtà: le espressioni regolari ti permettono di definire classi di caratteri da trovare: per definirne uno, metti tutti i caratteri che vuoi avere nella classe dentro parentesi quadre. Quindi, ad esempio, la classe ``[abc]`` troverebbe sia il carattere \"a\", sia \"b\" sia \"c\". *Le classi troveranno sempre solamente uno dei caratteri della classe.* Esse \"riconoscono\" gli intervalli, ovvero, se volessi trovare tutti i caratteri minuscoli dovresti usare la classe ``[a-z]``, per tutti i caratteri minuscoli e maiuscoli dovresti usare ``[a-zA-Z]``, e così via. Chiaro il concetto? Quindi, ovviamente, usando l'espressione ``Pagina [0-9] di 423`` saresti in grado di trovare le prime 9 pagine, riducendo quindi il numero di espressioni necessarie a tre: la seconda espressione ``Pagina [0-9][0-9] di 423`` troverebbe tutti i numeri di pagina di due cifre, e sono sicuro che tu possa immaginare l'aspetto della terza espressione. Esatto, vai pure. Scrivila."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
@@ -170,7 +170,7 @@ msgid ""
 " matching page numbers, wouldn't that be the single one expression to match "
 "all the page numbers? Yes, the expression ``Page [0-9]+ of 423`` would match"
 " every page number in that book!"
-msgstr "Speravo proprio che lo dicessi. Ma aspetta, ora diventa ancora più bello! Abbiamo appena visto che usando gli insiemi possiamo trovare un carattere tra molti inclusi. Ma puoi anche ripetere un carattere o un insieme, e ridurre così il numero di espressioni necessarie per gestire l’esempio dei numeri di pagina di poco fa a uno. Esatto, UNO! Eccitato? Dovresti esserlo! Funziona così: Alcuni cosiddetti caratteri speciali, \"+\", \"?\" e \"*\", *ripetono l’elemento singolo che li precede*. Per elemento si intende un singolo carattere, un insieme di caratteri, una sequenza di escape o un gruppo (Di questi ultimi due parleremo più avanti) – in breve ogni entità singola in un’espressione regolare. Questi caratteri sono chiamati wildcard o quantificatori. Per essere più precisi, \"?\" trova *0 o 1* dell’elemento che lo precede, \"*\" trova *0 o più* dell’elemento che lo precede e \"+\" trova *1 o più* dell’elemento che lo precede. Alcuni esempi: l’espressione ``a?`` troverebbe sia \"\" (che è la stringa vuota, non proprio utile nel nostro caso) sia \"a\", l’espressione ``a*`` troverebbe \"\", \"a\", \"aa\" o un qualsiasi numero di a messe in fila e, infine, l’espressione ``a+`` troverebbe \"a\", \"aa\" o un qualsiasi numero di a messe in fila (Nota: non troverebbe la stringa vuota!). Lo stesso vale per gli insiemi: l’espressione ``[0-9]+`` troverebbe *ogni numero intero che c’è*! So cosa stai pensando, e hai ragione: se usassi questa espressione nel caso di prima dei numeri di pagina, non sarebbe questa l’espressione unica che trova tutti i numeri di pagina? Sì, l’espressione ``Pagina [0-9]+ di 423`` troverebbe tutti I numeri di pagina in quel libro!"
+msgstr "Speravo proprio che lo dicessi. Ma aspetta, ora diventa ancora più bello! Abbiamo appena visto che usando le classi possiamo trovare un carattere tra molti inclusi. Ma puoi anche ripetere un carattere o una classe, e ridurre così il numero di espressioni necessarie per gestire l’esempio dei numeri di pagina di poco fa a uno. Esatto, UNO! Eccitato? Dovresti esserlo! Funziona così: Alcuni cosiddetti caratteri speciali, \"+\", \"?\" e \"*\", *ripetono l’elemento singolo che li precede*. Per elemento si intende un singolo carattere, una classe di caratteri, una sequenza di escape o un gruppo (Di questi ultimi due parleremo più avanti) – in breve ogni entità singola in un’espressione regolare. Questi caratteri sono chiamati wildcard o quantificatori. Per essere più precisi, \"?\" trova *0 o 1* dell’elemento che lo precede, \"*\" trova *0 o più* dell’elemento che lo precede e \"+\" trova *1 o più* dell’elemento che lo precede. Alcuni esempi: l’espressione ``a?`` troverebbe sia \"\" (che è la stringa vuota, non proprio utile nel nostro caso) sia \"a\", l’espressione ``a*`` troverebbe \"\", \"a\", \"aa\" o un qualsiasi numero di a messe in fila e, infine, l’espressione ``a+`` troverebbe \"a\", \"aa\" o un qualsiasi numero di a messe in fila (Nota: non troverebbe la stringa vuota!). Lo stesso vale per le classi: l’espressione ``[0-9]+`` troverebbe *ogni numero intero che c’è*! So cosa stai pensando, e hai ragione: se usassi questa espressione nel caso di prima dei numeri di pagina, non sarebbe questa l’espressione unica che trova tutti i numeri di pagina? Sì, l’espressione ``Pagina [0-9]+ di 423`` troverebbe tutti I numeri di pagina in quel libro!"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
@@ -215,7 +215,7 @@ msgstr "Puoi farlo, naturalmente: Basta mettere una barra rovesciata prima di og
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
-msgstr "Quindi, quali sono i set più utili?"
+msgstr "Quindi, quali sono le classi più utili?"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:63
 msgid ""
@@ -224,7 +224,7 @@ msgid ""
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand:"
-msgstr "Sapevo che l'avresti chiesto. Alcuni utili set sono ``[0-9]`` che trova una singola cifra, ``[a-z]`` che trova una singola lettera minuscola, ``[A-Z]`` che trova una singola lettera maiuscola, ``[a-zA-Z]`` che trova una singola lettera e ``[a-zA-Z0-9]`` che trova una singola lettera o numero. Puoi anche usare una sequenza di escape per fare più in fretta:"
+msgstr "Sapevo che l'avresti chiesto. Alcune utili classi sono ``[0-9]`` che trova una singola cifra, ``[a-z]`` che trova una singola lettera minuscola, ``[A-Z]`` che trova una singola lettera maiuscola, ``[a-zA-Z]`` che trova una singola lettera e ``[a-zA-Z0-9]`` che trova una singola lettera o numero. Puoi anche usare una sequenza di escape per fare più in fretta:"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "``\\d``"
@@ -264,7 +264,7 @@ msgid ""
 "found, for instance in Preferences->Searching in calibre itself and on the "
 "Search panel in the calibre :guilabel:`E-book viewer` as well as the calibre"
 " :guilabel:`Edit book` tool."
-msgstr "I set di maiuscole e minuscole possono corrispondere sia alle maiuscole che alle minuscole se è abilitata l'impostazione per rendere le ricerche senza distinzione tra maiuscole e minuscole. Tali impostazioni si trovano, ad esempio, in Preferenze->Ricerca in calibre stesso e nel pannello di ricerca in calibre :guilabel:`Visualizzatore di e-book` così come nello strumento calibre :guilabel:`Modifica libro`."
+msgstr "Le classi di maiuscole e minuscole possono corrispondere a entrambe se è abilitata l'impostazione che non distingue tra maiuscole e minuscole. Tali impostazioni si trovano, ad esempio, in Preferenze->Ricerca in calibre stesso e nel pannello di ricerca del :guilabel:`Lettore e-book` di calibre, così come nello strumento :guilabel:`Modifica libro`."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:89
 msgid ""
@@ -279,7 +279,7 @@ msgid ""
 " ``<p[^>]*>`` from the previous section, now you can see that the character "
 "set it's using tries to match any character except for a closing angle "
 "bracket."
-msgstr "Per concludere con i set, puoi anche definire un set con tutti i caratteri *esclusi* quelli nel set. Lo puoi fare includendo il carattere ``\"^\"`` come *primo carattere del set*. Così, ``[^a]`` troverebbe ogni carattere eccetto \"a\". Questo è detto integrare il set. Anche le sequenze di escape abbreviate che abbiamo visto in precedenza possono essere integrate: ``\"\\D\"`` significa qualunque carattere non numerico, essendo perciò equivalente a ``[^0-9]``. Le altre sequenze abbreviate possono essere integrate usando, hai indovinato, le rispettive lettere maiuscole invece di quelle minuscole. Quindi, tornando all'esempio ``<p[^>]*>`` della sezione precedente, ora puoi vedere che il set di caratteri utilizzato prova a trovare un qualsiasi carattere eccetto una parentesi angolare di chiusura."
+msgstr "Come nota conclusiva sulle classi, puoi anche definire una classe composta di tutti i caratteri *tranne* quelli nella classe. Puoi far ciò includendo il carattere ``\"^\"`` come *primo carattere della classe*. In questo modo, ``[^a]`` troverebbe ogni carattere eccetto \"a\". Questa operazione è detta \"integrare la classe\". Anche le sequenze di escape abbreviate che abbiamo visto in precedenza possono essere integrate: ``\"\\D\"`` significa qualunque carattere non numerico, essendo perciò equivalente a ``[^0-9]``. Le altre sequenze abbreviate possono essere integrate usando, hai indovinato, le rispettive lettere maiuscole invece di quelle minuscole. Quindi, tornando all'esempio ``<p[^>]*>`` della sezione precedente, ora puoi vedere che la classe di caratteri utilizzata prova a trovare un qualsiasi carattere eccetto una parentesi angolare di chiusura."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
@@ -349,7 +349,7 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``(?i)test`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr "Sì, l'ho fatto, grazie per aver prestato attenzione e avermelo ricordato. Puoi dire a Calibre come vuoi che certe cose vengano gestite usando qualcosa chiamato flag. Puoi includere i flag nella tua espressione utilizzando il costrutto speciale ``(?flags go here)`` dove, ovviamente, sostituirai \"flags go here\" con i flag specifici che desideri. Per ignorare le maiuscole e minuscole, il flag è ``i``, quindi includi ``(?i)`` nella tua espressione. Pertanto, ``(?i)test`` corrisponderà a \"Test\", \"tEst\", \"TEst\" e qualsiasi variazione di maiuscole e minuscole a cui potresti pensare."
+msgstr "Sì, l'ho fatto, grazie per aver prestato attenzione e avermelo ricordato. Puoi dire a calibre come vuoi che certe cose vengano gestite usando qualcosa chiamato flag. Puoi includere i flag nella tua espressione utilizzando il costrutto speciale ``(?i flag vanno qui)`` dove, ovviamente, sostituirai \"i flag vanno qui\" con i flag specifici che desideri. Per ignorare maiuscole e minuscole, il flag è ``i``, quindi includi ``(?i)`` nella tua espressione. In questo modo, ``(?i)test`` troverà una corrispondenza con \"Test\", \"tEst\", \"TEst\" e qualsiasi altra variazione di maiuscole e minuscole a cui potresti pensare."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:111
 msgid ""
@@ -358,7 +358,7 @@ msgid ""
 "expression, just put them in the same statement: ``(?is)`` would ignore case"
 " and make the dot match all. It doesn't matter which flag you state first, "
 "``(?si)`` would be equivalent to the above."
-msgstr ""
+msgstr "Un altro utile flag fa in modo che a un punto corrispondano tutti i caratteri *incluso* il carattere newline, il flag ``s``. Se vuoi usare più di un flag in un'espressione, inseriscile semplicemente nella stessa espressione: ``(?is)`` ignorerà maiuscole e minuscole e farà corrispondere il punto a tutti i caratteri. Non importa quale flag specifichi per prima, ``(?si)`` darà gli stessi risultati."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:114
 msgid ""
@@ -384,7 +384,7 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr ""
+msgstr "Iniziamo dalle impostazioni di conversione, che hanno potenzialità interessanti. Nella scheda :guilabel:`Cerca & sostituisci`, puoi inserire una regex (abbreviazione di \"regular expression\") che descrive la stringa da sostituire durante la conversione. La parte davvero interessante è la procedura guidata. Clicca sulla bacchetta magica per mostrare un'anteprima di ciò che calibre \"vede\" durante il processo di conversione. Scorri verso il basso fino alla stringa che vuoi rimuovere, selezionala e copiala, poi incollala nel campo regex nella parte alta della finestra. Se ci sono parti variabili come numeri di pagina o altro, usa le classi e i quantificatori per catturarli, e già che ci sei, ricordati di usare la sequenza di escape per i caratteri speciali, se ce ne sono. Premi il pulsante :guilabel:`Prova` e calibre evidenzierà le parti che sostiruirebbe se usassi quella regex. Quando sei soddisfatto, premi OK per convertire. Fai attenzione se la sorgente per la conversione contiene tag come quelli di questo esempio::"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
@@ -411,7 +411,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "(vergognosamente copiata da `questa discussione <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Ci sarebbero da rimuovere anche alcuni dei tag. In questo esempio, ti consiglio di iniziare dal tag ``<b class=\"calibre2\">``, dopodiché devi rimuovere il tag di chiusura corrispondente (i tag di apertura sono ``<tag>``, quelli di chiusura sono ``</tag>``), che in questo caso è semplicemente il ``</b>`` successivo (se questo punto non ti è chiaro, fai riferimento a un buon manuale di HTML o chiedi aiuto sul forum). Il tag di apertura può essere descritto da ``<b.*?>``, quello di chiusura da ``</b>``, perciò potremmo rimuovere tutto ciò che si trova tra i due tag con ``<b.*?>.*?</b>``. Usare questa espressione però non sarebbe una buona idea, perché rimuoverebbe qualunque testo racchiuso da tag <b> (che, come nota, applica il grassetto al testo racchiuso) ed è più che probabile che parti del libro verrebbero rimosse come conseguenza. Conviene invece includere anche la parte iniziale della stringa racchiusa, usando l'espressione regolare ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` `Invece di digitare esplicitamente gli spazi della stringa, viene usato `\\s`` con i quantificatori, per catturare ogni possibile variazione della stringa. Se provi una nuova espressione ricorda di controllare tutte le rimozioni che calibre applicherà, per essere sicuro di non rimuovere parti che vuoi conservare. Se ne controlli solamente una, potresti perderti una corrispondenza non voluta da un'altra parte nel testo. Ricorda anche che se dovessi rimuovere più (o meno) tag di quelli che volevi, calibre proverà a riparare il codice danneggiato dopo la rimozione."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
@@ -438,7 +438,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "Un altro caso in cui puoi usare le espressioni regolari è per l'estrazione di metadati dai nomi dei file. Puoi trovare questa funzionalità nella sezione \"Aggiunta libri\" delle impostazioni. Qui c'è una funzione speciale: puoiu usare i nomi dei campi per i campi dei metadati, per esempio ``(?P<title>)`` indica a calibre di usare questa parte della stringa come titolo del libro. I nomi di campo permessi sono elencati nella finestra, insieme a un altro comodo campo di prova. Un esempio: immagina di voler importare una gran quantità di libri con nomi del tipo ``Grandi Classici: La Divina Commedia di Dante Alighieri.mobi``. (naturalmente sarà già nella tua biblioteca, chi non ama la poesia classica italiana?) oppure ``Epopee della Fantascienza: Trilogia della Fondazione di Isaac Asimov.epub``. Questi ovviamente sono nomi di file da cui calibre non riuscirà a estrarre niente di utile - l'espressione predefinita usata per estrarre i metadati è  ``(?P<title>.+) - (?P<author>[^_]+)``. Un'espressione regolare che sarebbe utile in questo caso è ``[a-zA-Z]+: (?P<title>.+) di (?P<author>.+)``. Tieni presente che dentro al gruppo per il campo dei metadati devi usare espressioni che descrivano cosa trovare per quel campo. E ricorda anche che quando usi il campo di prova fornito da calibre devi aggiungere al nome del file di prova la sua estensione, altrimenti non otterrai alcuna corrispondenza, anche se usi un'espressione adatta."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"

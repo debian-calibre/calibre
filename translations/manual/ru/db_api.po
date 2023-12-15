@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-17 03:14+0000\n"
+"POT-Creation-Date: 2023-12-13 17:04+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>, 2020-2023\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -207,6 +207,13 @@ msgid ""
 msgstr "Регистрирует функцию обратного вызова, которая будет вызываться после выполнения определённых действий с этой базой данных. Функция должна принимать три аргумента: (:class:`EventType`, library_id, event_type_specific_data)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_notes_resource:1
+msgid ""
+"Add the specified resource so it can be referenced by notes and return its "
+"content hash"
+msgstr "Добавить указанный ресурс, чтобы его можно было ссылаться в примечаниях и вернуть его хэш-код"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
 msgstr "Замороженный набор всех известных идентификаторов книг."
@@ -378,6 +385,12 @@ msgid "Expire entries from the trash that are too old"
 msgstr "Записи из корзины слишком старые"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.export_note:1
+msgid ""
+"Export the note as a single HTML document with embedded images as data: URLs"
+msgstr "Экспортировать примечание в виде одного HTML-документа с встроенными изображениями в виде URL-адресов данных"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
@@ -417,6 +430,13 @@ msgid ""
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
 msgstr "Вернуть идентификаторы (в виде кортежа) для значений, которые поле name имеет в книге, идентифицированной с помощью ``book_id``. Если значений нет, или такой книги, или такого поля нет, возвращается пустой кортеж."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_supports_notes:1
+msgid ""
+"Return True iff the specified field supports notes. If field is None return "
+"frozenset of all fields that support notes."
+msgstr "Вернуть True, если указанное поле поддерживает примечания. Если поле равно None, вернуть неизменяемое множество всех полей, поддерживающих примечания."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
@@ -515,6 +535,13 @@ msgid ""
 msgstr "Вернуть кортеж всех форматов для указанной книги. Если verify_formats имеет значение True, проверяет, существуют ли файлы на диске."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_items_that_have_notes:1
+msgid ""
+"Return all item_ids for items that have notes in the specified field or all "
+"fields if field_name is None"
+msgstr "Вернуть все item_ids для элементов, у которых есть примечания в указанном поле или во всех полях, если field_name равно None"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:1
 msgid ""
 "Returns all links for all fields referenced by book identified by book_id. "
@@ -599,6 +626,11 @@ msgid ""
 msgstr "Вернуть имя элемента для элемента, указанного в item_id в указанном поле. См. также :meth:`get_id_map`."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_name_map:1
+msgid "Return mapping of item values to ids"
+msgstr "Вернуть отображение значений элементов в идентификаторы"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
 msgid "Return a dictionary of links for the supplied field."
 msgstr "Возвращает словарь ссылок для предоставленного поля."
@@ -642,6 +674,13 @@ msgid ""
 msgstr " Если True, вместо этого возвращает сопоставление book_id с текущим значением series_index."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_notes_resource:1
+msgid ""
+"Return a dict containing the resource data and name or None if no resource "
+"with the specified hash is found"
+msgstr "Вернуть словарь, содержащий данные ресурса и имя или None, если ресурс с указанным хэшем не найден"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -676,9 +715,29 @@ msgid "Return True iff the specified book_id exists in the db"
 msgstr "Вернёт True, если указанный book_id существует в БД"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.import_note:1
+msgid ""
+"Import a previously exported note or an arbitrary HTML file as the note for "
+"the specified item"
+msgstr "Импортировать ранее экспортированное примечание или произвольный HTML-файл в качестве примечания для указанного элемента"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "Инициализировать этот кеш данными из серверной части."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_with_notes_in_book:1
+msgid ""
+"Return a dict of field to items that have associated notes for that field "
+"for the specified book"
+msgstr "Вернуть словарь поля для элементов, у которых есть примечания для этого поля для указанной книги"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.link_for:1
+msgid ""
+"Return the link, if any, for the specified item or None if no link is found"
+msgstr "Вернуть ссылку, если она есть, для указанного элемента или None, если ссылка не найдена"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:1
@@ -737,6 +796,23 @@ msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
 msgstr "поля должны быть списком из двух кортежей формы (field_name, ascending = True или False). Наиболее значимое поле - первое в кортеже из двух элементов."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_data_for:1
+msgid "Return all notes data as a dict or None if note does not exist"
+msgstr "Вернуть все данные примечаний в виде словаря или None, если примечание не существует"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_for:1
+msgid "Return the notes document or an empty string if not found"
+msgstr "Вернуть документ с примечаниями или пустую строку, если не найдено"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_resources_used_by:1
+msgid ""
+"Return the set of resource hashes of all resources used by the note for the "
+"specified item"
+msgstr "Вернуть набор хэшей ресурсов всех ресурсов, используемых примечанием для указанного элемента"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
@@ -886,6 +962,13 @@ msgid ""
 msgstr "Если не None, то набор идентификаторов книг, по которым будет выполняться поиск книг вместо поиска по всем книгам."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_notes:1
+msgid ""
+"Search the text of notes using an FTS index. If the query is empty return "
+"all notes."
+msgstr "Искать текст примечаний с использованием индекса FTS. Если запрос пустой, вернуть все примечания."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
 msgid "options must be a map of the form {book_id:conversion_options}"
 msgstr "параметры должны быть картой в форме {book_id: conversion_options}"
@@ -967,6 +1050,17 @@ msgid ""
 msgstr "Установка force_changes = True заставит set_metadata обновлять поля, даже если mi содержит пустые значения. В этом случае `None` отличается от `empty`. Если mi.XXX равно 'None', XXX не заменяется, в противном случае - нет. Теги, идентификаторы и атрибуты обложки - это особые случаи. Теги и идентификаторы не могут быть установлены на 'None', поэтому они всегда будут заменены, если force_changes истинно. Вы должны убедиться, что mi содержит те значения, которые вы хотите, чтобы книга имела. Обложки всегда меняются, если предоставляется новая обложка, но никогда не удаляются. Также обратите внимание, что force_changes не влияет на установку заголовка или авторов."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_notes_for:1
+msgid ""
+"Set the notes document. If the searchable text is different from the "
+"document, specify it as searchable_text. If the document references "
+"resources their hashes must be present in resource_hashes. Set "
+"remove_unused_resources to True to cleanup unused resources, note that "
+"updating a note automatically cleans up resources pertaining to that note "
+"anyway."
+msgstr "Установить документ с примечаниями. Если искомый текст отличается от документа, указать его как searchable_text. Если документ ссылается на ресурсы, их хэши должны присутствовать в resource_hashes. Установить remove_unused_resources в True, чтобы очистить неиспользуемые ресурсы, обратите внимание, что обновление примечания автоматически очищает ресурсы, относящиеся к этому примечанию."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
@@ -1007,6 +1101,13 @@ msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
 msgstr "Список авторов. Если нет, то список совпадений будет ограничен книгами, имеющими этих авторов (без учета регистра)."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.unretire_note_for:1
+msgid ""
+"Unretire a previously retired note for the specified item. Notes are retired"
+" when an item is removed from the database"
+msgstr "Восстановить ранее удаленное примечание для указанного элемента. Примечания удаляются, когда элемент удаляется из базы данных."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1
