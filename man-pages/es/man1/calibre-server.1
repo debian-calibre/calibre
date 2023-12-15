@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "noviembre 24, 2023" "7.1.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "diciembre 15, 2023" "7.2.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -41,7 +41,7 @@ calibre\-server [opciones] [ruta de acceso a la carpeta de biblioteca...]
 .UNINDENT
 .UNINDENT
 .sp
-Iniciar el servidor de contenido de calibre. El servidor de contenidos de calibre expone las bibliotecas calibre en Internet. Puede especificar la ruta de acceso a las carpetas de biblioteca como argumentos de \fBcalibre\-server\fP\&. Si no especifica ninguna ruta, se utilizarán todas las bibliotecas que el programa principal de calibre conoce.
+Iniciar el servidor de contenido de Calibre. El servidor de contenidos de Calibre expone las bibliotecas Calibre en Internet. Puede especificar la ruta de acceso a las carpetas de biblioteca como argumentos de \fBcalibre\-server\fP\&. Si no especifica ninguna ruta, se utilizarán todas las bibliotecas que el programa principal de Calibre conoce.
 .sp
 Cuando alguno de los argumentos de \fBcalibre\-server\fP contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .SH [OPCIONES]
@@ -88,7 +88,7 @@ Tamaño mínimo para usar compresión de datos (en bytes).
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Ruta de acceso a un archivo JSON que contiene una plantilla para el modo de lista de libros personalizada. La manera más sencilla de crear tal plantilla es ir a Preferencias > Compartir por la red > Plantilla de lista de libros en calibre, crear una plantilla y exportarla.
+Ruta a un archivo JSON que contiene una plantilla para el modo de lista de libros personalizada. La forma más sencilla de crear un archivo de plantilla de este tipo es ir a Preferencias\-> Compartir en la red\-> Plantilla de lista de libros en Calibre, crear la plantilla y exportarla.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -118,7 +118,7 @@ Recurrir a la interfaz detectada automáticamente.   Si por alguna razón el ser
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Permitir hacer cambios a las conexiones locales sin autenticación.  Normalmente, si no activa la autenticación, el servidor funciona en modo de sólo lectura, para que los usuarios anónimos no puedan hacer cambios en la biblioteca. Esta opción permite hacer cambios a cualquiera que se conecte desde el mismo equipo donde se ejecuta el servidor. Esto es útil si quiere ejecutar el servidor sin autenticación y usar calibredb para hacer cambios en las bibliotecas de calibre. Tenga en cuenta que si activa esta opción permitirá que cualquier programa que se ejecute en el equipo pueda hacer cambios en las bibliotecas de calibre. De manera predeterminada esta opción está desactivada.
+Permitir hacer cambios a las conexiones locales sin autenticación.  Normalmente, si no activa la autenticación, el servidor funciona en modo de sólo lectura, para que los usuarios anónimos no puedan hacer cambios en la biblioteca. Esta opción permite hacer cambios a cualquiera que se conecte desde el mismo equipo donde se ejecuta el servidor. Esto es útil si quiere ejecutar el servidor sin autenticación y usar calibredb para hacer cambios en las bibliotecas de Calibre. Tenga en cuenta que si activa esta opción permitirá que cualquier programa que se ejecute en el equipo pueda hacer cambios en las bibliotecas de Calibre. De manera predeterminada esta opción está desactivada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +148,7 @@ Campos de metadatos definidos por el usuario ignorados.     Lista de campos de m
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-La interfaz en la que esperar conexiones.   De manera predeterminada se esperan conexiones en todas las interfaces IPv4 disponibles. Puede cambiar esto a, por ejemplo, «127.0.0.1» para esperar conexiones sólo del equipo local, o a «::» para esperar todas las conexiones IPv6 e IPv4.
+La interfaz en la que esperar conexiones.   De manera predeterminada se esperan conexiones en todas las interfaces IPv6 e IPv4 disponibles. Puede cambiar esto a, por ejemplo, «127.0.0.1» para esperar conexiones sólo del equipo local en IPv4, o a «0.0.0.0» para esperar todas las conexiones IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,7 +213,7 @@ El puerto en el que esperar conexiones.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Ruta de acceso a un archivo JSON que contiene URL para la función «Buscar en internet». La manera más sencilla de crear tal archivo es ir a Preferencias > Compartir por la red > Buscar en internet en calibre, crear los URL y exportarlos.
+Ruta de acceso a un archivo JSON que contiene URL para la función «Buscar en internet». La manera más sencilla de crear tal archivo es ir a Preferencias > Compartir por la red > Buscar en internet en Calibre, crear los URL y exportarlos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -238,7 +238,7 @@ Tiempo (en segundos) tras el que se cierra una conexión inactiva.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Permitir hacer cambios a las conexiones sin autenticación desde direcciones IP específicas.         Normalmente, si no activa la autenticación, el servidor funciona en modo de sólo lectura, para que los usuarios anónimos no puedan hacer cambios en la biblioteca. Esta opción permite hacer cambios a cualquiera que se conecte desde las direcciones IP especificadas. Debe ser una lista de direcciones o especificaciones de red separadas por comas. Esto es útil si quiere ejecutar el servidor sin autenticación y usar calibredb para hacer cambios en las bibliotecas de calibre. Tenga en cuenta que si activa esta opción permitirá que cualquiera que se conecte desde las direcciones IP especificadas pueda hacer cambios en las bibliotecas de calibre.
+Permitir hacer cambios a las conexiones sin autenticación desde direcciones IP específicas.         Normalmente, si no activa la autenticación, el servidor funciona en modo de sólo lectura, para que los usuarios anónimos no puedan hacer cambios en la biblioteca. Esta opción permite hacer cambios a cualquiera que se conecte desde las direcciones IP especificadas. Debe ser una lista de direcciones o especificaciones de red separadas por comas. Esto es útil si quiere ejecutar el servidor sin autenticación y usar calibredb para hacer cambios en las bibliotecas de Calibre. Tenga en cuenta que si activa esta opción permitirá que cualquiera que se conecte desde las direcciones IP especificadas pueda hacer cambios en las bibliotecas de Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP

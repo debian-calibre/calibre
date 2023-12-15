@@ -17,6 +17,7 @@ import sys
 import textwrap
 import time
 from collections import OrderedDict, deque
+from functools import partial
 from io import BytesIO
 from qt.core import (
     QAction, QApplication, QDialog, QFont, QIcon, QMenu, QSystemTrayIcon, Qt, QTimer,
@@ -30,10 +31,9 @@ from calibre.constants import (
 from calibre.customize import PluginInstallationType
 from calibre.customize.ui import available_store_plugins, interface_actions
 from calibre.db.legacy import LibraryDatabase
-from calibre.gui2.extra_files_watcher import ExtraFilesWatcher
 from calibre.gui2 import (
     Dispatcher, GetMetadata, config, error_dialog, gprefs, info_dialog,
-    max_available_height, open_url, question_dialog, warning_dialog,
+    max_available_height, open_url, question_dialog, timed_print, warning_dialog,
 )
 from calibre.gui2.auto_add import AutoAdder
 from calibre.gui2.changes import handle_changes
@@ -42,6 +42,7 @@ from calibre.gui2.device import DeviceMixin
 from calibre.gui2.dialogs.message_box import JobError
 from calibre.gui2.ebook_download import EbookDownloadMixin
 from calibre.gui2.email import EmailMixin
+from calibre.gui2.extra_files_watcher import ExtraFilesWatcher
 from calibre.gui2.init import LayoutMixin, LibraryViewMixin
 from calibre.gui2.job_indicator import Pointer
 from calibre.gui2.jobs import JobManager, JobsButton, JobsDialog
@@ -118,6 +119,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
     def __init__(self, opts, parent=None, gui_debug=None):
         MainWindow.__init__(self, opts, parent=parent, disable_automatic_gc=True)
+        self.setVisible(False)
         self.setWindowIcon(QApplication.instance().windowIcon())
         self.extra_files_watcher = ExtraFilesWatcher(self)
         self.jobs_pointer = Pointer(self)
@@ -372,7 +374,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
         # ########################## Cover Flow ################################
 
-        CoverFlowMixin.init_cover_flow_mixin(self)
+        CoverFlowMixin.__init__(self)
 
         self._calculated_available_height = min(max_available_height()-15,
                 self.height())
@@ -391,13 +393,12 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
         if config['autolaunch_server']:
             self.start_content_server()
-
+        do_hide_windows = False
         if self.system_tray_icon is not None and self.system_tray_icon.isVisible() and opts.start_in_tray:
-            QTimer.singleShot(0, self.hide_windows)
+            do_hide_windows = True
             show_gui = False
             setattr(self, '__systray_minimized', True)
-        if show_gui:
-            self.show()
+        QTimer.singleShot(0, partial(self.post_initialize_actions, show_gui, do_hide_windows))
         self.read_settings()
 
         self.finalize_layout()
@@ -421,35 +422,50 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
         self.listener = Listener(parent=self)
         self.listener.message_received.connect(self.message_from_another_instance)
-        QTimer.singleShot(0, self.listener.start_listening)
-
-        # Collect cycles now
-        gc.collect()
 
         QApplication.instance().shutdown_signal_received.connect(self.quit)
         if show_gui and self.gui_debug is not None:
             QTimer.singleShot(10, self.show_gui_debug_msg)
 
         self.iactions['Connect Share'].check_smartdevice_menus()
-        QTimer.singleShot(1, self.start_smartdevice)
         QTimer.singleShot(100, self.update_toggle_to_tray_action)
+
+    def post_initialize_actions(self, show_gui, do_hide_windows):
+        # Various post-initialization actions after an event loop tick
+
+        # Collect cycles now
+        gc.collect()
+
+        self.listener.start_listening()
+        if do_hide_windows:
+            self.hide_windows()
+        if show_gui:
+            timed_print('GUI main window shown')
+            self.show()
+        # Force repaint of the book details splitter because it otherwise ends
+        # up with the wrong size. I don't know why.
+        self.bd_splitter.repaint()
 
         # Once the gui is initialized we can restore the quickview state
         # The same thing will be true for any action-based operation with a
         # layout button. We need to let a book be selected in the book list
         # before initializing quickview, so run it after an event loop tick
         QTimer.singleShot(0, self.start_quickview)
-        # Force repaint of the book details splitter because it otherwise ends
-        # up with the wrong size. I don't know why.
-        QTimer.singleShot(0, self.bd_splitter.repaint)
+
+        # Start the smartdevice later so that the network time doesn't affect
+        # the gui repaint debouncing. Wait 3 seconds before starting to be sure
+        # that all other initialization (plugins etc) has completed. Yes, 3
+        # seconds is an arbitrary value and probably too long, but it will do
+        # until the underlying structure changes to make it unnecessary.
+        QTimer.singleShot(3000, self.start_smartdevice)
 
     def start_quickview(self):
         from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
         qv = get_quickview_action_plugin()
         if qv:
-            if DEBUG:
-                prints('Starting QuickView')
+            timed_print('QuickView starting')
             qv.qv_button.restore_state()
+            timed_print('QuickView started')
         self.save_layout_state()
         self.focus_library_view()
 
@@ -479,13 +495,15 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.focus_current_view()
 
     def start_smartdevice(self):
+        timed_print('Starting the smartdevice driver')
         message = None
         if self.device_manager.get_option('smartdevice', 'autostart'):
             try:
                 message = self.device_manager.start_plugin('smartdevice')
-            except:
-                message = 'start smartdevice unknown exception'
-                prints(message)
+                timed_print('Finished starting smartdevice')
+            except Exception as e:
+                message = str(e)
+                timed_print(f'Starting smartdevice driver failed: {message}')
                 import traceback
                 traceback.print_exc()
         if message:

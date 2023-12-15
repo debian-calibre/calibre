@@ -5,7 +5,7 @@
 # Translators:
 # Lindsey Li <172sylviali@gmail.com>, 2016
 # CalbireC <fd98shadow@sina.com>, 2020
-# tony shen <anthanny@hotmail.com>, 2020
+# tony shen <anthanny@hotmail.com>, 2020,2023
 # yyngfive <chenhye5@outlook.com>, 2023
 # ZeYu Zhang <zeyuzhangwing@gmail.com>, 2016
 # CalbireC <fd98shadow@sina.com>, 2020
@@ -13,10 +13,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 03:59+0000\n"
+"POT-Creation-Date: 2023-12-13 17:04+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: yyngfive <chenhye5@outlook.com>, 2023\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2023\n"
+"Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -225,7 +225,7 @@ msgid ""
 "<https://bugs.launchpad.net/calibre>`_. Note that this will include *all* "
 "the commits you have made. If you only want to send some commits, you have "
 "to change ``origin/master`` above. To send only the last commit, use::"
-msgstr ""
+msgstr "这将在当前文件夹中创建一个文件：`my changes'文件，只需将其附加到calibre `bug tracker上的票证上即可<https://bugs.launchpad.net/calibre>`_。请注意，这将包括您所做的所有提交。如果您只想发送一些提交，则必须更改上面的“origin/master”。要只发送最后一次提交，请使用："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:119
 msgid ""
@@ -316,12 +316,12 @@ msgid ""
 "Install calibre normally, using the `Windows installer <https://calibre-"
 "ebook.com/download_windows>`__. Then open a Command Prompt and change to the"
 " previously checked out calibre code folder. For example::"
-msgstr ""
+msgstr "正常安装Calibre，使用`Windows Installer<https://calibre-ebook.com/download_windows>`__。然后打开命令提示符并切换到先前检出的口径代码文件夹。例如："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:165
 #: ../../__w/calibre/calibre/manual/develop.rst:241
 msgid "calibre is the folder that contains the src and resources sub-folders."
-msgstr ""
+msgstr "Calibre是包含src和resource子文件夹的文件夹。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:167
 msgid ""
@@ -330,7 +330,7 @@ msgid ""
 "would be ``C:\\Users\\kovid\\work\\calibre\\src``. `Here is a short guide "
 "<https://docs.python.org/using/windows.html#excursus-setting-environment-"
 "variables>`_ to setting environment variables on Windows."
-msgstr ""
+msgstr "下一步是将环境变量``CALIBRE_DEVELOP_FROM``设置为src文件夹的绝对路径。因此，按照上面的示例，它应该是``C:\\Users\\kovid\\work\\calibre\\src`。以下是<https://docs.python.org/using/windows.html#excursus-setting-environment-variables>`_在Windows上设置环境变量的简短指南。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:172
 msgid ""
@@ -375,7 +375,7 @@ msgid ""
 "Install calibre normally using the `provided .dmg <https://calibre-"
 "ebook.com/download_osx>`__. Then open a Terminal and change to the "
 "previously checked out calibre code folder, for example::"
-msgstr ""
+msgstr "使用`提供的.dmg<https://calibre-ebook.com/download_osx>`__.正常安装Calibre。然后打开终端并切换到之前检出的口径代码文件夹，例如："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:199
 msgid ""
@@ -384,14 +384,14 @@ msgid ""
 ":file:`/Applications/calibre.app/Contents/MacOS` you should add this folder "
 "to your PATH environment variable, if you want to run the command line tools"
 " easily."
-msgstr ""
+msgstr "Calibre是包含src和resource子文件夹的文件夹。Calibre命令行工具位于Calibre应用程序包中，在：file:`/Applications/calibre.app/Contents/MacOS`中，如果您希望轻松运行命令行工具，则应将此文件夹添加到PATH环境变量中。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:205
 msgid ""
 "The next step is to create a bash script that will set the environment "
 "variable ``CALIBRE_DEVELOP_FROM`` to the absolute path of the src folder "
 "when running calibre in debug mode."
-msgstr ""
+msgstr "下一步是创建一个bash脚本，该脚本将在调试模式下运行Calibre时将环境变量``CALIBRE_DEVELOP_FROM``设置为src文件夹的绝对路径。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:208
 msgid "Create a plain text file::"
@@ -401,7 +401,7 @@ msgstr "创建一个空文件:"
 msgid ""
 "Save this file as :file:`/usr/local/bin/calibre-develop`, then set its "
 "permissions so that it can be executed::"
-msgstr ""
+msgstr "将该文件另存为：file:`/usr/local/bin/calibre-develop`，设置权限即可执行："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:218
 msgid "Once you have done this, run::"
@@ -434,7 +434,7 @@ msgid ""
 "Install calibre using the `binary installer <https://calibre-"
 "ebook.com/download_linux>`_. Then open a terminal and change to the "
 "previously checked out calibre code folder, for example::"
-msgstr ""
+msgstr "使用`二进制安装程序<https://calibre-ebook.com/download_linux>`_.安装Calibre。然后打开终端，切换到之前检出的calibre代码文件夹，例如："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:243
 msgid ""
@@ -442,14 +442,14 @@ msgid ""
 " the absolute path of the src folder. So, following the example above, it "
 "would be ``/home/kovid/work/calibre/src``. How to set environment variables "
 "depends on your Linux distribution and what shell you are using."
-msgstr ""
+msgstr "下一步是将环境变量``CALIBRE_DEPLE_FROM``设置为src文件夹的绝对路径。因此，按照上面的示例，它应该是``/home/kovid/work/calibre/src``。如何设置环境变量取决于您的Linux发行版以及您使用的是什么Shell。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:248
 msgid ""
 "It is recommended to use the binary installer provided from upstream. Should"
 " you insist on using a package provided by your distribution, use the "
 "``CALIBRE_PYTHON_PATH`` and ``CALIBRE_RESOURCES_PATH`` variables instead."
-msgstr ""
+msgstr "建议使用上游提供的二进制安装程序。如果您坚持使用发行版提供的包，请改用``CALIBRE_PYTHON_PATH``和``CALIBRE_RESOURCES_PATH``变量。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:252
 msgid ""
@@ -516,11 +516,11 @@ msgstr "这是Kovid最喜欢的Debug方式。只需要在目标点插入print语
 
 #: ../../__w/calibre/calibre/manual/develop.rst:301
 msgid "Similarly, you can start the E-book viewer as::"
-msgstr ""
+msgstr "同样，您可以通过以下方式启动电子书阅读器："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:305
-msgid "The e-book-editor can be started as::"
-msgstr "电子书编辑器可以这样打开:"
+msgid "The e-book editor can be started as::"
+msgstr "可以通过以下方式启动电子书编辑器："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:310
 msgid "Using an interactive Python interpreter"
@@ -539,7 +539,7 @@ msgid ""
 "local scope). The interactive prompt even has :kbd:`Tab` completion for "
 "object properties and you can use the various Python facilities for "
 "introspection, such as :func:`dir`, :func:`type`, :func:`repr`, etc."
-msgstr ""
+msgstr "当从命令行运行时，这将启动一个交互式的Python解释器，可以访问所有本地定义的变量(本地作用域中的变量)。交互提示符甚至有：按键`Tab`对象属性补全，可以使用各种Python工具进行自省，如：func：`dir`、：func：`type`、：func：`repr`等。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:323
 msgid "Using the Python debugger as a remote debugger"
@@ -597,7 +597,7 @@ msgid ""
 "checkout to the ``PYTHONPATH`` in your IDE. In other words, the folder you "
 "set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the ``PYTHONPATH`` of"
 " your IDE."
-msgstr ""
+msgstr "如果内置调试器支持远程调试，则可以在您最喜欢的Python IDE中使用它。第一步是将Calibre src检出添加到IDE中的``PYTHONPATH``中。换句话说，您在上面设置为``CALIBRE_DEVELOP_FROM``的文件夹也必须位于您的IDE的``PYTHONPATH`中。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:362
 msgid ""
@@ -606,7 +606,7 @@ msgid ""
 "the remote debugger to calibre at the point of interest, for example in the "
 "main function. Then run calibre as normal. Your IDE should now be able to "
 "connect to the remote debugger running inside calibre."
-msgstr ""
+msgstr "然后将IDE的远程调试器模块放入Calibre源代码签出的：file：`src`子文件夹中。添加启动远程调试器所需的任何代码，以在感兴趣的点进行校准，例如在Main函数中。然后像往常一样运行Calibre。您的IDE现在应该能够连接到在Calibre内运行的远程调试器。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:369
 msgid "Executing arbitrary scripts in the calibre Python environment"
