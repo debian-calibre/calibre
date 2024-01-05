@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "joulukuuta 15, 2023" "7.2.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -41,15 +41,15 @@ ebook\-convert input_file output_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Muunna e\-kirja muodosta toiseen.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+input_file on tulo ja output_file on lähtö. Molemmat on määritettävä komennon kahdeksi ensimmäiseksi argumentiksi.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Tulostetun e\-kirjan muoto arvataan output_file tiedostopäätteestä. output_file voi olla myös erikoismuodossa . EXT, jossa EXT on tulostetiedoston tunniste. Tässä tapauksessa tulostetiedoston nimi johdetaan syöttötiedoston nimestä. Huomaa, että tiedostonimet eivät saa alkaa yhdysmerkillä. Lopuksi, jos output_file tiedostolla ei ole päätettä, sitä käsitellään kansiona ja HTML\-tiedostoista koostuva \(dqavoin e\-kirja\(dq (OEB) kirjoitetaan kyseiseen kansioon. Nämä tiedostot ovat tiedostoja, jotka normaalisti olisi välitetty lähtölaajennukseen.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Kun olet määrittänyt syöttö\- ja tulostetiedoston, voit mukauttaa muunnosta määrittämällä erilaisia vaihtoehtoja. Käytettävissä olevat vaihtoehdot riippuvat syöttö\- ja tulostetiedostotyypeistä. Saat apua niihin määrittämällä syöttö\- ja tulostetiedoston ja käyttämällä sitten \-h\-vaihtoehtoa.
 .sp
-For full documentation of the conversion system see
+Muuntojärjestelmän täydellinen dokumentaatio:
 \fI\%Ekirja muunnos\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
@@ -100,7 +100,7 @@ Luettelo sisäänrakennetuista resepteistä. Voit suorittaa muunnoksen sisäänr
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device. In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd, generic_eink_large
+Määritä tulostusprofiili. Tulostusprofiili kertoo muunnosjärjestelmälle, miten luotu asiakirja optimoidaan määritettyä laitetta varten. Joissakin tapauksissa tulostusprofiilia voidaan käyttää optimoimaan tulostus tietylle laitteelle, mutta tämä on harvoin tarpeen. Vaihtoehtoja ovat mm.:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd, generic_eink_large
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,7 +136,7 @@ Lisää inline\-sisällysluettelon, joka näkyy kirjan sisällön osana.
 .INDENT 0.0
 .TP
 .B \-\-epub\-max\-image\-size
-The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
+Kuvan enimmäiskoko (leveys x korkeus). Arvo none tarkoittaa, että käytä näytön kokoa lähtöprofiilista. Arvo profile tarkoittaa, että enimmäiskokoa ei ole määritetty. Esimerkiksi arvo 100x200 aiheuttaa kaikkien kuvien koon muuttamisen siten, että niiden leveys on enintään 100 pikseliä ja korkeus enintään 200 pikseliä. Huomaa, että tämä vaikuttaa vain itse kuvatiedostojen kokoon. Mikä tahansa kuva voidaan renderöidä eri kokoisena riippuen siihen asiakirjassa käytetystä tyylistä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Luotavan EPUB\-tiedoston versio. EUPB 2 on yleisimmin yhteensopiva versio, käyt
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Pura luodun EPUB tiedoston sisältö määritettyyn kansioon. Kansion sisältö poistetaan ensin, joten ole varovainen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -189,7 +189,7 @@ Asetukset, joilla kontrolloidaan ulostulon ulkoasua
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Unicode\-merkkien translitterointi ASCII\-esitykseksi. Käytä varovasti, koska tämä korvaa Unicode\-merkit ASCII\-merkillä. Se korvaa esimerkiksi \fB\(dq\fPPelé\fB\(dq\fP merkillä \fB\(dq\fPPele\fB\(dq\fP\&. Huomaa myös, että tapauksissa, joissa merkistä on useita esitystapoja (esimerkiksi kiinan ja japanin yhteiset merkit), käytetään nykyisen calibre\-käyttöliittymän kielen mukaista esitystä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -299,7 +299,7 @@ Kun calibre poistaa tyhjiä rivejä kappaleiden välistä, se asettaa myös kapp
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Muunna tavalliset lainausmerkit, viivat ja ellipsit niiden typografisesti oikeiksi vastineiksi. Lisätietoja on osoitteessa \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -314,7 +314,7 @@ Polku tiedostoon jossa on sääntöjä käytettäväksi kirjan CSS\-tyylien muun
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
+Polku tiedostoon, joka sisältää säännöt tämän kirjan HTML:n muuttamiseksi. Helpoin tapa luoda tällainen tiedosto on käyttää ohjattua sääntöjen luomista calibre GUI:ssä. Siirry siihen muuntamisvalintaikkunan \fB\(dq\fPKäyttötuntuma\->Muunna HTML\fB\(dq\fP \-osiossa. Kun olet luonut säännöt, voit käyttää \fB\(dq\fPVie\fB\(dq\fP\-painiketta tallentaaksesi ne tiedostoon.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -336,7 +336,7 @@ Analysoi dokumentin tavutetut sanat. Dokumentin omaa sisältöä käytetään tu
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-Poista tyhjät kappaleet kappaleiden välistä.
+Poista tyhjät kappaleet kappaleiden välistä
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -376,7 +376,7 @@ Ota heuristinen prosessointi käyttöön. Valinta vaaditaan, jotta heuristista p
 .INDENT 0.0
 .TP
 .B \-\-html\-unwrap\-factor
-Pituuden suhdeluku, jolla arvioida mistä riveistä tulisi poistaa rivitys. Käyvät arvot ovat desimaalilukuja välillä 0\-1. Oletus on 0.4, hiukan rivipituuksien mediaanin alapuolella. Jos vain harvoista dokumentin riveistä tarvitsee poistaa rivitys, tarvitaan pienempi suhdeluku.
+Pituuden suhdeluku, jolla arvioida mistä riveistä tulisi poistaa rivitys. Käyvät arvot ovat desimaalilukuja välillä 0\-1. Oletus on 0.4, hiukan rivipituuksien mediaanin alapuolella. Jos vain harvoista dokumentin riveistä tarvitsee poistaa rivitys, tarvitaan pienempi suhdeluku
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -538,17 +538,17 @@ Aseta kirjan kuvaus.
 .INDENT 0.0
 .TP
 .B \-\-cover
-Aseta kansi osoitetusta tiedostosta tai URL:stä.
+Aseta kansi osoitetusta tiedostosta tai URL:stä
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-isbn
-Anna kirjan ISBN
+Anna kirjan ISBN.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-language
-Anna kieli
+Anna kieli.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -563,7 +563,7 @@ Aseta kirjan julkaisija.
 .INDENT 0.0
 .TP
 .B \-\-rating
-Aseta arvosana. Luku 1\-5
+Aseta arvosana. Luku 1\-5.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -593,7 +593,7 @@ Aseta kirja aikaleima (ei enää käytössä missään)
 .INDENT 0.0
 .TP
 .B \-\-title
-Anna otsikko
+Anna otsikko.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -606,7 +606,7 @@ Asetukset, joilla muunnoksen vianmääritystä helpotetaan
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Tallenna muuntoputken eri vaiheiden tuotokset määritettyyn kansioon. Hyödyllinen, jos et ole varma, missä vaiheessa muuntoprosessia virhe ilmenee.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "joulukuuta 15, 2023" "7.2.0" "calibre"
+.TH "CALIBREDB" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,42 +41,62 @@ calibredb komento [valinnat] [arvot]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+:command:\(aqcalibredb\(aq on komentoriviliittymä calibren tietokantaan. Siinä on
+useita alikomentoja, jotka on dokumentoitu alla.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+:command:\(aqcalibredB\(aq voidaan käyttää käsittelemään joko calibren tietokantaa
+määritetty polku tai kaliiperin mukaan :guilabel:\(aqContent server\(aq, joka toimii joko
+paikallisella koneella tai Internetin kautta. Voit käynnistää calibren
+:guilabel:\(aqContent server\(aq käyttäen jompaakumpaa :command:\(aqcalibre\-server\(aq
+\-ohjelmassa tai pääkaliiperiohjelmassa napsauta :guilabel:\(aqYhdistä / jaa \->
+Käynnistä Sisältöpalvelin\(dq. Koska :command:\(aqcalibredb\(aq voi tehdä muutoksia
+calibre kirjastoon, sinun on ensin määritettävä todennus palvelimelle. Siellä
+on kaksi tapaa tehdä se:
 .INDENT 0.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B Jos aiot muodostaa yhteyden vain samassa tietokoneessa toimivaan palvelimeen,
+.INDENT 7.0
 .INDENT 3.5
 .INDENT 0.0
-.IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
+.INDENT 3.5
+voit yksinkertaisesti käyttää \(aq\(aq\-\-enable\-local\-write\(aq\(aq Sisältöpalvelin\-vaihtoehtoa,
+joka sallii minkä tahansa ohjelman, mukaan lukien calibredb, suorittamisen
+paikallisessa tietokoneessa, jos haluat tehdä muutoksia calibre\-tietoihin. Kun suoritat
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B palvelimen Calibre\-pääohjelmasta, tämä vaihtoehto on kohdassa
 Preferences → Sharing over the net → Advanced\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
+Jos haluat ottaa käyttöön Internetin kautta tapahtuvan käytön, sinun on asennettava seuraavat asetukset
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B käyttäjätilit palvelimelle ja käyttää \fB\-\-käyttäjänimi\fP ja \fB\-\-salasana\fP\&.
+.INDENT 7.0
+.INDENT 3.5
+vaihtoehdoilla \fBcalibredb\fP antaa sille pääsyn. Voit määrittää
+käyttäjän todennuksen \fBcalibre\-server\fP:lle käyttämällä asetusta \fB\-\-enable\-auth\fP\&.
+vaihtoehdon avulla ja käyttämällä \fB\-\-manage\-users\fP käyttäjätilien luomiseen.
+Jos käytät palvelinta calibren pääohjelmasta käsin, käytä komentoa
 Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
+.sp
+Jos haluat muodostaa yhteyden käynnissä olevaan sisältöpalvelimeen, anna palvelimen URL\-osoite komentoon
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+\fI\%\-\-with\-library\fP \-vaihtoehtoa, katso kyseisen vaihtoehdon dokumentaatiosta lisätietoja.
+lisätietoja ja esimerkkejä.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%GLOBAALIT ASETUKSET\fP
@@ -224,22 +244,22 @@ Kenttien erottamiseen käytettävät välimerkit. Oletus on välilyönti.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id
+Kenttä, jonka mukaan tulokset lajitellaan. Voit määrittää useita kenttiä erottamalla ne pilkuilla. Käytettävissä olevat kentät: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Oletus: id
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Suoritettava malli, jos kenttäluettelossa on \fB\(dq\fPtemplate\fB\(dq\fP\&. Oletus: Ei mitään
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Polku suoritettavan mallin sisältävään tiedostoon, jos kenttäluettelossa on \fB\(dq\fPtemplate\fB\(dq\fP\&. Oletus: Ei mitään
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Mallisarakkeen otsikko. Oletus: template. Tämä asetus ohitetaan, jos asetus \fI\%\-\-for\-machine\fP on määritetty
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -247,14 +267,14 @@ Heading for the template column. Default: template. This option is ignored if th
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb lisää [asetukset] tiedosto1 tiedosto2 tiedosto3 ...
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Lisää määritetyt tiedostot kirjoina tietokantaan. Voit myös määrittää kansioita, katso
+alla olevat kansioon liittyvät vaihtoehdot.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -265,7 +285,7 @@ Annan tekijoiden nimet lisäty(i)lle.
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
+Jos löytyy kirjoja, joilla on samanlaiset nimet ja kirjoittajat, yhdistä saapuvat muodot (tiedostot) automaattisesti olemassa oleviin kirjatietueisiin. \fB\(dq\fPOhita\fB\(dq\fP \-arvo tarkoittaa, että päällekkäiset muodot hylätään. Arvo \fB\(dq\fPkorvaa\fB\(dq\fP tarkoittaa, että kirjaston päällekkäiset muodot korvataan juuri lisätyillä tiedostoilla. Arvo \fB\(dq\fPnew_record\fB\(dq\fP tarkoittaa, että kaksoiskappaleet sijoitetaan uuteen kirjatietueeseen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,22 +343,22 @@ Asetukset kirjojen lisäämiselle kansioista. Oletuksena vain tunnettujen e\-kir
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Tiedostonimikuvio (glob), tätä mallia vastaavat tiedostot lisätään, kun kansioita etsitään tiedostojen varalta, vaikka ne eivät olisikaan tunnettua e\-kirjatiedostotyyppiä. Voidaan määrittää useita kertoja useille kuvioille.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Tiedostonimikuvio (glob), tätä mallia vastaavat tiedostot ohitetaan, kun kansioita etsitään tiedostojen varalta. Voidaan määrittää useita kertoja useille kuvioille. Esimerkiksi: *.pdf ohittaa kaikki PDF\-tiedostot
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Oleta, että kussakin kansiossa on vain yhtä kirjaa ja kaikki siinä olevat tiedostot ovat tämän kirjan eri e\-kirjaformaatteja.
+Oleta, että kussakin kansiossa on vain yhtä kirjaa ja kaikki siinä olevat tiedostot ovat tämän kirjan eri e\-kirjaformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Työstä myös alikansiot.
+Käsittele kansioita rekursiivisesti
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -378,7 +398,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Lisää tiedosto kirjaan ylimääräisenä datatiedostona, ei e\-kirjamuotona
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -433,12 +453,12 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Asettaa calibre\-tietokantaan tallennetut metatiedot kirjalle, joka on tunnistettu
+book_id OPF\-tiedostosta metadata.opf. book_id on kirjan tunnistenumero hakukomennosta.
+Voit tutustua nopeasti OPF\-muotoon käyttämällä komentoa
+\-\-as\-opf switch show_metadata\-komentoa. Voit myös asettaa
+yksittäisten kenttien metatiedot \-\-field\-vaihtoehdolla. Jos käytät \-\-field\-vaihtoehtoa,
+silloin ei tarvitse määrittää OPF\-tiedostoa.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -449,7 +469,7 @@ Täytettävä kenttä. Muoto on kentän_nimi:arvo \- esimerkiksi: \fI\%\-\-field
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Listaa metatietokentät joita voi käyttää \-field \-valinnalla.
+Luettele metatietokenttien nimet, joita voidaan käyttää \fB\-\-field\-asetuksen\fP kanssa
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -463,10 +483,10 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Vie id:llä määritetyt kirjat (pilkuilla erotettu luettelo) tiedostojärjestelmään.
+Vientitoiminto tallentaa kaikki kirjan muodot, kannen ja metatiedot (
+OPF\-tiedostossa). Myös kirjaan liittyvät ylimääräiset datatiedostot tallennetaan.
+Saat tunnusnumerot hakukomennosta.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -477,27 +497,27 @@ Vie kaikki kirjat tietokannasta, nimerttyjä id:itä ei huomioida.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Valinta poistaa toiminnon
+Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Valinta poistaa toiminnon
+Normally, calibre will save the cover in a separate file along with the actual e\-book files. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-extra\-files
-Save any data files associated with the book when saving the book Valinta poistaa toiminnon
+Save any data files associated with the book when saving the book Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Valinta poistaa toiminnon
+Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Valinta poistaa toiminnon
+Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -681,15 +701,15 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Hallitsee tähän tietokantaan tallennettuja hakuja.
+Jos yrität lisätä kyselyn, jonka nimi on jo olemassa, se
+korvataan.
 .sp
-Syntax for adding:
+Syntaksi lisäämiseen:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Syntaksi poistoon:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -746,13 +766,14 @@ Näytä sarakkeiden tiedot.
 .sp
 .nf
 .ft C
-calibredb remove_custom_column [options] label
+calibredb remove_custom_column [Options] \-tunniste
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Poista viitteen mukainen mukautettu sarake. Näet käytettävissä olevat mukautetut sarakkeet custom_columns\-komennolla.
+Poista tunnisteen määrittämä mukautettu sarake. Näet käytettävissä olevat
+sarakkeet, joissa on custom_columns\-komento.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -766,15 +787,16 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .sp
 .nf
 .ft C
-calibredb set_custom [vaihtoehdot] sarake if arvo
+calibredb set_custom [options] \-sarakkeen tunnusarvo
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Aseta arvo id:n mukaisen kirjan mukautettuun sarakkeeseen.
-Saat listan id:istä haulla.
-Saat listan mukautetuista sarakkeista custom_columns\-komennolla.
+Määritä tunnuksella tunnistetun kirjan mukautetun sarakkeen arvo.
+Saat luettelon tunnuksista hakukomennolla.
+Voit saada luettelon mukautetuista sarakenimistä käyttämällä custom_columns
+komentoa.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -794,14 +816,14 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Palauttaa tämän tietokannan OPF\-tiedostoihin tallennetuista metatiedoista kussakin
+calibre\-kirjaston kansiossa. Tämä on hyödyllistä, jos metadata.db\-tiedosto on
+on vioittunut.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+VAROITUS: Tämä komento uusii tietokantasi kokonaan. Menetät
+kaikki tallennetut haut, käyttäjäkategoriat, liitäntätaulut, tallennetut kirjakohtaiset muunnokset
+asetukset ja mukautetut reseptit. Palautetut metatiedot ovat vain niin tarkkoja kuin
+kuin mitä OPF\-tiedostoissa on.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -847,7 +869,7 @@ Pilkuin erotettu lista raporteista. Oletus: kaikki
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Imuroi koko tekstihaun tietokanta. Tämä voi olla hyvin hidasta ja muistia vaativaa tietokannan koosta riippuen.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -861,8 +883,8 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Tuota raportti tietokannan luokkatiedoista.
+Tiedot vastaavat Tag\-selaimessa näkyviä tietoja.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -896,18 +918,18 @@ Yksitäisen rivin maksimipituus. Oletusarvona käytetään näytön kokoa.
 .sp
 .nf
 .ft C
-calibredb backup_metadata [options]
+%pROG\-backup_metadata [options]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Varmuuskopioi tietokantaan tallennetut metatiedot yksittäisiin OPF\-tiedostoihin kussakin
+kirjat\-kansiossa. Tämä tapahtuu yleensä automaattisesti, mutta voit suorittaa tämän
+komennon pakottamaan OPF\-tiedostojen uudelleenluonti \-\-all\-vaihtoehdolla.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Huomaa, että tätä ei yleensä tarvitse tehdä, koska OPF\-tiedostot varmuuskopioidaan
+automaattisesti aina, kun metatietoja muutetaan.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -927,11 +949,11 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Luo klooni nykyisestä kirjastosta. Tämä luo uuden, tyhjän kirjaston, jossa on kaikki
+samat mukautetut sarakkeet, virtuaalikirjastot ja muut asetukset kuin nykyisessä kirjastossa.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Kloonattu kirjasto ei sisällä kirjoja. Jos haluat luoda täydellisen kaksoiskappaleen, mukaan lukien
+kaikki kirjat, niin kopioi Kirjasto\-kansio tiedostojärjestelmän työkaluilla.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
@@ -966,12 +988,11 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Etsii kirjastosta määritetyn hakusanan ja palauttaa pilkulla erotellun
+listan kirjojen tunnuksista, jotka vastaavat hakulauseketta. Tulostusmuoto on hyödyllinen
+syöttää muihin komentoihin, jotka hyväksyvät syötteenä listan tunnuksia.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+Hakulauseke voi olla mitä tahansa Calibren tehokkaasta hakukyselystäkielestä, esimerkiksi: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -991,36 +1012,53 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Hallitse kokotekstihaun indeksointiprosessia.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Ottaa FTS\-indeksoinnin käyttöön tässä kirjastossa
 .TP
 .B disable
-Turns off FTS indexing for this library
+Poistaa FTS\-indeksoinnin käytöstä tässä kirjastossa
 .TP
 .B status
-Shows the current indexing status
+Näyttää indeksoinnin nykyisen tilan
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+.INDENT 7.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+Voidaan käyttää joko tiettyjen kirjojen tai
+.UNINDENT
+.UNINDENT
+.sp
+koko kirjastonuudelleen indeksointiin. Tiettyjen kirjojen uudelleenindeksointi
+.UNINDENT
+.UNINDENT
+.INDENT 7.0
+.TP
+.B määrittää kirjojen tunnukset lisäargumentteina reindex\-komennon jälkeen.
+.INDENT 7.0
+.INDENT 3.5
+Jos kirjojen tunnuksia ei määritetä, komento
+.UNINDENT
+.UNINDENT
+.sp
+koko kirjasto indeksoidaan uudelleen.
+.UNINDENT
 .UNINDENT
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Indeksoinnin nopeus. Käytä nopeaa indeksointia kaikkiin tietokoneesi resursseihin ja hidasta vähemmän resursseja kuluttavaan indeksointiin. Huomaa, että nopeus nollataan hitaaksi jokaisen kutsun jälkeen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Odota, kunnes kaikki kirjat on indeksoitu, ja näytä indeksoinnin edistyminen säännöllisesti
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1034,43 +1072,43 @@ calibredb fts_search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Tee kokotekstihaku koko kirjastosta tai sen osajoukosta.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Täsmää vain tarkoilla sanoilla, ei toisiinsa liittyvillä sanoilla. Joten korjaus ei vastaa korjausta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Sisällytä tekstinpätkiä kunkin osuman ympärille. Huomaa, että tämä hidastaa hakua huomattavasti.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Kuinka suuri osa kirjastosta on indeksoitava prosentteina ennen haun sallimista. Oletusarvo on 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Merkki, jota käytetään osoittamaan vastaavan sanan loppua katkelmassa
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Merkki, jota käytetään osoittamaan vastaavan sanan alkua katkelmassa
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Muoto, jossa hakutulokset tulostetaan. Joko \fB\(dq\fPteksti\fB\(dq\fP tavalliselle tekstille tai \fB\(dq\fPjson\fB\(dq\fP JSON\-tulosteelle.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Rajoita haettavia kirjoja joko hakulausekkeen tai tunnusten avulla. Esimerkiksi: ids:1,2,3, jos haluat rajoittaa tunnuksella, tai search:tag:foo, jos haluat rajoittaa kirjoihin, joissa on tunniste foo.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

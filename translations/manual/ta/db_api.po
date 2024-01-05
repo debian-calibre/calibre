@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-23 15:49+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Tamil (http://www.transifex.com/calibre/calibre/language/ta/)\n"
+"POT-Creation-Date: 2024-01-04 02:10+0000\n"
+"PO-Revision-Date: 2014-07-05 16:49+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,19 +19,19 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
-msgstr ""
+msgstr "தரவுத்தள இடைமுகத்திற்கான API ஆவணங்கள்"
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:9
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr ""
+msgstr "இந்த ஏபிஐ நூல் பாதுகாப்பானது (இது பல வாசகர், ஒற்றை எழுத்தாளர் பூட்டுதல் திட்டத்தைப் பயன்படுத்துகிறது). இந்த API ஐ நீங்கள் அணுகலாம் ::"
 
 #: ../../__w/calibre/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr ""
+msgstr "பிரதான காலிபர் GUI இன் ஒரு பகுதியாக இருக்கும் ஒரு காலிபர் சொருகியில் நீங்கள் இருந்தால், அதற்கு பதிலாக இதை அணுகலாம் ::"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -39,7 +39,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr ""
+msgstr "ஒரு காலிபர் நூலகத்திலிருந்து Metadata.db கோப்பின் நினைவக தற்காலிக சேமிப்பு. இந்த வகுப்பு தரவுத்தளத்தை அணுகுவதற்கான ஒரு த்ரெட்சேஃப் ஏபிஐ ஆகவும் செயல்படுகிறது. இன்-மெமரி கேச் அதிகபட்ச செயல்திறனுக்காக சாதாரண வடிவத்தில் பராமரிக்கப்படுகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -47,12 +47,65 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr ""
+msgstr "மெட்டாடேட்டா.டிபியிலிருந்து வலுவாக படிக்கவும் எழுதவும் SQLite வெறுமனே பயன்படுத்தப்படுகிறது. அனைத்து அட்டவணை வாசிப்பு/வரிசைப்படுத்துதல்/தேடல்/தேக்கக தர்க்கம் மீண்டும் செயல்படுத்தப்படுகிறது. அதிகபட்ச செயல்திறன் மற்றும் நெகிழ்வுத்தன்மைக்கு இது அவசியம்."
 
-#: ../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
-#: calibre.db.listeners.EventType:1
-msgid "An enumeration."
-msgstr ""
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_created:1
+msgid ""
+"When a new book record is created in the database, with the book id as the "
+"only argument"
+msgstr "தரவுத்தளத்தில் ஒரு புதிய புத்தக பதிவு உருவாக்கப்படும் போது, புத்தக ஐடியுடன் ஒரே வாதமாக"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.book_edited:1
+msgid "When a book format is edited, with arguments: (book_id, fmt)"
+msgstr "ஒரு புத்தக வடிவம் திருத்தப்படும்போது, வாதங்களுடன்: (book_id, fmt)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.books_removed:1
+msgid ""
+"When books are removed from the database with the list of book ids as the "
+"only argument"
+msgstr "ஒரே வாதமாக புத்தக ஐடிகளின் பட்டியலுடன் தரவுத்தளத்திலிருந்து புத்தகங்கள் அகற்றப்படும் போது"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.format_added:1
+msgid "When a format is added to a book, with arguments: (book_id, format)"
+msgstr "ஒரு புத்தகத்தில் ஒரு வடிவம் சேர்க்கப்படும்போது, வாதங்களுடன்: (book_id, வடிவம்)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.formats_removed:1
+msgid ""
+"When formats are removed from a book, with arguments: (mapping of book id to"
+" set of formats removed from the book)"
+msgstr "ஒரு புத்தகத்திலிருந்து வடிவங்கள் அகற்றப்படும் போது, வாதங்களுடன்: (புத்தகத்திலிருந்து அகற்றப்பட்ட வடிவங்களின் தொகுப்பிற்கு புத்தக ஐடியை வரைபடமாக்குதல்)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
+msgid "When the indexing progress changes"
+msgstr "குறியீட்டு முன்னேற்றம் மாறும்போது"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_removed:1
+msgid ""
+"When items such as tags or authors are removed from some books. Arguments: "
+"(field_name, affected book ids, ids of removed items)"
+msgstr "குறிச்சொற்கள் அல்லது ஆசிரியர்கள் போன்ற உருப்படிகள் சில புத்தகங்களிலிருந்து அகற்றப்படும் போது. வாதங்கள்: (புலம்_பெயர், பாதிக்கப்பட்ட புத்தக ஐடிகள், அகற்றப்பட்ட பொருட்களின் ஐடிகள்)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.items_renamed:1
+msgid ""
+"When items such as tags or authors are renamed in some or all books. "
+"Arguments: (field_name, affected book ids, map of old item id to new item "
+"id)"
+msgstr "குறிச்சொற்கள் அல்லது ஆசிரியர்கள் போன்ற உருப்படிகள் சில அல்லது அனைத்து புத்தகங்களிலும் மறுபெயரிடப்படும் போது. வாதங்கள்: (புலம்_பெயர், பாதிக்கப்பட்ட புத்தக ஐடிகள், பழைய உருப்படி ஐடியின் வரைபடம் புதிய உருப்படி ஐடிக்கு)"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.metadata_changed:1
+msgid ""
+"When some metadata is changed for some books, with arguments: (name of "
+"changed field, set of affected book ids)"
+msgstr "சில புத்தகங்களுக்கு சில மெட்டாடேட்டா மாற்றப்படும்போது, வாதங்களுடன்: (மாற்றப்பட்ட புலத்தின் பெயர், பாதிக்கப்பட்ட புத்தக ஐடிகளின் தொகுப்பு)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -61,7 +114,7 @@ msgid ""
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகங்களை நூலகத்தில் சேர்க்கவும். புத்தகங்கள் 2-டூபிள்ஸின் ஒரு மறுக்கக்கூடியதாக இருக்க வேண்டும், ஒவ்வொரு 2-டூப்பிள் படிவமும்: குறியீடு: `(எம்ஐ, வடிவம்_மாப்)` எங்கே மி மெட்டாடேட்டா பொருள் மற்றும் வடிவம்_மாப் என்பது படிவத்தின் அகராதி: குறியீடு: `{fmt: path_or_stream} `, எடுத்துக்காட்டாக :: குறியீடு:` {'epub': '/path/to/file.epub'} `."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
@@ -70,21 +123,26 @@ msgid ""
 "ids for all newly created books in the database. ``duplicates`` contains the"
 " :code:`(mi, format_map)` for all books that already exist in the database "
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
-msgstr ""
+msgstr "ஒரு ஜோடி பட்டியல்களை வழங்குகிறது :: குறியீடு: `ஐடிஎஸ், நகல்கள்`. `` ஐடிஎஸ்`` தரவுத்தளத்தில் புதிதாக உருவாக்கப்பட்ட அனைத்து புத்தகங்களுக்கும் புத்தக ஐடிகள் உள்ளன. `` நகல்கள்`` ஐக் கொண்டுள்ளது: குறியீடு: `(எம்ஐ, வடிவம்_மாப்)` ஏற்கனவே தரவுத்தளத்தில் இருக்கும் அனைத்து புத்தகங்களுக்கும் எளிய நகல் கண்டறிதல் ஹூரிஸ்டிக் பயன்படுத்தியபடி: மெத்: `ஹஸ்_புக்`."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr ""
+msgstr "VAL_MAP என்பது மதிப்புகளுக்கு book_ids இன் வரைபடமாக இருக்கும் பெயருக்கான தரவைச் சேர்க்கவும். Delete_first உண்மை என்றால், பெயருக்கான முன்னர் சேமிக்கப்பட்ட அனைத்து தரவும் அகற்றப்படும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_extra_files:1
+msgid "Add extra data files"
+msgstr "கூடுதல் தரவு கோப்புகளைச் சேர்க்கவும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
 msgid ""
 "Add a format to the specified book. Return True if the format was added "
 "successfully."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகத்தில் ஒரு வடிவமைப்பைச் சேர்க்கவும். வடிவம் வெற்றிகரமாக சேர்க்கப்பட்டால் உண்மை திரும்பவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:0
@@ -95,7 +153,13 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -105,28 +169,30 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:0
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:0
 msgid "Parameters"
-msgstr ""
+msgstr "அளவுருக்கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr ""
+msgstr "உண்மை ஏற்கனவே இருக்கும் வடிவமைப்பை மாற்றினால், இல்லையெனில் வடிவம் ஏற்கனவே இருந்தால், பொய்யைத் தரவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr ""
+msgstr "உண்மை என்றால், கோப்பு வகை செருகுநிரல்கள் சேர்க்கப்படுவதற்கு முன்னும் பின்னும் வடிவத்தில் இயக்கப்படுகின்றன."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
-msgstr ""
+msgstr "உள் பயன்பாடு மட்டுமே."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_listener:1
@@ -134,41 +200,48 @@ msgid ""
 "Register a callback function that will be called after certain actions are "
 "taken on this database. The function must take three arguments: "
 "(:class:`EventType`, library_id, event_type_specific_data)"
-msgstr ""
+msgstr "இந்த தரவுத்தளத்தில் சில நடவடிக்கைகள் எடுக்கப்பட்ட பின்னர் அழைக்கப்படும் ஒரு கால்பேக் செயல்பாட்டை பதிவு செய்யுங்கள். செயல்பாடு மூன்று வாதங்களை எடுக்க வேண்டும்: (: வகுப்பு: `EventType`, library_id, event_type_specific_data)"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_notes_resource:1
+msgid ""
+"Add the specified resource so it can be referenced by notes and return its "
+"content hash"
+msgstr "குறிப்பிட்ட வளத்தைச் சேர்க்கவும், இதனால் குறிப்புகள் மூலம் குறிப்பிடலாம் மற்றும் அதன் உள்ளடக்க ஹாஷைத் திருப்பி விடுங்கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
-msgstr ""
+msgstr "அறியப்பட்ட அனைத்து புத்தக ஐடிகளின் உறைந்த தொகுப்பு."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
 msgid "Same as field_for, except that it operates on multiple books at once"
-msgstr ""
+msgstr "Field_for ஐப் போலவே, இது ஒரே நேரத்தில் பல புத்தகங்களில் இயங்குகிறது என்பதைத் தவிர"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
 msgid "Frozen set of ids for all values in the field ``name``."
-msgstr ""
+msgstr "புலத்தில் உள்ள அனைத்து மதிப்புகளுக்கும் ஐடிகளின் உறைந்த தொகுப்பு `` பெயர்``."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
-msgstr ""
+msgstr "அனைத்து புலங்களின் பெயர்களின் உறைந்த தொகுப்பு (பல-ஒன்று மற்றும் பல-பல துறைகளுக்கு மட்டுமே பயன்படுத்தப்பட வேண்டும்)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
-msgstr ""
+msgstr "விசைகள் கொண்ட அகராதியாக எழுத்தாளர் தரவைத் தரவும்: பெயர், வரிசை, இணைப்பு"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr ""
+msgstr "குறிப்பிட்ட ஐடிகளுடன் எந்த ஆசிரியர்களும் காணப்படாவிட்டால், வெற்று அகராதி திரும்பப் பெறப்படுகிறது. ஆசிரியர்_ஐடிகள் எதுவுமில்லை என்றால், அனைத்து ஆசிரியர்களுக்கும் தரவு திரும்பப் பெறப்படுகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -176,33 +249,33 @@ msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr ""
+msgstr "ஆசிரியர்களின் பட்டியலைக் கொடுத்தால், ஆசிரியர்களுக்கான ஆசிரியர்_சார்ட் சரத்தை திருப்பி அனுப்பவும், கணக்கிடப்பட்ட சரத்தின் மீது ஆசிரியருடன் தொடர்புடைய ஆசிரியர் வரிசையை விரும்புகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
-msgstr ""
+msgstr "`` Item_id`` ஆல் அடையாளம் காணப்பட்ட உருப்படியுடன் தொடர்புடைய அனைத்து புத்தகங்களையும் திருப்பித் தரவும், அங்கு உருப்படி `` பெயர்`` புலத்திற்கு சொந்தமானது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4
 msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
-msgstr ""
+msgstr "திரும்பிய மதிப்பு என்பது புத்தகங்களின் தொகுப்பு, அல்லது உருப்படி அல்லது புலம் இல்லாவிட்டால் வெற்று தொகுப்பு."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_in_virtual_library:1
 msgid "Return the set of books in the specified virtual library"
-msgstr ""
+msgstr "குறிப்பிட்ட மெய்நிகர் நூலகத்தில் புத்தகங்களின் தொகுப்பைத் திருப்பி விடுங்கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:1
 msgid ""
 "Compress the cover images for the specified books. A compression quality of "
 "100 will perform lossless compression, otherwise lossy compression."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகங்களுக்கான கவர் படங்களை சுருக்கவும். 100 இன் சுருக்க தரம் இழப்பற்ற சுருக்கத்தை நிகழ்த்தும், இல்லையெனில் இழப்பு சுருக்கம்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:4
@@ -210,7 +283,7 @@ msgid ""
 "The progress callback will be called with the book_id and the old and new "
 "sizes for each book that has been processed. If an error occurs, the new "
 "size will be a string with the error details."
-msgstr ""
+msgstr "முன்னேற்ற கால்பேக் புக்_ஐடி மற்றும் செயலாக்கப்பட்ட ஒவ்வொரு புத்தகத்திற்கும் பழைய மற்றும் புதிய அளவுகள் மூலம் அழைக்கப்படும். பிழை ஏற்பட்டால், புதிய அளவு பிழை விவரங்களுடன் ஒரு சரமாக இருக்கும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
@@ -219,7 +292,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "பொருள் `` dest`` போன்ற கோப்பில் அட்டையை நகலெடுக்கவும். எந்தவொரு கவர் இல்லை என்றால் அல்லது டெஸ்ட் என்பது தற்போதைய அட்டையின் அதே கோப்பாக இருந்தால் தவறானது. தற்போதைய பாதையிலிருந்து பாதை வேறுபட்டிருந்தால் மட்டுமே (வழக்கு உணர்திறனை கணக்கில் எடுத்துக்கொள்வது) கவர் நகலெடுக்கப்பட்டால், டெஸ்ட் ஒரு பாதையாக இருக்கலாம்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -228,14 +301,14 @@ msgid ""
 "format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
 "a path (to a file), in which case the format is copied to it, iff the path "
 "is different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "`` Fmt`` வடிவத்தை பொருள் `` dest`` போன்ற கோப்பில் நகலெடுக்கவும். குறிப்பிட்ட வடிவம் இல்லை என்றால், எழுப்புகிறது: வகுப்பு: `nosuchoformat` பிழை. டெஸ்ட் ஒரு பாதையாகவும் (ஒரு கோப்பிற்கு) இருக்கலாம், இந்த விஷயத்தில் வடிவம் அதற்கு நகலெடுக்கப்படுகிறது, பாதை தற்போதைய பாதையிலிருந்து வேறுபட்டது (வழக்கு உணர்திறனை கணக்கில் எடுத்துக்கொள்வது)."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
-msgstr ""
+msgstr "கவர் படத்தைத் திருப்பித் தரவும் அல்லது எதுவும் இல்லை. இயல்பாக, அட்டையை ஒரு பைட்டெஸ்ட்ரிங்காக வழங்குகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
@@ -243,30 +316,35 @@ msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
 "path to the temp file. You should delete the temp file when you are done "
 "with it."
-msgstr ""
+msgstr "எச்சரிக்கை: AS_PATH ஐப் பயன்படுத்துவது அட்டையை ஒரு தற்காலிக கோப்பில் நகலெடுத்து, பாதையை தற்காலிக கோப்பிற்கு அனுப்பும். தற்காலிக கோப்பை நீங்கள் முடிந்ததும் நீக்க வேண்டும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
-msgstr ""
+msgstr "உண்மை என்றால் படத்தை ஒரு திறந்த கோப்பு பொருளாக (ஒரு ஸ்பூலெட் டெமர்டுஃபைல்) திரும்பவும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr ""
+msgstr "உண்மை என்றால் படத்தை ஒரு கிமேஜ் பொருளாக திருப்பி விடுங்கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
+msgid "If True return the image as a QPixmap object"
+msgstr "உண்மை என்றால் படத்தை qpixmap பொருளாக திருப்பி விடுங்கள்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.cover:11
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr ""
+msgstr "உண்மை என்றால் ஒரு தற்காலிக கோப்பை சுட்டிக்காட்டும் பாதையாக படத்தை திருப்பி விடுங்கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
 msgid ""
 "Return data that can be used to implement :meth:`find_identical_books` in a "
 "worker process without access to the db. See db.utils for an implementation."
-msgstr ""
+msgstr "செயல்படுத்த பயன்படுத்தக்கூடிய தரவைத் தரவும்: METH: `find_identical_books` ஒரு தொழிலாளி செயல்பாட்டில் DB ஐ அணுகாமல். செயல்படுத்த db.utils ஐப் பார்க்கவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_has_book:1
@@ -274,28 +352,46 @@ msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
-msgstr ""
+msgstr "இதைப் பயன்படுத்த ஏற்ற தரவைத் தரவும்: METH: `HAS_BOOK`. இது செயல்படுத்தப்படுவதற்கு பயன்படுத்தப்படலாம்: METH: `HAS_BOOK` ஒரு தொழிலாளி செயல்பாட்டில் DB ஐ அணுகாமல்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
 msgid ""
 "Delete data for name. By default deletes all data, if you only want to "
 "delete data for some book ids, pass in a list of book ids."
-msgstr ""
+msgstr "பெயருக்கான தரவை நீக்கு. இயல்பாகவே எல்லா தரவையும் நீக்குகிறது, நீங்கள் சில புத்தக ஐடிகளுக்கான தரவை மட்டுமே நீக்க விரும்பினால், புத்தக ஐடிகளின் பட்டியலில் அனுப்பவும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_trash_entry:1
+msgid ""
+"Delete an entry from the trash. Here category is 'b' for books and 'f' for "
+"formats."
+msgstr "குப்பையிலிருந்து ஒரு நுழைவை நீக்கவும். இங்கே வகை புத்தகங்களுக்கு 'பி' மற்றும் வடிவங்களுக்கு 'எஃப்'."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
-msgstr ""
+msgstr "தரவுத்தளத்தில் தற்போதைய மெட்டாடேட்டாவுக்கு குறிப்பிட்ட புத்தக_ஐடிகளின் அனைத்து வடிவங்களிலும் மெட்டாடேட்டாவைப் புதுப்பிக்கவும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.expire_old_trash:1
+msgid "Expire entries from the trash that are too old"
+msgstr "மிகவும் பழைய குப்பையிலிருந்து உள்ளீடுகளை காலாவதியாகுங்கள்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.export_note:1
+msgid ""
+"Export the note as a single HTML document with embedded images as data: URLs"
+msgstr "உட்பொதிக்கப்பட்ட படங்களுடன் ஒரு HTML ஆவணமாக குறிப்பை தரவுகளாக ஏற்றுமதி செய்யுங்கள்: URL கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
-msgstr ""
+msgstr "புலப் பொருளைப் பெறுவதற்கு கூடுதல் தேடலைத் தவிர்க்கிறது என்பதைத் தவிர, புலம்_ ஃபோர் போன்றது"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
@@ -303,7 +399,7 @@ msgid ""
 "Return the value of the field ``name`` for the book identified by "
 "``book_id``. If no such book exists or it has no defined value for the field"
 " ``name`` or no such field exists, then ``default_value`` is returned."
-msgstr ""
+msgstr "`` Book_id`` ஆல் அடையாளம் காணப்பட்ட புத்தகத்திற்கு `` பெயர்`` புலத்தின் மதிப்பைத் தரவும். அத்தகைய புத்தகம் எதுவும் இல்லை அல்லது அதற்கு புலத்திற்கு வரையறுக்கப்பட்ட மதிப்பு இல்லை என்றால் `` பெயர்`` அல்லது அத்தகைய புலம் எதுவும் இல்லை, பின்னர் `` இயல்புநிலை_ மதிப்பு`` திரும்பியது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
@@ -311,17 +407,17 @@ msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
 "and series_index. This is because these always have values in the db. "
 "``default_value`` is used for all custom columns."
-msgstr ""
+msgstr "`` Default_Value`` தலைப்பு, தலைப்பு_சார்ட், ஆசிரியர்கள், ஆசிரியர்_சார்ட் மற்றும் சீரிஸ்_இண்டெக்ஸ் ஆகியவற்றிற்கு பயன்படுத்தப்படவில்லை. ஏனென்றால் இவை எப்போதும் டி.பியில் மதிப்புகளைக் கொண்டுள்ளன. அனைத்து தனிப்பயன் நெடுவரிசைகளுக்கும் `` Default_Value`` பயன்படுத்தப்படுகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
 msgid ""
 "The returned value for is_multiple fields are always tuples, even when no "
 "values are found (in other words, default_value is ignored). The exception "
-"is identifiers for which the returned value is always a dict. The returned "
-"tuples are always in link order, that is, the order in which they were "
-"created."
-msgstr ""
+"is identifiers for which the returned value is always a dictionary. The "
+"returned tuples are always in link order, that is, the order in which they "
+"were created."
+msgstr "IS_Multiple புலங்களுக்கான திரும்பிய மதிப்பு எப்போதுமே டூபில்களாக இருக்கும், மதிப்புகள் எதுவும் காணப்படாவிட்டாலும் கூட (வேறுவிதமாகக் கூறினால், இயல்புநிலை_ மதிப்பு புறக்கணிக்கப்படுகிறது). விதிவிலக்கு அடையாளங்காட்டிகள், அதற்காக திரும்பிய மதிப்பு எப்போதும் ஒரு அகராதியாகும். திரும்பிய டூப்பிள்ஸ் எப்போதும் இணைப்பு வரிசையில் இருக்கும், அதாவது அவை உருவாக்கப்பட்ட வரிசை."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -329,21 +425,28 @@ msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
-msgstr ""
+msgstr "`` Book_id`` ஆல் அடையாளம் காணப்பட்ட புத்தகத்தில் `` பெயர்`` வைத்திருக்கும் மதிப்புகளுக்கு ஐடிகளை (ஒரு டப்பிள் என) திருப்பித் தரவும். மதிப்புகள் இல்லை, அல்லது அத்தகைய புத்தகம் இல்லை, அல்லது அத்தகைய புலம் இல்லை என்றால், வெற்று டூப்பிள் திரும்பப் பெறப்படுகிறது."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_supports_notes:1
+msgid ""
+"Return True iff the specified field supports notes. If field is None return "
+"frozenset of all fields that support notes."
+msgstr "உண்மையான IFF ஐத் திருப்பி குறிப்பிட்ட புலம் குறிப்புகளை ஆதரிக்கிறது. புலம் எதுவுமில்லை என்றால் குறிப்புகளை ஆதரிக்கும் அனைத்து புலங்களின் உறைவிடத்தையும் திரும்பவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
 msgid ""
 "Finds books that have a superset of the authors in mi and the same title "
 "(title is fuzzy matched). See also :meth:`data_for_find_identical_books`."
-msgstr ""
+msgstr "MI இல் ஆசிரியர்களின் சூப்பர்செட்டைக் கொண்ட புத்தகங்களையும் அதே தலைப்பையும் காண்கிறது (தலைப்பு தெளிவில்லாதது). மேலும் காண்க: மெத்: `data_for_find_identical_books`."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:1
 msgid ""
 "Return the e-book format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the e-book file."
-msgstr ""
+msgstr "மின் புத்தக வடிவமைப்பை ஒரு பைட்டெஸ்ட்ரிங்காக திருப்பி அனுப்புங்கள் அல்லது வடிவம் இல்லை என்றால் `எதுவுமில்லை ', அல்லது மின் புத்தகக் கோப்பில் எழுத எங்களுக்கு அனுமதி இல்லை."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
@@ -351,13 +454,13 @@ msgid ""
 "If True the e-book format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr ""
+msgstr "உண்மை என்றால் மின் புத்தக வடிவம் ஒரு கோப்பு பொருளாக திருப்பித் தரப்படுகிறது. கோப்பு பொருள் ஒரு ஸ்பூலெட் டெமர்டுஃபைல் என்பதை நினைவில் கொள்க, எனவே நீங்கள் செய்ய விரும்புவது வடிவமைப்பை வேறொரு கோப்பிற்கு நகலெடுத்தால், பயன்படுத்தவும்: METH: `copy_format_to` செயல்திறனுக்கு பதிலாக."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
 msgid ""
 "Copies the format file to a temp file and returns the path to the temp file"
-msgstr ""
+msgstr "வடிவமைப்பு கோப்பை ஒரு தற்காலிக கோப்பில் நகலெடுத்து, தற்காலிக கோப்பிற்கு பாதையை வழங்குகிறது"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:10
@@ -365,7 +468,7 @@ msgid ""
 "If True and returning a path the filename is the same as that used in the "
 "library. Note that using this means that repeated calls yield the same temp "
 "file (which is re-created each time)"
-msgstr ""
+msgstr "உண்மை மற்றும் ஒரு பாதையைத் திருப்பித் தருவது கோப்பு பெயர் நூலகத்தில் பயன்படுத்தப்பட்டதைப் போன்றது. இதைப் பயன்படுத்துவதால், மீண்டும் மீண்டும் அழைப்புகள் ஒரே தற்காலிக கோப்பை அளிக்கின்றன (இது ஒவ்வொரு முறையும் மீண்டும் உருவாக்கப்படுகிறது)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
@@ -373,7 +476,7 @@ msgid ""
 "Return absolute path to the e-book file of format `format`. You should "
 "almost never use this, as it breaks the threadsafe promise of this API. "
 "Instead use, :meth:`copy_format_to`."
-msgstr ""
+msgstr "`வடிவமைப்பு` வடிவத்தின் மின் புத்தக கோப்புக்கு முழுமையான பாதையைத் தரவும். இந்த API இன் த்ரெட்சேஃப் வாக்குறுதியை மீறுவதால், நீங்கள் இதை ஒருபோதும் பயன்படுத்தக்கூடாது. அதற்கு பதிலாக,: meth: `copy_format_to`."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
@@ -381,21 +484,21 @@ msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
 " to original format, open with, bulk metadata edit and the catalogs (via "
 "get_data_as_dict())."
-msgstr ""
+msgstr "தற்போது கலிபிரெட் பி பட்டியலில் மட்டுமே பயன்படுத்தப்படுகிறது, பார்வையாளர், திருத்து புத்தகம், அசல் வடிவத்துடன் ஒப்பிட்டுப் பாருங்கள், திறந்த, மொத்த மெட்டாடேட்டா திருத்து மற்றும் பட்டியல்கள் (Get_data_as_dict () வழியாக)."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
 msgid ""
 "Apart from the viewer, open with and edit book, I don't believe any of the "
 "others do any file write I/O with the results of this call."
-msgstr ""
+msgstr "பார்வையாளரைத் தவிர, புத்தகத்துடன் திறந்து திருத்தவும், மற்றவர்களில் யாரும் இந்த அழைப்பின் முடிவுகளுடன் எந்த கோப்பையும் எழுதுங்கள் I/O என்று நான் நம்பவில்லை."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_hash:1
 msgid ""
 "Return the hash of the specified format for the specified book. The kind of "
 "hash is backend dependent, but is usually SHA-256."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகத்திற்கான குறிப்பிட்ட வடிவமைப்பின் ஹாஷைத் திருப்பித் தரவும். வகையான ஹாஷ் பின்தளத்தில் சார்ந்தது, ஆனால் பொதுவாக SHA-256 ஆகும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:1
@@ -404,7 +507,7 @@ msgid ""
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகத்திற்கான குறிப்பிட்ட வடிவமைப்பிற்கான பாதை, அளவு மற்றும் MTIME ஐத் தரவும். இந்த API இன் த்ரெட்சேஃப் உத்தரவாதங்களை நேரடியாக உடைக்கும் என்பதால், நீங்கள் முற்றிலும் பாதையை பயன்படுத்தக்கூடாது. அதற்கு பதிலாக: meth: `copy_format_to` முறையைப் பயன்படுத்தவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
@@ -412,25 +515,73 @@ msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
 "done. The cache values could be out of date if access was performed to the "
 "filesystem outside of this API."
-msgstr ""
+msgstr "`` உண்மை` `தற்காலிக சேமிப்பு மதிப்புகள் பயன்படுத்தப்பட்டால், இல்லையெனில் மெதுவான கோப்பு முறைமை அணுகல் செய்யப்படுகிறது. இந்த ஏபிஐக்கு வெளியே கோப்பு முறைமைக்கு அணுகல் செய்யப்பட்டால் கேச் மதிப்புகள் காலாவதியானது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updated for this book."
-msgstr ""
+msgstr "`` உண்மை` `என்றால் தரவுத்தளத்தின் MAX_SIZE புலம் இந்த புத்தகத்திற்கு புதுப்பிக்கப்பட்டுள்ளது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகத்திற்கான அனைத்து வடிவங்களின் டப்பிள் திரும்பவும். சரிபார்ப்பு_ வடிவங்கள் உண்மையாக இருந்தால், கோப்புகள் வட்டில் உள்ளனவா என்பதை சரிபார்க்கிறது."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_items_that_have_notes:1
+msgid ""
+"Return all item_ids for items that have notes in the specified field or all "
+"fields if field_name is None"
+msgstr "புலம்_பெயர் எதுவுமில்லை எனில், குறிப்பிட்ட புலத்தில் குறிப்புகள் அல்லது அனைத்து புலங்களிலும் உள்ள உருப்படிகளுக்கான அனைத்து item_ids ஐத் தரவும்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:1
+msgid ""
+"Returns all links for all fields referenced by book identified by book_id. "
+"If book_id doesn't exist then the method returns {}."
+msgstr "Book_ID ஆல் அடையாளம் காணப்பட்ட புத்தகத்தால் குறிப்பிடப்பட்ட அனைத்து துறைகளுக்கான அனைத்து இணைப்புகளையும் வழங்குகிறது. Book_id இல்லை என்றால், முறை {} திரும்பும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:4
+msgid ""
+"Example: Assume author A has link X, author B has link Y, tag S has link F, "
+"and tag T has link G. If book 1 has author A and tag T, this method returns "
+"{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
+"nor B and has no tags, this method returns {}."
+msgstr "எடுத்துக்காட்டு: எழுத்தாளர் A க்கு இணைப்பு X உள்ளது, ஆசிரியர் B க்கு இணைப்பு Y உள்ளது, குறிச்சொல்லுக்கு இணைப்பு f உள்ளது, மற்றும் டேக் டி இணைப்பு G. ஐக் கொண்டுள்ளது. புத்தகம் 1 க்கு ஆசிரியர் a மற்றும் tag t இருந்தால், இந்த முறை {'ஆசிரியர்கள்': {'a' : 'X'}, 'குறிச்சொற்கள்': {'t', 'g'}}. புத்தகம் 2 இன் ஆசிரியர் A அல்லது B மற்றும் குறிச்சொற்கள் இல்லை என்றால், இந்த முறை {} திரும்பும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:9
+msgid "the book id in question."
+msgstr "கேள்விக்குரிய புத்தக ஐடி."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:0
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:0
+msgid "Returns"
+msgstr "வருமானம்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_link_maps_for_book:11
+msgid ""
+"{field: {field_value, link_value}, ...  for all fields with a field_value "
+"having a non-empty link value for that book"
+msgstr "{புலம்: {field_value, link_value}, ... அந்த புத்தகத்திற்கான வெற்று அல்லாத இணைப்பு மதிப்பைக் கொண்ட ஒரு புலம்_ மதிப்புள்ள அனைத்து துறைகளுக்கும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
-msgstr ""
+msgstr "குறிச்சொல் உலாவியை செயல்படுத்த உள்நாட்டில் பயன்படுத்தப்படுகிறது"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_custom_book_data:1
@@ -438,33 +589,57 @@ msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
 "of book ids if you only want some data. Returns a map of book_id to values. "
 "If a particular value could not be decoded, uses default for it."
-msgstr ""
+msgstr "பெயருக்கான தரவைப் பெறுங்கள். முன்னிருப்பாக அனைத்து புத்தக_ஐடிகளுக்கும் தரவை வழங்குகிறது, நீங்கள் சில தரவை மட்டுமே விரும்பினால் புத்தக ஐடிகளின் பட்டியலில் தேர்ச்சி பெறவும். Book_id இன் வரைபடத்தை மதிப்புகளுக்கு வழங்குகிறது. ஒரு குறிப்பிட்ட மதிப்பை டிகோட் செய்ய முடியாவிட்டால், அதற்கான இயல்புநிலையைப் பயன்படுத்துகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr ""
+msgstr "குறிப்பிட்ட புலத்திற்கான மதிப்புகளுக்கு ஐடி எண்களின் மேப்பிங்கைத் தரவும். புலம் பல ஒன்று அல்லது பல புலங்களாக இருக்க வேண்டும், இல்லையெனில் ஒரு மதிப்பு பிழை எழுப்பப்படுகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
 msgid "Return the set of book ids for which name has data."
-msgstr ""
+msgstr "திரும்புக புத்தகங்களின் தொகுப்பு எந்த பெயருக்கு தரவு உள்ளது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
+msgid ""
+"Return the item id for item_name (case-insensitive) or None if not found"
+msgstr "ITEM_NAME (வழக்கு-உணர்திறன்) அல்லது கிடைக்கவில்லை என்றால் எதுவுமில்லை"
+
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return the item id for item_name (case-insensitive)"
-msgstr ""
+msgstr "ITEM_NAME க்கான உருப்படி ஐடியைத் திருப்பி விடுங்கள் (வழக்கு-உணர்வற்ற)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
-msgstr ""
+msgstr "குறிப்பிட்ட புலத்தில் உருப்படி_ஐடி குறிப்பிடப்பட்ட உருப்படிக்கு உருப்படி பெயரைத் திருப்பித் தரவும். மேலும் காண்க: மெத்: `get_id_map`."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_name_map:1
+msgid "Return mapping of item values to ids"
+msgstr "உருப்படி மதிப்புகளின் மேப்பிங் ஐடிகளுக்கு திரும்பவும்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:1
+msgid "Return a dictionary of links for the supplied field."
+msgstr "வழங்கப்பட்ட புலத்திற்கான இணைப்புகளின் அகராதியைத் தரவும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:3
+msgid "the lookup name of the field for which the link map is desired"
+msgstr "இணைப்பு வரைபடம் விரும்பப்படும் புலத்தின் தேடல் பெயர்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_link_map:5
+msgid "{field_value:link_value, ...} for non-empty links"
+msgstr "{field_value: link_value, ...} காலியாக இல்லாத இணைப்புகளுக்கு"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
@@ -474,25 +649,32 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr ""
+msgstr "புத்தகத்திற்கான மெட்டாடேட்டாவை புத்தக_ஐடி மூலம் அடையாளம் கண்டுள்ளது: வகுப்பு: `calibre.ebooks.metadata.book.base.metadata` பொருள். வடிவங்களின் பட்டியல் சரிபார்க்கப்படவில்லை என்பதை நினைவில் கொள்க. Get_cover உண்மையாக இருந்தால், கவர் திரும்பப் பெறப்படும், இது தற்காலிக கோப்பிற்கான பாதை mi.cover அல்லது cover_as_data உண்மையாக இருந்தால் mi.cover_data என."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
 msgid ""
 "Return the next series index for the specified series, taking into account "
 "the various preferences that control next series number generation."
-msgstr ""
+msgstr "அடுத்த தொடர் எண் தலைமுறையை கட்டுப்படுத்தும் பல்வேறு விருப்பங்களை கணக்கில் எடுத்துக்கொண்டு, குறிப்பிட்ட தொடருக்கான அடுத்த தொடர் குறியீட்டைத் திருப்பி விடுங்கள்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
 msgid "The series-like field (defaults to the builtin series column)"
-msgstr ""
+msgstr "தொடர் போன்ற புலம் (பில்டின் தொடர் நெடுவரிசைக்கு இயல்புநிலை)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr ""
+msgstr "உண்மை என்றால், அதற்கு பதிலாக தற்போதைய தொடர்_இண்டெக்ஸ் மதிப்புக்கு Book_ID இன் மேப்பிங்கை வழங்குகிறது."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_notes_resource:1
+msgid ""
+"Return a dict containing the resource data and name or None if no resource "
+"with the specified hash is found"
+msgstr "குறிப்பிட்ட ஹாஷுடன் எந்த ஆதாரமும் காணப்படாவிட்டால், வள தரவு மற்றும் பெயரைக் கொண்ட ஒரு கட்டளையை அல்லது எதுவுமில்லை"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
@@ -501,14 +683,14 @@ msgid ""
 " only reads values from the database on demand. This is much faster than "
 "get_metadata when only a small number of fields need to be accessed from the"
 " returned metadata object."
-msgstr ""
+msgstr "இது போன்றவை: மெத்: `get_metadata` தவிர, இது ஒரு ப்ராக்ஸிமெட்டாடேட்டா பொருளை வழங்குகிறது, இது தேவைக்கேற்ப தரவுத்தளத்திலிருந்து மட்டுமே மதிப்புகளைப் படிக்கிறது. திரும்பிய மெட்டாடேட்டா பொருளிலிருந்து குறைந்த எண்ணிக்கையிலான புலங்களை மட்டுமே அணுக வேண்டியிருக்கும் போது இது Get_Metadata ஐ விட மிக வேகமாக இருக்கும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_usage_count_by_id:1
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr ""
+msgstr "குறிப்பிட்ட புலத்தின் அனைத்து மதிப்புகளுக்கும் ஐடியின் வரைபடத்தை பயன்பாட்டு எண்ணிக்கையில் திருப்பித் தரவும், இது பல ஒன்று அல்லது பல புலங்களாக இருக்க வேண்டும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -516,75 +698,163 @@ msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr ""
+msgstr "உண்மையான IFF ஐத் திரும்பப் பெறுங்கள் தரவுத்தளத்தில் மெட்டாடேட்டா பொருளில் அனுப்பப்பட்ட அதே தலைப்புடன் ஒரு நுழைவு உள்ளது. ஒப்பீடு வழக்கு-உணர்வற்றது. மேலும் காண்க: மெத்: `data_for_has_book`."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
-msgstr ""
+msgstr "உண்மை என்றால் வடிவமைப்பு வட்டில் உள்ளது"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
-msgstr ""
+msgstr "உண்மையாகத் திரும்புகையில் குறிப்பிட்ட புத்தகம்_ஐடி டி.பியில் உள்ளது"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.import_note:1
+msgid ""
+"Import a previously exported note or an arbitrary HTML file as the note for "
+"the specified item"
+msgstr "முன்னர் ஏற்றுமதி செய்யப்பட்ட குறிப்பு அல்லது தன்னிச்சையான HTML கோப்பை குறிப்பிட்ட உருப்படிக்கான குறிப்பாக இறக்குமதி செய்க"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
-msgstr ""
+msgstr "பின்தளத்தில் இருந்து தரவுகளுடன் இந்த தற்காலிக சேமிப்பை துவக்கவும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_with_notes_in_book:1
+msgid ""
+"Return a dict of field to items that have associated notes for that field "
+"for the specified book"
+msgstr "குறிப்பிட்ட புத்தகத்திற்கான அந்தத் துறைக்கான குறிப்புகளை தொடர்புடைய உருப்படிகளுக்கு புலத்தின் ஒரு கட்டளையைத் திருப்பித் தரவும்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.link_for:1
+msgid ""
+"Return the link, if any, for the specified item or None if no link is found"
+msgstr "எந்தவொரு இணைப்பும் காணப்படாவிட்டால், குறிப்பிட்ட உருப்படிக்கு அல்லது எதுவுமில்லை என இணைப்பை திருப்பி விடுங்கள்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:1
+msgid "Get information about extra files in the book's directory."
+msgstr "புத்தகத்தின் கோப்பகத்தில் கூடுதல் கோப்புகள் பற்றிய தகவல்களைப் பெறுங்கள்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:3
+msgid "the database book id for the book"
+msgstr "புத்தகத்திற்கான தரவுத்தள புத்தக ஐடி"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:4
+msgid ""
+"the pattern of filenames to search for. Empty pattern matches all extra "
+"files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
+"to match files inside the data directory."
+msgstr "தேட கோப்பு பெயர்களின் முறை. வெற்று முறை எல்லா கூடுதல் கோப்புகளுக்கும் பொருந்துகிறது. வடிவங்கள் / பிரிப்பான் பயன்படுத்த வேண்டும். தரவு கோப்பகத்திற்குள் உள்ள கோப்புகளை பொருத்த Data_File_Pattern மாறிலி பயன்படுத்தவும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.list_extra_files:7
+msgid ""
+"A tuple of all extra files matching the specified pattern. Each element of "
+"the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
+"the relative path of the file to the book directory using / as a separator. "
+"stat_result is the result of calling os.stat() on the file."
+msgstr "குறிப்பிட்ட வடிவத்துடன் பொருந்தக்கூடிய அனைத்து கூடுதல் கோப்புகளின் டூப்பிள். டப்பிளின் ஒவ்வொரு உறுப்பு எக்ஸ்ட்ராஃபைல் (ரில்பாத், கோப்பு_பாத், STAT_RESULT). ஒரு பிரிப்பானாகப் பயன்படுத்தி புத்தக கோப்பகத்திற்கு கோப்பின் ஒப்பீட்டு பாதை ரில்பாத். STAT_RESULT என்பது கோப்பில் OS.Stat () ஐ அழைப்பதன் விளைவாகும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_extra_files:1
+msgid ""
+"Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
+"renamed unless replace=True in which case they are replaced."
+msgstr "SRC_IDS இலிருந்து கூடுதல் கோப்புகளை DEST_ID இல் ஒன்றிணைக்கவும். மாற்றியமைக்காவிட்டால் முரண்பட்ட கோப்புகள் தானாக மறுசீரமைக்கப்படுகின்றன = உண்மை அவை மாற்றப்படுகின்றன."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.move_book_from_trash:1
+msgid "Undelete a book from the trash directory"
+msgstr "குப்பை கோப்பகத்திலிருந்து ஒரு புத்தகத்தை குறைக்கவும்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.move_format_from_trash:1
+msgid "Undelete a format from the trash directory"
+msgstr "குப்பை கோப்பகத்திலிருந்து ஒரு வடிவமைப்பை குறைக்கவும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
 "returned."
-msgstr ""
+msgstr "வரிசைப்படுத்தப்பட்ட புத்தக ஐடிகளின் பட்டியலைத் தரவும். IDS_TO_SORT ஒன்றும் இல்லை என்றால், எல்லா புத்தக ஐடிகளும் திரும்பப் பெறப்படுகின்றன."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:4
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr ""
+msgstr "புலங்கள் படிவத்தின் 2-காசுகளின் பட்டியலாக இருக்க வேண்டும் (புலம்_பெயர், ஏறுதல் = உண்மை அல்லது பொய்). மிக முக்கியமான புலம் முதல் 2-டூப்பிள் ஆகும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_data_for:1
+msgid "Return all notes data as a dict or None if note does not exist"
+msgstr "எல்லா குறிப்புகள் தரவையும் ஒரு கட்டளையாகத் திருப்பி விடுங்கள் அல்லது குறிப்பு இல்லை என்றால் எதுவும் இல்லை"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_for:1
+msgid "Return the notes document or an empty string if not found"
+msgstr "குறிப்புகள் ஆவணம் அல்லது வெற்று சரம் கிடைக்கவில்லை என்றால் திருப்பி விடுங்கள்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_resources_used_by:1
+msgid ""
+"Return the set of resource hashes of all resources used by the note for the "
+"specified item"
+msgstr "குறிப்பிட்ட உருப்படிக்கு குறிப்பு பயன்படுத்தும் அனைத்து வளங்களின் வள ஹாஷ்களின் தொகுப்பைத் தரவும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr ""
+msgstr "முன்னுரிமை அமைக்கப்படாவிட்டால் குறிப்பிட்ட விருப்பத்திற்கான மதிப்பை அல்லது `` இயல்புநிலை`` என குறிப்பிடப்பட்ட மதிப்பைத் தரவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
-msgstr ""
+msgstr "புத்தகத்திற்கான OPF மெட்டாடேட்டா காப்புப்பிரதியை ஒரு பைட்டெஸ்டிங்காக திருப்பி விடுங்கள் அல்லது அத்தகைய காப்புப்பிரதி எதுவும் இல்லை என்றால் எதுவும் இல்லை."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
-"placed in the recycle bin."
-msgstr ""
+"placed in the per-library trash directory."
+msgstr "தரவுத்தளத்திலிருந்து புத்தகம்_ஐடிகளால் குறிப்பிடப்பட்ட புத்தகங்களை அகற்றி அவற்றின் வடிவமைப்பு கோப்புகளை நீக்கவும். `` நிரந்தரமானது`` தவறானது என்றால், வடிவமைப்பு கோப்புகள் ஒரு நூலக குப்பைக் கோப்பகத்தில் வைக்கப்படுகின்றன."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
 msgid "Remove the specified formats from the specified books."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகங்களிலிருந்து குறிப்பிட்ட வடிவங்களை அகற்றவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
 msgid "A mapping of book_id to a list of formats to be removed from the book."
-msgstr ""
+msgstr "புத்தகத்திலிருந்து அகற்றப்பட வேண்டிய வடிவங்களின் பட்டியலுக்கு book_id இன் மேப்பிங்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:4
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
-msgstr ""
+msgstr "உண்மை என்றால், டி.பியிலிருந்து வடிவமைப்பிற்கான பதிவை மட்டும் அகற்றவும், கோப்பு முறைமையிலிருந்து உண்மையான வடிவமைப்பு கோப்பை நீக்க வேண்டாம்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_formats:5
+msgid ""
+"A map of book id to set of formats actually deleted from the filesystem for "
+"that book"
+msgstr "அந்த புத்தகத்திற்கான கோப்பு முறைமையிலிருந்து உண்மையில் நீக்கப்பட்ட வடிவங்களின் தொகுப்பிற்கான புத்தக ஐடியின் வரைபடம்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
@@ -592,33 +862,38 @@ msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
-msgstr ""
+msgstr "குறிப்பிட்ட புலத்தில் உள்ள அனைத்து பொருட்களையும் குறிப்பிட்ட ஐடிகளுடன் நீக்கவும். பாதிக்கப்பட்ட புத்தக ஐடிகளின் தொகுப்பை வழங்குகிறது. `` gract_to_book_ids`` என்பது புத்தகங்களின் ஐடிகளின் விருப்பமான தொகுப்பாகும். குறிப்பிடப்பட்டால், அந்த புத்தகங்களிலிருந்து மட்டுமே உருப்படிகள் அகற்றப்படும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.rename_extra_files:1
+msgid "Rename extra data files"
+msgstr "கூடுதல் தரவு கோப்புகளை மறுபெயரிடுங்கள்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr ""
+msgstr "குறிச்சொற்கள் அல்லது தொடர் போன்ற பல ஒன்று அல்லது பல துறைகளில் இருந்து உருப்படிகளை மறுபெயரிடுங்கள்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
 msgid ""
 "When renaming in a series-like field also change the series_index values."
-msgstr ""
+msgstr "தொடர் போன்ற துறையில் மறுபெயரிடும்போது தொடர்_இண்டெக்ஸ் மதிப்புகளையும் மாற்றவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:4
 msgid ""
 "An optional set of book ids for which the rename is to be performed, "
 "defaults to all books."
-msgstr ""
+msgstr "ஒரு விருப்பமான புத்தகத் தொகுப்பு, மறுபெயரிடப்பட வேண்டியவை, எல்லா புத்தகங்களுக்கும் இயல்புநிலை."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_book:1
 msgid ""
 "Restore the book entry in the database for a book that already exists on the"
 " filesystem"
-msgstr ""
+msgstr "கோப்பு முறைமையில் ஏற்கனவே இருக்கும் ஒரு புத்தகத்திற்கான தரவுத்தளத்தில் புத்தக உள்ளீட்டை மீட்டெடுக்கவும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_original_format:1
@@ -626,7 +901,7 @@ msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
 "any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
 "successful restore."
-msgstr ""
+msgstr "முன்னர் சேமிக்கப்பட்ட அசல்_ஃபார்மட்டிலிருந்து குறிப்பிட்ட வடிவமைப்பை மீட்டெடுக்கவும். வெற்றியில் உண்மையாக திரும்பவும். வெற்றிகரமான மீட்டெடுப்புக்குப் பிறகு அசல்_ஃபார்மாட் நீக்கப்படுகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
@@ -638,7 +913,7 @@ msgid ""
 "lock, but searching a composite column involves reading field values via "
 "ProxyMetadata which tries to get a shared lock. There may be other scenarios"
 " that trigger this as well."
-msgstr ""
+msgstr "பாதுகாப்பான வாசிப்பு பூட்டு என்பது ஒரு பூட்டு என்பது நூலில் ஏற்கனவே எழுதும் பூட்டு இருந்தால் எதுவும் செய்யாது, இல்லையெனில் அது வாசிப்பு பூட்டைப் பெறுகிறது. டாஸ்கிரட்லாக்அர்னர்களைத் தடுக்க இது அவசியம், இது கலப்பு நெடுவரிசைகளின் முன்னிலையில் தேடல் தற்காலிக சேமிப்பைப் புதுப்பிக்கும்போது நிகழலாம். தேடல் தற்காலிக சேமிப்பைப் புதுப்பிப்பது ஒரு பிரத்யேக பூட்டைக் கொண்டுள்ளது, ஆனால் ஒரு கலப்பு நெடுவரிசையைத் தேடுவது ப்ராக்ஸிமெடாடேட்டா வழியாக புலம் மதிப்புகளைப் படிப்பதை உள்ளடக்குகிறது, இது பகிரப்பட்ட பூட்டைப் பெற முயற்சிக்கிறது. இதைத் தூண்டும் பிற காட்சிகளும் இருக்கலாம்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:9
@@ -646,21 +921,21 @@ msgid ""
 "This property returns a new lock object on every access. This lock object is"
 " not recursive (for performance) and must only be used in a with statement "
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
-msgstr ""
+msgstr "இந்த சொத்து ஒவ்வொரு அணுகலிலும் ஒரு புதிய பூட்டு பொருளை வழங்குகிறது. இந்த பூட்டு பொருள் சுழல்நிலை அல்ல (செயல்திறனுக்காக) மற்றும் `` Cache.safe_read_lock உடன் அறிக்கையுடன் மட்டுமே பயன்படுத்தப்பட வேண்டும்: `` இல்லையெனில் மோசமான விஷயங்கள் நடக்கும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
 msgid ""
 "Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
 "existing ORIGINAL_FORMAT."
-msgstr ""
+msgstr "குறிப்பிட்ட வடிவமைப்பின் நகலை அசல்_பார்மட் என சேமிக்கவும், ஏற்கனவே இருக்கும் அசல்_பார்மட்டை மேலெழுதும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:1
 msgid ""
 "Search the database for the specified query, returning a set of matched book"
 " ids."
-msgstr ""
+msgstr "குறிப்பிட்ட வினவலுக்கான தரவுத்தளத்தைத் தேடுங்கள், பொருந்திய புத்தக ஐடிகளின் தொகுப்பை திருப்பித் தருகின்றன."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:3
@@ -668,24 +943,31 @@ msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr ""
+msgstr "குறிப்பிட்ட வினவலுக்கு மற்றும் ஒரு கட்டுப்பாடு. கட்டுப்பாடுகள் தற்காலிகமாக உள்ளன என்பதை நினைவில் கொள்க, எனவே A மற்றும் B க்கான தேடல் A ஐ விட மெதுவாக இருக்கும் b."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
 msgid "Used internally (virtual fields such as on_device to search over)."
-msgstr ""
+msgstr "உள்நாட்டில் பயன்படுத்தப்படுகிறது (தேடுவதற்கு ON_DEVICE போன்ற மெய்நிகர் புலங்கள்)."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:8
 msgid ""
 "If not None, a set of book ids for which books will be searched instead of "
 "searching all books."
-msgstr ""
+msgstr "எதுவுமில்லை என்றால், எல்லா புத்தகங்களையும் தேடுவதற்குப் பதிலாக எந்த புத்தகங்களுக்காகத் தேடப்படும் என்பது புத்தகங்களின் தொகுப்பு."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_notes:1
+msgid ""
+"Search the text of notes using an FTS index. If the query is empty return "
+"all notes."
+msgstr "FTS குறியீட்டைப் பயன்படுத்தி குறிப்புகளின் உரையைத் தேடுங்கள். வினவல் காலியாக இருந்தால் அனைத்து குறிப்புகளையும் திரும்பவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
 msgid "options must be a map of the form {book_id:conversion_options}"
-msgstr ""
+msgstr "விருப்பங்கள் படிவத்தின் வரைபடமாக இருக்க வேண்டும் {book_id: Converty_Options}"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_cover:1
@@ -693,19 +975,19 @@ msgid ""
 "Set the cover for this book. The data can be either a QImage, QPixmap, file "
 "object or bytestring. It can also be None, in which case any existing cover "
 "is removed."
-msgstr ""
+msgstr "இந்த புத்தகத்திற்கான அட்டையை அமைக்கவும். தரவு ஒரு Qimage, Qpixmap, கோப்பு பொருள் அல்லது பைட்டெஸ்ட்ரிங் ஆக இருக்கலாம். இது எதுவுமில்லை, இந்த விஷயத்தில் தற்போதுள்ள எந்த அட்டையும் அகற்றப்படும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr ""
+msgstr "`` பெயர்`` மூலம் குறிப்பிடப்பட்ட புலத்தின் மதிப்புகளை அமைக்கவும். மாற்றத்தால் பாதிக்கப்பட்ட அனைத்து புத்தக ஐடிகளின் தொகுப்பையும் வழங்குகிறது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
 msgid "Mapping of book_ids to values that should be applied."
-msgstr ""
+msgstr "பயன்படுத்தப்பட வேண்டிய மதிப்புகளுக்கு book_ids ஐ மேப்பிங் செய்வது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:4
@@ -714,17 +996,40 @@ msgid ""
 "example, if a  book has the tag ``tag1`` and you set the tag for another "
 "book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
-msgstr ""
+msgstr "உண்மை என்றால், பல ஒன்று அல்லது பல-பல துறைகளின் வழக்கு மாற்றப்படும். எடுத்துக்காட்டாக, ஒரு புத்தகத்தில் `` TAG1`` என்ற குறிச்சொல் இருந்தால், மற்றொரு புத்தகத்திற்கான குறிச்சொல்லை `` TAG1`` க்கு அமைத்தால், இரண்டு புத்தகங்களிலும் `` TAG1`` என்ற குறிச்சொல் உண்மையாக இருந்தால், இல்லையெனில் அவை இரண்டும் இருக்கும் குறிச்சொல் `` TAG1``."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
-msgstr ""
+msgstr "உள்நாட்டில் பயன்படுத்தப்பட்டது, நீங்கள் அதை ஒருபோதும் மாற்றக்கூடாது."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:1
+msgid ""
+"Sets links for item values in field. Note: this method doesn't change values"
+" not in the value_to_link_map"
+msgstr "புலத்தில் உருப்படி மதிப்புகளுக்கான இணைப்புகளை அமைக்கிறது. குறிப்பு: இந்த முறை value_to_link_map இல் இல்லாத மதிப்புகளை மாற்றாது"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:4
+msgid "the lookup name"
+msgstr "தேடல் பெயர்"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:5
+msgid ""
+"dict(field_value:link, ...). Note that these are values, not field ids."
+msgstr "dict (field_value: இணைப்பு, ...). இவை மதிப்புகள், புலம் ஐடிகள் அல்ல என்பதை நினைவில் கொள்க."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_link_map:7
+msgid "books changed by setting the link"
+msgstr "இணைப்பை அமைப்பதன் மூலம் புத்தகங்கள் மாற்றப்பட்டன"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
-msgstr ""
+msgstr "`மெட்டாடேட்டா` பொருளிலிருந்து` ஐடி` புத்தகத்திற்கான மெட்டாடேட்டாவை அமைக்கவும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:3
@@ -738,40 +1043,67 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr ""
+msgstr "Force_changes = உண்மை MI வெற்று மதிப்புகளைக் கொண்டிருந்தாலும் புலங்களைப் புதுப்பிக்க Set_metadata ஐ கட்டாயப்படுத்தும். இந்த விஷயத்தில், 'எதுவுமில்லை' 'வெற்று' என்பதிலிருந்து வேறுபடுகிறது. Mi.xxx ஒன்றும் இல்லை என்றால், XXX மாற்றப்படாது, இல்லையெனில் அது. குறிச்சொற்கள், அடையாளங்காட்டிகள் மற்றும் கவர் பண்புக்கூறுகள் சிறப்பு வழக்குகள். குறிச்சொற்கள் மற்றும் அடையாளங்காட்டிகளை எதுவும் அமைக்க முடியாது, எனவே ஃபோர்ஸ்_சேஞ்சுகள் உண்மையாக இருந்தால் அவை எப்போதும் மாற்றப்படும். நீங்கள் புத்தகத்தை வைத்திருக்க விரும்பும் மதிப்புகள் MI ஐக் கொண்டுள்ளன என்பதை உறுதிப்படுத்த வேண்டும். ஒரு புதிய கவர் வழங்கப்பட்டால் கவர்கள் எப்போதும் மாற்றப்படும், ஆனால் ஒருபோதும் நீக்கப்படாது. தலைப்பு அல்லது ஆசிரியர்களை அமைப்பதில் ஃபோர்ஸ்_சேஞ்ச்ஸ் எந்த விளைவையும் ஏற்படுத்தாது என்பதையும் நினைவில் கொள்க."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_notes_for:1
+msgid ""
+"Set the notes document. If the searchable text is different from the "
+"document, specify it as searchable_text. If the document references "
+"resources their hashes must be present in resource_hashes. Set "
+"remove_unused_resources to True to cleanup unused resources, note that "
+"updating a note automatically cleans up resources pertaining to that note "
+"anyway."
+msgstr "குறிப்புகள் ஆவணத்தை அமைக்கவும். தேடக்கூடிய உரை ஆவணத்திலிருந்து வேறுபட்டால், அதைத் தேடக்கூடிய_டெக்ஸ்ட் எனக் குறிப்பிடவும். ஆவணம் ஆதாரங்களைக் குறிப்பிட்டால், அவற்றின் ஹாஷ்கள் வள_ஹாஷ்களில் இருக்க வேண்டும். பயன்படுத்தப்படாத வளங்களைத் தூய்மைப்படுத்துவதற்கு remive_unused_resources ஐ உண்மையாக அமைக்கவும், ஒரு குறிப்பைப் புதுப்பிப்பது அந்தக் குறிப்பு தொடர்பான ஆதாரங்களை எப்படியும் தானாகவே சுத்தம் செய்கிறது என்பதை நினைவில் கொள்க."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
-msgstr ""
+msgstr "குறிப்பிட்ட மதிப்புக்கு குறிப்பிட்ட விருப்பத்தை அமைக்கவும். மேலும் காண்க: மெத்: `pref`."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.split_if_is_multiple_composite:1
+msgid ""
+"If f is a composite column lookup key and the column is is_multiple then "
+"split v into unique non-empty values. The comparison is case sensitive. "
+"Order is not preserved. Return a list() for compatibility with proxy "
+"metadata field getters, for example tags."
+msgstr "F என்பது ஒரு கலப்பு நெடுவரிசை தேடல் விசை மற்றும் நெடுவரிசை IS_MULTIPLE என்றால், V ஐ தனித்துவமான வெற்று அல்லாத மதிப்புகளாகப் பிரிக்கவும். ஒப்பீடு வழக்கு உணர்திறன். ஒழுங்கு பாதுகாக்கப்படவில்லை. எடுத்துக்காட்டாக குறிச்சொற்கள், ப்ராக்ஸி மெட்டாடேட்டா புலம் பெறுபவர்களுடன் பொருந்தக்கூடிய பட்டியலை () திருப்பித் தரவும்."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:1
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr ""
+msgstr "குறிப்பிட்ட நேரத்தை விட பழைய `` குறிச்சொல்`` என்ற குறிச்சொல்லைக் கொண்ட அனைத்து புத்தகங்களின் ஐடிகளையும் திருப்பித் தரவும். குறிச்சொல் ஒப்பீடு வழக்கு உணர்வற்றது."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr ""
+msgstr "ஒரு நேரமெடுப்பு பொருள் அல்லது எதுவுமில்லை. எதுவுமில்லை என்றால், குறிச்சொல்லுடன் கூடிய அனைத்து ஐடிகளும் திருப்பித் தரப்படுகின்றன."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
-msgstr ""
+msgstr "இல்லையென்றால் போட்டிகளின் பட்டியல் இந்த குறிச்சொல்லைக் கொண்ட புத்தகங்களுக்கு மட்டுப்படுத்தப்படும்"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10
 msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
-msgstr ""
+msgstr "ஆசிரியர்களின் பட்டியல். இல்லையென்றால், போட்டிகளின் பட்டியல் இந்த ஆசிரியர்களைக் கொண்ட புத்தகங்களுக்கு (வழக்கு உணர்வற்றது) கட்டுப்படுத்தப்படும்."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.unretire_note_for:1
+msgid ""
+"Unretire a previously retired note for the specified item. Notes are retired"
+" when an item is removed from the database"
+msgstr "குறிப்பிட்ட உருப்படிக்கு முன்னர் ஓய்வுபெற்ற குறிப்பை அழிக்காதீர்கள். தரவுத்தளத்திலிருந்து ஒரு உருப்படி அகற்றப்படும்போது குறிப்புகள் ஓய்வு பெறுகின்றன"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1
@@ -780,4 +1112,4 @@ msgid ""
 "optional and is useful for a performance boost, in contexts where a "
 "ProxyMetadata object for the books already exists. It should be a mapping of"
 " book_ids to their corresponding ProxyMetadata objects."
-msgstr ""
+msgstr "குறிப்பிட்ட புத்தகங்களுக்கான பயனர் வகைகளைத் தரவும். ப்ராக்ஸி_மெட்டாடேட்டா_மாப் விருப்பமானது மற்றும் செயல்திறன் ஊக்கத்திற்கு இது பயனுள்ளதாக இருக்கும், இது புத்தகங்களுக்கான ப்ராக்ஸிமெட்டாடேட்டா பொருள் ஏற்கனவே இருக்கும் சூழல்களில். இது அவற்றின் தொடர்புடைய ப்ராக்ஸிமெட்டாடேட்டா பொருள்களுக்கு book_ids இன் வரைபடமாக இருக்க வேண்டும்."
