@@ -497,6 +497,7 @@ class Worker(Thread):  # Get details {{{
         non_hero = tuple(self.selector(
             'div#bookDetails_container_div div#nonHeroSection')) or tuple(self.selector(
                 '#productDetails_techSpec_sections'))
+        feature_and_detail_bullets = root.xpath('//*[@data-feature-name="featureBulletsAndDetailBullets"]')
         if detail_bullets:
             self.parse_detail_bullets(root, mi, detail_bullets[0])
         elif non_hero:
@@ -505,6 +506,8 @@ class Worker(Thread):  # Get details {{{
             except:
                 self.log.exception(
                     'Failed to parse new-style book details section')
+        elif feature_and_detail_bullets:
+            self.parse_detail_bullets(root, mi, feature_and_detail_bullets[0], ul_selector='ul')
 
         else:
             pd = root.xpath(self.pd_xpath)
@@ -674,6 +677,16 @@ class Worker(Thread):  # Get details {{{
                 ans = parse_ratings_text(t)
                 if ans is not None:
                     return ans
+        else:
+            # found in kindle book pages on amazon.com
+            for x in root.xpath('//a[@id="acrCustomerReviewLink"]'):
+                spans = x.xpath('./span')
+                if spans:
+                    txt = self.tostring(spans[0], method='text', encoding='unicode', with_tail=False).strip()
+                    try:
+                        return float(txt.replace(',', '.'))
+                    except Exception:
+                        pass
 
     def _render_comments(self, desc):
         from calibre.library.comments import sanitize_comments_html
@@ -721,12 +734,14 @@ class Worker(Thread):  # Get details {{{
         except ImportError:
             from urllib import unquote
         ans = ''
-        ovr = tuple(self.selector('#drengr_MobileTabbedDescriptionOverviewContent_feature_div'))
+        ovr = tuple(self.selector('#drengr_MobileTabbedDescriptionOverviewContent_feature_div')) or tuple(
+            self.selector('#drengr_DesktopTabbedDescriptionOverviewContent_feature_div'))
         if ovr:
             ovr = ovr[0]
             ovr.tag = 'div'
             ans = self._render_comments(ovr)
-            ovr = tuple(self.selector('#drengr_MobileTabbedDescriptionEditorialsContent_feature_div'))
+            ovr = tuple(self.selector('#drengr_MobileTabbedDescriptionEditorialsContent_feature_div')) or tuple(
+                self.selector('#drengr_DesktopTabbedDescriptionEditorialsContent_feature_div'))
             if ovr:
                 ovr = ovr[0]
                 ovr.tag = 'div'
@@ -781,6 +796,20 @@ class Worker(Thread):  # Get details {{{
 
     def parse_series(self, root):
         ans = (None, None)
+
+        # This is found on kindle pages for books on amazon.com
+        series = root.xpath('//*[@id="rpi-attribute-book_details-series"]')
+        if series:
+            spans = series[0].xpath('descendant::span')
+            if spans:
+                texts = [self.tostring(x, encoding='unicode', method='text', with_tail=False).strip() for x in spans]
+                texts = list(filter(None, texts))
+                if len(texts) == 2:
+                    idxinfo, series = texts
+                    m = re.search(r'[0-9.]+', idxinfo.strip())
+                    if m is not None:
+                        ans = series, float(m.group())
+                        return ans
 
         # This is found on the paperback/hardback pages for books on amazon.com
         series = root.xpath('//div[@data-feature-name="seriesTitle"]')
@@ -877,6 +906,11 @@ class Worker(Thread):  # Get details {{{
         # Look for the image URL in javascript, using the first image in the
         # image gallery as the cover
         import json
+        imgpat = re.compile(r'"hiRes":"(.+?)","thumb"')
+        for script in root.xpath('//script'):
+            m = imgpat.search(script.text or '')
+            if m is not None:
+                return m.group(1)
         imgpat = re.compile(r"""'imageGalleryData'\s*:\s*(\[\s*{.+])""")
         for script in root.xpath('//script'):
             m = imgpat.search(script.text or '')
@@ -926,6 +960,7 @@ class Worker(Thread):  # Get details {{{
                             if width > mwidth:
                                 mwidth = width
                                 url = iurl
+
                         return url
                     except Exception:
                         pass
@@ -944,8 +979,11 @@ class Worker(Thread):  # Get details {{{
                 if url:
                     return url
 
-    def parse_detail_bullets(self, root, mi, container):
-        ul = next(self.selector('.detail-bullet-list', root=container))
+    def parse_detail_bullets(self, root, mi, container, ul_selector='.detail-bullet-list'):
+        try:
+            ul = next(self.selector(ul_selector, root=container))
+        except StopIteration:
+            return
         for span in self.selector('.a-list-item', root=ul):
             cells = span.xpath('./span')
             if len(cells) >= 2:
@@ -1044,7 +1082,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 3, 5)
+    version = (1, 3, 7)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 
@@ -1459,6 +1497,7 @@ class Amazon(Source):
         matches = []
         query, domain = self.create_query(log, title=title, authors=authors,
                                           identifiers=identifiers)
+        time.sleep(1)
         try:
             raw = br.open_novisit(query, timeout=timeout).read().strip()
         except Exception as e:
@@ -1723,8 +1762,7 @@ def manual_tests(domain, **kw):  # {{{
     all_tests['com'] = [  # {{{
         (   # Paperback with series
             {'identifiers': {'amazon': '1423146786'}},
-            [title_test('The Heroes of Olympus, Book Five The Blood of Olympus',
-                        exact=True), series_test('The Heroes of Olympus', 5)]
+            [title_test('Heroes of Olympus', exact=False), series_test('The Heroes of Olympus', 5)]
         ),
 
         (   # Kindle edition with series
@@ -1743,7 +1781,7 @@ def manual_tests(domain, **kw):  # {{{
         (  # Different comments markup, using Book Description section
             {'identifiers': {'amazon': '0982514506'}},
             [title_test(
-                "Griffin's Destiny: Book Three: The Griffin's Daughter Trilogy",
+                "Griffin's Destiny",
                 exact=True),
              comments_test('Jelena'), comments_test('Ashinji'),
              ]
@@ -1759,8 +1797,8 @@ def manual_tests(domain, **kw):  # {{{
 
         (  # No specific problems
             {'identifiers': {'isbn': '0743273567'}},
-            [title_test('the great gatsby: the only authorized edition', exact=True),
-             authors_test(['Francis Scott Fitzgerald'])]
+            [title_test('the great gatsby'),
+             authors_test(['f. Scott Fitzgerald'])]
         ),
 
     ]

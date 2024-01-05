@@ -8,6 +8,7 @@ __docformat__ = 'restructuredtext en'
 import os
 import re
 import traceback
+from collections import defaultdict
 from contextlib import suppress
 from functools import partial
 from qt.core import (
@@ -22,7 +23,7 @@ from calibre.constants import config_dir
 from calibre.ebooks.metadata import rating_to_stars
 from calibre.gui2 import (
     FunctionDispatcher, choose_files, config, empty_index, gprefs, pixmap_to_data,
-    question_dialog, rating_font,
+    question_dialog, rating_font, safe_open_url,
 )
 from calibre.gui2.dialogs.edit_category_notes import EditNoteDialog
 from calibre.gui2.complete2 import EditWithComplete
@@ -43,6 +44,9 @@ class TagDelegate(QStyledItemDelegate):  # {{{
         self.rating_pat = re.compile(r'[%s]' % rating_to_stars(3, True))
         self.rating_font = QFont(rating_font())
         self.tags_view = tags_view
+        self.links_icon = QIcon.ic('external-link.png')
+        self.notes_icon = QIcon.ic('notes.png')
+        self.blank_icon = QIcon()
 
     def draw_average_rating(self, item, style, painter, option, widget):
         rating = item.average_rating
@@ -83,26 +87,86 @@ class TagDelegate(QStyledItemDelegate):  # {{{
     def draw_text(self, style, painter, option, widget, index, item):
         tr = style.subElementRect(QStyle.SubElement.SE_ItemViewItemText, option, widget)
         text = index.data(Qt.ItemDataRole.DisplayRole)
-        hover = option.state & QStyle.StateFlag.State_MouseOver
-        is_search = (True if item.type == TagTreeItem.TAG and
-                            item.tag.category == 'search' else False)
-        if not is_search and (hover or gprefs['tag_browser_show_counts']):
-            count = str(index.data(COUNT_ROLE))
-            width = painter.fontMetrics().boundingRect(count).width()
-            r = QRect(tr)
-            r.setRight(r.right() - 1), r.setLeft(r.right() - width - 4)
-            self.paint_text(painter, r, Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextSingleLine, count, hover, option)
-            tr.setRight(r.left() - 1)
-        else:
-            tr.setRight(tr.right() - 1)
-        is_rating = item.type == TagTreeItem.TAG and not self.rating_pat.sub('', text)
-        if is_rating:
-            painter.setFont(self.rating_font)
         flags = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft | Qt.TextFlag.TextSingleLine
         lr = QRect(tr)
         lr.setRight(lr.right() * 2)
-        br = painter.boundingRect(lr, flags, text)
-        if br.width() > tr.width():
+        text_rec = painter.boundingRect(lr, flags, text)
+        hover = option.state & QStyle.StateFlag.State_MouseOver
+        is_search = (True if item.type == TagTreeItem.TAG and
+                            item.tag.category == 'search' else False)
+
+        def render_count():
+            if not is_search and (hover or gprefs['tag_browser_show_counts']):
+                count = str(index.data(COUNT_ROLE))
+                width = painter.fontMetrics().boundingRect(count).width()
+                r = QRect(tr)
+                r.setRight(r.right() - 1), r.setLeft(r.right() - width - 4)
+                self.paint_text(painter, r, Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextSingleLine, count, hover, option)
+                tr.setRight(r.left() - 1)
+            else:
+                tr.setRight(tr.right() - 1)
+
+        if item.type == TagTreeItem.TAG:
+            category = item.tag.category
+            name = item.tag.original_name
+            tv = self.tags_view
+            m = tv._model
+            positions = {'links': (-1, -1), 'notes': (-1, -1)}
+
+            # The icons fits in a rectangle height/2 + 4 x height/2 + 4. This
+            # ensures they are a 'pleasant' size compared to the text.
+            icon_width = int(tr.height()/2) + 4
+
+            def render_link_icon():
+                icon = self.links_icon if m.item_has_link(category, name) else self.blank_icon
+                r = QRect(tr)
+                r.setRight(r.right() - 1)
+                r.setLeft(r.right() - icon_width)
+                positions['links'] = (r.left(), r.left()+r.width())
+                icon.paint(painter, r, option.decorationAlignment, QIcon.Mode.Normal, QIcon.State.On)
+                tr.setRight(r.left() - 1)
+            def render_note_icon():
+                icon = self.notes_icon if m.item_has_note(category, name) else self.blank_icon
+                r = QRect(tr)
+                r.setRight(r.right() - 1)
+                r.setLeft(r.right() - icon_width)
+                positions['notes'] = (r.left(), r.left()+r.width())
+                icon.paint(painter, r, option.decorationAlignment, QIcon.Mode.Normal, QIcon.State.On)
+                tr.setRight(r.left() - 1)
+
+            if gprefs['icons_on_right_in_tag_browser']:
+                # Icons go far right, in columns after the counts
+                show_note_icon = gprefs['show_notes_in_tag_browser'] and m.category_has_notes(category)
+                show_link_icon = gprefs['show_links_in_tag_browser'] and m.category_has_links(category)
+                if show_link_icon:
+                    render_link_icon()
+                if show_note_icon:
+                    render_note_icon()
+                render_count()
+            else:
+                # Icons go after the text to the left of the counts, not in columns
+                show_note_icon = gprefs['show_notes_in_tag_browser'] and m.item_has_note(category, name)
+                show_link_icon = gprefs['show_links_in_tag_browser'] and m.item_has_link(category, name)
+
+                render_count()
+                # The link icon has a margin of 1 px on each side. Account for
+                # this when computing the width of the icons. If you change the
+                # order of the icons then you must change this calculation
+                w = (int(show_link_icon) * (icon_width + 2)) + (int(show_note_icon) * icon_width)
+                # Leave a 5 px margin between the text and the icon.
+                tr.setWidth(min(tr.width(), text_rec.width() + 5 + w))
+                if show_link_icon:
+                    render_link_icon()
+                if show_note_icon:
+                    render_note_icon()
+            tv.category_button_positions[category][name] = positions
+        else:
+            render_count()
+
+        is_rating = item.type == TagTreeItem.TAG and not self.rating_pat.sub('', text)
+        if is_rating:
+            painter.setFont(self.rating_font)
+        if text_rec.width() > tr.width():
             g = QLinearGradient(QPointF(tr.topLeft()), QPointF(tr.topRight()))
             c = option.palette.color(QPalette.ColorRole.WindowText)
             g.setColorAt(0, c), g.setColorAt(0.8, c)
@@ -219,6 +283,12 @@ class TagsView(QTreeView):  # {{{
         self.plus_icon = QIcon.ic('plus.png')
         self.minus_icon = QIcon.ic('minus.png')
 
+        # Dict for recording the positions of the fake buttons for category tag
+        # lines. It is recorded per category because we can't guarantee the
+        # order that items are painted. The numbers get updated whenever an item
+        # is painted, which deals with resizing.
+        self.category_button_positions = defaultdict(dict)
+
         self._model = TagsModel(self)
         self._model.search_item_renamed.connect(self.search_item_renamed)
         self._model.refresh_required.connect(self.refresh_required,
@@ -332,7 +402,7 @@ class TagsView(QTreeView):  # {{{
             match_pop = 0
         self.alter_tb.match_menu.actions()[match_pop].setChecked(True)
         if not self.made_connections:
-            self.clicked.connect(self.toggle)
+            self.clicked.connect(self.toggle_on_mouse_click)
             self.customContextMenuRequested.connect(self.show_context_menu)
             self.refresh_required.connect(self.recount, type=Qt.ConnectionType.QueuedConnection)
             self.alter_tb.sort_menu.triggered.connect(self.sort_changed)
@@ -430,6 +500,8 @@ class TagsView(QTreeView):  # {{{
 
     def mousePressEvent(self, event):
         if event.buttons() & Qt.MouseButton.LeftButton:
+            # Record the press point for processing during the clicked signal
+            self.mouse_clicked_point = event.pos()
             # Only remember a possible drag start if the item is drag enabled
             dex = self.indexAt(event.pos())
             if self._model.flags(dex) & Qt.ItemFlag.ItemIsDragEnabled:
@@ -486,10 +558,36 @@ class TagsView(QTreeView):  # {{{
         joiner = ' and ' if self.match_all else ' or '
         return joiner.join(tokens)
 
+    def click_in_button_range(self, val, category, item_name, kind):
+        range_tuple = self.category_button_positions[category].get(item_name, {}).get(kind)
+        return range_tuple and range_tuple[0] <= val <= range_tuple[1]
+
     def toggle_current_index(self):
         ci = self.currentIndex()
         if ci.isValid():
             self.toggle(ci)
+
+    def toggle_on_mouse_click(self, index):
+        # Check if one of the link or note icons was clicked. If so, deal with
+        # it here and don't do the real toggle
+        t = self._model.data(index, Qt.UserRole)
+        if t.type == TagTreeItem.TAG:
+            db = self._model.db.new_api
+            category = t.tag.category
+            orig_name = t.tag.original_name
+            x = self.mouse_clicked_point.x()
+            if self.click_in_button_range(x, category, orig_name, 'notes'):
+                from calibre.gui2.dialogs.show_category_note import ShowNoteDialog
+                item_id = db.get_item_id(category, orig_name)
+                if db.notes_for(category, item_id):
+                    ShowNoteDialog(category, item_id, db, parent=self).show()
+                    return
+            if self.click_in_button_range(x, category, orig_name, 'links'):
+                link = db.get_link_map(category).get(orig_name)
+                if link:
+                    safe_open_url(link)
+                    return
+        self._toggle(index, None)
 
     def toggle(self, index):
         self._toggle(index, None)
@@ -811,6 +909,19 @@ class TagsView(QTreeView):  # {{{
                             self.context_menu.addAction(_('Edit link for %s')%display_name(tag),
                                     partial(self.context_menu_handler,
                                             action='edit_author_link', index=tag.id)).setIcon(QIcon.ic('insert-link.png'))
+                        elif self.db.new_api.has_link_map(key):
+                            self.context_menu.addAction(_('Edit link for %s')%display_name(tag),
+                                    partial(self.context_menu_handler, action='open_editor',
+                                            category=tag.original_name if tag else None,
+                                            key=key))
+
+                        if self.db.new_api.field_supports_notes(key):
+                            item_id = self.db.new_api.get_item_id(tag.category, tag.original_name)
+                            has_note = self._model.item_has_note(key, tag.original_name)
+                            self.context_menu.addAction(self.edit_metadata_icon,
+                                (_('Edit note for %s') if has_note else _('Create note for %s'))%display_name(tag),
+                                partial(self.context_menu_handler, action='edit_note',
+                                        index=index, extra=item_id, category=tag.category))
 
                         # is_editable is also overloaded to mean 'can be added
                         # to a User category'
@@ -848,14 +959,6 @@ class TagsView(QTreeView):  # {{{
                             m.addAction(self.minus_icon,
                                 _('Remove %s from selected books') % display_name(tag),
                                 partial(self.context_menu_handler, action='remove_tag', index=index))
-
-                        item_id = self.db.new_api.get_item_id(tag.category, tag.original_name)
-                        has_note = bool(self.db.new_api.notes_for(tag.category, item_id))
-                        self.context_menu.addAction(self.edit_metadata_icon,
-                            (_('Edit note for %s') if has_note else _('Create note for %s'))%display_name(tag),
-                            partial(self.context_menu_handler, action='edit_note',
-                                    index=index, extra=item_id, category=tag.category))
-
                     elif key == 'search' and tag.is_searchable:
                         self.context_menu.addAction(self.rename_icon,
                                                     _('Rename %s')%display_name(tag),

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "diciembre 15, 2023" "7.2.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "enero 05, 2024" "7.3.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -188,7 +188,7 @@ Opciones para controlar el aspecto de la salida
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterar caracteres Unicode a la representación ASCII. Tenga cuidado al usar esta opción, ya que reemplazará los caracteres Unicode con ASCII. Por ejemplo, sustituirá «Pelé» por «Pele». Tenga en cuenta también que en los casos en los que existen múltiples representaciones para un carácter determinado (por ejemplo, caracteres compartidos por la escritura china y japonesa) se usará la representación basada en el idioma de la interfaz de calibre.
+Transliterar caracteres Unicode a la representación ASCII. Tenga cuidado al usar esta opción, ya que reemplazará los caracteres Unicode con ASCII. Por ejemplo, sustituirá «Pelé» por «Pele». Tenga en cuenta también que en los casos en los que existen múltiples representaciones para un carácter determinado (por ejemplo, caracteres compartidos por la escritura china y japonesa) se usará la representación basada en el idioma de la interfaz de Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -218,7 +218,7 @@ Incrustar el tipo de letra especificado en el libro. Esto establece el tipo de l
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-De manera predeterminada, calibre usa una forma abreviada para algunas propiedades CSS como «margin», «padding», «border», etc. Esta opción hace que se use la forma expandida completa en su lugar. Tenga en cuenta que el CSS siempre se expande cuando se generan archivos EPUB con uno de los perfiles de salida para Nook, ya que los lectores Nook no admiten CSS abreviado.
+De manera predeterminada, Calibre usa una forma abreviada para algunas propiedades CSS como «margin», «padding», «border», etc. Esta opción hace que se use la forma expandida completa en su lugar. Tenga en cuenta que el CSS siempre se expande cuando se generan archivos EPUB con uno de los perfiles de salida para Nook, ya que los lectores Nook no admiten CSS abreviado.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -248,7 +248,7 @@ Establece la altura de las líneas en blanco que se insertan (en unidades em). L
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Mantener las ligaduras presentes en el documento de entrada. Una ligadura es una forma especial de escribir una secuencia de caracteres como ff, fi, ffl, etc. La mayoría de los lectores no soportan ligaduras en sus tipos de letra predeterminados, por lo que no pueden mostrarlas correctamente. De manera predeterminada, calibre convertirá una ligadura en sus caracteres separados. Por el contrario, seleccionar esta opción las mantendrá.
+Mantener las ligaduras presentes en el documento de entrada. Una ligadura es una forma especial de escribir una secuencia de caracteres como ff, fi, ffl, etc. La mayoría de los lectores no soportan ligaduras en sus tipos de letra predeterminados, por lo que no pueden mostrarlas correctamente. De manera predeterminada, Calibre convertirá una ligadura en sus caracteres separados. Por el contrario, seleccionar esta opción las mantendrá.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -283,7 +283,7 @@ Establecer el margen superior en pt. El valor predeterminado es 5.0. Un número 
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-La altura mínima de la línea, como porcentaje del tamaño de letra calculado para el elemento. calibre se asegurará de que cada elemento tenga esta altura de línea como mínimo, a pesar de lo que indique el documento de entrada. Asignar 0 para desactivar. El valor predeterminado es 120%. Utilice esta opción preferentemente a la especificación directa de la altura de línea, a menos que sepa lo que está haciendo. Por ejemplo, puede conseguir texto «doble espaciado» asignándole un valor de 240.
+La altura mínima de la línea, como porcentaje del tamaño de letra calculado para el elemento. Calibre se asegurará de que cada elemento tenga esta altura de línea como mínimo, a pesar de lo que indique el documento de entrada. Asignar 0 para desactivar. El valor predeterminado es 120%. Utilice esta opción preferentemente a la especificación directa de la altura de línea, a menos que sepa lo que está haciendo. Por ejemplo, puede conseguir texto «doble espaciado» asignándole un valor de 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -293,7 +293,7 @@ Eliminar el espacio entre párrafos. También establece sangrado en cada párraf
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Cuando calibre elimina las líneas en blanco entre párrafos, automáticamente establece una sangría para que se distingan bien los párrafos. Esta opción controla la anchura de esta sangría (en unidades em). Si asigna un valor negativo se usará la sangría especificada en el documento de entrada, es decir, calibre no cambia la sangría.
+Cuando Calibre elimina las líneas en blanco entre párrafos, automáticamente establece una sangría para que se distingan bien los párrafos. Esta opción controla la anchura de esta sangría (en unidades em). Si asigna un valor negativo se usará la sangría especificada en el documento de entrada, es decir, Calibre no cambia la sangría.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,12 +308,12 @@ Reducir caracteres en todos los tipos de letra incrustados. Cada tipo de letra i
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Ruta al archivo que contiene las reglas para transformar los estilos CSS de este libro. La manera más fácil de crear dicho archivo es usar el asistente para creación de reglas en la interfaz gráfica de calibre. Se accede a él  en la sección «Apariencia > Transformar estilos» del cuadro de diálogo de conversión. Una vez creadas las reglas, se puede usar el botón «Exportar» para guardarlas en un archivo.
+Ruta al archivo que contiene las reglas para transformar los estilos CSS de este libro. La manera más fácil de crear dicho archivo es usar el asistente para creación de reglas en la interfaz gráfica de Calibre. Se accede a él  en la sección «Apariencia > Transformar estilos» del cuadro de diálogo de conversión. Una vez creadas las reglas, se puede usar el botón «Exportar» para guardarlas en un archivo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Ruta al archivo que contiene las reglas para transformar el HTML de este libro. La manera más fácil de crear dicho archivo es usar el asistente para creación de reglas en la interfaz gráfica de calibre. Se accede a él  en la sección «Apariencia > Transformar HTML» del cuadro de diálogo de conversión. Una vez creadas las reglas, se puede usar el botón «Exportar» para guardarlas en un archivo.
+Ruta al archivo que contiene las reglas para transformar el HTML de este libro. La manera más fácil de crear dicho archivo es usar el asistente para creación de reglas en la interfaz gráfica de Calibre. Se accede a él  en la sección «Apariencia > Transformar HTML» del cuadro de diálogo de conversión. Una vez creadas las reglas, se puede usar el botón «Exportar» para guardarlas en un archivo.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -426,7 +426,7 @@ Control de autodetección de estructura de documento.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Expresión XPath para detectar títulos de capítulo. El comportamiento predeterminado es considerar como títulos de capítulo las etiquetas <h1> o <h2> que contengan las palabras «chapter», «book», «section», «prologue», «epilogue» o «part», así como cualquier etiqueta que tenga class=\fB\(dq\fPchapter\fB\(dq\fP\&. La expresión debe dar como resultado una lista de elementos. Para desactivar la detección de capítulos use la expresión «/». Véase el Cursillo de XPath en el Manual de usuario de calibre para obtener más ayuda sobre el uso de esta opción.
+Expresión XPath para detectar títulos de capítulo. El comportamiento predeterminado es considerar como títulos de capítulo las etiquetas <h1> o <h2> que contengan las palabras «chapter», «book», «section», «prologue», «epilogue» o «part», así como cualquier etiqueta que tenga class=\fB\(dq\fPchapter\fB\(dq\fP\&. La expresión debe dar como resultado una lista de elementos. Para desactivar la detección de capítulos use la expresión «/». Véase el Cursillo de XPath en el Manual de usuario de Calibre para obtener más ayuda sobre el uso de esta opción.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -436,7 +436,7 @@ Especificar cómo marcar los capítulos detectados. Con el valor «pagebreak», 
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-Algunos documentos especifican los márgenes de página añadiendo márgenes a la izquierda y derecha de cada párrafo, calibre intentará detectar y eliminar estos márgenes. A veces esto puede ocasionar que se eliminen márgenes que deberían mantenerse. En tal caso, puede desactivar la eliminación.
+Algunos documentos especifican los márgenes de página añadiendo márgenes a la izquierda y derecha de cada párrafo, Calibre intentará detectar y eliminar estos márgenes. A veces esto puede ocasionar que se eliminen márgenes que deberían mantenerse. En tal caso, puede desactivar la eliminación.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -456,12 +456,12 @@ Usar preferentemente la portada detectada en el archivo de origen en vez de la p
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Eliminar la primera imagen del libro de entrada. Es útil si el documento de entrada tiene una imagen de portada no identificada como tal. En tal caso, si asigna una portada en calibre, el documento de salida tendrá dos imágenes de portada si no activa esta opción.
+Eliminar la primera imagen del libro de entrada. Es útil si el documento de entrada tiene una imagen de portada no identificada como tal. En tal caso, si asigna una portada en Calibre, el documento de salida tendrá dos imágenes de portada si no activa esta opción.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Una expresión XPath para detectar dónde debe comenzar la lectura del documento. Algunos programas de lectura de libros electrónicos (entre ellos el Kindle) usan esta ubicación como la posición desde donde iniciar el libro. Lea el tutorial Xpath  en el Manual de usuario de calibre para obtener mayor información acerca de esta función.
+Una expresión XPath para detectar dónde debe comenzar la lectura del documento. Algunos programas de lectura de libros electrónicos (entre ellos el Kindle) usan esta ubicación como la posición desde donde iniciar el libro. Lea el tutorial Xpath  en el Manual de usuario de Calibre para obtener mayor información acerca de esta función.
 .UNINDENT
 .SH ÍNDICE
 .sp
@@ -474,17 +474,17 @@ Al crear un índice a partir de enlaces en el documento de entrada, permitir ent
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Expresión XPath que especifica todas las etiquetas que deben añadirse en el primer nivel del índice. Si se indica, tiene prioridad sobre otras formas de autodetección. Pueden encontrarse algunos ejemplos en el Cursillo de XPath en el Manual de usuario de calibre.
+Expresión XPath que especifica todas las etiquetas que deben añadirse en el primer nivel del índice. Si se indica, tiene prioridad sobre otras formas de autodetección. Pueden encontrarse algunos ejemplos en el Cursillo de XPath en el Manual de usuario de Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-Expresión XPath que especifica todas las etiquetas que deben añadirse en el segundo nivel del índice. Cada entrada se añade bajo la entrada previa del nivel uno. Pueden encontrarse algunos ejemplos en el Cursillo de XPath en el Manual de usuario de calibre.
+Expresión XPath que especifica todas las etiquetas que deben añadirse en el segundo nivel del índice. Cada entrada se añade bajo la entrada previa del nivel uno. Pueden encontrarse algunos ejemplos en el Cursillo de XPath en el Manual de usuario de Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-Expresión XPath que especifica todas las etiquetas que deben añadirse en el tercer nivel del índice. Cada entrada se añade bajo la entrada previa del nivel dos. Pueden encontrarse algunos ejemplos en el Cursillo de XPath en el Manual de usuario de calibre.
+Expresión XPath que especifica todas las etiquetas que deben añadirse en el tercer nivel del índice. Cada entrada se añade bajo la entrada previa del nivel dos. Pueden encontrarse algunos ejemplos en el Cursillo de XPath en el Manual de usuario de Calibre.
 .UNINDENT
 .INDENT 0.0
 .TP

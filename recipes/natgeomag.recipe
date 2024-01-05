@@ -2,7 +2,7 @@
 # vim:fileencoding=utf-8
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import json, re
+import json
 from datetime import date
 from pprint import pformat
 
@@ -52,7 +52,7 @@ def parse_body(item):
     c = item['cntnt']
     if item.get('type') == 'inline':
         if c.get('cmsType') == 'listicle':
-            if 'title' in c:	
+            if 'title' in c:
                 yield '<h3>' + escape(c['title']) + '</h3>'
             yield c['text']
         elif c.get('cmsType') == 'image':
@@ -60,7 +60,7 @@ def parse_body(item):
                 yield line
         elif c.get('cmsType') == 'imagegroup':
             for imgs in c['images']:
-                for line in parse_lead_image(imgs): 
+                for line in parse_lead_image(imgs):
                     yield line
         elif c.get('cmsType') == 'pullquote':
             if 'quote' in c:
@@ -143,8 +143,9 @@ class NatGeo(BasicNewsRecipe):
         self.log('Downloading ', url)
         self.timefmt = ' [' + edition + ']'
         soup = self.index_to_soup(url)
-        png = re.findall('https://i\.natgeofe\.com\S+?national-geographic-\S+?\.jpg', soup.decode('utf-8'))
-        self.cover_url = png[0] + '?w=1000&h=1000'
+        # png = re.findall('https://i\.natgeofe\.com\S+?national-geographic-\S+?\.jpg', soup.decode('utf-8'))
+        # self.cover_url = png[0] + '?w=1000&h=1000'
+        self.cover_url = soup.find('meta', attrs={'property':'og:image'})['content'].split('?')[0] + '?w=1000'
 
         name = soup.find(attrs={'class':lambda x: x and 'Header__Description' in x.split()})
         self.title = 'National Geographic ' + self.tag_to_string(name)

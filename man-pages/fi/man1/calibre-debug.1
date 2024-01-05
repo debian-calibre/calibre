@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "joulukuuta 15, 2023" "7.2.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,23 +41,22 @@ calibre\-debug {options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Erilaisia komentoriviliittymiä, jotka ovat hyödyllisiä calibren virheenkorjauksessa. Ilman vaihtoehtoja,
+tämä komento käynnistää sulautetun Python\-tulkin. Voit myös ajaa pääohjelman
+calibre GUI, calibre E\-book viewer ja calibre editor debug\-tilassa.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Se sisältää myös rajapintoja erilaisiin calibren osiin, joissa ei ole
+omia komentorivityökaluja, kuten fonttien alustus, E\-kirjan diff\-työkalu ja niin edelleen.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Voit myös käyttää \fBcalibre\-debug\fP\-ohjelmaa itsenäisten skriptien suorittamiseen. Käytä sitä näin:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Kaikki \fB\-\-\fP jälkeinen siirretään skriptille. Voit myös käyttää \fBcalibre\-debug\fP
+shebang merkkinä skripteissä, esimerkiksi näin:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
@@ -65,11 +64,11 @@ as a shebang in scripts, like this:
 .UNINDENT
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
-.SH [OPTIONS]
+.SH [VALINNAT]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
-Lisää yksinkertainen lisäosa (eli lisäosa, jossa on vain .py\-tiedosto) syöttämällä .py\-tiedoston tiedostopolku
+Lisää yksinkertainen laajennus (eli laajennus, joka koostuu vain .py tiedostosta) määrittämällä laajennuskoodin sisältävän py\-tiedoston polku.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -94,7 +93,7 @@ Suorita calibre diff\-työkalu. Esimerkiksi: calibre\-debug \fI\%\-\-diff\fP fil
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Käynnistä calibren \fB\(dq\fPMuokkaa kirjaa\fB\(dq\fP\-työkalu virheentunnistustilassa
+Käynnistä calibren \fB\(dq\fPMuokkaa kirjaa\fB\(dq\fP \-työkalu virheenkorjaustilassa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -104,12 +103,12 @@ Suorita tiedoston Python\-koodi.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Pura kirja määritettyyn kansioon. Käyttö: \-x file.epub output_dir Vie kirjan HTML\-tiedostojen ja metatietojen kokoelmana, jota voit muokata tavallisilla HTML\-muokkaustyökaluilla. Toimii EPUB\-, AZW3\-, HTMLZ\- ja DOCX\-tiedostojen kanssa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+Vie kaikki calibre\-tiedot (kirjat/asetukset/laajennukset). Normaalisti sinulta kysytään vientikansiota ja vietäviä kirjastoja. Voit myös ohittaa kysymykset määrittämällä ne komentoriviargumenteiksi. Käytä absoluuttisia polkuja vientikansiossa ja kirjastoissa. Erityistä avainsanaa \fB\(dq\fPall\fB\(dq\fP voidaan käyttää kaikkien kirjastojen viemiseen. Esimerkkejä:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # interaktiiviseen käyttöön   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all # vie kaikki tunnetut kirjastot
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -124,7 +123,7 @@ Käynnistä GUI vianmääritys aktivoituna. Vianmääritys tulostaa virtoihin st
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-Käynnistä GUI vianmäärityskonsolin kanssa, kirjoittaen lokia määriteltyyn polkuun. Vain sisäiseen käyttöön, käytä parametria \-g käynnistääksesi GUI:n vianmääritystilassa.
+Suorita graafinen käyttöliittymä virheenkorjauskonsolilla kirjautumalla määritettyyn polkuun. Käytä vain sisäiseen käyttöön \-g\-vaihtoehtoa graafisen käyttöliittymän suorittamiseen virheenkorjaustilassa
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,17 +153,17 @@ Tulosta hakemistopolut, joita tarvitaan calibre\-ympäristön määrittelyyn
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Suorita laajennus, joka tarjoaa komentorivikäyttöliittymän. Esimerkiksi: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Kaikki \fB\-\-\fP jälkeen oleva välitetään laajennukselle argumentteina.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Suorita nimetyt testit. Käytä erityistä arvoa \fB\(dq\fPall\fB\(dq\fP kaikkien testien suorittamiseen. Jos testin nimi alkaa pisteellä, sen oletetaan olevan moduulin nimi. Jos testin nimi alkaa @\-merkillä, sen oletetaan olevan luokan nimi.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Älä käytä DEBUG\-lippua asetettuna
 .UNINDENT
 .INDENT 0.0
 .TP

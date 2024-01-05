@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# தமிழ்நேரம் <anishprabu.t@gmail.com>, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-21 05:29+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Tamil (http://www.transifex.com/calibre/calibre/language/ta/)\n"
+"POT-Creation-Date: 2024-01-04 02:10+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>, 2023\n"
+"Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
-msgstr ""
+msgstr "காலிபரின் செயல்பாட்டை நீட்டிக்க உங்கள் சொந்த செருகுநிரல்களை எழுதுதல்"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
@@ -29,32 +30,32 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr ""
+msgstr "காலிபர் மிகவும் மட்டு வடிவமைப்பைக் கொண்டுள்ளது. காலிபரில் கிட்டத்தட்ட அனைத்து செயல்பாடுகளும் செருகுநிரல்களின் வடிவத்தில் வருகின்றன. செய்திகளைப் பதிவிறக்குவதற்கு (இவை சமையல் குறிப்புகள் என அழைக்கப்படுகின்றன), பயனர் இடைமுகத்தின் பல்வேறு கூறுகளுக்கு, வெவ்வேறு சாதனங்களுடன் இணைக்க, கோப்புகளை காலிபரில் சேர்க்கும்போது செயலாக்கவும், அவற்றை மாற்றுவதற்காகவும் செருகுநிரல்கள் பயன்படுத்தப்படுகின்றன. செல்வதன் மூலம் அனைத்து உள்ளமைக்கப்பட்ட செருகுநிரல்களின் முழுமையான பட்டியலைப் பெறலாம்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> மேம்பட்ட-> செருகுநிரல்கள்`."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
-msgstr ""
+msgstr "புதிய அம்சங்களை காலிபரில் சேர்க்க உங்கள் சொந்த செருகுநிரல்களை எவ்வாறு உருவாக்குவது என்பதை இங்கே நாங்கள் உங்களுக்குக் கற்பிப்போம்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
-msgstr ""
+msgstr "உள்ளடக்கங்கள்"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
-msgstr ""
+msgstr "இது காலிபர் வெளியீடுகளுக்கு மட்டுமே பொருந்தும்> = 0.8.60"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
-msgstr ""
+msgstr "ஒரு காலிபர் சொருகி உடற்கூறியல்"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr ""
+msgstr "ஒரு காலிபர் சொருகி மிகவும் எளிமையானது, இது சில பைதான் குறியீடு மற்றும் சொருகி தேவைப்படும் படக் கோப்புகள் போன்ற வேறு எந்த ஆதாரங்களையும் கொண்ட ஒரு ஜிப் கோப்பு மட்டுமே. மேலும் கவலைப்படாமல், ஒரு அடிப்படை உதாரணத்தைப் பார்ப்போம்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -64,26 +65,26 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr ""
+msgstr "EPUB மற்றும் MOBI வடிவங்களில் பல்வேறு மின்-வாதங்களை சுயமாக வெளியிட நீங்கள் பயன்படுத்தும் திறமை உங்களிடம் உள்ளது என்று வைத்துக்கொள்வோம். காலிபர் உருவாக்கிய அனைத்து கோப்புகளும் அவற்றின் வெளியீட்டாளரை \"ஹலோ வேர்ல்ட்\" என்று அமைக்க வேண்டும் என்று நீங்கள் விரும்புகிறீர்கள், அதை எப்படி செய்வது என்பது இங்கே. பெயரிடப்பட்ட ஒரு கோப்பை உருவாக்கவும்: கோப்பு: `__init __. Py` (இது ஒரு சிறப்புப் பெயர் மற்றும் உங்கள் சொருகியின் முக்கிய கோப்பிற்கு எப்போதும் பயன்படுத்தப்பட வேண்டும்) மற்றும் பின்வரும் பைதான் குறியீட்டை உள்ளிடவும்:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "அவ்வளவுதான். இந்த குறியீட்டை ஒரு சொருகி என காலிபரில் சேர்க்க, நீங்கள் உருவாக்கிய கோப்புறையில் பின்வருவனவற்றை இயக்கவும்: கோப்பு: `__init __. Py` ::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
-msgstr ""
+msgstr "MACOS இல், கட்டளை வரி கருவிகள் காலிபர் மூட்டைக்குள் உள்ளன, எடுத்துக்காட்டாக, நீங்கள் காலிபரை நிறுவியிருந்தால்: கோப்பு: `/பயன்பாடுகள்` கட்டளை வரி கருவிகள்:`/பயன்பாடுகள்/calibre.app/பொருளடக்கம்/` ."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from "
 ":download_file:`helloworld_plugin.zip`."
-msgstr ""
+msgstr "ஹலோ உலக சொருகி இதிலிருந்து பதிவிறக்கம் செய்யலாம்: பதிவிறக்கம்_பீல்: `helloworld_plugin.zip`."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
@@ -91,11 +92,11 @@ msgid ""
 "method will be called and the converted book will have its publisher set to "
 "\"Hello World\". This is a trivial plugin, lets move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr ""
+msgstr "ஒவ்வொரு முறையும் நீங்கள் ஒரு புத்தகத்தை மாற்ற காலிபரைப் பயன்படுத்தும்போது, சொருகி: மெத்: `ரன்` முறை அழைக்கப்படும், மாற்றப்பட்ட புத்தகத்தில் அதன் வெளியீட்டாளர்\" ஹலோ வேர்ல்ட் \"ஆக அமைக்கப்பட்டிருக்கும். இது ஒரு அற்பமான சொருகி, பயனர் இடைமுகத்திற்கு உண்மையில் ஒரு கூறுகளைச் சேர்க்கும் மிகவும் சிக்கலான எடுத்துக்காட்டுக்கு செல்ல உதவுகிறது."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
-msgstr ""
+msgstr "ஒரு பயனர் இடைமுக சொருகி"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
@@ -104,23 +105,23 @@ msgid ""
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr ""
+msgstr "இந்த சொருகி சில கோப்புகளில் பரவுகிறது (குறியீட்டை சுத்தமாக வைத்திருக்க). சொருகி ஜிப் கோப்பிலிருந்து வளங்களை (படங்கள் அல்லது தரவுக் கோப்புகள்) எவ்வாறு பெறுவது, உங்கள் சொருகி கட்டமைக்க பயனர்களை அனுமதிப்பது, காலிபர் பயனர் இடைமுகத்தில் கூறுகளை எவ்வாறு உருவாக்குவது மற்றும் புத்தக தரவுத்தளத்தை காலிபரில் எவ்வாறு அணுகுவது மற்றும் வினவுவது என்பதை இது காண்பிக்கும்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from :download_file:`interface_demo_plugin.zip`"
-msgstr ""
+msgstr "இந்த சொருகி இதிலிருந்து பதிவிறக்கம் செய்யலாம்: Download_file: `இடைமுகம்_டெமோ_ப்ளூஜின்.ஜிப்`"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr ""
+msgstr "கவனிக்க வேண்டிய முதல் விஷயம் என்னவென்றால், இந்த ஜிப் கோப்பில் இன்னும் நிறைய கோப்புகள் உள்ளன, கீழே விளக்கப்பட்டுள்ளன, `` சொருகி-இறக்குமதி-பெயர்-இடைமுகம்_டெமோ.டெக்ஸ்டிக்கு குறிப்பாக கவனம் செலுத்துங்கள்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
-msgstr ""
+msgstr "** சொருகி-இறக்குமதி-பெயர்-இடைமுகம்_டெமோ."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
@@ -130,7 +131,7 @@ msgid ""
 "name-**some_name**.txt``. The presence of this file allows you to import "
 "code from the .py files present inside the ZIP file, using a statement "
 "like::"
-msgstr ""
+msgstr "பல கோப்பு சொருகி மந்திரத்தை இயக்க பயன்படுத்தப்படும் வெற்று உரை கோப்பு. ஒன்றுக்கு மேற்பட்ட .py கோப்பைப் பயன்படுத்தும் அனைத்து செருகுநிரல்களிலும் இந்த கோப்பு இருக்க வேண்டும். இது காலியாக இருக்க வேண்டும் மற்றும் அதன் கோப்பு பெயர் வடிவமாக இருக்க வேண்டும்: `` சொருகி-முக்கிய பெயர்-** சில_பேம் **. Txt``. இந்த கோப்பின் இருப்பு, ஜிப் கோப்பின் உள்ளே இருக்கும் .py கோப்புகளிலிருந்து குறியீட்டை இறக்குமதி செய்ய உங்களை அனுமதிக்கிறது, இது போன்ற அறிக்கையைப் பயன்படுத்தி ::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
@@ -141,76 +142,76 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr ""
+msgstr "`` Calibre_plugins`` முன்னொட்டு எப்போதும் இருக்க வேண்டும். `` சில_நேம்`` வெற்று உரை கோப்பின் கோப்பு பெயரில் இருந்து வருகிறது. `` சில_மோடூல்`` குறிக்கிறது: கோப்பு: `சில_மோடூல்.பி` கோப்பு ஜிப் கோப்பின் உள்ளே. இந்த இறக்குமதி வழக்கமான பைதான் இறக்குமதியைப் போலவே சக்தி வாய்ந்தது என்பதை நினைவில் கொள்க. நீங்கள் சாதாரணமாக (ஒவ்வொரு துணை கோப்புறையிலும் __init__.py ஐ வரையறுப்பதன் மூலம்) ஜிப் கோப்பிற்குள் .py தொகுதிகளின் தொகுப்புகள் மற்றும் துணைப் பேக்குகளை உருவாக்கலாம், மேலும் அனைத்தும் \"வேலை செய்ய வேண்டும்\"."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr ""
+msgstr "`` சில_நேம்` go க்கு நீங்கள் பயன்படுத்தும் பெயர் அனைத்து செருகுநிரல்களால் பகிரப்பட்ட உலகளாவிய பெயர்வெளியில் நுழைகிறது, ** எனவே முடிந்தவரை தனித்துவத்தை உருவாக்கவும் **. ஆனால் இது செல்லுபடியாகும் பைதான் அடையாளங்காட்டியாக இருக்க வேண்டும் என்பதை நினைவில் கொள்ளுங்கள் (எழுத்துக்கள், எண்கள் மற்றும் அடிக்கோடிட்டது)."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
-msgstr ""
+msgstr "** __ init __. py **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
-msgstr ""
+msgstr "முன்பு போல, சொருகி வகுப்பை வரையறுக்கும் கோப்பு"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
-msgstr ""
+msgstr "** main.py **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
-msgstr ""
+msgstr "இந்த கோப்பில் பயனுள்ள ஒன்றைச் செய்யும் உண்மையான குறியீடு உள்ளது"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "**ui.py**"
-msgstr ""
+msgstr "** ui.py **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
-msgstr ""
+msgstr "இந்த கோப்பு சொருகி இடைமுக பகுதியை வரையறுக்கிறது"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
-msgstr ""
+msgstr "** படங்கள்/icon.png **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
-msgstr ""
+msgstr "இந்த சொருகி ஐகான்"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "**about.txt**"
-msgstr ""
+msgstr "** பற்றி. txt **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
-msgstr ""
+msgstr "சொருகி பற்றிய தகவலுடன் உரை கோப்பு"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
-msgstr ""
+msgstr "** மொழிபெயர்ப்புகள் **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr ""
+msgstr ".Mo கோப்புகளைக் கொண்ட ஒரு கோப்புறை உங்கள் சொருகி பயனர் இடைமுகத்தின் மொழிபெயர்ப்புகளுடன் வெவ்வேறு மொழிகளில். விவரங்களுக்கு கீழே காண்க."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
-msgstr ""
+msgstr "இப்போது குறியீட்டைப் பார்ப்போம்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
-msgstr ""
+msgstr "__init__.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
-msgstr ""
+msgstr "முதலில், சொருகி மெட்டாடேட்டாவை வரையறுக்க வேண்டிய கட்டாய `__init __. Py``:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
@@ -220,142 +221,145 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr ""
+msgstr "ஒரே குறிப்பிடத்தக்க அம்சம் புலம்: ATTR: `ரியல்_ப்ளூகின்`. காலிபர் கட்டளை வரி மற்றும் GUI இடைமுகங்கள் இரண்டையும் கொண்டிருப்பதால், இது போன்ற GUI செருகுநிரல்கள் எந்த GUI நூலகங்களையும் __init__.py இல் ஏற்றக்கூடாது. உண்மையான_பிளகின் புலம் உங்களுக்காக இதைச் செய்கிறது, உண்மையான சொருகி உங்கள் ஜிப் காப்பகத்திற்குள் மற்றொரு கோப்பில் காணப்பட வேண்டும் என்று சொல்வதன் மூலம், இது GUI சூழலில் மட்டுமே ஏற்றப்படும்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
-msgstr ""
+msgstr "இது வேலை செய்ய, மேலே விவாதிக்கப்பட்டபடி, உங்கள் சொருகி ஜிப் கோப்பில் சொருகி-இறக்குமதி-பெயர்-some_name.txt கோப்பை நீங்கள் வைத்திருக்க வேண்டும் என்பதை நினைவில் கொள்ளுங்கள்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
-msgstr ""
+msgstr "சொருகி பயனர் உள்ளமைவை செயல்படுத்த இரண்டு முறைகள் உள்ளன. இவை கீழே விவாதிக்கப்பட்டுள்ளன."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
-msgstr ""
+msgstr "ui.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
-msgstr ""
+msgstr "இப்போது உண்மையான GUI சொருகி வரையறுக்கும் UI.py ஐப் பார்ப்போம். மூலக் குறியீடு பெரிதும் கருத்து தெரிவிக்கப்பட்டுள்ளது மற்றும் சுய விளக்கமாக இருக்க வேண்டும்:"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:220
 msgid "main.py"
-msgstr ""
+msgstr "main.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
-msgstr ""
+msgstr "இடைமுக சொருகி டெமோ உரையாடலை செயல்படுத்த உண்மையான தர்க்கம்."
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
-msgstr ""
+msgstr "சொருகி ஜிப் கோப்பிலிருந்து ஆதாரங்களைப் பெறுதல்"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
-msgstr ""
+msgstr "காலிபரின் சொருகி ஏற்றுதல் அமைப்பு சொருகி ஜிப் கோப்பிலிருந்து கோப்புகளை வசதியாகப் பெற அனுமதிக்கும் இரண்டு உள்ளமைக்கப்பட்ட செயல்பாடுகளை வரையறுக்கிறது."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:145
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
 msgid "**get_resources(name_or_list_of_names)**"
-msgstr ""
+msgstr "** get_resources (name_or_list_of_names) **"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
-"file. For example to access the file icon.png in the folder images in the "
-"ZIP file, you would use: ``images/icon.png``. Always use a forward slash as "
-"the path separator, even on Windows. When you pass in a single name, the "
-"function will return the raw bytes of that file or None if the name was not "
-"found in the ZIP file. If you pass in more than one name then it returns a "
-"dict mapping the names to bytes. If a name is not found, it will not be "
-"present in the returned dict."
-msgstr ""
+"file. For example to access the file :file:`icon.png` in the folder images "
+"in the ZIP file, you would use: ``images/icon.png``. Always use a forward "
+"slash as the path separator, even on Windows. When you pass in a single "
+"name, the function will return the raw bytes of that file or None if the "
+"name was not found in the ZIP file. If you pass in more than one name then "
+"it returns a dictionary mapping the names to bytes.  If a name is not found,"
+" it will not be present in the returned dictionary."
+msgstr "இந்த செயல்பாடு ஜிப் கோப்பின் உள்ளே உள்ள கோப்புகளுக்கான பாதைகளின் பட்டியலுடன் அழைக்கப்பட வேண்டும். எடுத்துக்காட்டாக கோப்பை அணுக: கோப்பு: `icon.png` ZIP கோப்பில் உள்ள கோப்புறை படங்களில், நீங்கள் பயன்படுத்துவீர்கள்:` `படங்கள்/icon.png``. ஜன்னல்களில் கூட, பாதை பிரிப்பானாக எப்போதும் முன்னோக்கி குறைப்பதைப் பயன்படுத்துங்கள். நீங்கள் ஒரு பெயரில் கடந்து செல்லும்போது, செயல்பாடு அந்த கோப்பின் மூல பைட்டுகளைத் தரும் அல்லது ஜிப் கோப்பில் பெயர் காணப்படாவிட்டால் எதுவும் இல்லை. நீங்கள் ஒன்றுக்கு மேற்பட்ட பெயர்களை கடந்து சென்றால், அது ஒரு அகராதியை பைட்டுகளுக்கு மேப்பிங் செய்கிறது. ஒரு பெயர் கிடைக்கவில்லை என்றால், அது திரும்பிய அகராதியில் இருக்காது."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
-msgid "**get_icons(name_or_list_of_names)**"
-msgstr ""
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:157
+msgid "**get_icons(name_or_list_of_names, plugin_name='')**"
+msgstr "."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:151
 msgid ""
-"A convenience wrapper for get_resources() that creates QIcon objects from "
-"the raw bytes returned by get_resources. If a name is not found in the ZIP "
-"file the corresponding QIcon will be null."
-msgstr ""
+"A wrapper for get_resources() that creates QIcon objects from the raw bytes "
+"returned by get_resources. If a name is not found in the ZIP file the "
+"corresponding QIcon will be null. In order to support icon theme-ing, pass "
+"in the human friendly name of your plugin as ``plugin_name``. If the user is"
+" using an icon theme with icons for your plugin, they will be loaded "
+"preferentially."
+msgstr "Get_resources () க்கான ஒரு ரேப்பர், இது get_resources ஆல் திரும்பிய மூல பைட்டுகளிலிருந்து கிகான் பொருள்களை உருவாக்குகிறது. ஜிப் கோப்பில் ஒரு பெயர் காணப்படவில்லை என்றால், தொடர்புடைய கிகான் பூஜ்யமாக இருக்கும். ஐகான் தீம்-இங்கை ஆதரிக்க, உங்கள் சொருகி மனித நட்பு பெயரை `` செருகுநிரல்_பெயர்`` என அனுப்பவும். உங்கள் சொருகி ஐகான்களுடன் பயனர் ஒரு ஐகான் கருப்பொருளைப் பயன்படுத்துகிறார்களானால், அவை முன்னுரிமையாக ஏற்றப்படும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:152
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:160
 msgid "Enabling user configuration of your plugin"
-msgstr ""
+msgstr "உங்கள் சொருகி பயனர் உள்ளமைவை இயக்குகிறது"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:154
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:162
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
-msgstr ""
+msgstr "உங்கள் சொருகி கட்டமைக்க பயனர்களை அனுமதிக்க, உங்கள் அடிப்படை சொருகி வகுப்பில் மூன்று முறைகளை வரையறுக்க வேண்டும், ** is_customizable **, ** config_widget ** மற்றும் ** save_settings ** கீழே காட்டப்பட்டுள்ளபடி:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:165
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:173
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
-msgstr ""
+msgstr "உள்ளமைவு தரவை (அதன் நீண்ட வரலாற்றின் மரபு) சேமிக்க காலிபர் பல வழிகளைக் கொண்டுள்ளது. பரிந்துரைக்கப்பட்ட வழி ** jsonconfig ** வகுப்பைப் பயன்படுத்துவது, இது உங்கள் உள்ளமைவு தகவல்களை ஒரு .json கோப்பில் சேமிக்கிறது."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:167
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:175
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
-msgstr ""
+msgstr "டெமோ சொருகி உள்ளமைவு தரவை நிர்வகிப்பதற்கான குறியீடு config.py இல் உள்ளது:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:172
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:180
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
-msgstr ""
+msgstr "`` PREFS`` பொருள் இப்போது சொருகி குறியீடு முழுவதும் ஒரு எளிய ::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:177
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:185
 msgid "You can see the ``prefs`` object being used in main.py:"
-msgstr ""
+msgstr "Main.py இல் பயன்படுத்தப்படும் `` PREFS`` பொருளை நீங்கள் காணலாம்:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:184
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:192
 msgid "Edit book plugins"
-msgstr ""
+msgstr "புத்தக செருகுநிரல்களைத் திருத்தவும்"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:186
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
 ":download_file:`editor_demo_plugin.zip`."
-msgstr ""
+msgstr "இப்போது கியர்களை சிறிது மாற்றுவோம், மேலும் காலிபர் புத்தக எடிட்டருக்கு கருவிகளைச் சேர்க்க ஒரு சொருகி உருவாக்குவதைப் பார்ப்போம். சொருகி இங்கே கிடைக்கிறது :: Download_file: `atitor_demo_plugin.zip`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:198
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
-msgstr ""
+msgstr "முதல் படி, அனைத்து செருகுநிரல்களையும் பொறுத்தவரை, இறக்குமதி பெயரை வெற்று TXT கோப்பை உருவாக்குவது, விவரிக்கப்பட்டுள்ளபடி: ref: `மேலே <இறக்குமதி_நாம்_TXT>`. `` சொருகி-இறக்குமதி-பெயர்-எடிட்டர்_ப்ளூகின்_டெமோ.டெக்ஸ்டிக்` கோப்பை பெயரிடுவோம்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:202
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
-msgstr ""
+msgstr "இப்போது நாம் கட்டாய `__init __. Py`` கோப்பை உருவாக்குகிறோம், அது சொருகி பற்றிய மெட்டாடேட்டாவைக் கொண்டுள்ளது - அதன் பெயர், ஆசிரியர், பதிப்பு போன்றவை."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:200
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:208
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
 "the editor. These can have sub-menus in case the tool has multiple related "
 "actions."
-msgstr ""
+msgstr "ஒரு ஒற்றை எடிட்டர் சொருகி பல கருவிகளை வழங்க முடியும், ஒவ்வொரு கருவியும் கருவிப்பட்டியில் உள்ள ஒற்றை பொத்தானுக்கு ஒத்திருக்கிறது மற்றும் நுழைவு: கிலாபெல்: எடிட்டரில் `செருகுநிரல்கள்` மெனு. கருவி பல தொடர்புடைய செயல்களைக் கொண்டிருந்தால் இவை துணை மெனஸைக் கொண்டிருக்கலாம்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:204
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -363,30 +367,30 @@ msgid ""
 "``main.py`` from the demo plugin, the source code is heavily commented and "
 "should be self-explanatory. Read the API documents of the "
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
-msgstr ""
+msgstr "கருவிகள் அனைத்தும் உங்கள் சொருகி `` main.py`` கோப்பில் வரையறுக்கப்பட வேண்டும். ஒவ்வொரு கருவியும்: வகுப்பிலிருந்து பெறும் ஒரு வர்க்கமாகும்: `calibre.gui2.tweak_book.plugin.tool` வகுப்பு. டெமோ சொருகியிலிருந்து `` main.py`` ஐப் பார்ப்போம், மூலக் குறியீடு பெரிதும் கருத்து தெரிவிக்கப்பட்டுள்ளது, மேலும் சுய விளக்கமாக இருக்க வேண்டும். மேலும் விவரங்களுக்கு API ஆவணங்களைப் படியுங்கள்: வகுப்பு: `calibre.gui2.tweak_book.plugin.tool` வகுப்பைப் படியுங்கள்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:214
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
 "various important concepts that you will need in developing your own "
 "plugins, so you should read the (heavily commented) source code carefully."
-msgstr ""
+msgstr "பயனர் வழங்கிய எண்ணால் புத்தகத்தில் உள்ள அனைத்து எழுத்துரு அளவுகளையும் பெருக்கும் ஒற்றை கருவியின் வரையறையை இங்கே காண்போம். இந்த கருவி உங்கள் சொந்த செருகுநிரல்களை வளர்ப்பதில் உங்களுக்குத் தேவையான பல்வேறு முக்கியமான கருத்துக்களை நிரூபிக்கிறது, எனவே நீங்கள் (பெரிதும் கருத்து தெரிவிக்கப்பட்ட) மூலக் குறியீட்டை கவனமாக படிக்க வேண்டும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:230
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
-msgstr ""
+msgstr "`` Main.py`` ஐ உடைப்போம். *பெயரிடப்பட்ட ஒரு கருவியை இது வரையறுக்கிறது என்பதை நாங்கள் காண்கிறோம் *எழுத்துருக்களை பெரிதாக்குங்கள் *. இந்த கருவி பயனரைக் கேட்கும் மற்றும் புத்தகத்தில் உள்ள அனைத்து எழுத்துரு அளவுகளையும் அந்த எண்ணால் பெருக்கும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:226
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:234
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
-msgstr ""
+msgstr "முதல் முக்கியமான விஷயம் என்னவென்றால், நீங்கள் ஒப்பீட்டளவில் சில தனித்துவமான சரத்திற்கு அமைக்க வேண்டிய கருவி பெயர், ஏனெனில் இது இந்த கருவிக்கான விசையாக பயன்படுத்தப்படும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:229
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -395,18 +399,18 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr ""
+msgstr "அடுத்த முக்கியமான நுழைவு புள்ளி: meth: `calibre.gui2.tweak_book.plugin.tool.create_action`. இந்த முறை செருகுநிரல்கள் கருவிப்பட்டி மற்றும் சொருகி மெனுவில் தோன்றும் QACTION பொருள்களை உருவாக்குகிறது. இது, விருப்பமாக, பயனர் தனிப்பயனாக்கக்கூடிய விசைப்பலகை குறுக்குவழியை ஒதுக்குகிறது. Qaction இலிருந்து தூண்டப்பட்ட சமிக்ஞை ASK_USER () முறையுடன் இணைக்கப்பட்டுள்ளது, இது பயனரிடம் எழுத்துரு அளவு பெருக்கியைக் கேட்கிறது, பின்னர் உருப்பெருக்கக் குறியீட்டை இயக்குகிறது."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:245
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
 "and the editor *Boss* as ``self.boss``. The *Boss* is the object that "
 "controls the editor user interface. It has many useful methods, that are "
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
-msgstr ""
+msgstr "உருப்பெருக்கக் குறியீடு நன்கு கருத்து மற்றும் மிகவும் எளிமையானது. கவனிக்க வேண்டிய முக்கிய விஷயங்கள் என்னவென்றால், நீங்கள் எடிட்டர் சாளரத்திற்கு ஒரு குறிப்பை `` self.gui`` மற்றும் ஆசிரியர் * முதலாளி * `` self.boss`` எனப் பெறுவீர்கள். * முதலாளி * என்பது எடிட்டர் பயனர் இடைமுகத்தை கட்டுப்படுத்தும் பொருள். இது பல பயனுள்ள முறைகளைக் கொண்டுள்ளது, அவை ஆவணப்படுத்தப்பட்டுள்ளன: வகுப்பில்: `calibre.gui2.tweak_book.boss.boss` வகுப்பில்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:243
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:251
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -415,170 +419,148 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr ""
+msgstr "இறுதியாக, `` self.current_container`` உள்ளது, இது புத்தகத்தை ஒரு: வகுப்பு: `calibre.ebooks.ob.polish.container.container` பொருள் என திருத்தியதற்கான குறிப்பு. இது புத்தகத்தை அதன் தொகுதி HTML/CSS/படக் கோப்புகளின் தொகுப்பாகக் குறிக்கிறது மற்றும் பல பயனுள்ள விஷயங்களைச் செய்வதற்கான வசதியான முறைகளைக் கொண்டுள்ளது. உங்கள் சொருகி குறியீட்டில் மீண்டும் பயன்படுத்தக்கூடிய கொள்கலன் பொருள் மற்றும் பல்வேறு பயனுள்ள பயன்பாட்டு செயல்பாடுகள் ஆவணப்படுத்தப்பட்டுள்ளன: Ref: `Polish_api`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:252
-msgid "Running User Interface plugins in a separate process"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:254
-msgid ""
-"If you are writing a user interface plugin that needs to make use of Qt "
-"WebEngine, it cannot be run in the main calibre process as it is not "
-"possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary folder and run the plugin with that data in a separate "
-"process. A simple example plugin follows that shows how to do this."
-msgstr ""
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:259
+msgid "Adding translations to your plugin"
+msgstr "உங்கள் சொருகி மொழிபெயர்ப்புகளைச் சேர்ப்பது"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
-"You can download the plugin from :download_file:`webengine_demo_plugin.zip`."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
-msgid "The important part of the plugin is in two functions:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:273
-msgid ""
-"The ``show_demo()`` function asks the user for a URL and then runs the "
-"``main()`` function passing it that URL. The ``main()`` function displays "
-"the URL in a ``QWebEngineView``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
-msgid "Adding translations to your plugin"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
-msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
-msgstr ""
+msgstr "உங்கள் சொருகி மொழிபெயர்க்கப்பட்ட மற்றும் முக்கிய காலிபர் பயனர் இடைமுகத்திற்கு அமைக்கப்பட்ட எந்த மொழியிலும் காண்பிக்கப்படும் அனைத்து பயனர் இடைமுக சரங்களையும் நீங்கள் வைத்திருக்கலாம்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:284
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
-msgstr ""
+msgstr "முதல் படி, உங்கள் சொருகி மூலக் குறியீட்டைக் கடந்து, அனைத்து பயனர் புலப்படும் சரங்களையும் மொழிபெயர்க்கக்கூடியதாகக் குறிக்கவும், அவற்றை _ () இல் சுற்றி வருவதன் மூலம். உதாரணத்திற்கு::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`Poedit <https://poedit.net/>`_ program for this."
-msgstr ""
+msgstr "உங்கள் சொருகி மூலக் குறியீட்டிலிருந்து .po கோப்புகளை உருவாக்க சில நிரலைப் பயன்படுத்தவும். நீங்கள் மொழிபெயர்க்க விரும்பும் ஒவ்வொரு மொழிக்கும் ஒன்று .po கோப்பு இருக்க வேண்டும். எடுத்துக்காட்டாக: ஜெர்மன் -க்கு DE.PO, பிரஞ்சு மற்றும் பலவற்றிற்கான fr.po. இதற்காக நீங்கள் `போய்டிட் <https://poedit.net/> _ _ நிரலைப் பயன்படுத்தலாம்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:294
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
-msgstr ""
+msgstr "இந்த .po கோப்புகளை உங்கள் மொழிபெயர்ப்பாளர்களுக்கு அனுப்பவும். அவற்றை திரும்பப் பெற்றவுடன், அவற்றை .mo கோப்புகளில் தொகுக்கவும். அதற்காக நீங்கள் மீண்டும் போய்டிட்டைப் பயன்படுத்தலாம், அல்லது செய்யுங்கள் ::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:299
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
-msgstr ""
+msgstr ".Mo கோப்புகளை உங்கள் சொருகி `` மொழிபெயர்ப்புகள்` கோப்புறையில் வைக்கவும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
 " this function in those .py files that actually have translatable strings. "
 "So in a typical User Interface plugin you would call it at the top of "
 "``ui.py`` but not ``__init__.py``."
-msgstr ""
+msgstr "உங்கள் சொருகி .py கோப்புகளின் மேற்புறத்தில் `load_translations ()` என்ற செயல்பாட்டை வெறுமனே அழைப்பது கடைசி கட்டமாகும். செயல்திறன் காரணங்களுக்காக நீங்கள் இந்த செயல்பாட்டை மட்டுமே அந்த .py கோப்புகளில் மட்டுமே அழைக்க வேண்டும், அவை உண்மையில் மொழிபெயர்க்கக்கூடிய சரங்களைக் கொண்டுள்ளன. எனவே ஒரு பொதுவான பயனர் இடைமுக சொருகியில் நீங்கள் அதை `` ui.py`` இன் மேலே அழைப்பீர்கள், ஆனால் `__init __. Py``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
-"or by running calibre like this::"
-msgstr ""
+"or by running calibre with the ``CALIBRE_OVERRIDE_LANG`` environment "
+"variable set. For example::"
+msgstr "பயனர் இடைமுக மொழியை காலிபரில் மாற்றுவதன் மூலம் உங்கள் செருகுநிரல்களின் மொழிபெயர்ப்புகளை நீங்கள் சோதிக்கலாம்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> இடைமுகம்-> பாருங்கள் உதாரணத்திற்கு::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
-msgstr ""
+msgstr "நீங்கள் சோதிக்க விரும்பும் மொழியின் மொழிக் குறியீட்டைக் கொண்டு `` டி`` ஐ மாற்றவும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:295
+msgid ""
+"For translations with plurals, use the ``ngettext()`` function instead of "
+"``_()``. For example::"
+msgstr "பன்மை உடனான மொழிபெயர்ப்புகளுக்கு, `` _ () `` க்கு பதிலாக `` ngettext () `செயல்பாட்டைப் பயன்படுத்தவும். உதாரணத்திற்கு::"
+
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
-msgstr ""
+msgstr "சொருகி API"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
 "each class, including the base class of all plugins can be found in "
 ":ref:`plugins`."
-msgstr ""
+msgstr "நீங்கள் மேலே கவனித்திருக்கலாம், காலிபரில் ஒரு சொருகி ஒரு வகுப்பு. வெவ்வேறு வகையான செருகுநிரல்களுக்கு வெவ்வேறு வகுப்புகள் உள்ளன. அனைத்து செருகுநிரல்களின் அடிப்படை வகுப்பு உட்பட ஒவ்வொரு வகுப்பிலும் உள்ள விவரங்களை இதில் காணலாம்: குறிப்பு: `செருகுநிரல்கள்`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
-msgstr ""
+msgstr "உங்கள் சொருகி கிட்டத்தட்ட காலிபரிலிருந்து குறியீட்டைப் பயன்படுத்தப் போகிறது. காலிபர் குறியீடு தளத்தில் பல்வேறு செயல்பாடுகளை எவ்வாறு கண்டுபிடிப்பது என்பதை அறிய, காலிபரில் உள்ள பகுதியைப் படியுங்கள்: ref: `code_layout`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
-msgstr ""
+msgstr "பிழைத்திருத்த செருகுநிரல்கள்"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
-msgstr ""
+msgstr "முதல், மிக முக்கியமான படி பிழைத்திருத்த பயன்முறையில் காலிபரை இயக்குவது. கட்டளை வரியிலிருந்து இதை நீங்கள் செய்யலாம் ::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:332
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
-msgstr ""
+msgstr "."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
-msgstr ""
+msgstr "கட்டளை வரியிலிருந்து இயங்கும் போது, பிழைத்திருத்த வெளியீடு கன்சோலுக்கு அச்சிடப்படும், காலிபருக்குள் இருந்து இயங்கும் போது வெளியீடு ஒரு TXT கோப்புக்கு செல்லும்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr ""
+msgstr "உங்கள் சொருகி குறியீட்டில் எங்கும் அச்சு அறிக்கைகளை நீங்கள் செருகலாம், அவை பிழைத்திருத்த பயன்முறையில் வெளியீடாக இருக்கும். நினைவில் கொள்ளுங்கள், இது பைதான், பிழைத்திருத்தத்திற்கு அச்சு அறிக்கைகளைத் தவிர வேறு எதுவும் உங்களுக்கு தேவையில்லை;) இந்த பிழைத்திருத்த நுட்பத்தைப் பயன்படுத்தி எல்லா திறன்களையும் உருவாக்கினேன்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
-msgstr ""
+msgstr "பின்வரும் கட்டளை வரியைப் பயன்படுத்தி உங்கள் சொருகி மாற்றங்களை விரைவாக சோதிக்கலாம் ::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:343
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
-msgstr ""
+msgstr "இது இயங்கும் காலிபரை நிறுத்திவிடும், பணிநிறுத்தம் முடிவடையும் வரை காத்திருங்கள், பின்னர் உங்கள் சொருகி காலிபரில் புதுப்பித்து, காலிபர் காலிபர்."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
-msgstr ""
+msgstr "மேலும் சொருகி எடுத்துக்காட்டுகள்"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:348
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
-msgstr ""
+msgstr "பல அதிநவீன காலிபர் செருகுநிரல்களின் பட்டியலை நீங்கள் காணலாம் `இங்கே <https://www.mobileered.com/forums/showthread.php?t=118764>` _."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
-msgstr ""
+msgstr "உங்கள் செருகுநிரல்களை மற்றவர்களுடன் பகிர்ந்து கொள்ளுங்கள்"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:353
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
-msgstr ""
+msgstr "நீங்கள் உருவாக்கிய செருகுநிரல்களை காலிபரின் பிற பயனர்களுடன் பகிர்ந்து கொள்ள விரும்பினால், உங்கள் சொருகி ஒரு புதிய நூலில் `காலிபர் செருகுநிரல்கள் மன்றத்தில் <https://www.mobileered.com/forums/forumdisplay.php?f=237 இல் இடுங்கள் > `_."
