@@ -34,7 +34,7 @@ class NotesResultsDelegate(ResultsDelegate):
     def result_data(self, result):
         if not isinstance(result, dict):
             return None, None, None, None, None
-        full_text = result['text']
+        full_text = result['text'].replace('\n', ': ', 1)
         parts = full_text.split('\x1d', 2)
         before = after = ''
         if len(parts) > 2:
@@ -44,6 +44,8 @@ class NotesResultsDelegate(ResultsDelegate):
             before, text = parts
         else:
             text = parts[0]
+        if len(parts) > 1 and before:
+            before = before.replace('\n', ': ', 1)
         return False, before, text, after, False
 
 
@@ -452,7 +454,25 @@ class NotesBrowser(Dialog):
         b.clicked.connect(self.export_selected)
         b.setToolTip(_('Export the selected notes as HTML files'))
         h.addWidget(us), h.addStretch(10), h.addWidget(self.bb)
+        from calibre.gui2.ui import get_gui
+        gui = get_gui()
+        if gui is not None:
+            b = self.bb.addButton(_('Search books'), QDialogButtonBox.ButtonRole.ActionRole)
+            b.setToolTip(_('Search the calibre library for books in the currently selected category'))
+            b.clicked.connect(self.search_books)
+            b.setIcon(QIcon.ic('search.png'))
         QTimer.singleShot(0, self.do_find)
+
+    def search_books(self):
+        self.notes_display.current_result_changed
+        item = self.results_list.currentItem()
+        if item:
+            r = item.data(0, Qt.ItemDataRole.UserRole)
+            if isinstance(r, dict):
+                ival = r['text'].split('\n', 1)[0].replace('"', '\\"')
+                search_expression = f'{r["field"]}:"={ival}"'
+                from calibre.gui2.ui import get_gui
+                get_gui().search.set_search_string(search_expression)
 
     def export_selected(self):
         results = tuple(self.results_list.selected_results())
@@ -519,4 +539,5 @@ if __name__ == '__main__':
     br = NotesBrowser()
     br.exec()
     del br
+
     del app

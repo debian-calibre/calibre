@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -41,23 +41,23 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Lähetä sähköpostia SMTP\-protokollaa käyttäen. \fBcalibre\-smtp\fP on kaksi toimintatapaa.
+Compose \-tilassa määritetään from to ja text, ja näitä käytetään sähköpostin rakentamiseen ja lähettämiseen.
+Suodatintilassa \fBcalibre\-smtp\fP lukee täydellisen sähköposti\-
+viestin STDIN:stä ja lähettää sen.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+text on sähköpostiviestin runko.
+Jos textiä ei määritetä, täydellinen sähköpostiviesti luetaan STDINistä.
+from on lähettäjän sähköpostiosoite ja to on
+vastaanottajan sähköpostiosoite. Kun STDIN:stä luetaan kokonainen sähköpostiviesti, from ja to
+käytetään vain SMTP\-neuvottelussa, eikä viestin otsikoita muuteta.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBcalibre\-smtp\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH [VALINNAT]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+Haarukoi ja lähetä viesti taustalla. Jos käytät tätä vaihtoehtoa, sinun tulisi käyttää myös \fB\-\-outbox\-vaihtoehtoa,\fP jotta voit käsitellä toimitusvirheitä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,17 +67,17 @@ näytä tämä ohjeviesti ja poistu
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+Localhostin isäntänimi. Käytetään, kun muodostetaan yhteys SMTP\-palvelimeen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+Polku maildir\-kansioon, johon tallennetaan epäonnistuneet sähköpostiviestit.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout for connection
+Yhteyden aikakatkaisu
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,54 +91,54 @@ näytä ohjelman versionumero ja poistu
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+Vaihtoehdot sähköpostin laatimiseksi. Jätetään huomiotta, jos tekstiä ei ole määritetty
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-File to attach to the email
+Sähköpostiin liitettävä tiedosto
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subject, \-s
-Subject of the email
+Sähköpostin aihe
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+Vaihtoehdot SMTP\-välityspalvelimen käyttämiseen sähköpostin lähettämisessä. calibre yrittää lähettää sähköpostin suoraan, ellei \-\-relay ole määritetty.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Polku tiedostoon, joka sisältää PEM\-muotoisia yhdistettyjä CA\-varmenteita, joita käytetään palvelimen varmenteen tarkistamiseen TLS:ää käytettäessä. Oletusarvoisesti käytetään järjestelmän CA\-varmenteita.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Älä tarkista palvelimen varmentetta, kun muodostat yhteyden TLS:ää käyttäen. Tämä oli oletuskäyttäytyminen Calibren versioissa ennen versiota 3.27. Jos käytät releitä, joilla on itse allekirjoitettu tai muuten virheellinen varmenne, voit palauttaa ennen versiota 3.27 vallinneen käyttäytymisen tällä vaihtoehdolla
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Salausmenetelmä, jota käytetään yhteyden muodostamisessa releeseen. Vaihtoehdot ovat TLS, SSL ja NONE. Oletusarvo on TLS. VAROITUS: valinta NONE on erittäin epävarma.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+Salasana releelle
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Portti, johon muodostetaan yhteys relepalvelimella. Oletusarvo on 465, jos salausmenetelmänä on SSL, ja muutoin 25.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+SMTP\-välityspalvelin, jota käytetään sähköpostin lähettämiseen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+Käyttäjätunnus relettä varten
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

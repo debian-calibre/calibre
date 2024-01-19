@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -45,14 +45,14 @@ Muunna e\-kirja muodosta toiseen.
 .sp
 input_file on tulo ja output_file on lähtö. Molemmat on määritettävä komennon kahdeksi ensimmäiseksi argumentiksi.
 .sp
-Tulostetun e\-kirjan muoto arvataan output_file tiedostopäätteestä. output_file voi olla myös erikoismuodossa . EXT, jossa EXT on tulostetiedoston tunniste. Tässä tapauksessa tulostetiedoston nimi johdetaan syöttötiedoston nimestä. Huomaa, että tiedostonimet eivät saa alkaa yhdysmerkillä. Lopuksi, jos output_file tiedostolla ei ole päätettä, sitä käsitellään kansiona ja HTML\-tiedostoista koostuva \(dqavoin e\-kirja\(dq (OEB) kirjoitetaan kyseiseen kansioon. Nämä tiedostot ovat tiedostoja, jotka normaalisti olisi välitetty lähtölaajennukseen.
+Tulostetun e\-kirjan muoto arvataan output_file tiedostopäätteestä. output_file voi olla myös erikoismuodossa . EXT, jossa EXT on tulostetiedoston tunniste. Tässä tapauksessa tulostetiedostonimi johdetaan syöttötiedoston nimestä. Huomaa, että tiedostonimet eivät saa alkaa yhdysmerkillä. Lopuksi, jos output_file tiedostolla ei ole päätettä, sitä käsitellään kansiona ja HTML\-tiedostoista koostuva \(dqavoin e\-kirja\(dq (OEB) kirjoitetaan kyseiseen kansioon. Nämä tiedostot ovat tiedostoja, jotka normaalisti olisi välitetty lähtölaajennukseen.
 .sp
 Kun olet määrittänyt syöttö\- ja tulostetiedoston, voit mukauttaa muunnosta määrittämällä erilaisia vaihtoehtoja. Käytettävissä olevat vaihtoehdot riippuvat syöttö\- ja tulostetiedostotyypeistä. Saat apua niihin määrittämällä syöttö\- ja tulostetiedoston ja käyttämällä sitten \-h\-vaihtoehtoa.
 .sp
 Muuntojärjestelmän täydellinen dokumentaatio:
 \fI\%Ekirja muunnos\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBebook\-convert\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .sp
 Vaihtoehdot ja oletusarvot asetuksille vaihtuvat sekä lähde\- että kohdeformaatin mukaan, joten tarkasta aina:
 .INDENT 0.0
@@ -100,7 +100,7 @@ Luettelo sisäänrakennetuista resepteistä. Voit suorittaa muunnoksen sisäänr
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Määritä tulostusprofiili. Tulostusprofiili kertoo muunnosjärjestelmälle, miten luotu asiakirja optimoidaan määritettyä laitetta varten. Joissakin tapauksissa tulostusprofiilia voidaan käyttää optimoimaan tulostus tietylle laitteelle, mutta tämä on harvoin tarpeen. Vaihtoehtoja ovat mm.:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd, generic_eink_large
+Määritä lähtöprofiili. Tulostusprofiili kertoo muunnosjärjestelmälle, miten luotu asiakirja optimoidaan määritettyä laitetta varten. Joissakin tapauksissa lähtöprofiilia voidaan käyttää optimoimaan lähtö tietylle laitteelle, mutta tämä on harvoin tarpeen. Vaihtoehtoja ovat mm.:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd, generic_eink_large
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -126,12 +126,12 @@ Poista käytöstä katkaisu sivunvaihtojen kohdalla. Tavallisesti lisätyt tiedo
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-Tämä valinta on tarpeen, jos aikot käyttää EPUB\-tiedostoa FBReaderJ:ssä. Toiminto litistää EPUBin sisäisen tiedostorakenteen, siten että kaikki tiedostot ovat pääkansiossa.
+Tätä vaihtoehtoa tarvitaan vain, jos aiot käyttää EPUB\-tiedostoa FBReaderJ:n kanssa. Se tasaa tiedostojärjestelmän EPUB:n sisällä, jolloin kaikki tiedostot ovat ylimmällä tasolla.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Lisää inline\-sisällysluettelon, joka näkyy kirjan sisällön osana.
+Lisää tekstiin sidottu sisällysluettelo, joka näkyy osana kirjan pääsisältöä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -141,7 +141,7 @@ Kuvan enimmäiskoko (leveys x korkeus). Arvo none tarkoittaa, että käytä näy
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Lisää inline\-sisällysluettelon kirjan loppuun alun sijaan.
+Lisää tekstiin sidottu sisällysluettelon kirjan loppuun alun sijaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -176,12 +176,12 @@ Kun käytät SVG\-kuvaa kantena, tämä valinta asettaa kannen peittämään kok
 .INDENT 0.0
 .TP
 .B \-\-pretty\-print
-Mikäli määritelty, lisäosa yrittää luoda tuloksen, joka on mahdollisimman luettava. Ei vaikuta välttämättä muiden tulokseen vaikuttavien lisäosien toimintaan.
+Mikäli määritelty, laajennus yrittää luoda lähdön, joka on mahdollisimman luettava. Ei vaikuta välttämättä muiden tulokseen vaikuttavien lisäosien toimintaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Luotavan inline\-sisällysluettelon otsikko.
+Luotavan tekstiin sidotun sisällysluettelon otsikko.
 .UNINDENT
 .SH ULKOASU
 .sp
@@ -199,12 +199,12 @@ Normaali tekstin koko pisteinä (pt). Kaikki teksti tuotetaan tätä kokoa skaal
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Vaihda tekstin tasaus. Arvo \fB\(dq\fPleft\fB\(dq\fP muuntaa kaiken tekstin vasemmalle tasatuksi. Arvo \fB\(dq\fPjustify\fB\(dq\fP muuntaa kaiken tekstin tasapalstaksi. Arvo \fB\(dq\fPoriginal\fB\(dq\fP (oletus) säilyttää alkuperäisen tasauksen lähdetiedostosta. Huomaa, että vain jotkin kohdeformaatit tukevat tasapalstaa.
+Muuta tekstin kohdistusta. Arvo \fB\(dq\fPvasen\fB\(dq\fP muuttaa kaiken lähteen tekstin vasemmalle tasatuksi (eli tasaamattomaksi) tekstiksi. Arvo \fB\(dq\fPtasaa\fB\(dq\fP muuttaa kaiken tasoittamattoman tekstin tasoitetuksi. Arvo \fB\(dq\fPalkuperäinen\fB\(dq\fP (oletusarvo) ei muuta lähdetiedoston tekstin tasausta. Huomaa, että vain jotkin lähtöformaatit tukevat tasausta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-Kytke tekstikoon skaalaus pois päältä.
+Poista kaikki fonttikokojen skaalaukset käytöstä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -219,12 +219,12 @@ Upota valittu fonttitiedosto kirjaan. Tästä tulee kirjan \fB\(dq\fPperusfontti
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Oletuksena calibre käyttää CSS\-määritysten lyhennettyjä muotoja, mm. margin, padding, border jne. Valinta kytkee käyttöön täydet, laajennetut muodot. Nook ei pysty käsittelemään lyhennettyjä muotoja, ja Nookin muunnosprofiilit käyttävät aina laajennettua muotoa EPUB\-tiedostoissa.
+Oletuksena calibre käyttää CSS\-määritysten lyhennettyjä muotoja, mm. marginaali, täyte, reunus jne. Valinta kytkee käyttöön täydet, laajennetut muodot. Nook ei pysty käsittelemään lyhennettyjä muotoja, ja Nookin muunnosprofiilit käyttävät aina laajennettua muotoa EPUB\-tiedostoissa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Polku CSS\-stylesheetiin tai suoraan CSS:ää. Tämä CSS lisätään lähdetiedoston tyylisääntöihin, jotta se voi ohittaa noita sääntöjä.
+Joko CSS\-tyylisivun polku tai raaka CSS. Tämä CSS liitetään lähdetiedoston tyylisääntöihin, joten sitä voidaan käyttää näiden sääntöjen ohittamiseen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -234,7 +234,7 @@ Pilkuin erotettu lista CSS\-määreitä, jotka poistetaan kaikista CSS\-säänn�
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-CSS\-tekstikokojen vastavuus tekstikokoihin pisteinä (pt). Esimerkkiarvo on 12,12,14,16,18,20,22,24, joka vastaa kokoja xx\-small\->xx\-large. Tekstinskaalausalgoritmi käyttää näitä kokoja tekstikoon älykkääseen skaalaukseen. Oletuksena käytetään vastaavuutta, joka perustuu valitsemaasi vientiprofiiliin.
+CSS\-fonttien nimien yhdistäminen fonttikokoihin pisteinä. Esimerkkiasetus on 12,12,14,16,18,20,22,24. Nämä ovat yhdistelmät kokoja xx\-pieni\- xx\-suuri varten, ja viimeinen koko on valtaville fonteille. Fonttien skaalausalgoritmi käyttää näitä kokoja fonttien älykkääseen skaalaukseen. Oletusarvoisesti käytetään valitsemaasi lähtöprofiiliin perustuvaa kartoitusta.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -249,7 +249,7 @@ Aseta tyhjien lisättyjen rivien korkeus (em). Rivien korkeus on kaksi kertaa t�
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Säilytä ligatuurit lähdetiedostosta. Ligatuuri on erityinen kahden merkin typografinen yhdistelmä, kuten ff, fi, fl jne. Useimmat elukijat eivät tue ligatuureja, joten ne eivät yleensä näy oikein. Oletuksen calibre muuntaa ligatuurin vastaaviksi vakiomerkeiksi. Tämä valinta säilyttää ligatuurit.
+Säilytä ligatuurit lähdetiedostosta. Ligatuuri on erityinen kahden merkin typografinen yhdistelmä, kuten ff, fi, fl jne. Useimmat e\-lukijat eivät tue ligatuureja, joten ne eivät yleensä näy oikein. Oletuksena calibre muuntaa ligatuurin vastaaviksi vakiomerkeiksi. Tämä valinta säilyttää ligatuurit.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -299,12 +299,12 @@ Kun calibre poistaa tyhjiä rivejä kappaleiden välistä, se asettaa myös kapp
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Muunna tavalliset lainausmerkit, viivat ja ellipsit niiden typografisesti oikeiksi vastineiksi. Lisätietoja on osoitteessa \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Muunna tavalliset lainausmerkit, viivat ja ellipsit niiden typografisesti oikeiksi vastineiksi. Lisätietoja osoitteessa \fI\%https://daringfireball.net/projects/smartypants\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Osita kaikki upotetut fontit. Kaikki fontit rajataan vain dokumentissa käytettyihin merkkeihin. Tämä pienentää fonttitiedostojen kokoa. Etenkin erittäin suuria fonttitiedostoja käyttäessä tämä on hyvin hyödyllistä.
+Tiivistä kaikki upotetut fontit. Jokainen upotettu fontti pienennetään siten, että se sisältää vain tässä asiakirjassa käytetyt merkit. Tämä pienentää fonttitiedostojen kokoa. Hyödyllinen, jos upotat erityisen suuren fontin, jossa on paljon käyttämättömiä merkkejä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -356,12 +356,12 @@ Etsi yleisiä sanoja sekä rakenteita joilla merkitään kursivointeja ja kursiv
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Tunnista muotoilemattomat lukujen otsikot ja alaotsikot. Muuntaa ne h2 ja h3 tägeiksi. Tästä ei vielä muodostu sisällysluetteloa, mutta toimintoa voidaan hyödyntää rakenteen luomisessa sisällyluettelon generoimisen yhteydessä.
+Tunnista muotoilemattomat lukujen otsikot ja alaotsikot. Muunna ne h2 ja h3 tageiksi. Tästä ei vielä muodostu sisällysluetteloa, mutta toimintoa voidaan hyödyntää rakenteen luomisessa sisällysluettelon generoimisen yhteydessä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-Etsii perättäisiä <h1> tai <h2> tägejä. Tägit numeroidaan uusiksi, jotta lukujen otsikot eivät katkea kesken.
+Etsii perättäisiä <h1> tai <h2> tageja. Tagit numeroidaan uudelleen, jotta lukujen otsikot eivät katkea kesken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -427,7 +427,7 @@ Kontrolloi asiakirjan rakenteen automaattista tunnistusta.
 .INDENT 0.0
 .TP
 .B \-\-chapter
-XPath\-lauseke lukujen otsikoiden poimimiseksi. Oletuksena huomioidaan <h1> tai <h2> tägit joissa on sanat \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP tai \fB\(dq\fPpart\fB\(dq\fP lukujen otsikoiksi, kuten myös tägit joiden class=\fB\(dq\fPchapter\fB\(dq\fP\&. Lauseke tulee kääntyä listaksi elementtejä. Poista otsikoiden tunnistaminen käytöstä arvolla \fB\(dq\fP/\fB\(dq\fP\&.  Katso calibren käyttöohjeesta XPathin käyttöopastus.
+XPath\-lauseke kappaleotsikoiden poimimiseksi. Oletuksena huomioidaan <h1> tai <h2> tägit joissa on sanat \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP tai \fB\(dq\fPpart\fB\(dq\fP kappaleiden otsikkoina, kuten myös tagit joiden luokka=\fB\(dq\fPkappale\fB\(dq\fP\&. Lauseke tulee kääntyä listaksi elementtejä. Poista otsikoiden tunnistaminen käytöstä arvolla \fB\(dq\fP/\fB\(dq\fP\&.  Katso calibren käyttöohjeesta XPathin käyttöopastus.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -442,7 +442,7 @@ Joissakin dokumenteissa oikea ja vasen marginaali on ilmoitettu jokaiselle kappa
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Lisää metatiedot kirjan alkuun. Hyödyllistä, jos lukulaitteesi ei tue metatietojen normaalia esittämistä/hakua.
+Lisää metadata kirjan alkuun. Hyödyllistä, jos lukulaitteesi ei tue metadatan normaalia esittämistä/hakua.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -452,12 +452,12 @@ XPath\-lauseke. Lisää sivunvaihdot ennen tiettyjä elementtejä. Poista käyt�
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-Käytä lähdetiedostosta havaittua kansikuvaa erikseen määritellyn kansikuvan sijaan.
+Käytä lähdetiedostosta löydettyä kansikuvaa määritetyn kannen sijasta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Poista ekirjan ensimmäinen kuva. Hyödyllistä, jos lähdetiedostossa on kansikuva, jota ei tunnisteta kanneksi.  Jos asetat oman kansikuvan sen sijaan, tämä valinta estää kahden kannen muodostumisen kirjaan.
+Poista e\-kirjan ensimmäinen kuva. Hyödyllistä, jos lähdetiedostossa on kansikuva, jota ei tunnisteta kanneksi.  Jos asetat oman kansikuvan sen sijaan, tämä valinta estää kahden kannen muodostumisen kirjaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -475,17 +475,17 @@ Salli sisällysluettelossa toistuvat rivit, eli samansisältöiset rivit, kunhan
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath\-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 1. Asetus tässä ohittaa kaikki muut automaattisesti tunnistetut otsikot. Katso calibren käyttöohjeesta XPathin käyttöopastus.
+XPath\-lauseke, joka määrittää kaikki tagit, jotka on lisättävä sisällysluetteloon tasolla yksi. Jos tämä määritetään, se on ensisijainen muihin automaattisen tunnistuksen muotoihin nähden. Katso esimerkkejä calibren käyttöoppaan XPath\-oppaasta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath\-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 2. Tasot sijoittuvat vastaavan ylemmän tason alle. Katso calibren käyttöohjeesta XPathin käyttöopastus.
+XPath\-lauseke, joka määrittää kaikki tagit, jotka on lisättävä sisällysluetteloon tasolla kaksi. Jokainen merkintä lisätään edellisen tason yksi merkinnän alle. Katso esimerkkejä calibren käyttöoppaan XPath\-oppaasta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath\-lauseke joka määrittää kaikki tägit joiden tulee esiintyä sisällysluettelon tasolla 3. Tasot sijoittuvat vastaavan ylemmän tason alle. Katso calibren käyttöohjeesta XPathin käyttöopastus.
+XPath\-lauseke, joka määrittää kaikki tagit, jotka on lisättävä sisällysluetteloon tasolla kolme. Jokainen merkintä lisätään edellisen tason kaksi merkinnän alle. Katso esimerkkejä calibren käyttöoppaan XPath\-oppaasta.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -514,7 +514,7 @@ Yleensä, jos tiedostossa on jo sisällysluettelo, sitä käytetään automaatti
 .UNINDENT
 .SH METATIEDOT
 .sp
-Asetukset ulostulon metatiedoille
+Asetukset lähdön metadatalle
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
@@ -568,7 +568,7 @@ Aseta arvosana. Luku 1\-5.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Lue metatiedot osoitetusta OPF\-tiedostosta. Luetut metatiedot ohittavat lähdetiedostosta löytyvät tiedot.
+Lue metadata osoitetusta OPF\-tiedostosta. Luettu metadata ohittaa lähdetiedostosta löytyvät tiedot.
 .UNINDENT
 .INDENT 0.0
 .TP

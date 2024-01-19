@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "WEB2DISK" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "WEB2DISK" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .INDENT 0.0
@@ -41,19 +41,19 @@ web2disk URL
 .UNINDENT
 .UNINDENT
 .sp
-Where URL is for example \fI\%https://google.com\fP
+Jossa URL on esimerkiksi \fI\%https://google.com\fP
 .sp
-Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBweb2disk\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH [VALINNAT]
 .INDENT 0.0
 .TP
 .B \-\-base\-dir, \-d
-Base folder into which URL is saved. Default is .
+Peruskansio, johon URL\-osoite tallennetaan. Oletusarvo on .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-delay
-Minimum interval in seconds between consecutive fetches. Default is 0 s
+Vähimmäisväli sekunteina peräkkäisten hakujen välillä. Oletusarvo on 0 s
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -68,7 +68,7 @@ Noudettavien verkkosivujen merkkikoodaus. Oletuksena merkkikoodaus yritetään a
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-Any link that matches this regular expression will be ignored. This option can be specified multiple times, in which case as long as any regexp matches a link, it will be ignored. By default, no links are ignored. If both filter regexp and match regexp are specified, then filter regexp is applied first.
+Kaikki linkit, jotka vastaavat tätä säännöllistä lauseketta, jätetään huomiotta. Tämä vaihtoehto voidaan määrittää useita kertoja, jolloin linkki jätetään huomiotta niin kauan kuin jokin regexp vastaa linkkiä. Oletusarvoisesti mitään linkkejä ei jätetä huomiotta. Jos sekä filter regexp että match regexp on määritetty, sovelletaan ensin filter regexp:tä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,17 +78,17 @@ näytä tämä ohjeviesti ja poistu
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-Only links that match this regular expression will be followed. This option can be specified multiple times, in which case as long as a link matches any one regexp, it will be followed. By default all links are followed.
+Vain tätä säännöllistä lauseketta vastaavia linkkejä seurataan. Tämän vaihtoehdon voi määrittää useita kertoja, jolloin linkkiä seurataan niin kauan kuin se vastaa yhtä regexpiä. Oletuksena kaikkia linkkejä seurataan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-files, \-n
-The maximum number of files to download. This only applies to files from <a href> tags. Default is 9223372036854775807
+Ladattavien tiedostojen enimmäismäärä. Tämä koskee vain <a href> \-tagitiedostoja. Oletusarvo on 9223372036854775807
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-Maximum number of levels to recurse i.e. depth of links to follow. Default 1
+Toistettavien tasojen enimmäismäärä eli seurattavien linkkien syvyys. Oletus 1
 .UNINDENT
 .INDENT 0.0
 .TP

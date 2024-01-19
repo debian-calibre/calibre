@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-VIEWER" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .INDENT 0.0
@@ -41,9 +41,9 @@ ebook\-viewer [options] file
 .UNINDENT
 .UNINDENT
 .sp
-View an e\-book.
+Näytä e\-kirja.
 .sp
-Whenever you pass arguments to \fBebook\-viewer\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBebook\-viewer\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH [VALINNAT]
 .INDENT 0.0
 .TP
@@ -58,12 +58,12 @@ Irtaudu ohjaavasta terminaalista, jos sellainen on (vain Linux)
 .INDENT 0.0
 .TP
 .B \-\-force\-reload
-Force reload of all opened books
+Pakota kaikkien avattujen kirjojen uudelleen lataaminen
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-full\-screen, \-\-fullscreen, \-f
-If specified, the E\-book viewer window will try to open full screen when started.
+Jos tämä määritetään, E\-kirjan katseluikkuna yritetään avata koko näytön kokoisena käynnistyessään.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -73,17 +73,17 @@ näytä tämä ohjeviesti ja poistu
 .INDENT 0.0
 .TP
 .B \-\-new\-instance
-Open a new viewer window even when the option to use only a single viewer window is set
+Avaa uusi katseluikkuna myös silloin, kun vain yhden katseluikkunan käyttö on asetettu
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location or position you can get by using the Go to\->Location action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB\(dq\fPsomething\fB\(dq\fP\&. The form toc\-href:something will match the href (internal link destination) of toc nodes. The matching is exact. If you want to match a substring, use the form toc\-href\-contains:something. The form ref:something will use Reference mode references. The form search:something will search for something after opening the book. The form regex:something will search for the regular expression something after opening the book.
+Sijainti, josta määritetty kirja avataan. Sijainti on paikka tai sijainti, jonka saat käyttämällä katseluohjelman ohjainten Siirry kohteeseen\-> Sijainti \-toimintoa. Vaihtoehtoisesti voit käyttää muotoa toc:jotain, jolloin kirja aukeaa sen ensimmäisen sisällysluettelomerkinnän kohdalta, joka sisältää merkkijonon \fB\(dq\fPjotain\fB\(dq\fP\&. Lomake toc\-href:jotain vastaa toc\-solmujen href (sisäisen linkin kohde). Täsmäytys on tarkka. Jos haluat sovittaa osajonon, käytä muotoa toc\-href\-contains:something. Lomake ref:jotain käyttää viittaustilan viittauksia. Lomake search:something hakee jotain kirjan avaamisen jälkeen. Lomake regex:jotain hakee säännöllisen lausekkeen jotain kirjan avaamisen jälkeen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-raise\-window
-If specified, the E\-book viewer window will try to come to the front when started.
+Jos tämä on määritetty, E\-kirjan katseluikkuna yrittää tulla etualalle käynnistyessään.
 .UNINDENT
 .INDENT 0.0
 .TP

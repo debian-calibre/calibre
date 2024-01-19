@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -43,7 +43,7 @@ calibre\-debug {options]
 .sp
 Erilaisia komentoriviliittymiä, jotka ovat hyödyllisiä calibren virheenkorjauksessa. Ilman vaihtoehtoja,
 tämä komento käynnistää sulautetun Python\-tulkin. Voit myös ajaa pääohjelman
-calibre GUI, calibre E\-book viewer ja calibre editor debug\-tilassa.
+calibre graafisen käyttöliittymän, calibre E\-kirjan katseluohjelman ja calibre\-editorin virheenkorjaustilassa.
 .sp
 Se sisältää myös rajapintoja erilaisiin calibren osiin, joissa ei ole
 omia komentorivityökaluja, kuten fonttien alustus, E\-kirjan diff\-työkalu ja niin edelleen.
@@ -56,14 +56,14 @@ Voit myös käyttää \fBcalibre\-debug\fP\-ohjelmaa itsenäisten skriptien suor
 .UNINDENT
 .sp
 Kaikki \fB\-\-\fP jälkeinen siirretään skriptille. Voit myös käyttää \fBcalibre\-debug\fP
-shebang merkkinä skripteissä, esimerkiksi näin:
+shebangina skripteissä, esimerkiksi näin:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBcalibre\-debug\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH [VALINNAT]
 .INDENT 0.0
 .TP
@@ -93,7 +93,7 @@ Suorita calibre diff\-työkalu. Esimerkiksi: calibre\-debug \fI\%\-\-diff\fP fil
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Käynnistä calibren \fB\(dq\fPMuokkaa kirjaa\fB\(dq\fP \-työkalu virheenkorjaustilassa.
+Käynnistä calibren \fB\(dq\fPKirjan muokkaus\fB\(dq\fP \-työkalu virheenkorjaustilassa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -103,7 +103,7 @@ Suorita tiedoston Python\-koodi.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Pura kirja määritettyyn kansioon. Käyttö: \-x file.epub output_dir Vie kirjan HTML\-tiedostojen ja metatietojen kokoelmana, jota voit muokata tavallisilla HTML\-muokkaustyökaluilla. Toimii EPUB\-, AZW3\-, HTMLZ\- ja DOCX\-tiedostojen kanssa.
+Pura kirja määritettyyn kansioon. Käyttö: \-x file.epub output_dir Vie kirjan HTML\-tiedostojen ja metadata kokoelmana, jota voit muokata tavallisilla HTML\-muokkaustyökaluilla. Toimii EPUB\-, AZW3\-, HTMLZ\- ja DOCX\-tiedostojen kanssa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -173,7 +173,7 @@ Pakottaa käynnissä olevien calibre\-instanssien sammumisen. Huomaa, että täm
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Poimi fontista vain käytetyt merkit. Lisää \fB\-\-\fP valinnan jälkeen, jotta se siirtyy fontinpoimintaohjelmaan.
+Tiivistä määritetty fontti. Käyttö \fB\-\-\fP valinnan jälkeen, jotta se siirtyy fontinpoimintaohjelmaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -188,7 +188,7 @@ näytä ohjelman versionumero ja poistu
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Suorita e\-kirja virheentunnistusmoodissa
+Käynnistä E\-kirjan katseluohjelma virheenkorjaustilassa
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

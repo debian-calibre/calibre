@@ -233,7 +233,7 @@ class GridViewButton(LayoutButton):  # {{{
         self.action_toggle = QAction(self.icon(), _('Toggle') + ' ' + self.label, self)
         gui.addAction(self.action_toggle)
         gui.keyboard.register_shortcut('grid view toggle' + self.label, str(self.action_toggle.text()),
-                                    default_keys=(sc,), action=self.action_toggle)
+                                    default_keys=(sc,), action=self.action_toggle, group=_('Main window layout'))
         self.action_toggle.triggered.connect(self.toggle)
         self.action_toggle.changed.connect(self.update_shortcut)
         self.toggled.connect(self.update_state)
@@ -267,7 +267,7 @@ class SearchBarButton(LayoutButton):  # {{{
         self.action_toggle = QAction(self.icon(), _('Toggle') + ' ' + self.label, self)
         gui.addAction(self.action_toggle)
         gui.keyboard.register_shortcut('search bar toggle' + self.label, str(self.action_toggle.text()),
-                                    default_keys=(sc,), action=self.action_toggle)
+                                    default_keys=(sc,), action=self.action_toggle, group=_('Main window layout'))
         self.action_toggle.triggered.connect(self.toggle)
         self.action_toggle.changed.connect(self.update_shortcut)
         self.toggled.connect(self.update_state)
@@ -496,7 +496,7 @@ class LayoutMixin:  # {{{
                         QToolButton:checked { background: rgba(0, 0, 0, 25%); }
                 ''')
         for button in reversed(self.layout_buttons):
-            self.status_bar.insertPermanentWidget(1, button)
+            self.status_bar.insertPermanentWidget(2, button)
         self.layout_button.setMenu(LayoutMenu(self))
         self.layout_button.setVisible(not gprefs['show_layout_buttons'])
 
@@ -733,7 +733,7 @@ class LayoutMixin:  # {{{
     def read_layout_settings(self):
         # View states are restored automatically when set_database is called
         self.layout_container.read_settings()
-        self.book_details.vertical = self.layout_container.is_wide
+        self.book_details.change_layout(self.layout_container.is_wide)
         self.place_layout_buttons()
         self.grid_view_button.restore_state()
         self.search_bar_button.restore_state()

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "CALIBREDB" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -200,7 +200,7 @@ calibredb listaa[options]
 .sp
 Listaa calibre\-tietokannan kirjat.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -276,7 +276,7 @@ calibredb lisää [asetukset] tiedosto1 tiedosto2 tiedosto3 ...
 Lisää määritetyt tiedostot kirjoina tietokantaan. Voit myös määrittää kansioita, katso
 alla olevat kansioon liittyvät vaihtoehdot.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -285,17 +285,17 @@ Annan tekijoiden nimet lisäty(i)lle.
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Jos löytyy kirjoja, joilla on samanlaiset nimet ja kirjoittajat, yhdistä saapuvat muodot (tiedostot) automaattisesti olemassa oleviin kirjatietueisiin. \fB\(dq\fPOhita\fB\(dq\fP \-arvo tarkoittaa, että päällekkäiset muodot hylätään. Arvo \fB\(dq\fPkorvaa\fB\(dq\fP tarkoittaa, että kirjaston päällekkäiset muodot korvataan juuri lisätyillä tiedostoilla. Arvo \fB\(dq\fPnew_record\fB\(dq\fP tarkoittaa, että kaksoiskappaleet sijoitetaan uuteen kirjatietueeseen.
+Jos löytyy kirjoja, joilla on samanlaiset nimet ja tekijät, yhdistä saapuvat formaatit (tiedostot) automaattisesti olemassa oleviin kirjatietueisiin. \fB\(dq\fPOhita\fB\(dq\fP tarkoittaa, että päällekkäiset formaatit hylätään. \fB\(dq\fPKorvaa\fB\(dq\fP tarkoittaa, että kirjaston päällekkäiset muodot korvataan juuri lisätyillä tiedostoilla. Arvo \fB\(dq\fPUusi tietue\fB\(dq\fP tarkoittaa, että kaksoiskappaleet sijoitetaan uuteen kirjatietueeseen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Tiedostopolku kansikuvaan lisäty(i)lle
+Polku lisättyyn kirjaan käytettävään kanteen
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Lisää kirjat tietokantaan vaikka ne ovat jo siellä. Vertailu perustuu kirjojen ja tekijöiden nimiin. Huomaa, että vaihtoehto \fI\%\-\-automerge\fP on ensisijainen.
+Lisää kirjoja tietokantaan, vaikka ne olisivat jo olemassa. Vertailu tehdään kirjan otsikoiden ja kirjoittajien perusteella. Huomaa, että \fB\-\-automerge\-vaihtoehto\fP on ensisijainen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -315,7 +315,7 @@ Anna ISBN lisäty(i)lle
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-Pilkuin erotettu lista kieliä (miel. ISO639\-muodossa)
+Pilkulla erotettu luettelo kielistä (paras käyttää ISO639\-kielikoodeja, vaikka jotkin kielten nimet voidaan myös tunnistaa).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -330,7 +330,7 @@ Anne sarjanumero lisäty(i)lle
 .INDENT 0.0
 .TP
 .B \-\-tags, \-T
-Aseta tägit lisäty(i)lle
+Aseta lisätyn kirjan (kirjojen) tagit
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -339,16 +339,16 @@ Anna nimi lisäty(i)lle.
 .UNINDENT
 .SS LISÄTÄÄN KANSIOISTA
 .sp
-Asetukset kirjojen lisäämiselle kansioista. Oletuksena vain tunnettujen e\-kirjatiedostomuotojen päätteillä varustetut tiedostot lisätään.
+Vaihtoehdot kirjojen lisäämisen hallitsemiseksi kansioista. Oletusarvoisesti lisätään vain tiedostot, joilla on tunnettujen e\-kirjatyyppien tiedostopäätteet.
 .INDENT 0.0
 .TP
 .B \-\-add
-Tiedostonimikuvio (glob), tätä mallia vastaavat tiedostot lisätään, kun kansioita etsitään tiedostojen varalta, vaikka ne eivät olisikaan tunnettua e\-kirjatiedostotyyppiä. Voidaan määrittää useita kertoja useille kuvioille.
+Tiedostonimimalli (glob), tätä mallia vastaavat tiedostot lisätään, kun kansioita etsitään tiedostojen varalta, vaikka ne eivät olisikaan tunnettua e\-kirjatiedostotyyppiä. Voidaan määrittää useita kertoja useille kuvioille.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-Tiedostonimikuvio (glob), tätä mallia vastaavat tiedostot ohitetaan, kun kansioita etsitään tiedostojen varalta. Voidaan määrittää useita kertoja useille kuvioille. Esimerkiksi: *.pdf ohittaa kaikki PDF\-tiedostot
+Tiedostonimimalli (glob), tätä mallia vastaavat tiedostot ohitetaan, kun kansioita etsitään tiedostojen varalta. Voidaan määrittää useita kertoja useille kuvioille. Esimerkiksi: *.pdf ohittaa kaikki PDF\-tiedostot
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -374,7 +374,7 @@ calibredb remove ids
 .sp
 Poista id:itä vastaavat kirjat tietokannasta. Id:t tulee listata pilkuin erotettuna sarjana. Id:t löytyvät hakutoiminnolla. Esimerkki: 23,34,57\-85 (id\-välin viimeistä numeroa ei huomioida).
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -392,9 +392,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .UNINDENT
 .UNINDENT
 .sp
-Lisää ebook_filen e\-kirja käytettävissä oleviin formaatteihin id:n osoittamaan kirjaan. Löydät id:t hakukomennolla. Jos formaatti on jo olemassa, se korvataan, ellei ole asetettu älä korvaa \-valintaa.
+Lisää ebook_file\-tiedostossa oleva e\-kirja id:llä yksilöidyn loogisen kirjan käytettävissä oleviin formaatteihin. Voit saada id:n käyttämällä hakukomentoa. Jos formaatti on jo olemassa, se korvataan, ellei \(aqÄlä korvaa\(aq \-vaihtoehtoa ole määritetty.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
@@ -403,7 +403,7 @@ Lisää tiedosto kirjaan ylimääräisenä datatiedostona, ei e\-kirjamuotona
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Älä korvaa formaattia jos se on jo olemassa
+Älä korvaa formaattia, jos se on jo olemassa
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -419,7 +419,7 @@ calibredb remove_format [options] id fmt
 .sp
 Poista formaatti fmt id:n osoittamasta loogisesta kirajsta. Löydät id:n hakutoiminnolla. fmt:n tulee vastata tiedostopäätettä kuten LRF, TXT tai EPUB. Jos fmt:a ei ole loogiselle kirjalle, älä tee mitään.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -432,14 +432,14 @@ calibredb show_metadata [vaihtoehdot] id
 .UNINDENT
 .UNINDENT
 .sp
-Näytä tietokannan metatiedot id:n mukaiselle kirjalle.
+Näytä tietokannan metadata id:n mukaiselle kirjalle.
 Saat listan id:istä haulla.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-Tulosta metatiedot OPF\-muodossa (XML)
+Tulosta metadata OPF\-muodossa (XML)
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
@@ -453,23 +453,23 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Asettaa calibre\-tietokantaan tallennetut metatiedot kirjalle, joka on tunnistettu
+Asettaa calibre\-tietokantaan tallennetun metadatan kirjalle, joka on tunnistettu
 book_id OPF\-tiedostosta metadata.opf. book_id on kirjan tunnistenumero hakukomennosta.
 Voit tutustua nopeasti OPF\-muotoon käyttämällä komentoa
 \-\-as\-opf switch show_metadata\-komentoa. Voit myös asettaa
-yksittäisten kenttien metatiedot \-\-field\-vaihtoehdolla. Jos käytät \-\-field\-vaihtoehtoa,
+yksittäisten kenttien metadatan \-\-field\-vaihtoehdolla. Jos käytät \-\-field\-vaihtoehtoa,
 silloin ei tarvitse määrittää OPF\-tiedostoa.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Täytettävä kenttä. Muoto on kentän_nimi:arvo \- esimerkiksi: \fI\%\-\-field\fP tags:täsi1,tägi2. Käytä \fI\%\-\-list\-fields\fP listataksesi kaikki kenttänimet. Voit asettaa useita arvoja useiden kenttien määrittämiseksi. Huom: Kielille on käytettävä ISO639\-koodia (eli en englannille, fr ranskalle jne). Tunnusten syntaksi on \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Kyllä/ei\-kentille käytetään true ja false tai yes ja no.
+Asetettava kenttä. Muoto on kentän_nimi:arvo, esimerkiksi: \fI\%\-\-field\fP tagit:tagi1,tagi2. Käytä \fI\%\-\-list\-fields\fP saadaksesi luettelon kaikista kenttien nimistä. Voit määrittää tämän vaihtoehdon useita kertoja asettaaksesi useita kenttiä. Huomautus: Kielissä on käytettävä ISO639\-kielikoodeja (esim. en englannille, fi suomelle jne.). Tunnisteiden syntaksi on \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Boolean (kyllä/ei) \-kenttien kohdalla käytä true ja false tai yes ja no.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Luettele metatietokenttien nimet, joita voidaan käyttää \fB\-\-field\-asetuksen\fP kanssa
+Luettele metadatakenttien nimet, joita voidaan käyttää \fB\-\-field\-asetuksen\fP kanssa
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -484,11 +484,11 @@ calibredb export [options] ids
 .UNINDENT
 .sp
 Vie id:llä määritetyt kirjat (pilkuilla erotettu luettelo) tiedostojärjestelmään.
-Vientitoiminto tallentaa kaikki kirjan muodot, kannen ja metatiedot (
+Vientitoiminto tallentaa kaikki kirjan formaatit, kannen ja metadata(
 OPF\-tiedostossa). Myös kirjaan liittyvät ylimääräiset datatiedostot tallennetaan.
 Saat tunnusnumerot hakukomennosta.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -497,32 +497,32 @@ Vie kaikki kirjat tietokannasta, nimerttyjä id:itä ei huomioida.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Have calibre convert all non English characters into English equivalents for the file names. This is useful if saving to a legacy filesystem without full support for Unicode filenames. Valinta poistaa toiminnon.
+Pyydä Calibrea muuntamaan kaikki muut kuin englanninkieliset merkit englanninkielisiksi vastineiksi tiedostonimille. Tämä on hyödyllistä, jos tallennetaan vanhaan tiedostojärjestelmään, jossa ei ole täyttä tukea Unicode\-tiedostonimille. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normally, calibre will save the cover in a separate file along with the actual e\-book files. Valinta poistaa toiminnon.
+Normaalisti calibre tallentaa kannen erilliseen tiedostoon varsinaisten e\-kirjatiedostojen kanssa. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-extra\-files
-Save any data files associated with the book when saving the book Valinta poistaa toiminnon.
+Tallenna kaikki kirjaan liittyvät datatiedostot kirjaa tallennettaessa Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normally, calibre will update the metadata in the saved files from what is in the calibre library. Makes saving to disk slower. Valinta poistaa toiminnon.
+Normaalisti calibre päivittää tallennettujen tiedostojen metadatan calibre\-kirjastossa olevien tietojen perusteella. Tekee tallentamisesta levylle hitaampaa. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normally, calibre will write the metadata into a separate OPF file along with the actual e\-book files. Valinta poistaa toiminnon.
+Normaalisti calibre kirjoittaa metatiedot erilliseen OPF\-tiedostoon varsinaisten e\-kirjatiedostojen mukana. Valinta poistaa toiminnon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-formats
-Comma separated list of formats to save for each book. By default all available formats are saved.
+Pilkulla erotettu luettelo kunkin kirjan tallennettavista formaateista. Oletuksena kaikki käytettävissä olevat muodot tallennetaan.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -532,7 +532,7 @@ Raportoi eteneminen
 .INDENT 0.0
 .TP
 .B \-\-replace\-whitespace
-Replace whitespace with underscores.
+Korvaa välilyönnit alleviivauksilla.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -542,12 +542,12 @@ Vie kaikki kirjat yhteen kansioon
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to control the filename and folder structure of the saved files. Default is \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP which will save books into a per\-author subfolder with filenames containing title and author. Available controls are: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Malli, jolla ohjataan tallennettujen tiedostojen tiedostonimeä ja kansiorakennetta. Oletusarvo on \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP, joka tallentaa kirjat kirjailijakohtaiseen alikansioon, jonka tiedostonimet sisältävät otsikon ja kirjailijan. Käytettävissä olevat ohjaimet ovat: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timefmt
-The format in which to display dates. %d \- day, %b \- month, %m \- month number, %Y \- year. Default is: %b, %Y
+Muoto, jossa päivämäärät näytetään. %d \- päivä, %b \- kuukausi, %m \- kuukauden numero, %Y \- vuosi. Oletusarvo on: %b, %Y
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +557,7 @@ Vie kirjat määrättyyn kansioon. Oletus on .
 .INDENT 0.0
 .TP
 .B \-\-to\-lowercase
-Convert paths to lowercase.
+Muunna polut pieniksi kirjaimiksi.
 .UNINDENT
 .SH CATALOG
 .INDENT 0.0
@@ -577,11 +577,11 @@ Note that different \fBcatalog\fP formats support different sets of options. To
 see the different options, specify the name of the output file and then the
 \-\-help option.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Pilkuin erotettu lista luettelon tietokanta\-ID:istä. Jos käytössä, \fI\%\-\-search\fP ohitetaan. Oletus: all
+Pilkulla erotettu luettelo luetteloitavista tietokantatunnuksista. Jos tyhjennetty \fB\-\-haku\fP jätetään huomiotta. Oletusarvo: kaikki
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -597,97 +597,97 @@ Näytä detaljoidut viennin tiedot. Hyödyksi virheenetsinnässä
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Title of generated catalog used as title in metadata. Default: \fB\(aq\fPMy Books\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Luodun luettelon otsikko, jota käytetään metatietojen otsikkona. Oletus: \fB\(aq\fPMy Books\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-tulostusmuodot
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Luo ristiviittauksia Tekijät\-osiossa kirjoille, joilla on useita kirjoittajia. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-tulostusmuodot
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tallenna muuntoputken eri vaiheiden tuotokset määritettyyn kansioon. Hyödyllinen, jos et ole varma, missä vaiheessa muuntoprosessia virhe ilmenee. Oletus: \fB\(aq\fPNone\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-tulostusmuodot
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Regex kuvailee tageja, jotka suljetaan pois lajityyppeinä. Oletus: \fB\(aq\fP[.+]|^+$\fB\(aq\fP sulkee pois suluissa olevat tagit, esimerkiksi \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, ja \fB\(aq\fP+\fB\(aq\fP, joka on luettujen kirjojen oletustagi. Koskee: AZW3\-, EPUB\- ja MOBI\-tulostusmuodot
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
+Määrittää säännöt, joiden avulla kirjat jätetään pois luodusta luettelosta. Poissulkemissäännön malli on joko (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTagit\fB\(aq\fP,\fB\(aq\fP<pilkulla erotettu luettelo tunnisteista>\fB\(aq\fP) tai (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<muokattu sarake>\fB\(aq\fP,\fB\(aq\fP<malli>\fB\(aq\fP). Esim: ((\fB\(aq\fPArkistoidut kirjat\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArkistoitu\fB\(aq\fP),) sulkee pois kirjan, jonka arvo on \fB\(aq\fPArkistoitu\fB\(aq\fP mukautetussa sarakkeessa \fB\(aq\fPstatus\fB\(aq\fP\&. Kun useita sääntöjä on määritelty, kaikkia sääntöjä sovelletaan. Oletusarvo:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sisällytä \fB\(dq\fPTekijät\fB\(dq\fP\-osio luetteloon. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sisällytä luetteloon kuvaukset\-osio. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sisällytä \fB\(dq\fPLajityypit\fB\(dq\fP\-osio luetteloon. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sisällytä luetteloon Äskettäin lisätyt\fB\(dq\fP \-osio. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sisällytä \fB\(dq\fPSarja\fB\(dq\fP\-osio luetteloon. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Sisällytä \fB\(dq\fPOtsikot\fB\(dq\fP\-osio luetteloon. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Source field for \fB\(aq\fPGenres\fB\(aq\fP section. Default: \fB\(aq\fPTagit\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Lähdekenttä \fB\(dq\fPTyylilajit\fB\(dq\fP\-osiossa. Oletus: \fB\(aq\fPTagit\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-Custom field containing note text to insert in Description header. Default: \fB\(aq\fP\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Mukautettu kenttä, joka sisältää kuvausotsikkoon lisättävän huomautustekstin. Oletus: \fB\(aq\fP\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] määrittely:  <custom field> Mukautettu kenttä, joka sisältää huomautuksia, jotka yhdistetään kommentteihin  [before|after] Huomautusten sijoittaminen suhteessa kommentteihin  [True|False] \- Huomautusten ja kommenttien väliin lisätään vaakasuora viiva Oletus: \fB\(aq\fP::\fB\(aq\fP Sovelletaan: AZW3\-, EPUB\- ja MOBI\-lähtömuotoihin
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specifies the output profile. In some cases, an output profile is required to optimize the catalog for the device. For example, \fB\(aq\fPkindle\fB\(aq\fP or \fB\(aq\fPkindle_dx\fB\(aq\fP creates a structured Table of Contents with Sections and Articles. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Määrittää lähtöprofiilin. Joissakin tapauksissa tarvitaan lähtöprofiili luettelon optimoimiseksi laitetta varten. Esimerkiksi \fB\(aq\fPkindle\fB\(aq\fP tai \fB\(aq\fPkindle_dx\fB\(aq\fP luo jäsennellyn sisällysluettelon, jossa on jaksoja ja artikkeleita. Oletus: \fB\(aq\fPNone\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Specifies the rules used to include prefixes indicating read books, wishlist items and other user\-specified prefixes. The model for a prefix rule is (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). When multiple rules are defined, the first matching rule will be used. Default: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
+Määrittää säännöt, joita käytetään luettuja kirjoja, toivomuslistan kohteita ja muita käyttäjän määrittämiä etuliitteitä osoittavien etuliitteiden sisällyttämiseen. Etuliitesäännön malli on (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Kun useita sääntöjä on määritelty, käytetään ensimmäistä vastaavaa sääntöä. Oletusarvo: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preset
-Use a named preset created with the GUI catalog builder. A preset specifies all settings for building a catalog. Default: \fB\(aq\fPNone\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Käytä nimettyä esiasetusta, joka on luotu GUI\-luettelon rakentajalla. Esiasetus määrittää kaikki luettelon rakentamiseen tarvittavat asetukset. Oletus: \fB\(aq\fPNone\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Size hint (in inches) for book covers in catalog. Range: 1.0 \- 2.0 Default: \fB\(aq\fP1.0\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Kokovihje (tuumina) kirjojen kansia varten luettelossa. Valikoima: 1.0 \- 2.0 Oletus: \fB\(aq\fP1.0\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-existing\-cover
-Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Korvaa nykyinen kansi luetteloa laadittaessa. Oletus: \fB\(aq\fPFalse\fB\(aq\fP Koskee: AZW3\-, EPUB\- ja MOBI\-lähtöformaatteja
 .UNINDENT
 .SH SAVED_SEARCHES
 .INDENT 0.0
@@ -713,7 +713,7 @@ Syntaksi poistoon:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -729,7 +729,7 @@ calibredb add_custom_column [options] otsikko nimi tietotyyppi
 Luo mukautettu sarake. Otsikko on koneystävällinen nimi sarakkeelle. Se ei saa sisältää välilyöntejä tai pisteitä.  Nimi on ihmisystävällinen nimi sarakkeelle.
 tietotyyppi on jokin näistä: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
@@ -738,7 +738,7 @@ Lista vaihtohtoja tämän sarakkeen tietojen käsittelyyn. Tämä on JSON lausek
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-Tämä sarake tallentaa tagi\-tietoja (eli useita pilkuin erotettuja arvoja). Käytössä vain jos tietotyyppi on teksti.
+Tähän sarakkeeseen tallennetaan tunnisteiden kaltaisia tietoja (eli useita pilkulla erotettuja arvoja). Sovelletaan vain, jos tietotyyppi on teksti.
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -754,7 +754,7 @@ calibredb custom_columns [options]
 .sp
 Luettelo käytettävissä olevista sarakkeista. Näyttää sarakkeiden otsikot ja id:t.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -775,7 +775,7 @@ calibredb remove_custom_column [Options] \-tunniste
 Poista tunnisteen määrittämä mukautettu sarake. Näet käytettävissä olevat
 sarakkeet, joissa on custom_columns\-komento.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -798,7 +798,7 @@ Saat luettelon tunnuksista hakukomennolla.
 Voit saada luettelon mukautetuista sarakenimistä käyttämällä custom_columns
 komentoa.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -816,16 +816,16 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Palauttaa tämän tietokannan OPF\-tiedostoihin tallennetuista metatiedoista kussakin
+Palauttaa tämän tietokannan OPF\-tiedostoihin tallennetuista metadatasta kussakin
 calibre\-kirjaston kansiossa. Tämä on hyödyllistä, jos metadata.db\-tiedosto on
 on vioittunut.
 .sp
 VAROITUS: Tämä komento uusii tietokantasi kokonaan. Menetät
-kaikki tallennetut haut, käyttäjäkategoriat, liitäntätaulut, tallennetut kirjakohtaiset muunnokset
-asetukset ja mukautetut reseptit. Palautetut metatiedot ovat vain niin tarkkoja kuin
+kaikki tallennetut haut, käyttäjäkategoriat, plugboardit, tallennetut kirjakohtaiset muunnokset
+asetukset ja mukautetut reseptit. Palautettu metadata on vain niin tarkka kuin
 kuin mitä OPF\-tiedostoissa on.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -845,7 +845,7 @@ calibredb check_library [options]
 .sp
 Tarkastaa kirjaston tiedostorakennetta. Raportit ovat invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -884,9 +884,9 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 Tuota raportti tietokannan luokkatiedoista.
-Tiedot vastaavat Tag\-selaimessa näkyviä tietoja.
+Tiedot vastaavat Tagiselaimessa näkyviä tietoja.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -924,14 +924,14 @@ Yksitäisen rivin maksimipituus. Oletusarvona käytetään näytön kokoa.
 .UNINDENT
 .UNINDENT
 .sp
-Varmuuskopioi tietokantaan tallennetut metatiedot yksittäisiin OPF\-tiedostoihin kussakin
+Varmuuskopioi tietokantaan tallennettu metadata yksittäisiin OPF\-tiedostoihin kussakin
 kirjat\-kansiossa. Tämä tapahtuu yleensä automaattisesti, mutta voit suorittaa tämän
 komennon pakottamaan OPF\-tiedostojen uudelleenluonti \-\-all\-vaihtoehdolla.
 .sp
 Huomaa, että tätä ei yleensä tarvitse tehdä, koska OPF\-tiedostot varmuuskopioidaan
-automaattisesti aina, kun metatietoja muutetaan.
+automaattisesti aina, kun metadataa muutetaan.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -955,7 +955,7 @@ samat mukautetut sarakkeet, virtuaalikirjastot ja muut asetukset kuin nykyisess�
 Kloonattu kirjasto ei sisällä kirjoja. Jos haluat luoda täydellisen kaksoiskappaleen, mukaan lukien
 kaikki kirjat, niin kopioi Kirjasto\-kansio tiedostojärjestelmän työkaluilla.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -968,13 +968,13 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Päivitä varsinaisten kirjatiedostojen metatiedot calibre\-kirjaston tietokannan metatietojen mukaisiksi. Yleensä metatiedot päivitetään vain vietäessä tiedostoja ulos calibresta, mutta näin voit muokata olemassa olevia tiedostoja. Huomaa, että eri formaatit sallivat erilaisia metatietoja. Voit käyttää valitsinta \(aqall\(aq kaikkien kirjojen metatietojen päivittämiseen. Voit myös osoittaa useita kirjoja id:illä ja id\-väleillä osoitettuna väliviivoilla. Esimerkiksi calibredb \fBembed_metadata\fP 1 2 10\-15 23
+Päivitä varsinaisten kirjatiedostojen metadata calibre\-kirjaston tietokannan metadataa mukaisiksi. Yleensä metadata päivitetään vain vietäessä tiedostoja ulos calibresta, mutta näin voit muokata olemassa olevia tiedostoja. Huomaa, että eri formaatit sallivat erilaista metadataa. Voit käyttää valitsinta \(aqkaikki\(aq kaikkien kirjojen metadatan päivittämiseen. Voit myös määrittää monien kirjojen id:t väleillä erotettuna ja id\-alueita väliviivoilla. Esimerkiksi calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Päivitä vain määritetyn tiedostotyypin metatiedot. Määrittele tarvittaessa useampia tiedostoformaatteja. Oletuksena päivitetään kaikki formaatit.
+Päivitä vain määritetyn tiedostotyypin metadata. Määrittele tarvittaessa useampia tiedostoformaatteja. Oletuksena päivitetään kaikki formaatit.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -989,12 +989,12 @@ calibredb search [options] search expression
 .UNINDENT
 .sp
 Etsii kirjastosta määritetyn hakusanan ja palauttaa pilkulla erotellun
-listan kirjojen tunnuksista, jotka vastaavat hakulauseketta. Tulostusmuoto on hyödyllinen
+listan kirjojen tunnuksista, jotka vastaavat hakulauseketta. Lähtömuoto on hyödyllistä
 syöttää muihin komentoihin, jotka hyväksyvät syötteenä listan tunnuksia.
 .sp
 Hakulauseke voi olla mitä tahansa Calibren tehokkaasta hakukyselystäkielestä, esimerkiksi: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
@@ -1049,7 +1049,7 @@ koko kirjasto indeksoidaan uudelleen.
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
@@ -1072,9 +1072,9 @@ calibredb fts_search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Tee kokotekstihaku koko kirjastosta tai sen osajoukosta.
+Tee täysi tekstihaku koko kirjastosta tai sen osajoukosta.
 .sp
-Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
