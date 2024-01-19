@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Januar 05, 2024" "7.3.0" "calibre"
+.TH "CALIBREDB" "1" "Januar 19, 2024" "7.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -245,14 +245,14 @@ Heading for the template column. Default: template. This option is ignored if th
 .sp
 .nf
 .ft C
-calibredb add [options] file1 file2 file3 ...
+calibredb add [Optionen] Datei1 Datei2 Datei3\ …
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Hinzufügen der angegebenen Dateien als Bücher zur Datenbank.
+Sie können auch Verzeichnisse angeben \- vergleichen Sie hierfür die auf Verzeichnisse bezogenen Optionen unten.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -283,7 +283,7 @@ Leeres Buch hinzufügen (ein Buch ohne Formate)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Kennungen für dieses Buch festlegen, z. B.  \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -317,7 +317,7 @@ Titel der hinzugefügten Bücher festlegen
 .UNINDENT
 .SS HINZUFÜGEN VON ORDNERN
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Optionen, um das Hinzufügen von Büchern aus Verzeichnissen zu steuern. Standardmäßig werden nur Dateien mit Dateinamenerweiterungen bekannter eBook\-Dateitypen hinzugefügt.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -377,7 +377,7 @@ Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Füge die Datei als zusätzliche Datendatei zum Buch hinzu, kein E\-Book\-Format
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -848,7 +848,7 @@ Kommagetrenne Liste von Berichten. Standardeinstellung: alle
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Die Volltextsuchdatenbank aufräumen. Dies kann sehr langsam und arbeitsspeicherlastig sein, je nach Größe der Datenbank.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -1021,12 +1021,12 @@ Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Die Geschwindigkeit der Indizierung. Verwende schnell für schnelles Indizieren unter Verwendung der gesamten Rechnerkapazität und langsam für weniger rechenlastiges Indizieren. Beachte, dass die Geschwindigkeit nach jedem Aufruf auf langsam zurückgesetzt wird.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Warte bis alle Bücher indiziert sind, zeige Indizierungsprozess periodisch
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0

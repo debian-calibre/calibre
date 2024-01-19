@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "CALIBRE" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 calibre \- calibre
 .INDENT 0.0
@@ -35,24 +35,36 @@ calibre \- calibre
 .sp
 .nf
 .ft C
-calibre [options] [path_to_ebook or calibre url ...]
+calibre [options] [path_to_ebook tai calibre url ...]
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
-path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
-different actions, than just adding books. For example:
+Käynnistetään :command:
+.nf
+\(ga
+.fi
+calibre\(gan graafinen pääkäyttöliittymä ja lisätään e\-kirja valinnaisesti
+path_to_ebook tietokantaan. Voit myös määrittää :command:
+.nf
+\(ga
+.fi
+calibre\(gan URL\-osoitteet erilaisten tehtävien suorittamiseksi,
+kuin vain kirjojen lisääminen. Esim:
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Will open the book with id 1842 in the EPUB format from the library
-\(dqtest_library\(dq in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
-libraries with spaces replaced by underscores. A full description of the
-various URL based actions is in the User Manual.
+Avaa kirjaston EPUB\-muodossa olevan kirjan, jonka tunniste on 1842
+\(dqtest_library\(dq :command:
+.nf
+\(ga
+.fi
+calibre\(gan E\-kirjojen katseluohjelmassa. Kirjastojen nimet ovat kansioiden nimiä
+kirjastossa, joissa välilyönnit on korvattu alleviivauksilla. Täydellinen kuvaus
+URL\-osoitteisiin perustuvista eri toiminnoista löytyy käyttöoppaasta.
 .sp
-Whenever you pass arguments to \fBcalibre\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBcalibre\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH [VALINNAT]
 .INDENT 0.0
 .TP
@@ -67,7 +79,7 @@ näytä tämä ohjeviesti ja poistu
 .INDENT 0.0
 .TP
 .B \-\-ignore\-plugins
-Ignore custom plugins, useful if you installed a plugin that is preventing calibre from starting
+Ohita mukautetut laajennukset, hyödyllinen, jos olet asentanut laajennuksen, joka estää calibrea käynnistymästä
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -87,7 +99,7 @@ Käynnistä ilmoitusalueelle pienennettynä.
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Ignored, do not use. Present only for legacy reasons
+Ohitettu, ei saa käyttää. Käytetään vain perinteisistä syistä
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -97,7 +109,7 @@ näytä ohjelman versionumero ja poistu
 .INDENT 0.0
 .TP
 .B \-\-with\-library
-Use the library located at the specified path.
+Käytä kirjastoa, joka sijaitsee määritetyssä polussa.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

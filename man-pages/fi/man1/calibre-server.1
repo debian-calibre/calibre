@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "tammikuuta 05, 2024" "7.3.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "tammikuuta 19, 2024" "7.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -41,102 +41,102 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Käynnistä calibren sisältöpalvelin. Calibre Content \-palvelin esittää
+calibre\-kirjastot internetin kautta. Voit määrittää polun kirjastoon
+kansiot argumentteina \fBcalibre\-server\fP\-komentoon. Jos et määritä mitään polkuja, kaikkia
+kirjastoja, jotka calibren pääohjelma tuntee, käytetään.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Aina kun annat \fBcalibre\-server\fP:lle argumentteja, joissa on välilyöntejä, sulje argumentit lainausmerkkeihin. Esimerkiksi: \(dq/some path/with spaces\(dq
 .SH [VALINNAT]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Polku käyttöoikeuslokitiedostoon. Tämä loki sisältää tietoja asiakkaista, jotka muodostavat yhteyden palvelimeen ja tekevät pyyntöjä. Oletusarvoisesti pääsylokia ei tehdä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Aika (sekunteina), jonka kuluessa palvelimelta odotetaan vastausta kyselyjä tehtäessä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
+Valitse käytettävä todennustyyppi.  Asettaa palvelimen käyttämän HTTP\-todennustilan. Aseta arvoksi \fB\(dq\fPbasic\fB\(dq\fP, jos asetat tämän palvelimen SSL\-välityspalvelimen taakse. Muussa tapauksessa jätä arvoksi \fB\(dq\fPauto\fB\(dq\fP, joka käyttää \fB\(dq\fPbasic\fB\(dq\fP\-tunnistusta, jos SSL on määritetty, muuten se käyttää \fB\(dq\fPdigest\fB\(dq\fP\-tunnistusta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+Lataa palvelin automaattisesti uudelleen, kun lähdekoodi muuttuu. Hyödyllinen kehitystyössä. Myös sammutusaikakatkaisulle kannattaa määrittää pieni arvo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Kieltoon liittyvien kirjautumisvirheiden määrä.     Kirjautumishäiriöiden määrä, jonka jälkeen IP\-osoite kielletään
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Kiellä IP\-osoitteet, joilla on toistuvia kirjautumishäiriöitä.      Kieltää tilapäisesti pääsyn IP\-osoitteilta, joilla on toistuvia kirjautumishäiriöitä määritetyn minuuttimäärän aikana. Hyödyllinen salasanojen arvausyritysten estämiseksi. Jos arvoksi asetetaan nolla, estoja ei aseteta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Valitse kirjaluettelon oletustila.  Aseta oletuskirjaluettelotila, jota käytetään uusille käyttäjille. Yksittäiset käyttäjät voivat ohittaa oletusarvon omissa asetuksissaan. Oletuksena käytetään kansiruutua.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Vähimmäiskoko, jonka kohdalla vastauksissa käytetään tiedonpakkausta (tavuina).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Polku JSON\-tiedostoon, joka sisältää mukautetun kirjaluettelotilan mallin. Helpoin tapa luoda tällainen mallitiedosto on siirtyä kohtaan Asetukset\-> Jakaminen verkon kautta\-> Kirjaluettelomalli Calibressä, luoda malli ja viedä se.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Suorita prosessi taustalla demonina (vain Linux).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Rajoita näytettäviä käyttäjän määrittämiä kenttiä.  Pilkulla erotettu luettelo käyttäjän määrittämistä metadatakentistä, jotka sisältöpalvelin näyttää /opds\- ja /mobile\-näkymissä. Jos määrität tämän vaihtoehdon, luettelon ulkopuolisia kenttiä ei näytetä. Esimerkiksi: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+Socketin esivaraus, esimerkiksi systemd:n socket\-aktivoinnilla. Oletusarvoisesti tämä vaihtoehto on käytössä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Salasanapohjainen todennus palvelimeen pääsemiseksi.        Normaalisti palvelin on rajoittamaton, joten kuka tahansa voi käyttää sitä. Voit rajoittaa pääsyn ennalta määritettyihin käyttäjiin tällä vaihtoehdolla. Oletuksena tämä vaihtoehto on poistettu käytöstä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Palaa automaattisesti havaittuun liitäntään.        Jos palvelin ei jostain syystä pysty sitoutumaan listen_on\-vaihtoehdossa määritettyyn rajapintaan, se yrittää löytää rajapinnan, joka muodostaa yhteyden ulkomaailmaan, ja sitoutuu siihen. Oletusarvoisesti tämä vaihtoehto on käytössä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Salli muutosten tekeminen paikallisille yhteyksille, joita ei ole todennettu.       Jos et ota todennusta käyttöön, palvelin toimii tavallisesti vain lukutilassa, jotta nimettömät käyttäjät eivät voi tehdä muutoksia calibre\-kirjastoihin. Tämän vaihtoehdon avulla kuka tahansa, joka muodostaa yhteyden samalta tietokoneelta, jolla palvelin toimii, voi tehdä muutoksia. Tämä on hyödyllistä, jos haluat käyttää palvelinta ilman todennusta, mutta käyttää calibredb:tä silti muutosten tekemiseen calibre\-kirjastoihin. Huomaa, että tämän vaihtoehdon ottaminen käyttöön tarkoittaa, että mikä tahansa tietokoneella käynnissä oleva ohjelma voi tehdä muutoksia calibre\-kirjastoihin. Oletuksena tämä vaihtoehto on poistettu käytöstä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+HTTP 404 (ei löydy) \-pyyntöjen kirjaaminen.         Normaalisti palvelin kirjaa kaikki HTTP\-pyynnöt, jotka koskevat resursseja, joita ei löydy. Tämä voi tuottaa paljon lokiroskapostia, jos palvelimesi on bottien kohteena. Voit poistaa sen käytöstä tällä vaihtoehdolla. Oletusarvoisesti tämä vaihtoehto on käytössä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Ilmoita OPDS\-syötteet BonJourin kautta.     Ilmoita OPDS\-syötteet BonJour\-palvelun kautta, jotta OPDS\-pohjaiset lukusovellukset voivat tunnistaa palvelimen ja muodostaa siihen yhteyden automaattisesti. Oletusarvoisesti tämä vaihtoehto on käytössä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Nollakopiointi tiedoston siirrot lisäävät suorituskykyä.    Tämä käyttää ytimen sisäisiä nollakopiointisiirtoja, kun tiedostoja lähetetään verkon kautta, mikä parantaa suorituskykyä. Se voi kuitenkin aiheuttaa korruptoituneita tiedostojen siirtoja joissakin viallisissa tiedostojärjestelmissä. Jos tiedostojen siirrot ovat korruptoituneita, kytke se pois päältä. Oletusarvoisesti tämä vaihtoehto on käytössä.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,112 +146,112 @@ näytä tämä ohjeviesti ja poistu
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Ohitetut käyttäjän määrittämät metatietokentät.     Pilkulla erotettu luettelo käyttäjän määrittämistä metatietokentistä, joita sisältöpalvelin ei näytä /opds\- ja /mobile\-näkymissä. Esimerkiksi: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for IPv4 connections from the local machine, or to \fB\(dq\fP0.0.0.0\fB\(dq\fP to listen to all incoming IPv4 connections.
+Rajapinta, jolla yhteyksiä kuunnellaan.     Oletuksena on kuunnella kaikkia käytettävissä olevia IPv6\- ja IPv4\-rajapintoja. Voit muuttaa tämän esimerkiksi muotoon \fB\(dq\fP127.0.0.1\fB\(dq\fP, jos haluat kuunnella vain IPv4\-yhteyksiä paikallisesta koneesta, tai \fB\(dq\fP0.0.0.0\fB\(dq\fP, jos haluat kuunnella kaikkia saapuvia IPv4\-yhteyksiä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+Polku palvelimen lokitiedostoon. Tämä loki sisältää palvelimen tietoja ja virheitä, ei käyttöpäiväkirjoja. Oletusarvoisesti se kirjoitetaan stdoutiin.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+Hallitse tietokantaa käyttäjistä, joilla on oikeus muodostaa yhteys tähän palvelimeen. Voit käyttää sitä automaattisessa tilassa lisäämällä \-\-. Katso lisätietoja osoitteesta calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help. Katso myös vaihtoehto \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Yksittäisen HTTP\-otsikon enimmäiskoko (KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Tehtäväprosessien enimmäisaika.     Tehtäväprosessien sallittu enimmäiskesto (minuutteina). Asetetaan nollaan, jos rajoitusta ei ole.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Tehtäväprosessien enimmäismäärä.    Tehtäväprosessit käynnistetään tarpeen mukaan, ja niitä käytetään suuriin tehtäviin, kuten kirjan valmisteluun katselua varten, kirjojen lisäämiseen, muuntamiseen jne. Tavallisesti tällaisten prosessien enimmäismäärä perustuu suorittimen ytimien määrään. Voit hallita sitä tällä asetuksella.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Lokitiedoston enimmäiskoko (MB).    Palvelimen tuottamien lokitiedostojen enimmäiskoko. Kun loki kasvaa tätä suuremmaksi, se kiertyy automaattisesti. Aseta nollaksi, jos haluat poistaa lokin pyörittämisen käytöstä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Kirjojen enimmäismäärä OPDS\-syötteissä.     Kirjojen enimmäismäärä, jonka palvelin palauttaa yhdessä OPDS\-hankintasyötteessä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Ryhmittämättömien kohteiden enimmäismäärä OPDS\-syötteissä.  Ryhmittele kohteet kategorioihin, kuten kirjoittaja/tagit alkukirjaimen mukaan, kun kohteita on enemmän kuin tämä määrä. Nollan asettaminen poistaa käytöstä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Palvelimelle ladattavien tiedostojen suurin sallittu koko (MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Yhdellä sivulla näytettävien kirjojen määrä.        Selaimessa yhdellä sivulla näytettävien kirjojen määrä.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pidfile
-Write process PID to the specified file
+Kirjoita prosessin PID määritettyyn tiedostoon
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+Portti, jossa yhteyksiä kuunnellaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Polku JSON\-tiedostoon, joka sisältää URL\-osoitteet \fB\(dq\fPEtsi internetistä\fB\(dq\fP \-toimintoa varten. Helpoin tapa luoda tällainen tiedosto on mennä kohtaan Asetukset\-> Jakaminen netin kautta\-> Etsi internetistä Calibressa, luoda URL\-osoitteet ja viedä ne.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Kokonaisaika sekunteina odotettaessa puhdasta sammutusta.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Polku SSL\-sertifikaattitiedostoon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Polku SSL:n yksityiseen avaintiedostoon.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Aika (sekunteina), jonka jälkeen käyttämätön yhteys suljetaan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Salli tiettyjen IP\-osoitteiden ei\-autentikoitujen yhteyksien tehdä muutoksia.       Jos et ota todennusta käyttöön, palvelin toimii tavallisesti vain lukutilassa, jotta nimettömät käyttäjät eivät voi tehdä muutoksia calibre\-kirjastoihin. Tämä vaihtoehto sallii kaikkien määritetyistä IP\-osoitteista tulevien yhteydenottajien tehdä muutoksia. Täytyy olla pilkulla erotettu luettelo osoite\- tai verkkomäärityksistä. Tämä on hyödyllinen, jos haluat käyttää palvelinta ilman todennusta, mutta käyttää calibredb:tä silti muutosten tekemiseen calibre\-kirjastoihin. Huomaa, että tämän vaihtoehdon ottaminen käyttöön tarkoittaa, että kuka tahansa, joka muodostaa yhteyden määritetyistä IP\-osoitteista, voi tehdä muutoksia calibre\-kirjastoihin.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Kaikkiin URL\-osoitteisiin liitettävä etuliite.      Hyödyllinen, jos haluat käyttää tätä palvelinta käänteisen välityspalvelimen takana. Käytä esimerkiksi URL\-osoitteen etuliitteenä /calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
+Polku todennuksessa käytettävään käyttäjätietokantaan. Tietokanta on SQLite\-tiedosto. Sen luomiseen käytetään \fI\%\-\-manage\-users\fP\&. Voit lukea lisää käyttäjien hallinnasta osoitteessa: \fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -261,7 +261,7 @@ näytä ohjelman versionumero ja poistu
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Pyyntöjen käsittelyyn käytettävien työsäikeiden määrä.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
