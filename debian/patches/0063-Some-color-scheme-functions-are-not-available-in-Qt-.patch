@@ -1,0 +1,40 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 9 Feb 2024 18:55:16 +0900
+Subject: Some color scheme functions are not available in Qt 6.4
+
+Forwarded: not-needed
+
+colorScheme/colorSchemeChanged will be available from Qt 6.5 .
+Current Debian Qt6 version is 6.4.2 .
+---
+ src/calibre/gui2/palette.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/gui2/palette.py b/src/calibre/gui2/palette.py
+index 3227f7f..42d8789 100644
+--- a/src/calibre/gui2/palette.py
++++ b/src/calibre/gui2/palette.py
+@@ -250,13 +250,12 @@ class PaletteManager(QObject):
+     @property
+     def use_dark_palette(self):
+         app = QApplication.instance()
+-        system_is_dark = app.styleHints().colorScheme() == Qt.ColorScheme.Dark
++        system_is_dark = False
+         return self.color_palette == 'dark' or (self.color_palette == 'system' and system_is_dark)
+ 
+     def setup_styles(self):
+         if self.using_calibre_style:
+             app = QApplication.instance()
+-            app.styleHints().colorSchemeChanged.connect(self.color_scheme_changed)
+             self.set_dark_mode_palette() if self.use_dark_palette else self.set_light_mode_palette()
+             QApplication.instance().setAttribute(Qt.ApplicationAttribute.AA_SetPalette, True)
+ 
+@@ -388,7 +387,7 @@ QTabBar::tab:only-one {
+         if ismacos:
+             from calibre_extensions.cocoa import set_appearance
+             set_appearance(self.color_palette)
+-        system_is_dark = QApplication.instance().styleHints().colorScheme() == Qt.ColorScheme.Dark
++        system_is_dark = False
+         is_dark = self.color_palette == 'dark' or (self.color_palette == 'system' and system_is_dark)
+         pal = dark_palette() if is_dark else light_palette()
+         self.set_palette(pal)
