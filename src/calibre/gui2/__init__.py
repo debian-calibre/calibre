@@ -427,6 +427,10 @@ def create_defs():
     defs['show_notes_in_tag_browser'] = False
     defs['icons_on_right_in_tag_browser'] = True
     defs['cover_browser_narrow_view_position'] = 'automatic'
+    defs['dark_palette_name'] = ''
+    defs['light_palette_name'] = ''
+    defs['dark_palettes'] = {}
+    defs['light_palettes'] = {}
 
     def migrate_tweak(tweak_name, pref_name):
         # If the tweak has been changed then leave the tweak in the file so
@@ -1140,7 +1144,7 @@ class Application(QApplication):
         self.file_event_hook = None
         if override_program_name:
             args = [override_program_name] + args[1:]
-        self.palette_manager = PaletteManager(gprefs['color_palette'], gprefs['ui_style'], force_calibre_style, headless)
+        self.palette_manager = PaletteManager(force_calibre_style, headless)
         if headless:
             args.extend(('-platformpluginpath', plugins_loc, '-platform', 'headless'))
         else:
@@ -1680,3 +1684,23 @@ def timed_print(*a, **kw):
     if not hasattr(timed_print, 'startup_time'):
         timed_print.startup_time = monotonic()
     print(f'[{monotonic() - timed_print.startup_time:.2f}]', *a, **kw)
+
+
+def local_path_for_resource(qurl: QUrl, base_qurl: 'QUrl | None' = None) -> str:
+    import re
+
+    def fix_qt_bodging_windows_paths(path: str) -> str:
+        # When loading <img src="file:///c:/path/to/img.png"> Qt gives us the
+        # URL: //c/path/to/img.png  Le bubbling sigh
+        if iswindows and re.match(r'//[a-zA-Z]/', path) is not None and not os.path.exists(path):
+            path = os.path.normpath(path[2] + ':' + path[3:])
+        return path
+
+    if base_qurl and qurl.isRelative():
+        qurl = base_qurl.resolved(qurl)
+
+    if qurl.isLocalFile():
+        return fix_qt_bodging_windows_paths(qurl.toLocalFile())
+    if qurl.isRelative():  # this means has no scheme
+        return fix_qt_bodging_windows_paths(qurl.path())
+    return ''

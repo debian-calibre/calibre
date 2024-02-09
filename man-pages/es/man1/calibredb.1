@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "enero 19, 2024" "7.4.0" "calibre"
+.TH "CALIBREDB" "1" "febrero 09, 2024" "7.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,14 +41,14 @@ calibredb orden [opciones] [argumentos]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP es la interfaz de línea de órdenes para la base de datos de Calibre. Tiene varias subórdenes que se documentan a continuación.
+\fBcalibredb\fP es la interfaz de línea de órdenes para la base de datos de calibre. Tiene varias subórdenes que se documentan a continuación.
 .sp
-\fBcalibredb\fP puede usarse para manipular una base de datos de Calibre especificada por una ruta de acceso o un servidor de contenidos de Calibre que esté ejecutándose en el equipo local o a través de internet. Puede iniciar un servidor de contenidos de Calibre mediante el programa \fBcalibre\-server\fP o, en el programa principal de Calibre, pulsando Conectar y compartir > Iniciar servidor de contenidos\&. Puesto que \fBcalibredb\fP puede realizar cambios en las bibliotecas de Calibre, debe configurar la autenticación en el servidor previamente. Hay dos maneras de hacerlo:
+\fBcalibredb\fP puede usarse para manipular una base de datos de calibre especificada por una ruta de acceso o un servidor de contenidos de calibre que esté ejecutándose en el equipo local o a través de internet. Puede iniciar un servidor de contenidos de calibre mediante el programa \fBcalibre\-server\fP o, en el programa principal de calibre, pulsando Conectar y compartir > Iniciar servidor de contenidos\&. Puesto que \fBcalibredb\fP puede realizar cambios en las bibliotecas de calibre, debe configurar la autenticación en el servidor previamente. Hay dos maneras de hacerlo:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Si tiene pensado conectar sólo con un servidor que se ejecute en el mismo equipo, puede usar simplemente la opción \fB\-\-enable\-local\-write\fP del servidor de contenidos, para permitir que cualquier programa, incluido \fBcalibredb\fP, que se ejecute en el equipo local pueda hacer cambios en los datos de Calibre. Al ejecutar el servidor desde el programa principal de Calibre, esta opción está en Preferencias > Compartir por la red > Avanzado\&.
+Si tiene pensado conectar sólo con un servidor que se ejecute en el mismo equipo, puede usar simplemente la opción \fB\-\-enable\-local\-write\fP del servidor de contenidos, para permitir que cualquier programa, incluido \fBcalibredb\fP, que se ejecute en el equipo local pueda hacer cambios en los datos de calibre. Al ejecutar el servidor desde el programa principal de calibre, esta opción está en Preferencias > Compartir por la red > Avanzado\&.
 .IP \(bu 2
 Si quiere activar el acceso remoto por internet, debería configurar cuentas de usuario en el servidor y usar las opciones \fI\%\-\-username\fP y \fI\%\-\-password\fP de \fBcalibredb\fP para darle acceso. Puede configurar la autenticación de usuarios para \fBcalibre\-server\fP usando la opción \fB\-\-enable\-auth\fP y \fB\-\-manage\-users\fP para crear las cuentas de usuario. Si ejecuta el servidor desde el programa principal de calibre, use Preferencias > Compartir por la red > Requerir nombre de usuario y contraseña\&.
 .UNINDENT
@@ -123,22 +123,22 @@ mostrar este mensaje de ayuda y terminar
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Ruta a la biblioteca de Calibre. De manera predeterminada se usa la ruta almacenada en las preferencias. También puede conectar a un servidor de contenidos de Calibre para ejecutar acciones sobre bibliotecas remotas. Para ello use un URL de la forma \fI\%http://hostname:port/#library_id\fP\&. Por ejemplo, \fI\%http://localhost:8080/#mylibrary\fP\&. «id_de_biblioteca» es el identificador de la biblioteca con la que quiere conectar en el servidor de contenidos. Puede usar el valor especial «\-» para id_de_biblioteca para obtener una lista de identificadores de biblioteca disponibles en el servidor. Para más detalles sobre cómo configurar el acceso mediante el servidor de contenidos, vea \fI\%https://manual.calibre\-ebook.com/es/generated/es/calibredb.html\fP
+Ruta a la biblioteca de calibre. De manera predeterminada se usa la ruta almacenada en las preferencias. También puede conectar a un servidor de contenidos de calibre para ejecutar acciones sobre bibliotecas remotas. Para ello use un URL de la forma \fI\%http://hostname:port/#library_id\fP\&. Por ejemplo, \fI\%http://localhost:8080/#mylibrary\fP\&. «id_de_biblioteca» es el identificador de la biblioteca con la que quiere conectar en el servidor de contenidos. Puede usar el valor especial «\-» para id_de_biblioteca para obtener una lista de identificadores de biblioteca disponibles en el servidor. Para más detalles sobre cómo configurar el acceso mediante el servidor de contenidos, vea \fI\%https://manual.calibre\-ebook.com/es/generated/es/calibredb.html\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Contraseña para conectar con un servidor de contenidos de Calibre. Para leer la contraseña de la entrada estándar, use el valor especial: <stdin>. Para leer la contraseña de un archivo, use: <f:/path/to/file> (es decir, <f: seguido de la ruta de acceso completa al fichero y > al final). Los paréntesis angulares son necesarios, no olvide escaparlos o usar las comillas adecuadas en el intérprete de órdenes.
+Contraseña para conectar con un servidor de contenidos de calibre. Para leer la contraseña de la entrada estándar, use el valor especial: <stdin>. Para leer la contraseña de un archivo, use: <f:/path/to/file> (es decir, <f: seguido de la ruta de acceso completa al fichero y > al final). Los paréntesis angulares son necesarios, no olvide escaparlos o usar las comillas adecuadas en el intérprete de órdenes.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-El tiempo máximo de espera, en segundos, al conectar con Calibre por la red. El valor predeterminado es dos minutos.
+El tiempo máximo de espera, en segundos, al conectar con calibre por la red. El valor predeterminado es dos minutos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username
-Nombre de usuario para conectar con un servidor de contenidos de Calibre
+Nombre de usuario para conectar con un servidor de contenidos de calibre
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -157,7 +157,7 @@ calibredb list [opciones]
 .UNINDENT
 .UNINDENT
 .sp
-Lista de los libros disponibles en la base de datos de Calibre.
+Lista de los libros disponibles en la base de datos de calibre.
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -208,12 +208,12 @@ El campo por el que ordenar los resultados. Puede especificar varios campos sepa
 .INDENT 0.0
 .TP
 .B \-\-template
-La plantilla a ejecutar si «template» aparece en la lista de campos. Predeterminada: Ninguna
+La plantilla que se ejecutará si \fB\(dq\fPtemplate\fB\(dq\fP está en la lista de campos. Predeterminado: Ninguno
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Ruta a un archivo que contiene la plantilla a ejecutar si «template» aparece en la lista de campos. Predeterminada: Ninguna
+Ruta a un archivo que contiene la plantilla que se ejecutará si \fB\(dq\fPtemplate\fB\(dq\fP está en la lista de campos. Predeterminado: Ninguno
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -391,7 +391,8 @@ calibredb show_metadata [opciones] ID
 .UNINDENT
 .UNINDENT
 .sp
-Muestra los metadatos almacenados en la base de datos de Calibre para el libro identificado por ID. ID es un identificador de la orden «search».
+Muestra los metadatos almacenados en la base de datos de calibre para el libro identificado por id.
+id es un número de identificación del comando de búsqueda.
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -422,7 +423,11 @@ El campo a modificar. El formato es nombre_de_campo:valor, por ejemplo: \fI\%\-\
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Lista los nombres de campo de metadatos que pueden usarse con la opción \fI\%\-\-field\fP
+Lista los nombres de campo de metadatos que pueden usarse con la :option:
+.nf
+\(ga
+.fi
+\-\-opci\(gaón campo
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -436,7 +441,10 @@ calibredb export [opciones] ID
 .UNINDENT
 .UNINDENT
 .sp
-Exportar los libros especificados por los ID (una lista de identificadores separados por comas) al sistema de archivos. La operación de exportación guarda todos los formatos del libro, su portada y metadatos (en un archivo OPF). Se guarda también cualquier archivo de datos adicional asociado con el libro. Se pueden obtener los números ID con la orden «search».
+Exporte los libros especificados por identificadores (una lista separada por comas) al sistema de archivos.
+La operación de exportación guarda todos los formatos del libro, su portada y metadatos (en
+un archivo OPF). También se guardan todos los archivos de datos adicionales asociados con el libro.
+Puede obtener números de identificación desde el comando de búsqueda.
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -447,12 +455,12 @@ Exportar todos los libros de la base de datos, ignorando el listado de ID.
 .INDENT 0.0
 .TP
 .B \-\-dont\-asciiize
-Hacer que Calibre convierta todos los caracteres no ASCII en sus equivalentes ASCII para los nombres de archivo. Esto es útil si se guarda en sistemas de archivos antiguos que no tienen compatibilidad completa con nombres de archivo Unicode. Si se especifica esta opción, se desactiva este comportamiento.
+Hacer que calibre convierta todos los caracteres no ASCII en sus equivalentes ASCII para los nombres de archivo. Esto es útil si se guarda en sistemas de archivos antiguos que no tienen compatibilidad completa con nombres de archivo Unicode. Si se especifica esta opción, se desactiva este comportamiento.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normalmente, Calibre guardará la portada en un archivo separado, junto con los archivos de libro electrónico. Si se especifica esta opción, se desactiva este comportamiento.
+Normalmente, calibre guardará la portada en un archivo separado, junto con los archivos de libro electrónico. Si se especifica esta opción, se desactiva este comportamiento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -462,12 +470,12 @@ Guardar todos los archivos de datos asociados con el libro al guardar el libro S
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normalmente, Calibre actualizará los metadatos en los archivos guardados según los datos presentes en la biblioteca de Calibre. Esto hace que el guardado en disco sea más lento. Si se especifica esta opción, se desactiva este comportamiento.
+Normalmente, calibre actualizará los metadatos en los archivos guardados según los datos presentes en la biblioteca de calibre. Esto hace que el guardado en disco sea más lento. Si se especifica esta opción, se desactiva este comportamiento.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normalmente, Calibre escribirá los metadatos en un archivo OPF separado, junto con los archivos de libro electrónico. Si se especifica esta opción, se desactiva este comportamiento.
+Normalmente, calibre escribirá los metadatos en un archivo OPF separado, junto con los archivos de libro electrónico. Si se especifica esta opción, se desactiva este comportamiento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -721,7 +729,7 @@ calibredb remove_custom_column [opciones] etiqueta
 .UNINDENT
 .UNINDENT
 .sp
-Elimina la columna personalizada identificada por «etiqueta». Puede ver
+Elimina la columna personalizada identificada por etiqueta. Puede ver
 las columnas disponibles con la orden «custom_columns»
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
@@ -763,7 +771,7 @@ calibredb restore_database [options]
 .UNINDENT
 .sp
 Recupera la base de datos a partir de los metadatos almacenados en los
-archivos OPF en cada carpeta de la biblioteca de Calibre. Esto resulta útil
+archivos OPF en cada carpeta de la biblioteca de calibre. Esto resulta útil
 si su archivo metadata.db se ha dañado.
 .sp
 ADVERTENCIA: Esta orden regenera completamente la base de datos. Se perderán
@@ -836,7 +844,7 @@ Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre c
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Lista de los nombres de consulta de las categorías, separados por comas. Valor predeterminado: all
+Lista separada por comas de nombres de búsqueda de categorías.  Predeterminado: todos
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -918,8 +926,8 @@ calibredb embed_metadata [opciones] ID
 .UNINDENT
 .sp
 Actualizar los metadatos en los archivos de libro almacenados en la biblioteca
-de Calibre a partir de los metadatos en la base de datos de Calibre. Normalmente,
-los metadatos se actualizan únicamente cuando se exportan los libros de Calibre,
+de calibre a partir de los metadatos en la base de datos de calibre. Normalmente,
+los metadatos se actualizan únicamente cuando se exportan los libros de calibre,
 esta orden es útil si quiere actualizar los archivos de origen. Tenga en cuenta que
 los distintos formatos admiten diferentes tipos de metadatos. Puede usar el valor
 especial \(aqall\(aq para ID, para actualizar los metadatos de todos los libros. También
@@ -946,7 +954,7 @@ calibredb search [opciones] expresión de búsqueda
 .sp
 Busca la expresión de búsqueda especificada en la biblioteca y devuelve una lista separada por comas de ID de libros que coinciden con la expresión. El formato de la salida puede usarse como entrada par otras órdenes que admiten una lista de ID.
 .sp
-La expresión de búsqueda puede ser cualquiera aceptada por el potente lenguaje de búsquedas de Calibre, por ejemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+La expresión de búsqueda puede ser cualquiera aceptada por el potente lenguaje de búsquedas de calibre, por ejemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1014,7 +1022,7 @@ Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre c
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Buscar sólo palabras exactas, no similares. De manera que «correction» no coincidirá con «correcting».
+Buscar sólo palabras exactas, no similares. De manera que corrección no coincidirá con corrigiendo.
 .UNINDENT
 .INDENT 0.0
 .TP

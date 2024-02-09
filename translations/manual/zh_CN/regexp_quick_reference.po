@@ -8,18 +8,18 @@
 # Hoilc <fyxyzhc@qq.com>, 2018
 # Andrew Chen <751970186@qq.com>, 2018
 # Pengcheng Guo <gpc2843661009@gmail.com>, 2020
-# tony shen <anthanny@hotmail.com>, 2020
 # Junle Wang, 2022
+# tony shen <anthanny@hotmail.com>, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 5.35.0\n"
+"Project-Id-Version: calibre 7.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
+"POT-Creation-Date: 2024-02-07 01:54+0000\n"
 "PO-Revision-Date: 2017-12-15 03:02+0000\n"
-"Last-Translator: Junle Wang, 2022\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/calibre/teams/19337/zh_CN/)\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/calibre/teams/19337/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +34,7 @@ msgstr "正则表达式语法速查"
 msgid ""
 "This checklist summarizes the most commonly used/hard to remember parts of "
 "the regexp engine available in most parts of calibre."
-msgstr ""
+msgstr "这份清单总结了最常用/最难记住的正则表达式引擎部件，这些部件可在Calibre的大多数部件中使用。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:10
 msgid "Contents"
@@ -191,7 +191,7 @@ msgstr "``.``"
 msgid ""
 "Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
 "regexp modifier to include the newline character."
-msgstr ""
+msgstr "除换行符以外的任何字符。使用“.all”复选框或``(?s)``正则表达式修饰符来包含换行符。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:78
 msgid "The quantifiers"
@@ -264,7 +264,7 @@ msgstr "介于0和包含的最大值之间的出现次数"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:109
 msgid "Greed"
-msgstr ""
+msgstr "Greed"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:111
 msgid ""
@@ -273,12 +273,13 @@ msgid ""
 "first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
 "same expression, the result can be unpredictable."
 msgstr ""
+"默认情况下，对于量词，正则表达式引擎是贪婪的：它尽可能多地扩展选择。起初，这往往会引起意外。“？”跟随一个量词使其变懒。避免将两者放在同一个表达式中，结果可能是不可预测的。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:116
 msgid ""
 "Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
 "exponentially increases processing time."
-msgstr ""
+msgstr "小心嵌套的量词，例如模式“（a*）*”，因为它会成倍地增加处理时间。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:120
 msgid "Alternation"
@@ -288,7 +289,7 @@ msgstr "交替"
 msgid ""
 "The ``|`` character in a regular expression is a logical ``OR``. It means "
 "that either the preceding or the following expression can match."
-msgstr ""
+msgstr "正则表达式中的“|”字符是逻辑“OR”。这意味着前面的表达式或下面的表达式都可以匹配。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:126
 msgid "Exclusion"
@@ -300,7 +301,7 @@ msgstr "方法 1"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:130
 msgid "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
-msgstr ""
+msgstr "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:132
 msgid "Example:"
@@ -308,14 +309,14 @@ msgstr "例如："
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:134
 msgid "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
-msgstr ""
+msgstr "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:136
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:144
 msgid ""
 "selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
 "\"Blabla\"."
-msgstr ""
+msgstr "选择Blabla，在字符串Blabla或“Blabla or Blabla”中，但不在“Blabla”中。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:138
 msgid "Method 2"
@@ -323,11 +324,11 @@ msgstr "方法 2"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:140
 msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
-msgstr ""
+msgstr "``pattern_to_exclude\\K|(pattern_to_select)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:142
 msgid "``\"Blabla\"\\K|(Blabla)``"
-msgstr ""
+msgstr "``\"Blabla\"\\K|(Blabla)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:147
 msgid "Anchors"
@@ -348,7 +349,7 @@ msgid ""
 "Designates a word boundary, i.e. a transition from space to non-space "
 "character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
 "not ``absurd``."
-msgstr ""
+msgstr "指定单词边界，即从空格字符到非空格字符的转换。例如，您可以使用“\\bssurd”来匹配“the surd”，但不能使用“荒谬”。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:159
 msgid "``^``"
@@ -378,33 +379,34 @@ msgid ""
 "engines, it also allows you to get rid of this limit by writing the "
 "equivalent of a positive lookbehind of variable length."
 msgstr ""
+"将所选内容的起始位置重置为其在阵列中的位置。一些正则表达式引擎（但不是calibre）不允许可变长度的lookbacking，尤其是使用量词。当您可以将“\\K”与这些引擎一起使用时，它还允许您通过编写可变长度的正查找表来消除这一限制。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:172
 msgid "Groups"
-msgstr ""
+msgstr "组"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:177
 msgid "``(expression)``"
-msgstr ""
+msgstr "``(表达式)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:175
 msgid ""
 "Capturing group, which stores the selection and can be recalled later in the"
 " *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
 "number of the capturing group (starting at 1 in reading order)"
-msgstr ""
+msgstr "捕获组，它存储所选内容，并可稍后在*搜索*或*替换*模式中用“\\n”调用，其中“n”是捕获组的序列号（按读取顺序从1开始）"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
 msgid "``(?:expression)``"
-msgstr ""
+msgstr "``(?:表达式)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
 msgid "Group that does not capture the selection"
-msgstr ""
+msgstr "未捕获所选内容的组"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:186
 msgid "``(?>expression)``"
-msgstr ""
+msgstr "``(?>表达式)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:183
 msgid ""
@@ -412,20 +414,21 @@ msgid ""
 "passes, and if the rest of the pattern fails, it will not backtrack to try "
 "other combinations with the expression. Atomic groups do not capture."
 msgstr ""
+"Atomic Group：一旦满足表达式，正则表达式引擎就会通过，如果模式的其余部分失败，它将不会回溯以尝试与表达式的其他组合。原子组不会捕获。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:190
 msgid "``(?|expression)``"
-msgstr ""
+msgstr "``(?|表达式)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:189
 msgid ""
 "Branch reset group: the branches of the alternations included in the "
 "expression share the same group numbers"
-msgstr ""
+msgstr "分支重置组：表达式中包含的替换项的分支共享相同的组号"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:196
 msgid "``(?<name>expression)``"
-msgstr ""
+msgstr "``(?<name>表达式)``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
 msgid ""
@@ -433,19 +436,21 @@ msgid ""
 "pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
 "different groups can use the same name."
 msgstr ""
+"名为“name”的组。稍后可以在*search*模式中用“（？P=name）”和在*replace*中用“\\g "
+"<name>”调用所选内容。两个不同的组可以使用相同的名称。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
 msgid "Lookarounds"
-msgstr ""
+msgstr "Lookarounds"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
 msgid "**Lookaround**"
-msgstr ""
+msgstr "**Lookaround**"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
 msgid "**Meaning**"
-msgstr ""
+msgstr "**Meaning**"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
 msgid "``?=``"
@@ -486,6 +491,7 @@ msgid ""
 "satisfied, the regexp engine passes, and if the rest of the pattern fails, "
 "it will not backtrack inside the lookaround to try other combinations."
 msgstr ""
+"Lookahead和lookbehinds不消耗字符，它们为零长度，不捕获。它们是原子组：只要断言得到满足，正则表达式引擎就会通过，如果模式的其余部分失败，它就不会在环视中回溯以尝试其他组合。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:223
 msgid ""
@@ -499,6 +505,7 @@ msgid ""
 "calibre's regexp engine practice, the positive lookbehind behaves in the "
 "same way, and selects only 2, contrary to theory."
 msgstr ""
+"在字符串中查找多个匹配时，在每次匹配尝试的起始位置，后行断言可以检查当前位置之前的字符。因此，在字符串123上，模式“（？<=\\d）\\d”（一个数字前面有一个数字）理论上应该选择2和3。另一方面，“\\d\\K\\d”只能选择2，因为第一次选择后的起始位置正好在3之前，并且没有足够的数字进行第二次匹配。类似地，“\\d（\\d）”只捕获2。在calibre的regexp引擎实践中，正向后行断言的行为与理论相反，只选择2。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:233
 msgid ""
@@ -509,10 +516,11 @@ msgid ""
 "``\\K`` rather than a positive lookbehind when you have a quantifier (or "
 "worse, several) in a capturing group of the positive lookbehind."
 msgstr ""
+"组可以放置在环视区内，但捕获很少有用。然而，如果它是有用的，那么在后行断言中使用量词时就必须非常小心：与没有后行断言相关的贪婪可能会带来令人惊讶的结果。出于这个原因，当你在一个正向后行断言的捕获组中有一个量词（或者更糟的是，几个）时，使用“\\K”而不是正向后行断言。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:240
 msgid "Example of negative lookahead:"
-msgstr ""
+msgstr "负向先行断言示例："
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:242
 msgid "``(?![^<>{}]*[>}])``"
@@ -522,17 +530,17 @@ msgstr "``(?![^<>{}]*[>}])``"
 msgid ""
 "Placed at the end of the pattern prevents to select within a tag or a style "
 "embedded in the file."
-msgstr ""
+msgstr "放置在图案末尾可防止在文件中嵌入的标记或样式中进行选择。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:246
 msgid ""
 "Whenever possible, it is always better to \"anchor\" the lookarounds, to "
 "reduce the number of steps necessary to obtain the result."
-msgstr ""
+msgstr "只要可能，最好“固定”环视，以减少获得结果所需的步骤数。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:250
 msgid "Recursion"
-msgstr ""
+msgstr "Recursion"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
 msgid "``(?R)``"
@@ -549,7 +557,7 @@ msgstr "``(?1)``"
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
 msgid ""
 "Recursion of the only pattern of the numbered capturing group, here group 1"
-msgstr ""
+msgstr "编号捕获组的唯一模式的递归，此处为组1"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:263
 msgid ""
@@ -559,18 +567,19 @@ msgid ""
 "beginning of a new string between double quotation marks, well we know how "
 "to do, and we call ourselves. Then we have a pattern like::"
 msgstr ""
+"递归是在召唤自己。这对于平衡查询非常有用，例如可以包含嵌入的带引号的字符串的引号字符串。因此，如果在处理双引号之间的字符串的过程中，我们遇到双引号之间的新字符串的开头，那么我们知道如何做，我们称之为自己。然后我们就有了类似这样的模式："
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
 msgid ""
 "To select a string between double quotation marks without stopping on an "
 "embedded string::"
-msgstr ""
+msgstr "要在双引号之间选择字符串而不在嵌入的字符串上停止，请执行以下操作："
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:275
 msgid ""
 "This template can also be used to modify pairs of tags that can be embedded,"
 " such as ``<div>`` tags."
-msgstr ""
+msgstr "该模板还可用于修改可嵌入的标签对，例如“<div>”标签。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
 msgid "Special characters"
@@ -586,7 +595,7 @@ msgstr "``\\t``"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
 msgid "tabulation"
-msgstr ""
+msgstr "tabulation"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
 msgid "``\\n``"
@@ -623,6 +632,7 @@ msgid ""
 "(``\\``), to lose their special meaning and become a regular character "
 "again::"
 msgstr ""
+"元字符是那些对正则表达式引擎具有特殊意义的字符。其中，十二必须在前加一个转义符，即反斜杠（``\\``），才能失去其特殊含义，重新成为正则字符："
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:308
 msgid ""
@@ -637,12 +647,13 @@ msgid ""
 "status in a class. Outside the class, the dash is a simple literal, the "
 "closing bracket remains a meta-character."
 msgstr ""
+"如果在类中使用特殊字符（位于括号``[]``之间），它们将失去状态。括号和短划线在类中具有特殊的地位。在类之外，短划线是一个简单的文字，右括号仍然是一个元字符。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:319
 msgid ""
 "The slash (/) and the number sign (or hash character) (#) are not meta-"
 "characters, they don’t need to be escaped."
-msgstr ""
+msgstr "斜杠（/）和数字符号（或哈希字符）（#）不是元字符，它们不需要转义。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:322
 msgid ""
@@ -650,10 +661,11 @@ msgid ""
 "the special status of separator, and must be escaped, or the options "
 "changed. This is not the case in the editor of calibre."
 msgstr ""
+"在一些工具中，如带有Python引擎的regex101.com，双引号具有分隔符的特殊状态，必须转义，或者更改选项。优秀编辑的情况并非如此。"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:327
 msgid "Modes"
-msgstr ""
+msgstr "Modes"
 
 #: ../../__w/calibre/calibre/manual/regexp_quick_reference.rst:330
 msgid "``(?s)``"
@@ -671,4 +683,4 @@ msgstr "``(?m)``"
 msgid ""
 "Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
 "of the start and end of the entire string."
-msgstr ""
+msgstr "使“^”和“$”锚与行的开始和结束匹配，而不是与整个字符串的开始和结尾匹配。"
