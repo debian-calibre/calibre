@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "enero 19, 2024" "7.4.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "febrero 09, 2024" "7.5.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -41,9 +41,9 @@ calibre\-debug [opciones]
 .UNINDENT
 .UNINDENT
 .sp
-Diversas interfaces de línea de órdenes útiles para depurar Calibre. Sin opciones, esta orden inicia un intérprete de Python incrustado. También se pueden iniciar la interfaz gráfica principal de calibre, el visor de libros electrónicos de Calibre y el editor de Calibre en modo de depuración.
+Diversas interfaces de línea de órdenes útiles para depurar calibre. Sin opciones, esta orden inicia un intérprete de Python incrustado. También se pueden iniciar la interfaz gráfica principal de calibre, el visor de libros electrónicos de calibre y el editor de calibre en modo de depuración.
 .sp
-También contiene interfaces para distintos aspectos de Calibre que no tienen herramientas de línea de órdenes específicas, como la reducción de caracteres de tipos de letra, la herramienta de comparación de libros, etc.
+También contiene interfaces para distintos aspectos de calibre que no tienen herramientas de línea de órdenes específicas, como la reducción de caracteres de tipos de letra, la herramienta de comparación de libros, etc.
 .sp
 Se puede usar también \fBcalibre\-debug\fP para ejecutar scripts independientes. Para ello se usa de esta manera:
 .sp
@@ -73,17 +73,17 @@ Depurar detección de dispositivos
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-(Des)registrar Calibre como programa predeterminado de Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+(Des)registrar calibre como programa predeterminado de Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-diff
-Ejecutar la herramienta de comparación de Calibre. Por ejemplo: calibre\-debug \fI\%\-\-diff\fP archivo1 archivo2
+Ejecutar la herramienta de comparación de calibre. Por ejemplo: calibre\-debug \fI\%\-\-diff\fP archivo1 archivo2
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Ejecutar la herramienta para modificar libros de Calibre en modo de depuración.
+Ejecutar la herramienta para modificar libros de calibre en modo de depuración.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -98,7 +98,7 @@ Expandir el libro en la carpeta especificada. Empleo: \-x archivo.epub dir_salid
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportar todos los datos de Calibre (libros, configuración, complementos). Normalmente se le pedirá la carpeta donde exportar y las bibliotecas a exportar. También puede especificarlas como argumentos de línea de órdenes para evitar las preguntas. Use rutas absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las biblietecas. Ejemplos:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/carpeta/de/exportación/vacía /ruta/a/carpeta/de/biblioteca1 /ruta/a/carpeta/de/biblioteca2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /carpeta/de/exportación all # exportar todas las bibliotecas conocidas
+Exportar todos los datos de calibre (libros, configuración, complementos). Normalmente se le pedirá la carpeta donde exportar y las bibliotecas a exportar. También puede especificarlas como argumentos de línea de órdenes para evitar las preguntas. Use rutas absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las biblietecas. Ejemplos:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/carpeta/de/exportación/vacía /ruta/a/carpeta/de/biblioteca1 /ruta/a/carpeta/de/biblioteca2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /carpeta/de/exportación all # exportar todas las bibliotecas conocidas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +128,7 @@ Regenerar un libro previamente expandido. Empleo: \-l dir_salida archivo.epub Im
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-Importar datos de Calibre previamente exportados
+Importar datos de calibre previamente exportados
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -138,7 +138,7 @@ Inspeccionar los archivos MOBI en las rutas especificadas
 .INDENT 0.0
 .TP
 .B \-\-paths
-Mostrar las rutas necesarias para configurar el entorno de Calibre
+Mostrar las rutas necesarias para configurar el entorno de calibre
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +148,7 @@ Ejecutar un complemento que proporciona una interfaz de línea de órdenes. Por 
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Ejecutar los tests nombrados. Usar el valor especial \fB\(dq\fPall\fB\(dq\fP para ejecutar todos los tests. Si el nombre de test empieza por un punto se supone que es un nombre de módulo. Si el nombre de test empieza por @ se supone que es un nombre de categoría.
+Ejecute la prueba(s) nombradas. Utilice el valor especial \fB\(dq\fPtodos\fB\(dq\fP para ejecutar todas las pruebas. Si el nombre de la prueba comienza con un punto, se supone que es el nombre de un módulo. Si el nombre de la prueba comienza con @, se supone que es un nombre de categoría.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -158,7 +158,7 @@ No ejecutar con DEBUG activado
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Cierra una sesión de Calibre que pueda estar abierta. Tenga cuidado, porque si hay tareas en ejecución serán abortadas, úselo con precaución.
+Cierra una sesión de calibre que pueda estar abierta. Tenga cuidado, porque si hay tareas en ejecución serán abortadas, úselo con precaución.
 .UNINDENT
 .INDENT 0.0
 .TP
