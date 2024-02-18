@@ -3,6 +3,12 @@ Date: Mon, 11 Jul 2022 21:28:57 +0900
 Subject: Debian uses "pycryptodomex" instead of "prcryptodome"
 
 Forwarded: not-needed
+
+Debian uses Cryptdome class (pycryptodomex) for cipher functions.
+Cryptodome class can be replacement for old Crypto class (prcryptodome),
+but Debian dose not replace this class yet.
+
+So, this hack is not needed yet.
 ---
  src/calibre/constants.py | 4 ----
  1 file changed, 4 deletions(-)

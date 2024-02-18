@@ -5,7 +5,7 @@ Subject: Fix book store chooser error
 Reproducer:
 1. "Get Books" -> "Choose Stores" from tool button bar
 
-
+----
 Traceback (most recent call last):
   File "/usr/lib/calibre/calibre/gui2/actions/store.py", line 116, in choose
     d = StoreChooserDialog(self.gui)
@@ -19,6 +19,7 @@ Traceback (most recent call last):
     self.results_view = ResultsView(parent=Form)
                         ^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: ResultsView.__init__() got an unexpected keyword argument 'parent'
+----
 ---
  src/calibre/gui2/store/config/chooser/results_view.py | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
