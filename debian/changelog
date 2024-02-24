@@ -1,3 +1,13 @@
+calibre (7.5.1+ds-3) UNRELEASED; urgency=medium
+
+  * Drop qt6-wayland from Recommends section
+    qt6-wayland was recommended since Git 1c1514515d3ae6bbf2b276e09a4fac535acb3478 ,
+    because qt6-wayland was not installed by qt6 dependency.
+    But qt6-wayland is now recommended by libqtgui6 (>= 6.4.2+dfsg-13).
+    Drop redundant words to simplify Recommends list.
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 24 Feb 2024 11:13:10 +0900
+
 calibre (7.5.1+ds-2) unstable; urgency=medium
 
   * Fix book store chooser error
