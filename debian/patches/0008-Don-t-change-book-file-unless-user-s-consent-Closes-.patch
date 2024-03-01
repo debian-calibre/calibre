@@ -13,17 +13,17 @@ for easy sharing".
 * Set "False" for "save_annotations_in_ebook".
 * Give "False" if askes default value of "save_annotations_in_ebook".
 ---
- resources/viewer.js              | 2 +-
- src/calibre/gui2/viewer/main.py  | 2 +-
- src/calibre/gui2/viewer/ui.py    | 2 +-
- src/pyj/read_book/prefs/misc.pyj | 2 +-
+ resources/viewer.js             | 2 +-
+ src/calibre/gui2/viewer/main.py | 2 +-
+ src/calibre/gui2/viewer/ui.py   | 2 +-
+ src/pyj/session.pyj             | 2 +-
  4 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/resources/viewer.js b/resources/viewer.js
-index 356a25b..b33b6af 100644
+index 1bc9acd..1b9178a 100644
 --- a/resources/viewer.js
 +++ b/resources/viewer.js
-@@ -39659,7 +39659,7 @@ return this.__repr__();
+@@ -7415,7 +7415,7 @@ return parser;
              ρσ_d["remember_last_read"] = true;
              ρσ_d["show_actions_toolbar"] = false;
              ρσ_d["show_actions_toolbar_in_fullscreen"] = false;
@@ -33,7 +33,7 @@ index 356a25b..b33b6af 100644
              ρσ_d["singleinstance"] = false;
              ρσ_d["auto_hide_mouse"] = true;
 diff --git a/src/calibre/gui2/viewer/main.py b/src/calibre/gui2/viewer/main.py
-index 4df005c..1051cfb 100644
+index 491e67e..5057390 100644
 --- a/src/calibre/gui2/viewer/main.py
 +++ b/src/calibre/gui2/viewer/main.py
 @@ -44,7 +44,7 @@ def migrate_previous_viewer_prefs():
@@ -46,7 +46,7 @@ index 4df005c..1051cfb 100644
          sd['standalone_misc_settings'] = ms
  
 diff --git a/src/calibre/gui2/viewer/ui.py b/src/calibre/gui2/viewer/ui.py
-index 312d21b..916beb7 100644
+index a493df7..67841e1 100644
 --- a/src/calibre/gui2/viewer/ui.py
 +++ b/src/calibre/gui2/viewer/ui.py
 @@ -706,7 +706,7 @@ class EbookViewer(MainWindow):
@@ -58,11 +58,11 @@ index 312d21b..916beb7 100644
              get_session_pref('sync_annots_user', default='')
          )
  
-diff --git a/src/pyj/read_book/prefs/misc.pyj b/src/pyj/read_book/prefs/misc.pyj
-index 840320f..3255c88 100644
---- a/src/pyj/read_book/prefs/misc.pyj
-+++ b/src/pyj/read_book/prefs/misc.pyj
-@@ -18,7 +18,7 @@ DEFAULTS = {
+diff --git a/src/pyj/session.pyj b/src/pyj/session.pyj
+index e7f19e4..5c75a7e 100644
+--- a/src/pyj/session.pyj
++++ b/src/pyj/session.pyj
+@@ -259,7 +259,7 @@ standalone_reader_defaults = {
      'remember_last_read': True,
      'show_actions_toolbar': False,
      'show_actions_toolbar_in_fullscreen': False,
