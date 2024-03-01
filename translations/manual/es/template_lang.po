@@ -6,7 +6,7 @@
 # Darío Hereñú, 2014-2015
 # David Martínez <jokerdm@gmail.com>, 2015
 # david ruiz <daruc20@gmail.com>, 2015
-# Jellby <jellby@yahoo.com>, 2014-2018,2020-2023
+# Jellby <jellby@yahoo.com>, 2014-2018,2020-2024
 # Jose Antonio Mireles <jantoniomjr.91@gmail.com>, 2015
 # Qualified Projects <drako.cjs@gmail.com>, 2015
 # Walter Paterno <walter.paterno@gmail.com>, 2020-2021,2023
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-07 01:54+0000\n"
+"POT-Creation-Date: 2024-02-28 11:32+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2023\n"
+"Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2024\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -267,7 +267,7 @@ msgid ""
 "the decimal points to line up. For example, you might want the indices 1 and"
 " 2.5 to appear as 01.00 and 02.50 so that they will sort correctly on a "
 "device that does lexical sorting. To do this, use:"
-msgstr "Si usa índices de serie con valores fraccionarios (por ejemplo 1.1), puede querer asegurarse de que los decimales queden alineados. Por ejemplo, puede que los índices 1 y 2.5 aparezcan como 01.00 y 02.50 para que se ordenen correctamente en un dispositivo que utilice un orden lexicográfico. Para ello, use:"
+msgstr "Si usa índices de serie con decimales (por ejemplo 1.1), puede querer asegurarse de que los decimales queden alineados. Por ejemplo, puede que los índices 1 y 2.5 aparezcan como 01.00 y 02.50 para que se ordenen correctamente en un dispositivo que utilice un orden lexicográfico. Para ello, use:"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:101
 msgid ""
@@ -707,7 +707,7 @@ msgstr "``{tags:sublist(-1,0,\\,)}`` devuelve `C`"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:213
 msgid "``{tags:sublist(0,-1,\\,)}`` returns \"A, B\""
-msgstr "``tags:sublist(0,-1,\\,)}`` devuelve `A, B`"
+msgstr "``{tags:sublist(0,-1,\\,)}`` devuelve `A, B`"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:215
 msgid ""
@@ -1088,7 +1088,7 @@ msgstr "``program: 'l.a' in field('series')`` devuelve ``'1'`` si la serie del l
 msgid ""
 "``program: 'science' inlist field('#genre')`` returns ``'1'`` if any of the "
 "book's genres match the regular expression ``science``, e.g., `Science`, "
-"`History of Science`, `Science Fiction` etc.), otherwise ``''``."
+"`History of Science`, `Science Fiction` etc., otherwise ``''``."
 msgstr "``program: 'ciencia' inlist field('#genero')`` devuelve ``'1'`` si alguno de los géneros del libro coincide con la expresión regular ``ciencia`` (por ejemplo `Ciencia`, `Historia de la ciencia`, `Ciencia ficción`, etc.), en caso contrario devuelve ``''``."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:419
@@ -1430,7 +1430,7 @@ msgid ""
 "file ``file_name`` in the book's ``data/`` folder if it exists, otherwise "
 "``-1``. See also the functions ``has_extra_files()``, ``extra_file_names()``"
 " and ``extra_file_modtime()``. This function can be used only in the GUI."
-msgstr "``extra_file_size(nombre_archivo)`` -- devuelve el tamaño en bytes del archivo adicional ``nombre_archivo`` en la carpeta ``data/`` del libro si existe, o ``-1`` en caso contrario. Ver también las funciones ``has_extra_files()``, ``extra_file_names()`` y ``extra­_file_modtime``. Esta función sólo puede usarse en la interfaz gráfica."
+msgstr "``extra_file_size(nombre_archivo)`` -- devuelve el tamaño en bytes del archivo adicional ``nombre_archivo`` en la carpeta ``data/`` del libro si existe, o ``-1`` en caso contrario. Ver también las funciones ``has_extra_files()``, ``extra_file_names()`` y ``extra­_file_modtime()``. Esta función sólo puede usarse en la interfaz gráfica."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:497
 msgid ""
@@ -1442,7 +1442,7 @@ msgid ""
 "seconds since the epoch.  See also the functions ``has_extra_files()``, "
 "``extra_file_names()`` and ``extra_file_size()``. The epoch is OS dependent."
 " This function can be used only in the GUI."
-msgstr "``extra_file_modtime(nombre_archivo, texto_formato)`` -- devuelve la fecha (hora) de modificación del archivo adicional ``nombre_archivo`` en la carpeta ``data/`` del libro si existe, o ``-1`` en caso contrario. El formato de la fecha se especifica en ``texto_formato`` (ver ``format()`` para más detalles). Si ``texto_formato`` es un texto vacío, devuelve la fecha de modificación como un número real de segundos desde el inicio de la época. Ver también las funciones ``has_extra_files()``, ``extra_file_names()`` y ``extra_file_size()``. El inicio de la época depende del sistema operativo. Esta función sólo puede usarse en la interfaz gráfica."
+msgstr "``extra_file_modtime(nombre_archivo, texto_formato)`` -- devuelve la fecha (y hora) de modificación del archivo adicional ``nombre_archivo`` en la carpeta ``data/`` del libro si existe, o ``-1`` en caso contrario. El formato de la fecha se especifica en ``texto_formato`` (ver ``format_date()`` para más detalles). Si ``texto_formato`` es un texto vacío, devuelve la fecha de modificación como un número real de segundos desde el inicio de la época. Ver también las funciones ``has_extra_files()``, ``extra_file_names()`` y ``extra_file_size()``. El inicio de la época depende del sistema operativo. Esta función sólo puede usarse en la interfaz gráfica."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:498
 msgid ""
@@ -2444,7 +2444,7 @@ msgid ""
 "argument, cannot be used in SFM. For example this template, intended to "
 "return the first 5 characters of the series value uppercased, won't work in "
 "SFM::"
-msgstr "Las funciones anidadas, en las que una función invoca a otra función para evaluar un argumento, no pueden usarse en MFU. Por ejemplo, esta plantilla, que pretende devolver los primeros cinco caracteres del valor de la serie convertidos en mayúsculas, no funcionará en MFU::"
+msgstr "Las funciones anidadas, en las que una función invoca a otra función para evaluar un argumento, no pueden usarse en MFU. Por ejemplo, esta plantilla, que pretende devolver los 5 primeros caracteres del valor de la serie convertidos en mayúsculas, no funcionará en MFU::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:845
 msgid ""
@@ -2535,7 +2535,7 @@ msgstr "Creamos un campo compuesto (démosle el nombre de consulta #bb) que cont
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:878
 msgid ""
-"Set the save template to ``{series:lookup(.,#aa,#bb}``. This template "
+"Set the save template to ``{series:lookup(.,#aa,#bb)}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
 "``#bb`` if series is empty. We therefore have two completely different save "
 "paths, depending on whether or not `series` is empty."

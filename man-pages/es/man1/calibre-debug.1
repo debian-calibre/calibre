@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "febrero 09, 2024" "7.5.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "marzo 01, 2024" "7.6.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -98,7 +98,7 @@ Expandir el libro en la carpeta especificada. Empleo: \-x archivo.epub dir_salid
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exportar todos los datos de calibre (libros, configuración, complementos). Normalmente se le pedirá la carpeta donde exportar y las bibliotecas a exportar. También puede especificarlas como argumentos de línea de órdenes para evitar las preguntas. Use rutas absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las biblietecas. Ejemplos:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/carpeta/de/exportación/vacía /ruta/a/carpeta/de/biblioteca1 /ruta/a/carpeta/de/biblioteca2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /carpeta/de/exportación all # exportar todas las bibliotecas conocidas
+Exportar todos los datos de calibre (libros, configuración, complementos). Normalmente se le pedirá la carpeta donde exportar y las bibliotecas a exportar. También puede especificarlas como argumentos de línea de órdenes para evitar las preguntas. Use rutas absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las bibliotecas. Ejemplos:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/carpeta/de/exportación/vacía /ruta/a/carpeta/de/biblioteca1 /ruta/a/carpeta/de/biblioteca2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /carpeta/de/exportación all # exportar todas las bibliotecas conocidas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,7 +148,7 @@ Ejecutar un complemento que proporciona una interfaz de línea de órdenes. Por 
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Ejecute la prueba(s) nombradas. Utilice el valor especial \fB\(dq\fPtodos\fB\(dq\fP para ejecutar todas las pruebas. Si el nombre de la prueba comienza con un punto, se supone que es el nombre de un módulo. Si el nombre de la prueba comienza con @, se supone que es un nombre de categoría.
+Ejecutar las pruebas nombradas. Usar el valor especial «all» para ejecutar todas las pruebas. Si el nombre de la prueba empieza por un punto se supone que es un nombre de módulo. Si el nombre de la prueba empieza por @ se supone que es un nombre de categoría.
 .UNINDENT
 .INDENT 0.0
 .TP

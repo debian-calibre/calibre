@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "febrero 09, 2024" "7.5.1" "calibre"
+.TH "CALIBREDB" "1" "marzo 01, 2024" "7.6.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -123,7 +123,7 @@ mostrar este mensaje de ayuda y terminar
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Ruta a la biblioteca de calibre. De manera predeterminada se usa la ruta almacenada en las preferencias. También puede conectar a un servidor de contenidos de calibre para ejecutar acciones sobre bibliotecas remotas. Para ello use un URL de la forma \fI\%http://hostname:port/#library_id\fP\&. Por ejemplo, \fI\%http://localhost:8080/#mylibrary\fP\&. «id_de_biblioteca» es el identificador de la biblioteca con la que quiere conectar en el servidor de contenidos. Puede usar el valor especial «\-» para id_de_biblioteca para obtener una lista de identificadores de biblioteca disponibles en el servidor. Para más detalles sobre cómo configurar el acceso mediante el servidor de contenidos, vea \fI\%https://manual.calibre\-ebook.com/es/generated/es/calibredb.html\fP
+Ruta a la biblioteca de calibre. De manera predeterminada se usa la ruta almacenada en las preferencias. También puede conectar a un servidor de contenidos de calibre para ejecutar acciones sobre bibliotecas remotas. Para ello use un URL de la forma \fI\%http://servidor:puerto/#id_de_biblioteca\fP; por ejemplo, \fI\%http://localhost:8080/#mislibros\fP\&. «id_de_biblioteca» es el identificador de la biblioteca con la que quiere conectar en el servidor de contenidos. Puede usar el valor especial «\-» para id_de_biblioteca para obtener una lista de identificadores de biblioteca disponibles en el servidor. Para más detalles sobre cómo configurar el acceso mediante el servidor de contenidos, vea \fI\%https://manual.calibre\-ebook.com/es/generated/es/calibredb.html\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -168,7 +168,7 @@ Ordenar los resultados en orden ascendente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Los campos que se mostrarán cuando se listen los libros en la base de datos. Debe ser una lista de campos separada por comas. Campos disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Valor predeterminado: title,authors. El campo especial «all» puede usarse para seleccionar todos los campos. Además de los campos incorporados anteriores, también están disponibles los campos personalizados como *nombre_campo; por ejemplo, para un campo personalizado llamado #puntos, use el nombre: *puntos
+Los campos que se mostrarán cuando se listen los libros en la base de datos. Debe ser una lista de campos separada por comas. Campos disponibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Valor predeterminado: title,authors. El campo especial «all» puede usarse para seleccionar todos los campos. Además de los campos predefinidos anteriores, también están disponibles los campos personalizados como *nombre_campo; por ejemplo, para un campo personalizado llamado #puntos, use el nombre: *puntos
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -208,12 +208,12 @@ El campo por el que ordenar los resultados. Puede especificar varios campos sepa
 .INDENT 0.0
 .TP
 .B \-\-template
-La plantilla que se ejecutará si \fB\(dq\fPtemplate\fB\(dq\fP está en la lista de campos. Predeterminado: Ninguno
+La plantilla a ejecutar si «template» aparece en la lista de campos. Valor predeterminado: None
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Ruta a un archivo que contiene la plantilla que se ejecutará si \fB\(dq\fPtemplate\fB\(dq\fP está en la lista de campos. Predeterminado: Ninguno
+Ruta a un archivo que contiene la plantilla a ejecutar si «template» aparece en la lista de campos. Valor predeterminado: None
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -391,8 +391,7 @@ calibredb show_metadata [opciones] ID
 .UNINDENT
 .UNINDENT
 .sp
-Muestra los metadatos almacenados en la base de datos de calibre para el libro identificado por id.
-id es un número de identificación del comando de búsqueda.
+Muestra los metadatos almacenados en la base de datos de calibre para el libro identificado por ID. ID es un identificador de la orden «search».
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -423,11 +422,7 @@ El campo a modificar. El formato es nombre_de_campo:valor, por ejemplo: \fI\%\-\
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Lista los nombres de campo de metadatos que pueden usarse con la :option:
-.nf
-\(ga
-.fi
-\-\-opci\(gaón campo
+Lista los nombres de campo de metadatos que pueden usarse con la opción \fI\%\-\-field\fP
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -441,10 +436,10 @@ calibredb export [opciones] ID
 .UNINDENT
 .UNINDENT
 .sp
-Exporte los libros especificados por identificadores (una lista separada por comas) al sistema de archivos.
+Exportar los libros especificados por ID (una lista de identificadores separada por comas) al sistema de archivos.
 La operación de exportación guarda todos los formatos del libro, su portada y metadatos (en
 un archivo OPF). También se guardan todos los archivos de datos adicionales asociados con el libro.
-Puede obtener números de identificación desde el comando de búsqueda.
+Se pueden obtener identificación con la orden «search».
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -729,7 +724,7 @@ calibredb remove_custom_column [opciones] etiqueta
 .UNINDENT
 .UNINDENT
 .sp
-Elimina la columna personalizada identificada por etiqueta. Puede ver
+Elimina la columna personalizada identificada por «etiqueta». Puede ver
 las columnas disponibles con la orden «custom_columns»
 .sp
 Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre comillas. Por ejemplo: \(dq/some path/with spaces\(dq
@@ -844,7 +839,7 @@ Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre c
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Lista separada por comas de nombres de búsqueda de categorías.  Predeterminado: todos
+Lista separada por comas de los nombres de consulta de las categorías. Valor predeterminado: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1022,7 +1017,7 @@ Cuando alguno de los argumentos de calibredb contenga espacios, póngalo entre c
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Buscar sólo palabras exactas, no similares. De manera que corrección no coincidirá con corrigiendo.
+Buscar sólo palabras exactas, no similares. De manera que «correction» no coincidirá con «correcting».
 .UNINDENT
 .INDENT 0.0
 .TP

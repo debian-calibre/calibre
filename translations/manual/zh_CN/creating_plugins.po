@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# tony shen <anthanny@hotmail.com>, 2024
 # 子昂 李 <alexdialga@hotmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-21 05:29+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
+"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
+"Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +21,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
-msgstr "编写您自己的插件来延伸Calibre的功能"
+msgstr "编写自己的插件来扩展 calibre 的功能"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
@@ -30,13 +31,13 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr "Calibre是以模块化的形式设计的，其所有功能几乎都以插件的形式实现。这些插件用作于文本转换、新闻（或称之为诀窍）下载，和用户界面的各种组件，来连接到不同的设备，或在将文件添加到Calibre时处理他们等等。您可以在“选项→高级→插件”中完整地得到在Cailbre里已经内建的插件清单。"
+msgstr "Calibre 是以模块化的形式设计的，其所有功能几乎都以插件的形式实现。这些插件用作于文本转换、新闻（或称之为诀窍）下载，和用户界面的各种组件，来连接到不同的设备，或在将文件添加到Calibre时处理他们等等。您可以在“选项→高级→插件”中完整地得到在Cailbre里已经内建的插件清单。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
-msgstr "在此，我们将会教您如何创造您自己的插件，给Calibre添加新的功能。"
+msgstr "在此，我们将会教您如何创造您自己的插件，给Calibre 添加新的功能。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
@@ -48,14 +49,14 @@ msgstr "此功能仅适用于0.8.60或更高的版本。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
-msgstr "Calibre插件的剖析"
+msgstr "Calibre 插件的剖析"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr "一个Calibre插件的组成是非常简单的，其只是一个包含了一些Python代码与一些其他资源文件（如插件所需的贴图文件）的ZIP文件。现在，让我们直入主题，看看一个简单的例子。"
+msgstr "一个Calibre 插件的组成是非常简单的，其只是一个包含了一些Python 代码与一些其他资源文件如插件所需的贴图文件的ZIP 文件。现在，让我们直入主题，看看一个简单的例子。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -65,26 +66,26 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr "假设您已安装了Calibre且将电子文件以不同的格式（如.epub和.mobi）自主出版，而您想将所有从Calibre中产生出来的文件设置其出版者为“Hello world”，那么以下就是方法。创造一个名为‘__init__.py’的文件（这是一个特殊的名字，而且其必须为插件的主文件），且在此文件中写入如下的Python代码："
+msgstr "假设您已安装了Calibre 且将电子文件以不同的格式（如.epub和.mobi）自主出版，而您想将所有从Calibre 中产生出来的文件设置其出版者为“Hello world”，那么以下就是方法。创造一个名为‘__init__.py’的文件，这是一个特殊的名字，而且其必须为插件的主文件，且在此文件中写入如下的Python代码："
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "就这样。 要将此代码作为插件添加到 calibre，只需在创建“__init__.py”的文件夹中运行以下命令即可："
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
-msgstr "在MacOS上，命令行工具位于Calibre包中，例如，如果您将Calibre安装在：file：`/Applications`中，则命令行工具位于：file：`/Applications/calibre.app/Contents/MacOS/`.中。"
+msgstr "在MacOS 上，命令行工具位于Calibre 包中，例如，如果您将Calibre 安装在：file：`/Applications`中，则命令行工具位于：file：`/Applications/calibre.app/Contents/MacOS/`.中。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from "
 ":download_file:`helloworld_plugin.zip`."
-msgstr ""
+msgstr "您可以从 helloworld_plugin.zip 下载 Hello World 插件。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
@@ -92,11 +93,11 @@ msgid ""
 "method will be called and the converted book will have its publisher set to "
 "\"Hello World\". This is a trivial plugin, lets move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr ""
+msgstr "每次您使用 calibre 转换书籍时，都会调用插件的 run 方法，并将转换后的书籍的出版商设置为“Hello World”。 这是一个简单的插件，让我们继续看一个更复杂的示例，该示例实际上向用户界面添加了一个组件。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
-msgstr ""
+msgstr "用户界面插件"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
@@ -105,23 +106,23 @@ msgid ""
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr ""
+msgstr "该插件将分布在几个文件中（以保持代码整洁）。 它将向您展示如何从插件 ZIP 文件获取资源（图像或数据文件）、允许用户配置您的插件、如何在 calibre 用户界面中创建元素以及如何访问和查询 calibre 中的图书数据库。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from :download_file:`interface_demo_plugin.zip`"
-msgstr ""
+msgstr "您可以从“interface_demo_plugin.zip”下载此插件"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr ""
+msgstr "首先要注意的是，这个ZIP文件中有很多文件，解释如下，特别注意``plugin-import-name-interface_demo.txt``。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
 msgid "**plugin-import-name-interface_demo.txt**"
-msgstr ""
+msgstr "**plugin-import-name-interface_demo.txt**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
@@ -131,7 +132,7 @@ msgid ""
 "name-**some_name**.txt``. The presence of this file allows you to import "
 "code from the .py files present inside the ZIP file, using a statement "
 "like::"
-msgstr ""
+msgstr "一个空文本文件，用于启用多文件插件魔法。 该文件必须存在于使用多个 .py 文件的所有插件中。 它应该为空，并且文件名必须采用以下形式：``plugin-import-name-**some_name**.txt``。 该文件的存在允许您使用如下语句从 ZIP 文件内的 .py 文件导入代码："
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
@@ -142,76 +143,76 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr ""
+msgstr "前缀“calibre_plugins”必须始终存在。 ``some_name`` 来自空文本文件的文件名。 ``some_module`` 指的是 ZIP 文件中的 some_module.py 文件。 请注意，此导入与常规 Python 导入一样强大。 您可以在 ZIP 文件内创建 .py 模块的包和子包，就像通常一样（通过在每个子文件夹中定义 __init__.py ），并且一切都应该“正常工作”。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr ""
+msgstr "您用于“some_name”的名称进入由所有插件共享的全局命名空间，**因此请使其尽可能唯一**。 但请记住，它必须是有效的 Python 标识符（只能是字母、数字和下划线）。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "**__init__.py**"
-msgstr ""
+msgstr "**__init__.py**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
-msgstr ""
+msgstr "和以前一样，定义插件类的文件"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "**main.py**"
-msgstr ""
+msgstr "**main.py**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
-msgstr ""
+msgstr "该文件包含执行有用操作的实际代码"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "**ui.py**"
-msgstr ""
+msgstr "**ui.py**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
-msgstr ""
+msgstr "该文件定义了插件的接口部分"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "**images/icon.png**"
-msgstr ""
+msgstr "**images/icon.png**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
-msgstr ""
+msgstr "该插件的图标"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "**about.txt**"
-msgstr ""
+msgstr "**about.txt**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
-msgstr ""
+msgstr "包含有关插件信息的文本文件"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
 msgid "**translations**"
-msgstr ""
+msgstr "**translations**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr ""
+msgstr "包含 .mo 文件的文件夹，其中包含将插件的用户界面翻译成不同语言的文件。 详情请参阅下文。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
-msgstr ""
+msgstr "现在让我们看一下代码。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
-msgstr ""
+msgstr "__init__.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
-msgstr ""
+msgstr "首先，必须使用 __init__.py 来定义插件元数据："
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
@@ -221,142 +222,145 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr ""
+msgstr "唯一值得注意的功能是“actual_plugin”字段。 由于 calibre 同时具有命令行和 GUI 界面，因此像这样的 GUI 插件不应在 __init__.py 中加载任何 GUI 库。 ual_plugin 字段可以为您完成此操作，告诉 calibre 实际插件可以在 ZIP 存档内的另一个文件中找到，该文件只会在 GUI 上下文中加载。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
-msgstr ""
+msgstr "请记住，要使其正常工作，您的插件 ZIP 文件中必须有一个 plugin-import-name-some_name.txt 文件，如上所述。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
-msgstr ""
+msgstr "还有几种方法可以启用插件的用户配置。 这些将在下面讨论。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
-msgstr ""
+msgstr "ui.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
-msgstr ""
+msgstr "现在让我们看一下 ui.py，它定义了实际的 GUI 插件。 源代码有大量注释，应该是不言自明的："
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:220
 msgid "main.py"
-msgstr ""
+msgstr "main.py"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
-msgstr ""
+msgstr "实现界面插件演示对话框的实际逻辑。"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
-msgstr ""
+msgstr "从插件 ZIP 文件获取资源"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
-msgstr ""
+msgstr "calibre 的插件加载系统定义了几个内置函数，使您可以方便地从插件 ZIP 文件中获取文件。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:145
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
 msgid "**get_resources(name_or_list_of_names)**"
-msgstr ""
+msgstr "**get_resources(name_or_list_of_names)**"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
-"file. For example to access the file icon.png in the folder images in the "
-"ZIP file, you would use: ``images/icon.png``. Always use a forward slash as "
-"the path separator, even on Windows. When you pass in a single name, the "
-"function will return the raw bytes of that file or None if the name was not "
-"found in the ZIP file. If you pass in more than one name then it returns a "
-"dict mapping the names to bytes. If a name is not found, it will not be "
-"present in the returned dict."
-msgstr ""
+"file. For example to access the file :file:`icon.png` in the folder images "
+"in the ZIP file, you would use: ``images/icon.png``. Always use a forward "
+"slash as the path separator, even on Windows. When you pass in a single "
+"name, the function will return the raw bytes of that file or None if the "
+"name was not found in the ZIP file. If you pass in more than one name then "
+"it returns a dictionary mapping the names to bytes.  If a name is not found,"
+" it will not be present in the returned dictionary."
+msgstr "应使用 ZIP 文件内文件的路径列表来调用此函数。 例如，要访问 ZIP 文件中图像文件夹中的文件“icon.png”，您可以使用：“images/icon.png”。 始终使用正斜杠作为路径分隔符，即使在 Windows 上也是如此。 当您传入单个名称时，该函数将返回该文件的原始字节，如果在 ZIP 文件中找不到该名称，则返回 None。 如果您传入多个名称，那么它会返回一个将名称映射到字节的字典。 如果未找到名称，则该名称不会出现在返回的字典中。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
-msgid "**get_icons(name_or_list_of_names)**"
-msgstr ""
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:157
+msgid "**get_icons(name_or_list_of_names, plugin_name='')**"
+msgstr "**get_icons(name_or_list_of_names, plugin_name='')**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:151
 msgid ""
-"A convenience wrapper for get_resources() that creates QIcon objects from "
-"the raw bytes returned by get_resources. If a name is not found in the ZIP "
-"file the corresponding QIcon will be null."
-msgstr ""
+"A wrapper for get_resources() that creates QIcon objects from the raw bytes "
+"returned by get_resources. If a name is not found in the ZIP file the "
+"corresponding QIcon will be null. In order to support icon theme-ing, pass "
+"in the human friendly name of your plugin as ``plugin_name``. If the user is"
+" using an icon theme with icons for your plugin, they will be loaded "
+"preferentially."
+msgstr "get_resources() 的包装器，用于根据 get_resources 返回的原始字节创建 QIcon 对象。 如果在 ZIP 文件中找不到名称，则相应的 QIcon 将为空。 为了支持图标主题，请将插件的人类友好名称传递为“plugin_name”。 如果用户使用带有插件图标的图标主题，它们将优先加载。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:152
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:160
 msgid "Enabling user configuration of your plugin"
-msgstr ""
+msgstr "启用插件的用户配置"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:154
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:162
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
-msgstr ""
+msgstr "要允许用户配置您的插件，您必须在插件基类中定义三个方法：**is_customizable**、**config_widget** 和 **save_settings**，如下所示："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:165
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:173
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
-msgstr ""
+msgstr "calibre 有许多不同的方式来存储配置数据（其悠久历史的遗产）。 推荐的方法是使用 **JSONConfig** 类，它将配置信息存储在 .json 文件中。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:167
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:175
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
-msgstr ""
+msgstr "演示插件中管理配置数据的代码位于config.py中："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:172
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:180
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
-msgstr ""
+msgstr "现在可以通过简单的操作在整个插件代码中使用“prefs”对象："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:177
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:185
 msgid "You can see the ``prefs`` object being used in main.py:"
-msgstr ""
+msgstr "您可以看到 main.py 中使用了“prefs”对象："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:184
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:192
 msgid "Edit book plugins"
-msgstr ""
+msgstr "编辑书籍插件"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:186
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
 ":download_file:`editor_demo_plugin.zip`."
-msgstr ""
+msgstr "现在让我们稍微改变一下，看看创建一个插件来向 calibre 书籍编辑器添加工具。 该插件可在此处获取：`editor_demo_plugin.zip`。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:198
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
-msgstr ""
+msgstr "对于所有插件来说，第一步是创建导入名称空 txt 文件，如“上面 <import_name_txt>”所述。 我们将文件命名为“plugin-import-name-editor_plugin_demo.txt”。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:202
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
-msgstr ""
+msgstr "现在我们创建强制性的 __init__.py 文件，其中包含有关插件的元数据 - 它的名称、作者、版本等。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:200
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:208
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
 "the editor. These can have sub-menus in case the tool has multiple related "
 "actions."
-msgstr ""
+msgstr "单个编辑器插件可以提供多个工具，每个工具对应于工具栏中的单个按钮和编辑器中“插件”菜单中的条目。 如果该工具有多个相关操作，这些可以有子菜单。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:204
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -364,30 +368,30 @@ msgid ""
 "``main.py`` from the demo plugin, the source code is heavily commented and "
 "should be self-explanatory. Read the API documents of the "
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
-msgstr ""
+msgstr "这些工具必须全部在插件的“main.py”文件中定义。 每个工具都是一个继承自“calibre.gui2.tweak_book.plugin.Tool”类的类。 让我们看一下演示插件中的“main.py”，源代码有大量注释，应该是不言自明的。 阅读 calibre.gui2.tweak_book.plugin.Tool 类的 API 文档了解更多详细信息。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:214
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
 "various important concepts that you will need in developing your own "
 "plugins, so you should read the (heavily commented) source code carefully."
-msgstr ""
+msgstr "在这里，我们将看到一个工具的定义，该工具将书中的所有字体大小乘以用户提供的数字。 该工具演示了开发自己的插件时需要的各种重要概念，因此您应该仔细阅读（大量注释的）源代码。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:230
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
-msgstr ""
+msgstr "让我们分解一下``main.py``。 我们看到它定义了一个工具，名为*放大字体*。 该工具将要求用户提供一个数字，并将书中所有字体大小乘以该数字。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:226
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:234
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
-msgstr ""
+msgstr "第一件重要的事情是工具名称，您必须将其设置为一些相对唯一的字符串，因为它将用作该工具的密钥。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:229
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -396,18 +400,18 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr ""
+msgstr "下一个重要的入口点是“calibre.gui2.tweak_book.plugin.Tool.create_action”。 此方法创建出现在插件工具栏和插件菜单中的 QAction 对象。 它还可以选择分配用户可以自定义的键盘快捷键。 来自 QAction 的触发信号连接到ask_user() 方法，该方法询问用户字体大小乘数，然后运行放大代码。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:245
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
 "and the editor *Boss* as ``self.boss``. The *Boss* is the object that "
 "controls the editor user interface. It has many useful methods, that are "
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
-msgstr ""
+msgstr "放大代码有很好的注释并且相当简单。 需要注意的主要事情是，您将获得对编辑器窗口的引用“self.gui”，以及编辑器 *Boss* 的引用“self.boss”。 *Boss* 是控制编辑器用户界面的对象。 它有许多有用的方法，记录在“calibre.gui2.tweak_book.boss.Boss”类中。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:243
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:251
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -416,170 +420,148 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr ""
+msgstr "最后，还有“self.current_container”，它是对作为“calibre.ebooks.oeb.polish.container.Container”对象编辑的书籍的引用。 这将本书表示为其组成的 HTML/CSS/图像文件的集合，并且具有执行许多有用操作的便捷方法。 容器对象和可以在插件代码中重用的各种有用的实用程序函数记录在“polish_api”中。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:252
-msgid "Running User Interface plugins in a separate process"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:254
-msgid ""
-"If you are writing a user interface plugin that needs to make use of Qt "
-"WebEngine, it cannot be run in the main calibre process as it is not "
-"possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary folder and run the plugin with that data in a separate "
-"process. A simple example plugin follows that shows how to do this."
-msgstr ""
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:259
+msgid "Adding translations to your plugin"
+msgstr "将翻译添加到您的插件中"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
-"You can download the plugin from :download_file:`webengine_demo_plugin.zip`."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
-msgid "The important part of the plugin is in two functions:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:273
-msgid ""
-"The ``show_demo()`` function asks the user for a URL and then runs the "
-"``main()`` function passing it that URL. The ``main()`` function displays "
-"the URL in a ``QWebEngineView``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
-msgid "Adding translations to your plugin"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
-msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
-msgstr ""
+msgstr "您可以翻译插件中的所有用户界面字符串，并以为主 calibre 用户界面设置的任何语言显示。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:284
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
-msgstr ""
+msgstr "第一步是检查插件的源代码，并通过将所有用户可见的字符串括在 _() 中，将它们标记为可翻译。 例如："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`Poedit <https://poedit.net/>`_ program for this."
-msgstr ""
+msgstr "然后使用一些程序从插件源代码生成 .po 文件。 您要翻译的每种语言都应该有一个 .po 文件。 例如：德语为 de.po，法语为 fr.po 等。 您可以使用“Poedit <https://poedit.net/>”程序来实现此目的。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:294
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
-msgstr ""
+msgstr "将这些 .po 文件发送给您的翻译人员。 取回它们后，将它们编译成 .mo 文件。 您可以再次使用 Poedit 来实现此目的，或者只需执行以下操作："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:299
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
-msgstr ""
+msgstr "将 .mo 文件放入插件的“translations”文件夹中。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
 " this function in those .py files that actually have translatable strings. "
 "So in a typical User Interface plugin you would call it at the top of "
 "``ui.py`` but not ``__init__.py``."
-msgstr ""
+msgstr "最后一步是简单地调用插件 .py 文件顶部的函数“load_translations()”。 出于性能原因，您应该只在那些实际具有可翻译字符串的 .py 文件中调用此函数。 因此，在典型的用户界面插件中，您可以在“ui.py”的顶部调用它，而不是“__init__.py”。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
-"or by running calibre like this::"
-msgstr ""
+"or by running calibre with the ``CALIBRE_OVERRIDE_LANG`` environment "
+"variable set. For example::"
+msgstr "您可以通过在 “首选项->界面->外观” 下更改 calibre 中的用户界面语言或通过设置 ``CALIBRE_OVERRIDE_LANG`` 环境变量集运行 calibre 来测试插件的翻译。 例如："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
-msgstr ""
+msgstr "将“de”替换为您要测试的语言的语言代码。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:295
+msgid ""
+"For translations with plurals, use the ``ngettext()`` function instead of "
+"``_()``. For example::"
+msgstr "对于复数翻译，请使用“ngettext()”函数而不是“_()”。 例如："
+
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
-msgstr ""
+msgstr "插件 API"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
 "each class, including the base class of all plugins can be found in "
 ":ref:`plugins`."
-msgstr ""
+msgstr "正如您在上面可能已经注意到的，calibre 中的插件是一个类。 calibre 中不同类型的插件有不同的类。 每个类的详细信息，包括所有插件的基类，可以在“插件”中找到。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
-msgstr ""
+msgstr "您的插件几乎肯定会使用 calibre 中的代码。 要了解如何在 calibre 代码库中查找各种功能，请阅读有关 calibre“code_layout”的部分。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
-msgstr ""
+msgstr "调试插件"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
-msgstr ""
+msgstr "第一步，也是最重要的一步是在调试模式下运行 calibre。 您可以使用以下命令从命令行执行此操作："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:332
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
-msgstr ""
+msgstr "或者在 calibre 中右键单击“首选项”按钮或使用“Ctrl+Shift+R”键盘快捷键。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
-msgstr ""
+msgstr "从命令行运行时，调试输出将打印到控制台，从 calibre 内运行时，输出将打印到 txt 文件。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr ""
+msgstr "您可以在插件代码中的任何位置插入打印语句，它们将以调试模式输出。 请记住，这是 Python，除了打印语句之外，您实际上不需要任何其他东西来调试；）我仅使用这种调试技术开发了所有 calibre。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
-msgstr ""
+msgstr "您可以使用以下命令行快速测试对插件的更改："
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:343
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
-msgstr ""
+msgstr "这将关闭正在运行的 calibre，等待关闭完成，然后更新 calibre 中的插件并重新启动 calibre。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
-msgstr ""
+msgstr "更多插件示例"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:348
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
-msgstr ""
+msgstr "您可以在“此处 <https://www.mobileread.com/forums/showthread.php?t=118764>”找到许多复杂的 calibre 插件列表。"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
-msgstr ""
+msgstr "与他人分享您的插件"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:353
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
-msgstr ""
+msgstr "如果您想与 calibre 的其他用户分享您创建的插件，请将您的插件发布到“calibre 插件论坛”的新主题中 <https://www.mobileread.com/forums/forumdisplay.php?f=237 >`_。"

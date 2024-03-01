@@ -1223,7 +1223,7 @@ def make_appdata_releases():
         # Formatting of release description tries to resemble that of
         # https://calibre-ebook.com/whats-new while taking into account the limits imposed by
         # https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-description
-        description = E.description(**{'{http://www.w3.org/XML/1998/namespace}lang': 'en'})
+        description = E.description()
         if 'new features' in revision:
             description.append(E.p('New features:'))
             description.append(E.ol(
@@ -1274,6 +1274,7 @@ def write_appdata(key, entry, base, translators):
         E.name(entry['name']),
         E.metadata_license('CC0-1.0'),
         E.project_license('GPL-3.0'),
+        E.developer(E.name('Kovid Goyal'), id='kovidgoyal.net'),
         E.summary(entry['summary']),
         E.content_rating(
             # Information Sharing: Using any online API, e.g. a user-counter

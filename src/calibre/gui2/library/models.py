@@ -22,7 +22,9 @@ from qt.core import (
 from calibre import (
     fit_image, human_readable, isbytestring, prepare_string_for_xml, strftime,
 )
-from calibre.constants import DEBUG, config_dir, dark_link_color, filesystem_encoding
+from calibre.constants import (
+    DEBUG, config_dir, dark_link_color, filesystem_encoding
+)
 from calibre.db.search import CONTAINS_MATCH, EQUALS_MATCH, REGEXP_MATCH, _match
 from calibre.db.utils import force_to_bool
 from calibre.ebooks.metadata import authors_to_string, fmt_sidx, string_to_authors
@@ -915,7 +917,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                             return (text) if force_to_bool(text) is None else None
                     else:
                         def func(idx):
-                            return (fffunc(field_obj, idfunc(idx), default_value=''))
+                            return fffunc(field_obj, idfunc(idx), default_value='')
             elif dt == 'datetime':
                 def func(idx):
                     val = fffunc(field_obj, idfunc(idx), default_value=UNDEFINED_DATE)

@@ -7,15 +7,16 @@
 # Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020
 # JOÃO PEDRO SLONGO, 2020
 # Paulo_Neto <layoutbr@lexxa.com.br>, 2014
+# Marcello Oliveira <marcello.mco@gmail.com>, 2024
 # Patricia de Albuquerque Garcia Redondo <prbioeng@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-10 17:06+0000\n"
+"POT-Creation-Date: 2024-02-28 11:32+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/calibre/calibre/language/pt_BR/)\n"
+"Last-Translator: Marcello Oliveira <marcello.mco@gmail.com>, 2024\n"
+"Language-Team: Portuguese (Brazil) (http://app.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -75,7 +76,7 @@ msgstr "Suponha que você tenha uma instalação de calibre que esteja usando pa
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "Isso é tudo. Para adicionar este código ao Calibre como um plugin, apenas execute o seguinte na pasta na qual foi criado :file:`__init__.py`::"
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
@@ -280,8 +281,8 @@ msgid ""
 "slash as the path separator, even on Windows. When you pass in a single "
 "name, the function will return the raw bytes of that file or None if the "
 "name was not found in the ZIP file. If you pass in more than one name then "
-"it returns a dict mapping the names to bytes.  If a name is not found, it "
-"will not be present in the returned dict."
+"it returns a dictionary mapping the names to bytes.  If a name is not found,"
+" it will not be present in the returned dictionary."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:157
@@ -472,7 +473,8 @@ msgstr ""
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
-"or by running calibre like this::"
+"or by running calibre with the ``CALIBRE_OVERRIDE_LANG`` environment "
+"variable set. For example::"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
@@ -480,11 +482,17 @@ msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:296
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:295
+msgid ""
+"For translations with plurals, use the ``ngettext()`` function instead of "
+"``_()``. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
 msgstr "A API do plugin"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:298
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -492,36 +500,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
 msgstr "Depurando plugins"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:308
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "A primeira e mais importante etapa é executar o calibre no modo de depuração. Você pode fazer isso na linha de comando com::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:312
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:314
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Ao executar a partir da linha de comando, a saída de depuração será impressa no console; ao executar a partir do *Calibre*, a saída irá para um arquivo ``.txt``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -529,33 +537,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "É possível inserir declarações ``print()`` em qualquer lugar do código do plugin, elas serão geradas no modo de depuração. Lembre-se, isso é *Python*, você realmente não precisa de nada além de declarações ``print()`` para depurar ;) Desenvolvi todo o *Calibre* usando apenas esta técnica de depuração."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Você pode testar rapidamente as alterações em seu plug-in usando a seguinte linha de comando::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Isso desligará o calibre em execução, esperará até que o desligamento seja concluído e, em seguida, atualizará o calibre do plug-in e o reiniciará."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
 msgstr "Mais exemplos de plugins"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
 msgstr "Compartilhando seus plugins com os outros"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
+#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
