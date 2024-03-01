@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# tony shen <anthanny@hotmail.com>, 2020
+# tony shen <anthanny@hotmail.com>, 2020,2024
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-23 07:19+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
+"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2024\n"
+"Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +24,7 @@ msgstr "清单的API文档"
 
 #: ../../__w/calibre/calibre/manual/news_recipe.rst:9
 msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
-msgstr "编写清单的API由：class:`BasicNewsRecipe定义`"
+msgstr "编写清单的API由\"BasicNewsRecipe\"定义"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe:1
@@ -33,7 +33,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr ""
+msgstr "包含所有新闻源所需逻辑的基类。 通过逐渐覆盖此类中的更多功能，您可以逐渐制作更加定制/强大的新闻源。 有关创建新闻源的教程介绍，请参阅“新闻”。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -41,14 +41,14 @@ msgid ""
 "Call this method inside any of the preprocess methods to abort the download "
 "for the current article. Useful to skip articles that contain inappropriate "
 "content, such as pure video articles."
-msgstr ""
+msgstr "在任何预处理方法中调用此方法可中止当前文章的下载。 有助于跳过包含不当内容的文章，例如纯视频文章。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
 msgid ""
 "Causes the recipe download system to abort the download of this recipe, "
 "displaying a simple feedback message to the user."
-msgstr ""
+msgstr "导致新闻源下载系统中止此新闻源的下载，并向用户显示一条简单的反馈消息。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
@@ -59,7 +59,7 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr ""
+msgstr "从 populate_article_metadata 调用此方法，并使用文章中 <img>标记的 src 属性，该标记适合用作代表目录中文章的缩略图。 缩略图是否实际使用取决于设备（目前仅由 Kindle 使用）。 注意，引用的图片必须是已成功下载的图片，否则会被忽略。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
@@ -67,7 +67,7 @@ msgid ""
 "If your recipe when converted to EPUB has problems with images when viewed "
 "in Adobe Digital Editions, call this method from within "
 ":meth:`postprocess_html`."
-msgstr ""
+msgstr "如果您的新闻在转换为 EPUB 后在 Adobe Digital Editions 中查看时出现图像问题，请从“postprocess_html”中调用此方法。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
@@ -77,7 +77,7 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr ""
+msgstr "返回一组“url”的规范表示。 默认实现仅使用服务器主机名和 URL 路径，忽略任何查询参数、片段等。规范表示在该新闻源的所有 URL 中必须是唯一的。 如果不是，则内部链接可能无法正确解析。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
@@ -97,14 +97,14 @@ msgstr "参数"
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
 " the URL is the URL used to download an article."
-msgstr ""
+msgstr "如果 URL 来自 HTML 文件中的内部链接，则为 True。 如果 URL 是用于下载文章的 URL，则为 False。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
 msgid ""
 "Called after all articles have been download. Use it to do any cleanup like "
 "logging out of subscription sites, etc."
-msgstr ""
+msgstr "下载完所有文章后调用。 用它来进行任何清理，例如注销订阅网站等。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
@@ -113,19 +113,19 @@ msgid ""
 " since mechanize is not thread safe. The default cloning routines should "
 "capture most browser customization, but if you do something exotic in your "
 "recipe, you should override this method in your recipe and clone manually."
-msgstr ""
+msgstr "克隆浏览器br。 克隆浏览器用于多线程下载，因为 mechanize 不是线程安全的。 默认克隆例程应该捕获大多数浏览器自定义，但如果您在新闻源中做了一些奇怪的事情，则应该在新闻源中覆盖此方法并手动克隆。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
 msgid ""
 "Cloned browser instances use the same, thread-safe CookieJar by default, "
 "unless you have customized cookie handling."
-msgstr ""
+msgstr "默认情况下，克隆的浏览器实例使用相同的线程安全 CookieJar，除非您自定义了 cookie 处理。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
 msgid "Create a generic cover for recipes that don't have a cover"
-msgstr ""
+msgstr "为没有封面的新闻源创建通用封面"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.download:1
@@ -134,7 +134,7 @@ msgid ""
 "method should be called only once on a particular Recipe instance. Calling "
 "it more than once will lead to undefined behavior. :return: Path to "
 "index.html"
-msgstr ""
+msgstr "下载并预处理本新闻源中提要中的所有文章。 该方法只能在特定的 Recipe 实例上调用一次。 多次调用它会导致未定义的行为。 index.html 的路径"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
@@ -142,7 +142,7 @@ msgid ""
 "Extracts main article content from 'html', cleans up and returns as a "
 "(article_html, extracted_title) tuple. Based on the original readability "
 "algorithm by Arc90."
-msgstr ""
+msgstr "从“html”中提取主要文章内容，进行清理并以（article_html，extracted_title）元组形式返回。 基于Arc90原创的可读性算法。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
@@ -154,7 +154,7 @@ msgid ""
 "for the original link (for feeds syndicated via a service like FeedBurner or"
 " Pheedo) and if found, returns that or else returns `article.link "
 "<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
-msgstr ""
+msgstr "在子类中重写以自定义指向每篇文章内容的“URL”的提取。 返回文章网址。 它通过“article”来调用，“article”是一个表示来自提要的已解析文章的对象。 请参阅“feedparser <https://pythonhosted.org/feedparser/>”_。 默认情况下，它会查找原始链接（通过 FeedBurner 或 Pheedo 等服务联合供稿），如果找到，则返回该链接，否则返回“https://pythonhosted.org/feedparser/reference-entry-link.html>`_。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
@@ -163,7 +163,7 @@ msgid ""
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
 "refreshes and has a mozilla firefox user agent."
-msgstr ""
+msgstr "返回用于从网络获取文档的浏览器实例。 默认情况下，它返回一个 `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ 浏览器实例，该实例支持 cookie、忽略 robots.txt、处理刷新并具有 mozilla firefox 用户代理。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
@@ -171,7 +171,7 @@ msgid ""
 "If your recipe requires that you login first, override this method in your "
 "subclass. For example, the following code is used in the New York Times "
 "recipe to login for full access::"
-msgstr ""
+msgstr "如果您的新闻源要求您先登录，请在您的子类中重写此方法。 例如，《纽约时报》新闻源中使用以下代码来登录以获得完全访问权限："
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -181,14 +181,14 @@ msgid ""
 "`None`. If you want your recipe to download a cover for the e-book override "
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
-msgstr ""
+msgstr "返回此问题封面图片的“URL”或“None”。 默认情况下，它返回成员“self.cover_url”的值，通常为“None”。 如果您希望您的新闻源下载电子书的封面，请在子类中重写此方法，或者在调用此方法之前设置成员变量“self.cover_url”。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
 msgid ""
 "By default returns `self.extra_css`. Override if you want to "
 "programmatically generate the extra_css."
-msgstr ""
+msgstr "默认情况下返回“self.extra_css”。 如果您想以编程方式生成 extra_css，请覆盖。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
@@ -198,12 +198,12 @@ msgid ""
 "None or an empty string, the title from the feed is used. This method is "
 "useful if your recipe needs to do some processing to figure out the list of "
 "feeds to download. If so, override in your subclass."
-msgstr ""
+msgstr "返回要为此配置文件获取的“RSS”提要列表。 列表中的每个元素必须是 (title, url) 形式的 2 元素元组。 如果 title 为 None 或空字符串，则使用提要中的标题。 如果您的新闻源需要进行一些处理来找出要下载的提要列表，则此方法非常有用。 如果是这样，请在您的子类中重写。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
 msgid "Override in subclass to use something other than the recipe title"
-msgstr ""
+msgstr "在子类中重写以使用新闻源标题以外的内容"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_url:1
@@ -214,7 +214,7 @@ msgid ""
 "e-book override this method in your subclass, or set the member variable "
 "`self.masthead_url` before this method is called. Masthead images are used "
 "in Kindle MOBI files."
-msgstr ""
+msgstr "返回此问题的标头图片的“URL”或“无”。 默认情况下，它返回成员“self.masthead_url”的值，通常为“None”。 如果您希望您的新闻源下载电子书的标头，请在子类中重写此方法，或者在调用此方法之前设置成员变量 self.masthead_url 。 标头图像用于 Kindle MOBI 文件中。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
@@ -222,21 +222,46 @@ msgid ""
 "If you set `articles_are_obfuscated` this method is called with every "
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
-"fetching engine, so it can contain links to pages/images on the web."
+"fetching engine, so it can contain links to pages/images on the web. "
+"Alternately, you can return a dictionary of the form: {'data': <HTML data>, "
+"'url': <the resolved URL of the article>}. This avoids needing to create "
+"temporary files. The `url` key in the dictionary is useful if the effective "
+"URL of the article is different from the URL passed into this method, for "
+"example, because of redirects. It can be omitted if the URL is unchanged."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
 msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
+msgid ""
+"Return the delay in seconds before downloading this URL. If you want to "
+"programmatically determine the delay for the specified URL, override this "
+"method in your subclass, returning self.delay by default for URLs you do not"
+" want to affect."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+msgid "Returns"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
+msgid "A floating point number, the delay in seconds."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL."
+"for dynamically generated images, etc.) and return the precessed URL. Return"
+" None or an empty string to skip fetching the image."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -429,6 +454,13 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
+msgid ""
+"Use this method to set the date when this issue was published. Defaults to "
+"the moment of download. Must return a :class:`datetime.datetime` object."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
 msgid ""
 "This method is called with the source of each downloaded :term:`HTML` file, "
@@ -568,8 +600,9 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
-"Delay between consecutive downloads in seconds. The argument may be a "
-"floating point number to indicate a more precise time."
+"The default delay between consecutive downloads in seconds. The argument may"
+" be a floating point number to indicate a more precise time. See "
+":meth:`get_url_specific_delay` to implement per URL delays."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -631,8 +664,8 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you dont want to use gzipped transfers. Note that some old "
-"servers flake out with gzip"
+"Set to False if you do not want to use gzipped transfers. Note that some old"
+" servers flake out with gzip"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -680,7 +713,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
-" Override this in your recipe to provide a url to use as a masthead."
+" Override this in your recipe to provide a URL to use as a masthead."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of

@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# tony shen <anthanny@hotmail.com>, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-23 15:50+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
+"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
+"Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
-msgstr ""
+msgstr "关于在 calibre 中使用正则表达式的所有内容"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:6
 msgid ""
@@ -27,7 +28,7 @@ msgid ""
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
 "a gentle introduction to getting you started with using regular expressions "
 "in calibre."
-msgstr ""
+msgstr "正则表达式是 calibre 中许多地方使用的功能，用于对电子书内容和元数据执行复杂的操作。 本教程简要介绍了如何开始在 calibre 中使用正则表达式。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
@@ -35,7 +36,7 @@ msgstr "目录"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
-msgstr ""
+msgstr "首先，一句警告和一句勇气"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:16
 msgid ""
@@ -51,11 +52,11 @@ msgid ""
 "regular expressions really well have trouble reading the more complex ones, "
 "but writing them isn't as difficult- you construct the expression step by "
 "step. So, take a step and follow me into the rabbit hole."
-msgstr ""
+msgstr "这不可避免地会有些技术性——毕竟，正则表达式是一种用于完成技术工作的技术工具。 我将不得不使用一些看起来复杂或令人费解的术语和概念。 我将尝试尽可能清楚地解释这些概念，但实际上根本无法不使用它们。 话虽如此，不要因为任何行话而气馁，因为我已经尝试解释所有新内容。虽然正则表达式本身可能看起来像是一种神秘的黑魔法（或者，更平淡地说，是一串随机的繁琐字母和符号），但我保证它们并不那么复杂。 即使那些非常了解正则表达式的人在阅读更复杂的表达式时也会遇到困难，但是编写它们并不那么困难 - 您可以逐步构建表达式。 那么，迈出一步，跟我一起进入兔子洞吧。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
-msgstr ""
+msgstr "calibre 中哪里可以使用正则表达式？"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:21
 msgid ""
@@ -66,11 +67,11 @@ msgid ""
 "expressions in its :guilabel:`Search and replace` feature. Finally, you can "
 "use regular expressions when searching the calibre book list and when "
 "searching inside the calibre E-book viewer."
-msgstr ""
+msgstr "calibre 有几个地方使用了正则表达式。 转换选项中有搜索和替换，导入设置中的文件名元数据检测以及批量编辑图书元数据时的搜索和替换。 calibre 图书编辑器还可以在其搜索和替换功能中使用正则表达式。 最后，您可以在搜索 calibre 图书列表以及在 calibre 电子书阅读器内搜索时使用正则表达式。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
-msgstr ""
+msgstr "正则表达式到底是什么？"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:32
 msgid ""
@@ -78,7 +79,7 @@ msgid ""
 "expression can *match* a number of different strings. This is what makes "
 "regular expression so powerful -- they are a concise way of describing a "
 "potentially large number of variations."
-msgstr ""
+msgstr "正则表达式是一种描述字符串集的方法。 单个正则表达式可以“匹配”多个不同的字符串。 这就是正则表达式如此强大的原因——它们是描述大量潜在变体的简洁方式。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:34
 msgid ""
@@ -93,11 +94,11 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr ""
+msgstr "我在这里使用的字符串是在编程语言中使用的意义上的：由一个或多个字符组成的字符串，字符包括实际字符、数字、标点符号和所谓的空白（换行符、制表符等）。 请注意，一般情况下，大写和小写字符不被视为相同，因此“a”与“A”是不同的字符，依此类推。 在 calibre 中，正则表达式在搜索栏中不区分大小写，但在转换选项中则不区分大小写。 有一种方法可以使每个正则表达式不区分大小写，但我们稍后会讨论。 它变得很复杂，因为正则表达式允许其匹配的字符串存在变化，因此一个表达式可以匹配多个字符串，这就是人们费心使用它们的原因。 稍后会详细介绍。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
-msgstr ""
+msgstr "介意解释一下吗？"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:39
 msgid ""
@@ -109,11 +110,11 @@ msgid ""
 "though, that this *only* matches the exact string ``\"Hello, World!\"``, not"
 " e.g. ``\"Hello, wOrld!\"`` or ``\"hello, world!\"`` or any other such "
 "variation."
-msgstr ""
+msgstr "嗯，这就是我们在这里的原因。 首先，这是正则表达式中最重要的概念：*字符串本身就是一个与自身匹配的正则表达式*。 也就是说，如果我想使用正则表达式来匹配字符串“Hello, World!”，则使用的正则表达式将是“Hello, World!”。 是的，确实就是这么简单。 不过，您会注意到，这 *仅* 匹配确切的字符串 ``\"Hello, World!\"``，而不是例如 “你好，世界！”或“你好，世界！”或任何其他类似的变体。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
-msgstr ""
+msgstr "听起来还不错。 下一步是什么？"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:44
 msgid ""
@@ -135,11 +136,11 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr ""
+msgstr "接下来是真正好东西的开始。 还记得我说过正则表达式可以匹配多个字符串吗？ 这就是事情变得有点复杂的地方。 假设，作为一个更实际的练习，您想要转换的电子书有一个讨厌的页脚来计算页数，例如“第 5 页，共 423 页”。 显然页码将从 1 增加到 423，因此您必须匹配 423 个不同的字符串，对吧？ 实际上是错误的：正则表达式允许您定义匹配的字符集：要定义一个集合，您可以将想要包含在该集合中的所有字符放入方括号中。因此，例如，集合“[abc]”将匹配字符“a”、“b”或“c”。 *集合将始终仅匹配集合中的一个字符*。 它们“理解”字符范围，也就是说，如果您想匹配所有小写字符，您可以使用集合“[a-z]”来表示小写和大写字符，您可以使用“[a-zA” -Z]``等等。明白了吗？ 因此，显然，使用表达式“Page [0-9] of 423”，您可以匹配前 9 页，从而将所需的表达式减少到三个：第二个表达式“Page [0-9]” [0-9] of 423`` 将匹配所有两位数页码，我相信您可以猜到第三个表达式会是什么样子。 好，去吧。 写下来。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
-msgstr ""
+msgstr "嘿，整洁！这开始有意义了！"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:49
 msgid ""
@@ -165,7 +166,7 @@ msgid ""
 " matching page numbers, wouldn't that be the single one expression to match "
 "all the page numbers? Yes, the expression ``Page [0-9]+ of 423`` would match"
 " every page number in that book!"
-msgstr ""
+msgstr "我本来希望你会这么说。 但请做好准备，现在情况会变得更好！ 我们刚刚看到，使用集合，我们可以一次匹配多个字符之一。 但您甚至可以重复一个字符或集合，将处理上述页码示例所需的表达式数量减少到一个。 是的，一个！ 兴奋的？ 你应该！ 它的工作原理是这样的：一些所谓的特殊字符，“+”，“？” 和“*”，*重复它们前面的单个元素*。 （元素意味着单个字符、字符集、转义序列或组（稍后我们将了解最后两个）——简而言之，正则表达式中的任何单个实体）。 这些字符称为通配符或量词。更准确地说，“？” 匹配前面元素的 *0 或 1*，“*”匹配前面元素的 *0 或更多*，“+”匹配前面元素的 *1 或更多*。 几个例子：表达式 ``a?`` 将匹配 \"\" （这是空字符串，在这种情况下严格来说没有用）或 \"a\"，表达式 ``a*`` 将匹配 \"\", \" a\"、\"aa\" 或任意数量的连续 a，最后，表达式 ``a+`` 将匹配 \"a\"、\"aa\" 或任意数量的连续 a（注意：它不会 匹配空字符串！）。对于集合来说也是如此：表达式“[0-9]+”将匹配*每个整数*！ 我知道您在想什么，您是对的：如果您在上述匹配页码的情况下使用它，那不是可以匹配所有页码的单个表达式吗？ 是的，表达式“第 [0-9]+ 页，共 423 页”将匹配该书中的每个页码！"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
@@ -185,13 +186,13 @@ msgid ""
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
 " section. Just note that there quite frequently is more than one way to "
 "write a regular expression."
-msgstr ""
+msgstr "关于这些量词的注释：它们通常会尝试匹配尽可能多的文本，因此使用它们时要小心。 这就是所谓的“贪婪行为”——我相信你明白为什么。 例如，当您尝试匹配标签时，就会出现问题。例如，考虑字符串 ``\"<p class=\"calibre2\"> Title here </p>\"`` ，假设您想要匹配开始标签（第一对尖括号之间的部分，稍后会详细介绍标签）。 您可能认为表达式 ``<p.*>`` 会匹配该标签，但实际上，它匹配整个字符串！ （字符“.”是另一个特殊字符。它匹配*除*换行符之外的任何内容，因此，基本上，表达式“.*”将匹配您能想到的任何单行）。相反，尝试使用 ``<p.*?>`` 这使得量词 ``\"*\"`` 非贪婪。 正如预期的那样，该表达式仅匹配第一个开始标记。 实际上还有另一种方法可以实现此目的：表达式 ``<p[^>]*>`` 将匹配相同的开始标记 - 您将在下一节之后看到原因。 请注意，编写正则表达式的方法通常不止一种。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
-msgstr ""
+msgstr "嗯，这些特殊字符非常整齐，但是如果我想匹配一个点或一个问号怎么办？"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:58
 msgid ""
@@ -206,11 +207,11 @@ msgid ""
 "the way, concerning those special characters: Consider any character we "
 "discuss in this introduction as having some function to be special and thus "
 "needing to be escaped if you want the literal character."
-msgstr ""
+msgstr "您当然可以这样做：只需在任何特殊字符前面放置一个反斜杠，它就会被解释为文字字符，没有任何特殊含义。 这对反斜杠后跟一个字符称为转义序列，将反斜杠放在特殊字符前面的行为称为转义该字符。 转义序列被解释为单个元素。 当然，有些转义序列的作用不仅仅是转义特殊字符，例如“”\\t“表示制表符。 稍后我们将讨论一些转义序列。 哦，顺便说一下，关于那些特殊字符：将我们在本介绍中讨论的任何字符视为具有某些特殊功能，因此如果您想要字面字符，则需要对其进行转义。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
-msgstr ""
+msgstr "那么，最有用的集合是什么？"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:63
 msgid ""
@@ -219,40 +220,49 @@ msgid ""
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand:"
-msgstr ""
+msgstr "就知道你会问。 一些有用的集合是“[0-9]”匹配单个数字，“[a-z]”匹配单个小写字母，“[A-Z]”匹配单个大写字母，“[a-zA” -Z]`` 匹配单个字母，``[a-zA-Z0-9]`` 匹配单个字母或数字。 您还可以使用转义序列作为简写："
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:66
+#: ../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "``\\d``"
 msgstr "``\\d``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:66
-msgid "is equivalent to ``[0-9]``"
-msgstr ""
-
 #: ../../__w/calibre/calibre/manual/regexp.rst:70
+msgid "is equivalent to ``[0-9]``"
+msgstr "相当于``[0-9]``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:74
 msgid "``\\w``"
 msgstr "``\\w``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:69
-msgid "is equivalent to ``[a-zA-Z0-9_]``"
-msgstr ""
-
 #: ../../__w/calibre/calibre/manual/regexp.rst:73
+msgid "is equivalent to ``[a-zA-Z0-9_]``"
+msgstr "相当于``[a-zA-Z0-9_]``"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:77
 msgid "``\\s``"
 msgstr "``\\s``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:73
+#: ../../__w/calibre/calibre/manual/regexp.rst:77
 msgid "is equivalent to any whitespace"
-msgstr ""
+msgstr "相当于任何空白"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:76
+#: ../../__w/calibre/calibre/manual/regexp.rst:80
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
-msgstr ""
+msgstr "“空白”是一个术语，指的是任何不会被打印的内容。 这些字符包括空格、制表符、换行符、换页符、回车符、不间断空格等。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:78
+#: ../../__w/calibre/calibre/manual/regexp.rst:83
+msgid ""
+"The upper and lower case sets may match both upper and lowercase if the "
+"setting to make searches case insensitive is enabled. Such settings are "
+"found, for instance in Preferences->Searching in calibre itself and on the "
+"Search panel in the calibre :guilabel:`E-book viewer` as well as the calibre"
+" :guilabel:`Edit book` tool."
+msgstr "如果启用了搜索不区分大小写的设置，则大写和小写集可能会同时匹配大写和小写。 例如，可以在 calibre 本身的“首选项”->“搜索”以及 calibre“电子书阅读器”以及 calibre“编辑书籍”工具的搜索面板中找到此类设置。"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:89
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -265,15 +275,15 @@ msgid ""
 " ``<p[^>]*>`` from the previous section, now you can see that the character "
 "set it's using tries to match any character except for a closing angle "
 "bracket."
-msgstr ""
+msgstr "作为集合的最后一个注释，您还可以将集合定义为集合中的任何字符*但*字符。 您可以通过将字符 ``\"^\"`` 作为*集合中的第一个字符*来实现这一点。 因此，``[^a]`` 将匹配除“a”之外的任何字符。 这就是所谓的补充集合。 我们之前看到的那些转义序列简写也可以补充：``“\\D”``表示任何非数字字符，因此相当于``[^0-9]``。 您猜对了，可以使用相应的大写字母而不是小写字母来补充其他简写。 因此，回到上一节中的示例 ``<p[^>]*>`` ，现在您可以看到它使用的字符集尝试匹配除右尖括号之外的任何字符。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:81
+#: ../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
-msgstr ""
+msgstr "但是如果我想要匹配一些不同的字符串，事情会变得复杂吗？"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:83
+#: ../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -287,9 +297,9 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr ""
+msgstr "不要害怕，生活仍然美好而轻松。 考虑以下示例：您要转换的书籍的每个奇数页上都写有“标题”，而每个偶数页上都写有“作者”。 印刷版看起来很棒，对吧？ 但在电子书中，这很烦人。 您可以将整个表达式分组在普通括号中，并且字符 ``\"|\"`` 将让您匹配*其右侧的表达式*或*其左侧的表达式。 将它们结合起来就完成了。 对你来说太快了吗？ 好的，首先，我们将奇数页和偶数页的表达式分组，从而将“（标题）（作者）”作为我们需要的两个表达式。 现在我们通过使用竖线（``“|”``称为竖线字符）使事情变得更简单：如果您使用表达式``（Title | Author）``，您将获得“Title”的匹配项 ”（在奇数页上），或者匹配“作者”（在偶数页上）。 嗯，这不是很容易吗？"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:85
+#: ../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -303,13 +313,13 @@ msgid ""
 "will be selected. If you were to use ``c|Calibre``, you'd get a match on the"
 " string \"c\" or on the string \"Calibre\", which isn't what we wanted. In "
 "short: If in doubt, use grouping together with the vertical bar."
-msgstr ""
+msgstr "当然，您也可以使用竖线而不使用分组括号。 还记得我说过量词会重复它们前面的元素吗？ 嗯，竖线的工作方式有点不同：表达式“Title|Author”也将匹配字符串“Title”或字符串“Author”，就像上面使用分组的示例一样。 *竖线在其前后的整个表达式之间进行选择*。 因此，如果您想匹配字符串“Calibre”和“calibre”，并且只想在大写和小写“c”之间进行选择，则必须使用表达式“(c|C)alibre”， 其中分组确保仅选择“c”。 如果你要使用“c|Calibre”，你会得到字符串“c”或字符串“Calibre”的匹配，这不是我们想要的。 简而言之：如果有疑问，请与竖线一起使用分组。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:88
+#: ../../__w/calibre/calibre/manual/regexp.rst:101
 msgid "You missed..."
-msgstr ""
+msgstr "你错过了。。。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:90
+#: ../../__w/calibre/calibre/manual/regexp.rst:103
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -318,15 +328,15 @@ msgid ""
 "you want to reference, thus, the fifth group would be referenced as ``\\5``."
 " So, if you searched for ``([^ ]+) \\1`` in the string \"Test Test\", you'd "
 "match the whole string!"
-msgstr ""
+msgstr "...等一下，还有最后一件非常巧妙的事情，你可以与团体一起做。 如果您之前有一个匹配的组，则可以稍后在表达式中使用对该组的引用：组的编号从 1 开始，您可以通过转义要引用的组的编号来引用它们，因此是第五组 将被引用为``\\5``。 因此，如果您在字符串“Test Test”中搜索``([^]+) \\1``，您将匹配整个字符串！"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:94
+#: ../../__w/calibre/calibre/manual/regexp.rst:107
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
-msgstr ""
+msgstr "一开始，你说有办法让正则表达式不区分大小写？"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:96
+#: ../../__w/calibre/calibre/manual/regexp.rst:109
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -335,28 +345,28 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``(?i)test`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr ""
+msgstr "是的，我知道了，谢谢你的关注和提醒。 您可以使用称为标志的东西来告诉 calibre 您希望如何处理某些事情。 您可以通过使用特殊构造“(?flags go here)”在表达式中包含标志，显然，您可以将“flags go here”替换为您想要的特定标志。 为了忽略大小写，标志是“i”，因此您可以在表达式中包含“(?i)”。 因此，``(?i)test`` 将匹配“Test”、“tEst”、“TEst”以及您能想到的任何大小写变体。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:98
+#: ../../__w/calibre/calibre/manual/regexp.rst:111
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
 "expression, just put them in the same statement: ``(?is)`` would ignore case"
 " and make the dot match all. It doesn't matter which flag you state first, "
 "``(?si)`` would be equivalent to the above."
-msgstr ""
+msgstr "另一个有用的标志可以让点匹配任何字符，*包括*换行符，标志“s”。 如果您想在表达式中使用多个标志，只需将它们放在同一个语句中即可：``(?is)`` 将忽略大小写并使点全部匹配。 无论您首先声明哪个标志，``(?si)`` 都等同于上面的。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:101
+#: ../../__w/calibre/calibre/manual/regexp.rst:114
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
-msgstr ""
+msgstr "我想我现在开始理解这些正则表达式了......我如何在 calibre 中使用它们？"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:104
+#: ../../__w/calibre/calibre/manual/regexp.rst:117
 msgid "Conversions"
-msgstr ""
+msgstr "转换"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:106
+#: ../../__w/calibre/calibre/manual/regexp.rst:119
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -370,9 +380,9 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr ""
+msgstr "让我们从转换设置开始，这真的很简洁。 在“搜索和替换”部分中，您可以输入一个regexp（正则表达式的缩写）来描述转换过程中将被替换的字符串。 最巧妙的部分是向导。 单击向导人员，您可以预览转换过程中口径“看到”的内容。 向下滚动到要删除的字符串，选择并复制它，将其粘贴到窗口顶部的正则表达式字段中。 如果存在可变部分，例如页码等，请使用集合和量词来覆盖这些部分，并且在使用时，请记住转义特殊字符（如果有）。 点击标有“测试”的按钮，口径会突出显示如果您使用正则表达式它将替换的部分。 一旦您满意，请点击“确定”并进行转换。 如果您的转化源具有类似以下示例的标签，请务必小心："
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:116
+#: ../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -397,13 +407,13 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "（无耻地从“这个BBS帖子 <https://www.mobileread.com/forums/showthread.php?t=75594\">`_ 中撕下来。您还必须删除一些标签。在此示例中 ，我建议从标签“<b class=\"calibre2\">”开始，现在你必须以相应的结束标签结束（开始标签是“<tag>”，结束标签是“</tag>”），这只是下一个 在这种情况下为“</b>”。（如果您对此不清楚，请参阅良好的 HTML 手册或在论坛中询问）。开始标签可以使用“<b.*?>”来描述，结束标签可以使用“</b>”来描述，因此我们可以使用“<b.*?>.*?</b>”来删除这些标签之间的所有内容。但是使用这个表达式将不是一个好主意，因为它会删除 </b>- 标签包含的所有内容（顺便说一句，它会以粗体打印呈现包含的文本），而且我们很有可能会删除书中的部分内容 这边走。相反，也包括封闭字符串的开头，使正则表达式为``<b.*?>\\s*Generate\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` 此处包含带有量词的 ``\\s`` ，而不是显式使用字符串中的空格来捕获可能出现的字符串的任何变化。请记住检查要删除的calibre，以确保在测试新表达式时不会删除任何想要保留的部分。 如果您只检查一次出现的情况，则可能会错过文本中其他地方的不匹配之处。 另请注意，如果您不小心删除了比您实际想要的更多或更少的标签，calibre 会在删除后尝试修复损坏的代码。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:119
+#: ../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
 msgstr "添加书籍"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:121
+#: ../../__w/calibre/calibre/manual/regexp.rst:134
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -424,13 +434,13 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "您可以使用正则表达式的另一件事是从文件名中提取元数据。 您可以在设置的“添加图书”部分找到此功能。 这里有一个特殊功能：您可以使用元数据字段的字段名称，例如“(?P<title>)”将表明 calibre 使用这部分字符串作为书名。 窗口中列出了允许的字段名称，以及另一个不错的测试字段。举个例子：假设您要导入一大堆名为“古典文本：但丁·阿利吉耶里的神曲.mobi”的文件。 （显然，这已经在您的书库中，因为我们都喜欢古典意大利诗歌）或“科幻史诗：艾萨克·阿西莫夫的基础三部曲.epub”。 这显然是一个 calibre 不会从中提取任何有意义的数据的命名方案 - 它提取元数据的标准表达式是``(?P<title>.+) - (?P<author>[^_]+)``。此处适用的正则表达式为“[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)”。 请注意，在元数据字段的组内，您需要使用表达式来描述字段实际匹配的内容。 另请注意，在使用 calibre 提供的测试字段时，您需要将文件扩展名添加到测试文件名中，否则即使使用工作表达式，您也根本不会获得任何匹配项。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:125
+#: ../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
-msgstr ""
+msgstr "批量编辑元数据"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:127
+#: ../../__w/calibre/calibre/manual/regexp.rst:140
 msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
@@ -454,18 +464,18 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "最后一部分是元数据字段中的正则表达式“搜索和替换”。 您可以通过选择书库中的多本书并使用批量元数据编辑来访问此内容。 使用最后一个功能时要非常小心，因为它可能会对您的书库造成**非常糟糕的事情**！ 使用测试字段仔细检查您的表达式是否符合您的要求，并且仅标记您真正想要更改的书籍！ 在正则表达式搜索模式下，您可以在一个字段中搜索，用某些内容替换文本，甚至可以将结果写入另一字段。一个实际的例子：假设您的书库包含弗兰克·赫伯特的《沙丘》系列书籍，以时尚“沙丘 1 - 沙丘”、“沙丘 2 - 沙丘弥赛亚”等命名。 现在你想让《沙丘》进入系列领域。 您可以通过在标题字段中搜索``(.*?) \\d+ - .*`` 并在系列字段中将其替换为``\\1`` 来做到这一点。看看我在那里做了什么？ 这是对您要替换系列字段的第一组的引用。 现在您已经完成了该系列的准备，您只需再次搜索``.*？ -`` 在标题字段中，并再次在标题字段中将其替换为 ``\"\"`` （空字符串），这样您的元数据就干净整洁了。是不是很棒？ 顺便说一句，您也可以附加或添加到该字段，而不是替换整个字段，因此，如果您“希望”在书名前面添加系列信息，您也可以这样做。 您现在无疑已经注意到，有一个标记为“区分大小写”的复选框，因此您不必在此处使用标志来选择行为。"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:129
+#: ../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
 "started and to enable you to continue learning by yourself- a good starting "
 "point would be the `Python documentation for regexps "
 "<https://docs.python.org/library/re.html>`_."
-msgstr ""
+msgstr "好了，关于正则表达式的简短介绍就到此结束了。 希望我能向您展示足够的内容，至少让您入门并让您能够继续自己学习 - 一个很好的起点是“正则表达式的 Python 文档”<https://docs.python.org/library/re .html>`_."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:131
+#: ../../__w/calibre/calibre/manual/regexp.rst:144
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -473,53 +483,53 @@ msgid ""
 "yourself in the foot. (God, I love that expression...). But should you, "
 "despite the warning, injure your foot (or any other body parts), try to "
 "learn from it."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/regexp.rst:135
-msgid "Quick reference"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/regexp.rst:143
-msgid "Credits"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/regexp.rst:145
-msgid "Thanks for helping with tips, corrections and such:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/regexp.rst:147
-msgid "ldolse"
-msgstr ""
+msgstr "不过，最后一句警告是：正则表达式很强大，但也很容易出错。 calibre 提供了非常好的测试可能性，可以查看您的表达式是否按照您的预期运行。 使用它们。 尽量不要搬起石头砸自己的脚。 （上帝，我喜欢这个表达......）。 但是，如果您不顾警告，受伤了您的脚（或任何其他身体部位），请尝试从中吸取教训。"
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:148
+msgid "Quick reference"
+msgstr "快速参考"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:156
+msgid "Credits"
+msgstr "荣誉"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:158
+msgid "Thanks for helping with tips, corrections and such:"
+msgstr "感谢您提供提示、更正等帮助："
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:160
+msgid "ldolse"
+msgstr "ldolse"
+
+#: ../../__w/calibre/calibre/manual/regexp.rst:161
 msgid "kovidgoyal"
-msgstr ""
+msgstr "kovidgoyal"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:149
+#: ../../__w/calibre/calibre/manual/regexp.rst:162
 msgid "chaley"
-msgstr ""
+msgstr "chaley"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:150
+#: ../../__w/calibre/calibre/manual/regexp.rst:163
 msgid "dwanthny"
-msgstr ""
+msgstr "dwanthny"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:151
+#: ../../__w/calibre/calibre/manual/regexp.rst:164
 msgid "kacir"
-msgstr ""
+msgstr "kacir"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:152
+#: ../../__w/calibre/calibre/manual/regexp.rst:165
 msgid "Starson17"
-msgstr ""
+msgstr "Starson17"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:153
+#: ../../__w/calibre/calibre/manual/regexp.rst:166
 msgid "Orpheu"
-msgstr ""
+msgstr "Orpheu"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:155
+#: ../../__w/calibre/calibre/manual/regexp.rst:168
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "
 "library used by calibre is: `regex <https://bitbucket.org/mrabarnett/mrab-"
 "regex/src/hg/>`_ which supports several useful enhancements over the Python "
 "standard library one."
-msgstr ""
+msgstr "有关正则表达式的更多信息，请参阅“Python 用户手册 <https://docs.python.org/library/re.html>”_。 calibre 使用的实际正则表达式库是：`regex <https://bitbucket.org/mrabarnett/mrab-regex/src/hg/>`_，它支持对 Python 标准库的一些有用的增强。"

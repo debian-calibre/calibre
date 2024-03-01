@@ -906,7 +906,7 @@ class DetailsPanel(QWidget):
             atype=a(atype), text=annot_text, dt=_('Date'), date=a(date), ut=a(_('User')),
             user=a(friendly_username(r['user_type'], r['user'])), highlight_css=highlight_css,
             ov=a(_('Open in viewer')), sic=a(_('Show in calibre')),
-            ovtt=a(_('Open the book at this annotation in the calibre E-book viewer')),
+            ovtt=a(_('View the book at this annotation in the calibre E-book viewer')),
             sictt=(_('Show this book in the main calibre book list')),
         )
         self.text_browser.setHtml(text)
@@ -1061,7 +1061,7 @@ class AnnotationsBrowser(Dialog):
         else:
             self.reinitialize(restrict_to_book_ids)
             self.show()
-            self.raise_()
+            self.raise_and_focus()
             QTimer.singleShot(80, self.browse_panel.effective_query_changed)
 
     def selection_changed(self):

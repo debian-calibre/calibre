@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# tony shen <anthanny@hotmail.com>, 2020
+# Pei Qing, 2024
+# tony shen <anthanny@hotmail.com>, 2020,2024
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2024-02-28 11:32+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
-"Last-Translator: tony shen <anthanny@hotmail.com>, 2020\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/calibre/calibre/language/zh_CN/)\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2024\n"
+"Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -39,7 +40,7 @@ msgstr "你可以通过在calibre里右键单击任意一本书--选择“编辑
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Edit book tool"
-msgstr ""
+msgstr "书籍编辑工具"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:23
 msgid "Contents"
@@ -53,7 +54,7 @@ msgstr "基本的工作流程"
 msgid ""
 "A video tour of the calibre E-book editor is available :website:`here "
 "<demo#tutorials>`."
-msgstr ""
+msgstr "calibre电子书编辑器的视频向导在 `此处 <demo#tutorials>`。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:31
 msgid ""
@@ -86,7 +87,7 @@ msgid ""
 "replace. The checkpointing functionality is in addition to the normal "
 "undo/redo mechanism when editing individual files. Checkpoints are needed "
 "for when changes are spread over multiple files in the book."
-msgstr ""
+msgstr "一项有用的功能是“检查点”。 在开始进行一些雄心勃勃的编辑之前，您可以创建一个检查点。 检查点将保留图书的当前状态，如果将来您决定不喜欢所做的更改，则可以返回到创建检查点时的状态。 要创建检查点，请使用“编辑->创建检查点”。 每当您运行任何自动化工具（例如全局搜索和替换）时，也会自动为您创建检查点。 检查点功能是编辑单个文件时正常撤消/重做机制之外的功能。 当更改分布在书中的多个文件时，需要检查点。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:55
 msgid ""
@@ -101,7 +102,7 @@ msgstr "文件浏览器"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The File browser showing files in the book"
-msgstr ""
+msgstr "显示书中文件的文件浏览器"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:66
 msgid ""
@@ -164,7 +165,7 @@ msgid ""
 "dialog also lets you rename files by the order they appear in the book "
 "instead of the order you selected them in, useful, for instance to rename "
 "all images by the order they appear."
-msgstr ""
+msgstr "您还可以一次批量重命名多个文件。 如果您希望文件具有一些简单的名称模式，这非常有用。 例如，您可能想要将所有 HTML 文件重命名为 Chapter-1.html、Chapter-2.html 等。 按住“Shift”或“Ctrl”键并单击文件，选择要批量重命名的文件。 然后右键单击并选择“批量重命名”。 输入前缀以及您希望自动编号从哪个数字开始，单击“确定”即可完成。 批量重命名对话框还允许您按照文件在书中出现的顺序（而不是您选择它们的顺序）重命名文件，这很有用，例如按它们出现的顺序重命名所有图像。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:109
 msgid ""
@@ -194,13 +195,13 @@ msgid ""
 "of migrating all links and references to the merged files. Note that merging"
 " files can sometimes cause text styling to change, since the individual "
 "files could have used different stylesheets."
-msgstr ""
+msgstr "要将多个文件合并在一起，请按住“Ctrl”键并单击它们来选择它们（确保仅选择一种类型的文件，可以是所有 HTML 文件或所有 CSS 文件等）。 然后右键单击并选择合并。 就这样，calibre 将合并文件，自动迁移所有链接和对合并文件的引用。 请注意，合并文件有时会导致文本样式发生更改，因为各个文件可能使用不同的样式表。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:129
 msgid ""
 "You can also select text files and then drag and drop the text files onto "
 "another text file to merge the dropped text files into the target text file."
-msgstr ""
+msgstr "您还可以选择文本文件，然后将文本文件拖放到另一个文本文件上，以将拖放的文本文件合并到目标文本文件中。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:133
 msgid "Changing text file order"
@@ -209,18 +210,25 @@ msgstr "更改文本文件顺序"
 #: ../../__w/calibre/calibre/manual/edit.rst:135
 msgid ""
 "You can re-arrange the order in which text (HTML) files are opened when "
-"reading the book by simply dragging and dropping them in the Files browser. "
-"For the technically inclined, this is called re-ordering the book spine. "
+"reading the book by simply dragging and dropping them in the :guilabel:`File"
+" browser` or clicking on the file to move and then pressing the "
+":kbd:`Ctrl+Shift` modifiers with the :kbd:`Up`, :kbd:`Down`, :kbd:`Home` or "
+":kbd:`End` keys. For the technically inclined, this is called re-ordering "
+"the book spine."
+msgstr "您可以在阅读本书时重新排列文本（HTML）文件的打开顺序，只需将它们拖放到“文件浏览器”中，或者单击要移动的文件，然后按“Ctrl+Shift”修饰符即可 “向上”、“向下”、“Home”或“End”键。 对于技术性的人来说，这称为重新排序书脊。"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:141
+msgid ""
 "Note that you have to drop the items *between* other items, not on top of "
 "them, this can be a little fiddly until you get used to it. Dropping on top "
 "of another file will cause the files to be merged."
-msgstr ""
+msgstr "请注意，您必须将项目放在其他项目*之间*，而不是放在它们上面，这可能有点麻烦，直到您习惯为止。 放在另一个文件的顶部将导致文件被合并。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:143
+#: ../../__w/calibre/calibre/manual/edit.rst:146
 msgid "Marking the cover"
 msgstr "标记封面"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:145
+#: ../../__w/calibre/calibre/manual/edit.rst:148
 msgid ""
 "E-books typically have a cover image. This image is indicated in the "
 ":guilabel:`File browser` by the icon of a brown book next to the image name."
@@ -228,7 +236,7 @@ msgid ""
 "right clicking on the file and choosing :guilabel:`Mark as cover`."
 msgstr "电子书通常都有封面图片。此图像在：guilabel：`文件浏览器`中由图像名称旁边的棕色书图标表示。如果要指定其他图像作为封面，可以通过右键单击该文件并选择：guilabel：`标记为封面‘来实现。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:150
+#: ../../__w/calibre/calibre/manual/edit.rst:153
 msgid ""
 "In addition, EPUB files has the concept of a *titlepage*. A title page is a "
 "HTML file that acts as the title page/cover for the book. You can mark an "
@@ -240,11 +248,11 @@ msgid ""
 " only the cover and no other content."
 msgstr "此外，EPUB文件还具有*title page*的概念。标题页是充当图书标题页/封面的HTML文件。在编辑ePub时，您可以通过右键单击将HTML文件标记为标题页。请注意，您标记的文件仅包含封面信息。如果它包含其他内容，如第一章，则如果用户将Calibre格式的EPUB文件转换为另一种格式，则该内容将丢失。这是因为在转换时，Calibre假定标记的标题页只包含封面，不包含其他内容。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:160
+#: ../../__w/calibre/calibre/manual/edit.rst:163
 msgid "Deleting files"
 msgstr "删除文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:162
+#: ../../__w/calibre/calibre/manual/edit.rst:165
 msgid ""
 "You can delete files by either right clicking on them or by selecting them "
 "and pressing the Delete key. Deleting a file removes all references to the "
@@ -253,11 +261,11 @@ msgid ""
 "remove/replace them."
 msgstr "您可以通过右键单击文件或选择文件并按Delete键来删除文件。删除文件会从OPF文件中删除对该文件的所有引用，从而省去了这项工作。但是，其他位置的参照不会被删除，您可以使用Check Book工具轻松地查找和删除/替换它们。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:169
+#: ../../__w/calibre/calibre/manual/edit.rst:172
 msgid "Exporting files"
 msgstr "正在导出文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:171
+#: ../../__w/calibre/calibre/manual/edit.rst:174
 msgid ""
 "You can export a file from inside the book to somewhere else on your "
 "computer. This is useful if you want to work on the file in isolation, with "
@@ -265,7 +273,7 @@ msgid ""
 ":guilabel:`Export`."
 msgstr "您可以将文件从书内导出到计算机上的其他位置。如果您希望使用专门的工具单独处理文件，这将非常有用。要执行此操作，只需右键单击该文件并选择：guilabel：`导出`。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:176
+#: ../../__w/calibre/calibre/manual/edit.rst:179
 msgid ""
 "Once you are done working on the exported file, you can re-import it into "
 "the book, by right clicking on the file again and choosing "
@@ -273,7 +281,7 @@ msgid ""
 " the book with the previously exported file."
 msgstr "处理完导出的文件后，您可以将其重新导入到书中，方法是再次右键单击该文件，然后选择：guilabel：`替换为文件...‘，这将允许您将书籍中的文件替换为以前导出的文件。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:181
+#: ../../__w/calibre/calibre/manual/edit.rst:184
 msgid ""
 "You can also copy files between multiple editor instances. Select the files "
 "you want to copy in the :guilabel:`File browser`, then right click and "
@@ -282,11 +290,11 @@ msgid ""
 "choose :guilabel:`Paste file from other editor instance`."
 msgstr "您还可以在多个编辑器实例之间复制文件。在：guilabel：`文件浏览器`中选择要复制的文件，然后右键单击并选择、：guilabel：`将所选文件复制到另一个编辑器实例`。然后，在另一个编辑器实例中，右键单击：guilabel：`文件浏览器`并选择：guilabel：`从其他编辑器实例粘贴文件`。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:188
+#: ../../__w/calibre/calibre/manual/edit.rst:191
 msgid "Adding new images/fonts/etc. or creating new blank files"
 msgstr "增加新的图片/字体等或者创建新空文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:190
+#: ../../__w/calibre/calibre/manual/edit.rst:193
 msgid ""
 "You can add a new image, font, stylesheet, etc. from your computer into the "
 "book by clicking :guilabel:`File->New file`. This lets you either import a "
@@ -295,17 +303,17 @@ msgid ""
 " for the new file."
 msgstr "您可以通过单击：guilabel：`文件->新建文件`将计算机中的新图像、字体、样式表等添加到书本中。这允许您通过单击：guilabel：`导入资源文件`按钮导入文件，或者只需在新文件的框中输入文件名即可创建新的空白HTML文件或样式表。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:195
+#: ../../__w/calibre/calibre/manual/edit.rst:198
 msgid ""
 "You can also import multiple files into the book at once using File->Import "
 "files into book."
 msgstr "您还可以使用文件->将文件导入书本，一次将多个文件导入书本。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:199
+#: ../../__w/calibre/calibre/manual/edit.rst:202
 msgid "Replacing files"
 msgstr "替代文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:201
+#: ../../__w/calibre/calibre/manual/edit.rst:204
 msgid ""
 "You can easily replace existing files in the book, by right clicking on the "
 "file and choosing replace. This will automatically update all links and "
@@ -313,22 +321,22 @@ msgid ""
 "being replaced."
 msgstr "通过右键单击文件并选择替换，您可以轻松地替换图书中的现有文件。这将自动更新所有链接和引用，以防替换文件的名称与要替换的文件不同。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:207
+#: ../../__w/calibre/calibre/manual/edit.rst:210
 msgid "Linking stylesheets to HTML files efficiently"
 msgstr "有效地将样式表链接到HTML文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:209
+#: ../../__w/calibre/calibre/manual/edit.rst:212
 msgid ""
 "As a convenience, you can select multiple HTML files in the File browser, "
 "right click and choose Link stylesheets to have calibre automatically insert"
 " the <link> tags for those stylesheets into all the selected HTML files."
 msgstr "为了方便起见，您可以在文件浏览器中选择多个HTML文件，右键单击并选择链接样式表，以便Calibre自动将这些样式表的 <link> 标记插入到所有选定的HTML文件中。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:219
+#: ../../__w/calibre/calibre/manual/edit.rst:222
 msgid "Search & replace"
 msgstr "搜索并替换"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:221
+#: ../../__w/calibre/calibre/manual/edit.rst:224
 msgid ""
 "Edit book has a very powerful search and replace interface that allows you "
 "to search and replace text in the current file, across all files and even in"
@@ -337,20 +345,20 @@ msgid ""
 "advanced searching, see :ref:`regexptutorial`."
 msgstr "编辑书籍有一个非常强大的搜索和替换界面，允许您搜索和替换当前文件中的文本，跨所有文件，甚至在当前文件的标记区域中搜索和替换文本。您可以使用普通搜索或使用正则表达式进行搜索。要了解如何使用正则表达式进行高级搜索，请参阅：ref：`regexptutorial`。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:231
+#: ../../__w/calibre/calibre/manual/edit.rst:234
 msgid ""
 "Start the search and replace via the :guilabel:`Search->Find/replace` menu "
 "entry (you must be editing an HTML or CSS file)."
 msgstr "通过：guilabel：`搜索->查找/替换`菜单项开始搜索和替换(您必须编辑HTML或CSS文件)。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:234
+#: ../../__w/calibre/calibre/manual/edit.rst:237
 msgid ""
 "Type the text you want to find into the Find box and its replacement into "
 "the Replace box. You can the click the appropriate buttons to Find the next "
 "match, replace the current match and replace all matches."
 msgstr "在“查找”框中键入要查找的文本，并在“替换”框中替换它。您可以单击相应的按钮查找下一个匹配项、替换当前匹配项和替换所有匹配项。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:238
+#: ../../__w/calibre/calibre/manual/edit.rst:241
 msgid ""
 "Using the drop downs at the bottom of the box, you can have the search "
 "operate over the current file, all text files, all style files or all files."
@@ -358,110 +366,110 @@ msgid ""
 "regular expression search."
 msgstr "使用框底部的下拉列表，您可以对当前文件、所有文本文件、所有样式文件或所有文件进行搜索。您还可以将搜索模式选择为普通(字符串)搜索或正则表达式搜索。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:243
+#: ../../__w/calibre/calibre/manual/edit.rst:246
 msgid ""
 "You can count all the matches for a search expression via "
 ":guilabel:`Search->Count all`. The count will run over whatever "
 "files/regions you have selected in the dropdown box."
 msgstr "您可以通过：guilabel：`搜索->全部计数`统计搜索表达式的所有匹配项。计数将遍历您在下拉框中选择的任何文件/区域。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:247
+#: ../../__w/calibre/calibre/manual/edit.rst:250
 msgid ""
 "You can also go to a specific line in the currently open editor via "
 ":guilabel:`Search->Go to line`."
-msgstr ""
+msgstr "您还可以通过“搜索->转到行”转到当前打开的编辑器中的特定行。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:251
+#: ../../__w/calibre/calibre/manual/edit.rst:254
 msgid ""
 "Remember, to harness the full power of search and replace, you will need to "
 "use regular expressions. See :ref:`regexptutorial`."
-msgstr ""
+msgstr "请记住，要充分利用搜索和替换的功能，您将需要使用正则表达式。 请参阅“正则表达式教程”。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:255
+#: ../../__w/calibre/calibre/manual/edit.rst:258
 msgid "Saved searches"
 msgstr "保存的查找"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:257
+#: ../../__w/calibre/calibre/manual/edit.rst:260
 msgid ""
 "You can save frequently used search/replace expressions (including function "
 "mode expressions) and reuse them multiple times.  To save a search simply "
 "right click in the Find box and select :guilabel:`Save current search`."
-msgstr ""
+msgstr "您可以保存常用的搜索/替换表达式（包括函数模式表达式）并多次重复使用。 要保存搜索，只需右键单击“查找”框并选择“保存当前搜索”。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:261
+#: ../../__w/calibre/calibre/manual/edit.rst:264
 msgid ""
 "You can bring up the saved searches via :guilabel:`Search->Saved searches`. "
 "This will present you with a list of search and replace expressions that you"
 " can apply. You can even select multiple entries in the list by holding down"
 " the :kbd:`Ctrl` key while clicking so as to run multiple search and replace"
 " expressions in a single operation."
-msgstr ""
+msgstr "您可以通过“搜索->保存的搜索”调出保存的搜索。 这将为您提供可以应用的搜索和替换表达式的列表。 您甚至可以通过按住“Ctrl”键并单击来选择列表中的多个条目，以便在单个操作中运行多个搜索和替换表达式。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:268
+#: ../../__w/calibre/calibre/manual/edit.rst:271
 msgid "Function mode"
 msgstr "功能模式"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:270
+#: ../../__w/calibre/calibre/manual/edit.rst:273
 msgid ""
 "Function mode allows you to write arbitrarily powerful Python functions that"
 " are run on every Find/replace. You can do pretty much any text manipulation"
 " you like in function mode. For more information, see :doc:`function_mode`."
-msgstr ""
+msgstr "函数模式允许您编写在每个查找/替换上运行的任意强大的 Python 函数。 您可以在功能模式下进行几乎任何您喜欢的文本操作。 有关更多信息，请参阅“function_mode”。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:275
+#: ../../__w/calibre/calibre/manual/edit.rst:278
 msgid "Search ignoring HTML tags"
-msgstr ""
+msgstr "搜索时忽略 HTML 标签"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:277
+#: ../../__w/calibre/calibre/manual/edit.rst:280
 msgid ""
 "There is also a dedicated tool for searching for text, ignoring any HTML "
 "tags in between. For example, if the book has the HTML ``Empahisis on a "
 "<i>word</i>.`` you can search for ``on a word`` and it will be found even "
 "though there is an ``<i>`` tag in the middle. Use this tool via the "
 ":guilabel:`Search->Search ignoring HTML markup` menu item."
-msgstr ""
+msgstr "还有一个专门的工具用于搜索文本，忽略之间的任何 HTML 标签。 例如，如果这本书有 HTML“Empahisis on a <i>word</i>.”，您可以搜索“on a word”，即使中间有“<i>”标签，也会找到它。 通过“搜索->搜索忽略 HTML 标记”菜单项使用此工具。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:284
+#: ../../__w/calibre/calibre/manual/edit.rst:287
 msgid "Automated tools"
 msgstr "自动化工具"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:286
+#: ../../__w/calibre/calibre/manual/edit.rst:289
 msgid ""
 "Edit book has various tools to help with common tasks. These are accessed "
 "via the :guilabel:`Tools` menu."
-msgstr ""
+msgstr "Edit book 有各种工具可以帮助完成常见任务。 这些可以通过“工具”菜单访问。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:290
+#: ../../__w/calibre/calibre/manual/edit.rst:293
 msgid "Editing the Table of Contents"
-msgstr ""
+msgstr "正在编辑目录"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:292
+#: ../../__w/calibre/calibre/manual/edit.rst:295
 msgid ""
 "There is a dedicated tool to ease editing of the Table of Contents. Launch "
 "it with :guilabel:`Tools->Table of Contents->Edit Table of Contents`."
-msgstr ""
+msgstr "有一个专用工具可以轻松编辑目录。 使用“工具->目录->编辑目录”启动它。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Edit Table of Contents tool"
-msgstr ""
+msgstr "目录编辑工具"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:299
+#: ../../__w/calibre/calibre/manual/edit.rst:302
 msgid ""
 "The Edit Table of Contents tool shows you the current Table of Contents (if "
 "any) on the left. Simply double click on any entry to change its text. You "
 "can also re-arrange entries by drag and drop or by using the buttons to the "
 "right."
-msgstr ""
+msgstr "编辑目录工具在左侧显示当前目录（如果有）。 只需双击任何条目即可更改其文本。 您还可以通过拖放或使用右侧的按钮来重新排列条目。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:303
+#: ../../__w/calibre/calibre/manual/edit.rst:306
 msgid ""
 "For books that do not have a pre-existing Table of Contents, the tool gives "
 "you various options to auto-generate a Table of Contents from the text. You "
 "can generate from the headings in the document, from links, from individual "
 "files and so on."
-msgstr ""
+msgstr "对于没有预先存在目录的书籍，该工具为您提供了各种选项来从文本自动生成目录。 您可以从文档中的标题、链接、单个文件等生成。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:308
+#: ../../__w/calibre/calibre/manual/edit.rst:311
 msgid ""
 "You can edit individual entries by clicking on them and then clicking the "
 ":guilabel:`Change the location this entry points to` button. This will open "
@@ -469,43 +477,43 @@ msgid ""
 "view panel, and click where you want the entry to point to. A thick green "
 "line will show you the location. Click OK once you are happy with the "
 "location."
-msgstr ""
+msgstr "您可以通过单击单个条目，然后单击“更改此条目指向的位置”按钮来编辑各个条目。 这将打开书籍的迷你预览，只需将鼠标光标移到书籍视图面板上，然后单击您希望条目指向的位置即可。 一条粗绿线将向您显示该位置。 对位置感到满意后，单击“确定”。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid ""
 "The Edit Table of Contents tool, how to change the location an entry points "
 "to"
-msgstr ""
+msgstr "编辑目录工具，如何更改条目指向的位置"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:319
+#: ../../__w/calibre/calibre/manual/edit.rst:322
 msgid "Checking the book"
-msgstr ""
+msgstr "正在检查书籍"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:321
+#: ../../__w/calibre/calibre/manual/edit.rst:324
 msgid ""
 "The :guilabel:`Check book` tool searches your book for problems that could "
 "prevent it working as intended on actual reader devices. Activate it via "
 ":guilabel:`Tools->Check book`."
-msgstr ""
+msgstr "“检查图书”工具会搜索您的图书以查找可能妨碍其在实际阅读器设备上正常运行的问题。 通过“工具->支票簿”激活它。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Check book tool"
-msgstr ""
+msgstr "书籍检查工具"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:329
+#: ../../__w/calibre/calibre/manual/edit.rst:332
 msgid ""
 "Any problems found are reported in a nice, easy to use list. Clicking any "
 "entry in the list shows you some help about that error as well as giving you"
 " the option to auto-fix that error, if the error can be fixed automatically."
 " You can also double click the error to open the location of the error in an"
 " editor, so you can fix it yourself."
-msgstr ""
+msgstr "发现的任何问题都会报告在一个漂亮且易于使用的列表中。 单击列表中的任何条目会显示有关该错误的一些帮助，并为您提供自动修复该错误的选项（如果该错误可以自动修复）。 您还可以双击错误以在编辑器中打开错误位置，以便您可以自行修复。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:336
+#: ../../__w/calibre/calibre/manual/edit.rst:339
 msgid "Some of the checks performed are:"
-msgstr ""
+msgstr "执行的一些检查包括："
 
-#: ../../__w/calibre/calibre/manual/edit.rst:338
+#: ../../__w/calibre/calibre/manual/edit.rst:341
 msgid ""
 "Malformed HTML markup. Any HTML markup that does not parse as well-formed "
 "XML is reported. Correcting it will ensure that your markup works as "
@@ -514,46 +522,46 @@ msgid ""
 " checkpoint is created before auto-fixing so you can easily revert all "
 "changes. Auto-fixing works by parsing the markup using the HTML5 algorithm, "
 "which is highly fault tolerant and then converting to well formed XML."
-msgstr ""
+msgstr "HTML 标记格式错误。 任何不能解析为格式良好的 XML 的 HTML 标记都会被报告。 纠正它将确保您的标记在所有上下文中都能按预期工作。 calibre 还可以自动修复这些错误，但自动修复有时会产生意想不到的效果，因此请谨慎使用。 与往常一样，在自动修复之前会创建一个检查点，以便您可以轻松恢复所有更改。 自动修复的工作原理是使用 HTML5 算法解析标记，该算法具有高度容错性，然后转换为格式良好的 XML。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:347
+#: ../../__w/calibre/calibre/manual/edit.rst:350
 msgid ""
 "Malformed or unknown CSS styles. Any CSS that is not valid or that has "
 "properties not defined in the CSS 2.1 standard (plus a few from CSS 3) are "
 "reported. CSS is checked in all stylesheets, inline style attributes and "
 "<style> tags in HTML files."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/edit.rst:352
-msgid ""
-"Broken links. Links that point to files inside the book that are missing are"
-" reported."
-msgstr ""
+msgstr "CSS 样式格式错误或未知。 任何无效的 CSS 或具有 CSS 2.1 标准（以及 CSS 3 中的一些）中未定义的属性的 CSS 都会被报告。 所有样式表、内联样式属性和 HTML 文件中的<style> 标签均检查 CSS。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:355
 msgid ""
-"Unreferenced files. Files in the book that are not referenced by any other "
-"file or are not in the spine are reported."
-msgstr ""
+"Broken links. Links that point to files inside the book that are missing are"
+" reported."
+msgstr "损坏的链接。 报告指向书中丢失的文件的链接。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:358
+msgid ""
+"Unreferenced files. Files in the book that are not referenced by any other "
+"file or are not in the spine are reported."
+msgstr "未引用的文件。 报告书中未被任何其他文件引用或不在书脊中的文件。"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:361
 msgid ""
 "Various common problems in OPF files such as duplicate spine or manifest "
 "items, broken idrefs or meta cover tags, missing required sections and so "
 "on."
-msgstr ""
+msgstr "OPF 文件中的各种常见问题，例如重复的书脊或清单项、损坏的 idref 或元覆盖标签、缺少必需的部分等。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:362
+#: ../../__w/calibre/calibre/manual/edit.rst:365
 msgid ""
 "Various compatibility checks for known problems that can cause the book to "
 "malfunction on reader devices."
-msgstr ""
+msgstr "针对可能导致图书在阅读器设备上出现故障的已知问题进行各种兼容性检查。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:366
+#: ../../__w/calibre/calibre/manual/edit.rst:369
 msgid "Adding a cover"
-msgstr ""
+msgstr "正在添加封面"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:368
+#: ../../__w/calibre/calibre/manual/edit.rst:371
 msgid ""
 "You can easily add a cover to the book via :guilabel:`Tools->Add cover`. "
 "This allows you to either choose an existing image in the book as the cover "
@@ -562,26 +570,26 @@ msgid ""
 "existing cover in the book is found, it is replaced. The tool also "
 "automatically takes care of correctly marking the cover files as covers in "
 "the OPF."
-msgstr ""
+msgstr "您可以通过“工具->添加封面”轻松为书籍添加封面。 这允许您选择书中的现有图像作为封面，或将新图像导入书中并将其设为封面。 编辑 EPUB 文件时，会自动生成封面的 HTML 包装器。 如果在书中找到现有封面，则将其替换。 该工具还会自动将封面文件正确标记为 OPF 中的封面。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:377
+#: ../../__w/calibre/calibre/manual/edit.rst:380
 msgid "Embedding referenced fonts"
 msgstr "嵌入使用到的字体"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:379
+#: ../../__w/calibre/calibre/manual/edit.rst:382
 msgid ""
 "Accessed via :guilabel:`Tools->Embed reference fonts`, this tool finds all "
 "fonts referenced in the book and if they are not already embedded, searches "
 "your computer for them and embeds them into the book, if found. Please make "
 "sure that you have the necessary copyrights for embedding commercially "
 "licensed fonts, before doing this."
-msgstr ""
+msgstr "通过“工具->嵌入参考字体”访问，该工具会查找书中引用的所有字体，如果尚未嵌入，则会在您的计算机中搜索它们并将其嵌入到书中（如果找到）。 在执行此操作之前，请确保您拥有嵌入商业许可字体所需的版权。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:386
+#: ../../__w/calibre/calibre/manual/edit.rst:389
 msgid "Subsetting embedded fonts"
 msgstr "子集化嵌入字体"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:388
+#: ../../__w/calibre/calibre/manual/edit.rst:391
 msgid ""
 "Accessed via :guilabel:`Tools->Subset embedded fonts`, this tool reduces all"
 " the fonts in the book to only contain glyphs for the text actually present "
@@ -589,68 +597,68 @@ msgid ""
 "However, be aware that once the fonts are subset, if you add new text whose "
 "characters are not previously present in the subset font, the font will not "
 "work for the new text. So do this only as the last step in your workflow."
-msgstr ""
+msgstr "通过“工具->子集嵌入字体”访问，该工具将书中的所有字体减少到仅包含书中实际存在的文本的字形。 这通常会将字体文件的大小减少约 50%。 但是，请注意，一旦字体成为子集，如果您添加的新文本的字符以前不存在于子集字体中，则该字体将不适用于新文本。 因此，仅将此作为工作流程的最后一步。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:396
+#: ../../__w/calibre/calibre/manual/edit.rst:399
 msgid "Smartening punctuation"
 msgstr "规范标点"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:398
+#: ../../__w/calibre/calibre/manual/edit.rst:401
 msgid ""
 "Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into "
 "their typographically correct equivalents. Note that the algorithm can "
 "sometimes generate incorrect results, especially when single quotes at the "
 "start of contractions are involved. Accessed via :guilabel:`Tools->Smarten "
 "punctuation`."
-msgstr ""
+msgstr "将纯文本破折号、省略号、引号、多个连字符等转换为印刷正确的等效内容。 请注意，该算法有时会生成不正确的结果，尤其是在缩写开头涉及单引号时。 通过“工具->智能标点符号”访问。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:405
+#: ../../__w/calibre/calibre/manual/edit.rst:408
 msgid "Transforming CSS properties"
-msgstr ""
+msgstr "转换 CSS 属性"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:407
+#: ../../__w/calibre/calibre/manual/edit.rst:410
 msgid ""
 "Create rules to transform the styling of the book. For example, create a "
 "rule to convert all red text to green or to double the font size of all text"
 " in the book or make text of a certain font family italic, etc."
-msgstr ""
+msgstr "创建规则来改变书籍的样式。 例如，创建一条规则将所有红色文本转换为绿色，或者将书中所有文本的字体大小加倍，或者将特定字体系列的文本设置为斜体等。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:411
+#: ../../__w/calibre/calibre/manual/edit.rst:414
 msgid ""
 "Creating the rules is simple, the rules follow a natural language format, "
 "that looks like:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/edit.rst:414
-msgid "If the property *color* is *red* *change* it to *green*"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/edit.rst:415
-msgid "If the property *font-size* is *any value* *multiply* the value by *2*"
-msgstr ""
+msgstr "创建规则很简单，规则遵循自然语言格式，如下所示："
 
 #: ../../__w/calibre/calibre/manual/edit.rst:417
-msgid "Accessed via :guilabel:`Tools->Transform styles`."
-msgstr ""
+msgid "If the property *color* is *red* *change* it to *green*"
+msgstr "如果属性*颜色*是*红色*，将其*更改*为*绿色*"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:418
+msgid "If the property *font-size* is *any value* *multiply* the value by *2*"
+msgstr "如果属性 *font-size* 是 *任何值* *将该值乘以 *2*"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:420
+msgid "Accessed via :guilabel:`Tools->Transform styles`."
+msgstr "通过“工具->变换样式”访问。"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:423
 msgid "Removing unused CSS rules"
 msgstr "移除无用的 CSS 规则"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:422
+#: ../../__w/calibre/calibre/manual/edit.rst:425
 msgid ""
 "Remove all unused CSS rules from stylesheets and <style> tags. Some books "
 "created from production templates can have a large number of extra CSS rules"
 " that don't match any actual content. These extra rules can slow down "
 "readers that need to process them all. Accessed via :guilabel:`Tools->Remove"
 " unused CSS`."
-msgstr ""
+msgstr "从样式表和 <style> 标签中删除所有未使用的 CSS 规则。 一些从生产模板创建的书籍可能具有大量与任何实际内容不匹配的额外 CSS 规则。 这些额外的规则可能会减慢需要处理所有规则的读者的速度。 通过“工具->删除未使用的 CSS”访问。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:429
+#: ../../__w/calibre/calibre/manual/edit.rst:432
 msgid "Fixing HTML"
-msgstr ""
+msgstr "正在修正HTML"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:431
+#: ../../__w/calibre/calibre/manual/edit.rst:434
 msgid ""
 "This tool simply converts HTML that cannot be parsed as XML into well-formed"
 " XML. It is very common in e-books to have non-well-formed XML, so this tool"
@@ -660,13 +668,13 @@ msgid ""
 " can sometimes have counter-intuitive results. If you prefer, you can use "
 "the Check Book tool discussed above to find and manually correct problems in"
 " the HTML. Accessed via :guilabel:`Tools->Fix HTML`."
-msgstr ""
+msgstr "该工具只是将无法解析为 XML 的 HTML 转换为格式良好的 XML。 在电子书中，格式不正确的 XML 很常见，因此该工具只是自动执行修复此类 HTML 的过程。 该工具的工作原理是使用 HTML5 算法（所有现代浏览器中使用的算法）解析 HTML，然后将结果转换为 XML。 请注意，自动修复有时会产生违反直觉的结果。 如果您愿意，可以使用上面讨论的 Check Book 工具来查找并手动更正 HTML 中的问题。 通过“工具->修复 HTML”访问。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:441
+#: ../../__w/calibre/calibre/manual/edit.rst:444
 msgid "Beautifying files"
 msgstr "美化文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:443
+#: ../../__w/calibre/calibre/manual/edit.rst:446
 msgid ""
 "This tool is used to auto-format all HTML and CSS files so that they \"look "
 "pretty\". The code is auto-indented so that it lines up nicely, blank lines "
@@ -674,9 +682,9 @@ msgid ""
 "fixes broken HTML/CSS. Therefore, if you don't want any auto-fixing to be "
 "performed, first use the Check Book tool to correct all problems and only "
 "then run beautify.  Accessed via :guilabel:`Tools->Beautify all files`."
-msgstr ""
+msgstr "该工具用于自动格式化所有 HTML 和 CSS 文件，使它们“看起来很漂亮”。 代码会自动缩进，以便很好地排列，在适当的位置插入空行等等。 请注意，美化还会自动修复损坏的 HTML/CSS。 因此，如果您不想执行任何自动修复，请先使用检查簿工具修复所有问题，然后再运行美化。 通过“工具->美化所有文件”访问。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:451
+#: ../../__w/calibre/calibre/manual/edit.rst:454
 msgid ""
 "In HTML any text can have significant whitespace, via the CSS white-space "
 "directive. Therefore, beautification could potentially change the rendering "
@@ -688,34 +696,34 @@ msgid ""
 "beautify as it has no suitable block level tags. In such cases you can try "
 "different beautification tools, that are less careful, for example: `HTML "
 "Tidy <https://infohound.net/tidy/>`_."
-msgstr ""
+msgstr "在 HTML 中，通过 CSS 空白指令，任何文本都可以具有显着的空白。 因此，美化可能会改变 HTML 的呈现。 为了尽可能避免这种情况，美化算法仅美化包含其他块级标签的块级标签。 因此，例如，<p> 标记内的文本不会更改其空格。 但是只包含其他<p>和 <div> 标签的<body>标签将会被美化。 这有时意味着特定文件不会受到美化的影响，因为它没有合适的块级标签。 在这种情况下，您可以尝试不同的美化工具，这些工具不太仔细，例如：`HTML Tidy <https://infohound.net/tidy/>`_。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:464
+#: ../../__w/calibre/calibre/manual/edit.rst:467
 msgid "Inserting an inline Table of Contents"
-msgstr ""
+msgstr "插入内联目录"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:466
+#: ../../__w/calibre/calibre/manual/edit.rst:469
 msgid ""
 "Normally in e-books, the Table of Contents is separate from the main text "
 "and is typically accessed via a special Table of Contents button/menu in the"
 " e-book reading device. You can also have calibre automatically generate an "
 "*inline* Table of Contents that becomes part of the text of the book. It is "
 "generated based on the currently defined Table of Contents."
-msgstr ""
+msgstr "通常在电子书中，目录与正文是分开的，并且通常通过电子书阅读设备中的特殊目录按钮/菜单来访问。 您还可以让 calibre 自动生成*内联*目录，该目录成为书籍文本的一部分。 它是根据当前定义的目录生成的。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:472
+#: ../../__w/calibre/calibre/manual/edit.rst:475
 msgid ""
 "If you use this tool multiple times, each invocation will cause the "
 "previously created inline Table of Contents to be replaced. The tool can be "
 "accessed via :guilabel:`Tools->Table of Contents->Insert inline Table of "
 "Contents`."
-msgstr ""
+msgstr "如果多次使用此工具，每次调用都会导致先前创建的内联目录被替换。 可以通过“工具->目录->插入内联目录”访问该工具。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:477
+#: ../../__w/calibre/calibre/manual/edit.rst:480
 msgid "Setting Semantics"
-msgstr ""
+msgstr "正在设置语义"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:479
+#: ../../__w/calibre/calibre/manual/edit.rst:482
 msgid ""
 "This tool is used to set *semantics* in EPUB files. Semantics are simply, "
 "links in the OPF file that identify certain locations in the book as having "
@@ -724,13 +732,13 @@ msgid ""
 "information you want to specify and then select the location in the book the"
 " link should point to. This tool can be accessed via :guilabel:`Tools->Set "
 "semantics`."
-msgstr ""
+msgstr "该工具用于设置 EPUB 文件中的*语义*。 语义很简单，就是 OPF 文件中的链接，用于将书中的某些位置标识为具有特殊含义。 您可以使用它们来识别前言、奉献、封面、目录等。只需选择要指定的语义信息类型，然后选择链接应指向的书中位置。 可以通过“工具->设置语义”访问该工具。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:487
+#: ../../__w/calibre/calibre/manual/edit.rst:490
 msgid "Filtering style information"
-msgstr ""
+msgstr "过滤样式信息"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:489
+#: ../../__w/calibre/calibre/manual/edit.rst:492
 msgid ""
 "This tool can be used to easily remove specified CSS style properties from "
 "the entire book. You can tell it what properties you want removed, for "
@@ -739,47 +747,47 @@ msgid ""
 "``style`` attributes. After removing the style information, a summary of all"
 " the changes made is displayed so you can see exactly what was changed. The "
 "tool can be accessed via :guilabel:`Tools->Filter style information`."
-msgstr ""
+msgstr "该工具可用于轻松地从整本书中删除指定的 CSS 样式属性。 你可以告诉它你想要删除哪些属性，例如“颜色、背景颜色、行高”，它会从它们出现的任何地方删除它们——样式表、“<style>”标签和内联“ style`` 属性。 删除样式信息后，将显示所有所做更改的摘要，以便您可以准确地看到更改的内容。 可以通过“工具->过滤样式信息”访问该工具。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:499
+#: ../../__w/calibre/calibre/manual/edit.rst:502
 msgid "Upgrading the book's internals"
-msgstr ""
+msgstr "升级本书的内部结构"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:501
+#: ../../__w/calibre/calibre/manual/edit.rst:504
 msgid ""
 "This tool can be used to upgrade the book's internals, if possible. For "
 "instance it will upgrade EPUB 2 books to EPUB 3 books. The tool can be "
 "accessed via :guilabel:`Upgrade book internals`."
-msgstr ""
+msgstr "如果可能的话，该工具可用于升级本书的内部结构。 例如，它将 EPUB 2 图书升级为 EPUB 3 图书。 该工具可以通过“升级图书内部结构”来访问。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:508
+#: ../../__w/calibre/calibre/manual/edit.rst:511
 msgid "Checkpoints"
 msgstr "还原点"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:510
+#: ../../__w/calibre/calibre/manual/edit.rst:513
 msgid ""
 ":guilabel:`Checkpoints` are a way to mark the current state of the book as "
 "\"special\". You can then go on to do whatever changes you want to the book "
 "and if you don't like the results, return to the checkpointed state. "
 "Checkpoints are automatically created every time you run any of the "
 "automated tools described in the previous section."
-msgstr ""
+msgstr "“检查点”是一种将书籍当前状态标记为“特殊”的方法。 然后，您可以继续对本书进行任何您想要的更改，如果您不喜欢结果，请返回到检查点状态。 每次运行上一节中描述的任何自动化工具时，都会自动创建检查点。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:516
+#: ../../__w/calibre/calibre/manual/edit.rst:519
 msgid ""
 "You can create a checkpoint via :guilabel:`Edit->Create checkpoint`. And go "
 "back to a previous checkpoint with :guilabel:`Edit->Revert to ...`"
-msgstr ""
+msgstr "您可以通过“编辑->创建检查点”创建检查点。 并使用“编辑->恢复到...”返回到上一个检查点"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:519
+#: ../../__w/calibre/calibre/manual/edit.rst:522
 msgid ""
 "The check pointing functionality is in addition to the normal Undo/redo "
 "mechanism when editing individual files. Checkpoints are needed for when "
 "changes are spread over multiple files in the book or when you wish to be "
 "able to revert a large group of related changes as a whole."
-msgstr ""
+msgstr "检查点功能是编辑单个文件时正常撤消/重做机制之外的功能。 当更改分布在书中的多个文件中或当您希望能够整体恢复一大组相关更改时，需要检查点。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:524
+#: ../../__w/calibre/calibre/manual/edit.rst:527
 msgid ""
 "You can see a list of available checkpoints via "
 ":guilabel:`View->Checkpoints`. You can compare the current state of the book"
@@ -787,17 +795,17 @@ msgid ""
 "checkpoint of interest and clicking the :guilabel:`Compare` button. The "
 ":guilabel:`Revert to` button restores the book to the selected checkpoint, "
 "undoing all changes since that checkpoint was created."
-msgstr ""
+msgstr "您可以通过“视图->检查点”查看可用检查点的列表。 您可以使用“diff”工具将书籍的当前状态与指定的检查点进行比较 - 通过选择感兴趣的检查点并单击“比较”按钮。 “恢复到”按钮将书籍恢复到选定的检查点，撤消自创建该检查点以来的所有更改。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:532
+#: ../../__w/calibre/calibre/manual/edit.rst:535
 msgid "The Live preview panel"
-msgstr ""
+msgstr "实时预览面板"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Live preview panel showing a rendering of the current file"
-msgstr ""
+msgstr "显示当前文件渲染的实时预览面板"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:538
+#: ../../__w/calibre/calibre/manual/edit.rst:541
 msgid ""
 "The :guilabel:`File preview` gives you an overview of the various files "
 "inside The live preview panel shows you the changes you are making live "
@@ -808,18 +816,18 @@ msgid ""
 "panel, will cause the cursor in the editor to be positioned over the element"
 " you clicked. If you click a link pointing to another file in the book, that"
 " file will be opened in the edit and the preview panel, automatically."
-msgstr ""
+msgstr "“文件预览”为您提供了内部各种文件的概述。实时预览面板向您显示正在实时进行的更改（有一两秒的延迟）。 当您编辑 HTML 或 CSS 文件时，预览面板会自动更新以反映您的更改。 当您在编辑器中移动光标时，预览面板将跟踪其位置，向您显示书中的相应位置。 在预览面板中单击，将导致编辑器中的光标位于您单击的元素上。 如果您单击指向书中另一个文件的链接，该文件将在编辑和预览面板中自动打开。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:548
+#: ../../__w/calibre/calibre/manual/edit.rst:551
 msgid ""
 "You can turn off the automatic syncing of position and live preview of "
 "changes -- by buttons under the preview panel. The live update of the "
 "preview panel only happens when you are not actively typing in the editor, "
 "so as not to be distracting or slow you down, waiting for the preview to "
 "render."
-msgstr ""
+msgstr "您可以通过预览面板下的按钮关闭位置自动同步和更改的实时预览。 预览面板的实时更新仅在您未在编辑器中主动输入时发生，以免在等待预览渲染时分散您的注意力或减慢您的速度。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:553
+#: ../../__w/calibre/calibre/manual/edit.rst:556
 msgid ""
 "The preview panel shows you how the text will look when viewed. However, the"
 " preview panel is not a substitute for actually testing your book an actual "
@@ -829,24 +837,20 @@ msgid ""
 " use font name aliasing. Use the preview panel while you are working on the "
 "book, but once you are done, review it in an actual reader device or "
 "software emulator."
-msgstr ""
+msgstr "预览面板向您显示文本在查看时的外观。 但是，预览面板并不能替代在实际阅读器设备上实际测试您的图书。 它比实际读者的能力更强，也更弱。 它比大多数阅读器设备更好地容忍错误和草率标记。 它还不会显示页边距、分页符和使用字体名称别名的嵌入字体。 在阅读本书时使用预览面板，但完成后，请在实际的阅读器设备或软件模拟器中查看它。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:562
+#: ../../__w/calibre/calibre/manual/edit.rst:565
 msgid ""
 "The preview panel does not support embedded fonts if the name of the font "
 "inside the font file does not match the name in the CSS @font-face rule. You"
 " can use the Check Book tool to quickly find and fix any such problem fonts."
-msgstr ""
+msgstr "如果字体文件中的字体名称与 CSS @font-face 规则中的名称不匹配，则预览面板不支持嵌入字体。 您可以使用检查簿工具快速查找并修复任何此类问题字体。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:568
+#: ../../__w/calibre/calibre/manual/edit.rst:571
 msgid "Splitting HTML files"
 msgstr "分割HTML文件"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:570
-msgid "spmb"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/edit.rst:572
+#: ../../__w/calibre/calibre/manual/edit.rst:575
 msgid ""
 "One, perhaps non-obvious, use of the preview panel is to split long HTML "
 "files. While viewing the file you want to split, click the :guilabel:`Split "
@@ -855,94 +859,98 @@ msgid ""
 "will show you exactly where the split will happen as you move your mouse. "
 "Once you have found the location you want, simply click and the split will "
 "be performed."
-msgstr ""
+msgstr "预览面板的一种（也许不是显而易见的）用途是分割长 HTML 文件。 查看要拆分的文件时，单击预览面板 |spmb| 下的“拆分模式”按钮。 然后只需将鼠标移动到要分割文件的位置并单击即可。 当您移动鼠标时，一条粗绿线将准确显示分割发生的位置。 找到所需位置后，只需单击即可执行分割。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:579
+#: ../../__w/calibre/calibre/manual/edit.rst:573
+msgid "spmb"
+msgstr "预览面板"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:582
 msgid ""
 "Splitting the file will automatically update all links and references that "
 "pointed into the bottom half of the file and will open the newly split file "
 "in an editor."
-msgstr ""
+msgstr "拆分文件将自动更新指向文件下半部分的所有链接和引用，并将在编辑器中打开新拆分的文件。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:583
+#: ../../__w/calibre/calibre/manual/edit.rst:586
 msgid ""
 "You can also split a single HTML file at multiple locations automatically, "
 "by right clicking inside the file in the editor and choosing "
 ":guilabel:`Split at multiple locations`. This will allow you to easily split"
 " a large file at all heading tags or all tags having a certain class and so "
 "on."
-msgstr ""
+msgstr "您还可以通过在编辑器中右键单击文件内部并选择“在多个位置拆分”来自动在多个位置拆分单个 HTML 文件。 这将允许您轻松地在所有标题标签或具有特定类别的所有标签等处拆分大文件。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:593
+#: ../../__w/calibre/calibre/manual/edit.rst:596
 msgid "The Live CSS panel"
-msgstr ""
+msgstr "实时 CSS 面板"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Live CSS panel showing the styles for the current element"
-msgstr ""
+msgstr "显示当前元素样式的实时 CSS 面板"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:600
+#: ../../__w/calibre/calibre/manual/edit.rst:603
 msgid ""
 "The :guilabel:`Live CSS` panel shows you all the style rules that apply to "
 "the tag you are currently editing. The name of tag, along with its line "
 "number in the editor are displayed, followed by a list of matching style "
 "rules."
-msgstr ""
+msgstr "“实时CSS”面板向您显示适用于您当前正在编辑的标签的所有样式规则。 显示标签的名称及其在编辑器中的行号，后面是匹配样式规则的列表。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:604
+#: ../../__w/calibre/calibre/manual/edit.rst:607
 msgid ""
 "It is a great way to quickly see which style rules apply to any tag. The "
 "view also has clickable links (in blue), which take you directly to the "
 "location where the style was defined, in case you wish to make any changes "
 "to the style rules. Style rules that apply directly to the tag, as well as "
 "rules that are inherited from parent tags are shown."
-msgstr ""
+msgstr "这是快速查看哪些样式规则适用于任何标签的好方法。 该视图还有可单击的链接（蓝色），如果您希望对样式规则进行任何更改，可以直接转到定义样式的位置。 显示直接应用于标记的样式规则以及从父标记继承的规则。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:610
+#: ../../__w/calibre/calibre/manual/edit.rst:613
 msgid ""
 "The panel also shows you what the finally calculated styles for the tag are."
 " Properties in the list that are superseded by higher priority rules are "
 "shown with a line through them."
-msgstr ""
+msgstr "该面板还向您显示最终计算出的标签样式。 列表中被更高优先级规则取代的属性用一条线显示。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:614
+#: ../../__w/calibre/calibre/manual/edit.rst:617
 msgid "You can enable the Live CSS panel via :guilabel:`View->Live CSS`."
-msgstr ""
+msgstr "您可以通过“视图->实时CSS”启用实时CSS 面板。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:621
+#: ../../__w/calibre/calibre/manual/edit.rst:624
 msgid "Miscellaneous tools"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/edit.rst:623
-msgid "There are a few more tools that can be useful while you edit the book."
-msgstr ""
+msgstr "杂项工具"
 
 #: ../../__w/calibre/calibre/manual/edit.rst:626
-msgid "The Table of Contents view"
-msgstr ""
+msgid "There are a few more tools that can be useful while you edit the book."
+msgstr "在您编辑本书时，还有一些有用的工具。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:628
+#: ../../__w/calibre/calibre/manual/edit.rst:629
+msgid "The Table of Contents view"
+msgstr "目录视图"
+
+#: ../../__w/calibre/calibre/manual/edit.rst:631
 msgid ""
 "The Table of Contents view shows you the current table of contents in the "
 "book. Double clicking on any entry opens the place that entry points to in "
 "an editor. You can right click to edit the Table of Contents, refresh the "
 "view or expand/collapse all items. Access this view via "
 ":guilabel:`View->Table of Contents`."
-msgstr ""
+msgstr "目录视图显示书中当前的目录。 双击任何条目会在编辑器中打开该条目所指向的位置。 您可以右键单击以编辑目录、刷新视图或展开/折叠所有项目。 通过“视图->目录”访问此视图。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:635
+#: ../../__w/calibre/calibre/manual/edit.rst:638
 msgid "Checking the spelling of words in the book"
-msgstr ""
+msgstr "检查图书中单词的拼写"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:637
+#: ../../__w/calibre/calibre/manual/edit.rst:640
 msgid "You can run a spelling checker via :guilabel:`Tools->Check spelling`."
-msgstr ""
+msgstr "您可以通过“工具->检查拼写”运行拼写检查器。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Check spelling tool"
-msgstr ""
+msgstr "检查拼写工具"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:644
+#: ../../__w/calibre/calibre/manual/edit.rst:647
 msgid ""
 "Words are shown with the number of times they occur in the book and the "
 "language the word belongs to. Language information is taken from the books "
@@ -951,16 +959,16 @@ msgid ""
 "languages. For example, in the following HTML extract, the word color will "
 "be checked using American English and the word colour using British "
 "English::"
-msgstr ""
+msgstr "单词会显示它们在书中出现的次数以及该单词所属的语言。 语言信息取自书籍元数据和 HTML 文件中的“lang”属性。 这使得拼写检查器即使在包含多种语言文本的书籍上也能正常工作。 例如，在以下 HTML 摘录中，将使用美式英语检查单词 color，使用英式英语检查单词 color："
 
-#: ../../__w/calibre/calibre/manual/edit.rst:654
+#: ../../__w/calibre/calibre/manual/edit.rst:657
 msgid ""
 "You can double click a word to highlight the next occurrence of that word in"
 " the editor. This is useful if you wish to manually edit the word, or see "
 "what context it is in."
-msgstr ""
+msgstr "您可以双击某个单词以突出显示该单词在编辑器中下一次出现的位置。 如果您希望手动编辑单词或查看它所处的上下文，这非常有用。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:658
+#: ../../__w/calibre/calibre/manual/edit.rst:661
 msgid ""
 "To change a word, simply double click one of the suggested alternative "
 "spellings on the right, or type in your own corrected spelling and click the"
@@ -968,45 +976,45 @@ msgid ""
 "occurrences of the word in the book. You can also right click on a word in "
 "the main word list to change the word conveniently from the right click "
 "menu."
-msgstr ""
+msgstr "要更改单词，只需双击右侧建议的替代拼写之一，或者输入您自己更正的拼写，然后单击“将所选单词更改为”按钮。 这将替换书中出现的所有单词。 您还可以右键单击主单词列表中的单词，从右键菜单中方便地更改单词。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:664
+#: ../../__w/calibre/calibre/manual/edit.rst:667
 msgid ""
 "You can have the spelling checker ignore a word for the current session by "
 "clicking the :guilabel:`Ignore` button. You can also add a word to the user "
 "dictionary by clicking the :guilabel:`Add to dictionary` button. The "
 "spelling checker supports multiple user dictionaries, so you can select the "
 "dictionary you want the word added to."
-msgstr ""
+msgstr "您可以通过单击“忽略”按钮让拼写检查器忽略当前会话的单词。 您还可以通过单击“添加到词典”按钮将单词添加到用户词典中。 拼写检查器支持多个用户词典，因此您可以选择要将单词添加到的词典。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:670
+#: ../../__w/calibre/calibre/manual/edit.rst:673
 msgid ""
 "You can also have the spelling checker display all the words in your book, "
 "not just the incorrectly spelled ones. This is useful to see what words are "
 "most common in your book and to run a simple search and replace on "
 "individual words."
-msgstr ""
+msgstr "您还可以让拼写检查器显示书中的所有单词，而不仅仅是拼写错误的单词。 这对于查看书中最常见的单词以及对单个单词进行简单搜索和替换非常有用。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:675
+#: ../../__w/calibre/calibre/manual/edit.rst:678
 msgid ""
 "If you make any changes to the book by editing files while the spell check "
 "tool is open, you should click the :guilabel:`Refresh` button in the Spell "
 "check tool. If you do not do this and continue to use the Spell check tool, "
 "you could lose the changes you have made in the editor."
-msgstr ""
+msgstr "如果您在拼写检查工具打开时通过编辑文件对图书进行任何更改，则应单击拼写检查工具中的“刷新”按钮。 如果您不这样做并继续使用拼写检查工具，您可能会丢失在编辑器中所做的更改。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:681
+#: ../../__w/calibre/calibre/manual/edit.rst:684
 msgid ""
 "To exclude an individual file from being spell checked when running the "
 "spell check tool, you can use the :guilabel:`Exclude files` button or add "
 "the following comment just under the opening tag in the file::"
-msgstr ""
+msgstr "要在运行拼写检查工具时排除单个文件进行拼写检查，您可以使用“排除文件”按钮或在文件的开始标记下方添加以下注释："
 
-#: ../../__w/calibre/calibre/manual/edit.rst:689
+#: ../../__w/calibre/calibre/manual/edit.rst:692
 msgid "Adding new dictionaries"
-msgstr ""
+msgstr "正在添加新的字典"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:691
+#: ../../__w/calibre/calibre/manual/edit.rst:694
 msgid ""
 "The spelling checker comes with builtin dictionaries for the English and "
 "Spanish languages. You can install your own dictionaries via "
@@ -1014,13 +1022,13 @@ msgid ""
 "checker can use dictionaries from the LibreOffice program (in the .oxt "
 "format). You can download these dictionaries from `The LibreOffice "
 "Extensions repository <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
-msgstr ""
+msgstr "拼写检查器附带英语和西班牙语的内置词典。 您可以通过“首选项->编辑器->管理拼写词典”安装自己的词典。 拼写检查器可以使用 LibreOffice 程序中的词典（.oxt 格式）。 您可以从“LibreOffice 扩展存储库 <https://extensions.libreoffice.org/?Tags%5B%5D=50>”下载这些词典。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:700
+#: ../../__w/calibre/calibre/manual/edit.rst:703
 msgid "Inserting special characters"
 msgstr "插入特殊字符"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:702
+#: ../../__w/calibre/calibre/manual/edit.rst:705
 msgid ""
 "You can insert characters that are difficult to type by using the "
 ":guilabel:`Edit->Insert special character` tool. This shows you all Unicode "
@@ -1029,9 +1037,9 @@ msgid ""
 " selected character. This tool can be used to insert special characters into"
 " the main text or into any other area of the user interface, such as the "
 "Search and replace tool."
-msgstr ""
+msgstr "您可以使用“编辑->插入特殊字符”工具插入难以键入的字符。 这会显示所有 Unicode 字符，只需单击您要输入的字符即可。 如果在单击时按住“Ctrl”，窗口将在插入所选字符后自行关闭。 该工具可用于将特殊字符插入到主文本或用户界面的任何其他区域，例如搜索和替换工具。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:710
+#: ../../__w/calibre/calibre/manual/edit.rst:713
 msgid ""
 "Because there are a lot of characters, you can define your own "
 ":guilabel:`Favorite` characters, that will be shown first. Simply right "
@@ -1040,9 +1048,9 @@ msgid ""
 "arrange the order of characters in favorites by clicking the :guilabel:`Re-"
 "arrange favorites` button and then drag and dropping the characters in "
 "favorites around."
-msgstr ""
+msgstr "因为角色很多，您可以定义自己的“最喜欢的”角色，这些角色将首先显示。 只需右键单击一个角色即可将其标记为收藏夹。 您还可以右键单击收藏夹中的角色将其从收藏夹中删除。 最后，您可以通过单击“重新排列收藏夹”按钮，然后拖放收藏夹中的字符来重新排列收藏夹中的字符顺序。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:717
+#: ../../__w/calibre/calibre/manual/edit.rst:720
 msgid ""
 "You can also directly type in special characters using the keyboard. To do "
 "this, you type the Unicode code for the character (in hexadecimal) and then "
@@ -1051,21 +1059,21 @@ msgid ""
 "then :kbd:`Alt+X`. To type a non-breaking space you would use a0 and then "
 ":kbd:`Alt+X`, to type the horizontal ellipsis you would use 2026 and "
 ":kbd:`Alt+X` and so on."
-msgstr ""
+msgstr "您也可以使用键盘直接输入特殊字符。 为此，请键入该字符的 Unicode 代码（十六进制），然后按“Alt+X”键，这会将之前键入的代码转换为相应的字符。 例如，要输入 ÿ，您可以输入 ff，然后输入“Alt+X”。 要输入不间断空格，您可以使用 a0，然后使用“Alt+X”，要输入水平省略号，您可以使用 2026 和“Alt+X”，依此类推。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:725
+#: ../../__w/calibre/calibre/manual/edit.rst:728
 msgid ""
 "Finally, you can type in special characters by using HTML named entities. "
 "For example, typing &nbsp; will be replaced by a non breaking space when you"
 " type the semi-colon. The replacement happens only when typing the semi-"
 "colon."
-msgstr ""
+msgstr "最后，您可以使用 HTML 命名实体输入特殊字符。 例如，输入 空格; 当您键入分号时，将被不间断空格替换。 仅当键入分号时才会进行替换。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:730
+#: ../../__w/calibre/calibre/manual/edit.rst:733
 msgid "The code inspector view"
-msgstr ""
+msgstr "代码检查器视图"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:732
+#: ../../__w/calibre/calibre/manual/edit.rst:735
 msgid ""
 "This view shows you the HTML coding and CSS that applies to the current "
 "element of interest. You open it by right clicking a location in the preview"
@@ -1075,38 +1083,38 @@ msgid ""
 "changes have instantly. Note that editing the styles does not actually make "
 "changes to the book contents, it only allows for quick experimentation. The "
 "ability to live edit inside the Inspector is under development."
-msgstr ""
+msgstr "此视图向您显示适用于当前感兴趣元素的 HTML 编码和 CSS。 您可以通过右键单击预览面板中的某个位置并选择“检查”来打开它。 它允许您查看该元素的 HTML 编码，更重要的是，查看适用于该元素的 CSS 样式。 您甚至可以动态编辑样式并立即查看更改的效果。 请注意，编辑样式实际上并不会更改书籍内容，它仅允许快速实验。 Inspector 内的实时编辑功能正在开发中。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:742
+#: ../../__w/calibre/calibre/manual/edit.rst:745
 msgid "Checking external links"
-msgstr ""
+msgstr "正在检查外部链接"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:744
+#: ../../__w/calibre/calibre/manual/edit.rst:747
 msgid ""
 "You can use this tool to check all links in your book that point to external"
 " websites. The tool will try to visit every externally linked website, and "
 "if the visit fails, it will report all broken links in a convenient format "
 "for you to fix."
-msgstr ""
+msgstr "您可以使用此工具检查书中指向外部网站的所有链接。 该工具将尝试访问每个外部链接的网站，如果访问失败，它将以方便的格式报告所有损坏的链接，以便您修复。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:751
+#: ../../__w/calibre/calibre/manual/edit.rst:754
 msgid "Downloading external resources"
-msgstr ""
+msgstr "正在下载外部资源"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:753
+#: ../../__w/calibre/calibre/manual/edit.rst:756
 msgid ""
 "You can use this tool to automatically download any images/stylesheets/etc. "
 "in the book that are not bundled with the book (i.e. they have URLs pointing"
 " to a location on the internet). The tool will find all such resources and "
 "automatically download them, add them to the book and replace all references"
 " to them to use the downloaded files."
-msgstr ""
+msgstr "您可以使用此工具自动下载任何图像/样式表/等。 书中未与本书捆绑在一起的内容（即它们的 URL 指向互联网上的某个位置）。 该工具将找到所有此类资源并自动下载它们，将它们添加到书中并替换对它们的所有引用以使用下载的文件。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:761
+#: ../../__w/calibre/calibre/manual/edit.rst:764
 msgid "Arranging files into folders by type"
-msgstr ""
+msgstr "按类型将文件整理到文件夹中"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:763
+#: ../../__w/calibre/calibre/manual/edit.rst:766
 msgid ""
 "Often when editing EPUB files that you get from somewhere, you will find "
 "that the files inside the EPUB are arranged haphazardly, in different sub-"
@@ -1114,26 +1122,26 @@ msgid ""
 "folders based on their types. Access it via :guilabel:`Tools->Arrange into "
 "folders`. Note that this tool only changes how the files are arranged inside"
 " the EPUB, it does not change how they are displayed in the File browser."
-msgstr ""
+msgstr "通常，当编辑从某处获取的 EPUB 文件时，您会发现 EPUB 内的文件随意排列在不同的子文件夹中。 该工具允许您根据文件的类型自动将所有文件移动到子文件夹中。 通过“工具->排列到文件夹”访问它。 请注意，此工具仅更改文件在 EPUB 内的排列方式，不会更改文件在文件浏览器中的显示方式。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:771
+#: ../../__w/calibre/calibre/manual/edit.rst:774
 msgid "Importing files in other e-book formats as EPUB"
-msgstr ""
+msgstr "将其他电子书格式的文件导入为 EPUB"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:773
+#: ../../__w/calibre/calibre/manual/edit.rst:776
 msgid ""
 "The editor includes the ability to import files in some other e-book formats"
 " directly as a new EPUB, without going through a full conversion. This is "
 "particularly useful to directly create EPUB files from your own hand-edited "
 "HTML files. You can do this via :guilabel:`File->Import an HTML or DOCX file"
 " as a new book`."
-msgstr ""
+msgstr "该编辑器能够将其他一些电子书格式的文件直接导入为新的 EPUB，而无需进行完全转换。 这对于直接从您自己手工编辑的 HTML 文件创建 EPUB 文件特别有用。 您可以通过“文件->导入 HTML 或 DOCX 文件作为新书”来完成此操作。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:786
+#: ../../__w/calibre/calibre/manual/edit.rst:789
 msgid "The Reports tool"
-msgstr ""
+msgstr "报表工具"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:788
+#: ../../__w/calibre/calibre/manual/edit.rst:791
 msgid ""
 "The editor includes a nice *Reports* tool (via :guilabel:`Tools->Reports`) "
 "that shows summaries of the files, images, links, words, characters and "
@@ -1143,110 +1151,110 @@ msgid ""
 "can double click entries the :guilabel:`Source` column to jump to where the "
 "link is defined and entries in the :guilabel:`Target` column to jump to "
 "where the link points."
-msgstr ""
+msgstr "该编辑器包括一个很好的*报告*工具（通过“工具->报告”），显示书中使用的文件、图像、链接、单词、字符和样式的摘要。 报告中的每一行都是热链接的。 双击一行可跳转到书中使用或定义该项目的位置（视情况而定）。 例如，在“链接”视图中，您可以双击“源”列中的条目以跳转到定义链接的位置，双击“目标”列中的条目以跳转到链接指向的位置。"
 
 #: ../../__w/calibre/calibre/manual/edit.rst-1
 msgid "The Reports tool with information and statistics about the book"
-msgstr ""
+msgstr "包含有关本书的信息和统计数据的报告工具"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:803
+#: ../../__w/calibre/calibre/manual/edit.rst:806
 msgid "Special features in the code editor"
-msgstr ""
+msgstr "代码编辑器中的特殊功能"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:805
+#: ../../__w/calibre/calibre/manual/edit.rst:808
 msgid ""
 "The calibre HTML editor is very powerful. It has many features that make "
 "editing of HTML (and CSS) easier."
-msgstr ""
+msgstr "calibre HTML 编辑器非常强大。 它具有许多使 HTML（和 CSS）编辑变得更容易的功能。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:809
+#: ../../__w/calibre/calibre/manual/edit.rst:812
 msgid "Syntax highlighting"
 msgstr "语法高亮"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:811
+#: ../../__w/calibre/calibre/manual/edit.rst:814
 msgid ""
 "The HTML editor has very sophisticated syntax highlighting. Features "
 "include:"
-msgstr ""
+msgstr "HTML 编辑器具有非常复杂的语法突出显示。 特点包括："
 
-#: ../../__w/calibre/calibre/manual/edit.rst:813
+#: ../../__w/calibre/calibre/manual/edit.rst:816
 msgid "The text inside bold, italic and heading tags is made bold/italic"
-msgstr ""
+msgstr "粗体、斜体和标题标签内的文本变为粗体/斜体"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:814
+#: ../../__w/calibre/calibre/manual/edit.rst:817
 msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
 "keyboard shortcuts :kbd:`Ctrl+{` and :kbd:`Ctrl+}`. Similarly, you can "
-"select the contents of a tag with :kbd:`Ctrl+Alt+T`."
-msgstr ""
+"select the contents of a tag with :kbd:`Ctrl+Alt+T` or :kbd:`Ctrl+Shift+T`."
+msgstr "当您在 HTML 中移动光标时，匹配的 HTML 标记会突出显示，您可以使用键盘快捷键“Ctrl+{”和“Ctrl+}”跳转到开始或结束标记。 同样，您可以使用“Ctrl+Alt+T”或“Ctrl+Shift+T”选择标签的内容。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:818
+#: ../../__w/calibre/calibre/manual/edit.rst:822
 msgid "Invalid HTML is highlighted with a red underline"
 msgstr "已用紅線間底無效的HTML"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:819
+#: ../../__w/calibre/calibre/manual/edit.rst:823
 msgid ""
 "Spelling errors in the text inside HTML tags and attributes such as title "
 "are highlighted. The spell checking is language aware, based on the value of"
 " the ``lang`` attribute of the current tag and the overall book language."
-msgstr ""
+msgstr "HTML 标签内的文本和标题等属性中的拼写错误会突出显示。 拼写检查是语言感知的，基于当前标签的“lang”属性值和整体书籍语言。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:822
+#: ../../__w/calibre/calibre/manual/edit.rst:826
 msgid "CSS embedded inside ``<style>`` tags is highlighted"
-msgstr ""
+msgstr "嵌入在``<style>``标签内的CSS被突出显示"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:823
+#: ../../__w/calibre/calibre/manual/edit.rst:827
 msgid ""
 "Special characters that can be hard to distinguish such as non-breaking "
 "spaces, different types of hyphens, etc. are highlighted."
-msgstr ""
+msgstr "难以区分的特殊字符（例如不间断空格、不同类型的连字符等）会突出显示。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:825
+#: ../../__w/calibre/calibre/manual/edit.rst:829
 msgid ""
 "Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
 " the filenames highlighted. If the filename they point to does not exist, "
 "the filename is marked with a red underline."
-msgstr ""
+msgstr "``<a>`` 标签、``<img>`` 和``<link>`` 标签中其他文件的链接都突出显示文件名。 如果它们指向的文件名不存在，则该文件名会标有红色下划线。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:830
+#: ../../__w/calibre/calibre/manual/edit.rst:834
 msgid "Context sensitive help"
 msgstr "上下文帮助"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:832
+#: ../../__w/calibre/calibre/manual/edit.rst:836
 msgid ""
 "You can right click on an HTML tag name or a CSS property name to get help "
 "for that tag or property."
-msgstr ""
+msgstr "您可以右键单击 HTML 标记名称或 CSS 属性名称来获取该标记或属性的帮助。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:834
+#: ../../__w/calibre/calibre/manual/edit.rst:838
 msgid ""
 "You can also hold down the :kbd:`Ctrl` key and click on any filename inside "
 "a link tag to open that file in the editor automatically. Similarly, "
 ":kbd:`Ctrl` clicking a class name will take you to the first style rule that"
 " matches the tag and class."
-msgstr ""
+msgstr "您还可以按住“Ctrl”键并单击链接标记内的任何文件名，以在编辑器中自动打开该文件。 同样，“Ctrl”单击类名将带您到达与标签和类匹配的第一个样式规则。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:838
+#: ../../__w/calibre/calibre/manual/edit.rst:842
 msgid ""
 "Right clicking a class name in an HTML file will allow you to rename the "
 "class, changing all occurrences of the class throughout the book and all its"
 " stylesheets."
-msgstr ""
+msgstr "右键单击 HTML 文件中的类名将允许您重命名该类，从而更改该类在本书及其所有样式表中出现的所有位置。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:845
+#: ../../__w/calibre/calibre/manual/edit.rst:849
 msgid "Auto-complete"
 msgstr "自动完成"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:847
+#: ../../__w/calibre/calibre/manual/edit.rst:851
 msgid ""
 "When editing an e-book, one of the most tedious tasks is creating links to "
 "other files inside the book, or to CSS stylesheets, or images. You have to "
 "figure out the correct filename and relative path to the file. The editor "
 "has auto-complete to make that easier."
-msgstr ""
+msgstr "编辑电子书时，最繁琐的任务之一是创建指向书中其他文件、CSS 样式表或图像的链接。 您必须找出正确的文件名和文件的相对路径。 编辑器具有自动完成功能，使操作变得更容易。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:852
+#: ../../__w/calibre/calibre/manual/edit.rst:856
 msgid ""
 "As you type a filename, the editor automatically pops up suggestions. Simply"
 " use the :kbd:`Tab` key to select the correct file name. The editor even "
@@ -1254,9 +1262,9 @@ msgid ""
 " After you type the ``#`` character, the editor will show you a list of all "
 "anchors in the target file, with a small snippet of text to help you choose "
 "the right anchor."
-msgstr ""
+msgstr "当您键入文件名时，编辑器会自动弹出建议。 只需使用“Tab”键即可选择正确的文件名。 该编辑器甚至还提供了指向另一个 HTML 文件中的锚点的链接的建议。 输入“#”字符后，编辑器将显示目标文件中所有锚点的列表，其中包含一小段文本以帮助您选择正确的锚点。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:858
+#: ../../__w/calibre/calibre/manual/edit.rst:862
 msgid ""
 "Note that unlike most other completion systems, the editor's completion "
 "system uses subsequence matching. This means that you can type just two or "
@@ -1266,13 +1274,13 @@ msgid ""
 "for matches, the completion system prioritizes letters that are at the start"
 " of a word, or immediately after a path separator. Once you get used to this"
 " system, you will find it saves you a lot of time and effort."
-msgstr ""
+msgstr "请注意，与大多数其他完成系统不同，编辑器的完成系统使用子序列匹配。 这意味着您只需键入文件名中任意位置的两个或三个字母即可完成文件名。 例如，假设您想要文件名“../images/arrow1.png”，您可以简单地键入“ia1”并按“Tab”来完成文件名。 搜索匹配项时，补全系统会优先考虑位于单词开头或紧接路径分隔符之后的字母。 一旦你习惯了这个系统，你会发现它为你节省了大量的时间和精力。"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:868
+#: ../../__w/calibre/calibre/manual/edit.rst:872
 msgid "Snippets"
 msgstr "片段"
 
-#: ../../__w/calibre/calibre/manual/edit.rst:870
+#: ../../__w/calibre/calibre/manual/edit.rst:874
 msgid ""
 "The calibre E-book editor supports *snippets*. A snippet is a piece of text "
 "that is either re-used often or contains a lot of redundant text. The editor"
@@ -1280,4 +1288,4 @@ msgid ""
 "are very powerful, with many features, such as placeholders you can jump "
 "between, automatic mirroring of repeated text and so on. For more "
 "information, see :doc:`snippets`."
-msgstr ""
+msgstr "calibre 电子书编辑器支持*片段*。 片段是经常重复使用或包含大量冗余文本的一段文本。 该编辑器允许您只需敲击几个键即可插入片段。 这些片段非常强大，具有许多功能，例如可以在之间跳转的占位符、重复文本的自动镜像等等。 有关更多信息，请参阅“片段”。"

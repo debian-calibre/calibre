@@ -6,8 +6,8 @@ import os
 from functools import partial
 from qt.core import (
     QAbstractItemView, QAction, QDialog, QDialogButtonBox, QGroupBox, QHBoxLayout,
-    QIcon, QKeySequence, QLabel, QListWidget, QListWidgetItem, QMenu, Qt, QToolBar,
-    QToolButton, QVBoxLayout, pyqtSignal,
+    QIcon, QInputDialog, QKeySequence, QLabel, QListWidget, QListWidgetItem, QMenu, Qt,
+    QToolBar, QToolButton, QVBoxLayout, pyqtSignal,
 )
 from qt.webengine import QWebEnginePage
 
@@ -41,6 +41,7 @@ def all_actions():
     if not hasattr(all_actions, 'ans'):
         amap = {
             'color_scheme': Action('format-fill-color.png', _('Switch color scheme')),
+            'profiles': Action('auto-reload.png', _('Apply settings from a saved profile')),
             'back': Action('back.png', _('Back'), 'back'),
             'forward': Action('forward.png', _('Forward'), 'forward'),
             'open': Action('document_open.png', _('Open e-book')),
@@ -151,6 +152,7 @@ class ActionsToolBar(ToolBar):
         web_view.read_aloud_state_changed.connect(self.update_read_aloud_action)
         web_view.customize_toolbar.connect(self.customize, type=Qt.ConnectionType.QueuedConnection)
         web_view.view_created.connect(self.on_view_created)
+        web_view.change_toolbar_actions.connect(self.change_toolbar_actions)
 
         self.web_actions = {}
         self.back_action = a = shortcut_action('back')
@@ -215,7 +217,18 @@ class ActionsToolBar(ToolBar):
         self.color_scheme_menu = m = QMenu(self)
         a.setMenu(m)
         m.aboutToShow.connect(self.populate_color_scheme_menu)
+        self.profiles_action = a = QAction(aa.profiles.icon, aa.profiles.text, self)
+        self.profiles_menu = m = QMenu(self)
+        a.setMenu(m)
+        m.aboutToShow.connect(self.populate_profiles_menu)
 
+        self.add_actions()
+
+    def change_toolbar_actions(self, toolbar_actions):
+        if toolbar_actions is None:
+            vprefs.__delitem__('actions-toolbar-actions')
+        else:
+            vprefs.set('actions-toolbar-actions', toolbar_actions)
         self.add_actions()
 
     def update_web_action(self):
@@ -237,9 +250,10 @@ class ActionsToolBar(ToolBar):
                     self.addAction(getattr(self, f'{x}_action'))
                 except AttributeError:
                     pass
-        w = self.widgetForAction(self.color_scheme_action)
-        if w:
-            w.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
+        for x in (self.color_scheme_action, self.profiles_action):
+            w = self.widgetForAction(x)
+            if w:
+                w.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
 
     def update_mode_action(self):
         mode = get_session_pref('read_mode', default='paged', group=None)
@@ -337,6 +351,47 @@ class ActionsToolBar(ToolBar):
 
     def on_view_created(self, data):
         self.default_color_schemes = data['default_color_schemes']
+
+    def populate_profiles_menu(self):
+        from calibre.gui2.viewer.config import load_viewer_profiles
+        m = self.profiles_menu
+        m.clear()
+        self.profiles = load_viewer_profiles('viewer:')
+        self.profiles['__default__'] = {}
+        def a(name, display_name=''):
+            a = m.addAction(display_name or name)
+            a.setObjectName(f'profile-switch-action:{name}')
+            a.triggered.connect(self.profile_switch_triggered)
+        a('__default__', _('Restore settings to defaults'))
+        m.addSeparator()
+        for profile_name in sorted(self.profiles, key=lambda x: x.lower()):
+            if profile_name == '__default__':
+                continue
+            a(profile_name)
+        m.addSeparator()
+        m.addAction(_('Save current settings as a profile')).triggered.connect(self.save_profile)
+        if len(self.profiles) > 1:
+            s = m.addMenu(_('Delete saved profile...'))
+            for pname in self.profiles:
+                if pname != '__default__':
+                    a = s.addAction(pname)
+                    a.setObjectName(f'profile-delete-action:{pname}')
+                    a.triggered.connect(self.profile_delete_triggerred)
+
+    def profile_switch_triggered(self):
+        key = self.sender().objectName().partition(':')[-1]
+        profile = self.profiles[key]
+        self.web_view.profile_op('apply-profile', key, profile)
+
+    def profile_delete_triggerred(self):
+        key = self.sender().objectName().partition(':')[-1]
+        from calibre.gui2.viewer.config import save_viewer_profile
+        save_viewer_profile(key, None, 'viewer:')
+
+    def save_profile(self):
+        name, ok = QInputDialog.getText(self, _('Enter name of profile to create'), _('&Name of profile'))
+        if ok:
+            self.web_view.profile_op('request-save', name, {})
 
     def populate_color_scheme_menu(self):
         m = self.color_scheme_menu

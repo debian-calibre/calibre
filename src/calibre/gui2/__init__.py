@@ -16,7 +16,7 @@ from qt.core import (
     QFontDatabase, QFontInfo, QFontMetrics, QGuiApplication, QIcon, QImageReader,
     QImageWriter, QIODevice, QLocale, QNetworkProxyFactory, QObject, QPalette,
     QResource, QSettings, QSocketNotifier, QStringListModel, Qt, QThread, QTimer,
-    QTranslator, QUrl, pyqtSignal, pyqtSlot,
+    QTranslator, QUrl, QWidget, pyqtSignal, pyqtSlot,
 )
 from threading import Lock, RLock
 
@@ -431,6 +431,7 @@ def create_defs():
     defs['light_palette_name'] = ''
     defs['dark_palettes'] = {}
     defs['light_palettes'] = {}
+    defs['saved_layouts'] = {}
 
     def migrate_tweak(tweak_name, pref_name):
         # If the tweak has been changed then leave the tweak in the file so
@@ -1687,20 +1688,29 @@ def timed_print(*a, **kw):
 
 
 def local_path_for_resource(qurl: QUrl, base_qurl: 'QUrl | None' = None) -> str:
-    import re
-
-    def fix_qt_bodging_windows_paths(path: str) -> str:
-        # When loading <img src="file:///c:/path/to/img.png"> Qt gives us the
-        # URL: //c/path/to/img.png  Le bubbling sigh
-        if iswindows and re.match(r'//[a-zA-Z]/', path) is not None and not os.path.exists(path):
-            path = os.path.normpath(path[2] + ':' + path[3:])
-        return path
-
     if base_qurl and qurl.isRelative():
         qurl = base_qurl.resolved(qurl)
 
     if qurl.isLocalFile():
-        return fix_qt_bodging_windows_paths(qurl.toLocalFile())
+        return qurl.toLocalFile()
     if qurl.isRelative():  # this means has no scheme
-        return fix_qt_bodging_windows_paths(qurl.path())
+        return qurl.path()
     return ''
+
+
+def raise_and_focus(self: QWidget) -> None:
+    self.raise_()
+    self.activateWindow()
+
+
+def raise_without_focus(self: QWidget) -> None:
+    if QApplication.instance().platformName() == 'wayland':
+        # On fucking Wayland, we cant raise a dialog without also giving it
+        # keyboard focus. What a joke.
+        self.raise_and_focus()
+    else:
+        self.raise_()
+
+
+QWidget.raise_and_focus = raise_and_focus
+QWidget.raise_without_focus = raise_without_focus
