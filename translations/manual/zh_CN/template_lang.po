@@ -5,14 +5,15 @@
 # Translators:
 # Kevin Jin <kevin.defan@gmail.com>, 2016
 # Pler Li, 2024
+# tony shen <anthanny@hotmail.com>, 2024
 # Mew X <imewx@qq.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"POT-Creation-Date: 2024-03-13 15:20+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: Pler Li, 2024\n"
+"Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +36,7 @@ msgstr "calibre模板语言是calibre特定的语言，用于在calibre中执行
 msgid ""
 "Specify the folder structure and file names when saving files from the "
 "calibre library to the disk or e-book reader."
-msgstr "在将文件从calibre图书馆保存到磁盘或电子书阅读器时，指定文件夹结构和文件名。"
+msgstr "在将文件从calibre书库保存到磁盘或电子书阅读器时，指定文件夹结构和文件名。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:9
 msgid "Define rules for adding icons and colors to the calibre book list."
@@ -51,7 +52,7 @@ msgstr "高级书库搜索。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:12
 msgid "Advanced metadata search and replace."
-msgstr ""
+msgstr "高级元数据搜索和替换。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:14
 msgid ""
@@ -71,7 +72,7 @@ msgid ""
 "replaced by the corresponding metadata from the book being processed. For "
 "example, the default template in calibre used for saving books to device has"
 " 4 ``template expressions``::"
-msgstr ""
+msgstr "基本模板由一个或多个“模板表达式”组成。 “模板表达式”由大括号 (“{}”) 中的文本和名称组成，并由正在处理的书籍中的相应元数据替换。 例如，calibre 中用于将书籍保存到设备的默认模板有 4 个“模板表达式”："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:23
 msgid "For the book \"The Foundation\" by \"Isaac Asimov\" the  will become::"
@@ -100,7 +101,7 @@ msgid ""
 "custom series column named ``#myseries``, there will also be a column named "
 "``#myseries_index``. The standard series column's index is named "
 "``series_index``."
-msgstr ""
+msgstr "“模板表达式”可以通过使用列的“查找名称”来访问 calibre 中可用的所有元数据，包括自定义列（您自己创建的列）。 要查找“列”（有时称为“字段”）的查找名称，请将鼠标悬停在 calibre 图书列表中的列标题上。 自定义列的查找名称始终以“#”开头。 对于系列类型列，有一个名为“#lookup name_index”的附加字段，它是该系列中该书的系列索引。 例如，如果您有一个名为“#myseries”的自定义系列列，那么还将有一个名为“#myseries_index”的列。 标准系列列的索引名为“series_index”。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:37
 msgid "In addition to the standard column based fields, you also can use:"
@@ -160,7 +161,7 @@ msgid ""
 "empty. A common case is ``series`` and ``series_index`` where you want "
 "either nothing or the two values separated by a hyphen. calibre handles this"
 " case using a special ``template expression`` syntax."
-msgstr ""
+msgstr "有时，您希望仅当字段不为空时文本才出现在输出中。 常见的情况是“series”和“series_index”，其中您不需要任何内容或用连字符分隔两个值。 calibre 使用特殊的“模板表达式”语法来处理这种情况。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:65
 msgid ""
@@ -304,7 +305,7 @@ msgid ""
 "ISBN, create the column and enter ``{identifiers:select(isbn)}`` in the "
 "template box. To display a column containing the values of two series custom"
 " columns, separated by a comma, use ``{#series1:||,}{#series2}``."
-msgstr ""
+msgstr "模板可用于显示 calibre 元数据中没有的信息，或以不同于 calibre 正常格式的方式显示元数据。 例如，您可能想要显示“ISBN”，这是 calibre 不显示的字段。 您可以通过创建类型为“从其他列构建的列”（以下称为“复合列”）的自定义列来完成此操作，并提供一个模板来生成显示的文本。 该列将显示评估模板的结果。 例如，要显示 ISBN，请创建列并在模板框中输入“{identifiers:select(isbn)}”。 要显示包含两个系列自定义列的值（以逗号分隔）的列，请使用``{#series1:||,}{#series2}``。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:115
 msgid "Composite columns can use any template option, including formatting."
@@ -331,7 +332,7 @@ msgid ""
 " language, publisher, tags, title, title_sort. This feature helps people who"
 " want to use different metadata in books on devices to solve sorting or "
 "display issues."
-msgstr ""
+msgstr "插件板用于在发送到设备和保存到磁盘操作期间更改写入书籍的元数据。 插件板允许您指定一个模板来提供要写入书籍元数据的数据。 您可以使用插件板修改以下字段：作者、author_sort、语言、出版商、标签、书名、title_sort。 此功能可以帮助想要在设备上使用图书中的不同元数据的人们解决排序或显示问题。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:125
 msgid ""
@@ -342,7 +343,7 @@ msgid ""
 "to change, providing templates to supply the new values. These templates are"
 " `connected` to their destination fields, hence the name `plugboards`. You "
 "can of course use composite columns in these templates."
-msgstr ""
+msgstr "创建插接板时，您可以指定插接板要使用的格式和设备。 提供了一个特殊的设备“save_to_disk”，在保存格式时使用（而不是将它们发送到设备）。 选择格式和设备后，您可以选择要更改的元数据字段，并提供模板来提供新值。 这些模板“连接”到其目标字段，因此称为“插件板”。 您当然可以在这些模板中使用复合列。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:127
 msgid ""
@@ -357,7 +358,7 @@ msgid ""
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
 " the plugboards using the following search order:"
-msgstr ""
+msgstr "当插件板可能适用时（内容服务器、保存到磁盘或发送到设备），calibre 会搜索定义的插件板，为给定的格式和设备选择正确的插件板。 例如，要为发送到 ANDROID 设备的 EPUB 图书找到合适的插件板，calibre 使用以下搜索顺序搜索插件板："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:133
 msgid ""
@@ -391,7 +392,7 @@ msgid ""
 "if the template produces the value ``Thriller, Horror``, then the result "
 "will be two tags, ``Thriller`` and ``Horror``. There is no way to put a "
 "comma in the middle of a tag."
-msgstr ""
+msgstr "标签和作者字段有特殊处理，因为这两个字段都可以容纳多个项目。 一本书可以有多个标签和多个作者。 当您指定要更改这两个字段之一时，将检查模板的结果以查看是否存在多个项目。 对于标签，只要 calibre 找到逗号，结果就会被分割。 例如，如果模板生成值“Thriller, Horror”，则结果将是两个标签“Thriller”和“Horror”。 无法在标签中间放置逗号。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:141
 msgid ""
@@ -401,7 +402,7 @@ msgid ""
 "with two authors, ``Blogs, Joe`` and ``Posts, Susan``. If the template "
 "produces the value ``Blogs, Joe;Posts, Susan``, then the book will have one "
 "author with a rather strange name."
-msgstr ""
+msgstr "作者也会发生同样的情况，但使用不同的字符进行剪切，即“&”（与号）而不是逗号。 例如，如果模板生成值“Blogs, Joe&Posts, Susan”，则该书最终将有两个作者：“Blogs, Joe”和“Posts, Susan”。 如果模板生成值“博客，乔；帖子，苏珊”，那么这本书将有一位作者的名字相当奇怪。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:143
 msgid ""
@@ -432,7 +433,7 @@ msgid ""
 "you have both a format and a function reference, the function comes after a "
 "second ``:``.  Functions return the value of the column specified in the "
 "template, suitably modified."
-msgstr ""
+msgstr "函数进入模板的格式部分，在 ``:`` 之后和第一个 ``|`` 之前，或者如果没有使用前缀/后缀，则在结束的 ``}`` 之前。 如果您同时具有格式和函数引用，则该函数位于第二个 ``:`` 后面。 函数返回模板中指定的列的值，经过适当修改。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:154
 msgid "The syntax for using functions is one of::"
@@ -445,7 +446,7 @@ msgid ""
 "parentheses. Arguments are separated by commas. Literal commas (commas as "
 "text, not argument separators) must be preceded by a backslash (``\\``) . "
 "The last (or only) argument cannot contain a textual closing parenthesis."
-msgstr ""
+msgstr "函数名称后面必须始终跟有左括号和右括号。 有些函数需要额外的值（参数），这些值位于括号内。 参数之间用逗号分隔。 文字逗号（逗号作为文本，而不是参数分隔符）前面必须有反斜杠 (``\\``) 。 最后一个（或唯一的）参数不能包含文本右括号。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:163
 msgid ""
@@ -520,7 +521,7 @@ msgid ""
 "documentation "
 "<https://docs.python.org/3/library/string.html#formatstrings>`_ for more "
 "examples. Returns the empty string if formatting fails."
-msgstr ""
+msgstr "``format_number(template)`` -- 将值解释为数字，并使用 Python 格式模板，例如 ``{0:5.2f}`` 或 ``{0:,d}`` 或 ` `${0:5,.2f}``。 格式化模板必须以“{0:”开头并以“}”结尾，如上面的示例所示。 例外：如果格式模板仅包含格式，则可以省略前导“{0:”和尾随“}”。 有关更多示例，请参阅模板语言和“Python 文档 <https://docs.python.org/3/library/string.html#formatstrings>`_”。 如果格式化失败，则返回空字符串。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:180
 msgid ""
@@ -543,7 +544,7 @@ msgid ""
 " ``pattern`` and ``found_value`` can be repeated as many times as desired, "
 "permitting returning different values depending on the item's value. The "
 "patterns are checked in order, and the first match is returned."
-msgstr ""
+msgstr "``in_list(separator, [pattern,found_val,]* not_found_val)`` -- 将值解释为由``separator`` 分隔的项目列表，并对照列表中的每个项目检查``pattern``。 如果“pattern”与某个项目匹配，则返回“found_val”，否则返回“not_found_val”。 ``pattern`` 和 ``found_value`` 对可以根据需要重复多次，允许根据项目的值返回不同的值。 按顺序检查模式，并返回第一个匹配项。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:183
 msgid ""
@@ -554,7 +555,7 @@ msgid ""
 "``localize`` is zero, return the strings in English. If ``localize`` is not "
 "zero, return the strings in the language of the current locale. "
 "``Lang_codes`` is a comma-separated list."
-msgstr ""
+msgstr "``language_strings(localize)`` -- 返回 `语言代码 <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ 的`语言名称 <https:// www.loc.gov/standards/iso639-2/php/code_list.php>`_ 作为值传入。 示例：“{语言：语言字符串()}”。 如果“localize”为零，则返回英文字符串。 如果“localize”不为零，则返回当前语言环境的字符串。 ``Lang_codes`` 是一个以逗号分隔的列表。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:184
 msgid ""
@@ -616,7 +617,7 @@ msgid ""
 "characters. If the value's length is less than ``left chars`` + ``right "
 "chars`` + the length of ``middle text`` then the value will be returned "
 "unchanged. For example, the title `The Dome` would not be changed."
-msgstr ""
+msgstr "``shorten(left chars, middle text, right chars)`` -- 返回值的缩短版本，由值开头的 ``left chars`` 字符组成，后跟 ``middle text``， 后跟值末尾的“right chars”字符。 “左字符”和“右字符”必须是非负整数。 示例：假设您要显示的标题长度最多为 15 个字符。 执行此操作的一个模板是“{title:shorten(9,-,5)}”。 对于标题为“艾芬豪时代的古代英国法律”的书，结果将是“Ancient E-anhoe”：标题的前 9 个字符，“-”，然后是最后 5 个字符。 如果值的长度小于“左字符”+“右字符”+“中间文本”的长度，则该值将按原样返回。 例如，标题“The Dome”不会改变。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:191
 msgid ""
@@ -630,7 +631,7 @@ msgid ""
 "times as desired, permitting returning different values depending on "
 "string's value. If none of the strings match then ``not_found_value`` is "
 "returned. The strings are checked in order. The first match is returned."
-msgstr ""
+msgstr "``str_in_list(separator, [ string,found_val, ]+ not_found_val)`` -- 将值解释为由``separator`` 分隔的项目列表，然后将``string`` 与列表中的每个值进行比较。 “string”不是正则表达式。 如果“string”等于任何项（忽略大小写），则返回相应的“found_val”。 如果“string”包含“separators”，那么它也被视为一个列表，并且每个子值都会被检查。 “string”和“found_value”对可以根据需要重复多次，允许根据字符串的值返回不同的值。 如果没有任何字符串匹配，则返回“not_found_value”。 按顺序检查字符串。 返回第一个匹配项。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:192
 msgid ""
@@ -643,7 +644,7 @@ msgid ""
 "separated list has an index of zero. If an index is negative then it counts "
 "from the end of the list. As a special case, an end_index of zero is assumed"
 " to be the length of the list."
-msgstr ""
+msgstr "``subitems(start_index, end_index)`` -- 此函数分解类似标签的分层项目列表，例如流派。 它将值解释为以逗号分隔的类似标记的项目列表，其中每个项目都是以句点分隔的列表。 它返回一个新列表，该列表是通过从每个项目中提取从“start_index”到“end_index”的组件，然后将结果合并在一起而形成的。 重复项被删除。 以句点分隔的列表中的第一个子项的索引为零。 如果索引为负数，则从列表末尾开始计数。 作为一种特殊情况，假设 end_index 为零是列表的长度。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:194
 #: ../../__w/calibre/calibre/manual/template_lang.rst:414
@@ -685,7 +686,7 @@ msgid ""
 " items from ``start_index`` to ``end_index``. The first item is number zero."
 " If an index is negative, then it counts from the end of the list. As a "
 "special case, an end_index of zero is assumed to be the length of the list."
-msgstr ""
+msgstr "``sublist（start_index，end_index，separator）`` -- 将值解释为由``separator``分隔的项目列表，返回由``start_index``到``end_index``的项目组成的新列表 。 第一项的编号为零。 如果索引为负数，则从列表末尾开始计数。 作为一种特殊情况，假设 end_index 为零是列表的长度。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:209
 msgid ""
@@ -713,7 +714,7 @@ msgid ""
 "If no ``separator`` is provided then the value is treated as being a single "
 "value, not a list. The `articles` are those used by calibre to generate the "
 "``title_sort``."
-msgstr ""
+msgstr "``swap_around_articles(separator)`` -- 返回文章移至末尾的值。 该值可以是一个列表，在这种情况下，列表中的每个项目都会被处理。 如果该值是一个列表，那么您必须提供“分隔符”。 如果未提供“separator”，则该值将被视为单个值，而不是列表。 “articles”是 calibre 用于生成“title_sort”的内容。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:216
 msgid ""
@@ -730,7 +731,7 @@ msgid ""
 "so returns the associated ``value``. If no ``pattern`` matches, then "
 "``else_value`` is returned. You can have as many ``pattern, value`` pairs as"
 " you wish. The first match is returned."
-msgstr ""
+msgstr "``switch([pattern, value,]+ else_value)`` -- 对于每个``pattern, value`` 对，检查该值是否与正则表达式``pattern`` 匹配，如果匹配则返回关联的``value' ``。 如果没有“pattern”匹配，则返回“else_value”。 您可以根据需要拥有任意数量的“模式、值”对。 返回第一个匹配项。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:218
 msgid ""
@@ -767,7 +768,7 @@ msgid ""
 "the empty string, not ``000``. If you want to see ``000`` values then you "
 "use both the format string and the ``ifempty`` function to change the empty "
 "value back to a zero. The template would be::"
-msgstr ""
+msgstr "假设您有一个整数自定义列“#myint”，您希望显示前导零，如“003”。 实现此目的的一种方法是使用“0>3s”的格式。 但是，默认情况下，如果数字（整数或浮点数）等于零，则该值将显示为空字符串，因此零值将生成空字符串，而不是“000”。 如果您想查看“000”值，则可以使用格式字符串和“ifempty”函数将空值更改回零。 模板将是："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:229
 msgid ""
@@ -924,7 +925,7 @@ msgid ""
 "``top_expressions``. An ``if`` expression returns the result of the last "
 "``top_expression`` in the evaluated ``expression_list``, or the empty string"
 " if no expression list was evaluated."
-msgstr ""
+msgstr "``If`` 表达式首先评估``condition``。 如果“condition”为 True（非空值），则评估“then”子句中的“expression_list”。 如果为 False，则评估“elif”或“else”子句中的“expression_list”。 ``elif`` 和 ``else`` 部分是可选的。 单词“if”、“then”、“elif”、“else”和“fi”被保留； 您不能将它们用作标识符名称。 您可以在任何有意义的地方放置换行符和空格。 “condition”是“top_expression”，而不是“expression_list”； 不允许使用分号。 “表达式列表”是以分号分隔的“top_表达式”序列。 ``if`` 表达式返回已计算的 ``expression_list`` 中最后一个 ``top_expression`` 的结果，如果没有计算表达式列表，则返回空字符串。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:323
 msgid "Examples::"
@@ -966,7 +967,7 @@ msgid ""
 "assigned to the specified variable then the ``expression_list`` is "
 "evaluated. You can use ``break`` to jump out of the loop, and ``continue`` "
 "to jump to the beginning of the loop for the next iteration."
-msgstr ""
+msgstr "``for`` 表达式迭代一系列值，一次处理一个值。 “list_expression” 必须计算为元数据字段“查找名称”，例如“tags” 或“#genre”，或者计算为值列表。 `range() 函数 1`（见下文）生成一个数字列表。 如果结果是有效的“查找名称”，则将获取字段的值并使用为该字段类型指定的分隔符。 如果结果不是有效的查找名称，则假定它是值列表。 除非提供可选关键字“separator”，否则假定列表以逗号分隔，在这种情况下，列表值必须由评估“separator_expr”的结果分隔。 如果列表是由“range()”生成的，则不能使用分隔符。 列表中的每个值都分配给指定的变量，然后计算“表达式列表”。 您可以使用“break”跳出循环，并使用“continue”跳到循环的开头进行下一次迭代。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:363
 msgid ""
@@ -982,7 +983,7 @@ msgid ""
 "in bulk -> Search & replace` with :guilabel:`Search for` set to ``template``"
 " to strip off the first level of the hierarchy and assign the resulting "
 "value to Genre."
-msgstr ""
+msgstr "如果原始类型是“History.Military, Science Fiction.Alternate History, ReadMe”，则模板将返回“Military, Alternate History, ReadMe”。 您可以在 calibre 的“批量编辑元数据 -> 搜索和替换”中使用此模板，并将“搜索”设置为“模板”，以剥离层次结构的第一级并将结果值分配给类型。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:376
 msgid ""
@@ -991,7 +992,7 @@ msgid ""
 " the expression list. The value of an assignment is the value of its "
 "expression, so the value of the ``for`` statement is what was assigned to "
 "``new_tags``."
-msgstr ""
+msgstr "注意：在这种情况下，模板中的最后一行“new_tags”并不是绝对必要的，因为“for”返回表达式列表中最后一个 top_expression 的值。 赋值的值是其表达式的值，因此“for”语句的值就是分配给“new_tags”的值。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:378
 msgid "**Function definition**"
@@ -1013,7 +1014,7 @@ msgid ""
 "arguments than defined parameters. Parameters can have default values, such "
 "as ``a = 25``. If an argument is not supplied for that parameter then the "
 "default value is used, otherwise the parameter is set to the empty string."
-msgstr ""
+msgstr "参数是立场性的。 调用函数时，提供的参数会从左到右与定义的参数进行匹配，并将参数的值分配给参数。 提供的参数多于定义的参数是错误的。 参数可以有默认值，例如“a = 25”。 如果没有为该参数提供参数，则使用默认值，否则该参数将设置为空字符串。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:384
 msgid "The ``return`` statement can be used in a local function."
@@ -1057,7 +1058,7 @@ msgid ""
 "operator is true if the left hand regular expression matches any one of the "
 "items in the right hand list where the items in the list are separated by "
 "commas. The matches are case-insensitive."
-msgstr ""
+msgstr "字符串比较使用词法顺序进行不区分大小写的字符串比较。 支持的字符串比较运算符有 ``==``、``!=``、``<``、``<=``、``>``、``>=``、``in`` ` 和 ``inlist``。 对于“in”运算符，左侧表达式的结果被解释为正则表达式模式。 如果左侧正则表达式的值与右侧表达式的值匹配，则“in”运算符为 True。 如果左侧正则表达式与右侧列表中的任何一项匹配，其中列表中的项目以逗号分隔，则“inlist”运算符为 true。 匹配不区分大小写。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:412
 msgid ""
@@ -1161,7 +1162,7 @@ msgid ""
 "circuiting can change the results because of side effects. For example, "
 "``and(a='',b=5)`` will always do both assignments, where the ``&&`` operator"
 " won't do the second."
-msgstr ""
+msgstr "``and(value [, value]*)`` -- 如果所有值都不为空，则返回字符串“1”，否则返回空字符串。 您可以拥有任意多个值。 在大多数情况下，您可以使用“&&”运算符来代替此函数。 不将“and”替换为“&&”的原因之一是短路是否会因副作用而改变结果。 例如，“and(a='',b=5)”将始终执行两个赋值操作，而“&&”运算符不会执行第二个操作。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:434
 msgid ""
@@ -1179,7 +1180,7 @@ msgid ""
 "``{:'approximate_formats()'}``. Note that resulting format names are always "
 "uppercase, as in EPUB. The ``approximate_formats()`` function is "
 "significantly faster than the ``formats_...`` functions discussed below."
-msgstr ""
+msgstr "``approximate_formats()`` -- 返回与书籍关联的以逗号分隔的格式列表。 尽管可能是正确的，但不能保证该列表是正确的。 可以使用模板``{:'approximate_formats()'}`` 在模板程序模式（见下文）中调用此函数和其他零参数函数。 请注意，生成的格式名称始终为大写，如 EPUB 中那样。 “approximate_formats()”函数比下面讨论的“formats_...”函数要快得多。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:436
 msgid ""
@@ -1194,7 +1195,7 @@ msgid ""
 "``pair_separator`` string argument with no added spaces. It is up to you to "
 "choose separator strings that do not occur in author names or links. An "
 "author is included even if the author link is empty."
-msgstr ""
+msgstr "作者与其链接值由“val_separator”字符串分隔，不添加空格。 “author:linkvalue” 对由 “pair_separator” 字符串参数分隔，不添加空格。 您可以选择不出现在作者姓名或链接中的分隔符字符串。 即使作者链接为空，也会包含作者。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:441
 msgid ""
@@ -1205,7 +1206,7 @@ msgid ""
 " 2`` etc. with no added spaces. The author sort values in this list are in "
 "the same order as the authors of the book. If you want spaces around "
 "``val_separator`` then include them in the ``val_separator`` string."
-msgstr ""
+msgstr "``author_sorts(val_separator)`` -- 返回一个字符串，其中包含书籍作者的作者排序值列表。 排序是作者元数据信息中的排序（与书籍中的author_sort不同）。 返回的列表的形式为``author sort 1`` ``val_separator`` ``author sort 2`` 等，不添加空格。 此列表中的作者排序值与书籍作者的顺序相同。 如果您想要“val_separator”周围有空格，则将它们包含在“val_separator”字符串中。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:442
 msgid ""
@@ -1217,7 +1218,7 @@ msgid ""
 "It cannot be used in composite columns unless the tweak "
 "``allow_template_database_functions_in_composites`` is set to True. It can "
 "be used only in the GUI."
-msgstr ""
+msgstr "``book_count(query, use_vl)`` -- 返回通过搜索 ``query`` 找到的书籍数量。 如果“use_vl”为“0”（零），则虚拟库将被忽略。 此函数及其同伴“book_values()”在模板搜索中特别有用，支持组合多本书信息的搜索，例如查找仅包含一本书的系列。 除非将“allow_template_database_functions_in_composites”调整设置为 True，否则它不能在复合列中使用。 它只能在 GUI 中使用。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:444
 msgid ""
@@ -1262,7 +1263,7 @@ msgid ""
 " for series with only one book. It cannot be used in composite columns "
 "unless the tweak ``allow_template_database_functions_in_composites`` is set "
 "to True. It can be used only in the GUI."
-msgstr ""
+msgstr "``book_values(column, query, sep, use_vl)`` -- 返回列 ``column`` （查找名称）中包含的唯一值的列表，以 ``sep`` 分隔，在找到的书中 通过搜索“查询”。 如果“use_vl”为“0”（零），则虚拟库将被忽略。 该函数及其同伴“book_count()”在模板搜索中特别有用，支持组合多本书信息的搜索，例如查找仅包含一本书的系列。 除非将“allow_template_database_functions_in_composites”调整设置为 True，否则它不能在复合列中使用。 它只能在 GUI 中使用。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:469
 msgid ""
@@ -1278,7 +1279,7 @@ msgid ""
 "is found otherwise returning the empty string. Set the parameter "
 "``is_undefined``, ``is_false``, or ``is_true`` to 1 (the number) to check "
 "that condition, otherwise set it to 0. Example:"
-msgstr ""
+msgstr "``check_yes_no(field_name, is_undefined, is_false, is_true)`` -- 检查由查找名称 ``field_name`` 命名的是/否字段的值是否是参数指定的值之一，返回 ``' yes'`` 如果找到匹配项，否则返回空字符串。 将参数“is_undefined”、“is_false”或“is_true”设置为 1（数字）以检查该条件，否则将其设置为 0。示例："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:472
 msgid ""
@@ -1360,7 +1361,7 @@ msgid ""
 " calc_spec is a string formed by concatenating pairs of ``vW`` "
 "(``valueWhat``) where ``v`` is a possibly-negative number and W is one of "
 "the following letters:"
-msgstr ""
+msgstr "``date_arithmetic(date, calc_spec, fmt)`` -- 使用 ``calc_spec`` 从 ``date`` 计算新日期。 返回根据可选“fmt”格式化的新日期：如果未提供，则结果将采用 ISO 格式。 calc_spec 是由一对“vW”（“valueWhat”）连接而成的字符串，其中“v”是可能为负数，W 是以下字母之一："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:485
 msgid "``s``: add ``v`` seconds to ``date``"
@@ -1418,7 +1419,7 @@ msgid ""
 "prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in the "
 "argument to this function when using :ref:`Template Program Mode "
 "<template_mode>`."
-msgstr ""
+msgstr "``eval(string)`` -- 将字符串作为程序求值，传递局部变量。 这允许使用模板处理器从局部变量构造复杂的结果。 在“模板程序模式 <template_mode>”中，由于在评估模板之前解释“{”和“}”字符，因此必须对“{”字符使用“[[”，对“}”使用“]]” 特点。 它们会自动转换。 另请注意，使用“模板程序模式 <template_mode>”时，不能在此函数的参数中使用前缀和后缀（“|prefix|suffix”语法）。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:496
 msgid ""
@@ -1438,7 +1439,7 @@ msgid ""
 "seconds since the epoch.  See also the functions ``has_extra_files()``, "
 "``extra_file_names()`` and ``extra_file_size()``. The epoch is OS dependent."
 " This function can be used only in the GUI."
-msgstr ""
+msgstr "``extra_file_modtime(file_name, format_string)`` -- 返回书籍的``data/`` 文件夹中额外文件``file_name`` 的修改时间，如果存在，否则返回``-1``。 modtime 根据“format_string”进行格式化（有关详细信息，请参阅“format_date()”）。 如果“format_string”是空字符串，则返回 modtime 作为自纪元以来的浮点数秒数。 另请参见函数“has_extra_files()”、“extra_file_names()”和“extra_file_size()”。 纪元取决于操作系统。 该功能只能在 GUI 中使用。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:498
 msgid ""
@@ -1448,7 +1449,7 @@ msgid ""
 "files that match ``pattern``. The pattern match is case insensitive. See "
 "also the functions ``has_extra_files()``, ``extra_file_modtime()`` and "
 "``extra_file_size()``. This function can be used only in the GUI."
-msgstr ""
+msgstr "``extra_file_names(sep [,pattern])`` 返回本书的 ``data/`` 文件夹中以 ``sep`` 分隔的额外文件列表。 如果提供了可选参数“pattern”，一个正则表达式，则列表将被过滤到与“pattern”匹配的文件。 模式匹配不区分大小写。 另请参见函数“has_extra_files()”、“extra_file_modtime()”和“extra_file_size()”。 该功能只能在 GUI 中使用。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:499
 msgid ""
@@ -1633,7 +1634,7 @@ msgid ""
 "function is much faster than format_date and should be used when you are "
 "formatting the value in a field (column). It can't be used for computed "
 "dates or dates in string variables. Examples::"
-msgstr ""
+msgstr "``format_date_field(field_name, format_string)`` -- 格式化字段``field_name`` 中的值，该字段必须是日期字段的查找名称，标准或自定义。 有关格式化代码，请参阅“format_date()”。 此函数比 format_date 快得多，应在格式化字段（列）中的值时使用。 它不能用于计算日期或字符串变量中的日期。 例子："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:560
 msgid ""
@@ -1643,7 +1644,7 @@ msgid ""
 "date is to be formatted. See the ``format_date()`` function for details. You"
 " can use the ``select`` function to get the modification time for a specific"
 " format. Note that format names are always uppercase, as in EPUB."
-msgstr ""
+msgstr "``formats_modtimes(date_format_string)`` -- 返回以冒号分隔的项目的逗号分隔列表 ``FMT:DATE`` 表示书籍格式的修改时间。 “date_format_string”参数指定日期的格式。 有关详细信息，请参阅“format_date()”函数。 您可以使用“select”函数来获取特定格式的修改时间。 请注意，格式名称始终为大写，如 EPUB 中那样。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:561
 msgid ""
@@ -1700,7 +1701,7 @@ msgid ""
 "insensitive. See also the functions ``extra_file_names()``, "
 "``extra_file_size()`` and ``extra_file_modtime()``. This function can be "
 "used only in the GUI."
-msgstr ""
+msgstr "``has_extra_files([pattern])`` -- 返回额外文件的计数，否则返回 '' （空字符串）。 如果提供了可选参数“pattern”（正则表达式），则在对文件进行计数之前，列表将被过滤为与“pattern”匹配的文件。 模式匹配不区分大小写。 另请参见函数“extra_file_names()”、“extra_file_size()”和“extra_file_modtime()”。 该功能只能在 GUI 中使用。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:584
 msgid ""
@@ -1715,7 +1716,7 @@ msgid ""
 "``found_val`` and ``not_found_val`` are not provided then if there is a "
 "match then return the ``identifier:value`` pair, otherwise the empty string "
 "(``''``)."
-msgstr ""
+msgstr "``identifier_in_list(val, id_name [,found_val, not_found_val])`` -- 将 ``val`` 视为以逗号分隔的标识符列表。 标识符的格式为“id_name:value”。 ``id_name`` 参数是要搜索的 id_name 文本，可以是 ``id_name`` 或 ``id_name:regexp``。 如果有任何标识符与 id_name 匹配，则第一种情况匹配。 如果 id_name 与标识符匹配并且正则表达式与标识符的值匹配，则第二种情况匹配。 如果提供了“found_val”和“not_found_val”，则如果存在匹配则返回“found_val”，否则返回“not_found_val”。 如果未提供 ``found_val`` 和 ``not_found_val`` ，则如果存在匹配则返回 ``identifier:value`` 对，否则返回空字符串 (``''``)。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:585
 msgid ""
@@ -1743,7 +1744,7 @@ msgid ""
 "be repeated as many times as desired, permitting returning different values "
 "depending on the search. The patterns are checked in order. The first match "
 "is returned. Aliases: ``in_list()``, ``list_contains()``"
-msgstr ""
+msgstr "``list_contains(value,separator, [pattern,found_val,]* not_found_val)`` --（``in_list`` 的别名）将值解释为由``separator`` 分隔的项目列表，评估 `` 针对列表中的每个值的pattern``。 如果“pattern”匹配任何值，则返回“found_val”，否则返回“not_found_val”。 “pattern” 和 “found_value” 可以根据需要重复多次，允许根据搜索返回不同的值。 按顺序检查模式。 返回第一个匹配项。 别名：``in_list()``、``list_contains()``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:588
 msgid ""
@@ -1775,7 +1776,7 @@ msgid ""
 "return ``no_val``. The items are determined by splitting each list using the"
 " appropriate separator character (``sep1`` or ``sep2``). The order of items "
 "in the lists is not relevant. The comparison is case-insensitive."
-msgstr ""
+msgstr "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- 如果``list1`` 和``list2` 包含相同的项目，则返回``yes_val``，否则返回``no_val``。 通过使用适当的分隔符（“sep1”或“sep2”）分割每个列表来确定项目。 列表中项目的顺序不相关。 比较不区分大小写。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:592
 msgid ""
@@ -1797,12 +1798,12 @@ msgid ""
 "returned in the order they appear in the source lists. If items on lists "
 "differ only in letter case then the last is used. All separators can be more"
 " than one character."
-msgstr ""
+msgstr "``list_join(with_separator,list1,separator1 [,list2,separator2]*)`` -- 返回通过在项目之间使用``with_separator``连接源列表（``list1``等）中的项目而创建的列表 在结果列表中。 每个源“list[123...]”中的项目由关联的“separator[123...]”分隔。 列表可以包含零值。 它可以是像“publisher”这样的单值字段，实际上是一个单项列表。 使用不区分大小写的比较删除重复项。 项目按照它们在源列表中出现的顺序返回。 如果列表中的项目仅字母大小写不同，则使用最后一个。 所有分隔符都可以是多个字符。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:595
 #: ../../__w/calibre/calibre/manual/template_lang.rst:617
 msgid "Example::"
-msgstr "例如::"
+msgstr "例如:"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:600
 msgid ""
@@ -1826,7 +1827,7 @@ msgid ""
 " it does then add it to the list to be returned. If ``opt_replace`` is not "
 "the empty string then apply the replacement before adding the item to the "
 "returned list."
-msgstr ""
+msgstr "``list_re(src_list,separator, include_re, opt_replace)`` -- 首先使用``separator`` 字符将``src_list`` 分隔成项目来构造一个列表。 对于列表中的每个项目，检查它是否与“include_re”匹配。 如果是，则将其添加到要返回的列表中。 如果“opt_replace”不是空字符串，则在将项目添加到返回的列表之前应用替换。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:612
 msgid ""
@@ -1834,7 +1835,7 @@ msgid ""
 "template_for_group]*)`` -- Like list_re except replacements are not "
 "optional. It uses ``re_group(item, search_re, template ...)`` when doing the"
 " replacements."
-msgstr ""
+msgstr "``list_re_group(src_list,separator, include_re, search_re [, template_for_group]*)`` -- 与 list_re 类似，但替换不是可选的。 它在进行替换时使用“re_group(item, search_re, template ...)”。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:613
 msgid ""
@@ -1908,7 +1909,7 @@ msgid ""
 "you want. This function can usually be replaced by the ``||`` operator. A "
 "reason it cannot be replaced is if short-circuiting will change the results "
 "because of side effects."
-msgstr ""
+msgstr "``or(value [, value]*)`` -- 如果任何值不为空，则返回字符串 ``'1'``，否则返回空字符串。 您可以拥有任意多个值。 该函数通常可以用“||”运算符替换。 无法更换的一个原因是短路会因副作用而改变结果。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:633
 msgid ""
@@ -1932,7 +1933,7 @@ msgid ""
 "``stop``. Two arguments specify ``start`` and ``stop``. Three arguments "
 "specify ``start``, ``stop``, and ``step``. Four arguments specify ``start``,"
 " ``stop``, ``step`` and ``limit``. Examples::"
-msgstr ""
+msgstr "``range(start, stop, step, limit)`` -- 返回通过在参数 start、stop 和 step 指定的范围内循环生成的数字列表，最大长度为 limit。 产生的第一个值是“start”。 后续值``next_v = current_v + step``。 假设“step”为正，则“next_v < stop”时循环继续，否则当“next_v > stop”时继续。 如果“start”未通过测试，则会生成一个空列表：如果“step”为正，则“start >= stop”。 “limit” 设置列表的最大长度，默认值为 1000。参数“start”、“step” 和“limit” 是可选的。 使用一个参数调用“range()”指定“stop”。 两个参数指定“start”和“stop”。 三个参数指定“start”、“stop”和“step”。 四个参数指定“start”、“stop”、“step”和“limit”。 例子："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:647
 msgid ""
@@ -1957,7 +1958,7 @@ msgid ""
 "template. In :ref:`Template Program Mode <template_mode>`, like for the "
 "``template`` and the ``eval`` functions, you use ``[[`` for ``{`` and ``]]``"
 " for ``}``."
-msgstr ""
+msgstr "``re_group(value,pattern [, template_for_group]*)`` -- 返回一个字符串，该字符串是通过将正则表达式模式应用于``value`` 并将每个匹配的实例替换为相应模板返回的值而生成的。 在模板程序模式 1 中，与“template”和“eval”函数一样，您可以使用“[[”表示“{”，使用“]]”表示 ``}``。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:651
 msgid ""
@@ -1989,7 +1990,7 @@ msgid ""
 " of the value as long as the resulting string length is less than ``max``. "
 "Prefixes can be empty. Returns ``string1`` even if ``string1`` is longer "
 "than ``max``. You can pass as many ``prefix, string`` pairs as you wish."
-msgstr ""
+msgstr "``strcat_max(max, string1 [, prefix2, string2]*)`` -- 返回通过连接参数形成的字符串。 返回值被初始化为“string1”。 只要生成的字符串长度小于“max”，由“prefix, string”对组成的字符串就会添加到值的末尾。 前缀可以为空。 即使“string1”比“max”长，也会返回“string1”。 您可以根据需要传递任意数量的“前缀、字符串”对。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:659
 msgid ""
@@ -2026,7 +2027,7 @@ msgid ""
 "characters counting from the right. If ``end`` is zero, then it indicates "
 "the last character. For example, ``substr('12345', 1, 0)`` returns "
 "``'2345'``, and ``substr('12345', 1, -1)`` returns ``'234'``."
-msgstr ""
+msgstr "``substr(str, start, end)`` -- 返回``str`` 的第``start``' 个字符到第``end``' 个字符。 “str” 中的第一个字符是第零个字符。 如果“end”为负数，则表示从右边数起有很多字符。 如果“end”为零，则表示最后一个字符。 例如， ``substr('12345', 1, 0)`` 返回 ``'2345'``，而 ``substr('12345', 1, -1)`` 返回 ``'234'`` 。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid ""
@@ -2043,7 +2044,7 @@ msgid ""
 "``value_expression``. If no ``test_expression`` is True then the result of "
 "``else_expression` is returned. You can have as many ``test_expression, "
 "value_expression`` pairs as you want."
-msgstr ""
+msgstr "``switch_if([test_expression, value_expression,]+ else_expression)`` -- 对于每个 ``test_expression, value_expression`` 对，检查 ``test_expression`` 是否为 True（非空），如果是则返回 ` `值_表达式``。 如果没有“test_expression”为 True，则返回“else_expression”的结果。 您可以根据需要拥有任意多个“test_expression, value_expression”对。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid ""
@@ -2076,7 +2077,7 @@ msgid ""
 "alphabetically by the identifier name. The URLs are generated in the same "
 "way as the built-in identifiers column when shown in :guilabel:`Book "
 "details`."
-msgstr ""
+msgstr "``urls_from_identifiers(identifiers, sort_results)`` -- 给定一个以逗号分隔的“identifiers”列表，其中“identifier”是一对以冒号分隔的值（“id_name:id_value”），返回一个 从标识符生成的以逗号分隔的 HTML URL 列表。 如果 sort_results 为“0”（字符或数字），则列表不排序，否则按标识符名称的字母顺序排序。 URL 的生成方式与“图书详细信息”中显示的内置标识符列相同。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:676
 msgid "More complex programs in template expressions - Template Program Mode"
@@ -2092,7 +2093,7 @@ msgid ""
 "template is contained between ``{`` and ``}`` characters and doesn't begin "
 "with the word ``program:``. The program portion of the template is a General"
 " Program Mode expression list."
-msgstr ""
+msgstr "“模板程序模式”(“TPM”) 是“通用程序模式 <general_mode>”和“单功能模式 <single_mode>”的混合。 “TPM”与单函数模式的不同之处在于它允许编写引用其他元数据字段的模板表达式、使用嵌套函数、修改变量和进行算术。 它与“通用程序模式”的不同之处在于，模板包含在“{”和“}”字符之间，并且不以单词“program:”开头。 模板的程序部分是通用程序模式表达式列表。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:681
 msgid ""
@@ -2101,7 +2102,7 @@ msgid ""
 "in the :ref:`Single Function Mode <single_mode>` because you cannot make "
 "reference to another metadata field within a template expression. In `TPM` "
 "you can, as the following expression demonstrates::"
-msgstr ""
+msgstr "示例：假设您希望模板显示一本书的系列，如果有，否则显示自定义字段 #genre 的值。 您无法在“单函数模式 <single_mode>”中执行此操作，因为您无法引用模板表达式中的另一个元数据字段。 在“TPM”中，您可以，如以下表达式所示："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:686
 msgid "The example shows several things:"
@@ -2149,7 +2150,7 @@ msgid ""
 "some but not all cases you can replace a ``{`` with ``[[`` and a ``}`` with "
 "`]]`. Generally, if your program contains ``{`` and ``}`` characters then "
 "you should use `General Program Mode`."
-msgstr ""
+msgstr "在“TPM”中，在字符串文字中使用“{”和“}”字符可能会导致错误或意外结果，因为它们会混淆模板处理器。 它尝试将它们视为模板表达式边界，而不是字符。 在某些情况下，但不是所有情况下，您可以将 ``{`` 替换为 ``[[`` ，将 ``}`` 替换为 `]]` 。 一般来说，如果您的程序包含“{”和“}”字符，那么您应该使用“通用程序模式”。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:698
 msgid ""
@@ -2158,7 +2159,7 @@ msgid ""
 "act upon as the first parameter in addition to the documented parameters. In"
 " `TPM` you can use ``$`` to access the value specified by the ``lookup "
 "name`` for the template expression."
-msgstr ""
+msgstr "与“通用程序模式”一样，对于“单函数模式 <single_mode>”下记录的函数，除了记录的参数之外，您还必须提供函数要执行的值作为第一个参数。 在“TPM”中，您可以使用“$”来访问模板表达式的“查找名称”指定的值。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:703
 msgid "Python Template Mode"
@@ -2172,7 +2173,7 @@ msgid ""
 "most use; further discussion is beyond the scope of this manual. PTM "
 "templates are faster and can do more complicated operations but you must "
 "know how to write code in python using the calibre API."
-msgstr ""
+msgstr "Python 模板模式 (PTM) 允许您使用本机 python 和 `calibre API <https://manual.calibre-ebook.com/develop.html#api-documentation-for-various-parts-of-calibre>` 编写模板 _。 数据库 API 将是最常用的； 进一步的讨论超出了本手册的范围。 PTM 模板速度更快，可以执行更复杂的操作，但您必须知道如何使用 calibre API 在 python 中编写代码。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:707
 msgid "A PTM template begins with:"
@@ -2199,7 +2200,7 @@ msgid ""
 "directly in your code. The functions are retrieved using their names. If the"
 " name conflicts with a Python keyword, add an underscore to the end of the "
 "name. Examples:"
-msgstr ""
+msgstr "``context.funcs`` 属性允许调用内置和用户模板函数以及存储的 GPM/Python 模板，以便您可以直接在代码中执行它们。 使用函数的名称来检索函数。 如果名称与 Python 关键字冲突，请在名称末尾添加下划线。 例子："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:736
 msgid ""
@@ -2211,7 +2212,7 @@ msgid ""
 "To satisfy that requirement the template converts commas in author names to "
 "semicolons then builds a comma-separated list of authors. The authors are "
 "then sorted, which is why the template uses author_sort."
-msgstr ""
+msgstr "以下是 PTM 模板的示例，该模板生成一个系列的所有作者的列表。 该列表存储在“从其他列构建的列，行为类似于标签”中。 它显示在“书籍详细信息”中，并选中“在单独的行上”（在“首选项->外观->书籍详细信息”中）。 该选项要求列表以逗号分隔。 为了满足该要求，模板将作者姓名中的逗号转换为分号，然后构建以逗号分隔的作者列表。 然后对作者进行排序，这就是模板使用author_sort的原因。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:757
 msgid "The output in :guilabel:`Book details` looks like this:"
@@ -2235,7 +2236,7 @@ msgid ""
 " call a function, passing positional arguments if desired. An argument can "
 "be any expression. Examples of calling a template, assuming the stored "
 "template is named ``foo``:"
-msgstr ""
+msgstr "“通用程序模式 <general_mode>”和“Python 模板模式 <python_mode>”都支持保存模板并从另一个模板调用这些模板，就像调用存储的函数一样。 您可以使用“首选项->高级->模板功能”保存模板。 该对话框中提供了更多信息。 您可以像调用函数一样调用模板，并根据需要传递位置参数。 参数可以是任何表达式。 调用模板的示例，假设存储的模板名为“foo”："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:769
 msgid "``foo()`` -- call the template passing no arguments."
@@ -2265,7 +2266,7 @@ msgid ""
 "value then the variable is set to the empty string. For example, the "
 "following ``arguments`` function declares 2 variables, ``key``, "
 "``alternate``::"
-msgstr ""
+msgstr "在 GPM 中，您可以使用“arguments”函数检索在调用存储模板时传递的参数。 它声明并初始化局部变量，即有效的参数。 变量是位置变量； 他们在同一位置获取调用中给出的参数值。 如果调用中未提供相应的参数，则“arguments”会为该变量分配提供的默认值。 如果没有默认值，则该变量将设置为空字符串。 例如，以下“arguments”函数声明 2 个变量“key”、“alternate”："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:777
 msgid "Examples, again assuming the stored template is named ``foo``:"
@@ -2306,7 +2307,7 @@ msgid ""
 ":guilabel:`Preferences->Advanced->Keyboard shortcuts->Template tester`. "
 "Giving the ``Stored templates`` dialog a shortcut will help switching more "
 "rapidly between the tester and editing the stored template's source code."
-msgstr ""
+msgstr "测试存储模板的一种简单方法是使用“模板测试器”对话框。 为了便于访问，请在“首选项->高级->键盘快捷键->模板测试器”中为其提供键盘快捷键。 为“存储的模板”对话框提供快捷方式将有助于在测试器和编辑存储的模板的源代码之间更快地切换。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:788
 msgid "Providing additional information to templates"
@@ -2333,7 +2334,7 @@ msgid ""
 "change the name so it is best to use names that won't collide with other "
 "template local variables, for example by prefixing the name with an "
 "underscore."
-msgstr ""
+msgstr "附加信息是一个包含“变量名：变量值”对的 Python 字典，其中值必须是字符串。 模板可以访问字典，创建名为“variable_name”的模板局部变量，其中包含值“variable_value”。 用户无法更改名称，因此最好使用不会与其他模板局部变量冲突的名称，例如在名称前添加下划线。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:796
 msgid ""
@@ -2362,7 +2363,7 @@ msgid ""
 "the result is assigned to the local variable. If neither a value nor an "
 "expression is provided, the function assigns the empty string (``''``) to "
 "the local variable."
-msgstr ""
+msgstr "其中“id”是任何合法的变量名称。 该函数检查开发者提供的附加信息中是否包含该名称。 如果是，则该函数将提供的值分配给具有该名称的模板局部变量。 如果附加信息中没有该名称，并且提供了“表达式”，则计算“表达式”并将结果分配给局部变量。 如果既没有提供值也没有提供表达式，函数会将空字符串 (``''``) 分配给局部变量。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:812
 msgid ""
@@ -2461,7 +2462,7 @@ msgid ""
 "cases you can replace a ``{`` with ``[[`` and a ``}`` with `]]`. Generally, "
 "if your program contains ``{`` and ``}`` characters then you should use "
 "`General Program Mode`."
-msgstr ""
+msgstr "如上面“模板程序模式 1”部分所述，在“TPM”字符串文字中使用“{”和“}”字符可能会导致错误或意外结果，因为它们会混淆模板处理器。 它尝试将它们视为模板边界，而不是字符。 在某些情况下，但不是所有情况下，您可以将 ``{`` 替换为 ``[[`` ，将 ``}`` 替换为 `]]` 。 一般来说，如果您的程序包含“{”和“}”字符，那么您应该使用“通用程序模式”。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:857
 msgid "User-defined Python template functions"
@@ -2473,7 +2474,7 @@ msgid ""
 "functions can be used in any of the three template programming modes. The "
 "functions are added by going to :guilabel:`Preferences -> Advanced -> "
 "Template functions`. Instructions are shown in that dialog."
-msgstr ""
+msgstr "您可以将自己的 Python 函数添加到模板处理器。 这些函数可以在三种模板编程模式中的任何一种中使用。 通过转到“首选项 -> 高级 -> 模板函数”来添加这些函数。 该对话框中显示了说明。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:862
 msgid "Special notes for save/send templates"
@@ -2488,7 +2489,7 @@ msgid ""
 "However, slashes are not changed in prefix or suffix strings, so slashes in "
 "these strings will cause folders to be created. Because of this, you can "
 "create variable-depth folder structure."
-msgstr ""
+msgstr "当模板用于“保存到磁盘”或“发送到设备”模板时，会应用特殊处理。 字段的值被清理，用下划线替换文件系统特有的字符，包括斜杠。 这意味着字段文本不能用于创建文件夹。 但是，前缀或后缀字符串中的斜杠不会更改，因此这些字符串中的斜杠将导致创建文件夹。 因此，您可以创建可变深度的文件夹结构。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:866
 msgid ""
@@ -2509,7 +2510,7 @@ msgid ""
 "we want the folder structure `genre/author_sort/title.fmt`. If the book has "
 "no genre then we want to use 'Unknown'. We want two completely different "
 "paths, depending on the value of series."
-msgstr ""
+msgstr "查找功能让我们可以进行更高级的处理。 例如，假设一本书有一个系列，那么我们需要文件夹结构“系列/系列索引 - title.fmt”。 如果这本书没有系列，那么我们需要文件夹结构“genre/author_sort/title.fmt”。 如果这本书没有类型，那么我们想使用“未知”。 我们想要两条完全不同的路径，具体取决于系列的值。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:874
 msgid "To accomplish this, we:"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"POT-Creation-Date: 2024-03-13 15:20+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2023-2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -54,7 +54,7 @@ msgid ""
 "easy, resulting in a frenetic pace of development. Because of its roots, "
 "calibre has a comprehensive command line interface for all its functions, "
 "documented in :doc:`generated/en/cli-index`."
-msgstr "calibre源自Unix，它的设计是高度模块化的。模块间相互作用通过定义良好的接口实现。这使在calibre中添加新功能或者修改bug十分方便，这种便利性使calibre的开发很迅速。正因这种模块化设计思想，calibre对所有功能，都有一个完整的命令行接口，可以参考:doc:`generated/zh_CN/cli-index`进行了解。"
+msgstr "calibre源自Unix，它的设计是高度模块化的。模块间相互作用通过定义良好的接口实现。这使在calibre中添加新功能或者修改bug十分方便，这种便利性使calibre的开发很迅速。正因这种模块化设计思想，calibre对所有功能，都有一个完整的命令行接口，可以参考 `generated/zh_CN/cli-index`进行了解。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:24
 msgid ""
@@ -69,7 +69,7 @@ msgid ""
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
 "designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr "模块化设计的思想通过“插件”体现出来。关于“插件”的编写，这里有一份教程 :ref:`tutorial <customize>`。举个例子，如果要给calibre添加一个新的设备支持，一般只需要利用设备驱动插件范式写不到100行代码即可。你能从获取`built-in drivers <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_。类似地，为新的转换格式添加支持，也只需要改写输入/输出格式插件。模块化设计的另一个例子是抓取新闻，:ref:`recipe system <news>`。对于更多可加入calibre的插件，可以参考 `Index of plugins <https://www.mobileread.com/forums/showthread.php?p=。1362767#post1362767>`_。"
+msgstr "模块化设计的思想通过“插件”体现出来。关于“插件”的编写，这里有一份教程 :ref:`tutorial <customize>`。举个例子，如果要给calibre添加一个新的设备支持，一般只需要利用设备驱动插件范式写不到100行代码即可。你能从获取`built-in drivers <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_。类似地，为新的转换格式添加支持，也只需要改写输入/输出格式插件。模块化设计的另一个例子是抓取新闻，`recipe system <news>`。对于更多可加入calibre的插件，可以参考 `Index of plugins <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:34
 msgid "Code layout"
@@ -102,12 +102,12 @@ msgid ""
 ":command:`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
-msgstr "电子书 -- 所有的电子书格式转换/元数据代码。一个好的出发点是``calibre.ebooks.conversion.cli``，这是用于支持电子书转换命令的模块。转换过程通过``conversion.plumber``进行控制。\n格式无关代码全部放在``ebooks.oeb``文件夹中，（文档未更新）格式有关代码放在``ebooks.format_name``中。"
+msgstr "电子书 - 所有电子书转换/元数据代码。 一个好的起点是“calibre.ebooks.conversion.cli”，它是为 ebook-convert 命令提供动力的模块。 转换过程是通过“conversion.plumber”控制的。 与格式无关的代码全部在“ebooks.oeb”中，与格式相关的代码在“ebooks.format_name”中。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:47
 msgid ""
 "Metadata reading, writing, and downloading is all in ``ebooks.metadata``"
-msgstr "元数据读写下载，放在``ebooks.metadata``中"
+msgstr "元数据的读取、写入和下载都在``ebooks.metadata``中"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:48
 msgid ""
@@ -121,19 +121,19 @@ msgid ""
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr "格式转换发生在管道（pipeline）中。有关该结构可以参看:ref:`conversion-introduction`。管道包含一个输入插件（plugin），多种转换方法和一个输出插件。构建和驱动管道的代码在:file:`plumber.py`中。管道利用一本电子书（未压缩的equb文件）的特征（representation）工作，这里的特征是指像一个包含目录、书脊、toc、指南、html内容等。管理这些特征的类时OEBBook在``ebooks.oeb.base``。在格式转换时所用的的转换方法位于:file:`oeb/transforms/*.py`。输入与输出插件位于:file:`conversion/plugins/*.py`。"
+msgstr "转换发生在传输途径中，传输途径的结构请参见“转换简介”。 该传输途径由输入插件、各种转换和输出插件组成。 构建和驱动传输途径的代码位于“plumber.py”中。 该传输途径适用于电子书的表示，就像解压的 epub，具有清单、书脊、目录、指南、html 内容等。管理此表示的类是“ebooks.oeb.base”中的 OEBBook 。 在转换过程中应用于本书的各种转换位于“oeb/transforms/*.py”中。 输入和输出插件位于“conversion/plugins/*.py”中。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:58
 msgid ""
 "E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
-msgstr "电子书编辑使用不同的容器对象。详见:ref:`polish_api`。"
+msgstr "电子书编辑使用不同的容器对象。详见 `polish_api`。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:61
 msgid ""
 "db - The database back-end. See :ref:`db_api` for the interface to the "
 "calibre library."
-msgstr "db -- 数据库后端。参考:ref:`db_api`了解calibre的接口。"
+msgstr "db -- 数据库后端。参考`db_api`了解calibre的接口。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:63
 msgid "Content server: ``srv`` is the calibre Content server."
@@ -181,7 +181,7 @@ msgstr "calibre使用`Git <https://www.git-scm.com/>`_，一个分布式版本�
 msgid ""
 "On Windows you will need the complete path name, that will be something like"
 " :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
-msgstr "在Windows上，你需要完整的路径名，类似于:file:`C:\\\\Program Files\\\\Git\\\\git.exe`。"
+msgstr "在 Windows 上，您将需要完整的路径名，类似于文件“C:\\\\Program Files\\\\Git\\\\git.exe”。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:88
 msgid ""
@@ -231,7 +231,7 @@ msgstr "这将在当前文件夹中创建一个文件：`my changes'文件，只
 msgid ""
 "To send the last *n* commits, replace *1* with *n*, for example, for the "
 "last 3 commits::"
-msgstr "上传最后n次提交，用*n*代替*1*。假如提交最后三次提交:"
+msgstr "要发送最后 *n* 次提交，请将 *1* 替换为 *n*，例如，对于最后 3 次提交："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:124
 msgid "Be careful to not include merges when using ``HEAD~n``."
@@ -243,7 +243,7 @@ msgid ""
 "to create a `GitHub <https://github.com>`__ account. Below is a basic guide "
 "to setting up your own fork of calibre in a way that will allow you to "
 "submit pull requests for inclusion into the main calibre repository:"
-msgstr "如果你计划为calibre进行长时间开发，那么你最好创建一个`GitHub <https://github.com>`__账号。下面是一个基本教程，它将引导你建立一个自己的calibre分支。这样你就可以向主calibre仓库提交你的pull请求:"
+msgstr "如果您计划在 calibre 上进行大量开发，那么最好的方法是创建一个 `GitHub <https://github.com>`__ 帐户。 以下是设置您自己的 calibre 分支的基本指南，该指南允许您提交拉取请求以包含到主 calibre 存储库中："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:131
 msgid ""
@@ -261,7 +261,7 @@ msgstr "设置ssh密钥以进行GitHub身份验证，参考这里:`Generating SS
 msgid ""
 "Go to https://github.com/kovidgoyal/calibre and click the :guilabel:`Fork` "
 "button."
-msgstr "前往 https://github.com/kovidgoyal/calibre 并点击 :guilabel:`Fork` 按钮。"
+msgstr "访问 https://github.com/kovidgoyal/calibre 并单击“Fork”按钮。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:134
 msgid "In a Terminal do::"
@@ -298,7 +298,7 @@ msgid ""
 "<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
 "major changes, you should discuss them in the forum or contact Kovid "
 "directly (his email address is all over the source code)."
-msgstr "你也应该随时关注calibre的 `development forum <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ 。在做出重大改变之前，你应该现在论坛中进行讨论或者直接联系Kovid（他的email在源码中可见）。"
+msgstr "您还应该关注 calibre `开发论坛 <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_。 在进行重大更改之前，您应该在论坛中讨论它们或直接联系 Kovid（他的电子邮件地址遍布源代码）。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:156
 msgid "Windows development environment"
@@ -357,7 +357,7 @@ msgstr "就是这样！你已经可以开始为calibre编写代码了。举例�
 msgid ""
 "near the top of the file. Now run the command :command:`calibredb`. The very"
 " first line of output should be ``Hello, world!``."
-msgstr "现在运行命令 :command:`calibredb` 。输出的第一行应该就是``Hello, world!`` 。"
+msgstr "靠近文件顶部。 现在运行命令“calibredb”。 输出的第一行应该是“Hello, world!”。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:186
 msgid ""
@@ -395,13 +395,13 @@ msgstr "下一步是创建一个bash脚本，该脚本将在调试模式下运�
 
 #: ../../__w/calibre/calibre/manual/develop.rst:208
 msgid "Create a plain text file::"
-msgstr "创建一个空文件:"
+msgstr "创建一个空文本文件:"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:214
 msgid ""
 "Save this file as :file:`/usr/local/bin/calibre-develop`, then set its "
 "permissions so that it can be executed::"
-msgstr "将该文件另存为：file:`/usr/local/bin/calibre-develop`，设置权限即可执行："
+msgstr "将此文件保存为 “/usr/local/bin/calibre-develop”，然后设置其权限以便可以执行:"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:218
 msgid "Once you have done this, run::"
@@ -462,7 +462,7 @@ msgid ""
 "That's it! You are now ready to start hacking on the calibre code. For "
 "example, open the file :file:`src/calibre/__init__.py` in your favorite "
 "editor and add the line::"
-msgstr "就是这样！你已经可以开始为calibre编写（hacking）代码了。举例。用你最喜欢的编辑器打开文件 :file:`src\\\\calibre\\\\__init__.py` ，在文件开头添加这么一行:"
+msgstr "就是这样！ 现在您已准备好开始破解 calibre 代码。 例如，在您喜欢的编辑器中打开文件  “src/calibre/__init__.py”并添加以下行："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:267
 msgid ""
@@ -478,11 +478,11 @@ msgid ""
 "using .bat files or shell scripts to launch calibre. The example below shows"
 " how to do this on Windows using .bat files (the instructions for other "
 "platforms are the same, just use a shell script instead of a .bat file)"
-msgstr "calibre源码树非常稳定，很少崩溃，但如果你需要从源码运行一个测试库并且你还要运行released版本的calibre作为日常使用。你能方便地通过批处理文件或者shell脚本启动calibre。下面的例子展示如何在Windows上通过批处理文件启动calibre(其他平台的命令也是一样的，只是用shell脚本代替批处理文件)。"
+msgstr "calibre源码树非常稳定，很少崩溃，但如果你需要从源码运行一个测试书库并且你还要运行released版本的calibre作为日常使用。你能方便地通过批处理文件或者shell脚本启动calibre。下面的例子展示如何在Windows上通过批处理文件启动calibre(其他平台的命令也是一样的，只是用shell脚本代替批处理文件)。"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:274
 msgid "To launch the release version of calibre with your everyday library:"
-msgstr "用常用库启动release版本的calibre:"
+msgstr "用常用库启动发布版本的calibre:"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:276
 msgid "calibre-normal.bat::"
@@ -550,7 +550,7 @@ msgid ""
 "You can use the builtin Python debugger (pdb) as a remote debugger from the "
 "command line. First, start the remote debugger at the point in the calibre "
 "code you are interested in, like this::"
-msgstr "你可以从命令行中使用内置的Python调试器作为远程调试器。首先，在calibre代码中你关注的位置开启远程调试器，像这样:"
+msgstr "您可以从命令行使用内置 Python 调试器 (pdb) 作为远程调试器。 首先，在您感兴趣的 calibre 代码中启动远程调试器，如下所示："
 
 #: ../../__w/calibre/calibre/manual/develop.rst:332
 msgid ""
@@ -616,7 +616,7 @@ msgstr "在calibre的Python环境中执行任意脚本"
 msgid ""
 "The :command:`calibre-debug` command provides a couple of handy switches to "
 "execute your own code, with access to the calibre modules::"
-msgstr ":command:`calibre-debug`  提供了一些方便的开关来执行你自己的代码，并且可以访问calibre模块:"
+msgstr "`calibre-debug`  提供了一些方便的开关来执行你自己的代码，并且可以访问calibre模块:"
 
 #: ../../__w/calibre/calibre/manual/develop.rst:376
 msgid ""

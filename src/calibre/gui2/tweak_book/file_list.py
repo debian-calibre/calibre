@@ -503,7 +503,7 @@ class FileList(QTreeWidget, OpenWithHandler):
             elif mt in OEB_DOCS:
                 category = 'text'
             ext = name.rpartition('.')[-1].lower()
-            if ext in {'ttf', 'otf', 'woff'}:
+            if ext in {'ttf', 'otf', 'woff', 'woff2'}:
                 # Probably wrong mimetype in the OPF
                 category = 'fonts'
             return category
@@ -1273,6 +1273,9 @@ class FileListWidget(QWidget):
             setattr(self, x, getattr(self.file_list, x))
         self.setFocusProxy(self.file_list)
         self.edit_next_file = self.file_list.edit_next_file
+
+    def merge_completed(self, master_name):
+        self.file_list.select_name(master_name, set_as_current_index=True)
 
     def build(self, container, preserve_state=True):
         self.file_list.build(container, preserve_state=preserve_state)

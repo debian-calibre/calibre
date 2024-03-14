@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "三月 01, 2024" "7.6.0" "calibre"
+.TH "CALIBREDB" "1" "三月 14, 2024" "7.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,15 +41,15 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP 是calibre数据库的命令行接口。它有
+\fIcalibredb\fP 是calibre数据库的命令行接口。它有
 几个子命令，记录如下。
 .sp
-\fBcalibredb\fP  可以用来操作一个 calibre 数据库
-由运行在上的 calibre 或 calibre:guilabel:\fI内容服务器\(ga指定
+\fIcalibredb\fP  可以用来操作一个 calibre 数据库
+由运行在上的 calibre 或 calibre“内容服务器”指定
 本地机器或通过互联网。你可以运行一个 calibre
-:guilabel:\(ga内容服务器\fP 使用：命令：\fIcalibre\-server\fP
-程序或在主 calibre 程序中单击 连接/共享  → 
-启动内容服务器\&. 因为 \fBcalibredb\fP  可以更改
+“内容服务器”使用：\fIcalibre\-server\(ga程序
+或在主 calibre 程序中单击 “连接/共享 \->
+启动内容服务器”。因为\(gacalibredb\fP  可以更改
 calibre 书库，必须首先在服务器上设置身份验证。这里
 有两种方法：
 .INDENT 0.0
@@ -60,7 +60,7 @@ calibre 书库，必须首先在服务器上设置身份验证。这里
 则只需使用内容服务器的 \fB\-\-enable\-local\-write\fP 选项，
 允许本地计算机上运行的任何程序，包括 calibredb，
 对 calibre 数据进行更改。从主 calibre 程序运行服务器时，
-此选项位于：guilabel:\fI首选项\->通过网络共享\->高级\fP。
+此选项位于“首选项\->通过网络共享\->高级”。
 .IP \(bu 2
 如果要启用通过互联网的访问，则应在服务器上
 设置用户帐户，并使用：选项：\fI\-\-username\fP 和：
@@ -73,14 +73,17 @@ calibre 书库，必须首先在服务器上设置身份验证。这里
 如果从主 calibre 程序运行服务器，请使用：
 .UNINDENT
 .UNINDENT
-.sp
-首选项 → 通过网络共享 → 需要用户名/密码。
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+“首选项\->通过网络共享\->需要用户名/密码”。
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
 要连接到正在运行的内容服务器，请将服务器的URL传递给：
-\fI\%\-\-with\-library\fP 选项，有关详细信息和示例，
+\fI\-\-with\-library\fP 选项，有关详细信息和示例，
 请参阅该选项的文档。
 .INDENT 0.0
 .IP \(bu 2
@@ -593,7 +596,7 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline
-将转换过程的不同阶段分别保存输出到指定文件夹。如果您检查在转换过程的哪个阶段发生了错误，这非常有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
+将转换传输途径不同阶段的输出保存到指定文件夹。 如果您不确定在转换过程的哪个阶段发生错误，这很有用。 默认: \fB\(aq\fPNone\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 的输出格式
 .UNINDENT
 .INDENT 0.0
 .TP

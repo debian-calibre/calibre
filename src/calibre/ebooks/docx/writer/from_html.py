@@ -116,8 +116,17 @@ class TextRun:
                 if text:
                     for x in self.soft_hyphen_pat.split(text):
                         if x == '\u00ad':
+                            # trailing spaces in <w:t> before a soft hyphen are
+                            # ignored, so put them in a preserve whitespace
+                            # element with a single space.
+                            if not preserve_whitespace and len(r) and r[-1].text and r[-1].text.endswith(' '):
+                                r[-1].text = r[-1].text.rstrip()
+                                add_text(' ', True)
                             makeelement(r, 'w:softHyphen')
                         elif x:
+                            if not preserve_whitespace and x.startswith(' ') and len(r) and r[-1].tag and 'softHyphen' in r[-1].tag:
+                                x = x.lstrip()
+                                add_text(' ', True)
                             add_text(x, preserve_whitespace)
                 else:
                     add_text('', preserve_whitespace)
