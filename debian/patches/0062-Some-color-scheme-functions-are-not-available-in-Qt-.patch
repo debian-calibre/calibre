@@ -11,10 +11,10 @@ Current Debian Qt6 version is 6.4.2 .
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/src/calibre/gui2/palette.py b/src/calibre/gui2/palette.py
-index 6f17830..22eaed9 100644
+index 92a4af8..b75e919 100644
 --- a/src/calibre/gui2/palette.py
 +++ b/src/calibre/gui2/palette.py
-@@ -250,13 +250,12 @@ class PaletteManager(QObject):
+@@ -254,13 +254,12 @@ class PaletteManager(QObject):
      @property
      def use_dark_palette(self):
          app = QApplication.instance()
@@ -29,7 +29,7 @@ index 6f17830..22eaed9 100644
              self.set_dark_mode_palette() if self.use_dark_palette else self.set_light_mode_palette()
              QApplication.instance().setAttribute(Qt.ApplicationAttribute.AA_SetPalette, True)
  
-@@ -388,7 +387,7 @@ QTabBar::tab:only-one {
+@@ -392,7 +391,7 @@ QTabBar::tab:only-one {
          if ismacos:
              from calibre_extensions.cocoa import set_appearance
              set_appearance(self.color_palette)
