@@ -273,9 +273,10 @@ def create_template_tab(self):
                     "in the calibre documentation. For example, with Number "
                     "comparisons you can use the relational operators like '>=' etc. "
                     "With Text comparisons you can use contains (T), exact (=T), "
-                    "or regular expression matches (~T). With Date you can use "
-                    "today, yesterday, etc. Set/not set takes 'true' for set "
-                    "and 'false' for not set.") + '</p>')
+                    "or regular expression matches (~T), where T is your text. "
+                    "With Date you can use 'today', 'yesterday', etc. When checking for "
+                    "Set use 'true' or 'yes'. When checking for Not set use 'false' "
+                    "or 'no'") + '</p>')
     l.addRow(_('Template &value:'), le)
 
     self.template_test_type_box = le = QComboBox(w)
@@ -293,7 +294,15 @@ def create_template_tab(self):
     self.template_program_box = le = TemplateLineEditor(self.tab_widget)
     le.setObjectName('template_program_box')
     le.setPlaceholderText(_('The template that generates the value'))
-    le.setToolTip(_('Right click to open a template editor'))
+    le.setToolTip('<p>' +
+                  _('Right click to open a template editor. <br>'
+                    'Technical note: the set of book ids already matched by '
+                    'previous search terms in the search expression is passed '
+                    'to the template in the global variables dictionary with the '
+                    'key "{0}". You can use the set to limit any work the '
+                    'template does to the set of books already matched, possibly '
+                    'improving performance.'
+                    ).format('_candidates')  + '</p>')
     lo = QHBoxLayout()
     lo.addWidget(le)
     self.edit_template_button = tb = QToolButton()

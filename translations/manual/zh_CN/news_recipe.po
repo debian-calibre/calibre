@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"POT-Creation-Date: 2024-03-13 15:20+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -228,14 +228,14 @@ msgid ""
 "temporary files. The `url` key in the dictionary is useful if the effective "
 "URL of the article is different from the URL passed into this method, for "
 "example, because of redirects. It can be omitted if the URL is unchanged."
-msgstr ""
+msgstr "如果您设置了“articles_are_obfuscated”，则每个文章 URL 都会调用此方法。 它应该返回文件系统上包含文章 HTML 的文件的路径。 该文件由递归 HTML 获取引擎处理，因此它可以包含指向 Web 上的页面/图像的链接。 或者，您可以返回以下形式的字典：{'data': 1, 'url': 2}。 这避免了需要创建临时文件。 如果文章的有效 URL 与传递到此方法的 URL 不同，例如由于重定向，则字典中的“url”键很有用。 如果 URL 不变，则可以省略。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
 msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
-msgstr ""
+msgstr "此方法通常适用于试图阻止自动访问文章内容的网站。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
@@ -244,17 +244,17 @@ msgid ""
 "programmatically determine the delay for the specified URL, override this "
 "method in your subclass, returning self.delay by default for URLs you do not"
 " want to affect."
-msgstr ""
+msgstr "返回下载此 URL 之前的延迟，以秒为单位。 如果您想以编程方式确定指定 URL 的延迟，请在子类中重写此方法，默认情况下为您不想影响的 URL 返回 self.delay。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
 msgid "Returns"
-msgstr ""
+msgstr "返回"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
 msgid "A floating point number, the delay in seconds."
-msgstr ""
+msgstr "浮点数，以秒为单位的延迟。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
@@ -262,7 +262,7 @@ msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the precessed URL. Return"
 " None or an empty string to skip fetching the image."
-msgstr ""
+msgstr "对图像 url 执行一些处理（可能消除动态生成的图像的大小限制等）并返回处理后的 URL。 返回 None 或空字符串以跳过获取图像。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -270,36 +270,36 @@ msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ of"
 " it."
-msgstr ""
+msgstr "便捷方法，获取索引页面的 URL 并返回它的 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
 msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
-msgstr ""
+msgstr "`url_or_raw`：URL 或下载的索引页作为字符串"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
 msgid ""
 "Return True if the link should be followed or False otherwise. By default, "
 "raises NotImplementedError which causes the downloader to ignore it."
-msgstr ""
+msgstr "如果应遵循链接，则返回 True，否则返回 False。 默认情况下，引发 NotImplementedError ，导致下载器忽略它。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
 msgid "The URL to be followed"
-msgstr ""
+msgstr "要关注的 URL"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
 msgid "The tag from which the URL was derived"
-msgstr ""
+msgstr "派生 URL 的标签"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
 msgid ""
 "Create a list of articles from the list of feeds returned by "
 ":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
-msgstr ""
+msgstr "从“BasicNewsRecipe.get_feeds”返回的提要列表中创建文章列表。 返回“Feed”对象的列表。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
@@ -309,26 +309,26 @@ msgid ""
 "that have a \"Print Edition\" webpage that lists all the articles in the "
 "current print edition. If this function is implemented, it will be used in "
 "preference to :meth:`BasicNewsRecipe.parse_feeds`."
-msgstr ""
+msgstr "此方法应该在解析网站而不是提要来生成文章列表的新闻源中实现。 典型用途是具有“印刷版”网页的新闻源，其中列出了当前印刷版的所有文章。 如果实现此功能，它将优先于“BasicNewsRecipe.parse_feeds”使用。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
 msgid ""
 "It must return a list. Each element of the list must be a 2-element tuple of"
 " the form ``('feed title', list of articles)``."
-msgstr ""
+msgstr "它必须返回一个列表。 列表中的每个元素必须是形式为``('提要标题'，文章列表)`` 的 2 元素元组。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
 msgid "Each list of articles must contain dictionaries of the form::"
-msgstr ""
+msgstr "每个文章列表必须包含以下形式的字典："
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:23
 msgid ""
 "For an example, see the recipe for downloading `The Atlantic`. In addition, "
 "you can add 'author' for the author of the article."
-msgstr ""
+msgstr "例如，请参阅下载“The Atlantic”的方法。 此外，您可以为文章的作者添加“作者”。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
@@ -336,7 +336,7 @@ msgid ""
 "If you want to abort processing for some reason and have calibre show the "
 "user a simple message instead of an error, call "
 ":meth:`abort_recipe_processing`."
-msgstr ""
+msgstr "如果您想出于某种原因中止处理并让 calibre 向用户显示一条简单的消息而不是错误，请调用“abort_recipe_processing”。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
@@ -344,39 +344,39 @@ msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
 "HTML (soup)."
-msgstr ""
+msgstr "下载属于文章的每个 HTML 页面时调用。 旨在用于获取文章元数据，如作者/摘要/等。 来自解析的 HTML（汤）。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
 msgid ""
 "A object of class :class:`calibre.web.feeds.Article`. If you change the "
 "summary, remember to also change the text_summary"
-msgstr ""
+msgstr "`calibre.web.feeds.Article` 类的对象。 如果更改摘要，请记住同时更改 text_summary"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
 msgid "Parsed HTML belonging to this article"
-msgstr ""
+msgstr "属于本文的已解析 HTML"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
 msgid "True iff the parsed HTML is the first page of the article."
-msgstr ""
+msgstr "当且仅当解析的 HTML 是文章的第一页时为 true。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
 msgid "Run any needed post processing on the parsed downloaded e-book."
-msgstr ""
+msgstr "对已解析的下载电子书运行任何所需的后处理。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
 msgid "An OEBBook object"
-msgstr ""
+msgstr "一个 OEBBook 对象"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
 msgid "Conversion options"
-msgstr ""
+msgstr "转换选项"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:1
@@ -385,19 +385,19 @@ msgid ""
 "after it is parsed for links and images. It can be used to do arbitrarily "
 "powerful post-processing on the :term:`HTML`. It should return `soup` after "
 "processing it."
-msgstr ""
+msgstr "在解析链接和图像后，使用每个下载的 HTML 文件的源调用此方法。 它可用于对 HTML 进行任意强大的后处理。 处理后它应该返回`soup`。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
 msgid ""
 "A `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__"
 "  instance containing the downloaded :term:`HTML`."
-msgstr ""
+msgstr "一个 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ 实例，包含下载的 `HTML`。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
 msgid "True if this is the first page of an article."
-msgstr ""
+msgstr "如果这是文章的第一页，则为 true。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:1
@@ -406,7 +406,7 @@ msgid ""
 "before it is parsed for links and images. It is called after the cleanup as "
 "specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
 "processing on the :term:`HTML`. It should return `soup` after processing it."
-msgstr ""
+msgstr "在解析链接和图像之前，使用每个下载的“HTML”文件的源调用此方法。 它在remove_tags等指定的清理之后被调用。它可以用来对“HTML”进行任意强大的预处理。 处理后它应该返回`soup`。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
@@ -416,7 +416,7 @@ msgid ""
 "`soup`: A `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instance "
 "containing the downloaded :term:`HTML`."
-msgstr ""
+msgstr "`soup`：一个 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ 实例，包含下载的 :term:`HTML`。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
@@ -424,7 +424,7 @@ msgid ""
 "Perform some processing on downloaded image data. This is called on the raw "
 "data before any resizing is done. Must return the processed raw data. Return"
 " None to skip the image."
-msgstr ""
+msgstr "对下载的图像数据进行一些处理。 在完成任何大小调整之前，会对原始数据调用此方法。 必须返回处理后的原始数据。 返回 None 以跳过图像。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
@@ -433,17 +433,17 @@ msgid ""
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr ""
+msgstr "在将每个下载的 HTML 文件解析为对象树之前，会调用此方法。 raw_html 是一个 unicode 字符串，表示从网络下载的原始 HTML。 url 是下载 HTML 的 URL。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
 msgid "Note that this method acts *before* preprocess_regexps."
-msgstr ""
+msgstr "请注意，此方法在 preprocess_regexps *之前*起作用。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
 msgid "This method must return the processed raw_html as a unicode object."
-msgstr ""
+msgstr "此方法必须将处理后的 raw_html 作为 unicode 对象返回。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
@@ -451,14 +451,14 @@ msgid ""
 "Take a `url` pointing to the webpage with article content and return the "
 ":term:`URL` pointing to the print version of the article. By default does "
 "nothing. For example::"
-msgstr ""
+msgstr "获取指向包含文章内容的网页的“url”，并返回指向文章打印版本的“URL”。 默认情况下不执行任何操作。 例如："
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
 msgid ""
 "Use this method to set the date when this issue was published. Defaults to "
 "the moment of download. Must return a :class:`datetime.datetime` object."
-msgstr ""
+msgstr "使用此方法设置此问题的发布日期。 默认为下载时刻。 必须返回一个“datetime.datetime”对象。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
@@ -468,26 +468,26 @@ msgid ""
 "applied. Note that preprocess_regexps will have already been applied. It is "
 "meant to allow the recipe to skip ad pages. If the soup represents an ad "
 "page, return the HTML of the real page. Otherwise return None."
-msgstr ""
+msgstr "在应用任何清理属性（如remove_tags、keep_only_tags）之前，使用每个下载的 HTML 文件的源调用此方法。 请注意，preprocess_regexps 已被应用。 它的目的是允许菜谱跳过广告页面。 如果汤代表广告页面，则返回真实页面的 HTML。 否则返回 None。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
 msgid ""
 "Convenience method to sort the titles in `index` according to `weights`. "
 "`index` is sorted in place. Returns `index`."
-msgstr ""
+msgstr "根据“权重”对“索引”中的标题进行排序的便捷方法。 `index` 已就地排序。 返回“索引”。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
 msgid "`index`: A list of titles."
-msgstr ""
+msgstr "`index`: 标题列表。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:6
 msgid ""
 "`weights`: A dictionary that maps weights to titles. If any titles in index "
 "are not in weights, they are assumed to have a weight of 0."
-msgstr ""
+msgstr "`weights`：将权重映射到标题的字典。 如果索引中的任何标题不在权重中，则假定它们的权重为 0。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
@@ -496,28 +496,28 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
 "extract the text from it recursively, including any CDATA sections and alt "
 "tag attributes. Return a possibly empty Unicode string."
-msgstr ""
+msgstr "获取 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `Tag` 并从中递归提取文本的便捷方法，包括任何 CDATA 部分和 alt 标签属性。 返回一个可能为空的 Unicode 字符串。"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
 msgid ""
 "`use_alt`: If `True` try to use the alt attribute for tags that don't have "
 "any textual content"
-msgstr ""
+msgstr "`use_alt`：如果为`True`，则尝试对没有任何文本内容的标签使用 alt 属性"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
 msgid ""
 "`tag`: `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
-msgstr ""
+msgstr "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ `标签`"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
 msgid ""
 "Set to True and implement :meth:`get_obfuscated_article` to handle websites "
 "that try to make it difficult to scrape content."
-msgstr ""
+msgstr "设置为 True 并实施 `get_obfuscated_article` 来处理那些试图让抓取内容变得困难的网站。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
@@ -526,20 +526,20 @@ msgid ""
 "algorithms from the readability project. Setting this to True, means that "
 "you do not have to worry about cleaning up the downloaded HTML manually "
 "(though manual cleanup will always be superior)."
-msgstr ""
+msgstr "自动从下载的文章页面中提取所有文本。 使用可读性项目中的算法。 将其设置为 True 意味着您不必担心手动清理下载的 HTML（尽管手动清理总是更好）。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
 msgid ""
 "Specify elements that the auto cleanup algorithm should never remove. The "
 "syntax is a XPath expression. For example::"
-msgstr ""
+msgstr "指定自动清理算法永远不应删除的元素。 语法是 XPath 表达式。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
-msgstr ""
+msgstr "如果 True 则导航栏居中对齐，否则左对齐"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
@@ -549,7 +549,7 @@ msgid ""
 "left at their default values, JPEG images will be scaled to fit in the "
 "screen dimensions set by the output profile and compressed to size at most "
 "(w * h)/16 where w x h are the scaled image dimensions."
-msgstr ""
+msgstr "将其设置为 False 可忽略所有缩放和压缩参数并传递图像而不进行修改。 如果 True 和其他压缩参数保留默认值，则 JPEG 图像将缩放以适合输出配置文件设置的屏幕尺寸，并压缩至最大尺寸 (w * h)/16，其中 w x h 是缩放后的图像尺寸 。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
@@ -565,7 +565,7 @@ msgid ""
 "will first be scaled and then its quality lowered until its size is less "
 "than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
 "other words, this compression happens after scaling."
-msgstr ""
+msgstr "自动压缩 JPEG 图像时使用的系数。 如果设置为 None，则禁用自动压缩。 否则，如果可能的话，通过降低质量级别，图像的大小将减小到 (w * h)/compress_news_images_auto_size 字节，其中 w x h 是图像尺寸，以像素为单位。 最低 JPEG 质量将为 5/100，因此可能无法满足此限制。 该参数可以被参数 compress_news_images_max_size 覆盖，该参数提供图像的固定最大大小。 请注意，如果启用scale_news_images_to_device，则图像将首先缩放，然后降低其质量，直到其大小小于 (w * h)/factor，其中 w 和 h 现在是*缩放*图像尺寸。 换句话说，这种压缩发生在缩放之后。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
@@ -574,7 +574,7 @@ msgid ""
 " this parameter overrides auto compression via "
 "compress_news_images_auto_size. The minimum JPEG quality will be 5/100 so it"
 " is possible this constraint will not be met."
-msgstr ""
+msgstr "设置 JPEG 质量，使图像不超过给定的大小（以千字节为单位）。 如果设置，此参数将覆盖通过 compress_news_images_auto_size 自动压缩。 最低 JPEG 质量将为 5/100，因此可能无法满足此限制。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
@@ -582,7 +582,7 @@ msgid ""
 "Recipe specific options to control the conversion of the downloaded content "
 "into an e-book. These will override any user or plugin specified values, so "
 "only use if absolutely necessary. For example::"
-msgstr ""
+msgstr "用于控制将下载的内容转换为电子书的特定于新闻源的选项。 这些将覆盖任何用户或插件指定的值，因此仅在绝对必要时使用。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
@@ -595,7 +595,7 @@ msgid ""
 "15px on the top and bottom. Color names are defined `here "
 "<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
 " white does not always work in Windows. Use #ffffff instead"
-msgstr ""
+msgstr "默认情况下， get_cover_url() 返回的封面图像将用作期刊的封面。 在您的配方中覆盖此选项会指示 calibre 将下载的封面渲染到一个框架中，该框架的宽度和高度以下载封面的百分比表示。 cover_margins = (10, 15, '#ffffff') 在封面上填充左侧和右侧 10 像素的白边距，顶部和底部 15 像素的白边距。 颜色名称在“此处 <https://www.imagemagick.org/script/color.php>”定义。 请注意，由于某种原因，白色并不总是在 Windows 中起作用。 使用#ffffff代替"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -603,14 +603,14 @@ msgid ""
 "The default delay between consecutive downloads in seconds. The argument may"
 " be a floating point number to indicate a more precise time. See "
 ":meth:`get_url_specific_delay` to implement per URL delays."
-msgstr ""
+msgstr "连续下载之间的默认延迟，以秒为单位。 该参数可以是浮点数以指示更精确的时间。 请参阅“get_url_specific_delay”来实现每个 URL 的延迟。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
 msgid ""
 "A couple of lines that describe the content this recipe downloads. This will"
 " be used primarily in a GUI that presents a list of recipes."
-msgstr ""
+msgstr "几行描述了此新闻源下载的内容。 这将主要用在显示新闻源列表的 GUI 中。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
@@ -620,7 +620,7 @@ msgid ""
 "``cp1252``. If None, try to detect the encoding. If it is a callable, the "
 "callable is called with two arguments: The recipe object and the source to "
 "be decoded. It must return the decoded source."
-msgstr ""
+msgstr "为字符集规范不正确的站点指定覆盖编码。 最常见的是指定“latin1”并使用“cp1252”。 如果没有，请尝试检测编码。 如果它是可调用的，则使用两个参数调用可调用的：新闻源对象和要解码的源。 它必须返回解码后的源。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
@@ -631,26 +631,26 @@ msgid ""
 "is declared using the style attribute on individual :term:`HTML` tags. Note "
 "that if you want to programmatically generate the extra_css override the "
 ":meth:`get_extra_css()` method instead. For example::"
-msgstr ""
+msgstr "指定应添加到下载的“HTML”文件中的任何额外“CSS”。 它将被插入到“<style>”标签中，就在结束“</head>”标签之前，从而覆盖所有“CSS”，除了在各个“HTML”标签上使用 style 属性声明的内容之外。 请注意，如果您想以编程方式生成 extra_css，请重写“get_extra_css()”方法。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
 msgid ""
 "List of feeds to download. Can be either ``[url1, url2, ...]`` or "
 "``[('title1', url1), ('title2', url2),...]``"
-msgstr ""
+msgstr "要下载的提要列表。 可以是 ``[url1, url2, ...]`` 或 ``[('title1', url1), ('title2', url2),...]``"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
 msgid ""
 "List of regular expressions that determines which links to ignore. If empty "
 "it is ignored. Used only if is_link_wanted is not implemented. For example::"
-msgstr ""
+msgstr "确定要忽略哪些链接的正则表达式列表。 如果为空则被忽略。 仅当未实现 is_link_wanted 时使用。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
 msgid "will remove all URLs that have `ads.doubleclick.net` in them."
-msgstr ""
+msgstr "将删除其中包含“ads.doubleclick.net”的所有网址。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
@@ -659,14 +659,14 @@ msgstr ""
 msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
-msgstr ""
+msgstr "仅应定义“BasicNewsRecipe.match_regexps”或“BasicNewsRecipe.filter_regexps”之一。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
 "Set to False if you do not want to use gzipped transfers. Note that some old"
 " servers flake out with gzip"
-msgstr ""
+msgstr "如果您不想使用 gzip 传输，请设置为 False。 请注意，一些旧服务器在使用 gzip 后会崩溃"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
@@ -674,17 +674,17 @@ msgid ""
 "Ignore duplicates of articles that are present in more than one section. A "
 "duplicate article is an article that has the same title and/or URL. To "
 "ignore articles with the same title, set this to::"
-msgstr ""
+msgstr "忽略出现在多个部分中的重复文章。 重复文章是指具有相同标题和/或 URL 的文章。 要忽略具有相同标题的文章，请将其设置为："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
-msgstr ""
+msgstr "要改为使用 URL，请将其设置为："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
 msgid "To match on title or URL, set it to::"
-msgstr ""
+msgstr "要匹配标题或 URL，请将其设置为："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
@@ -693,28 +693,28 @@ msgid ""
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. If this list is "
 "not empty, then the `<body>` tag will be emptied and re-filled with the tags"
 " that match the entries in this list. For example::"
-msgstr ""
+msgstr "仅保留指定的标签及其子标签。 有关指定标签的格式，请参阅“BasicNewsRecipe.remove_tags”。 如果此列表不为空，则“<body>”标签将被清空并用与此列表中的条目匹配的标签重新填充。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
 msgid ""
 "will keep only tags that have an `id` attribute of `\"content\"` or "
 "`\"heading\"`."
-msgstr ""
+msgstr "将仅保留具有“id”属性为“内容”或“标题”的标签。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.language:1
 msgid ""
 "The language that the news is in. Must be an ISO-639 code either two or "
 "three characters long"
-msgstr ""
+msgstr "新闻所使用的语言。必须是 ISO-639 代码，长度为两个或三个字符"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
 " Override this in your recipe to provide a URL to use as a masthead."
-msgstr ""
+msgstr "默认情况下，calibre 将使用默认图像作为标头（仅限 Kindle）。 在您的配方中覆盖此设置以提供用作标头的 URL。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
@@ -722,12 +722,12 @@ msgid ""
 "List of regular expressions that determines which links to follow. If empty,"
 " it is ignored. Used only if is_link_wanted is not implemented. For "
 "example::"
-msgstr ""
+msgstr "确定要跟踪哪些链接的正则表达式列表。 如果为空，则被忽略。 仅当未实现 is_link_wanted 时使用。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
 msgid "will match all URLs that have `page=some number` in them."
-msgstr ""
+msgstr "将匹配所有包含“page=some number”的 URL。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
@@ -735,7 +735,7 @@ msgid ""
 "Maximum number of articles to download from each feed. This is primarily "
 "useful for feeds that don't have article dates. For most feeds, you should "
 "use :attr:`BasicNewsRecipe.oldest_article`"
-msgstr ""
+msgstr "从每个提要下载的最大文章数。 这主要对于没有文章日期的提要有用。 对于大多数提要，您应该使用“BasicNewsRecipe.oldest_article”"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
@@ -743,7 +743,7 @@ msgid ""
 "If True the GUI will ask the user for a username and password to use while "
 "downloading. If set to \"optional\" the use of a username and password "
 "becomes optional"
-msgstr ""
+msgstr "如果为 True，GUI 将要求用户提供下载时使用的用户名和密码。 如果设置为“可选”，则用户名和密码的使用将变为可选"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
@@ -751,12 +751,12 @@ msgid ""
 "Convenient flag to disable loading of stylesheets for websites that have "
 "overly complex stylesheets unsuitable for conversion to e-book formats. If "
 "True stylesheets are not downloaded and processed"
-msgstr ""
+msgstr "方便的标志，用于禁用样式表加载的网站，这些网站的样式表过于复杂，不适合转换为电子书格式。 如果未下载和处理 True 样式表"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
 msgid "Oldest article to download from this news source. In days."
-msgstr ""
+msgstr "从此新闻源下载最旧的文章。 几天之内。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
@@ -766,36 +766,36 @@ msgid ""
 "first element of the tuple should be a compiled regular expression and the "
 "second a callable that takes a single match object and returns a string to "
 "replace the match. For example::"
-msgstr ""
+msgstr "要在下载的“HTML”上运行的“regexp”替换规则列表。 列表的每个元素应该是一个二元素元组。 元组的第一个元素应该是已编译的正则表达式，第二个元素应该是可调用的，它接受单个匹配对象并返回一个字符串来替换匹配项。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
 msgid "will remove everything from `<!--Article ends here-->` to `</body>`."
-msgstr ""
+msgstr "将删除从 `<!--Articleendshere-->` 到 `</body>` 的所有内容。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.publication_type:1
 msgid ""
 "Publication type Set to newspaper, magazine or blog. If set to None, no "
 "publication type metadata will be written to the opf file."
-msgstr ""
+msgstr "出版物类型 设置为报纸、杂志或博客。 如果设置为 None，则不会将任何发布类型元数据写入 opf 文件。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
 msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
-msgstr ""
+msgstr "设置为非空字符串以禁用此新闻源。 该字符串将用作禁用消息"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
 msgid "Number of levels of links to follow on article webpages"
-msgstr ""
+msgstr "文章网页上可跟踪的链接级别数"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
 msgid "List of attributes to remove from all tags. For example::"
-msgstr ""
+msgstr "要从所有标签中删除的属性列表。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
@@ -804,19 +804,19 @@ msgid ""
 "if parse_index is overridden in the sub class. It is meant only for recipes "
 "that return a list of feeds using `feeds` or :meth:`get_feeds`. It is also "
 "used if you use the ignore_duplicate_articles option."
-msgstr ""
+msgstr "如果为 True，则从输出中删除空提要。 如果在子类中重写了 parse_index，则此选项无效。 它仅适用于使用“feeds”或“get_feeds”返回提要列表的配方。 如果您使用ignore_duplicate_articles选项，它也会被使用。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
 msgid "Convenient flag to strip all JavaScript tags from the downloaded HTML"
-msgstr ""
+msgstr "方便的标记，用于从下载的 HTML 中去除所有 JavaScript 标签"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
 msgid ""
 "List of tags to be removed. Specified tags are removed from downloaded HTML."
 " A tag is specified as a dictionary of the form::"
-msgstr ""
+msgstr "要删除的标签列表。 指定的标签将从下载的 HTML 中删除。 标签被指定为以下形式的字典："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
@@ -825,43 +825,43 @@ msgid ""
 "`Beautiful Soup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-"
 "tree>`__ A common example::"
-msgstr ""
+msgstr "所有键都是可选的。 有关搜索条件的完整说明，请参阅 `Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-tree>`__ 一个常见示例："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
 msgid ""
 "This will remove all `<div class=\"advert\">` tags and all their children "
 "from the downloaded :term:`HTML`."
-msgstr ""
+msgstr "这将从下载的“HTML”中删除所有“<div class=\"advert\">”标签及其所有子标签。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
 msgid ""
 "Remove all tags that occur after the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
-msgstr ""
+msgstr "删除指定标签之后出现的所有标签。 有关指定标签的格式，请参阅“BasicNewsRecipe.remove_tags”。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
 msgid "will remove all tags after the first element with `id=\"content\"`."
-msgstr ""
+msgstr "将删除第一个带有 `id=\"content\"` 元素之后的所有标签。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:1
 msgid ""
 "Remove all tags that occur before the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
-msgstr ""
+msgstr "删除指定标签之前出现的所有标签。 有关指定标签的格式，请参阅“BasicNewsRecipe.remove_tags”。 例如："
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:7
 msgid "will remove all tags before the first element with `id=\"content\"`."
-msgstr ""
+msgstr "将删除第一个带有 `id=\"content\"` 元素之前的所有标签。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.requires_version:1
 msgid "Minimum calibre version needed to use this recipe"
-msgstr ""
+msgstr "使用此新闻源所需的calibre的最低版本"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.resolve_internal_links:1
@@ -871,12 +871,12 @@ msgid ""
 "article rather than its original web URL. If you set this to True, you might"
 " also need to implement :meth:`canonicalize_internal_url` to work with the "
 "URL scheme of your particular website."
-msgstr ""
+msgstr "如果设置为 True，则下载文章中指向其他下载文章的链接将更改为指向该文章的下载副本，而不是其原始 Web URL。 如果将此设置为 True，您可能还需要实现“canonicalize_internal_url”以使用特定网站的 URL 方案。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
 msgid "Reverse the order of articles in each feed"
-msgstr ""
+msgstr "颠倒每个提要中文章的顺序"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images:1
@@ -885,26 +885,26 @@ msgid ""
 "is True this is set to the device screen dimensions set by the output "
 "profile unless there is no profile set, in which case it is left at whatever"
 " value it has been assigned (default None)."
-msgstr ""
+msgstr "图像缩放到的最大尺寸（宽，高）。 如果scale_news_images_to_device为True，则设置为由输出配置文件设置的设备屏幕尺寸，除非没有配置文件集，在这种情况下，它将保留为已分配的任何值（默认为“无”）。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
 msgid ""
 "Rescale images to fit in the device screen dimensions set by the output "
 "profile. Ignored if no output profile is set."
-msgstr ""
+msgstr "重新缩放图像以适合输出配置文件设置的设备屏幕尺寸。 如果未设置输出配置文件，则忽略。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1
 msgid ""
 "Number of simultaneous downloads. Set to 1 if the server is picky. "
 "Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
-msgstr ""
+msgstr "同时下载的数量。 如果服务器挑剔，则设置为 1。 如果 `BasicNewsRecipe.delay` > 0，则自动减少到 1"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
 msgid "Max number of characters in the short description"
-msgstr ""
+msgstr "简短描述中的最大字符数"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.template_css:1
@@ -912,24 +912,24 @@ msgid ""
 "The CSS that is used to style the templates, i.e., the navigation bars and "
 "the Tables of Contents. Rather than overriding this variable, you should use"
 " `extra_css` in your recipe to customize look and feel."
-msgstr ""
+msgstr "用于设置模板样式的 CSS，即导航栏和目录。 您应该在新闻源中使用“extra_css”来自定义外观，而不是覆盖此变量。"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1
 msgid ""
 "The format string for the date shown on the first page. By default: "
 "Day_Name, Day_Number Month_Name Year"
-msgstr ""
+msgstr "第一页上显示的日期的格式字符串。 默认情况下：Day_Name、Day_Number Month_Name Year"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
 msgid "Timeout for fetching files from server in seconds"
-msgstr ""
+msgstr "从服务器获取文件的超时时间，以秒为单位"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1
 msgid "The title to use for the e-book"
-msgstr ""
+msgstr "用于电子书的标题"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1
@@ -938,4 +938,4 @@ msgid ""
 " the length of the embedded content. If `None`, then the default guessing is"
 " used. If `True` then the we always assume the feeds has embedded content "
 "and if `False` we always assume the feed does not have embedded content."
-msgstr ""
+msgstr "通常，我们会尝试根据嵌入内容的长度来猜测提要是否嵌入了完整的文章。 如果“无”，则使用默认猜测。 如果为“True”，则我们始终假设提要具有嵌入内容，如果为“False”，我们始终假设提要没有嵌入内容。"

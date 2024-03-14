@@ -4,6 +4,7 @@
 
 import textwrap
 from enum import IntEnum
+
 from qt.core import (
     QAction, QApplication, QBrush, QCheckBox, QDialog, QDialogButtonBox, QGridLayout,
     QHBoxLayout, QIcon, QKeySequence, QLabel, QListView, QModelIndex, QPalette, QPixmap,
@@ -14,6 +15,7 @@ from qt.core import (
 from calibre import fit_image
 from calibre.db.constants import RESOURCE_URL_SCHEME
 from calibre.gui2 import NO_URL_FORMATTING, gprefs
+from calibre.gui2 import BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY
 from calibre.gui2.book_details import (
     create_open_cover_with_menu, resolved_css, details_context_menu_event, render_html, set_html,
 )
@@ -27,9 +29,13 @@ class Cover(CoverView):
 
     open_with_requested = pyqtSignal(object)
     choose_open_with_requested = pyqtSignal()
+    copy_to_clipboard_requested = pyqtSignal()
 
     def __init__(self, parent, show_size=False):
         CoverView.__init__(self, parent, show_size=show_size)
+
+    def copy_to_clipboard(self):
+        self.copy_to_clipboard_requested.emit()
 
     def build_context_menu(self):
         ans = CoverView.build_context_menu(self)
@@ -165,6 +171,7 @@ class BookInfo(QDialog):
         l.addWidget(self.splitter)
 
         self.cover = Cover(self, show_size=gprefs['bd_overlay_cover_size'])
+        self.cover.copy_to_clipboard_requested.connect(self.copy_cover_to_clipboard)
         self.cover.resizeEvent = self.cover_view_resized
         self.cover.cover_changed.connect(self.cover_changed)
         self.cover.open_with_requested.connect(self.open_with)
@@ -216,6 +223,10 @@ class BookInfo(QDialog):
         self.path_to_book = None
         self.current_row = None
         self.slave_connected = False
+        self.slave_debounce_timer = t = QTimer(self)
+        t.setInterval(BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY)
+        t.setSingleShot(True)
+        t.timeout.connect(self._debounce_refresh)
         if library_path is not None:
             self.view = None
             db = get_gui().library_broker.get_library(library_path)
@@ -314,6 +325,7 @@ class BookInfo(QDialog):
         ret = QDialog.done(self, r)
         if self.slave_connected:
             self.view.model().new_bookdisplay_data.disconnect(self.slave)
+        self.slave_debounce_timer.stop() # OK if it isn't running
         self.view = self.link_delegate = self.gui = None
         self.closed.emit(self)
         return ret
@@ -338,6 +350,11 @@ class BookInfo(QDialog):
         QTimer.singleShot(1, self.resize_cover)
 
     def slave(self, mi):
+        self._mi_for_debounce = mi
+        self.slave_debounce_timer.start() # start() will automatically reset the timer if it was already running
+
+    def _debounce_refresh(self):
+        mi, self._mi_for_debounce = self._mi_for_debounce, None
         self.refresh(mi.row_number, mi)
 
     def move(self, delta=1):
@@ -376,6 +393,10 @@ class BookInfo(QDialog):
         self.cover.set_pixmap(pixmap)
         self.cover.set_marked(self.marked)
         self.update_cover_tooltip()
+
+    def copy_cover_to_clipboard(self):
+        if self.cover_pixmap is not None:
+            QApplication.instance().clipboard().setPixmap(self.cover_pixmap)
 
     def update_cover_tooltip(self):
         tt = ''
