@@ -9,7 +9,7 @@ Forwarded: not-needed
  2 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index 9f2f40e..306f067 100644
+index 7808224..54fcbcd 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -580,8 +580,8 @@ class Build(Command):
@@ -42,10 +42,10 @@ index 9f2f40e..306f067 100644
  include-dirs = {ext.inc_dirs}
  qmake-QT = {ext.qt_modules}
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index bba524a..27ce70b 100644
+index adc4b3e..21468a8 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -286,7 +286,7 @@ class ZshCompleter:  # {{{
+@@ -287,7 +287,7 @@ class ZshCompleter:  # {{{
                  if opt.dest in {'extract_to', 'debug_pipeline', 'to_dir', 'outbox', 'with_library', 'library_path'}:
                      arg += "'_path_files -/'"
                  elif opt.choices:
@@ -54,7 +54,7 @@ index bba524a..27ce70b 100644
                  elif set(file_map).intersection(set(opt._long_opts)):
                      k = set(file_map).intersection(set(opt._long_opts))
                      exts = file_map[tuple(k)[0]]
-@@ -331,10 +331,10 @@ class ZshCompleter:  # {{{
+@@ -332,10 +332,10 @@ class ZshCompleter:  # {{{
          from calibre.ebooks.conversion.plumber import supported_input_formats
          from calibre.utils.logging import DevNull
          from calibre.web.feeds.recipes.collection import get_builtin_recipe_titles
@@ -69,7 +69,7 @@ index bba524a..27ce70b 100644
          w = polyglot_write(f)
          # Arg 1
          w('\n_ebc_input_args() {')
-@@ -469,7 +469,7 @@ _ebook_edit() {{
+@@ -470,7 +470,7 @@ _ebook_edit() {{
  
      return 1
  }}
@@ -78,7 +78,7 @@ index bba524a..27ce70b 100644
  
      def do_calibredb(self, f):
          from calibre.customize.ui import available_catalog_formats
-@@ -500,7 +500,7 @@ _ebook_edit() {{
+@@ -501,7 +501,7 @@ _ebook_edit() {{
                  exts = ['opf']
              exts = set(exts).union(x.upper() for x in exts)
              pats = ('*.%s'%x for x in exts)
@@ -87,7 +87,7 @@ index bba524a..27ce70b 100644
              if command in {'add', 'add_format'}:
                  extra = ("'*:filename:_files' ",)
              opts = '\\\n        '.join(tuple(self.get_options(
-@@ -918,7 +918,7 @@ class PostInstall:
+@@ -919,7 +919,7 @@ class PostInstall:
          mimetypes.discard('application/octet-stream')
  
          def write_mimetypes(f, extra=''):
@@ -96,7 +96,7 @@ index bba524a..27ce70b 100644
              if extra:
                  line += extra + ';'
              f.write(line.encode('utf-8') + b'\n')
-@@ -933,7 +933,7 @@ class PostInstall:
+@@ -934,7 +934,7 @@ class PostInstall:
          with open('calibre-ebook-edit.desktop', 'wb') as f:
              f.write(ETWEAK.encode('utf-8'))
              mt = {guess_type('a.' + x.lower())[0] for x in (SUPPORTED|IMPORTABLE)} - {None, 'application/octet-stream'}

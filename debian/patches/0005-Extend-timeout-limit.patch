@@ -9,10 +9,10 @@ Forwarded: not-needed
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/calibre/db/tests/filesystem.py b/src/calibre/db/tests/filesystem.py
-index cea9c5d..3d53b6b 100644
+index 2cae7f0..6030f5a 100644
 --- a/src/calibre/db/tests/filesystem.py
 +++ b/src/calibre/db/tests/filesystem.py
-@@ -277,7 +277,7 @@ class FilesystemTest(BaseTest):
+@@ -279,7 +279,7 @@ class FilesystemTest(BaseTest):
          cache.enable_fts()
          cache.set_fts_num_of_workers(4)
          st = time.monotonic()
@@ -22,7 +22,7 @@ index cea9c5d..3d53b6b 100644
          if cache.fts_indexing_left > 0:
              raise ValueError('FTS indexing did not complete')
 diff --git a/src/calibre/db/tests/fts_api.py b/src/calibre/db/tests/fts_api.py
-index e482c3a..a4fd03a 100644
+index 42ae209..1e19940 100644
 --- a/src/calibre/db/tests/fts_api.py
 +++ b/src/calibre/db/tests/fts_api.py
 @@ -53,7 +53,7 @@ class FTSAPITest(BaseTest):

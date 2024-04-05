@@ -9,10 +9,10 @@ This reverts commit 53b74283a40469b0beecec56eea199d7b9f73198.
  2 files changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
-index ecfbcb78fc..98ef90e344 100644
+index ecfbcb7..98ef90e 100644
 --- a/src/calibre/ebooks/pdf/html_writer.py
 +++ b/src/calibre/ebooks/pdf/html_writer.py
-@@ -9,21 +9,20 @@
+@@ -9,21 +9,20 @@ import signal
  import sys
  from collections import namedtuple
  from functools import lru_cache
@@ -42,7 +42,7 @@ index ecfbcb78fc..98ef90e344 100644
  from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
  from calibre.ebooks.oeb.base import XHTML, XPath
  from calibre.ebooks.oeb.polish.container import Container as ContainerBase
-@@ -38,7 +37,10 @@
+@@ -38,7 +37,10 @@ from calibre.utils.fonts.sfnt.merge import merge_truetype_fonts_for_pdf
  from calibre.utils.fonts.sfnt.subset import pdf_subset
  from calibre.utils.logging import default_log
  from calibre.utils.monotonic import monotonic
@@ -55,7 +55,7 @@ index ecfbcb78fc..98ef90e344 100644
  from calibre.utils.short_uuid import uuid4
  from calibre.utils.webengine import secure_webengine, send_reply, setup_profile
 diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
-index 68c84180fa..cd29451bc9 100644
+index 68c8418..cd29451 100644
 --- a/src/calibre/utils/podofo/__init__.py
 +++ b/src/calibre/utils/podofo/__init__.py
 @@ -213,7 +213,6 @@ def test_roundtrip(src, dest):
