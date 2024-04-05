@@ -4,6 +4,7 @@
 import copy
 import json
 import traceback
+
 from qt.core import QDialog, QDialogButtonBox
 
 from calibre.gui2 import error_dialog, gprefs, question_dialog, warning_dialog
@@ -12,8 +13,12 @@ from calibre.gui2.preferences import AbortInitialize, ConfigWidgetBase, test_wid
 from calibre.gui2.preferences.template_functions_ui import Ui_Form
 from calibre.gui2.widgets import PythonHighlighter
 from calibre.utils.formatter_functions import (
-    StoredObjectType, compile_user_function, compile_user_template_functions,
-    formatter_functions, function_object_type, function_pref_name,
+    StoredObjectType,
+    compile_user_function,
+    compile_user_template_functions,
+    formatter_functions,
+    function_object_type,
+    function_pref_name,
     load_user_template_functions,
 )
 from calibre.utils.resources import get_path as P
@@ -303,7 +308,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             return True
         if self.argument_count.value() == 0:
             if not question_dialog(self.gui, _('Template functions'),
-                         _('Setting argument count to to zero means that this '
+                         _('Setting argument count to zero means that this '
                            'function cannot be used in single function mode. '
                            'Is this OK?'),
                          det_msg='',

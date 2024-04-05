@@ -5,24 +5,58 @@ __license__ = 'GPL v3'
 __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import itertools
-from io import BytesIO
 import math
 import operator
 import os
 import weakref
 from collections import namedtuple
 from functools import wraps
-from PIL import Image
-from qt.core import (
-    QAbstractItemView, QApplication, QBuffer, QByteArray, QColor, QDrag, QEasingCurve,
-    QEvent, QFont, QHelpEvent, QIcon, QImage, QIODevice, QItemSelection,
-    QItemSelectionModel, QListView, QMimeData, QModelIndex, QPainter, QPalette, QPixmap,
-    QPoint, QPropertyAnimation, QRect, QSize, QStyledItemDelegate, QStyleOptionViewItem,
-    Qt, QTableView, QTimer, QToolTip, QTreeView, QUrl, pyqtProperty, pyqtSignal,
-    pyqtSlot, qBlue, qGreen, qRed,
-)
+from io import BytesIO
 from textwrap import wrap
 from threading import Event, Thread
+
+from PIL import Image
+from qt.core import (
+    QAbstractItemView,
+    QApplication,
+    QBuffer,
+    QByteArray,
+    QColor,
+    QDrag,
+    QEasingCurve,
+    QEvent,
+    QFont,
+    QHelpEvent,
+    QIcon,
+    QImage,
+    QIODevice,
+    QItemSelection,
+    QItemSelectionModel,
+    QListView,
+    QMimeData,
+    QModelIndex,
+    QPainter,
+    QPalette,
+    QPixmap,
+    QPoint,
+    QPropertyAnimation,
+    QRect,
+    QSize,
+    QStyledItemDelegate,
+    QStyleOptionViewItem,
+    Qt,
+    QTableView,
+    QTimer,
+    QToolTip,
+    QTreeView,
+    QUrl,
+    pyqtProperty,
+    pyqtSignal,
+    pyqtSlot,
+    qBlue,
+    qGreen,
+    qRed,
+)
 
 from calibre import fit_image, human_readable, prepare_string_for_xml
 from calibre.constants import DEBUG, config_dir, islinux
@@ -972,6 +1006,7 @@ class GridView(QListView):
                 cache_valid = None
         else:
             # A cover is in the cache. Check whether it is up to date.
+            # Note that if tcdata is not None then it is already a PIL image.
             has_cover, tcdata, timestamp = db.new_api.cover_or_cache(book_id, timestamp,
                                                                      as_what='pil_image')
             if has_cover:
@@ -983,6 +1018,7 @@ class GridView(QListView):
                 else:
                     # The cached cover is stale
                     cache_valid = False
+                    cdata = tcdata
             else:
                 # We found a cached cover for a book without a cover. This can
                 # happen in older version of calibre that can reuse book_ids
@@ -1011,12 +1047,6 @@ class GridView(QListView):
         if cover_tuple.has_cover:
             # cdata contains either the resized thumbnail, the full cover.jpg
             # rendered as a PIL image, or None if cover.jpg isn't valid
-            if cdata.getbbox() is None and cover_tuple.cache_valid:
-                # Something wrong with the cover data in the cache. Remove it
-                # from the cache and queue it to render again.
-                tc.invalidate((book_id,))
-                self.render_queue.put(book_id)
-                return None
             if not cover_tuple.cache_valid:
                 # The cover isn't in the cache, is stale, or isn't a valid
                 # image. We might have the image from cover.jpg, in which case
@@ -1051,6 +1081,20 @@ class GridView(QListView):
                     # The cover data isn't valid. Remove it from the cache
                     tc.invalidate((book_id,))
             else:
+                # Test to see if there is something wrong with the cover data in
+                # the cache. If so, remove it from the cache and queue it to
+                # render again. It isn't clear that this can ever happen. One
+                # possibility is if different versions of calibre are used
+                # interchangeably.
+                def getbbox(img):
+                    try:
+                        return img.getbbox()
+                    except Exception:
+                        return None
+                if getbbox(cdata) is None:
+                    tc.invalidate((book_id,))
+                    self.render_queue.put(book_id)
+                    return None
                 # The data from the cover cache is valid and is already a thumb.
                 thumb = cdata
         else:

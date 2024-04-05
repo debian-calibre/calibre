@@ -1,3 +1,6 @@
+[project]
+requires-python = ">=3.8"
+
 [tool.ruff]
 line-length = 160
 target-version = 'py38'
@@ -5,20 +8,26 @@ builtins = ['_']
 
 [tool.ruff.lint]
 ignore = ['E741', 'E402', 'E722', 'E401']
-select = ['E', 'F']
+select = ['E', 'F', 'I']
 
 [tool.ruff.lint.per-file-ignores]
 "src/calibre/ebooks/unihandecode/unicodepoints.py" = ["E501"]
 "src/qt/__init__.py" = ["E501"]
 
-[tool.black]
-target-version = ['py38']
+[tool.ruff.format]
+quote-style = 'single'
 
-[tool.isort]
-profile = "black"
-combine_as_imports = true
-multi_line_output = 5
-known_future_library = "__python__"
-known_third_party = "qt"
-known_standard_library = "aes,elementmaker,encodings"
-known_first_party = "calibre_extensions"
+[tool.ruff.lint.isort]
+detect-same-package = true
+extra-standard-library = ['aes', 'elementmaker', 'encodings']
+known-first-party = ["calibre_extensions", 'polyglot']
+known-third-party = ["qt"]
+relative-imports-order = "closest-to-furthest"
+split-on-trailing-comma = false
+section-order = ['__python__', "future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.lint.isort.sections]
+'__python__' = ['__python__']
+
+[tool.pylsp-mypy]
+enabled = false

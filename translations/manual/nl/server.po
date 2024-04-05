@@ -5,16 +5,16 @@
 # Translators:
 # M. de Boer <de.boer.melle@gmail.com>, 2017-2018
 # Meteor0id, 2019
-# peter <petertje@tuta.io>, 2021-2022
+# peter <luc@ditbenik.be>, 2021-2022
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-20 09:15+0000\n"
-"PO-Revision-Date: 2022-01-07 16:46+0000\n"
-"Last-Translator: peter <petertje@tuta.io>\n"
-"Language-Team: Dutch (http://www.transifex.com/calibre/calibre/language/nl/)\n"
+"POT-Creation-Date: 2024-04-03 03:07+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: peter <luc@ditbenik.be>, 2021-2022\n"
+"Language-Team: Dutch (http://app.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -58,9 +58,9 @@ msgid ""
 "This will open a page in the browser showing you your calibre libraries, "
 "click on any one and browse the books in it. Click on a book, and it will "
 "show you all the metadata about the book, along with buttons to "
-":guilabel:`Read book` and :guilabel:`Download book`. Click the "
-":guilabel:`Read book` button to start reading the book."
-msgstr "Dit opent een pagina in de browser die u uw calibre bibliotheken toont, klikt op een browser en blader door de boeken erin. Klik op een boek en het toont u alle metadata over het boek, samen met de knoppen om: guilabel: `Leesboek` en: guilabel:` Download boek`. Klik op de: guilabel: `Lees boek` knop om te beginnen met het lezen van het boek."
+":guilabel:`Read` and :guilabel:`Download` the book. Click the "
+":guilabel:`Read` button to start reading the book."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/server.rst:30
 msgid ""
@@ -283,11 +283,11 @@ msgstr "De boekreader"
 #: ../../__w/calibre/calibre/manual/server.rst:180
 msgid ""
 "You can read any book in your calibre library by simply tapping on it and "
-"then tapping the :guilabel:`Read book` button. The books reader is very "
-"simple to operate. You can both tap and swipe to turn pages. Swiping up/down"
-" skips between chapters. Tapping the top quarter of the screen gets you the "
+"then tapping the :guilabel:`Read` button. The book reader is very simple to "
+"operate. You can both tap and swipe to turn pages. Swiping up/down skips "
+"between chapters. Tapping the top quarter of the screen gets you the "
 "detailed controls and viewer preferences."
-msgstr "U kan elk boek in uw calibre bibliotheek lezen door erop te tikken en dan te tikken op de  :guilabel:`Boek lezen` knop. De boekreader is heel eenvoudig te bedienen. U kan zowel tikken als vegen om pagina's om te draaien. Op en neer vegen wisselt tussen hoofdstukken. Tikken in het bovenste kwart van het scherm geeft u de gedetailleerde controles en kijker voorkeuren."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/server.rst:186
 msgid ""
@@ -340,17 +340,18 @@ msgstr "Offline support inschakelen"
 msgid ""
 "Browser makers have been trying to force people to use SSL by disabling "
 "advanced features in their browsers for plain HTTP connections. One such "
-"casualty is offline support. So you may need to enable HTTPS on the server "
-"to get offline support working. In addition, in Firefox on Android, you will"
-" need to type ``about:config`` and search for ``browser.tabs.useCache`` and "
-"toggle it to ``true``."
-msgstr "Browser bouwers hebben geprobeerd mensen te dwingen SSL te gebruiken door geavanceerde functies uit te schakelen op gewone HTTP verbindingen. Een slachtoffer daarvan is offline ondersteuning. U moet dus misschien HTTPS inschakelen op de server om offline ondersteuning te laten werken. Daarbovenop, in FireFox op Android, moet u ``about:config`` intikken en zoeken naar ``browser.tabs.useCache`` en het naar  ``true`` schakelen."
+"casualty is ApplicationCache, which was what was used in calibre for offline"
+" support. As a result now-a-days sadly, offline mode works only as long as "
+"you keep the browser tab open. In addition, in Firefox on Android, you will "
+"need to type ``about:config`` and create a preference called "
+"``browser.tabs.useCache`` and set it to ``true``."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/server.rst:224
+#: ../../__w/calibre/calibre/manual/server.rst:225
 msgid "Managing user accounts from the command-line only"
 msgstr "Gebruikersaccounts enkel beheren vanop de commandoregel"
 
-#: ../../__w/calibre/calibre/manual/server.rst:226
+#: ../../__w/calibre/calibre/manual/server.rst:227
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -359,28 +360,28 @@ msgid ""
 "line."
 msgstr "Het calibre programma heeft een leuke sectie in :guilabel:`Voorkeuren` dat u gebruikersaccounts laat beheren voor de server. Echter, als u de server zelfstandig wilt draaien en het calibre hoofdprogramma niet op dezelfde computer/gebruikersaccount kunt draaien, kunt u ook gebruikers beheren via de commandoregel."
 
-#: ../../__w/calibre/calibre/manual/server.rst:231
+#: ../../__w/calibre/calibre/manual/server.rst:232
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
 "database in the folder ``/srv/calibre``, then you create it by running::"
 msgstr "U kan gebruikersaccounts beheren met de ``--manage-users`` optie van het zelfstandige ``calibre-server`` programma. Veronderstel dat u de gebruikersdatabase wilt opslaan in de map ``/srv/calibre`` , dan creëert u die door het draaien van::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:238
+#: ../../__w/calibre/calibre/manual/server.rst:239
 msgid ""
 "Just follow the prompts to create user accounts, set their permission, etc. "
 "Once you are done, you can run the server as::"
 msgstr "Volg gewoon de prompts om gebruikersaccounts te creëren, hun toelatingen in te stellen, enz. Als u klaar bent, kan u de server draaien als volgt::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:243
+#: ../../__w/calibre/calibre/manual/server.rst:244
 msgid "It will use the user accounts you created in the previous step."
 msgstr "Het gebruikt de gebruikersaccounts die u creëerde in de vorige stap."
 
-#: ../../__w/calibre/calibre/manual/server.rst:247
+#: ../../__w/calibre/calibre/manual/server.rst:248
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Integratie van de Calibre Content-server in andere servers"
 
-#: ../../__w/calibre/calibre/manual/server.rst:249
+#: ../../__w/calibre/calibre/manual/server.rst:250
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -389,7 +390,7 @@ msgid ""
 "server."
 msgstr "Hier laten we u zien hoe de calibre Content server te integreren in een andere server. Dit gebeurt meestal om gebruik te maken van SSL of om de calibre bibliotheek te gebruiken als deel van een grotere site. De basistechniek is om de calibre server te draaien en een omgekeerde proxy in te stellen van de hoofdserver."
 
-#: ../../__w/calibre/calibre/manual/server.rst:254
+#: ../../__w/calibre/calibre/manual/server.rst:255
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -398,36 +399,36 @@ msgid ""
 "with your main server."
 msgstr "Een omgekeerde proxy betekent dat uw gewone server binnenkomende verzoeken accepteert en die doorgeeft aan de calibre server. Hij leest dan de antwoorden van de calibre server en stuurt die door naar de cliënt. Dit betekent dat u de calibre server gewoon als altijd kunt draaien zonder hem te moeten integreren met uw hoofdserver."
 
-#: ../../__w/calibre/calibre/manual/server.rst:261
+#: ../../__w/calibre/calibre/manual/server.rst:262
 msgid "Using a full virtual host"
 msgstr "Een volledig virtuele host gebruiken"
 
-#: ../../__w/calibre/calibre/manual/server.rst:263
+#: ../../__w/calibre/calibre/manual/server.rst:264
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "De eenvoudigste configuratie is om een volledig virtuele host aan de calibre server toe te wijden. In dit geval, draai de calibre server als::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:268
+#: ../../__w/calibre/calibre/manual/server.rst:269
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Stel nu uw viruele host in op uw hoofdserver, bijvoorbeeld voor nginx::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:283
+#: ../../__w/calibre/calibre/manual/server.rst:284
 msgid "Or, for Apache::"
 msgstr "Of voor Apache::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:298
+#: ../../__w/calibre/calibre/manual/server.rst:299
 msgid "Using a URL prefix"
 msgstr "Met een URL prefix"
 
-#: ../../__w/calibre/calibre/manual/server.rst:300
+#: ../../__w/calibre/calibre/manual/server.rst:301
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Als u geen volledige virtuele host wil toewijden aan calibre kan u hem een URL prefix laten gebruiken. Start de calibre server als::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:305
+#: ../../__w/calibre/calibre/manual/server.rst:306
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -435,17 +436,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr "De sleutel parameter hier is ``--url-prefix /calibre``. Dit laat de Content server alle URL's voorafgegaan door ``/calibre`` bedienen. Om dit in actie te zien, bezoek ``http://localhost:8080/calibre`` in uw browser. U zou de normale Content server website moeten zien maar hij draait nu onder ``/calibre``."
 
-#: ../../__w/calibre/calibre/manual/server.rst:307
+#: ../../__w/calibre/calibre/manual/server.rst:308
 msgid "With nginx, the required configuration is::"
 msgstr "Met nginx is de vereiste configuratie::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:324
+#: ../../__w/calibre/calibre/manual/server.rst:325
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr "Voor Apache, activeer eerst de proxy modules in Apache door het volgende toe te voegen aan  :file:`httpd.conf`::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:329
+#: ../../__w/calibre/calibre/manual/server.rst:330
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -453,7 +454,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr "De exacte techniek om de proxy modules in te schakelen hangt af van uw Apache installatie. Als u de proxy modules hebt ingeschakeld, voeg de volgende regels toe aan :file:`httpd.conf` (of als u virtuele hosts gebruikt, aan het conf bestand voor die virtuele host)::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:336
+#: ../../__w/calibre/calibre/manual/server.rst:337
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -462,7 +463,7 @@ msgid ""
 "transparently."
 msgstr "Dat is alles, u hebt nu toegang tot de calibre Content server via de ``/calibre`` URL in uw hoofdserver. De bovenstaande regels geven alle verzoeken onder  ``/calibre`` door aan de calibre server draaiend op poort 8080 en dankzij de ``--url-prefix`` optie boven, handelt de calibre server ze transparant af."
 
-#: ../../__w/calibre/calibre/manual/server.rst:341
+#: ../../__w/calibre/calibre/manual/server.rst:342
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -470,7 +471,7 @@ msgid ""
 "from the reverse proxy."
 msgstr "Bij gebruik van een reverse proxy moet u de calibre Content server vertellen om enkel naar localhost te luisteren via ``--listen-on 127.0.0.1``. Op deze manier luistert de server enkel voor verbindingen vanop dezelfde computer, d.w.z. van de reverse proxy."
 
-#: ../../__w/calibre/calibre/manual/server.rst:348
+#: ../../__w/calibre/calibre/manual/server.rst:349
 msgid ""
 "If you have setup SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -478,11 +479,11 @@ msgid ""
 "server``."
 msgstr "Als u SSL hebt ingesteld voor uw hoofdserver, moet u de calibre server zeggen basis authenticatie te gebruiken i.p.v. digest authenticatie, dat is sneller. Geef hiertoe de ``--auth-mode=basic`` optie mee aan de ``calibre-server``."
 
-#: ../../__w/calibre/calibre/manual/server.rst:357
+#: ../../__w/calibre/calibre/manual/server.rst:358
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr "Een dienst creëren voor de calibre server op een modern Linux systeem"
 
-#: ../../__w/calibre/calibre/manual/server.rst:359
+#: ../../__w/calibre/calibre/manual/server.rst:360
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -490,7 +491,7 @@ msgid ""
 "the contents shown below::"
 msgstr "U kan gemakkelijk een dienst creëren om calibre te starten bij booten op een modern (`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_) gebaseerd Linux systeem. Creëer gewoon het bestand ``/etc/systemd/system/calibre-server.service`` met de inhoud onder getoond::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:378
+#: ../../__w/calibre/calibre/manual/server.rst:379
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
@@ -500,25 +501,25 @@ msgid ""
 "needed. See the help for the ``calibre-server`` command."
 msgstr "Verander ``mylinuxuser`` en ``mylinuxgroup`` naar eender welke gebruiker en groep die u op de server wil. Dit zou dezelfde gebruiker en groep moeten zijn als de eigenaar van de bestanden in de calibre bibliotheekmap. Merk po dat het gewoonlijk geen goed idee is de server als root te draaien. Verander ook het pad naar de calibre bibliotheekmap volgens uw systeem. U kan meerdere bibliotheken toevoegen indien nodig. Bekijk de help voor het ``calibre-server`` commando."
 
-#: ../../__w/calibre/calibre/manual/server.rst:385
+#: ../../__w/calibre/calibre/manual/server.rst:386
 msgid "Now run::"
 msgstr "Draai nu::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:389
+#: ../../__w/calibre/calibre/manual/server.rst:390
 msgid "to start the server. Check its status with::"
 msgstr "om de server te starten. Controleer z'n status met::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:393
+#: ../../__w/calibre/calibre/manual/server.rst:394
 msgid "To make it start at boot, run::"
 msgstr "Om hem te laten starten bij het booten, draai::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:399
+#: ../../__w/calibre/calibre/manual/server.rst:400
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr "De calibre server *heeft geen* draaiende X server nodig maar wel de X geïnstalleerde bibliotheken omdat sommige componenten die hij nodig heeft eraan linken."
 
-#: ../../__w/calibre/calibre/manual/server.rst:404
+#: ../../__w/calibre/calibre/manual/server.rst:405
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."

@@ -30258,7 +30258,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.7.0";
+        CALIBRE_VERSION = "7.8.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -32837,7 +32837,7 @@ return this.__repr__();
                 __module__ : {value: "read_book.prefs.head_foot"}
             });
 
-            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), sep(), opt(_("Clock"), "clock"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
+            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), opt(_("View mode"), "view-mode"), opt(_("View mode as icon"), "view-mode-icon"), sep(), opt(_("Clock"), "clock"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
         };
         if (!create_item.__argnames__) Object.defineProperties(create_item, {
             __argnames__ : {value: ["region", "label", "style"]},
@@ -33063,7 +33063,7 @@ return this.__repr__();
             __module__ : {value: "read_book.prefs.head_foot"}
         });
 
-        function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos, override) {
+        function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos, override, view_mode) {
             var template, field, interface_data, text, has_clock, percent, ival;
             template = get_session_data().get(which) || Object.create(null);
             field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
@@ -33094,6 +33094,10 @@ return this.__repr__();
                 if (!text) {
                     text = (current_toc_node) ? current_toc_node.title : "";
                 }
+            } else if (field === "view-mode") {
+                text = (view_mode === "paged") ? _("Paged") : _("Flow");
+            } else if (field === "view-mode-icon") {
+                text = (view_mode === "paged") ? "📄" : "📜";
             } else if (field.startswith("time-")) {
                 if (book_time === null || chapter_time === null) {
                     text = _("Calculating...");
@@ -33128,7 +33132,7 @@ return this.__repr__();
             return has_clock;
         };
         if (!render_head_foot.__argnames__) Object.defineProperties(render_head_foot, {
-            __argnames__ : {value: ["div", "which", "region", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time", "pos", "override"]},
+            __argnames__ : {value: ["div", "which", "region", "metadata", "current_toc_node", "current_toc_toplevel_node", "book_time", "chapter_time", "pos", "override", "view_mode"]},
             __module__ : {value: "read_book.prefs.head_foot"}
         });
 
@@ -39266,6 +39270,8 @@ return this.__repr__();
         var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
         var create_side_action = ρσ_modules["book_list.item_list"].create_side_action;
 
+        var create_top_bar = ρσ_modules["book_list.top_bar"].create_top_bar;
+
         var clear = ρσ_modules.dom.clear;
         var unique_id = ρσ_modules.dom.unique_id;
 
@@ -39419,6 +39425,7 @@ return this.__repr__();
 
         function create_profiles_panel(container, hide_panel, on_change) {
             var c, container_id, a;
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Profiles"), icon: "close", action: hide_panel})]));
             c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 1rem", id: unique_id("placeholder-prefs")})]);
             c.addEventListener("close_panel", (function() {
                 var ρσ_anonfunc = function () {
@@ -40757,11 +40764,13 @@ return this.__repr__();
         var element = ρσ_modules.dom.element;
         var unique_id = ρσ_modules.dom.unique_id;
 
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
         var runtime = ρσ_modules["read_book.globals"].runtime;
 
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
         var session_defaults = ρσ_modules.session.session_defaults;
+
+        var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
 
         CONTAINER = unique_id("reader-page-layout");
         MARGINS = unique_id("reader-page-margins");
@@ -40820,6 +40829,8 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
             container = container.lastChild;
             sd = get_session_data();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})]));
+            safe_set_inner_html(container.lastChild, _("Current window size is: <b>{0}x{1}</b> pixels").format(window.innerWidth, window.innerHeight));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Change the page margins (in pixels) below")].concat([ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({id: MARGINS})]));
             labels = (function(){
@@ -40873,7 +40884,7 @@ return this.__repr__();
             sec(_("In paged mode, control the number of pages per screen. A setting of zero means the number of pages is set based on the screen size."));
             cps = sd.get("columns_per_screen");
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Portrait:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "portrait", min: "0", step: "1", max: "20", value: str(cps.portrait)})])), E.td(_("Landscape:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "landscape", min: "0", step: "1", max: "20", value: str(cps.landscape)})])))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem", id: COLS})])));
-            sec(_("Change the maximum screen area (in pixels) used to display text. A value of zero means that all available screen area is used. Current window width is {0} and height is {1} pixels.").format(window.innerWidth, window.innerHeight));
+            sec(_("Change the maximum screen area (in pixels) used to display text. A value of zero means that all available screen area is used."));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Width:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "width", min: "0", step: "10", max: "99999", value: str(sd.get("max_text_width"))})])), E.td(_("Height:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "height", min: "0", step: "10", max: "99999", value: str(sd.get("max_text_height"))})])))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem", id: TEXT_AREA})])));
             sec(_("Miscellaneous"));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: "cover_preserve_aspect_ratio", checked: sd.get("cover_preserve_aspect_ratio")})]), _("Preserve cover aspect ratio"))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 2rem; display: flex;"})])));
@@ -51731,7 +51742,7 @@ return this.__repr__();
         });
         View.prototype.create_template_renderer = function create_template_renderer() {
             var self = this;
-            var pos, book_length, chapter_length, book_time, chapter_time, mi;
+            var pos, book_length, chapter_length, book_time, chapter_time, mi, sd, view_mode;
             if (!self.book) {
                 return;
             }
@@ -51741,8 +51752,10 @@ return this.__repr__();
             book_time = self.timers.time_for(book_length);
             chapter_time = self.timers.time_for(chapter_length);
             mi = self.book.metadata;
+            sd = get_session_data();
+            view_mode = sd.get("read_mode");
             function render(div, name, which, override) {
-                return render_head_foot(div, name, which, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, override);
+                return render_head_foot(div, name, which, mi, self.current_toc_node, self.current_toc_toplevel_node, book_time, chapter_time, pos, override, view_mode);
             };
             if (!render.__argnames__) Object.defineProperties(render, {
                 __argnames__ : {value: ["div", "name", "which", "override"]},

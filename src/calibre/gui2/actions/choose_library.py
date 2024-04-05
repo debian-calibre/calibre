@@ -10,19 +10,39 @@ import sys
 import weakref
 from contextlib import suppress
 from functools import lru_cache, partial
+
 from qt.core import (
-    QAction, QCoreApplication, QDialog, QDialogButtonBox, QGridLayout, QIcon,
-    QInputDialog, QLabel, QLineEdit, QMenu, QSize, Qt, QTimer, QToolButton, QVBoxLayout,
+    QAction,
+    QCoreApplication,
+    QDialog,
+    QDialogButtonBox,
+    QGridLayout,
+    QIcon,
+    QInputDialog,
+    QLabel,
+    QLineEdit,
+    QMenu,
+    QSize,
+    Qt,
+    QTimer,
+    QToolButton,
+    QVBoxLayout,
     pyqtSignal,
 )
 
 from calibre import isbytestring, sanitize_file_name
-from calibre.constants import (
-    config_dir, filesystem_encoding, get_portable_base, isportable, iswindows,
-)
+from calibre.constants import config_dir, filesystem_encoding, get_portable_base, isportable, iswindows
 from calibre.gui2 import (
-    Dispatcher, choose_dir, choose_images, error_dialog, gprefs, info_dialog,
-    open_local_file, pixmap_to_data, question_dialog, warning_dialog,
+    Dispatcher,
+    choose_dir,
+    choose_images,
+    error_dialog,
+    gprefs,
+    info_dialog,
+    open_local_file,
+    pixmap_to_data,
+    question_dialog,
+    warning_dialog,
 )
 from calibre.gui2.actions import InterfaceAction
 from calibre.library import current_library_name
@@ -658,6 +678,7 @@ class ChooseLibraryAction(InterfaceAction):
         db = m.db
         db.prefs.disable_setting = True
         library_path = db.library_path
+        before = db.new_api.size_stats()
 
         d = DBCheck(self.gui, db)
         try:
@@ -672,10 +693,22 @@ class ChooseLibraryAction(InterfaceAction):
         if d.rejected:
             return
         if d.error is None:
+            after = self.gui.current_db.new_api.size_stats()
+            det_msg = ''
+            from calibre import human_readable
+            for which, title in {'main': _('books'), 'fts': _('full text search'), 'notes': _('notes')}.items():
+                if which != 'main' and not getattr(d, which).isChecked():
+                    continue
+                det_msg += '\n'
+                if before[which] == after[which]:
+                    det_msg += _('Size of the {} database was unchanged.').format(title)
+                else:
+                    det_msg += _('Size of the {0} database reduced from {1} to {2}.').format(
+                            title, human_readable(before[which]), human_readable(after[which]))
             if not question_dialog(self.gui, _('Success'),
                     _('Found no errors in your calibre library database.'
                         ' Do you want calibre to check if the files in your'
-                        ' library match the information in the database?')):
+                        ' library match the information in the database?'), det_msg=det_msg.strip()):
                 return
         else:
             return error_dialog(self.gui, _('Failed'),

@@ -1,8 +1,9 @@
 '''
 www.theweek.com
 '''
-from calibre.web.feeds.news import BasicNewsRecipe, classes
 from urllib.parse import quote
+
+from calibre.web.feeds.news import BasicNewsRecipe, classes
 
 
 class TheWeek(BasicNewsRecipe):
@@ -82,9 +83,9 @@ class TheWeek(BasicNewsRecipe):
         'culture-life', 'business', 'travel', 'arts-life', 'history'
     ]
     for sec in sections:
-        a = 'https://news.google.com/rss/search?q=when:{}h+allinurl:{}&hl=en-IN&gl=US&ceid=US:en'
+        a = 'https://news.google.com/rss/search?q=when:{}h+allinurl:{}&hl=en-GB&gl=GB&ceid=GB:en'
         feeds.append((sec.capitalize(), a.format(when, quote(index + sec, safe=''))))
-    feeds.append(('Others', a.format(when, quote(index, safe=''), '')))
+    feeds.append(('Others', a.format(when, quote(index, safe=''))))
 
     def populate_article_metadata(self, article, soup, first):
         article.title = article.title.replace(' - The Week', '')
