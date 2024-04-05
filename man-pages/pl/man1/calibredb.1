@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "marca 14, 2024" "7.7.0" "calibre"
+.TH "CALIBREDB" "1" "kwietnia 05, 2024" "7.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,42 +41,42 @@ calibredb polecenie [opcje] [argumenty]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+command:\fIcalibredb\fP jest interfejsem wiersza poleceń do bazy danych calibre. Posiada
+kilka podkomend, udokumentowanych poniżej.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+komenda:\fIcalibredb\fP może być użyta do manipulowania bazą danych calibre
+określoną przez ścieżkę lub calibre Content server działającą na komputerze
+na komputerze lokalnym lub przez Internet. Można uruchomić calibre
+guilabel:\fISerwer treści\fP używając \fBcalibre\-server\fP
+lub w głównym programie calibre klikając Connect/share  → 
+Start Content server\&. Ponieważ \fBcalibredb\fP może dokonywać zmian w bibliotekach
+calibre, należy najpierw skonfigurować uwierzytelnianie na serwerze. Istnieją
+są na to dwa sposoby:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Jeśli planujesz łączyć się tylko z serwerem uruchomionym na tym samym komputerze,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+można po prostu użyć opcji \fB\-\-enable\-local\-write\fP serwera
+Content, aby zezwolić dowolnemu programowi, w tym calibredb, działającemu na komputerze
+na komputerze lokalnym na dokonywanie zmian w danych calibre. Podczas uruchamiania
+serwera z głównego programu calibre, opcja ta znajduje się w
+guilabel:\fIPreferencje\->Udostępnianie przez sieć\->Zaawansowane\fP\&.
+.INDENT 0.0
+.IP \(bu 2
+Jeśli chcesz włączyć dostęp przez Internet, powinieneś skonfigurować konta użytkowników na serwerze i użyć
+.UNINDENT
+.sp
+konta użytkowników na serwerze i użyć opcji \fI\%\-\-username\fP i \fI\%\-\-password\fP\&.
+aby nadać im dostęp. Można skonfigurować
+uwierzytelnianie użytkownika dla \fBcalibre\-server\fP używając opcji \fB\-\-enable\-auth\fP\&.
+i używając \fB\-manage\-users\fP do utworzenia kont użytkowników.
+Jeśli uruchamiasz serwer z głównego programu calibre, użyj
+guilabel:\fIPreferences\->Sharing over the net\->Require username/password\fP\&.
+.sp
+Aby połączyć się z uruchomionym serwerem treści, przekaż adres URL serwera do opcji
+\fI\%\-\-with\-library\fP, zobacz dokumentację tej opcji dla
+szczegóły i przykłady.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%OPCJE GLOBALNE\fP
@@ -378,7 +378,7 @@ Ilekroć przekazujesz argumenty do calibredb, które zawierają spacje, ujmuj je
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Dodaj plik jako dodatkowy plik danych do książki, a nie jako format ebooka.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -457,16 +457,15 @@ Lista pól, które mogą być użyte z opcją \fI\%\-\-field\fP
 .sp
 .nf
 .ft C
-calibredb export [options] ids
+calibredb export [opcje] ids
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Eksportuje książki określone przez ids (lista rozdzielana przecinkami) do systemu plików.
+Operacja eksportu zapisuje wszystkie formaty książki, jej okładkę i metadane (w pliku pliku OPF). Wszelkie dodatkowe pliki danych powiązane z książką są również zapisywane.
+Numery id można uzyskać za pomocą polecenia wyszukiwania.
 .sp
 Ilekroć przekazujesz argumenty do calibredb, które zawierają spacje, ujmuj je w cudzysłowy. Na przykład: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -994,31 +993,25 @@ Maksymalna liczba wyświetlanych rezultatów. Domyślnie wszystkie.
 .sp
 .nf
 .ft C
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [opcje] enable/disable/status/reindex
 .ft P
 .fi
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
-.INDENT 0.0
-.TP
-.B enable
-Turns on FTS indexing for this library
-.TP
-.B disable
-Turns off FTS indexing for this library
-.TP
-.B status
-Shows the current indexing status
-.TP
-.B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
-.UNINDENT
+Kontroluje proces indeksowania wyszukiwania pełnotekstowego.
+.sp
+enable
+Włącza indeksowanie FTS dla tej biblioteki
+disable
+Wyłącza indeksowanie FTS dla tej biblioteki
+status
+Pokazuje bieżący status indeksowania
+reindex
+Może być użyty do ponownego indeksowania poszczególnych książek lub
+całej biblioteki. Aby ponownie zindeksować poszczególne książki
+należy podać identyfikatory książek jako dodatkowe argumenty po poleceniu
+reindex. Jeśli nie podano identyfikatorów książek indeksowana jest cała biblioteka.
 .sp
 Ilekroć przekazujesz argumenty do calibredb, które zawierają spacje, ujmuj je w cudzysłowy. Na przykład: \(dq/some path/with spaces\(dq
 .INDENT 0.0

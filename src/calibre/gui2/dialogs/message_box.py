@@ -6,10 +6,28 @@ __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
 import sys
+from contextlib import suppress
+
 from qt.core import (
-    QAction, QApplication, QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QIcon,
-    QKeySequence, QLabel, QPainter, QPlainTextEdit, QSize, QSizePolicy, Qt,
-    QTextBrowser, QTextDocument, QVBoxLayout, QWidget, pyqtSignal,
+    QAction,
+    QApplication,
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QGridLayout,
+    QIcon,
+    QKeySequence,
+    QLabel,
+    QPainter,
+    QPlainTextEdit,
+    QSize,
+    QSizePolicy,
+    Qt,
+    QTextBrowser,
+    QTextDocument,
+    QVBoxLayout,
+    QWidget,
+    pyqtSignal,
 )
 
 from calibre.constants import __version__, isfrozen
@@ -75,16 +93,17 @@ class MessageBox(QDialog):  # {{{
         tc.setObjectName("toggle_checkbox")
         l.addWidget(tc, 2, 0, 1, 2)
 
-    def __init__(self, type_, title, msg,
-                 det_msg='',
-                 q_icon=None,
-                 show_copy_button=True,
-                 parent=None, default_yes=True,
-                 yes_text=None, no_text=None, yes_icon=None, no_icon=None,
-                 add_abort_button=False,
-                 only_copy_details=False
+    def __init__(
+        self, type_, title, msg,
+        det_msg='',
+        q_icon=None,
+        show_copy_button=True,
+        parent=None, default_yes=True,
+        yes_text=None, no_text=None, yes_icon=None, no_icon=None,
+        add_abort_button=False,
+        only_copy_details=False
     ):
-        QDialog.__init__(self, parent)
+        super().__init__(parent)
         self.only_copy_details = only_copy_details
         self.aborted = False
         if q_icon is None:
@@ -151,17 +170,11 @@ class MessageBox(QDialog):  # {{{
         if not det_msg:
             self.det_msg_toggle.setVisible(False)
 
-        self.resize_needed.connect(self.do_resize, type=Qt.ConnectionType.QueuedConnection)
+        self.resize_needed.connect(self.do_resize)
         self.do_resize()
 
     def on_abort(self):
         self.aborted = True
-
-    def sizeHint(self):
-        ans = QDialog.sizeHint(self)
-        ans.setWidth(max(min(ans.width(), 500), self.bb.sizeHint().width() + 100))
-        ans.setHeight(min(ans.height(), 500))
-        return ans
 
     def toggle_det_msg(self, *args):
         vis = self.det_msg.isVisible()
@@ -170,6 +183,10 @@ class MessageBox(QDialog):  # {{{
         self.resize_needed.emit()
 
     def do_resize(self):
+        sz = self.sizeHint()
+        sz.setWidth(max(min(sz.width(), 500), self.bb.sizeHint().width() + 100))
+        sz.setHeight(min(sz.height(), 500))
+        self.setMaximumSize(sz)
         self.resize(self.sizeHint())
 
     def copy_to_clipboard(self, *args):
@@ -183,11 +200,9 @@ class MessageBox(QDialog):  # {{{
     def showEvent(self, ev):
         ret = QDialog.showEvent(self, ev)
         if self.is_question:
-            try:
+            with suppress(Exception):
                 self.bb.button(QDialogButtonBox.StandardButton.Yes if self.default_yes else QDialogButtonBox.StandardButton.No
                         ).setFocus(Qt.FocusReason.OtherFocusReason)
-            except:
-                pass  # Buttons were changed
         else:
             self.bb.button(QDialogButtonBox.StandardButton.Ok).setFocus(Qt.FocusReason.OtherFocusReason)
         return ret
@@ -492,6 +507,8 @@ class JobError(QDialog):  # {{{
 
 
 if __name__ == '__main__':
+    from qt.core import QMainWindow, QTimer
+
     from calibre import prepare_string_for_xml
     from calibre.gui2 import Application, question_dialog
     app = Application([])
@@ -502,7 +519,12 @@ if __name__ == '__main__':
         for title in sorted(merged[author]):
             lines.append(f'<li>{prepare_string_for_xml(title)}</li>')
         lines.append('</ol>')
-
-    print(question_dialog(None, 'title', 'msg <a href="http://google.com">goog</a> ',
+    w = QMainWindow()
+    w.show()
+    def doit():
+        print(question_dialog(w, 'title', 'msg <a href="http://google.com">goog</a> ',
             det_msg='\n'.join(lines),
             show_copy_button=True))
+        w.close()
+    QTimer.singleShot(100, doit)
+    app.exec()

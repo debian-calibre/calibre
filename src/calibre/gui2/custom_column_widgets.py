@@ -8,10 +8,29 @@ __docformat__ = 'restructuredtext en'
 import os
 from collections import OrderedDict
 from functools import partial
+
 from qt.core import (
-    QApplication, QCheckBox, QComboBox, QDialog, QDoubleSpinBox, QGridLayout,
-    QGroupBox, QHBoxLayout, QIcon, QLabel, QLineEdit, QMessageBox, QPlainTextEdit,
-    QSizePolicy, QSpacerItem, QSpinBox, QStyle, Qt, QToolButton, QUrl, QVBoxLayout,
+    QApplication,
+    QCheckBox,
+    QComboBox,
+    QDialog,
+    QDoubleSpinBox,
+    QGridLayout,
+    QGroupBox,
+    QHBoxLayout,
+    QIcon,
+    QLabel,
+    QLineEdit,
+    QMessageBox,
+    QPlainTextEdit,
+    QSizePolicy,
+    QSpacerItem,
+    QSpinBox,
+    QStyle,
+    Qt,
+    QToolButton,
+    QUrl,
+    QVBoxLayout,
     QWidget,
 )
 
@@ -22,14 +41,13 @@ from calibre.gui2.complete2 import EditWithComplete as EWC
 from calibre.gui2.dialogs.tag_editor import TagEditor
 from calibre.gui2.library.delegates import ClearingDoubleSpinBox, ClearingSpinBox
 from calibre.gui2.markdown_editor import Editor as MarkdownEditor
-from calibre.gui2.widgets2 import DateTimeEdit as DateTimeEditBase, RatingEditor
+from calibre.gui2.widgets2 import DateTimeEdit as DateTimeEditBase
+from calibre.gui2.widgets2 import RatingEditor
 from calibre.library.comments import comments_to_html
 from calibre.utils.config import tweaks
-from calibre.utils.date import (
-    as_local_time, as_utc, internal_iso_format_string, is_date_undefined, now,
-    qt_from_dt, qt_to_dt,
-)
-from calibre.utils.icu import lower as icu_lower, sort_key
+from calibre.utils.date import as_local_time, as_utc, internal_iso_format_string, is_date_undefined, now, qt_from_dt, qt_to_dt
+from calibre.utils.icu import lower as icu_lower
+from calibre.utils.icu import sort_key
 
 
 class EditWithComplete(EWC):
@@ -874,6 +892,11 @@ def get_field_list(db, use_defaults=False, pref_data_override=None):
         return [(k,v) for k,v in result.items()]
 
 
+def get_custom_columns_to_display_in_editor(db):
+    return list([k[0] for k in
+        get_field_list(db, use_defaults=db.prefs['edit_metadata_ignore_display_order']) if k[1]])
+
+
 def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, parent=None):
     def widget_factory(typ, key):
         if bulk:
@@ -886,7 +909,7 @@ def populate_metadata_page(layout, db, book_id, bulk=False, two_column=False, pa
     fm = db.field_metadata
 
     # Get list of all non-composite custom fields. We must make widgets for these
-    cols = [k[0] for k in get_field_list(db, use_defaults=db.prefs['edit_metadata_ignore_display_order']) if k[1]]
+    cols = get_custom_columns_to_display_in_editor(db)
     # This deals with the historical behavior where comments fields go to the
     # bottom, starting on the left hand side. If a comment field is moved to
     # somewhere else then it isn't moved to either side.

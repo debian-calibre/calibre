@@ -7,11 +7,33 @@ import re
 from collections import namedtuple
 from contextlib import suppress
 from functools import lru_cache, partial
+
 from qt.core import (
-    QAction, QApplication, QClipboard, QColor, QDialog, QEasingCurve, QIcon,
-    QKeySequence, QMenu, QMimeData, QPainter, QPalette, QPen, QPixmap,
-    QPropertyAnimation, QRect, QSize, QSizePolicy, QSplitter, Qt, QTimer, QUrl, QWidget,
-    pyqtProperty, pyqtSignal,
+    QAction,
+    QApplication,
+    QClipboard,
+    QColor,
+    QDialog,
+    QEasingCurve,
+    QIcon,
+    QKeySequence,
+    QMenu,
+    QMimeData,
+    QPainter,
+    QPalette,
+    QPen,
+    QPixmap,
+    QPropertyAnimation,
+    QRect,
+    QSize,
+    QSizePolicy,
+    QSplitter,
+    Qt,
+    QTimer,
+    QUrl,
+    QWidget,
+    pyqtProperty,
+    pyqtSignal,
 )
 
 from calibre import fit_image, sanitize_file_name
@@ -20,18 +42,11 @@ from calibre.db.constants import DATA_DIR_NAME, DATA_FILE_PATTERN, RESOURCE_URL_
 from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.ebooks.metadata.book.base import Metadata, field_metadata
 from calibre.ebooks.metadata.book.render import mi_to_html
-from calibre.ebooks.metadata.search_internet import (
-    all_author_searches, all_book_searches, name_for, url_for_author_search,
-    url_for_book_search,
-)
-from calibre.gui2 import (
-    NO_URL_FORMATTING, choose_save_file, config, default_author_link, gprefs,
-    pixmap_to_data, question_dialog, rating_font, safe_open_url,
-)
-from calibre.gui2.dialogs.confirm_delete import confirm, confirm as confirm_delete
-from calibre.gui2.dnd import (
-    dnd_get_files, dnd_get_image, dnd_has_extension, dnd_has_image, image_extensions,
-)
+from calibre.ebooks.metadata.search_internet import all_author_searches, all_book_searches, name_for, url_for_author_search, url_for_book_search
+from calibre.gui2 import NO_URL_FORMATTING, choose_save_file, config, default_author_link, gprefs, pixmap_to_data, question_dialog, rating_font, safe_open_url
+from calibre.gui2.dialogs.confirm_delete import confirm
+from calibre.gui2.dialogs.confirm_delete import confirm as confirm_delete
+from calibre.gui2.dnd import dnd_get_files, dnd_get_image, dnd_has_extension, dnd_has_image, image_extensions
 from calibre.gui2.widgets2 import HTMLDisplay
 from calibre.startup import connect_lambda
 from calibre.utils.config import tweaks
@@ -430,6 +445,15 @@ def add_format_entries(menu, data, book_info, copy_menu, search_menu):
                 QIcon.ic('fts.png'))
 
 
+def add_link_submenu(menu: QMenu, link, book_info, field='', item_name=''):
+    if field and item_name:
+        m = menu.addMenu(QIcon.ic('external-link'), _('Associated link'))
+        m.addAction(QIcon.ic('reference'), _('Open: {}').format(link), lambda : book_info.link_clicked.emit(link))
+        m.addAction(QIcon.ic('minus'), _('Remove the link').format(link), lambda : book_info.link_removal_requested.emit(field, item_name))
+    else:
+        menu.addAction(QIcon.ic('external-link'), _('Open associated link').format(link), lambda : book_info.link_clicked.emit(link))
+
+
 def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
     from calibre.gui2.ui import get_gui
     search_internet_added = False
@@ -471,8 +495,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
         link_map = get_gui().current_db.new_api.get_all_link_maps_for_book(data.get('book_id', -1))
         link = link_map.get("authors", {}).get(author)
         if link:
-            menu.addAction(QIcon.ic('external-link'), _('Open associated link'),
-                           lambda : book_info.link_clicked.emit(link))
+            add_link_submenu(menu, link, book_info, 'authors', author)
     elif dt in ('path', 'devpath'):
         path = data['loc']
         ac = book_info.copy_link_action
@@ -532,8 +555,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
             link_map = get_gui().current_db.new_api.get_all_link_maps_for_book(data.get('book_id', -1))
             link = link_map.get(field, {}).get(value)
             if link:
-                menu.addAction(QIcon.ic('external-link'), _('Open associated link'),
-                               lambda : book_info.link_clicked.emit(link))
+                add_link_submenu(menu, link, book_info, field, value)
         else:
             v = data.get('original_value') or data.get('value')
             if v:
@@ -651,7 +673,7 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
             ac.current_url = url
             ac.setText(_('Copy link location'))
             menu.addAction(ac)
-            menu.addAction(QIcon.ic('external-link'), _('Open associated link'), lambda : book_info.link_clicked.emit(url))
+            add_link_submenu(menu, url, book_info)
     if not copy_links_added:
         create_copy_links(copy_menu)
 
@@ -981,6 +1003,7 @@ class CoverView(QWidget):  # {{{
 class BookInfo(HTMLDisplay):
 
     link_clicked = pyqtSignal(object)
+    link_removal_requested = pyqtSignal(object, object)
     remove_format = pyqtSignal(int, object)
     remove_item = pyqtSignal(int, object, object)
     save_format = pyqtSignal(int, object)
@@ -1248,34 +1271,14 @@ class DetailsLayout(QSplitter):  # {{{
         cover.do_layout()
 # }}}
 
+# Drag 'n drop {{{
 
-class BookDetails(DetailsLayout):  # {{{
-
-    show_book_info = pyqtSignal()
-    open_containing_folder = pyqtSignal(int)
-    open_data_folder = pyqtSignal(int)
-    view_specific_format = pyqtSignal(int, object)
-    search_requested = pyqtSignal(object, object)
-    remove_specific_format = pyqtSignal(int, object)
-    remove_metadata_item = pyqtSignal(int, object, object)
-    save_specific_format = pyqtSignal(int, object)
-    restore_specific_format = pyqtSignal(int, object)
-    set_cover_from_format = pyqtSignal(int, object)
-    compare_specific_format = pyqtSignal(int, object)
-    copy_link = pyqtSignal(object)
-    remote_file_dropped = pyqtSignal(object, object)
+class DropMixin:
     files_dropped = pyqtSignal(object, object)
-    cover_changed = pyqtSignal(object, object)
-    open_cover_with = pyqtSignal(object, object)
-    cover_removed = pyqtSignal(object)
-    view_device_book = pyqtSignal(object)
-    manage_category = pyqtSignal(object, object)
-    edit_identifiers = pyqtSignal()
-    open_fmt_with = pyqtSignal(int, object, object)
-    edit_book = pyqtSignal(int, object)
-    find_in_tag_browser = pyqtSignal(object, object)
+    remote_file_dropped = pyqtSignal(object, object)
 
-    # Drag 'n drop {{{
+    def __init__(self):
+        self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event):
         md = event.mimeData()
@@ -1321,10 +1324,35 @@ class BookDetails(DetailsLayout):  # {{{
 
     # }}}
 
+
+class BookDetails(DetailsLayout, DropMixin):  # {{{
+
+    show_book_info = pyqtSignal()
+    open_containing_folder = pyqtSignal(int)
+    open_data_folder = pyqtSignal(int)
+    view_specific_format = pyqtSignal(int, object)
+    search_requested = pyqtSignal(object, object)
+    remove_specific_format = pyqtSignal(int, object)
+    remove_metadata_item = pyqtSignal(int, object, object)
+    save_specific_format = pyqtSignal(int, object)
+    restore_specific_format = pyqtSignal(int, object)
+    set_cover_from_format = pyqtSignal(int, object)
+    compare_specific_format = pyqtSignal(int, object)
+    copy_link = pyqtSignal(object)
+    cover_changed = pyqtSignal(object, object)
+    open_cover_with = pyqtSignal(object, object)
+    cover_removed = pyqtSignal(object)
+    view_device_book = pyqtSignal(object)
+    manage_category = pyqtSignal(object, object)
+    edit_identifiers = pyqtSignal()
+    open_fmt_with = pyqtSignal(int, object, object)
+    edit_book = pyqtSignal(int, object)
+    find_in_tag_browser = pyqtSignal(object, object)
+
     def __init__(self, vertical, parent=None):
         super().__init__(vertical, parent)
+        DropMixin.__init__(self)
         self.last_data = {}
-        self.setAcceptDrops(True)
         self._layout = self
         self.current_path = ''
 
@@ -1340,6 +1368,7 @@ class BookDetails(DetailsLayout):  # {{{
         self.book_info.search_requested = self.search_requested.emit
         self._layout.addWidget(self.book_info)
         self.book_info.link_clicked.connect(self.handle_click)
+        self.book_info.link_removal_requested.connect(self.remove_link)
         self.book_info.remove_format.connect(self.remove_specific_format)
         self.book_info.remove_item.connect(self.remove_metadata_item)
         self.book_info.open_fmt_with.connect(self.open_fmt_with)
@@ -1438,6 +1467,16 @@ class BookDetails(DetailsLayout):  # {{{
 
     def handle_click(self, link):
         self.handle_click_from_popup(link)
+
+    def remove_link(self, field, item_value):
+        from calibre.gui2.ui import get_gui
+        gui = get_gui()
+        db = gui.current_db.new_api
+        db.set_link_map(field, {item_value: ''})
+        m = gui.library_view.model()
+        current = gui.library_view.currentIndex()
+        m.current_changed(current, current)
+        gui.tags_view.recount()
 
     def show_notes(self, field, item_id, parent=None):
         from calibre.gui2.dialogs.show_category_note import ShowNoteDialog

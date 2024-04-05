@@ -23,9 +23,9 @@ address:
 
 This will open a page in the browser showing you your calibre libraries, click
 on any one and browse the books in it. Click on a book, and it will show you
-all the metadata about the book, along with buttons to :guilabel:`Read book`
-and :guilabel:`Download book`. Click the :guilabel:`Read book` button to
-start reading the book.
+all the metadata about the book, along with buttons to :guilabel:`Read` and
+:guilabel:`Download` the book. Click the :guilabel:`Read` button to start
+reading the book.
 
 .. note:: The address used above ``http://127.0.0.1:8080`` will only work on
     the computer that is running calibre. To access the server from other
@@ -178,7 +178,7 @@ The book reader
 ^^^^^^^^^^^^^^^^
 
 You can read any book in your calibre library by simply tapping on
-it and then tapping the :guilabel:`Read book` button. The books reader
+it and then tapping the :guilabel:`Read` button. The book reader
 is very simple to operate. You can both tap and swipe to turn pages. Swiping
 up/down skips between chapters. Tapping the top quarter of the screen gets you
 the detailed controls and viewer preferences.
@@ -215,10 +215,11 @@ Enabling offline support
 
 Browser makers have been trying to force people to use SSL by disabling
 advanced features in their browsers for plain HTTP connections. One such
-casualty is offline support. So you may need to enable HTTPS on the server to
-get offline support working. In addition, in Firefox on Android, you will need
-to type ``about:config`` and search for ``browser.tabs.useCache`` and toggle it
-to ``true``.
+casualty is ApplicationCache, which was what was used in calibre for offline
+support. As a result now-a-days sadly, offline mode works only as long as you
+keep the browser tab open. In addition, in Firefox on Android, you will need to
+type ``about:config`` and create a preference called ``browser.tabs.useCache``
+and set it to ``true``.
 
 Managing user accounts from the command-line only
 -----------------------------------------------------

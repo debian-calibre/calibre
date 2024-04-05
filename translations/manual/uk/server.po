@@ -5,16 +5,16 @@
 # Translators:
 # Zoriana Zaiats, 2014
 # Surmay Danilo <den-surmay@mail.ru>, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2017-2021
+# Yuri Chornoivan <yurchor@ukr.net>, 2017-2021,2024
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-20 11:33+0000\n"
-"PO-Revision-Date: 2021-05-15 12:46+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian (http://www.transifex.com/calibre/calibre/language/uk/)\n"
+"POT-Creation-Date: 2024-04-03 03:07+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2017-2021,2024\n"
+"Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -58,9 +58,9 @@ msgid ""
 "This will open a page in the browser showing you your calibre libraries, "
 "click on any one and browse the books in it. Click on a book, and it will "
 "show you all the metadata about the book, along with buttons to "
-":guilabel:`Read book` and :guilabel:`Download book`. Click the "
-":guilabel:`Read book` button to start reading the book."
-msgstr "У відповідь у програмі для перегляду інтернету буде відкрито сторінку зі списком ваших бібліотек calibre. Натисніть пункт однієї з бібліотек і перегляньте список книг у бібліотеці. У відповідь на натискання пункту книги ви зможете переглянути метадані щодо неї та отримати доступ до кнопок :guilabel:`Читати книгу` і :guilabel:`Отримати книгу`. Щоб розпочати читання книги, натисніть кнопку :guilabel:`Читати книгу`."
+":guilabel:`Read` and :guilabel:`Download` the book. Click the "
+":guilabel:`Read` button to start reading the book."
+msgstr "У відповідь у програмі для перегляду інтернету буде відкрито сторінку зі списком ваших бібліотек calibre. Натисніть пункт однієї з бібліотек і перегляньте список книг у бібліотеці. У відповідь на натискання пункту книги ви зможете переглянути метадані щодо неї та отримати доступ до кнопок :guilabel:`Читати` і :guilabel:`Отримати`. Щоб розпочати читання книги, натисніть кнопку :guilabel:`Читати`."
 
 #: ../../__w/calibre/calibre/manual/server.rst:30
 msgid ""
@@ -283,11 +283,11 @@ msgstr "Засіб для читання книг"
 #: ../../__w/calibre/calibre/manual/server.rst:180
 msgid ""
 "You can read any book in your calibre library by simply tapping on it and "
-"then tapping the :guilabel:`Read book` button. The books reader is very "
-"simple to operate. You can both tap and swipe to turn pages. Swiping up/down"
-" skips between chapters. Tapping the top quarter of the screen gets you the "
+"then tapping the :guilabel:`Read` button. The book reader is very simple to "
+"operate. You can both tap and swipe to turn pages. Swiping up/down skips "
+"between chapters. Tapping the top quarter of the screen gets you the "
 "detailed controls and viewer preferences."
-msgstr "Ви можете почати читати будь-яку книгу із вашої бібліотеки calibre простим натисканням її пункту з наступним натисканням кнопки :guilabel:`Читати книгу`. Працювати із засобом читання книг дуже просто. Гортати сторінки можна як натисканням, так і рухом пальця. Рухами пальцем вгору-вниз можна переходити між розділами книги. Натисканням у верхній чверті екрана ви можете отримати доступу до засобів керування програмою та параметрів перегляду."
+msgstr "Ви можете почати читати будь-яку книгу із вашої бібліотеки calibre простим натисканням її пункту з наступним натисканням кнопки :guilabel:`Читати`. Працювати із засобом читання книг дуже просто. Гортати сторінки можна як натисканням, так і рухом пальця. Рухами пальцем вгору-вниз можна переходити між розділами книги. Натисканням у верхній чверті екрана ви можете отримати доступу до засобів керування програмою та параметрів перегляду."
 
 #: ../../__w/calibre/calibre/manual/server.rst:186
 msgid ""
@@ -340,17 +340,18 @@ msgstr "Вмикання підтримки автономної роботи"
 msgid ""
 "Browser makers have been trying to force people to use SSL by disabling "
 "advanced features in their browsers for plain HTTP connections. One such "
-"casualty is offline support. So you may need to enable HTTPS on the server "
-"to get offline support working. In addition, in Firefox on Android, you will"
-" need to type ``about:config`` and search for ``browser.tabs.useCache`` and "
-"toggle it to ``true``."
-msgstr "Розробники браузерів намагаються спонукати користувачів до вживання SSL, вимикаючи додаткові можливості браузерів для простих (нешифрованих) з'єднань HTTP. Однією із таких додаткових можливостей є підтримка роботи в автономному режимі. Отже, для того щоб скористатися автономним режимом, ймовірно, вам слід увімкнути HTTPS на сервері. Крім того, у Firefox на Android вам слід ввести адресу ``about:config``, знайти пункт ``browser.tabs.useCache`` і перемкнути його значення на ``true``."
+"casualty is ApplicationCache, which was what was used in calibre for offline"
+" support. As a result now-a-days sadly, offline mode works only as long as "
+"you keep the browser tab open. In addition, in Firefox on Android, you will "
+"need to type ``about:config`` and create a preference called "
+"``browser.tabs.useCache`` and set it to ``true``."
+msgstr "Розробники браузерів намагаються спонукати користувачів до вживання SSL, вимикаючи додаткові можливості браузерів для простих (нешифрованих) з'єднань HTTP. Однією із таких додаткових можливостей є ApplicationCache, те, що у calibre було використано для підтримки автономної роботи. У результаті на сьогодні, на жаль, програма може працювати в автономному режимі, лише якщо ви не закриєте вкладку браузера. Крім того, у Firefox для Android вам доведеться ввести адресу ``about:config`` і створити параметр із назвою ``browser.tabs.useCache``, встановивши для нього значення ``true``."
 
-#: ../../__w/calibre/calibre/manual/server.rst:224
+#: ../../__w/calibre/calibre/manual/server.rst:225
 msgid "Managing user accounts from the command-line only"
 msgstr "Керування обліковими записами лише з командного рядка"
 
-#: ../../__w/calibre/calibre/manual/server.rst:226
+#: ../../__w/calibre/calibre/manual/server.rst:227
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -359,28 +360,28 @@ msgid ""
 "line."
 msgstr "У програмі calibre є чудовий розділ у вікні :guilabel:`Налаштування`, за допомогою якого ви можете керувати обліковими записами для сервера. Втім, якщо ви хочете користуватися лише сервером і не маєте змоги запустити основну програму calibre на тому самому комп’ютері або обліковому записі, ви можете керувати записами користувачів за допомогою лише інтерфейсу командного рядка."
 
-#: ../../__w/calibre/calibre/manual/server.rst:231
+#: ../../__w/calibre/calibre/manual/server.rst:232
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
 "database in the folder ``/srv/calibre``, then you create it by running::"
 msgstr "Щоб перейти до режиму керування записами користувачів, скористайтеся параметром ``--manage-users`` під час запуску окремої програми ``calibre-server``. Припустімо, вам потрібно зберегти базу даних користувачів до теки ``/srv/calibre``. Створіть її за допомогою такої команди::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:238
+#: ../../__w/calibre/calibre/manual/server.rst:239
 msgid ""
 "Just follow the prompts to create user accounts, set their permission, etc. "
 "Once you are done, you can run the server as::"
 msgstr "Виконайте настанови щодо створення облікових записів користувачів, встановлення паролів тощо. Виконавши відповідні дії, запустіть сервер такою командою::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:243
+#: ../../__w/calibre/calibre/manual/server.rst:244
 msgid "It will use the user accounts you created in the previous step."
 msgstr "На запущеному сервері використовуватимуться облікові записи користувачів, створені вами на попередньому кроці."
 
-#: ../../__w/calibre/calibre/manual/server.rst:247
+#: ../../__w/calibre/calibre/manual/server.rst:248
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Інтегрування сервера даних calibre в інші сервери"
 
-#: ../../__w/calibre/calibre/manual/server.rst:249
+#: ../../__w/calibre/calibre/manual/server.rst:250
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -389,7 +390,7 @@ msgid ""
 "server."
 msgstr "Тут описано спосіб інтеграції сервера даних calibre до іншого сервера. Найпоширенішою причиною для такої інтеграції є використання SSL або обслуговування бібліотеки calibre як частини більшого сайта. Основною методикою є запуск сервера calibre і налаштовування на основному сервері зворотного проксі-сервера до сервера даних."
 
-#: ../../__w/calibre/calibre/manual/server.rst:254
+#: ../../__w/calibre/calibre/manual/server.rst:255
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -398,36 +399,36 @@ msgid ""
 "with your main server."
 msgstr "Зворотною називається схема проксі-сервера, коли ваш звичайний сервер приймає вхідні запити і передає їх серверу calibre. Далі він читає відповідь від сервера calibre і переспрямовує її клієнту. Це означає, що ви можете просто запустити сервер calibre як звичайно, без спроб тісно інтегрувати його зі вашим основним сервером."
 
-#: ../../__w/calibre/calibre/manual/server.rst:261
+#: ../../__w/calibre/calibre/manual/server.rst:262
 msgid "Using a full virtual host"
 msgstr "Використання повного віртуального вузла"
 
-#: ../../__w/calibre/calibre/manual/server.rst:263
+#: ../../__w/calibre/calibre/manual/server.rst:264
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "Найпростішою є конфігурація із використанням повного віртуального вузла для роботи сервера calibre. У цьому випадку сервер calibre запускається так::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:268
+#: ../../__w/calibre/calibre/manual/server.rst:269
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Далі, слід налаштувати віртуальний вузол на вашому основному сервері. Приклад для nginx::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:283
+#: ../../__w/calibre/calibre/manual/server.rst:284
 msgid "Or, for Apache::"
 msgstr "Або для Apache::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:298
+#: ../../__w/calibre/calibre/manual/server.rst:299
 msgid "Using a URL prefix"
 msgstr "Використання префікса адреси"
 
-#: ../../__w/calibre/calibre/manual/server.rst:300
+#: ../../__w/calibre/calibre/manual/server.rst:301
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Якщо ви не хочете використовувати окремий віртуальний вузол для calibre, ви можете налаштувати систему з використанням префікса адреси. Запустіть сервер calibre так::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:305
+#: ../../__w/calibre/calibre/manual/server.rst:306
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -435,17 +436,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr "Ключовим параметром тут є ``--url-prefix /calibre``. Цей параметр наказує серверу даних обслуговувати усі адреси із префіксом calibre. Щоб побачити як це праціює, відкрийте сторінку з адресою ``http://localhost:8080/calibre`` у вашій програмі для перегляду інтернету. Ви маєте побачити звичайний сайт сервера даних, але тепер він працюватиме у теці «/calibre»."
 
-#: ../../__w/calibre/calibre/manual/server.rst:307
+#: ../../__w/calibre/calibre/manual/server.rst:308
 msgid "With nginx, the required configuration is::"
 msgstr "Для nginx потрібні такі налаштування::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:324
+#: ../../__w/calibre/calibre/manual/server.rst:325
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr "Для Apache спочатку увімкніть модулі проксі в Apache додаванням таких рядків до :file:`httpd.conf`::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:329
+#: ../../__w/calibre/calibre/manual/server.rst:330
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -453,7 +454,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr "Точна методика вмикання модулів проксі залежить від встановленого варіанта Apache. Щойно модулі проксі буде увімкнено, додайте такі правила до файла :file\"`httpd.conf` (або якщо ви використовуєте віртуальні вузли, до файла налаштувань віртуального вузла)::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:336
+#: ../../__w/calibre/calibre/manual/server.rst:337
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -462,7 +463,7 @@ msgid ""
 "transparently."
 msgstr "Ось і усе, тепер ви можете отримувати доступ до сервера даних calibre за префіксом «/calibre» на вашому основному сервері. Вказані вище правила передають усі запити до «/calibre» на сервер calibre, який запущено на порту 8080 і, завдяки вказаному параметру «--url-prefix», сервер calibre прозоро їх обробляє."
 
-#: ../../__w/calibre/calibre/manual/server.rst:341
+#: ../../__w/calibre/calibre/manual/server.rst:342
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -470,7 +471,7 @@ msgid ""
 "from the reverse proxy."
 msgstr "Якщо використовується зворотний проксі, вам слід повідомити сервер даних calibre про те, що слід очікувати на встановлення зв’язку лише від локального вузла, скориставшись параметром ``--listen-on 127.0.0.1``. Таким чином, сервер оброблятиме лише ті з’єднання, які встановлюватиметься з того самого комп’ютера, на якому його запущено, тобто з’єднання від зворотного проксі."
 
-#: ../../__w/calibre/calibre/manual/server.rst:348
+#: ../../__w/calibre/calibre/manual/server.rst:349
 msgid ""
 "If you have setup SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -478,11 +479,11 @@ msgid ""
 "server``."
 msgstr "Якщо вами налаштовано SSL на вашому основному сервері, вам слід повідомити сервер calibre про те, що слід використовувати базове розпізнавання замість розпізнавання за контрольними сумами, оскільки воно працює швидше. Для цього передайте параметр ``--auth-mode=basic`` програмі ``calibre-server``."
 
-#: ../../__w/calibre/calibre/manual/server.rst:357
+#: ../../__w/calibre/calibre/manual/server.rst:358
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr "Створення служби для сервера calibre у сучасній системі Linux"
 
-#: ../../__w/calibre/calibre/manual/server.rst:359
+#: ../../__w/calibre/calibre/manual/server.rst:360
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -490,7 +491,7 @@ msgid ""
 "the contents shown below::"
 msgstr "Створити службу для запуску calibre під час завантаження у сучасній заснованій на `systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_ системі Linux дуже просто. Створіть файл ``/etc/systemd/system/calibre-server.service`` із таким вмістом:"
 
-#: ../../__w/calibre/calibre/manual/server.rst:378
+#: ../../__w/calibre/calibre/manual/server.rst:379
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
@@ -500,25 +501,25 @@ msgid ""
 "needed. See the help for the ``calibre-server`` command."
 msgstr "Замініть ``mylinuxuser`` і ``mylinuxgroup`` на користувача і групу, від імені яких має бути запущено сервер. Користувач і група мають бути тими самими, що і користувач і група власника файлів у теці бібліотеки calibre. Зауважте, що, зазвичай, не варто запускати сервер від імені адміністратора (root). Крім того, вам слід змінити шлях до теки бібліотеки calibre так, щоб він збігався зі шляхом у вашій системі. Якщо треба, можете додати декілька бібліотек. Докладніший опис можна знайти у довідці до програми ``calibre-server``."
 
-#: ../../__w/calibre/calibre/manual/server.rst:385
+#: ../../__w/calibre/calibre/manual/server.rst:386
 msgid "Now run::"
 msgstr "Тепер віддайте команду:"
 
-#: ../../__w/calibre/calibre/manual/server.rst:389
+#: ../../__w/calibre/calibre/manual/server.rst:390
 msgid "to start the server. Check its status with::"
 msgstr "для запуску сервера. Перевірте стан сервера такою командою::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:393
+#: ../../__w/calibre/calibre/manual/server.rst:394
 msgid "To make it start at boot, run::"
 msgstr "Щоб сервер запускався під час завантаження системи, віддайте таку команду::"
 
-#: ../../__w/calibre/calibre/manual/server.rst:399
+#: ../../__w/calibre/calibre/manual/server.rst:400
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr "Для роботи сервера calibre *не потрібен* графічний серве X, але йому знадобляться встановлені бібліотеки X, оскільки деякі з його компонентів зібрано із використанням цих бібліотек."
 
-#: ../../__w/calibre/calibre/manual/server.rst:404
+#: ../../__w/calibre/calibre/manual/server.rst:405
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."
