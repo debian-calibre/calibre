@@ -1,29 +1,24 @@
 From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
-Date: Sun, 24 Sep 2023 23:07:46 +0900
+Date: Sun, 24 Sep 2023 23:07:21 +0900
 Subject: Revert "..."
 
 Forwarded: not-needed
 
-This reverts commit c118d19e380a69762a66719d70104648dc4afda1.
+This reverts commit f486e6271402c5bf9ab34e512dae6fc8e61152d7.
 ---
- src/calibre/utils/podofo/__init__.py | 7 -------
- 1 file changed, 7 deletions(-)
+ src/calibre/utils/podofo/images.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
-index 8a53e63..540a556 100644
---- a/src/calibre/utils/podofo/__init__.py
-+++ b/src/calibre/utils/podofo/__init__.py
-@@ -204,13 +204,6 @@ def test_save_to(src, dest):
-         print('Wrote PDF of size:', out.tell())
- 
- 
--def test_roundtrip(src, dest):
--    podofo = get_podofo()
--    p = podofo.PDFDoc()
--    p.open(src)
--    p.save(dest)
--
--
- def test_podofo():
-     import tempfile
-     from calibre.ebooks.metadata.book.base import Metadata
+diff --git a/src/calibre/utils/podofo/images.cpp b/src/calibre/utils/podofo/images.cpp
+index 6e9b602..dc9cf32 100644
+--- a/src/calibre/utils/podofo/images.cpp
++++ b/src/calibre/utils/podofo/images.cpp
+@@ -78,7 +78,7 @@ dedup_images(PDFDoc *self, PyObject *args) {
+             const PdfReference &canonical_ref = x.first.reference();
+             for (auto &ref : x.second) {
+                 if (ref != canonical_ref) {
+-                    ref_map[ref] = canonical_ref;
++                    ref_map[ref] = x.first.reference();
+                     objects.RemoveObject(ref).reset();
+                     count++;
+                 }
