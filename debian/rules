@@ -82,9 +82,11 @@ calibre_auto_install:
 	rmdir debian/tmp/usr/share/desktop-directories
 #
 #	# do not install developer's script
-	rm debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
+	rm    debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
+	rmdir debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/
 #	# Debian package "python3-tinycss" doesn't installs test code
-	rm debian/tmp/usr/lib/calibre/tinycss/tests/*.py
+	rm    debian/tmp/usr/lib/calibre/tinycss/tests/*.py
+	rmdir debian/tmp/usr/lib/calibre/tinycss/tests/
 #
 # 	# Replace "python" to "python3" in shebang
 	find debian/tmp/usr/lib/calibre debian/tmp/usr/share/calibre -name '*.py' -print | xargs --no-run-if-empty sed --separate --file=debian/fix-python-shebang.sed --in-place
