@@ -1,3 +1,26 @@
+calibre (7.8.0+ds2-1) UNRELEASED; urgency=medium
+
+  * Revert "Drop unused line from copyright file"
+    This reverts commit 53dfd678695bf627a37e3dbda5f5bba9752537a7.
+  * Revert "Drop unused Lintian-overrides"
+    This reverts commit 3e40fcbbcd0645f5346b5fbe33b70c124400cad5.
+  * Revert "Drop embedded MathJax"
+    This reverts commit 76ed2fdc5c281364fe385480df6855990e5d7a94.
+  * Revert "MathJax v3 was provided by node-mathjax-full package"
+    This reverts commit dc63eed92c827466a3c33ea1d8d388e8f301de74.
+  * Re-import embedded MathJax again (Closes: #1068765)
+    Debian MathJax v3 requires nodejs.
+    It's too big to depends.
+  * Revert "Drop unused Lintian overrides"
+    This reverts commit 3770964d4843dde0e12dc07fa1691d8fcfeab4a5.
+    Debian Lintian server still reports it.
+  * New upstream version 7.8.0+ds2
+  * Add Lintian overrides for server content
+  * Add Lintian overrides for groff
+  * Update Lintian overrides syntax
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 11 Apr 2024 22:31:09 +0900
+
 calibre (7.8.0+ds1-2) unstable; urgency=medium
 
   * Drop unused Lintian-overrides.
