@@ -7,8 +7,8 @@ version=4
 
 opts="pgpmode=next, \
       searchmode=plain, \
-      dversionmangle=s/\+ds1?//, \
-      oversionmangle=s/$/+ds1/" \
+      dversionmangle=s/\+ds[12]?//, \
+      oversionmangle=s/$/+ds2/" \
   https://api.github.com/repos/kovidgoyal/@PACKAGE@/releases \
   https://github.com/kovidgoyal/@PACKAGE@/releases/download/v\d+\.\d+\.\d+/@PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
 opts="pgpmode=previous" \
