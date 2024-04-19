@@ -7053,6 +7053,18 @@ return parser;
                 ρσ_d["category"] = "read_book";
                 return ρσ_d;
             }).call(this);
+            ρσ_d["cite_text_template"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["default"] = "[{text}]({url})";
+                ρσ_d["category"] = "read_book";
+                return ρσ_d;
+            }).call(this);
+            ρσ_d["cite_hl_template"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["default"] = "[{text}]({url})";
+                ρσ_d["category"] = "read_book";
+                return ρσ_d;
+            }).call(this);
             return ρσ_d;
         }).call(this);
         defaults = Object.create(null);
@@ -28385,7 +28397,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.8.0";
+        CALIBRE_VERSION = "7.9.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -40341,6 +40353,8 @@ return this.__repr__();
 
         var create_button = ρσ_modules.widgets.create_button;
 
+        var parse_url_params = ρσ_modules.utils.parse_url_params;
+
         DRAG_SCROLL_ZONE_MIN_HEIGHT = 10;
         BUTTON_MARGIN = "0.5rem";
         function get_margins() {
@@ -42213,7 +42227,7 @@ return this.__repr__();
         });
         SelectionBar.prototype.handle_message = function handle_message(msg) {
             var self = this;
-            var notes, toc_family, before, spine_index, cfi, link_prefix, url, text;
+            var notes, toc_family, before, annot_id, data, spine_index, cfi, url, ρσ_unpack, key, value, info, copy_info, link_prefix, text;
             if (msg.type === "highlight-applied") {
                 notes = self.current_notes;
                 self.current_notes = "";
@@ -42256,16 +42270,57 @@ return this.__repr__();
             } else if (msg.type === "double-click") {
                 self.last_double_click_at = window.performance.now();
             } else if (msg.type === "cite-data") {
-                spine_index = self.view.currently_showing.spine_index;
-                spine_index = (1 + spine_index) * 2;
-                cfi = msg.bounds.start;
-                link_prefix = get_current_link_prefix();
-                if (!link_prefix) {
-                    return self.view.show_not_a_library_book_error();
+                annot_id = self.view.currently_showing.selection.annot_id;
+                if (annot_id) {
+                    data = self.annotations_manager.data_for_highlight(annot_id);
+                    spine_index = self.view.currently_showing.spine_index;
+                    cfi = self.annotations_manager.cfi_for_highlight(annot_id, spine_index);
+                    if (runtime.is_standalone_viewer) {
+                        url = get_current_link_prefix() + "?open_at=" + cfi;
+                    } else {
+                        url = get_current_link_prefix() + ("bookpos=" + ρσ_str.format("{}", cfi) + "");
+                        var ρσ_Iter11 = ρσ_Iterable(Object.entries(parse_url_params()));
+                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                            ρσ_unpack = ρσ_Iter11[ρσ_Index11];
+                            key = ρσ_unpack[0];
+                            value = ρσ_unpack[1];
+                            if ((key !== "bookpos" && (typeof key !== "object" || ρσ_not_equals(key, "bookpos")))) {
+                                url = url + ("&" + ρσ_str.format("{}", key) + "=" + ρσ_str.format("{}", value) + "");
+                            }
+                        }
+                    }
+                    info = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["text"] = data.highlighted_text;
+                        ρσ_d["url"] = url;
+                        ρσ_d["timestamp"] = data.timestamp;
+                        ρσ_d["style_type"] = data.style.type;
+                        ρσ_d["style_kind"] = data.style.kind;
+                        ρσ_d["style_which"] = data.style.which;
+                        ρσ_d["chapter"] = (data.toc_family_titles[0]) ? data.toc_family_titles[0] : "";
+                        ρσ_d["notes"] = (ρσ_in("notes", data)) ? data.notes : "";
+                        return ρσ_d;
+                    }).call(this);
+                    copy_info = (ρσ_expr_temp = get_session_data().get("cite_hl_template"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs(info)]));
+                } else {
+                    spine_index = self.view.currently_showing.spine_index;
+                    spine_index = (1 + spine_index) * 2;
+                    cfi = msg.bounds.start;
+                    link_prefix = get_current_link_prefix();
+                    if (!link_prefix) {
+                        return self.view.show_not_a_library_book_error();
+                    }
+                    text = msg.highlighted_text.replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+                    url = link_to_epubcfi("epubcfi(/" + ρσ_str.format("{}", spine_index) + "" + ρσ_str.format("{}", cfi) + ")", link_prefix);
+                    info = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["text"] = text;
+                        ρσ_d["url"] = url;
+                        return ρσ_d;
+                    }).call(this);
+                    copy_info = (ρσ_expr_temp = get_session_data().get("cite_text_template"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs(info)]));
                 }
-                url = link_to_epubcfi("epubcfi(/" + ρσ_str.format("{}", spine_index) + "" + ρσ_str.format("{}", cfi) + ")", link_prefix);
-                text = msg.highlighted_text.replace(/\[/g, "\\[").replace(/\]/g, "\\]");
-                ui_operations.copy_selection("[" + ρσ_str.format("{}", text) + "](" + ρσ_str.format("{}", url) + ")");
+                ui_operations.copy_selection(copy_info);
             } else {
                 print("Ignoring annotations message with unknown type:", msg.type);
             }
@@ -42377,12 +42432,13 @@ return this.__repr__();
         });
 
         function restore_defaults() {
-            var container, val, control;
+            var container, sd, val, control, ta;
             container = get_container();
+            sd = session_defaults();
             var ρσ_Iter0 = ρσ_Iterable(container.querySelectorAll("input[name]"));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 control = ρσ_Iter0[ρσ_Index0];
-                val = (ρσ_expr_temp = session_defaults())[ρσ_bound_index(control.getAttribute("name"), ρσ_expr_temp)];
+                val = sd[ρσ_bound_index(control.getAttribute("name"), sd)];
                 if (control.type === "checkbox") {
                     control.checked = val;
                 } else if (control.type === "number") {
@@ -42390,6 +42446,12 @@ return this.__repr__();
                 } else {
                     control.value = val;
                 }
+            }
+            var ρσ_Iter1 = ρσ_Iterable(container.querySelectorAll("textarea[name]"));
+            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                ta = ρσ_Iter1[ρσ_Index1];
+                val = sd[ρσ_bound_index(ta.getAttribute("name"), sd)];
+                ta.value = val;
             }
             set_actions(true);
         };
@@ -42470,9 +42532,9 @@ return this.__repr__();
             adef = all_actions();
             table = ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({style: "margin-left: 2rem"})]);
             container.appendChild(table);
-            var ρσ_Iter1 = ρσ_Iterable(JSON.parse(container.dataset.actions));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                action_name = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter2 = ρσ_Iterable(JSON.parse(container.dataset.actions));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                action_name = ρσ_Iter2[ρσ_Index2];
                 ac = adef[(typeof action_name === "number" && action_name < 0) ? adef.length + action_name : action_name];
                 if (is_current) {
                     buttons = E.td(ρσ_interpolate_kwargs.call(E, E.span, [_("Remove")].concat([ρσ_desugar_kwargs({class_: "simple-link", onclick: remove_action.bind(null, action_name)})])), ρσ_interpolate_kwargs.call(E, E.span, [" "].concat([ρσ_desugar_kwargs({style: "min-width: 2rem; display: inline-block"})])), ρσ_interpolate_kwargs.call(E, E.span, [_("Up")].concat([ρσ_desugar_kwargs({class_: "simple-link", onclick: move_action.bind(null, action_name, true)})])), ρσ_interpolate_kwargs.call(E, E.span, [" "].concat([ρσ_desugar_kwargs({style: "min-width: 2rem; display: inline-block"})])), ρσ_interpolate_kwargs.call(E, E.span, [_("Down")].concat([ρσ_desugar_kwargs({class_: "simple-link", onclick: move_action.bind(null, action_name, false)})])));
@@ -42530,9 +42592,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]);
-            var ρσ_Iter2 = ρσ_Iterable(actions);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                hs = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter3 = ρσ_Iterable(actions);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                hs = ρσ_Iter3[ρσ_Index3];
                 c.appendChild(ρσ_interpolate_kwargs.call(E, E.label, [hs.make_swatch(E.span(), is_dark_theme()), " ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", value: hs.key, checked: current[ρσ_bound_index(hs.key, current)]})]), " ", hs.friendly_name].concat([ρσ_desugar_kwargs({style: "margin: 1ex; display: flex; align-contents: center"})])));
             }
         };
@@ -42544,9 +42606,9 @@ return this.__repr__();
             var ans, c, inp;
             ans = [];
             c = get_container().querySelector(".quick-actions");
-            var ρσ_Iter3 = ρσ_Iterable(c.querySelectorAll("input:checked"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                inp = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter4 = ρσ_Iterable(c.querySelectorAll("input:checked"));
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                inp = ρσ_Iter4[ρσ_Index4];
                 if (inp.value) {
                     ans.push(inp.value);
                 }
@@ -42589,11 +42651,26 @@ return this.__repr__();
                 __module__ : {value: "read_book.prefs.selection"}
             });
 
+            function cite_template_textarea(name, text, title) {
+                var ans;
+                ans = ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({name: name, style: "width: 100%; margin-top: 1ex; box-sizing: border-box; flex-grow: 10"})]);
+                ans.value = sd.get(name);
+                return ρσ_interpolate_kwargs.call(E, E.div, [E.label(text, E.br(), ans)].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
+            };
+            if (!cite_template_textarea.__argnames__) Object.defineProperties(cite_template_textarea, {
+                __argnames__ : {value: ["name", "text", "title"]},
+                __module__ : {value: "read_book.prefs.selection"}
+            });
+
             container.appendChild(cb("show_selection_bar", _("Show a popup bar with common actions next to selected text")));
             container.appendChild(url("net_search_url", _("URL to query when searching the internet"), _("The {q} in the URL is replaced by the selected text")));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Customize which actions are shown in the selection popup bar")].concat([ρσ_desugar_kwargs({style: "margin-top: 2ex; border-top: solid 1px; padding-top: 1ex;"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h3(_("Current actions")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "current-actions"})]), E.h3(_("Available actions")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "available-actions"})])].concat([ρσ_desugar_kwargs({style: "padding: 1ex; border-bottom: solid 1px; margin-bottom: 1ex"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.h3(_("Quick highlight actions")), E.div(_("Choose highlight styles that will have dedicated buttons in the selection bar to create highlights with a single click")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "quick-actions"})])].concat([ρσ_desugar_kwargs({style: "padding: 1ex; border-bottom: solid 1px; margin-bottom: 1ex"})])));
+            container.appendChild(E.h3(_("Citing text")));
+            container.appendChild(cite_template_textarea("cite_text_template", _("Template for citing plain text:")));
+            container.appendChild(cite_template_textarea("cite_hl_template", _("Template for citing highlighted text:")));
+            container.appendChild(E.div(ρσ_interpolate_kwargs.call(E, E.div, [(ρσ_expr_temp = _("{text} and {url} are available in both types of template. Additionally, {timestamp}, {chapter}, {notes}, {style_type}, {style_kind} and {style_which} are available when citing a highlight."), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({text: "{text}", url: "{url}", chapter: "{chapter}", notes: "{notes}", style_type: "{style_type}", style_kind: "{style_kind}", style_which: "{style_which}", timestamp: "{timestamp}"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 2ex"})])), ρσ_interpolate_kwargs.call(E, E.div, [_("Use \"}}\" and \"{{\" to escape \"}\" and \"{\".")].concat([ρσ_desugar_kwargs({style: "margin-top: 2ex; margin-bottom: 2ex; border-bottom: solid 1px; padding-bottom: 1ex;"})]))));
             set_actions();
             container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
         };
@@ -42604,19 +42681,19 @@ return this.__repr__();
 
         develop = create_selection_panel;
         function commit_selection(onchange) {
-            var sd, container, changed, save_ev, x, name, val, control, actions, quick_highlights;
+            var sd, container, changed, save_ev, x, name, val, control, actions, quick_highlights, old, ta;
             sd = get_session_data();
             container = get_container();
             changed = false;
             save_ev = new Event("save_history");
-            var ρσ_Iter4 = ρσ_Iterable(container.querySelectorAll("[data-calibre-history-input]"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                x = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter5 = ρσ_Iterable(container.querySelectorAll("[data-calibre-history-input]"));
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                x = ρσ_Iter5[ρσ_Index5];
                 x.dispatchEvent(save_ev);
             }
-            var ρσ_Iter5 = ρσ_Iterable(container.querySelectorAll("input[name]"));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                control = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter6 = ρσ_Iterable(container.querySelectorAll("input[name]"));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                control = ρσ_Iter6[ρσ_Index6];
                 name = control.getAttribute("name");
                 if (control.type === "checkbox") {
                     val = control.checked;
@@ -42639,6 +42716,17 @@ return this.__repr__();
             if (ρσ_not_equals(list(quick_highlights), list(sd.get("selection_bar_quick_highlights")))) {
                 changed = true;
                 sd.set("selection_bar_quick_highlights", quick_highlights);
+            }
+            var ρσ_Iter7 = ρσ_Iterable(container.querySelectorAll("textarea[name]"));
+            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
+                ta = ρσ_Iter7[ρσ_Index7];
+                name = ta.getAttribute("name");
+                val = (ta.value || "").strip() || (ρσ_expr_temp = session_defaults())[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+                old = sd.get(name);
+                if (old !== val) {
+                    sd.set(name, val);
+                    changed = true;
+                }
             }
             if (changed) {
                 onchange();
