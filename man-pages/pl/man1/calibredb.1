@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "kwietnia 05, 2024" "7.8.0" "calibre"
+.TH "CALIBREDB" "1" "kwietnia 19, 2024" "7.9.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -581,7 +581,7 @@ Tytuł wygenerowanego katalogu używany jako tytuł w metadanych. Domyślnie: \f
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Create cross\-references in Authors section for books with multiple authors. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+Tworzy odsyłacze w sekcji Autorzy dla książek z wieloma autorami np. prace zbiorowe. Domyślnie: \fB\(aq\fPFalse\fB\(aq\fP Dotyczy formatów wyjściowych AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -591,12 +591,12 @@ Zapisz dane wyjściowe z różnych etapów potoku konwersji w określonym folder
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex describing tags to exclude as genres. Default: \fB\(aq\fP[.+]|^+$\fB\(aq\fP excludes bracketed tags, e.g. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, and \fB\(aq\fP+\fB\(aq\fP, the default tag for read books. Applies to: AZW3, EPUB, MOBI output formats
+Wyrażenie regularne opisujące etykiety do wykluczenia jako gatunki. Domyślnie:  \fB\(aq\fP[.+]|^+$\fB\(aq\fP wyklucza etykiety w nawiasach kwadratowych, tzn. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, i \fB\(aq\fP+\fB\(aq\fP, domyślny tag dla przeczytanych książek. Dotyczy formatów wyjściowych AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Specifies the rules used to exclude books from the generated catalog. The model for an exclusion rule is either (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) or (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). For example: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) will exclude a book with a value of \fB\(aq\fPArchived\fB\(aq\fP in the custom column \fB\(aq\fPstatus\fB\(aq\fP\&. When multiple rules are defined, all rules will be applied. Default:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Applies to: AZW3, EPUB, MOBI output formats
+Określa reguły używane do wykluczania książek z generowanego katalogu. Schemat reguły wykluczającej to: (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPEtykieta\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) lub (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Na przykład: ((\fB\(aq\fPArchiwalne ksiązki\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchiwalne\fB\(aq\fP),) wykluczy książki, które w polu użytkownika \fB\(aq\fPstatus\fB\(aq\fP ma wartość \fB\(aq\fPArchiwalne\fB\(aq\fP\&. Jeśli zdefiniowano wiele reguł wszystkie są brane pod uwagę. Domyślnie:  \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Dotyczy formatów wyjściowych AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -641,7 +641,7 @@ Pole użytkownika zawierające tekst włączany do opisu. Domyślnie: \fB\(aq\fP
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] specifying:  <custom field> Custom field containing notes to merge with comments  [before|after] Placement of notes with respect to comments  [True|False] \- A horizontal rule is inserted between notes and comments Default: \fB\(aq\fP::\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+#<custom field>:[before|after]:[True|False] określa: <custom field> Pole niestandardowe zawierające notatki do scalenia z komentarzami • [before|after] Umieszczanie uwag w stosunku do komentarzy • [True|False] Pomiędzy notatkami i komentarzami wstawiana jest pozioma linia Domyślnie: \fB\(aq\fP::\fB\(aq\fP Dotyczy formatów wyjściowych AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
