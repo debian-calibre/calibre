@@ -1,26 +1,26 @@
 
 # smoke test
 Features: test-name=smoke-calibre
-Architecture: amd64 arm64 i386
+Architecture: amd64 arm64 armhf i386
 Test-Command: calibre --version
 Restrictions: superficial, allow-stderr
 
 Features: test-name=smoke-ebook-convert
-Architecture: amd64 arm64 i386
+Architecture: amd64 arm64 armhf i386
 Test-Command: ebook-convert --version
 Restrictions: superficial
 
 Features: test-name=smoke-ebook-meta
-Architecture: amd64 arm64 i386
+Architecture: amd64 arm64 armhf i386
 Test-Command: ebook-meta --version
 Restrictions: superficial
 
 Features: test-name=smoke-ebook-polish
-Architecture: amd64 arm64 i386
+Architecture: amd64 arm64 armhf i386
 Test-Command: ebook-polish --version
 Restrictions: superficial
 
 # Format conversion test
 Tests: convert-md-epub.sh
-Architecture: amd64 arm64 i386
+Architecture: amd64 arm64 armhf i386
 Depends: @, epubcheck
