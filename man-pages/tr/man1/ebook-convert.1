@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "Nisan 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Mayıs 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert girdi_dosyası çıktı_dosyası [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ girdi_dosyası girdi, çıktı_dosyası ise çıktıdır. Her ikisi de komutun i
 Giriş ve çıkış dosyasını belirledikten sonra, çeşitli seçenekler belirleyerek dönüştürmeyi özelleştirebilirsiniz. Kullanılabilir seçenekler, giriş ve çıkış dosyası türlerine bağlıdır. Bunlarla ilgili yardım almak için giriş ve çıkış dosyasını belirtin ve ardından \-h seçeneğini kullanın.
 .sp
 Dönüştürme sistemi dökümanları için bakınız:
-\fI\%E\-kitap dönüşümü\fP
+\X'tty: link #conversion'\fI\%E\-kitap dönüşümü\fP\X'tty: link'
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ değişiklik gösterir, her zaman şu şekilde kontrol etmelisiniz:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -306,7 +302,7 @@ Calibre paragraflar arasındaki boş satırları kaldırdığında, paragraflar�
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP

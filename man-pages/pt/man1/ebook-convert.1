@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "abril 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "maio 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert ficheiro_entrada ficheiro_saída [opções]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ O formato do resultado final é calculado através da extensão de ficheiro do  
 Depois de especificar o ficheiro de entrada e o de saída poderá personalizar a conversão através da especificação de várias opções. As opções disponíveis dependem dos tipos de ficheiro de entrada e do de saída. Para obter ajuda neste tópico indique o ficheiro de entrada e o de saída seguido da opção \-h .
 .sp
 Para obter a documentação completa do sistema de conversão veja
-\fI\%Conversão de livros digitais\fP
+\X'tty: link #conversion'\fI\%Conversão de livros digitais\fP\X'tty: link'
 .sp
 Sempre que passar argumentos para o \fBebook\-convert\fP que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .sp
@@ -58,11 +56,9 @@ As opções e os valores das opções variam dependendo simultaneamente do forma
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -304,7 +300,7 @@ Quando o Calibre remove linhas em branco entre parágrafos, insere automaticamen
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Converter aspas simples, hífenes e reticências para os seus equivalentes tipográficos. Para detalhes, ver \fI\%https://daringfireball.net/projects/smartypants\fP
+Converter aspas simples, hífenes e reticências para os seus equivalentes tipográficos. Para detalhes, ver \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'
 .UNINDENT
 .INDENT 0.0
 .TP

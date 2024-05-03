@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "apirila 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "maiatza 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb agindua [aukera] [argumentuak]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ Erakutsi laguntza mezu hau eta irten
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' for example, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ Erakutsi programaren bertsioa zein den eta irten
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [aukerak]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ Heading for the template column. Default: template. This option is ignored if th
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 %p rog gehitu [aukerak] fitxategia1 fitxategia2 fitxategia3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -344,11 +338,9 @@ Prozesatu karpetak modu errekurtsiboan
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +356,9 @@ Ez erabili Birziklatzeko paperontzia
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -389,11 +379,9 @@ Ez ordeztu formatua dagoeneko existitu existitzen bada
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +392,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -425,11 +411,9 @@ Inprima itzazu metadatuak OPF formatuarekin (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -455,11 +439,9 @@ Ezarri beharreko eremua. Formatua honako hau da: eremuaren_izena:balioa, adibide
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -543,11 +525,9 @@ Bihurtu bideak minuskuletara, letra xeheetara.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -673,11 +653,9 @@ Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -698,11 +676,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [aukerak] etiketa izena data\-mota
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -725,11 +701,9 @@ Zutabe honek datu itxurako etiketak gordetzen ditu (adibidez koma anitzekin bere
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -745,11 +719,9 @@ Erakutsi zehaztasunak zutabe bakoitzean.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -766,11 +738,9 @@ Ez eskatu baieztapenik
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -789,11 +759,9 @@ Zutabeak balio anitz gordetzen baditu, erantsi zehaztutako balioak lehenagotik z
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -816,11 +784,9 @@ Berreskuratzea egin, bai. Agindua ez da martxan hasiko aukera hau zehaztu arte.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb aztertu_liburutegia [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -856,11 +822,9 @@ Hustu testu osoko bilaketa datu\-basea. Hau oso motela eta memoria intentsiboa i
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -897,11 +861,9 @@ Lerro sinple baten zabalera maximoa. Lehenetsitako balioa: pantailaren tamaina d
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -922,11 +884,9 @@ Normalean, komando honek OPF fitxategi zaharkituak duten liburuetan baino ez du 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -941,11 +901,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -967,11 +925,9 @@ Eguneratu metadatuak zehaztutako formatuko fitxategietan soilik. Zehaztu hainbat
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -992,11 +948,9 @@ The maximum number of results to return. Default is all results.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1035,11 +989,9 @@ Itxaron liburu guztiak indexatu arte, indexatzeko aurrerapena aldian\-aldian era
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

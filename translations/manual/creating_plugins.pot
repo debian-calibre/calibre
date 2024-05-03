@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.9.0\n"
+"Project-Id-Version: calibre 7.10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 08:00+0530\n"
+"POT-Creation-Date: 2024-05-03 07:29+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "The first thing to note is that this ZIP file has a lot more files in it, explained below, pay particular attention to ``plugin-import-name-interface_demo.txt``."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:77
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:64
 msgid "**plugin-import-name-interface_demo.txt**"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 msgid "The name you use for ``some_name`` enters a global namespace shared by all plugins, **so make it as unique as possible**. But remember that it must be a valid Python identifier (only alphabets, numbers and the underscore)."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:80
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:79
 msgid "**__init__.py**"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "As before, the file that defines the plugin class"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:83
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:82
 msgid "**main.py**"
 msgstr ""
 
@@ -112,7 +112,7 @@ msgstr ""
 msgid "This file contains the actual code that does something useful"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:86
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:85
 msgid "**ui.py**"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "This file defines the interface part of the plugin"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:89
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:88
 msgid "**images/icon.png**"
 msgstr ""
 
@@ -128,7 +128,7 @@ msgstr ""
 msgid "The icon for this plugin"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:92
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:91
 msgid "**about.txt**"
 msgstr ""
 
@@ -136,7 +136,7 @@ msgstr ""
 msgid "A text file with information about the plugin"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:97
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:94
 msgid "**translations**"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "calibre's plugin loading system defines a couple of built-in functions that allow you to conveniently get files from the plugin ZIP file."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:148
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:140
 msgid "**get_resources(name_or_list_of_names)**"
 msgstr ""
 
@@ -201,7 +201,7 @@ msgstr ""
 msgid "This function should be called with a list of paths to files inside the ZIP file. For example to access the file :file:`icon.png` in the folder images in the ZIP file, you would use: ``images/icon.png``. Always use a forward slash as the path separator, even on Windows. When you pass in a single name, the function will return the raw bytes of that file or None if the name was not found in the ZIP file. If you pass in more than one name then it returns a dictionary mapping the names to bytes.  If a name is not found, it will not be present in the returned dictionary."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:157
+#: ../../home/kovid/work/calibre/manual/creating_plugins.rst:150
 msgid "**get_icons(name_or_list_of_names, plugin_name='')**"
 msgstr ""
 

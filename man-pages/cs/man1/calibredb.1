@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "dubna 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "května 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ zobrazit tuto zprávu nápovědy a ukončit
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Cesta ke knihovně Calibre. Výchozí je použít cestu uloženou v nastaveních. Pro provádění akce na vzdálených knihovnách se můžete také připojit k Serveru s obsahem Calibre. Abyste to udělali, použijte URL ve formě: \fI\%http://hostitel:port/#id_knihovny\fP, například \fI\%http://localhost:8080/#mojeknihovna\fP\&. id_knihovny je identifikátor knihovny, ke které se chcete připojit na Serveru s obsahem. Pomocí speciální hodnoty id_knihovny \- můžete získat seznam identifikátorů knihoven dostupných na serveru. Pro podrobnosti o nastavení přístupu prostřednictvím Serveru s obsahem navštivte \fI\%https://manual.calibre\-ebook.com/cs/generated/cs/calibredb.html\fP\&.
+Cesta ke knihovně Calibre. Výchozí je použít cestu uloženou v nastaveních. Pro provádění akce na vzdálených knihovnách se můžete také připojit k Serveru s obsahem Calibre. Abyste to udělali, použijte URL ve formě: \X'tty: link http://hostitel:port/#id_knihovny'\fI\%http://hostitel:port/#id_knihovny\fP\X'tty: link', například \X'tty: link http://localhost:8080/#mojeknihovna'\fI\%http://localhost:8080/#mojeknihovna\fP\X'tty: link'\&. id_knihovny je identifikátor knihovny, ke které se chcete připojit na Serveru s obsahem. Pomocí speciální hodnoty id_knihovny \- můžete získat seznam identifikátorů knihoven dostupných na serveru. Pro podrobnosti o nastavení přístupu prostřednictvím Serveru s obsahem navštivte \X'tty: link https://manual.calibre-ebook.com/cs/generated/cs/calibredb.html'\fI\%https://manual.calibre\-ebook.com/cs/generated/cs/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ zobrazit číslo verze programu a ukončit
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ Záhlaví sloupce šablony. Výchozí: %dvýchozí. Tato volba je ignorována, p
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [options] file1 file2 file3...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -343,11 +337,9 @@ Zpracuj složky rekurzivně
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -363,11 +355,9 @@ Nepoužívat Koš
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -388,11 +378,9 @@ Nenahrazovat formát, pokud již existuje
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -403,11 +391,9 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -424,11 +410,9 @@ Vypsat metadata v podobě OPF (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -454,11 +438,9 @@ Vypsat názvy polí metadat, která mohou být použita s volbou \fI\%\-\-field\
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -542,11 +524,9 @@ Převést cesty na malá písmena.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -672,11 +652,9 @@ Nahradit existující obálku při generování katalogu. Výchozí: \fB\(aq\fPF
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -697,11 +675,9 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] label name datatype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -724,11 +700,9 @@ Tento sloupec ukládá štítky jako data (tj. více čárkami oddělených hodn
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -744,11 +718,9 @@ Zobrazit podrobnosti pro každý sloupec.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -765,11 +737,9 @@ Nepožadovat potvrzení
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -787,11 +757,9 @@ Pokud sloupec ukládá více hodnot, přidat zadané hodnoty k existujícím, na
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -814,11 +782,9 @@ Opravdu provést obnovení. Příkaz nebude spuštěn, pokud není zadána tato 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -855,11 +821,9 @@ Vyčistit databázi fulltextového vyhledávání. V závislosti na velikosti da
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -896,11 +860,9 @@ Maximální šířka jednoho řádku ve výstupu. Výchozí nastavení pro rozpo
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -921,11 +883,9 @@ Normálně tento příkaz pracuje pouze nad knihami, které mají zastaralé sou
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -941,11 +901,9 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -968,11 +926,9 @@ Aktualizovat metadata pouze  v souborech zadaného formátu. Zadejte vícekrát 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -993,11 +949,9 @@ Maximální počet výsledků k navrácení. Výchozí je všechny výsledky.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [volby] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1036,11 +990,9 @@ Rychlost indexování. Použijte rychlé pro rychlé indexování využívajíc�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [volby] vyhledávací výraz
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

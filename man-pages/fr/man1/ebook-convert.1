@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "avril 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "mai 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert input_file output_file [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ Le format de livre numérique de sortie est défini par l\(aqextension du fichie
 Après avoir spécifié le fichier d\(aqentrée et de sortie vous pouvez adapter la conversion en spécifiant diverses options. Les options disponibles dépendent des types de fichier d\(aqentrée et de sortie. Pour obtenir de l\(aqaide sur celles\-ci, spécifiez le fichier d\(aqentrée et de sortie et puis employez l\(aqoption \-h.
 .sp
 Pour la documentation complète du système de conversion voir
-\fI\%Conversion de livre numérique\fP
+\X'tty: link #conversion'\fI\%Conversion de livre numérique\fP\X'tty: link'
 .sp
 Chaque fois que vous passez à \fBebook\-convert\fP des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ formats d\(aqentrée et de sortie, aussi vous devriez toujours vérifier avec
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -306,7 +302,7 @@ Lorsque calibre supprime les lignes blanches entre les paragraphes, il ajoute au
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convertit les guillemets, les tirets et les points de suspension en leurs équivalents typographiques corrects. Pour plus de détails, voir \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Convertit les guillemets, les tirets et les points de suspension en leurs équivalents typographiques corrects. Pour plus de détails, voir \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "aprīlis 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "maijs 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert input_file output_file [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-\fI\%E\-book conversion\fP
+\X'tty: link #conversion'\fI\%E\-book conversion\fP\X'tty: link'
 .sp
 Katru reizi, kad jūs nododat argumentus \fBebook\-convert\fP, kam ir atstarpes, pievienojiet argumentus pēdiņās. Piemēram: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ ievades un izvades formāta, tāpēc jums vienmēr vajadzētu pārbaudīt ar:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -306,7 +302,7 @@ calibre aizvācot tukšās rindas starp rindkopām automātiski pievieno rindkop
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Konvertējiet pēdiņas, domuzīmes un elipsi par to tipogrāfiski pareiziem ekvivalentiem. Plašāku informāciju skatiet vietnē \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Konvertējiet pēdiņas, domuzīmes un elipsi par to tipogrāfiski pareiziem ekvivalentiem. Plašāku informāciju skatiet vietnē \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP

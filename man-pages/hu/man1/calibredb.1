@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "április 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "május 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb parancs [kapcsolók] [argumentumok]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -155,7 +153,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Útvonal a Calibre könyvtárhoz. Alapértelmezés szerint a beállításokban tárolt útvonalat kell használni. Csatlakozhat egy Calibre  tartalomkiszolgálóhoz is, hogy távoli könyvtárakon hajtson végre műveleteket. Ehhez használja a következő formátumú URL\-t: \fI\%http://hostname:port/#library_id\fP, például: \fI\%http://localhost:8080/#mylibrary\fP\&. A library_id annak a könyvtárnak az azonosítója, amelyhez a tartalomkiszolgálón csatlakozni kíván. Használhatja a \- speciális library_id értékét a szerveren elérhető könyvtárazonosítók listájának megtekintéséhez. A tartalomszerveren keresztüli hozzáférés beállításának részleteiért lásd: \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Útvonal a Calibre könyvtárhoz. Alapértelmezés szerint a beállításokban tárolt útvonalat kell használni. Csatlakozhat egy Calibre  tartalomkiszolgálóhoz is, hogy távoli könyvtárakon hajtson végre műveleteket. Ehhez használja a következő formátumú URL\-t: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link', például: \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. A library_id annak a könyvtárnak az azonosítója, amelyhez a tartalomkiszolgálón csatlakozni kíván. Használhatja a \- speciális library_id értékét a szerveren elérhető könyvtárazonosítók listájának megtekintéséhez. A tartalomszerveren keresztüli hozzáférés beállításának részleteiért lásd: \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -181,11 +179,9 @@ program verziójának megjelenítése és kilépés
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -260,11 +256,9 @@ Modell oszlopfejléc. Alapértelmezett érték: template. Ezt a beállítást a 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [opciók] fájl1 fájl2 fájl3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -359,11 +353,9 @@ Mappák rekurzív feldolgozása
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -379,11 +371,9 @@ Ne használja ezt: Lomtár
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +394,9 @@ Ne cserélje ki a formátumot, ha már létezik
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -419,11 +407,9 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -440,11 +426,9 @@ Metaadatok nyomtatása OPF(XML) formátumban
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -473,11 +457,9 @@ A \fI\%\-\-field\fP paraméterrel használható metaadat\-mezőnevek felsorolás
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [opciók] azonosítók
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -565,11 +547,9 @@ Elérési út kisbetűssé alakítása.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -695,11 +675,9 @@ A meglévő borító kicserélése katalógus generálásakor. Alapértelmezett:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -719,11 +697,9 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [kapcsolók] oszlop_nev cím adattípus
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -747,11 +723,9 @@ Az oszlop címke\-szerű (több elem, vesszővel tagolva) adatokat tárol. Csak 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -767,11 +741,9 @@ Részletek mutatása minden oszlopnál.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -788,11 +760,9 @@ Ne kérjen megerősítést
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -811,11 +781,9 @@ Ha az oszlop több értéket tárol, akkor a megadott értéket adja a meglévő
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 Az adatbázis visszaállítása a Calibre könyvtár minden mappájában
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -838,11 +806,9 @@ Tényleg állítsa vissza az adatbázist. Enélkül az opció nélkül nem fut a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [kapcsolók]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -878,11 +844,9 @@ A teljes szöveges keresés adatbázis kitiszítása. Ez a művelet nagyon lass�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -919,11 +883,9 @@ Egy sor maximális szélessége a kimenetben. A képernyőmérethez szükséges.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -944,11 +906,9 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -965,11 +925,9 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -991,11 +949,9 @@ Csak a megadott formátumú fájlok metaadatait frissítése. Több formátum es
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1015,11 +971,9 @@ A visszaküldendő eredmények maximális száma. Alapértelmezett az összes er
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1057,11 +1011,9 @@ Várja meg, amíg az összes könyvet indexeli, és időnként mutatja az indexe
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [opciók] keresési kifejezés
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "huhtikuuta 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "toukokuuta 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb komento [valinnat] [arvot]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -190,11 +188,9 @@ näytä ohjelman versionumero ja poistu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb listaa[options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -265,11 +261,9 @@ Mallisarakkeen otsikko. Oletus: template. Tämä asetus ohitetaan, jos asetus \f
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb lisää [asetukset] tiedosto1 tiedosto2 tiedosto3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +358,9 @@ Käsittele kansioita rekursiivisesti
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -384,11 +376,9 @@ Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 %p rog add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -409,11 +399,9 @@ Lisää tiedosto kirjaan ylimääräisenä datatiedostona, ei e\-kirjamuotona
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -424,11 +412,9 @@ Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [vaihtoehdot] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -445,11 +431,9 @@ Tulosta metadata OPF\-muodossa (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -475,11 +459,9 @@ Luettele metadatakenttien nimet, joita voidaan käyttää \fB\-\-field\-asetukse
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -563,11 +545,9 @@ Muunna polut pieniksi kirjaimiksi.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -693,11 +673,9 @@ Korvaa nykyinen kansi luetteloa laadittaessa. Oletus: \fB\(aq\fPFalse\fB\(aq\fP 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -718,11 +696,9 @@ Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] otsikko nimi tietotyyppi
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -744,11 +720,9 @@ Tähän sarakkeeseen tallennetaan tunnisteiden kaltaisia tietoja (eli useita pil
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -764,11 +738,9 @@ Näytä sarakkeiden tiedot.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [Options] \-tunniste
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -785,11 +757,9 @@ Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] \-sarakkeen tunnusarvo
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -808,11 +778,9 @@ Jos sarakkeessa on useampia arvoja, liitä määritetyt arvot olemassa oleviin, 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -835,11 +803,9 @@ Varmistus palautuksen suorittamiselle. Komentoa ei suoriteta ellei tätä asetet
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -875,11 +841,9 @@ Imuroi koko tekstihaun tietokanta. Tämä voi olla hyvin hidasta ja muistia vaat
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -916,11 +880,9 @@ Yksitäisen rivin maksimipituus. Oletusarvona käytetään näytön kokoa.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 %pROG\-backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -941,11 +903,9 @@ Normaalisti tämä komento toimii vain kirjoihin joiden OPF\-tiedosto on vanhent
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -960,11 +920,9 @@ Aina kun annat calibredb:lle argumentteja, joissa on välilyöntejä, sulje argu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -980,11 +938,9 @@ Päivitä vain määritetyn tiedostotyypin metadata. Määrittele tarvittaessa u
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1004,11 +960,9 @@ Tulosten maksimimäärä. Oletus on näyttää kaikki tulokset.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1064,11 +1018,9 @@ Odota, kunnes kaikki kirjat on indeksoitu, ja näytä indeksoinnin edistyminen s
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

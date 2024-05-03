@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "apríl 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "maí 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ sýna þessi hjálparskilaboð og hætta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' for example, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ sýna útgáfunúmer forrits og hætta
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [valkostir]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ Heading for the template column. Default: template. This option is ignored if th
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [options] file1 file2 file3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -344,11 +338,9 @@ Process folders recursively
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +356,9 @@ Do not use the Recycle Bin
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -389,11 +379,9 @@ Do not replace the format if it already exists
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +392,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -425,11 +411,9 @@ Print metadata in OPF form (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -455,11 +439,9 @@ List the metadata field names that can be used with the \fI\%\-\-field\fP option
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -543,11 +525,9 @@ Umbreyta slóðum í lágstafi.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -673,11 +653,9 @@ Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -698,11 +676,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] label name datatype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -725,11 +701,9 @@ This column stores tag like data (i.e. multiple comma separated values). Only ap
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -745,11 +719,9 @@ Birta ítarlegri upplýsingar fyrir hvern dálk.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -766,11 +738,9 @@ Ekki biðja um staðfestingu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -789,11 +759,9 @@ If the column stores multiple values, append the specified values to the existin
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -816,11 +784,9 @@ Really do the recovery. The command will not run unless this option is specified
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -856,11 +822,9 @@ Vacuum the full text search database. This can be very slow and memory intensive
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -897,11 +861,9 @@ The maximum width of a single line in the output. Defaults to detecting screen s
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -922,11 +884,9 @@ Normally, this command only operates on books that have out of date OPF files. T
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -941,11 +901,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -967,11 +925,9 @@ Only update metadata in files of the specified format. Specify it multiple times
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -992,11 +948,9 @@ The maximum number of results to return. Default is all results.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1035,11 +989,9 @@ Wait till all books are indexed, showing indexing progress periodically
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

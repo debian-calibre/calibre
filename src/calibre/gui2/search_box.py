@@ -57,12 +57,29 @@ class SearchLineEdit(QLineEdit):  # {{{
         else:
             menu.addAction(ac)
         menu.addSeparator()
+        ac = menu.addAction(_('Invert current search'))
+        ac.setEnabled(bool(self.text().strip()))
+        ac.setIcon(QIcon.ic('search.png'))
+        ac.triggered.connect(self.invert_search)
+        menu.addAction(ac)
+        menu.addSeparator()
         if self.as_url is not None:
             url = self.as_url(self.text())
             if url:
                 menu.addAction(_('Copy search as URL'), lambda : QApplication.clipboard().setText(url))
         menu.addAction(_('&Clear search history')).triggered.connect(self.clear_history)
         menu.exec(ev.globalPos())
+
+    def invert_search(self):
+        q = self.text().strip()
+        if q:
+            if q.startswith('NOT ( ') and q.endswith(' )'):
+                q = q[6:-2]
+            else:
+                q = f'NOT ( {q} )'
+            self.setText(q)
+            ev = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter, Qt.KeyboardModifier.NoModifier)
+            self.keyPressEvent(ev)
 
     def paste_and_search(self):
         self.paste()
@@ -452,6 +469,7 @@ class SavedSearchBoxMixin:  # {{{
         use_hierarchy = 'search' in db.new_api.pref('categories_using_hierarchy', [])
         submenus = {}
         for name in sorted(db.saved_search_names(), key=lambda x: primary_sort_key(x.strip())):
+            display_name = name.replace('&', '&&')
             current_menu = menu
             if use_hierarchy:
                 components = tuple(n.strip() for n in name.split('.'))
@@ -461,14 +479,16 @@ class SavedSearchBoxMixin:  # {{{
                 for i,c in enumerate(hierarchy, start=1):
                     hierarchical_prefix = '.'.join(hierarchy[:i])
                     if hierarchical_prefix not in submenus:
-                        current_menu = current_menu.addMenu(c)
+                        current_menu = current_menu.addMenu(c.replace('&', '&&'))
                         current_menu.setIcon(folder_icon)
                         submenus[hierarchical_prefix] = current_menu
                     else:
                         current_menu = submenus[hierarchical_prefix]
-                ac = add_action(current_menu, name, last, partial(self.search.set_search_string, 'search:"='+name+'"'))
+                ac = add_action(current_menu, display_name, last.replace('&', '&&'),
+                                partial(self.search.set_search_string, 'search:"='+name+'"'))
             else:
-                ac = add_action(current_menu, name, name, partial(self.search.set_search_string, 'search:"='+name+'"'))
+                ac = add_action(current_menu, display_name, display_name,
+                                partial(self.search.set_search_string, 'search:"='+name+'"'))
             if ac.icon().isNull():
                 ac.setIcon(search_icon)
 

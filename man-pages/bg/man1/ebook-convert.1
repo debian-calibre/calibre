@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "април 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "май 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert input_file output_file [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ input_file е входът и output_file е изходът. И двата тр�
 След указване на файла за въвеждане и изход може да персонализирате конвертирането, като посочите различни опции. Наличните опции зависят от типовете входни и изходни файлове. За да получите помощ за тях посочете входния и изходния файл и след това използвайте \-h опцията.
 .sp
 За пълна документация на системата за конвертиране виж
-\fI\%E\-book conversion\fP
+\X'tty: link #conversion'\fI\%E\-book conversion\fP\X'tty: link'
 .sp
 Винаги, когато предавате аргументи на \fBebook\-convert\fP, които имат интервали в тях, затворете аргументите в кавички. Например: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ input_file е входът и output_file е изходът. И двата тр�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -306,7 +302,7 @@ The maximum image size (width x height). A value of none means use the screen si
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Конвертиране на обикновени кавички, тирета и елипси в техните типографски правилни еквиваленти. За подробности, вижте \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Конвертиране на обикновени кавички, тирета и елипси в техните типографски правилни еквиваленти. За подробности, вижте \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP

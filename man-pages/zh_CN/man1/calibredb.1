@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "四月 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "五月 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -152,7 +150,7 @@ calibre 书库，必须首先在服务器上设置身份验证。这里
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibre 书库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程书库上执行操作。为此使用此格式的URL：\fI\%http://hostname:port/#library_id\fP。例如，\fI\%http://localhost:8080/#mylibrary\fP。library_id是要在内容服务器上连接的书库的书库id。您可以使用特殊的library_id值 \- 来获得服务器上可用书库id的列表。有关如何通过内容服务器设置访问的详情，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
+calibre 书库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程书库上执行操作。为此使用此格式的URL：\X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link'。例如，\X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'。library_id是要在内容服务器上连接的书库的书库id。您可以使用特殊的library_id值 \- 来获得服务器上可用书库id的列表。有关如何通过内容服务器设置访问的详情，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -178,11 +176,9 @@ calibre 书库的路径。默认是使用存储在设置中的路径。您还可
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -253,11 +249,9 @@ calibredb list [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [选项] file1 file2 file3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -355,11 +349,9 @@ calibredb add [选项] file1 file2 file3 ...
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -375,11 +367,9 @@ calibredb remove ids
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -400,11 +390,9 @@ calibredb add_format [options] id ebook_file
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -415,11 +403,9 @@ calibredb remove_format [options] id fmt
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -436,11 +422,9 @@ id是来自搜索命令的id号。
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -464,11 +448,9 @@ book_id 是来自搜索命令的 id 号。您可以通过使用 \-\-as\-opf 切�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -552,11 +534,9 @@ calibredb export [options] ids
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -682,11 +662,9 @@ see the different options, specify the name of the output file and then the
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -707,11 +685,9 @@ calibredb \fBsaved_searches\fP remove search_name
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] label name datatype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -732,11 +708,9 @@ calibredb add_custom_column [options] label name datatype
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -752,11 +726,9 @@ calibredb custom_columns [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -772,11 +744,9 @@ calibredb remove_custom_column [options] label
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -794,11 +764,9 @@ calibredb set_custom [options] column id value
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -816,11 +784,9 @@ calibredb restore_database [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -856,11 +822,9 @@ calibredb check_library [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -897,11 +861,9 @@ calibredb list_categories [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -922,11 +884,9 @@ OPF 文件都会自动备份。
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -939,11 +899,9 @@ calibredb clone path/to/new/library
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -963,11 +921,9 @@ calibredb embed_metadata [options] book_id
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -984,11 +940,9 @@ calibredb search [options] search expression
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1034,11 +988,9 @@ calibredb fts_index [options] enable/disable/status/reindex
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options]  search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

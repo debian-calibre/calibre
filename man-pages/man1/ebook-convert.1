@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "April 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "May 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert input_file output_file [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-\fI\%E\-book conversion\fP
+\X'tty: link #conversion'\fI\%E\-book conversion\fP\X'tty: link'
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ input and output formats, so you should always check with:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -308,7 +304,7 @@ When calibre removes blank lines between paragraphs, it automatically sets a par
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -908,7 +904,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-formatting\-type
-Formatting used within the document. * auto: Automatically decide which formatting processor to use * plain: No formatting * heuristic: Use heuristics to determine chapter headings, italics, etc. * textile: Use the Textile markup language * markdown: Use the Markdown markup language To learn more about Markdown see \fI\%https://daringfireball.net/projects/markdown/\fP
+Formatting used within the document. * auto: Automatically decide which formatting processor to use * plain: No formatting * heuristic: Use heuristics to determine chapter headings, italics, etc. * textile: Use the Textile markup language * markdown: Use the Markdown markup language To learn more about Markdown see \X'tty: link https://daringfireball.net/projects/markdown/'\fI\%https://daringfireball.net/projects/markdown/\fP\X'tty: link'
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -918,7 +914,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-markdown\-extensions
-Enable extensions to Markdown syntax. Extensions are formatting that is not part of the standard Markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about Markdown extensions, see \fI\%https://python\-markdown.github.io/extensions/\fP This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * codehilite: Add code highlighting via Pygments * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * legacy_attrs: Use legacy element attributes * legacy_em: Use legacy underscore handling for connected words * meta: Metadata in the document * nl2br: Treat newlines as hard breaks * sane_lists: Do not allow mixing list types * smarty: Use Markdown\fB\(aq\fPs internal smartypants parser * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
+Enable extensions to Markdown syntax. Extensions are formatting that is not part of the standard Markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about Markdown extensions, see \X'tty: link https://python-markdown.github.io/extensions/'\fI\%https://python\-markdown.github.io/extensions/\fP\X'tty: link' This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * codehilite: Add code highlighting via Pygments * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * legacy_attrs: Use legacy element attributes * legacy_em: Use legacy underscore handling for connected words * meta: Metadata in the document * nl2br: Treat newlines as hard breaks * sane_lists: Do not allow mixing list types * smarty: Use Markdown\fB\(aq\fPs internal smartypants parser * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1102,7 +1098,7 @@ Title for any generated in\-line table of contents.
 .INDENT 0.0
 .TP
 .B \-\-fb2\-genre
-Genre for the book. Choices: sf_history, sf_action, sf_epic, sf_heroic, sf_detective, sf_cyberpunk, sf_space, sf_social, sf_horror, sf_humor, sf_fantasy, sf, det_classic, det_police, det_action, det_irony, det_history, det_espionage, det_crime, det_political, det_maniac, det_hard, thriller, detective, prose_classic, prose_history, prose_contemporary, prose_counter, prose_rus_classic, prose_su_classics, love_contemporary, love_history, love_detective, love_short, love_erotica, adv_western, adv_history, adv_indian, adv_maritime, adv_geo, adv_animal, adventure, child_tale, child_verse, child_prose, child_sf, child_det, child_adv, child_education, children, poetry, dramaturgy, antique_ant, antique_european, antique_russian, antique_east, antique_myths, antique, sci_history, sci_psychology, sci_culture, sci_religion, sci_philosophy, sci_politics, sci_business, sci_juris, sci_linguistic, sci_medicine, sci_phys, sci_math, sci_chem, sci_biology, sci_tech, science, comp_www, comp_programming, comp_hard, comp_soft, comp_db, comp_osnet, computers, ref_encyc, ref_dict, ref_ref, ref_guide, reference, nonf_biography, nonf_publicism, nonf_criticism, design, nonfiction, religion_rel, religion_esoterics, religion_self, religion, humor_anecdote, humor_prose, humor_verse, humor, home_cooking, home_pets, home_crafts, home_entertain, home_health, home_garden, home_diy, home_sport, home_sex, home   See: \fI\%http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres\fP for a complete list with descriptions.
+Genre for the book. Choices: sf_history, sf_action, sf_epic, sf_heroic, sf_detective, sf_cyberpunk, sf_space, sf_social, sf_horror, sf_humor, sf_fantasy, sf, det_classic, det_police, det_action, det_irony, det_history, det_espionage, det_crime, det_political, det_maniac, det_hard, thriller, detective, prose_classic, prose_history, prose_contemporary, prose_counter, prose_rus_classic, prose_su_classics, love_contemporary, love_history, love_detective, love_short, love_erotica, adv_western, adv_history, adv_indian, adv_maritime, adv_geo, adv_animal, adventure, child_tale, child_verse, child_prose, child_sf, child_det, child_adv, child_education, children, poetry, dramaturgy, antique_ant, antique_european, antique_russian, antique_east, antique_myths, antique, sci_history, sci_psychology, sci_culture, sci_religion, sci_philosophy, sci_politics, sci_business, sci_juris, sci_linguistic, sci_medicine, sci_phys, sci_math, sci_chem, sci_biology, sci_tech, science, comp_www, comp_programming, comp_hard, comp_soft, comp_db, comp_osnet, computers, ref_encyc, ref_dict, ref_ref, ref_guide, reference, nonf_biography, nonf_publicism, nonf_criticism, design, nonfiction, religion_rel, religion_esoterics, religion_self, religion, humor_anecdote, humor_prose, humor_verse, humor, home_cooking, home_pets, home_crafts, home_entertain, home_health, home_garden, home_diy, home_sport, home_sex, home   See: \X'tty: link http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres'\fI\%http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres\fP\X'tty: link' for a complete list with descriptions.
 .UNINDENT
 .INDENT 0.0
 .TP

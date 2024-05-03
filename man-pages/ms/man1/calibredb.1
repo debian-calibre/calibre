@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "April 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "Mei 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ tunjuk mesej bantuan ini dan keluar
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \fI\%http://hostname:port/#library_id\fP sebagai contoh, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Laluan ke pustaka calibre. Lalai gunakan laluan tersimpan dalam tetapan. Anda juga boleh sambungkan dengan pelayan Kandungan calibre untuk membuat tindakan terhadap pustaka jauh. Untuk membuatnya gunakan URL dalam bentuk: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' sebagai contoh, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id ialah id pustaka bagi pustaka yang mahu disambungkan dengan pelayan Kandungan. Anda boleh gunakan nilai khas library_id \- untuk dapatkan senarai id pustaka yang tersedia dalam pelayan. Untuk perincian bagaimana hendak memasang melalui pelayan Kandungan, sila rujuk \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ tunjuk nombor versi program dan keluar
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ Heading for the template column. Default: template. This option is ignored if th
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [options] file1 file2 file3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -344,11 +338,9 @@ Process folders recursively
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +356,9 @@ Do not use the Recycle Bin
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id fail_ebuku
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -389,11 +379,9 @@ Jangan ganti format jika ia sudah wujud
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +392,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -426,11 +412,9 @@ Cetak data meta dalam bentuk OPF (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -456,11 +440,9 @@ Senarai nama medan data meta yang boleh digunakan dengan pilihan \fI\%\-\-field\
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -544,11 +526,9 @@ Tukar laluan menjadi huruf kecil.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -674,11 +654,9 @@ Ganti kulit buku sedia ada bila menjana katalog. Lalai: \fB\(aq\fPFalse\fB\(aq\f
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -699,11 +677,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] label name datatype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -726,14 +702,12 @@ Lajur ini menyimpan tag seperti data (iaitu nilai berbilang dipisah\-tanda\-koma
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
 
 
 Senaraikan lajur suai tersedia. Tunjuk label dan id lajur.
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -747,15 +721,13 @@ Tunjuk perincian untuk setiap lajur.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
 
 
 Buang lajur suai yang dikenalpasti oleh label. Anda boleh lihat lajur
 tersedia dengan perintah custom_columns.
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -769,11 +741,9 @@ Jangan tanya untuk pengesahan
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -792,11 +762,9 @@ Jika lajur menyimpan nilai berbilang, tambah nilai yang dinyatakan pada mana\-ma
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -819,11 +787,9 @@ Pasti mahu buat pemulihan. Perintah tidak akan berjalan melainkan pilihan ini di
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -859,11 +825,9 @@ Vacuum the full text search database. This can be very slow and memory intensive
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -900,11 +864,9 @@ Lebar maksimum baris tunggal dalam output. Lalai ialah mengesan saiz skrin.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -925,11 +887,9 @@ Biasanya, perintah ini hanya beroperasi pada buku yang mempunyai fail OPF yang t
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -944,11 +904,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -971,11 +929,9 @@ Hanya kemaskini data meta dalam fail bagi format yang dinyatakan. Nyatakan ia be
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -996,11 +952,9 @@ Bilangan keputusan makismum yang dikembalikann. Lalai ialah semua keputusan.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1039,11 +993,9 @@ Wait till all books are indexed, showing indexing progress periodically
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
