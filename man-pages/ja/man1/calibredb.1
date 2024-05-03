@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "4月 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "5月 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -139,7 +137,7 @@ calibredb を含めてローカルなコンピュータ上で実行されるす�
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibreライブラリへのパス。デフォルトでは設定画面で指定されたpathが使用されます。リモートライブラリに対して操作を行うためにcalibreコンテンツサーバに接続することも可能です。コンテンツサーバに接続するには、\fI\%http://hostname:port/#library_id\fP の形式のURLを指定します。例えば \fI\%http://localhost:8080/#mylibrary\fP のように指定します。library_id はコンテンツサーバ上の接続したいライブラリのIDです。特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \fI\%https://manual.calibre\-ebook.com/ja/generated/ja/calibredb.html\fP を参照してください。
+calibreライブラリへのパス。デフォルトでは設定画面で指定されたpathが使用されます。リモートライブラリに対して操作を行うためにcalibreコンテンツサーバに接続することも可能です。コンテンツサーバに接続するには、\X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' の形式のURLを指定します。例えば \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link' のように指定します。library_id はコンテンツサーバ上の接続したいライブラリのIDです。特殊な library_id として \- を指定すると、そのサーバ上で利用可能なライブラリの一覧を表示できます。コンテンツサーバ経由でのアクセスを設定する方法について詳しくは \X'tty: link https://manual.calibre-ebook.com/ja/generated/ja/calibredb.html'\fI\%https://manual.calibre\-ebook.com/ja/generated/ja/calibredb.html\fP\X'tty: link' を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -165,11 +163,9 @@ calibreコンテンツサーバ接続用ユーザ名
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -240,11 +236,9 @@ Heading for the template column. Default: template. This option is ignored if th
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [options] file1 file2 file3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -339,11 +333,9 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -359,11 +351,9 @@ idsに指定された本をデータベースから削除。idsには数字を�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -384,11 +374,9 @@ Add the file as an extra data file to the book, not an ebook format
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -399,11 +387,9 @@ fmt で指定した形式を id で指定した本から削除します。id は
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -419,11 +405,9 @@ OPF 形式 (XML) で書誌を表示
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -449,11 +433,9 @@ is no need to specify an OPF file.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -537,11 +519,9 @@ Save any data files associated with the book when saving the book このスイ�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -671,11 +651,9 @@ GUIカタログビルだーで作成された名前つきプリセットを使�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -695,11 +673,9 @@ calibredb \fBsaved_searches\fP remove search_name
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] label name datatype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -722,11 +698,9 @@ datatypeは以下のいずれか: bool, comments, composite, datetime, enumerati
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -742,11 +716,9 @@ calibredb custom_columns [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -763,11 +735,9 @@ custom_columns コマンドで存在するカスタム列を見ることがで�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -785,11 +755,9 @@ custom_columns コマンドでカスタム列の名前のリストが取得で�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -808,11 +776,9 @@ calibreライブラリの各ディレクトリに保存されている OPF フ�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -848,11 +814,9 @@ CSVで出力
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -888,11 +852,9 @@ DSVファイルのタイプ。選択肢: excel, excel\-tab, unix
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -913,11 +875,9 @@ calibredb backup_metadata [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -933,11 +893,9 @@ calibredb clone path/to/new/library
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -962,11 +920,9 @@ book_id に特別な値 \(aqall\(aq を指定すると、すべての本が更�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -982,11 +938,9 @@ calibredb search [options] search expression
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1021,11 +975,9 @@ The speed of indexing. Use fast for fast indexing using all your computers resou
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

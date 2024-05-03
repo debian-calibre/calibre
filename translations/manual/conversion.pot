@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.9.0\n"
+"Project-Id-Version: calibre 7.10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 08:00+0530\n"
+"POT-Creation-Date: 2024-05-03 07:29+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "This document will refer mainly to the conversion settings as found in the conversion dialog, pictured below. All these settings are also available via command line interface to conversion, documented at :doc:`generated/en/ebook-convert`. In calibre, you can obtain help on any individual setting by holding your mouse over it, a tooltip will appear describing the setting."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:-1
+#: ../../home/kovid/work/calibre/manual/conversion.rst:24
 msgid "E-book conversion dialog"
 msgstr ""
 
@@ -45,7 +45,7 @@ msgstr ""
 msgid "The first thing to understand about the conversion system is that it is designed as a pipeline. Schematically, it looks like this:"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:-1
+#: ../../home/kovid/work/calibre/manual/conversion.rst:45
 msgid "The conversion pipeline"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr ""
 msgid "Heuristic processing provides a variety of functions which can be used to try and detect and correct common problems in poorly formatted input documents.  Use these functions if your input document suffers from poor formatting. Because these functions rely on common patterns, be aware that in some cases an option may lead to worse results, so use with care.  As an example, several of these options will remove all non-breaking-space entities, or may include false positive matches relating to the function."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:301
+#: ../../home/kovid/work/calibre/manual/conversion.rst:299
 msgid ":guilabel:`Enable heuristic processing`"
 msgstr ""
 
@@ -273,7 +273,7 @@ msgstr ""
 msgid "This option activates calibre's :guilabel:`Heuristic processing` stage of the conversion pipeline. This must be enabled in order for various sub-functions to be applied"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:307
+#: ../../home/kovid/work/calibre/manual/conversion.rst:303
 msgid ":guilabel:`Unwrap lines`"
 msgstr ""
 
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Enabling this option will cause calibre to attempt to detect and correct hard line breaks that exist within a document using punctuation clues and line length. calibre will first attempt to detect whether hard line breaks exist, if they do not appear to exist calibre will not attempt to unwrap lines. The line-unwrap factor can be reduced if you want to 'force' calibre to unwrap lines."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:313
+#: ../../home/kovid/work/calibre/manual/conversion.rst:309
 msgid ":guilabel:`Line-unwrap factor`"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "This option controls the algorithm calibre uses to remove hard line breaks. For example, if the value of this option is 0.4, that means calibre will remove hard line breaks from the end of lines whose lengths are less than the length of 40% of all lines in the document. If your document only has a few line breaks which need correction, then this value should be reduced to somewhere between 0.1 and 0.2."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:328
+#: ../../home/kovid/work/calibre/manual/conversion.rst:315
 msgid ":guilabel:`Detect and markup unformatted chapter headings and sub headings`"
 msgstr ""
 
@@ -305,7 +305,7 @@ msgstr ""
 msgid "The inserted headings are not formatted, to apply formatting use the :guilabel:`Extra CSS` option under the Look and Feel conversion settings.  For example, to center heading tags, use the following::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:333
+#: ../../home/kovid/work/calibre/manual/conversion.rst:330
 msgid ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
 msgstr ""
 
@@ -313,7 +313,7 @@ msgstr ""
 msgid "Some publishers format chapter headings using multiple <h1> or <h2> tags sequentially. calibre's default conversion settings will cause such titles to be split into two pieces.  This option will re-number the heading tags to prevent splitting."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:344
+#: ../../home/kovid/work/calibre/manual/conversion.rst:335
 msgid ":guilabel:`Delete blank lines between paragraphs`"
 msgstr ""
 
@@ -321,7 +321,7 @@ msgstr ""
 msgid "This option will cause calibre to analyze blank lines included within the document.  If every paragraph is interleaved with a blank line, then calibre will remove all those blank paragraphs.  Sequences of multiple blank lines will be considered scene breaks and retained as a single paragraph. This option differs from the :guilabel:`Remove paragraph spacing` option under :guilabel:`Look and Feel` in that it actually modifies the HTML content, while the other option modifies the document styles.  This option can also remove paragraphs which were inserted using calibre's :guilabel:`Insert blank line` option."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:349
+#: ../../home/kovid/work/calibre/manual/conversion.rst:346
 msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
 msgstr ""
 
@@ -329,7 +329,7 @@ msgstr ""
 msgid "With this option calibre will attempt to detect common scene-break markers and ensure that they are center aligned. 'Soft' scene break markers, i.e. scene breaks only defined by extra white space, are styled to ensure that they will not be displayed in conjunction with page breaks."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:365
+#: ../../home/kovid/work/calibre/manual/conversion.rst:351
 msgid ":guilabel:`Replace scene breaks`"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 msgid "In general you should avoid using HTML tags, calibre will discard any tags and use pre-defined markup.  <hr /> tags, i.e. horizontal rules, and <img> tags are exceptions.  Horizontal rules can optionally be specified with styles, if you choose to add your own style be sure to include the 'width' setting, otherwise the style information will be discarded.  Image tags can used, but calibre does not provide the ability to add the image during conversion, this must be done after the fact using the 'Edit book' feature."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:362
+#: ../../home/kovid/work/calibre/manual/conversion.rst:361
 msgid "Example image tag (place the image within an 'Images' folder inside the EPUB after conversion):"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgstr ""
 msgid "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:365
+#: ../../home/kovid/work/calibre/manual/conversion.rst:364
 msgid "Example horizontal rule with styles:"
 msgstr ""
 
@@ -357,7 +357,7 @@ msgstr ""
 msgid "<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-bottom: 2px groove black;\"/>"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:373
+#: ../../home/kovid/work/calibre/manual/conversion.rst:367
 msgid ":guilabel:`Remove unnecessary hyphens`"
 msgstr ""
 
@@ -365,7 +365,7 @@ msgstr ""
 msgid "calibre will analyze all hyphenated content in the document when this option is enabled.  The document itself is used as a dictionary for analysis.  This allows calibre to accurately remove hyphens for any words in the document in any language, along with made-up and obscure scientific words.  The primary drawback is words appearing only a single time in the document will not be changed.  Analysis happens in two passes, the first pass analyzes line endings.  Lines are only unwrapped if the word exists with or without a hyphen in the document.  The second pass analyzes all hyphenated words throughout the document, hyphens are removed if the word exists elsewhere in the document without a match."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:377
+#: ../../home/kovid/work/calibre/manual/conversion.rst:375
 msgid ":guilabel:`Italicize common words and patterns`"
 msgstr ""
 
@@ -373,7 +373,7 @@ msgstr ""
 msgid "When enabled, calibre will look for common words and patterns that denote italics and italicize them.  Examples are common text conventions such as ~word~ or phrases that should generally be italicized, e.g. latin phrases like 'etc.' or 'et cetera'."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:381
+#: ../../home/kovid/work/calibre/manual/conversion.rst:379
 msgid ":guilabel:`Replace entity indents with CSS indents`"
 msgstr ""
 
@@ -445,7 +445,7 @@ msgstr ""
 msgid "There are a few more options in this section."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:456
+#: ../../home/kovid/work/calibre/manual/conversion.rst:452
 msgid ":guilabel:`Insert metadata as page at start of book`"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgstr ""
 msgid "One of the great things about calibre is that it allows you to maintain very complete metadata about all of your books, for example, a rating, tags, comments, etc. This option will create a single page with all this metadata and insert it into the converted e-book, typically just after the cover. Think of it as a way to create your own customised book jacket."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:463
+#: ../../home/kovid/work/calibre/manual/conversion.rst:458
 msgid ":guilabel:`Remove first image`"
 msgstr ""
 
@@ -617,7 +617,7 @@ msgstr ""
 msgid "TXT input supports a number of options to differentiate how paragraphs are detected."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:689
+#: ../../home/kovid/work/calibre/manual/conversion.rst:687
 msgid ":guilabel:`Paragraph style: Auto`"
 msgstr ""
 
@@ -625,7 +625,7 @@ msgstr ""
 msgid "Analyzes the text file and attempts to automatically determine how paragraphs are defined.  This option will generally work fine, if you achieve undesirable results try one of the manual options."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:697
+#: ../../home/kovid/work/calibre/manual/conversion.rst:691
 msgid ":guilabel:`Paragraph style: Block`"
 msgstr ""
 
@@ -633,7 +633,7 @@ msgstr ""
 msgid "Assumes one or more blank lines are a paragraph boundary::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:704
+#: ../../home/kovid/work/calibre/manual/conversion.rst:699
 msgid ":guilabel:`Paragraph style: Single`"
 msgstr ""
 
@@ -641,7 +641,7 @@ msgstr ""
 msgid "Assumes that every line is a paragraph::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:715
+#: ../../home/kovid/work/calibre/manual/conversion.rst:706
 msgid ":guilabel:`Paragraph style: Print`"
 msgstr ""
 
@@ -649,7 +649,7 @@ msgstr ""
 msgid "Assumes that every paragraph starts with an indent (either a tab or 2+ spaces). Paragraphs end when the next line that starts with an indent is reached::"
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:719
+#: ../../home/kovid/work/calibre/manual/conversion.rst:717
 msgid ":guilabel:`Paragraph style: Unformatted`"
 msgstr ""
 
@@ -657,7 +657,7 @@ msgstr ""
 msgid "Assumes that the document has no formatting, but does use hard line breaks.  Punctuation and median line length are used to attempt to re-create paragraphs."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:723
+#: ../../home/kovid/work/calibre/manual/conversion.rst:721
 msgid ":guilabel:`Formatting style: Auto`"
 msgstr ""
 
@@ -665,7 +665,7 @@ msgstr ""
 msgid "Attempts to detect the type of formatting markup being used.  If no markup is used then heuristic formatting will be applied."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:727
+#: ../../home/kovid/work/calibre/manual/conversion.rst:725
 msgid ":guilabel:`Formatting style: Heuristic`"
 msgstr ""
 
@@ -673,7 +673,7 @@ msgstr ""
 msgid "Analyzes the document for common chapter headings, scene breaks, and italicized words and applies the appropriate HTML markup during conversion."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:734
+#: ../../home/kovid/work/calibre/manual/conversion.rst:729
 msgid ":guilabel:`Formatting style: Markdown`"
 msgstr ""
 
@@ -681,7 +681,7 @@ msgstr ""
 msgid "calibre also supports running TXT input though a transformation preprocessor known as Markdown. Markdown allows for basic formatting to be added to TXT documents, such as bold, italics, section headings, tables, lists, a Table of Contents, etc. Marking chapter headings with a leading # and setting the chapter XPath detection expression to \"//h:h1\" is the easiest way to have a proper table of contents generated from a TXT document. You can learn more about the Markdown syntax at `daringfireball <https://daringfireball.net/projects/markdown/syntax>`_."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/manual/conversion.rst:737
+#: ../../home/kovid/work/calibre/manual/conversion.rst:736
 msgid ":guilabel:`Formatting style: None`"
 msgstr ""
 

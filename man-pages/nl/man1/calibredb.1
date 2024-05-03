@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "april 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "mei 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 %prof commando [opties] [parameters]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -153,7 +151,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Pad naar calibre bibliotheek. Standaard wordt het pad gebruikt opgeslagen in de instellingen. U kan ook met een calibre Content server verbinden om te wijzigen in bibliotheken op afstand. Om dit te doen, gebruik een URL van de vorm: \fI\%http://hostname:port/#library_id\fP bv, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id is de id van de bibliotheek waarmee u wilt verbinden op de Content server. U kan de speciale library_id gebruiken van \- om een lijst te krijgen van beschikbare ids op de server. Voor details over het toegang krijgen via een Content server, zie \fI\%https://manual.calibre\-ebook.com/nl/generated/nl/calibredb.html\fP\&.
+Pad naar calibre bibliotheek. Standaard wordt het pad gebruikt opgeslagen in de instellingen. U kan ook met een calibre Content server verbinden om te wijzigen in bibliotheken op afstand. Om dit te doen, gebruik een URL van de vorm: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' bv, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id is de id van de bibliotheek waarmee u wilt verbinden op de Content server. U kan de speciale library_id gebruiken van \- om een lijst te krijgen van beschikbare ids op de server. Voor details over het toegang krijgen via een Content server, zie \X'tty: link https://manual.calibre-ebook.com/nl/generated/nl/calibredb.html'\fI\%https://manual.calibre\-ebook.com/nl/generated/nl/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -179,11 +177,9 @@ toon programmaversie en stop
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [opties]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -254,11 +250,9 @@ Kop voor de sjabloonkolom. Standaard: stan%daard. Deze optie wordt genegeerd als
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb toevoegen [opties] bestand1 bestand2 bestand3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -353,11 +347,9 @@ Verwerk mappen recursief
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb verwijder ID\(aqs
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -373,11 +365,9 @@ Gebruik de Prullenbak niet
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [opties] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -398,11 +388,9 @@ Vervang het formaat niet als het al bestaat
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [opties] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -413,11 +401,9 @@ Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanha
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [opties] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -434,11 +420,9 @@ Metadata in OPF\-formaat (XML) afdrukken
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -464,11 +448,9 @@ Toon de metadata veldnamen die kunnen worden gebruikt met de \fI\%\-\-field\fP o
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -552,11 +534,9 @@ Paden naar kleine letters omzetten.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -682,11 +662,9 @@ Vervang bestaande omslag bij genereren van de catalogus. Standaard: \fB\(aq\fPFa
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -707,11 +685,9 @@ Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanha
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [opties] label naam gegevenstype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
@@ -737,11 +713,9 @@ Deze kolom slaat label like data op (i.e. waarden gescheiden door komma\fB\(aq\f
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -757,11 +731,9 @@ Toon details voor iedere kolom.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -777,11 +749,9 @@ Niet om bevestiging vragen
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -799,11 +769,9 @@ Als de kolom meerde waardes bevat, voeg dan de opgegeven waarden aan de bestaand
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -826,11 +794,9 @@ Het herstel echt uitvoeren. Het commando zal niet uitgevoerd worden tenzij deze 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [opties]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -866,11 +832,9 @@ Leeg de volledige tekstzoek database. Dit kan erg traag en geheugenintensief zij
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [opties]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -907,11 +871,9 @@ De maximale breedte van een enkele regel in de uitvoer. Standaard is dit hetzelf
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [opties]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .INDENT 0.0
@@ -935,11 +897,9 @@ Normaal werkt dit commando enkel op boeken met verouderde OPF bestanden. Deze op
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb kloon pad/naar/nieuw/bibliotheek
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -954,11 +914,9 @@ Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanha
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb ingevoegde_metadata [opties] boek_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -980,11 +938,9 @@ Update alleen de metadata in specifieke bestands types. Gebruik dit meerdere ker
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [opties] zoekexpressie
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1005,11 +961,9 @@ Het maximum aantal weer te geven resultaten. Standaard is alle resultaten.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1048,11 +1002,9 @@ Wacht tot alle boeken geïndexeerd zijn, indexeringsvoortgang wordt regelmatig g
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] zoekexpressie
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "април 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "май 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ calibre библиотеки, първо трябва да настроите у
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Път към calibre библиотеката. По подразбиране е да използвате пътя, съхранен в настройките. Може също така да се свържете към calibre Съдържание сървър, за да се извършат действия на отдалечени библиотеки. За да го направите, използвайте URL адрес на формуляра: \fI\%http://hostname:port/#library_id\fP for example, \fI\%http://localhost:8080/#mylibrary\fP\&. library_id е идентификационният номер за библиотека на библиотеката, към която искате да се свържете на сървъра Съдържание. Може да използвате специална library_id стойност на \- да получите списък с библиотечни идентификатори налични на сървъра. За подробности как да настроите достъпа чрез сървър за съдържание вижте \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Път към calibre библиотеката. По подразбиране е да използвате пътя, съхранен в настройките. Може също така да се свържете към calibre Съдържание сървър, за да се извършат действия на отдалечени библиотеки. За да го направите, използвайте URL адрес на формуляра: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' for example, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id е идентификационният номер за библиотека на библиотеката, към която искате да се свържете на сървъра Съдържание. Може да използвате специална library_id стойност на \- да получите списък с библиотечни идентификатори налични на сървъра. За подробности как да настроите достъпа чрез сървър за съдържание вижте \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ calibre библиотеки, първо трябва да настроите у
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb списък [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ calibredb списък [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb добавяне [опции] файл1 файл2 файл3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -344,11 +338,9 @@ calibredb добавяне [опции] файл1 файл2 файл3 ...
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb премахване на ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +356,9 @@ calibredb премахване на ids
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -389,11 +379,9 @@ Add the file as an extra data file to the book, not an ebook format
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +392,9 @@ calibredb remove_format [options] id fmt
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -425,11 +411,9 @@ id е id номер от командата за търсене.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -455,11 +439,9 @@ book_id от OPF файла metadata.opf. book_id е идентификацио�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -543,11 +525,9 @@ Save any data files associated with the book when saving the book Задаван
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -673,11 +653,9 @@ Regex описващи етикети, за изключване като жан
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -698,11 +676,9 @@ calibredb \fBsaved_searches\fP remove search_name
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] тип данни за име на етикет
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -725,11 +701,9 @@ calibredb add_custom_column [options] тип данни за име на ети�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -745,11 +719,9 @@ calibredb custom_columns [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] етикет
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -766,11 +738,9 @@ calibredb remove_custom_column [options] етикет
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -789,11 +759,9 @@ calibredb set_custom [options] column id value
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -816,11 +784,9 @@ calibredb restore_database [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -856,11 +822,9 @@ calibredb check_library [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -897,11 +861,9 @@ calibredb list_categories [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -922,11 +884,9 @@ calibredb backup_metadata [options]
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb клонинг път/към/нова/библиотека
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -941,11 +901,9 @@ calibredb клонинг път/към/нова/библиотека
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -967,11 +925,9 @@ calibredb embed_metadata [options] book_id
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -992,11 +948,9 @@ calibredb search [options] search expression
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1035,11 +989,9 @@ reindex команда. Ако не са посочени идентификат
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] израз за търсене
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

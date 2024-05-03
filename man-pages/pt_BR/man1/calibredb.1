@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "abril 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "maio 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Caminho para a biblioteca calibre. O padrão é usar o caminho armazenado nas configurações. Você também pode se conectar a um servidor de conteúdo do calibre para executar ações em bibliotecas remotas. Para fazer isso, use uma URL de formulário: \fI\%http://hostname:port/#library_id\fP por exemplo,  \fI\%http://localhost:8080/#mylibrary\fP\&. library_id é o ID da biblioteca da biblioteca à qual você deseja se conectar no Servidor de Conteúdo. Você pode usar o valor de library_id \- para obter uma lista de IDs de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um Servidor de Conteúdo, consulte \fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\&.
+Caminho para a biblioteca calibre. O padrão é usar o caminho armazenado nas configurações. Você também pode se conectar a um servidor de conteúdo do calibre para executar ações em bibliotecas remotas. Para fazer isso, use uma URL de formulário: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' por exemplo,  \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id é o ID da biblioteca da biblioteca à qual você deseja se conectar no Servidor de Conteúdo. Você pode usar o valor de library_id \- para obter uma lista de IDs de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um Servidor de Conteúdo, consulte \X'tty: link https://manual.calibre-ebook.com/pt/generated/pt/calibredb.html'\fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ mostrar número da versão do programa e sair
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [opções]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -243,11 +239,9 @@ Cabeçalho para a coluna do modelo. Padrão: template. Esta opção é ignorada 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [opções] arquivos1 arquivo2 arquivo3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -341,11 +335,9 @@ Processar pastas recursivamente
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -361,11 +353,9 @@ Não usar a Lixeira
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -386,11 +376,9 @@ Não substituir o formato se ele já existir
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -401,11 +389,9 @@ Sempre que você for passar argumentos para calibredb que possuem espaços em br
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metada[options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -422,11 +408,9 @@ Imprimir metadados num formulário OPF (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [opções] book_id [/caminho/para/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -452,11 +436,9 @@ Listar os nomes dos campos de metadados que podem ser usados ​​com a opção
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [opções] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -540,11 +522,9 @@ Converter caminhos para letras minúsculas
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -670,11 +650,9 @@ Substituir capas existentes ao gerar o catálogo. Padrão: \fB\(aq\fPFalse\fB\(a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -695,11 +673,9 @@ Sempre que você for passar argumentos para calibredb que possuem espaços em br
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [opções] identificador nome tipo\-de\-dado
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -722,11 +698,9 @@ Este campo armazena dados como etiquetas (ou seja, vários valores separados por
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -742,11 +716,9 @@ Mostrar detalhes para cada campo.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column[options]label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -763,11 +735,9 @@ Não pedir confirmação
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -786,11 +756,9 @@ Se o campo possibilitar armazenar diversos valores, não sobrescreva os valores 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [opções]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -814,11 +782,9 @@ Realmente faz a recuperação. O comando não será executado, a menos que esta 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -854,11 +820,9 @@ Limpar a base de dados da pesquisa no texto completo. Isto pode ser muito lento 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [opções]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -895,11 +859,9 @@ A largura máxima de uma única linha na saída. O padrão é detectar o tamanho
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -920,11 +882,9 @@ Normalmente, este comando apenas opera em livros que tenham arquivos OPF desatua
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -939,11 +899,9 @@ Sempre que você for passar argumentos para calibredb que possuem espaços em br
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -973,11 +931,9 @@ Apenas atualizar os metadados em arquivos do formato especificado. Especifique\-
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -998,11 +954,9 @@ O número máximo de resultados para retornar. O padrão é todos os resultados.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [opções] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1041,11 +995,9 @@ Aguarde até que todos os livros sejam indexados, exibindo periodicamente o prog
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [opções] expressão de busca
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

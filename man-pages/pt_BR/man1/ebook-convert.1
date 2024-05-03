@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "abril 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "maio 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert arquivo_entrada arquivo_saída [opções]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ O formato de e\-book de saída é adivinhado a partir da extensão de arquivo do
 Depois de especificar o arquivo de entrada e saída, você pode personalizar a conversão especificando várias opções. As opções disponíveis dependem dos tipos de arquivo de entrada e saída. Para obter ajuda sobre eles, especifique o arquivo de entrada e saída e, em seguida, use a opção \-h.
 .sp
 Para documentação completa do sistema de conversão, consulte
-\fI\%Conversão de E\-book\fP
+\X'tty: link #conversion'\fI\%Conversão de E\-book\fP\X'tty: link'
 .sp
 Sempre que você for passar argumentos para \fBebook\-convert\fP que possuem espaços em branco, coloque o argumento dentro de aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ de entrada e saída, por isso você deve sempre verificar com:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -306,7 +302,7 @@ Quando calibre remove linhas em branco entre parágrafos, ele insere automaticam
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Converta aspas, travessões e reticências em seus equivalentes tipograficamente corretos. Para detalhes, veja \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Converta aspas, travessões e reticências em seus equivalentes tipograficamente corretos. Para detalhes, veja \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP

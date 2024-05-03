@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Nisan 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "Mayıs 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb komut [seçenekler] [değişkenler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -139,7 +137,7 @@ bu yardım iletisini göster ve çık
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Calibre kitaplığının yolu. Varsayılan, ayarlarda saklanan yolu kullanmaktır. Uzak kitaplıklarda eylemler gerçekleştirmek için bir calibre İçerik sunucusuna da bağlanabilirsiniz. Bunu yapmak için şu biçimde bir URL kullanın: \fI\%http:/\fP/sunucuadı:port/#kitaplık_no örneğin, \fI\%http://localhost:8080/#mylibrary\fP\&.kitaplık_no, İçerik sunucusunda bağlanmak istediğiniz kitaplığın kitaplık kimliğidir. Sunucuda bulunan kitaplık kimliklerinin bir listesini almak için \-\fB\(aq\fPnin özel kimlik numarası değerini kullanabilirsiniz. Bir İçerik sunucusu üzerinden erişimin nasıl kurulacağıyla ilgili ayrıntılar için bakınız \fI\%https://manual.calibre\-ebook.com/tr/generated/tr/calibredb.html\fP\&.
+Calibre kitaplığının yolu. Varsayılan, ayarlarda saklanan yolu kullanmaktır. Uzak kitaplıklarda eylemler gerçekleştirmek için bir calibre İçerik sunucusuna da bağlanabilirsiniz. Bunu yapmak için şu biçimde bir URL kullanın: \X'tty: link http:/'\fI\%http:/\fP\X'tty: link'/sunucuadı:port/#kitaplık_no örneğin, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&.kitaplık_no, İçerik sunucusunda bağlanmak istediğiniz kitaplığın kitaplık kimliğidir. Sunucuda bulunan kitaplık kimliklerinin bir listesini almak için \-\fB\(aq\fPnin özel kimlik numarası değerini kullanabilirsiniz. Bir İçerik sunucusu üzerinden erişimin nasıl kurulacağıyla ilgili ayrıntılar için bakınız \X'tty: link https://manual.calibre-ebook.com/tr/generated/tr/calibredb.html'\fI\%https://manual.calibre\-ebook.com/tr/generated/tr/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -165,11 +163,9 @@ programın sürüm numarasını göster ve çık
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -240,11 +236,9 @@ Alan listesinde \fB\(dq\fPtemplate\fB\(dq\fP varsa çalıştırılacak şablonu 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 %p rog add [seçenekler] dosya1 dosya2 dosya3 ... Belirtilen dosyaları veritabanına kitap olarak ekleyin. Ayrıca klasörleri de belirtebilirsiniz, klasörlerle ilgili aşağıdaki seçeneklere bakınız.
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -336,11 +330,9 @@ Klasörleri, alt klasörleri ile birlikte işle
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb kimlikleri kaldır
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -356,11 +348,9 @@ Geri Dönüşüm Kutusu kullanmayın
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [seçenekler] id e\-kitap_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -381,11 +371,9 @@ Mevcut biçimi değiştirmeyin
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [seçenekler] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -396,11 +384,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [seçenekler] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -417,11 +403,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [seçenekler] kitap_kimlik_no [/yol/üstveri.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -446,11 +430,9 @@ Ayarlanacak alan. Biçimi alan_ismi:değer şeklindedir, örneğin: \fI\%\-\-fie
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [seçenekler] kimlik numaraları
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -534,11 +516,9 @@ Yolları küçük harflere dönüştür.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -664,11 +644,9 @@ Replace existing cover when generating the catalog. Default: \fB\(aq\fPFalse\fB\
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [seçenekler] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -684,11 +662,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [seçenekler] etiket isim veritürü
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -710,11 +686,9 @@ Bu sütun etiket benzeri verileri (virgülle ayrılmış değerleri) içerir. Sa
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb özel_sütunlar [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -730,11 +704,9 @@ Her sütun için ayrıntıları göster.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [seçenekler] etiket
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -751,11 +723,9 @@ Onaylama sorma
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [seçenekler] sütun kimlik değeri
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -773,11 +743,9 @@ Sütun birden çok değer saklıyorsa, belirtilen değerleri üzerine yazmak yer
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -800,11 +768,9 @@ Kurtarmayı gerçekleştir. Komut bu seçeneği seçmediğinizde çalışmayacak
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -840,11 +806,9 @@ Tam metin arama veri tabanını boşaltın. Bu, veri tabanının boyutuna bağl�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -881,11 +845,9 @@ Girdideki bir satırın en fazla genişliği. Varsayılanı ekranın boyutunu al
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [seçenekler]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -905,11 +867,9 @@ Normal olarak bu komut sadece tarihi geçmiş OPF dosyaları içeren kitaplarda 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -924,11 +884,9 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [seçenekler] kitap_kimliği
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -951,11 +909,9 @@ Sadece belirtilen biçimlerdeki dosyaların üstbilgilerini güncelle. Birden ç
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [seçenekler] arama ifadesi
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -973,11 +929,9 @@ Azami döndürülecek sonuç sayısı. Varsayılan tüm sonuçlardır.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [seçenekler] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1006,11 +960,9 @@ Tüm kitaplar indekslenene kadar bekleyin, indeksleme ilerlemesini periyodik ola
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [seçenekler] arama ifadesi
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

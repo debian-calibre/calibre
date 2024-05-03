@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "april 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "maj 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb command [options] [arguments]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en URL av formen: \fI\%http://hostname:port/#bibliotek_id\fP till exempel \fI\%http://localhost:8080/#mittbibliotek\fP\&. Bibliotek_id är bibliotekets identifierare för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteksidentifierare tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i \fI\%https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html\fP\&.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en URL av formen: \X'tty: link http://hostname:port/#bibliotek_id'\fI\%http://hostname:port/#bibliotek_id\fP\X'tty: link' till exempel \X'tty: link http://localhost:8080/#mittbibliotek'\fI\%http://localhost:8080/#mittbibliotek\fP\X'tty: link'\&. Bibliotek_id är bibliotekets identifierare för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteksidentifierare tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i \X'tty: link https://manual.calibre-ebook.com/sv/generated/sv/calibredb.html'\fI\%https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ visar programmets versionsnummer och avsluta
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ Rubrik till mallkolumnen. Standard: template. Det här alternativet ignoreras om
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add [options] file1 file2 file3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -344,11 +338,9 @@ Bearbeta mappar rekursivt
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +356,9 @@ Använd inte Papperskorgen
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -389,11 +379,9 @@ Ersätt inte formatet om det redan finns
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [options] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +392,9 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [options] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -425,11 +411,9 @@ Skriv metadata i OPF\-form (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -454,11 +438,9 @@ Ange namn på metadatafälten som kan användas med flaggan \fI\%\-\-field\fP
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -542,11 +524,9 @@ Konvertera sökvägar till gemener.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -672,11 +652,9 @@ Ersätt befintliga omslag när du skapar katalog.  Standard: \fB\(aq\fPFalse\fB\
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -697,11 +675,9 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [options] label name datatype
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -724,11 +700,9 @@ Denna kolumn lagrar taggar som data (dvs. flera kommaseparerade värden). Gälle
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -744,11 +718,9 @@ Visa detaljer för varje kolumn.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -765,11 +737,9 @@ Fråga inte efter bekräftelse
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -788,11 +758,9 @@ Om kolumnen lagrar flera värden, lägg till de angivna värdena till de befintl
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -815,11 +783,9 @@ Verkligen gör återställningen. Kommandot kommer inte köras om det här alter
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -855,11 +821,9 @@ Rensa heltextsökningsdatabasen. Detta kan vara mycket långsamt och minneskräv
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -896,11 +860,9 @@ Största bredd på en enskild rad i utmatning. Standardinställningen är att up
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -921,11 +883,9 @@ Normalt fungerar det här kommandot endast på böcker som har inaktuella OPF\-f
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone sökväg/till/nytt/bibliotek
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -939,11 +899,9 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [options] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -965,11 +923,9 @@ Uppdatera bara metadata i filer för ett särskilt format. Specificera det flera
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] sökuttryck
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -990,11 +946,9 @@ Högsta antalet resultat att returnera. Standard är alla resultat.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1033,11 +987,9 @@ Vänta tills alla böcker har indexerats och visar indexeringsförlopp med jämn
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_search [options] sökuttryck
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "aprīlis 19, 2024" "7.9.0" "calibre"
+.TH "CALIBREDB" "1" "maijs 03, 2024" "7.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb komanda [opcijas] [argumenti]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -144,7 +142,7 @@ parādīt šo palīdzības paziņojumu un iziet
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāto ceļu. Lai veiktu darbības attālinātās bibliotēkās, varat arī izveidot savienojumu ar calibre satura serveri. Lai to izdarītu, izmantojiet URL formu: \fI\%http://hostname:port/#library_id\fP, piemēram, \fI\%http://localhost:8080/#mylibrary\fP\&. Library_id ir tās bibliotēkas id, ar kuru vēlaties izveidot savienojumu ar satura serveri. Jūs varat izmantot īpašo library_id vērtību, lai serverī piekļūtu bibliotēkas identifikācijas sarakstam. Sīkāku informāciju, kā iestatīt piekļuvi, izmantojot satura serveri, skatiet sadaļā \fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\&.
+Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāto ceļu. Lai veiktu darbības attālinātās bibliotēkās, varat arī izveidot savienojumu ar calibre satura serveri. Lai to izdarītu, izmantojiet URL formu: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link', piemēram, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. Library_id ir tās bibliotēkas id, ar kuru vēlaties izveidot savienojumu ar satura serveri. Jūs varat izmantot īpašo library_id vērtību, lai serverī piekļūtu bibliotēkas identifikācijas sarakstam. Sīkāku informāciju, kā iestatīt piekļuvi, izmantojot satura serveri, skatiet sadaļā \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -170,11 +168,9 @@ parādīt programmas versijas numuru un iziet
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -245,11 +241,9 @@ Ceļš uz failu, kas satur veidni, kuru palaist, ja lauku sarakstā ir \fB\(dq\f
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb pievienot [opcijas] failu1 failu2 failu3 ...
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -344,11 +338,9 @@ Apstrādāt mapes rekursīvi
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -364,11 +356,9 @@ Neizmantojiet Atkritne
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_format [options] id ebook_file
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -389,11 +379,9 @@ Neaizvietot formātu, ja tāds jau pastāv
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_format [opcijas] id fmt
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -404,11 +392,9 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb show_metadata [opcijas] id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -425,11 +411,9 @@ Drukāt datus OPF formā (XML)
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_metadata [options] book_id [/path/to/metadata.opf]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -455,11 +439,9 @@ Ar \fI\%\-\-field\fP papildiespēju izmantojamo metadatu lauku nosaukumu sarakst
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb export [options] ids
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -543,11 +525,9 @@ Pārvērst ceļu nosaukumus uz apakšējo reģistru
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -677,11 +657,9 @@ Aizstāj esošo vāciņu, kad tiek ģenerēts katalogs. Noklusējums: \fB\(aq\fP
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb saved_searches [options] (list|add|remove)
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -702,11 +680,9 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb add_custom_column [opcijas] datu tipa etiķetes nosaukums
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -729,11 +705,9 @@ Opcija, kas pielāgo, kā tiks šajā slejā interpretēta datu vārdnīca. Tā 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb custom_columns [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -749,11 +723,9 @@ Rādīt katras slejas detaļas.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb remove_custom_column [options] label
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -770,11 +742,9 @@ Nepieprasīt apstiprinājumu
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb set_custom [options] column id value
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -793,11 +763,9 @@ Ja slejā tiek saglabātas vairākas vērtības, pievienot tām esošās vērtī
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb restore_database [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -820,11 +788,9 @@ Izpildīt atgūšanu. Šī komanda netiks izpildīta, kamēr netiks norādīta �
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb check_library [opcijas]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -860,11 +826,9 @@ Iztīriet pilna teksta meklēšanas datu bāzi. Tas var būt ļoti lēns un aiz�
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb list_categories [opcijas]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -901,11 +865,9 @@ Maksimālais rindas platums izvadē. Noklusētais \- mēģināt noteikt ekrāna 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb backup_metadata [options]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -926,11 +888,9 @@ Parasti šī komanda darbojas tikai ar grāmatām ar novecojušām OPF datnēm. 
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb clone path/to/new/library
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -945,11 +905,9 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb embed_metadata [opcijas] book_id
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -971,11 +929,9 @@ Atjaunināt metadatu failus tikai norādītajā formātā. Norādiet to vairāka
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb search [options] search expression
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -996,11 +952,9 @@ Maksimālais atgriezto rezultātu skaits. Pēc noklusējuma \- visi.
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 calibredb fts_index [options] enable/disable/status/reindex
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -1039,11 +993,9 @@ Pagaidiet līdz visas grāmatas tiks indeksētas, periodiski parādot indeksēš
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 % prog fts_search [opcijas] meklēšanas izteiksme
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp

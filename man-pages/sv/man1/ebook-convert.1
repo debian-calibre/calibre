@@ -27,17 +27,15 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "april 19, 2024" "7.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "maj 03, 2024" "7.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert input_file output_file [alternativ]
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -50,7 +48,7 @@ Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file.
 Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
 .sp
 För fullständig dokumentation om konverteringssystemet, gå till
-\fI\%Konvertering av e\-bok\fP
+\X'tty: link #conversion'\fI\%Konvertering av e\-bok\fP\X'tty: link'
 .sp
 När du skickar argument till \fBebook\-convert\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .sp
@@ -59,11 +57,9 @@ inmatning\- och utmatningsformat, därför bör du alltid kontrollera med:
 .INDENT 0.0
 .INDENT 3.5
 .sp
-.nf
-.ft C
+.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.ft P
-.fi
+.EE
 .UNINDENT
 .UNINDENT
 .sp
@@ -306,7 +302,7 @@ När calibre tar bort tomma rader mellan stycken, anger det automatiskt ett styc
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Konvertera rena citattecken, bindestreck och ellipser till deras typografiskt korrekta motsvarigheter. För detaljer, se \fI\%https://daringfireball.net/projects/smartypants\fP\&.
+Konvertera rena citattecken, bindestreck och ellipser till deras typografiskt korrekta motsvarigheter. För detaljer, se \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
