@@ -1,3 +1,19 @@
+calibre (7.10.0+ds-1) UNRELEASED; urgency=medium
+
+  * Use Emacs automatic edit mode
+  * Revert "Drop armhf from autopkgtest architecture list for 64bit time_t transition workaround"
+    This reverts commit bc38757b07c1884d55c401487684cd251eba518f.
+  * New upstream version 7.10.0+ds
+  * Rediff patches.
+    Drop 0062-Add-space-to-help-break-lines.patch: Upstream fixed
+    Drop 0061-Use-bold-font-for-man-pages.patch: Upstream fixed
+  * Remove unused sed script.
+    This fix script was no more needed because the problem was fixed by
+    upstream.
+  * Renumber patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 03 May 2024 20:16:59 +0900
+
 calibre (7.9.0+ds-2) unstable; urgency=medium
 
   * Rediff patches
