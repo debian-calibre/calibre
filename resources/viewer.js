@@ -6757,6 +6757,7 @@ return parser;
                 var ρσ_d = Object.create(null);
                 ρσ_d["default"] = (function(){
                     var ρσ_d = Object.create(null);
+                    ρσ_d["left"] = "menu-icon-on-hover";
                     ρσ_d["right"] = "progress";
                     return ρσ_d;
                 }).call(this);
@@ -6765,7 +6766,11 @@ return parser;
             }).call(this);
             ρσ_d["header"] = (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["default"] = Object.create(null);
+                ρσ_d["default"] = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["right"] = "menu-icon-on-hover";
+                    return ρσ_d;
+                }).call(this);
                 ρσ_d["category"] = "read_book";
                 return ρσ_d;
             }).call(this);
@@ -18641,43 +18646,53 @@ return this.__repr__();
         });
 
         function text_from_serialized_html(data, get_anchor_offset_map) {
-            var serialized_data, tag_map, ans, stack, child, ignore_text, anchor_offset_map, text_pos, node, src, x, aid;
+            var serialized_data, tag_map, ans, no_visit, ignore_text, stack, child, anchor_offset_map, text_pos, ρσ_unpack, node, text_ignored_in_parent, src, x, aid, ignore_text_in_node_and_children;
             serialized_data = JSON.parse(data);
             tag_map = serialized_data.tag_map;
             ans = [];
+            no_visit = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["script"] = true;
+                ρσ_d["style"] = true;
+                ρσ_d["title"] = true;
+                ρσ_d["head"] = true;
+                return ρσ_d;
+            }).call(this);
+            ignore_text = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["img"] = true;
+                ρσ_d["math"] = true;
+                ρσ_d["rt"] = true;
+                ρσ_d["rp"] = true;
+                ρσ_d["rtc"] = true;
+                return ρσ_d;
+            }).call(this);
+            ignore_text;
             if (tag_map) {
-                stack = [serialized_data.tree[2]];
+                stack = [[serialized_data.tree[2], False]];
             } else {
                 stack = [];
                 var ρσ_Iter13 = ρσ_Iterable(serialized_data.tree.c);
                 for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
                     child = ρσ_Iter13[ρσ_Index13];
                     if (child.n === "body") {
-                        stack.push(child);
+                        stack.push([child, False]);
                     }
                 }
             }
-            ignore_text = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["script"] = true;
-                ρσ_d["style"] = true;
-                ρσ_d["title"] = true;
-                return ρσ_d;
-            }).call(this);
             anchor_offset_map = Object.create(null);
             text_pos = 0;
             while (stack.length) {
-                node = stack.pop();
+                ρσ_unpack = stack.pop();
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                node = ρσ_unpack[0];
+                text_ignored_in_parent = ρσ_unpack[1];
                 if (typeof node === "string") {
                     ans.push(node);
                     text_pos += node.length;
                     continue;
                 }
-                if (tag_map) {
-                    src = tag_map[ρσ_bound_index(node[0], tag_map)];
-                } else {
-                    src = node;
-                }
+                src = (tag_map) ? tag_map[ρσ_bound_index(node[0], tag_map)] : node;
                 if (get_anchor_offset_map && src.a) {
                     for (var i = 0; i < src.a.length; i++) {
                         x = (ρσ_expr_temp = src.a)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
@@ -18689,21 +18704,25 @@ return this.__repr__();
                         }
                     }
                 }
-                if (src.n && !ignore_text[ρσ_bound_index(src.n, ignore_text)] && src.x) {
+                if (no_visit[ρσ_bound_index(src.n, no_visit)]) {
+                    continue;
+                }
+                ignore_text_in_node_and_children = !!ignore_text[src.n];
+                if (!ignore_text_in_node_and_children && src.x) {
                     ans.push(src.x);
                     text_pos += src.x.length;
                 }
-                if (src.l) {
-                    stack.push(src.l);
+                if (!text_ignored_in_parent && src.l) {
+                    stack.push([src.l, ignore_text_in_node_and_children]);
                 }
                 if (tag_map) {
                     for (var i = node.length - 1; i >= 1; i--) {
-                        stack.push(node[(typeof i === "number" && i < 0) ? node.length + i : i]);
+                        stack.push([node[i], ignore_text_in_node_and_children]);
                     }
                 } else {
                     if (src.c) {
                         for (var i = src.c.length; i-- > 0;) {
-                            stack.push(src.c[i]);
+                            stack.push([src.c[i], ignore_text_in_node_and_children]);
                         }
                     }
                 }
@@ -28397,7 +28416,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.10.0";
+        CALIBRE_VERSION = "7.11.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30581,16 +30600,18 @@ return this.__repr__();
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
+
         var ngettext = ρσ_modules.gettext.ngettext;
 
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
+        var clear = ρσ_modules.dom.clear;
         var unique_id = ρσ_modules.dom.unique_id;
 
         var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
 
-        var session_defaults = ρσ_modules.session.session_defaults;
         var get_interface_data = ρσ_modules.session.get_interface_data;
+        var session_defaults = ρσ_modules.session.session_defaults;
 
         var fmt_sidx = ρσ_modules.utils.fmt_sidx;
 
@@ -30611,7 +30632,7 @@ return this.__repr__();
                 __module__ : {value: "read_book.prefs.head_foot"}
             });
 
-            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), opt(_("View mode"), "view-mode"), opt(_("View mode as icon"), "view-mode-icon"), sep(), opt(_("Clock"), "clock"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
+            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), opt(_("View mode"), "view-mode"), opt(_("View mode as icon"), "view-mode-icon"), sep(), opt(_("Clock"), "clock"), opt(_("Controls button on hover"), "menu-icon-on-hover"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
         };
         if (!create_item.__argnames__) Object.defineProperties(create_item, {
             __argnames__ : {value: ["region", "label", "style"]},
@@ -30846,6 +30867,10 @@ return this.__repr__();
             has_clock = false;
             if (override) {
                 text = override;
+            } else if (field === "menu-icon-on-hover") {
+                clear(div);
+                div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(_("Show controls"))].concat([ρσ_desugar_kwargs({class_: "visible-on-hover", title: _("Show viewer controls"), style: "cursor: pointer"})])));
+                return has_clock;
             } else if (field === "progress") {
                 percent = min(100, max(Math.round(pos.progress_frac * 100), 0));
                 text = percent + "%";
@@ -48600,6 +48625,9 @@ return this.__repr__();
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > .not-arrow"].concat([ρσ_desugar_kwargs({display: "none"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > .arrow"].concat([ρσ_desugar_kwargs({display: "block"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":active > .arrow"].concat([ρσ_desugar_kwargs({display: "block", transform: "scale(2)"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-h-margin .visible-on-hover"].concat([ρσ_desugar_kwargs({visibility: "hidden"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-h-margin:hover .visible-on-hover"].concat([ρσ_desugar_kwargs({visibility: "visible"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-h-margin .visible-on-hover:hover"].concat([ρσ_desugar_kwargs({color: get_color("window-hover-foreground")})]));
                 return ans;
             };
             if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
@@ -48748,7 +48776,7 @@ return this.__repr__();
             sz = sd.get(which, 20);
             fsz = header_footer_font_size(sz);
             s = "; text-overflow: ellipsis; white-space: nowrap; overflow: hidden";
-            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-right: 1.5em" + s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1.5em" + s})])].concat([ρσ_desugar_kwargs({style: "height:" + ρσ_str.format("{}", sz) + "px; overflow: hidden; font-size:" + ρσ_str.format("{}", fsz) + "px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center; user-select: none", id: id})]));
+            ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-right: 1.5em" + s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: s})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1.5em" + s})])].concat([ρσ_desugar_kwargs({style: "height:" + ρσ_str.format("{}", sz) + "px; overflow: hidden; font-size:" + ρσ_str.format("{}", fsz) + "px; width:100%; padding: 0; display: flex; justify-content: space-between; align-items: center; user-select: none; cursor: pointer", class_: "book-h-margin", id: id})]));
             if (onclick) {
                 ans.addEventListener("click", onclick);
             }
@@ -49249,7 +49277,7 @@ return this.__repr__();
         });
         View.prototype.bottom_margin_clicked = function bottom_margin_clicked(event) {
             var self = this;
-            if (event.button === 2) {
+            if (event.button === 0 || event.button === 2) {
                 [event.preventDefault(), event.stopPropagation()];
                 window.setTimeout(self.show_chrome, 0);
             }
