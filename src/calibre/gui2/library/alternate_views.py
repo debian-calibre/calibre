@@ -61,7 +61,7 @@ from qt.core import (
 from calibre import fit_image, human_readable, prepare_string_for_xml
 from calibre.constants import DEBUG, config_dir, islinux
 from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
-from calibre.gui2 import config, empty_index, gprefs, rating_font
+from calibre.gui2 import clip_border_radius, config, empty_index, gprefs, rating_font
 from calibre.gui2.dnd import path_from_qurl
 from calibre.gui2.gestures import GestureManager
 from calibre.gui2.library.caches import CoverCache, ThumbnailCache
@@ -562,7 +562,8 @@ class CoverDelegate(QStyledItemDelegate):
         return ans
 
     def paint(self, painter, option, index):
-        QStyledItemDelegate.paint(self, painter, option, empty_index)  # draw the hover and selection highlights
+        with clip_border_radius(painter, option.rect):
+            QStyledItemDelegate.paint(self, painter, option, empty_index)  # draw the hover and selection highlights
         m = index.model()
         db = m.db
         try:
@@ -636,7 +637,7 @@ class CoverDelegate(QStyledItemDelegate):
                 dy = max(0, int((rect.height() - ch)/2.0))
                 right_adjust = dx
                 rect.adjust(dx, dy, -dx, -dy)
-                painter.drawPixmap(rect, cdata)
+                self.paint_cover(painter, rect, cdata)
                 if self.title_height != 0:
                     self.paint_title(painter, trect, db, book_id)
             if self.emblem_size > 0:
@@ -657,6 +658,10 @@ class CoverDelegate(QStyledItemDelegate):
                 self.paint_embossed_emblem(p, painter, orect, right_adjust, left=False)
         finally:
             painter.restore()
+
+    def paint_cover(self, painter: QPainter, rect: QRect, pixmap: QPixmap):
+        with clip_border_radius(painter, rect):
+            painter.drawPixmap(rect, pixmap)
 
     def paint_title(self, painter, rect, db, book_id):
         painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
