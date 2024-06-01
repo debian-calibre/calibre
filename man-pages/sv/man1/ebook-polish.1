@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "maj 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-POLISH" "1" "maj 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
@@ -43,7 +43,7 @@ Polera böcker handlar om att sätta glans av perfektion på
 dina noggrant utformade e\-böcker.
 .sp
 Polering försöker minimera ändringarna i den interna koden av din e\-bok.
-Till skillnad från konvertering, plattar den inte ut CSS, byter namn på filer, ändrar teckensnittsstorlekar, justerar marginaler osv. Varje åtgärd utför endast minsta uppsättning av ändringar som krävs för önskad effekt.
+Till skillnad från konvertering, plattar den inte ut CSS, byter namn på filer, ändrar teckensnittsstorlekar, justerar marginaler etc. Varje åtgärd utför endast minsta uppsättning av ändringar som krävs för önskad effekt.
 .sp
 Du bör använda det här verktyget som det sista steget i din e\-bokskaparprocess.
 .sp
@@ -68,6 +68,11 @@ Sökvägen till en omslagsbild. Ändrar omslag angivit i boken. Om inget omslag 
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-download\-external\-resources, \-d
+Hämta externa resurser som bilder, stilmallar etc. som pekar på webbadresser istället för filer i boken. Alla sådana resurser kommer att hämtas och läggas till i boken så att boken inte längre refererar till några externa resurser.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-embed\-fonts, \-e
 Bädda in alla teckensnitt som refereras i dokumentet och som inte redan är inbäddade. Detta kommer att skanna din dator efter teckensnitt, och om de finns, kommer de att  bäddas in i dokumentet. Se till att du har rätt licens för att bädda in teckensnitt som används i detta dokument.
 .UNINDENT
@@ -79,7 +84,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Infoga ett \fB\(dq\fPbokomslag\fB\(dq\fP i början av boken som innehåller  alla om bokens metadata som titel, taggar, författare, serier, kommentarer,  osv. Alla tidigare bokomslag kommer att ersättas.
+Infoga ett \fB\(dq\fPbokomslag\fB\(dq\fP i början av boken som innehåller  alla om bokens metadata som titel, taggar, författare, serier, kommentarer,  etc. Alla tidigare bokomslag kommer att ersättas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -104,7 +109,7 @@ Ta bort alla oanvända CSS\-regler från formatmallar och <format>taggar. Vissa 
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Konvertera bindestreck, ellipser, citattecken, flertal bindestreck osv. till deras typografiskt korrekta motsvarigheter. Observera att algoritmen ibland kan skapa felaktiga resultat, särskilt när enkla citattecken i början av sammandragningar är inblandade.
+Konvertera bindestreck, ellipser, citattecken, flertal bindestreck etc. till deras typografiskt korrekta motsvarigheter. Observera att algoritmen ibland kan skapa felaktiga resultat, särskilt när enkla citattecken i början av sammandragningar är inblandade.
 .UNINDENT
 .INDENT 0.0
 .TP

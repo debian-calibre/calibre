@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "mai 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "mai 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -427,6 +427,11 @@ Modèle de recherche (expression régulière) qui sera remplacée par sr3\-repla
 .SH DÉTECTION DE LA STRUCTURE
 .sp
 Contrôle de l’auto\-détection de la structure du document.
+.INDENT 0.0
+.TP
+.B \-\-add\-alt\-text\-to\-img
+Lorsqu\fB\(aq\fPune balise <img> n\fB\(aq\fPa pas d\fB\(aq\fPattribut alt, vérifiez si le fichier image associé contient des métadonnées spécifiant un texte alternatif et utilisez\-les pour remplir l\fB\(aq\fPattribut alt. L\fB\(aq\fPattribut alt est utilisé par les lecteurs d\fB\(aq\fPécran pour aider les malvoyants.
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter

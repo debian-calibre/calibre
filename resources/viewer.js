@@ -18669,14 +18669,14 @@ return this.__repr__();
             }).call(this);
             ignore_text;
             if (tag_map) {
-                stack = [[serialized_data.tree[2], False]];
+                stack = [[serialized_data.tree[2], false]];
             } else {
                 stack = [];
                 var ρσ_Iter13 = ρσ_Iterable(serialized_data.tree.c);
                 for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
                     child = ρσ_Iter13[ρσ_Index13];
                     if (child.n === "body") {
-                        stack.push([child, False]);
+                        stack.push([child, false]);
                     }
                 }
             }
@@ -18707,7 +18707,7 @@ return this.__repr__();
                 if (no_visit[ρσ_bound_index(src.n, no_visit)]) {
                     continue;
                 }
-                ignore_text_in_node_and_children = !!ignore_text[src.n];
+                ignore_text_in_node_and_children = text_ignored_in_parent || !!ignore_text[src.n];
                 if (!ignore_text_in_node_and_children && src.x) {
                     ans.push(src.x);
                     text_pos += src.x.length;
@@ -23872,7 +23872,7 @@ return this.__repr__();
         };
         Object.defineProperty(ChapterGroup.prototype, "__bases__", {value: []});
 
-        function show_export_dialog(annotations_manager) {
+        function show_export_dialog(annotations_manager, book_metadata) {
             var sd, fmt, all_highlights, selected_highlight_items, key, e, h, ta_id, href, idx, current_query, link_prefix;
             sd = get_session_data();
             fmt = sd.get("highlights_export_format");
@@ -23976,11 +23976,12 @@ return this.__repr__();
                         return ρσ_anonfunc;
                     })()), " ", create_button(_("Download"), "cloud-download", (function() {
                         var ρσ_anonfunc = function (ev) {
-                            var text, ext, mt, filename, file, url, a;
+                            var text, ext, mt, title, filename, file, url, a;
                             text = document.getElementById(ta_id).textContent;
                             ext = (fmt === "markdown") ? "md" : (fmt === "text") ? "txt" : "json";
                             mt = (fmt === "markdown") ? "text/markdown" : (fmt === "text") ? "text/plain" : "application/json";
-                            filename = "highlights." + ρσ_str.format("{}", ext) + "";
+                            title = (typeof book_metadata !== "undefined" && book_metadata !== null ? book_metadata : Object.create(null)).title || _("Unknown");
+                            filename = (ρσ_expr_temp = _("{title} - highlights"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({title: title})])) + ("." + ρσ_str.format("{}", ext) + "");
                             file = new Blob(ρσ_list_decorate([ text ]), (function(){
                                 var ρσ_d = Object.create(null);
                                 ρσ_d["type"] = mt;
@@ -24017,7 +24018,7 @@ return this.__repr__();
             })());
         };
         if (!show_export_dialog.__argnames__) Object.defineProperties(show_export_dialog, {
-            __argnames__ : {value: ["annotations_manager"]},
+            __argnames__ : {value: ["annotations_manager", "book_metadata"]},
             __module__ : {value: "read_book.highlights"}
         });
 
@@ -24457,7 +24458,7 @@ return this.__repr__();
             clear_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Clear"), "close", clear_selection, _("Clear selection")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
             delete_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Remove"), "trash", delete_selection.bind(null, annotations_manager, annotations_manager.view), _("Remove selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
             all_button = ρσ_interpolate_kwargs.call(this, create_button, [_("All"), "plus", select_all, _("Select all highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button sel-button"})]));
-            export_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Export"), "cloud-download", show_export_dialog.bind(null, annotations_manager), _("Export all or selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button"})]));
+            export_button = ρσ_interpolate_kwargs.call(this, create_button, [_("Export"), "cloud-download", show_export_dialog.bind(null, annotations_manager, book.metadata), _("Export all or selected highlights")].concat([ρσ_desugar_kwargs({class_: "ac-button"})]));
             c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [sb, next_button, prev_button, clear_button, all_button, delete_button, export_button].concat([ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; margin-top: -1ex; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "padding: 1rem", id: get_container_id()})]));
             container.appendChild(c);
             toc_groups = Object.create(null);
@@ -28416,7 +28417,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.11.0";
+        CALIBRE_VERSION = "7.12.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -48609,7 +48610,6 @@ return this.__repr__();
 
         var default_context_menu_should_be_allowed = ρσ_modules.utils.default_context_menu_should_be_allowed;
         var html_escape = ρσ_modules.utils.html_escape;
-        var is_ios = ρσ_modules.utils.is_ios;
         var parse_url_params = ρσ_modules.utils.parse_url_params;
         var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
         var username_key = ρσ_modules.utils.username_key;
@@ -48618,7 +48618,7 @@ return this.__repr__();
             var ρσ_anonfunc = function () {
                 var sel, ans;
                 sel = ".book-side-margin";
-                ans = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({cursor: "pointer", text_align: "center", height: "100vh", user_select: "none", display: "flex", align_items: "center", justify_content: "space-between", flex_direction: "column"})]));
+                ans = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({cursor: "pointer", text_align: "center", height: "100dvh", user_select: "none", display: "flex", align_items: "center", justify_content: "space-between", flex_direction: "column"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > .arrow"].concat([ρσ_desugar_kwargs({display: "none"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > *"].concat([ρσ_desugar_kwargs({max_width: "100%", overflow: "hidden"})]));
                 ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ":hover > .not-arrow"].concat([ρσ_desugar_kwargs({display: "none"})]));
@@ -48737,7 +48737,7 @@ return this.__repr__();
             if (container.firstChild) {
                 container.removeChild(container.firstChild);
             }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap (or right click) for controls"))].concat([ρσ_desugar_kwargs({style: "height: 25vh; display:flex; align-items: center; border-bottom: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_msg].concat([ρσ_desugar_kwargs({style: "width: " + ρσ_str.format("{}", left_width) + "; flex-grow: " + ρσ_str.format("{}", left_grow) + "; display:flex; align-items: center; border-right: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [right_msg].concat([ρσ_desugar_kwargs({style: "width: " + ρσ_str.format("{}", right_width) + "; display:flex; flex-grow: " + ρσ_str.format("{}", right_grow) + "; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: stretch; flex-grow: 10"})]))].concat([ρσ_desugar_kwargs({style: "overflow: hidden; width: 100vw; height: 100vh; text-align: center; font-size: 1.3rem; font-weight: bold; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "display:flex; flex-direction: column; align-items: stretch"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [msg(_("Tap (or right click) for controls"))].concat([ρσ_desugar_kwargs({style: "height: 25dvh; display:flex; align-items: center; border-bottom: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_msg].concat([ρσ_desugar_kwargs({style: "width: " + ρσ_str.format("{}", left_width) + "; flex-grow: " + ρσ_str.format("{}", left_grow) + "; display:flex; align-items: center; border-right: solid 2px currentColor"})])), ρσ_interpolate_kwargs.call(E, E.div, [right_msg].concat([ρσ_desugar_kwargs({style: "width: " + ρσ_str.format("{}", right_width) + "; display:flex; flex-grow: " + ρσ_str.format("{}", right_grow) + "; align-items: center"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: stretch; flex-grow: 10"})]))].concat([ρσ_desugar_kwargs({style: "overflow: hidden; width: 100vw; height: 100dvh; text-align: center; font-size: 1.3rem; font-weight: bold; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + "display:flex; flex-direction: column; align-items: stretch"})])));
         };
         if (!show_controls_help.__module__) Object.defineProperties(show_controls_help, {
             __module__ : {value: "read_book.view"}
@@ -48782,9 +48782,6 @@ return this.__repr__();
             }
             if (oncontextmenu) {
                 ans.addEventListener("contextmenu", oncontextmenu);
-            }
-            if (is_ios && which === "margin_bottom" && !window.navigator.standalone && !/CriOS\//.test(window.navigator.userAgent)) {
-                ans.style.marginBottom = "25px";
             }
             return ans;
         };
@@ -49096,7 +49093,7 @@ return this.__repr__();
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
             iframe = ρσ_unpack[0];
             self.iframe_wrapper = ρσ_unpack[1];
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), iframe, margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-selection-bar-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-read-aloud-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-hints-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height:100%; display:none", id: SearchOverlay.prototype.CONTAINER_ID})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; bottom:0em; width: 100%; height: 100%; display:none", id: "audio-ebooks-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: stretch", oncontextmenu: (function() {
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [left_margin, ρσ_interpolate_kwargs.call(E, E.div, [margin_elem(sd, "margin_top", "book-top-margin", self.top_margin_clicked, self.margin_context_menu.bind(null, "top")), iframe, margin_elem(sd, "margin_bottom", "book-bottom-margin", self.bottom_margin_clicked, self.margin_context_menu.bind(null, "bottom"))].concat([ρσ_desugar_kwargs({style: "flex-grow:2; display:flex; align-items:stretch; flex-direction: column"})])), right_margin, self.book_scrollbar.create(), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-selection-bar-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-read-aloud-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none;", id: "book-hints-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height:100%; display:none", id: SearchOverlay.prototype.CONTAINER_ID})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "book-content-popup-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; overflow: auto; display:none", id: "book-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; top:0; left:0; width: 100%; height: 100%; display:none", id: "controls-help-overlay"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "position: absolute; bottom:0em; width: 100%; height: 100%; display:none", id: "audio-ebooks-overlay"})])].concat([ρσ_desugar_kwargs({style: "max-height: 100dvh; flex-grow: 2; display:flex; align-items: stretch"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100dvh; display: flex; flex-direction: column; align-items: stretch; flex-grow:2"})]))].concat([ρσ_desugar_kwargs({style: "max-height: 100dvh; width: 100dvw; height: 100dvh; overflow: hidden; display: flex; align-items: stretch", oncontextmenu: (function() {
                 var ρσ_anonfunc = function (ev) {
                     if (!default_context_menu_should_be_allowed(ev)) {
                         ev.preventDefault();

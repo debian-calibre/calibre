@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "toukokuuta 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-POLISH" "1" "toukokuuta 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
@@ -67,6 +67,11 @@ Pakkaa kirjan kuvat häviöttömästi tiedostokoon pienentämiseksi vaikuttamatt
 .TP
 .B \-\-cover, \-c
 Polku kansikuvaan. Muuttaa e\-kirjassa määritetyn kansikuvan. Jos kantta ei ole tai kantta ei ole tunnistettu oikein, lisää uuden kannen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-download\-external\-resources, \-d
+Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book. All such resources will be downloaded and added to the book so that the book no longer references any external resources.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -4,8 +4,8 @@
 # 
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022
-# Jonatan Nyberg <jonatan@autistici.org>, 2018-2021
+# Jonatan Nyberg, 2016-2017,2021-2024
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
@@ -14,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-15 08:35+0000\n"
+"POT-Creation-Date: 2024-05-29 02:47+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>, 2016-2017,2021-2022\n"
-"Language-Team: Swedish (http://www.transifex.com/calibre/calibre/language/sv/)\n"
+"Last-Translator: Jonatan Nyberg, 2016-2017,2021-2024\n"
+"Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -100,7 +100,7 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr "Jag använder sträng här i den mening den används i programspråk: en sträng av ett eller flera tecken, tecken inklusive faktiska tecken, siffror, skiljetecken och s.k. whitespace (radbrytningar, tabulatorer o.s.v.). Observera att i allmänhet anses inte stora och små bokstäver vara samma, alltså \"a\" som en annan karaktär från \"A\" och så vidare. I calibre, är reguljära uttryck skiftlägesokänslig i sökfältet, men inte i konverteringsalternativet. Det finns ett sätt att göra alla reguljära uttryck fall okänsligt, men vi kommer att diskutera det senare. Det blir komplicerat eftersom reguljära uttryck tillåter variationer i strängar som matchar, så ett uttryck kan matcha flera strängar, vilket är varför folk bryr sig att använda dem. Mer om det om ett tag."
+msgstr "Jag använder sträng här i den mening den används i programspråk: en sträng av ett eller flera tecken, tecken inklusive faktiska tecken, siffror, skiljetecken och s.k. whitespace (radbrytningar, tabulatorer etc.). Observera att i allmänhet anses inte stora och små bokstäver vara samma, alltså \"a\" som en annan karaktär från \"A\" och så vidare. I calibre, är reguljära uttryck skiftlägesokänslig i sökfältet, men inte i konverteringsalternativet. Det finns ett sätt att göra alla reguljära uttryck fall okänsligt, men vi kommer att diskutera det senare. Det blir komplicerat eftersom reguljära uttryck tillåter variationer i strängar som matchar, så ett uttryck kan matcha flera strängar, vilket är varför folk bryr sig att använda dem. Mer om det om ett tag."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
@@ -142,7 +142,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr "Nästa är början på riktigt bra grejer. Kom ihåg var jag sa att reguljära uttryck kan matcha flera strängar? Det är här det blir lite mer komplicerat. Säg, som en något mer praktisk övning, e-boken du ville konvertera hade en otäck sidfot som räknar sidor, \"Sida 5 av 423\". Uppenbarligen skulle sidnumret stiga från 1 till 423, så du skulle behöva matcha 423 olika strängar, eller hur? Fel, faktiskt: reguljära uttryck tillåter dig definiera uppsättningar av tecken som matchar: För att definiera en uppsättning, lägger du alla de tecken du vill att ska vara i uppsättningen inom hakparenteser. Så, till exempel uppsättningen `` [abc]`` skulle matcha antingen tecknet \"a\", \"b\" eller \"c\". *Uppsättningarna kommer alltid bara matcha en av karaktärerna i uppsättningen*. De \"förstår\" teckenformattering, det vill säga om du ville matcha mot alla små bokstäver, skulle du använda uppsättningen ``[az]`` för gemener och för versaler skulle du använda `` [a-zA-Z]`` o.s.v. Förstår du principen? Så, självklart, med hjälp av uttrycket ``Sida [0-9] av 423`` skulle du kunna matcha de första nio sidorna, vilket minskar uttrycken som behövs för tre: Det andra uttrycket ``Sida [0-9] [0-9] av 423`` skulle matcha alla tvåsiffriga sidnummer, och jag är säker på att du kan gissa hur det tredje uttryck skulle se ut. Ja, gå vidare. Skriv ner det."
+msgstr "Nästa är början på riktigt bra grejer. Kom ihåg var jag sa att reguljära uttryck kan matcha flera strängar? Det är här det blir lite mer komplicerat. Säg, som en något mer praktisk övning, e-boken du ville konvertera hade en otäck sidfot som räknar sidor, \"Sida 5 av 423\". Uppenbarligen skulle sidnumret stiga från 1 till 423, så du skulle behöva matcha 423 olika strängar, eller hur? Fel, faktiskt: reguljära uttryck tillåter dig definiera uppsättningar av tecken som matchar: För att definiera en uppsättning, lägger du alla de tecken du vill att ska vara i uppsättningen inom hakparenteser. Så, till exempel uppsättningen `` [abc]`` skulle matcha antingen tecknet \"a\", \"b\" eller \"c\". *Uppsättningarna kommer alltid bara matcha en av karaktärerna i uppsättningen*. De \"förstår\" teckenformattering, det vill säga om du ville matcha mot alla små bokstäver, skulle du använda uppsättningen ``[az]`` för gemener och för versaler skulle du använda `` [a-zA-Z]`` osv. Förstår du principen? Så, självklart, med hjälp av uttrycket ``Sida [0-9] av 423`` skulle du kunna matcha de första nio sidorna, vilket minskar uttrycken som behövs för tre: Det andra uttrycket ``Sida [0-9] [0-9] av 423`` skulle matcha alla tvåsiffriga sidnummer, och jag är säker på att du kan gissa hur det tredje uttryck skulle se ut. Ja, gå vidare. Skriv ner det."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
@@ -228,7 +228,7 @@ msgid ""
 "shorthand:"
 msgstr "Visste att du skulle fråga. Några användbara uppsättningar är ``[0-9]`` matchar en enda siffra, ``[a-z]`` matchar en enda gemen, ``[A-Z]`` matchar en enda versal, ``[a-zA-Z]`` matchar en enda bokstav och ``[a-zA-Z0-9]`` matchar en enda bokstav eller siffra. Du kan också använda en flyktsekvens som stenografi:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:70
+#: ../../__w/calibre/calibre/manual/regexp.rst:69
 msgid "``\\d``"
 msgstr "``\\d``"
 
@@ -236,7 +236,7 @@ msgstr "``\\d``"
 msgid "is equivalent to ``[0-9]``"
 msgstr "motsvarar ``[0-9]``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:74
+#: ../../__w/calibre/calibre/manual/regexp.rst:72
 msgid "``\\w``"
 msgstr "``\\w``"
 
@@ -244,7 +244,7 @@ msgstr "``\\w``"
 msgid "is equivalent to ``[a-zA-Z0-9_]``"
 msgstr "motsvarar ``[a-zA-Z0-9_]``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../__w/calibre/calibre/manual/regexp.rst:76
 msgid "``\\s``"
 msgstr "``\\s``"
 
@@ -257,7 +257,7 @@ msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
-msgstr "\"Whitespace\" är en term för allt som inte kommer att skrivas ut. Dessa tecken inkluderar blanksteg, tabulator, radmatning, formulärmatning, vagnretur, icke-brytande blanksteg o.s.v."
+msgstr "\"Whitespace\" är en term för allt som inte kommer att skrivas ut. Dessa tecken inkluderar blanksteg, tabulator, radmatning, formulärmatning, vagnretur, icke-brytande blanksteg etc."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
@@ -440,7 +440,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr "En annan sak du kan använda reguljära uttryck för är att utvinna metadata från filnamn. Du hittar den här funktionen \"Lägga till böcker\" i en del av inställningarna. Det finns en speciell funktion här: Du kan använda fältnamn för metadatafält, till exempel ``(?P<titel>)`` skulle indikera att calibre använder den här delen av strängen som boktitel. De tillåtna fältnamnen listas i fönstren, tillsammans med ett annat fint testfält. Ett exempel: Säg att du vill importera en hel massa filer som heter ``Klassiska texter: Den gudomliga komedin av Dante Alighieri.mobi``. (Uppenbarligen finns detta redan i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science Fiction epos: Stiftelseserien av Isaac Asimov.epub``. Detta är naturligtvis ett namngivningssystem som calibre inte kommer att utvinna några meningsfulla uppgifter ur - dess standarduttryck för att utvinna metadata är ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här skulle vara ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att i gruppen för metadatafältet måste du använda uttryck för att beskriva vad fältet faktiskt matchar. Och observera också att vid användning av testfältet calibre tillhandahåller måste du lägga till filändelsen till ditt testfilnamn, annars får du inga matchningar alls, trots att du använder ett fungerande uttryck."
+msgstr "En annan sak du kan använda reguljära uttryck för är att utvinna metadata från filnamn. Du hittar den här funktionen \"Lägga till böcker\" i en del av inställningarna. Det finns en speciell funktion här: Du kan använda fältnamn för metadatafält, till exempel ``(?P<titel>)`` skulle indikera att calibre använder den här delen av strängen som boktitel. De tillåtna fältnamnen listas i fönstren, tillsammans med ett annat fint testfält. Ett exempel: Säg att du vill importera en hel massa filer som heter ``Klassiska texter: Den gudomliga komedin av Dante Alighieri.mobi``. (Uppenbarligen finns detta redan i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science fiction epos: Stiftelseserien av Isaac Asimov.epub``. Detta är naturligtvis ett namngivningssystem som calibre inte kommer att utvinna några meningsfulla uppgifter ur - dess standarduttryck för att utvinna metadata är ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här skulle vara ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att i gruppen för metadatafältet måste du använda uttryck för att beskriva vad fältet faktiskt matchar. Och observera också att vid användning av testfältet calibre tillhandahåller måste du lägga till filändelsen till ditt testfilnamn, annars får du inga matchningar alls, trots att du använder ett fungerande uttryck."
 
 #: ../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"

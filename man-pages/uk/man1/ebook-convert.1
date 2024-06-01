@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "травня 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "травня 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -419,6 +419,11 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .SH ВИЯВЛЕННЯ СТРУКТУРИ
 .sp
 Контроль автоматичного визначення структури документа.
+.INDENT 0.0
+.TP
+.B \-\-add\-alt\-text\-to\-img
+Якщо теґ <img> не має атрибута alt, виконати пошук у файлі пов\fB\(aq\fPязаного зображення метаданих, які визначають альтернативний текст, і використати їх для заповнення атрибута alt. Атрибут alt використовують у засобах для читання з екрана для допомоги людям із вадами зору.
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter

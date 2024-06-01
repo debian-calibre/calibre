@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "五月 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "五月 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -418,6 +418,11 @@ sr3\-search搜索到的内容的替换文本
 .SH 结构检测
 .sp
 设置自动检测文档结构。
+.INDENT 0.0
+.TP
+.B \-\-add\-alt\-text\-to\-img
+When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute is used by screen readers for assisting the visually challenged.
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter
