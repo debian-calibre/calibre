@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "Mai 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-POLISH" "1" "Mai 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
@@ -64,6 +64,11 @@ Komprimieren Sie verlustfrei die Bilder im Buch, um die Dateigröße zu reduzier
 .TP
 .B \-\-cover, \-c
 Pfad zu einem Titelbild. Ändert das im eBook festgelegte Titelbild. Falls kein Titelbild vorhanden oder dieses nicht korrekt identifiziert ist, wird ein neues Titelbild eingefügt.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-download\-external\-resources, \-d
+Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book. All such resources will be downloaded and added to the book so that the book no longer references any external resources.
 .UNINDENT
 .INDENT 0.0
 .TP

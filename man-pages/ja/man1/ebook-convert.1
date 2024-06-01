@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "5月 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "5月 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -423,6 +423,11 @@ calibreがパラグラフ間の空白行を削除する時に、パラグラフ�
 .SH 構造の検出
 .sp
 ドキュメント構造の自動判別を制御
+.INDENT 0.0
+.TP
+.B \-\-add\-alt\-text\-to\-img
+When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute is used by screen readers for assisting the visually challenged.
+.UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter

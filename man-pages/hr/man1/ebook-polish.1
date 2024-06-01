@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "svibnja 24, 2024" "7.11.0" "calibre"
+.TH "EBOOK-POLISH" "1" "svibnja 31, 2024" "7.12.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
@@ -67,6 +67,11 @@ Losslessly compress images in the book, to reduce the filesize, without affectin
 .TP
 .B \-\-cover, \-c
 Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-download\-external\-resources, \-d
+Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book. All such resources will be downloaded and added to the book so that the book no longer references any external resources.
 .UNINDENT
 .INDENT 0.0
 .TP
