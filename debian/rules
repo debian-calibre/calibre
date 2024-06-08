@@ -2,6 +2,10 @@
 
 # help for reproducible build
 export LANG=C.UTF-8
+export LC_ALL=C.UTF-8
+export LC_CTYPE=C.UTF-8
+export LC_MESSAGES=C.UTF-8
+export LANGUAGE=
 
 # building with python3
 PYTHON=$(shell py3versions -d)
@@ -57,11 +61,11 @@ override_dh_auto_test:
 
 # "test_ajax_book" fails if previous test is "test_workers" (Closes: #973458)
 calibre_auto_test:
-	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt --exclude-test-name=dom_load
-	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
-	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=workers   $(TEST_FLAGS)
-	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt        $(TEST_FLAGS)
-	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C TZ=UTC $(CI_ENV) $(SETUP) test --test-name=dom_load  $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt --exclude-test-name=dom_load
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=workers   $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt        $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=dom_load  $(TEST_FLAGS)
 
 execute_before_dh_install:
 	dh_buildinfo
@@ -74,7 +78,7 @@ calibre_auto_install:
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
 	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
-	env LANGUAGE= LC_ALL=C LC_CTYPE=C LC_MESSAGES=C LANG=C XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
+	env XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config $(SETUP) install --root=debian/tmp/usr
 #
 #	# not needed
 	rm debian/tmp/usr/share/calibre/calibre-portable.*
