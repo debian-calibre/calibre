@@ -1,0 +1,31 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Mon, 29 May 2023 23:45:27 +0900
+Subject: Revert "PDF Output: Fix regression in previous release causing
+ non-ascii entries to be incorrectly encoded into the PDF bookmarks"
+
+Forwarded: not-needed
+
+This reverts commit 00681544d8c9ef12930dd6ec8ae5a2118022587e.
+---
+ src/calibre/utils/podofo/utils.cpp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/src/calibre/utils/podofo/utils.cpp b/src/calibre/utils/podofo/utils.cpp
+index fb1fb01..ea11132 100644
+--- a/src/calibre/utils/podofo/utils.cpp
++++ b/src/calibre/utils/podofo/utils.cpp
+@@ -8,7 +8,6 @@
+ #include "global.h"
+ #include <sstream>
+ #include <stdexcept>
+-#include <string_view>
+ 
+ using namespace pdf;
+ 
+@@ -34,5 +33,5 @@ pdf::podofo_convert_pystring(PyObject *val) {
+     Py_ssize_t len;
+     const char *data = PyUnicode_AsUTF8AndSize(val, &len);
+     if (data == NULL) throw std::runtime_error("Failed to convert python string to UTF-8, possibly not a string object");
+-    return PdfString(std::string_view(data, len));
++    return PdfString::FromRaw(bufferview(data, len));
+ }
