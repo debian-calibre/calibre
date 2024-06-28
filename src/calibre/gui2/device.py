@@ -48,6 +48,7 @@ from calibre.gui2 import (
 from calibre.gui2.dialogs.choose_format_device import ChooseFormatDeviceDialog
 from calibre.gui2.widgets import BusyCursor
 from calibre.library.save_to_disk import find_plugboard
+from calibre.prints import debug_print
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.ptempfile import force_unicode as filename_to_unicode
 from calibre.startup import connect_lambda
@@ -1215,12 +1216,10 @@ class DeviceMixin:  # {{{
         self.device_manager.slow_driveinfo()
 
         # set_books_in_library might schedule a sync_booklists job
-        if DEBUG:
-            prints('DeviceJob: metadata_downloaded: Starting set_books_in_library')
+        debug_print('DeviceJob: metadata_downloaded: Starting set_books_in_library')
         self.set_books_in_library(job.result, reset=True, add_as_step_to_job=job)
 
-        if DEBUG:
-            prints('DeviceJob: metadata_downloaded: updating views')
+        debug_print('DeviceJob: metadata_downloaded: updating views')
         mainlist, cardalist, cardblist = job.result
         self.memory_view.set_database(mainlist)
         self.memory_view.set_editable(self.device_manager.device.CAN_SET_METADATA,
@@ -1234,17 +1233,14 @@ class DeviceMixin:  # {{{
         self.card_b_view.set_editable(self.device_manager.device.CAN_SET_METADATA,
                                       self.device_manager.device.BACKLOADING_ERROR_MESSAGE
                                       is None)
-        if DEBUG:
-            prints('DeviceJob: metadata_downloaded: syncing')
+        debug_print('DeviceJob: metadata_downloaded: syncing')
         self.sync_news()
         self.sync_catalogs()
 
-        if DEBUG:
-            prints('DeviceJob: metadata_downloaded: refreshing ondevice')
+        debug_print('DeviceJob: metadata_downloaded: refreshing ondevice')
         self.refresh_ondevice()
 
-        if DEBUG:
-            prints('DeviceJob: metadata_downloaded: sending metadata_available signal')
+        debug_print('DeviceJob: metadata_downloaded: sending metadata_available signal')
         device_signals.device_metadata_available.emit()
 
     def refresh_ondevice(self, reset_only=False):
@@ -1851,13 +1847,16 @@ class DeviceMixin:  # {{{
         except:
             return False
 
+        # Define the cleaning function
         string_pat = re.compile(r'(?u)\W|[_]')
 
         def clean_string(x):
             try:
+                # Convert to lowercase if x is not None or empty
                 x = x.lower() if x else ''
             except Exception:
                 x = ''
+            # Perform regex substitution
             return string_pat.sub('', x)
 
         update_metadata = (
@@ -1936,6 +1935,21 @@ class DeviceMixin:  # {{{
             except:
                 return True
 
+        def get_by_author(book, d, author):
+            book_id = d['authors'].get(author)
+            if book_id is not None:
+                book.in_library = 'AUTHOR'
+                book.application_id = book_id
+                update_book(book_id, book)
+                return True
+            book_id = d['author_sort'].get(author)
+            if book_id is not None:
+                book.in_library = 'AUTH_SORT'
+                book.application_id = book_id
+                update_book(book_id, book)
+                return True
+            return False
+
         # Now iterate through all the books on the device, setting the
         # in_library field. If the UUID matches a book in the library, then
         # do not consider that book for other matching. In all cases set
@@ -1948,8 +1962,7 @@ class DeviceMixin:  # {{{
             for book in booklist:
                 if book:
                     total_book_count += 1
-        if DEBUG:
-            prints('DeviceJob: set_books_in_library: books to process=', total_book_count)
+        debug_print('DeviceJob: set_books_in_library: books to process=', total_book_count)
 
         start_time = time.time()
 
@@ -2009,17 +2022,11 @@ class DeviceMixin:  # {{{
                         if book.authors:
                             # Compare against both author and author sort, because
                             # either can appear as the author
-                            book_authors = clean_string(authors_to_string(book.authors))
-                            if book_authors in d['authors']:
-                                id_ = d['authors'][book_authors]
-                                update_book(id_, book)
-                                book.in_library = 'AUTHOR'
-                                book.application_id = id_
-                            elif book_authors in d['author_sort']:
-                                id_ = d['author_sort'][book_authors]
-                                update_book(id_, book)
-                                book.in_library = 'AUTH_SORT'
-                                book.application_id = id_
+                            all_book_authors = clean_string(authors_to_string(book.authors))
+                            if not get_by_author(book, d, all_book_authors):
+                                for author in book.authors:
+                                    if get_by_author(book, d, clean_string(author)):
+                                        break
                     else:
                         # Book definitely not matched. Clear its application ID
                         book.application_id = None
@@ -2089,9 +2096,7 @@ class DeviceMixin:  # {{{
             except:
                 traceback.print_exc()
 
-        if DEBUG:
-            prints('DeviceJob: set_books_in_library finished: time=',
-                   time.time() - start_time)
+        debug_print('DeviceJob: set_books_in_library finished: time=', time.time() - start_time)
         # The status line is reset when the job finishes
         return update_metadata
     # }}}
