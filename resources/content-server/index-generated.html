@@ -30290,7 +30290,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.12.0";
+        CALIBRE_VERSION = "7.13.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -60406,7 +60406,7 @@ return this.__repr__();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.a, [_("Re-index all books in this library")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: reindex_all})])), E.span("  "), ρσ_interpolate_kwargs.call(E, E.a, [_("Disable full text search")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: disable_fts})])), E.span("  "), ρσ_interpolate_kwargs.call(E, E.a, [(restrict) ? _("Search all books") : _("Search a subset of books")].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", onclick: toggle_restrict})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
             container = container.firstChild;
             fts_url = "https://www.sqlite.org/fts5.html#full_text_query_syntax";
-            html = (ρσ_expr_temp = _("\n<div class=\"h\">Search for single words</div>\n<p>Simply type the word:</p>\n<div class=\"bq\">awesome<br>calibre</div>\n\n<div class=\"h\">Search for phrases</div>\n<p>Enclose the phrase in quotes:</p>\n<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n\n<div class=\"h\">Boolean searches</div>\n<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n\n<div class=\"h\">Phrases near each other</div>\n<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n\n<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Full syntax reference</a></div>\n" + "</div>"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({fts_url: fts_url})]));
+            html = (ρσ_expr_temp = _("\n<div class=\"h\">Search for single words</div>\n<p>Simply type the word:</p>\n<div class=\"bq\">awesome<br>calibre</div>\n\n<div class=\"h\">Search for phrases</div>\n<p>Enclose the phrase in quotes:</p>\n<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n\n<div class=\"h\">Boolean searches</div>\n<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n\n<div class=\"h\">Phrases near each other</div>\n<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n\n<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Complete syntax reference</a></div>\n" + "</div>"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({fts_url: fts_url})]));
             container.innerHTML = html;
             a = container.querySelector("a[href]");
             a.setAttribute("target", "_new");

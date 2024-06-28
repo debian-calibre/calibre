@@ -567,8 +567,8 @@ class Worker(Thread):  # Get details {{{
                 filtered_characters = list(s for s in res if s.isprintable())
             except AttributeError:
                 filtered_characters = list(s for s in res if s in string.printable)
-            res = ''.join(filtered_characters).strip()
-        return res
+            res = ''.join(filtered_characters)
+        return res.strip()
 
     def parse_title(self, root):
 
@@ -584,6 +584,10 @@ class Worker(Thread):  # Get details {{{
             for child in h1.xpath('./*[contains(@class, "a-color-secondary")]'):
                 h1.remove(child)
             return sanitize_title(self.totext(h1))
+        # audiobooks
+        elem = root.xpath('//*[@id="productTitle"]')
+        if elem:
+            return sanitize_title(self.totext(elem[0]))
         tdiv = root.xpath('//h1[contains(@class, "parseasinTitle")]')
         if not tdiv:
             span = root.xpath('//*[@id="ebooksTitle"]')
@@ -767,7 +771,11 @@ class Worker(Thread):  # Get details {{{
                     ns = tuple(self.selector('#bookDescription_feature_div .a-expander-content'))
                     if ns:
                         ans = self._render_comments(ns[0])
-
+        # audiobooks
+        if not ans:
+            elem = root.xpath('//*[@id="audible_desktopTabbedDescriptionOverviewContent_feature_div"]')
+            if elem:
+                ans = self._render_comments(elem[0])
         desc = root.xpath(
             '//div[@id="productDescription"]/*[@class="content"]')
         if desc:
@@ -998,7 +1006,7 @@ class Worker(Thread):  # Get details {{{
 
     def parse_detail_cells(self, mi, c1, c2):
         name = self.totext(c1, only_printable=True).strip().strip(':').strip()
-        val = self.totext(c2).strip()
+        val = self.totext(c2)
         val = val.replace('\u200e', '').replace('\u200f', '')
         if not val:
             return
@@ -1082,7 +1090,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 3, 7)
+    version = (1, 3, 9)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 
@@ -1684,13 +1692,20 @@ class Amazon(Source):
         if not self.use_search_engine:
             return True
         if title is not None:
+            import regex
+            only_punctuation_pat = regex.compile(r'^\p{P}+$')
 
             def tokenize_title(x):
-                return icu_lower(x).replace("'", '').replace('"', '').rstrip(':')
+                ans = icu_lower(x).replace("'", '').replace('"', '').rstrip(':')
+                if only_punctuation_pat.match(ans) is not None:
+                    ans = ''
+                return ans
 
             tokens = {tokenize_title(x) for x in title.split() if len(x) > 3}
+            tokens.discard('')
             if tokens:
                 result_tokens = {tokenize_title(x) for x in mi.title.split()}
+                result_tokens.discard('')
                 if not tokens.intersection(result_tokens):
                     log('Ignoring result:', mi.title, 'as its title does not match')
                     return False

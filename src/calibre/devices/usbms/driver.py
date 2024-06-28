@@ -11,24 +11,16 @@ for a particular device.
 import json
 import os
 import shutil
-import time
 from itertools import cycle
 
 from calibre import fsync, isbytestring, prints
-from calibre.constants import filesystem_encoding, is_debugging, ismacos, numeric_version
+from calibre.constants import filesystem_encoding, ismacos, numeric_version
 from calibre.devices.usbms.books import Book, BookList
 from calibre.devices.usbms.cli import CLI
 from calibre.devices.usbms.device import Device
 from calibre.ebooks.metadata.book.json_codec import JsonCodec
+from calibre.prints import debug_print
 from polyglot.builtins import itervalues, string_or_bytes
-
-
-def debug_print(*args, **kw):
-    base_time = getattr(debug_print, 'base_time', None)
-    if base_time is None:
-        debug_print.base_time = base_time = time.monotonic()
-    if is_debugging():
-        prints('DEBUG: %6.1f'%(time.monotonic()-base_time), *args, **kw)
 
 
 def safe_walk(top, topdown=True, onerror=None, followlinks=False, maxdepth=128):
