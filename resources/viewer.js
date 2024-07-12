@@ -28417,7 +28417,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.13.0";
+        CALIBRE_VERSION = "7.14.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30860,12 +30860,15 @@ return this.__repr__();
         });
 
         function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, book_time, chapter_time, pos, override, view_mode) {
-            var template, field, interface_data, text, has_clock, percent, ival;
+            var template, field, interface_data, text, has_clock, force_display_even_if_overflowed, percent, ival;
             template = get_session_data().get(which) || Object.create(null);
             field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
             interface_data = get_interface_data();
             text = "";
             has_clock = false;
+            div.style.textOverflow = "ellipsis";
+            div.style.overflow = "hidden";
+            force_display_even_if_overflowed = false;
             if (override) {
                 text = override;
             } else if (field === "menu-icon-on-hover") {
@@ -30875,6 +30878,7 @@ return this.__repr__();
             } else if (field === "progress") {
                 percent = min(100, max(Math.round(pos.progress_frac * 100), 0));
                 text = percent + "%";
+                force_display_even_if_overflowed = true;
             } else if (field === "title") {
                 text = metadata.title || _("Untitled");
             } else if (field === "authors") {
@@ -30885,6 +30889,7 @@ return this.__repr__();
                     text = _("{0} of {1}").format(ival, metadata.series);
                 }
             } else if (field === "clock") {
+                force_display_even_if_overflowed = true;
                 text = time_formatter.format(new Date);
                 has_clock = true;
             } else if (field === "section") {
@@ -30928,6 +30933,10 @@ return this.__repr__();
             }
             if (text !== div.textContent) {
                 div.textContent = text;
+            }
+            if (force_display_even_if_overflowed) {
+                div.style.textOverflow = "clip";
+                div.style.overflow = "visible";
             }
             return has_clock;
         };

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "juni 28, 2024" "7.13.0" "calibre"
+.TH "CALIBREDB" "1" "juli 12, 2024" "7.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -259,7 +259,7 @@ Ange författarna för den tillagda boken eller de tillagda böckerna
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Om böcker med liknande titlar och författare hittas, slå samman de inkommande formaten (filer) automatiskt med befintliga bokposter. Värdet \fB\(dq\fPignore\fB\(dq\fP betyder att dubblettformat kasseras. Värdet \fB\(dq\fPoverwrite\fB\(dq\fP betyder att dubblettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB\(dq\fPnew_record\fB\(dq\fP betyder att dubblettformat placeras i en ny bokpost.
+Om böcker med liknande titlar och författare hittas, slå samman de inkommande formaten (filer) automatiskt med befintliga bokposter. Värdet \fB\(dq\fPignore\fB\(dq\fP betyder att dubblettformat ignoreras. Värdet \fB\(dq\fPoverwrite\fB\(dq\fP betyder att dubblettformat i biblioteket skrivs över med de nyligen tillagda filerna. Värdet \fB\(dq\fPnew_record\fB\(dq\fP betyder att dubblettformat placeras i en ny bokpost.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +556,7 @@ Visa detaljerad utmatningsinformation. Användbart för felsökning
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Titel på den skapade katalogen som används som titel i metadata. Standard: \fB\(aq\fPMy Books\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Titel på den genererade katalogen som används som titel i metadata. Standard: \fB\(aq\fPMy Books\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -576,7 +576,7 @@ Regex beskriver taggar som ska exkluderas som genrer Standard: \fB\(aq\fP[.+]|^+
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Anger de regler som används för att exkludera böcker från den skapade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB\(aq\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB\(dq\fPArkiverade böcker\fB\(dq\fP, \fB\(dq\fP# status\fB\(dq\fP, \fB\(dq\fPArkiverade\fB\(dq\fP),) kommer att exkludera en bok med ett värde på \fB\(dq\fPstatus\fB\(dq\fP \fB\(dq\fPArkiverat\fB\(dq\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att exkludera böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fPTaggar\fB\(aq\fP,\fB\(aq\fP<komma\-separerad lista med taggar>\fB\(aq\fP) eller (\fB\(aq\fP<regel namn>\fB\(aq\fP,\fB\(aq\fP<anpassad column>\fB\(aq\fP,\fB\(aq\fP<mönster>\fB\(aq\fP). Till exempel: ((\fB\(dq\fPArkiverade böcker\fB\(dq\fP, \fB\(dq\fP# status\fB\(dq\fP, \fB\(dq\fPArkiverade\fB\(dq\fP),) kommer att exkludera en bok med ett värde på \fB\(dq\fPstatus\fB\(dq\fP \fB\(dq\fPArkiverat\fB\(dq\fP i den anpassade kolumnen. När flera regler är definierade, kommer alla regler tillämpas. Standard: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP

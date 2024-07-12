@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "6月 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "7月 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -184,7 +184,7 @@ SVGの表紙を使う場合、このオプションは縦横比を保ったま�
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-すべての生成されたインラインの目次に使われるタイトル。
+Title for any generated inline table of contents.
 .UNINDENT
 .SH 外観
 .sp
@@ -252,7 +252,7 @@ CSSフォント名からポイントでのフォントサイズへのマッピ�
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-入力ドキュメント内の合字をそのままにします。合字とは2つの文字を組み合わせて表現する特別な文字です。（例：ff,fi,fl等）大半のリーダは標準のフォントで合字をサポートしないので、これらが正しく表示される可能性は低いです。デフォルトではcalibreは合字を2つの通常文字に変換します。このオプションはそれらをそのままにします。
+Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
 .UNINDENT
 .INDENT 0.0
 .TP

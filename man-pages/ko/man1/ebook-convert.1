@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "6월 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "7월 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -184,7 +184,7 @@ SVG 표지를 사용할 때 이 옵션을 사용하면 표지가 사용 가능�
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-생성된 인라인 목차에 사용될 제목입니다.
+Title for any generated inline table of contents.
 .UNINDENT
 .SH 모양새
 .sp
@@ -252,7 +252,7 @@ CSS 글꼴 크기 명칭을 pts 단위의 글꼴크기로 맵핑합니다. 설�
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-입력문서에 있는 합자(Ligature)들을 보존합니다. 합자란, ff, fi, fl 등과 같은, 두 문자가 합쳐진 형태의 특별한 렌더링을 뜻합니다. 대부분 기기의 기본 글꼴에서는 이 합자를 지원하지 않기 때문에 이 합자들이 제대로 렌더링되지 않을 가능성이 큽니다. 기본값으로 캘리버는 이 합자들을 해당하는 두 일반 문자 쌍으로 전환합니다. 이 옵션을 켜면, 전환하는 대신 이 합자들을 그냥 보존하게 됩니다.
+Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
 .UNINDENT
 .INDENT 0.0
 .TP

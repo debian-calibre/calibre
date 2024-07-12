@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "kesäkuuta 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "heinäkuuta 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -179,7 +179,7 @@ Mikäli määritelty, laajennus yrittää luoda lähdön, joka on mahdollisimman
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Luotavan tekstiin sidotun sisällysluettelon otsikko.
+Title for any generated inline table of contents.
 .UNINDENT
 .SH ULKOASU
 .sp
@@ -247,7 +247,7 @@ Aseta tyhjien lisättyjen rivien korkeus (em). Rivien korkeus on kaksi kertaa t�
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Säilytä ligatuurit lähdetiedostosta. Ligatuuri on erityinen kahden merkin typografinen yhdistelmä, kuten ff, fi, fl jne. Useimmat e\-lukijat eivät tue ligatuureja, joten ne eivät yleensä näy oikein. Oletuksena calibre muuntaa ligatuurin vastaaviksi vakiomerkeiksi. Tämä valinta säilyttää ligatuurit.
+Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
 .UNINDENT
 .INDENT 0.0
 .TP

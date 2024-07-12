@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "6月 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "7月 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -182,7 +182,7 @@ The maximum image size (width x height). A value of none means use the screen si
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-用於任何產生的行內目錄頁的標題。
+Title for any generated inline table of contents.
 .UNINDENT
 .SH 介面外觀
 .sp
@@ -250,7 +250,7 @@ CSS 樣式表或原生 CSS 的路徑。這個 CSS 會添加到來源檔案的樣
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-保留輸入文件中的「印刷連字」。所謂「印刷連字」是指對於ff, fi, fl之類的字母組合的一種特殊的展示方式。大部分閱讀器在使用預設字體時無法支持「印刷連字」，所以常常無法正常顯示。預設情況下，calibre會把「印刷連字」轉換成對應的字母組合。本選項用於選擇保留「印刷連字」。
+Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
 .UNINDENT
 .INDENT 0.0
 .TP
