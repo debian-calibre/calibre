@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "июня 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "июля 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -174,7 +174,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Название для любого встроенного оглавления.
+Title for any generated inline table of contents.
 .UNINDENT
 .SH ВИД И ФУНКЦИИ
 .sp
@@ -242,7 +242,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Сохранить лигатуры в этом входном документе. Лигатура — специальный рендеринг пары символов, таких как ff, fi, fl и так далее. У большинства устройств для чтения электронных книг нет поддержки лигатур в их заданных по умолчанию шрифтах, поэтому они вряд ли отобразятся правильно. По умолчанию, Calibre превратит лигатуру в соответствующую пару нормальных символов. Эта опция сохранит лигатуры.
+Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
 .UNINDENT
 .INDENT 0.0
 .TP

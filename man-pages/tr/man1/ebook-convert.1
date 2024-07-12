@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "Haziran 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Temmuz 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -184,7 +184,7 @@ Eğer belirtilirse, çıktı ektentisi en okunabilir şekilde bir çıktı yarat
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Oluşturulan İçindekiler (TOC) bölümü için başlık.
+Title for any generated inline table of contents.
 .UNINDENT
 .SH GÖR VE HİSSET
 .sp
@@ -252,7 +252,7 @@ Eklenen boşlukların yüksekliğini \fB\(dq\fPem\fB\(dq\fP cinsinden ayarlayın
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Girdi belgesinde mevcut olan bağları koru. Bir bağ, ff, fi, fl vs. gibi bir çift karakterin özel olarak gerçeklenmesine denir. Çoğu okuyucu varsayılan yazı tiplerinde bağları desteklemezler, yani doğru gerçeklemeleri beklenmez. Varsayılan olarak, Calibre bir bağı karşılık gelen normal karakter çiftine çevirir. Bu seçenek ise korunmalarını sağlar.
+Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "júna 28, 2024" "7.13.0" "calibre"
+.TH "CALIBREDB" "1" "júla 12, 2024" "7.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -84,7 +84,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%PRIDÁVANIE Z PRIEČINKOV\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -242,13 +242,13 @@ Heading for the template column. Default: template. This option is ignored if th
 .INDENT 3.5
 .sp
 .EX
-calibredb add [options] file1 file2 file3 ...
+calibredb add [options] súbor1 súbor2 súbor3 ...
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Add the specified files as books to the database. You can also specify folders, see
-the folder related options below.
+Pridá uvedené súbory ako knihy do databázy. Môžete zadať aj priečinky, pozrite si
+možnosti týkajúce sa priečinkov nižšie.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -259,7 +259,7 @@ Nastaviť autorov pridávaných kníh
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-If books with similar titles and authors are found, merge the incoming formats (files) automatically into existing book records. A value of \fB\(dq\fPignore\fB\(dq\fP means duplicate formats are discarded. A value of \fB\(dq\fPoverwrite\fB\(dq\fP means duplicate formats in the library are overwritten with the newly added files. A value of \fB\(dq\fPnew_record\fB\(dq\fP means duplicate formats are placed into a new book record.
+Ak sa nájdu knihy s podobnými názvami a autormi, automaticky sa zlúčia prijaté formáty (súbory) do existujúcich záznamov o knihách. Hodnota \fB\(dq\fPignorovať\fB\(dq\fP znamená, že duplicitné formáty sa vyradia. Hodnota \fB\(dq\fPprepísať\fB\(dq\fP znamená, že duplicitné formáty v knižnici sa prepíšu novo pridanými súbormi. Hodnota \fB\(dq\fPnew_record\fB\(dq\fP znamená, že duplicitné formáty sa umiestnia ako nový záznam knihy.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -269,7 +269,7 @@ Cesta k obálke, ktorú chcete použiť pre pridanú knihu
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Pridanie kníh do databázy, aj keď v nej už existujú. Porovnávanie sa vykonáva na základe názvov a autorov kníh. Všimnite si, že možnosť \fI\%\-\-automerge\fP má prednosť.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -279,7 +279,7 @@ Pridať prázdnu knihu (knihu bez formátov)
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Nastaviť identifikátory tejto knihy, napr. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -311,9 +311,9 @@ Nastaviť značky pridávaných kníh
 .B \-\-title, \-t
 Nastaviť názov pridanej knihy(kníh)
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS PRIDÁVANIE Z PRIEČINKOV
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Možnosti kontroly pridávania kníh z priečinkov. V predvolenom nastavení sa pridávajú len súbory, ktoré majú prípony známych typov súborov e\-kníh.
 .INDENT 0.0
 .TP
 .B \-\-add
@@ -327,12 +327,12 @@ A filename (glob) pattern, files matching this pattern will be ignored when scan
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Predpokladá sa, že každý priečinok obsahuje len jednu knihu a že všetky súbory v ňom sú rôzne formáty e\-kníh tejto knihy.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Spracovať priečinky rekurzívne
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -368,7 +368,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Pridanie súboru ako ďalšieho dátového súboru knihy, nie ako formátu e\-knihy
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -499,7 +499,7 @@ Nahradiť medzery podčiarkami.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Exportovať všetky knihy do jedného priečinka
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -514,7 +514,7 @@ Formát zobrazovaných dátomov. %d \- deň, %b \- mesiac, %m \- číslo mesiaca
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Export kníh do zadaného priečinka. Predvolená hodnota je .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -984,7 +984,7 @@ The speed of indexing. Use fast for fast indexing using all your computers resou
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Počkajte, kým nebudú zindexované všetky knihy, priebežne sa zobrazuje priebeh indexovania.
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -1027,7 +1027,7 @@ The marker used to indicate the start of a matched word inside a snippet
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Formát pre výstup výsledkov vyhľadávania. Buď \fB\(dq\fPtext\fB\(dq\fP pre obyčajný text, alebo \fB\(dq\fPjson\fB\(dq\fP pre výstup JSON.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "juni 28, 2024" "7.13.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "juli 12, 2024" "7.14.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -144,7 +144,7 @@ Maximal bildstorlek (bredd x höjd). Ett värde på none betyder att du använde
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Lägg till den infogade indragsinnehållsförteckningen i slutet av boken istället för i början.
+Placera den infogade indragsinnehållsförteckningen i slutet av boken istället för början.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -154,7 +154,7 @@ Versionen av EPUB\-filen som ska skapas. EPUB 2 är den mest kompatibla, använd
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extrahera innehållet i den skapade EPUB\-filen till den angivna mappen. Innehållet i mappen tas bort först, så var försiktig.
+Extrahera innehållet i den genererade EPUB\-filen till den angivna mappen. Innehållet i mappen tas bort först, så var försiktig.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -164,7 +164,7 @@ Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödv
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-Om inmatningsfilen inte har något omslag och du inte ställer in ett, skapas normalt ett standardomslag skapats med titel, författare, etc. Med det här alternativet aktiverat skapas inga standardomslag.
+Normalt, om inmatningsfilen inte har något omslag och du inte anger ett, genereras ett standardomslag med titeln, författare, etc. Detta alternativ inaktiverar genereringen av detta omslag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -184,7 +184,7 @@ Om det anges, kommer utmatningsinsticksmodulen att försöka skapa utmatning som
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Titel för alla skapade infogade innehållsförteckningar.
+Title for any generated inline table of contents.
 .UNINDENT
 .SH UTSEENDE OCH KÄNSLA
 .sp
@@ -252,7 +252,7 @@ Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mell
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en speciell rendering av ett teckenpar som ff, fi, fl och så vidare. De flesta läsenheter saknar stöd för ligaturer i deras standardteckensnitt så det är osannolikt att de renderas korrekt. Som standard konverterar calibre en ligatur till motsvarande par av normala tecken. Det här alternativet kommer att bevara ligaturerna istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en kombinerad karaktär av ett par tecken som ff, fi, fl et cetera. De flesta läsare har inte stöd för ligaturer i sina standardteckensnitt, så det är osannolikt att de renderas korrekt. Som standard kommer calibre att förvandla en ligatur till motsvarande par normala tecken. Observera att ligaturer här endast betyder Unicode\-ligaturer, inte ligaturer skapade via CSS eller teckensnittsstilar. Det här alternativet kommer att bevara dem istället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -474,7 +474,7 @@ Ett XPath\-uttryck för att identifiera platsen i dokumentet där du ska börja 
 .UNINDENT
 .SH INNEHÅLLSFÖRTECKNING
 .sp
-Anpassa hur innehållsförteckningen skapas. Om källfilen har en innehållsförteckning, kommer denna att användas istället för den automatiskt skapade.
+Anpassa hur innehållsförteckningen genereras. Om källfilen har en innehållsförteckning, kommer denna att användas istället för den automatiskt genererade.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -518,7 +518,7 @@ Om färre än detta antal kapitel upptäcks läggs länkar till i innehållsför
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-Om källfilen redan har en innehållsförteckning, används normalt denna i stället för den automatiskt skapade. Med det här alternativet används alltid den automatiskt skapade.
+Om källfilen redan har en innehållsförteckning, används normalt denna i stället för den automatiskt genererade. Med det här alternativet används alltid den automatiskt genererade.
 .UNINDENT
 .SH METADATA
 .sp
