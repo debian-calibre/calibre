@@ -1,0 +1,61 @@
+From: Petter Reinholdtsen <pere@hungry.com>
+Date: Sun, 14 Jul 2024 10:20:09 +0200
+Subject: calibre: fix appstream ID warning (Closes: #1076311)
+
+Package: calibre
+Version: 6.13.0+repack-2
+Tags: patch
+
+<URL: https://appstream.debian.org/sid/main/issues/calibre.html >
+contain the following warning about the content of the appstream
+metadata file:
+
+  * asv-cid-desktopapp-is-not-rdns
+    calibre-gui.metainfo.xml:3 - calibre-gui.desktop
+    The component ID is not a reverse domain-name. Please update the ID
+    to avoid future issues and be compatible with all AppStream
+    implementations. You may also consider to update the name of the
+    accompanying .desktop file to follow the latest version of the
+    Desktop-Entry specification and use a rDNS name for it as well. In
+    any case, do not forget to mention the new desktop-entry in a
+    <launchable/> tag for this component to keep the application
+    launchable from software centers and the .desktop file data
+    associated with the metainfo data.
+
+I believe the following untested patch will solve the issue.  Sadly I
+lack the required free disk space available to test thie patch.
+---
+ src/calibre/linux.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index 71f736b..9c2cdd0 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -1150,7 +1150,7 @@ def get_appdata():
+     def _(x):
+         return x  # Make sure the text below is not translated, but is marked for translation
+     return {
+-        'calibre-gui': {
++        'com.calibre-ebook.gui': {
+             'name':'calibre',
+             'summary':_('The one stop solution to all your e-book needs'),
+             'description':(
+@@ -1166,7 +1166,7 @@ def get_appdata():
+             'include-releases': True,
+         },
+ 
+-        'calibre-ebook-edit': {
++        'com.calibre-ebook.edit': {
+             'name':'calibre - E-book Editor',
+             'summary':_('Edit the text and styles inside e-books'),
+             'description':(
+@@ -1181,7 +1181,7 @@ def get_appdata():
+             'desktop-id': 'calibre-ebook-edit.desktop',
+         },
+ 
+-        'calibre-ebook-viewer': {
++        'com.calibre-ebook.viewer': {
+             'name':'calibre - E-book Viewer',
+             'summary':_('Read e-books in over a dozen different formats'),
+             'description': (
