@@ -1,0 +1,104 @@
+From: Petter Reinholdtsen <pere@hungry.com>
+Date: Sun, 14 Jul 2024 10:29:33 +0200
+Subject: calibre: Please announce supported hardware using AppStream (Closes:
+ #838069)
+
+Package: calibre
+Version: 2.60.0+dfsg-1
+Severity: wishlist
+User: pere@hungry.com
+Usertags: appstream-modalias
+
+Hi.
+
+The calibre package is one of the packages in the Debian archive that
+should be proposed for installation when a given hardware dongle is
+inserted or available.  Thanks to the appstream system, this can now be
+announced in a way other tools can use and act on.  I've written the
+isenkram system to ask the current user if hardware specific packages
+should be installed when a new dongle is installed or already present on
+a machine, and isenkram now uses appstream as one source for hardware to
+package mappings.
+
+You can read more about this on my blog,
+<URL: http://people.skolelinux.org/pere/blog/Using_appstream_with_isenkram_to_install_hardware_related_packages_in_Debian.html >.
+
+Instructions on how to create the metadata XML file can be found in
+<URL: https://wiki.debian.org/AppStream/Guidelines >.
+
+It would be great if you could add an appstream metainfo file to the
+calibre package, with content similar to this:
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <component>
+   [...]
+   <provides>
+	<modalias>usb:v2237p*d*ic08isc*ip*</modalias>
+        <modalias>usb:v0525pA4A5d*ic08isc*ip*</modalias>
+    </provides>
+  </component>
+
+If there are other USB ids also supposed by the package, please add
+those too. :)
+
+----------
+
+I had a look at how to modify the source to fix this.  Here is an
+untested patch to implement support for provides in the generated
+metadata XML file.  Unfortunately I lacked the required free disk space
+to do a test build.  I did not add the provides to the editor metadata
+entry, assuming that it is most relevant for the two other components.
+---
+ src/calibre/linux.py | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index 9c2cdd0..ac6cec1 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -1157,6 +1157,10 @@ def get_appdata():
+                 _('calibre is the one stop solution to all your e-book needs.'),
+                 _('You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.')  # noqa
+             ),
++            'provides': [
++                {'modalias': 'usb:v2237p*d*ic08isc*ip*'},
++                {'modalias': 'usb:v0525pA4A5d*ic08isc*ip*'},
++            ],
+             'screenshots':(
+                 (1408, 792, 'https://lh4.googleusercontent.com/-bNE1hc_3pIc/UvHLwKPGBPI/AAAAAAAAASA/8oavs_c6xoU/w1408-h792-no/main-default.png',),
+                 (1408, 792, 'https://lh4.googleusercontent.com/-Zu2httSKABE/UvHMYK30JJI/AAAAAAAAATg/dQTQUjBvV5s/w1408-h792-no/main-grid.png'),
+@@ -1188,6 +1192,10 @@ def get_appdata():
+                 _('The calibre E-book viewer allows you to read e-books in over a dozen different formats.'),
+                 _('It has a full screen mode for distraction free reading and can display the text with multiple columns per screen.'),
+             ),
++            'provides': [
++                {'modalias': 'usb:v2237p*d*ic08isc*ip*'},
++                {'modalias': 'usb:v0525pA4A5d*ic08isc*ip*'},
++            ],
+             'screenshots':(
+                 (1408, 792, 'https://lh5.googleusercontent.com/-dzSO82BPpaE/UvHMYY5SpNI/AAAAAAAAATk/I_kF9fYWrZM/w1408-h792-no/viewer-default.png',),
+                 (1920, 1080, 'https://lh6.googleusercontent.com/-n32Ae5RytAk/UvHMY0QD94I/AAAAAAAAATs/Zw8Yz08HIKk/w1920-h1080-no/viewer-fs.png'),
+@@ -1260,7 +1268,7 @@ def make_appdata_releases():
+ 
+ def write_appdata(key, entry, base, translators):
+     from lxml.builder import E
+-    from lxml.etree import tostring
++    from lxml.etree import Element, tostring
+     fpath = os.path.join(base, '%s.metainfo.xml' % key)
+     screenshots = E.screenshots()
+     for w, h, url in entry['screenshots']:
+@@ -1300,6 +1308,14 @@ def write_appdata(key, entry, base, translators):
+         tp = t.gettext(entry['summary'])
+         if tp != entry['summary']:
+             root.append(E.summary(tp, **{'{http://www.w3.org/XML/1998/namespace}lang': lang}))
++    if 0 < len(entry.get('provides', [])):
++        provides = E.provides()
++        for p in entry['provides']:
++            for tag in p.keys():
++                provided = Elements(tag)
++                provided.text = p[tag]
++                provides.append(provided)
++        root.append(provides)
+     if entry.get('include-releases', False):
+         try:
+             root.append(make_appdata_releases())
