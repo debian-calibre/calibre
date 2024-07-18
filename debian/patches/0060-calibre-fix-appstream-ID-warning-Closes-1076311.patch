@@ -24,38 +24,46 @@ metadata file:
 
 I believe the following untested patch will solve the issue.  Sadly I
 lack the required free disk space available to test thie patch.
+
+Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 ---
- src/calibre/linux.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ src/calibre/linux.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 71f736b..9c2cdd0 100644
+index 71f736b..5842b8d 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -1150,7 +1150,7 @@ def get_appdata():
-     def _(x):
-         return x  # Make sure the text below is not translated, but is marked for translation
-     return {
--        'calibre-gui': {
-+        'com.calibre-ebook.gui': {
-             'name':'calibre',
-             'summary':_('The one stop solution to all your e-book needs'),
-             'description':(
-@@ -1166,7 +1166,7 @@ def get_appdata():
+@@ -1163,6 +1163,7 @@ def get_appdata():
+                 (1408, 792, 'https://lh3.googleusercontent.com/-_trYUjU_BaY/UvHMYSdKhlI/AAAAAAAAATc/auPA3gyXc6o/w1408-h792-no/main-flow.png'),
+             ),
+             'desktop-id': 'calibre-gui.desktop',
++            'appstream-id': 'com.calibre-ebook.gui',
              'include-releases': True,
          },
  
--        'calibre-ebook-edit': {
-+        'com.calibre-ebook.edit': {
-             'name':'calibre - E-book Editor',
-             'summary':_('Edit the text and styles inside e-books'),
-             'description':(
-@@ -1181,7 +1181,7 @@ def get_appdata():
+@@ -1179,6 +1180,7 @@ def get_appdata():
+                 (887, 575, 'https://lh6.googleusercontent.com/-KwaOwHabnBs/UvHMWidjyXI/AAAAAAAAAS8/H6xmCeLnSpk/w887-h575-no/edit-toc.png'),
+             ),
              'desktop-id': 'calibre-ebook-edit.desktop',
++            'appstream-id': 'com.calibre-ebook.edit',
          },
  
--        'calibre-ebook-viewer': {
-+        'com.calibre-ebook.viewer': {
-             'name':'calibre - E-book Viewer',
-             'summary':_('Read e-books in over a dozen different formats'),
-             'description': (
+         'calibre-ebook-viewer': {
+@@ -1193,6 +1195,7 @@ def get_appdata():
+                 (1920, 1080, 'https://lh6.googleusercontent.com/-n32Ae5RytAk/UvHMY0QD94I/AAAAAAAAATs/Zw8Yz08HIKk/w1920-h1080-no/viewer-fs.png'),
+             ),
+             'desktop-id': 'calibre-ebook-viewer.desktop',
++            'appstream-id': 'com.calibre-ebook.viewer',
+         },
+     }
+ 
+@@ -1276,7 +1279,7 @@ def write_appdata(key, entry, base, translators):
+                 description.append(E.p(tp, **{'{http://www.w3.org/XML/1998/namespace}lang': lang}))
+ 
+     root = E.component(
+-        E.id(key + '.desktop'),
++        E.id(entry['appstream-id']),
+         E.name(entry['name']),
+         E.metadata_license('CC0-1.0'),
+         E.project_license('GPL-3.0'),
