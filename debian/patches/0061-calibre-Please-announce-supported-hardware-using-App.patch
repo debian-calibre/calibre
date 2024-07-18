@@ -48,12 +48,14 @@ untested patch to implement support for provides in the generated
 metadata XML file.  Unfortunately I lacked the required free disk space
 to do a test build.  I did not add the provides to the editor metadata
 entry, assuming that it is most relevant for the two other components.
+
+Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 ---
  src/calibre/linux.py | 18 +++++++++++++++++-
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 9c2cdd0..ac6cec1 100644
+index 9c2cdd0..ea96a63 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
 @@ -1157,6 +1157,10 @@ def get_appdata():
@@ -95,7 +97,7 @@ index 9c2cdd0..ac6cec1 100644
 +        provides = E.provides()
 +        for p in entry['provides']:
 +            for tag in p.keys():
-+                provided = Elements(tag)
++                provided = Element(tag)
 +                provided.text = p[tag]
 +                provides.append(provided)
 +        root.append(provides)
