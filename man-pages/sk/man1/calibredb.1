@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "júla 12, 2024" "7.14.0" "calibre"
+.TH "CALIBREDB" "1" "júla 19, 2024" "7.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -225,12 +225,12 @@ The field by which to sort the results. You can specify multiple fields by separ
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Šablóna, ktorá sa spustí, ak sa \fB\(dq\fPtemplate\fB\(dq\fP nachádza v zozname polí. Predvolené nastavenie: Žiadna
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Cesta k súboru obsahujúcemu šablónu, ktorá sa má spustiť, ak sa \fB\(dq\fPtemplate\fB\(dq\fP nachádza v zozname polí. Predvolené nastavenie: Žiadna
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -350,7 +350,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Kôš
+Nepoužívať Kôš
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -433,7 +433,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fI\%\-\-field\fP option
+Zoznam názvov polí metadát, ktoré možno použiť s možnosťou \fI\%\-\-field\fP
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -836,7 +836,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-Comma\-separated list of category lookup names. Default: all
+Čiarkou oddelený zoznam názvov prehľadávaných kategórií. Predvolené: všetky
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -920,7 +920,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+Aktualizovať iba metadáta v súboroch zadaného formátu. Pre viacero formátov špecifikujte opakovane. V predvolenom nastavení sa aktualizujú všetky formáty.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -943,7 +943,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
-The maximum number of results to return. Default is all results.
+Maximálny počet výsledkov, ktoré sa majú vrátiť. Predvolené nastavenie je všetky výsledky.
 .UNINDENT
 .SH FTS_INDEX
 .INDENT 0.0
@@ -1002,7 +1002,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Zhoda sa vzťahuje len na presné slová, nie na príbuzné slová. Slovo oprava sa teda nebude zhodovať s opravou.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1012,7 +1012,7 @@ Include snippets of the text surrounding each match. Note that this makes search
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Koľko percent knižnice musí byť indexovaných pred povolením vyhľadávania. Predvolená hodnota je 90
 .UNINDENT
 .INDENT 0.0
 .TP

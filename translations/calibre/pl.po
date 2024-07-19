@@ -51,7 +51,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2024-07-10 11:43+UTC\n"
+"POT-Creation-Date: 2024-07-19 02:06+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Adam Kowalski, 2024\n"
 "Language-Team: Polish (http://app.transifex.com/calibre/calibre/language/pl/)\n"
@@ -310,10 +310,10 @@ msgstr "Zupełnie nic nie zmienia"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:723
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:227
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1206
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:420
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:434
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:615
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:673
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1453
@@ -363,8 +363,8 @@ msgstr "Zupełnie nic nie zmienia"
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:349
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:349
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:74
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:80
 msgid "Unknown"
 msgstr "Nieznany"
 
@@ -1319,7 +1319,7 @@ msgstr "Katalog"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:87
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:665
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1811
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1813
 #: /__w/calibre/calibre/src/calibre/library/database2.py:382
@@ -4710,37 +4710,45 @@ msgid ""
 "\"Export\" button to save them to a file."
 msgstr "Ścieżka do pliku zawierającego reguły przekształcania kodu HTML w tej książce. Najłatwiejszym sposobem utworzenia takiego pliku jest skorzystanie z kreatora tworzenia reguł w GUI calibre. Uzyskaj do niego dostęp w sekcji „Wygląd i styl->Przekształć kod HTML” w oknie dialogowym konwersji. Po utworzeniu reguł możesz użyć przycisku „Eksportuj”, aby zapisać je do pliku."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:127
+#, python-brace-format
+msgid ""
+"Recipe specific options. Syntax is option_name:value. For example: "
+"{example}. Can be specified multiple times to set different options. To see "
+"a list of all available options for a recipe, use {list}."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "INPUT OPTIONS"
 msgstr "OPCJE PLIKU ŹRÓDŁOWEGO"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "OUTPUT OPTIONS"
 msgstr "OPCJE PLIKU WYJŚCIOWEGO"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:178
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:186
 #, python-format
 msgid "Options to control the processing of the input %s file"
 msgstr "Opcje sterujące przetwarzaniem pliku źródłowego %s"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:185
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:193
 #, python-format
 msgid "Options to control the processing of the output %s"
 msgstr "Opcje sterujące przetwarzaniem pliku wyjściowego %s"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:199
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:207
 msgid "LOOK AND FEEL"
 msgstr "WYGLĄD"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:200
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:208
 msgid "Options to control the look and feel of the output"
 msgstr "Opcje umożliwiające kontrolę nad wyglądem pliku wyjściowego"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:218
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
 msgid "HEURISTIC PROCESSING"
 msgstr "PRZETWARZANIE HEURYSTYCZNE"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:219
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
 #, python-format
 msgid ""
 "Modify the document text and structure using common patterns. Disabled by "
@@ -4748,61 +4756,61 @@ msgid ""
 "%(dis)s options."
 msgstr "Zmodyfikuj tekst i strukturę używając wzorców. Domyślnie wyłączone. Aby włączyć użyj %(en)s. Poszczególne akcje mogą zostać wyłączone przy użyciu %(dis)s."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:234
 msgid "SEARCH AND REPLACE"
 msgstr "WYSZUKAJ I ZASTĄP"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:235
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace.py:22
 msgid "Modify the document text and structure using user defined patterns."
 msgstr "Modyfikuj tekst dokumentu i jego strukturę, używając wzorów zdefiniowanych przez użytkownika."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:236
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:244
 msgid "STRUCTURE DETECTION"
 msgstr "WYKRYWANIE STRUKTURY"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:237
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:245
 msgid "Control auto-detection of document structure."
 msgstr "Kontrola autodetekcji struktury dokumentu."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:246
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:254
 msgid "TABLE OF CONTENTS"
 msgstr "SPIS TREŚCI"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:247
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:255
 msgid ""
 "Control the automatic generation of a Table of Contents. By default, if the "
 "source file has a Table of Contents, it will be used in preference to the "
 "automatically generated one."
 msgstr "Kontroluje automatyczne generowanie spisu treści. Domyślnie, jeśli plik źródłowy ma już spis treści, to ma on pierwszeństwo przed tym wygenerowanym automatycznie."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "METADATA"
 msgstr "METADANE"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "Options to set metadata in the output"
 msgstr "Opcje odpowiedzialne za ustawienia metadanych w plikach wyjściowych"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "DEBUG"
 msgstr "DEBUG"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "Options to help with debugging the conversion"
 msgstr "Opcje pomocy przy debugowaniu konwersji"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:283
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:291
 msgid ""
 "List builtin recipe names. You can create an e-book from a builtin recipe "
 "like this: ebook-convert \"Recipe Name.recipe\" output.epub"
 msgstr "Lista wbudowanych źródeł. Korzystając ze źródła możesz utworzyć e-booka za pomocą polecenia ebook-convert \"Nazwa źródła.recipe\" wynik.epub"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:432
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:440
 msgid "Output saved to"
 msgstr "Plik wyjściowy zapisany do"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:438
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:446
 #, python-format
 msgid ""
 "The options and default values for the options change depending on both the\n"
@@ -5089,8 +5097,8 @@ msgstr "Umieść wstawiany spis treści na końcu książki zamiast na początku
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:55
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:57
-msgid "Title for any generated in-line table of contents."
-msgstr "Tytuł dla automatycznie wygenerowanego spisu treści."
+msgid "Title for any generated inline table of contents."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_output.py:123
 msgid ""
@@ -5632,10 +5640,22 @@ msgstr "Login dla stron wymagających zalogowania to przeglądania zawartości."
 msgid "Password for sites that require a login to access content."
 msgstr "Hasło dla stron wymagających zalogowania to przeglądania zawartości."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:52
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:51
+msgid "Recipe specific options."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:54
 msgid ""
 "Do not download latest version of builtin recipes from the calibre server"
 msgstr "Nie pobieraj najnowszych wersji wbudowanych źródeł z serwera calibre"
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:142
+msgid "specific options:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:151
+msgid "has no recipe specific options"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:49
 msgid "Convert RTF files to HTML"
@@ -9311,7 +9331,7 @@ msgid "Table of Contents:"
 msgstr "Spis treści:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:646
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1012
 msgid "Default icons"
@@ -10470,7 +10490,7 @@ msgid "Open dialog"
 msgstr "Otwórz okno dialogowe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:729
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:464
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Finished"
 msgstr "Zakończone"
@@ -11265,7 +11285,7 @@ msgstr "Nie udało się pobrać metadanych"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:262
 #: /__w/calibre/calibre/src/calibre/gui2/dnd.py:96
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:940
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:953
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:549
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:990
 #: /__w/calibre/calibre/src/calibre/gui2/store/web_store.py:191
@@ -13943,7 +13963,7 @@ msgstr "Prawda"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:400
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:184
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/models.py:38
@@ -15431,7 +15451,7 @@ msgstr "Użyj okładki z pliku ź&ródłowego"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata_ui.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:142
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:231
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:188
@@ -17640,7 +17660,7 @@ msgid "No help available for this output format."
 msgstr "Brak pomocy dla tego formatu wyjściowego."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:385
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:390
 msgid "Generate catalog"
 msgstr "Utwórz katalog"
 
@@ -18362,7 +18382,7 @@ msgid "Choose builtin recipe"
 msgstr "Wybierz wbudowane źródło"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:540
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:271
 msgid "Go"
 msgstr "Szukaj"
 
@@ -18467,7 +18487,7 @@ msgid "Manage data files for {}"
 msgstr "Zarządzaj plikami danych dla {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:238
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:697
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:151
 msgid "&Sort by:"
 msgstr "&Sortuj wg:"
@@ -18875,7 +18895,7 @@ msgid "The URL for this link"
 msgstr "Adres URL tego łącza"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:283
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:291
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "&URL:"
 msgstr "Adres &URL:"
@@ -20101,7 +20121,7 @@ msgid "&Maximum articles per feed:"
 msgstr "&Maksymalnie artykułów na kanał:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/opml.py:81
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:189
 msgid " days"
 msgstr " dni"
@@ -20735,7 +20755,7 @@ msgid ""
 msgstr "<p>Zaznacz, by uniknąć zmiany zawartości okna podglądu \nkiedy zmieni się zawartość listy w głównym oknie</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:297
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1024
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:98
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:273
@@ -20897,7 +20917,7 @@ msgstr "Zapisane wyszukiwanie z nazwą {} już istnieje. Wybierz inną nazwę"
 msgid "Search expression"
 msgstr "Wyrażenie wyszukiwania"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:102
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:103
 msgid ""
 "                Download this periodical every week on the specified days after\n"
 "                the specified time. For example, if you choose: Monday after\n"
@@ -20906,11 +20926,11 @@ msgid ""
 "            "
 msgstr "                Pobierz to czasopismo każdego tygodnia, w wybrane dni, po\n                określonym czasie. Na przykład, jeśli wybierzesz: poniedziałek po\n                9:00 rano, to czasopismo zostanie pobrane w każdy poniedziałek\n                po 9:00 rano, najszybciej jak to możliwe.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:124
 msgid "&Download after:"
 msgstr "&Pobierz po:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:155
 msgid ""
 "                Download this periodical every month, on the specified days.\n"
 "                The download will happen as soon after the specified time as\n"
@@ -20921,19 +20941,19 @@ msgid ""
 "            "
 msgstr "                Pobierz to czasopismo każdego miesiąca, w określone dni.\n                Pobieranie rozpocznie się tak szybko jak to możliwe po określonym\n                czasie, w określone dni każdego miesiąca. Na przykład,\n                jeśli wybierzesz 1-szy i 15-ty po 9:00 to czasopismo zostanie\n                pobrane każdego 1-szego i 15-tego dnia miesiąca tak szybko\n                po 9:00 jak to będzie możliwe\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:166
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:167
 msgid "&Days of the month:"
 msgstr "&Dni miesiąca:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:168
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:169
 msgid "Comma separated list of days of the month. For example: 1, 15"
 msgstr "Oddzielona przecinkami lista dni w miesiącu. Na przykład: 1, 15"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:173
 msgid "Download &after:"
 msgstr "Pobierz &po:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:206
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:207
 msgid ""
 "                Download this periodical every x days. For example, if you\n"
 "                choose 30 days, the periodical will be downloaded every 30\n"
@@ -20942,30 +20962,30 @@ msgid ""
 "            "
 msgstr "                Pobierz to czasopismo co x dni. Na przykład,\n                jeśli wybierzesz 30 dni, czasopismo będzie pobierane\n                co 30 dni. Zwróć uwagę, że można ustalić okresy krótsze\n                niż jeden dzień, np. 0.1 dnia, aby pobierać\n                czasopismo więcej niż raz na dzień.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:215
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:216
 msgid "&Download every:"
 msgstr "&Pobierz co:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:219
 msgid "every hour"
 msgstr "co godzinę"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:254
 msgid "days"
 msgstr "dni"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:226
 msgid ""
 "Note: You can set intervals of less than a day, by typing the value "
 "manually."
 msgstr "Notka: Można ustalić interwały mniejsze niż jeden dzień, wpisując wartość ręcznie."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:281
 msgid "Schedule news download [{} sources]"
 msgstr "Zaplanuj pobieranie wiadomości [{} źródła]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:298
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:299
 msgid "&Schedule"
 msgstr "&Planowanie"
 
@@ -21002,124 +21022,122 @@ msgstr "Z&aawansowane"
 msgid "Add &title as tag"
 msgstr "Dodaj &tytuł jako etykietę"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:359
 msgid "&Extra tags:"
 msgstr "Dodatkow&e tagi:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:362
-msgid "&Keep at most:"
-msgstr "&Zachowaj najwyżej:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:363
-msgid ""
-"Maximum number of copies (issues) of this recipe to keep.  Set to 0 to keep "
-"all (disable)."
-msgstr "Maksymalna liczba kopii (wydań) tego źródła do zachowania. Ustaw tę wartość na 0, aby przechowywać wszystkie (wyłączyć)."
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:364
 msgid ""
 "<p>When set, this option will cause calibre to keep, at most, the specified number of issues of this periodical. Every time a new issue is downloaded, the oldest one is deleted, if the total is larger than this number.\n"
 "<p>Note that this feature only works if you have the option to add the title as tag checked, above.\n"
 "<p>Also, the setting for deleting periodicals older than a number of days, below, takes priority over this setting."
 msgstr "<p>Ta opcja określa liczbę wydań tego czasopisma, która ma zostać zachowana w bibliotece. Za każdym razem, gdy pobrane zostanie nowe wydanie, najstarsze zostanie usunięte, w przypadku gdy liczba wydań w bibliotece przekracza określoną tu granicę.\n<p>Zauważ, że ta funkcja działa tylko wtedy, gdy masz zaznaczoną powyżej opcję do dodawania tytułu jako etykiety.\n<p>Również ustawienie dla usuwania czasopism starszych niż liczba dni (poniżej) ma większy priorytet nad tym ustawieniem."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid " issues"
 msgstr " wydań"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid "all issues"
 msgstr "wszystkie wydania"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:370
+msgid "&Keep at most:"
+msgstr "&Zachowaj najwyżej:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:376
 msgid "Delete downloaded &news older than:"
 msgstr "Usuń pobra&ne wiadomości starsze niż:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:384
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:379
 msgid ""
 "<p>Delete downloaded news older than the specified number of days. Set to zero to disable.\n"
 "<p>You can also control the maximum number of issues of a specific periodical that are kept by clicking the Advanced tab for that periodical above."
 msgstr "<p>Usuń pobrane wiadomości starsze niż wskazana liczba dni. Ustaw zero by wyłączyć tę funkcję.\n<p>Możesz również określić maksymalną liczbę wydań konkretnych czasopism, które są zachowane w bibliotece, klikając zakładkę Zaawansowane dla tego czasopisma."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 msgid "never delete"
 msgstr "nigdy nie usuwaj"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:386
 msgid "Download &all scheduled"
 msgstr "Pobierz wszystkie &zaplanowane"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
 msgid "Download all scheduled news sources at once"
 msgstr "Pobierz naraz wszystkie zaplanowane wiadomości"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:397
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
 msgid "&Download now"
 msgstr "&Pobierz teraz"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:482
 msgid "Need username and password"
 msgstr "Potrzebna jest nazwa użytkownika oraz hasło"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:483
 msgid "You must provide a username and/or password to use this news source."
 msgstr "Musisz podać nazwę użytkownika i/lub hasło, aby móc korzystać z tego źródła."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:529
 msgid "Account"
 msgstr "Konto"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
 msgid "(optional)"
 msgstr "(opcjonalnie)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:532
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
 msgid "(required)"
 msgstr "(wymagane)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:550
 msgid "Created by: "
 msgstr "Stworzone przez: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:555
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:554
 #, python-format
 msgid "Download %s now"
 msgstr "Pobierz teraz %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:558
 msgid "Last downloaded: never"
 msgstr "Ostatnio pobrano: nigdy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:560
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
 msgid "never"
 msgstr "nigdy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:567
 #, python-format
 msgid "%(days)d days, %(hours)d hours and %(mins)d minutes ago"
 msgstr "%(days)d dni, %(hours)d godzin i %(mins)d minut temu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:584
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:582
 msgid "Last downloaded:"
 msgstr "Ostatnio pobrano:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:597
+msgid "Default if unspecified: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
 msgid "Cannot download news as no internet connection is active"
 msgstr "Nie można pobrać wiadomości, gdyż twoje połączenie internetowe nie jest aktywne"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
 msgid "No internet connection"
 msgstr "Brak połączenia z Internetem"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:630
 msgid "Schedule news download"
 msgstr "Zaplanuj pobieranie wiadomości"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:633
 msgid "Add or edit a custom news source"
 msgstr "Dodaj lub edytuj własne źródło wiadomości"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:639
 msgid "Download all scheduled news sources"
 msgstr "Pobierz wszystkie zaplanowane"
 
@@ -21249,7 +21267,7 @@ msgid "The author to search for"
 msgstr "Autor do wyszukania"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:152
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:192
@@ -23210,217 +23228,216 @@ msgstr "Otwórz pliki HTML"
 msgid "Selected HTML files"
 msgstr "Wybrane pliki HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:244
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
 msgid "Create an icon theme"
 msgstr "Utwórz motyw ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:259
 msgid "Use this theme in calibre"
 msgstr "Użyj tego motywu w calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:260
 msgid "Change the current calibre icon theme to this theme"
 msgstr "Zmień aktualny motyw ikony calibre na ten motyw"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:265
 msgid "Theme Metadata"
 msgstr "Metadane motywu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
 msgid "&Version:"
 msgstr "&Wersja:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:284
 msgid "Light and Dark"
 msgstr "Jasny i ciemny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
 msgid "Light only"
 msgstr "Tylko jasny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:286
 msgid "Dark only"
 msgstr "Tylko ciemny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:287
 msgid "Specify the color palette this icon theme is suited for"
 msgstr "Określ paletę kolorów, który pasuje do tego motywu ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:288
 msgid "&Color palette:"
 msgstr "Paleta &kolorów:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
 msgid "&License:"
 msgstr "&Licencja:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:293
 msgid ""
 "The license for the icons in this theme. Common choices are Creative Commons"
 " or Public Domain."
 msgstr "Licencja dla ikon w tym zestawie. Najczęściej wybierane są Creative Commons lub domena publiczna."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:343
 #, python-format
 msgid "%d icons missing in this theme"
 msgstr "Brakujące ikony w tym motywie: %d"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:337
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:345
 msgid "No missing icons"
 msgstr "Są wszystkie ikony"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:355
 msgid "No title specified"
 msgstr "Nie podano nazwy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:356
 msgid "You must specify a title for this icon theme"
 msgstr "Należy podać tytuł tego motywu ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:350
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:358
 msgid "No author specified"
 msgstr "Nie podano autora"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:359
 msgid "You must specify an author for this icon theme"
 msgstr "Należy podać autora tego motywu ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "&Abort"
 msgstr "Przerwij"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "Losslessly optimizing images, please wait..."
 msgstr "Bezstratna optymalizacja obrazów, proszę czekać..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:384
 msgid "Optimizing images failed, click \"Show details\" for more information"
 msgstr "Optymalizacja obrazów nie powiodła się. Kliknij „Pokaż szczegóły”, aby uzyskać więcej informacji"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:389
 msgid "Compression failed"
 msgstr "Kompresja nie powiodła się"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:421
 #, python-format
 msgid "Optimizing %s"
 msgstr "Trwa optymalizacja %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:440
 msgid "Creating theme file"
 msgstr "Tworzenie pliku motywu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:451
 msgid "Compressing theme file"
 msgstr "Kompresowanie pliku motywu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:463
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:471
 msgid "Choose a folder from which to read the icons"
 msgstr "Podaj folder, z którego zostaną pobrane ikony"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:487
 msgid "Choose destination for icon theme"
 msgstr "Wybierz miejsce docelowe motywu ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:480
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:488
 msgid "ZIP files"
 msgstr "Pliki ZIP"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:608
 msgid "Right click to visit theme homepage"
 msgstr "Kliknij prawym przyciskiem myszy, aby odwiedzić stronę motywu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:609
 #, python-brace-format
 msgid ""
-"\n"
-"            <h2>{title}</h2>\n"
+"            <p><b><big>{title}<big></b><p>\n"
 "            <p>by <i>{author}</i> with <b>{number}</b> icons [{size}]</p>\n"
 "            <p>{description}</p>\n"
 "            <p>Version: {version} Number of users: {usage:n}</p>\n"
 "            <p><i>{visit}</i></p>\n"
 "            "
-msgstr "\n            <h2>{title}</h2>\n            <p>autorstwa <i>{author}</i> z <b>{number}</b> ikonami [{size}]</p>\n            <p>{description}</p>\n            <p>Wersja: {version} Liczba użytkowników: {usage:n}</p>\n            <p><i>{visit}</i></p>\n            "
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:634
 msgid "Downloading icons..."
 msgstr "Pobieranie ikon..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:635
 msgid "Downloading icons, please wait..."
 msgstr "Pobieranie ikon, proszę o cierpliwość..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:660
 msgid "Use the calibre default icons"
 msgstr "Użyj domyślnych ikon calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:668
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:681
 msgid ""
 "Choose an icon theme below. It will be used for both light and dark color "
 "themes unless a color specific theme is chosen in one of the other tabs."
 msgstr "Wybierz motyw ikon poniżej. Będzie on używany zarówno w przypadku jasnych, jak i ciemnych motywów kolorystycznych, chyba że w jednej z pozostałych zakładek zostanie wybrany inny motyw."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
 msgid ""
 "Choose an icon theme below. It will be used preferentially for light color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr "Wybierz motyw ikon poniżej. Będzie on używany do jasnych motywów kolorystycznych. W przypadku wybrania domyślnego zostanie użyty motyw „dla jasnego i ciemnego”."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
 msgid ""
 "Choose an icon theme below. It will be used preferentially for dark color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr "Wybierz motyw ikon poniżej. Będzie on używany do ciemnych motywów kolorystycznych. W przypadku wybrania domyślnego zostanie użyty motyw „dla jasnego i ciemnego”."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Number of icons"
 msgstr "Liczba ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Popularity"
 msgstr "Popularność"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:793
 msgid "Choose an icon theme"
 msgstr "Wybierz motyw ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:800
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:813
 msgid "Restore &default icons"
 msgstr "Przywróć domyślne ikony"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:829
 msgid "For light and dark"
 msgstr "Dla jasnego i ciemnego"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:831
 msgid "For light only"
 msgstr "Tylko dla jasnego"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:820
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:833
 msgid "For dark only"
 msgstr "Tylko dla ciemnego"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:835
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:848
 msgid "Downloading, please wait..."
 msgstr "Pobieranie, proszę czekać..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:881
 msgid "Failed to download list of themes"
 msgstr "Nieudane pobieranie listy motywów"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:882
 msgid ""
 "Failed to download list of themes, click \"Show details\" for more "
 "information"
 msgstr "Nie udało się pobrać listy motywów, kliknij „Pokaż szczegóły”, aby uzyskać więcej informacji"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:873
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:886
 msgid "Choose from {} available icon themes"
 msgstr "Wybierz z {} dostępnych motywów ikon"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:954
 msgid ""
 "Failed to download icon themes, click \"Show details\" for more information."
 msgstr "Nie udało się pobrać motywu ikon, kliknij „Pokaż szczegóły”, aby uzyskać więcej informacji."
@@ -32754,16 +32771,16 @@ msgid ""
 "format was found."
 msgstr "Nie można przekonwertować %(num)d książek z %(tot)d ponieważ nie zawierają odpowiednich formatów źródłowych."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:329
 #, python-format
 msgid "Fetch news from %s"
 msgstr "Pobierz wiadomości z %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:404
 msgid "Convert existing"
 msgstr "Konwertuj istniejące"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:405
 #, python-format
 msgid ""
 "The following books have already been converted to the %s format. Do you "
@@ -44421,7 +44438,7 @@ msgid "%s Document"
 msgstr "Dokument %s"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:128
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1600
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1630
 msgid "Unknown section"
 msgstr "Nieznana sekcja"
 
@@ -44431,7 +44448,7 @@ msgstr "Nieznany strumień"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:169
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:210
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1591
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1621
 msgid "Untitled article"
 msgstr "Artykuł bez tytułu"
 
@@ -44439,69 +44456,69 @@ msgstr "Artykuł bez tytułu"
 msgid "Unknown News Source"
 msgstr "Nieznane źródło informacji"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:616
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:633
 msgid "Article download aborted"
 msgstr "Pobieranie artykułu zostało przerwane"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:842
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:859
 #, python-format
 msgid "Failed to download %s"
 msgstr "Nie udało się pobrać %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:940
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:957
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "Źródło \"%s\" wymaga podania nazwy użytkownika i hasła."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1070
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1100
 msgid "Download finished"
 msgstr "Pobranie zakończone"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1072
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1102
 msgid "Failed to download the following articles:"
 msgstr "Nie udało się pobrać następujących artykułów:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1078
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1108
 msgid "Failed to download parts of the following articles:"
 msgstr "Nie udało się pobrać części następujących artykułów:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1080
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1110
 msgid " from "
 msgstr " z "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1082
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1112
 msgid "\tFailed links:"
 msgstr "\tNieprawidłowe odnośniki:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1188
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1218
 msgid "Could not fetch article."
 msgstr "Nie udało się pobrać artykułu."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1190
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1220
 msgid "The debug traceback is available earlier in this log"
 msgstr "Informacje dotyczące debugowania są dostępne wyżej w tym logu"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1192
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1222
 msgid "Run with -vv to see the reason"
 msgstr "Uruchom z -vv, aby zobaczyć przyczynę"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1275
 msgid "Fetching feeds..."
 msgstr "Pobieram strumienie..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1251
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1281
 msgid "Got feeds from index page"
 msgstr "Pobierz strumienie ze strony głównej"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1264
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1294
 msgid "Trying to download cover..."
 msgstr "Próbuję pobrać okładkę..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1266
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
 msgid "Generating masthead..."
 msgstr "Generuje nagłówek..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1326
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1356
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "Rozpoczynam pobieranie w pojedynczym wątku..."
@@ -44509,61 +44526,61 @@ msgstr[1] "Rozpoczynam pobieranie [{} wątki]..."
 msgstr[2] "Rozpoczynam pobieranie [{} wątków]..."
 msgstr[3] "Rozpoczynam pobieranie [{} wątków]..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1341
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1371
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Strumienie pobrano do %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1350
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1380
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "Nie można pobrać okładki: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1363
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Pobieranie okładki z %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1445
 msgid "Masthead image downloaded"
 msgstr "Obrazek nagłówka pobrany"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1515
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1545
 msgid "Articles in this issue:"
 msgstr "Artykuły w tym wydaniu:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1672
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1702
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Artykuł pobrany: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1682
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "Pobieranie artykułu zostało przerwane: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1690
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1720
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Pobieranie artykułu nie powiodło się: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 msgid "Fetching feed"
 msgstr "Pobieram strumień"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1888
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1918
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "Nie udało się zalogować, sprawdź nazwę użytkownika i hasło do usługi czasopisma calibre."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1904
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1934
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
 msgstr "Nie masz uprawnień do pobrania tego wydania. Albo twoja subskrypcja wygasła, albo przekroczyłeś maksymalną dzienną ilość pobrań."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr "Ty"
 

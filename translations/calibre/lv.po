@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2024-07-10 11:43+UTC\n"
+"POT-Creation-Date: 2024-07-19 02:06+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Jurcuks Jurcuks, 2024\n"
 "Language-Team: Latvian (http://app.transifex.com/calibre/calibre/language/lv/)\n"
@@ -276,10 +276,10 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:723
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:227
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1206
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:420
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:434
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:615
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:673
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1453
@@ -329,8 +329,8 @@ msgstr "Nedara pilnīgi neko"
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:349
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:349
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:74
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:80
 msgid "Unknown"
 msgstr "Nezināms"
 
@@ -1285,7 +1285,7 @@ msgstr "Katalogs"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:87
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:665
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1811
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1813
 #: /__w/calibre/calibre/src/calibre/library/database2.py:382
@@ -4676,37 +4676,45 @@ msgid ""
 "\"Export\" button to save them to a file."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:127
+#, python-brace-format
+msgid ""
+"Recipe specific options. Syntax is option_name:value. For example: "
+"{example}. Can be specified multiple times to set different options. To see "
+"a list of all available options for a recipe, use {list}."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "INPUT OPTIONS"
 msgstr "IEVADES IESTATĪJUMI"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "OUTPUT OPTIONS"
 msgstr "IZVADES IESTATĪJUMI"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:178
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:186
 #, python-format
 msgid "Options to control the processing of the input %s file"
 msgstr "Papildiestatījumi, kas pārvalda ievaddatnes %s apstrādi"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:185
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:193
 #, python-format
 msgid "Options to control the processing of the output %s"
 msgstr "Papildiestatījumi, kas pārvalda izvaddatnes %s apstrādi"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:199
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:207
 msgid "LOOK AND FEEL"
 msgstr "IZSKATS"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:200
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:208
 msgid "Options to control the look and feel of the output"
 msgstr "Papildiestatījumi, kas pārvalda rezultāta izskatu"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:218
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
 msgid "HEURISTIC PROCESSING"
 msgstr "HEURISTISKĀ APSTRĀDE"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:219
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
 #, python-format
 msgid ""
 "Modify the document text and structure using common patterns. Disabled by "
@@ -4714,61 +4722,61 @@ msgid ""
 "%(dis)s options."
 msgstr "Mainīt dokumenta tekstu un struktūru, izmantojot vispārējas pazīmes. Pēc noklusēšanas - atspējots. Iespējošanai lietojiet %(en)s.  Atsevišķas darbības var atspējot izmantojot  %(dis)s iestatījumus."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:234
 msgid "SEARCH AND REPLACE"
 msgstr "MEKLĒT UN AIZVIETOT"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:235
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace.py:22
 msgid "Modify the document text and structure using user defined patterns."
 msgstr "Izmaina dokumenta tekstu un struktūru, izmantojot lietotāja definētus šablonus."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:236
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:244
 msgid "STRUCTURE DETECTION"
 msgstr "STRUKTŪRAS NOTEIKŠANA"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:237
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:245
 msgid "Control auto-detection of document structure."
 msgstr "Pārvalda dokumenta struktūras automātisku noteikšanu."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:246
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:254
 msgid "TABLE OF CONTENTS"
 msgstr "SATURA RĀDĪITĀJS"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:247
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:255
 msgid ""
 "Control the automatic generation of a Table of Contents. By default, if the "
 "source file has a Table of Contents, it will be used in preference to the "
 "automatically generated one."
 msgstr "Vadīt satura rādītāja automātisku veidošanu. Pēc noklusēšanas, ja oriģinālā datne jau satur satura rādītāju, tam tiks dota priekšroka pret automātiski izveidoto."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "METADATA"
 msgstr "METADATI"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "Options to set metadata in the output"
 msgstr "Uzstādījumi metadatu norādīšanai rezultātā"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "DEBUG"
 msgstr "ATKĻŪDOŠANA"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "Options to help with debugging the conversion"
 msgstr "Iestatījumi, kas palīdz atkļūdot pārveidošanu"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:283
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:291
 msgid ""
 "List builtin recipe names. You can create an e-book from a builtin recipe "
 "like this: ebook-convert \"Recipe Name.recipe\" output.epub"
 msgstr "Saraksts ar iebūvēto recepšu nosaukumiem. Jūs varat izveidot e-grāmatu no iebūvētas receptes šādā veidā: ebook-convert \"Recipe Name.recipe\" output.epub"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:432
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:440
 msgid "Output saved to"
 msgstr "Rezultāts saglabāts"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:438
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:446
 #, python-format
 msgid ""
 "The options and default values for the options change depending on both the\n"
@@ -5055,8 +5063,8 @@ msgstr "Novietot pievienoto iekļauto satura rādītāju grāmatas beigās, nevi
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:55
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:57
-msgid "Title for any generated in-line table of contents."
-msgstr "Veidojamā iekļautā satura rādītāja nosaukums."
+msgid "Title for any generated inline table of contents."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_output.py:123
 msgid ""
@@ -5598,10 +5606,22 @@ msgstr "Lietotāja vārds vietnēm, kur nepieciešams autentificēties, lai piek
 msgid "Password for sites that require a login to access content."
 msgstr "Parole vietnēm, kur nepieciešams autentificēties, lai piekļūtu saturam."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:52
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:51
+msgid "Recipe specific options."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:54
 msgid ""
 "Do not download latest version of builtin recipes from the calibre server"
 msgstr "Nelejupielādēt jaunākās iebūvētās receptes no Calibre servera"
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:142
+msgid "specific options:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:151
+msgid "has no recipe specific options"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:49
 msgid "Convert RTF files to HTML"
@@ -9268,7 +9288,7 @@ msgid "Table of Contents:"
 msgstr "Satura rādītājs:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:646
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1012
 msgid "Default icons"
@@ -10419,7 +10439,7 @@ msgid "Open dialog"
 msgstr "Atvērt dialogu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:729
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:464
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Finished"
 msgstr "Pabeigts"
@@ -11207,7 +11227,7 @@ msgstr "Neizdevās lejupielādēt metadatus"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:262
 #: /__w/calibre/calibre/src/calibre/gui2/dnd.py:96
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:940
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:953
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:549
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:990
 #: /__w/calibre/calibre/src/calibre/gui2/store/web_store.py:191
@@ -13875,7 +13895,7 @@ msgstr "Patiess"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:400
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:184
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/models.py:38
@@ -15363,7 +15383,7 @@ msgstr "Izmantot vāku no oriģinālās datnes"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata_ui.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:142
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:231
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:188
@@ -17571,7 +17591,7 @@ msgid "No help available for this output format."
 msgstr "Šim izvades formātam nav pieejama palīdzība."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:385
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:390
 msgid "Generate catalog"
 msgstr "Veidot katalogu"
 
@@ -18293,7 +18313,7 @@ msgid "Choose builtin recipe"
 msgstr "Izvēlieties iebūvēto recepti"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:540
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:271
 msgid "Go"
 msgstr "Aiziet"
 
@@ -18398,7 +18418,7 @@ msgid "Manage data files for {}"
 msgstr "Pārvaldīt {} datu failus"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:238
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:697
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:151
 msgid "&Sort by:"
 msgstr "Šķirot pēc:"
@@ -18805,7 +18825,7 @@ msgid "The URL for this link"
 msgstr "Šīs saites URL"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:283
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:291
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "&URL:"
 msgstr "&URL:"
@@ -20029,7 +20049,7 @@ msgid "&Maximum articles per feed:"
 msgstr "&Maksimālais rakstu skaits vienā barotnē:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/opml.py:81
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:189
 msgid " days"
 msgstr " dienas"
@@ -20663,7 +20683,7 @@ msgid ""
 msgstr "<p>Izvēlieties, lai novērstu, ka Ātrais skats maina saturu, kad\n       tiek mainīta bibliotēkas skatījuma izvēle</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:297
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1024
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:98
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:273
@@ -20825,7 +20845,7 @@ msgstr "Saglabātā meklēšana ar vārdu {} jau pastāv. Izvēlieties citu vār
 msgid "Search expression"
 msgstr "Meklēšanas izteiksme"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:102
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:103
 msgid ""
 "                Download this periodical every week on the specified days after\n"
 "                the specified time. For example, if you choose: Monday after\n"
@@ -20834,11 +20854,11 @@ msgid ""
 "            "
 msgstr "                Lejupielādējiet šo periodisko izdevumu katru nedēļu norādītajās dienās pēc\n                norādītā laika. Piemēram, ja izvēlaties: pirmdien pēc\n                plkst. 9:00, periodika tiks lejupielādēta katru pirmdienu\n                pēc iespējas ātrāk pēc plkst. 9:00.\n           "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:124
 msgid "&Download after:"
 msgstr "&Lejupielādēt pēc:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:155
 msgid ""
 "                Download this periodical every month, on the specified days.\n"
 "                The download will happen as soon after the specified time as\n"
@@ -20849,19 +20869,19 @@ msgid ""
 "            "
 msgstr "                Lejupielādējiet šo periodisko izdevumu katru mēnesi norādītajās dienās.\n                Lejupielāde notiks, tiklīdz būs pabeigta noteiktajā laikā\n                Iespējams katra mēneša norādītajās dienās. Piemēram,\n                ja jūs izvēlaties 1. un 15. pēc 9:00, tad\n                periodiska tiks lejupielādēta katra mēneša 1. un 15. datumā,\n                pēc iespējas ātrāk pēc pulksten 9:00.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:166
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:167
 msgid "&Days of the month:"
 msgstr "&Mēneša dienas:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:168
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:169
 msgid "Comma separated list of days of the month. For example: 1, 15"
 msgstr "Ar komatu atdalīts mēneša dienu saraksts. Piemēram: 1, 15"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:173
 msgid "Download &after:"
 msgstr "Lejupielādēt &pēc:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:206
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:207
 msgid ""
 "                Download this periodical every x days. For example, if you\n"
 "                choose 30 days, the periodical will be downloaded every 30\n"
@@ -20870,30 +20890,30 @@ msgid ""
 "            "
 msgstr "                Lejupielādējiet šo periodisko izdevumu ik pēc x dienām. Piemēram, ja jūs\n                izvēlieties 30 dienas, periodika tiks lejupielādēta ik pēc 30\n                dienām. Ņemiet vērā, ka jūs varat iestatīt periodus, kas ir mazāki par dienu\n                piemēram, 0,1 dienas, lai periodiku lejupielādētu vairāk kā vienu reizi dienā.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:215
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:216
 msgid "&Download every:"
 msgstr "&Lejupielādēt ik:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:219
 msgid "every hour"
 msgstr "ik stundu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:254
 msgid "days"
 msgstr "dienas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:226
 msgid ""
 "Note: You can set intervals of less than a day, by typing the value "
 "manually."
 msgstr "Piezīme: Jūs varat uzstādīt intervālu mazāk nekā vienu dienu, ierakstot vērtību manuāli."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:281
 msgid "Schedule news download [{} sources]"
 msgstr "Ieplānot ziņu lejupielādi [{} avoti]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:298
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:299
 msgid "&Schedule"
 msgstr "&Plāns"
 
@@ -20930,124 +20950,122 @@ msgstr "&Paplašināti"
 msgid "Add &title as tag"
 msgstr "Pievienot &nosaukumu kā birku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:359
 msgid "&Extra tags:"
 msgstr "&Papildu birkas:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:362
-msgid "&Keep at most:"
-msgstr "&Saglabāt ne vairāk kā:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:363
-msgid ""
-"Maximum number of copies (issues) of this recipe to keep.  Set to 0 to keep "
-"all (disable)."
-msgstr "Maksimālais kopiju skaits (nummuru) par šo metodi, lai saglabātu.  Iestatīts uz 0 lai saglabātu visu (atslēgts)."
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:364
 msgid ""
 "<p>When set, this option will cause calibre to keep, at most, the specified number of issues of this periodical. Every time a new issue is downloaded, the oldest one is deleted, if the total is larger than this number.\n"
 "<p>Note that this feature only works if you have the option to add the title as tag checked, above.\n"
 "<p>Also, the setting for deleting periodicals older than a number of days, below, takes priority over this setting."
 msgstr "<p>Ja ir iestatīta, šī opcija izraisa calibre, maksimāli uzturēs noteiktu periodu izdevumu skaitu. Katru reizi, kad tiek lejupielādēts jauns izdevums, vecākais tiek dzēsts, ja kopējais skaits ir lielāks par šo numuru.\n<p>Ņemiet vērā, ka šī funkcija darbojas tikai tad, ja jums ir iespēja pievienot atzīmi kā atzīmi, kā norādīts iepriekš.\n<p>Arī iestatījumi, kuru mērķis ir dzēst periodiskus izdevumus, kuri ir vecāki par vairākām dienām, kā norādīts zemāk, ir prioritāri nekā šis iestatījums."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid " issues"
 msgstr " numuri"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid "all issues"
 msgstr "visus numurus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:370
+msgid "&Keep at most:"
+msgstr "&Saglabāt ne vairāk kā:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:376
 msgid "Delete downloaded &news older than:"
 msgstr "Dzēst lejupielādētos &jaunākos ziņojumus par:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:384
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:379
 msgid ""
 "<p>Delete downloaded news older than the specified number of days. Set to zero to disable.\n"
 "<p>You can also control the maximum number of issues of a specific periodical that are kept by clicking the Advanced tab for that periodical above."
 msgstr "<p>Dzēst ielādētos ziņojumus, kas ir vecāki par norādīto dienu skaitu. Iestatīt nulli, lai atspējotu.\n<p>Varat arī kontrolēt noteiktu periodisko izdevumu maksimālo skaitu, kas tiek turēti, klikšķinot uz \ncilnes Advanced (Papildu), kas paredzēta iepriekš minētajam periodiskajam izdevumam."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 msgid "never delete"
 msgstr "nekad nedzēst"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:386
 msgid "Download &all scheduled"
 msgstr "Lejupielādēt &visus ieplānotos"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
 msgid "Download all scheduled news sources at once"
 msgstr "Lejupielādēt visus ieplānotos ziņu avotus vienlaicīgi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:397
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
 msgid "&Download now"
 msgstr "&Lejupielādēt tagad"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:482
 msgid "Need username and password"
 msgstr "Nepieciešams lietotājvārds un parole"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:483
 msgid "You must provide a username and/or password to use this news source."
 msgstr "Jums ir jānorāda lietotājvārds un/vai parole, lai izmantotu šo ziņu avotu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:529
 msgid "Account"
 msgstr "Konts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
 msgid "(optional)"
 msgstr "(neobligāts)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:532
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
 msgid "(required)"
 msgstr "(obligāts)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:550
 msgid "Created by: "
 msgstr "Izveidoja: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:555
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:554
 #, python-format
 msgid "Download %s now"
 msgstr "Lejupielādēt %s tagad"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:558
 msgid "Last downloaded: never"
 msgstr "Pēdējie lejupielādētie: nekad"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:560
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
 msgid "never"
 msgstr "nekad"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:567
 #, python-format
 msgid "%(days)d days, %(hours)d hours and %(mins)d minutes ago"
 msgstr "%(days)d dienas, %(hours)d stundas un %(mins)d minūtes atpakaļ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:584
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:582
 msgid "Last downloaded:"
 msgstr "Pēdējie lejupielādētie:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:597
+msgid "Default if unspecified: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
 msgid "Cannot download news as no internet connection is active"
 msgstr "Nevar lejupielādēt jaunumus, ja nav aktīva interneta pieslēguma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
 msgid "No internet connection"
 msgstr "Nav interneta savienojuma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:630
 msgid "Schedule news download"
 msgstr "Plānot ziņu lejupielādi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:633
 msgid "Add or edit a custom news source"
 msgstr "Pievienojiet vai labojiet pielāgotu ziņu avotu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:639
 msgid "Download all scheduled news sources"
 msgstr "Lejupielādēt visus ieplānotos ziņu avotus"
 
@@ -21177,7 +21195,7 @@ msgid "The author to search for"
 msgstr "Meklēt pēc autora"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:152
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:192
@@ -23137,217 +23155,216 @@ msgstr "Atvērt HTML failus"
 msgid "Selected HTML files"
 msgstr "Atlasītie HTML faili"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:244
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
 msgid "Create an icon theme"
 msgstr "Izveidot ikonu tēmu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:259
 msgid "Use this theme in calibre"
 msgstr "Izmantot šo calibre tēmu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:260
 msgid "Change the current calibre icon theme to this theme"
 msgstr "Mainīt pašreizējo calibre ikonas motīvu uz šo motīvu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:265
 msgid "Theme Metadata"
 msgstr "Tēmas metadati"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
 msgid "&Version:"
 msgstr "&Versija:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:284
 msgid "Light and Dark"
 msgstr "Gaišs un tumšs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
 msgid "Light only"
 msgstr "Tikai gaišs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:286
 msgid "Dark only"
 msgstr "Tikai tumšs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:287
 msgid "Specify the color palette this icon theme is suited for"
 msgstr "Norādiet krāsu paleti, kurai šī ikonas tēma ir piemērota"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:288
 msgid "&Color palette:"
 msgstr "&Krāsu palete:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
 msgid "&License:"
 msgstr "&Licence:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:293
 msgid ""
 "The license for the icons in this theme. Common choices are Creative Commons"
 " or Public Domain."
 msgstr "Licence ikonām šajā tēmā. Ierastā izvēle - Creative Commons vai Public Domain"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:343
 #, python-format
 msgid "%d icons missing in this theme"
 msgstr "Šai tēmai iztrūkst %d ikonas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:337
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:345
 msgid "No missing icons"
 msgstr "Nav iztrūkstošu ikonu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:355
 msgid "No title specified"
 msgstr "Nav norādīts nosaukums"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:356
 msgid "You must specify a title for this icon theme"
 msgstr "Šai ikonu tēmai ir jānorāda nosaukums"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:350
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:358
 msgid "No author specified"
 msgstr "Nav norādīts autors"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:359
 msgid "You must specify an author for this icon theme"
 msgstr "Šai ikonu tēmai jānorāda autors"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "&Abort"
 msgstr "&Pārtraukt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "Losslessly optimizing images, please wait..."
 msgstr "Optimizē, bez zaudējumiem, attēlus, lūdzu, uzgaidiet..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:384
 msgid "Optimizing images failed, click \"Show details\" for more information"
 msgstr "Attēlu optimizēšana, bez zaudējumiem, neizdevās, noklikšķiniet uz \"Parādīt detaļas\" plašākai informācijai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:389
 msgid "Compression failed"
 msgstr "Saspiešana neizdevās"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:421
 #, python-format
 msgid "Optimizing %s"
 msgstr "Optimizē %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:440
 msgid "Creating theme file"
 msgstr "Izveidot tēmas failu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:451
 msgid "Compressing theme file"
 msgstr "Saspiest tēmas failu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:463
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:471
 msgid "Choose a folder from which to read the icons"
 msgstr "Izvēlieties mapi, no kuras nolasīt ikonas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:487
 msgid "Choose destination for icon theme"
 msgstr "Izvēlieties ikonas tēmas mērķi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:480
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:488
 msgid "ZIP files"
 msgstr "ZIP datnes"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:608
 msgid "Right click to visit theme homepage"
 msgstr "Ar peles labo pogu klikšķiniet, lai apmeklētu tēmas sākumlapu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:609
 #, python-brace-format
 msgid ""
-"\n"
-"            <h2>{title}</h2>\n"
+"            <p><b><big>{title}<big></b><p>\n"
 "            <p>by <i>{author}</i> with <b>{number}</b> icons [{size}]</p>\n"
 "            <p>{description}</p>\n"
 "            <p>Version: {version} Number of users: {usage:n}</p>\n"
 "            <p><i>{visit}</i></p>\n"
 "            "
-msgstr "\n            <h2>{title}</h2>\n            <p>ar <i>{author}</i> ar <b>{number}</b> ikonas [{size}]</p>\n            <p>{description}</p>\n            <p>Versija: {version} Lietotāju skaits: {usage:n}</p>\n            <p><i>{visit}</i></p>\n            "
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:634
 msgid "Downloading icons..."
 msgstr "Lejupielādē ikonas..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:635
 msgid "Downloading icons, please wait..."
 msgstr "Lejupielādē ikonas; lūdzu, uzgaidiet..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:660
 msgid "Use the calibre default icons"
 msgstr "Izmantot calibre noklusējuma ikonas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:668
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:681
 msgid ""
 "Choose an icon theme below. It will be used for both light and dark color "
 "themes unless a color specific theme is chosen in one of the other tabs."
 msgstr "Tālāk izvēlieties ikonas motīvu. Tas tiks izmantots gan gaišo, gan tumšo krāsu motīviem, ja vien kādā no citām cilnēm nebūs izvēlēts krāsains motīvs."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
 msgid ""
 "Choose an icon theme below. It will be used preferentially for light color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr "Tālāk izvēlieties ikonas motīvu. Tas galvenokārt tiks izmantots gaišu krāsu tēmām. Ja tiek izvēlēts noklusējuma iestatījums, tiks izmantots motīvs \"gaišs un tumšs\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
 msgid ""
 "Choose an icon theme below. It will be used preferentially for dark color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr "Tālāk izvēlieties ikonas motīvu. Tas galvenokārt tiks izmantots tumšu krāsu tēmām. Ja tiek izvēlēts noklusējuma iestatījums, tiks izmantots motīvs \"gaišs un tumšs\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Number of icons"
 msgstr "Ikonu skaits"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Popularity"
 msgstr "Popularitāte"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:793
 msgid "Choose an icon theme"
 msgstr "Izvēlieties ikonu tēmu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:800
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:813
 msgid "Restore &default icons"
 msgstr "Atjaunot &noklusētās ikonas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:829
 msgid "For light and dark"
 msgstr "Gaišam un tumšam"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:831
 msgid "For light only"
 msgstr "Tikai gaišai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:820
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:833
 msgid "For dark only"
 msgstr "Tikai tumšai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:835
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:848
 msgid "Downloading, please wait..."
 msgstr "Lejupielādē; lūdzu, uzgaidiet..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:881
 msgid "Failed to download list of themes"
 msgstr "Neizdevās lejupielādēt tēmu sarakstu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:882
 msgid ""
 "Failed to download list of themes, click \"Show details\" for more "
 "information"
 msgstr "Nevar lejupielādēt motīvu sarakstu. Lai iegūtu plašāku informāciju, klikšķiniet uz \"Rādīt detalizētu informāciju\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:873
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:886
 msgid "Choose from {} available icon themes"
 msgstr "Izvēlieties kādu no {} pieejamajiem ikonu motīviem"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:954
 msgid ""
 "Failed to download icon themes, click \"Show details\" for more information."
 msgstr "Nevar lejupielādēt ikonu motīvus. Lai iegūtu plašāku informāciju, klikšķiniet uz \"Rādīt informāciju\"."
@@ -32663,16 +32680,16 @@ msgid ""
 "format was found."
 msgstr "Neizdevās pārveidot %(num)d no %(tot)d grāmatas, jo nav atrasts piemērots avota formāts."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:329
 #, python-format
 msgid "Fetch news from %s"
 msgstr "Ielādēt ziņas no %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:404
 msgid "Convert existing"
 msgstr "Pārveidot esošu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:405
 #, python-format
 msgid ""
 "The following books have already been converted to the %s format. Do you "
@@ -44314,7 +44331,7 @@ msgid "%s Document"
 msgstr "%s dokuments"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:128
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1600
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1630
 msgid "Unknown section"
 msgstr "Nezināma nodaļa"
 
@@ -44324,7 +44341,7 @@ msgstr "Nezināma barotne"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:169
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:210
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1591
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1621
 msgid "Untitled article"
 msgstr "Raksts bez nosaukuma"
 
@@ -44332,130 +44349,130 @@ msgstr "Raksts bez nosaukuma"
 msgid "Unknown News Source"
 msgstr "Nezināms ziņu avots"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:616
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:633
 msgid "Article download aborted"
 msgstr "Raksta lejupielāde atcelta"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:842
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:859
 #, python-format
 msgid "Failed to download %s"
 msgstr "%s lejupielādēt neizdevās"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:940
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:957
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "Receptei \"%s\" nepieciešams lietotāja vārds un parole."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1070
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1100
 msgid "Download finished"
 msgstr "Lejupielāde pabeigta"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1072
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1102
 msgid "Failed to download the following articles:"
 msgstr "Neizdevās lejupielādēt šādus rakstus:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1078
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1108
 msgid "Failed to download parts of the following articles:"
 msgstr "Neizdevās lejupielādēt daļas no šiem rakstiem:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1080
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1110
 msgid " from "
 msgstr " no "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1082
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1112
 msgid "\tFailed links:"
 msgstr "\tNav saites:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1188
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1218
 msgid "Could not fetch article."
 msgstr "Rakstu saņemt neizdevās."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1190
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1220
 msgid "The debug traceback is available earlier in this log"
 msgstr "Atkļūdošanas izsekojums ir pieejams agrāk šajā žurnālā"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1192
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1222
 msgid "Run with -vv to see the reason"
 msgstr "Palaidiet ar -vv, lai noskaidrotu iemeslu"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1275
 msgid "Fetching feeds..."
 msgstr "Saņem barotnes..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1251
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1281
 msgid "Got feeds from index page"
 msgstr "Saņemtas barotnes no indeksa lapas"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1264
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1294
 msgid "Trying to download cover..."
 msgstr "Mēģina lejupielādēt vāku..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1266
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
 msgid "Generating masthead..."
 msgstr "Veido masta galvu..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1326
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1356
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "Notiek lejupielāde vienā pavedienā..."
 msgstr[1] "Notiek lejupielāde [{} pavedienos]..."
 msgstr[2] "Starting download [{} threads]..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1341
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1371
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Barotnes lejupielādētas %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1350
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1380
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "Nevarēja lejupielādēt vāku: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1363
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Lejupielādē vāku no %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1445
 msgid "Masthead image downloaded"
 msgstr "Virsraksta attēls lejupielādēts"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1515
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1545
 msgid "Articles in this issue:"
 msgstr "Raksti šajā izdevumā:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1672
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1702
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Raksts lejupielādēts: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1682
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "Raksta lejupielāde atcelta: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1690
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1720
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Raksta lejupielāde neveiksmīga: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 msgid "Fetching feed"
 msgstr "Saņem barotni"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1888
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1918
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "Neizdevās pieslēgties, pārbaudiet Jūsu calibre Periodikas servisa lietotāja vārdu un paroli"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1904
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1934
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
 msgstr "Jums nav tiesību saņemt šo izdevumu. Vai nu Jūsu parakstīšanās laiks ir beidzies vai arī ir pārsniegts Jums vienā dienā atļauto lejupielāžu skaits."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr "Tu"
 

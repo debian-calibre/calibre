@@ -74,6 +74,7 @@
 # Qian Yicheng, 2022
 # Qishen Wu <wuqswuqs2001@gmail.com>, 2018
 # qwewei <zhuyug@163.com>, 2014
+# ready tracing, 2024
 # reeqoo <reeooq@gmail.com>, 2016-2017
 # reeqoo jack <reeqoo@outlook.com>, 2018
 # reeqoo <reeooq@gmail.com>, 2016
@@ -128,9 +129,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2024-07-10 11:43+UTC\n"
+"POT-Creation-Date: 2024-07-19 02:06+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
-"Last-Translator: RERBIN MA, 2022-2024\n"
+"Last-Translator: ready tracing, 2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -387,10 +388,10 @@ msgstr "不做修改"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:723
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:227
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1206
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:420
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:434
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:615
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:673
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1453
@@ -440,8 +441,8 @@ msgstr "不做修改"
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:349
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:349
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:74
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:80
 msgid "Unknown"
 msgstr "未知"
 
@@ -1396,7 +1397,7 @@ msgstr "书目"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:87
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:665
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1811
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1813
 #: /__w/calibre/calibre/src/calibre/library/database2.py:382
@@ -4787,37 +4788,45 @@ msgid ""
 "\"Export\" button to save them to a file."
 msgstr "包含转换本书中的HTML的规则的文件的路径。创建这样一个文件的最简单方法是在 calibre图形用户界面中使用向导创建规则。在“外观->转换HTML”的转换对话框部分访问它。一旦创建规则，就可以使用“导出”按钮将它们保存到文件中。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:127
+#, python-brace-format
+msgid ""
+"Recipe specific options. Syntax is option_name:value. For example: "
+"{example}. Can be specified multiple times to set different options. To see "
+"a list of all available options for a recipe, use {list}."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "INPUT OPTIONS"
 msgstr "输入格式选项"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "OUTPUT OPTIONS"
 msgstr "输出格式选项"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:178
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:186
 #, python-format
 msgid "Options to control the processing of the input %s file"
 msgstr "处理输入 %s 文件的选项设置"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:185
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:193
 #, python-format
 msgid "Options to control the processing of the output %s"
 msgstr "处理输出 %s 的选项设置"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:199
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:207
 msgid "LOOK AND FEEL"
 msgstr "界面外观"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:200
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:208
 msgid "Options to control the look and feel of the output"
 msgstr "输出的界面外观选项设置"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:218
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
 msgid "HEURISTIC PROCESSING"
 msgstr "智能处理"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:219
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
 #, python-format
 msgid ""
 "Modify the document text and structure using common patterns. Disabled by "
@@ -4825,61 +4834,61 @@ msgid ""
 "%(dis)s options."
 msgstr "使用常见规则修改文档内容与结构。默认禁用。使用 %(en)s 启用该功能。具体选项可以通过 %(dis)s 参数禁用。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:234
 msgid "SEARCH AND REPLACE"
 msgstr "查找与替换"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:235
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace.py:22
 msgid "Modify the document text and structure using user defined patterns."
 msgstr "以用户预定义的规则修改文档内容和结构。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:236
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:244
 msgid "STRUCTURE DETECTION"
 msgstr "结构检测"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:237
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:245
 msgid "Control auto-detection of document structure."
 msgstr "设置自动检测文档结构。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:246
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:254
 msgid "TABLE OF CONTENTS"
 msgstr "目录"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:247
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:255
 msgid ""
 "Control the automatic generation of a Table of Contents. By default, if the "
 "source file has a Table of Contents, it will be used in preference to the "
 "automatically generated one."
 msgstr "设置自动生成目录。默认情况下若源文件有目录，它将被优先使用，而不是自动创建。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "METADATA"
 msgstr "元数据"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "Options to set metadata in the output"
 msgstr "设定输出的元数据选项"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "DEBUG"
 msgstr "调试"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "Options to help with debugging the conversion"
 msgstr "用于调试转换的选项"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:283
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:291
 msgid ""
 "List builtin recipe names. You can create an e-book from a builtin recipe "
 "like this: ebook-convert \"Recipe Name.recipe\" output.epub"
 msgstr "列出内建的规则名。你可以通过如下命令创建基于内建的规则的电子书： ebook-convert \"Recipe Name.recipe\" output.epub"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:432
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:440
 msgid "Output saved to"
 msgstr "输出保存到"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:438
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:446
 #, python-format
 msgid ""
 "The options and default values for the options change depending on both the\n"
@@ -5166,8 +5175,8 @@ msgstr "在书籍的末尾插入内嵌目录，而不是书籍开头。"
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:55
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:57
-msgid "Title for any generated in-line table of contents."
-msgstr "生成的内嵌到书籍的目录的标题。"
+msgid "Title for any generated inline table of contents."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_output.py:123
 msgid ""
@@ -5709,10 +5718,22 @@ msgstr "需登录才能访问内容的网站上对应的用户名。"
 msgid "Password for sites that require a login to access content."
 msgstr "需登录才能访问内容的网站上对应的密码。"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:52
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:51
+msgid "Recipe specific options."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:54
 msgid ""
 "Do not download latest version of builtin recipes from the calibre server"
 msgstr "不下载 calibre 服务器最新的内建规则"
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:142
+msgid "specific options:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:151
+msgid "has no recipe specific options"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:49
 msgid "Convert RTF files to HTML"
@@ -9361,7 +9382,7 @@ msgid "Table of Contents:"
 msgstr "目录："
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:646
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1012
 msgid "Default icons"
@@ -10496,7 +10517,7 @@ msgid "Open dialog"
 msgstr "打开对话框"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:729
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:464
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Finished"
 msgstr "已完成"
@@ -11270,7 +11291,7 @@ msgstr "下载元数据失败"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:262
 #: /__w/calibre/calibre/src/calibre/gui2/dnd.py:96
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:940
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:953
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:549
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:990
 #: /__w/calibre/calibre/src/calibre/gui2/store/web_store.py:191
@@ -13918,7 +13939,7 @@ msgstr "正确"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:400
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:184
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/models.py:38
@@ -15406,7 +15427,7 @@ msgstr "使用来自源文件的封面(&S)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata_ui.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:142
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:231
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:188
@@ -17612,7 +17633,7 @@ msgid "No help available for this output format."
 msgstr "没有此输出格式的帮助信息。"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:385
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:390
 msgid "Generate catalog"
 msgstr "生成书目"
 
@@ -18334,7 +18355,7 @@ msgid "Choose builtin recipe"
 msgstr "选择内建的规则"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:540
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:271
 msgid "Go"
 msgstr "搜索"
 
@@ -18439,7 +18460,7 @@ msgid "Manage data files for {}"
 msgstr "管理 {} 的数据文件"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:238
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:697
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:151
 msgid "&Sort by:"
 msgstr "排序(&S):"
@@ -18844,7 +18865,7 @@ msgid "The URL for this link"
 msgstr "此链接的URL"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:283
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:291
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "&URL:"
 msgstr "URL(&U):"
@@ -20064,7 +20085,7 @@ msgid "&Maximum articles per feed:"
 msgstr "每个源最大文章数(&M)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/opml.py:81
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:189
 msgid " days"
 msgstr " 天"
@@ -20698,7 +20719,7 @@ msgid ""
 msgstr "<p>当书库视图上的选择发生更改时，选择以防止'类似书籍'的内容更改</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:297
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1024
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:98
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:273
@@ -20860,7 +20881,7 @@ msgstr "已存在名称为 {} 搜索记录。选择其他名称"
 msgid "Search expression"
 msgstr "搜索表达式"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:102
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:103
 msgid ""
 "                Download this periodical every week on the specified days after\n"
 "                the specified time. For example, if you choose: Monday after\n"
@@ -20869,11 +20890,11 @@ msgid ""
 "            "
 msgstr "                在每周指定日期的指定时间后下载新闻。比如，\n                如果你选择“星期一，上午 9:00 后”，则\n                指定新闻会在每个星期一的上午9:00后被\n                尽快的下载。\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:124
 msgid "&Download after:"
 msgstr "下载时间(&D)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:155
 msgid ""
 "                Download this periodical every month, on the specified days.\n"
 "                The download will happen as soon after the specified time as\n"
@@ -20884,19 +20905,19 @@ msgid ""
 "            "
 msgstr "                在每个月指定的日期下载新闻。下载会\n                在每个月指定的日期的指定时间达后\n                尽快进行。举倒来说，如果你选择\n                “第 1 天和第 5 天，上午 9:00 后”，则\n                指定新闻会在每个月的第 1 天和\n                第 5 天的上午9:00后被尽快的下载。\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:166
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:167
 msgid "&Days of the month:"
 msgstr "每月(&D)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:168
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:169
 msgid "Comma separated list of days of the month. For example: 1, 15"
 msgstr "一个月中的某几号，以逗号隔开。比如：1, 15"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:173
 msgid "Download &after:"
 msgstr "下载时间(&A)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:206
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:207
 msgid ""
 "                Download this periodical every x days. For example, if you\n"
 "                choose 30 days, the periodical will be downloaded every 30\n"
@@ -20905,30 +20926,30 @@ msgid ""
 "            "
 msgstr "                每隔指定的天数下载新闻。举例来说，\n                如果你选择 30 天，新闻会每隔 30天下载一次。你可以设置小于 1 天的\n                间隔，比如 0.1 天，这样就可以在一天\n                内多次下载该新闻。\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:215
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:216
 msgid "&Download every:"
 msgstr "下载周期(&D) ："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:219
 msgid "every hour"
 msgstr "每小时"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:254
 msgid "days"
 msgstr "天"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:226
 msgid ""
 "Note: You can set intervals of less than a day, by typing the value "
 "manually."
 msgstr "注意：你可以设置小于一天的时间间隔，手工输入值即可。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:281
 msgid "Schedule news download [{} sources]"
 msgstr "定期下载新闻 [{} 个源]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:298
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:299
 msgid "&Schedule"
 msgstr "计划安排(&S)"
 
@@ -20965,124 +20986,122 @@ msgstr "高级选项(&A)"
 msgid "Add &title as tag"
 msgstr "将标题添加为标签(&T)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:359
 msgid "&Extra tags:"
 msgstr "附加标签(&E)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:362
-msgid "&Keep at most:"
-msgstr "最多保留份数(&K)："
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:363
-msgid ""
-"Maximum number of copies (issues) of this recipe to keep.  Set to 0 to keep "
-"all (disable)."
-msgstr "该规则下载的新闻的最大保留份数。设为0保留全部（禁止清除过期新闻）。"
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:364
 msgid ""
 "<p>When set, this option will cause calibre to keep, at most, the specified number of issues of this periodical. Every time a new issue is downloaded, the oldest one is deleted, if the total is larger than this number.\n"
 "<p>Note that this feature only works if you have the option to add the title as tag checked, above.\n"
 "<p>Also, the setting for deleting periodicals older than a number of days, below, takes priority over this setting."
 msgstr "<p>设置这个参数后， calibre 会最多保留你所指定期数的新闻。当新的新闻被下载时，如果保留新闻的总数超过了设置值，超过指定数量的新闻中最旧的一份会被删除。\n<p>注意：本功能只在启用了上面的“将标题添加为标签”后才生效。\n<p>同时，下面的“删除指定天数前下载的新闻”的设置优先级比这个选项要高。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid " issues"
 msgstr " 份"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid "all issues"
 msgstr "全部保留"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:370
+msgid "&Keep at most:"
+msgstr "最多保留份数(&K)："
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:376
 msgid "Delete downloaded &news older than:"
 msgstr "删除指定天数前下载的新闻(&N)："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:384
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:379
 msgid ""
 "<p>Delete downloaded news older than the specified number of days. Set to zero to disable.\n"
 "<p>You can also control the maximum number of issues of a specific periodical that are kept by clicking the Advanced tab for that periodical above."
 msgstr "<p>删除已经下载超过指定天数的的新闻。设为 0 可以禁用自动删除功能。\n<p>你也可以控制要保留的多大下载的新闻的数目，在上面新闻设置的“高级”选项卡中可以找到这个设置。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 msgid "never delete"
 msgstr "从不删除"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:386
 msgid "Download &all scheduled"
 msgstr "下载所有设好计划的新闻源(&A)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
 msgid "Download all scheduled news sources at once"
 msgstr "立即下载所有设置了定期下载的新闻源"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:397
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
 msgid "&Download now"
 msgstr "立即下载(&D)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:482
 msgid "Need username and password"
 msgstr "需要用户名和密码"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:483
 msgid "You must provide a username and/or password to use this news source."
 msgstr "你必须为该新闻源提供用户名和/或密码"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:529
 msgid "Account"
 msgstr "账户"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
 msgid "(optional)"
 msgstr "(可选)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:532
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
 msgid "(required)"
 msgstr "(必需)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:550
 msgid "Created by: "
 msgstr "作者： "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:555
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:554
 #, python-format
 msgid "Download %s now"
 msgstr "立即下载 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:558
 msgid "Last downloaded: never"
 msgstr "最近下载：无"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:560
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
 msgid "never"
 msgstr "未完成过下载"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:567
 #, python-format
 msgid "%(days)d days, %(hours)d hours and %(mins)d minutes ago"
 msgstr "%(days)d 天， %(hours)d 小时， %(mins)d 分钟前"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:584
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:582
 msgid "Last downloaded:"
 msgstr "最近一次下载时间："
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:597
+msgid "Default if unspecified: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
 msgid "Cannot download news as no internet connection is active"
 msgstr "无法下载新闻，无网络连接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
 msgid "No internet connection"
 msgstr "无网络连接"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:630
 msgid "Schedule news download"
 msgstr "定期下载新闻"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:633
 msgid "Add or edit a custom news source"
 msgstr "添加自定义新闻源"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:639
 msgid "Download all scheduled news sources"
 msgstr "下载所有设置了定期下载的新闻源"
 
@@ -21212,7 +21231,7 @@ msgid "The author to search for"
 msgstr "要搜索的作者"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:152
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:192
@@ -23170,217 +23189,216 @@ msgstr "打开的HTML文件"
 msgid "Selected HTML files"
 msgstr "所选的HTML文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:244
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
 msgid "Create an icon theme"
 msgstr "创建一个图标主题"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:259
 msgid "Use this theme in calibre"
 msgstr "在calibre中使用此主题"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:260
 msgid "Change the current calibre icon theme to this theme"
 msgstr "将当前图标主题更改为此主题"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:265
 msgid "Theme Metadata"
 msgstr "主题元数据"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
 msgid "&Version:"
 msgstr "版本(&V):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:284
 msgid "Light and Dark"
 msgstr "浅色和深色"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
 msgid "Light only"
 msgstr "仅浅色"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:286
 msgid "Dark only"
 msgstr "仅深色"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:287
 msgid "Specify the color palette this icon theme is suited for"
 msgstr "指定此图标主题适合的调色板"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:288
 msgid "&Color palette:"
 msgstr "调色板(&C):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
 msgid "&License:"
 msgstr "许可(&L):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:293
 msgid ""
 "The license for the icons in this theme. Common choices are Creative Commons"
 " or Public Domain."
 msgstr "此主题中图标的授权。一般使用知识共享(Creative Commons)或公有领域(Public Domain)。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:343
 #, python-format
 msgid "%d icons missing in this theme"
 msgstr "%d 个图标在该主题中缺失"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:337
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:345
 msgid "No missing icons"
 msgstr "没有缺失图标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:355
 msgid "No title specified"
 msgstr "未指定名称"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:356
 msgid "You must specify a title for this icon theme"
 msgstr "你必须为此图标主题指定名称"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:350
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:358
 msgid "No author specified"
 msgstr "未指定作者"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:359
 msgid "You must specify an author for this icon theme"
 msgstr "你必须为此图标主题指定作者"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "&Abort"
 msgstr "中止(&A)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "Losslessly optimizing images, please wait..."
 msgstr "正在无损优化图片，请稍等…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:384
 msgid "Optimizing images failed, click \"Show details\" for more information"
 msgstr "优化图片失败，点击“显示详情”获取更多信息"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:389
 msgid "Compression failed"
 msgstr "压缩失败"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:421
 #, python-format
 msgid "Optimizing %s"
 msgstr "正在优化 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:440
 msgid "Creating theme file"
 msgstr "正在创建主题文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:451
 msgid "Compressing theme file"
 msgstr "正在压缩主题文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:463
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:471
 msgid "Choose a folder from which to read the icons"
 msgstr "选择图标来源文件夹"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:487
 msgid "Choose destination for icon theme"
 msgstr "选择此主题的目标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:480
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:488
 msgid "ZIP files"
 msgstr "ZIP文件"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:608
 msgid "Right click to visit theme homepage"
 msgstr "单击右键访问主题主页"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:609
 #, python-brace-format
 msgid ""
-"\n"
-"            <h2>{title}</h2>\n"
+"            <p><b><big>{title}<big></b><p>\n"
 "            <p>by <i>{author}</i> with <b>{number}</b> icons [{size}]</p>\n"
 "            <p>{description}</p>\n"
 "            <p>Version: {version} Number of users: {usage:n}</p>\n"
 "            <p><i>{visit}</i></p>\n"
 "            "
-msgstr "\n            <h2>{title}</h2>\n            <p>作者 <i>{author}</i> ,包含 <b>{number}</b> 个图标, [{size}]</p>\n            <p>{description}</p>\n            <p>版本: {version} ,用户数: {usage:n}</p>\n            <p><i>{visit}</i></p>\n            "
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:634
 msgid "Downloading icons..."
 msgstr "下载图标中…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:635
 msgid "Downloading icons, please wait..."
 msgstr "下载图标中，请稍候…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:660
 msgid "Use the calibre default icons"
 msgstr "使用默认图标"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:668
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:681
 msgid ""
 "Choose an icon theme below. It will be used for both light and dark color "
 "themes unless a color specific theme is chosen in one of the other tabs."
 msgstr "在下面选择图标主题。它即可用于浅色主题、也可用于深色主题，除非在其他选项卡中选择了特定颜色的主题。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
 msgid ""
 "Choose an icon theme below. It will be used preferentially for light color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr "在下面选择图标主题。它将优先用于浅色主题。如果选择了默认系统配色，则将使用“浅色和深色”图标主题。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
 msgid ""
 "Choose an icon theme below. It will be used preferentially for dark color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr "在下面选择图标主题。它将优先用于深色主题。如果选择了默认系统配色，则将使用“浅色和深色”图标主题。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Number of icons"
 msgstr "图标数"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Popularity"
 msgstr "流行度"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:793
 msgid "Choose an icon theme"
 msgstr "选择一个图标主题"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:800
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:813
 msgid "Restore &default icons"
 msgstr "还原默认图标(&D)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:829
 msgid "For light and dark"
 msgstr "用于浅色和深色"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:831
 msgid "For light only"
 msgstr "仅用于浅色"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:820
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:833
 msgid "For dark only"
 msgstr "仅用于深色"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:835
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:848
 msgid "Downloading, please wait..."
 msgstr "下载中，请稍候…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:881
 msgid "Failed to download list of themes"
 msgstr "下载主题列表失败"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:882
 msgid ""
 "Failed to download list of themes, click \"Show details\" for more "
 "information"
 msgstr "下载主题列表失败，点击“显示详情”获取更多信息"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:873
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:886
 msgid "Choose from {} available icon themes"
 msgstr "从 {} 个可用图标主题中选择"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:954
 msgid ""
 "Failed to download icon themes, click \"Show details\" for more information."
 msgstr "下载图标主题失败，点击“显示详情”获取更多信息。"
@@ -32660,16 +32678,16 @@ msgid ""
 "format was found."
 msgstr "由于无法找到合适的源文件格式，无法转换 %(num)d 本书籍(共 %(tot)d 本)。"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:329
 #, python-format
 msgid "Fetch news from %s"
 msgstr "获取新闻，来源于 %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:404
 msgid "Convert existing"
 msgstr "转换现有的"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:405
 #, python-format
 msgid ""
 "The following books have already been converted to the %s format. Do you "
@@ -36015,7 +36033,7 @@ msgstr "起始编号(&N)："
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:124
 msgid "Rename files according to their book order"
-msgstr "根据书名重命名文件"
+msgstr "根据书中顺序重命名文件"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:126
 msgid ""
@@ -44279,7 +44297,7 @@ msgid "%s Document"
 msgstr "%s文档"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:128
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1600
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1630
 msgid "Unknown section"
 msgstr "未知章节"
 
@@ -44289,7 +44307,7 @@ msgstr "未知源"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:169
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:210
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1591
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1621
 msgid "Untitled article"
 msgstr "无标题文章"
 
@@ -44297,128 +44315,128 @@ msgstr "无标题文章"
 msgid "Unknown News Source"
 msgstr "未知新闻来源"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:616
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:633
 msgid "Article download aborted"
 msgstr "文章下载中断"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:842
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:859
 #, python-format
 msgid "Failed to download %s"
 msgstr "下载 %s 失败"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:940
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:957
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr " \"%s\"规则需要用户名与密码。"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1070
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1100
 msgid "Download finished"
 msgstr "下载完成"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1072
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1102
 msgid "Failed to download the following articles:"
 msgstr "下载下列文章失败："
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1078
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1108
 msgid "Failed to download parts of the following articles:"
 msgstr "下载下列文章的某些部分失败："
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1080
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1110
 msgid " from "
 msgstr "来自"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1082
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1112
 msgid "\tFailed links:"
 msgstr "\t失败的链接："
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1188
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1218
 msgid "Could not fetch article."
 msgstr "无法获取文章。"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1190
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1220
 msgid "The debug traceback is available earlier in this log"
 msgstr "调试信息在日志文件前部"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1192
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1222
 msgid "Run with -vv to see the reason"
 msgstr "以 -vv 参数运行，以便查看原因"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1275
 msgid "Fetching feeds..."
 msgstr "正在获取源..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1251
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1281
 msgid "Got feeds from index page"
 msgstr "从索引页面获取了源"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1264
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1294
 msgid "Trying to download cover..."
 msgstr "正在尝试下载封面..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1266
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
 msgid "Generating masthead..."
 msgstr "正在生成刊头..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1326
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1356
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "开始下载 [{} 线程]…"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1341
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1371
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "新闻源已下载到 %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1350
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1380
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "无法下载封面：%s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1363
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "正在从 %s 下载封面"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1445
 msgid "Masthead image downloaded"
 msgstr "已下载刊头图像"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1515
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1545
 msgid "Articles in this issue:"
 msgstr "本期文章:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1672
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1702
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "已下载文章：%s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1682
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "文章下载中断：%s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1690
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1720
 #, python-format
 msgid "Article download failed: %s"
 msgstr "文章下载失败：%s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 msgid "Fetching feed"
 msgstr "获取源"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1888
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1918
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "登录失败，检查你 calibre 期刊服务的用户名密码。"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1904
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1934
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
 msgstr "你无权下载这一期。你的订阅已经过期或者超过了今天可下载的最大值。"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr "你"
 

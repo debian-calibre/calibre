@@ -1,10 +1,11 @@
 # Translation template file..
 # Copyright (C) 2024 Kovid Goyal
-# 
+#
 # Translators:
 # Antón Méixome <meixome@certima.net>, 2010
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008
 # José M. Abuín <chemaster@gmail.com>, 2016
+# nin hum <ninhum@gmx.com>, 2024
 # pep <kuma_ym@hotmail.com>, 2014
 # Xosé, 2013
 # ghose <correoxm@disroot.org>, 2015
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2024-07-10 11:43+UTC\n"
+"POT-Creation-Date: 2024-07-19 02:06+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
-"Last-Translator: Xosé, 2013,2015-2016,2018,2021,2023\n"
+"Last-Translator: nin hum <ninhum@gmx.com>, 2024\n"
 "Language-Team: Galician (http://app.transifex.com/calibre/calibre/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +77,7 @@ msgid ""
 ":option:`--with-library` option, see the documentation of that option for\n"
 "details and examples.\n"
 "    "
-msgstr ""
+msgstr ":comando:`calibredb` é a interface de liña de comandos para a base de datos de calibre. Ten\nvarios sub-comandos, documentados a continuación.\n\n:comando:`calibredb` pode usarse para manipular tanto unha base de datos de calibre\nespecificada por ruta como un :guilabel:Servidor de contidos de calibre que estea a funcionar na\nthe local machine or over the internet. máquina local ou a través de internet. Podes iniciar un :`Servidor de contidos` de calibre utilizando tanto o programa :`calibre-server`\ncomo desde o programa principal de calibre facendo clic en :guilabel:`Conectar/compartir ->\nIniciar servidor de contidos`. Dado que :command:`calibredb` pode realizar cambios nas túas\nbibliotecas de calibre, debes configurar a autenticación no servidor primeiro. Hai\ndúas maneiras de facelo:\n\n    * Se planeas conectarte só a un servidor que se estea a executar no mesmo ordenador,\n      podes simplemente usar a opción ``--enable-local-write`` do Servidor de contidos, para permitir que calquera programa, incluíndo calibredb, que se estea a executar\n      no ordenador local poida facer cambios nos teus datos de calibre. Cando executas\n     o servidor desde o programa principal de calibre, esta opción está en\n      :guilabel:`Preferencias->Compartir a través da rede->Avanzado`.\n\n    * Se queres habilitar o acceso a través de internet, entón debes configurar\n      contas de usuario no servidor e usar as opcións :option:`--username` and :option:`--password`\n      con :command:`calibredb` para darlle acceso. Podes configurar a autenticación de usuarios para :command:`calibre-server` usando a opción ``--enable-auth``\n      e utilizando ``--manage-users`` para crear as contas de usuario.\n      Se estás a executar o servidor desde o programa principal de calibre, usa\n      :guilabel:`Preferencias->Compartir a través da rede->Requirir nome de usuario/contrasinal`.\n\nPara conectarte a un Servidor de contidos en execución, pasa a URL do servidor á opción\n:option:`--with-library`  consulta a documentación desa opción para detalles e exemplos.\n    "
 
 #: /__w/calibre/calibre/manual/custom.py:216
 msgid "[options]"
@@ -84,7 +85,7 @@ msgstr "[opcións]"
 
 #: /__w/calibre/calibre/src/calibre/constants.py:444
 msgid "{} Portable"
-msgstr ""
+msgstr "{} Portátil"
 
 #: /__w/calibre/calibre/src/calibre/constants.py:481
 msgid "Recycle Bin"
@@ -272,10 +273,10 @@ msgstr "Non fai absolutamente nada"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:723
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:227
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1206
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:420
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:434
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:615
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:673
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1453
@@ -325,8 +326,8 @@ msgstr "Non fai absolutamente nada"
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:349
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:349
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:74
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:80
 msgid "Unknown"
 msgstr "Descoñecido"
 
@@ -400,7 +401,7 @@ msgid ""
 "Create a PMLZ archive containing the PML file and all images in the folder "
 "pmlname_img or images. This plugin is run every time you add a PML file to "
 "the library."
-msgstr ""
+msgstr "Crea un arquivo PMLZ que conteña o ficheiro PML e todas as imaxes do cartafol pmlname_img ou imaxes. Este complemento execútase cada vez que engades un ficheiro PML á biblioteca."
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:51
 msgid ""
@@ -463,7 +464,7 @@ msgstr "Definir os metadatos nos dos ficheiros %s"
 msgid ""
 "Enter {0} below to have the EPUB metadata writer plugin not add cover images"
 " to EPUB files that have no existing cover image."
-msgstr ""
+msgstr "Introduce {0} a continuación para que o complemento do escritor de metadatos EPUB non engada imaxes de portada aos ficheiros EPUB que non teñan ningunha imaxe de portada."
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:474
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:509
@@ -497,17 +498,17 @@ msgstr "Afinar a configuración dos libros electrónicos"
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:889
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:15
 msgid "Browse highlights and bookmarks from all books in the library"
-msgstr ""
+msgstr "Explora os puntos destacados e os marcadores de todos os libros da biblioteca"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:895
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_notes.py:12
 msgid "Browse notes for authors, tags, etc. in the library"
-msgstr ""
+msgstr "Busca notas de autores, etiquetas, etc. na biblioteca"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:901
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fts.py:12
 msgid "Search the full text of all books in the calibre library"
-msgstr ""
+msgstr "Busca o texto completo de todos os libros na biblioteca calibre"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:907
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:74
@@ -547,7 +548,7 @@ msgstr "Filtra/transforma as etiquetas para libros na libraría"
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:955
 #: /__w/calibre/calibre/src/calibre/gui2/actions/author_mapper.py:16
 msgid "Transform the authors for books in the library"
-msgstr ""
+msgstr "Transformar os autores para os libros da biblioteca"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:961
 msgid "Show an editor for testing templates"
@@ -557,7 +558,7 @@ msgstr "Mostrar un editor para modelos de proba"
 msgid ""
 "Show a dialog for creating and managing template functions and stored "
 "templates"
-msgstr ""
+msgstr "Mostra un diálogo para crear e xestionar funcións de modelos e modelos almacenados"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:973
 msgid "Export books from your calibre library to the hard disk"
@@ -578,7 +579,7 @@ msgstr "Abrir o cartafol que contén os libros electrónicos da biblioteca do Ca
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:998
 msgid "Auto scroll through the list of books"
-msgstr ""
+msgstr "Desprazamento automático pola lista de libros"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1004
 msgid "Send books to the connected device"
@@ -588,7 +589,7 @@ msgstr "Enviar os libros ao dispositivo conectado"
 msgid ""
 "Send books via email or the web. Also connect to folders on your computer as"
 " if they are devices"
-msgstr ""
+msgstr "Envía libros por correo electrónico ou pola web. Conéctate tamén aos cartafoles do teu ordenador coma se fosen dispositivos"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1017
 #: /__w/calibre/calibre/src/calibre/gui2/actions/help.py:18
@@ -623,7 +624,7 @@ msgstr "Emparellar libros nos dispositivos con libros na biblioteca"
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1060
 #: /__w/calibre/calibre/src/calibre/gui2/actions/match_books.py:46
 msgid "Show the book in the calibre library that matches this book"
-msgstr ""
+msgstr "Mostra o libro na biblioteca calibre que coincide con este libro"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1066
 msgid "Copy a book from one calibre library to another"
@@ -635,7 +636,7 @@ msgstr "Editar libros electrónicos nos formatos EPUB ou AZW3"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1078
 msgid "Make small changes to EPUB or HTMLZ files in your calibre library"
-msgstr ""
+msgstr "Fai pequenos cambios nos ficheiros EPUB ou HTMLZ da túa biblioteca de calibre"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid ""
@@ -658,30 +659,30 @@ msgstr "Marcar libros temporalmente"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1110
 msgid "Manage tag browser categories"
-msgstr ""
+msgstr "Xestionar categorías do navegador de etiquetas"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1117
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:29
 msgid "Show a menu of saved searches"
-msgstr ""
+msgstr "Mostra un menú de buscas gardadas"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1124
 msgid "Show a menu of actions to change calibre's layout"
-msgstr ""
+msgstr "Mostra un menú de accións para cambiar o deseño do calibre"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1131
 msgid "Open the context menu for the column"
-msgstr ""
+msgstr "Abre o menú contextual da columna"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1138
 msgid "Open a menu showing all installed GUI actions"
-msgstr ""
+msgstr "Abre un menú que mostra todas as accións da GUI instaladas"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1143
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
 msgid "Change the current Virtual library"
-msgstr ""
+msgstr "Cambia a biblioteca virtual actual"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1150
 msgid "Search for books from different book sellers"
@@ -804,7 +805,7 @@ msgstr "Envío de libros a dispositivos"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1327
 msgid "Control how calibre transfers files to your e-book reader"
-msgstr ""
+msgstr "Controla como calibre transfire ficheiros ao teu lector de libros electrónicos"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1334
 msgid "Metadata plugboards"
@@ -868,7 +869,7 @@ msgstr "Compartir na rede"
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
-msgstr ""
+msgstr "Configura o servidor de contido calibre que che dará acceso á túa biblioteca de calibre desde calquera lugar, en calquera dispositivo e a través de Internet"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1385
 msgid "Metadata download"
@@ -876,7 +877,7 @@ msgstr "Descarga de metadatos"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1391
 msgid "Control how calibre downloads e-book metadata from the net"
-msgstr ""
+msgstr "Controla como calibre descarga metadatos de libros electrónicos da rede"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1397
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:426
@@ -936,7 +937,7 @@ msgstr "Opcións específicas do formato de entrada."
 
 #: /__w/calibre/calibre/src/calibre/customize/conversion.py:138
 msgid "Conversion input"
-msgstr ""
+msgstr "Entrada da conversión"
 
 #: /__w/calibre/calibre/src/calibre/customize/conversion.py:174
 msgid ""
@@ -948,7 +949,7 @@ msgstr "Especificar a codificación de caracteres do documento de entrada. Se se
 
 #: /__w/calibre/calibre/src/calibre/customize/conversion.py:287
 msgid "Conversion output"
-msgstr ""
+msgstr "Saída da conversión"
 
 #: /__w/calibre/calibre/src/calibre/customize/conversion.py:303
 msgid ""
@@ -959,7 +960,7 @@ msgstr "Se está especificado, o complemento de saída tratará de crear unha sa
 #: /__w/calibre/calibre/src/calibre/customize/conversion.py:318
 #, python-format
 msgid "Convert e-books to the %s format"
-msgstr ""
+msgstr "Converter libros electrónicos ao formato %s"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:45
 msgid "Input profile"
@@ -1064,7 +1065,7 @@ msgstr "Pensado para o iPad e dispositivos semellantes cunha resolución de 1536
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:452
 msgid "Tablet"
-msgstr ""
+msgstr "Tableta"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:454
 msgid "Intended for generic tablet devices, does no resizing of images"
@@ -1116,7 +1117,7 @@ msgstr "Tinta electrónica xenérico HD"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:561
 msgid "Suitable for use with any modern high resolution e-ink device"
-msgstr ""
+msgstr "Adecuado para usar con calquera dispositivo moderno de tinta electrónica de alta resolución"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:571
 msgid "This profile is intended for the 5-inch JetBook."
@@ -1134,7 +1135,7 @@ msgstr "Este perfil é o propio do Kindle DX da Amazon."
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:708
 msgid "This profile is intended for the Amazon Kindle Paperwhite 1 and 2"
-msgstr ""
+msgstr "Este perfil está pensado para Amazon Kindle Paperwhite 1 e 2"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:720
 msgid "This profile is intended for the Amazon Kindle Voyage"
@@ -1142,17 +1143,17 @@ msgstr "Este perfil está orientado ao Amazon Kindle Voyage"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:733
 msgid "This profile is intended for the Amazon Kindle Paperwhite 3 and above"
-msgstr ""
+msgstr "Este perfil está pensado para Amazon Kindle Paperwhite 3 e superior"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:745
 msgid ""
 "This profile is intended for the Amazon Kindle Oasis 2017, Paperwhite 2021 "
 "and above"
-msgstr ""
+msgstr "Este perfil está pensado para Amazon Kindle Oasis 2017, Paperwhite 2021 e superior"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:757
 msgid "This profile is intended for the Amazon Kindle Scribe 2022 and above"
-msgstr ""
+msgstr "Este perfil está pensado para Amazon Kindle Scribe 2022 e superior"
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:769
 msgid "This profile is intended for the Amazon Kindle Fire."
@@ -1174,19 +1175,19 @@ msgstr "Este perfil está pensado para os dispositivos da colectánea PocketBook
 msgid ""
 "This profile is intended for the PocketBook Lux (1-5) and Basic 4 series of "
 "devices."
-msgstr ""
+msgstr "Este perfil está destinado ás series de dispositivos PocketBook Lux (1-5) e Basic 4."
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:886
 msgid ""
 "This profile is intended for the PocketBook HD Touch (1-3) series of "
 "devices."
-msgstr ""
+msgstr "Este perfil está pensado para a serie de dispositivos PocketBook HD Touch (1-3)."
 
 #: /__w/calibre/calibre/src/calibre/customize/profiles.py:898
 msgid ""
 "This profile is intended for the PocketBook Inkpad 3 and X series of "
 "devices."
-msgstr ""
+msgstr "Este perfil está pensado para os dispositivos das series PocketBook Inkpad 3 e X."
 
 #: /__w/calibre/calibre/src/calibre/customize/ui.py:52
 msgid "Installed plugins"
@@ -1223,14 +1224,14 @@ msgstr "    %prog opcións\n\n    Personalice Calibre cargando engadidos externo
 
 #: /__w/calibre/calibre/src/calibre/customize/ui.py:852
 msgid "Add a plugin by specifying the path to the ZIP file containing it."
-msgstr ""
+msgstr "Engade un complemento especificando a ruta do ficheiro ZIP que o contén."
 
 #: /__w/calibre/calibre/src/calibre/customize/ui.py:854
 msgid ""
 "For plugin developers: Path to the folder where you are developing the "
 "plugin. This command will automatically zip up the plugin and update it in "
 "calibre."
-msgstr ""
+msgstr "Para desenvolvedores de complementos: ruta ao cartafol onde está a desenvolver o complemento. Este comando comprimirá automaticamente o complemento e actualizalo en calibre."
 
 #: /__w/calibre/calibre/src/calibre/customize/ui.py:858
 msgid "Remove a custom plugin by name. Has no effect on builtin plugins"
@@ -1241,7 +1242,7 @@ msgid ""
 "Customize plugin. Specify name of plugin and customization string separated "
 "by a comma. The customization string is the same as you would enter when "
 "customizing the plugin in the main calibre GUI."
-msgstr ""
+msgstr "Personalizar o complemento. Especifique o nome do complemento e a cadea de personalización separados por coma. A cadea de personalización é a mesma que introduciría ao personalizar o complemento na GUI do calibre principal."
 
 #: /__w/calibre/calibre/src/calibre/customize/ui.py:863
 msgid "List all installed plugins"
@@ -1281,7 +1282,7 @@ msgstr "Catálogo"
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:87
 #: /__w/calibre/calibre/src/calibre/devices/utils.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fetch_news.py:87
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:665
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1811
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1813
 #: /__w/calibre/calibre/src/calibre/library/database2.py:382
@@ -1295,7 +1296,7 @@ msgstr "Noticias"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:324
 #, python-brace-format
 msgid "Path to library ({0}) too long. It must be less than {1} characters."
-msgstr ""
+msgstr "O camiño ata a biblioteca ({0}) é demasiado longo. Debe ter menos de {1} caracteres."
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:469
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:56
@@ -1304,7 +1305,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/__init__.py:791
 #, python-format
 msgid "Path to library too long. It must be less than %d characters."
-msgstr ""
+msgstr "O camiño cara á biblioteca é demasiado longo. Debe ser menos que %dcaracteres."
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:557
 #: /__w/calibre/calibre/src/calibre/library/database2.py:208
@@ -1375,19 +1376,19 @@ msgstr "Si"
 #: /__w/calibre/calibre/src/calibre/db/cache.py:2956
 #, python-format
 msgid "Recursion detected while processing Virtual library \"%s\""
-msgstr ""
+msgstr "Detectouse recursión ao procesar a biblioteca virtual \"%s\""
 
 #: /__w/calibre/calibre/src/calibre/db/cache.py:2968
 #, python-brace-format
 msgid "[Error in Virtual library {0}: {1}]"
-msgstr ""
+msgstr "[Erro na biblioteca virtual {0}: {1}]"
 
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3066
 #: /__w/calibre/calibre/src/calibre/gui2/main_window.py:209
 msgid ""
 "Could not open the file: \"{}\". It is already opened in the following "
 "programs:"
-msgstr ""
+msgstr "Non se puido abrir o ficheiro: \"{}\". Xa está aberto nos seguintes programas:"
 
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3516
 #, python-format
@@ -1402,24 +1403,24 @@ msgstr "{0} formato para {1}"
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3524
 #, python-brace-format
 msgid "Extra file {0} for book {1}"
-msgstr ""
+msgstr "Ficheiro adicional {0} para o libro {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:202
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:294
 #, python-format
 msgid "Added book ids: %s"
-msgstr ""
+msgstr "IDs do libro engadido: %s"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:278
 msgid ""
 "The following books were not added as they already exist in the database "
 "(see --duplicates option or --automerge option):"
-msgstr ""
+msgstr "Os seguintes libros non se engadiron xa que xa existen na base de datos (consulte a opción --duplicados ou a opción --autocombinados):"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:296
 #, python-format
 msgid "Merged book ids: %s"
-msgstr ""
+msgstr "Id. de libros combinados: %s"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:302
 msgid ""
@@ -1427,13 +1428,13 @@ msgid ""
 "\n"
 "Add the specified files as books to the database. You can also specify folders, see\n"
 "the folder related options below.\n"
-msgstr ""
+msgstr "%prog engade [opcións] ficheiro1 ficheiro2 ficheiro3 ...\n\nEngadir os ficheiros especificados como libros na base de datos. Tamén pode especificar cartafoles, vexa as opcións relacionadas con cartafoles a seguir.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:316
 msgid ""
 "Add books to database even if they already exist. Comparison is done based "
 "on book titles and authors. Note that the {} option takes precedence."
-msgstr ""
+msgstr "Engade libros á base de datos aínda que xa existan. A comparación realízase en función dos títulos dos libros e dos autores. Teña en conta que a opción {} ten prioridade."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:327
 msgid ""
@@ -1443,7 +1444,7 @@ msgid ""
 "means duplicate formats in the library are overwritten with the newly added "
 "files. A value of \"new_record\" means duplicate formats are placed into a "
 "new book record."
-msgstr ""
+msgstr "Se se atopan libros con títulos e autores similares, combine os formatos (arquivos) entrantes automaticamente nos rexistros de libros existentes. Un valor de \"ignorar\" significa que se descartan os formatos duplicados. Un valor de \"sobrescribir\" significa que os formatos duplicados na biblioteca se sobrescriben cos ficheiros recén engadidos. Un valor de \"new_record\" significa que os formatos duplicados colócanse nun novo rexistro de libro."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:338
 msgid "Add an empty book (a book with no formats)"
@@ -1451,79 +1452,79 @@ msgstr "Engadir libro en branco (sen formato)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:341
 msgid "Set the title of the added book(s)"
-msgstr ""
+msgstr "Establece o título do(s) libro(s) engadido(s)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:347
 msgid "Set the authors of the added book(s)"
-msgstr ""
+msgstr "Establece os autores do(s) libro(s) engadido(s)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:350
 msgid "Set the ISBN of the added book(s)"
-msgstr ""
+msgstr "Establece o ISBN do(s) libro(s) engadido(s)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:357
 msgid "Set the identifiers for this book, e.g. -I asin:XXX -I isbn:YYY"
-msgstr ""
+msgstr "Establece os identificadores deste libro, p. ex. -I asin:XXX -I isbn:YYY"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:360
 msgid "Set the tags of the added book(s)"
-msgstr ""
+msgstr "Establece as etiquetas do(s) libro(s) engadido(s)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:366
 msgid "Set the series of the added book(s)"
-msgstr ""
+msgstr "Establece a serie do(s) libro(s) engadido(s)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:373
 msgid "Set the series number of the added book(s)"
-msgstr ""
+msgstr "Establece o número de serie do(s) libro(s) engadido(s)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:379
 msgid "Path to the cover to use for the added book"
-msgstr ""
+msgstr "Camiño ata a portada para usar para o libro engadido"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:386
 msgid ""
 "A comma separated list of languages (best to use ISO639 language codes, "
 "though some language names may also be recognized)"
-msgstr ""
+msgstr "Unha lista de idiomas separados por comas (o mellor é usar códigos de idioma ISO639, aínda que tamén se poden recoñecer algúns nomes de idiomas)"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:392
 msgid "ADDING FROM FOLDERS"
-msgstr ""
+msgstr "ENGADIR DENDE CARTAFOLES"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:394
 msgid ""
 "Options to control the adding of books from folders. By default only files "
 "that have extensions of known e-book file types are added."
-msgstr ""
+msgstr "Opcións para controlar a adición de libros desde cartafoles. De forma predeterminada, só se engaden ficheiros que teñen extensións de tipos de ficheiros de libros electrónicos coñecidos."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:411
 msgid ""
 "Assume that each folder has only a single logical book and that all files in"
 " it are different e-book formats of that book"
-msgstr ""
+msgstr "Supoña que cada cartafol só ten un único libro lóxico e que todos os ficheiros nel son diferentes formatos de libros electrónicos dese libro"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:419
 msgid "Process folders recursively"
-msgstr ""
+msgstr "Procesar cartafoles de forma recursiva"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:432
 msgid "GLOB PATTERN"
-msgstr ""
+msgstr "PATRÓN GLOBAL"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:439
 msgid ""
 "A filename (glob) pattern, files matching this pattern will be ignored when "
 "scanning folders for files. Can be specified multiple times for multiple "
 "patterns. For example: *.pdf will ignore all PDF files"
-msgstr ""
+msgstr "Un paTrón de nome de ficheiro (glob), os ficheiros que coincidan con este patrón ignoraranse ao buscar ficheiros nos cartafoles. Pódese especificar varias veces para varios patróns. Por exemplo: *.pdf ignorará todos os ficheiros PDF"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:446
 msgid ""
 "A filename (glob) pattern, files matching this pattern will be added when "
 "scanning folders for files, even if they are not of a known e-book file "
 "type. Can be specified multiple times for multiple patterns."
-msgstr ""
+msgstr "Un patrón de nome de ficheiro (glob), os ficheiros que coincidan con este patrón engadiranse ao buscar ficheiros nos cartafoles, aínda que non sexan dun tipo de ficheiro de libro electrónico coñecido. Pódese especificar varias veces para varios patróns."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:470
 msgid "You must specify at least one file to add"
@@ -1556,7 +1557,7 @@ msgid ""
 "text: is_names, use_decorations\n"
 "\n"
 "The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \"display\" for the new column in the OPF."
-msgstr ""
+msgstr "Un dicionario de opcións para personalizar como se interpretarán os datos desta columna. Esta é unha cadea JSON. Para as columnas de enumeración, use --display=\"{\\\"enum_values\\\":[\\\"val1\\\", \\\"val2\\\"]}\"\nHai moitas opcións que poden entrar na variable de visualización. As opcións por tipo de columna son:\ncomposto: composite_template, composite_sort, make_category,contains_html, use_decorations\ndatetime: data_format\nenumeración: valores_enum, cores_enum, use_decorations\nint, float: formato_número\ntexto: is_names, use_decorations\n\nA mellor forma de atopar combinacións legais é crear unha columna personalizada do tipo apropiado na GUI e despois mirar o OPF de copia de seguridade dun libro (asegúrese de que se creou un novo OPF desde que se engadiu a columna). Verá o JSON para a \"visualización\" da nova columna no OPF."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_custom_column.py:80
 msgid "You must specify label, name and datatype"
@@ -1567,28 +1568,28 @@ msgid ""
 "%prog add_format [options] id ebook_file\n"
 "\n"
 "Add the e-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified."
-msgstr ""
+msgstr "%prog add_format [opcións] id ebook_file\n\nEngade o libro electrónico en ebook_file aos formatos dispoñibles para o libro lóxico identificado por id. Podes obter a identificación usando o comando de busca. Se o formato xa existe, substitúese, a non ser que se especifique a opción non substituír."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_format.py:47
 msgid "Do not replace the format if it already exists"
-msgstr ""
+msgstr "Non substitúa o formato se xa existe"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_format.py:53
 msgid "Add the file as an extra data file to the book, not an ebook format"
-msgstr ""
+msgstr "Engade o ficheiro como ficheiro de datos extra ao libro, non como formato de libro electrónico"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_format.py:61
 msgid "You must specify an id and an e-book file"
-msgstr ""
+msgstr "Debes especificar un ID e un ficheiro de libro electrónico"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_format.py:69
 msgid "e-book file must have an extension"
-msgstr ""
+msgstr "o ficheiro de libro electrónico debe ter unha extensión"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add_format.py:73
 #, python-format
 msgid "A %(fmt)s file already exists for book: %(id)d, not replacing"
-msgstr ""
+msgstr "Xa existe un ficheiro %(fmt)spara o libro: %(id)d, non substituíndo"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_backup_metadata.py:19
 msgid ""
@@ -1600,17 +1601,17 @@ msgid ""
 "\n"
 "Note that there is normally no need to do this, as the OPF files are backed up\n"
 "automatically, every time metadata is changed.\n"
-msgstr ""
+msgstr "%prog backup_metadata [opcións]\n\nFai unha copia de seguranza dos metadatos almacenados na base de datos en ficheiros OPF individuais de cada un dos\ncartafoles de libros. Isto normalmente ocorre automaticamente, pero pode executalo\ncomando para forzar a rexeneración dos ficheiros OPF, coa  --opción todos.\n\nTeña en conta que normalmente non é necesario facelo, xa que se fai unha copia de seguranza dos ficheiros OPF\nautomaticamente, cada vez que se cambian os metadatos.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_backup_metadata.py:36
 msgid ""
 "Normally, this command only operates on books that have out of date OPF "
 "files. This option makes it operate on all books."
-msgstr ""
+msgstr "Normalmente, este comando só funciona en libros que teñen ficheiros OPF desactualizados. Esta opción fai que funcione en todos os libros."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:26
 msgid "{} OPTIONS"
-msgstr ""
+msgstr "{} OPCIÓNS"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:47
 msgid ""
@@ -1621,7 +1622,7 @@ msgid ""
 "Note that different catalog formats support different sets of options. To\n"
 "see the different options, specify the name of the output file and then the\n"
 "{} option.\n"
-msgstr ""
+msgstr "%pcatálogo rog /ruta/a/destino.(csv|epub|mobi|xml...) [opcións]\n\nExportar un catálogo no formato especificado pola extensión ruta/a/destino.\nAs opcións controlan como se mostran as entradas na saída do catálogo xerado.\nTeña en conta que os distintos formatos de catálogo admiten diferentes conxuntos de opcións. Para\nver as diferentes opcións, especifique o nome do ficheiro de saída e despois o\n{} opción.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:66
 msgid ""
@@ -1643,11 +1644,11 @@ msgstr "Mostrar información de saída detallada. Útil para a depuración"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:108
 msgid "You must specify a catalog output file"
-msgstr ""
+msgstr "Debe especificar un ficheiro de saída do catálogo"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_catalog.py:114
 msgid "Cannot generate a catalog in the {} format"
-msgstr ""
+msgstr "Non se pode xerar un catálogo no formato {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_check_library.py:25
 #, python-brace-format
@@ -1684,7 +1685,7 @@ msgstr "Lista de nomes para ignorar separados por vírgulas.\nValor predetermina
 msgid ""
 "Vacuum the full text search database. This can be very slow and memory "
 "intensive, depending on the size of the database."
-msgstr ""
+msgstr "Aspirar a base de datos de busca de texto completo. Isto pode ser moi lento e consumir memoria, dependendo do tamaño da base de datos."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_check_library.py:105
 msgid "Unknown report check"
@@ -1692,7 +1693,7 @@ msgstr "Comprobación de resultado descoñecida"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_check_library.py:122
 msgid "Vacuuming database..."
-msgstr ""
+msgstr "Aspirando base de datos..."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:22
 msgid ""
@@ -1704,20 +1705,20 @@ msgid ""
 "The cloned library will contain no books. If you want to create a full duplicate, including\n"
 "all books, then simply use your filesystem tools to copy the library folder.\n"
 "    "
-msgstr ""
+msgstr "%prog clone ruta/a/novo/biblioteca\n\nCrea un clon da biblioteca actual. Isto crea unha nova biblioteca baleira que ten todos os elementos\nmesmas columnas personalizadas, bibliotecas virtuais e outras opcións que a biblioteca actual.\n\nA biblioteca clonada non conterá ningún libro. Se queres crear un duplicado completo, incluído\ntodos os libros, entón simplemente use as ferramentas do sistema de ficheiros para copiar o cartafol da biblioteca."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:37
 msgid "Error: You must specify the path to the cloned library"
-msgstr ""
+msgstr "Erro: debes especificar o camiño á biblioteca clonada"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:45
 msgid "The location for the new library is the same as the current library"
-msgstr ""
+msgstr "A localización da nova biblioteca é a mesma que a actual"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:51
 #, python-format
 msgid "%s is not empty. You must choose an empty folder for the new library."
-msgstr ""
+msgstr "%s non está baleiro. Debes escoller un cartafol baleiro para a nova biblioteca."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_custom_columns.py:21
 msgid ""
@@ -1725,7 +1726,7 @@ msgid ""
 "\n"
 "List available custom columns. Shows column labels and ids.\n"
 "    "
-msgstr ""
+msgstr "%prog custom_columns [opcións]\n\nLista de columnas personalizadas dispoñibles. Mostra as etiquetas e os ID das columnas."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_custom_columns.py:33
 msgid "Show details for each column."
@@ -1743,22 +1744,22 @@ msgid ""
 "of metadata. You can use the special value 'all' for book_id to update metadata\n"
 "in all books. You can also specify many book ids separated by spaces and id ranges\n"
 "separated by hyphens. For example: %prog embed_metadata 1 2 10-15 23"
-msgstr ""
+msgstr "\n%prog embed_metadata [opcións] book_id\n\nActualiza os metadatos dos ficheiros de libros reais almacenados na biblioteca calibre desde\nos metadatos na base de datos calibre. Normalmente, os metadatos só se actualizan cando\nexportando ficheiros desde calibre, este comando é útil se queres que o fagan\nser actualizado no seu lugar. Teña en conta que os diferentes formatos de ficheiro admiten cantidades diferentes\nde metadatos. Podes usar o valor especial \"all\" para book_id para actualizar os metadatos\nen todos os libros. Tamén podes especificar moitos ID de libros separados por espazos e intervalos de ID\nseparados por guións. Por exemplo: rog embed_metadata 1 2 10-15 23"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_embed_metadata.py:37
 msgid ""
 "Only update metadata in files of the specified format. Specify it multiple "
 "times for multiple formats. By default, all formats are updated."
-msgstr ""
+msgstr "Actualiza só os metadatos en ficheiros do formato especificado. Especifícao varias veces para varios formatos. Por defecto, todos os formatos actualízanse."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_embed_metadata.py:54
 #, python-brace-format
 msgid "Processed {0} ({1} of {2})"
-msgstr ""
+msgstr "Procesado {0} ({1} de {2})"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_embed_metadata.py:58
 msgid "No book with id: {}"
-msgstr ""
+msgstr "Non hai ningún libro con ID: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:53
 msgid ""
@@ -1768,7 +1769,7 @@ msgid ""
 "The export operation saves all formats of the book, its cover and metadata (in\n"
 "an OPF file). Any extra data files associated with the book are also saved.\n"
 "You can get id numbers from the search command.\n"
-msgstr ""
+msgstr "%prog export [opcións] ids\n\nExporta os libros especificados por ids (unha lista separada por comas) ao sistema de ficheiros.\nA operación de exportación garda todos os formatos do libro, a súa portada e os metadatos (en\nun ficheiro OPF). Tamén se gardan os ficheiros de datos adicionais asociados co libro.\nPodes obter números de identificación do comando de busca.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:67
 msgid "Export all books in database, ignoring the list of ids."
@@ -1776,7 +1777,7 @@ msgstr "Exportar todos os libros da base de datos, facendo caso omiso da lista d
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:73
 msgid "Export books to the specified folder. Default is"
-msgstr ""
+msgstr "Exportar os libros ao cartafol especificado. O valor predeterminado é"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:80
 msgid "Export all books into a single folder"
@@ -1784,7 +1785,7 @@ msgstr "Exportar todos os libros a un cartafol único"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:86
 msgid "Report progress"
-msgstr ""
+msgstr "Informar do progreso"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_export.py:97
 msgid "Specifying this switch will turn this behavior off."
@@ -1798,7 +1799,7 @@ msgstr "Debe especificar algún identificador ou a opción %s"
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:31
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:45
 msgid "Full text indexing is not enabled on this library"
-msgstr ""
+msgstr "A indexación de texto completo non está activada nesta biblioteca"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:59
 #, python-brace-format
@@ -1819,85 +1820,85 @@ msgid ""
 "    specify the book ids as additional arguments after the\n"
 "    {reindex} command. If no book ids are specified the\n"
 "    entire library is re-indexed.\n"
-msgstr ""
+msgstr "%prog fts_index [opcións] {enable}/{disable}/{status}/{reindex}\n\nControle o proceso de indexación da busca de texto completo.\n\n{enable}\nActiva a indexación FTS para esta biblioteca\n{disable}\nDesactiva a indexación FTS para esta biblioteca\n{status}\nMostra o estado actual da indexación\n{reindex}\nPódese usar para reindexar libros ou\ntoda a biblioteca. Para reindexar determinados libros\nespecifique os ID do libro como argumentos adicionais despois do\ncomando {reindex}. Se non se especifican ID de libro o\ntoda a biblioteca está reindexada.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:82
 msgid ""
 "Wait till all books are indexed, showing indexing progress periodically"
-msgstr ""
+msgstr "Agarda ata que todos os libros estean indexados, mostrando o progreso da indexación periodicamente"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:88
 msgid ""
 "The speed of indexing. Use fast for fast indexing using all your computers "
 "resources and slow for less resource intensive indexing. Note that the speed"
 " is reset to slow after every invocation."
-msgstr ""
+msgstr "Velocidade de indexación. Utilízao rápido para indexar rápido usando todos os recursos do teu ordenador e lento para indexar menos recursos. Teña en conta que a velocidade restablece a baixa despois de cada invocación."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:107
 msgid "{} of {} book files indexed, {}"
-msgstr ""
+msgstr "{} de {} ficheiros de libros indexados, {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:146
 msgid "Error: You must specify the indexing action"
-msgstr ""
+msgstr "Erro: debes especificar a acción de indexación"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:152
 msgid "FTS Indexing is enabled"
-msgstr ""
+msgstr "A indexación FTS está activada"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:153
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:161
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:188
 #, python-brace-format
 msgid "{0} of {1} books files indexed"
-msgstr ""
+msgstr "{0} de {1} ficheiros de libros indexados"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:155
 msgid "FTS Indexing is disabled"
-msgstr ""
+msgstr "A indexación FTS está desactivada"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:160
 msgid "FTS indexing has been enabled"
-msgstr ""
+msgstr "Activouse a indexación FTS"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:166
 msgid "Re-indexing the entire library can take a long time. Are you sure?"
-msgstr ""
+msgstr "Reindexar toda a biblioteca pode levar moito tempo. Estás seguro?"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:169
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:194
 msgid "Type {} to proceed, anything else to abort"
-msgstr ""
+msgstr "Escribe {} para continuar, calquera outra cousa para abortar"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:191
 #: /__w/calibre/calibre/src/calibre/gui2/fts/scan.py:144
 msgid ""
 "Disabling indexing will mean that all books will have to be re-checked when "
 "re-enabling indexing. Are you sure?"
-msgstr ""
+msgstr "A desactivación da indexación significará que todos os libros terán que ser revisados ​​de novo ao volver habilitar a indexación. Estás seguro?"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:203
 msgid "FTS indexing has been disabled"
-msgstr ""
+msgstr "Desactivouse a indexación FTS"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:210
 msgid "Waiting for FTS indexing to complete, press Ctrl-C to abort..."
-msgstr ""
+msgstr "Agardando a que se complete a indexación FTS, preme Ctrl-C para cancelar..."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_index.py:219
 msgid "All books indexed!"
-msgstr ""
+msgstr "Todos os libros indexados!"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:14
 msgid ""
 "Full text searching is not enabled on this library. Use the calibredb "
 "fts_index enable --wait-until-complete command to enable it"
-msgstr ""
+msgstr "A busca de texto completo non está activada nesta biblioteca. Use o comando calibredb fts_index enable --wait-until-complete para activalo"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:19
 #, python-brace-format
 msgid "{0} files out of {1} are not yet indexed, searching is disabled"
-msgstr ""
+msgstr "{0} ficheiros de {1} aínda non están indexados, a busca está desactivada"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:56
 msgid ""
@@ -1905,47 +1906,47 @@ msgid ""
 "\n"
 "Do a full text search on the entire library or a subset of it.\n"
 "\n"
-msgstr ""
+msgstr "%prog fts_search [opcións] expresión de busca\n\nFai unha busca de texto completo en toda a biblioteca ou nun subconxunto dela.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:67
 msgid ""
 "Include snippets of the text surrounding each match. Note that this makes "
 "searching much slower."
-msgstr ""
+msgstr "Inclúe fragmentos do texto que rodea cada coincidencia. Teña en conta que isto fai que a busca sexa moito máis lenta."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:72
 msgid ""
 "The marker used to indicate the start of a matched word inside a snippet"
-msgstr ""
+msgstr "O marcador usado para indicar o inicio dunha palabra coincidente dentro dun fragmento"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:77
 msgid "The marker used to indicate the end of a matched word inside a snippet"
-msgstr ""
+msgstr "O marcador usado para indicar o final dunha palabra coincidente dentro dun fragmento"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:84
 msgid ""
 "Only match on exact words not related words. So correction will not match "
 "correcting."
-msgstr ""
+msgstr "Coincide só con palabras exactas non relacionadas. Polo tanto, a corrección non coincidirá coa corrección."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:89
 msgid ""
 "Restrict the searched books, either using a search expression or ids. For "
 "example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books"
 " having the tag foo."
-msgstr ""
+msgstr "Restrinxa os libros buscados, xa sexa mediante unha expresión de busca ou identificadores. Por exemplo: ids:1,2,3 para restrinxir mediante ids ou search:tag:foo para restrinxir a libros que teñan a etiqueta foo."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:94
 msgid ""
 "The format to output the search results in. Either \"text\" for plain text "
 "or \"json\" for JSON output."
-msgstr ""
+msgstr "O formato no que se mostrarán os resultados da busca. Ou \"texto\" para o texto simple ou \"json\" para a saída JSON."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:99
 msgid ""
 "How much of the library must be indexed before searching is allowed, as a "
 "percentage. Defaults to 90"
-msgstr ""
+msgstr "Canto da biblioteca debe estar indexada antes de permitir a busca, como porcentaxe. O valor predeterminado é 90"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:115
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:127
@@ -1957,11 +1958,11 @@ msgstr "{0} de {1}"
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:148
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:48
 msgid "Error: You must specify the search expression"
-msgstr ""
+msgstr "Erro: debes especificar a expresión de busca"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:169
 msgid "You must provide a template"
-msgstr ""
+msgstr "Debes proporcionar un modelo"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:251
 msgid ""
@@ -1976,7 +1977,7 @@ msgid ""
 "The fields to display when listing books in the database. Should be a comma separated list of fields.\n"
 "Available fields: %s\n"
 "Default: %%default. The special field \"all\" can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating"
-msgstr ""
+msgstr "Os campos que se mostrarán cando se listan libros na base de datos. Debe ser unha lista de campos separados por comas.\nCampos dispoñibles: %s\nPredeterminado: %%predeterminado. O campo especial \"todos\" pódese usar para seleccionar todos os campos. Ademais dos campos integrados anteriores, os campos personalizados tamén están dispoñibles como *field_name, por exemplo, para un campo personalizado #rating, use o nome: *rating"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:276
 #, python-brace-format
@@ -1984,7 +1985,7 @@ msgid ""
 "The field by which to sort the results. You can specify multiple fields by separating them with commas.\n"
 "Available fields: {0}\n"
 "Default: {1}"
-msgstr ""
+msgstr "O campo polo que ordenar os resultados. Podes especificar varios campos separándoos con comas.\nCampos dispoñibles: {0}\nValor predeterminado: {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:283
 msgid "Sort results in ascending order"
@@ -2016,30 +2017,30 @@ msgstr "O prefixo para todas as rutas de ficheiros. Por omisión é a ruta absol
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:320
 msgid "The maximum number of results to display. Default: all"
-msgstr ""
+msgstr "O número máximo de resultados para mostrar. Por defecto: todos"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:327
 msgid ""
 "Generate output in JSON format, which is more suitable for machine parsing. "
 "Causes the line width and separator options to be ignored."
-msgstr ""
+msgstr "Xera saída en formato JSON, que é máis axeitado para a análise de máquinas. Fai que se ignoren as opcións de ancho de liña e separador."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:334
 msgid "The template to run if \"{}\" is in the field list. Default: None"
-msgstr ""
+msgstr "O modelo a executar se \"{}\" está na lista de campos. Predeterminado: Ningún"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:340
 msgid ""
 "Path to a file containing the template to run if \"{}\" is in the field "
 "list. Default: None"
-msgstr ""
+msgstr "Ruta a un ficheiro que contén o modelo para executar se \"{}\" está na lista de campos. Predeterminado: Ningún"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:346
 #, python-format
 msgid ""
 "Heading for the template column. Default: %default. This option is ignored "
 "if the option {} is set"
-msgstr ""
+msgstr "Encabezamento para a columna do modelo. Predeterminado: %default. Esta opción é ignorada se a opción {} está definida"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:23
 msgid ""
@@ -2047,7 +2048,7 @@ msgid ""
 "\n"
 "Produce a report of the category information in the database. The\n"
 "information is the equivalent of what is shown in the Tag browser.\n"
-msgstr ""
+msgstr "%prog list_categories [opcións]\n\nElaborar un informe da información da categoría na base de datos. O\na información é o equivalente ao que se mostra no navegador de etiquetas.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:38
 msgid ""
@@ -2057,11 +2058,11 @@ msgstr "Xerar na saída só o número de elementos nunha categoría en vez de ca
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:49
 msgid "The type of CSV file to produce. Choices: {}"
-msgstr ""
+msgstr "O tipo de ficheiro CSV que se vai producir. Opcións: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:57
 msgid "Comma-separated list of category lookup names. Default: all"
-msgstr ""
+msgstr "Lista separada por comas dos nomes das categorías a consultar.\nValor predeterminado: todos"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:180
 msgid "CATEGORY ITEMS"
@@ -2072,11 +2073,11 @@ msgid ""
 "%prog remove ids\n"
 "\n"
 "Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57-85 (when specifying a range, the last number in the range is not included).\n"
-msgstr ""
+msgstr "%prog eliminar ids\n\nElimina os libros identificados por ID da base de datos. os ids deben ser unha lista separada por comas de números de identificación (podes obter números de identificación usando o comando de busca). Por exemplo, 23,34,57-85 (ao especificar un intervalo, non se inclúe o último número do intervalo).\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove.py:35
 msgid "Do not use the {}"
-msgstr ""
+msgstr "Non use o {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove.py:42
 msgid "You must specify at least one book to remove"
@@ -2089,7 +2090,7 @@ msgid ""
 "Remove the custom column identified by label. You can see available\n"
 "columns with the custom_columns command.\n"
 "    "
-msgstr ""
+msgstr "%prog remove_custom_column [opcións] etiqueta\n\nElimina a columna personalizada identificada pola etiqueta. Podes ver dispoñibles\ncolumnas co comando custom_columns."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove_custom_column.py:35
 msgid "Do not ask for confirmation"
@@ -2098,7 +2099,7 @@ msgstr "Non pedir confirmación"
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove_custom_column.py:50
 #, python-format
 msgid "You will lose all data in the column: %s. Are you sure (y/n)? "
-msgstr ""
+msgstr "Perderás todos os datos da columna: %s. Estás seguro (s/n)?"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove_custom_column.py:53
 msgid "y"
@@ -2109,7 +2110,7 @@ msgstr "s"
 msgid ""
 "No column named %s found. You must use column labels, not titles. Use "
 "calibredb custom_columns to get a list of labels."
-msgstr ""
+msgstr "Non se atopou ningunha columna co nome %s. Debes usar etiquetas de columnas, non títulos. Use calibredb custom_columns para obter unha lista de etiquetas."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove_custom_column.py:69
 msgid "Error: You must specify a column label"
@@ -2121,7 +2122,7 @@ msgid ""
 "%prog remove_format [options] id fmt\n"
 "\n"
 "Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.\n"
-msgstr ""
+msgstr "\n%prog remove_format [opcións] id fmt\n\nElimina o formato fmt do libro lóxico identificado por id. Podes obter a identificación usando o comando de busca. fmt debería ser unha extensión de ficheiro como LRF ou TXT ou EPUB. Se o libro lóxico non ten fmt dispoñible, non faga nada.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_remove_format.py:36
 msgid "You must specify an id and a format"
@@ -2140,7 +2141,7 @@ msgid ""
 "settings, and custom recipes. Restored metadata will only be as accurate as\n"
 "what is found in the OPF files.\n"
 "    "
-msgstr ""
+msgstr "%prog restore_database [opcións]\n\nRestaura esta base de datos a partir dos metadatos almacenados nos ficheiros OPF de cada un\ncarpeta da biblioteca calibre. Isto é útil se o teu ficheiro metadata.db\nfoi corrompido.\n\nAVISO: Este comando rexenera completamente a súa base de datos. Vai perder\ntodas as buscas gardadas, categorías de usuarios, plugboards, conversión almacenada por libro\nconfiguracións e receitas personalizadas. Os metadatos restaurados só serán tan precisos como\no que se atopa nos ficheiros OPF."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_restore_database.py:41
 msgid ""
@@ -2169,7 +2170,7 @@ msgid ""
 "\n"
 "%prog saved_searches remove search_name\n"
 "    "
-msgstr ""
+msgstr "%prog saved_searches [opcións] (lista|engadir|eliminar)\n\nXestiona as buscas gardadas almacenadas nesta base de datos.\nSe tentas engadir unha consulta cun nome que xa existe, será\nsubstituído.\n\nSintaxe para engadir:\n\n%prog saved_searches engade search_name search_expression\n\nSintaxe para eliminar:\n\n%prog save_searches eliminar search_name"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:59
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1051
@@ -2206,7 +2207,7 @@ msgstr "Erro: Non se recoñece a acción %s, debe ser unha de: (add|remove|list)
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:16
 #, python-brace-format
 msgid "Failed to parse search query: ({0}) with error: {1}"
-msgstr ""
+msgstr "Produciuse un erro ao analizar a consulta de busca: ({0}) con erro: {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:24
 #, python-brace-format
@@ -2219,31 +2220,31 @@ msgid ""
 "\n"
 "The search expression can be anything from calibre's powerful search query\n"
 "language, for example: %prog search {0}\n"
-msgstr ""
+msgstr "%prog search [opcións] expresión de busca\n\nBusca na biblioteca o termo de busca especificado, devolvendo unha coma separada\nlista de ID de libros que coinciden coa expresión de busca. O formato de saída é útil\npara alimentar outros comandos que aceptan unha lista de IDs como entrada.\n\nA expresión de busca pode ser calquera cousa desde a poderosa consulta de busca de calibre\nidioma, por exemplo: %prog search {0}\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:41
 msgid "The maximum number of results to return. Default is all results."
-msgstr ""
+msgstr "O número máximo de resultados a devolver. O predeterminado son todos os resultados."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:57
 msgid "No books matching the search expression:"
-msgstr ""
+msgstr "Non hai libros que coincidan coa expresión de busca:"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_custom.py:18
 msgid "No book with id {} exists"
-msgstr ""
+msgstr "Non existe ningún libro co ID {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_custom.py:22
 msgid "No column with name {} exists"
-msgstr ""
+msgstr "Non existe ningunha columna co nome {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_custom.py:28
 msgid "Data set to: {} [{}]"
-msgstr ""
+msgstr "Conxunto de datos en: {} [{}]"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_custom.py:36
 msgid "Data set to: {}"
-msgstr ""
+msgstr "Conxunto de datos en: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_custom.py:45
 msgid ""
@@ -2254,7 +2255,7 @@ msgid ""
 "You can get a list of custom column names using the custom_columns\n"
 "command.\n"
 "    "
-msgstr ""
+msgstr "%prog set_custom [opcións] valor de id de columna\n\nEstablece o valor dunha columna personalizada para o libro identificado por id.\nPodes obter unha lista de IDs usando o comando de busca.\nPodes obter unha lista de nomes de columnas personalizadas usando custom_columns\nmando."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_custom.py:62
 msgid ""
@@ -2277,7 +2278,7 @@ msgid ""
 "--as-opf switch to the show_metadata command. You can also set the metadata of\n"
 "individual fields with the --field option. If you use the --field option, there\n"
 "is no need to specify an OPF file.\n"
-msgstr ""
+msgstr "\n%prog set_metadata [opcións] book_id [/path/to/metadata.opf]\n\nEstablece os metadatos almacenados na base de datos calibre para o libro identificado por\nbook_id do ficheiro OPF metadata.opf. book_id é un número de identificación do libro de\ncomando de busca. Podes ter unha idea rápida do formato OPF usando o\n--as-opf cambia ao comando show_metadata. Tamén pode configurar os metadatos de\ncampos individuais coa opción --field. Se usa a opción --field, alí\nnon é necesario especificar un ficheiro OPF.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:79
 #, python-brace-format
@@ -2288,11 +2289,11 @@ msgid ""
 "must use the ISO639 language codes (e.g. en for English, fr for French and "
 "so on). For identifiers, the syntax is {0} {2}. For boolean (yes/no) fields "
 "use true and false or yes and no."
-msgstr ""
+msgstr "O campo a configurar. O formato é nome_campo:valor, por exemplo: {0} tags:tag1,tag2. Use {1} para obter unha lista de todos os nomes de campo. Podes especificar esta opción varias veces para establecer varios campos. Nota: para os idiomas debes utilizar os códigos de idioma ISO639 (por exemplo, en para inglés, fr para francés, etc.). Para os identificadores, a sintaxe é {0} {2}. Para os campos booleanos (si/non) use verdadeiro e falso ou si e non."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:94
 msgid "List the metadata field names that can be used with the --field option"
-msgstr ""
+msgstr "Lista os nomes dos campos de metadatos que se poden usar coa opción --campo"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:121
 msgid "Field name"
@@ -2322,12 +2323,12 @@ msgstr "Hai que indicar un identificador de rexistro como primeiro argumento"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:139
 msgid "You must specify either a field or an OPF file"
-msgstr ""
+msgstr "Debe especificar un campo ou un ficheiro OPF"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:145
 #, python-format
 msgid "The OPF file %s does not exist"
-msgstr ""
+msgstr "O ficheiro OPF %s non existe"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:152
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:181
@@ -2338,7 +2339,7 @@ msgstr "Non hai ningún libro co identificador %s na base de datos"
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_set_metadata.py:163
 #, python-format
 msgid "%s is not a known field"
-msgstr ""
+msgstr "%s non é un campo coñecido"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_show_metadata.py:25
 msgid ""
@@ -2347,7 +2348,7 @@ msgid ""
 "\n"
 "Show the metadata stored in the calibre database for the book identified by id.\n"
 "id is an id number from the search command.\n"
-msgstr ""
+msgstr "\n%prog show_metadata [opcións] id\n\nMostra os metadatos almacenados na base de datos calibre para o libro identificado por id.\nid é un número de identificación do comando de busca.\n"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_show_metadata.py:37
 msgid "Print metadata in OPF form (XML)"
@@ -2359,11 +2360,11 @@ msgstr "Debe especificar un identificador"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:39
 msgid "The {} command is not supported with remote (server based) libraries"
-msgstr ""
+msgstr "O comando {} non é compatible con bibliotecas remotas (baseadas no servidor)."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:46
 msgid "GLOBAL OPTIONS"
-msgstr ""
+msgstr "OPCIÓNS GLOBAIS"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:53
 msgid ""
@@ -2375,21 +2376,21 @@ msgid ""
 "library you want to connect to on the Content server. You can use the "
 "special library_id value of - to get a list of library ids available on the "
 "server. For details on how to setup access via a Content server, see {}."
-msgstr ""
+msgstr "Camiño á biblioteca calibre. O predeterminado é usar o camiño almacenado na configuración. Tamén pode conectarse a un servidor de contido calibre para realizar accións en bibliotecas remotas. Para facelo, use un URL do formulario: http://hostname:port/#library_id, por exemplo, http://localhost:8080/#mylibrary. library_id é o ID da biblioteca á que queres conectarte no servidor de contido. Podes usar o valor especial library_id de - para obter unha lista de ID de biblioteca dispoñibles no servidor. Para obter máis información sobre como configurar o acceso a través dun servidor de contido, consulte {}."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:66
 #: /__w/calibre/calibre/src/calibre/utils/config.py:124
 msgid "show this help message and exit"
-msgstr ""
+msgstr "mostrar esta mensaxe de axuda e saír"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:70
 #: /__w/calibre/calibre/src/calibre/utils/config.py:125
 msgid "show program's version number and exit"
-msgstr ""
+msgstr "mostrar o número de versión do programa e saír"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:75
 msgid "Username for connecting to a calibre Content server"
-msgstr ""
+msgstr "Nome de usuario para conectarse a un servidor de contido calibre"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:79
 #, python-brace-format
@@ -2399,13 +2400,13 @@ msgid ""
 " file, use: {1} (i.e. <f: followed by the full path to the file and a "
 "trailing >). The angle brackets in the above are required, remember to "
 "escape them or use quotes for your shell."
-msgstr ""
+msgstr "Contrasinal para conectarse a un servidor de contido calibre. Para ler o contrasinal desde a entrada estándar, use o valor especial: {0}. Para ler o contrasinal dun ficheiro, use: {1} (é dicir, <f: seguido da ruta completa ao ficheiro e un final >). Os corchetes angulares anteriores son necesarios, recorda escapar deles ou usar comiñas para o teu shell."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:90
 msgid ""
 "The timeout, in seconds, when connecting to a calibre library over the "
 "network. The default is two minutes."
-msgstr ""
+msgstr "O tempo de espera, en segundos, ao conectarse a unha biblioteca de calibre a través da rede. O valor predeterminado é de dous minutos."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:100
 #, python-format
@@ -2422,7 +2423,7 @@ msgstr "%%prog orde [opcións] [argumentos]\n\n%%prog é a interface da liña de
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:120
 msgid "Enter the password: "
-msgstr ""
+msgstr "Introduza o contrasinal:"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:158
 msgid ""
@@ -2431,11 +2432,11 @@ msgid ""
 "at the same time is a bad idea. calibredb can connect directly to a running "
 "calibre Content server, to make changes through it, instead. See the "
 "documentation of the {} option for details."
-msgstr ""
+msgstr "Está en execución outro programa calibre como {} ou o programa calibre principal. Ter varios programas que poidan facer cambios nunha biblioteca de calibre funcionando ao mesmo tempo é unha mala idea. calibredb pode conectarse directamente a un servidor de contido calibre en execución, para facer cambios a través del. Consulte a documentación da opción {} para obter máis información."
 
 #: /__w/calibre/calibre/src/calibre/db/cli/main.py:249
 msgid "Error: You must specify a command from the list above"
-msgstr ""
+msgstr "Erro: debes especificar un comando da lista anterior"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:300
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:156
@@ -2468,7 +2469,7 @@ msgstr "Tarxeta B"
 #: /__w/calibre/calibre/src/calibre/db/fts/pool.py:102
 #, python-brace-format
 msgid "Extracting text from the {0} file of size {1} took too long"
-msgstr ""
+msgstr "Extraer texto do ficheiro {0} de tamaño {1} levou demasiado tempo"
 
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:259
 #, python-format
@@ -2478,28 +2479,28 @@ msgstr "Campo non válido: %s"
 #: /__w/calibre/calibre/src/calibre/db/notes/connect.py:503
 #, python-brace-format
 msgid "Failed to read from document for {path} with error: {error}"
-msgstr ""
+msgstr "Produciuse un erro ao ler o documento {path} con erro: {error}"
 
 #: /__w/calibre/calibre/src/calibre/db/notes/connect.py:514
 #, python-brace-format
 msgid "Failed to parse document for: {0} with error: {1}"
-msgstr ""
+msgstr "Produciuse un erro ao analizar o documento para: {0} con erro: {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/notes/connect.py:520
 #, python-brace-format
 msgid ""
 "The item {old_item_val} does not exist in the {field} column in the restored"
 " database, could not restore its notes"
-msgstr ""
+msgstr "O elemento {old_item_val} non existe na columna {field} da base de datos restaurada, non se puido restaurar as súas notas"
 
 #: /__w/calibre/calibre/src/calibre/db/notes/connect.py:528
 msgid "Some resources for {} were missing"
-msgstr ""
+msgstr "Faltaban algúns recursos para {}"
 
 #: /__w/calibre/calibre/src/calibre/db/notes/connect.py:533
 #, python-brace-format
 msgid "Failed to set note for {path} with error: {error}"
-msgstr ""
+msgstr "Produciuse un erro ao definir a nota para {path} con erro: {error}"
 
 #: /__w/calibre/calibre/src/calibre/db/restore.py:173
 #: /__w/calibre/calibre/src/calibre/library/restore.py:127
@@ -2537,7 +2538,7 @@ msgstr "Creando unha columna personalizada"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:83
 msgid "Invalid regular expression: {!r} with error: {}"
-msgstr ""
+msgstr "Expresión regular non válida: {!r} con erro: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:108
 #: /__w/calibre/calibre/src/calibre/library/caches.py:341
@@ -2580,7 +2581,7 @@ msgstr "Valor non numérico na consulta: {0}"
 #: /__w/calibre/calibre/src/calibre/db/search.py:316
 #, python-brace-format
 msgid "Non-numeric value in column {0}: {1}"
-msgstr ""
+msgstr "Valor non numérico na columna {0}: {1}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:329
 #: /__w/calibre/calibre/src/calibre/db/utils.py:34
@@ -2630,11 +2631,11 @@ msgstr "Consulta lóxica incorrecta «{0}»"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:534
 msgid "No such Virtual library: {}"
-msgstr ""
+msgstr "Non hai unha biblioteca virtual deste tipo: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:539
 msgid "Virtual library search is recursive: {}"
-msgstr ""
+msgstr "A busca na biblioteca virtual é recursiva: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:570
 #: /__w/calibre/calibre/src/calibre/library/caches.py:692
@@ -2645,41 +2646,41 @@ msgstr "Detectado grupo de consulta recursivo: {0}"
 #: /__w/calibre/calibre/src/calibre/db/search.py:669
 msgid ""
 "search template: missing or invalid separator. Valid separators are: {}"
-msgstr ""
+msgstr "modelo de busca: falta o separador ou non é válido. Os separadores válidos son: {}"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:466
 msgid "{} days"
-msgstr ""
+msgstr "{} días"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:468
 #: /__w/calibre/calibre/src/calibre/db/utils.py:470
 msgid "{} hours"
-msgstr ""
+msgstr "{} horas"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:472
 #: /__w/calibre/calibre/src/calibre/db/utils.py:474
 msgid "{} minutes"
-msgstr ""
+msgstr "{} minutos"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:476
 #: /__w/calibre/calibre/src/calibre/db/utils.py:478
 msgid "{} seconds"
-msgstr ""
+msgstr "{} segundos"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:511
 #: /__w/calibre/calibre/src/calibre/db/utils.py:515
 #: /__w/calibre/calibre/src/calibre/db/utils.py:522
 msgid "calculating time left"
-msgstr ""
+msgstr "calculando o tempo restante"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:513
 #: /__w/calibre/calibre/src/calibre/db/utils.py:519
 msgid "almost done"
-msgstr ""
+msgstr "Casi feito"
 
 #: /__w/calibre/calibre/src/calibre/db/utils.py:520
 msgid "~{} left"
-msgstr ""
+msgstr "~{} deixou"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:33
 #, python-brace-format
@@ -2702,25 +2703,25 @@ msgid ""
 "as a shebang in scripts, like this:\n"
 "\n"
 "    {2}\n"
-msgstr ""
+msgstr "{0}\n\nVarias interfaces de liña de comandos útiles para depurar calibre. Sen opcións,\neste comando inicia un intérprete de Python incorporado. Tamén pode executar o principal\ncalibre GUI, o visor de libros electrónicos calibre e o editor calibre no modo de depuración.\n\nTamén contén interfaces para varios bits de calibre que non teñen\nferramentas de liña de comandos dedicadas, como a subconfiguración de fontes, a ferramenta de diferenza de libros electrónicos, etc\non.\n\nTamén pode usar %prog para executar scripts autónomos. Para iso úsao así:\n\n{1}\n\nTodo despois do -- pásase ao guión. Tamén pode usar calibre-debug\ncomo un shebang nos guións, así:\n\n{2}\n"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:52
 msgid "%prog [options]"
-msgstr ""
+msgstr "%prog [opcións]"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:53
 msgid "Run Python code."
-msgstr ""
+msgstr "Executar código python"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:54
 msgid "Run the Python code in file."
-msgstr ""
+msgstr "Execute o código Python no ficheiro."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:56
 msgid ""
 "Subset the specified font. Use -- after this option to pass option to the "
 "font subsetting program."
-msgstr ""
+msgstr "Subconfigure o tipo de letra especificado. Use -- despois desta opción para pasar a opción ao programa de subconxunto de fontes."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:58
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:523
@@ -2742,11 +2743,11 @@ msgstr "Executar a GUI con unha consola de depuración, rexistrando na ruta indi
 
 #: /__w/calibre/calibre/src/calibre/debug.py:66
 msgid "Don't run with the DEBUG flag set"
-msgstr ""
+msgstr "Non executes coa marca DEBUG establecida"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:68
 msgid "Run the E-book viewer in debug mode"
-msgstr ""
+msgstr "Executa o visor de libros electrónicos no modo de depuración"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:70
 msgid "Output the paths necessary to setup the calibre environment"
@@ -2764,21 +2765,21 @@ msgstr "Analizar o ficheiro(s) MOBI na ruta(s) indicada"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:79
 msgid "Launch the calibre \"Edit book\" tool in debug mode."
-msgstr ""
+msgstr "Inicie a ferramenta de calibre \"Editar libro\" no modo de depuración."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:81
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
-msgstr ""
+msgstr "Explota o libro no cartafol especificado.\nUso: -x file.epub output_dir\nExporta o libro como unha colección de ficheiros HTML e metadatos, que podes editar usando ferramentas de edición HTML estándar. Funciona con ficheiros EPUB, AZW3, HTMLZ e DOCX."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:87
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
-msgstr ""
+msgstr "Implosionar un libro previamente explotado.\nUso: -i output_dir file.epub\nImporta o libro dos ficheiros de output_dir que debeu ser creado por unha chamada anterior a --explode-book. Asegúrese de especificar o mesmo tipo de ficheiro que se utilizou ao explotar."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:92
 msgid ""
@@ -2787,11 +2788,11 @@ msgid ""
 "  calibre-debug --export-all-calibre-data  # for interactive use\n"
 "  calibre-debug --export-all-calibre-data /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2\n"
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
-msgstr ""
+msgstr "Exporta todos os datos de calibre (libros/configuracións/complementos). Normalmente, pediráselle o cartafol de exportación e as bibliotecas para exportar. Tamén pode especificalos como argumentos da liña de comandos para omitir as preguntas. Use camiños absolutos para o cartafol de exportación e as bibliotecas. A palabra clave especial \"todos\" pode usarse para exportar todas as bibliotecas. Exemplos:\n\ncalibre-debug --export-all-calibre-data # para uso interactivo\ncalibre-debug --export-all-calibre-data /ruta/a/empty/export/carpeta /ruta/a/biblioteca/carpeta1 /ruta/a/biblioteca2\ncalibre-debug --export-all-calibre-data /export/folder all # exportar todas as bibliotecas coñecidas"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:102
 msgid "Import previously exported calibre data"
-msgstr ""
+msgstr "Importar datos de calibre exportados previamente"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:105
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:63
@@ -2809,14 +2810,14 @@ msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
-msgstr ""
+msgstr "Executar un complemento que proporciona unha interface de liña de comandos. Por exemplo:\ncalibre-debug -r \"Nome do complemento\" -- ficheiro1 --opción1\nTodo despois do -- pasarase ao complemento como argumentos."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:115
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
-msgstr ""
+msgstr "Executa a(s) proba(s) nomeada(s). Use o valor especial \"todos\" para executar todas as probas. Se o nome da proba comeza cun punto, suponse que é un nome de módulo. Se o nome da proba comeza por @, suponse que é un nome de categoría."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:120
 msgid ""
@@ -2826,11 +2827,11 @@ msgstr "Executar a ferramenta diff de calibre. Por exemplo:\ncalibre-debug --dif
 
 #: /__w/calibre/calibre/src/calibre/debug.py:123
 msgid "(Un)register calibre from Windows Default Programs."
-msgstr ""
+msgstr "(Des)rexistra calibre dende os programas predeterminados de Windows."
 
 #: /__w/calibre/calibre/src/calibre/debug.py:125
 msgid "For internal use"
-msgstr ""
+msgstr "Para uso interno"
 
 #: /__w/calibre/calibre/src/calibre/debug.py:192
 msgid "Debug log"
@@ -2849,13 +2850,13 @@ msgstr "Comunicar con teléfonos Android."
 msgid ""
 "Comma separated list of folders to send e-books to on the device's <b>main "
 "memory</b>. The first one that exists will be used"
-msgstr ""
+msgstr "Lista separada por vírgulas dos cartafoles aos que enviar os libros electrónicos na <b>memoria principal</b> do dispositivo. Emprégase o primeiro que exista"
 
 #: /__w/calibre/calibre/src/calibre/devices/android/driver.py:217
 msgid ""
 "Comma separated list of folders to send e-books to on the device's "
 "<b>storage cards</b>. The first one that exists will be used"
-msgstr ""
+msgstr "Lista de cartafoles separados por vírgula para enviar libros electrónicos nas <b>tarxetas de almacenamento</b> do dispositivo. Utilizarase o primeiro que exista"
 
 #: /__w/calibre/calibre/src/calibre/devices/android/driver.py:343
 msgid "Communicate with S60 phones."
@@ -2867,7 +2868,7 @@ msgstr "Comunicarse coas tablets WebOs."
 
 #: /__w/calibre/calibre/src/calibre/devices/binatone/driver.py:16
 msgid "Communicate with the Binatone Readme e-book reader."
-msgstr ""
+msgstr "Comuníquese co lector de libros electrónicos Binatone Readme."
 
 #: /__w/calibre/calibre/src/calibre/devices/blackberry/driver.py:12
 msgid "Communicate with the Blackberry smart phone."
@@ -2882,23 +2883,23 @@ msgstr "Kovid Goyal"
 
 #: /__w/calibre/calibre/src/calibre/devices/blackberry/driver.py:36
 msgid "Communicate with the Blackberry Playbook."
-msgstr ""
+msgstr "Comunicarse co playbook Blackberry."
 
 #: /__w/calibre/calibre/src/calibre/devices/boeye/driver.py:15
 msgid "Communicate with BOEYE BEX Serial e-book readers."
-msgstr ""
+msgstr "Comunicarse cos lectores de libros electrónicos da colectánea Boeye Bex"
 
 #: /__w/calibre/calibre/src/calibre/devices/boeye/driver.py:37
 msgid "Communicate with BOEYE BDX serial e-book readers."
-msgstr ""
+msgstr "Comunicar con lectores de libros electrónicosBOEYE BDX."
 
 #: /__w/calibre/calibre/src/calibre/devices/cybook/driver.py:23
 msgid "Communicate with the Cybook Gen 3/Opus e-book reader."
-msgstr ""
+msgstr "Comunicar co lector de libros electrónico Cybook Gen 3 / Opus."
 
 #: /__w/calibre/calibre/src/calibre/devices/cybook/driver.py:67
 msgid "Communicate with the Cybook Orizon e-book reader."
-msgstr ""
+msgstr "Comunicar co lector de libros electrónicos Cybook Orizon."
 
 #: /__w/calibre/calibre/src/calibre/devices/cybook/driver.py:80
 #: /__w/calibre/calibre/src/calibre/devices/user_defined/driver.py:57
@@ -2913,15 +2914,15 @@ msgstr "Introduza o directorio onde se almacenen os libros cando sexan enviados 
 
 #: /__w/calibre/calibre/src/calibre/devices/cybook/driver.py:119
 msgid "Communicate with the Cybook Muse e-book reader."
-msgstr ""
+msgstr "Comunicar co lector Cybook Muse."
 
 #: /__w/calibre/calibre/src/calibre/devices/cybook/driver.py:145
 msgid "Communicate with the Bookeen Diva HD e-book reader."
-msgstr ""
+msgstr "Comuníquese co lector de libros electrónicos Bookeen Diva HD."
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:24
 msgid "Communicate with the EB600 e-book reader."
-msgstr ""
+msgstr "Comuníquese co lector de libros electrónicos EB600."
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:56
 msgid "Communicate with the Tolino Shine and Vision readers"
@@ -2936,7 +2937,7 @@ msgstr "Intercambiar entre principal e cartón A"
 msgid ""
 "Check this box if the device's main memory is being seen as card a and the "
 "card is being seen as main memory. Some tolino devices may need this option."
-msgstr ""
+msgstr "Marque esta caixa se a memoria principal do dispositivo se ve como tarxeta a e a tarxeta se ve como memoria principal. Algúns dispositivos tolino poden necesitar esta opción."
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:308
 msgid "Communicate with the Astak Mentor EB600"
@@ -2944,7 +2945,7 @@ msgstr "Comunicar co Astak Mentor EB600"
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:333
 msgid "Communicate with the PocketBook 301 Reader."
-msgstr ""
+msgstr "Comuníquese co PocketBook 301 Reader."
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:352
 msgid "Communicate with the PocketBook 515/602/603/902/903/Pro 912 reader."
@@ -2964,7 +2965,7 @@ msgstr "Comunicar co PocketBook 701"
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:432
 msgid "Communicate with the PocketBook 740"
-msgstr ""
+msgstr "Comuníquese co PocketBook 740"
 
 #: /__w/calibre/calibre/src/calibre/devices/eb600/driver.py:450
 msgid "Communicate with the Infibeam Pi2 reader."
@@ -2980,11 +2981,11 @@ msgstr "Comunicar co Entourage Edge."
 
 #: /__w/calibre/calibre/src/calibre/devices/eslick/driver.py:16
 msgid "Communicate with the ESlick e-book reader."
-msgstr ""
+msgstr "Comuníquese co lector de libros electrónicos ESlick."
 
 #: /__w/calibre/calibre/src/calibre/devices/eslick/driver.py:48
 msgid "Communicate with the Sigmatek e-book reader."
-msgstr ""
+msgstr "Comuníquese co lector de libros electrónicos Sigmatek."
 
 #: /__w/calibre/calibre/src/calibre/devices/folder_device/driver.py:19
 #: /__w/calibre/calibre/src/calibre/devices/folder_device/driver.py:36
@@ -2994,15 +2995,15 @@ msgstr "Usar un cartafol arbitrario como dispositivo."
 #: /__w/calibre/calibre/src/calibre/devices/folder_device/driver.py:32
 #: /__w/calibre/calibre/src/calibre/devices/interface.py:25
 msgid "Device interface"
-msgstr ""
+msgstr "Interface do dispositivo"
 
 #: /__w/calibre/calibre/src/calibre/devices/hanlin/driver.py:18
 msgid "Communicate with Hanlin V3 e-book readers."
-msgstr ""
+msgstr "Comuníquese cos lectores de libros electrónicos Hanlin V3."
 
 #: /__w/calibre/calibre/src/calibre/devices/hanlin/driver.py:98
 msgid "Communicate with Hanlin V5 e-book readers."
-msgstr ""
+msgstr "Comuníquese cos lectores de libros electrónicos Hanlin V5."
 
 #: /__w/calibre/calibre/src/calibre/devices/hanlin/driver.py:117
 msgid "Communicate with the BOOX e-book reader."
@@ -4672,37 +4673,45 @@ msgid ""
 "\"Export\" button to save them to a file."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:127
+#, python-brace-format
+msgid ""
+"Recipe specific options. Syntax is option_name:value. For example: "
+"{example}. Can be specified multiple times to set different options. To see "
+"a list of all available options for a recipe, use {list}."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "INPUT OPTIONS"
 msgstr "OPCIÓNS DE ENTRADA"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "OUTPUT OPTIONS"
 msgstr "OPCIÓNS DE SAÍDA"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:178
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:186
 #, python-format
 msgid "Options to control the processing of the input %s file"
 msgstr "Opcións para controlar o procesamento do ficheiro de entrada %s."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:185
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:193
 #, python-format
 msgid "Options to control the processing of the output %s"
 msgstr "Opcións para controlar o procesamento da saída %s"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:199
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:207
 msgid "LOOK AND FEEL"
 msgstr "APARENCIA"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:200
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:208
 msgid "Options to control the look and feel of the output"
 msgstr "Opcións para controlar o aspecto da saída"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:218
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
 msgid "HEURISTIC PROCESSING"
 msgstr "PROCESAMENTO HEURÍSTICO"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:219
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
 #, python-format
 msgid ""
 "Modify the document text and structure using common patterns. Disabled by "
@@ -4710,61 +4719,61 @@ msgid ""
 "%(dis)s options."
 msgstr "Modificar o texto e a estrutura do documento utilizando patróns habituais. Empregue %(en)s para activar. As accións individuais pódense desactivar coas opcións %(dis)s."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:226
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:234
 msgid "SEARCH AND REPLACE"
 msgstr "BUSCAR E SUBSTITUÍR"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:227
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:235
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace.py:22
 msgid "Modify the document text and structure using user defined patterns."
 msgstr "Modificar o texto do documento e a estrutura usando patróns definidos."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:236
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:244
 msgid "STRUCTURE DETECTION"
 msgstr "DETECCIÓN DA ESTRUTURA"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:237
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:245
 msgid "Control auto-detection of document structure."
 msgstr "Control de autodetección de estrutura de documento."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:246
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:254
 msgid "TABLE OF CONTENTS"
 msgstr "ÍNDICE"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:247
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:255
 msgid ""
 "Control the automatic generation of a Table of Contents. By default, if the "
 "source file has a Table of Contents, it will be used in preference to the "
 "automatically generated one."
 msgstr "Controla a xeración automática do Índice. De modo predeterminado, se o ficheiro orixe ten unha táboa de contidos, usarase esta preferentemente respecto da xerada automaticamente."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "METADATA"
 msgstr "METADATOS"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "Options to set metadata in the output"
 msgstr "As opcións para asignar metadatos na saída"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "DEBUG"
 msgstr "DEPURACIÓN"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "Options to help with debugging the conversion"
 msgstr "Opción para axudar coa depuración da conversión"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:283
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:291
 msgid ""
 "List builtin recipe names. You can create an e-book from a builtin recipe "
 "like this: ebook-convert \"Recipe Name.recipe\" output.epub"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:432
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:440
 msgid "Output saved to"
 msgstr "Saída gardada en"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:438
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/cli.py:446
 #, python-format
 msgid ""
 "The options and default values for the options change depending on both the\n"
@@ -5051,8 +5060,8 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:55
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/mobi_output.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:57
-msgid "Title for any generated in-line table of contents."
-msgstr "Título para calquera índice xerado no texto."
+msgid "Title for any generated inline table of contents."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_output.py:123
 msgid ""
@@ -5594,10 +5603,22 @@ msgstr "Nome de usuario para os sitios que requiren rexistro para acceder ao seu
 msgid "Password for sites that require a login to access content."
 msgstr "Contrasinal para sitios que requiren rexistro para acceder ao contido."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:52
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:51
+msgid "Recipe specific options."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:54
 msgid ""
 "Do not download latest version of builtin recipes from the calibre server"
 msgstr "Non descargar a última versión de receitas incorporadas polo servidor Calibre"
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:142
+msgid "specific options:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:151
+msgid "has no recipe specific options"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:49
 msgid "Convert RTF files to HTML"
@@ -9255,7 +9276,7 @@ msgid "Table of Contents:"
 msgstr "Índice de contidos:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/__init__.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:646
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:659
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:1012
 msgid "Default icons"
@@ -10398,7 +10419,7 @@ msgid "Open dialog"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:729
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:464
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Finished"
 msgstr "Rematado"
@@ -11179,7 +11200,7 @@ msgstr "Produciuse un fallo ao descargar os metadatos"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:262
 #: /__w/calibre/calibre/src/calibre/gui2/dnd.py:96
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:940
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:953
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:549
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:990
 #: /__w/calibre/calibre/src/calibre/gui2/store/web_store.py:191
@@ -13837,7 +13858,7 @@ msgstr "Verdadeiro"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:400
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:1009
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:184
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/models.py:38
@@ -15325,7 +15346,7 @@ msgstr "Empregar a capa do ficheiro de ori&xe"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata_ui.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:142
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:231
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:188
@@ -17532,7 +17553,7 @@ msgid "No help available for this output format."
 msgstr "Non hai axuda dispoñíbel sobre este formato de saída."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:385
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:390
 msgid "Generate catalog"
 msgstr "Xerar catálogo"
 
@@ -18254,7 +18275,7 @@ msgid "Choose builtin recipe"
 msgstr "Escolla unha receita predefinida"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/custom_recipes.py:540
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:271
 msgid "Go"
 msgstr "Vai"
 
@@ -18359,7 +18380,7 @@ msgid "Manage data files for {}"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:238
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:697
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:151
 msgid "&Sort by:"
 msgstr "&Ordenar por:"
@@ -18765,7 +18786,7 @@ msgid "The URL for this link"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:283
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:291
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "&URL:"
 msgstr "&URL:"
@@ -19987,7 +20008,7 @@ msgid "&Maximum articles per feed:"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/opml.py:81
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:189
 msgid " days"
 msgstr " días"
@@ -20621,7 +20642,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:297
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1024
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:98
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:273
@@ -20783,7 +20804,7 @@ msgstr ""
 msgid "Search expression"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:102
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:103
 msgid ""
 "                Download this periodical every week on the specified days after\n"
 "                the specified time. For example, if you choose: Monday after\n"
@@ -20792,11 +20813,11 @@ msgid ""
 "            "
 msgstr "                Descargar esta publicación todas as semanas, nos días especificados,\ntras a hora especificada. Por exemplo, se escolle «Luns despois\ndas 9:00 AM», a publicación descargarase todos os luns, tan pronto\ncomo sexa posíbel, pero sempre despois das 9:00 AM.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:124
 msgid "&Download after:"
 msgstr "&Descargar despois de:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:155
 msgid ""
 "                Download this periodical every month, on the specified days.\n"
 "                The download will happen as soon after the specified time as\n"
@@ -20807,19 +20828,19 @@ msgid ""
 "            "
 msgstr "                Descargar esta publicación todos os meses, nos días especificados.\nA descarga terá lugar tan pronto como sexa posíbel, pero sempre\ndespois da hora especificada. Por exemplo, se escolle os días 1 e 15\ndespois das 9:00 AM, a publicación descargarase os días 1 e 15 de\ncada mes, despois das 9:00 AM.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:166
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:167
 msgid "&Days of the month:"
 msgstr "&Días do mes:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:168
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:169
 msgid "Comma separated list of days of the month. For example: 1, 15"
 msgstr "Lista de días do mes, separados por comas. Por exemplo: 1, 15"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:173
 msgid "Download &after:"
 msgstr "D&escargar despois de:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:206
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:207
 msgid ""
 "                Download this periodical every x days. For example, if you\n"
 "                choose 30 days, the periodical will be downloaded every 30\n"
@@ -20828,30 +20849,30 @@ msgid ""
 "            "
 msgstr "                Descargar esta publicación cada x días. Por exemplo, se escolle 30 días,\na publicación descargarase cada 30 días. É posíbel especificar intervalos\nmenores dun día, como 0.1 días, para descargar unha publicación varias\nveces ao día.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:215
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:216
 msgid "&Download every:"
 msgstr "Descargar &cada:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:219
 msgid "every hour"
 msgstr "cada hora"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:254
 msgid "days"
 msgstr "días"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:226
 msgid ""
 "Note: You can set intervals of less than a day, by typing the value "
 "manually."
 msgstr "Nota: Pode especificar intervalos menores dun día, tecleando o valor manualmente."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:281
 msgid "Schedule news download [{} sources]"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:298
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:299
 msgid "&Schedule"
 msgstr "&Planificación"
 
@@ -20888,124 +20909,122 @@ msgstr "&Avanzado"
 msgid "Add &title as tag"
 msgstr "Engadir o &título como etiqueta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:359
 msgid "&Extra tags:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:362
-msgid "&Keep at most:"
-msgstr "&Conservar cando moito:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:363
-msgid ""
-"Maximum number of copies (issues) of this recipe to keep.  Set to 0 to keep "
-"all (disable)."
-msgstr "Máximo número de copias (exemplares) desta receita que desexa manter. Estabeleza o valor 0 para mantenlos todos (desactivado)."
-
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:364
 msgid ""
 "<p>When set, this option will cause calibre to keep, at most, the specified number of issues of this periodical. Every time a new issue is downloaded, the oldest one is deleted, if the total is larger than this number.\n"
 "<p>Note that this feature only works if you have the option to add the title as tag checked, above.\n"
 "<p>Also, the setting for deleting periodicals older than a number of days, below, takes priority over this setting."
 msgstr "<p>Cando se activa, esta opción fai que o Calibre manteña, cando moito, o número especificado de exemplares desta publicación. Cada vez que se descarga un novo exemplar, bórrase o máis antigo se o número total es maior ca este número.\n<p>Teña en conta que esta función só ten efecto se marcou a opción de engadirlle  o título como etiqueta.\n<p>Ademais, a opción para borrar publicacións con certa antigüidade ten prioridade sobre esta función."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid " issues"
 msgstr " exemplares"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid "all issues"
 msgstr "todos os exemplares"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:370
+msgid "&Keep at most:"
+msgstr "&Conservar cando moito:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:376
 msgid "Delete downloaded &news older than:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:384
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:379
 msgid ""
 "<p>Delete downloaded news older than the specified number of days. Set to zero to disable.\n"
 "<p>You can also control the maximum number of issues of a specific periodical that are kept by clicking the Advanced tab for that periodical above."
 msgstr "<p>Borrar as novas descargadas cunha antigüidade maior que o número de días especificado. Estabelézao en 0 para desactivar a función.\n<p>Tamén pode controlar o máximo número de exemplares duna mesma publicación que desexa manter, premendo na lapela «Avanzada» para a publicación."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 msgid "never delete"
 msgstr "Non eliminar nunca"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:386
 msgid "Download &all scheduled"
 msgstr "Descargar &todas as planificadas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:387
 msgid "Download all scheduled news sources at once"
 msgstr "Descargar todas as fontes de novas programadas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:397
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:392
 msgid "&Download now"
 msgstr "&Descargar agora"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:482
 msgid "Need username and password"
 msgstr "Precisa un nome de usuario e un contrasinal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:483
 msgid "You must provide a username and/or password to use this news source."
 msgstr "Ten de fornecer un nome de usuario e / ou un contrasinal para empregar esta orixe."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:529
 msgid "Account"
 msgstr "Conta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:530
 msgid "(optional)"
 msgstr "(opcional)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:532
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:531
 msgid "(required)"
 msgstr "(requirido)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:551
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:550
 msgid "Created by: "
 msgstr "Creado por: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:555
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:554
 #, python-format
 msgid "Download %s now"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:558
 msgid "Last downloaded: never"
 msgstr "Última descarga: nunca"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:560
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:559
 msgid "never"
 msgstr "nunca"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:567
 #, python-format
 msgid "%(days)d days, %(hours)d hours and %(mins)d minutes ago"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:584
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:582
 msgid "Last downloaded:"
 msgstr "Descargado por última vez:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:597
+msgid "Default if unspecified: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
 msgid "Cannot download news as no internet connection is active"
 msgstr "Non é posíbel descargar as novas se non se ten unha conexión activa á Internet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
 msgid "No internet connection"
 msgstr "Sen conexión á Internet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:630
 msgid "Schedule news download"
 msgstr "Descarga de novas planificada"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:633
 msgid "Add or edit a custom news source"
 msgstr "Engadir ou editar unha fonte de novas personalizada"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:639
 msgid "Download all scheduled news sources"
 msgstr "Descargar todas as fontes de novas programadas"
 
@@ -21135,7 +21154,7 @@ msgid "The author to search for"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:152
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:270
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:233
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:192
@@ -23094,131 +23113,130 @@ msgstr ""
 msgid "Selected HTML files"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:244
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
 msgid "Create an icon theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:259
 msgid "Use this theme in calibre"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:252
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:260
 msgid "Change the current calibre icon theme to this theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:265
 msgid "Theme Metadata"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
 msgid "&Version:"
 msgstr "&versión:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:284
 msgid "Light and Dark"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
 msgid "Light only"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:286
 msgid "Dark only"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:287
 msgid "Specify the color palette this icon theme is suited for"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:288
 msgid "&Color palette:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:289
 msgid "&License:"
 msgstr "&Licenza:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:293
 msgid ""
 "The license for the icons in this theme. Common choices are Creative Commons"
 " or Public Domain."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:335
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:343
 #, python-format
 msgid "%d icons missing in this theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:337
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:345
 msgid "No missing icons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:355
 msgid "No title specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:356
 msgid "You must specify a title for this icon theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:350
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:358
 msgid "No author specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:359
 msgid "You must specify an author for this icon theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "&Abort"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "Losslessly optimizing images, please wait..."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:384
 msgid "Optimizing images failed, click \"Show details\" for more information"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:381
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:389
 msgid "Compression failed"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:413
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:421
 #, python-format
 msgid "Optimizing %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:440
 msgid "Creating theme file"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:443
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:451
 msgid "Compressing theme file"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:463
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:471
 msgid "Choose a folder from which to read the icons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:487
 msgid "Choose destination for icon theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:480
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:488
 msgid "ZIP files"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:608
 msgid "Right click to visit theme homepage"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:609
 #, python-brace-format
 msgid ""
-"\n"
-"            <h2>{title}</h2>\n"
+"            <p><b><big>{title}<big></b><p>\n"
 "            <p>by <i>{author}</i> with <b>{number}</b> icons [{size}]</p>\n"
 "            <p>{description}</p>\n"
 "            <p>Version: {version} Number of users: {usage:n}</p>\n"
@@ -23226,85 +23244,85 @@ msgid ""
 "            "
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:634
 msgid "Downloading icons..."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:635
 msgid "Downloading icons, please wait..."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:660
 msgid "Use the calibre default icons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:668
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:681
 msgid ""
 "Choose an icon theme below. It will be used for both light and dark color "
 "themes unless a color specific theme is chosen in one of the other tabs."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:684
 msgid ""
 "Choose an icon theme below. It will be used preferentially for light color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
 msgid ""
 "Choose an icon theme below. It will be used preferentially for dark color "
 "themes. If the default is chosen then the theme for \"light and dark\" will "
 "be used."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Number of icons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Popularity"
 msgstr "Popularidade"
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:793
 msgid "Choose an icon theme"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:800
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:813
 msgid "Restore &default icons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:829
 msgid "For light and dark"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:818
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:831
 msgid "For light only"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:820
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:833
 msgid "For dark only"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:835
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:848
 msgid "Downloading, please wait..."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:868
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:881
 msgid "Failed to download list of themes"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:882
 msgid ""
 "Failed to download list of themes, click \"Show details\" for more "
 "information"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:873
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:886
 msgid "Choose from {} available icon themes"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:941
+#: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:954
 msgid ""
 "Failed to download icon themes, click \"Show details\" for more information."
 msgstr ""
@@ -32602,16 +32620,16 @@ msgid ""
 "format was found."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:329
 #, python-format
 msgid "Fetch news from %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:404
 msgid "Convert existing"
 msgstr "Xa existe a conversión"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tools.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/tools.py:405
 #, python-format
 msgid ""
 "The following books have already been converted to the %s format. Do you "
@@ -44237,7 +44255,7 @@ msgid "%s Document"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:128
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1600
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1630
 msgid "Unknown section"
 msgstr "Sección descoñecida"
 
@@ -44247,7 +44265,7 @@ msgstr "Fluxo descoñecido"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:169
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:210
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1591
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1621
 msgid "Untitled article"
 msgstr "Artigo sen título"
 
@@ -44255,129 +44273,129 @@ msgstr "Artigo sen título"
 msgid "Unknown News Source"
 msgstr "Fonte de novas descoñecida"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:616
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:633
 msgid "Article download aborted"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:842
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:859
 #, python-format
 msgid "Failed to download %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:940
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:957
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "A receita «%s» necesita un nome de usuario e un contrasinal."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1070
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1100
 msgid "Download finished"
 msgstr "Rematou a descarga"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1072
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1102
 msgid "Failed to download the following articles:"
 msgstr "Produciuse un fallo na descarga dos seguintes artigos:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1078
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1108
 msgid "Failed to download parts of the following articles:"
 msgstr "Produciuse un fallo na descarga de partes do seguintes artigos:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1080
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1110
 msgid " from "
 msgstr " desde "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1082
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1112
 msgid "\tFailed links:"
 msgstr "\tLigazóns erradas:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1188
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1218
 msgid "Could not fetch article."
 msgstr "Non foi posíbel obter o artigo."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1190
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1220
 msgid "The debug traceback is available earlier in this log"
 msgstr "O resultado do rastreo de depuración aparece máis arriba neste rexistro"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1192
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1222
 msgid "Run with -vv to see the reason"
 msgstr "Execute co parámetro -vv para ver o motivo"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1275
 msgid "Fetching feeds..."
 msgstr "A obter os fluxos..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1251
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1281
 msgid "Got feeds from index page"
 msgstr "Obtivéronse fontes de noticias da páxina principal"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1264
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1294
 msgid "Trying to download cover..."
 msgstr "Tratando de descargar a capa..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1266
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
 msgid "Generating masthead..."
 msgstr "Xerando o tope..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1326
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1356
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] ""
 msgstr[1] ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1341
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1371
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Fluxos descargados en %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1350
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1380
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "Non foi posíbel descargar a capa: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1363
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Descargando a capa desde %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1445
 msgid "Masthead image downloaded"
 msgstr "Tope da imaxe descargada"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1515
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1545
 msgid "Articles in this issue:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1672
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1702
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Artigo descargado: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1682
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
 #, python-format
 msgid "Article download aborted: %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1690
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1720
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Erro ao descargar o artigo: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1712
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 msgid "Fetching feed"
 msgstr "Obtendo o fluxo"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1888
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1918
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "Produciuse un fallo ao iniciar a sesión, comprobe o seu nome de usuario ou contrasinal do servizo de boletín do Calibre."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1904
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1934
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
 msgstr "Vostede non ten permiso para descargar esta publicación. A súa subscrición caducou ou excedeu do máximo permitido por día"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:65
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr "Vostede"
 
