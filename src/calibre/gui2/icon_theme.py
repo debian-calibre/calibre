@@ -18,6 +18,7 @@ from io import BytesIO
 from itertools import count
 from multiprocessing.pool import ThreadPool
 from threading import Event, Thread
+from xml.sax.saxutils import escape
 
 from qt.core import (
     QAbstractItemView,
@@ -121,8 +122,9 @@ class Theme:
 
 class Report:
 
-    def __init__(self, path, name_map, extra, missing, theme):
+    def __init__(self, path, name_map, extra, missing, theme, number):
         self.path, self.name_map, self.extra, self.missing, self.theme = path, name_map, extra, missing, theme
+        self.number = number
         self.bad = {}
 
     @property
@@ -136,10 +138,16 @@ def read_theme_from_folder(path):
     name_map = read_images_from_folder(path)
     name_map.pop(THEME_COVER, None)
     name_map.pop('blank.png', None)
-    current_names = frozenset(current_image_map)
-    names = frozenset(name_map)
+
+    def canonical_name(x):
+        return x.replace('-for-dark-theme', '').replace('-for-light-theme', '')
+
+    current_names = set(map(canonical_name, current_image_map))
+    names = set(map(canonical_name, name_map))
     extra = names - current_names
     missing = current_names - names
+    missing.discard('blank.png')
+    number = len(names - extra)
     try:
         with open(os.path.join(path, THEME_METADATA), 'rb') as f:
             metadata = json.load(f)
@@ -161,7 +169,7 @@ def read_theme_from_folder(path):
         return metadata.get(x, defval)
     theme = Theme(g('title'), g('author'), safe_int(g('version', -1)), g('description'), g('license', 'Unknown'), g('url', None))
 
-    ans = Report(path, name_map, extra, missing, theme)
+    ans = Report(path, name_map, extra, missing, theme, number)
     try:
         with open(os.path.join(path, THEME_COVER), 'rb') as f:
             theme.cover = f.read()
@@ -304,7 +312,7 @@ class ThemeCreateDialog(Dialog):
             'color_palette': self.color_palette.currentData(),
             'version': self.version.value(),
             'description': self.description.toPlainText().strip(),
-            'number': len(self.report.name_map) - len(self.report.extra),
+            'number': self.report.number,
             'date': utcnow().date().isoformat(),
             'name': self.report.name,
             'license': self.license.text().strip() or 'Unknown',
@@ -576,6 +584,10 @@ class Delegate(QStyledItemDelegate):
 
     SPACING = 10
 
+    def __init__(self, *a):
+        super().__init__(*a)
+        self.static_text_cache = {}
+
     def sizeHint(self, option, index):
         return QSize(COVER_SIZE[0] * 2, COVER_SIZE[1] + 2 * self.SPACING)
 
@@ -593,21 +605,22 @@ class Delegate(QStyledItemDelegate):
             painter.setPen(QPen(QApplication.instance().palette().highlightedText().color()))
         bottom = option.rect.bottom() - 2
         painter.drawLine(0, bottom, option.rect.right(), bottom)
-        if 'static-text' not in theme:
-            visit = _('Right click to visit theme homepage') if theme.get('url') else ''
-            theme['static-text'] = QStaticText(_(
-                '''
-            <h2>{title}</h2>
+        visit = _('Right click to visit theme homepage') if theme.get('url') else ''
+        text = _('''\
+            <p><b><big>{title}<big></b><p>
             <p>by <i>{author}</i> with <b>{number}</b> icons [{size}]</p>
             <p>{description}</p>
             <p>Version: {version} Number of users: {usage:n}</p>
             <p><i>{visit}</i></p>
-            ''').format(title=theme.get('title', _('Unknown')), author=theme.get('author', _('Unknown')),
-                       number=theme.get('number', 0), description=theme.get('description', ''),
+            ''').format(title=escape(theme.get('title') or _('Unknown')), author=escape(theme.get('author', _('Unknown'))),
+                       number=theme.get('number', 0), description=escape(theme.get('description', '')),
                        size=human_readable(theme.get('compressed-size', 0)), version=theme.get('version', 1),
-                       usage=theme.get('usage', 0), visit=visit
-        ))
-        painter.drawStaticText(COVER_SIZE[0] + self.SPACING, option.rect.top() + self.SPACING, theme['static-text'])
+                       usage=theme.get('usage', 0), visit=escape(visit)
+            )
+        st = self.static_text_cache.get(text)
+        if st is None:
+            self.static_text_cache[text] = st = QStaticText(text)
+        painter.drawStaticText(COVER_SIZE[0] + self.SPACING, option.rect.top() + self.SPACING, st)
         painter.restore()
 
 

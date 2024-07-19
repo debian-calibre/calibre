@@ -27,40 +27,34 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "xullo 12, 2024" "7.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "xullo 19, 2024" "7.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-debug [options]
+calibre\-debug [opcións]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Varias interfaces de liña de comandos útiles para depurar calibre. Sen opcións,
+este comando inicia un intérprete de Python incorporado. Tamén pode executar o principal
+calibre GUI, o visor de libros electrónicos calibre e o editor calibre no modo de depuración.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
+Tamén contén interfaces para varios bits de calibre que non teñen
+ferramentas de liña de comandos dedicadas, como a subconfiguración de fontes, a ferramenta de diferenza de libros electrónicos, etc
 on.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
-.INDENT 0.0
-.INDENT 3.5
-\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
-.UNINDENT
-.UNINDENT
+Tamén pode usar \fBcalibre\-debug\fP para executar scripts autónomos. Para iso úsao así:
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.sp
+Todo despois do \fB\-\-\fP pásase ao guión. Tamén pode usar \fBcalibre\-debug\fP
+como un shebang nos guións, así:
+.sp
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
-.UNINDENT
-.UNINDENT
 .sp
 Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH [OPCIÓNS]
@@ -72,7 +66,7 @@ Engada un engadido simple (por exemplo un engadido que consista nun só ficheiro
 .INDENT 0.0
 .TP
 .B \-\-command, \-c
-Run Python code.
+Executar código python
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -82,7 +76,7 @@ Depurar a detección de dispositivos
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-(Un)register calibre from Windows Default Programs. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
+(Des)rexistra calibre dende os programas predeterminados de Windows. \fI\%\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -92,27 +86,27 @@ Executar a ferramenta diff de calibre. Por exemplo: calibre\-debug \fI\%\-\-diff
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode.
+Inicie a ferramenta de calibre \fB\(dq\fPEditar libro\fB\(dq\fP no modo de depuración.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exec\-file, \-e
-Run the Python code in file.
+Execute o código Python no ficheiro.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Explota o libro no cartafol especificado. Uso: \-x file.epub output_dir Exporta o libro como unha colección de ficheiros HTML e metadatos, que podes editar usando ferramentas de edición HTML estándar. Funciona con ficheiros EPUB, AZW3, HTMLZ e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+Exporta todos os datos de calibre (libros/configuracións/complementos). Normalmente, pediráselle o cartafol de exportación e as bibliotecas para exportar. Tamén pode especificalos como argumentos da liña de comandos para omitir as preguntas. Use camiños absolutos para o cartafol de exportación e as bibliotecas. A palabra clave especial \fB\(dq\fPtodos\fB\(dq\fP pode usarse para exportar todas as bibliotecas. Exemplos:  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/empty/export/carpeta /ruta/a/biblioteca/carpeta1 /ruta/a/biblioteca2 calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all # exportar todas as bibliotecas coñecidas
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-fix\-multiprocessing
-For internal use
+Para uso interno
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -127,17 +121,17 @@ Executar a GUI con unha consola de depuración, rexistrando na ruta indicada. S�
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+mostrar esta mensaxe de axuda e saír
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fI\%\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Implosionar un libro previamente explotado. Uso: \-i output_dir file.epub Importa o libro dos ficheiros de output_dir que debeu ser creado por unha chamada anterior a \fI\%\-\-explode\-book\fP\&. Asegúrese de especificar o mesmo tipo de ficheiro que se utilizou ao explotar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-Import previously exported calibre data
+Importar datos de calibre exportados previamente
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -152,17 +146,17 @@ Mostrar as rutas necesarias para instalar o entorno de calibre
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Executar un complemento que proporciona unha interface de liña de comandos. Por exemplo: calibre\-debug \-r \fB\(dq\fPNome do complemento\fB\(dq\fP \fB\-\-\fP ficheiro1 \fB\-\-opci\(gaón1 Todo despois do \(ga\fP\-\-\(ga\(ga pasarase ao complemento como argumentos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Executa a(s) proba(s) nomeada(s). Use o valor especial \fB\(dq\fPtodos\fB\(dq\fP para executar todas as probas. Se o nome da proba comeza cun punto, suponse que é un nome de módulo. Se o nome da proba comeza por @, suponse que é un nome de categoría.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+Non executes coa marca DEBUG establecida
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -172,7 +166,7 @@ Apagar unha instancia do Calibre en execución, de existir. Teña en conta que, 
 .INDENT 0.0
 .TP
 .B \-\-subset\-font, \-f
-Subset the specified font. Use \fB\-\-\fP after this option to pass option to the font subsetting program.
+Subconfigure o tipo de letra especificado. Use \fB\-\-\fP despois desta opción para pasar a opción ao programa de subconxunto de fontes.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -182,12 +176,12 @@ Probar os módulos binarios na compilación
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+mostrar o número de versión do programa e saír
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode
+Executa o visor de libros electrónicos no modo de depuración
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

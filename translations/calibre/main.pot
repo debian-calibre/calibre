@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.14.0\n"
-"POT-Creation-Date: 2024-07-12 09:00+IST\n"
-"PO-Revision-Date: 2024-07-12 09:00+IST\n"
+"Project-Id-Version: calibre 7.15.0\n"
+"POT-Creation-Date: 2024-07-19 07:52+IST\n"
+"PO-Revision-Date: 2024-07-19 07:52+IST\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
@@ -265,10 +265,10 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/custom_recipes.py:723
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/data_files_manager.py:227
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1206
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:552
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:551
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:420
 #: /home/kovid/work/calibre/src/calibre/gui2/email.py:434
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:605
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:615
 #: /home/kovid/work/calibre/src/calibre/gui2/init.py:711
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:673
 #: /home/kovid/work/calibre/src/calibre/gui2/library/models.py:1453
@@ -318,8 +318,8 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/utils/formatter.py:349
 #: /home/kovid/work/calibre/src/calibre/utils/localization.py:349
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:29
-#: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:65
-#: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:74
+#: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:67
+#: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:80
 msgid "Unknown"
 msgstr ""
 
@@ -1214,7 +1214,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/devices/utils.py:87
 #: /home/kovid/work/calibre/src/calibre/devices/utils.py:120
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/fetch_news.py:87
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:652
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:665
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/model.py:1811
 #: /home/kovid/work/calibre/src/calibre/gui2/tag_browser/model.py:1813
 #: /home/kovid/work/calibre/src/calibre/library/database2.py:382
@@ -4189,91 +4189,96 @@ msgstr ""
 msgid "Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \"Look & feel->Transform HTML\" section of the conversion dialog. Once you create the rules, you can use the \"Export\" button to save them to a file."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:127
+#, python-brace-format
+msgid "Recipe specific options. Syntax is option_name:value. For example: {example}. Can be specified multiple times to set different options. To see a list of all available options for a recipe, use {list}."
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "INPUT OPTIONS"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:130
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:138
 msgid "OUTPUT OPTIONS"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:178
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:186
 #, python-format
 msgid "Options to control the processing of the input %s file"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:185
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:193
 #, python-format
 msgid "Options to control the processing of the output %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:199
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:207
 msgid "LOOK AND FEEL"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:200
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:208
 msgid "Options to control the look and feel of the output"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:218
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:226
 msgid "HEURISTIC PROCESSING"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:219
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:227
 #, python-format
 msgid "Modify the document text and structure using common patterns. Disabled by default. Use %(en)s to enable.  Individual actions can be disabled with the %(dis)s options."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:226
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:234
 msgid "SEARCH AND REPLACE"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:227
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:235
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/search_and_replace.py:22
 msgid "Modify the document text and structure using user defined patterns."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:236
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:244
 msgid "STRUCTURE DETECTION"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:237
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:245
 msgid "Control auto-detection of document structure."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:246
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:254
 msgid "TABLE OF CONTENTS"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:247
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:255
 msgid "Control the automatic generation of a Table of Contents. By default, if the source file has a Table of Contents, it will be used in preference to the automatically generated one."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "METADATA"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:257
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:265
 msgid "Options to set metadata in the output"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "DEBUG"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:260
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:268
 msgid "Options to help with debugging the conversion"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:283
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:291
 msgid "List builtin recipe names. You can create an e-book from a builtin recipe like this: ebook-convert \"Recipe Name.recipe\" output.epub"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:432
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:440
 msgid "Output saved to"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:438
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/cli.py:446
 #, python-format
 msgid ""
 "The options and default values for the options change depending on both the\n"
@@ -4910,8 +4915,20 @@ msgstr ""
 msgid "Password for sites that require a login to access content."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:52
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:51
+msgid "Recipe specific options."
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:54
 msgid "Do not download latest version of builtin recipes from the calibre server"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:142
+msgid "specific options:"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/recipe_input.py:151
+msgid "has no recipe specific options"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/rtf_input.py:49
@@ -8093,7 +8110,7 @@ msgid "Table of Contents:"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/__init__.py:168
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:646
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:659
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:609
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:1012
 msgid "Default icons"
@@ -9177,7 +9194,7 @@ msgid "Open dialog"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/choose_library.py:729
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:456
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:464
 #: /home/kovid/work/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Finished"
 msgstr ""
@@ -9902,7 +9919,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/actions/edit_metadata.py:262
 #: /home/kovid/work/calibre/src/calibre/gui2/dnd.py:96
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:940
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:953
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single_download.py:549
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/single_download.py:990
 #: /home/kovid/work/calibre/src/calibre/gui2/store/web_store.py:191
@@ -12441,7 +12458,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/check_library.py:400
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/data_files_manager.py:240
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/template_dialog.py:1009
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:687
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:700
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:184
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel.py:208
 #: /home/kovid/work/calibre/src/calibre/gui2/store/config/chooser/models.py:38
@@ -13881,7 +13898,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/convert/metadata_ui.py:161
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:142
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:268
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:276
 #: /home/kovid/work/calibre/src/calibre/gui2/metadata/basic_widgets.py:232
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:231
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search_ui.py:188
@@ -15946,7 +15963,7 @@ msgid "No help available for this output format."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/catalog_ui.py:77
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:385
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:390
 msgid "Generate catalog"
 msgstr ""
 
@@ -16631,7 +16648,7 @@ msgid "Choose builtin recipe"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/custom_recipes.py:540
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:270
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:271
 msgid "Go"
 msgstr ""
 
@@ -16736,7 +16753,7 @@ msgid "Manage data files for {}"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/data_files_manager.py:238
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:684
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:697
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/bookmarks.py:151
 msgid "&Sort by:"
 msgstr ""
@@ -17130,7 +17147,7 @@ msgid "The URL for this link"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:283
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:291
 #: /home/kovid/work/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "&URL:"
 msgstr ""
@@ -18272,7 +18289,7 @@ msgid "&Maximum articles per feed:"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/opml.py:81
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 #: /home/kovid/work/calibre/src/calibre/gui2/trash.py:189
 msgid " days"
 msgstr ""
@@ -18871,7 +18888,7 @@ msgid ""
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:289
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:297
 #: /home/kovid/work/calibre/src/calibre/gui2/library/annotations.py:1024
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/check_links.py:98
 #: /home/kovid/work/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:273
@@ -19017,7 +19034,7 @@ msgstr ""
 msgid "Search expression"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:102
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:103
 msgid ""
 "                Download this periodical every week on the specified days after\n"
 "                the specified time. For example, if you choose: Monday after\n"
@@ -19026,11 +19043,11 @@ msgid ""
 "            "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:123
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:124
 msgid "&Download after:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:154
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:155
 msgid ""
 "                Download this periodical every month, on the specified days.\n"
 "                The download will happen as soon after the specified time as\n"
@@ -19041,19 +19058,19 @@ msgid ""
 "            "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:166
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:167
 msgid "&Days of the month:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:168
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:169
 msgid "Comma separated list of days of the month. For example: 1, 15"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:172
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:173
 msgid "Download &after:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:206
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:207
 msgid ""
 "                Download this periodical every x days. For example, if you\n"
 "                choose 30 days, the periodical will be downloaded every 30\n"
@@ -19062,28 +19079,28 @@ msgid ""
 "            "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:215
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:216
 msgid "&Download every:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:218
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:219
 msgid "every hour"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:221
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:222
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:254
 msgid "days"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:225
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:226
 msgid "Note: You can set intervals of less than a day, by typing the value manually."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:280
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:281
 msgid "Schedule news download [{} sources]"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:298
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:299
 msgid "&Schedule"
 msgstr ""
 
@@ -19120,122 +19137,122 @@ msgstr ""
 msgid "Add &title as tag"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:358
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:359
 msgid "&Extra tags:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:362
-msgid "&Keep at most:"
-msgstr ""
-
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:363
-msgid "Maximum number of copies (issues) of this recipe to keep.  Set to 0 to keep all (disable)."
-msgstr ""
-
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:368
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:364
 msgid ""
 "<p>When set, this option will cause calibre to keep, at most, the specified number of issues of this periodical. Every time a new issue is downloaded, the oldest one is deleted, if the total is larger than this number.\n"
 "<p>Note that this feature only works if you have the option to add the title as tag checked, above.\n"
 "<p>Also, the setting for deleting periodicals older than a number of days, below, takes priority over this setting."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid " issues"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:373
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:369
 msgid "all issues"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:381
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:370
+msgid "&Keep at most:"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:376
 msgid "Delete downloaded &news older than:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:384
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:379
 msgid ""
 "<p>Delete downloaded news older than the specified number of days. Set to zero to disable.\n"
 "<p>You can also control the maximum number of issues of a specific periodical that are kept by clicking the Advanced tab for that periodical above."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:387
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:382
 msgid "never delete"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:391
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:386
 msgid "Download &all scheduled"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:392
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:387
 msgid "Download all scheduled news sources at once"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:397
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:392
 msgid "&Download now"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:487
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:482
 msgid "Need username and password"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:488
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:483
 msgid "You must provide a username and/or password to use this news source."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:530
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:529
 msgid "Account"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:531
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:530
 msgid "(optional)"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:532
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:531
 msgid "(required)"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:551
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:550
 msgid "Created by: "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:555
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:554
 #, python-format
 msgid "Download %s now"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:559
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:558
 msgid "Last downloaded: never"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:560
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:559
 msgid "never"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:568
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:567
 #, python-format
 msgid "%(days)d days, %(hours)d hours and %(mins)d minutes ago"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:584
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:582
 msgid "Last downloaded:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:604
-msgid "Cannot download news as no internet connection is active"
-msgstr ""
-
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:607
-msgid "No internet connection"
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:597
+msgid "Default if unspecified: {}"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:617
-msgid "Schedule news download"
+msgid "Cannot download news as no internet connection is active"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:620
+msgid "No internet connection"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:630
+msgid "Schedule news download"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:633
 msgid "Add or edit a custom news source"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:626
+#: /home/kovid/work/calibre/src/calibre/gui2/dialogs/scheduler.py:639
 msgid "Download all scheduled news sources"
 msgstr ""
 
@@ -19358,7 +19375,7 @@ msgid "The author to search for"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/dialogs/search.py:152
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:270
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:278
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:233
 #: /home/kovid/work/calibre/src/calibre/gui2/store/search/search_ui.py:175
 #: /home/kovid/work/calibre/src/calibre/gui2/store/stores/mobileread/adv_search_builder_ui.py:192
@@ -21211,129 +21228,128 @@ msgstr ""
 msgid "Selected HTML files"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:244
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:252
 msgid "Create an icon theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:251
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:259
 msgid "Use this theme in calibre"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:252
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:260
 msgid "Change the current calibre icon theme to this theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:257
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:265
 msgid "Theme Metadata"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:273
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:281
 msgid "&Version:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:276
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:284
 msgid "Light and Dark"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:277
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:285
 msgid "Light only"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:278
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:286
 msgid "Dark only"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:279
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:287
 msgid "Specify the color palette this icon theme is suited for"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:280
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:288
 msgid "&Color palette:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:281
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:289
 msgid "&License:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:285
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:293
 msgid "The license for the icons in this theme. Common choices are Creative Commons or Public Domain."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:335
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:343
 #, python-format
 msgid "%d icons missing in this theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:337
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:345
 msgid "No missing icons"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:347
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:355
 msgid "No title specified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:348
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:356
 msgid "You must specify a title for this icon theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:350
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:358
 msgid "No author specified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:351
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:359
 msgid "You must specify an author for this icon theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:362
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "&Abort"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:362
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:370
 msgid "Losslessly optimizing images, please wait..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:376
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:384
 msgid "Optimizing images failed, click \"Show details\" for more information"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:381
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:389
 msgid "Compression failed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:413
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:421
 #, python-format
 msgid "Optimizing %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:432
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:440
 msgid "Creating theme file"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:443
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:451
 msgid "Compressing theme file"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:463
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:471
 msgid "Choose a folder from which to read the icons"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:479
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:487
 msgid "Choose destination for icon theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:480
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:488
 msgid "ZIP files"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:597
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:608
 msgid "Right click to visit theme homepage"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:599
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:609
 #, python-brace-format
 msgid ""
-"\n"
-"            <h2>{title}</h2>\n"
+"            <p><b><big>{title}<big></b><p>\n"
 "            <p>by <i>{author}</i> with <b>{number}</b> icons [{size}]</p>\n"
 "            <p>{description}</p>\n"
 "            <p>Version: {version} Number of users: {usage:n}</p>\n"
@@ -21341,75 +21357,75 @@ msgid ""
 "            "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:621
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:634
 msgid "Downloading icons..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:622
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:635
 msgid "Downloading icons, please wait..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:647
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:660
 msgid "Use the calibre default icons"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:668
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:681
 msgid "Choose an icon theme below. It will be used for both light and dark color themes unless a color specific theme is chosen in one of the other tabs."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:671
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:684
 msgid "Choose an icon theme below. It will be used preferentially for light color themes. If the default is chosen then the theme for \"light and dark\" will be used."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:674
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:687
 msgid "Choose an icon theme below. It will be used preferentially for dark color themes. If the default is chosen then the theme for \"light and dark\" will be used."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:687
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Number of icons"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:687
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:700
 msgid "Popularity"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:780
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:793
 msgid "Choose an icon theme"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:800
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:813
 msgid "Restore &default icons"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:816
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:829
 msgid "For light and dark"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:818
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:831
 msgid "For light only"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:820
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:833
 msgid "For dark only"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:835
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:848
 msgid "Downloading, please wait..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:868
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:881
 msgid "Failed to download list of themes"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:869
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:882
 msgid "Failed to download list of themes, click \"Show details\" for more information"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:873
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:886
 msgid "Choose from {} available icon themes"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:941
+#: /home/kovid/work/calibre/src/calibre/gui2/icon_theme.py:954
 msgid "Failed to download icon themes, click \"Show details\" for more information."
 msgstr ""
 
@@ -30071,16 +30087,16 @@ msgstr ""
 msgid "Could not convert %(num)d of %(tot)d books, because no suitable source format was found."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:324
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:329
 #, python-format
 msgid "Fetch news from %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:399
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:404
 msgid "Convert existing"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:400
+#: /home/kovid/work/calibre/src/calibre/gui2/tools.py:405
 #, python-format
 msgid "The following books have already been converted to the %s format. Do you wish to reconvert them?"
 msgstr ""
@@ -40650,7 +40666,7 @@ msgid "%s Document"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:128
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1600
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1630
 msgid "Unknown section"
 msgstr ""
 
@@ -40660,7 +40676,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:169
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:210
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1591
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1621
 msgid "Untitled article"
 msgstr ""
 
@@ -40668,125 +40684,125 @@ msgstr ""
 msgid "Unknown News Source"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:616
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:633
 msgid "Article download aborted"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:842
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:859
 #, python-format
 msgid "Failed to download %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:940
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:957
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1070
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1100
 msgid "Download finished"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1072
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1102
 msgid "Failed to download the following articles:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1078
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1108
 msgid "Failed to download parts of the following articles:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1080
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1110
 msgid " from "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1082
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1112
 msgid "\tFailed links:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1188
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1218
 msgid "Could not fetch article."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1190
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1220
 msgid "The debug traceback is available earlier in this log"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1192
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1222
 msgid "Run with -vv to see the reason"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1245
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1275
 msgid "Fetching feeds..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1251
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1281
 msgid "Got feeds from index page"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1264
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1294
 msgid "Trying to download cover..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1266
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1296
 msgid "Generating masthead..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1326
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1356
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1341
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1371
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1350
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1380
 #, python-format
 msgid "Could not download cover: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1363
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Downloading cover from %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1415
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1445
 msgid "Masthead image downloaded"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1515
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1545
 msgid "Articles in this issue:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1672
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1702
 #, python-format
 msgid "Article downloaded: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1682
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1712
 #, python-format
 msgid "Article download aborted: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1690
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1720
 #, python-format
 msgid "Article download failed: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1712
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1742
 msgid "Fetching feed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1888
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1918
 msgid "Failed to log in, check your username and password for the calibre Periodicals service."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1904
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1934
 msgid "You do not have permission to download this issue. Either your subscription has expired or you have exceeded the maximum allowed downloads for today."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:65
+#: /home/kovid/work/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr ""
 
