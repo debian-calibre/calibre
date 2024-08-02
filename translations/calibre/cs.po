@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2024-07-19 02:06+UTC\n"
+"POT-Creation-Date: 2024-07-30 10:04+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Trottel <trottel09@gmail.com>, 2014-2024\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
@@ -104,7 +104,7 @@ msgstr "Nedělá vůbec nic"
 #: /__w/calibre/calibre/src/calibre/db/__init__.py:117
 #: /__w/calibre/calibre/src/calibre/db/backend.py:1484
 #: /__w/calibre/calibre/src/calibre/db/backend.py:1509
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2249
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2252
 #: /__w/calibre/calibre/src/calibre/db/cache.py:350
 #: /__w/calibre/calibre/src/calibre/db/cache.py:353
 #: /__w/calibre/calibre/src/calibre/db/cache.py:363
@@ -135,7 +135,7 @@ msgstr "Nedělá vůbec nic"
 #: /__w/calibre/calibre/src/calibre/devices/jetbook/driver.py:71
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:165
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:794
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1784
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1815
 #: /__w/calibre/calibre/src/calibre/devices/mtp/books.py:46
 #: /__w/calibre/calibre/src/calibre/devices/mtp/books.py:70
 #: /__w/calibre/calibre/src/calibre/devices/mtp/unix/driver.py:314
@@ -1339,7 +1339,7 @@ msgstr "Výpis databáze do SQL"
 msgid "Restoring database from SQL"
 msgstr "Obnovování databáze z SQL"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2639
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2644
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3181
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3531
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:223
@@ -1961,18 +1961,24 @@ msgstr "{0} od {1}"
 msgid "Error: You must specify the search expression"
 msgstr "Chyba: Musíte zadat vyhledávací výraz"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:169
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:171
+msgid ""
+"The use of templates is disallowed when connecting to remote servers for "
+"security reasons"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:177
 msgid "You must provide a template"
 msgstr "Musíte zadat šablonu"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:251
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:259
 msgid ""
 "%prog list [options]\n"
 "\n"
 "List the books available in the calibre database.\n"
 msgstr "%prog list [options]\n\nVypsat knihy dostupné v databázi Calibre.\n"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:263
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:271
 #, python-format
 msgid ""
 "The fields to display when listing books in the database. Should be a comma separated list of fields.\n"
@@ -1980,7 +1986,7 @@ msgid ""
 "Default: %%default. The special field \"all\" can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating"
 msgstr "Zobrazená pole při výpisu knih v databázi. Měl by to být čárkami oddělený seznam polí.\nDostupná pole: %s\nVýchozí: %%default. Pro výběr všech polí může být použito speciální pole „all“. Kromě výše uvedených polí jsou také dostupná vlastní pole, jako například *field_name, pro vlastní pole #rating použijte název *rating"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:276
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:284
 #, python-brace-format
 msgid ""
 "The field by which to sort the results. You can specify multiple fields by separating them with commas.\n"
@@ -1988,55 +1994,57 @@ msgid ""
 "Default: {1}"
 msgstr "Pole, podle kterého řadit výsledky. Více polí můžete zadat jejich oddělením čárkami.\nDostupná pole: {0}\nVýchozí: {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:283
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:291
 msgid "Sort results in ascending order"
 msgstr "Seřadit výsledky ve vzestupném pořadí"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:290
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:298
 msgid ""
 "Filter the results by the search query. For the format of the search query, "
 "please see the search related documentation in the User Manual. Default is "
 "to do no filtering."
 msgstr "Filtrovat výsledky podle vyhledávacího dotazu. Pro formát vyhledávacího dotazu se podívejte do dokumentace související s hledáním v uživatelské příručce. Výchozí je neprovádět žádné filtrování."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:301
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:309
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_list_categories.py:66
 msgid ""
 "The maximum width of a single line in the output. Defaults to detecting "
 "screen size."
 msgstr "Maximální šířka jednoho řádku ve výstupu. Výchozí nastavení pro rozpoznání velikosti obrazovky."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:307
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:315
 msgid "The string used to separate fields. Default is a space."
 msgstr "Řetězec použitý pro oddělení polí. Výchozí je mezera."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:313
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:321
 msgid ""
 "The prefix for all file paths. Default is the absolute path to the library "
 "folder."
 msgstr "Předpona pro všechny cesty k souborům. Výchozí je absolutní cesta do složky knihovny."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:320
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:328
 msgid "The maximum number of results to display. Default: all"
 msgstr "Maximální počet výsledků k zobrazení. Výchozí: vše"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:327
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:335
 msgid ""
 "Generate output in JSON format, which is more suitable for machine parsing. "
 "Causes the line width and separator options to be ignored."
 msgstr "Generovat výstup ve formátu JSON, který je vhodnější pro strojní analýzu. Způsobí, že šířka řádku a volby oddělovače budou ignorovány."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:334
-msgid "The template to run if \"{}\" is in the field list. Default: None"
-msgstr "Šablona, kterou spustit, pokud je „{}“ v seznamu polí. Výchozí: Žádná"
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:342
+msgid ""
+"The template to run if \"{}\" is in the field list. Note that templates are "
+"ignored while connecting to a calibre server. Default: None"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:340
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:349
 msgid ""
 "Path to a file containing the template to run if \"{}\" is in the field "
 "list. Default: None"
 msgstr "Cesta k souboru obsahujícímu šablonu, kterou spustit, pokud je „{}“ v seznamu polí. Výchozí: Žádná"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:346
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_list.py:355
 #, python-format
 msgid ""
 "Heading for the template column. Default: %default. This option is ignored "
@@ -2477,28 +2485,28 @@ msgstr "Extrahování textu ze souboru {0} o velikosti {1} trvalo příliš dlou
 msgid "Invalid field: %s"
 msgstr "Neplatné pole: %s"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:503
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:505
 #, python-brace-format
 msgid "Failed to read from document for {path} with error: {error}"
 msgstr "Nepodařilo se číst z dokumentu pro {path} s chybou: {error}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:514
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:516
 #, python-brace-format
 msgid "Failed to parse document for: {0} with error: {1}"
 msgstr "Nepodařilo se analyzovat dokument pro: {0} s chybou: {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:520
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:522
 #, python-brace-format
 msgid ""
 "The item {old_item_val} does not exist in the {field} column in the restored"
 " database, could not restore its notes"
 msgstr "Položka {old_item_val} neexistuje ve sloupci {field} v obnovované databázi, nelze obnovit její poznámky."
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:528
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:530
 msgid "Some resources for {} were missing"
 msgstr "Chyběly některé zdroje pro {}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:533
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:535
 #, python-brace-format
 msgid "Failed to set note for {path} with error: {error}"
 msgstr "Nepodařilo se nastavit poznámku pro {path} s chybou: {error}"
@@ -3041,7 +3049,7 @@ msgstr "Komunikace se čtečkou e-knih SpringDesign Alex."
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:562
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:594
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:741
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:3983
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4056
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:424
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:431
 msgid "Removing books from device..."
@@ -3314,10 +3322,10 @@ msgstr "Kobo pravidelně aktualizuje verzi firmware a databáze. Pomocí této v
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:260
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:263
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:465
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1645
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1649
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1653
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:2119
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1676
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1680
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:1684
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:2150
 #: /__w/calibre/calibre/src/calibre/devices/paladin/driver.py:75
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:160
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:205
@@ -3349,7 +3357,7 @@ msgid "Adding books to device metadata listing..."
 msgstr "Přidávání knih do výpisu metadat zařízení..."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:743
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:3985
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4058
 msgid "Kobo database version unsupported - See details"
 msgstr "Nepodporovaná verze databáze Kobo - Zobrazit podrobnosti"
 
@@ -3416,10 +3424,11 @@ msgid ""
 "Communicate with the Kobo Touch, Glo, Mini, Aura HD, Aura H2O, Glo HD, Touch"
 " 2, Aura ONE, Aura Edition 2, Aura H2O Edition 2, Clara HD, Forma, Libra "
 "H2O, Elipsa, Sage, Libra 2, Clara 2E, Clara BW, Clara Colour, Libra Colour "
-"eReaders. Based on the existing Kobo driver by %s."
+"as well as tolino shine 5, shine color and vision color eReaders. Based on "
+"the existing Kobo driver by %s."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:3986
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4059
 msgid ""
 "Your Kobo is running an updated firmware/database version. As calibre does "
 "not know about this updated firmware, database editing is disabled, to "
@@ -3432,7 +3441,7 @@ msgid ""
 "your Kobo."
 msgstr "Ve vašem zařízení Kobo je spuštěna aktualizovaná verze firmwaru nebo databáze. Protože Calibre neví o tomto aktualizovaném firmwaru, úpravy databáze jsou zakázány, aby se zabránilo poškození. Stále můžete odesílat knihy do Kobo pomocí Calibre, ale odstraňování knih a správa sbírek je zakázána. Pokud jste ochotni experimentovat a víte, jak obnovit Kobo do továrního nastavení, můžete přepsat tuto kontrolu kliknutím pravým tlačítkem myši na ikonu zařízení v Calibre výběrem volby \"Konfigurovat toto zařízení\" a pak \"Pokusit se o podporu novějšího firmwaru\". Může to vyžadovat provedení obnovení do Továrního nastavení vašeho zařízení Kobo."
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4000
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4073
 #, python-format
 msgid ""
 "Discussion of any new Kobo firmware can be found in the Kobo forum at "
@@ -9511,7 +9520,7 @@ msgstr "Calibre verze novější než 2.0 nefunguje na Windows XP. Je to proto, 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:34
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1031
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:310
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:329
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:345
 msgid "Books"
 msgstr "Knihy"
 
@@ -9672,9 +9681,9 @@ msgstr "Do schránky nebyly zkopírovány žádné soubory"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:312
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:396
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:482
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:800
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:810
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1943
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:826
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1959
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1471
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/send_email.py:319
 msgid "Are you sure?"
@@ -9938,9 +9947,9 @@ msgid "Fetch annotations (experimental)"
 msgstr "Načíst anotace (experimentální)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:110
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:774
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1024
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1073
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:790
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1040
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1089
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1416
 msgid "Not supported"
 msgstr "Nepodporováno"
@@ -10310,8 +10319,8 @@ msgstr "Příliš dlouhé"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:600
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:73
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:75
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1233
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1469
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1249
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1485
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:322
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1453
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:192
@@ -11992,7 +12001,7 @@ msgstr "Musíte vybrat alespoň jednu akci před uložením"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:146
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:106
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1262
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1278
 msgid "Choose name"
 msgstr "Zvolte název"
 
@@ -12082,7 +12091,7 @@ msgstr[2] "Původní soubory byly uloženy jako %s."
 msgstr[3] "Původní soubory byly uloženy jako %s."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:393
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:346
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:362
 msgid " and "
 msgstr "a"
 
@@ -12675,7 +12684,7 @@ msgstr "&Náhled knihy"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:117
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:396
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:475
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1325
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1341
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/printing.py:199
 msgid "&Cancel"
 msgstr "&Zrušit"
@@ -15963,7 +15972,7 @@ msgstr "Uložit seznam výrazů, abyste ho mohli snadno znovu použít"
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:405
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:550
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1325
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1341
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1461
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:400
 msgid "&Save"
@@ -18681,7 +18690,7 @@ msgstr "Již v Calibre:"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:674
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/main.py:158
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:558
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1249
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1265
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/view.py:274
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:896
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toc.py:195
@@ -19644,7 +19653,7 @@ msgid "A&pply date"
 msgstr "&Použít datum"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk_ui.py:708
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:2009
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:2016
 msgid "P&ublished:"
 msgstr "&Vydáno:"
 
@@ -23761,8 +23770,8 @@ msgstr "Hledat klávesovou zkratku podle jména"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:263
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:579
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:388
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1064
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1098
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1080
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1114
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:669
 msgid "No matches"
 msgstr "Žádné shody"
@@ -30614,7 +30623,7 @@ msgid "Edit publisher mapping rules"
 msgstr "Upravit pravidla mapování vydavatele"
 
 #: /__w/calibre/calibre/src/calibre/gui2/qt_file_dialogs.py:37
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:558
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:574
 msgid "Choose files"
 msgstr "Zvolte soubory"
 
@@ -32918,108 +32927,108 @@ msgstr "Nebylo nalezeno žádné aktivní zařízení zvukového výstupu. Přip
 msgid "&Unmark marked text"
 msgstr "Zrušit označení označeného textu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:201
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:214
 msgid "The Qt WebEngine Render process crashed and has been restarted"
 msgstr "Proces vykreslení Qt WebEngine selhal a musel být znovu spuštěn"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:267
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1962
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1978
 msgid "Unsaved changes"
 msgstr "Neuložené změny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:281
 msgid ""
 "The current book has unsaved changes. If you open a new book, they will be "
 "lost. Are you sure you want to proceed?"
 msgstr "Aktuální kniha má neuložené změny. Pokud otevřete novou knihu, budou ztraceny. Opravdu chcete pokračovat?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:285
 msgid "Cannot open"
 msgstr "Nelze otevřít"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:286
 msgid ""
 "The current book is being saved, you cannot open a new book until the saving"
 " is completed"
 msgstr "Aktuální kniha se ukládá, nemůžete otevřít novou knihu, dokud nebude ukládání dokončeno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:283
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1312
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1328
 msgid "Choose file location"
 msgstr "Zvolte umístění souboru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:321
 msgid "Importing book, please wait..."
 msgstr "Importování knihy, čekejte..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:340
 msgid "Choose book folder"
 msgstr "Zvolte složku knihy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:328
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:943
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:959
 msgid "Choose book"
 msgstr "Zvolte knihu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:336
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:352
 msgid "File not found"
 msgstr "Soubor nenalezen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:337
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:353
 #, python-format
 msgid "The file %s does not exist."
 msgstr "Soubor %s neexistuje."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:360
 msgid "Unsupported format"
 msgstr "Nepodporovaný formát"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:361
 #, python-format
 msgid ""
 "Tweaking is only supported for books in the %s formats. Convert your book to"
 " one of these formats first."
 msgstr "Vylepšení je podporováno pouze pro knihy ve formátech %s. Převeďte svou knihu nejdříve do jednoho z těchto formátů."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:351
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:367
 msgid "Read-only file"
 msgstr "Soubor pouze pro čtení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:352
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:368
 msgid ""
 "The file {} is read-only. Saving changes to it will either fail or cause its"
 " permissions to be reset."
 msgstr "Soubor {} je pouze pro čtení. Uložení změn do něj buď selže, nebo způsobí obnovení jeho oprávnění."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:369
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:385
 msgid "Opening book, please wait..."
 msgstr "Otevírání knihy, čekejte..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:383
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:387
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:403
 msgid "Failed to open book"
 msgstr "Nepodařilo se otevřít knihu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:384
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:400
 msgid ""
 "Failed to open book, it has obfuscated fonts, but the obfuscation key is "
 "missing from the OPF. Do an EPUB to EPUB conversion before trying to edit "
 "this book."
 msgstr "Nepodařilo se otevřít knihu, má zmatená písma, ale klíč zmatení v OPF chybí. Proveďte převod z EPUB na EPUB, než se pokusíte upravit tuto knihu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:388
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:404
 msgid "Failed to open book, click \"Show details\" for more information."
 msgstr "Nepodařilo se otevřít knihu, pro více informací klikněte na „Zobrazit podrobnosti“."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:432
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:448
 msgid "Start of editing session"
 msgstr "Na začátek relace úprav"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:469
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:485
 msgid "Before: Delete files"
 msgstr "Před: Odstranit soubory"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:511
 msgid "One file deleted"
 msgid_plural "{} files deleted"
 msgstr[0] "Odstraněn jeden soubor"
@@ -33027,166 +33036,166 @@ msgstr[1] "Odstraněny {} soubory"
 msgstr[2] "Odstraněno {} souborů"
 msgstr[3] "Odstraněno {} souborů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:506
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:522
 msgid "Before: Re-order text"
 msgstr "Před: Změnit uspořádání textu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:516
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:555
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:532
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:571
 msgid ""
 "You must first open a book to edit, before trying to create new files in it."
 msgstr "Nejdříve musíte otevřít knihu k úpravě, než se v ní pokusíte vytvořit nové soubory."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:544
 #, python-format
 msgid "Before: Add file %s"
 msgstr "Před: Přidat soubor %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:563
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:579
 msgid "Before Add files"
 msgstr "Před přidání souborů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:615
 msgid "Before: Add cover"
 msgstr "Před: Přidat obálku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:623
 msgid "No book is currently open. You must first open a book."
 msgstr "Aktuálně není otevřena žádná kniha. Nejdříve musíte otevřít knihu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:625
 msgid "No book open"
 msgstr "Není otevřena žádná kniha"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:614
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:630
 msgid "You must open a book before trying to edit the Table of Contents."
 msgstr "Musíte otevřít nějakou knihu, než se pokusíte upravit obsah."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:616
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:632
 msgid "Before: Edit Table of Contents"
 msgstr "Před: Upravit obsah"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:631
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:647
 msgid "Before: Insert inline Table of Contents"
 msgstr "Před: Vložit vložený obsah"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:635
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:651
 msgid "No Table of Contents"
 msgstr "Žádný obsah"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:636
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:652
 msgid ""
 "Cannot create an inline Table of Contents as this book has no existing Table"
 " of Contents. You must first create a Table of Contents using the Edit Table"
 " of Contents tool."
 msgstr "Nelze vytvořit vložený obsah, protože tato kniha nemá žádný existující obsah. Musíte nejdříve vytvořit obsah pomocí nástroje Upravit obsah."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:666
 #, python-format
 msgid "Before: %s"
 msgstr "Před: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:665
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:709
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:736
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:725
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:752
 msgid "You must first open a book in order to transform styles."
 msgstr "Nejdříve musíte otevřít knihu, abyste mohli převádět styly."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:683
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:699
 msgid "No HTML file"
 msgstr "Žádný soubor HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:683
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:699
 msgid "Not currently editing an HTML file"
 msgstr "Aktuálně neupravujete soubor HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:688
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:692
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:704
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:708
 msgid "No HTML files"
 msgstr "Žádné soubory HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:704
 msgid "Not currently editing any HTML files"
 msgstr "Aktuálně neupravujete žádné soubory HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:692
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:708
 msgid "No HTML files are currently selected in the File browser"
 msgstr "V Prohlížeči souborů nejsou aktuálně vybrány žádné soubory HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:694
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:710
 msgid "Before HTML transformation"
 msgstr "Před převodem HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:704
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:720
 msgid "No HTML was changed."
 msgstr "Nebylo změněno žádné HTML."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:704
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:720
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:746
 msgid "No changes"
 msgstr "Žádné změny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:720
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:736
 msgid "Before style transformation"
 msgstr "Před převodem stylů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:747
 msgid "No styles were changed."
 msgstr "Nebyly změněny žádné styly."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:740
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:756
 msgid "Before: Get external resources"
 msgstr "Před: Získat externí zdroje"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:755
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:771
 msgid "No book is currently open. You must first open a book to manage fonts."
 msgstr "Aktuálně není otevřena žádná kniha. Pro správu písem musíte nejdříve otevřít knihu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:761
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:777
 msgid "Embed all fonts"
 msgstr "Vložit všechna písma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:765
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:781
 msgid "Subset all fonts"
 msgstr "Částečně vložit všechna písma"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:775
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:791
 #, python-format
 msgid ""
 "The %s format does not support file and folder names internally, therefore "
 "arranging files into folders is not allowed."
 msgstr "Formát %s nepodporuje vnitřní názvy souborů a složek, proto není povoleno uspořádání souborů do složek."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:784
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:800
 msgid "The files in this book are already arranged into folders"
 msgstr "Soubory v této knize jsou již uspořádány do složek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:785
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:801
 msgid "Nothing to do"
 msgstr "Není co dělat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:802
 msgid "Show this message &again"
 msgstr "&Zobrazit tuto zprávu znovu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:788
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:804
 msgid "Before: Arrange into folders"
 msgstr "Před: Uspořádání do složek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:790
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:815
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:821
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:806
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:831
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:837
 msgid "Renaming and updating links..."
 msgstr "Přejmenovávání a aktualizace odkazů..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:798
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:814
 #, python-brace-format
 msgid ""
 "You are changing the file type of {0}<b>{1}</b> to {2}<b>{3}</b>. Doing so "
 "can cause problems, are you sure?"
 msgstr "Měníte typ souboru z {0}<b>{1}</b> na {2}<b>{3}</b>. To může způsobit problémy, opravdu to chcete?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:805
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:821
 #, python-brace-format
 msgid ""
 "The name you have chosen {0} contains special characters, internally it will"
@@ -33195,221 +33204,221 @@ msgid ""
 "for  different e-book viewers. Are you sure you want to proceed?"
 msgstr "Název, který jste zvolili {0}, obsahuje speciální znaky, vnitřně to bude vypadat jako: {1}. Zkuste pro názvy souborů používat pouze anglickou abecedu [a-z], čísla [0-9], spojovníky a podtržítka. Jiné znaky mohou způsobit problémy různým prohlížečům e-knih. Opravdu chcete pokračovat?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:812
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:828
 #, python-format
 msgid "Before: Rename %s"
 msgstr "Před: Přejmenovat %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:819
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:835
 msgid "Before: Bulk rename"
 msgstr "Před: Hromadně přejmenovat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:827
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:843
 msgid "Failed to rename files"
 msgstr "Nepodařilo se přejmenovat soubory"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:828
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:844
 msgid "Failed to rename files, click \"Show details\" for more information."
 msgstr "Nepodařilo se přejmenovat soubory, pro více informací klikněte na \"Zobrazit podrobnosti\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:861
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:877
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/undo.py:216
 msgid "&Revert to"
 msgstr "&Vrátit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:881
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:897
 msgid "&Revert changes"
 msgstr "&Vrátit změny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:924
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:940
 msgid "Show this popup again"
 msgstr "Zobrazit toto automaticky otevírané okno znovu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:932
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:948
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/download.py:242
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1515
 msgid "See what &changed"
 msgstr "Zobrazit, co se &změnilo"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:944
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:960
 #, python-format
 msgid "%s books"
 msgstr "%s knih"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:950
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:966
 msgid "Current book"
 msgstr "Aktuální kniha"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:950
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:966
 msgid "Other book"
 msgstr "Jiná kniha"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:989
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1005
 msgid "Before: Fix HTML"
 msgstr "Před: Opravit HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:993
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1009
 msgid "All HTML files fixed"
 msgstr "Všechny soubory HTML opraveny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:993
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1009
 msgid "Fixing done"
 msgstr "Oprava hotova"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1001
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1017
 msgid "Before: Beautify files"
 msgstr "Před: Zkrášlit soubory"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1006
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1022
 msgid "All files beautified"
 msgstr "Všechny soubory zkrášleny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1006
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1022
 msgid "Beautified"
 msgstr "Zkrášleno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1025
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1041
 msgid "Inserting images is only supported for HTML and CSS files."
 msgstr "Vkládání obrázků je podporováno pouze pro soubory HTML a CSS."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1053
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1069
 msgid "New class name"
 msgstr "Nový název třídy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1054
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1070
 msgid "Rename the class {} to?"
 msgstr "Přejmenovat třídu {} na?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1056
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1072
 msgid "Before: Rename {}"
 msgstr "Před: Přejmenovat {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1065
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1081
 msgid "No class {} found to change"
 msgstr "Nenalezena žádná třída {} ke změně"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1074
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1090
 msgid "Semantics are not supported for the AZW3 format."
 msgstr "Sémantika není pro formát AZW3 podporována."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1077
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1093
 msgid "Before: Set Semantics"
 msgstr "Před: Nastavit sémantiku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1090
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1106
 msgid "Before: Filter style information"
 msgstr "Před: Filtrovat informace stylu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1099
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1115
 msgid "No matching style rules were found"
 msgstr "Nebyla nalezena žádná odpovídající pravidla stylů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1234
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1250
 #, python-format
 msgid "No file with the name %s was found in the book"
 msgstr "V knize nebyl nalezen žádný soubor s názvem %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1249
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1265
 msgid "No style rules that match the class {} were found"
 msgstr "Nebyla nalezena žádná pravidla stylů, která odpovídají třídě {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1263
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1279
 msgid ""
 "Choose a name for the checkpoint.\n"
 "You can later restore the book to this checkpoint via the\n"
 "\"Revert to...\" entries in the Edit menu."
 msgstr "Zvolte název pro kontrolní bod.\nPozději můžete obnovit knihu na tento kontrolní bod\npomocí položek \"Vrátit...\" nabídky Upravit."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1306
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1322
 msgid "Path does not exist"
 msgstr "Cesta neexistuje"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1307
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1323
 #, python-format
 msgid ""
 "The file you are editing (%s) no longer exists. You have to choose a new "
 "save location."
 msgstr "Soubor, který upravujete (%s), již neexistuje. Musíte zvolit nové umístění uložení."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1323
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1339
 msgid "File is read-only"
 msgstr "Soubor je pouze pro čtení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1324
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1340
 msgid ""
 "The file at {} is read-only. The editor will try to reset its permissions "
 "before saving. Proceed with saving?"
 msgstr "Soubor v {} je pouze pro čtení. Editor se před uložením pokusí obnovit jeho oprávnění. Pokračovat v ukládání?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1336
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1352
 msgid "Cannot save a copy"
 msgstr "Nelze uložit kopii"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1337
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1353
 msgid "Saving a copy of a folder based book is not supported"
 msgstr "Ukládání kopie knih založených na složkách není podporováno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1340
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1356
 msgid "Choose path"
 msgstr "Zvolte cestu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1342
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1358
 #, python-format
 msgid "Book (%s)"
 msgstr "Kniha (%s)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1358
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1374
 msgid "Saving copy, please wait..."
 msgstr "Ukládání kopie, čekejte..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1365
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1381
 msgid "Failed to save copy"
 msgstr "Nepodařilo se uložit kopii"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1366
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1382
 msgid "Failed to save copy, click \"Show details\" for more information."
 msgstr "Nepodařilo se uložit kopii, pro více informací klikněte na \"Zobrazit podrobnosti\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1367
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1383
 #, python-format
 msgid "Copy saved to %s"
 msgstr "Kopie uložena do %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1385
 msgid "Copy saved"
 msgstr "Kopie uložena"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1371
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1387
 #, python-format
 msgid "Editing saved copy at: %s"
 msgstr "Úprava uložené kopie v: 1%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1393
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1409
 msgid "Could not save"
 msgstr "Nelze uložit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1394
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1410
 msgid ""
 "Saving of the book failed. Click \"Show details\" for more information. You "
 "can try to save a copy to a different location, via File->Save a copy"
 msgstr "Ukládání knihy selhalo. Pro více informací klikněte na „Zobrazit podrobnosti“. Můžete zkusit uložit kopii do jiného umístění pomocí Soubor->Uložit kopii"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1402
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1418
 msgid "Enter line number"
 msgstr "Zadejte číslo řádku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1412
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1431
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1428
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1447
 #, python-format
 msgid "Before: Split %s"
 msgstr "Před: Rozdělit %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1447
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1463
 msgid "Does not exist"
 msgstr "Neexistuje"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1448
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1464
 #, python-format
 msgid ""
 "The file %s does not exist. If you were trying to click an item in the Table"
@@ -33417,144 +33426,144 @@ msgid ""
 "\"Refresh\"."
 msgstr "Soubor %s neexistuje. Pokud jste se pokoušeli kliknout na položku v obsahu, možná ho potřebujete obnovit kliknutím pravým tlačítkem myši a zvolením \"Obnovit\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1455
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1805
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1471
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1821
 msgid "Unsupported file format"
 msgstr "Nepodporovaný formát souboru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1456
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1806
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1472
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1822
 #, python-format
 msgid "Editing files of type %s is not supported"
 msgstr "Úprava souborů typu %s není podporována"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1470
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1486
 #, python-format
 msgid "The anchor %s was not found in this file"
 msgstr "Kotva %s nebyla v souboru nalezena "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1484
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1500
 msgid "File deleted"
 msgstr "Soubor odstraněn"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1485
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1501
 msgid ""
 "The file {} has already been deleted, re-run Check Book to update the "
 "results."
 msgstr "Soubor {} již byl odstraněn, spusťte znovu Zkontrolovat knihu pro aktualizaci výsledků."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1507
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1523
 msgid "Before: Spell Check"
 msgstr "Před: Kontrola pravopisu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1512
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1528
 msgid "Before: Auto-fix errors"
 msgstr "Před: Automaticky opravit chyby"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1525
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1541
 #, python-format
 msgid "Before: Merge files into %s"
 msgstr "Před: Sloučit soubory do %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1535
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1551
 msgid "{} files merged"
 msgstr "Sloučeno {} souborů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1539
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1555
 msgid "Before: Link stylesheets"
 msgstr "Před: Propojit šablony stylů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1568
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1584
 msgid "File opened"
 msgstr "Soubor otevřen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1569
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1585
 #, python-brace-format
 msgid ""
 "When you are done editing {0} click \"Import\" to update the file in the "
 "book or \"Discard\" to lose any changes."
 msgstr "Až dokončíte úpravy {0}, klikněte na „Importovat“ pro aktualizaci souboru v knize, nebo „Zahodit“ pro ztrátu všech změn."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1571
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1587
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:759
 msgid "Discard"
 msgstr "Zahodit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1571
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1587
 msgid "Import"
 msgstr "Importovat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1573
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1622
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1589
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1638
 #, python-format
 msgid "Before: Replace %s"
 msgstr "Před: Nahradit %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1632
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1648
 msgid "You must first open a book in order to see the report."
 msgstr "Nejdříve musíte otevřít nějakou knihu, abyste viděli hlášení."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1647
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1663
 msgid "You must first open a book in order to check links."
 msgstr "Nejdříve musíte otevřít nějakou knihu, abyste zkontrolovali odkazy."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1652
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1668
 msgid "You must first open a book in order to compress images."
 msgstr "Nejdříve musíte otevřít nějakou knihu, abyste zkomprimovali obrázky."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1658
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1674
 msgid "Before: compress images"
 msgstr "Před: komprimace obrázků"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1666
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1682
 msgid "Unexpected error"
 msgstr "Neočekávaná chyba"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1667
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1683
 msgid "Failed to compress images, click \"Show details\" for more information"
 msgstr "Nepodařilo se komprimovat obrázky, pro více informací klikněte na \"Zobrazit podrobnosti\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1781
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1797
 msgid "Cannot decode"
 msgstr "Nelze dekódovat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1782
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1798
 #, python-format
 msgid "Cannot edit %s as it appears to be in an unknown character encoding"
 msgstr "Nelze upravit %s, protože se zdá být v neznámém kódování znaků"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1813
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1829
 msgid "No book is currently open. You must first open a book to edit."
 msgstr "Aktuálně není otevřena žádná kniha. Nejdříve musíte otevřít knihu k úpravě."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1944
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1960
 msgid ""
 "The current book is being saved in the background. Quitting now will "
 "<b>abort the save process</b>! Finish saving first?"
 msgstr "Aktuální kniha se ukládá na pozadí. Ukončení <p>přeruší proces ukládání</b>! Dokončit nejdříve ukládání?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1946
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1962
 msgid "&Quit immediately"
 msgstr "&Okamžitě ukončit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1946
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1962
 msgid "Finish &saving first"
 msgstr "&Dokončit nejdříve ukládání"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1967
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1983
 msgid ""
 "There are unsaved changes, if you quit without saving, you will lose them."
 msgstr "Jsou zde neuložené změny, pokud ukončíte bez uložení, přijdete o ně."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1979
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1995
 msgid "&Save and Quit"
 msgstr "&Uložit a ukončit"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1982
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1998
 msgid "&Quit without saving"
 msgstr "U&končit bez uložení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1996
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2012
 msgid "Saving, please wait..."
 msgstr "Ukládání, čekejte..."
 

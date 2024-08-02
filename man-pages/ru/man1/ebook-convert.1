@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "июля 19, 2024" "7.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "июля 31, 2024" "7.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -48,7 +48,7 @@ input_file \- это вход, а output_file \- это выход. Оба до�
 После указания файла ввода и вывода вы можете настроить конвертацию, указав различные параметры. Доступные параметры зависят от типов входных и выходных файлов. Чтобы получить справку по ним, укажите входной и выходной файл, а затем используйте параметр \-h.
 .sp
 Полную документацию по системе конвертации см.
-\X'tty: link #conversion'\fI\%Конвертирование книг\fP\X'tty: link'
+\fI\%Конвертирование книг\fP
 .sp
 Когда вы передаёте аргументы с пробелами в \fBebook\-convert\fP, заключайте их в кавычки. Например: \(dq/some path/with spaces\(dq
 .sp
@@ -174,7 +174,7 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Title for any generated inline table of contents.
+Заголовок любого сгенерированного встроенного оглавления.
 .UNINDENT
 .SH ВИД И ФУНКЦИИ
 .sp
@@ -242,7 +242,7 @@ Title for any generated inline table of contents.
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
+Сохраните лигатуры, присутствующие во входном документе. Лигатура — это комбинированный символ пары символов, таких как ff, fi, fl и т. д. Большинство программ чтения не поддерживают лигатуры в шрифтах по умолчанию, поэтому они вряд ли будут отображаться правильно. По умолчанию calibre превратит лигатуру в соответствующую пару обычных символов. Обратите внимание, что под лигатурами здесь подразумеваются только лигатуры Юникода, а не лигатуры, созданные с помощью CSS или стилей шрифта. Вместо этого эта опция сохранит их.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -420,7 +420,7 @@ Preserve ligatures present in the input document. A ligature is a combined chara
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute is used by screen readers for assisting the visually challenged.
+Если у <img> тега нет атрибута alt, проверьте связанный файл изображения на наличие метаданных, определяющих альтернативный текст, и используйте их для заполнения атрибута alt. Атрибут alt используется программами чтения с экрана для помощи людям с ослабленным зрением.
 .UNINDENT
 .INDENT 0.0
 .TP

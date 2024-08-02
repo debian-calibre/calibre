@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# vim:fileencoding=utf-8
 import json
 import re
 from datetime import date
@@ -19,15 +21,22 @@ class LiveMint(BasicNewsRecipe):
     remove_attributes = ['style', 'height', 'width']
     masthead_url = 'https://images.livemint.com/static/livemint-logo-v1.svg'
 
+    recipe_specific_options = {
+        'days': {
+            'short': 'Oldest article to download from this news source. In days ',
+            'long': 'For example, 0.5, gives you articles from the past 12 hours',
+            'default': str(oldest_article)
+        }
+    }
     remove_empty_feeds =  True
     resolve_internal_links = True
 
+
     def __init__(self, *args, **kwargs):
         BasicNewsRecipe.__init__(self, *args, **kwargs)
-        if self.output_profile.short_name.startswith('kindle'):
-            self.title = 'Mint | ' + date.today().strftime('%b %d, %Y')
-            if is_saturday:
-                self.title = 'Mint Lounge | ' + date.today().strftime('%b %d, %Y')
+        d = self.recipe_specific_options.get('days')
+        if d and isinstance(d, str):
+            self.oldest_article = float(d)
 
     def get_cover_url(self):
         today = date.today().strftime('%d/%m/%Y')
@@ -40,7 +49,7 @@ class LiveMint(BasicNewsRecipe):
                 return cov['HighResolution']
 
     if is_saturday:
-
+        title = 'Mint Lounge'
         masthead_url = 'https://lifestyle.livemint.com/mintlounge/static-images/lounge-logo.svg'
 
         oldest_article = 6.5 # days
@@ -88,9 +97,8 @@ class LiveMint(BasicNewsRecipe):
             .summary, .highlights, .synopsis {
                 font-weight:normal !important; font-style:italic; color:#202020;
             }
-            h2 {font-size:normal !important;}
             em, blockquote {color:#202020;}
-            .moreAbout, .articleInfo, .metaData, .psTopicsHeading, .topicsTag {font-size:small;}
+            .moreAbout, .articleInfo, .metaData, .psTopicsHeading, .topicsTag, .auth {font-size:small;}
         '''
 
         keep_only_tags = [
@@ -100,10 +108,14 @@ class LiveMint(BasicNewsRecipe):
         ]
         remove_tags = [
             dict(name=['meta', 'link', 'svg', 'button', 'iframe']),
+            dict(attrs={'class':lambda x: x and x.startswith(
+                ('storyPage_alsoRead__', 'storyPage_firstPublishDate__', 'storyPage_bcrumb__')
+            )}),
+            dict(attrs={'id':['faqSection', 'seoText', 'ellipsisId']}),
             classes(
-                'trendingSimilarHeight moreNews mobAppDownload label msgError msgOk taboolaHeight gadgetSlider'
+                'trendingSimilarHeight moreNews mobAppDownload label msgError msgOk taboolaHeight gadgetSlider ninSec'
                 ' socialHolder imgbig disclamerText disqus-comment-count openinApp2 lastAdSlot bs_logo author-widget'
-                ' datePublish sepStory premiumSlider moreStory Joinus moreAbout milestone benefitText checkCibilBtn'
+                ' datePublish sepStory premiumSlider moreStory Joinus moreAbout milestone benefitText checkCibilBtn trade'
             )
         ]
 
@@ -131,9 +143,7 @@ class LiveMint(BasicNewsRecipe):
             # remove empty p tags
             raw = re.sub(
                 r'(<p>\s*)(<[^(\/|a|i|b|em|strong)])', '\g<2>', re.sub(
-                    r'(<p>\s*&nbsp;\s*<\/p>)|(<p>\s*<\/p>)|(<p\s*\S+>&nbsp;\s*<\/p>)', '', re.sub(
-                        r'(?=<h2>\s*Also\s*Read).*?(?<=</h2>)', '', raw
-                    )
+                    r'(<p>\s*&nbsp;\s*<\/p>)|(<p>\s*<\/p>)|(<p\s*\S+>&nbsp;\s*<\/p>)', '', raw
                 )
             )
             if '<script>var wsjFlag=true;</script>' in raw:
@@ -150,22 +160,37 @@ class LiveMint(BasicNewsRecipe):
             return raw
 
         def preprocess_html(self, soup):
+            for h2 in soup.findAll('h2'):
+                h2.name = 'h4'
+            auth = soup.find(attrs={'class':lambda x: x and x.startswith(('storyPage_authorInfo__', 'storyPage_authorSocial__'))})
+            if auth:
+                auth['class'] = 'auth'
+            summ = soup.find(attrs={'class':lambda x: x and x.startswith('storyPage_summary__')})
+            if summ:
+                summ['class'] = 'summary'
             for strong in soup.findAll('strong'):
                 if strong.find('p'):
                     strong.name = 'div'
             for embed in soup.findAll('div', attrs={'class':'embed'}):
-                if nos := embed.find('noscript'):
+                nos = embed.find('noscript')
+                if nos:
                     nos.name = 'span'
             for span in soup.findAll('figcaption'):
                 span['id'] = 'img-cap'
             for auth in soup.findAll('span', attrs={'class':lambda x: x and 'articleInfo' in x.split()}):
                 auth.name = 'div'
-            for span in soup.findAll('span', attrs={'class':'exclusive'}):
-                span.extract()
             for img in soup.findAll('img', attrs={'data-src': True}):
                 img['src'] = img['data-src']
-            if wa := soup.find(**classes('autobacklink-topic')):
-                if p := wa.findParent('p'):
+            for span in soup.findAll('span', attrs={'class':'exclusive'}):
+                span.extract()
+            for al in soup.findAll('a', attrs={'class':'manualbacklink'}):
+                pa = al.findParent(['p', 'h2', 'h3', 'h4'])
+                if pa:
+                    pa.extract()
+            wa = soup.find(**classes('autobacklink-topic'))
+            if wa:
+                p = wa.findParent('p')
+                if p:
                     p.extract()
             return soup
 
