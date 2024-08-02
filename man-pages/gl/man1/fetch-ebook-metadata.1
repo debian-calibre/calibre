@@ -27,37 +27,37 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "FETCH-EBOOK-METADATA" "1" "xullo 19, 2024" "7.15.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "xullo 31, 2024" "7.16.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-fetch\-ebook\-metadata [options]
+fetch\-ebook\-metadata [opcións]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Fetch book metadata from online sources. You must specify at least one
-of title, authors or ISBN.
+Obtén metadatos de libros de fontes en liña. Debes especificar polo menos un
+de título, autores ou ISBN.
 .sp
 Whenever you pass arguments to \fBfetch\-ebook\-metadata\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH [OPCIÓNS]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
+Especifique o nome do complemento de descarga de metadatos para usar. Por defecto, utilizaranse todos os complementos de metadatos. Pódese especificar varias veces para varios complementos. Todos os nomes de complementos: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
-Book author(s)
+Autor(es) do libro  Obtén metadatos de libros de fontes en liña. Debes especificar polo menos un de título, autores ou ISBN.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Specify a filename. The cover, if available, will be saved to it. Without this option, no cover will be downloaded.
+Especifique un nome de ficheiro. A portada, se está dispoñible, gardarase nela. Sen esta opción, non se descargará ningunha portada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,7 +67,7 @@ mostrar esta mensaxe de axuda e saír
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identifiers such as ASIN/Goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fI\%\-\-identifier\fP asin:B0082BAJA0
+Identificadores como ASIN/ID de Goodreads, etc. Pódense especificar varias veces para varios identificadores. Por exemplo:\fI\%\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -77,12 +77,12 @@ ISBN do libro
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Output the metadata in OPF format instead of human readable text.
+Sae os metadatos en formato OPF en lugar de texto lexible por humanos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-d
-Timeout in seconds. Default is 30
+Tempo de espera en segundos. O valor predeterminado é 30
 .UNINDENT
 .INDENT 0.0
 .TP

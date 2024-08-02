@@ -1,0 +1,269 @@
+.\" Man page generated from reStructuredText.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "CALIBRE-SERVER" "1" "जुलै 31, 2024" "7.16.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibre\-server [options] [path to library folder...]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Start the calibre Content server. The calibre Content server exposes your
+calibre libraries over the internet. You can specify the path to the library
+folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
+libraries that the main calibre program knows about will be used.
+.sp
+Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+.SH [पर्याय]
+.INDENT 0.0
+.TP
+.B \-\-access\-log
+Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ajax\-timeout
+Time (in seconds) to wait for a response from the server when making queries.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auth\-mode
+वापरलेले प्रमाणीकरणाचे प्रकार निवडा.        Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auto\-reload
+Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ban\-after
+Number of login failures for ban.   The number of login failures after which an IP address is banned
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ban\-for
+Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-list\-mode
+पुस्तकांच्या यादीचे डिफॉल्ट मोड निवडा.      Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-min\-size
+Minimum size for which responses use data compression (in bytes).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-custom\-list\-template
+Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-daemonize
+Run process in background as a daemon (Linux only).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-displayed\-fields
+Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
+Socket pre\-allocation, for example, with systemd socket activation. डिफॉल्टने हा पर्याय सक्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-auth, \-\-disable\-auth
+Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. डिफॉल्टने हा पर्याय निष्क्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
+Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. डिफॉल्टने हा पर्याय सक्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-local\-write, \-\-disable\-local\-write
+Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. डिफॉल्टने हा पर्याय निष्क्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
+HTTP 404 (सापडले नाही) विनंत्यांची नोंद करा.        Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. डिफॉल्टने हा पर्याय सक्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
+BonJour द्वारे OPDS फीडांची जाहिरात करा.    Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. डिफॉल्टने हा पर्याय सक्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
+Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. डिफॉल्टने हा पर्याय सक्रिय असतो.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+हा मदतीचा निरोप दाखवून बाहेर पडा
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignored\-fields
+प्रयोक्त्याने निश्चित केलेले मेटाडेटा रकाने दुर्लक्ष करा.   सामग्रीच्या /opds आणि /mobile दृश्यांमध्ये न दाखवले जाणार्‍या प्रयोक्ताने निश्चित केलेल्या मेटाडेटा रकान्यांची स्वल्पविरामाने विभाजित केलेली यादी. उदाहरणार्थ: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-listen\-on
+The interface on which to listen for connections.   The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for IPv4 connections from the local machine, or to \fB\(dq\fP0.0.0.0\fB\(dq\fP to listen to all incoming IPv4 connections.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log
+Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-manage\-users
+Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-header\-line\-size
+एका HTTP हेडरचा कमाल आकार (कि.बा.).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-job\-time
+Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-jobs
+Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-log\-size
+कमाल नोंदवही फाईलचा आकार (मे.बा.).  The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-items
+OPDS फीडांमधील पुस्तकांची कमाल संख्या.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-ungrouped\-items
+Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-request\-body\-size
+Max. allowed size for files uploaded to the server (in MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-num\-per\-page
+एका पानात दाखवायच्या पुस्तकांची संख्या.     ब्राउझरमध्ये एका पानावर दाखवायच्या पुस्तकांची संख्या.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pidfile
+Write process PID to the specified file
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+The port on which to listen for connections.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search\-the\-net\-urls
+Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-timeout
+Total time in seconds to wait for clean shutdown.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-certfile
+SSL प्रमाणपत्र फायलीचा पाथ.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-keyfile
+Path to the SSL private key file.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Time (in seconds) after which an idle connection is closed.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-trusted\-ips
+Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-url\-prefix
+A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-userdb
+Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \X'tty: link https://manual.calibre-ebook.com/server.html#managing-user-accounts-from-the-command-line-only'\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP\X'tty: link'
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+प्रोग्रामच्या आवृत्तीची संख्या दाखवा आणि मग बाहेर पडा
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-worker\-count
+Number of worker threads used to process requests.
+.UNINDENT
+.SH AUTHOR
+Kovid Goyal
+.SH COPYRIGHT
+Kovid Goyal
+.\" Generated by docutils manpage writer.
+.

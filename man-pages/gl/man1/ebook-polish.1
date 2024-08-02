@@ -27,56 +27,56 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "xullo 19, 2024" "7.15.0" "calibre"
+.TH "EBOOK-POLISH" "1" "xullo 31, 2024" "7.16.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-polish [options] input_file [output_file]
+ebook\-polish [opcións] ficheiro_entrada [ficheiro_saída]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Polishing books is all about putting the shine of perfection onto
-your carefully crafted e\-books.
+Pulir libros consiste en poñerlle o brillo da perfección
+os teus libros electrónicos coidadosamente elaborados.
 .sp
-Polishing tries to minimize the changes to the internal code of your e\-book.
-Unlike conversion, it does not flatten CSS, rename files, change font
-sizes, adjust margins, etc. Every action performs only the minimum set of
-changes needed for the desired effect.
+Pulido tenta minimizar os cambios no código interno do teu libro electrónico.
+A diferenza da conversión, non aplana CSS, renomea ficheiros, cambia o tipo de letra
+tamaños, axustar as marxes, etc. Cada acción realiza só o conxunto mínimo de
+cambios necesarios para o efecto desexado.
 .sp
-You should use this tool as the last step in your e\-book creation process.
+Deberías usar esta ferramenta como último paso no proceso de creación do teu libro electrónico.
 .sp
-Note that polishing only works on files in the AZW3 ou EPUB formats.
+Teña en conta que o pulido só funciona nos ficheiros AZW3 ou EPUBdos formatos.
 .sp
 Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH [OPCIÓNS]
 .INDENT 0.0
 .TP
 .B \-\-add\-soft\-hyphens, \-H
-Add soft hyphens to all words in the book. This allows the book to be rendered better when the text is justified, in readers that do not support hyphenation.
+Engade guións suaves a todas as palabras do libro. Isto permite renderizar o libro mellor cando o texto está xustificado, en lectores que non admiten a guionización.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-images, \-i
-Losslessly compress images in the book, to reduce the filesize, without affecting image quality.
+Comprimir sen perdas as imaxes do libro para reducir o tamaño dos ficheiros afectando a calidade da imaxe.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+Camiño a unha imaxe de portada. Cambia a portada especificada no libro electrónico. Se non hai tapa ou a tapa non está correctamente identificada, insire unha nova tapa.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-download\-external\-resources, \-d
-Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book. All such resources will be downloaded and added to the book so that the book no longer references any external resources.
+Descarga recursos externos como imaxes, follas de estilo, etc. que apunten a URL en lugar de ficheiros do libro. Todos estes recursos descargaranse e engadiranse ao libro para que o libro xa non faga referencia a ningún recurso externo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-Embed all fonts that are referenced in the document and are not already embedded. This will scan your computer for the fonts, and if they are found, they will be embedded into the document. Please ensure that you have the proper license for embedding the fonts used in this document.
+Incrustar todas as fontes ás que se fai referencia no documento e que aínda non estean incrustadas. Isto escaneará o teu ordenador para buscar os tipos de letra e, se se atopan, serán incrustado no documento. Asegúrese de ter a licenza adecuada para incorporar os tipos de letra utilizados neste documento.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -86,47 +86,47 @@ mostrar esta mensaxe de axuda e saír
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Insert a \fB\(dq\fPbook jacket\fB\(dq\fP page at the start of the book that contains all the book metadata such as title, tags, authors, series, comments, etc. Any previous book jacket will be replaced.
+Insira unha páxina \fB\(dq\fPcamiseta do libro\fB\(dq\fP ao comezo do libro que contén todos os metadatos do libro, como título, etiquetas, autores, series, comentarios, etc. Substituirase calquera funda de libro anterior.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Path to an OPF file. The metadata in the book is updated from the OPF file.
+Ruta a un ficheiro OPF. Os metadatos do libro actualízanse a partir do ficheiro OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Remove a previous inserted book jacket page.
+Elimina unha páxina anterior de sobrecuberta de libro inserida.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-soft\-hyphens
-Remove soft hyphens from all text in the book.
+Elimina os guións suaves de todo o texto do libro.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-unused\-css, \-u
-Remove all unused CSS rules from stylesheets and <style> tags. Some books created from production templates can have a large number of extra CSS rules that don\fB\(aq\fPt match any actual content. These extra rules can slow down readers that need to parse them all.
+Elimina todas as regras CSS non utilizadas das follas de estilo e do <style> etiquetas. Algúns libros creados a partir de modelos de produción poden ter un gran número de regras CSS adicionais que non coinciden con ningún contido real. Estas regras adicionais poden retardar os lectores que precisan analizalos todos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into their typographically correct equivalents. Note that the algorithm can sometimes generate incorrect results, especially when single quotes at the start of contractions are involved.
+Converte guións de texto simple, puntos suspensivos, comiñas, guións múltiples, etc equivalentes tipograficamente correctos. Teña en conta que o algoritmo ás veces pode xerar resultados incorrectos, especialmente cando interveñen comiñas simples ao comezo das contraccións.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-fonts, \-f
-Subsetting fonts means reducing an embedded font to contain only the characters used from that font in the book. This greatly reduces the size of the font files (halving the font file sizes is common). For example, if the book uses a specific font for headers, then subsetting will reduce that font to contain only the characters present in the actual headers in the book. Or if the book embeds the bold and italic versions of a font, but bold and italic text is relatively rare, or absent altogether, then the bold and italic fonts can either be reduced to only a few characters or completely removed. The only downside to subsetting fonts is that if, at a later date you decide to add more text to your books, the newly added text might not be covered by the subset font.
+Subconfigurar fontes significa reducir unha fonte incrustada para que contén só os caracteres usados ​​desa fonte no libro. Isto reduce moito o tamaño dos ficheiros de fonte (reducindo o tipo de letra á metade tamaños de ficheiros é común). Por exemplo, se o libro usa unha fonte específica para as cabeceiras, entón o subconxunto reducirá ese tipo de letra para conter só o personaxes presentes nas cabeceiras reais do libro. Ou se o book incorpora as versións en negra e cursiva dunha fonte, pero en negra e o texto en cursiva é relativamente raro, ou está completamente ausente, entón as fontes en negra e cursiva poden reducirse a só unhas poucas caracteres ou completamente eliminado. O único inconveniente de subconfigurar fontes é que se, máis tarde data na que decides engadir máis texto aos teus libros, o recén engadido É posible que o texto non estea cuberto pola fonte do subconxunto.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-upgrade\-book, \-U
-Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
+Actualiza as estruturas internas do libro, se é posible. Por exemplo, actualiza os libros de EPUB 2 a EPUB 3.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Produce more verbose output, useful for debugging.
+Produce unha saída máis detallada, útil para a depuración.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -37,13 +37,27 @@ class ilCorriereEn(BasicNewsRecipe):
     remove_javascript = True
     no_stylesheets = True
 
+    recipe_specific_options = {
+        'days': {
+            'short': 'Oldest article to download from this news source. In days ',
+            'long': 'For example, 0.5, gives you articles from the past 12 hours',
+            'default': str(oldest_article)
+        }
+    }
+
+    def __init__(self, *args, **kwargs):
+        BasicNewsRecipe.__init__(self, *args, **kwargs)
+        d = self.recipe_specific_options.get('days')
+        if d and isinstance(d, str):
+            self.oldest_article = float(d)
+
     def get_article_url(self, article):
         articleUrl = article.get('link')
         segments = articleUrl.split('/')
         basename = '/'.join(segments[:3]) + '/' + \
             'International/english/articoli/'
 
-    # the date has to be redone with the url structure
+        # the date has to be redone with the url structure
         mlist1 = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno',
                   'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
         mlist2 = ['01', '02', '03', '04', '05',
@@ -57,7 +71,7 @@ class ilCorriereEn(BasicNewsRecipe):
 
         newDateUrl = '20' + myDate[0] + '/' + noMonth + '/' + myDate[2] + '/'
 
-    # clean the article title
+        # clean the article title
         articleURLseg = segments[5].split('-')
         myArticle = (articleURLseg[0])[:-9] + '.shtml'
 
