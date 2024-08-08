@@ -1,11 +1,31 @@
 calibre (7.16.0+ds-2) UNRELEASED; urgency=medium
 
+  [ Nicholas D Steeves ]
   * Add python3-requests-toolbelt to recommends; it was previously
     transitively fulfilled, and without it plugins such as FanFicFare have
     begun to fail.  Thanks to Beatrice Torracca for the report and
     workaround. (Closes: #1078080)
 
- -- Nicholas D Steeves <sten@debian.org>  Tue, 06 Aug 2024 13:10:33 -0400
+  [ YOKOTA Hiroshi ]
+  * Sort dependency lines
+  * Add python3-request-toolbelt to recommendation list
+    python3-request-toolbelt was pulled by python3-dnspython in previous
+    version, but dropped since python3-dnspython 2.5.0~rc1-1.
+    Some Calibre plugins like FanFicFare held older request-toolbelt
+    module inside, and it breaks Debian Calibre by obsolete dependency
+    problems.
+    Install Debian package python3-request-toolbelt will solve the problem.
+    See also:
+    * Import error when system python's urllib3 is version 2
+      https://github.com/JimmXinu/FanFicFare/issues/987
+    * UI not loading after updating to Ubuntu 24.04
+      https://github.com/JimmXinu/FanFicFare/issues/1079
+  * Update Lintian overrides for groff warning messages
+  * Add Lintian overrides
+    "uu" module is deprecated, but "uuid" module is not deprecated
+  * Unify Lintian 0.117 and 0.118 message
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 09 Aug 2024 00:30:19 +0900
 
 calibre (7.16.0+ds-1) unstable; urgency=medium
 
