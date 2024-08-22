@@ -1,0 +1,25 @@
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Sun, 11 Aug 2024 20:18:29 +0530
+Subject: Fix #2076515 [calibredb list command ignores fields
+ option](https://bugs.launchpad.net/calibre/+bug/2076515)
+
+Origin: backport, https://github.com/kovidgoyal/calibre/commit/34f7b9eaf4cba97412481f659abe35c3e85eb013.patch
+Forwarded: not-needed
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1079277
+---
+ src/calibre/db/cli/cmd_list.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/db/cli/cmd_list.py b/src/calibre/db/cli/cmd_list.py
+index 65935b5..8dcb6e5 100644
+--- a/src/calibre/db/cli/cmd_list.py
++++ b/src/calibre/db/cli/cmd_list.py
+@@ -170,7 +170,7 @@ def do_list(
+ ):
+     if sort_by is None:
+         ascending = True
+-    if dbctx.is_remote and (template or template_file or template_title):
++    if dbctx.is_remote and (template or template_file):
+         raise SystemExit(_('The use of templates is disallowed when connecting to remote servers for security reasons'))
+     if 'template' in (f.strip() for f in fields):
+         if template_file:
