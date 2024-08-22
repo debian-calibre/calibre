@@ -1,0 +1,45 @@
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 30 Jul 2024 13:51:33 +0530
+Subject: Fix #2075128 [Private
+ bug](https://bugs.launchpad.net/calibre/+bug/2075128)
+
+---
+ src/calibre/db/cli/cmd_list.py | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/src/calibre/db/cli/cmd_list.py b/src/calibre/db/cli/cmd_list.py
+index 9907b26..65935b5 100644
+--- a/src/calibre/db/cli/cmd_list.py
++++ b/src/calibre/db/cli/cmd_list.py
+@@ -36,6 +36,12 @@ def implementation(
+     db, notify_changes, fields, sort_by, ascending, search_text, limit, template=None
+ ):
+     is_remote = notify_changes is not None
++    if is_remote:
++        # templates allow arbitrary code execution via python templates. We
++        # could possibly disallow only python templates but that is more work
++        # than I feel like doing for this, so simply ignore templates on remote
++        # connections.
++        template = None
+     formatter = None
+     with db.safe_read_lock:
+         fm = db.field_metadata
+@@ -164,6 +170,8 @@ def do_list(
+ ):
+     if sort_by is None:
+         ascending = True
++    if dbctx.is_remote and (template or template_file or template_title):
++        raise SystemExit(_('The use of templates is disallowed when connecting to remote servers for security reasons'))
+     if 'template' in (f.strip() for f in fields):
+         if template_file:
+             with open(template_file, 'rb') as f:
+@@ -334,7 +342,8 @@ List the books available in the calibre database.
+     parser.add_option(
+         '--template',
+         default=None,
+-        help=_('The template to run if "{}" is in the field list. Default: None').format('template')
++        help=_('The template to run if "{}" is in the field list. Note that templates are ignored while connecting to a calibre server.'
++               ' Default: None').format('template')
+     )
+     parser.add_option(
+         '--template_file',
