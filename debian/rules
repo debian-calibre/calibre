@@ -59,13 +59,10 @@ override_dh_auto_build: blhc-note
 override_dh_auto_test:
 	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak test
 
-# "test_ajax_book" fails if previous test is "test_workers" (Closes: #973458)
 calibre_auto_test:
-	env TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=workers --exclude-test-name=qt --exclude-test-name=dom_load
+	env TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=qt
 	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
-	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=workers   $(TEST_FLAGS)
 	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt        $(TEST_FLAGS)
-	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=dom_load  $(TEST_FLAGS)
 
 execute_before_dh_install:
 	dh_buildinfo
