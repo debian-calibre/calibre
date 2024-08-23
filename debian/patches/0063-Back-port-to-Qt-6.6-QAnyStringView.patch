@@ -1,0 +1,29 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 23 Aug 2024 14:04:14 +0900
+Subject: Back port to Qt 6.6 (QAnyStringView)
+
+QAnyStringView class is available from Qt 6.7.
+Use bytes for Qt 6.6.
+
+----
+  File ".../src/calibre/scraper/qt_backend.py", line 209, in download
+    ex = rq.rawHeader(name)
+         ^^^^^^^^^^^^^^^^^^
+TypeError: rawHeader(self, headerName: Union[QByteArray, bytes, bytearray, memoryview]): argument 1 has unexpected type 'str'
+---
+ src/calibre/scraper/qt_backend.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/scraper/qt_backend.py b/src/calibre/scraper/qt_backend.py
+index e48bacd..3af0827 100644
+--- a/src/calibre/scraper/qt_backend.py
++++ b/src/calibre/scraper/qt_backend.py
+@@ -206,7 +206,7 @@ class FetchBackend(QNetworkAccessManager):
+         rq.setTransferTimeout(int(timeout * 1000))
+         rq.setRawHeader(b'User-Agent', self.current_user_agent().encode())
+         for (name, val) in req['headers']:
+-            ex = rq.rawHeader(name)
++            ex = rq.rawHeader(name.encode())
+             if len(ex):
+                 val = bytes(ex).decode() + ', ' + val
+             rq.setRawHeader(name.encode(), val.encode())
