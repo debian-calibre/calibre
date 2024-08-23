@@ -7,16 +7,16 @@
 # Mario Moens <marimo.it4u@gmail.com>, 2017
 # M. de Boer <de.boer.melle@gmail.com>, 2017-2018
 # Meteor0id, 2019
-# peter <luc@ditbenik.be>, 2021-2022
+# peter <klm@ditbenik.be>, 2021-2022
 # math1985 <transifex@matthijsmelissen.nl>, 2016
 # W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-19 08:30+0000\n"
+"POT-Creation-Date: 2024-08-16 02:50+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: peter <luc@ditbenik.be>, 2021-2022\n"
+"Last-Translator: peter <klm@ditbenik.be>, 2021-2022\n"
 "Language-Team: Dutch (http://app.transifex.com/calibre/calibre/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,16 +85,7 @@ msgid ""
 "links may be resolved incorrectly."
 msgstr "Retourneer een set canonieke representaties van `` url``. De standaardimplementatie gebruikt alleen de hostnaam van de server en het pad van de URL, waarbij alle zoekparameters, fragmenten, enzovoort worden genegeerd. De canonieke weergaven moeten uniek zijn voor alle URL's voor deze nieuwsbron. Als dat niet het geval is, kunnen interne links onjuist worden opgelost."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Parameters"
 msgstr "Parameters"
 
@@ -168,16 +159,13 @@ msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr "Geef een browserinstantie terug gebruikt om documenten van internet op te halen. Standaard geeft het een `mechanize <https://github.com/jjlee/mechanize>` _ browserinstantie terug die cookies ondersteunt, robots.txt negeert, vernieuwingen verwerkt en een mozilla firefox user-agent heeft."
+"refreshes and has a random common user agent."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
-msgstr "Als uw recept vereist dat u eerst inlogt, overschrijf dan deze methode in uw subklasse. Bijvoorbeeld: de volgende code wordt  gebruikt in het New York Times recept om in te loggen voor volledige toegang ::"
+msgid "To customize the browser override this method in your sub-class as::"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -252,8 +240,7 @@ msgid ""
 " want to affect."
 msgstr ""
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Returns"
 msgstr ""
 
@@ -266,7 +253,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL. Return"
+"for dynamically generated images, etc.) and return the processed URL. Return"
 " None or an empty string to skip fetching the image."
 msgstr ""
 
@@ -542,6 +529,17 @@ msgid ""
 msgstr "Geef elementen op die het algoritme voor automatische opruiming nooit mag verwijderen. De syntaxis is een XPath-uitdrukking. Bijvoorbeeld::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine. An alternate is "
+"\"qt\" which will use the network engine from the Qt toolkit. The mechanize "
+"engine supports logging in, the Qt engine does not. However, the Qt engine "
+"supports HTTP/2 and similar technologies and also is harder for bot "
+"interception services to fingerprint."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
@@ -670,8 +668,8 @@ msgstr "Maar één van :attr:`BasicNewsRecipe.match_regexps` of :attr:`BasicNews
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you do not want to use gzipped transfers. Note that some old"
-" servers flake out with gzip"
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -791,6 +789,25 @@ msgstr ""
 msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:1
+msgid ""
+"Specify options specific to this recipe. These will be available for the "
+"user to customize in the Advanced tab of the Fetch News dialog or at the "
+"ebook-convert command line. The options are specified as a dictionary "
+"mapping option name to metadata about the option. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
+msgid ""
+"When the recipe is run, self.recipe_specific_options will be a dict mapping "
+"option name to the option value specified by the user. When the option is "
+"unspecified by the user, it will have the value specified by 'default'. If "
+"no default is specified, the option will not be in the dict at all, when "
+"unspecified by the user."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of

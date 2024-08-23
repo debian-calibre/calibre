@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.16.0\n"
+"Project-Id-Version: calibre 7.17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-31 06:24+0530\n"
+"POT-Creation-Date: 2024-08-23 07:23+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,11 +85,11 @@ msgid "Override in a subclass to customize extraction of the :term:`URL` that po
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
-msgid "Return a browser instance used to fetch documents from the web. By default it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ browser instance that supports cookies, ignores robots.txt, handles refreshes and has a mozilla firefox user agent."
+msgid "Return a browser instance used to fetch documents from the web. By default it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ browser instance that supports cookies, ignores robots.txt, handles refreshes and has a random common user agent."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid "If your recipe requires that you login first, override this method in your subclass. For example, the following code is used in the New York Times recipe to login for full access::"
+msgid "To customize the browser override this method in your sub-class as::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -133,7 +133,7 @@ msgid "A floating point number, the delay in seconds."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
-msgid "Perform some processing on image urls (perhaps removing size restrictions for dynamically generated images, etc.) and return the precessed URL. Return None or an empty string to skip fetching the image."
+msgid "Perform some processing on image urls (perhaps removing size restrictions for dynamically generated images, etc.) and return the processed URL. Return None or an empty string to skip fetching the image."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -293,6 +293,10 @@ msgstr ""
 msgid "Specify elements that the auto cleanup algorithm should never remove. The syntax is a XPath expression. For example::"
 msgstr ""
 
+#: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid "The simulated browser engine to use when downloading from servers. The default is to use the Python mechanize browser engine, which supports logging in. However, if you don't need logging in, consider changing this to either 'webengine' which uses an actual Chromium browser to do the network requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and 'qt' support HTTP/2, which mechanize does not and are thus harder to fingerprint for bot protection services."
+msgstr ""
+
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid "If True the navigation bar is center aligned, otherwise it is left aligned"
 msgstr ""
@@ -351,7 +355,7 @@ msgid "Only one of :attr:`BasicNewsRecipe.match_regexps` or :attr:`BasicNewsReci
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
-msgid "Set to False if you do not want to use gzipped transfers. Note that some old servers flake out with gzip"
+msgid "Set to False if you do not want to use gzipped transfers with the mechanize browser. Note that some old servers flake out with gzip."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1

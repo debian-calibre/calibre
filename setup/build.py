@@ -675,16 +675,15 @@ class Build(Command):
 requires = ["sip >=5.3", "PyQt-builder >=1"]
 build-backend = "sipbuild.api"
 
-[tool.sip.metadata]
-name = "{ext.name}"
-requires-dist = "PyQt6 (>=6.2.1)"
-
 [tool.sip]
 project-factory = "pyqtbuild:PyQtProject"
 
 [tool.sip.project]
 sip-files-dir = "."
 {abi_version}
+
+[project]
+name = "{ext.name}"
 
 [tool.sip.builder]
 qmake-settings = [
@@ -732,7 +731,10 @@ sip-file = {os.path.basename(sipf)!r}
         cwd = os.getcwd()
         try:
             os.chdir(os.path.join(src_dir, 'build'))
-            self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]))
+            env = os.environ.copy()
+            if is_macos_universal_build:
+                env['ARCHS'] = 'x86_64 arm64'
+            self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]), env=env)
             e = 'pyd' if iswindows else 'so'
             m = glob.glob(f'{ext.name}/{ext.name}.*{e}')
             if not m:

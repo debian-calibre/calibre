@@ -27,35 +27,35 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "xullo 31, 2024" "7.16.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "agosto 23, 2024" "7.17.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-smtp [options] [from to text]
+calibre\-smtp [opcións] [de a texto]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Enviar correo mediante o protocolo SMTP. \fBcalibre\-smtp\fP ten dous modos de funcionamento. No
+o modo de redacción que especificas desde ata e texto e estes úsanse para construír e
+enviar unha mensaxe de correo electrónico. No modo de filtro, \fBcalibre\-smtp\fP le un correo electrónico completo
+mensaxe de STDIN e envíaa.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+texto é o corpo da mensaxe de correo electrónico.
+Se non se especifica texto, lerase unha mensaxe de correo electrónico completa de STDIN.
+from é o enderezo de correo electrónico do remitente e to é o enderezo de correo electrónico
+do destinatario. Cando se le un correo electrónico completo de STDIN, de e para
+só se usan na negociación SMTP, as cabeceiras das mensaxes non se modifican.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a \fBcalibre\-smtp\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPCIÓNS]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+Dividir e entregar a mensaxe en segundo plano. Se usas esta opción, tamén deberías usar \fI\%\-\-outbox\fP para xestionar os fallos de entrega.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -65,17 +65,17 @@ mostrar esta mensaxe de axuda e saír
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+Nome do host local. Úsase cando se conecta ao servidor SMTP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+Ruta ao cartafol maildir para almacenar mensaxes de correo electrónico erradas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout for connection
+Tempo de espera para a conexión
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -89,54 +89,54 @@ mostrar o número de versión do programa e saír
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+Opcións para redactar un correo electrónico. Ignorase se non se especifica o texto
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-File to attach to the email
+Arquivo para anexar ao correo electrónico
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subject, \-s
-Subject of the email
+Asunto do correo electrónico
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+Opcións para usar un servidor de retransmisión SMTP para enviar correo. calibre tentará enviar o correo electrónico directamente a menos que se especifique \-\-relay.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Ruta a un ficheiro de certificados CA concatenados en formato PEM, usado para verificar o certificado do servidor cando se usa TLS. Por defecto, utilízanse os certificados CA do sistema.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Non verifique o certificado do servidor ao conectarse mediante TLS. Este adoitaba ser o comportamento predeterminado nas versións de calibre anteriores á 3.27. Se estás a usar un relé cun certificado autoasinado ou non válido, podes usar esta opción para restaurar o comportamento anterior á versión 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Método de cifrado para usar ao conectarse ao relé. As opcións son TLS, SSL e NONE. O predeterminado é TLS. AVISO: elixir NINGUNHA é moi inseguro
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+Contrasinal para relé
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Porto ao que conectarse no servidor de retransmisión. O predeterminado é usar 465 se o método de cifrado é SSL e 25 no caso contrario.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+Un servidor de retransmisión SMTP para usar para enviar correo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+Nome de usuario para relé
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

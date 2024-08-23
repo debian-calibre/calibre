@@ -40,7 +40,7 @@ from calibre.db.tables import VirtualTable
 from calibre.db.utils import type_safe_sort_key_function
 from calibre.db.write import get_series_values, uniq
 from calibre.ebooks import check_ebook_format
-from calibre.ebooks.metadata import author_to_author_sort, string_to_authors
+from calibre.ebooks.metadata import author_to_author_sort, string_to_authors, title_sort
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.opf2 import metadata_to_opf
 from calibre.ptempfile import PersistentTemporaryFile, SpooledTemporaryFile, base_dir
@@ -1882,6 +1882,7 @@ class Cache:
 
                 val = mi.get('title_sort', None)
                 if (force_changes and val is not None) or not mi.is_null('title_sort'):
+
                     protected_set_field('sort', val)
 
                 # identifiers will always be replaced if force_changes is True
@@ -2133,6 +2134,8 @@ class Cache:
             mi.authors = (_('Unknown'),)
         aus = mi.author_sort if not mi.is_null('author_sort') else self._author_sort_from_authors(mi.authors)
         mi.title = mi.title or _('Unknown')
+        if mi.is_null('title_sort'):
+            mi.title_sort = title_sort(mi.title, lang=mi.languages[0] if mi.languages else None)
         if isbytestring(aus):
             aus = aus.decode(preferred_encoding, 'replace')
         if isbytestring(mi.title):
@@ -3182,6 +3185,9 @@ class Cache:
 
     @read_api
     def annotations_map_for_book(self, book_id, fmt, user_type='local', user='viewer'):
+        '''
+        Return a map of annotation type -> annotation data for the specified book_id, format, user and user_type.
+        '''
         ans = {}
         for annot in self.backend.annotations_for_book(book_id, fmt, user_type, user):
             ans.setdefault(annot['type'], []).append(annot)
@@ -3189,22 +3195,40 @@ class Cache:
 
     @read_api
     def all_annotations_for_book(self, book_id):
+        '''
+        Return a tuple containing all annotations for the specified book_id as a dict with keys:
+        `format`, `user_type`, `user`, `annotation`. Here, annotation is the annotation data.
+        '''
         return tuple(self.backend.all_annotations_for_book(book_id))
 
     @read_api
     def annotation_count_for_book(self, book_id):
+        '''
+        Return the number of annotations for the specified book available in the database.
+        '''
         return self.backend.annotation_count_for_book(book_id)
 
     @read_api
     def all_annotation_users(self):
+        '''
+        Return a tuple of all (user_type, user name) that have annotations.
+        '''
         return tuple(self.backend.all_annotation_users())
 
     @read_api
     def all_annotation_types(self):
+        '''
+        Return a tuple of all annotation types in the database.
+        '''
         return tuple(self.backend.all_annotation_types())
 
     @read_api
     def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False, restrict_to_book_ids=None):
+        '''
+        Return a tuple of all annotations matching the specified criteria.
+        `ignore_removed` controls whether removed (deleted) annotations are also returned. Removed annotations are just a skeleton
+        used for merging of annotations.
+        '''
         return tuple(self.backend.all_annotations(restrict_to_user, limit, annotation_type, ignore_removed, restrict_to_book_ids))
 
     @read_api
@@ -3220,6 +3244,9 @@ class Cache:
         restrict_to_user=None,
         ignore_removed=False
     ):
+        '''
+        Return of a tuple of annotations matching the specified Full-text query.
+        '''
         return tuple(self.backend.search_annotations(
             fts_engine_query, use_stemming, highlight_start, highlight_end,
             snippet_size, annotation_type, restrict_to_book_ids, restrict_to_user,
@@ -3228,10 +3255,16 @@ class Cache:
 
     @write_api
     def delete_annotations(self, annot_ids):
+        '''
+        Delete annotations with the specified ids.
+        '''
         self.backend.delete_annotations(annot_ids)
 
     @write_api
     def update_annotations(self, annot_id_map):
+        '''
+        Update annotations.
+        '''
         self.backend.update_annotations(annot_id_map)
 
     @write_api
@@ -3249,10 +3282,16 @@ class Cache:
 
     @write_api
     def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
+        '''
+        Set all annotations for the specified book_id, fmt, user_type and user.
+        '''
         self.backend.set_annotations_for_book(book_id, fmt, annots_list, user_type, user)
 
     @write_api
     def merge_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
+        '''
+        Merge the specified annotations into the existing annotations for book_id, fm, user_type, and user.
+        '''
         from calibre.utils.date import EPOCH
         from calibre.utils.iso8601 import parse_iso8601
         amap = self._annotations_map_for_book(book_id, fmt, user_type=user_type, user=user)

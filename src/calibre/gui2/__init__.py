@@ -1288,6 +1288,10 @@ class Application(QApplication):
                 self.setCursorFlashTime(int(cft))
 
     @property
+    def using_calibre_style(self) -> bool:
+        return self.palette_manager.using_calibre_style
+
+    @property
     def is_dark_theme(self):
         return self.palette_manager.is_dark_theme
 
@@ -1471,7 +1475,7 @@ def sanitize_env_vars():
             'LD_LIBRARY_PATH':'/lib', 'OPENSSL_MODULES': '/lib/ossl-modules',
         }
     elif iswindows:
-        env_vars = {'OPENSSL_MODULES': None}
+        env_vars = {'OPENSSL_MODULES': None, 'QTWEBENGINE_DISABLE_SANDBOX': None}
     elif ismacos:
         env_vars = {k:None for k in (
                     'FONTCONFIG_FILE FONTCONFIG_PATH SSL_CERT_FILE OPENSSL_ENGINES OPENSSL_MODULES').split()}

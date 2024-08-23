@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-13 15:20+0000\n"
+"POT-Creation-Date: 2024-08-21 14:51+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -148,34 +148,7 @@ msgid ""
 "successfully."
 msgstr "为指定的书籍添加格式。 如果格式添加成功，则返回 True。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.add_format:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.cover:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.format:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.format_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_next_series_num_for:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.remove_formats:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.rename_items:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.search:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_field:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.tags_older_than:0
+#: ../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Parameters"
 msgstr "参数"
 
@@ -214,6 +187,33 @@ msgid ""
 msgstr "添加指定的资源，以便它可以被注释引用并返回其内容哈希"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_types:1
+msgid "Return a tuple of all annotation types in the database."
+msgstr "返回数据库中所有注释类型的数组。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_users:1
+msgid "Return a tuple of all (user_type, user name) that have annotations."
+msgstr "返回所有具有注释的二元组 (user_type, user name)。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations:1
+msgid ""
+"Return a tuple of all annotations matching the specified criteria. "
+"`ignore_removed` controls whether removed (deleted) annotations are also "
+"returned. Removed annotations are just a skeleton used for merging of "
+"annotations."
+msgstr "返回与指定条件匹配的所有注释的多元组。' ignore_removed '控制是否也返回已删除（删除）的注释。删除的注释只是用于合并注释的骨架。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations_for_book:1
+msgid ""
+"Return a tuple containing all annotations for the specified book_id as a "
+"dict with keys: `format`, `user_type`, `user`, `annotation`. Here, "
+"annotation is the annotation data."
+msgstr "将包含指定book_id的所有注释的二元组作为带有键的dict返回：`format`, `user_type`, `user`, `annotation`。这里，注释是注释数据。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
 msgstr "所有已知图书 ID 的冻结集。"
@@ -234,6 +234,20 @@ msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
 msgstr "所有字段名称的冻结集（仅应用于多一和多对多字段）"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotation_count_for_book:1
+msgid ""
+"Return the number of annotations for the specified book available in the "
+"database."
+msgstr "返回数据库中可用的指定书籍的注释数量。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotations_map_for_book:1
+msgid ""
+"Return a map of annotation type -> annotation data for the specified "
+"book_id, format, user and user_type."
+msgstr "返回注释类型->指定book_id、格式、用户和用户_类型的注释数据的映射。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
@@ -357,6 +371,11 @@ msgid ""
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
 msgstr "返回适合在“has_book”中使用的数据。 这可用于在工作进程中实现“has_book”，而无需访问数据库。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_annotations:1
+msgid "Delete annotations with the specified ids."
+msgstr "删除具有指定id的注释。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
@@ -562,16 +581,7 @@ msgstr "示例：假设作者 A 有链接 X，作者 B 有链接 Y，标签 S �
 msgid "the book id in question."
 msgstr "这本书id有问题。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.remove_formats:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_link_map:0
+#: ../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Returns"
 msgstr "返回"
 
@@ -765,6 +775,13 @@ msgid ""
 "the relative path of the file to the book directory using / as a separator. "
 "stat_result is the result of calling os.stat() on the file."
 msgstr "与指定模式匹配的所有额外文件的元组。 元组的每个元素都是 ExtraFile(relpath, file_path, stat_result)。 其中 relpath 是文件到图书目录的相对路径，使用 / 作为分隔符。 stat_result 是对文件调用 os.stat() 的结果。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_annotations_for_book:1
+msgid ""
+"Merge the specified annotations into the existing annotations for book_id, "
+"fm, user_type, and user."
+msgstr "将指定的注释合并到book_id、fm、user_ype和user的现有注释中。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
@@ -962,11 +979,23 @@ msgid ""
 msgstr "如果不是“无”，则将搜索一组图书 ID，而不是搜索所有图书。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_annotations:1
+msgid ""
+"Return of a tuple of annotations matching the specified Full-text query."
+msgstr "返回与指定全文查询匹配的注释二元组。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search_notes:1
 msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "使用 FTS 索引搜索笔记文本。 如果查询为空，则返回所有注释。"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_annotations_for_book:1
+msgid ""
+"Set all annotations for the specified book_id, fmt, user_type and user."
+msgstr "为指定的book_id、fdt、user_ype和user设置所有注释。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
@@ -1108,6 +1137,11 @@ msgid ""
 "Unretire a previously retired note for the specified item. Notes are retired"
 " when an item is removed from the database"
 msgstr "取消指定项目之前已停用的注释。 当从数据库中删除项目时，注释将被停用"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_annotations:1
+msgid "Update annotations."
+msgstr "更新注释。"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

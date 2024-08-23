@@ -110,14 +110,16 @@ add_ext(STACK_OF(X509_EXTENSION) *sk, int nid, const char *value, char *item_typ
 static PyObject* create_rsa_cert_req(PyObject *self, PyObject *args) {
     PyObject *capsule = NULL, *ans = NULL, *t = NULL;
     X509_NAME *Name = NULL;
-    char *common_name = NULL, *country = NULL, *state = NULL, *locality = NULL, *org = NULL, *org_unit = NULL, *email = NULL, *basic_constraints = NULL;
+    char *common_name = NULL, *country = NULL, *state = NULL, *locality = NULL, *org = NULL, *org_unit = NULL, *email = NULL, *basic_constraints = NULL, *digital_key_usage = NULL, *ext_key_usage = NULL;
     X509_REQ *Cert = NULL;
     PyObject *alt_names = NULL;
     int ok = 0, signature_length = 0;
     Py_ssize_t i = 0;
     STACK_OF(X509_EXTENSION) *exts = NULL;
 
-    if(!PyArg_ParseTuple(args, "OO!szzzzzzz", &capsule, &PyTuple_Type, &alt_names, &common_name, &country, &state, &locality, &org, &org_unit, &email, &basic_constraints)) return NULL;
+    if(!PyArg_ParseTuple(args, "OO!szzzzzzzzz",
+        &capsule, &PyTuple_Type, &alt_names, &common_name, &country, &state, &locality, &org, &org_unit, &email,
+        &basic_constraints, &digital_key_usage, &ext_key_usage)) return NULL;
     if(!PyCapsule_CheckExact(capsule)) return PyErr_Format(PyExc_TypeError, "The key is not a capsule object");
     EVP_PKEY *KeyPair = PyCapsule_GetPointer(capsule, NULL);
     if (!KeyPair) return PyErr_Format(PyExc_TypeError, "The key capsule is NULL");
@@ -134,7 +136,7 @@ static PyObject* create_rsa_cert_req(PyObject *self, PyObject *args) {
     if (!add_entry(Name, "emailAddress", email)) goto error;
     if (!add_entry(Name, "CN", common_name)) goto error;
 
-    if (PyTuple_GET_SIZE(alt_names) > 0 || basic_constraints) {
+    if (PyTuple_GET_SIZE(alt_names) > 0 || basic_constraints || digital_key_usage) {
         exts = sk_X509_EXTENSION_new_null();
         if (!exts) { set_error("sk_X509_EXTENSION_new_null"); goto error; }
         for (i = 0; i < PyTuple_GET_SIZE(alt_names); i++) {
@@ -146,6 +148,12 @@ static PyObject* create_rsa_cert_req(PyObject *self, PyObject *args) {
         }
         if (basic_constraints) {
             if(!add_ext(exts, NID_basic_constraints, basic_constraints, "basic_constraints")) goto error;
+        }
+        if (digital_key_usage) {
+            if(!add_ext(exts, NID_key_usage, digital_key_usage, "key_usage")) goto error;
+        }
+        if (ext_key_usage) {
+            if(!add_ext(exts, NID_ext_key_usage, ext_key_usage, "key_usage")) goto error;
         }
         X509_REQ_add_extensions(Cert, exts);
         sk_X509_EXTENSION_pop_free(exts, X509_EXTENSION_free);
@@ -269,6 +277,23 @@ static PyObject* create_rsa_cert(PyObject *self, PyObject *args) {
     if (!PubKey) { set_error("X509_REQ_get_pubkey"); goto error; }
     if (!X509_REQ_verify(req, PubKey)) { set_error("X509_REQ_verify"); goto error; }
     if (!X509_set_pubkey(Cert, PubKey)) { set_error("X509_set_pubkey"); goto error; }
+    X509_EXTENSION *ex;
+    if (req_is_for_CA_cert) {
+        X509V3_set_ctx(&ctx, Cert, Cert, NULL, NULL, 0);
+        X509V3_set_ctx_nodb(&ctx);
+    } else {
+        X509V3_set_ctx(&ctx, CA_cert, Cert, NULL, NULL, 0);
+        X509V3_set_ctx_nodb(&ctx);
+    }
+    ex = X509V3_EXT_conf_nid(NULL, &ctx, NID_subject_key_identifier, "hash");
+    if (!ex) { set_error("creating subject key identifier failed"); goto error; }
+    X509_add_ext(Cert, ex, -1);
+    X509_EXTENSION_free(ex);
+    ex = X509V3_EXT_conf_nid(NULL, &ctx, NID_authority_key_identifier, "keyid:always");
+    if (!ex) { set_error("creating authority key identifier failed"); goto error; }
+    X509_add_ext(Cert, ex, -1);
+    X509_EXTENSION_free(ex);
+
     Py_BEGIN_ALLOW_THREADS;
     signature_length = X509_sign(Cert, CA_key, EVP_sha256());
     Py_END_ALLOW_THREADS;
@@ -355,6 +380,33 @@ error:
     return ans;
 }
 
+static PyObject*
+verify_cert(PyObject *self, PyObject *args) {
+    PyObject *ca_cert_cap, *cert_cap;
+    if(!PyArg_ParseTuple(args, "OO", &ca_cert_cap, &cert_cap)) return NULL;
+    if(!PyCapsule_CheckExact(ca_cert_cap)) return PyErr_Format(PyExc_TypeError, "The ca_cert is not a capsule object");
+    if(!PyCapsule_CheckExact(cert_cap)) return PyErr_Format(PyExc_TypeError, "The cert is not a capsule object");
+    X509 *ca_cert = PyCapsule_GetPointer(ca_cert_cap, NULL);
+    X509 *cert = PyCapsule_GetPointer(cert_cap, NULL);
+    X509_STORE *store = X509_STORE_new();
+    X509_STORE_add_cert(store, ca_cert);
+    X509_STORE_set_flags(store,
+        X509_V_FLAG_X509_STRICT | X509_V_FLAG_CHECK_SS_SIGNATURE |
+        X509_V_FLAG_POLICY_CHECK | X509_V_FLAG_EXPLICIT_POLICY |
+        X509_V_FLAG_NOTIFY_POLICY);
+    X509_STORE_CTX *vfy_ctx = X509_STORE_CTX_new();
+    X509_STORE_CTX_init(vfy_ctx, store, cert, NULL);
+    // X509_STORE_CTX_set_flags(vfy_ctx, X509_V_FLAG_CRL_CHECK | X509_V_FLAG_CRL_CHECK_ALL);
+    int ok;
+    Py_BEGIN_ALLOW_THREADS
+    ok = X509_verify_cert(vfy_ctx);
+    Py_END_ALLOW_THREADS
+    X509_STORE_CTX_free(vfy_ctx);
+    X509_STORE_free(store);
+    if (!ok) { set_error("X509_verify_cert"); return NULL; }
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef certgen_methods[] = {
     {"create_rsa_keypair", create_rsa_keypair, METH_VARARGS,
         "create_rsa_keypair(size)\n\nCreate a RSA keypair of the specified size"
@@ -378,6 +430,10 @@ static PyMethodDef certgen_methods[] = {
 
     {"cert_info", cert_info, METH_VARARGS,
         "cert_info(cert)\n\nReturn the certificate information (certificate in text format)"
+    },
+
+    {"verify_cert", verify_cert, METH_VARARGS,
+        "verify_cert(cacert, cert)\n\nVerift cert against CA cert"
     },
 
     {NULL, NULL, 0, NULL}

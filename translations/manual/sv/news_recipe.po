@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-29 02:47+0000\n"
+"POT-Creation-Date: 2024-08-16 02:50+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Jonatan Nyberg, 2016-2017,2021-2024\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -83,16 +83,7 @@ msgid ""
 "links may be resolved incorrectly."
 msgstr "Returnera en uppsättning kanoniska representationer av ``url``. Standardimplementeringen använder bara serverns värdnamn och sökväg för URL:en, utan att ignorerar eventuella frågeparametrar, fragment etc. De kanoniska representationerna måste vara unika för alla URL:er för den här nyhetskällan. Om de inte är det kan interna länkar lösas felaktigt."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Parameters"
 msgstr "Parametrar"
 
@@ -166,16 +157,13 @@ msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr "Returnera en webbläsarinstans som används för att hämta dokument från webben. Som standard returneras en `mechanize (mekanisera) <https://mechanize.readthedocs.io/en/latest/>`_ webbläsarinstans som stöder kakor, ignorerar robots.txt, hanterar uppdateringar och har en Mozilla Firefox-användaragent."
+"refreshes and has a random common user agent."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
-msgstr "Om ditt recept kräver att du loggar in först, åsidosätt denna metod i din underklass. Till exempel används följande kod i receptet New York Times för att logga in för full åtkomst::"
+msgid "To customize the browser override this method in your sub-class as::"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -250,8 +238,7 @@ msgid ""
 " want to affect."
 msgstr "Returnera fördröjningen i sekunder innan du hämtar den här webbadressen. Om du programmatiskt vill bestämma fördröjningen för den angivna URL:en, åsidosätt den här metoden i din underklass och returnerar self.delay som standard för URL:er som du inte vill påverka."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Returns"
 msgstr "Returnerar"
 
@@ -264,9 +251,9 @@ msgstr "Ett flyttalnummer, fördröjningen i sekunder."
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL. Return"
+"for dynamically generated images, etc.) and return the processed URL. Return"
 " None or an empty string to skip fetching the image."
-msgstr "Utför en del bearbetning av bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder etc.) och returnera den föregående URL:en. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -540,6 +527,17 @@ msgid ""
 msgstr "Ange element som den automatiska rensningsalgoritmen aldrig ska ta bort. Syntaxen är ett XPath-uttryck. Till exempel::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine. An alternate is "
+"\"qt\" which will use the network engine from the Qt toolkit. The mechanize "
+"engine supports logging in, the Qt engine does not. However, the Qt engine "
+"supports HTTP/2 and similar technologies and also is harder for bot "
+"interception services to fingerprint."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
@@ -668,9 +666,9 @@ msgstr "Endast en av :attr:`BasicNewsRecipe.match_regexps` eller :attr:`BasicNew
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you do not want to use gzipped transfers. Note that some old"
-" servers flake out with gzip"
-msgstr "Ställ in på False om du inte vill använda gzippade överföringar. Observera att vissa gamla servrar funger dåligt med gzip"
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
@@ -790,6 +788,25 @@ msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
 msgstr "Ändra till en icke-tom sträng för att inaktivera detta recept. Strängen kommer att användas som det inaktiverade meddelandet"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:1
+msgid ""
+"Specify options specific to this recipe. These will be available for the "
+"user to customize in the Advanced tab of the Fetch News dialog or at the "
+"ebook-convert command line. The options are specified as a dictionary "
+"mapping option name to metadata about the option. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
+msgid ""
+"When the recipe is run, self.recipe_specific_options will be a dict mapping "
+"option name to the option value specified by the user. When the option is "
+"unspecified by the user, it will have the value specified by 'default'. If "
+"no default is specified, the option will not be in the dict at all, when "
+"unspecified by the user."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
