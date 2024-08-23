@@ -27,114 +27,114 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "xullo 31, 2024" "7.16.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "agosto 23, 2024" "7.17.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-server [options] [path to library folder...]
+calibre\-server [opcións] [ruta ao cartafol da biblioteca...]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Inicia o servidor de contido calibre. O servidor de contido calibre expón o teu
+bibliotecas de calibre en internet. Podes especificar o camiño á biblioteca
+carpetas como argumentos para \fBcalibre\-server\fP\&. Se non especifica ningún camiño, todos os
+utilizaranse bibliotecas que coñece o programa principal calibre.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a \fBcalibre\-server\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
 .SH [OPCIÓNS]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Ruta ao ficheiro de rexistro de acceso. Este rexistro contén información sobre os clientes que se conectan ao servidor e realizan solicitudes. Por defecto, non se realiza ningún rexistro de acceso.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Tempo (en segundos) para esperar unha resposta do servidor ao facer consultas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
+Escolla o tipo de autenticación empregada.  Establece o modo de autenticación HTTP utilizado polo servidor. Establécese como \fB\(dq\fPbásico\fB\(dq\fP se está a poñer este servidor detrás dun proxy SSL. En caso contrario, déixao como \fB\(dq\fPauto\fB\(dq\fP, que usará \fB\(dq\fPbásico\fB\(dq\fP se se configura SSL, se non, utilizará \fB\(dq\fPdigest\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+Recarga automaticamente o servidor cando cambia o código fonte. Útil para o desenvolvemento. Tamén debes especificar un valor pequeno para o tempo de espera de apagado.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Número de erros de inicio de sesión para a prohibición.     O número de erros de inicio de sesión despois dos cales se prohibe un enderezo IP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Prohibe os enderezos IP que teñan erros de inicio de sesión repetidos.      Prohibe temporalmente o acceso aos enderezos IP que teñan erros de inicio de sesión repetidos durante o número de minutos especificado. Útil para evitar intentos de adiviñar contrasinais. Se se establece en cero, non se fai ningunha prohibición.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Escolla o modo de lista de libros predeterminado.   Establece o modo de lista de libros predeterminado que se utilizará para os novos usuarios. Os usuarios individuais poden anular o valor predeterminado na súa propia configuración. O predeterminado é usar unha reixa de cobertura.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Tamaño mínimo para o que as respostas usan compresión de datos (en bytes).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+Ruta a un ficheiro JSON que contén un modelo para o modo de lista de libros personalizado. O xeito máis sinxelo de crear un ficheiro de modelo deste tipo é ir a Preferencias\-> Compartir na rede\-> Modelo de lista de libros en calibre, crear o modelo e exportalo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Executar o proceso en segundo plano como un daemon (só Linux).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Restrinxir campos definidos polo usuario mostrados.         Lista separada por comas de campos de metadatos definidos polo usuario que mostrará o servidor de contido nas vistas /opds e /mobile. Se especifica esta opción, non se mostrarán os campos que non figuren nesta lista. Por exemplo: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+A asignación previa de socket, por exemplo, coa activación de socket systemd. Por defecto, esta opción está activada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Autenticación baseada en contrasinal para acceder ao servidor.      Normalmente, o servidor non está restrinxido, permitindo a calquera acceder a el. Pode restrinxir o acceso a usuarios predefinidos con esta opción. Por defecto, esta opción está desactivada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Retorno á interface detectada automaticamente.      Se por algún motivo o servidor non pode vincularse á interface especificada na opción listen_on, tentará detectar unha interface que se conecte co mundo exterior e vincularse a ela. Por defecto, esta opción está activada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+Permitir que as conexións locais non autenticadas fagan cambios.    Normalmente, se non activas a autenticación, o servidor funciona en modo de só lectura, para non permitir que usuarios anónimos fagan cambios nas túas bibliotecas de calibre. Esta opción permite que calquera persoa que se conecte desde o mesmo ordenador no que se está a executar o servidor faga cambios. Isto é útil se queres executar o servidor sen autenticación pero aínda usa calibredb para facer cambios nas túas bibliotecas de calibre. Teña en conta que activar esta opción significa que calquera programa en execución no ordenador pode facer cambios nas súas bibliotecas de calibre. Por defecto, esta opción está desactivada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+Rexistrar solicitudes HTTP 404 (non atopadas).      Normalmente, o servidor rexistra todas as solicitudes HTTP dos recursos que non se atopan. Isto pode xerar moito spam de rexistro, se o teu servidor está dirixido por bots. Use esta opción para desactivalo. Por defecto, esta opción está activada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Anuncia fontes OPDS a través de BonJour.    Anuncia as fontes de OPDS a través do servizo BonJour, para que as aplicacións de lectura baseadas en OPDS poidan detectar e conectarse ao servidor automaticamente. Por defecto, esta opción está activada.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Transferencia de ficheiros sen copia para aumentar o rendemento.    Isto usará transferencias no núcleo sen copia cando envíe ficheiros pola rede, aumentando o rendemento. Non obstante, pode causar transferencias de ficheiros danadas nalgúns sistemas de ficheiros rotos. Se experimenta transferencias de ficheiros danadas, desactívaa. Por defecto, esta opción está activada.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -144,22 +144,22 @@ mostrar esta mensaxe de axuda e saír
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Ignoráronse os campos de metadatos definidos polo usuario.  Lista separada por comas de campos de metadatos definidos polo usuario que o servidor de contido non mostrará nas vistas /opds e /mobile. Por exemplo: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for IPv4 connections from the local machine, or to \fB\(dq\fP0.0.0.0\fB\(dq\fP to listen to all incoming IPv4 connections.
+A interface na que escoitar as conexións.   O predeterminado é escoitar en todas as interfaces IPv6 e IPv4 dispoñibles. Podes cambiar isto a, por exemplo, \fB\(dq\fP127.0.0.1\fB\(dq\fP para escoitar só as conexións IPv4 desde a máquina local, ou a \fB\(dq\fP0.0.0.0\fB\(dq\fP para escoitar todas as conexións IPv4 entrantes.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+Ruta ao ficheiro de rexistro para o rexistro do servidor. Este rexistro contén información do servidor e erros, non rexistros de acceso. Por defecto está escrito en stdout.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+Xestiona a base de datos de usuarios autorizados a conectarse a este servidor. Podes usalo en modo automatizado engadindo un \-\-. Consulte calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help para obter máis información. Consulte tamén a opción \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,37 +169,37 @@ Max. size of single HTTP header (in KB).
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Tempo máximo para procesos laborais.        Cantidade máxima de tempo que se permite executar os procesos de traballo (en minutos). Establece a cero sen límite.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Número máximo de procesos de traballo.      Os procesos de traballo lánzanse segundo sexa necesario e utilízanse para traballos grandes como preparar un libro para ver, engadir libros, converter, etc. Normalmente, o máximo. número de tales procesos baséase no número de núcleos de CPU. Podes controlalo mediante esta configuración.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Máx. tamaño do ficheiro de rexistro (en MB).        O tamaño máximo dos ficheiros de rexistro xerados polo servidor. Cando o rexistro se fai máis grande que este tamaño, rótase automaticamente. Establécese en cero para desactivar a rotación do rexistro.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Número máximo de libros en fontes OPDS.     O número máximo de libros que devolverá o servidor nun único feed de adquisición de OPDS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Número máximo de elementos sen agrupar nas fontes de OPDS.  Agrupa elementos en categorías como autor/etiquetas pola primeira letra cando haxa máis de este número de elementos. Establece a cero para desactivar.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Máx. tamaño permitido para os ficheiros cargados no servidor (en MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Número de libros para mostrar nunha soa páxina.     O número de libros que se mostrarán nunha única páxina do navegador.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -209,47 +209,47 @@ Escribir o PID de proceso no ficheiro especificado
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+O porto no que escoitar as conexións.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+Ruta a un ficheiro JSON que contén URL para a función \fB\(dq\fPBuscar en Internet\fB\(dq\fP\&. O xeito máis sinxelo de crear un ficheiro deste tipo é ir a Preferencias\-> Compartir na rede\->Buscar en internet con calibre, crear os URL e exportalos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Tempo total en segundos para esperar o apagado limpo.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Ruta ao ficheiro do certificado SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Ruta ao ficheiro de chave privada SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Tempo (en segundos) despois do cal se pecha unha conexión inactiva.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Permitir que as conexións non autenticadas de enderezos IP específicos fagan cambios.       Normalmente, se non activas a autenticación, o servidor funciona en modo de só lectura, para non permitir que usuarios anónimos fagan cambios nas túas bibliotecas de calibre. Esta opción permite que calquera persoa que se conecte desde os enderezos IP especificados faga cambios. Debe ser unha lista separada por comas de enderezos ou especificacións de rede. Isto é útil se queres executar o servidor sen autenticación pero aínda usa calibredb para facer cambios nas túas bibliotecas de calibre. Ten en conta que activar esta opción significa que calquera persoa que se conecte desde os enderezos IP especificados pode facer cambios nas túas bibliotecas de calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Un prefixo para antepoñer todos os URL.     Útil se desexa executar este servidor detrás dun proxy inverso. Por exemplo, use /calibre como prefixo de URL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \X'tty: link https://manual.calibre-ebook.com/server.html#managing-user-accounts-from-the-command-line-only'\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP\X'tty: link'
+Ruta á base de datos de usuarios para usar para a autenticación. A base de datos é un ficheiro SQLite. Para crealo use \fI\%\-\-manage\-users\fP\&. Podes ler máis sobre como xestionar usuarios en: \X'tty: link https://manual.calibre-ebook.com/server.html#managing-user-accounts-from-the-command-line-only'\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP\X'tty: link'
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -259,7 +259,7 @@ mostrar o número de versión do programa e saír
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Número de fíos de traballo empregados para procesar as solicitudes.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

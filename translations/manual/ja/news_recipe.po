@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-19 08:30+0000\n"
+"POT-Creation-Date: 2024-08-16 02:50+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Yuka Kachi, 2022\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -79,16 +79,7 @@ msgid ""
 "links may be resolved incorrectly."
 msgstr "``url`` の正準表現のセットを返します。デフォルトの実装では、サーバのホスト名とURLのパスのみが使用され、クエリパラメータ、フラグメントなどは無視されます。正準表現は、このニュースソースのすべての URL で一意である必要があります。そうでない場合は、内部リンクが正しく解決されない可能性があります。"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Parameters"
 msgstr "パラメータ"
 
@@ -162,16 +153,13 @@ msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr "Webからドキュメントをフェッチするために使用されるブラウザインスタンスを返します。デフォルトでは、Cookieをサポートし、robots.txtを無視し、更新を処理し、mozilla firefoxユーザエージェントを持つ `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ブラウザインスタンスを返します。"
+"refreshes and has a random common user agent."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
-msgstr "レシピで最初にログインする必要がある場合は、サブクラスでこのメソッドをオーバーライドします。たとえば、New York Times のレシピでは、フルアクセスのためのログイン用に次のコードが使用されています::"
+msgid "To customize the browser override this method in your sub-class as::"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -246,8 +234,7 @@ msgid ""
 " want to affect."
 msgstr ""
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Returns"
 msgstr "返り値"
 
@@ -260,7 +247,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL. Return"
+"for dynamically generated images, etc.) and return the processed URL. Return"
 " None or an empty string to skip fetching the image."
 msgstr ""
 
@@ -536,6 +523,17 @@ msgid ""
 msgstr "自動クリーンアップアルゴリズムで削除してはならない要素を指定します。構文は XPath 式です。例::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine. An alternate is "
+"\"qt\" which will use the network engine from the Qt toolkit. The mechanize "
+"engine supports logging in, the Qt engine does not. However, the Qt engine "
+"supports HTTP/2 and similar technologies and also is harder for bot "
+"interception services to fingerprint."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
@@ -664,8 +662,8 @@ msgstr ":attr:`BasicNewsRecipe.match_regexps` または :attr:`BasicNewsRecipe.f
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you do not want to use gzipped transfers. Note that some old"
-" servers flake out with gzip"
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -786,6 +784,25 @@ msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
 msgstr "空でない文字列を設定すると、このレシピを無効にします。文字列は無効のメッセージとして使用されます"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:1
+msgid ""
+"Specify options specific to this recipe. These will be available for the "
+"user to customize in the Advanced tab of the Fetch News dialog or at the "
+"ebook-convert command line. The options are specified as a dictionary "
+"mapping option name to metadata about the option. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
+msgid ""
+"When the recipe is run, self.recipe_specific_options will be a dict mapping "
+"option name to the option value specified by the user. When the option is "
+"unspecified by the user, it will have the value specified by 'default'. If "
+"no default is specified, the option will not be in the dict at all, when "
+"unspecified by the user."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-04 02:10+0000\n"
+"POT-Creation-Date: 2024-08-16 02:50+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -78,16 +78,7 @@ msgid ""
 "links may be resolved incorrectly."
 msgstr "`` Url`` இன் நியமன பிரதிநிதித்துவங்களின் தொகுப்பைத் தரவும். இயல்புநிலை செயல்படுத்தல் எந்தவொரு வினவல் அளவுருக்கள், துண்டுகள் போன்றவற்றைப் புறக்கணித்து, சேவையக ஹோஸ்ட்பெயர் மற்றும் URL இன் பாதையைப் பயன்படுத்துகிறது. இந்த செய்தி மூலத்திற்கான அனைத்து URL களிலும் நியமன பிரதிநிதித்துவங்கள் தனித்துவமாக இருக்க வேண்டும். அவை இல்லையென்றால், உள் இணைப்புகள் தவறாக தீர்க்கப்படலாம்."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Parameters"
 msgstr "அளவுருக்கள்"
 
@@ -161,16 +152,13 @@ msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr "வலையிலிருந்து ஆவணங்களைப் பெற பயன்படும் உலாவி உதாரணத்தைத் தரவும். இயல்பாக இது `இயந்திரமயமாக்கல் <https://mechanize.readthedocs.io/en/latest/>` _ _ _ _ குக்கீகளை ஆதரிக்கும், ரோபோக்களை புறக்கணிக்கிறது, புதுப்பிப்புகளை கையாளுகிறது மற்றும் மொஸில்லா பயனர் பயனர் முகவரைக் கொண்டுள்ளது."
+"refreshes and has a random common user agent."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
-msgstr "உங்கள் செய்முறைக்கு நீங்கள் முதலில் உள்நுழைய வேண்டும் என்றால், உங்கள் துணைப்பிரிவில் இந்த முறையை மேலெழுதவும். எடுத்துக்காட்டாக, முழு அணுகலுக்காக உள்நுழைய நியூயார்க் டைம்ஸ் செய்முறையில் பின்வரும் குறியீடு பயன்படுத்தப்படுகிறது ::"
+msgid "To customize the browser override this method in your sub-class as::"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -245,8 +233,7 @@ msgid ""
 " want to affect."
 msgstr "இந்த URL ஐ பதிவிறக்குவதற்கு முன் விநாடிகளில் தாமதத்தைத் தரவும். குறிப்பிட்ட URL க்கான தாமதத்தை நீங்கள் நிரல் ரீதியாக தீர்மானிக்க விரும்பினால், உங்கள் துணைப்பிரிவில் இந்த முறையை மேலெழுதவும், நீங்கள் பாதிக்க விரும்பாத URL களுக்கு இயல்புநிலையாக சுய."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Returns"
 msgstr "வருமானம்"
 
@@ -259,9 +246,9 @@ msgstr "ஒரு மிதக்கும் புள்ளி எண், வ�
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL. Return"
+"for dynamically generated images, etc.) and return the processed URL. Return"
 " None or an empty string to skip fetching the image."
-msgstr "பட URL களில் சில செயலாக்கத்தைச் செய்யுங்கள் (ஒருவேளை மாறும் வகையில் உருவாக்கப்பட்ட படங்களுக்கான அளவு கட்டுப்பாடுகளை நீக்குகிறது) மற்றும் முன்னோடி URL ஐத் தரவும். படத்தைப் பெறுவதைத் தவிர்க்க எதுவும் அல்லது வெற்று சரம் திரும்பவும்."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -535,6 +522,17 @@ msgid ""
 msgstr "ஆட்டோ தூய்மைப்படுத்தும் வழிமுறை ஒருபோதும் அகற்றக்கூடாது என்ற கூறுகளைக் குறிப்பிடவும். தொடரியல் ஒரு எக்ஸ்பாத் வெளிப்பாடு. உதாரணத்திற்கு::"
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine. An alternate is "
+"\"qt\" which will use the network engine from the Qt toolkit. The mechanize "
+"engine supports logging in, the Qt engine does not. However, the Qt engine "
+"supports HTTP/2 and similar technologies and also is harder for bot "
+"interception services to fingerprint."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
@@ -663,9 +661,9 @@ msgstr "ஒன்று மட்டுமே: ATTR: `BasicNewsRecipe.match_rege
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you do not want to use gzipped transfers. Note that some old"
-" servers flake out with gzip"
-msgstr "நீங்கள் gziped இடமாற்றங்களைப் பயன்படுத்த விரும்பவில்லை என்றால் பொய்யாக அமைக்கவும். சில பழைய சேவையகங்கள் GZIP உடன் வெளியேறுகின்றன என்பதை நினைவில் கொள்க"
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
@@ -785,6 +783,25 @@ msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
 msgstr "இந்த செய்முறையை முடக்க வெற்று அல்லாத சரத்திற்கு அமைக்கவும். சரம் முடக்கப்பட்ட செய்தியாக பயன்படுத்தப்படும்"
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:1
+msgid ""
+"Specify options specific to this recipe. These will be available for the "
+"user to customize in the Advanced tab of the Fetch News dialog or at the "
+"ebook-convert command line. The options are specified as a dictionary "
+"mapping option name to metadata about the option. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
+msgid ""
+"When the recipe is run, self.recipe_specific_options will be a dict mapping "
+"option name to the option value specified by the user. When the option is "
+"unspecified by the user, it will have the value specified by 'default'. If "
+"no default is specified, the option will not be in the dict at all, when "
+"unspecified by the user."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1

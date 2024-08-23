@@ -20,9 +20,6 @@ from bypy.utils import create_job, get_dll_path, mkdtemp, parallel_build, py_com
 j = os.path.join
 self_dir = os.path.dirname(os.path.abspath(__file__))
 machine = (os.uname()[4] or '').lower()
-arch = 'x86_64'
-if machine.startswith('arm') or machine.startswith('aarch64'):
-    arch = 'arm64'
 py_ver = '.'.join(map(str, python_major_minor_version()))
 QT_PREFIX = os.path.join(PREFIX, 'qt')
 iv = globals()['init_env']
@@ -273,12 +270,13 @@ def strip_binaries(env):
 def create_tarfile(env, compression_level='9'):
     print('Creating archive...')
     base = OUTPUT_DIR
+    arch = 'arm64' if 'arm64' in os.environ['BYPY_ARCH'] else ('i686' if 'i386' in os.environ['BYPY_ARCH'] else 'x86_64')
     try:
         shutil.rmtree(base)
     except EnvironmentError as err:
-        if err.errno != errno.ENOENT:
+        if err.errno not in (errno.ENOENT, errno.EBUSY):
             raise
-    os.mkdir(base)
+    os.makedirs(base, exist_ok=True)  # when base is a mount point deleting it fails with EBUSY
     dist = os.path.join(base, '%s-%s-%s.tar' % (calibre_constants['appname'], calibre_constants['version'], arch))
     with tarfile.open(dist, mode='w', format=tarfile.PAX_FORMAT) as tf:
         cwd = os.getcwd()

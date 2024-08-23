@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-17 02:39+0000\n"
+"POT-Creation-Date: 2024-08-16 02:50+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/calibre/calibre/language/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (http://app.transifex.com/calibre/calibre/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -39,10 +39,6 @@ msgid ""
 "presenting a way to organize and display subgroups of books within a calibre"
 " library."
 msgstr "在继续之前，请注意我们不是在谈论硬盘上的文件夹。子组不是文件文件夹。任何地方都不会复制书籍。calibre的书库文件结构不受影响。相反，我们提供了一种在一个calibre书库中组织和显示图书子组的方法。"
-
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
-msgid "sgtree"
-msgstr "子组树"
 
 #: ../../__w/calibre/calibre/manual/sub_groups.rst:18
 msgid "The commonly-provided requirements for subgroups such as genres are:"
@@ -81,6 +77,10 @@ msgid ""
 "genre or sub-genre. For example, assume that your genre structure is similar"
 " to the following::"
 msgstr "|sgtree | |体裁树搜索|calibre分级特性为您提供了第三种功能，即在“树”中查看体裁，并能够轻松地搜索体裁或子类型的书籍。例如，假设你的体裁结构与以下类似："
+
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
+msgid "sgtree"
+msgstr "子组树"
 
 #: ../../__w/calibre/calibre/manual/sub_groups.rst:45
 msgid ""
@@ -138,20 +138,19 @@ msgstr "现在，您的问题可能是“所有这些设置是如何的？”有
 msgid ""
 "You create the custom column in the usual way, using Preferences -> Add your"
 " own columns. This example uses \"#genre\" as the lookup name and \"Genre\" "
-"as the column heading. The column type is \"Comma-separated text, like tags,"
-" shown in the Tag browser.\""
-msgstr "您可以使用“首选项->添加你自己的列”以通常的方式创建自定义列。本例使用“#体裁”作为查找名称，使用“体裁”作为列标题。列类型是“逗号分隔的文本，就像标签浏览器中显示的标签一样。”"
+"as the column heading. It is important that the column type is set to "
+":guilabel:`Comma-separated text, like tags, shown in the Tag browser`."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/sub_groups.rst:63
 msgid ""
 "Then after restarting calibre, you must tell calibre that the column is to "
 "be treated as a hierarchy. Go to :guilabel:`Preferences -> Look & feel -> "
-"Tag browser` and enter the lookup name \"#genre\" into the \"Categories with"
-" hierarchical items\" box. Press :guilabel:`Apply`, and you are done with "
-"setting up."
-msgstr "然后，在重新启动Calibre之后，您必须告诉Calibre该列将被视为层次结构。进入：guilabel：`首选项->外观->标签浏览器`，在“具有层次结构的分类”框中输入查找名称“#体裁”。按：Guilabel：`应用`，设置完毕。"
+"Tag browser -> Hierarchy and searching` and choose the new Genre column as "
+"having hierarchical items."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:68
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:67
 msgid ""
 "At the point there are no genres in the column. We are left with the last "
 "step: how to apply a genre to a book. A genre does not exist in calibre "
@@ -160,7 +159,7 @@ msgid ""
 "the metadata for a book."
 msgstr "在这一点上，列中没有流派。我们只剩下最后一步：如何将一种体裁应用于一本书。一种体裁只有在至少一本书上出现时，它才能在calibre上存在。要第一次学习如何应用一种体裁，我们必须详细了解一本书的元数据中的体裁是什么样子。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:70
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:69
 msgid ""
 "A hierarchy of 'things' is built by creating an item consisting of phrases "
 "separated by periods. Continuing the genre example, these items would "
@@ -174,29 +173,29 @@ msgid ""
 "custom columns):"
 msgstr "“事物”的层次结构是通过创建一个由句点分隔的短语组成的项来构建的。继续体裁示例，这些项目将“历史.军事\", \"神秘.吸血鬼“，”科幻.太空歌剧”等等。因此，要创建新体裁，请选择一本应该具有该体裁的书，编辑其元数据，并将新体裁输入到您创建的列中。如果你想给一本书分配一个新的体裁“漫画”和一个子体裁“超级英雄”，你需要为那本（漫画）书“编辑元数据”，选择“自定义元数据”选项卡，然后输入“漫画。超级英雄“如下所示（忽略其他自定义列）："
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:75
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:74
 msgid "After doing the above, you see in the Tag browser:"
 msgstr "完成上述操作后，您将在“标签浏览器”中看到："
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:80
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:79
 msgid ""
 "From here on, to apply this new genre to a book (a comic book, presumably), "
 "you can either drag the book onto the genre, or add it to the book using "
 "edit metadata in exactly the same way as done above."
 msgstr "从现在开始，要将这一新体裁应用于一本书(假设是漫画书)，您可以将书拖到该体裁上，或者使用编辑元数据将其添加到书中，方法与上面完全相同。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:84
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:83
 msgid ""
 "Hierarchical display only works if the Tag browser is set to sort items by "
 "name. This is the default and can be checked by clicking the "
 ":guilabel:`Configure` button at the bottom of the Tag browser."
 msgstr "仅当Tag Browser设置为按名称对项目排序时，分层显示才有效。这是默认设置，单击\"标签浏览器\"底部的：guilabel：`设置`按钮即可查看。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:89
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:88
 msgid "Searching"
 msgstr "搜尋"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:94
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:93
 msgid ""
 "The easiest way to search for genres is using the Tag browser, clicking on "
 "the genre you wish to see. Clicking on a genre with children will show you "
@@ -207,7 +206,7 @@ msgid ""
 "\"History\"?"
 msgstr "最简单的搜索体裁的方法是使用”标签浏览器”，点击你想看到的体裁。点击一个有儿童的体裁，你会看到有这个体裁和所有儿童体裁的书。然而，这可能会带来一个问题。仅仅因为一个体裁有孩子并不意味着它本身就不是一个体裁。例如，一本书的体裁可以是“历史”，但不是\"历史.军事\". 你如何搜索只有“历史”体裁的书？"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:96
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:95
 msgid ""
 "The Tag browser search mechanism knows if an item has children. If it does, "
 "clicking on the item cycles through 5 searches instead of the normal three. "
@@ -220,11 +219,11 @@ msgid ""
 "no mark, meaning no search."
 msgstr "“标签浏览器”搜索机制知道项是否有子项。如果是这样，单击该项将循环进行5次搜索，而不是常规的三次搜索。第一种是普通的绿色加号，它只向你展示那种体裁的书（例如历史）。第二个是双倍加号（如上图所示），它向您展示具有该类型和所有子类型（例如，历史和历史.军事). 第三种是正常的红色减号，它显示的是没有那种类型的书。第四个是一个双倍减号，它显示的是没有这种类型或子类型的书。第五个是回到开始，没有标记，意味着没有搜索。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:99
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:98
 msgid "Restrictions"
 msgstr "限制"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:101
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:100
 msgid ""
 "If you search for a genre then create a saved search for it, you can use the"
 " 'restrict to' box to create a Virtual library of books with that genre. "
@@ -237,15 +236,15 @@ msgid ""
 " side)."
 msgstr "如果您搜索某一体裁，然后为其创建保存的搜索，您可以使用“限制为”框来创建具有该体裁图书的“虚拟书库”。如果要在该体裁内进行其他搜索或管理/更新该体裁图书的元数据，这将非常有用。继续我们的示例，您可以创建名为‘历史.日本’的已保存搜索，方法是：首先单击“标记浏览器”中的\"日本历史\"体裁，将搜索放入搜索字段，在已保存搜索字段中输入历史.日本，然后按下“保存搜索”按钮(右侧带有白色加号的绿色框)。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:106
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:105
 msgid "After creating the saved search, you can use it as a restriction."
 msgstr "创建保存的搜索后，您可以将其用作限制。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:112
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:111
 msgid "Useful template functions"
 msgstr "有用的模板函数"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:114
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:113
 msgid ""
 "You might want to use the genre information in a template, such as with save"
 " to disk or send to device. The question might then be \"How do I get the "
@@ -253,7 +252,7 @@ msgid ""
 "provided to make doing this easier."
 msgstr "您可能需要在模板中使用体裁信息，例如“保存到磁盘”或“发送到设备”。接下来的问题可能是“如何获得最外层的体裁名称？”提供了一个calibre模板函数subitems来简化这一过程。"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:116
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:115
 msgid ""
 "For example, assume you want to add the outermost genre level to the save-"
 "to-disk template to make genre folders, as in \"History/The Gathering Storm "
@@ -262,7 +261,7 @@ msgid ""
 "should make a folder. The template below accomplishes this::"
 msgstr "例如，假设您要将最外层的体裁级别添加到“保存到磁盘”模板中，以创建流派文件夹，如“历史/聚集风暴-丘吉尔，温斯顿”中所示。为此，您必须提取层次结构的第一级，并将其与斜线一起添加到前面，以指示它应该成为一个文件夹。下面的模板实现了这一点："
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:120
+#: ../../__w/calibre/calibre/manual/sub_groups.rst:119
 msgid ""
 "See :ref:`The template language <templatelangcalibre>` for more information "
 "about templates and the :func:`subitems` function."

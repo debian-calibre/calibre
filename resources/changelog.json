@@ -1,5 +1,99 @@
 [
     {
+        "version": "7.17.0",
+        "date": "2024-08-23",
+        "new features": [
+            {
+                "type": "major",
+                "title": "E-book viewer: Support for jumping to and displaying paper edition page numbers",
+                "description": "If an e-book contains embedded information about the pages from the paper edition of the book, the calibre E-book viewer can now jump to a page number via the Go to button in the viewer controls. You can also optionally have the current paper edition page number displayed in the header/footer by adding \"Pages from paper edition\" to either the header or footer in the viewer settings."
+            },
+            {
+                "tickets": [
+                    2076251
+                ],
+                "title": "Edit book: When text is selected allow changing the indentation of all lines in the selection by pressing Tab to increase one level or Shift+Tab to decrease one level"
+            },
+            {
+                "title": "Allow a plugboard to change the series_index as well as the series name."
+            },
+            {
+                "title": "News download: News recipes can now optionally use browser engines based on either Qt or Chromium network stacks instead of mechanize"
+            },
+            {
+                "title": "Email delivery: When sending emails to Kindles do not convert filenames to English letters as Amazon appears to have finally fixed their email servers to handle non-English filenames"
+            },
+            {
+                "tickets": [
+                    2075565
+                ],
+                "title": "Quickview: Add a tooltip displaying the full cell contents"
+            }
+        ],
+        "bug fixes": [
+            {
+                "title": "Update the version of the Qt toolkit bundled with calibre to the latest available, fixing some crashes on macOS related to accessibility tools"
+            },
+            {
+                "tickets": [
+                    2075970
+                ],
+                "title": "Edit book: Fix searching marking incorrect text in the presence of non-BMP unicode characters"
+            },
+            {
+                "tickets": [
+                    2074002
+                ],
+                "title": "Conversion: Do not embed a second copy of a font when using the option to embed font family if the font is already embedded in the book"
+            },
+            {
+                "tickets": [
+                    2076515
+                ],
+                "title": "calibredb list: Fix a regression in the previous release that required setting --template-header to empty to use the list command"
+            },
+            {
+                "title": "Tolino driver: Fix books from the Tolino cloud not being listed"
+            },
+            {
+                "title": "Windows: Book details panel: Fix selection not visible when using the system default theme"
+            },
+            {
+                "tickets": [
+                    2073441
+                ],
+                "title": "Hide the Virtual library tab bar in device view as it is non-functional"
+            }
+        ],
+        "improved recipes": [
+            "Jot Down",
+            "Various Russian and Ukranian news sources",
+            "Nautilus Magazine",
+            "S\u00fcddeutsche Zeitung",
+            "The India Forum",
+            "WSJ",
+            "National Geographic",
+            "Washington Post",
+            "Mediapart",
+            "Bloomberg",
+            "Nautilus"
+        ],
+        "new recipes": [
+            {
+                "title": "GaGadget",
+                "author": "bugmen00t"
+            },
+            {
+                "title": "S\u00fcddeutsche Zeitung Magazin",
+                "author": "unkn0wn"
+            },
+            {
+                "title": "Science Journal",
+                "author": "unkn0wn"
+            }
+        ]
+    },
+    {
         "version": "7.16.0",
         "date": "2024-07-31",
         "new features": [

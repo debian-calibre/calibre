@@ -427,7 +427,15 @@ class BasicNewsRecipe(Recipe):
     #: If no default is specified, the option will not be in the dict at all, when unspecified by the user.
     recipe_specific_options = None
 
-    #: Set to False if you do not want to use gzipped transfers. Note that some old servers flake out with gzip
+    #: The simulated browser engine to use when downloading from servers. The default is to use the Python mechanize
+    #: browser engine, which supports logging in. However, if you don't need logging in, consider changing this
+    #: to either 'webengine' which uses an actual Chromium browser to do the network requests or 'qt' which
+    #: uses the Qt Networking backend. Both 'webengine' and 'qt' support HTTP/2, which mechanize does not and
+    #: are thus harder to fingerprint for bot protection services.
+    browser_type = 'mechanize'
+
+    #: Set to False if you do not want to use gzipped transfers with the mechanize browser.
+    #: Note that some old servers flake out with gzip.
     handle_gzip = True
 
     # See the built-in recipes for examples of these settings.
@@ -515,7 +523,7 @@ class BasicNewsRecipe(Recipe):
     def image_url_processor(cls, baseurl, url):
         '''
         Perform some processing on image urls (perhaps removing size restrictions for
-        dynamically generated images, etc.) and return the precessed URL. Return None
+        dynamically generated images, etc.) and return the processed URL. Return None
         or an empty string to skip fetching the image.
         '''
         return url
@@ -533,14 +541,23 @@ class BasicNewsRecipe(Recipe):
         Return a browser instance used to fetch documents from the web. By default
         it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_
         browser instance that supports cookies, ignores robots.txt, handles
-        refreshes and has a mozilla firefox user agent.
+        refreshes and has a random common user agent.
 
-        If your recipe requires that you login first, override this method
-        in your subclass. For example, the following code is used in the New York
-        Times recipe to login for full access::
+        To customize the browser override this method in your sub-class as::
 
-            def get_browser(self):
-                br = BasicNewsRecipe.get_browser(self)
+            def get_browser(self, *a, **kw):
+                br = super().get_browser(*a, **kw)
+                # Add some headers
+                br.addheaders += [
+                    ('My-Header', 'one'),
+                    ('My-Header2', 'two'),
+                ]
+                # Set some cookies
+                br.set_cookie('name', 'value')
+                br.set_cookie('name2', 'value2', domain='.mydomain.com')
+                # Make a POST request with some data
+                br.open('https://someurl.com', {'username': 'def', 'password': 'pwd'}).read()
+                # Do a login via a simple web form (only supported with mechanize browsers)
                 if self.username is not None and self.password is not None:
                     br.open('https://www.nytimes.com/auth/login')
                     br.select_form(name='login')
@@ -555,6 +572,10 @@ class BasicNewsRecipe(Recipe):
             ua = getattr(self, 'last_used_user_agent', None) or self.calibre_most_common_ua or random_user_agent(allow_ie=False)
             kwargs['user_agent'] = self.last_used_user_agent = ua
         self.log('Using user agent:', kwargs['user_agent'])
+        if self.browser_type != 'mechanize':
+            from calibre.scraper.qt import Browser, WebEngineBrowser
+            return {'qt': Browser, 'webengine': WebEngineBrowser}[self.browser_type](
+                user_agent=kwargs['user_agent'], verify_ssl_certificates=kwargs.get('verify_ssl_certificates', False))
         br = browser(*args, **kwargs)
         br.addheaders += [('Accept', '*/*')]
         if self.handle_gzip:
@@ -580,7 +601,7 @@ class BasicNewsRecipe(Recipe):
 
     @property
     def cloned_browser(self):
-        if hasattr(self.get_browser, 'is_base_class_implementation'):
+        if hasattr(self.get_browser, 'is_base_class_implementation') and self.browser_type == 'mechanize':
             # We are using the default get_browser, which means no need to
             # clone
             br = BasicNewsRecipe.get_browser(self)

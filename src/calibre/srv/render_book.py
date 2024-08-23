@@ -193,6 +193,19 @@ def toc_anchor_map(toc):
     return dict(ans)
 
 
+def pagelist_anchor_map(page_list):
+    ans = defaultdict(list)
+    seen_map = defaultdict(set)
+    for i, x in enumerate(page_list):
+        x['id'] = i + 1
+        name = x['dest']
+        frag = x['frag']
+        if name and frag not in seen_map[name]:
+            ans[name].append({'id': x['id'], 'pagenum': x['pagenum'], 'frag':frag})
+            seen_map[name].add(frag)
+    return dict(ans)
+
+
 class SimpleContainer(ContainerBase):
 
     tweak_mode = True
@@ -713,7 +726,9 @@ def process_exploded_book(
         name == 'mimetype' or not container.has_name_and_is_not_empty(name)}
     raster_cover_name, titlepage_name = create_cover_page(container, input_fmt.lower(), is_comic, book_metadata)
 
-    toc = get_toc(container, verify_destinations=False).to_dict(count())
+    tocobj = get_toc(container, verify_destinations=False)
+    page_list = tocobj.page_list or []
+    toc = tocobj.to_dict(count())
     if not toc or not toc.get('children'):
         toc = from_xpaths(container, ['//h:h1', '//h:h2', '//h:h3']).to_dict(count())
     spine = [name for name, is_linear in container.spine_names]
@@ -746,6 +761,8 @@ def process_exploded_book(
         'landmarks': landmarks,
         'link_to_map': {},
         'page_progression_direction': page_progression_direction,
+        'page_list': page_list,
+        'page_list_anchor_map': pagelist_anchor_map(page_list),
     }
 
     names = sorted(
