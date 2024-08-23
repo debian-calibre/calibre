@@ -1,0 +1,29 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 23 Aug 2024 14:48:47 +0900
+Subject: Back port to Qt 6.6 (QNetworkAccessManager::get())
+
+GET method with data is available from Qt 6.7.
+Use non-data method.
+
+----
+  File ".../src/calibre/scraper/qt_backend.py", line 220, in download
+    reply = self.get(rq, data)
+            ^^^^^^^^^^^^^^^^^^
+TypeError: get(self, request: QNetworkRequest): too many arguments
+---
+ src/calibre/scraper/qt_backend.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/scraper/qt_backend.py b/src/calibre/scraper/qt_backend.py
+index 3af0827..1c8cb20 100644
+--- a/src/calibre/scraper/qt_backend.py
++++ b/src/calibre/scraper/qt_backend.py
+@@ -217,7 +217,7 @@ class FetchBackend(QNetworkAccessManager):
+             with open(data_path, 'rb') as f:
+                 data = f.read()
+         if qmethod == 'get':
+-            reply = self.get(rq, data)
++            reply = self.get(rq)
+         elif qmethod == 'post':
+             reply = self.post(rq, data)
+         elif qmethod == 'put':
