@@ -96,7 +96,7 @@ index 5f217d5..0e39f9f 100644
      # }}}
  
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index 7e4ea0e..ff01af5 100644
+index ec2f20e..af02b37 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
 @@ -114,8 +114,8 @@ class LoopTest(BaseTest):
@@ -111,10 +111,10 @@ index 7e4ea0e..ff01af5 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 8612e18..780a39a 100644
+index 8576749..47fdc76 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -383,7 +383,7 @@ class BuildTest(unittest.TestCase):
+@@ -390,7 +390,7 @@ class BuildTest(unittest.TestCase):
              p.titleChanged.connect(do_webengine_test)
              p.renderProcessTerminated.connect(render_process_crashed)
              p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')

@@ -10,7 +10,7 @@ Allow hardening flags from debhelper.
  1 file changed, 13 insertions(+)
 
 diff --git a/setup/build.py b/setup/build.py
-index d0a6891..c04f8e8 100644
+index 4fa8a39..e8d6a76 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -268,6 +268,10 @@ def init_env(debug=False, sanitize=False, compiling_for='native'):
@@ -24,7 +24,7 @@ index d0a6891..c04f8e8 100644
          cflags += base_cflags
          ldflags += base_ldflags
          cflags += ['-fvisibility=hidden']
-@@ -732,6 +736,15 @@ sip-file = {os.path.basename(sipf)!r}
+@@ -731,6 +735,15 @@ sip-file = {os.path.basename(sipf)!r}
          cwd = os.getcwd()
          try:
              os.chdir(os.path.join(src_dir, 'build'))
@@ -37,6 +37,6 @@ index d0a6891..c04f8e8 100644
 +                        raw = raw.replace('LFLAGS        =', 'LFLAGS        = ' + os.environ.get('LDFLAGS',  ''))
 +                        f.seek(0), f.truncate()
 +                        f.write(raw)
-             self.check_call([self.env.make] + ([] if iswindows else ['-j%d'%(os.cpu_count() or 1)]))
-             e = 'pyd' if iswindows else 'so'
-             m = glob.glob(f'{ext.name}/{ext.name}.*{e}')
+             env = os.environ.copy()
+             if is_macos_universal_build:
+                 env['ARCHS'] = 'x86_64 arm64'
