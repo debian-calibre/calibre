@@ -60,9 +60,10 @@ override_dh_auto_test:
 	dh_auto_test -O--buildsystem=makefile -- -f debian/calibre-builder.mak test
 
 calibre_auto_test:
-	env TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=qt
-	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book $(TEST_FLAGS)
-	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt        $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test $(TEST_FLAGS) --exclude-test-name=ajax_book --exclude-test-name=qt --exclude-test-name=recipe_browser_qt
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=ajax_book         $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=qt                $(TEST_FLAGS)
+	env TZ=UTC $(CI_ENV) $(SETUP) test --test-name=recipe_browser_qt $(TEST_FLAGS)
 
 execute_before_dh_install:
 	dh_buildinfo
