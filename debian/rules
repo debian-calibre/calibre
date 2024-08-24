@@ -29,8 +29,8 @@ CI_ENV =
 # This test always stole
 TEST_FLAGS += --exclude-test-name=fts_pool
 
-# Disable some test when in package builder environment
-ifeq ($(wildcard .git),)
+# Enable all tests while in UNRELEASED
+ifneq ($(shell dpkg-parsechangelog --show-field=Distribution),UNRELEASED)
   include debian/buildd-options.mak
   CI_ENV += CI=true
 endif
