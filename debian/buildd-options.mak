@@ -6,6 +6,9 @@ TEST_FLAGS += --exclude-test-name=workers
 # D-Bus is not wroks on build server environment
 TEST_FLAGS += --exclude-test-name=dbus
 
+# network connection is unreliable on build server environment
+TEST_FLAGS += --exclude-test-name=recipe_browser_qt
+
 # Disable some tests for specific platforms
 ifeq      (armhf, $(DEB_HOST_ARCH))
   # seccomp-bpf crash
