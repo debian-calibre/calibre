@@ -1,0 +1,25 @@
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 30 Jul 2024 13:40:21 +0530
+Subject: Fix #2075130 [Private
+ bug](https://bugs.launchpad.net/calibre/+bug/2075130)
+
+Origin: backport, https://github.com/kovidgoyal/calibre/commit/863abac24e7bc3e5ca0b3307362ff1953ba53fe0.patch
+Forwarded: not-needed
+Bug-Debian: https://security-tracker.debian.org/tracker/CVE-2024-7008
+---
+ src/calibre/srv/legacy.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/srv/legacy.py b/src/calibre/srv/legacy.py
+index c3a782e..e8722f0 100644
+--- a/src/calibre/srv/legacy.py
++++ b/src/calibre/srv/legacy.py
+@@ -256,7 +256,7 @@ def browse(ctx, rd, rest):
+     if rest.startswith('book/'):
+         # implementation of https://bugs.launchpad.net/calibre/+bug/1698411
+         # redirect old server book URLs to new URLs
+-        redirect = ctx.url_for(None) + '#book_id=' + rest[5:] + "&amp;panel=book_details"
++        redirect = ctx.url_for(None) + '#book_id=' + int(rest[5:]) + "&amp;panel=book_details"
+         from lxml import etree as ET
+         return html(ctx, rd, endpoint,
+                  E.html(E.head(
