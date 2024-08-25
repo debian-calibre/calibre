@@ -1,0 +1,42 @@
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 30 Jul 2024 13:36:39 +0530
+Subject: Fix #2075131 [Private
+ bug](https://bugs.launchpad.net/calibre/+bug/2075131)
+
+Origin: backport, https://github.com/kovidgoyal/calibre/commit/d56574285e8859d3d715eb7829784ee74337b7d7.patch
+Forwarded: not-needed
+Bug-Debian: https://security-tracker.debian.org/tracker/CVE-2024-7009
+---
+ src/calibre/db/backend.py | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/src/calibre/db/backend.py b/src/calibre/db/backend.py
+index 55526b7..bae5b35 100644
+--- a/src/calibre/db/backend.py
++++ b/src/calibre/db/backend.py
+@@ -1803,18 +1803,20 @@ class DB(object):
+     ):
+         fts_table = 'annotations_fts_stemmed' if use_stemming else 'annotations_fts'
+         text = 'annotations.searchable_text'
++        data = []
+         if highlight_start is not None and highlight_end is not None:
+             if snippet_size is not None:
+-                text = 'snippet({fts_table}, 0, "{highlight_start}", "{highlight_end}", "…", {snippet_size})'.format(
+-                        fts_table=fts_table, highlight_start=highlight_start, highlight_end=highlight_end,
+-                        snippet_size=max(1, min(snippet_size, 64)))
++                text = "snippet({fts_table}, 0, ?, ?, '…', {snippet_size})".format(
++                        fts_table=fts_table, snippet_size=max(1, min(snippet_size, 64)))
+             else:
+-                text = 'highlight({}, 0, "{}", "{}")'.format(fts_table, highlight_start, highlight_end)
++                text = f"highlight({fts_table}, 0, ?, ?)"
++            data.append(highlight_start)
++            data.append(highlight_end)
+         query = 'SELECT {0}.id, {0}.book, {0}.format, {0}.user_type, {0}.user, {0}.annot_data, {1} FROM {0} '
+         query = query.format('annotations', text)
+         query += ' JOIN {fts_table} ON annotations.id = {fts_table}.rowid'.format(fts_table=fts_table)
+         query += ' WHERE {fts_table} MATCH ?'.format(fts_table=fts_table)
+-        data = [fts_engine_query]
++        data.append(fts_engine_query)
+         if restrict_to_user:
+             query += ' AND annotations.user_type = ? AND annotations.user = ?'
+             data += list(restrict_to_user)
