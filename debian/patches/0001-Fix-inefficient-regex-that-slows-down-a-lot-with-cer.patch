@@ -1,0 +1,36 @@
+From 12327c27b66cc2749a3c1ca7a55911af01d56f06 Mon Sep 17 00:00:00 2001
+From: Kovid Goyal <kovid@kovidgoyal.net>
+Date: Tue, 23 Nov 2021 21:26:18 +0530
+Subject: Fix inefficient regex that slows down a lot with certain input. Fixes
+ #1951979 [Private bug](https://bugs.launchpad.net/calibre/+bug/1951979)
+
+---
+ src/calibre/ebooks/conversion/preprocess.py | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/ebooks/conversion/preprocess.py b/src/calibre/ebooks/conversion/preprocess.py
+index e3e6983742..baa7e2d49f 100644
+--- a/src/calibre/ebooks/conversion/preprocess.py
++++ b/src/calibre/ebooks/conversion/preprocess.py
+@@ -47,7 +47,7 @@
+ 
+ 
+ def sanitize_head(match):
+-    x = match.group(1)
++    x = match.group(1).strip()
+     x = _span_pat.sub('', x)
+     return '<head>\n%s\n</head>' % x
+ 
+@@ -381,8 +381,7 @@ def html_preprocess_rules():
+         (re.compile(r'\s{10000,}'), ''),
+         # Some idiotic HTML generators (Frontpage I'm looking at you)
+         # Put all sorts of crap into <head>. This messes up lxml
+-        (re.compile(r'<head[^>]*>\n*(.*?)\n*</head>', re.IGNORECASE|re.DOTALL),
+-        sanitize_head),
++        (re.compile(r'<head[^>]*>(.*?)</head>', re.IGNORECASE|re.DOTALL), sanitize_head),
+         # Convert all entities, since lxml doesn't handle them well
+         (re.compile(r'&(\S+?);'), convert_entities),
+         # Remove the <![if/endif tags inserted by everybody's darling, MS Word
+-- 
+2.30.2
+
