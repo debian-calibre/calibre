@@ -18,6 +18,7 @@ import zipfile
 from bypy.constants import CL, LINK, MT, PREFIX, RC, SIGNTOOL, SW, build_dir, python_major_minor_version, worker_env
 from bypy.constants import SRC as CALIBRE_DIR
 from bypy.freeze import cleanup_site_packages, extract_extension_modules, freeze_python, path_to_freeze_dir
+from bypy.pkgs.piper import copy_piper_dir
 from bypy.utils import mkdtemp, py_compile, run, walk
 
 iv = globals()['init_env']
@@ -138,6 +139,9 @@ def freeze(env, ext_dir, incdir):
     os.mkdir(ossm)
     for f in glob.glob(os.path.join(PREFIX, 'lib', 'ossl-modules', '*.dll')):
         copybin(f, ossm)
+    for f in glob.glob(os.path.join(PREFIX, 'ffmpeg', 'bin', '*.dll')):
+        copybin(f)
+    copy_piper_dir(PREFIX, env.dll_dir)
 
     copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver.replace('.', '')))
     copybin(os.path.join(env.python_base, 'python%s.dll' % env.py_ver[0]))
@@ -370,12 +374,18 @@ def sign_files(env, files):
             'https://calibre-ebook.com', '/f', CODESIGN_CERT, '/p', pw, '/tr']
 
     def runcmd(cmd):
-        for timeserver in ('http://sha256timestamp.ws.symantec.com/sha256/timestamp', 'http://timestamp.comodoca.com/rfc3161',):
+        # See https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710 for list of timestamp servers
+        for timeserver in (
+            'http://timestamp.acs.microsoft.com/',  # this is Microsoft Azure Code Signing
+            'http://rfc3161.ai.moda/windows',  # this is a load balancer
+            'http://timestamp.comodoca.com/rfc3161',
+            'http://timestamp.sectigo.com'
+        ):
             try:
                 subprocess.check_call(cmd + [timeserver] + list(files))
                 break
             except subprocess.CalledProcessError:
-                print('Signing failed, retrying with different timestamp server')
+                print(f'Signing failed with timestamp server {timeserver}, retrying with different timestamp server')
         else:
             raise SystemExit('Signing failed')
 

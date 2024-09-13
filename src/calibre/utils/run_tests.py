@@ -186,9 +186,9 @@ class TestImports(unittest.TestCase):
             exclude_modules.add('calibre.utils.open_with.osx')
         if not islinux:
             exclude_modules |= {
-                    'calibre.linux',
-                    'calibre.utils.linux_trash', 'calibre.utils.open_with.linux',
-                    'calibre.gui2.linux_file_dialogs',
+                'calibre.linux', 'calibre.gui2.tts.speechd',
+                'calibre.utils.linux_trash', 'calibre.utils.open_with.linux',
+                'calibre.gui2.linux_file_dialogs',
             }
         if not isbsd:
             exclude_modules.add('calibre.devices.usbms.hal')
@@ -269,6 +269,8 @@ def find_tests(which_tests=None, exclude_tests=None):
         a(find_tests())
         from calibre.gui2.viewer.annotations import find_tests
         a(find_tests())
+        from calibre.ebooks.html_entities import find_tests
+        a(find_tests())
     if ok('misc'):
         from calibre.ebooks.html.input import find_tests
         a(find_tests())
@@ -302,8 +304,6 @@ def find_tests(which_tests=None, exclude_tests=None):
         a(find_tests())
         if iswindows:
             from calibre.utils.windows.wintest import find_tests
-            a(find_tests())
-            from calibre.utils.windows.winsapi import find_tests
             a(find_tests())
         a(unittest.defaultTestLoader.loadTestsFromTestCase(TestImports))
     if ok('dbcli'):

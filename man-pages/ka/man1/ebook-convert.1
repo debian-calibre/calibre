@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "აგვისტო 23, 2024" "7.17.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "სექტემბერი 13, 2024" "7.18.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -827,12 +827,32 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-new\-pdf\-engine
-Use the new PDF conversion engine. Currently not operational.
+Use the new, experimental, PDF conversion engine.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-images
 Do not extract images from the document
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-footer\-regex
+Regular expression to remove lines at the bottom of a page. This only looks at the last line of a page and works only with the new PDF engine.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-footer\-skip
+Skip everything to the specified number of pixels at the bottom of a page. Negative numbers mean auto\-detect and remove footers, zero means do not remove footers and positive numbers mean remove footers that appear below that many pixels from the bottom of the page. Works only with the new PDF engine.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-header\-regex
+Regular expression to remove lines at the top of a page. This only looks at the first line of a page and works only with the new PDF engine.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pdf\-header\-skip
+Skip everything to the specified number pixels at the top of a page. Negative numbers mean auto\-detect and remove headers, zero means do not remove headers and positive numbers mean remove headers that appear above that many pixels from the top of the page. Works only with the new PDF engine.
 .UNINDENT
 .INDENT 0.0
 .TP

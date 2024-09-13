@@ -15,6 +15,7 @@ from functools import partial
 from bypy.constants import LIBDIR, OUTPUT_DIR, PREFIX, python_major_minor_version
 from bypy.constants import SRC as CALIBRE_DIR
 from bypy.freeze import extract_extension_modules, fix_pycryptodome, freeze_python, is_package_dir, path_to_freeze_dir
+from bypy.pkgs.piper import copy_piper_dir
 from bypy.utils import create_job, get_dll_path, mkdtemp, parallel_build, py_compile, run, walk
 
 j = os.path.join
@@ -38,7 +39,7 @@ def binary_includes():
             ('usb-1.0 mtp expat sqlite3 ffi z lzma openjp2 poppler dbus-1 iconv xml2 xslt jpeg png16'
              ' webp webpmux webpdemux sharpyuv exslt ncursesw readline chm hunspell-1.7 hyphen'
              ' icudata icui18n icuuc icuio stemmer gcrypt gpg-error uchardet graphite2'
-             ' brotlicommon brotlidec brotlienc zstd podofo ssl crypto tiff'
+             ' brotlicommon brotlidec brotlienc zstd podofo ssl crypto deflate tiff'
              ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
         )) + [
             # debian/ubuntu for for some typical stupid reason use libpcre.so.3
@@ -105,6 +106,11 @@ def import_site_packages(srcdir, dest):
                     import_site_packages(src, dest)
         elif is_package_dir(f):
             shutil.copytree(f, j(dest, x), ignore=ignore_in_lib)
+
+
+def copy_piper(env):
+    print('Copying piper...')
+    copy_piper_dir(PREFIX, env.bin_dir)
 
 
 def copy_libs(env):
@@ -252,7 +258,7 @@ def strip_files(files, argv_max=(256 * 1024)):
 
 
 def strip_binaries(env):
-    files = {j(env.bin_dir, x) for x in os.listdir(env.bin_dir)} | {
+    files = {j(env.bin_dir, x) for x in os.listdir(env.bin_dir) if x != 'piper'} | {
         x for x in {
             j(os.path.dirname(env.bin_dir), x) for x in os.listdir(env.bin_dir)} if os.path.exists(x)}
     for x in walk(env.lib_dir):
@@ -304,6 +310,7 @@ def main():
     env = Env()
     copy_libs(env)
     copy_python(env, ext_dir)
+    copy_piper(env)
     build_launchers(env)
     if not args.skip_tests:
         run_tests(j(env.base, 'calibre-debug'), env.base)

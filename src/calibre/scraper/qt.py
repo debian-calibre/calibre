@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import subprocess
+import time
 import weakref
 from contextlib import suppress
 from io import BytesIO
@@ -99,6 +100,12 @@ class FakeResponse:
         return self.headers
 
     def close(self):
+        self._data.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
         self._data.close()
 
 
@@ -238,8 +245,6 @@ class Browser:
 
     def shutdown(self):
         self.shutting_down = True
-        import shutil
-        import time
         if self.worker:
             w, self.worker = self.worker, None
             with suppress(OSError):
