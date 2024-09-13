@@ -14,7 +14,7 @@ Add some more time to wait test results.
  4 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index fc9fa2e..2ac7e3b 100644
+index 0915533..616528d 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
 @@ -119,7 +119,7 @@ class TestServer(Thread):
@@ -111,10 +111,10 @@ index ec2f20e..af02b37 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 8576749..47fdc76 100644
+index 23a6bca..5b8f9d8 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -390,7 +390,7 @@ class BuildTest(unittest.TestCase):
+@@ -400,7 +400,7 @@ class BuildTest(unittest.TestCase):
              p.titleChanged.connect(do_webengine_test)
              p.renderProcessTerminated.connect(render_process_crashed)
              p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
