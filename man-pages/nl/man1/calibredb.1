@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "augustus 23, 2024" "7.17.0" "calibre"
+.TH "CALIBREDB" "1" "september 13, 2024" "7.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -234,7 +234,7 @@ Het veld waarop de resultaten moeten worden gesorteerd. U kunt meerdere velden s
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Note that templates are ignored while connecting to a calibre server. Default: None
+De sjabloon die moet worden uitgevoerd als \fB\(dq\fPtemplate\fB\(dq\fP in de veldenlijst staat. Houd er rekening mee dat sjablonen worden genegeerd tijdens het verbinden met een Calibre\-server. Standaard: Geen
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -449,15 +449,15 @@ Toon de metadata veldnamen die kunnen worden gebruikt met de \fI\%\-\-field\fP o
 .INDENT 3.5
 .sp
 .EX
-calibredb export [options] ids
+calibredb export [opties] ids
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Exporteer de boeken die zijn opgegeven door ids (een door komma\(aqs gescheiden lijst) naar het bestandssysteem.
+De exportbewerking slaat alle formaten van het boek, de omslag en metagegevens op (in
+een OPF\-bestand). Alle extra gegevensbestanden die aan het boek zijn geassocieerd, worden ook opgeslagen.
+U kunt id\-nummers ophalen via de zoekopdracht.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0

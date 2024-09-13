@@ -3,7 +3,6 @@ from calibre.web.feeds.news import BasicNewsRecipe
 
 class Cumhuriyet(BasicNewsRecipe):
     title = 'Cumhuriyet'
-    __author__ = 'ims'
     description = 'News from Turkey'
     language = 'tr'
     publisher = 'Cumhuriyet'
@@ -14,6 +13,7 @@ class Cumhuriyet(BasicNewsRecipe):
     use_embedded_content = False
     timefmt = ' [%d %b %Y]'
     ignore_duplicate_articles = {'title', 'url'}
+    remove_empty_feeds = True
 
     keep_only_tags = [
         dict(name='h1', attrs={'class': 'baslik'}),

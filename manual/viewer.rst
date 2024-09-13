@@ -261,7 +261,7 @@ Syncing with a paper edition of the current book
 Some e-books, that have corresponding print editions, include metadata that
 marks the start of each paper page. For such e-books, the viewer allows you to
 jump to a particular paper edition page via the :guilabel:`Go to` button in the
-viewer controls. You can also optionally display the paper page corressponding
+viewer controls. You can also optionally display the paper page corresponding
 to the current location in the book's headers or footers via the viewer
 settings, by adding :guilabel:`Pages from paper edition` to either the header
 or the footer.
@@ -275,7 +275,7 @@ The viewer has extensive keyboard shortcuts, like the rest of calibre. They can
 be customised in the viewer :guilabel:`Preferences`. The default shortcuts are listed below:
 
 
-.. list-table:: Keyboard shortcuts for the calibre viewer
+.. list-table:: Keyboard shortcuts for the calibre E-book viewer
     :widths: 10 100
     :header-rows: 1
 
@@ -419,10 +419,10 @@ viewer preferences to force the viewer to break up lines of text in
     code, pre { white-space: pre-wrap }
 
 
-Designing your book to work well with the calibre viewer
-------------------------------------------------------------
+Designing your book to work well with the calibre E-book viewer
+-----------------------------------------------------------------
 
-The calibre viewer will set the ``is-calibre-viewer`` class on the root
+The calibre E-book viewer will set the ``is-calibre-viewer`` class on the root
 element. So you can write CSS rules that apply only for it. Additionally,
 the viewer will set the following classes on the ``body`` element:
 
@@ -443,7 +443,7 @@ the viewer will set the following classes on the ``body`` element:
 
 Finally, you can use the calibre color scheme colors via `CSS variables
 <https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties>`_.
-The calibre viewer defines the following variables:
+The calibre E-book viewer defines the following variables:
 ``--calibre-viewer-background-color``, ``--calibre-viewer-foreground-color``
 and optionally ``--calibre-viewer-link-color`` in color themes that define
 a link color.

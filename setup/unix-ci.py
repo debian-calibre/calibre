@@ -59,13 +59,13 @@ else:
         setenv('CALIBRE_QT_PREFIX', '$SW/qt')
 
 
-def run(*args):
+def run(*args, timeout=600):
     if len(args) == 1:
         args = shlex.split(args[0])
     print(' '.join(args), flush=True)
     p = subprocess.Popen(args)
     try:
-        ret = p.wait(timeout=600)
+        ret = p.wait(timeout=timeout)
     except subprocess.TimeoutExpired as err:
         ret = 1
         print(err, file=sys.stderr, flush=True)
@@ -164,10 +164,11 @@ username = api
         install_env()
         get_tx()
         os.environ['TX'] = os.path.abspath('tx')
-        run(sys.executable, 'setup.py', 'pot')
+        run(sys.executable, 'setup.py', 'pot', timeout=30 * 60)
     elif action == 'test':
         os.environ['CI'] = 'true'
         os.environ['OPENSSL_MODULES'] = os.path.join(SW, 'lib', 'ossl-modules')
+        os.environ['PIPER_TTS_DIR'] = os.path.join(SW, 'piper')
         if ismacos:
             os.environ['SSL_CERT_FILE'] = os.path.abspath(
                 'resources/mozilla-ca-certs.pem')

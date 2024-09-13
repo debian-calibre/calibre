@@ -7,8 +7,11 @@ import os
 import unittest
 from threading import Event, Thread
 
+from calibre.constants import iswindows
+
 from .qt import Browser, WebEngineBrowser
 
+is_ci = os.environ.get('CI', '').lower() == 'true'
 skip = ''
 is_sanitized = 'libasan' in os.environ.get('LD_PRELOAD', '')
 if is_sanitized:
@@ -91,6 +94,7 @@ class TestFetchBackend(unittest.TestCase):
     def test_recipe_browser_qt(self):
         self.do_recipe_browser_test(Browser)
 
+    @unittest.skipIf(iswindows and is_ci, 'WebEngine browser test hangs on windows CI')
     def test_recipe_browser_webengine(self):
         self.do_recipe_browser_test(WebEngineBrowser)
 
@@ -109,10 +113,10 @@ class TestFetchBackend(unittest.TestCase):
                 req = Request(url, headers=headers)
             else:
                 req = url
-            res = br.open(req, data=data, timeout=timeout)
-            raw = res.read()
-            ans = json.loads(raw)
-            ans['final_url'] = res.geturl()
+            with br.open(req, data=data, timeout=timeout) as res:
+                raw = res.read()
+                ans = json.loads(raw)
+                ans['final_url'] = res.geturl()
             return ans
 
         def test_with_timeout(no_response=True):

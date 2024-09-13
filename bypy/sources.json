@@ -112,6 +112,17 @@
     },
 
     {
+        "name": "libdeflate",
+        "comment": "Used optionally libtiff instead of zlib, sadly the Ubuntu build image comes with this library installed so libtiff links against it on Linux",
+        "os": "linux",
+        "unix": {
+            "filename": "libdeflate-1.21.tar.gz",
+            "hash": "sha256:7f05b533dd1d95e48a9f7d633beab67d8c6f502c01a2a5f46b204c16d1e748ad",
+            "urls": ["https://github.com/ebiggers/libdeflate/releases/download/v1.21/{filename}"]
+        }
+    },
+
+    {
         "name": "zstd",
         "unix": {
             "filename": "zstd-1.5.5.tar.gz",
@@ -504,6 +515,27 @@
             "hash": "sha256:059ea8ab31a1a4fe090751e8c82fca16d2f7339f309e15b2c65820dff83b579a",
             "urls": ["https://github.com/nodejs/node/archive/refs/tags/v20.7.0.tar.gz"]
         }
+    },
+
+    {
+        "name": "nv-codec-headers",
+		"comment": "Needed for building Qt Multimedia, see https://code.qt.io/cgit/qt/qt5.git/tree/coin/provisioning/common/unix/install-ffmpeg.sh only change the version when bumping ffmpeg and qt versions.",
+        "os": "linux",
+        "unix": {
+            "filename": "nv-codec-headers-11.1.zip",
+            "hash": "sha256:d0262edcd464c36eddd35c754faf29799161a30b4f8635a4aa06f9ecedf053e2",
+            "urls": ["https://github.com/FFmpeg/nv-codec-headers/archive/refs/heads/sdk/11.1.zip"]
+        }
+    },
+
+    {
+        "name": "ffmpeg",
+		"comment": "Needed for building Qt Multimedia. Only change the version when bumping Qt version. Get the needed ffmpeg version from: https://doc.qt.io/qt-6/qtmultimedia-index.html#ffmpeg-as-the-default-backend",
+		"unix": {
+			"filename": "ffmpeg-6.1.2.tar.xz",
+			"hash": "sha256:3b624649725ecdc565c903ca6643d41f33bd49239922e45c9b1442c63dca4e38",
+			"urls": ["https://www.ffmpeg.org/releases/{filename}"]
+		}
     },
 
     {
@@ -1123,6 +1155,41 @@
             "filename": "xxhash-3.3.0.tar.gz",
             "hash": "sha256:c3f9e322b1ebeebd44e3d9d2d9b124e0c550c1ef41bd552afdcdd719516ee41a",
             "urls": ["pypi"]
+        }
+    },
+    {
+        "name": "onnx",
+		"comment": "This is newer than the version needed for the version of piper-phonemize to get it to build on macOS (see CMakeLists.txt in piper-phonemize)",
+        "unix": {
+            "filename": "onnx-1.19.0.tar.gz",
+            "hash": "sha256:dd945b2fb8c2e7df7243e9d96c0293f45350058f0f713f66c519834a49a6c99d",
+            "urls": ["https://github.com/microsoft/onnxruntime/archive/refs/tags/v1.19.0.tar.gz"]
+        }
+    },
+    {
+        "name": "piper-espeak",
+		"comment": "This is the version needed for the version of piper-phonemize we use (see CMakeLists.txt in piper-phonemize)",
+        "unix": {
+            "filename": "espeak-1.zip",
+            "hash": "sha256:150fc955926a084a77ebe25c9e8287bde2e2a17bbf9b23a25c147b556837949f",
+            "urls": ["https://github.com/rhasspy/espeak-ng/archive/0f65aa301e0d6bae5e172cc74197d32a6182200f.zip"]
+        }
+    },
+    {
+        "name": "piper-phonemize",
+		"comment": "This is the version needed for the version of piper we use (see CMakeLists.txt in piper)",
+        "unix": {
+            "filename": "piper-phonemize-1.zip",
+            "hash": "sha256:cc57a4a00a0f5bd50555a93c94c0622da065a2a90b9c896bfbe8b45519e2e9c2",
+            "urls": ["https://github.com/rhasspy/piper-phonemize/archive/bfc2e7549957829b0227c66a305d11cc88167bda.zip"]
+        }
+    },
+    {
+        "name": "piper",
+        "unix": {
+            "filename": "piper-2023.11.14.tar.gz",
+            "hash": "sha256:8b684e102cfe23af097830db9555a8641f17735725853c531a1daeb34b6ed1a8",
+            "urls": ["https://github.com/rhasspy/piper/archive/refs/tags/2023.11.14-2.tar.gz"]
         }
     }
 ]

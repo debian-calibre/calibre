@@ -18620,28 +18620,169 @@ return this.__repr__();
 
         var create_button = ρσ_modules.widgets.create_button;
 
-        function escaper() {
-            var doc, el, ser;
-            doc = document.implementation.createDocument("", "", null);
-            el = doc.createElement("temp");
-            el.textContent = "temp";
-            el = el.firstChild;
-            ser = new XMLSerializer;
-            return (function() {
-                var ρσ_anonfunc = function (text) {
-                    el.nodeValue = text;
-                    return ser.serializeToString(el);
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["text"]},
-                    __module__ : {value: "read_book.tts"}
-                });
-                return ρσ_anonfunc;
-            })();
+        function Tracker() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            Tracker.prototype.__bind_methods__.call(this);
+            Tracker.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(Tracker.prototype, "__bind_methods__", {value: function () {
+            this.clear = Tracker.prototype.clear.bind(this);
+            this.parse_marked_text = Tracker.prototype.parse_marked_text.bind(this);
+            this.pop_first = Tracker.prototype.pop_first.bind(this);
+            this.current_text = Tracker.prototype.current_text.bind(this);
+            this.resume = Tracker.prototype.resume.bind(this);
+            this.boundary_reached = Tracker.prototype.boundary_reached.bind(this);
+            this.mark_word = Tracker.prototype.mark_word.bind(this);
+        }});
+        Tracker.prototype.__init__ = function __init__() {
+            var self = this;
+            self.clear();
         };
-        if (!escaper.__module__) Object.defineProperties(escaper, {
+        if (!Tracker.prototype.__init__.__module__) Object.defineProperties(Tracker.prototype.__init__, {
             __module__ : {value: "read_book.tts"}
         });
+        Tracker.__argnames__ = Tracker.prototype.__init__.__argnames__;
+        Tracker.__handles_kwarg_interpolation__ = Tracker.prototype.__init__.__handles_kwarg_interpolation__;
+        Tracker.prototype.clear = function clear() {
+            var self = this;
+            self.positions = [];
+            self.last_pos = 0;
+            self.queue = [];
+        };
+        if (!Tracker.prototype.clear.__module__) Object.defineProperties(Tracker.prototype.clear, {
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.parse_marked_text = function parse_marked_text(marked_text) {
+            var self = this;
+            var text, text_len, chunk_len, index_in_positions, offset_in_text, limit, x;
+            self.clear();
+            text = [];
+            text_len = chunk_len = index_in_positions = offset_in_text = 0;
+            limit = 2048;
+            function commit() {
+                self.queue.push((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["text"] = "".join(text);
+                    ρσ_d["index_in_positions"] = index_in_positions;
+                    ρσ_d["offset_in_text"] = offset_in_text;
+                    ρσ_d["reached_offset"] = 0;
+                    return ρσ_d;
+                }).call(this));
+            };
+            if (!commit.__module__) Object.defineProperties(commit, {
+                __module__ : {value: "read_book.tts"}
+            });
+
+            var ρσ_Iter0 = ρσ_Iterable(marked_text);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                x = ρσ_Iter0[ρσ_Index0];
+                if (typeof x === "number") {
+                    self.positions.push((function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["mark"] = x;
+                        ρσ_d["offset_in_text"] = text_len;
+                        return ρσ_d;
+                    }).call(this));
+                } else {
+                    text_len += x.length;
+                    chunk_len += x.length;
+                    text.push(x);
+                    if (chunk_len > limit) {
+                        commit();
+                        chunk_len = 0;
+                        text = [];
+                        index_in_positions = max(0, self.positions.length - 1);
+                        offset_in_text = text_len;
+                    }
+                }
+            }
+            if (text.length) {
+                commit();
+            }
+            self.marked_text = marked_text;
+            return self.current_text();
+        };
+        if (!Tracker.prototype.parse_marked_text.__argnames__) Object.defineProperties(Tracker.prototype.parse_marked_text, {
+            __argnames__ : {value: ["marked_text"]},
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.pop_first = function pop_first() {
+            var self = this;
+            self.queue.splice(0, 1);
+        };
+        if (!Tracker.prototype.pop_first.__module__) Object.defineProperties(Tracker.prototype.pop_first, {
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.current_text = function current_text() {
+            var self = this;
+            if (self.queue.length) {
+                return self.queue[0].text;
+            }
+            return "";
+        };
+        if (!Tracker.prototype.current_text.__module__) Object.defineProperties(Tracker.prototype.current_text, {
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.resume = function resume() {
+            var self = this;
+            var o;
+            self.last_pos = 0;
+            if (self.queue.length) {
+                self.last_pos = self.queue[0].index_in_positions;
+                if (self.queue[0].reached_offset) {
+                    o = self.queue[0].reached_offset;
+                    self.queue[0].text = " ".repeat(o) + self.queue[0].text.slice(o);
+                }
+            }
+            return self.current_text();
+        };
+        if (!Tracker.prototype.resume.__module__) Object.defineProperties(Tracker.prototype.resume, {
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.boundary_reached = function boundary_reached(start) {
+            var self = this;
+            if (self.queue.length) {
+                self.queue[0].reached_offset = start;
+            }
+        };
+        if (!Tracker.prototype.boundary_reached.__argnames__) Object.defineProperties(Tracker.prototype.boundary_reached, {
+            __argnames__ : {value: ["start"]},
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.mark_word = function mark_word(start, length) {
+            var self = this;
+            var end, matches, pos;
+            if (!self.queue.length) {
+                return;
+            }
+            start += self.queue[0].offset_in_text;
+            end = start + length;
+            matches = [];
+            while (self.last_pos < self.positions.length) {
+                pos = (ρσ_expr_temp = self.positions)[ρσ_bound_index(self.last_pos, ρσ_expr_temp)];
+                if (start <= (ρσ_cond_temp = pos.offset_in_text) && ρσ_cond_temp < end) {
+                    matches.push(pos);
+                } else if (pos.offset_in_text >= end) {
+                    break;
+                }
+                self.last_pos += 1;
+            }
+            if (matches.length) {
+                return [matches[0].mark, matches[matches.length-1].mark];
+            }
+            return null;
+        };
+        if (!Tracker.prototype.mark_word.__argnames__) Object.defineProperties(Tracker.prototype.mark_word, {
+            __argnames__ : {value: ["start", "length"]},
+            __module__ : {value: "read_book.tts"}
+        });
+        Tracker.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        Tracker.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(Tracker.prototype, "__bases__", {value: []});
 
         function Client() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
@@ -18652,19 +18793,21 @@ return this.__repr__();
             this.create_utterance = Client.prototype.create_utterance.bind(this);
             this.utterance_started = Client.prototype.utterance_started.bind(this);
             this.utterance_paused = Client.prototype.utterance_paused.bind(this);
+            this.speak = Client.prototype.speak.bind(this);
             this.utterance_ended = Client.prototype.utterance_ended.bind(this);
             this.utterance_failed = Client.prototype.utterance_failed.bind(this);
-            this.utterance_mark_reached = Client.prototype.utterance_mark_reached.bind(this);
+            this.utterance_boundary_reached = Client.prototype.utterance_boundary_reached.bind(this);
             this.utterance_resumed = Client.prototype.utterance_resumed.bind(this);
             this.pause = Client.prototype.pause.bind(this);
             this.resume = Client.prototype.resume.bind(this);
+            this.pause_for_configure = Client.prototype.pause_for_configure.bind(this);
             this.resume_after_configure = Client.prototype.resume_after_configure.bind(this);
             this.stop = Client.prototype.stop.bind(this);
             this.speak_simple_text = Client.prototype.speak_simple_text.bind(this);
             this.speak_marked_text = Client.prototype.speak_marked_text.bind(this);
             this.faster = Client.prototype.faster.bind(this);
             this.slower = Client.prototype.slower.bind(this);
-            this.apply_settings = Client.prototype.apply_settings.bind(this);
+            this.save_settings = Client.prototype.save_settings.bind(this);
             this.change_rate = Client.prototype.change_rate.bind(this);
             this.configure = Client.prototype.configure.bind(this);
         }});
@@ -18678,7 +18821,7 @@ return this.__repr__();
                 ρσ_d["paused"] = false;
                 return ρσ_d;
             }).call(this);
-            self.queue = [];
+            self.tracker = new Tracker([]);
             self.last_reached_mark = null;
             self.onevent = (function() {
                 var ρσ_anonfunc = function () {
@@ -18697,23 +18840,20 @@ return this.__repr__();
         });
         Client.__argnames__ = Client.prototype.__init__.__argnames__;
         Client.__handles_kwarg_interpolation__ = Client.prototype.__init__.__handles_kwarg_interpolation__;
-        Client.prototype.create_utterance = function create_utterance(text_or_ssml, wrap_in_ssml) {
+        Client.prototype.create_utterance = function create_utterance(text) {
             var self = this;
             var ut, voice;
-            if (wrap_in_ssml) {
-                text_or_ssml = "<?xml version=\"1.0\"?>\n<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\"><s>" + text_or_ssml + "</s></speak>";
-            }
-            ut = new window.SpeechSynthesisUtterance(text_or_ssml);
+            ut = new window.SpeechSynthesisUtterance(text);
             ut.onstart = self.utterance_started;
             ut.onpause = self.utterance_paused;
             ut.onend = self.utterance_ended;
             ut.onerror = self.utterance_failed;
-            ut.onmark = self.utterance_mark_reached;
             ut.onresume = self.utterance_resumed;
+            ut.addEventListener("boundary", self.utterance_boundary_reached);
             if (self.current_voice_uri) {
-                var ρσ_Iter0 = ρσ_Iterable(window.speechSynthesis.getVoices());
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    voice = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter1 = ρσ_Iterable(window.speechSynthesis.getVoices());
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    voice = ρσ_Iter1[ρσ_Index1];
                     if (voice.voiceURI === self.current_voice_uri) {
                         ut.voice = voice;
                         break;
@@ -18723,11 +18863,10 @@ return this.__repr__();
             if (self.current_rate) {
                 ut.rate = self.current_rate;
             }
-            self.queue.push(ut);
             return ut;
         };
         if (!Client.prototype.create_utterance.__argnames__) Object.defineProperties(Client.prototype.create_utterance, {
-            __argnames__ : {value: ["text_or_ssml", "wrap_in_ssml"]},
+            __argnames__ : {value: ["text"]},
             __module__ : {value: "read_book.tts"}
         });
         Client.prototype.utterance_started = function utterance_started(event) {
@@ -18758,8 +18897,21 @@ return this.__repr__();
             __argnames__ : {value: ["event"]},
             __module__ : {value: "read_book.tts"}
         });
+        Client.prototype.speak = function speak(text) {
+            var self = this;
+            self.current_utterance = null;
+            if (text && text.length) {
+                self.current_utterance = self.create_utterance(text);
+                window.speechSynthesis.speak(self.current_utterance);
+            }
+        };
+        if (!Client.prototype.speak.__argnames__) Object.defineProperties(Client.prototype.speak, {
+            __argnames__ : {value: ["text"]},
+            __module__ : {value: "read_book.tts"}
+        });
         Client.prototype.utterance_ended = function utterance_ended(event) {
             var self = this;
+            var text;
             self.status = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["synthesizing"] = false;
@@ -18770,9 +18922,10 @@ return this.__repr__();
                 self.stop_requested_at = null;
                 return;
             }
-            self.queue.splice(0, 1);
-            if (self.queue.length) {
-                window.speechSynthesis.speak(self.queue[0]);
+            self.tracker.pop_first();
+            text = self.tracker.current_text();
+            if (text && text.length) {
+                self.speak(text);
             } else {
                 self.onevent("end");
             }
@@ -18783,26 +18936,48 @@ return this.__repr__();
         });
         Client.prototype.utterance_failed = function utterance_failed(event) {
             var self = this;
+            var msg;
             self.status = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["synthesizing"] = false;
                 ρσ_d["paused"] = false;
                 return ρσ_d;
             }).call(this);
-            self.queue = [];
-            error_dialog(_("Speaking failed"), _("An error has occurred with speech synthesis: " + event.error));
+            self.tracker.clear();
+            if (event.error !== "interrupted" && event.error !== "canceled") {
+                if (event.error === "synthesis-unavailable") {
+                    msg = _("Text-to-Speech not available in this browser. You may need to install some Text-to-Speech software.");
+                } else {
+                    msg = _("An error has occurred with speech synthesis: ") + event.error;
+                }
+                error_dialog(_("Speaking failed"), msg);
+            }
             self.onevent("cancel");
         };
         if (!Client.prototype.utterance_failed.__argnames__) Object.defineProperties(Client.prototype.utterance_failed, {
             __argnames__ : {value: ["event"]},
             __module__ : {value: "read_book.tts"}
         });
-        Client.prototype.utterance_mark_reached = function utterance_mark_reached(event) {
+        Client.prototype.utterance_boundary_reached = function utterance_boundary_reached(event) {
             var self = this;
-            self.last_reached_mark = event.name;
-            self.onevent("mark", int(event.name));
+            var x, ρσ_unpack, first, last;
+            self.tracker.boundary_reached(event.charIndex);
+            if (event.name === "word") {
+                x = self.tracker.mark_word(event.charIndex, event.charLength || 2);
+                if (x) {
+                    ρσ_unpack = [x[0], x[1]];
+                    first = ρσ_unpack[0];
+                    last = ρσ_unpack[1];
+                    self.onevent("mark", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["first"] = first;
+                        ρσ_d["last"] = last;
+                        return ρσ_d;
+                    }).call(this));
+                }
+            }
         };
-        if (!Client.prototype.utterance_mark_reached.__argnames__) Object.defineProperties(Client.prototype.utterance_mark_reached, {
+        if (!Client.prototype.utterance_boundary_reached.__argnames__) Object.defineProperties(Client.prototype.utterance_boundary_reached, {
             __argnames__ : {value: ["event"]},
             __module__ : {value: "read_book.tts"}
         });
@@ -18834,10 +19009,25 @@ return this.__repr__();
         if (!Client.prototype.resume.__module__) Object.defineProperties(Client.prototype.resume, {
             __module__ : {value: "read_book.tts"}
         });
+        Client.prototype.pause_for_configure = function pause_for_configure() {
+            var self = this;
+            var ut;
+            if (self.current_utterance) {
+                ut = self.current_utterance;
+                self.current_utterance = null;
+                ut.onstart = ut.onpause = ut.onend = ut.onerror = ut.onresume = null;
+            }
+            window.speechSynthesis.cancel();
+        };
+        if (!Client.prototype.pause_for_configure.__module__) Object.defineProperties(Client.prototype.pause_for_configure, {
+            __module__ : {value: "read_book.tts"}
+        });
         Client.prototype.resume_after_configure = function resume_after_configure() {
             var self = this;
-            if (self.queue.length) {
-                window.speechSynthesis.speak(self.queue[0]);
+            var text;
+            text = self.tracker.resume();
+            if (text && text.length) {
+                self.speak(text);
             }
         };
         if (!Client.prototype.resume_after_configure.__module__) Object.defineProperties(Client.prototype.resume_after_configure, {
@@ -18845,7 +19035,7 @@ return this.__repr__();
         });
         Client.prototype.stop = function stop() {
             var self = this;
-            self.queue = [];
+            self.tracker.clear();
             self.stop_requested_at = window.performance.now();
             window.speechSynthesis.cancel();
             self.status = (function(){
@@ -18861,15 +19051,9 @@ return this.__repr__();
         Client.prototype.speak_simple_text = function speak_simple_text(text) {
             var self = this;
             self.stop();
-            while (text.length > 32766) {
-                self.create_utterance(text.slice(0, 32766));
-                text = text.slice(32766);
-            }
-            if (text) {
-                self.create_utterance(text);
-            }
-            if (self.queue.length) {
-                window.speechSynthesis.speak(self.queue[0]);
+            text = self.tracker.parse_marked_text([text]);
+            if (text && text.length) {
+                self.speak(text);
             }
         };
         if (!Client.prototype.speak_simple_text.__argnames__) Object.defineProperties(Client.prototype.speak_simple_text, {
@@ -18878,49 +19062,12 @@ return this.__repr__();
         });
         Client.prototype.speak_marked_text = function speak_marked_text(text_segments, onevent) {
             var self = this;
-            var buf, size, limit, x;
+            var text;
             self.stop();
             self.onevent = onevent;
-            buf = [];
-            size = 0;
-            limit = 2048;
-            function commit() {
-                var text;
-                text = buf.join("");
-                if (text.length) {
-                    self.create_utterance(text);
-                }
-                buf = [];
-                size = 0;
-            };
-            if (!commit.__module__) Object.defineProperties(commit, {
-                __module__ : {value: "read_book.tts"}
-            });
-
-            var ρσ_Iter1 = ρσ_Iterable(text_segments);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                x = ρσ_Iter1[ρσ_Index1];
-                if (typeof x === "number") {
-                    continue;
-                } else {
-                    if (x.length > limit) {
-                        commit();
-                        while (x.length) {
-                            self.create_utterance(x.slice(0, limit));
-                            x = x.slice(limit);
-                        }
-                        continue;
-                    }
-                }
-                if (size + x.length > limit) {
-                    commit();
-                }
-                buf.push(x);
-                size += x.length;
-            }
-            commit();
-            if (self.queue.length) {
-                window.speechSynthesis.speak(self.queue[0]);
+            text = self.tracker.parse_marked_text(text_segments);
+            if (text && text.length) {
+                self.speak(text);
             }
         };
         if (!Client.prototype.speak_marked_text.__argnames__) Object.defineProperties(Client.prototype.speak_marked_text, {
@@ -18941,9 +19088,9 @@ return this.__repr__();
         if (!Client.prototype.slower.__module__) Object.defineProperties(Client.prototype.slower, {
             __module__ : {value: "read_book.tts"}
         });
-        Client.prototype.apply_settings = function apply_settings() {
+        Client.prototype.save_settings = function save_settings() {
             var self = this;
-            var sd, existing, ut;
+            var sd;
             sd = get_session_data();
             sd.set("tts_backend", (function(){
                 var ρσ_d = Object.create(null);
@@ -18951,20 +19098,8 @@ return this.__repr__();
                 ρσ_d["rate"] = self.current_rate;
                 return ρσ_d;
             }).call(this));
-            existing = self.queue;
-            if (self.queue && self.queue.length) {
-                if (self.status.paused) {
-                    window.speechSynthesis.resume();
-                }
-                self.stop();
-                var ρσ_Iter2 = ρσ_Iterable(existing);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    ut = ρσ_Iter2[ρσ_Index2];
-                    self.create_utterance(ut.text);
-                }
-            }
         };
-        if (!Client.prototype.apply_settings.__module__) Object.defineProperties(Client.prototype.apply_settings, {
+        if (!Client.prototype.save_settings.__module__) Object.defineProperties(Client.prototype.save_settings, {
             __module__ : {value: "read_book.tts"}
         });
         Client.prototype.change_rate = function change_rate() {
@@ -18975,16 +19110,21 @@ return this.__repr__();
             if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "steps")){
                 steps = ρσ_kwargs_obj.steps;
             }
-            var rate, current_rate, step_size;
+            var rate, current_rate, is_speaking;
             rate = current_rate = (self.current_rate || 1) * 10;
-            step_size = 2;
-            rate += steps * step_size;
+            rate += steps;
             rate /= 10;
             rate = max(self.min_rate, min(rate, self.max_rate));
             if (rate !== current_rate) {
+                is_speaking = bool(window.speechSynthesis.speaking);
+                if (is_speaking) {
+                    self.pause_for_configure();
+                }
                 self.current_rate = rate;
-                self.apply_settings();
-                self.resume_after_configure();
+                self.save_settings();
+                if (is_speaking) {
+                    self.resume_after_configure();
+                }
             }
         };
         if (!Client.prototype.change_rate.__defaults__) Object.defineProperties(Client.prototype.change_rate, {
@@ -19024,9 +19164,9 @@ return this.__repr__();
                         });
                         return ρσ_anonfunc;
                     })());
-                    var ρσ_Iter3 = ρσ_Iterable(voices);
-                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                        voice = ρσ_Iter3[ρσ_Index3];
+                    var ρσ_Iter2 = ρσ_Iterable(voices);
+                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                        voice = ρσ_Iter2[ρσ_Index2];
                         dflt = "";
                         if (voice.default) {
                             default_voice = voice.voiceURI;
@@ -19054,7 +19194,7 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })()].concat([ρσ_desugar_kwargs({on_close: (function() {
                 var ρσ_anonfunc = function () {
-                    var voice, rate, changed;
+                    var voice, rate, changed, is_speaking;
                     voice = document.getElementById(voice_id).value;
                     rate = int(document.getElementById(rate_id).value) / 10;
                     if (rate === 1) {
@@ -19067,7 +19207,14 @@ return this.__repr__();
                     if (changed) {
                         self.current_voice_uri = voice;
                         self.current_rate = rate;
-                        self.apply_settings();
+                        is_speaking = bool(window.speechSynthesis.speaking);
+                        if (is_speaking) {
+                            self.pause_for_configure();
+                        }
+                        self.save_settings();
+                        if (is_speaking) {
+                            self.resume_after_configure();
+                        }
                     }
                     self.onevent("configured");
                 };
@@ -19090,7 +19237,7 @@ return this.__repr__();
         Client.prototype.min_rate = .1;
         Client.prototype.max_rate = 2;
 
-        ρσ_modules["read_book.tts"].escaper = escaper;
+        ρσ_modules["read_book.tts"].Tracker = Tracker;
         ρσ_modules["read_book.tts"].Client = Client;
     })();
 
@@ -20560,7 +20707,7 @@ return this.__repr__();
         });
 
         function ensure_page_list_target_is_displayed(elem) {
-            if (window.getComputedStyle(elem).display === "none") {
+            if (elem && window.getComputedStyle(elem).display === "none") {
                 elem.textContent = "";
                 elem.setAttribute("style", "all: revert");
             }
@@ -20571,7 +20718,7 @@ return this.__repr__();
         });
 
         function position_for_anchor(anchor, is_page_list_anchor) {
-            var cache, val, anchor_funcs, elem;
+            var cache, val, anchor_funcs, elem, q;
             ensure_anchor_cache_valid();
             cache = anchor_position_cache.positions;
             val = cache[(typeof anchor === "number" && anchor < 0) ? cache.length + anchor : anchor];
@@ -20579,7 +20726,17 @@ return this.__repr__();
                 return val;
             }
             anchor_funcs = get_boss().anchor_funcs;
-            elem = document.getElementById(anchor);
+            if (anchor) {
+                elem = document.getElementById(anchor);
+                if (!elem) {
+                    q = document.getElementsByName(anchor);
+                    if (q && q.length) {
+                        elem = q[0];
+                    }
+                }
+            } else {
+                elem = document.body;
+            }
             if (is_page_list_anchor) {
                 ensure_page_list_target_is_displayed(elem);
             }
@@ -20653,24 +20810,42 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.find";
-        var cache;
-        function build_text_map() {
-            var node_list, flat_text, ignored_tags, text_node_type, element_node_type;
+        var ignored_tags, block_tags_for_tts, cache;
+        ignored_tags = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["style"] = true;
+            ρσ_d["script"] = true;
+            ρσ_d["noscript"] = true;
+            ρσ_d["title"] = true;
+            ρσ_d["meta"] = true;
+            ρσ_d["head"] = true;
+            ρσ_d["link"] = true;
+            ρσ_d["html"] = true;
+            ρσ_d["img"] = true;
+            return ρσ_d;
+        }).call(this);
+        block_tags_for_tts = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["h1"] = true;
+            ρσ_d["h2"] = true;
+            ρσ_d["h3"] = true;
+            ρσ_d["h4"] = true;
+            ρσ_d["h5"] = true;
+            ρσ_d["h6"] = true;
+            ρσ_d["p"] = true;
+            ρσ_d["div"] = true;
+            ρσ_d["table"] = true;
+            ρσ_d["th"] = true;
+            ρσ_d["tr"] = true;
+            ρσ_d["td"] = true;
+            ρσ_d["section"] = true;
+            ρσ_d["article"] = true;
+            return ρσ_d;
+        }).call(this);
+        function build_text_map(for_tts) {
+            var node_list, flat_text, text_node_type, element_node_type;
             node_list = [];
             flat_text = "";
-            ignored_tags = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["style"] = true;
-                ρσ_d["script"] = true;
-                ρσ_d["noscript"] = true;
-                ρσ_d["title"] = true;
-                ρσ_d["meta"] = true;
-                ρσ_d["head"] = true;
-                ρσ_d["link"] = true;
-                ρσ_d["html"] = true;
-                ρσ_d["img"] = true;
-                return ρσ_d;
-            }).call(this);
             text_node_type = Node.TEXT_NODE;
             element_node_type = Node.ELEMENT_NODE;
             function process_node(node) {
@@ -20695,6 +20870,14 @@ return this.__repr__();
                         i = ρσ_Index0;
                         process_node(children[i]);
                     }
+                    if (for_tts && block_tags_for_tts[(typeof tag === "number" && tag < 0) ? block_tags_for_tts.length + tag : tag]) {
+                        if (flat_text.length && " \n\t\r".indexOf(flat_text[flat_text.length-1]) > -1) {
+                            flat_text = flat_text.slice(0, -1) + "\u2029";
+                        } else if (node_list.length) {
+                            flat_text += "\u2029";
+                            node_list[node_list.length-1].length += 1;
+                        }
+                    }
                 }
             };
             if (!process_node.__argnames__) Object.defineProperties(process_node, {
@@ -20711,7 +20894,8 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
         };
-        if (!build_text_map.__module__) Object.defineProperties(build_text_map, {
+        if (!build_text_map.__argnames__) Object.defineProperties(build_text_map, {
+            __argnames__ : {value: ["for_tts"]},
             __module__ : {value: "read_book.find"}
         });
 
@@ -20737,20 +20921,28 @@ return this.__repr__();
             __module__ : {value: "read_book.find"}
         });
 
-        function tts_data(text_node, offset) {
-            var offset_in_flat_text, match, first, last, marked_text, text, start, trailer;
-            offset_in_flat_text = offset || 0;
-            if (!cache.text_map) {
-                cache.text_map = build_text_map();
+        function cached_tts_text_map() {
+            if (!cache.tts_text_map) {
+                cache.tts_text_map = build_text_map(true);
             }
+            return cache.tts_text_map;
+        };
+        if (!cached_tts_text_map.__module__) Object.defineProperties(cached_tts_text_map, {
+            __module__ : {value: "read_book.find"}
+        });
+
+        function tts_data(text_node, offset) {
+            var offset_in_flat_text, text_map, match, first, last, marked_text, text, start, trailer;
+            offset_in_flat_text = offset || 0;
+            text_map = cached_tts_text_map();
             if (text_node) {
-                offset_in_flat_text += index_for_node(text_node, cache.text_map.node_list) || 0;
+                offset_in_flat_text += index_for_node(text_node, text_map.node_list) || 0;
             }
             match = null;
             first = true;
             last = null;
             marked_text = [];
-            text = cache.text_map.flat_text.slice(offset_in_flat_text);
+            text = text_map.flat_text.slice(offset_in_flat_text);
             for (match of text.matchAll(tts_word_regex())) {
                 start = match.index;
                 if (first) {
@@ -20919,34 +21111,48 @@ return this.__repr__();
             __module__ : {value: "read_book.find"}
         });
 
-        function select_tts_mark(idx_in_flat_text) {
+        function find_word_length(text_map, idx) {
             var r, match, word_length;
-            window.getSelection().removeAllRanges();
-            if (!cache.text_map) {
-                cache.text_map = build_text_map();
-            }
             r = tts_word_regex();
-            r.lastIndex = idx_in_flat_text;
-            match = r.exec(cache.text_map.flat_text);
+            r.lastIndex = idx;
+            match = r.exec(text_map.flat_text);
             word_length = 5;
             if (match) {
                 word_length = ρσ_exists.d(match[0]).length || 5;
             }
-            match = get_occurrence_data(cache.text_map.node_list, idx_in_flat_text, idx_in_flat_text + word_length);
+            return word_length;
+        };
+        if (!find_word_length.__argnames__) Object.defineProperties(find_word_length, {
+            __argnames__ : {value: ["text_map", "idx"]},
+            __module__ : {value: "read_book.find"}
+        });
+
+        function select_tts_mark(idx_in_flat_text, last_idx_in_flat_text) {
+            var text_map, match;
+            window.getSelection().removeAllRanges();
+            text_map = cached_tts_text_map();
+            if (idx_in_flat_text === last_idx_in_flat_text) {
+                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, idx_in_flat_text + find_word_length(text_map, idx_in_flat_text));
+            } else {
+                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, last_idx_in_flat_text + find_word_length(text_map, last_idx_in_flat_text));
+            }
             if (!match) {
                 return false;
             }
             return select_find_result(match);
         };
         if (!select_tts_mark.__argnames__) Object.defineProperties(select_tts_mark, {
-            __argnames__ : {value: ["idx_in_flat_text"]},
+            __argnames__ : {value: ["idx_in_flat_text", "last_idx_in_flat_text"]},
             __module__ : {value: "read_book.find"}
         });
 
+        ρσ_modules["read_book.find"].ignored_tags = ignored_tags;
+        ρσ_modules["read_book.find"].block_tags_for_tts = block_tags_for_tts;
         ρσ_modules["read_book.find"].cache = cache;
         ρσ_modules["read_book.find"].build_text_map = build_text_map;
         ρσ_modules["read_book.find"].index_for_node = index_for_node;
         ρσ_modules["read_book.find"].tts_word_regex = tts_word_regex;
+        ρσ_modules["read_book.find"].cached_tts_text_map = cached_tts_text_map;
         ρσ_modules["read_book.find"].tts_data = tts_data;
         ρσ_modules["read_book.find"].find_node_for_index_binary = find_node_for_index_binary;
         ρσ_modules["read_book.find"].get_occurrence_data = get_occurrence_data;
@@ -20954,6 +21160,7 @@ return this.__repr__();
         ρσ_modules["read_book.find"].reset_find_caches = reset_find_caches;
         ρσ_modules["read_book.find"].select_find_result = select_find_result;
         ρσ_modules["read_book.find"].select_search_result = select_search_result;
+        ρσ_modules["read_book.find"].find_word_length = find_word_length;
         ρσ_modules["read_book.find"].select_tts_mark = select_tts_mark;
     })();
 
@@ -30465,7 +30672,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.17.0";
+        CALIBRE_VERSION = "7.18.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -32164,15 +32371,23 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
-        IframeBoss.prototype.mark_word_being_spoken = function mark_word_being_spoken(occurrence_number) {
+        IframeBoss.prototype.mark_word_being_spoken = function mark_word_being_spoken(x) {
             var self = this;
+            if (typeof x === "number") {
+                x = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["first"] = x;
+                    ρσ_d["last"] = x;
+                    return ρσ_d;
+                }).call(this);
+            }
             self.last_search_at = window.performance.now();
-            if (select_tts_mark(occurrence_number)) {
+            if (select_tts_mark(x.first, x.last)) {
                 self.ensure_selection_boundary_visible();
             }
         };
         if (!IframeBoss.prototype.mark_word_being_spoken.__argnames__) Object.defineProperties(IframeBoss.prototype.mark_word_being_spoken, {
-            __argnames__ : {value: ["occurrence_number"]},
+            __argnames__ : {value: ["x"]},
             __module__ : {value: "read_book.iframe"}
         });
         IframeBoss.prototype.audio_ebook_msg_received = function audio_ebook_msg_received(data) {
@@ -47282,6 +47497,10 @@ return this.__repr__();
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["mark"].concat([ρσ_desugar_kwargs({num: data})]));
             } else if (which === "begin") {
                 self.state = PLAYING;
+            } else if (which === "pause") {
+                self.state = PAUSED;
+            } else if (which === "resume") {
+                self.state = PLAYING;
             } else if (which === "end") {
                 self.state = STOPPED;
                 self.view.show_next_spine_item();
@@ -48082,6 +48301,7 @@ return this.__repr__();
             this.on_bob_mouse_event = BookScrollbar.prototype.on_bob_mouse_event.bind(this);
             this.apply_visibility = BookScrollbar.prototype.apply_visibility.bind(this);
             this.set_position = BookScrollbar.prototype.set_position.bind(this);
+            this._sync_to_contents = BookScrollbar.prototype._sync_to_contents.bind(this);
             this.sync_to_contents = BookScrollbar.prototype.sync_to_contents.bind(this);
             this.apply_color_scheme = BookScrollbar.prototype.apply_color_scheme.bind(this);
         }});
@@ -48248,12 +48468,20 @@ return this.__repr__();
             __argnames__ : {value: ["frac"]},
             __module__ : {value: "read_book.scrollbar"}
         });
+        BookScrollbar.prototype._sync_to_contents = function _sync_to_contents(frac) {
+            var self = this;
+            self.sync_to_contents_timer = 0;
+            self.set_position(frac);
+        };
+        if (!BookScrollbar.prototype._sync_to_contents.__argnames__) Object.defineProperties(BookScrollbar.prototype._sync_to_contents, {
+            __argnames__ : {value: ["frac"]},
+            __module__ : {value: "read_book.scrollbar"}
+        });
         BookScrollbar.prototype.sync_to_contents = function sync_to_contents(frac) {
             var self = this;
-            if (self.sync_to_contents_timer) {
-                window.clearTimeout(self.sync_to_contents_timer);
+            if (!self.sync_to_contents_timer) {
+                self.sync_to_contents_timer = window.setTimeout(self._sync_to_contents.bind(null, frac), 50);
             }
-            self.sync_to_contents_timer = window.setTimeout(self.set_position.bind(null, frac), 100);
         };
         if (!BookScrollbar.prototype.sync_to_contents.__argnames__) Object.defineProperties(BookScrollbar.prototype.sync_to_contents, {
             __argnames__ : {value: ["frac"]},
@@ -59242,6 +59470,11 @@ return this.__repr__();
                 container.appendChild(g);
                 g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["unwrap_factor", _("Line &un-wrapping factor:")].concat([ρσ_desugar_kwargs({max: 1, step: .01})])));
                 g.appendChild(checkbox("no_images", _("No &images")));
+                g.appendChild(checkbox("new_pdf_engine", _("New, experimental, PDF conversion &engine")));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_header_skip", _("Remove headers at &top of page by:")].concat([ρσ_desugar_kwargs({min: -1, max: 999999, step: 1})])));
+                g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_footer_skip", _("Remove footers at &bottom of page by:")].concat([ρσ_desugar_kwargs({min: -1, max: 999999, step: 1})])));
+                g.appendChild(lineedit("pdf_header_regex", _("Regular expression to remove &header at top of page:")));
+                g.appendChild(lineedit("pdf_footer_regex", _("Regular expression to remove &footer at bottom of page:")));
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                 __argnames__ : {value: ["container"]},

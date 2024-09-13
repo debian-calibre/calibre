@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-21 14:51+0000\n"
+"POT-Creation-Date: 2024-09-05 06:17+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -1860,7 +1860,7 @@ msgid ""
 "named ``id_prefix_N`` where N is the position of the value in the list. The "
 "first item has position 0 (zero). The function returns the last element in "
 "the list."
-msgstr ""
+msgstr "``list_split(list_val, sep, id_prefix)`` -- 使用“sep”将“list_val”拆分为单独的值，然后将这些值分配给名为“id_precast_N”的局部变量，其中N是该值在列表中的位置。第一项的位置为0（零）。该函数返回列表中的最后一个元素。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:621
 msgid "is equivalent to::"
@@ -1874,7 +1874,7 @@ msgid ""
 "used. The items in ``list1`` and ``list2`` are separated by ``separator``, "
 "as are the items in the returned list. Aliases: ``merge_lists()``, "
 "``list_union()``"
-msgstr ""
+msgstr "``list_union(list1, list2, separator)`` -- 返回通过合并“list 1”和“list 2”中的项而创建的列表，使用不区分大小写的比较删除重复的项。如果项目的大小写不同，则使用“列表1”中的项目。“list 1”和“list 2”中的项由“分隔符”分隔，返回列表中的项也是如此。别名：``merge_lists()``, ``list_union()``"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:628
 msgid ""
@@ -1957,7 +1957,7 @@ msgid ""
 "each matched instance with the value returned by the corresponding template."
 " In :ref:`Template Program Mode <template_mode>`, like for the ``template`` "
 "and the ``eval`` functions, you use ``[[`` for ``{`` and ``]]`` for ``}``."
-msgstr ""
+msgstr "``re_group(value, pattern [, template_for_group]*)`` -- 返回通过将规则表达模式应用于“值”并将每个匹配的实例替换为相应模板返回的值而生成的字符串。 在“模板程序模式<template_mode>”中，就像“模板”和“eval”函数一样，您可以使用“[[”表示“{”，“]]”表示“}”。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:651
 msgid ""
@@ -2297,7 +2297,7 @@ msgid ""
 "list of strings. There isn't any way to specify default values. You must "
 "check the length of the ``arguments`` list to be sure that the number of "
 "arguments is what you expect."
-msgstr ""
+msgstr "在PTM中，参数在“arguments”参数中传递，该参数是字符串列表。没有任何方法可以指定默认值。您必须检查“参数”列表的长度，以确保参数的数量符合您的期望。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:785
 msgid ""
@@ -2318,7 +2318,7 @@ msgid ""
 "processor, such as application-specific book metadata or information about "
 "what the processor is being asked to do. A template can access this "
 "information and use it during the evaluation."
-msgstr ""
+msgstr "开发人员可以选择将附加信息传递给模板处理器，例如应用程序特定的书籍元数据或有关处理器被要求执行什么的信息。模板可以访问此信息并在评估期间使用它。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:792
 msgid "**Developer: how to pass additional information**"
@@ -2376,7 +2376,7 @@ msgid ""
 "where ``value`` is the value of the template local variable ``id``. If that "
 "local variable doesn't exist then ``value`` is set to the result of "
 "evaluating ``expression``."
-msgstr ""
+msgstr "此函数用于设置“全局范围”词典，key:value配对``id:value`` ，其中“value”是模板局部变量“id”的值。如果该局部变量不存在，则将“value”设置为“表达式”的求值结果。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:819
 msgid "Notes on the difference between modes"
@@ -2440,7 +2440,7 @@ msgid ""
 "argument, cannot be used in SFM. For example this template, intended to "
 "return the first 5 characters of the series value uppercased, won't work in "
 "SFM::"
-msgstr ""
+msgstr "嵌套函数，指其中一个函数调用另一个函数来计算参数，不能在SFM中使用。例如，此模板旨在返回升级后的系列值的前5个字符，在SFM中不起作用："
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:845
 msgid ""
@@ -2527,7 +2527,7 @@ msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
-msgstr ""
+msgstr "创建一个包含“{#genre：ifempty（Unknown）}/{Author_sort}/{title}'的复合字段（为其查找名称#bb）。此模板生成“genre/Author_sort/title”，其中空的genre被“Unknown”替换。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:878
 msgid ""
@@ -2535,7 +2535,7 @@ msgid ""
 "chooses composite field ``#aa`` if series is not empty and composite field "
 "``#bb`` if series is empty. We therefore have two completely different save "
 "paths, depending on whether or not `series` is empty."
-msgstr ""
+msgstr "将保存模板设置为“{series:lookup（.，#aa，#bb）}`”。如果系列不为空，则此模板选择复合字段“#aa”，如果系列为空，请选择复合字段。因此，根据“系列”是否为空，我们有两个完全不同的保存路径。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:881
 msgid "Tips"

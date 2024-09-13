@@ -20276,7 +20276,7 @@ return this.__repr__();
         });
 
         function ensure_page_list_target_is_displayed(elem) {
-            if (window.getComputedStyle(elem).display === "none") {
+            if (elem && window.getComputedStyle(elem).display === "none") {
                 elem.textContent = "";
                 elem.setAttribute("style", "all: revert");
             }
@@ -20287,7 +20287,7 @@ return this.__repr__();
         });
 
         function position_for_anchor(anchor, is_page_list_anchor) {
-            var cache, val, anchor_funcs, elem;
+            var cache, val, anchor_funcs, elem, q;
             ensure_anchor_cache_valid();
             cache = anchor_position_cache.positions;
             val = cache[(typeof anchor === "number" && anchor < 0) ? cache.length + anchor : anchor];
@@ -20295,7 +20295,17 @@ return this.__repr__();
                 return val;
             }
             anchor_funcs = get_boss().anchor_funcs;
-            elem = document.getElementById(anchor);
+            if (anchor) {
+                elem = document.getElementById(anchor);
+                if (!elem) {
+                    q = document.getElementsByName(anchor);
+                    if (q && q.length) {
+                        elem = q[0];
+                    }
+                }
+            } else {
+                elem = document.body;
+            }
             if (is_page_list_anchor) {
                 ensure_page_list_target_is_displayed(elem);
             }
@@ -20369,24 +20379,42 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.find";
-        var cache;
-        function build_text_map() {
-            var node_list, flat_text, ignored_tags, text_node_type, element_node_type;
+        var ignored_tags, block_tags_for_tts, cache;
+        ignored_tags = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["style"] = true;
+            ρσ_d["script"] = true;
+            ρσ_d["noscript"] = true;
+            ρσ_d["title"] = true;
+            ρσ_d["meta"] = true;
+            ρσ_d["head"] = true;
+            ρσ_d["link"] = true;
+            ρσ_d["html"] = true;
+            ρσ_d["img"] = true;
+            return ρσ_d;
+        }).call(this);
+        block_tags_for_tts = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["h1"] = true;
+            ρσ_d["h2"] = true;
+            ρσ_d["h3"] = true;
+            ρσ_d["h4"] = true;
+            ρσ_d["h5"] = true;
+            ρσ_d["h6"] = true;
+            ρσ_d["p"] = true;
+            ρσ_d["div"] = true;
+            ρσ_d["table"] = true;
+            ρσ_d["th"] = true;
+            ρσ_d["tr"] = true;
+            ρσ_d["td"] = true;
+            ρσ_d["section"] = true;
+            ρσ_d["article"] = true;
+            return ρσ_d;
+        }).call(this);
+        function build_text_map(for_tts) {
+            var node_list, flat_text, text_node_type, element_node_type;
             node_list = [];
             flat_text = "";
-            ignored_tags = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["style"] = true;
-                ρσ_d["script"] = true;
-                ρσ_d["noscript"] = true;
-                ρσ_d["title"] = true;
-                ρσ_d["meta"] = true;
-                ρσ_d["head"] = true;
-                ρσ_d["link"] = true;
-                ρσ_d["html"] = true;
-                ρσ_d["img"] = true;
-                return ρσ_d;
-            }).call(this);
             text_node_type = Node.TEXT_NODE;
             element_node_type = Node.ELEMENT_NODE;
             function process_node(node) {
@@ -20411,6 +20439,14 @@ return this.__repr__();
                         i = ρσ_Index0;
                         process_node(children[i]);
                     }
+                    if (for_tts && block_tags_for_tts[(typeof tag === "number" && tag < 0) ? block_tags_for_tts.length + tag : tag]) {
+                        if (flat_text.length && " \n\t\r".indexOf(flat_text[flat_text.length-1]) > -1) {
+                            flat_text = flat_text.slice(0, -1) + "\u2029";
+                        } else if (node_list.length) {
+                            flat_text += "\u2029";
+                            node_list[node_list.length-1].length += 1;
+                        }
+                    }
                 }
             };
             if (!process_node.__argnames__) Object.defineProperties(process_node, {
@@ -20427,7 +20463,8 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
         };
-        if (!build_text_map.__module__) Object.defineProperties(build_text_map, {
+        if (!build_text_map.__argnames__) Object.defineProperties(build_text_map, {
+            __argnames__ : {value: ["for_tts"]},
             __module__ : {value: "read_book.find"}
         });
 
@@ -20453,20 +20490,28 @@ return this.__repr__();
             __module__ : {value: "read_book.find"}
         });
 
-        function tts_data(text_node, offset) {
-            var offset_in_flat_text, match, first, last, marked_text, text, start, trailer;
-            offset_in_flat_text = offset || 0;
-            if (!cache.text_map) {
-                cache.text_map = build_text_map();
+        function cached_tts_text_map() {
+            if (!cache.tts_text_map) {
+                cache.tts_text_map = build_text_map(true);
             }
+            return cache.tts_text_map;
+        };
+        if (!cached_tts_text_map.__module__) Object.defineProperties(cached_tts_text_map, {
+            __module__ : {value: "read_book.find"}
+        });
+
+        function tts_data(text_node, offset) {
+            var offset_in_flat_text, text_map, match, first, last, marked_text, text, start, trailer;
+            offset_in_flat_text = offset || 0;
+            text_map = cached_tts_text_map();
             if (text_node) {
-                offset_in_flat_text += index_for_node(text_node, cache.text_map.node_list) || 0;
+                offset_in_flat_text += index_for_node(text_node, text_map.node_list) || 0;
             }
             match = null;
             first = true;
             last = null;
             marked_text = [];
-            text = cache.text_map.flat_text.slice(offset_in_flat_text);
+            text = text_map.flat_text.slice(offset_in_flat_text);
             for (match of text.matchAll(tts_word_regex())) {
                 start = match.index;
                 if (first) {
@@ -20635,34 +20680,48 @@ return this.__repr__();
             __module__ : {value: "read_book.find"}
         });
 
-        function select_tts_mark(idx_in_flat_text) {
+        function find_word_length(text_map, idx) {
             var r, match, word_length;
-            window.getSelection().removeAllRanges();
-            if (!cache.text_map) {
-                cache.text_map = build_text_map();
-            }
             r = tts_word_regex();
-            r.lastIndex = idx_in_flat_text;
-            match = r.exec(cache.text_map.flat_text);
+            r.lastIndex = idx;
+            match = r.exec(text_map.flat_text);
             word_length = 5;
             if (match) {
                 word_length = ρσ_exists.d(match[0]).length || 5;
             }
-            match = get_occurrence_data(cache.text_map.node_list, idx_in_flat_text, idx_in_flat_text + word_length);
+            return word_length;
+        };
+        if (!find_word_length.__argnames__) Object.defineProperties(find_word_length, {
+            __argnames__ : {value: ["text_map", "idx"]},
+            __module__ : {value: "read_book.find"}
+        });
+
+        function select_tts_mark(idx_in_flat_text, last_idx_in_flat_text) {
+            var text_map, match;
+            window.getSelection().removeAllRanges();
+            text_map = cached_tts_text_map();
+            if (idx_in_flat_text === last_idx_in_flat_text) {
+                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, idx_in_flat_text + find_word_length(text_map, idx_in_flat_text));
+            } else {
+                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, last_idx_in_flat_text + find_word_length(text_map, last_idx_in_flat_text));
+            }
             if (!match) {
                 return false;
             }
             return select_find_result(match);
         };
         if (!select_tts_mark.__argnames__) Object.defineProperties(select_tts_mark, {
-            __argnames__ : {value: ["idx_in_flat_text"]},
+            __argnames__ : {value: ["idx_in_flat_text", "last_idx_in_flat_text"]},
             __module__ : {value: "read_book.find"}
         });
 
+        ρσ_modules["read_book.find"].ignored_tags = ignored_tags;
+        ρσ_modules["read_book.find"].block_tags_for_tts = block_tags_for_tts;
         ρσ_modules["read_book.find"].cache = cache;
         ρσ_modules["read_book.find"].build_text_map = build_text_map;
         ρσ_modules["read_book.find"].index_for_node = index_for_node;
         ρσ_modules["read_book.find"].tts_word_regex = tts_word_regex;
+        ρσ_modules["read_book.find"].cached_tts_text_map = cached_tts_text_map;
         ρσ_modules["read_book.find"].tts_data = tts_data;
         ρσ_modules["read_book.find"].find_node_for_index_binary = find_node_for_index_binary;
         ρσ_modules["read_book.find"].get_occurrence_data = get_occurrence_data;
@@ -20670,6 +20729,7 @@ return this.__repr__();
         ρσ_modules["read_book.find"].reset_find_caches = reset_find_caches;
         ρσ_modules["read_book.find"].select_find_result = select_find_result;
         ρσ_modules["read_book.find"].select_search_result = select_search_result;
+        ρσ_modules["read_book.find"].find_word_length = find_word_length;
         ρσ_modules["read_book.find"].select_tts_mark = select_tts_mark;
     })();
 
@@ -28592,7 +28652,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.17.0";
+        CALIBRE_VERSION = "7.18.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30291,15 +30351,23 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
-        IframeBoss.prototype.mark_word_being_spoken = function mark_word_being_spoken(occurrence_number) {
+        IframeBoss.prototype.mark_word_being_spoken = function mark_word_being_spoken(x) {
             var self = this;
+            if (typeof x === "number") {
+                x = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["first"] = x;
+                    ρσ_d["last"] = x;
+                    return ρσ_d;
+                }).call(this);
+            }
             self.last_search_at = window.performance.now();
-            if (select_tts_mark(occurrence_number)) {
+            if (select_tts_mark(x.first, x.last)) {
                 self.ensure_selection_boundary_visible();
             }
         };
         if (!IframeBoss.prototype.mark_word_being_spoken.__argnames__) Object.defineProperties(IframeBoss.prototype.mark_word_being_spoken, {
-            __argnames__ : {value: ["occurrence_number"]},
+            __argnames__ : {value: ["x"]},
             __module__ : {value: "read_book.iframe"}
         });
         IframeBoss.prototype.audio_ebook_msg_received = function audio_ebook_msg_received(data) {
@@ -46285,6 +46353,10 @@ return this.__repr__();
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["mark"].concat([ρσ_desugar_kwargs({num: data})]));
             } else if (which === "begin") {
                 self.state = PLAYING;
+            } else if (which === "pause") {
+                self.state = PAUSED;
+            } else if (which === "resume") {
+                self.state = PLAYING;
             } else if (which === "end") {
                 self.state = STOPPED;
                 self.view.show_next_spine_item();
@@ -47085,6 +47157,7 @@ return this.__repr__();
             this.on_bob_mouse_event = BookScrollbar.prototype.on_bob_mouse_event.bind(this);
             this.apply_visibility = BookScrollbar.prototype.apply_visibility.bind(this);
             this.set_position = BookScrollbar.prototype.set_position.bind(this);
+            this._sync_to_contents = BookScrollbar.prototype._sync_to_contents.bind(this);
             this.sync_to_contents = BookScrollbar.prototype.sync_to_contents.bind(this);
             this.apply_color_scheme = BookScrollbar.prototype.apply_color_scheme.bind(this);
         }});
@@ -47251,12 +47324,20 @@ return this.__repr__();
             __argnames__ : {value: ["frac"]},
             __module__ : {value: "read_book.scrollbar"}
         });
+        BookScrollbar.prototype._sync_to_contents = function _sync_to_contents(frac) {
+            var self = this;
+            self.sync_to_contents_timer = 0;
+            self.set_position(frac);
+        };
+        if (!BookScrollbar.prototype._sync_to_contents.__argnames__) Object.defineProperties(BookScrollbar.prototype._sync_to_contents, {
+            __argnames__ : {value: ["frac"]},
+            __module__ : {value: "read_book.scrollbar"}
+        });
         BookScrollbar.prototype.sync_to_contents = function sync_to_contents(frac) {
             var self = this;
-            if (self.sync_to_contents_timer) {
-                window.clearTimeout(self.sync_to_contents_timer);
+            if (!self.sync_to_contents_timer) {
+                self.sync_to_contents_timer = window.setTimeout(self._sync_to_contents.bind(null, frac), 50);
             }
-            self.sync_to_contents_timer = window.setTimeout(self.set_position.bind(null, frac), 100);
         };
         if (!BookScrollbar.prototype.sync_to_contents.__argnames__) Object.defineProperties(BookScrollbar.prototype.sync_to_contents, {
             __argnames__ : {value: ["frac"]},
