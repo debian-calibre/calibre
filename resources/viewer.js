@@ -20391,6 +20391,9 @@ return this.__repr__();
             ρσ_d["link"] = true;
             ρσ_d["html"] = true;
             ρσ_d["img"] = true;
+            ρσ_d["rt"] = true;
+            ρσ_d["rp"] = true;
+            ρσ_d["rtc"] = true;
             return ρσ_d;
         }).call(this);
         block_tags_for_tts = (function(){
@@ -20412,19 +20415,28 @@ return this.__repr__();
             return ρσ_d;
         }).call(this);
         function build_text_map(for_tts) {
-            var node_list, flat_text, text_node_type, element_node_type;
+            var node_list, flat_text, text_node_type, element_node_type, in_ruby;
             node_list = [];
             flat_text = "";
             text_node_type = Node.TEXT_NODE;
             element_node_type = Node.ELEMENT_NODE;
+            in_ruby = 0;
             function process_node(node) {
-                var nt, text, tag, children, i;
+                var nt, text, rtext, tag, is_ruby_tag, children, i;
                 nt = node.nodeType;
                 if (nt === text_node_type) {
                     text = node.nodeValue;
                     if (text && text.length) {
-                        node_list.push({node: node, offset: flat_text.length, length: text.length});
-                        flat_text += text;
+                        if (in_ruby) {
+                            rtext = text.trim();
+                            if (rtext.length) {
+                                node_list.push({node: node, offset: flat_text.length, length: rtext.length, offset_in_node: text.length - text.trimStart().length});
+                                flat_text += rtext;
+                            }
+                        } else {
+                            node_list.push({node: node, offset: flat_text.length, length: text.length});
+                            flat_text += text;
+                        }
                     }
                 } else if (nt === element_node_type) {
                     if (!node.hasChildNodes()) {
@@ -20434,10 +20446,17 @@ return this.__repr__();
                     if (ignored_tags[(typeof tag === "number" && tag < 0) ? ignored_tags.length + tag : tag]) {
                         return;
                     }
+                    is_ruby_tag = tag === "ruby";
+                    if (is_ruby_tag) {
+                        in_ruby += 1;
+                    }
                     children = node.childNodes;
                     for (var ρσ_Index0 = 0; ρσ_Index0 < children.length; ρσ_Index0++) {
                         i = ρσ_Index0;
                         process_node(children[i]);
+                    }
+                    if (is_ruby_tag) {
+                        in_ruby -= 1;
                     }
                     if (for_tts && block_tags_for_tts[(typeof tag === "number" && tag < 0) ? block_tags_for_tts.length + tag : tag]) {
                         if (flat_text.length && " \n\t\r".indexOf(flat_text[flat_text.length-1]) > -1) {
@@ -20552,7 +20571,7 @@ return this.__repr__();
                 if (q.offset <= idx_in_flat_text && limit > idx_in_flat_text) {
                     start_node = q.node;
                     start_offset = idx_in_flat_text - q.offset;
-                    return [start_node, start_offset, mid];
+                    return [start_node, start_offset + (q.offset_in_node || 0), mid];
                 }
                 if (limit <= idx_in_flat_text) {
                     start = mid + 1;
@@ -28652,7 +28671,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.18.0";
+        CALIBRE_VERSION = "7.19.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();

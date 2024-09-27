@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-24 06:57+0000\n"
+"POT-Creation-Date: 2024-09-19 13:27+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French (Canada) (http://app.transifex.com/calibre/calibre/language/fr_CA/)\n"
@@ -144,34 +144,7 @@ msgid ""
 "successfully."
 msgstr "Ajouter un format au livre spécifié. Renvoie True si le format a été ajouté avec succès."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.add_format:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.cover:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.format:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.format_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_next_series_num_for:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.remove_formats:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.rename_items:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.search:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_field:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.tags_older_than:0
+#: ../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Parameters"
 msgstr "Paramètres"
 
@@ -203,6 +176,40 @@ msgid ""
 msgstr "Enregistrer une fonction de rappel qui sera appelée après que certaines actions aient été effectuées sur cette base de données. La fonction doit prendre trois arguments : (:class:`EventType`, library_id, event_type_specific_data)"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_notes_resource:1
+msgid ""
+"Add the specified resource so it can be referenced by notes and return its "
+"content hash"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_types:1
+msgid "Return a tuple of all annotation types in the database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_users:1
+msgid "Return a tuple of all (user_type, user name) that have annotations."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations:1
+msgid ""
+"Return a tuple of all annotations matching the specified criteria. "
+"`ignore_removed` controls whether removed (deleted) annotations are also "
+"returned. Removed annotations are just a skeleton used for merging of "
+"annotations."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations_for_book:1
+msgid ""
+"Return a tuple containing all annotations for the specified book_id as a "
+"dict with keys: `format`, `user_type`, `user`, `annotation`. Here, "
+"annotation is the annotation data."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
 msgstr "Ensemble gelé de tous les ids de livre connus."
@@ -223,6 +230,20 @@ msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
 msgstr "Ensemble gelé de tous les champs de noms (devrait uniquement être utilisé pour les champs many-one et many-many)"
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotation_count_for_book:1
+msgid ""
+"Return the number of annotations for the specified book available in the "
+"database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotations_map_for_book:1
+msgid ""
+"Return a map of annotation type -> annotation data for the specified "
+"book_id, format, user and user_type."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
@@ -348,6 +369,11 @@ msgid ""
 msgstr "Renvoie les données appropriées pour être utilisées dans  :meth:`has_book`. Ceci peut être utilisé pour une implémentation de :meth:`has_book` dans un processus de travail sans accès à la bd."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_annotations:1
+msgid "Delete annotations with the specified ids."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
 msgid ""
 "Delete data for name. By default deletes all data, if you only want to "
@@ -371,6 +397,12 @@ msgstr "Mettre à jour les métadonnées pour tous les fomats du book_ids sélec
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.expire_old_trash:1
 msgid "Expire entries from the trash that are too old"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.export_note:1
+msgid ""
+"Export the note as a single HTML document with embedded images as data: URLs"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -413,6 +445,13 @@ msgid ""
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
 msgstr "Renvoie les ids (en tant que tuples) pour les valeurs que le champ ``name`` à dans le livre identifié par ``book_id``. S'il n'y a pas de valeurs, ou pas de tel livre, ou pas de tel champ, un tuple vide est renvoyé."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_supports_notes:1
+msgid ""
+"Return True iff the specified field supports notes. If field is None return "
+"frozenset of all fields that support notes."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
@@ -511,6 +550,13 @@ msgid ""
 msgstr "Renvoie le tuple pour tous les formats du livre spécifié. Si verify_format est Vrai, vérifie que les fichiers existent sur le disque."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_items_that_have_notes:1
+msgid ""
+"Return all item_ids for items that have notes in the specified field or all "
+"fields if field_name is None"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:1
 msgid ""
 "Returns all links for all fields referenced by book identified by book_id. "
@@ -531,16 +577,7 @@ msgstr ""
 msgid "the book id in question."
 msgstr ""
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.remove_formats:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_link_map:0
+#: ../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Returns"
 msgstr "Retours"
 
@@ -579,13 +616,16 @@ msgstr "Renvoie un ensemble d'ids de livre pour lesquels le nom a des données."
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 msgid ""
-"Return the item id for item_name (case-insensitive) or None if not found"
+"Return the item id for item_name or None if not found. This function is very"
+" slow if doing lookups for multiple names use either get_item_ids() or "
+"get_item_name_map(). Similarly, case sensitive lookups are faster than case "
+"insensitive ones."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
-msgid "Return the item id for item_name (case-insensitive)"
-msgstr "Renvoie l'id élément pour item_name(sensible à la casse)"
+msgid "Return a dict mapping item_name to the item id or None"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
@@ -593,6 +633,11 @@ msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
 msgstr "Renvoie le nom d'élément pour l'élément spécifié par item_id dans le champ spécifié. Voir aussi :meth:`get_id_map`."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_name_map:1
+msgid "Return mapping of item values to ids"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
@@ -638,6 +683,13 @@ msgid ""
 msgstr "Si Vrai, renvoie à la place un mappage de book_id à l'actuelle valeur series_index."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_notes_resource:1
+msgid ""
+"Return a dict containing the resource data and name or None if no resource "
+"with the specified hash is found"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -672,9 +724,29 @@ msgid "Return True iff the specified book_id exists in the db"
 msgstr "Renvoie Vrai si et seulement si le book_id spécifié existe dans la base de données."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.import_note:1
+msgid ""
+"Import a previously exported note or an arbitrary HTML file as the note for "
+"the specified item"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "Initialiser ce cache avec des données depuis le système principal."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_with_notes_in_book:1
+msgid ""
+"Return a dict of field to items that have associated notes for that field "
+"for the specified book"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.link_for:1
+msgid ""
+"Return the link, if any, for the specified item or None if no link is found"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:1
@@ -701,6 +773,13 @@ msgid ""
 "the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
 "the relative path of the file to the book directory using / as a separator. "
 "stat_result is the result of calling os.stat() on the file."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_annotations_for_book:1
+msgid ""
+"Merge the specified annotations into the existing annotations for book_id, "
+"fm, user_type, and user."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -733,6 +812,23 @@ msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
 msgstr "les champs doivent être une liste de 2-tuples de la forme (field_name, ascending = True ou False). Le champ le plus important est le 2-tuple."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_data_for:1
+msgid "Return all notes data as a dict or None if note does not exist"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_for:1
+msgid "Return the notes document or an empty string if not found"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_resources_used_by:1
+msgid ""
+"Return the set of resource hashes of all resources used by the note for the "
+"specified item"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
@@ -787,6 +883,11 @@ msgid ""
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
 msgstr "Supprimer tous les éléments dans le champ spécifié avec les ids spécifiés. Renvoie l'ensemble des ids de livres affectés. ``restrict_to_book_ids`` est un ensemble optionnel d'ids de livres. Si spécifié les éléments seront uniquement supprimés de ces livres."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.rename_extra_files:1
+msgid "Rename extra data files"
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
@@ -877,6 +978,25 @@ msgid ""
 msgstr "Si n'est pas Aucun, un ensemble d'ids de livre pour les livres sera recherché à la place de rechercher tous les livres."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_annotations:1
+msgid ""
+"Return of a tuple of annotations matching the specified Full-text query."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_notes:1
+msgid ""
+"Search the text of notes using an FTS index. If the query is empty return "
+"all notes."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_annotations_for_book:1
+msgid ""
+"Set all annotations for the specified book_id, fmt, user_type and user."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
 msgid "options must be a map of the form {book_id:conversion_options}"
 msgstr "les options doivent être une carte de la forme {book_id:conversion_options}"
@@ -958,6 +1078,17 @@ msgid ""
 msgstr "En réglant force_changes=True forcera set_metadata à mettre à jour les champs même si mi contient des valeurs vides. Dans ce cas, 'Aucun' est distingué de 'vide'. Si mi.XXX est Aucun, le XXX n'est pas remplacé, autrement il l'est. Les étiquettes, identifiants, et attributs de couverture sont des cas spéciaux. Étiquettes et identifiants ne peuvent  être paramétrés à Aucun aussi seront-ils toujours remplacés si force_change est Vrai. Vous devez vous assurer que mi contient les valeurs que vous voulez que le livre ait.. Les couvertures sont toujours changées si une nouvelle couverture est procurée, mais ne sont jamais supprimées. Aussi notez que force_changes n'a pas d'effet sur les réglages titre ou auteurs."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_notes_for:1
+msgid ""
+"Set the notes document. If the searchable text is different from the "
+"document, specify it as searchable_text. If the document references "
+"resources their hashes must be present in resource_hashes. Set "
+"remove_unused_resources to True to cleanup unused resources, note that "
+"updating a note automatically cleans up resources pertaining to that note "
+"anyway."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
@@ -998,6 +1129,18 @@ msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
 msgstr "Une liste d'auteurs. Si pas Aucun la liste des correspondances sera restreinte aux livres qui ont ces auteurs (insensible à la casse)."
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.unretire_note_for:1
+msgid ""
+"Unretire a previously retired note for the specified item. Notes are retired"
+" when an item is removed from the database"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_annotations:1
+msgid "Update annotations."
+msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

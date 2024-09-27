@@ -1096,6 +1096,7 @@ class BasicNewsRecipe(Recipe):
         # Nuke HTML5 tags
         for x in ans.findAll(['article', 'aside', 'header', 'footer', 'nav',
             'figcaption', 'figure', 'section']):
+            x.get_attribute_list('class').append(f'calibre-nuked-tag-{x.name}')
             x.name = 'div'
 
         if job_info:
@@ -1875,6 +1876,8 @@ class BasicNewsRecipe(Recipe):
                         if articles:
                             arelpath = sorted(articles, key=numeric_sort_key)[0]
                             a.set('href', item.relhref(arelpath))
+                            if a.text and len(a) == 0:
+                                a.text = a.text + '·'  # mark as local link
                             if url not in seen:
                                 log.debug(f'Resolved internal URL: {url} -> {arelpath}')
                                 seen.add(url)
