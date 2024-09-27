@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.18.0\n"
+"Project-Id-Version: calibre 7.19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 08:10+0530\n"
+"POT-Creation-Date: 2024-09-27 07:41+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -369,11 +369,11 @@ msgid "Return the set of book ids for which name has data."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_item_id:1
-msgid "Return the item id for item_name (case-insensitive) or None if not found"
+msgid "Return the item id for item_name or None if not found. This function is very slow if doing lookups for multiple names use either get_item_ids() or get_item_name_map(). Similarly, case sensitive lookups are faster than case insensitive ones."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_item_ids:1
-msgid "Return the item id for item_name (case-insensitive)"
+msgid "Return a dict mapping item_name to the item id or None"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_item_name:1

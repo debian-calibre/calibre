@@ -13,6 +13,8 @@ class QtTTSBackend(TTSBackend):
         super().__init__(parent)
         self.speaking_text = ''
         self.last_word_offset = 0
+        self.last_spoken_word = None
+        self.ignore_tracking_until_state_changes_to_speaking = False
         self._qt_reload_after_configure(engine_name)
 
     @property
@@ -36,11 +38,24 @@ class QtTTSBackend(TTSBackend):
         self.tts.resume()
 
     def stop(self) -> None:
-        self.tts.stop()
+        if self.tts.engine() == 'sapi' and self.tts.state() is QTextToSpeech.State.Speaking:
+            # prevent an occasional crash on stop by re-creating the engine rather than stopping it
+            self.tts.sayingWord.disconnect()
+            self.tts.stateChanged.disconnect()
+            self.tts.pause()
+            self.tts.deleteLater()
+            del self.tts
+            self._qt_reload_after_configure('sapi')
+            self._state_changed(QTextToSpeech.State.Ready)
+        else:
+            self.tts.stop()
 
     def say(self, text: str) -> None:
         self.last_word_offset = 0
+        self.last_spoken_word = None
         self.speaking_text = text
+        if self.tts.engine() == 'sapi':
+            self.ignore_tracking_until_state_changes_to_speaking = True
         self.tts.say(text)
 
     def error_message(self) -> str:
@@ -58,7 +73,7 @@ class QtTTSBackend(TTSBackend):
             settings = EngineSpecificSettings.create_from_config(engine_name)
             if settings.audio_device_id:
                 for x in QMediaDevices.audioOutputs():
-                    if bytes(x.id) == settings.audio_device_id.id:
+                    if bytes(x.id()) == settings.audio_device_id.id:
                         s['audioDevice'] = x
                         break
             if new_backend:
@@ -94,12 +109,23 @@ class QtTTSBackend(TTSBackend):
         self._current_settings = settings
 
     def _saying_word(self, word: str, utterance_id: int, start: int, length: int) -> None:
+        # print(f'{repr(word)=} {start=} {length=}, {repr(self.speaking_text[start:start+length])=} {self.ignore_tracking_until_state_changes_to_speaking=}')
+        if self.ignore_tracking_until_state_changes_to_speaking:
+            return
         # Qt's word tracking is broken with non-BMP unicode chars, the
         # start and length values are totally wrong, so track manually
+        key = word, start, length
+        # Qt sometimes repeats words with windows modern engine at least, for a test case see https://bugs.launchpad.net/calibre/+bug/2080708
+        if self.last_spoken_word == key:
+            return
+        self.last_spoken_word = key
         idx = self.speaking_text.find(word, self.last_word_offset)
+        # print(f'{self.last_word_offset=} {idx=}')
         if idx > -1:
             self.saying.emit(idx, len(word))
             self.last_word_offset = idx + len(word)
 
     def _state_changed(self, state: QTextToSpeech.State) -> None:
+        if self.ignore_tracking_until_state_changes_to_speaking and state is QTextToSpeech.State.Speaking:
+            self.ignore_tracking_until_state_changes_to_speaking = False
         self.state_changed.emit(state)

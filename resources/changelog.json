@@ -1,9 +1,101 @@
 [
     {
+        "version": "7.19.0",
+        "date": "2024-09-27",
+        "new features": [
+            {
+                "type": "major",
+                "title": "E-book viewer: Halve the time taken to open large EPUB format books for the first time",
+                "description": "A four hundred thousand word EPUB book now opens in under a second on typical hardware."
+            },
+            {
+                "title": "PDF new engine: Improve header/footer detection"
+            },
+            {
+                "title": "For column icons and grid view emblems, support icons for both light and dark themes"
+            },
+            {
+                "title": "News downloads: Mark links to locally available articles with a middle-dot"
+            },
+            {
+                "tickets": [
+                    2079784
+                ],
+                "title": "When saving a layout also save the main window geometry"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2080705
+                ],
+                "title": "Windows: Read Aloud: Fix an occasional crash when stopping read aloud when using the legacy windows TTS engine"
+            },
+            {
+                "tickets": [
+                    2080705
+                ],
+                "title": "Windows: Read Aloud: Fix clicking in text to change what is being read causing tracking of currently read word to fail when using the legacy Windows TTS engine"
+            },
+            {
+                "tickets": [
+                    2080708
+                ],
+                "title": "Read aloud: Fix reading large numeric words causing text synchronization to fail when using some legacy TTS engines"
+            },
+            {
+                "tickets": [
+                    2080701
+                ],
+                "title": "EPUB3 metadata: Fix setting series number to zero not working"
+            },
+            {
+                "tickets": [
+                    2081982
+                ],
+                "title": "Comic Input: Handle comics whose internal files have control codes in their filenames"
+            },
+            {
+                "tickets": [
+                    2071348
+                ],
+                "title": "E-book viewer: Fix a regression that broke searching in Japanese books that use <ruby> text"
+            },
+            {
+                "tickets": [
+                    2080655
+                ],
+                "title": "E-book viewer: Fix a regression in the previous release that broke Read aloud for selected text"
+            },
+            {
+                "title": "Amazon metadata plugin: Workaround for downloads failing because Google discontinued its webcache"
+            },
+            {
+                "title": "Cover grid: Suppress the 2px border Qt draws for the list view"
+            }
+        ],
+        "improved recipes": [
+            "NY Times",
+            "NYT Book Review",
+            "Courrier International",
+            "Le Monde",
+            "TLS Magazine",
+            "Scientific American",
+            "Engadget"
+        ],
+        "new recipes": [
+            {
+                "title": "NYT News based on feeds",
+                "author": "unkn0wn"
+            }
+        ]
+    },
+    {
         "version": "7.18.0",
         "date": "2024-09-13",
         "new features": [
             {
+                "type": "major",
                 "title": "E-book viewer: Read aloud: A new Text-to-Speech engine (Piper) that uses a neural network for realistic sounding voices",
                 "description": "To use it access the viewer controls and click the Read aloud button or press 'Ctrl+S'. The neural network is run locally, no cloud services are used. Using the OS Text-to-Speech engine is still possible by clicking the configure button on the Read aloud control bar. Note that the new engine highlights the currently read sentence rather than word."
             },
@@ -15,7 +107,7 @@
                 "description": "Turn it on via the PDF input section of the conversion dialog."
             },
             {
-                "title": "Content server: Viewer: Read Aloud: Implement word-by-word tracking when reading aloud if the browser and voice used support it, for example, Chromium on Windows, Firefox on Android and Safari on macOS"
+                "title": "Content server: Viewer: Read Aloud: Implement word-by-word tracking when reading aloud if the browser and OS used support it, for example, Chromium on Windows, Firefox on Android and Safari on macOS"
             },
             {
                 "tickets": [

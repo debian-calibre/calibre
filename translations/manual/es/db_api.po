@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-21 14:51+0000\n"
+"POT-Creation-Date: 2024-09-19 13:27+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2024\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
@@ -621,13 +621,16 @@ msgstr "Devuelve el conjunto de identificadores de libros para los que ``name`` 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 msgid ""
-"Return the item id for item_name (case-insensitive) or None if not found"
-msgstr "Devuelve el identificador del elemento para ``item_name`` (no distingue mayúsculas y minúsculas) o None si no se encuentra"
+"Return the item id for item_name or None if not found. This function is very"
+" slow if doing lookups for multiple names use either get_item_ids() or "
+"get_item_name_map(). Similarly, case sensitive lookups are faster than case "
+"insensitive ones."
+msgstr "Devuelve el identificador de elemento para «item_name» o None si no se encuentra. Esta función es muy lenta, para consultas de varios nombres use get_item_ids() o get_item_name_map(). Las consultas con distinción de mayúsculas y minúsculas son más rápidas que las consultas sin distinción."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
-msgid "Return the item id for item_name (case-insensitive)"
-msgstr "Devuelve el identificador del elemento para ``item_name`` (no distingue mayúsculas y minúsculas)"
+msgid "Return a dict mapping item_name to the item id or None"
+msgstr "Devuelve un diccionario que hace corresponder «item_name» con el identificador de elemento o None"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1

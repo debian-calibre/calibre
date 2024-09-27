@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 https://www.economist.com/the-world-in-brief
 '''
@@ -5,12 +6,13 @@ https://www.economist.com/the-world-in-brief
 import json
 from urllib.parse import quote, urlencode
 
+from html5_parser import parse
+from lxml import etree
+
 from calibre import replace_entities
 from calibre.ebooks.BeautifulSoup import NavigableString, Tag
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.web.feeds.news import BasicNewsRecipe
-from html5_parser import parse
-from lxml import etree
 
 
 def E(parent, name, text='', **attrs):
@@ -195,6 +197,12 @@ class Espresso(BasicNewsRecipe):
             url = 'file:///' + pt.name
             ans.append({"title": title, "url": url})
         return [('Espresso', ans)]
+
+    def preprocess_html(self, soup):
+        for img in soup.findAll('img', src=True):
+            img['src'] = img['src'].replace('economist.com/',
+                'economist.com/cdn-cgi/image/width=600,quality=80,format=auto/')
+        return soup
 
     def populate_article_metadata(self, article, soup, first):
         article.url = soup.find('h1')['title']

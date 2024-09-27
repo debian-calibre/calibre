@@ -118,6 +118,7 @@ class TTSManager(QObject):
         super().__init__(parent)
         self._tts: 'TTSBackend' | None = None
         self.state = QTextToSpeech.State.Ready
+        self.speaking_simple_text = False
         self.tracker = Tracker()
         self._resuming_after_configure = False
 
@@ -149,6 +150,7 @@ class TTSManager(QObject):
         self._stop()
 
     def _stop(self) -> None:
+        self.speaking_simple_text = False
         self.tracker.clear()
         self.tts.stop()
 
@@ -159,10 +161,13 @@ class TTSManager(QObject):
         self.tts.resume()
 
     def speak_simple_text(self, text: str) -> None:
-        self.speak_marked_text([0, text])
+        self._stop()
+        self.speaking_simple_text = True
+        self.tts.say(text)
 
     def speak_marked_text(self, marked_text):
         self._stop()
+        self.speaking_simple_text = False
         self.tts.say(self.tracker.parse_marked_text(marked_text))
 
     @contextmanager
@@ -227,8 +232,9 @@ class TTSManager(QObject):
     def _state_changed(self, state: QTextToSpeech.State) -> None:
         prev_state, self.state = self.state, state
         if state is QTextToSpeech.State.Error:
-            error_dialog(self, _('Read aloud failed'), self.tts.error_message(), show=True)
-        if state is QTextToSpeech.State.Paused:
+            from calibre.gui2.tts.types import widget_parent
+            error_dialog(widget_parent(self), _('Read aloud failed'), self.tts.error_message(), show=True)
+        elif state is QTextToSpeech.State.Paused:
             self.emit_state_event('pause')
         elif state is QTextToSpeech.State.Speaking:
             if prev_state is QTextToSpeech.State.Paused:
@@ -237,11 +243,14 @@ class TTSManager(QObject):
                 self.emit_state_event('begin')
         elif state is QTextToSpeech.State.Ready:
             if prev_state in (QTextToSpeech.State.Paused, QTextToSpeech.State.Speaking):
-                self.emit_state_event('end')
+                if not self.speaking_simple_text:
+                    self.emit_state_event('end')
         elif state is QTextToSpeech.State.Error:
             self.emit_state_event('cancel')
 
     def _saying(self, offset: int, length: int) -> None:
+        if self.speaking_simple_text:
+            return
         self.tracker.boundary_reached(offset)
         x = self.tracker.mark_word_or_sentence(offset, length)
         if x is not None:

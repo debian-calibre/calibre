@@ -8,6 +8,7 @@ __docformat__ = 'restructuredtext en'
 import numbers
 from collections import defaultdict
 from datetime import datetime, timedelta
+from typing import Iterable
 
 from calibre.ebooks.metadata import author_to_author_sort
 from calibre.utils.date import UNDEFINED_DATE, parse_date, utc_tz
@@ -64,9 +65,11 @@ class Table:
             'datetime': c_parse,
             'bool': bool
         }.get(dt)
+        self.serialize = None
         if name == 'authors':
             # Legacy
             self.unserialize = lambda x: x.replace('|', ',') if x else ''
+            self.serialize = lambda x: x.replace(',', '|')
         self.link_table = (link_table if link_table else
                 'books_%s_link'%self.metadata['table'])
         if self.supports_notes and dt == 'rating':  # custom ratings table
@@ -262,6 +265,30 @@ class ManyToOneTable(Table):
                     self.link_table, self.metadata['link_column']),
                     tuple((main_id, x) for x in v))
                 db.delete_category_items(self.name, self.metadata['table'], item_map)
+
+    def item_ids_for_names(self, db, item_names: Iterable[str], case_sensitive: bool = False) -> dict[str, int]:
+        item_names = tuple(item_names)
+        if case_sensitive:
+            colname = self.metadata['column']
+            serialized_names = tuple(map(self.serialize, item_names)) if self.serialize else item_names
+            if len(item_names) == 1:
+                iid = db.get(f'SELECT id FROM {self.metadata["table"]} WHERE {colname} = ?', ((serialized_names[0],)), all=False)
+                return {item_names[0]: iid}
+            inq = ('?,' * len(item_names))[:-1]
+            ans = dict.fromkeys(item_names)
+            res = db.get(f'SELECT {colname}, id FROM {self.metadata["table"]} WHERE {colname} IN ({inq})', serialized_names)
+            if self.unserialize:
+                res = ((self.unserialize(name), iid) for name, iid in res)
+            ans.update(res)
+            return ans
+        if len(item_names) == 1:
+            q = icu_lower(item_names[0])
+            for iid, name in self.id_map.items():
+                if icu_lower(name) == q:
+                    return {item_names[0]: iid}
+            return {item_names[0]: iid}
+        rmap = {icu_lower(v) if isinstance(v, str) else v:k for k, v in self.id_map.items()}
+        return {name: rmap.get(icu_lower(name) if isinstance(name, str) else name, None) for name in item_names}
 
     def remove_books(self, book_ids, db):
         clean = set()
