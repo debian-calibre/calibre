@@ -1,3 +1,16 @@
+calibre (7.19.0+ds-2) UNRELEASED; urgency=medium
+
+  * Drop obsolete module from dependency liist (Closes: #1083330)
+    "pkg_resources" module is not used since:
+    https://github.com/kovidgoyal/calibre/commit/c4a5afcf24769ec9adde99bc80f1ed33c9ee5e78
+  * Remove obsolete older python3-lxml usage
+    "python3-lxml-html-clean" module is already available in trixie.
+  * Rediff patches: done Qt 6.7 migration.
+    Drop 0063-Back-port-to-Qt-6.6-QAnyStringView.patch: done Qt 6.7 migration
+    Drop 0064-Back-port-to-Qt-6.6-QNetworkAccessManager-get.patch: done Qt 6.7 migration
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 05 Oct 2024 13:03:32 +0900
+
 calibre (7.19.0+ds-1) unstable; urgency=medium
 
   * New upstream version 7.19.0+ds
