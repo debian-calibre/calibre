@@ -564,6 +564,8 @@ if has_ssl_verify:
 
         def __init__(self, ssl_version, *args, **kwargs):
             kwargs['context'] = ssl.create_default_context(cafile=kwargs.pop('cert_file'))
+            if hasattr(ssl, 'VERIFY_X509_STRICT'):
+                kwargs['context'].verify_flags &= ~ssl.VERIFY_X509_STRICT
             httplib.HTTPSConnection.__init__(self, *args, **kwargs)
 else:
     class HTTPSConnection(httplib.HTTPSConnection):
@@ -846,6 +848,20 @@ def check_glibc_version(min_required=(2, 31), release_date='2020-02-01'):
         ).format(ver, '.'.join(map(str, min_required)), release_date))
 
 
+def check_for_recent_freetype():
+    import ctypes
+    f = None
+    try:
+        f = ctypes.CDLL('libfreetype.so.6')
+    except OSError:
+        raise SystemExit('Your system is missing the FreeType library libfreetype.so. Try installing the freetype package.')
+    try:
+        f.FT_Get_Color_Glyph_Paint
+    except AttributeError:
+        raise SystemExit('Your system has too old a version of the FreeType library.'
+                         ' freetype >= 2.11 is needed for the FT_Get_Color_Glyph_Paint function which is required by Qt WebEngine')
+
+
 def main(install_dir=None, isolated=False, bin_dir=None, share_dir=None, ignore_umask=False, version=None):
     if not ignore_umask and not isolated:
         check_umask()
@@ -872,6 +888,8 @@ def main(install_dir=None, isolated=False, bin_dir=None, share_dir=None, ignore_
         check_for_libOpenGl()
     if q[0] >= 7:
         check_for_libxcb_cursor()
+    if q >= (7, 16, 0):
+        check_for_recent_freetype()
     run_installer(install_dir, isolated, bin_dir, share_dir, version)
 
 

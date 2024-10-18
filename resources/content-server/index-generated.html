@@ -30691,7 +30691,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.19.0";
+        CALIBRE_VERSION = "7.20.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -38330,7 +38330,7 @@ return this.__repr__();
             }
             function forward_touch_events(ev) {
                 var container, dup;
-                container = window.top.document.getElementById(render_book.container_id);
+                container = window.parent.document.getElementById(render_book.container_id);
                 if (container) {
                     dup = new ev.constructor(ev.type, ev);
                     container.dispatchEvent(dup);
@@ -59489,7 +59489,12 @@ return this.__repr__();
                 container.appendChild(g);
                 g.appendChild(ρσ_interpolate_kwargs.call(this, float_spin, ["unwrap_factor", _("Line &un-wrapping factor:")].concat([ρσ_desugar_kwargs({max: 1, step: .01})])));
                 g.appendChild(checkbox("no_images", _("No &images")));
-                g.appendChild(checkbox("new_pdf_engine", _("New, experimental, PDF conversion &engine")));
+                g.appendChild(choices("pdf_engine", _("PDF &engine:"), (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["calibre"] = "calibre";
+                    ρσ_d["pdftohtml"] = "pdftohtml";
+                    return ρσ_d;
+                }).call(this)));
                 g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_header_skip", _("Remove headers at &top of page by:")].concat([ρσ_desugar_kwargs({min: -1, max: 999999, step: 1})])));
                 g.appendChild(ρσ_interpolate_kwargs.call(this, int_spin, ["pdf_footer_skip", _("Remove footers at &bottom of page by:")].concat([ρσ_desugar_kwargs({min: -1, max: 999999, step: 1})])));
                 g.appendChild(lineedit("pdf_header_regex", _("Regular expression to remove &header at top of page:")));
