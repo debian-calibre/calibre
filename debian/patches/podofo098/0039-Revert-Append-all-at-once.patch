@@ -11,10 +11,10 @@ This reverts commit 7469c920f22551d6a0b49b2224221be8c8991eed.
  2 files changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/src/calibre/ebooks/pdf/html_writer.py b/src/calibre/ebooks/pdf/html_writer.py
-index 6ebfe43..7f80db0 100644
+index a05a9d3..ebb4165 100644
 --- a/src/calibre/ebooks/pdf/html_writer.py
 +++ b/src/calibre/ebooks/pdf/html_writer.py
-@@ -1145,7 +1145,7 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
+@@ -1151,7 +1151,7 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
      results = manager.convert_html_files(jobs, settle_time=1, has_maths=has_maths)
      num_pages = 0
      page_margins_map = []
@@ -23,7 +23,7 @@ index 6ebfe43..7f80db0 100644
      for i, margin_file in enumerate(margin_files):
          name = margin_file.name
          data = results[name]
-@@ -1156,10 +1156,13 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
+@@ -1162,10 +1162,13 @@ def convert(opf_path, opts, metadata=None, output_path=None, log=default_log, co
          doc_pages = doc.page_count()
          page_margins_map.extend(repeat(resolve_margins(margin_file.margins, page_layout), doc_pages))
          num_pages += doc_pages

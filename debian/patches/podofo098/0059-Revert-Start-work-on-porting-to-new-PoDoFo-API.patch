@@ -41,10 +41,10 @@ index 60d5fff..0b56ae4 100644
  
  
 diff --git a/setup/build_environment.py b/setup/build_environment.py
-index e9d5ddf..dc0027b 100644
+index 7b595fc..e09e3a1 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
-@@ -209,7 +209,6 @@ else:
+@@ -223,7 +223,6 @@ if os.path.exists(os.path.join(sw, 'ffmpeg')):
  
  podofo_lib = os.environ.get('PODOFO_LIB_DIR', podofo_lib)
  podofo_inc = os.environ.get('PODOFO_INC_DIR', podofo_inc)
@@ -53,10 +53,10 @@ index e9d5ddf..dc0027b 100644
          ('PoDoFo not found on your system. Various PDF related',
      ' functionality will not work. Use the PODOFO_INC_DIR and',
 diff --git a/setup/extensions.json b/setup/extensions.json
-index 15482ea..d4a227f 100644
+index 0cd8993..db3afd9 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
-@@ -120,11 +120,11 @@
+@@ -128,11 +128,11 @@
          "name": "podofo",
          "sources": "calibre/utils/podofo/utils.cpp calibre/utils/podofo/output.cpp calibre/utils/podofo/doc.cpp calibre/utils/podofo/outline.cpp calibre/utils/podofo/fonts.cpp calibre/utils/podofo/impose.cpp calibre/utils/podofo/images.cpp calibre/utils/podofo/outlines.cpp calibre/utils/podofo/podofo.cpp",
          "headers": "calibre/utils/podofo/global.h",
