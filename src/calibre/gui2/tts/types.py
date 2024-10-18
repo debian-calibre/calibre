@@ -15,10 +15,16 @@ from calibre.utils.config_base import tweaks
 from calibre.utils.localization import canonicalize_lang
 
 CONFIG_NAME = 'tts'
+TTS_EMBEDED_CONFIG = 'tts-embedded'
+# lru_cache doesn't work for this because it returns different results for
+# load_config() and load_config(CONFIG_NAME)
+conf_cache = {}
 
-@lru_cache(2)
-def load_config() -> JSONConfig:
-    return JSONConfig(CONFIG_NAME)
+
+def load_config(config_name=CONFIG_NAME) -> JSONConfig:
+    if (ans := conf_cache.get(config_name)) is None:
+        ans = conf_cache[config_name] = JSONConfig(config_name)
+    return ans
 
 
 class TrackingCapability(Enum):
@@ -39,6 +45,7 @@ class EngineMetadata(NamedTuple):
     can_change_volume: bool = True
     voices_have_quality_metadata: bool = False
     has_managed_voices: bool = False
+    has_sentence_delay: bool = False
 
 
 class Quality(Enum):
@@ -122,6 +129,8 @@ class EngineSpecificSettings(NamedTuple):
     volume: float | None = None  # 0 to 1, None is platform default volume
     output_module: str = ''
     engine_name: str = ''
+    sentence_delay: float = 0  # seconds >= 0
+    preferred_voices: dict[str, str] | None = None
 
     @classmethod
     def create_from_prefs(cls, engine_name: str, prefs: dict[str, object]) -> 'EngineSpecificSettings':
@@ -142,14 +151,20 @@ class EngineSpecificSettings(NamedTuple):
         with suppress(Exception):
             volume = max(0, min(float(prefs.get('volume')), 1))
         om = str(prefs.get('output_module', ''))
+        sentence_delay = 0.
+        with suppress(Exception):
+            sentence_delay = max(0, float(prefs.get('sentence_delay')))
+        with suppress(Exception):
+            preferred_voices = prefs.get('preferred_voices')
         return EngineSpecificSettings(
-            voice_name=str(prefs.get('voice', '')), output_module=om,
+            voice_name=str(prefs.get('voice', '')), output_module=om, sentence_delay=sentence_delay, preferred_voices=preferred_voices,
             audio_device_id=audio_device_id, rate=rate, pitch=pitch, volume=volume, engine_name=engine_name)
 
     @classmethod
-    def create_from_config(cls, engine_name: str) -> 'EngineSpecificSettings':
-        prefs = load_config().get('engines', {}).get(engine_name, {})
-        return cls.create_from_prefs(engine_name, prefs)
+    def create_from_config(cls, engine_name: str, config_name: str = CONFIG_NAME) -> 'EngineSpecificSettings':
+        prefs = load_config(config_name)
+        val = prefs.get('engines', {}).get(engine_name, {})
+        return cls.create_from_prefs(engine_name, val)
 
     @property
     def as_dict(self) -> dict[str, object]:
@@ -166,10 +181,14 @@ class EngineSpecificSettings(NamedTuple):
             ans['volume'] = self.volume
         if self.output_module:
             ans['output_module'] = self.output_module
+        if self.sentence_delay:
+            ans['sentence_delay'] = self.sentence_delay
+        if self.preferred_voices:
+            ans['preferred_voices'] = self.preferred_voices
         return ans
 
-    def save_to_config(self, prefs:JSONConfig | None = None):
-        prefs = prefs or load_config()
+    def save_to_config(self, prefs:JSONConfig | None = None, config_name: str = CONFIG_NAME):
+        prefs = load_config(config_name) if prefs is None else prefs
         val = self.as_dict
         engines = prefs.get('engines', {})
         if not val:
@@ -219,7 +238,8 @@ def available_engines() -> dict[str, EngineMetadata]:
         ans['piper'] = EngineMetadata('piper', _('The Piper Neural Engine'), _(
             'The "piper" engine can track the currently spoken sentence on screen. It uses a neural network '
             'for natural sounding voices. The neural network is run locally on your computer, it is fairly resource intensive to run.'
-        ), TrackingCapability.Sentence, can_change_pitch=False, voices_have_quality_metadata=True, has_managed_voices=True)
+        ), TrackingCapability.Sentence, can_change_pitch=False, voices_have_quality_metadata=True, has_managed_voices=True,
+        has_sentence_delay=True)
     if islinux:
         try:
             from speechd.paths import SPD_SPAWN_CMD
@@ -299,10 +319,10 @@ class TTSBackend(QObject):
 engine_instances: dict[str, TTSBackend] = {}
 
 
-def create_tts_backend(force_engine: str | None = None) -> TTSBackend:
+def create_tts_backend(force_engine: str | None = None, config_name: str = CONFIG_NAME) -> TTSBackend:
     if not available_engines():
         raise OSError('There are no available TTS engines. Install a TTS engine before trying to use Read Aloud, such as flite or speech-dispatcher')
-    prefs = load_config()
+    prefs = load_config(config_name)
     engine_name = prefs.get('engine', '') if force_engine is None else force_engine
     engine_name = engine_name or default_engine_name()
     if engine_name not in available_engines():

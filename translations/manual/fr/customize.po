@@ -9,14 +9,15 @@
 # Ptit Prince <leporello1791@gmail.com>, 2014-2016
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2016-2022
+# un_pogaz, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 07:12+0000\n"
+"POT-Creation-Date: 2024-10-10 09:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
-"Last-Translator: Ptit Prince <leporello1791@gmail.com>, 2016-2022\n"
-"Language-Team: French (http://www.transifex.com/calibre/calibre/language/fr/)\n"
+"Last-Translator: un_pogaz, 2024\n"
+"Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -151,20 +152,27 @@ msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - empêche calibre d'enregistrer automat
 
 #: ../../__w/calibre/calibre/manual/customize.rst:55
 msgid ""
+"``CALIBRE_USE_SYSTEM_CERTIFICATES`` - make calibre use the system "
+"certificate store for SSL certificate verification instead of its own "
+"certificate store on Windows and macOS."
+msgstr "``CALIBRE_USE_SYSTEM_CERTIFICATES`` - fait en sorte que calibre utilise le magasin de certificats du système pour la vérification des certificats SSL au lieu de son propre magasin de certificats sous Windows et macOS."
+
+#: ../../__w/calibre/calibre/manual/customize.rst:56
+msgid ""
 "``QT_QPA_PLATFORM`` - On Linux set this to ``wayland`` to force calibre to "
 "use Wayland and ``xcb`` to force use of X11."
 msgstr "``QT_QPA_PLATFORM`` - Sous Linux, définissez ce paramètre à `wayland`` pour forcer calibre à utiliser Wayland et à ``xcb`` pour forcer l'utilisation de X11."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:56
+#: ../../__w/calibre/calibre/manual/customize.rst:57
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - Utiliser si sysfs est monté autre part que /sys"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:57
+#: ../../__w/calibre/calibre/manual/customize.rst:58
 msgid ""
 "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` - utilisés sous Linux pour spécifier un proxy HTTP(S)"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:59
+#: ../../__w/calibre/calibre/manual/customize.rst:60
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -173,11 +181,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "Voir `Comment définir les variables d'environnement dans Windows <https://www.computerhope.com/issues/ch000549.htm>`_. Si vous êtes sous macOS, vous pouvez définir des variables d'environnement en créant le fichier :file:`~/Library/Preferences/calibre/macos-env.txt` et en y mettant les variables d'environnement une par ligne, par exemple ::"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:69
+#: ../../__w/calibre/calibre/manual/customize.rst:70
 msgid "Tweaks"
 msgstr "Ajustements"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:71
+#: ../../__w/calibre/calibre/manual/customize.rst:72
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -185,11 +193,11 @@ msgid ""
 "reproduced below"
 msgstr "Les ajustements sont de petits changements que vous pouvez spécifier pour contrôler divers aspects du comportement de calibre. Vous pouvez les changer en allant dans Préférences->Avancé->Ajustements. Les valeurs par défaut pour les ajustements sont reproduits ci-dessous"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:78
+#: ../../__w/calibre/calibre/manual/customize.rst:79
 msgid "Overriding icons, templates, et cetera"
 msgstr "Outrepasser les Icônes, les modèles, etc."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:81
+#: ../../__w/calibre/calibre/manual/customize.rst:82
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -197,7 +205,7 @@ msgid ""
 "preferable to use icon themes over overriding individual icons."
 msgstr "calibre a un support direct pour les thèmes d'icônes, il y a plusieurs thèmes d'icônes disponibles pour calibre, que vous pouvez utiliser en allant dans :guilabel:`Préférences->Interface->Apparence et présentation->Changer le thème d'Icône`. Il est préférable d'utiliser les thèmes d'icônes plutôt que de remplacer les icônes individuelles."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:86
+#: ../../__w/calibre/calibre/manual/customize.rst:87
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -210,7 +218,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre vous permet d'outrepasser les ressources statiques, comme les icônes, le Javascript et les modèles pour les jaquettes de métadonnées, catalogues, etc. avec des versions personnalisées que vous préférez. Toutes les ressources statiques sont stockées dans le sous-répertoire ressources de l'emplacement d'installation de calibre. Sous Windows c'est habituellement :file:`C:\\\\Program Files\\\\app\\\\Calibre2\\\\resources`. Sous macOS, :file:`/Applications/calibre.app/Contents/Resources/resources/`. Sous Linux, si vous utilisez l'installateur de binaires depuis le site web de calibre ce sera :file:`/opt/calibre/resources`. Ces chemins peuvent changer dépendant de où vous choisissez d'installer calibre."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:95
+#: ../../__w/calibre/calibre/manual/customize.rst:96
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -222,7 +230,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Vous ne devriez pas changer les fichiers de ce répertoire ressources, vu que vos changements seront écrasés lors de votre prochaine mise à jour de calibre. A la place, allez dans :guilabel:`Préférences->Avancé->Divers` et cliquez :guilabel:`Ouvrir le répertoire de configuration de calibre`. Dans ce répertoire de configuration, créer un sous dossier appelé resources et placez y les fichiers que vous voulez remplacer. Placer les fichiers dans le sous dossier approprié, par exemple placez les images dans :file:`resources/images`, etc. calibre utilisera automatiquement votre fichier personnalisé en préférence à celui intégré la prochaine fois qu'il est démarré."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:104
+#: ../../__w/calibre/calibre/manual/customize.rst:105
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -235,11 +243,11 @@ msgid ""
 "icon theme."
 msgstr "Par exemple, si vous désirez changer l'icône pour l'action :guilabel:`Supprimer des livres`, vous devrez d'abord regarder dans le répertoire resources intégré et voir que le ficher pertinent est :file:`resources/images/remove_books.png`. Supposons que vous avez une icône alternative appelée :file:`my_remove_books.png` vous devriez la sauver dans le dossier de configuration comme file:`resources/images/remove_books.png`. Toutes les icônes de l'interface utilisateur calibre sont dans :file:`resources/images` et ses sous.répertoires. Placer un fichier de remplacement ici aura une priorité encore plus élevée qu'un thème d'icône personnalisé."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:114
+#: ../../__w/calibre/calibre/manual/customize.rst:115
 msgid "Creating your own icon theme for calibre"
 msgstr "Créer votre propre thème d'icônes pour calibre"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:116
+#: ../../__w/calibre/calibre/manual/customize.rst:117
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
@@ -256,7 +264,7 @@ msgid ""
 "the theme are used."
 msgstr "Si vous avez créé un superbe ensemble d'icônes et que vous souhaitez le partager avec les autres utilisateurs de calibre via le support de thème intégré, vous pouvez facilement les empaqueter dans un thème. Pour ce faire, aller à :guilabel:`Préférences->Divers->Créer un thème d'icônes`, sélectionner le dossier où vous avez posé vos icônes. Entrez alors les métadonnées du thème et cliquez sur OK. Ceci créera un fichier ZIP contenant vos icônes à thème. Vous pouvez téléverser cela sur le forum calibre à l'adresse `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ et je rendrai votre thème disponible via le système de thème d'icônes intégré de calibre. Par défaut, le thème d'icônes que vous venez de créer sera également installé comme thème courant dans calibre. Si vous testez votre thème, pensez à supprimer les images du dossier :file:`resources/images` afin que les icônes du thème soient utilisées."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:130
+#: ../../__w/calibre/calibre/manual/customize.rst:131
 msgid ""
 "As of calibre 6, you can have custom icons for light and dark mode. Simply "
 "create two versions of the icon and name the files with the suffix ``-for-"
@@ -265,11 +273,11 @@ msgid ""
 "automatically use the appropriate icon based on the current theme."
 msgstr "A partir de calibre 6, vous pouvez avoir des icônes personnalisées pour le mode clair et le mode sombre. Il suffit de créer deux versions de l'icône et de nommer les fichiers avec le suffixe ``-for-dark-theme`` et ``-for-light-theme`'. Par exemple, ``modified-for-dark-theme.png`` et ``modified-for-light-theme.png``. calibre utilisera alors automatiquement l'icône appropriée en fonction du thème actuel."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:137
+#: ../../__w/calibre/calibre/manual/customize.rst:138
 msgid "Customizing calibre with plugins"
 msgstr "Personnalisation de calibre avec des extensions"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:139
+#: ../../__w/calibre/calibre/manual/customize.rst:140
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -279,14 +287,14 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "calibre a un design hautement modulaire. Presque toutes les fonctionnalités dans calibre viennent sous la forme d'extensions. Les extensions sont utilisées pour la conversion, pour télécharger des actualités (bien que celles-ci s'appellent des recettes), pour divers composants de l'interface utilisateur, pour connecter différents périphériques, pour traiter les fichiers lorsque vous les ajouter à calibre. Vous pouvez obtenir une liste complète de toutes les extensions intégrées dans calibre en allant à :guilabel:`Préférences->Avancé->Extensions`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:146
+#: ../../__w/calibre/calibre/manual/customize.rst:147
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
 " :ref:`pluginstutorial`."
 msgstr "Vous pouvez écrire vos propres extensions pour personnaliser et améliorer le coportement de calibre. L'architecture extension dans calibre est vraiment simple, voir le tutoriel :ref:`pluginstutorial`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:150
+#: ../../__w/calibre/calibre/manual/customize.rst:151
 msgid ""
 "Once you have written a plugin, you can upload that to the calibre plugins "
 "forum at `Mobileread "

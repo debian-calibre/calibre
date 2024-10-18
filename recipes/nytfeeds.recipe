@@ -1,184 +1,12 @@
 #!/usr/bin/env python
-import json
 import re
 
-from calibre.utils.iso8601 import parse_iso8601
 from calibre.web.feeds.news import BasicNewsRecipe
 
-
-def extract_json(raw):
-    pre = re.search(r'<script>window.__preloadedData = ({.+)', raw).group(1)
-    js = json.JSONDecoder().raw_decode(re.sub('undefined', '[]', pre))[0]
-    return js['initialData']['data']['article']['sprinkledBody']['content']
-
-def parse_image(i):
-    if i.get('crops'):
-        yield '<div><img src="{}">'.format(i['crops'][0]['renditions'][0]['url'])
-    elif i.get('spanImageCrops'):
-        yield '<div><img src="{}">'.format(i['spanImageCrops'][0]['renditions'][0]['url'])
-    if i.get('caption'):
-        yield '<div class="cap">' + ''.join(parse_types(i['caption']))
-        if i.get('credit'):
-            yield '<span class="cred"> ' + i['credit'] + '</span>'
-        yield '</div>'
-    yield '</div>'
-
-def parse_img_grid(g):
-    for grd in g.get('gridMedia', {}):
-        yield ''.join(parse_image(grd))
-    if g.get('caption'):
-        yield '<div class="cap">{}'.format(g['caption'])
-        if g.get('credit'):
-            yield '<span class="cred"> ' + g['credit'] + '</span>'
-        yield '</div>'
-
-def parse_vid(v):
-    if v.get('promotionalMedia'):
-        if v.get('headline'):
-            if v.get('url'):
-                yield '<div><b><a href="{}">Video</a>: '.format(v['url'])\
-                    + v['headline'].get('default', '') + '</b></div>'
-            elif v['headline'].get('default'):
-                yield '<div><b>' + v['headline']['default'] + '</b></div>'
-        yield ''.join(parse_types(v['promotionalMedia']))
-        if v.get('promotionalSummary'):
-            yield '<div class="cap">' + v['promotionalSummary'] + '</div>'
-
-def parse_emb(e):
-    if e.get('html') and 'datawrapper.dwcdn.net' in e.get('html', ''):
-        dw = re.search(r'datawrapper.dwcdn.net/(.{5})', e['html']).group(1)
-        yield '<div><img src="{}">'.format('https://datawrapper.dwcdn.net/' + dw + '/full.png') + '</div>'
-    elif e.get('promotionalMedia'):
-        if e.get('headline'):
-            yield '<div><b>' + e['headline']['default'] + '</b></div>'
-        yield ''.join(parse_types(e['promotionalMedia']))
-        if e.get('note'):
-            yield '<div class="cap">' + e['note'] + '</div>'
-
-def parse_byline(byl):
-    for b in byl.get('bylines', {}):
-        yield '<div>' + b['renderedRepresentation'] + '</div>'
-    yield '<div><b><i>'
-    for rl in byl.get('role', {}):
-        if ''.join(parse_cnt(rl)).strip():
-            yield ''.join(parse_cnt(rl))
-    yield '</i></b></div>'
-
-def iso_date(x):
-    dt = parse_iso8601(x, as_utc=False)
-    return dt.strftime('%b %d, %Y at %I:%M %p')
-
-def parse_header(h):
-    if h.get('label'):
-        yield '<div class="lbl">' + ''.join(parse_types(h['label'])) + '</div>'
-    if h.get('headline'):
-        yield ''.join(parse_types(h['headline']))
-    if h.get('summary'):
-        yield '<p><i>' +  ''.join(parse_types(h['summary'])) + '</i></p>'
-    if h.get('ledeMedia'):
-        yield ''.join(parse_types(h['ledeMedia']))
-    if h.get('byline'):
-        yield ''.join(parse_types(h['byline']))
-    if h.get('timestampBlock'):
-        yield ''.join(parse_types(h['timestampBlock']))
-
-def parse_fmt_type(fm):
-    for f in fm.get('formats', {}):
-        if f.get('__typename', '') == 'BoldFormat':
-            yield '<strong>'
-        if f.get('__typename', '') == 'ItalicFormat':
-            yield '<em>'
-        if f.get('__typename', '') == 'LinkFormat':
-            hrf = f['url']
-            yield '<a href="{}">'.format(hrf)
-    yield fm['text']
-    for f in reversed(fm.get('formats', {})):
-        if f.get('__typename', '') == 'BoldFormat':
-            yield '</strong>'
-        if f.get('__typename', '') == 'ItalicFormat':
-            yield '</em>'
-        if f.get('__typename', '') == 'LinkFormat':
-            yield '</a>'
-
-def parse_cnt(cnt):
-    if cnt.get('formats'):
-        yield ''.join(parse_fmt_type(cnt))
-    elif cnt.get('content'):
-        for cnt_ in cnt['content']:
-            yield from parse_types(cnt_)
-    elif cnt.get('text'):
-        yield cnt['text']
-
-def parse_types(x):
-    if 'Header' in x.get('__typename', ''):
-        yield '\n'.join(parse_header(x))
-
-    elif x.get('__typename', '') == 'Heading1Block':
-        yield '<h1>' + ''.join(parse_cnt(x)) + '</h1>'
-    elif x.get('__typename', '') in {'Heading2Block', 'Heading3Block', 'Heading4Block'}:
-        yield '<h4>' + ''.join(parse_cnt(x)) + '</h4>'
-
-    elif x.get('__typename', '') == 'ParagraphBlock':
-        yield '<p>' + ''.join(parse_cnt(x)) + '</p>'
-
-    elif x.get('__typename', '') == 'BylineBlock':
-        yield '<div class="byl"><br/>' + ''.join(parse_byline(x)) + '</div>'
-    elif x.get('__typename', '') == 'LabelBlock':
-        yield '<div class="sc">' + ''.join(parse_cnt(x)) + '</div>'
-    elif x.get('__typename', '') == 'BlockquoteBlock':
-        yield '<blockquote>' + ''.join(parse_cnt(x)) + '</blockquote>'
-    elif x.get('__typename', '') == 'TimestampBlock':
-        yield '<div class="time">' + iso_date(x['timestamp']) + '</div>'
-    elif x.get('__typename', '') == 'LineBreakInline':
-        yield '<br/>'
-    elif x.get('__typename', '') == 'RuleBlock':
-        yield '<hr/>'
-
-    elif x.get('__typename', '') == 'Image':
-        yield ''.join(parse_image(x))
-    elif x.get('__typename', '') == 'ImageBlock':
-        yield ''.join(parse_types(x['media']))
-    elif x.get('__typename', '') == 'GridBlock':
-        yield ''.join(parse_img_grid(x))
-
-    elif x.get('__typename', '') == 'VideoBlock':
-        yield ''.join(parse_types(x['media']))
-    elif x.get('__typename', '') == 'Video':
-        yield ''.join(parse_vid(x))
-        
-    elif x.get('__typename', '') == 'InteractiveBlock':
-        yield ''.join(parse_types(x['media']))
-    elif x.get('__typename', '') == 'EmbeddedInteractive':
-        yield ''.join(parse_emb(x))
-
-    elif x.get('__typename', '') == 'ListBlock':
-        yield '<ul>' + ''.join(parse_cnt(x)) + '</ul>'
-    elif x.get('__typename', '') == 'ListItemBlock':
-        yield '<li>' + ''.join(parse_cnt(x)) + '</li>'
-
-    elif x.get('__typename', '') == 'CapsuleBlock':
-        if x['capsuleContent'].get('body'):
-            yield ''.join(parse_cnt(x['capsuleContent']['body']))
-    elif x.get('__typename', '') == 'Capsule':
-        yield ''.join(parse_cnt(x['body']))
-
-    elif x.get('__typename', '') in {
-        'TextInline', 'TextOnlyDocumentBlock', 'DocumentBlock', 'SummaryBlock'
-    }:
-        yield ''.join(parse_cnt(x))
-
-    elif x.get('__typename'):
-        if ''.join(parse_cnt(x)).strip():
-            yield '<p><i>' + ''.join(parse_cnt(x)) + '</i></p>'
-
-def article_parse(data):
-    yield "<html><body>"
-    for d in data:
-        yield from parse_types(d)
-    yield "</body></html>"
+use_wayback_machine = False
 
 
-class nytFeeds(BasicNewsRecipe):
+class NytFeeds(BasicNewsRecipe):
     title = 'NYT News'
     __author__ = 'unkn0wn'
     description = (
@@ -194,30 +22,60 @@ class nytFeeds(BasicNewsRecipe):
     ignore_duplicate_articles = {'title', 'url'}
     masthead_url = 'https://static01.nytimes.com/newsgraphics/2015-12-23-masthead-2016/b15c3d81d3d7b59065fff9a3f3afe85aa2e2dff5/_assets/nyt-logo.png'
 
+    # https://www.nytimes.com/rss
+    # https://developer.nytimes.com/docs/rss-api/1/overview
+    feeds = [
+        # to filter out all opinions from other sections first
+        'https://rss.nytimes.com/services/xml/rss/nyt/Opinion.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/US.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml',
+        # 'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Health.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Arts.xml',
+        # 'https://rss.nytimes.com/services/xml/rss/nyt/FashionandStyle.xml',
+        # 'https://rss.nytimes.com/services/xml/rss/nyt/tmagazine.xml',
+        # 'https://rss.nytimes.com/services/xml/rss/nyt/books.xml',
+        'https://www.nytimes.com/services/xml/rss/nyt/Travel.xml',
+        # 'https://rss.nytimes.com/services/xml/rss/nyt/well.xml',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml',
+        # 'https://rss.nytimes.com/services/xml/rss/nyt/Magazine.xml',
+        # 'http://nytimes.com/timeswire/feeds/',
+    ]
+
     def get_cover_url(self):
         soup = self.index_to_soup('https://www.frontpages.com/the-new-york-times/')
-        return 'https://www.frontpages.com' + soup.find('img', attrs={'id':'giornale-img'})['src']
+        return (
+            'https://www.frontpages.com'
+            + soup.find('img', attrs={'id': 'giornale-img'})['src']
+        )
 
     recipe_specific_options = {
         'days': {
             'short': 'Oldest article to download from this news source. In days ',
             'long': 'For example, 0.5, gives you articles from the past 12 hours',
-            'default': str(oldest_article)
+            'default': str(oldest_article),
         },
-        'comp': {
-            'short': 'Compress News Images?',
-            'long': 'enter yes',
-            'default': 'no'
-        },
+        'comp': {'short': 'Compress News Images?', 'long': 'enter yes', 'default': 'no'},
         'rev': {
             'short': 'Reverse the order of articles in each feed?',
             'long': 'enter yes',
-            'default': 'no'
+            'default': 'no',
         },
         'res': {
-            'short': 'For hi-res images, select a resolution from the following\noptions: popup, jumbo, mobileMasterAt3x, superJumbo',
-            'long': 'This is useful for non e-ink devices, and for a lower file size\nthan the default, use articleInline.',
-        }
+            'short': (
+                'For hi-res images, select a resolution from the following\noptions: '
+                'popup, jumbo, mobileMasterAt3x, superJumbo'
+            ),
+            'long': (
+                'This is useful for non e-ink devices, and for a lower file size\nthan '
+                'the default, use mediumThreeByTwo440, mediumThreeByTwo225, articleInline.'
+            ),
+        },
     }
 
     def __init__(self, *args, **kwargs):
@@ -234,7 +92,7 @@ class nytFeeds(BasicNewsRecipe):
             if c.lower() == 'yes':
                 self.compress_news_images = True
 
-    extra_css = '''
+    extra_css = """
         .byl, .time { font-size:small; color:#202020; }
         .cap { font-size:small; text-align:center; }
         .cred { font-style:italic; font-size:small; }
@@ -242,59 +100,58 @@ class nytFeeds(BasicNewsRecipe):
         .sc { font-variant: small-caps; }
         .lbl { font-size:small; color:#404040; }
         img { display:block; margin:0 auto; }
-    '''
+    """
 
-    # https://www.nytimes.com/rss
-    # https://developer.nytimes.com/docs/rss-api/1/overview
-    feeds = [
-        # to filter out all opinions from other sections first
-        'https://rss.nytimes.com/services/xml/rss/nyt/Opinion.xml',
+    @property
+    def nyt_parser(self):
+        ans = getattr(self, '_nyt_parser', None)
+        if ans is None:
+            from calibre.live import load_module
 
-        'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/US.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Health.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Arts.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/FashionandStyle.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/tmagazine.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/books.xml',
-        'https://www.nytimes.com/services/xml/rss/nyt/Travel.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/well.xml',
-        'https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml',
-        'http://nytimes.com/timeswire/feeds/'
-    ]
+            self._nyt_parser = ans = load_module('calibre.web.site_parsers.nytimes')
+        return ans
+
+    def get_nyt_page(self, url, skip_wayback=False):
+        if use_wayback_machine and not skip_wayback:
+            from calibre import browser
+
+            return self.nyt_parser.download_url(url, browser())
+        return self.index_to_soup(url, raw=True)
+
+    articles_are_obfuscated = use_wayback_machine
+
+    if use_wayback_machine:
+
+        def get_obfuscated_article(self, url):
+            from calibre.ptempfile import PersistentTemporaryFile
+
+            with PersistentTemporaryFile() as tf:
+                tf.write(self.get_nyt_page(url))
+            return tf.name
+
+    def preprocess_raw_html(self, raw_html, url):
+        return self.nyt_parser.extract_html(self.index_to_soup(raw_html), url)
 
     def get_browser(self, *args, **kwargs):
-        kwargs['user_agent'] = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        kwargs['user_agent'] = (
+            'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        )
         br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
         br.addheaders += [
             ('Referer', 'https://www.google.com/'),
-            ('X-Forwarded-For', '66.249.66.1')
+            ('X-Forwarded-For', '66.249.66.1'),
         ]
         return br
-
-    def preprocess_raw_html(self, raw_html, url):
-        if '/interactive/' in url:
-            return '<html><body><p><em>'\
-                + 'This is an interactive article, which is supposed to be read in a browser.'\
-                    + '</p></em></body></html>'
-        data = extract_json(raw_html)
-        return '\n'.join(article_parse(data))
 
     def preprocess_html(self, soup):
         w = self.recipe_specific_options.get('res')
         if w and isinstance(w, str):
             res = '-' + w
-            for img in soup.findAll('img', attrs={'src':True}):
+            for img in soup.findAll('img', attrs={'src': True}):
                 if '-article' in img['src']:
                     ext = img['src'].split('?')[0].split('.')[-1]
                     img['src'] = img['src'].rsplit('-article', 1)[0] + res + '.' + ext
-        for c in soup.findAll('div', attrs={'class':'cap'}):
+        for c in soup.findAll('div', attrs={'class': 'cap'}):
             for p in c.findAll(['p', 'div']):
                 p.name = 'span'
         return soup
@@ -305,3 +162,4 @@ class nytFeeds(BasicNewsRecipe):
         if not re.search(r'/video/|/live/|/athletic/|/espanol/|/card/', url):
             return url
         self.log('\tSkipped URL: ', url)
+        return None

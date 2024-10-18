@@ -7,6 +7,7 @@ __docformat__ = 'restructuredtext en'
 
 import copy
 import traceback
+from contextlib import suppress
 
 from calibre import prints
 from calibre.constants import DEBUG
@@ -231,6 +232,11 @@ class Metadata:
         # are returning a "real" Metadata instance that has __get_attribute__.
         m = Metadata(None)
         object.__setattr__(m, '_data', copy.deepcopy(object.__getattribute__(self, '_data')))
+        # Also copy these two top-level attributes as they can appear in templates.
+        with suppress(AttributeError):
+            object.__setattr__(m, 'id', copy.copy(self.__getattribute__('id')))
+        with suppress(AttributeError):
+            object.__setattr__(m, 'has_cover', copy.copy(self.__getattribute__('has_cover')))
         return m
 
     def get(self, field, default=None):

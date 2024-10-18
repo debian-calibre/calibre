@@ -7,10 +7,31 @@ __copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
 import os
 import sys
 
-from qt.core import QCheckBox, QDialog, QDialogButtonBox, QFormLayout, QHBoxLayout, QIcon, QKeySequence, QLabel, QSize, QSpinBox, Qt, QToolBar, QVBoxLayout
+from qt.core import (
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QDoubleSpinBox,
+    QFormLayout,
+    QHBoxLayout,
+    QIcon,
+    QKeySequence,
+    QLabel,
+    QSize,
+    QSpinBox,
+    Qt,
+    QToolBar,
+    QVBoxLayout,
+)
 
 from calibre.gui2 import gprefs
 from calibre.gui2.tweak_book.editor.canvas import Canvas
+
+
+def reduce_to_ratio(w, h, r):
+    h = min(h, w / r)
+    w = r * h
+    return int(round(w)), int(round(h))
 
 
 class Region(QDialog):
@@ -30,6 +51,13 @@ class Region(QDialog):
         h.setRange(20, max_height), h.setSuffix(' px'), h.setValue(height)
         h.valueChanged.connect(self.value_changed)
         l.addRow(_('&Height:'), h)
+        self.ratio_input = r = QDoubleSpinBox(self)
+        r.setRange(0.0, 5.00), r.setDecimals(2), r.setValue(max_width/max_height), r.setSingleStep(0.01)
+        r.setToolTip(_('For example, use 0.75 for kindle devices.'))
+        self.m_width = max_width
+        self.m_height = max_height
+        r.valueChanged.connect(self.aspect_changed)
+        l.addRow(_('&Aspect ratio:'), r)
         self.const_aspect = ca = QCheckBox(_('Keep the ratio of width to height fixed'))
         ca.toggled.connect(self.const_aspect_toggled)
         l.addRow(ca)
@@ -45,8 +73,20 @@ class Region(QDialog):
         l.addRow(bb)
         self.resize(self.sizeHint())
         self.current_aspect = width / height
+        self.ratio_input.setEnabled(not self.const_aspect.isChecked())
+
+    def aspect_changed(self):
+        inp = float(self.ratio_input.value())
+        if inp > 0 and inp != round(self.m_width/self.m_height, 2):
+            rw, rh = reduce_to_ratio(self.m_width, self.m_height, inp)
+            self.width_input.setValue(rw)
+            self.height_input.setValue(rh)
+        else:
+            self.width_input.setValue(self.m_width)
+            self.height_input.setValue(self.m_height)
 
     def const_aspect_toggled(self):
+        self.ratio_input.setEnabled(not self.const_aspect.isChecked())
         if self.const_aspect.isChecked():
             self.current_aspect = self.width_input.value() / self.height_input.value()
 

@@ -193,6 +193,74 @@ class Structure(BaseTest):
         self.assertEqual('a.html', find_cover_page(c))
         self.assertEqual('a.html', next(c.spine_names)[0])
 
+    def test_mark_sentences(self):
+        from html5_parser import parse
+        from lxml import html
+
+        from calibre.ebooks.oeb.polish.tts import id_prefix, mark_sentences_in_html, unmark_sentences_in_html
+
+        def normalize_markup(root):
+            actual = html.tostring(root, encoding='unicode')
+            actual = actual[actual.find('<body'):]
+            actual = actual[:actual.rfind('</body>')]
+            return actual.replace(id_prefix, '')
+
+        for text, expected in reversed({
+            '<p id=1>hello cruel world': '<body><p id="1"><span id="1">hello cruel world</span></p>',
+
+            '<p>hello <b>cruel</b> world': '<body><p><span id="1">hello <b>cruel</b> world</span></p>',
+
+            '<p>Yes, please. Hello <b>cruel</b> world.':
+            '<body><p><span id="1">Yes, please. </span><span id="2">Hello <b>cruel</b> world.</span></p>',
+
+            '<p>Hello <b>cruel</b> <i>world.  </i>':
+            '<body><p><span id="1">Hello <b>cruel</b> <i>world.  </i></span></p>',
+
+            '<p>Yes, <b>please.</b> Well done! Bravissima! ':
+            '<body><p><span id="1">Yes, <b>please.</b> </span><span id="2">Well done! </span><span id="3">Bravissima! </span></p>',
+
+            '<p>Yes, <b>please.</b> Well <i>done! </i>Bravissima! ':
+            '<body><p><span id="1">Yes, <b>please.</b> </span><span id="2">Well <i>done! </i></span><span id="3">Bravissima! </span></p>',
+
+            '<p><i>Hello</i>, world! Good day to you':
+            '<body><p><span id="1"><i>Hello</i>, world! </span><span id="2">Good day to you</span></p>',
+
+            '<p><i>Hello, world! </i>Good day to you':
+            '<body><p><i id="1">Hello, world! </i><span id="2">Good day to you</span></p>',
+
+            '<p><i>Hello, </i><b>world!</b>Good day to you':
+            '<body><p><span id="1"><i>Hello, </i><b>world!</b></span><span id="2">Good day to you</span></p>',
+
+            '<p><i>Hello, </i><b>world</b>! Good day to you':
+            '<body><p><span id="1"><i>Hello, </i><b>world</b>! </span><span id="2">Good day to you</span></p>',
+
+            '<p>Hello, <span lang="fr">world!':
+            '<body><p><span id="1">Hello, </span><span lang="fr"><span id="2">world!</span></span></p>',
+
+            '<p>Hello, <span data-calibre-tts="moose">world!':
+            '<body><p><span id="1">Hello, </span><span data-calibre-tts="moose"><span id="2">world!</span></span></p>',
+
+            '<p>One<p>Two':
+            '<body><p><span id="1">One</span></p><p><span id="2">Two</span></p>',
+
+            '<div><p>something':
+            '<body><div><p><span id="1">something</span></p></div>',
+
+            '<p>One</p> Two. Three <p>Four':
+            '<body><p><span id="1">One</span></p><span id="2"> Two. </span><span id="3">Three </span><p><span id="4">Four</span></p>',
+        }.items()):
+            root = parse(text, namespace_elements=True)
+            orig = normalize_markup(root)
+            mark_sentences_in_html(root)
+            marked = normalize_markup(root)
+            self.assertEqual(expected, marked)
+            unmark_sentences_in_html(root)
+            self.assertEqual(orig, normalize_markup(root), f'Unmarking failed for {marked}')
+        sentences = mark_sentences_in_html(parse('<p lang="en">Hello, <span lang="fr">world!'))
+        self.assertEqual(tuple(s.lang for s in sentences), ('eng', 'fra'))
+
+
+
 
 def find_tests():
     import unittest

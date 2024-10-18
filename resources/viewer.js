@@ -28671,7 +28671,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.19.0";
+        CALIBRE_VERSION = "7.20.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -37186,7 +37186,7 @@ return this.__repr__();
             }
             function forward_touch_events(ev) {
                 var container, dup;
-                container = window.top.document.getElementById(render_book.container_id);
+                container = window.parent.document.getElementById(render_book.container_id);
                 if (container) {
                     dup = new ev.constructor(ev.type, ev);
                     container.dispatchEvent(dup);

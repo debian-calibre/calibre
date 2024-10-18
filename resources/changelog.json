@@ -1,5 +1,72 @@
 [
     {
+        "version": "7.20.0",
+        "date": "2024-10-18",
+        "new features": [
+            {
+                "type": "major",
+                "title": "PDF Input: Automatic header/footer detection and removal",
+                "description": "A new, dedicated PDF Input engine for calibre that implements automatic detection of headers and footers based on document analysis. The new engine is the default to go back to using the old engine, select it in the PDF Input section of the Conversion dialog."
+            },
+            {
+                "tickets": [
+                    2083058
+                ],
+                "title": "Read Aloud: Allow configuring an extra pause at the end of every sentence when using the Piper TTS engine"
+            },
+            {
+                "title": "PDF Output: Add _WIDTH_PIXELS_ and _HEIGHT_PIXELS_ variables to know the width and height of the header/footer area in templates"
+            },
+            {
+                "title": "Windows: Use calibre's bundled SSL certificates instead of the system certificate store by default",
+                "description": "Can be turned off via CALIBRE_USE_SYSTEM_CERTIFICATES=1 env var"
+            },
+            {
+                "title": "Trim image tool: Add a control to adjust aspect ratio"
+            },
+            {
+                "title": "Kobo driver: Add support for the new firmware used by the Tolino Shine 5"
+            }
+        ],
+        "bug fixes": [
+            {
+                "title": "Fix a regression in previous release that broke copying of book to another library if the books author does not exist in the destination database"
+            },
+            {
+                "title": "Read aloud: Piper backend: Fix not working with voices whose names have non-ASCII characters on Windows."
+            },
+            {
+                "title": "Content server: Fix book with non-ASCII filenames not downloading in the Kindle browser when using the /mobile view"
+            },
+            {
+                "title": "Content server: Fix embedding the server HTML inside a third party iframe causing an error"
+            }
+        ],
+        "improved recipes": [
+            "The Wire",
+            "Nikkei Asia Magazine",
+            "Swarajya",
+            "Mainichi",
+            "Nautilus",
+            "National Geographic",
+            "Science Journal",
+            "Times Literary Supplement",
+            "Saechsische Zeitung",
+            "India Today",
+            "Scientific American"
+        ],
+        "new recipes": [
+            {
+                "title": "NYT Magazine",
+                "author": "unkn0wn"
+            },
+            {
+                "title": "RedaktionsNetzwerk Deutschland",
+                "author": "epubli"
+            }
+        ]
+    },
+    {
         "version": "7.19.0",
         "date": "2024-09-27",
         "new features": [
