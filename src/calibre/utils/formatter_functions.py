@@ -29,6 +29,7 @@ from calibre.constants import DEBUG
 from calibre.db.constants import DATA_DIR_NAME, DATA_FILE_PATTERN
 from calibre.db.notes.exim import expand_note_resources, parse_html
 from calibre.ebooks.metadata import title_sort
+from calibre.ebooks.metadata.book.base import field_metadata
 from calibre.utils.config import tweaks
 from calibre.utils.date import UNDEFINED_DATE, format_date, now, parse_date
 from calibre.utils.icu import capitalize, sort_key, strcmp
@@ -1248,6 +1249,10 @@ class BuiltinFormatDate(BuiltinFormatterFunction):
     category = 'Formatting values'
     __doc__ = doc = _('format_date(val, format_string) -- format the value, '
             'which must be a date, using the format_string, returning a string. '
+            'It is best if the date is in ISO format because using other date '
+            'formats often causes errors because the actual date value cannot be '
+            'unambiguously determined. Note that the format_date_field() function '
+            'is both faster and more reliable. '
             'The formatting codes are: '
             'd    : the day as number without a leading zero (1 to 31) '
             'dd   : the day as number with a leading zero (01 to 31) '
@@ -1303,9 +1308,12 @@ class BuiltinFormatDateField(BuiltinFormatterFunction):
 
     def evaluate(self, formatter, kwargs, mi, locals, field, format_string):
         try:
+            field = field_metadata.search_term_to_field_key(field)
             if field not in mi.all_field_keys():
-                return _('Unknown field %s passed to function %s')%(field, 'format_date_field')
+                raise ValueError(_("Function %s: Unknown field '%s'")%('format_date_field', field))
             val = mi.get(field, None)
+            if mi.metadata_for_field(field)['datatype'] != 'datetime':
+                raise ValueError(_("Function %s: field '%s' is not a date")%('format_date_field', field))
             if val is None:
                 s = ''
             elif format_string == 'to_number':
@@ -1317,9 +1325,11 @@ class BuiltinFormatDateField(BuiltinFormatterFunction):
             else:
                 s = format_date(val, format_string)
             return s
-        except:
+        except ValueError:
+            raise
+        except Exception:
             traceback.print_exc()
-            s = 'BAD DATE'
+            raise
         return s
 
 
@@ -2624,23 +2634,40 @@ class BuiltinHasNote(BuiltinFormatterFunction):
     name = 'has_note'
     arg_count = 2
     category = 'Template database functions'
-    __doc__ = doc = _("has_note(field_name, field_value) -- return '1' "
-                      "if the value 'field_value' in the field 'field_name' "
-                      "has an attached note, '' otherwise. Example: "
-                      "has_note('tags', 'Fiction') returns '1' if the tag "
-                      "'fiction' has an attached note, '' otherwise.")
+    __doc__ = doc = _("has_note(field_name, field_value) -- if field_value is not "
+                      "'' (the empty string) , return '1' if the value 'field_value' "
+                      "in the field 'field_name' has an attached note, otherwise ''. "
+                      "Example: has_note('tags', 'Fiction') returns '1' if the tag "
+                      "'fiction' has a note, otherwise ''. If field_value "
+                      "is '' then return a list of values in field_name that have "
+                      "a note. If no item in the field has a note, return ''. "
+                      "Example: has_note('authors', '') returns a list of authors "
+                      "that have notes, or '' if no author has a note. The second "
+                      "variant is useful for showing column icons icons if any value "
+                      "in the field has a note, rather than a specific value. "
+                      "You can also test if all the values have a note by comparing "
+                      "the list length of this function's return value against "
+                      "the list length of the values in field_name.")
 
     def evaluate(self, formatter, kwargs, mi, locals, field_name, field_value):
         db = self.get_database(mi).new_api
-        note = None
+        if field_value:
+            note = None
+            try:
+                item_id = db.get_item_id(field_name, field_value, case_sensitive=True)
+                if item_id is not None:
+                    note = db.notes_data_for(field_name, item_id)
+            except Exception as e:
+                traceback.print_exc()
+                raise ValueError(str(e))
+            return '1' if note is not None else ''
         try:
-            item_id = db.get_item_id(field_name, field_value, case_sensitive=True)
-            if item_id is not None:
-                note = db.notes_data_for(field_name, item_id)
+            notes_for_book = db.items_with_notes_in_book(mi.id)
+            values = [v for v in notes_for_book.get(field_name, {}).values()]
+            return db.field_metadata[field_name]['is_multiple'].get('list_to_ui', ', ').join(values)
         except Exception as e:
             traceback.print_exc()
-            raise ValueError(e)
-        return '1' if note is not None else ''
+            raise ValueError(str(e))
 
 
 class BuiltinIsDarkMode(BuiltinFormatterFunction):
@@ -2662,6 +2689,23 @@ class BuiltinIsDarkMode(BuiltinFormatterFunction):
             only_in_gui_error('is_dark_mode')
 
 
+class BuiltinFieldListCount(BuiltinFormatterFunction):
+    name = 'list_count_field'
+    arg_count = 0
+    category = 'List manipulation'
+    __doc__ = doc = _("list_count_field(field_name) -- returns the count of items "
+                      "in the field with the lookup name 'field_name'. The field "
+                      "must be multi-valued such as authors or tags, otherwise "
+                      "the function raises an error. This function is much faster "
+                      "than list_count() because it operates directly on calibre "
+                      "data without converting it to a string first. "
+                      "Example: {}").format("list_count_field('tags')")
+
+    def evaluate(self, formatter, kwargs, mi, locals, *args):
+        # The globals function is implemented in-line in the formatter
+        raise NotImplementedError()
+
+
 _formatter_builtins = [
     BuiltinAdd(), BuiltinAnd(), BuiltinApproximateFormats(), BuiltinArguments(),
     BuiltinAssign(),
@@ -2673,7 +2717,7 @@ _formatter_builtins = [
     BuiltinCurrentVirtualLibraryName(), BuiltinDateArithmetic(),
     BuiltinDaysBetween(), BuiltinDivide(), BuiltinEval(),
     BuiltinExtraFileNames(), BuiltinExtraFileSize(), BuiltinExtraFileModtime(),
-    BuiltinFirstNonEmpty(), BuiltinField(), BuiltinFieldExists(),
+    BuiltinFieldListCount(), BuiltinFirstNonEmpty(), BuiltinField(), BuiltinFieldExists(),
     BuiltinFinishFormatting(), BuiltinFirstMatchingCmp(), BuiltinFloor(),
     BuiltinFormatDate(), BuiltinFormatDateField(), BuiltinFormatNumber(), BuiltinFormatsModtimes(),
     BuiltinFormatsPaths(), BuiltinFormatsSizes(), BuiltinFractionalPart(),

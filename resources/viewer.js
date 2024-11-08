@@ -6908,6 +6908,13 @@ return parser;
                 ρσ_d["is_local"] = true;
                 return ρσ_d;
             }).call(this);
+            ρσ_d["scroll_mouse_boundary_delay"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["default"] = .5;
+                ρσ_d["category"] = "read_book";
+                ρσ_d["is_local"] = true;
+                return ρσ_d;
+            }).call(this);
             ρσ_d["scroll_stop_boundaries"] = (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["default"] = false;
@@ -17766,6 +17773,7 @@ return this.__repr__();
             opts.paged_wheel_section_jumps = !!settings.paged_wheel_section_jumps;
             opts.paged_pixel_scroll_threshold = settings.paged_pixel_scroll_threshold;
             opts.scroll_auto_boundary_delay = settings.scroll_auto_boundary_delay;
+            opts.scroll_mouse_boundary_delay = settings.scroll_mouse_boundary_delay;
             opts.scroll_stop_boundaries = !!settings.scroll_stop_boundaries;
             opts.reverse_page_turn_zones = !!settings.reverse_page_turn_zones;
             opts.user_stylesheet = settings.user_stylesheet;
@@ -20857,6 +20865,15 @@ return this.__repr__();
                 if (last_change_spine_item_request.name === csi.name && now - last_change_spine_item_request.at < 2e3) {
                     return false;
                 }
+                if (opts.scroll_mouse_boundary_delay > 0) {
+                    if (last_change_spine_item_request.denied === null) {
+                        last_change_spine_item_request.denied = now;
+                    }
+                    if (now - last_change_spine_item_request.denied < opts.scroll_mouse_boundary_delay * 1e3) {
+                        return false;
+                    }
+                    last_change_spine_item_request.denied = null;
+                }
                 last_change_spine_item_request.name = csi.name;
                 last_change_spine_item_request.at = now;
                 go_to_previous_page = args[0] < 0;
@@ -20866,6 +20883,7 @@ return this.__repr__();
                 (ρσ_expr_temp = get_boss(), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.send_message, ["next_spine_item"].concat([ρσ_desugar_kwargs({previous: go_to_previous_page})])));
                 return false;
             }
+            last_change_spine_item_request.denied = null;
             if (report) {
                 report_human_scroll(scroll_viewport.block_pos() - before);
             }
@@ -28671,7 +28689,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.20.0";
+        CALIBRE_VERSION = "7.21.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -40527,7 +40545,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.prefs.scrolling";
-        var CONTAINER, MIN_SCROLL_SPEED_AUTO, MAX_SCROLL_SPEED_AUTO, MIN_SCROLL_AUTO_DELAY, MAX_SCROLL_AUTO_DELAY, MIN_SCROLL_SPEED_SMOOTH, MAX_SCROLL_SPEED_SMOOTH, develop;
+        var CONTAINER, MIN_SCROLL_SPEED_AUTO, MAX_SCROLL_SPEED_AUTO, MIN_SCROLL_AUTO_DELAY, MAX_SCROLL_AUTO_DELAY, MIN_SCROLL_SPEED_SMOOTH, MAX_SCROLL_SPEED_SMOOTH, MIN_SCROLL_MOUSE_DELAY, MAX_SCROLL_MOUSE_DELAY, develop;
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
@@ -40547,6 +40565,8 @@ return this.__repr__();
         MAX_SCROLL_AUTO_DELAY = 50;
         MIN_SCROLL_SPEED_SMOOTH = 5;
         MAX_SCROLL_SPEED_SMOOTH = 80;
+        MIN_SCROLL_MOUSE_DELAY = 0;
+        MAX_SCROLL_MOUSE_DELAY = 5;
         function restore_defaults() {
             var container, val, control;
             container = get_container();
@@ -40634,12 +40654,12 @@ return this.__repr__();
             container.lastChild.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
             container.lastChild.appendChild(cb("paged_wheel_section_jumps", _("Horizontal mouse wheel jumps to next/previous section")));
             container.lastChild.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
-            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", " " + _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e3})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", " " + _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e4})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
             container.lastChild.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
-            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: .05, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: .05, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_mouse_boundary_delay", _("Seconds to pause when mouse-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Set to zero to scroll past internal file boundaries without delay"), step: .25, min: MIN_SCROLL_MOUSE_DELAY, max: MAX_SCROLL_MOUSE_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
             container.appendChild(E.hr());
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Miscellaneous")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
@@ -40684,6 +40704,8 @@ return this.__repr__();
         ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_AUTO_DELAY = MAX_SCROLL_AUTO_DELAY;
         ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_SPEED_SMOOTH = MIN_SCROLL_SPEED_SMOOTH;
         ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_SPEED_SMOOTH = MAX_SCROLL_SPEED_SMOOTH;
+        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_MOUSE_DELAY = MIN_SCROLL_MOUSE_DELAY;
+        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_MOUSE_DELAY = MAX_SCROLL_MOUSE_DELAY;
         ρσ_modules["read_book.prefs.scrolling"].develop = develop;
         ρσ_modules["read_book.prefs.scrolling"].restore_defaults = restore_defaults;
         ρσ_modules["read_book.prefs.scrolling"].get_container = get_container;
@@ -50716,6 +50738,7 @@ return this.__repr__();
                 ρσ_d["lines_per_sec_auto"] = sd.get("lines_per_sec_auto");
                 ρσ_d["lines_per_sec_smooth"] = sd.get("lines_per_sec_smooth");
                 ρσ_d["scroll_auto_boundary_delay"] = sd.get("scroll_auto_boundary_delay");
+                ρσ_d["scroll_mouse_boundary_delay"] = sd.get("scroll_mouse_boundary_delay");
                 ρσ_d["scroll_stop_boundaries"] = sd.get("scroll_stop_boundaries");
                 ρσ_d["reverse_page_turn_zones"] = sd.get("reverse_page_turn_zones");
                 ρσ_d["gesture_overrides"] = sd.get("gesture_overrides");
@@ -51994,9 +52017,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter3 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                key = ρσ_Iter3[ρσ_Index3];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);

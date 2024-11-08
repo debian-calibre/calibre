@@ -245,7 +245,8 @@ General Program Mode
     not_expression  ::= [ '!' not_expression ]* | concatenate_expr
     concatenate_expr::= compare_expr [ '&' compare_expr ]*
     compare_expr    ::= add_sub_expr [ compare_op add_sub_expr ]
-    compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' | 'in' | 'inlist' |
+    compare_op      ::= '==' | '!=' | '>=' | '>' | '<=' | '<' |
+                        'in' | 'inlist' | 'inlist_field' |
                         '==#' | '!=#' | '>=#' | '>#' | '<=#' | '<#'
     add_sub_expr    ::= times_div_expr [ add_sub_op times_div_expr ]*
     add_sub_op      ::= '+' | '-'
@@ -406,8 +407,10 @@ Relational operators return ``'1'`` if the comparison is true, otherwise the emp
 
 There are two forms of relational operators: string comparisons and numeric comparisons.
 
-String comparisons do case-insensitive string comparison using lexical order. The supported string comparison operators are ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, ``in``, and ``inlist``.
-For the ``in`` operator, the result of the left hand expression is interpreted as a regular expression pattern. The ``in`` operator is True if the value of left-hand regular expression matches the value of the right hand expression. The ``inlist`` operator is true if the left hand regular expression matches any one of the items in the right hand list where the items in the list are separated by commas. The matches are case-insensitive.
+String comparisons do case-insensitive string comparison using lexical order. The supported string comparison operators are ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, ``in``, ``inlist``, and ``inlist_field``.
+For the ``in`` operator, the result of the left hand expression is interpreted as a regular expression pattern. The ``in`` operator is True if the value of left-hand regular expression matches the value of the right hand expression.
+
+The ``inlist`` operator is true if the left hand regular expression matches any one of the items in the right hand list where the items in the list are separated by commas. The ``inlist_field`` operator is true if the left hand regular expression matches any of the items in the field (column) named by the right hand expression, using the separator defined for the field. NB: the ``inlist_field`` operator requires the right hand expression to evaluate to a field name, while the ``inlist`` operator requires the right hand expression to evaluate to a string containing a comma-separated list. Because of this difference, ``inlist_field`` is substantially faster than ``inlist`` because no string conversions or list constructions are done. The regular expressions are case-insensitive.
 
 The numeric comparison operators are ``==#``, ``!=#``, ``<#``, ``<=#``, ``>#``, ``>=#``. The left and right expressions must evaluate to numeric values with two exceptions: both the string value "None" (undefined field) and the empty string evaluate to the value zero.
 
@@ -415,8 +418,12 @@ Examples:
 
   * ``program: field('series') == 'foo'`` returns ``'1'`` if the book's series is 'foo', otherwise ``''``.
   * ``program: 'f.o' in field('series')`` returns ``'1'`` if the book's series matches the regular expression ``f.o`` (e.g., `foo`, `Off Onyx`, etc.), otherwise ``''``.
-  * ``program: 'science' inlist field('#genre')`` returns ``'1'`` if any of the book's genres match the regular expression ``science``, e.g., `Science`, `History of Science`, `Science Fiction` etc., otherwise ``''``.
-  * ``program: '^science$' inlist field('#genre')`` returns ``'1'`` if any of the book's genres exactly match the regular expression ``^science$``, e.g., `Science`. The genres `History of Science` and `Science Fiction` don't match. If there isn't a match then returns ``''``.
+  * ``program: 'science' inlist $#genre`` returns ``'1'`` if any of the values retrieved from the book's genres match the regular expression ``science``, e.g., `Science`, `History of Science`, `Science Fiction` etc., otherwise ``''``.
+  * ``program: '^science$' inlist $#genre`` returns ``'1'`` if any of the book's genres exactly match the regular expression ``^science$``, e.g., `Science`, otherwise ``''``. The genres `History of Science` and `Science Fiction` don't match.
+  * ``program: 'asimov' inlist $authors`` returns ``'1'`` if any author matches the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac Asimov`, otherwise ``''``.
+  * ``program: 'asimov' inlist_field 'authors'`` returns ``'1'`` if any author matches the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac Asimov`, otherwise ``''``.
+  * ``program: 'asimov$' inlist_field 'authors'`` returns ``'1'`` if any author matches the regular expression ``asimov$``, e.g., `Isaac Asimov`, otherwise ``''``. It doesn't match `Asimov, Isaac` because of the ``$`` anchor in the regular expression.
+  * ``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns ``'bar'`` if the book's series is not ``foo``. Otherwise it returns ``'mumble'``.
   * ``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns ``'bar'`` if the book's series is not ``foo``. Otherwise it returns ``'mumble'``.
   * ``program: if field('series') == 'foo' || field('series') == '1632' then 'yes' else 'no' fi`` returns ``'yes'`` if series is either ``'foo'`` or ``'1632'``, otherwise ``'no'``.
   * ``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` returns ``'yes'`` if series is either ``'foo'`` or ``'1632'``, otherwise ``'no'``.
@@ -495,9 +502,9 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
 * ``eval(string)`` -- evaluates the string as a program, passing the local variables. This permits using the template processor to construct complex results from local variables. In :ref:`Template Program Mode <template_mode>`, because the `{` and `}` characters are interpreted before the template is evaluated you must use `[[` for the `{` character and `]]` for the ``}`` character. They are converted automatically. Note also that prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in the argument to this function when using :ref:`Template Program Mode <template_mode>`.
 * ``extra_file_size(file_name)`` -- returns the size in bytes of the extra file ``file_name`` in the book's ``data/`` folder if it exists, otherwise ``-1``. See also the functions ``has_extra_files()``, ``extra_file_names()`` and ``extra_file_modtime()``. This function can be used only in the GUI.
 * ``extra_file_modtime(file_name, format_string)`` -- returns the modification time of the extra file ``file_name`` in the book's ``data/`` folder if it exists, otherwise ``-1``. The modtime is formatted according to ``format_string`` (see ``format_date()`` for details). If ``format_string`` is the empty string, returns the modtime as the floating point number of seconds since the epoch.  See also the functions ``has_extra_files()``, ``extra_file_names()`` and ``extra_file_size()``. The epoch is OS dependent. This function can be used only in the GUI.
-* ``extra_file_names(sep [, pattern])`` returns a ``sep``-separated list of extra files in the book's ``data/`` folder. If the optional parameter ``pattern``, a regular expression, is supplied then the list is filtered to files that match ``pattern``. The pattern match is case insensitive. See also the functions ``has_extra_files()``, ``extra_file_modtime()`` and ``extra_file_size()``. This function can be used only in the GUI.
+* ``extra_file_names(sep [, pattern])`` -- returns a ``sep``-separated list of extra files in the book's ``data/`` folder. If the optional parameter ``pattern``, a regular expression, is supplied then the list is filtered to files that match ``pattern``. The pattern match is case insensitive. See also the functions ``has_extra_files()``, ``extra_file_modtime()`` and ``extra_file_size()``. This function can be used only in the GUI.
 * ``field(lookup_name)`` -- returns the value of the metadata field with lookup name ``lookup_name``.
-* ``field_exists(field_name)`` -- checks if a field (column) with the lookup name ``field_name`` exists, returning ``'1'`` if so and the empty string if not.
+* ``field_exists(lookup_name)`` -- checks if a field (column) with the lookup name ``lookup_name`` exists, returning ``'1'`` if so and the empty string if not.
 * ``finish_formatting(val, fmt, prefix, suffix)`` -- apply the format, prefix, and suffix to a value in the same way as done in a template like ``{series_index:05.2f| - |- }``. This function is provided to ease conversion of complex single-function- or template-program-mode templates to `GPM` Templates. For example, the following program produces the same output as the above template::
 
     program: finish_formatting(field("series_index"), "05.2f", " - ", " - ")
@@ -520,7 +527,9 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
 
 * ``first_non_empty(value [, value]*)`` -- returns the first ``value`` that is not empty. If all values are empty, then the empty string is returned. You can have as many values as you want.
 * ``floor(x)`` -- returns the largest integer less than or equal to ``x``. Throws an exception if ``x`` is not a number.
-* ``format_date(val, format_string)`` -- format the value, which must be a date string, using the format_string, returning a string. The formatting codes are:
+* ``format_date(val, format_string)`` -- format the value, which must be a date string, using the format_string, returning a string. It is best if the date is in ISO format as using other date formats often causes errors because the actual date value cannot be unambiguously determined. Note that the ``format_date_field()`` function is both faster and more reliable.
+
+  The formatting codes are:
 
   * ``d    :`` the day as number without a leading zero (1 to 31)
   * ``dd   :`` the day as number with a leading zero (01 to 31)
@@ -544,15 +553,9 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
   * ``to_number   :`` convert the date & time into a floating point number (a `timestamp`)
   * ``from_number :`` convert a floating point number (a `timestamp`) into an ``iso`` formatted date. If you want a different date format then add the desired formatting string after ``from_number`` and a colon (``:``). Example: ``from_number:MMM dd yyyy``
 
-  You might get unexpected results if the date you are formatting contains localized month names, which can happen if you changed the date format tweaks to contain ``MMMM``. In this case, instead of using the ``field()`` function as in::
+  You might get unexpected results if the date you are formatting contains localized month names, which can happen if you changed the date format to contain ``MMMM``. Using ``format_date_field()`` avoids this problem.
 
-    format_date(field('pubdate'), 'yyyy')
-
-  use the ``raw_field()`` function as in::
-
-   format_date(raw_field('pubdate'), 'yyyy')
-
-* ``format_date_field(field_name, format_string)`` -- format the value in the field ``field_name``, which must be the lookup name of date field, either standard or custom. See ``format_date()`` for the formatting codes. This function is much faster than format_date and should be used when you are formatting the value in a field (column). It can't be used for computed dates or dates in string variables. Examples::
+* ``format_date_field(field_name, format_string)`` -- format the value in the field ``field_name``, which must be the lookup name of date field, either standard or custom. See ``format_date()`` for the formatting codes. This function is much faster than format_date and should be used when you are formatting the value in a field (column). It is also more reliable because it works directly on the underlying date. It can't be used for computed dates or dates in string variables. Examples::
 
    format_date_field('pubdate', 'yyyy.MM.dd')
    format_date_field('#date_read', 'MMM dd, yyyy')
@@ -593,6 +596,27 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
 
 
 * ``has_cover()`` -- return ``'Yes'`` if the book has a cover, otherwise the empty string.
+* ``has_note(field_name, field_value)``. This function has two variants:
+
+ * if ``field_value`` is not ``''`` (the empty string) return ``'1'`` if the value ``field_value`` in the field ``field_name`` has a note, otherwise ``''``. Example:::
+
+     has_note('tags', 'Fiction')
+
+  returns ``'1'`` if the tag ``fiction`` has an attached note, otherwise ``''``.
+
+ * If ``field_value`` is ``''`` then return a list of values in ``field_name`` that have a note. If no item in the field has a note, return ``''``.  This variant is useful for showing column icons if any value in the field has a note, rather than a specific value.
+
+  Example::
+
+    has_note('authors', '')
+
+  returns a list of authors that have notes, or ``''`` if no author has a note.
+
+  You can test if all the values in ``field_name`` have a note by comparing the list length of this function's return value against the list length of the values in ``field_name``. Example::
+
+    list_count(has_note('authors', ''), '&') ==# list_count_field('authors')
+
+
 * ``has_extra_files([pattern])`` -- returns the count of extra files, otherwise '' (the empty string). If the optional parameter ``pattern`` (a regular expression) is supplied then the list is filtered to files that match ``pattern`` before the files are counted. The pattern match is case insensitive. See also the functions ``extra_file_names()``, ``extra_file_size()`` and ``extra_file_modtime()``. This function can be used only in the GUI.
 * ``identifier_in_list(val, id_name [, found_val, not_found_val])`` -- treat ``val`` as a list of identifiers separated by commas. An identifier has the format ``id_name:value``. The ``id_name`` parameter is the id_name text to search for, either ``id_name`` or ``id_name:regexp``. The first case matches if there is any identifier matching that id_name. The second case matches if id_name matches an identifier and the regexp matches the identifier's value. If ``found_val`` and ``not_found_val`` are provided then if there is a match then return ``found_val``, otherwise return ``not_found_val``. If ``found_val`` and ``not_found_val`` are not provided then if there is a match then return the ``identifier:value`` pair, otherwise the empty string (``''``).
 * ``is_dark_mode()`` -- returns ``'1'`` if calibre is running in dark mode, ``''`` (the empty string) otherwise. This function can be used in advanced color and icon rules to choose different colors/icons according to the mode. Example::
@@ -603,6 +627,7 @@ In `GPM` the functions described in `Single Function Mode` all require an additi
 * ``language_codes(lang_strings)`` -- return the `language codes <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the language names passed in `lang_strings`. The strings must be in the language of the current locale. ``Lang_strings`` is a comma-separated list.
 * ``list_contains(value, separator, [ pattern, found_val, ]* not_found_val)`` -- (Alias of ``in_list``) Interpreting the value as a list of items separated by ``separator``, evaluate the ``pattern`` against each value in the list. If the ``pattern`` matches any value then return ``found_val``, otherwise return ``not_found_val``. The ``pattern`` and ``found_value`` can be repeated as many times as desired, permitting returning different values depending on the search. The patterns are checked in order. The first match is returned. Aliases: ``in_list()``, ``list_contains()``
 * ``list_count(value, separator)`` -- interprets ``value`` as a list of items separated by ``separator``, returning the count of items in the list. Aliases: ``count()``, ``list_count()``
+* ``list_count_field(lookup_name)``-- returns the count of items in the field with the lookup name `lookup_name`. The field must be multi-valued such as ``authors`` or ``tags``, otherwise the function raises an error. This function is much faster than ``list_count()`` because it operates directly on calibre data without converting it to a string first. Example: ``list_count_field('tags')``
 * ``list_count_matching(list, pattern, separator)`` -- interprets ``list`` as a list of items separated by ``separator``, returning the number of items in the list that match the regular expression ``pattern``. Aliases: ``list_count_matching()``, ``count_matching()``
 * ``list_difference(list1, list2, separator)`` -- return a list made by removing from ``list1`` any item found in ``list2`` using a case-insensitive comparison. The items in ``list1`` and ``list2`` are separated by separator, as are the items in the returned list.
 * ``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- return ``yes_val`` if ``list1`` and `list2` contain the same items, otherwise return ``no_val``. The items are determined by splitting each list using the appropriate separator character (``sep1`` or ``sep2``). The order of items in the lists is not relevant. The comparison is case-insensitive.
