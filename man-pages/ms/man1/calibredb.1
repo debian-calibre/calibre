@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Oktober 18, 2024" "7.20.0" "calibre"
+.TH "CALIBREDB" "1" "November 08, 2024" "7.21.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -84,7 +84,7 @@ details and examples.
 \fI\%add\fP
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+\fI\%DITAMBAH DARI FOLDER\fP
 .UNINDENT
 .IP \(bu 2
 \fI\%remove\fP
@@ -311,28 +311,28 @@ Tetapkan tag bagi buku yang ditambah
 .B \-\-title, \-t
 Tetapkan tajuk buku yang ditambah
 .UNINDENT
-.SS ADDING FROM FOLDERS
+.SS DITAMBAH DARI FOLDER
 .sp
-Options to control the adding of books from folders. By default only files that have extensions of known e\-book file types are added.
+Pilihan untuk mengawal penambahan buku dari folder. Secara lalai hanya fail yang mempunyai sambungan jenis fail e\-buku yang diketahui boleh ditambah.
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Satu pola (glob) nama fail, fail yang sepadan dengan pola ini akan ditambah bila mengimbas folder untuk dapatkan fail, walaupun jika ia bukanlah jenis fail e\-buku yang dikenali. Boleh dinyatakan lebih dari sekali untuk pola berbilang.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Satu pola (glob) nama fail, fail yang sepadan dengan pola ini akan diabaikan bila mengimbas folder untuk dapatkan fail. Boleh dinyatakan lebih dari sekali untuk pola berbilang. Sebagai contoh: *.pdf akan abaikan semua fail PDF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-one\-book\-per\-directory, \-1
-Assume that each folder has only a single logical book and that all files in it are different e\-book formats of that book
+Anggap setiap folder hanya mempunyai satu buku logikal dan semua fail berada di dalamnya adalah format ebuku yang berlainan bagi buku tersebut
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+Proses folder secara rekursif
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -350,7 +350,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the Recycle Bin
+Jangan guna Recycle Bin
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -368,7 +368,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Tambah fail sebagai fail data ekstra buku, bukan format ebuku
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -500,7 +500,7 @@ Ganti ruang putih dengan underscore.
 .INDENT 0.0
 .TP
 .B \-\-single\-dir
-Export all books into a single folder
+Eksport semua buku ke dalam satu folder
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -515,7 +515,7 @@ Format yang memaparkan tarikh. %d \- hari, %b \- bulan, %m \- nombor bulan, %Y \
 .INDENT 0.0
 .TP
 .B \-\-to\-dir
-Export books to the specified folder. Default is .
+Eksport buku ke folder yang dinyatakan, Lalai ialah .
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -982,12 +982,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Kelajuan pengindeksan. Guna pengindeksan pantas menggunakan semua sumber komputer anda dan perlahan bagi pengindeksan intensif dengan sedikit sumber. Perhatian, kelajuan ditetapkan pada lalai selepas setiap tindakan.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Tunggu sehingga semua buku diindekskan, menunjukkan kemajuan pengindeksan secara berkala
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0

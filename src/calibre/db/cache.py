@@ -2252,7 +2252,6 @@ class Cache:
         :param change_index: When renaming in a series-like field also change the series_index values.
         :param restrict_to_book_ids: An optional set of book ids for which the rename is to be performed, defaults to all books.
         '''
-
         f = self.fields[field]
         affected_books = set()
         try:
@@ -2322,7 +2321,7 @@ class Cache:
             raise ValueError('Cannot rename items for one-one fields: %s' % field)
         moved_books = set()
         id_map = {}
-        for item_id, new_name in iteritems(item_id_to_new_name_map):
+        for item_id, new_name in item_id_to_new_name_map.items():
             new_names = tuple(x.strip() for x in new_name.split(sv)) if sv else (new_name,)
             books, new_id = func(item_id, new_names[0], self.backend)
             affected_books.update(books)
@@ -2533,7 +2532,9 @@ class Cache:
             raise ValueError(f"Lookup name {for_field} doesn't have a link map")
         lm = table.link_map
         vm = table.id_map
-        return {vm.get(fid):v for fid,v in lm.items() if v}
+        ans = {vm.get(fid):v for fid,v in lm.items() if v}
+        ans.pop(None, None)
+        return ans
 
     @read_api
     def link_for(self, field, item_id):
