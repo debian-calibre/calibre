@@ -10,7 +10,7 @@ disable unrar test since the module is not in Debian main
  1 file changed, 5 insertions(+)
 
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 4e3d740..8732cc8 100644
+index 91c32eb..1fcf175 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -25,6 +25,10 @@ from polyglot.builtins import iteritems
@@ -24,7 +24,7 @@ index 4e3d740..8732cc8 100644
  
  def print(*a):
      builtins.print(*a, flush=True, file=sys.__stdout__)
-@@ -457,6 +461,7 @@ class BuildTest(unittest.TestCase):
+@@ -455,6 +459,7 @@ class BuildTest(unittest.TestCase):
          from calibre.gui2.win_file_dialogs import test
          test()
  

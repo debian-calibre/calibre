@@ -55,10 +55,10 @@ Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 87afebc..a00e445 100644
+index 9934168..d5a1aa1 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -1157,6 +1157,10 @@ def get_appdata():
+@@ -1158,6 +1158,10 @@ def get_appdata():
                  _('calibre is the one stop solution to all your e-book needs.'),
                  _('You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.')  # noqa
              ),
@@ -69,7 +69,7 @@ index 87afebc..a00e445 100644
              'screenshots':(
                  (1408, 792, 'https://lh4.googleusercontent.com/-bNE1hc_3pIc/UvHLwKPGBPI/AAAAAAAAASA/8oavs_c6xoU/w1408-h792-no/main-default.png',),
                  (1408, 792, 'https://lh4.googleusercontent.com/-Zu2httSKABE/UvHMYK30JJI/AAAAAAAAATg/dQTQUjBvV5s/w1408-h792-no/main-grid.png'),
-@@ -1190,6 +1194,10 @@ def get_appdata():
+@@ -1191,6 +1195,10 @@ def get_appdata():
                  _('The calibre E-book viewer allows you to read e-books in over a dozen different formats.'),
                  _('It has a full screen mode for distraction free reading and can display the text with multiple columns per screen.'),
              ),
@@ -80,7 +80,7 @@ index 87afebc..a00e445 100644
              'screenshots':(
                  (1408, 792, 'https://lh5.googleusercontent.com/-dzSO82BPpaE/UvHMYY5SpNI/AAAAAAAAATk/I_kF9fYWrZM/w1408-h792-no/viewer-default.png',),
                  (1920, 1080, 'https://lh6.googleusercontent.com/-n32Ae5RytAk/UvHMY0QD94I/AAAAAAAAATs/Zw8Yz08HIKk/w1920-h1080-no/viewer-fs.png'),
-@@ -1263,7 +1271,7 @@ def make_appdata_releases():
+@@ -1264,7 +1272,7 @@ def make_appdata_releases():
  
  def write_appdata(key, entry, base, translators):
      from lxml.builder import E
@@ -89,7 +89,7 @@ index 87afebc..a00e445 100644
      fpath = os.path.join(base, '%s.metainfo.xml' % key)
      screenshots = E.screenshots()
      for w, h, url in entry['screenshots']:
-@@ -1303,6 +1311,14 @@ def write_appdata(key, entry, base, translators):
+@@ -1304,6 +1312,14 @@ def write_appdata(key, entry, base, translators):
          tp = t.gettext(entry['summary'])
          if tp != entry['summary']:
              root.append(E.summary(tp, **{'{http://www.w3.org/XML/1998/namespace}lang': lang}))
