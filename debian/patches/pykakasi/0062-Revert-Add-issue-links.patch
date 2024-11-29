@@ -1,0 +1,31 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 30 Nov 2024 01:55:27 +0900
+Subject: Revert "Add issue links"
+
+Forwarded: not-needed
+
+This reverts commit 0c86a7918fb186ee0aadd00d728d61defb3b2804.
+---
+ src/calibre/ebooks/unihandecode/jadecoder.py | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
+index cd05c24..4f654c0 100644
+--- a/src/calibre/ebooks/unihandecode/jadecoder.py
++++ b/src/calibre/ebooks/unihandecode/jadecoder.py
+@@ -33,7 +33,6 @@ from calibre.ebooks.unihandecode.unidecoder import Unidecoder
+ 
+ # pykakasi uses paths for its dictionaries rather than using the
+ # Traversable API of importlib.resources so we have to hack around it, sigh.
+-# https://codeberg.org/miurahr/pykakasi/pulls/174
+ def dictdata(dbfile: str):
+     t = files('pykakasi')
+     q = t.joinpath('data').joinpath(dbfile)
+@@ -68,7 +67,6 @@ class Jadecoder(Unidecoder):
+ 
+         # We have to use the deprecated API as the new API does not capitalize
+         # words. Sigh.
+-        # https://codeberg.org/miurahr/pykakasi/issues/172
+         with warnings.catch_warnings():
+             warnings.simplefilter("ignore")
+             self.kakasi = kakasi()

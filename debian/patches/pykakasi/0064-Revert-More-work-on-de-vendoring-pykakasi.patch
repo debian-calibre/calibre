@@ -1,0 +1,335 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 30 Nov 2024 01:56:04 +0900
+Subject: Revert "More work on de-vendoring pykakasi"
+
+Forwarded: not-needed
+
+This reverts commit 04d5728ef9549ddfce380d71690ab4bc76f93dd8.
+---
+ COPYRIGHT                                    |   7 ++
+ bypy/linux/__main__.py                       |   5 +-
+ bypy/macos/__main__.py                       |   7 +-
+ bypy/sources.json                            |  18 -----
+ setup/commands.py                            |   5 +-
+ setup/resources.py                           | 117 ++++++++++++++++++++++++++-
+ src/calibre/ebooks/unihandecode/jadecoder.py |  33 --------
+ 7 files changed, 128 insertions(+), 64 deletions(-)
+
+diff --git a/COPYRIGHT b/COPYRIGHT
+index a4321bb..b454998 100644
+--- a/COPYRIGHT
++++ b/COPYRIGHT
+@@ -323,6 +323,13 @@ License: GPL-3
+  The full text of the GPL is distributed as in
+  /usr/share/common-licenses/GPL-3 on Debian systems.
+ 
++Files: src/calibre/ebooks/unihandecode/pykakasi/*
++Copyright: 2011, Hiroshi Miura <miurahr@linux.com>
++Copyright: 1992, Hironobu Takahashi
++License: GPL-2+
++ The full text of the GPL is distributed as in
++ /usr/share/common-licenses/GPL on Debian systems.
++
+ Files: src/calibre/ebooks/unihandecode/*
+ Copyright: 2010-2011, Hiroshi Miura <miurahr@linux.com>
+ Copyright: 2009, John Schember
+diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
+index 12ab7b1..ad94a2e 100644
+--- a/bypy/linux/__main__.py
++++ b/bypy/linux/__main__.py
+@@ -85,12 +85,11 @@ def ignore_in_lib(base, items, ignored_dirs=None):
+         ignored_dirs = {'.svn', '.bzr', '.git', 'test', 'tests', 'testing'}
+     for name in items:
+         path = j(base, name)
+-        is_kakasi = 'pykakasi' in path
+         if os.path.isdir(path):
+-            if name != 'plugins' and (name in ignored_dirs or not is_package_dir(path)) and not (is_kakasi and name == 'data'):
++            if name != 'plugins' and (name in ignored_dirs or not is_package_dir(path)):
+                 ans.append(name)
+         else:
+-            if name.rpartition('.')[-1] not in ('so', 'py') and not (is_kakasi and name.endswith('.db')):
++            if name.rpartition('.')[-1] not in ('so', 'py'):
+                 ans.append(name)
+     return ans
+ 
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index 152c39a..8e45153 100644
+--- a/bypy/macos/__main__.py
++++ b/bypy/macos/__main__.py
+@@ -617,15 +617,12 @@ class Freeze:
+ 
+     @flush
+     def add_package_dir(self, x, dest=None):
+-        is_kakasi = 'pykakasi' in x
+-        allowed_exts = ('', '.py', '.so')
+-        if is_kakasi:
+-            allowed_exts += ('.db',)
+         def ignore(root, files):
+             ans = []
+             for y in files:
+                 ext = os.path.splitext(y)[1]
+-                if ext not in allowed_exts or (not ext and not os.path.isdir(join(root, y))):
++                if ext not in ('', '.py', '.so') or \
++                        (not ext and not os.path.isdir(join(root, y))):
+                     ans.append(y)
+ 
+             return ans
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 5b3fac8..92b7b9d 100644
+--- a/bypy/sources.json
++++ b/bypy/sources.json
+@@ -1043,24 +1043,6 @@
+         }
+     },
+ 
+-    {
+-        "name": "wrapt",
+-        "unix": {
+-            "filename": "wrapt-1.16.0-py3-none-any.whl",
+-            "hash": "sha256:6906c4100a8fcbf2fa735f6059214bb13b97f75b1a61777fcf6432121ef12ef1",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+-    {
+-        "name": "deprecated",
+-        "unix": {
+-            "filename": "Deprecated-1.2.14-py2.py3-none-any.whl",
+-            "hash": "sha256:6fac8b097794a90302bdbb17b9b815e732d3c4720583ff1b198499d78470466c",
+-            "urls": ["pypi"]
+-        }
+-    },
+-
+     {
+         "name": "pykakasi",
+         "unix": {
+diff --git a/setup/commands.py b/setup/commands.py
+index 8cabf34..82b8d13 100644
+--- a/setup/commands.py
++++ b/setup/commands.py
+@@ -11,7 +11,7 @@ __all__ = [
+     'gui',
+     'git_version',
+     'develop', 'install',
+-    'rapydscript', 'cacerts', 'recent_uas', 'resources',
++    'kakasi', 'rapydscript', 'cacerts', 'recent_uas', 'resources',
+     'check', 'test', 'test_rs', 'upgrade_source_code',
+     'sdist', 'bootstrap', 'extdev',
+     'manual', 'tag_release',
+@@ -90,9 +90,10 @@ from setup.test import Test, TestRS
+ test = Test()
+ test_rs = TestRS()
+ 
+-from setup.resources import CACerts, RapydScript, RecentUAs, Resources
++from setup.resources import CACerts, Kakasi, RapydScript, RecentUAs, Resources
+ 
+ resources = Resources()
++kakasi = Kakasi()
+ cacerts = CACerts()
+ recent_uas = RecentUAs()
+ rapydscript = RapydScript()
+diff --git a/setup/resources.py b/setup/resources.py
+index 15edea7..e4376d6 100644
+--- a/setup/resources.py
++++ b/setup/resources.py
+@@ -9,11 +9,13 @@ import errno
+ import glob
+ import json
+ import os
++import re
+ import shutil
+ import zipfile
++from zlib import compress
+ 
+-from polyglot.builtins import iteritems, itervalues, only_unicode_recursive
+-from setup import Command, basenames, download_securely, dump_json
++from polyglot.builtins import codepoint_to_chr, iteritems, itervalues, only_unicode_recursive
++from setup import Command, __appname__, basenames, download_securely, dump_json
+ 
+ 
+ def get_opts_from_parser(parser):
+@@ -27,6 +29,113 @@ def get_opts_from_parser(parser):
+             yield from do_opt(o)
+ 
+ 
++class Kakasi(Command):  # {{{
++
++    description = 'Compile resources for unihandecode'
++
++    KAKASI_PATH = os.path.join(Command.SRC,  __appname__,
++            'ebooks', 'unihandecode', 'pykakasi')
++
++    def run(self, opts):
++        self.records = {}
++        src = self.j(self.KAKASI_PATH, 'kakasidict.utf8')
++        dest = self.j(self.RESOURCES, 'localization',
++                'pykakasi','kanwadict2.calibre_msgpack')
++        base = os.path.dirname(dest)
++        if not os.path.exists(base):
++            os.makedirs(base)
++
++        if self.newer(dest, src):
++            self.info('\tGenerating Kanwadict')
++
++            for line in open(src, "rb"):
++                self.parsekdict(line)
++            self.kanwaout(dest)
++
++        src = self.j(self.KAKASI_PATH, 'itaijidict.utf8')
++        dest = self.j(self.RESOURCES, 'localization',
++                'pykakasi','itaijidict2.calibre_msgpack')
++
++        if self.newer(dest, src):
++            self.info('\tGenerating Itaijidict')
++            self.mkitaiji(src, dest)
++
++        src = self.j(self.KAKASI_PATH, 'kanadict.utf8')
++        dest = self.j(self.RESOURCES, 'localization',
++                'pykakasi','kanadict2.calibre_msgpack')
++
++        if self.newer(dest, src):
++            self.info('\tGenerating kanadict')
++            self.mkkanadict(src, dest)
++
++    def mkitaiji(self, src, dst):
++        dic = {}
++        for line in open(src, "rb"):
++            line = line.decode('utf-8').strip()
++            if line.startswith(';;'):  # skip comment
++                continue
++            if re.match(r"^$",line):
++                continue
++            pair = re.sub(r'\\u([0-9a-fA-F]{4})', lambda x:codepoint_to_chr(int(x.group(1),16)), line)
++            dic[pair[0]] = pair[1]
++        from calibre.utils.serialize import msgpack_dumps
++        with open(dst, 'wb') as f:
++            f.write(msgpack_dumps(dic))
++
++    def mkkanadict(self, src, dst):
++        dic = {}
++        for line in open(src, "rb"):
++            line = line.decode('utf-8').strip()
++            if line.startswith(';;'):  # skip comment
++                continue
++            if re.match(r"^$",line):
++                continue
++            (alpha, kana) = line.split(' ')
++            dic[kana] = alpha
++        from calibre.utils.serialize import msgpack_dumps
++        with open(dst, 'wb') as f:
++            f.write(msgpack_dumps(dic))
++
++    def parsekdict(self, line):
++        line = line.decode('utf-8').strip()
++        if line.startswith(';;'):  # skip comment
++            return
++        (yomi, kanji) = line.split(' ')
++        if ord(yomi[-1:]) <= ord('z'):
++            tail = yomi[-1:]
++            yomi = yomi[:-1]
++        else:
++            tail = ''
++        self.updaterec(kanji, yomi, tail)
++
++    def updaterec(self, kanji, yomi, tail):
++        key = "%04x"%ord(kanji[0])
++        if key in self.records:
++            if kanji in self.records[key]:
++                rec = self.records[key][kanji]
++                rec.append((yomi,tail))
++                self.records[key].update({kanji: rec})
++            else:
++                self.records[key][kanji]=[(yomi, tail)]
++        else:
++            self.records[key] = {}
++            self.records[key][kanji]=[(yomi, tail)]
++
++    def kanwaout(self, out):
++        from calibre.utils.serialize import msgpack_dumps
++        with open(out, 'wb') as f:
++            dic = {}
++            for k, v in iteritems(self.records):
++                dic[k] = compress(msgpack_dumps(v))
++            f.write(msgpack_dumps(dic))
++
++    def clean(self):
++        kakasi = self.j(self.RESOURCES, 'localization', 'pykakasi')
++        if os.path.exists(kakasi):
++            shutil.rmtree(kakasi)
++# }}}
++
++
+ class CACerts(Command):  # {{{
+ 
+     description = 'Get updated mozilla CA certificate bundle'
+@@ -104,7 +213,7 @@ class RapydScript(Command):  # {{{
+ class Resources(Command):  # {{{
+ 
+     description = 'Compile various needed calibre resources'
+-    sub_commands = ['liberation_fonts', 'mathjax', 'rapydscript', 'hyphenation', 'piper_voices']
++    sub_commands = ['kakasi', 'liberation_fonts', 'mathjax', 'rapydscript', 'hyphenation', 'piper_voices']
+ 
+     def run(self, opts):
+         from calibre.utils.serialize import msgpack_dumps
+@@ -228,6 +337,8 @@ class Resources(Command):  # {{{
+             x = self.j(self.RESOURCES, x+'.pickle')
+             if os.path.exists(x):
+                 os.remove(x)
++        from setup.commands import kakasi
++        kakasi.clean()
+         for x in ('builtin_recipes.xml', 'builtin_recipes.zip',
+                 'template-functions.json', 'user-manual-translation-stats.json'):
+             x = self.j(self.RESOURCES, x)
+diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
+index 985063c..8284385 100644
+--- a/src/calibre/ebooks/unihandecode/jadecoder.py
++++ b/src/calibre/ebooks/unihandecode/jadecoder.py
+@@ -16,48 +16,15 @@ This functionality is owned by Kakasi Japanese processing engine.
+ Copyright (c) 2010 Hiroshi Miura
+ '''
+ 
+-import pickle
+ import re
+-from importlib.resources import files
+ 
+ from pykakasi import kakasi
+-from pykakasi.kanji import Itaiji, Kanwa
+-from pykakasi.properties import Configurations
+-from pykakasi.scripts import Jisyo
+ 
+ from calibre.ebooks.unihandecode.jacodepoints import CODEPOINTS as JACODES
+ from calibre.ebooks.unihandecode.unicodepoints import CODEPOINTS
+ from calibre.ebooks.unihandecode.unidecoder import Unidecoder
+ 
+ 
+-# pykakasi uses paths for its dictionaries rather than using the
+-# Traversable API of importlib.resources so we have to hack around it, sigh.
+-def dictdata(dbfile: str):
+-    t = files('pykakasi')
+-    q = t.joinpath('data').joinpath(dbfile)
+-    return q.read_bytes()
+-
+-
+-def jisyo_init(self, dbname):
+-    self._dict = pickle.loads(dictdata(dbname))
+-
+-
+-def itaiji_init(self):
+-    if self._itaijidict is None:
+-        with self._lock:
+-            if self._itaijidict is None:
+-                self._itaijidict = pickle.loads(dictdata(Configurations.jisyo_itaiji))
+-
+-def kanwa_init(self):
+-    if self._jisyo_table is None:
+-        with self._lock:
+-            if self._jisyo_table is None:
+-                self._jisyo_table = pickle.loads(dictdata(Configurations.jisyo_kanwa))
+-
+-Jisyo.__init__ = jisyo_init
+-Itaiji.__init__ = itaiji_init
+-Kanwa.__init__ = kanwa_init
+-
+ class Jadecoder(Unidecoder):
+ 
+     def __init__(self):

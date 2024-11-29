@@ -1,0 +1,72 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Sat, 30 Nov 2024 01:55:44 +0900
+Subject: Revert "And yet more crap with pykakasi"
+
+Forwarded: not-needed
+
+This reverts commit bcfdfc1e1d6c899c1fb45edfba7f528c3ed2bbc6.
+---
+ setup/arch-ci.sh                             |  2 --
+ src/calibre/ebooks/unihandecode/jadecoder.py | 26 +++++++++-----------------
+ 2 files changed, 9 insertions(+), 19 deletions(-)
+
+diff --git a/setup/arch-ci.sh b/setup/arch-ci.sh
+index 1add54a..b41ff34 100755
+--- a/setup/arch-ci.sh
++++ b/setup/arch-ci.sh
+@@ -7,8 +7,6 @@ set -xe
+ 
+ pacman -S --noconfirm --needed base-devel sudo git sip pyqt-builder cmake chmlib icu jxrlib hunspell libmtp libusb libwmf optipng python-apsw python-beautifulsoup4 python-cssselect python-css-parser python-dateutil python-jeepney python-dnspython python-feedparser python-html2text python-html5-parser python-lxml python-lxml-html-clean python-markdown python-mechanize python-msgpack python-netifaces python-unrardll python-pillow python-psutil python-pygments python-pyqt6 python-regex python-zeroconf python-pyqt6-webengine qt6-svg qt6-imageformats qt6-speech udisks2 hyphen python-pychm python-pycryptodome speech-dispatcher python-sphinx python-urllib3 python-py7zr python-pip python-fonttools python-xxhash uchardet libstemmer poppler tk podofo
+ 
+-pip install --break-system-packages pykakasi
+-
+ useradd -m ci
+ chown -R ci:users $GITHUB_WORKSPACE
+ 
+diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
+index 4f654c0..985063c 100644
+--- a/src/calibre/ebooks/unihandecode/jadecoder.py
++++ b/src/calibre/ebooks/unihandecode/jadecoder.py
+@@ -18,7 +18,6 @@ Copyright (c) 2010 Hiroshi Miura
+ 
+ import pickle
+ import re
+-import warnings
+ from importlib.resources import files
+ 
+ from pykakasi import kakasi
+@@ -64,25 +63,18 @@ class Jadecoder(Unidecoder):
+     def __init__(self):
+         self.codepoints = CODEPOINTS.copy()
+         self.codepoints.update(JACODES)
+-
+-        # We have to use the deprecated API as the new API does not capitalize
+-        # words. Sigh.
+-        with warnings.catch_warnings():
+-            warnings.simplefilter("ignore")
+-            self.kakasi = kakasi()
+-            self.kakasi.setMode("H","a") # Hiragana to ascii, default: no conversion
+-            self.kakasi.setMode("K","a") # Katakana to ascii, default: no conversion
+-            self.kakasi.setMode("J","a") # Japanese to ascii, default: no conversion
+-            self.kakasi.setMode("r","Hepburn") # default: use Hepburn Roman table
+-            self.kakasi.setMode("s", True) # add space, default: no separator
+-            self.kakasi.setMode("C", True) # capitalize, default: no capitalize
+-            self.conv = self.kakasi.getConverter()
++        self.kakasi = kakasi()
++        self.kakasi.setMode("H","a") # Hiragana to ascii, default: no conversion
++        self.kakasi.setMode("K","a") # Katakana to ascii, default: no conversion
++        self.kakasi.setMode("J","a") # Japanese to ascii, default: no conversion
++        self.kakasi.setMode("r","Hepburn") # default: use Hepburn Roman table
++        self.kakasi.setMode("s", True) # add space, default: no separator
++        self.kakasi.setMode("C", True) # capitalize, default: no capitalize
++        self.conv = self.kakasi.getConverter()
+ 
+     def decode(self, text):
+         try:
+-            with warnings.catch_warnings():
+-                warnings.simplefilter("ignore")
+-                text = self.conv.do(text)
++            text = self.conv.do(text)
+         except Exception:
+             pass
+         return re.sub('[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
