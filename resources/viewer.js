@@ -7077,6 +7077,14 @@ return parser;
                 ρσ_d["category"] = "read_book";
                 return ρσ_d;
             }).call(this);
+            ρσ_d["tts_bar_position"] = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["default"] = "float";
+                ρσ_d["category"] = "read_book";
+                ρσ_d["is_local"] = false;
+                ρσ_d["disallowed_in_profile"] = false;
+                return ρσ_d;
+            }).call(this);
             return ρσ_d;
         }).call(this);
         defaults = Object.create(null);
@@ -28689,7 +28697,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.21.0";
+        CALIBRE_VERSION = "7.22.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -41169,14 +41177,6 @@ return this.__repr__();
             this.handle_message = SelectionBar.prototype.handle_message.bind(this);
         }});
         Object.defineProperties(SelectionBar.prototype,  {
-            "supports_css_min_max": {
-                "enumerable": true, 
-                "get": function supports_css_min_max() {
-                    var self = this;
-                    return !runtime.is_standalone_viewer || runtime.QT_VERSION >= 331520;
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
             "container": {
                 "enumerable": true, 
                 "get": function container() {
@@ -41470,7 +41470,7 @@ return this.__repr__();
             notes = self.annotations_manager.notes_for_highlight(annot_id);
             bar_container = self.bar;
             clear(bar_container);
-            bar_container.style.maxWidth = (self.supports_css_min_max) ? "min(50rem, 90vw)" : "50rem";
+            bar_container.style.maxWidth = "min(50rem, 90vw)";
             bar_container.style.backgroundColor = get_color("window-background");
             notes_container = E.div();
             notes_container.addEventListener("wheel", (function() {
@@ -41611,11 +41611,7 @@ return this.__repr__();
             c = notes_container.lastChild;
             notes_container.style.display = notes_container.previousSibling.style.display = "block";
             c.style.overflow = "auto";
-            if (self.supports_css_min_max) {
-                c.style.maxHeight = "min(20ex, 40vh)";
-            } else {
-                c.style.maxHeight = "20ex";
-            }
+            c.style.maxHeight = "min(20ex, 40vh)";
             render_notes(notes, c, true);
         };
         if (!SelectionBar.prototype.show_notes.__argnames__) Object.defineProperties(SelectionBar.prototype.show_notes, {
@@ -42737,7 +42733,6 @@ return this.__repr__();
             return this.__repr__();
         };
         Object.defineProperty(SelectionBar.prototype, "__bases__", {value: []});
-        
         
         
         
@@ -46027,6 +46022,8 @@ return this.__repr__();
 
         var shortcut_for_key_event = ρσ_modules["read_book.shortcuts"].shortcut_for_key_event;
 
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
         HIDDEN = 0;
         WAITING_FOR_PLAY_TO_START = 1;
         PAUSED = 2;
@@ -46042,6 +46039,17 @@ return this.__repr__();
             __module__ : {value: "read_book.read_aloud"}
         });
 
+        function bar_class_and_position() {
+            var sd, bp, iclass;
+            sd = get_session_data();
+            bp = sd.get("tts_bar_position");
+            iclass = (ρσ_in("float", bp)) ? "floating" : "docked";
+            return [iclass, bp];
+        };
+        if (!bar_class_and_position.__module__) Object.defineProperties(bar_class_and_position, {
+            __module__ : {value: "read_book.read_aloud"}
+        });
+
         function ReadAloud() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             ReadAloud.prototype.__bind_methods__.call(this);
@@ -46051,6 +46059,8 @@ return this.__repr__();
             this.hide = ReadAloud.prototype.hide.bind(this);
             this.show = ReadAloud.prototype.show.bind(this);
             this.focus = ReadAloud.prototype.focus.bind(this);
+            this.build_docked_bar = ReadAloud.prototype.build_docked_bar.bind(this);
+            this.create_buttons = ReadAloud.prototype.create_buttons.bind(this);
             this.build_bar = ReadAloud.prototype.build_bar.bind(this);
             this.configure = ReadAloud.prototype.configure.bind(this);
             this.slower = ReadAloud.prototype.slower.bind(this);
@@ -46071,14 +46081,6 @@ return this.__repr__();
                 "get": function container() {
                     var self = this;
                     return document.getElementById("book-read-aloud-overlay");
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-            "supports_css_min_max": {
-                "enumerable": true, 
-                "get": function supports_css_min_max() {
-                    var self = this;
-                    return true;
                 }, 
                 "set": function () { throw new AttributeError("can't set attribute") }
             }, 
@@ -46122,10 +46124,8 @@ return this.__repr__();
             container = self.container;
             container.setAttribute("tabindex", "0");
             container.style.overflow = "hidden";
-            container.style.justifyContent = "flex-end";
-            container.style.alignItems = (is_flow_mode()) ? "flex-end" : "flex-start";
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: self.bar_id, style: "border: solid 1px currentColor; border-radius: 5px;display: flex; flex-direction: column; margin: 1rem;"})]));
-            container.appendChild(E.style("#" + ρσ_str.format("{}", self.bar_id) + ".speaking " + "{ opacity: 0.5 }\n\n", "#" + ρσ_str.format("{}", self.bar_id) + ".speaking:hover " + "{ opacity: 1.0 }\n\n"));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: self.bar_id})]));
+            container.appendChild(E.style("#" + ρσ_str.format("{}", self.bar_id) + ".floating" + "{ border: solid 1px currentColor; border-radius: 5px; display: flex;" + " flex-direction: column; margin: 1rem; }\n\n", "#" + ρσ_str.format("{}", self.bar_id) + ".docked" + "{ border-radius: 1em; height: 2em; padding:0.5em; display: flex; justify-content: center; align-items: center; }\n\n", "#" + ρσ_str.format("{}", self.bar_id) + ".speaking " + "{ opacity: 0.5 }\n\n", "#" + ρσ_str.format("{}", self.bar_id) + ".speaking:hover " + "{ opacity: 1.0 }\n\n"));
             container.addEventListener("keydown", self.on_keydown, (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["passive"] = false;
@@ -46184,28 +46184,20 @@ return this.__repr__();
         if (!ReadAloud.prototype.focus.__module__) Object.defineProperties(ReadAloud.prototype.focus, {
             __module__ : {value: "read_book.read_aloud"}
         });
-        ReadAloud.prototype.build_bar = function build_bar(annot_id) {
+        ReadAloud.prototype.build_docked_bar = function build_docked_bar(bar_container, bar_position) {
             var self = this;
-            var bar_container, x, bar, notes_container;
-            if (self.state === HIDDEN) {
-                return;
-            }
-            self.container.style.alignItems = (is_flow_mode()) ? "flex-end" : "flex-start";
-            bar_container = self.bar;
-            if (self.state === PLAYING) {
-                bar_container.classList.add("speaking");
-            } else {
-                bar_container.classList.remove("speaking");
-            }
-            clear(bar_container);
-            bar_container.style.maxWidth = (self.supports_css_min_max) ? "min(40rem, 80vw)" : "40rem";
-            bar_container.style.backgroundColor = get_color("window-background");
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px; font-size: smaller"})])) ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                x = ρσ_Iter0[ρσ_Index0];
-                bar_container.appendChild(x);
-            }
-            bar = bar_container.firstChild;
+            var container;
+            container = self.container;
+            container.style.alignItems = (ρσ_in("bottom", bar_position)) ? "flex-end" : "flex-start";
+            container.style.justifyContent = (ρσ_in("right", bar_position)) ? "flex-end" : (ρσ_in("left", bar_position)) ? "flex-start" : "center";
+            self.create_buttons(bar_container);
+        };
+        if (!ReadAloud.prototype.build_docked_bar.__argnames__) Object.defineProperties(ReadAloud.prototype.build_docked_bar, {
+            __argnames__ : {value: ["bar_container", "bar_position"]},
+            __module__ : {value: "read_book.read_aloud"}
+        });
+        ReadAloud.prototype.create_buttons = function create_buttons(bar) {
+            var self = this;
             function cb(name, icon, text) {
                 var ans;
                 ans = svgicon(icon, ICON_SIZE, ICON_SIZE, text);
@@ -46243,6 +46235,45 @@ return this.__repr__();
             bar.appendChild(cb("faster", "faster", _("Speed up speech")));
             bar.appendChild(cb("configure", "cogs", _("Configure Read aloud")));
             bar.appendChild(cb("hide", "off", _("Close Read aloud")));
+        };
+        if (!ReadAloud.prototype.create_buttons.__argnames__) Object.defineProperties(ReadAloud.prototype.create_buttons, {
+            __argnames__ : {value: ["bar"]},
+            __module__ : {value: "read_book.read_aloud"}
+        });
+        ReadAloud.prototype.build_bar = function build_bar() {
+            var self = this;
+            var bar_container, ρσ_unpack, iclass, bp, container, x, notes_container;
+            if (self.state === HIDDEN) {
+                return;
+            }
+            bar_container = self.bar;
+            bar_container.classList.remove("floating");
+            bar_container.classList.remove("docked");
+            ρσ_unpack = bar_class_and_position();
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            iclass = ρσ_unpack[0];
+            bp = ρσ_unpack[1];
+            bar_container.classList.add(iclass);
+            bar_container.style.maxWidth = "min(40rem, 80vw)";
+            bar_container.style.backgroundColor = get_color("window-background");
+            if (self.state === PLAYING) {
+                bar_container.classList.add("speaking");
+            } else {
+                bar_container.classList.remove("speaking");
+            }
+            clear(bar_container);
+            if (iclass !== "floating") {
+                return self.build_docked_bar(bar_container, bp);
+            }
+            container = self.container;
+            container.style.alignItems = (is_flow_mode()) ? "flex-end" : "flex-start";
+            container.style.justifyContent = "flex-end";
+            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px; font-size: smaller"})])) ]));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                x = ρσ_Iter0[ρσ_Index0];
+                bar_container.appendChild(x);
+            }
+            self.create_buttons(bar_container.firstChild);
             if (self.state !== WAITING_FOR_PLAY_TO_START) {
                 notes_container = bar_container.lastChild;
                 notes_container.style.display = notes_container.previousSibling.style.display = "block";
@@ -46256,8 +46287,7 @@ return this.__repr__();
                 }
             }
         };
-        if (!ReadAloud.prototype.build_bar.__argnames__) Object.defineProperties(ReadAloud.prototype.build_bar, {
-            __argnames__ : {value: ["annot_id"]},
+        if (!ReadAloud.prototype.build_bar.__module__) Object.defineProperties(ReadAloud.prototype.build_bar, {
             __module__ : {value: "read_book.read_aloud"}
         });
         ReadAloud.prototype.configure = function configure() {
@@ -46457,7 +46487,6 @@ return this.__repr__();
         
         
         
-        
 
         ρσ_modules["read_book.read_aloud"].HIDDEN = HIDDEN;
         ρσ_modules["read_book.read_aloud"].WAITING_FOR_PLAY_TO_START = WAITING_FOR_PLAY_TO_START;
@@ -46465,6 +46494,7 @@ return this.__repr__();
         ρσ_modules["read_book.read_aloud"].PLAYING = PLAYING;
         ρσ_modules["read_book.read_aloud"].STOPPED = STOPPED;
         ρσ_modules["read_book.read_aloud"].is_flow_mode = is_flow_mode;
+        ρσ_modules["read_book.read_aloud"].bar_class_and_position = bar_class_and_position;
         ρσ_modules["read_book.read_aloud"].ReadAloud = ReadAloud;
     })();
 
@@ -52017,9 +52047,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter3 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                key = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                key = ρσ_Iter0[ρσ_Index0];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);
@@ -52238,6 +52268,23 @@ return this.__repr__();
                 view.overlay.open_book(false);
             };
             if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: null}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var redraw_tts_bar = from_python((function() {
+            var ρσ_anonfunc = function redraw_tts_bar(pos) {
+                var sd;
+                sd = get_session_data();
+                sd.set("tts_bar_position", pos);
+                if (view) {
+                    view.read_aloud.build_bar();
+                }
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["pos"]},
                 __module__ : {value: null}
             });
             return ρσ_anonfunc;

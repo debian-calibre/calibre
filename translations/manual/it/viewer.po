@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-30 15:12+0000\n"
+"POT-Creation-Date: 2024-11-28 06:05+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>, 2021-2022,2024\n"
 "Language-Team: Italian (http://app.transifex.com/calibre/calibre/language/it/)\n"
@@ -220,7 +220,7 @@ msgid ""
 msgstr "Infine, se usi il server dei contenuti di calibre nel lettore del browser, puoi fare in modo che il lettore sincronizzi le sue annotazioni con il lettore del browser andando in :guilabel:`Preferenze->Varie` nelle preferenze del lettore e inserendo il nome utente del lettore del server dei contenuti con cui sincronizzare. Usa il carattere speciale ``*`` per sincronizzare con utenti anonimi."
 
 #: ../../__w/calibre/calibre/manual/viewer.rst:133
-#: ../../__w/calibre/calibre/manual/viewer.rst:315
+#: ../../__w/calibre/calibre/manual/viewer.rst:307
 msgid "Read aloud"
 msgstr "Lettura ad alta voce"
 
@@ -228,47 +228,33 @@ msgstr "Lettura ad alta voce"
 msgid ""
 "The viewer can read book text aloud. To use it you can simply click the "
 ":guilabel:`Read aloud` button in the viewer controls to start reading book "
-"text aloud. The word being currently read is highlighted. Speech is "
-"synthesized from the text using your operating system services for text-to-"
-"speech. You can change the voice being used by clicking the gear icon in the"
-" bar that is displayed while :guilabel:`Read aloud` is active."
-msgstr "Il lettore può leggere il testo dei libri ad alta voce. Per usare questa funzione devi semplicemente fare clic sul pulsante :guilabel:`Leggi ad alta voce` nei controlli del lettore per cominciare a leggere il testo del libro ad alta voce. La parola che viene letta in un dato momento è evidenziata. La voce è sintetizzata dal testo usando i servizi text-to-speech (TTS) del tuo sistema operativo. Puoi cambiare la voce usata facendo clic sull'icona della rotellina nella barra che viene mostrata quando :guilabel:`Leggi ad alta voce` è attivo."
+"text aloud. The word or sentence being currently read is highlighted. Speech"
+" is synthesized from the text using either the `Piper "
+"<https://github.com/rhasspy/piper>`__ neural text-to-speech engine or your "
+"operating system services for text-to-speech. You can change the backend and"
+" the voice being used by clicking the gear icon in the bar that is displayed"
+" while :guilabel:`Read aloud` is active."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:142
+#: ../../__w/calibre/calibre/manual/viewer.rst:144
 msgid ""
 "You can also read aloud highlighted passages by adding the :guilabel:`Read "
 "aloud` button to the selection bar in the viewer preferences under "
 ":guilabel:`Selection behavior`."
 msgstr "Puoi anche leggere ad alta voce i passaggi evidenziati aggiungendo il pulsante :guilabel:`Leggi ad alta voce` alla barra di selezione nelle preferenze del lettore sotto :guilabel:`Selezione`."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:147
+#: ../../__w/calibre/calibre/manual/viewer.rst:149
 msgid ""
 "Support for text-to-speech in browsers is very incomplete and bug-ridden so "
 "how well :guilabel:`Read aloud` will work in the in-browser viewer is "
-"dependent on how well the underlying browser supports text-to-speech. In "
-"particular, highlighting of current word does not work, and changing speed "
-"or voice will cause reading to start again from the beginning."
-msgstr "Il supporto a TTS nei browser è molto carente e pieno di problemi quindi il buon funzionamento della :guilabel:`Lettura ad alta voce` nel lettore del browser dipenderà da quanto bene il browser supporta il TTS. In particolare, l'evidenziazione della parola corrente non funziona, e cambiare la velocità o la voce narrante farà ripartire la lettura dall'inizio."
+"dependent on how well the underlying browser supports text-to-speech."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:154
-msgid ""
-"On Linux, :guilabel:`Read aloud` requires `Speech Dispatcher "
-"<https://freebsoft.org/speechd>`_ to be installed and working."
-msgstr "Su Linux :guilabel:`Leggi ad alta voce` richiede che `Speech Dispatcher <https://freebsoft.org/speechd>`_ sia installato e funzionante."
-
-#: ../../__w/calibre/calibre/manual/viewer.rst:157
-msgid ""
-"On Windows, not all installed voices may be visible to the SAPI sub-system "
-"that is used for text-to-speech. There are `instructions to make all voices "
-"visible "
-"<https://www.mobileread.com/forums/showpost.php?p=4084051&postcount=108>`_."
-msgstr "Su Windows non tutte le voci installate potrebbero essere visibili al sottosistema SAPI usato per il TTS. Sono disponibili `istruzioni per rendere tutte le voci visibili <https://www.mobileread.com/forums/showpost.php?p=4084051&postcount=108>`_."
-
-#: ../../__w/calibre/calibre/manual/viewer.rst:163
+#: ../../__w/calibre/calibre/manual/viewer.rst:155
 msgid "Searching the text"
 msgstr "Cercado il testo"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:165
+#: ../../__w/calibre/calibre/manual/viewer.rst:157
 msgid ""
 "The viewer has very powerful search capabilities. Press the :kbd:`Ctrl+F` "
 "key or access the viewer controls and click search. The simplest form of "
@@ -277,7 +263,7 @@ msgid ""
 "search input. Available modes are:"
 msgstr "Il lettore ha delle potenti capacità di ricerca. Premi :kbd:`Ctrl+F` o accedi ai controlli del lettore e clicca cerca. La più semplice forma di ricerca e quella di cercare per qualsiasi testo che inserisci nella casella testo. I diversi moduli di ricerca sono scelti nel riquardo modalità di ricerca sottostantela casella di ricerca. Le modalità disponibili sono:"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:171
+#: ../../__w/calibre/calibre/manual/viewer.rst:163
 msgid ""
 ":guilabel:`Contains` - The simplest default mode. The text entered in the "
 "search box is searched for anywhere. All punctuation, accents and spaces are"
@@ -286,7 +272,7 @@ msgid ""
 "sensitive` box then accents, spaces and punctuation are no longer ignored."
 msgstr ":guilabel:`Contains` - La modalità predefinita più semplice. Il testo inserito nell a casella di ricerca è cercato ovunque. Tutta la punteggiatura, accenti e spazi sono ignorati. Per esempio, la ricerca ``Pena`` restituira tutti i termini seguenti: ``penal, pen a, pen.a and Peña``. Se selezioni la casella :guilabel:`Case sensitive`, allora accenti, spazi e punteggiatura non sono più ignorati."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:177
+#: ../../__w/calibre/calibre/manual/viewer.rst:169
 msgid ""
 ":guilabel:`Whole words` - Searches for whole words. So for example, the "
 "search ``pena`` will match the word ``Peña`` but not the word ``Penal``. As "
@@ -294,7 +280,7 @@ msgid ""
 "ignored unless the :guilabel:`Case sensitive` box is checked."
 msgstr "guilabel:`Whole words` - Cerca tra tutte le parole. Per esempio, la ricerca ``pena`` restituirà la parola ``Peña`` ma non la parola ``Penal``. Come per :guilabel:`Contains`, con le ricerche sopracitate, accenti a punteggiatura sono ignorate a meno che la :guilabel:`Case sensitive` sia attivata."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:182
+#: ../../__w/calibre/calibre/manual/viewer.rst:174
 msgid ""
 ":guilabel:`Nearby words` - Searches for whole words that are near each "
 "other. So for example, the search ``calibre cool`` will match places where "
@@ -305,18 +291,18 @@ msgid ""
 " that punctuation and accents are *not* ignored for these searches."
 msgstr ":guilabel:`Nearby words` - Cerca intere parole che sono vicine tra di loro. Quindi, per esempio la ricerca ``calibre cool`` restituira risultati dove le parole ``calibre`` e``cool`` si trovano all'interno di sessanta caratteri tra di loro. Per cambiare il numero di caratteri aggiungi il nuovo numero alla fine della lista di parole. Per esempio, ``calibre cool awesome 120`` restiturà risultati dove le tre parole si trovano all'interno di 120 caratteri tra loro. Nota che punteggiatura e accenti sono *not* ignorate da queste ricerche."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:190
+#: ../../__w/calibre/calibre/manual/viewer.rst:182
 msgid ""
 ":guilabel:`Regex` - Interprets the search text as a *regular expression*. To"
 " learn more about using regular expressions, see :doc:`the tutorial "
 "<regexp>`."
 msgstr ":guilabel:`Regex` - Interpreta il testo di ricerca come una *espressione regolare*. Per saperne di più su espressioni regolari, vedi,  :doc:`the tutorial `."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:196
+#: ../../__w/calibre/calibre/manual/viewer.rst:188
 msgid "Following links using only the keyboard"
 msgstr "Seguire i collegamenti usando solo la tastiera"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:198
+#: ../../__w/calibre/calibre/manual/viewer.rst:190
 msgid ""
 "The E-book viewer has a :guilabel:`Hints mode` that allows you to click "
 "links in the text without using the mouse. Press the :kbd:`Alt+F` key and "
@@ -326,7 +312,7 @@ msgid ""
 "link."
 msgstr "Il lettore di e-book ha una :guilabel:`Modalità suggerimenti` che permette di fare clic sui collegamenti nel testo senza usare il mouse. Premi il tasto :kbd:`Alt+F` e tutti i collegamenti nella schermata attuale saranno evidenziati con un numero o una lettera soprastanti. Premi la lettera sulla tua tastiera per fare clic sul collegamento. Premere il tasto :kbd:`Esc` terminerà la :guilabel:`Modalità suggerimenti` senza selezionare alcun collegamento."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:204
+#: ../../__w/calibre/calibre/manual/viewer.rst:196
 msgid ""
 "If more than thirty five links are on-screen then some of them will have "
 "multiple letters, in which case type the first and second, or the first and "
@@ -334,37 +320,37 @@ msgid ""
 " undo a mistake in typing."
 msgstr "Se ci sono più di 35 collegamenti nella schermata, alcuni di essi avranno più di una lettera, nel qual caso dovrai premere la prima e la seconda lettera, o la prima seguita da :kbd:`Invio` per attivare. Puoi anche usare il tasto :kbd:`Backspace` per annullare un errore di digitazione."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:211
+#: ../../__w/calibre/calibre/manual/viewer.rst:203
 msgid "Customizing the look and feel of your reading experience"
 msgstr "Personalizzare la grafica della tua esperienza di lettura"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:213
+#: ../../__w/calibre/calibre/manual/viewer.rst:205
 msgid ""
 "You can change font sizes on the fly by using :guilabel:`Font size` in the "
 "viewer controls or :kbd:`Ctrl++` or :kbd:`Ctrl+-` or holding the :kbd:`Ctrl`"
 " key and using the mouse wheel."
 msgstr "Puoi cambiare al volo la dimensione dei caratteri usando :guilabel:`Dimensione carattere` nei controlli del lettore oppure :kbd:`Ctrl++` e :kbd:`Ctrl+-`, oppure tenendo premuto il tasto :kbd:`Ctrl` e usando la rotellina del mouse."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:217
+#: ../../__w/calibre/calibre/manual/viewer.rst:209
 msgid ""
 "Colors can be changed in the :guilabel:`Colors` section of the viewer "
 "preferences."
 msgstr "I colori possono essere cambiati nella sezione :guilabel:`Colori` delle preferenze del lettore."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:220
+#: ../../__w/calibre/calibre/manual/viewer.rst:212
 msgid ""
 "You can change the number of pages displayed on the screen as well as page "
 "margins in :guilabel:`Page layout` in the viewer preferences."
 msgstr "Puoi cambiare il numero di pagine mostrate sullo schermo, come anche i margini di pagina in :guilabel:`Impaginazione`  nelle preferenze del lettore."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:223
+#: ../../__w/calibre/calibre/manual/viewer.rst:215
 msgid ""
 "You can display custom headers and footers such as time left to read, "
 "current chapter title, book position, etc. via the :guilabel:`Headers and "
 "footers` section of the viewer preferences."
 msgstr "Puoi mostrare intestazioni e piè di pagina personalizzati come il tempo di lettura rimanente, il titolo del capitolo corrente, la posizione nel libro, ecc. attraverso la sezione :guilabel:`Intestazioni e piè di pagina` delle preferenze del lettore."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:227
+#: ../../__w/calibre/calibre/manual/viewer.rst:219
 msgid ""
 "More advanced customization can be achieved by the :guilabel:`Styles` "
 "settings. Here you can specify a background image to display under the text "
@@ -374,22 +360,22 @@ msgid ""
 "forums <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
 msgstr "Personalizzazioni oiù avanzate possono essere ottenute attraverso le impostazioni degli :guilabel:`Stili`. Qui puoi specificare un'immagine di sfondo da mostrare sotto al testo, e anche un foglio di stile da impostare che sarà applicato ad ogni libro. Usandolo puoi fare cose come cambiare gli stili di paragrafo, la giustificazione del testo, ecc.  Per esempi di fogli di stile personalizzati usati dagli utenti di calibre, visita `i forum <https://www.mobileread.com/forums/showthread.php?t=51500>`_."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:235
+#: ../../__w/calibre/calibre/manual/viewer.rst:227
 msgid "Dictionary lookup"
 msgstr "Consultazione del dizionario"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:237
+#: ../../__w/calibre/calibre/manual/viewer.rst:229
 msgid ""
 "You can look up the meaning of words in the current book by double clicking "
 "or long tapping the word you want to lookup and then clicking the lookup "
 "button that looks like a library."
 msgstr "Puoi ricercare il significato delle parole nel libro attuale facendo doppio clic o tenendo premuto sulla parola che vuoi cercare, e facendo clic poi sul pulsante di consultazione che assomiglia a una biblioteca."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:243
+#: ../../__w/calibre/calibre/manual/viewer.rst:235
 msgid "Copying text and images"
 msgstr "Copiare testo e immagini"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:245
+#: ../../__w/calibre/calibre/manual/viewer.rst:237
 msgid ""
 "You can select text and images by dragging the content with your mouse and "
 "then right clicking and selecting :guilabel:`Copy` to copy to the clipboard."
@@ -397,22 +383,22 @@ msgid ""
 "and images."
 msgstr "Puoi selezionare testo e immagini trascinando il conenuto con il mouse e poi facendo clic con il tasto destro e selezionando :guilabel:`Copia` per copiare negli appunti. Il materiale copiato può essere incollato in un'altra applicaziobe come testo e immagini semplici."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:251
+#: ../../__w/calibre/calibre/manual/viewer.rst:243
 msgid "Zooming in on images"
 msgstr "Ingrandimento delle immagini"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:253
+#: ../../__w/calibre/calibre/manual/viewer.rst:245
 msgid ""
 "You can zoom in to show an image at full size in a separate window by either"
 " double clicking or long tapping on it. You can also right click on it and "
 "choose :guilabel:`View image`."
 msgstr "Puoi ingrandire un immagine per mostrarla a dimensione intera in una finestra separata o facendo doppio clic, o toccando a lungo su di essa. Puoi anche fare clic con il tasto destro del mouse e scegliere :guilabel:`Visualizza immagine`."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:259
+#: ../../__w/calibre/calibre/manual/viewer.rst:251
 msgid "Syncing with a paper edition of the current book"
 msgstr "Sincronizzazione con un'edizione cartacea del libro corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:261
+#: ../../__w/calibre/calibre/manual/viewer.rst:253
 msgid ""
 "Some e-books, that have corresponding print editions, include metadata that "
 "marks the start of each paper page. For such e-books, the viewer allows you "
@@ -423,529 +409,529 @@ msgid ""
 "either the header or the footer."
 msgstr "Alcuni e-book con edizioni cartacee corrispondenti includono metadati che marcano l'inizio di ciascuna pagina cartacea. Per tali e-book, il lettore ti permette di saltare a una pagina specifica dell'edizione cartacea attraverso il pulsante :guilabel:`Vai a` nei controlli del lettore. Puoi anche mostrare opzionalmente la pagina cartacea corrispondente alla posizione corrente nelle intestazioni o nei piè di pagina del libro attraverso le impostazioni del lettore, aggiungendo :guilabel:`Pagine dell'edizione cartacea` all'intestazione o al piè di pagina."
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:272
+#: ../../__w/calibre/calibre/manual/viewer.rst:264
 msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:274
+#: ../../__w/calibre/calibre/manual/viewer.rst:266
 msgid ""
 "The viewer has extensive keyboard shortcuts, like the rest of calibre. They "
 "can be customised in the viewer :guilabel:`Preferences`. The default "
 "shortcuts are listed below:"
 msgstr "Il lettore fa uso di numerose scorciatoie da tastiera, come il resto di calibre. Possono essere personalizzate nelle :guilabel:`Preferenze` del lettore. Le scorciatoie predefinite sono elencate qui sotto:"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:278
+#: ../../__w/calibre/calibre/manual/viewer.rst:270
 msgid "Keyboard shortcuts for the calibre E-book viewer"
 msgstr "Scorciatoie da tastiera per il lettore e-book di calibre"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:282
+#: ../../__w/calibre/calibre/manual/viewer.rst:274
 msgid "Keyboard shortcut"
 msgstr "Scorciatoia da tastiera"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:283
+#: ../../__w/calibre/calibre/manual/viewer.rst:275
 msgid "Action"
 msgstr "Azione"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:284
+#: ../../__w/calibre/calibre/manual/viewer.rst:276
 msgid ":kbd:`Home, Ctrl+ArrowUp, Ctrl+ArrowLeft`"
 msgstr ":kbd:`Home, Ctrl+FrecciaSu, Ctrl+FrecciaSinistra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:285
+#: ../../__w/calibre/calibre/manual/viewer.rst:277
 msgid "Scroll to the start of the current file in a multi file book"
 msgstr "Scorri fino all'inizio del file corrente in un libro con più file"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:286
+#: ../../__w/calibre/calibre/manual/viewer.rst:278
 msgid ":kbd:`Ctrl+Home`"
 msgstr ":kbd:`Ctrl+Home`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:287
+#: ../../__w/calibre/calibre/manual/viewer.rst:279
 msgid "Scroll to the beginning of the book"
 msgstr "Scorri fino all'inizio del libro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:288
+#: ../../__w/calibre/calibre/manual/viewer.rst:280
 msgid ":kbd:`Ctrl+End`"
 msgstr ":kbd:`Ctrl+Fine`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:289
+#: ../../__w/calibre/calibre/manual/viewer.rst:281
 msgid "Scroll to the end of the book"
 msgstr "Scorri alla fine del libro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:290
+#: ../../__w/calibre/calibre/manual/viewer.rst:282
 msgid ":kbd:`End, Ctrl+ArrowDown, Ctrl+ArrowRight`"
 msgstr ":kbd:`Fine, Ctrl+FrecciaGiù, Ctrl+FrecciaDestra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:291
+#: ../../__w/calibre/calibre/manual/viewer.rst:283
 msgid "Scroll to the end of the current file in a multi file book"
 msgstr "Scorri fino alla fine del file corrente in un libro con più file"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:292
+#: ../../__w/calibre/calibre/manual/viewer.rst:284
 msgid ":kbd:`ArrowUp`"
 msgstr ":kbd:`FrecciaSu`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:293
+#: ../../__w/calibre/calibre/manual/viewer.rst:285
 msgid ""
 "Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"
 msgstr "Scorri all'indietro, in modo fluido in modalità Flusso e per schermate in modalità Pagine"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:294
+#: ../../__w/calibre/calibre/manual/viewer.rst:286
 msgid ":kbd:`ArrowDown`"
 msgstr ":kbd:`FrecciaGiù`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:295
+#: ../../__w/calibre/calibre/manual/viewer.rst:287
 msgid ""
 "Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"
 msgstr "Scorri in avanti, in modo fluido in modalità Flusso e per schermate in modalità Pagine"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:296
+#: ../../__w/calibre/calibre/manual/viewer.rst:288
 msgid ":kbd:`ArrowLeft`"
 msgstr ":kbd:`FrecciaSinistra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:297
+#: ../../__w/calibre/calibre/manual/viewer.rst:289
 msgid "Scroll leftwards by a little in flow mode and by a page in paged mode"
 msgstr "Scorri piano verso sinistra in modalità Flusso e di una pagina in modalità Pagine"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:298
+#: ../../__w/calibre/calibre/manual/viewer.rst:290
 msgid ":kbd:`ArrowRight`"
 msgstr ":kbd:`FrecciaDestra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:299
+#: ../../__w/calibre/calibre/manual/viewer.rst:291
 msgid "Scroll rightwards by a little in flow mode and by a page in paged mode"
 msgstr "Scorri piano verso destra in modalità Flusso e di una pagina in modalità Pagine"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:300
+#: ../../__w/calibre/calibre/manual/viewer.rst:292
 msgid ":kbd:`PageUp, Shift+Spacebar`"
 msgstr ":kbd:`PagSu, Maiusc+Spazio`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:301
+#: ../../__w/calibre/calibre/manual/viewer.rst:293
 msgid "Scroll backwards by screen-fulls"
 msgstr "Scorri indietro per schermate"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:302
+#: ../../__w/calibre/calibre/manual/viewer.rst:294
 msgid ":kbd:`PageDown, Spacebar`"
 msgstr ":kbd:`PaginaGiù, Spazio`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:303
+#: ../../__w/calibre/calibre/manual/viewer.rst:295
 msgid "Scroll forwards by screen-fulls"
 msgstr "Scorri avanti per schermate"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:304
+#: ../../__w/calibre/calibre/manual/viewer.rst:296
 msgid ":kbd:`Ctrl+PageUp`"
 msgstr ":kbd:`Ctrl+PaginaSu`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:305
+#: ../../__w/calibre/calibre/manual/viewer.rst:297
 msgid "Scroll to the previous section"
 msgstr "Scorri alla sezione precedente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:306
+#: ../../__w/calibre/calibre/manual/viewer.rst:298
 msgid ":kbd:`Ctrl+PageDown`"
 msgstr ":kbd:`Ctrl+PaginaGiù`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:307
+#: ../../__w/calibre/calibre/manual/viewer.rst:299
 msgid "Scroll to the next section"
 msgstr "Scorri alla prossima sezione"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:308
+#: ../../__w/calibre/calibre/manual/viewer.rst:300
 msgid ":kbd:`Alt+ArrowLeft`"
 msgstr ":kbd:`Alt+FrecciaSinistra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:309
+#: ../../__w/calibre/calibre/manual/viewer.rst:301
 msgid "Back"
 msgstr "Indietro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:310
+#: ../../__w/calibre/calibre/manual/viewer.rst:302
 msgid ":kbd:`Alt+ArrowRight`"
 msgstr ":kbd:`Alt+FrecciaDestra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:311
+#: ../../__w/calibre/calibre/manual/viewer.rst:303
 msgid "Forward"
 msgstr "Avanti"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:312
+#: ../../__w/calibre/calibre/manual/viewer.rst:304
 msgid ":kbd:`Ctrl+T`"
 msgstr ":kbd:`Ctrl+T`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:313
+#: ../../__w/calibre/calibre/manual/viewer.rst:305
 msgid "Toggle Table of Contents"
 msgstr "Mostra/Nascondi indice"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:314
+#: ../../__w/calibre/calibre/manual/viewer.rst:306
 msgid ":kbd:`Ctrl+S`"
 msgstr ":kbd:`Ctrl+S`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:316
+#: ../../__w/calibre/calibre/manual/viewer.rst:308
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:317
+#: ../../__w/calibre/calibre/manual/viewer.rst:309
 msgid ""
 "Change settings quickly by creating and switching to :guilabel:`profiles`"
 msgstr "Cambia velocemente impostazioni creando e spostandoti tra :guilabel:`profili`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:318
+#: ../../__w/calibre/calibre/manual/viewer.rst:310
 msgid ":kbd:`Alt+f`"
 msgstr ":kbd:`Alt+f`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:319
+#: ../../__w/calibre/calibre/manual/viewer.rst:311
 msgid "Follow links with the keyboard"
 msgstr "Apri link con la tastiera"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:320
+#: ../../__w/calibre/calibre/manual/viewer.rst:312
 msgid ":kbd:`Ctrl+C`"
 msgstr ":kbd:`Ctrl+C`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:321
+#: ../../__w/calibre/calibre/manual/viewer.rst:313
 msgid "Copy to clipboard"
 msgstr "Copia negli appunti"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:322
+#: ../../__w/calibre/calibre/manual/viewer.rst:314
 msgid ":kbd:`Alt+C`"
 msgstr ":kbd:`Alt+C`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:323
+#: ../../__w/calibre/calibre/manual/viewer.rst:315
 msgid "Copy current location to clipboard"
 msgstr "Copia la collocazione corrente negli appunti"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:324
+#: ../../__w/calibre/calibre/manual/viewer.rst:316
 msgid ":kbd:`Ctrl+Shift+C`"
 msgstr ":kbd:`Ctrl+Maiusc+C`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:325
+#: ../../__w/calibre/calibre/manual/viewer.rst:317
 msgid "Copy current location as calibre:// URL to clipboard"
 msgstr "Copia la collocazione corrente come URL calibre:// negli appunti"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:326
+#: ../../__w/calibre/calibre/manual/viewer.rst:318
 msgid ":kbd:`/, Ctrl+f, Cmd+f`"
 msgstr ":kbd:`/, Ctrl+f, Cmd+f`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:327
+#: ../../__w/calibre/calibre/manual/viewer.rst:319
 msgid "Start search"
 msgstr "Avvia la ricerca"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:328
+#: ../../__w/calibre/calibre/manual/viewer.rst:320
 msgid ":kbd:`F3, Enter`"
 msgstr ":kbd:`F3, Invio`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:329
+#: ../../__w/calibre/calibre/manual/viewer.rst:321
 msgid "Find next"
 msgstr "Trova successivo"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:330
+#: ../../__w/calibre/calibre/manual/viewer.rst:322
 msgid ":kbd:`Shift+F3, Shift+Enter`"
 msgstr ":kbd:`Maiusc+F3, Maiusc+Invio`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:331
+#: ../../__w/calibre/calibre/manual/viewer.rst:323
 msgid "Find previous"
 msgstr "Trova precedente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:332
+#: ../../__w/calibre/calibre/manual/viewer.rst:324
 msgid ":kbd:`Ctrl+Plus, Meta+Plus`"
 msgstr ":kbd:`Ctrl+Più, Meta+Più`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:333
+#: ../../__w/calibre/calibre/manual/viewer.rst:325
 msgid "Increase font size"
 msgstr "Aumenta la dimensione dei caratteri"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:334
+#: ../../__w/calibre/calibre/manual/viewer.rst:326
 msgid ":kbd:`Ctrl+Minus, Meta+Minus`"
 msgstr ":kbd:`Ctrl+Meno, Meta+Meno`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:335
+#: ../../__w/calibre/calibre/manual/viewer.rst:327
 msgid "Decrease font size"
 msgstr "Riduci la dimensione dei caratteri"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:336
+#: ../../__w/calibre/calibre/manual/viewer.rst:328
 msgid ":kbd:`Ctrl+0`"
 msgstr ":kbd:`Ctrl+0`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:337
+#: ../../__w/calibre/calibre/manual/viewer.rst:329
 msgid "Restore default font size"
 msgstr "Ripristina dimensione predefinita dei caratteri"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:338
+#: ../../__w/calibre/calibre/manual/viewer.rst:330
 msgid ":kbd:`Ctrl+]`"
 msgstr ":kbd:`Ctrl+]`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:339
+#: ../../__w/calibre/calibre/manual/viewer.rst:331
 msgid "Increase number of pages per screen"
 msgstr "Aumenta il numero di pagine per schermata"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:340
+#: ../../__w/calibre/calibre/manual/viewer.rst:332
 msgid ":kbd:`Ctrl+[`"
 msgstr ":kbd:`Ctrl+[`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:341
+#: ../../__w/calibre/calibre/manual/viewer.rst:333
 msgid "Decrease number of pages per screen"
 msgstr "Diminuisci il numero di pagine per schermata"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:342
+#: ../../__w/calibre/calibre/manual/viewer.rst:334
 msgid ":kbd:`Ctrl+Alt+C`"
 msgstr ":kbd:`Ctrl+Alt+C`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:343
+#: ../../__w/calibre/calibre/manual/viewer.rst:335
 msgid "Make number of pages per screen automatic"
 msgstr "Rendi automatico il numero di pagine per schermata"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:344
+#: ../../__w/calibre/calibre/manual/viewer.rst:336
 msgid ":kbd:`F11, Ctrl+Shift+F`"
 msgstr ":kbd:`F11, Ctrl+Maiusc+F`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:345
+#: ../../__w/calibre/calibre/manual/viewer.rst:337
 msgid "Toggle full screen"
 msgstr "Schermo intero"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:346
+#: ../../__w/calibre/calibre/manual/viewer.rst:338
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:347
+#: ../../__w/calibre/calibre/manual/viewer.rst:339
 msgid "Toggle between Paged mode and Flow mode for text layout"
 msgstr "Passa tra le modalità di presentazione del testo Pagine e Flusso"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:348
+#: ../../__w/calibre/calibre/manual/viewer.rst:340
 msgid ":kbd:`Ctrl+W`"
 msgstr ":kbd:`Ctrl+W`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:349
+#: ../../__w/calibre/calibre/manual/viewer.rst:341
 msgid "Toggle the scrollbar"
 msgstr "Mostra/nascondi la barra di scorrimento"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:350
+#: ../../__w/calibre/calibre/manual/viewer.rst:342
 msgid ":kbd:`Ctrl+X`"
 msgstr ":kbd:`Ctrl+X`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:351
+#: ../../__w/calibre/calibre/manual/viewer.rst:343
 msgid "Toggle the Reference mode"
 msgstr "Attiva/disattiva la modalità Riferimento"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:352
+#: ../../__w/calibre/calibre/manual/viewer.rst:344
 msgid ":kbd:`Ctrl+B`"
 msgstr ":kbd:`Ctrl+B`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:353
+#: ../../__w/calibre/calibre/manual/viewer.rst:345
 msgid "Show/hide bookmarks"
 msgstr "Mostra/nascondi i segnalibri"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:354
+#: ../../__w/calibre/calibre/manual/viewer.rst:346
 msgid ":kbd:`Ctrl+Alt+B`"
 msgstr ":kbd:`Ctrl+Alt+B`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:355
+#: ../../__w/calibre/calibre/manual/viewer.rst:347
 msgid "New bookmark"
 msgstr "Nuovo segnalibro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:356
+#: ../../__w/calibre/calibre/manual/viewer.rst:348
 msgid ":kbd:`Ctrl+N, Ctrl+E`"
 msgstr ":kbd:`Ctrl+N, Ctrl+E`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:357
+#: ../../__w/calibre/calibre/manual/viewer.rst:349
 msgid "Show the book metadata"
 msgstr "Mostra i metadati del libro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:358
+#: ../../__w/calibre/calibre/manual/viewer.rst:350
 msgid ":kbd:`Ctrl+Alt+F5, Ctrl+Alt+R`"
 msgstr ":kbd:`Ctrl+Alt+F5, Ctrl+Alt+R`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:359
+#: ../../__w/calibre/calibre/manual/viewer.rst:351
 msgid "Reload book"
 msgstr "Ricarica libro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:360
+#: ../../__w/calibre/calibre/manual/viewer.rst:352
 msgid ":kbd:`Ctrl+Shift+ArrowRight`"
 msgstr ":kbd:`Ctrl+Maiusc+FrecciaDestra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:361
+#: ../../__w/calibre/calibre/manual/viewer.rst:353
 msgid "Alter the current selection forward by a word"
 msgstr "Sposta di una parola avanti la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:362
+#: ../../__w/calibre/calibre/manual/viewer.rst:354
 msgid ":kbd:`Ctrl+Shift+ArrowLeft`"
 msgstr ":kbd:`Ctrl+Maiusc+FrecciaSinistra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:363
+#: ../../__w/calibre/calibre/manual/viewer.rst:355
 msgid "Alter the current selection backwards by a word"
 msgstr "Sposta di una parola indietro la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:364
+#: ../../__w/calibre/calibre/manual/viewer.rst:356
 msgid ":kbd:`Shift+ArrowRight`"
 msgstr ":kbd:`Maiusc+FrecciaDestra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:365
+#: ../../__w/calibre/calibre/manual/viewer.rst:357
 msgid "Alter the current selection forward by a character"
 msgstr "Sposta di un carattere avanti la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:366
+#: ../../__w/calibre/calibre/manual/viewer.rst:358
 msgid ":kbd:`Shift+ArrowLeft`"
 msgstr ":kbd:`Maiusc+FrecciaSinistra`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:367
+#: ../../__w/calibre/calibre/manual/viewer.rst:359
 msgid "Alter the current selection backwards by a character"
 msgstr "Sposta di un carattere indietro la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:368
+#: ../../__w/calibre/calibre/manual/viewer.rst:360
 msgid ":kbd:`Shift+ArrowDown`"
 msgstr ":kbd:`Maiusc+FrecciaGiù`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:369
+#: ../../__w/calibre/calibre/manual/viewer.rst:361
 msgid "Alter the current selection forward by a line"
 msgstr "Avanza di una linea la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:370
+#: ../../__w/calibre/calibre/manual/viewer.rst:362
 msgid ":kbd:`Shift+Home`"
 msgstr ":kbd:`Maiusc+Home`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:371
+#: ../../__w/calibre/calibre/manual/viewer.rst:363
 msgid "Extend the current selection to the start of the line"
 msgstr "Estendi la selezione corrente fino all'inizio della linea"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:372
+#: ../../__w/calibre/calibre/manual/viewer.rst:364
 msgid ":kbd:`Shift+End`"
 msgstr ":kbd:`Maiusc+Fine`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:373
+#: ../../__w/calibre/calibre/manual/viewer.rst:365
 msgid "Extend the current selection to the end of the line"
 msgstr "Estendi la selezione corrente fino alla fine della linea"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:374
+#: ../../__w/calibre/calibre/manual/viewer.rst:366
 msgid ":kbd:`Ctrl+A`"
 msgstr ":kbd:`Ctrl+A`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:375
+#: ../../__w/calibre/calibre/manual/viewer.rst:367
 msgid "Select all"
 msgstr "Seleziona tutto"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:376
+#: ../../__w/calibre/calibre/manual/viewer.rst:368
 msgid ":kbd:`Shift+ArrowUp`"
 msgstr ":kbd:`Maiusc+FrecciaSu`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:377
+#: ../../__w/calibre/calibre/manual/viewer.rst:369
 msgid "Alter the current selection backwards by a line"
 msgstr "Arretra di una linea la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:378
+#: ../../__w/calibre/calibre/manual/viewer.rst:370
 msgid ":kbd:`Ctrl+Shift+ArrowDown`"
 msgstr ":kbd:`Ctrl+Maiusc+FrecciaGiù`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:379
+#: ../../__w/calibre/calibre/manual/viewer.rst:371
 msgid "Alter the current selection forward by a paragraph"
 msgstr "Avanza di un paragrafo la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:380
+#: ../../__w/calibre/calibre/manual/viewer.rst:372
 msgid ":kbd:`Ctrl+Shift+ArrowUp`"
 msgstr ":kbd:`Ctrl+Maiusc+FrecciaSu`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:381
+#: ../../__w/calibre/calibre/manual/viewer.rst:373
 msgid "Alter the current selection backwards by a paragraph"
 msgstr "Arretra di un paragrafo la selezione corrente"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:382
+#: ../../__w/calibre/calibre/manual/viewer.rst:374
 msgid ":kbd:`Esc, MenuKey`"
 msgstr ":kbd:`Esc, Menu`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:383
+#: ../../__w/calibre/calibre/manual/viewer.rst:375
 msgid "Show the E-book viewer controls"
 msgstr "Mostra i controlli del lettore E-book"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:384
+#: ../../__w/calibre/calibre/manual/viewer.rst:376
 msgid ":kbd:`Ctrl+Comma, Ctrl+Esc, Meta+Esc, Meta+Comma`"
 msgstr ":kbd:`Ctrl+Virgola, Ctrl+Esc, Meta+Esc, Meta+Virgola`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:385
+#: ../../__w/calibre/calibre/manual/viewer.rst:377
 msgid "Show E-book viewer preferences"
 msgstr "Mostra le preferenze del lettore di E-Book"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:386
+#: ../../__w/calibre/calibre/manual/viewer.rst:378
 msgid ":kbd:`Ctrl+G, ;, :`"
 msgstr ":kbd:`Ctrl+G, ;, :`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:387
+#: ../../__w/calibre/calibre/manual/viewer.rst:379
 msgid "Go to a specified book location or position"
 msgstr "Vai a una specifica collocazione o posizione del libro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:388
+#: ../../__w/calibre/calibre/manual/viewer.rst:380
 msgid ":kbd:`Ctrl+Spacebar`"
 msgstr ":kbd:`Ctrl+Spazio`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:389
+#: ../../__w/calibre/calibre/manual/viewer.rst:381
 msgid "Toggle auto-scroll"
 msgstr "Attiva/disattiva auto scorrimento"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:390
+#: ../../__w/calibre/calibre/manual/viewer.rst:382
 msgid ":kbd:`Alt+ArrowUp`"
 msgstr ":kbd:`Alt+FrecciaSu`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:391
+#: ../../__w/calibre/calibre/manual/viewer.rst:383
 msgid "Auto scroll faster"
 msgstr "Accelera auto scorrimento"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:392
+#: ../../__w/calibre/calibre/manual/viewer.rst:384
 msgid ":kbd:`Alt+ArrowDown`"
 msgstr ":kbd:`Alt+FrecciaGiù`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:393
+#: ../../__w/calibre/calibre/manual/viewer.rst:385
 msgid "Auto scroll slower"
 msgstr "Rallenta auto scorrimento"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:394
+#: ../../__w/calibre/calibre/manual/viewer.rst:386
 msgid ":kbd:`Ctrl+I`"
 msgstr ":kbd:`Ctrl+I`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:395
+#: ../../__w/calibre/calibre/manual/viewer.rst:387
 msgid "Show/hide Inspector"
 msgstr "Mostra/nascondi l'Ispettore"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:396
+#: ../../__w/calibre/calibre/manual/viewer.rst:388
 msgid ":kbd:`Ctrl+L`"
 msgstr ":kbd:`Ctrl+L`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:397
+#: ../../__w/calibre/calibre/manual/viewer.rst:389
 msgid "Show/hide the word lookup panel"
 msgstr "Mostra/nascondi il pannello di ricerca parole"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:398
+#: ../../__w/calibre/calibre/manual/viewer.rst:390
 msgid ":kbd:`Ctrl+Q (Cmd+Q on macOS)`"
 msgstr ":kbd:`Ctrl+Q (Cmd+Q su macOS)`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:399
+#: ../../__w/calibre/calibre/manual/viewer.rst:391
 msgid "Quit"
 msgstr "Esci"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:400
+#: ../../__w/calibre/calibre/manual/viewer.rst:392
 msgid ":kbd:`Ctrl+P`"
 msgstr ":kbd:`Ctrl+P`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:401
+#: ../../__w/calibre/calibre/manual/viewer.rst:393
 msgid "Print book to PDF"
 msgstr "Stampa libro in PDF"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:402
+#: ../../__w/calibre/calibre/manual/viewer.rst:394
 msgid ":kbd:`Ctrl+F11`"
 msgstr ":kbd:`Ctrl+F11`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:403
+#: ../../__w/calibre/calibre/manual/viewer.rst:395
 msgid "Toggle the toolbar"
 msgstr "Mostra/nascondi la barra degli strumenti"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:404
+#: ../../__w/calibre/calibre/manual/viewer.rst:396
 msgid ":kbd:`Ctrl+H`"
 msgstr ":kbd:`Ctrl+H`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:405
+#: ../../__w/calibre/calibre/manual/viewer.rst:397
 msgid "Toggle the highlights panel"
 msgstr "Mostra/nascondi il pannello evidenziazioni"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:406
+#: ../../__w/calibre/calibre/manual/viewer.rst:398
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:407
+#: ../../__w/calibre/calibre/manual/viewer.rst:399
 msgid "Edit this book"
 msgstr "Modifica questo libro"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:410
+#: ../../__w/calibre/calibre/manual/viewer.rst:402
 msgid "Non re-flowable content"
 msgstr "Contenuto non adattabile"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:412
+#: ../../__w/calibre/calibre/manual/viewer.rst:404
 msgid ""
 "Some books have very wide content that cannot be broken up at page "
 "boundaries. For example tables or :code:`<pre>` tags. In such cases, you "
@@ -955,11 +941,11 @@ msgid ""
 "break up lines of text in :code:`<pre>` tags::"
 msgstr "Alcuni libri hanno del contenuto molto largo che non può essere spezzato ai confini della pagina, come le tabelle o i tag :code:`<pre>`. In casi del genere, dovresti usare il lettore in *modalità flusso* premendo :kbd:`Ctrl+M` per leggere questo contenuto. Alternativamente, puoi anche aggiungere il seguente CSS alla sezione :guilabel:`Stili` delle preferenze del lettore, per forzare il lettore a spezzare le linee di testo nei tag :code:`<pre>` tags::"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:423
+#: ../../__w/calibre/calibre/manual/viewer.rst:415
 msgid "Designing your book to work well with the calibre E-book viewer"
 msgstr "Progettazione del proprio libro in modo che si comporti bene con il lettore e-book di calibre"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:425
+#: ../../__w/calibre/calibre/manual/viewer.rst:417
 msgid ""
 "The calibre E-book viewer will set the ``is-calibre-viewer`` class on the "
 "root element. So you can write CSS rules that apply only for it. "
@@ -967,47 +953,47 @@ msgid ""
 "element:"
 msgstr "Il lettore e-book di calibre imposterà la classe ``is-calibre-viewer`` nell'elemento root. Quindi puoi scrivere regole CSS che si applichino solo ad esso. In più, il lettore imposterà le classi seguenti all'elemento ``body``:"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:429
+#: ../../__w/calibre/calibre/manual/viewer.rst:421
 msgid "``body.calibre-viewer-dark-colors``"
 msgstr "``body.calibre-viewer-dark-colors``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:430
+#: ../../__w/calibre/calibre/manual/viewer.rst:422
 msgid "Set when using a dark color scheme"
 msgstr "Impostata quando un tema scuro è utilizzato"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:432
+#: ../../__w/calibre/calibre/manual/viewer.rst:424
 msgid "``body.calibre-viewer-light-colors``"
 msgstr "``body.calibre-viewer-light-colors``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:433
+#: ../../__w/calibre/calibre/manual/viewer.rst:425
 msgid "Set when using a light color scheme"
 msgstr "Impostata quando un tema chiaro è utilizzato"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:435
+#: ../../__w/calibre/calibre/manual/viewer.rst:427
 msgid "``body.calibre-viewer-paginated``"
 msgstr "``body.calibre-viewer-paginated``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:436
+#: ../../__w/calibre/calibre/manual/viewer.rst:428
 msgid "Set when in paged mode"
 msgstr "Impostata quando il lettore è in modalità Pagine"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:438
+#: ../../__w/calibre/calibre/manual/viewer.rst:430
 msgid "``body.calibre-viewer-scrolling``"
 msgstr "``body.calibre-viewer-scrolling``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:439
+#: ../../__w/calibre/calibre/manual/viewer.rst:431
 msgid "Set when in flow (non-paginated) mode"
 msgstr "Impostata quando il lettore è in modalità Flusso (non impaginato)"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:441
+#: ../../__w/calibre/calibre/manual/viewer.rst:433
 msgid "``body.calibre-footnote-container``"
 msgstr "``body.calibre-footnote-container``"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:442
+#: ../../__w/calibre/calibre/manual/viewer.rst:434
 msgid "Set when displaying a popup footnote"
 msgstr "Impostata quando è mostrata una nota a comparsa"
 
-#: ../../__w/calibre/calibre/manual/viewer.rst:444
+#: ../../__w/calibre/calibre/manual/viewer.rst:436
 msgid ""
 "Finally, you can use the calibre color scheme colors via `CSS variables "
 "<https://developer.mozilla.org/en-"

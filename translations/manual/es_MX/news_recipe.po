@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-16 02:50+0000\n"
+"POT-Creation-Date: 2024-11-21 15:47+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Spanish (Mexico) (http://app.transifex.com/calibre/calibre/language/es_MX/)\n"
@@ -525,11 +525,12 @@ msgstr "Especifica los elementos que el algoritmo de limpieza automática no deb
 #: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
 msgid ""
 "The simulated browser engine to use when downloading from servers. The "
-"default is to use the Python mechanize browser engine. An alternate is "
-"\"qt\" which will use the network engine from the Qt toolkit. The mechanize "
-"engine supports logging in, the Qt engine does not. However, the Qt engine "
-"supports HTTP/2 and similar technologies and also is harder for bot "
-"interception services to fingerprint."
+"default is to use the Python mechanize browser engine, which supports "
+"logging in. However, if you don't need logging in, consider changing this to"
+" either 'webengine' which uses an actual Chromium browser to do the network "
+"requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and "
+"'qt' support HTTP/2, which mechanize does not and are thus harder to "
+"fingerprint for bot protection services."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -543,10 +544,10 @@ msgstr "Si es True la barra de navegación se alinea al centro, en caso contrari
 msgid ""
 "Set this to False to ignore all scaling and compression parameters and pass "
 "images through unmodified. If True and the other compression parameters are "
-"left at their default values, JPEG images will be scaled to fit in the "
-"screen dimensions set by the output profile and compressed to size at most "
-"(w * h)/16 where w x h are the scaled image dimensions."
-msgstr "Si es False, se descartan todos los parámetros de escala y compresión y se dejan las imágenes sin modificar. Si es True y los otros parámetros de compresión se dejan en sus valores predeterminados, las imágenes JPEG se redimensionarán para adaptarse al tamaño de la pantalla establecido por el perfil de salida y se comprimen a un tamaño máximo de (w × h)/16, donde «w» y «h» son la anchura y altura redimensionadas de la imagen."
+"left at their default values, images will be scaled to fit in the screen "
+"dimensions set by the output profile and compressed to size at most (w * "
+"h)/16 where w x h are the scaled image dimensions."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
