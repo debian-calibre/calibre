@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-24 00:05+0000\n"
+"POT-Creation-Date: 2024-11-21 15:47+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Jonatan Nyberg, 2016-2017,2021-2024\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -31,8 +31,8 @@ msgstr "Vanliga frågor"
 #: ../../__w/calibre/calibre/manual/faq.rst:8
 #: ../../__w/calibre/calibre/manual/faq.rst:14
 #: ../../__w/calibre/calibre/manual/faq.rst:138
-#: ../../__w/calibre/calibre/manual/faq.rst:515
-#: ../../__w/calibre/calibre/manual/faq.rst:732
+#: ../../__w/calibre/calibre/manual/faq.rst:530
+#: ../../__w/calibre/calibre/manual/faq.rst:747
 msgid "Contents"
 msgstr "Innehåll"
 
@@ -364,10 +364,10 @@ msgstr "Om du ansluter en Apple iEnhet (iPad, iPod Touch, iPhone), Apple tillåt
 msgid ""
 "If you are connecting a 2024 Kindle or newer or an Android device, and are "
 "on macOS or Linux, read the note under :ref:`android_usb`."
-msgstr ""
+msgstr "Om du ansluter en 2024 Kindle eller nyare eller en Android-enhet och använder macOS eller Linux, läs anteckningen under :ref:`android_usb`."
 
 #: ../../__w/calibre/calibre/manual/faq.rst:183
-#: ../../__w/calibre/calibre/manual/faq.rst:1004
+#: ../../__w/calibre/calibre/manual/faq.rst:1023
 msgid ""
 "On macOS if you get permission errors when connecting a device to calibre, "
 "you can fix that by looking under :guilabel:`System Preferences > Security "
@@ -855,11 +855,32 @@ msgstr "Om lösningen inte fungerar för dig måste du kontrollera att Kindle-mj
 
 #: ../../__w/calibre/calibre/manual/faq.rst:464
 msgid ""
+"Covers for books sent to my Kindle ColorSoft do not show up in the book "
+"list?"
+msgstr "Omslag för böcker som skickats till min Kindle ColorSoft visas inte i boklistan?"
+
+#: ../../__w/calibre/calibre/manual/faq.rst:466
+msgid ""
+"Amazon deliberately broke this functionality in their ColorSoft in order to "
+"discourage you from reading non Amazon books on their devices. See `this "
+"forum thread <https://www.mobileread.com/forums/showthread.php?t=364350>`__ "
+"for details. The only known workaround is to send the books as \"Personal "
+"documents\" to the Kindle which will fix the covers not showing up but break"
+" other features such as Whispersync and the books will show up under "
+"\"Personal documents\" not \"Books\" on the device. To enable this in "
+"calibre go to :guilabel:`Preferences->Output options->MOBI output` and "
+"enable the check box that says :guilabel:`Enable sharing of book content`. "
+"This will cause all future books sent to the Kindle by calibre to be marked "
+"as personal documents."
+msgstr "Amazon bröt medvetet den här funktionen i deras ColorSoft för att avskräcka dig från att läsa icke-Amazon-böcker på deras enheter. Se `den här forumtråden <https://www.mobileread.com/forums/showthread.php?t=364350>`__ för mer information. Den enda kända lösningen är att skicka böckerna som \"personliga dokument\" till Kindle, vilket kommer att fixa omslagen som inte visas men bryta andra funktioner som Whispersync och böckerna kommer att dyka upp under \"Personliga dokument\" inte \"Böcker\" på enheten . För att aktivera detta i calibre gå till :guilabel:`Inställningar->Utmatningsalternativ->MOBI-utmatning` och aktivera kryssrutan som säger :guilabel:`Aktivera delning av bokinnehåll`. Detta kommer att göra att alla framtida böcker som skickas till Kindle av calibre kommer att markeras som personliga dokument."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:479
+msgid ""
 "The covers for my MOBI files have stopped showing up in Kindle for PC/Kindle"
 " for Android/iPad etc."
 msgstr "Omslagen för mina MOBI-filer har slutat visas i Kindle för PC/Kindle for Android/iPad etc."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:466
+#: ../../__w/calibre/calibre/manual/faq.rst:481
 msgid ""
 "This is caused by a bug in the Amazon software. You can work around it by "
 "going to :guilabel:`Preferences->Conversion->Output Options->MOBI output` "
@@ -869,7 +890,7 @@ msgid ""
 "conversion settings are saved and take precedence)."
 msgstr "Detta orsakas av ett fel i Amazon-programmet. Du kan lösa det genom att gå till :guilabel:`Inställningar->Konvertera->Alternativ för utmatning->MOBI utmatning` och ställa in :guilabel:`Aktivera delning av bokinnehåll` alternativet. Om du kodar om  en tidigare konverterade bok, måste du också aktivera alternativet i konverteringsdialogrutan för att enskild bok (som per bok konverteringsinställningar sparas och har företräde)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:473
+#: ../../__w/calibre/calibre/manual/faq.rst:488
 msgid ""
 "Note that doing this will mean that the generated MOBI will show up under "
 "personal documents instead of Books on the Kindle Fire and Amazon "
@@ -878,7 +899,7 @@ msgid ""
 "and ask them to fix this bug."
 msgstr "Observera att detta kommer att innebära att den genererade MOBI kommer att dyka upp i personliga dokument istället för böcker på Kindle Fire och Amazon Whispersync kommer inte att fungera, men omslagen kommer. Det är ditt val vilken funktion som är viktigare för dig. Jag uppmuntrar dig att kontakta Amazon och be dem att åtgärda detta problem."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:479
+#: ../../__w/calibre/calibre/manual/faq.rst:494
 msgid ""
 "The bug in Amazon's software is that when you put a MOBI file on a Kindle, "
 "unless the file is marked as a Personal document, Amazon assumes you bought "
@@ -890,7 +911,7 @@ msgid ""
 "directly from Amazon."
 msgstr "Felet i Amazons programvara är att när du lägger en MOBI-fil på en Kindle, om inte filen är markerad som ett personligt dokument, antar Amazon att du köpte boken från dem och försöker hämta miniatyrbilden för den från sina servrar. När hämtningen misslyckas vägrar den att återgå till omslaget som definieras i MOBI-filen. Detta är sannolikt avsiktligt från Amazons sida för att försöka tvinga författare att sälja endast genom dem. Med andra ord visar Kindle bara omslag för böcker markerade som personliga dokument eller böcker som köpts direkt från Amazon."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:487
+#: ../../__w/calibre/calibre/manual/faq.rst:502
 msgid ""
 "If you send a MOBI file to an e-ink Kindle with calibre using a USB "
 "connection, calibre works around this Amazon bug by uploading a cover "
@@ -900,13 +921,13 @@ msgid ""
 "cover will work, but the book will show up in Personal Documents."
 msgstr "Om du överför en MOBI-fil till en e-bläck Kindle med calibre med hjälp av en USB-anslutning, arbetar calibre runt detta Amazon-problem genom att överföra en miniatyrbild själv. Men denna lösning är bara möjligt när du använder en USB-anslutning och skickar med calibre. Observera att om du skickar via e-post, kommer Amazon automatiskt markera MOBI-filen som ett personligt dokument och omslaget kommer att fungera, men boken kommer att dyka upp i personliga dokument."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:496
+#: ../../__w/calibre/calibre/manual/faq.rst:511
 msgid ""
 "I transferred some books to my Kindle using calibre and they did not show "
 "up?"
 msgstr "Jag överförde några böcker till min Kindle genom att använda calibre och de dök inte upp?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:498
+#: ../../__w/calibre/calibre/manual/faq.rst:513
 msgid ""
 "Books sent to the Kindle only show up on the Kindle after they have been "
 "*indexed* by the Kindle. This can take some time. If the book still does not"
@@ -921,15 +942,15 @@ msgid ""
 "send it back. This will most likely take care of the problem."
 msgstr "Böcker som skickas till Kindle visas bara upp på Kindle efter att de har blivit *indexerade* av Kindle. Detta kan ta lite tid. Om boken ännu inte dyker upp efter en viss tid, så är det troligt att Kindle indexering misslyckades. Ibland kan en viss bok kan orsaka indexeraren att kraschar. Tyvärr har Amazon inte lämnat något sätt att härleda vilken bok som orsakar en krasch på Kindle. Din enda utväg är att antingen återställa Kindle, eller ta bort alla filer från sitt minne med utforskaren i Windows (eller vad filhanteraren du använder) och sedan skicka böckerna till det igen, en efter en, tills du upptäcker problemboken. När du har hittat problemboken, ta bort den från Kindle och gör en MOBI till MOBI eller MOBI till AZW3 konvertering i calibre och sedan skicka tillbaka den. Detta kommer med största sannolikhet att ta hand om problemet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:511
+#: ../../__w/calibre/calibre/manual/faq.rst:526
 msgid "Library management"
 msgstr "Bibliotekshantering"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:518
+#: ../../__w/calibre/calibre/manual/faq.rst:533
 msgid "Where are the book files stored?"
 msgstr "Var är bokfilerna lagrade?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:519
+#: ../../__w/calibre/calibre/manual/faq.rst:534
 msgid ""
 "When you first run calibre, it will ask you for a folder in which to store "
 "your books. Whenever you add a book to calibre, it will copy the book into "
@@ -942,14 +963,14 @@ msgid ""
 "into the correct folder and move it around when the title/author changes."
 msgstr "När du först kör calibre kommer det att be dig om en mapp där du kan lagra dina böcker. När du lägger till en bok till calibre, kommer det att kopiera boken till den mappen. Böckerna i mappen är snyggt ordnade i undermappar efter författare och titel. Observera att innehållet i den här mappen hanteras automatiskt av calibre, **lägg inte** till några filer/mappar manuellt i den här mappen, eftersom de kan tas bort automatiskt. Om du vill lägga till en fil kopplad till en viss bok, använd det övre högra området i dialogrutan :guilabel:`Redigera metadata` för att göra det. Sedan kommer calibre automatiskt att lägga filen i rätt mapp och flytta runt den när titeln/författaren ändras."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:521
+#: ../../__w/calibre/calibre/manual/faq.rst:536
 msgid ""
 "Metadata about the books is stored in the file ``metadata.db`` at the top "
 "level of the library folder. This file is a sqlite database. When backing up"
 " your library make sure you copy the entire folder and all its sub-folders."
 msgstr "Metadata om böckerna lagras i filen ``metadata.db`` på den översta nivån i biblioteksmappen. Den här filen är en SQLite-databas. När du säkerhetskopierar ditt bibliotek att du kopierar hela mappen och alla dess undermappar."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:523
+#: ../../__w/calibre/calibre/manual/faq.rst:538
 msgid ""
 "The library folder and all its contents make up what is called a calibre "
 "library. You can have multiple such libraries. To manage the libraries, "
@@ -957,18 +978,18 @@ msgid ""
 "remove/rename existing ones and switch between libraries easily."
 msgstr "Biblioteksmappen och allt dess innehåll utgör vad som kallas ett calibre-bibliotek. Du kan ha flera sådana bibliotek. För att hantera biblioteken klickar du på calibre-ikonen i verktygsfältet. Du kan skapa nya bibliotek, ta bort/byta namn på befintliga och enkelt växla mellan bibliotek."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:525
+#: ../../__w/calibre/calibre/manual/faq.rst:540
 msgid ""
 "You can copy or move books between different libraries (once you have more "
 "than one library setup) by right clicking on a book and selecting the "
 ":guilabel:`Copy to library` action."
 msgstr "Du kan kopiera eller flytta böcker mellan olika bibliotek (när du har mer än ett bibliotek inställning) genom att högerklicka på en bok och välj åtgärden :guilabel:`Kopiera till bibliotek`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:528
+#: ../../__w/calibre/calibre/manual/faq.rst:543
 msgid "How does calibre manage author names and sorting?"
 msgstr "Hur hanterar calibre författarnamn och sortering?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:530
+#: ../../__w/calibre/calibre/manual/faq.rst:545
 msgid ""
 "Author names are complex, especially across cultures, see `this note "
 "<https://www.w3.org/International/questions/qa-personal-"
@@ -985,38 +1006,38 @@ msgid ""
 " authors, separate their names using the & character."
 msgstr "Författarnamn är komplexa, särskilt över kulturer, se `denna anmärkning <https://www.w3.org/International/questions/qa-personal-names.en.php?changelang=en>`_ för en del av komplexiteten. calibre har en mycket flexibel strategi för hantering av författarnamn. Det första man måste förstå är att böcker och författare är separata enheter i calibre. En bok kan ha mer än en författare och en författare kan ha mer än en bok. Du kan hantera författare till en bok genom att redigera metadatadialogrutan. Du kan hantera enskilda författare genom att högerklicka på författaren i taggbläddraren till vänster i huvud calibre-huvudfönstret och välja :guilabel:`Hantera författare`. Med denna dialogruta kan du ändra namnet på en författare och även hur namnet sorteras. Detta ändrar automatiskt författarens namn i alla författarens böcker. När en bok har flera författare, separera deras namn med &-tecknet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:543
+#: ../../__w/calibre/calibre/manual/faq.rst:558
 msgid "Now coming to author name sorting:"
 msgstr "Nu kommer vi till författarnamnssortering:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:545
+#: ../../__w/calibre/calibre/manual/faq.rst:560
 msgid ""
 "When a new author is added to calibre (this happens whenever a book by a new"
 " author is added), calibre automatically computes a sort string for both the"
 " book and the author."
 msgstr "När en ny författare läggs i calibre (det händer varje gång en bok av en ny författare läggs till), beräknar calibre automatiskt en sorts sträng för både boken och författaren."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:546
+#: ../../__w/calibre/calibre/manual/faq.rst:561
 msgid ""
 "Authors in the Tag browser are sorted by the sort value for the **authors**."
 " Remember that this is different from the Author sort field for a book."
 msgstr "Författare i taggbläddraren sorteras efter sorteringsvärdet för **authors**. Kom ihåg att detta skiljer sig från författarsorteringsfältet för en bok."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:547
+#: ../../__w/calibre/calibre/manual/faq.rst:562
 msgid ""
 "By default, this sort algorithm assumes that the author name is in ``First "
 "name Last name`` format and generates a ``Last name, First name`` sort "
 "value."
 msgstr "Som standard antar denna sorteringsalgoritm att författarnamnet är i formatet ``Förnamn Efternamn`` och skapar ett ``Efternamn, Förnamn``-sorteringsvärde."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:548
+#: ../../__w/calibre/calibre/manual/faq.rst:563
 msgid ""
 "You can change this algorithm by going to "
 ":guilabel:`Preferences->Advanced->Tweaks` and setting the "
 ":guilabel:`author_sort_copy_method` tweak."
 msgstr "Du kan ändra denna algoritm genom att gå till :guilabel:`Inställningar->Avancerat->Justeringar` och ställa in :guilabel:`author_sort_copy_method` justering."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:549
+#: ../../__w/calibre/calibre/manual/faq.rst:564
 msgid ""
 "You can force calibre to recalculate the author sort values for every author"
 " by right clicking on any author and selecting :guilabel:`Manage authors`, "
@@ -1024,7 +1045,7 @@ msgid ""
 "this after you have set the author_sort_copy_method tweak to what you want."
 msgstr "Du kan tvinga calibre att räkna om författarsorteringsvärdena för varje författare genom att högerklicka på en författare och välja :guilabel:`Hantera författare` och sedan trycka på knappen :guilabel:`Räkna om alla författarsorteringsvärden`. Gör detta efter att du har ställt in author_sort_copy_method att justera det du vill."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:550
+#: ../../__w/calibre/calibre/manual/faq.rst:565
 msgid ""
 "You can force calibre to recalculate the author sort values for all books by"
 " using the bulk metadata edit dialog (select all books and click edit "
@@ -1032,7 +1053,7 @@ msgid ""
 " press OK)."
 msgstr "Du kan tvinga calibre att räkna om författarsorteringsvärdena för alla böcker genom att använda dialogrutan för redigering av metadata i grupp (välj alla böcker och klicka på redigera metadata, markera kryssrutan :guilabel:`Ställ automatiskt in författarsortering` och tryck sedan på OK)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:551
+#: ../../__w/calibre/calibre/manual/faq.rst:566
 msgid ""
 "When recalculating the author sort values for books, calibre uses the author"
 " sort values for each individual author. Therefore, ensure that the "
@@ -1040,7 +1061,7 @@ msgid ""
 "author sort values."
 msgstr "Vid omräkning av författarsorteringsvärden för böcker använder calibre författarsorteringsvärden för varje enskild författare. Se därför till att de enskilda författarsorteringsvärdena är korrekta innan omräkning av böckernas författarsorteringsvärden."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:552
+#: ../../__w/calibre/calibre/manual/faq.rst:567
 msgid ""
 "You can control whether the Tag browser display authors using their names or"
 " their sort values by setting the "
@@ -1048,7 +1069,7 @@ msgid ""
 ":guilabel:`Preferences->Advanced->Tweaks`"
 msgstr "Du kan anpassa om taggbläddraren ska visa författare genom att använda deras namn eller deras sorteringsvärden genom att ställa in  :guilabel:`categories_use_field_for_author_name`  justering i :guilabel:`Inställningar->Avancerat->Justeringar`"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:554
+#: ../../__w/calibre/calibre/manual/faq.rst:569
 msgid ""
 "Note that you can set an individual author's sort value to whatever you want"
 " using :guilabel:`Manage authors`. This is useful when dealing with names "
@@ -1056,7 +1077,7 @@ msgid ""
 "Miguel de Cervantes Saavedra or when dealing with Asian names like Sun Tzu."
 msgstr "Observera att du kan ställa in en enskild författares sorteringsvärde till vad du vill genom att använda :guilabel:`Hantera Författare`. Detta är användbart när det handlar om namn som calibre inte kommer att få rätt, som komplexa flerdelade namn som Miguel de Cervantes Saavedra eller när den behandlar asiatiska namn som Sun Tzu."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:556
+#: ../../__w/calibre/calibre/manual/faq.rst:571
 msgid ""
 "With all this flexibility, it is possible to have calibre manage your author"
 " names however you like. For example, one common request is to have calibre "
@@ -1064,60 +1085,60 @@ msgid ""
 "apply to you, then:"
 msgstr "Med all denna flexibilitet, är det möjligt för calibre att hantera dina författarnamn som du vill. Till exempel en gemensam begäran om att få calibre att visa författarnamn EN, FN. För att göra detta, och om anmärkningen nedan inte gäller dig, då:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:558
-#: ../../__w/calibre/calibre/manual/faq.rst:567
+#: ../../__w/calibre/calibre/manual/faq.rst:573
+#: ../../__w/calibre/calibre/manual/faq.rst:582
 msgid ""
 "Set the ``author_sort_copy_method`` tweak to ``copy`` as described above."
 msgstr "Ändra ``author_sort_copy_method`` justering till ``copy`` såsom beskrivits ovan."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:559
-#: ../../__w/calibre/calibre/manual/faq.rst:568
+#: ../../__w/calibre/calibre/manual/faq.rst:574
+#: ../../__w/calibre/calibre/manual/faq.rst:583
 msgid ""
 "Restart calibre. Do not change any book metadata before doing the remaining "
 "steps."
 msgstr "Starta om calibre. Ändra inga bokmetadata innan du gör de återstående stegen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:560
+#: ../../__w/calibre/calibre/manual/faq.rst:575
 msgid "Change all author names to LN, FN using the Manage authors dialog."
 msgstr "Ändra alla författarnamn till EN, FN genom att använda dialogrutan Hantera författare."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:561
+#: ../../__w/calibre/calibre/manual/faq.rst:576
 msgid ""
 "After you have changed all the authors, press the `Recalculate all author "
 "sort values` button."
 msgstr "När du har ändrat alla författare, tryck på knappen `Räkna om alla författarsorteringsvärden`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:562
-#: ../../__w/calibre/calibre/manual/faq.rst:571
+#: ../../__w/calibre/calibre/manual/faq.rst:577
+#: ../../__w/calibre/calibre/manual/faq.rst:586
 msgid ""
 "Press OK, at which point calibre will change the authors in all your books. "
 "This can take a while."
 msgstr "Tryck på OK, då kommer calibre att ändra författarna i alla dina böcker. Detta kan ta ett tag."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:566
+#: ../../__w/calibre/calibre/manual/faq.rst:581
 msgid ""
 "When changing from FN LN to LN, FN, it is often the case that the values in "
 "author_sort are already in LN, FN format. If this is your case, then do the "
 "following:"
 msgstr "När man byter från FN EN till EN, FN, är det ofta så att värdena i author_sort redan är i EN, FN-format. Om så är ditt fall gör du följande:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:569
+#: ../../__w/calibre/calibre/manual/faq.rst:584
 msgid ""
 "Open the Manage authors dialog. Press the ``copy all author sort values to "
 "author`` button."
 msgstr "Öppna dialogrutan Hantera författare. Tryck på knappen ``Kopiera alla författarsorteringsvärden till författare``."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:570
+#: ../../__w/calibre/calibre/manual/faq.rst:585
 msgid ""
 "Check through the authors to be sure you are happy. You can still press "
 "Cancel to abandon the changes. Once you press OK, there is no undo."
 msgstr "Kontrollera författarna för att vara säker på att du är nöjd. Du kan fortfarande trycka på Avbryt för att överge ändringarna. När du trycker på OK, det finns inget att ångra."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:575
+#: ../../__w/calibre/calibre/manual/faq.rst:590
 msgid "Why doesn't calibre let me store books in my own folder structure?"
 msgstr "Varför låter calibre mig inte att lagra böcker i min egen mappstruktur?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:577
+#: ../../__w/calibre/calibre/manual/faq.rst:592
 msgid ""
 "The whole point of calibre's library management features is that they "
 "provide a search and sort based interface for locating books that is *much* "
@@ -1132,7 +1153,7 @@ msgid ""
 "folders with the following scheme::"
 msgstr "Hela poängen med calibres bibliotekshanteringsfunktioner är att de tillhandahåller ett sök- och sorteringsbaserat gränssnitt för att hitta böcker som är *mycket* effektivare än något möjligt mappschema du kan komma på för din samling. När du väl blir bekväm med att använda calibres gränssnitt för att hitta, sortera och bläddra i din samling kommer du aldrig att behöva leta igenom filerna på din disk för att hitta en bok igen. Genom att hantera böcker i sin egen mappstruktur av Författare -> Titel -> Bokfiler kan calibre uppnå en hög nivå av tillförlitlighet och standardisering. För att illustrera varför ett sök-/taggbaserat gränssnitt är överlägset mappar, överväg följande. Anta att din boksamling är snyggt sorterad i mappar med följande schema::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:581
+#: ../../__w/calibre/calibre/manual/faq.rst:596
 msgid ""
 "Now this makes it very easy to find for example all science fiction books by"
 " Isaac Asimov in the Foundation series. But suppose you want to find all "
@@ -1140,7 +1161,7 @@ msgid ""
 "folder scheme, you would instead need a folder scheme that looks like::"
 msgstr "Nu gör det mycket enkelt att hitta till exempel alla science fiction böcker av Isaac Asimov i stiftelsen serien. Men antar att du vill hitta alla olästa science fiction böcker. Det finns inget enkelt sätt att göra detta med det här mappsystemet, du måste istället ha ett mappschema som ser ut som::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:585
+#: ../../__w/calibre/calibre/manual/faq.rst:600
 msgid ""
 "In calibre, you would instead use tags to mark genre and read status and "
 "then just use a simple search query like ``tag:scifi and not tag:read``. "
@@ -1149,14 +1170,14 @@ msgid ""
 "them from the search."
 msgstr "I calibre skulle du istället använda taggar för att markera genre och lässtatus och sedan bara använda en enkel sökförfråga som ``tag:scifi and not tag:läst``. calibre har till och med ett snyggt grafiskt gränssnitt, så du behöver inte lära dig dess sökspråk, istället kan du bara klicka på taggar för att inkludera eller exkludera dem från sökningen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:587
+#: ../../__w/calibre/calibre/manual/faq.rst:602
 msgid ""
 "To those of you that claim that you need access to the filesystem, so that "
 "you can have access to your books over the network, calibre has an excellent"
 " Content server that gives you access to your calibre library over the net."
 msgstr "Till er som hävdar att du behöver tillgång till filsystemet, på så att du kan få tillgång till dina böcker över nätet, har calibre en utmärkt innehållsserver som ger dig tillgång till ditt calibre-biblioteket över nätet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:589
+#: ../../__w/calibre/calibre/manual/faq.rst:604
 msgid ""
 "If you are worried that someday calibre will cease to be developed, leaving "
 "all your books marooned in its folder structure, explore the powerful "
@@ -1165,7 +1186,7 @@ msgid ""
 "metadata."
 msgstr "Om du är orolig att en dag calibre kommer att upphöra att utvecklas och att lämna alla dina böcker strandsatta i sin mappstruktur, utforska den kraftfulla :guilabel:`Spara till disk`-funktionen i calibre som låter dig exportera alla dina filer i en mappstruktur för godtycklig komplexitet baserat på sina metadata."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:591
+#: ../../__w/calibre/calibre/manual/faq.rst:606
 msgid ""
 "Finally, the reason there are numbers at the end of every title folder, is "
 "for *robustness*. That number is the id number of the book record in the "
@@ -1178,7 +1199,7 @@ msgid ""
 "the uglier folder names."
 msgstr "Slutligen är anledningen till att det finns siffror i slutet av varje titelmapp är för *robusthet*. Det numret är bokpostens ID-nummer i calibre-databasen. Med närvaron av numret kan du ha flera poster med samma titel och författarnamn. Det är också en del av det som tillåter calibre att magiskt återgenerera databasen med alla metadata om databasfilen blir korrupt. Med tanke på att calibres uppdrag är att få dig att sluta lagra metadata i filnamn och sluta använda filsystemet för att hitta saker, är den ökade robustheten som ges av id-nummer väl värt de fulare mappnamnen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:593
+#: ../../__w/calibre/calibre/manual/faq.rst:608
 msgid ""
 "If you are still not convinced, then I'm afraid calibre is not for you. Look"
 " elsewhere for your book cataloguing needs. Just so we're clear, **this is "
@@ -1186,11 +1207,11 @@ msgid ""
 "change this."
 msgstr "Om du fortfarande inte är övertygad är jag rädd att calibre inte är något för dig. Leta någon annanstans för dina bokkatalogiseringsbehov. Bara för att vara tydlig, **det här kommer inte att förändras**. Kontakta oss inte i ett försök att få oss att ändra på detta."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:596
+#: ../../__w/calibre/calibre/manual/faq.rst:611
 msgid "Why doesn't calibre have a column for foo?"
 msgstr "Varför har calibre inte en kolumn för foo?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:598
+#: ../../__w/calibre/calibre/manual/faq.rst:613
 msgid ""
 "calibre is designed to have columns for the most frequently and widely used "
 "fields. In addition, you can add any columns you like. Columns can be added "
@@ -1200,7 +1221,7 @@ msgid ""
 "ebook.com/calibre-custom-columns/>`_."
 msgstr "calibre är designad för att ha kolumner för de mest frekventa och mest använda områdena. Dessutom kan du lägga till vilka kolumner du vill. Kolumner kan läggas till via Inställningar->Gränssnitt->Lägg till dina egna kolumner. Titta på handledningen :website:`Gränsnittets potentialtips <demo#tutorials>` för att lära dig hur du skapar dina egna kolumner, eller läs `det här blogginlägget <http://blog.calibre-ebook.com/2011/11/calibre-custom-columns.html>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:605
+#: ../../__w/calibre/calibre/manual/faq.rst:620
 msgid ""
 "You can also create \"virtual columns\" that contain combinations of the "
 "metadata from other columns. In the add column dialog  use the "
@@ -1209,27 +1230,27 @@ msgid ""
 "much more with columns. For more details, see :ref:`templatelangcalibre`."
 msgstr "Du kan också skapa \"virtuella kolumner\" som innehåller kombinationer av metadata från andra kolumner. I dialogrutan Lägg till kolumnen använder du :guilabel:`Snabbskapa`-länkarna för att enkelt skapa kolumner för att visa bokens ISBN eller format. Du kan använda det kraftfulla mallspråket för calibre för att göra mycket mer med kolumner. För mer information, se :ref:`templatelangcalibre`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:613
+#: ../../__w/calibre/calibre/manual/faq.rst:628
 msgid "Can I have a column showing the formats or the ISBN?"
 msgstr "Kan jag ha en kolumn som visar formaten eller ISBN?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:614
+#: ../../__w/calibre/calibre/manual/faq.rst:629
 msgid ""
 "Yes, you can. Follow the instructions in the answer above for adding custom "
 "columns."
 msgstr "Ja, det kan du. Följ instruktionerna i svaret ovan för att lägga till anpassade kolumner."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:617
+#: ../../__w/calibre/calibre/manual/faq.rst:632
 msgid "How do I move my calibre data from one computer to another?"
 msgstr "Hur flyttar jag min calibre-data från en dator till en annan?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:619
+#: ../../__w/calibre/calibre/manual/faq.rst:634
 msgid ""
 "You can export all calibre data (books, settings and plugins) and then "
 "import it on another computer. First let's see how to export the data:"
 msgstr "Du kan exportera alla calibre-data (böcker, inställningar och insticksmoduler) och sedan importera den till en annan dator. Låt oss först se hur du exporterar data:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:622
+#: ../../__w/calibre/calibre/manual/faq.rst:637
 msgid ""
 "Right click the calibre icon in the main calibre toolbar and select "
 ":guilabel:`Export/import all calibre data`. Note that if there is currently "
@@ -1241,7 +1262,7 @@ msgid ""
 "computer and follow the instructions below to import the data."
 msgstr "Högerklicka på calibre ikonen i calibre huvudverktygsfältet och välj :guilabel:`Exportera/importera alla calibre-data`. Observera att om det för närvarande finns en enhet ansluten, kommer det här menyalternativet inte att vara tillgängligt -- så koppla loss alla anslutna enheter. Klicka sedan på knappen märkt :guilabel:`Exporterar alla calibre-data`. Du kommer att se en lista med alla dina calibre-bibliotek. Klicka på OK och välj en tom mapp någonstans på din dator. Exporterade data sparas i den här mappen. Kopiera helt enkelt den här mappen till den nya datorn och följ instruktionerna nedan för att importera data."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:632
+#: ../../__w/calibre/calibre/manual/faq.rst:647
 msgid ""
 "Install calibre on your new computer and run through the :guilabel:`Welcome "
 "wizard`, it does not matter what you do there, as you will be importing your"
@@ -1257,7 +1278,7 @@ msgid ""
 "libraries, settings and calibre plugins."
 msgstr "Installera calibre på din nya dator och gå igenom :guilabel:`välkomstguiden`, det spelar ingen roll vad du gör där, eftersom du kommer att importera dina gamla inställningar i nästa steg. Du kommer nu ha ett tomt calibre med bara guiden :guilabel:`Komma igång` i ditt bibliotek. Högerklicka igen på calibre-knappen och välj :guilabel:`Exportera/importera alla calibre-data`. Klicka sedan på knappen märkt :guilabel:`Importera tidigare exporterade data`. Välj mappen med den exporterade data som du kopierade över tidigare. Du får nu en lista över bibliotek som du kan importera. Gå igenom listan en efter en och välj den nya platsen för varje bibliotek (en plats är bara en tom mapp någonstans på din dator). Klicka på OK. När importen är klar kommer calibre att starta om, med alla dina gamla bibliotek, inställningar och calibre-insticksmoduler."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:646
+#: ../../__w/calibre/calibre/manual/faq.rst:661
 msgid ""
 "This import/export functionality is only available from calibre version 2.47"
 " onwards. If you have an older version of calibre, or if you encounter "
@@ -1265,7 +1286,7 @@ msgid ""
 " folder manually, as described in the next paragraph."
 msgstr "Denna import/export funktion är endast tillgänglig från calibre version 2.47 och framåt. Om du har en äldre version av calibre, eller om du stöter på problem med import/export, kan du bara kopiera över din calibre-biblioteksmapp manuellt, som beskrivs i nästa stycke."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:651
+#: ../../__w/calibre/calibre/manual/faq.rst:666
 msgid ""
 "Simply copy the calibre library folder from the old to the new computer. You"
 " can find out what the library folder is by clicking the calibre icon in the"
@@ -1273,7 +1294,7 @@ msgid ""
 "you will see the path to the current calibre library."
 msgstr "Kopiera helt enkelt calibre-biblioteksmappen från den gamla till den nya datorn. Du kan ta reda på vilken biblioteksmappen är genom att klicka på calibre-ikonen i verktygsfältet. Välj åtgärden :guilabel:`Växla/skapa calibre-bibliotek` och du kommer se sökvägen till det aktuella calibre-biblioteket."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:656
+#: ../../__w/calibre/calibre/manual/faq.rst:671
 msgid ""
 "Now on the new computer, start calibre for the first time. It will run the "
 ":guilabel:`Welcome wizard` asking you for the location of the calibre "
@@ -1286,11 +1307,11 @@ msgid ""
 "this manner preserves all your metadata, tags, custom columns, etc."
 msgstr "Nu på den nya datorn, starta calibre för första gången. Den kommer att köra :guilabel:`välkomstguiden` som frågar dig om platsen för calibre-biblioteket. Peka på den tidigare kopierade mappen. Om datorn du överför till redan har en calibre-installation, kommer inte :guilabel:`välkomstguidenen` att köras. I så fall högerklickar du på calibre-ikonen i verktygsfältet och pekar på den nyligen kopierade mappen. Du kommer nu att ha två calibre-bibliotek på din dator och du kan växla mellan dem genom att klicka på calibre-ikonen i verktygsfältet. Att överföra ditt bibliotek på detta sätt bevarar alla dina metadata, taggar, anpassade kolumner, etc."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:668
+#: ../../__w/calibre/calibre/manual/faq.rst:683
 msgid "The list of books in calibre is blank!"
 msgstr "Listan över böcker i calibre är tom!"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:670
+#: ../../__w/calibre/calibre/manual/faq.rst:685
 msgid ""
 "In order to understand why that happened, you have to understand what a "
 "calibre library is. At the most basic level, a calibre library is just a "
@@ -1303,11 +1324,11 @@ msgid ""
 "this metadata.db file."
 msgstr "För att förstå varför det hände, måste du förstå vad calibre-biblioteket är. På den mest grundläggande nivån, är ett calibre-bibliotek bara är en mapp. När du lägger till en bok till calibre, är att bokens filer kopieras till denna mapp (ordnade i undermappar efter författare och titel). Inne i calibre-bibliotekmappen, på den högsta nivån, kommer du att se en fil som heter metadata.db. Den här filen är där calibre lagrar metadata som titel/författare/betyg/taggar etc. för varje bok i ditt calibre-bibliotek. Listan med böcker som calibre visar skapas genom att läsa innehållet i den här metadata.db-filen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:679
+#: ../../__w/calibre/calibre/manual/faq.rst:694
 msgid "There can be two reasons why calibre is showing a empty list of books:"
 msgstr "Det kan finnas två skäl till att calibre visar en tom lista med böcker:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:681
+#: ../../__w/calibre/calibre/manual/faq.rst:696
 msgid ""
 "Your calibre library folder changed its location. This can happen if it was "
 "on an external disk and the drive letter for that disk changed. Or if you "
@@ -1319,7 +1340,7 @@ msgid ""
 " computer for the file :file:`metadata.db`."
 msgstr "Din biblioteksmapp i calibre ändrade sin plats. Det här kan hända om det var på en extern hårddisk och enhetsbokstaven för disken ändrades. Eller om du av misstag flyttade mappen. I det här fallet kan calibre inte hitta sitt bibliotek och startar med ett tomt bibliotek istället. För att råda bot på detta, högerklicka på calibre-ikonen i calibre-verktygsfältet och välj Växla/skapa bibliotek. Klicka på den lilla blå ikonen för att välja den nya platsen för ditt calibre-bibliotek och klicka på OK. Om du inte känner till den nya platsen, sök efter filen :file:`metadata.db` på din dator."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:690
+#: ../../__w/calibre/calibre/manual/faq.rst:705
 msgid ""
 "Your metadata.db file was deleted/corrupted. In this case, you can ask "
 "calibre to rebuild the metadata.db from its backups. Right click the calibre"
@@ -1327,15 +1348,15 @@ msgid ""
 "database. calibre will automatically rebuild metadata.db."
 msgstr "Din metadata.db-fil togs bort/skadades. I så fall kan du be calibre att bygga om metadata.db från sina säkerhetskopior. Högerklicka på ikonen calibre i calibre-verktygsfältet och välj Biblioteksunderhålls->Återställ databas. calibre kommer automatiskt återuppbygga metadata.db."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:696
+#: ../../__w/calibre/calibre/manual/faq.rst:711
 msgid "I am getting errors with my calibre library on a networked drive/NAS?"
 msgstr "Jag får felmeddelanden med mitt calibre-biblioteket på en nätverksenhet/NAS?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:698
+#: ../../__w/calibre/calibre/manual/faq.rst:713
 msgid "**Do not put your calibre library on a networked drive**."
 msgstr "**Lägg inte ditt calibre-bibliotek på en nätverksenhet**."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:700
+#: ../../__w/calibre/calibre/manual/faq.rst:715
 msgid ""
 "A filesystem is a complex beast. Most network filesystems lack various "
 "filesystem features that calibre uses. Some don't support file locking, some"
@@ -1346,14 +1367,14 @@ msgid ""
 "drive across OSes, once again, bad things *will happen*."
 msgstr "Ett filsystem är ett komplext odjur. De flesta nätverksfilsystem saknar olika filsystemfunktioner som calibre använder. Vissa stöder inte fillåsning, andra stöder inte hårdlänkning, andra är bara opålitliga. Dessutom är calibre ett program för en enda användare. Om du av misstag kör två kopior av calibre på samma nätverksbibliotek, kommer dåliga saker att hända. Slutligen inför olika operativsystem olika begränsningar för filsystem, så om du delar din nätverksenhet över flera operativsystem, kommer återigen *dåliga saker* att hända."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:708
+#: ../../__w/calibre/calibre/manual/faq.rst:723
 msgid ""
 "Consider using the calibre Content server to make your books available on "
 "other computers. Run calibre on a single computer and access it via the "
 "Content server or a Remote Desktop solution."
 msgstr "Överväg att använda calibre-innehållsservern för att göra dina böcker tillgängliga på andra datorer. Kör calibre på en enda dator och få åtkomst till den via innehållsservern eller en fjärrskrivbordslösning."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:712
+#: ../../__w/calibre/calibre/manual/faq.rst:727
 msgid ""
 "If you must share the actual library, use a file syncing tool like DropBox "
 "or rsync instead of a networked drive. If you are using a file-syncing tool "
@@ -1363,7 +1384,7 @@ msgid ""
 "time."
 msgstr "Om du måste dela det faktiska biblioteket, använd ett filsynkroniseringsverktyg som DropBox eller rsync istället för en nätverksenhet. Om du använder ett filsynkroniseringsverktyg är det **viktigt** att du ser till att både calibre och filsynkroniseringsverktyget inte försöker komma åt calibre-biblioteket samtidigt. Med andra ord, kör **inte**  filsynkroniseringsverktyget och calibre samtidigt."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:719
+#: ../../__w/calibre/calibre/manual/faq.rst:734
 msgid ""
 "Even with these tools there is danger of data corruption/loss, so only do "
 "this if you are willing to live with that risk. In particular, be aware that"
@@ -1372,15 +1393,15 @@ msgid ""
 "<https://www.mobileread.com/forums/showthread.php?t=205581>`_ for details."
 msgstr "Även med dessa verktyg finns risk för datakorruption/förlust, så gör det bara om du är villig att leva med den risken. Var särskilt medveten om att **Google Drive** är oförenligt med calibre. Om du placerar ditt calibre-bibliotek i Google Drive **kommer du att drabbas av dataförlust**. Se `denna tråd <https://www.mobileread.com/forums/showthread.php?t=205581>`_ för detaljer."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:727
+#: ../../__w/calibre/calibre/manual/faq.rst:742
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:735
+#: ../../__w/calibre/calibre/manual/faq.rst:750
 msgid "Amazon is stopping email delivery of MOBI files?"
 msgstr "Amazon stoppar e-postleverans av MOBI-filer?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:737
+#: ../../__w/calibre/calibre/manual/faq.rst:752
 msgid ""
 "Amazon `have announced <https://blog.the-ebook-reader.com/2022/05/03/amazon-"
 "dropping-mobi-support-on-send-to-kindle-apps/>`__ that they will stop "
@@ -1391,29 +1412,29 @@ msgid ""
 " EPUB instead."
 msgstr "Amazon `har meddelat <https://blog.the-ebook-reader.com/2022/05/03/amazon-dropping-mobi-support-on-send-to-kindle-apps/>`__ att de kommer att sluta acceptera MOBI-filer som skickas till ``@kindle.com`` e-postadresser. Du kan instruera calibre att skicka EPUB istället för MOBI genom att gå till :guilabel:`Inställningar->Dela böcker via e-post` och sedan ta bort MOBI från listan över format att skicka till din ``@kindle.com`` e-postadress och lägga till EPUB istället."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:745
+#: ../../__w/calibre/calibre/manual/faq.rst:760
 msgid ""
 "Note however, that Amazon's EPUB intake is very flawed, they will reject a "
 "number of EPUB files that work everywhere else. In such cases you can try "
 "the following trick:"
 msgstr "Observera dock att Amazons EPUB-inmatning är mycket felaktigt, de kommer att avvisa ett antal EPUB-filer som fungerar överallt annars. I sådana fall kan du prova följande knep:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:749
+#: ../../__w/calibre/calibre/manual/faq.rst:764
 msgid "Convert the EPUB file to MOBI"
 msgstr "Konvertera EPUB-filen till MOBI"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:750
+#: ../../__w/calibre/calibre/manual/faq.rst:765
 msgid ""
 "Then convert the MOBI file back to EPUB and send the resulting EPUB file"
 msgstr "Konvertera sedan MOBI-filen tillbaka till EPUB och skicka den resulterande EPUB-filen"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:752
+#: ../../__w/calibre/calibre/manual/faq.rst:767
 msgid ""
 "This will remove all advanced formatting, embedded fonts, etc., but greatly "
 "increase the chances of Amazon accepting the EPUB."
 msgstr "Detta kommer att ta bort all avancerad formatering, inbäddade teckensnitt, etc., men ökar avsevärt chanserna att Amazon accepterar EPUB-filen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:755
+#: ../../__w/calibre/calibre/manual/faq.rst:770
 msgid ""
 "If you were previously using email delivery of periodicals downloaded by "
 "calibre, you will be better off sending those by USB cable or downloading "
@@ -1424,60 +1445,60 @@ msgid ""
 " is a whole other question."
 msgstr "Om du tidigare använde e-postleverans av tidskrifter som hämtats med calibre, är det bättre för dig att skicka dem med USB-kabel eller hämta dem från calibre-innehållsservern via Kindles inbyggda webbläsare. Men om du vill fortsätta att använda e-postleverans kan du prova att ändra utmatningsformatet i Inställningar->Beteende till EPUB, då hämtar calibre nyheterna i EPUB-format. Huruvida Amazon kommer att acceptera EPUB-filen eller inte är en helt annan fråga."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:765
+#: ../../__w/calibre/calibre/manual/faq.rst:780
 msgid "I want calibre to download news from my favorite news website."
 msgstr "Jag vill att calibre hämtar nyheter från min favorit nyhetswebbplats."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:766
+#: ../../__w/calibre/calibre/manual/faq.rst:781
 msgid ""
 "If you are reasonably proficient with computers, you can teach calibre to "
 "download news from any website of your choosing. To learn how to do this see"
 " :ref:`news`."
 msgstr "Om du är någorlunda skicklig med datorer, kan du lära calibre att hämtar nyheter från en webbplats som du väljer. Om du vill veta hur du gör detta se :ref:`news`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:768
+#: ../../__w/calibre/calibre/manual/faq.rst:783
 msgid ""
 "Otherwise, you can request a particular news site by posting in the `calibre"
 " Recipes forum <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_."
 msgstr "Annars kan du begära en viss nyhetssajt genom att posta i `calibre-receptforumet <https://www.mobileread.com/forums/forumdisplay.php?f=228>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:772
+#: ../../__w/calibre/calibre/manual/faq.rst:787
 msgid "Why the name calibre?"
 msgstr "Varför namnet calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:773
+#: ../../__w/calibre/calibre/manual/faq.rst:788
 msgid "Take your pick:"
 msgstr "Gör ditt val:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:774
+#: ../../__w/calibre/calibre/manual/faq.rst:789
 msgid "Converter And LIBRary for E-books"
 msgstr "Converter And LIBRary for E-books"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:775
+#: ../../__w/calibre/calibre/manual/faq.rst:790
 msgid "A high *calibre* product"
 msgstr "En produkt av hög *kaliber (calibre)*"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:776
+#: ../../__w/calibre/calibre/manual/faq.rst:791
 msgid ""
 "A tribute to the SONY Librie which was the first e-ink based e-book reader"
 msgstr "En hyllning till SONY Librie som var den första e-bläckbaserade e-bokläsenheten"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:777
+#: ../../__w/calibre/calibre/manual/faq.rst:792
 msgid "My wife chose it ;-)"
 msgstr "Min fru valde det ;-)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:779
+#: ../../__w/calibre/calibre/manual/faq.rst:794
 msgid ""
 "calibre is pronounced as cal-i-ber *not* ca-li-bre. If you're wondering, "
 "calibre is the British/commonwealth spelling for caliber. Being Indian, "
 "that's the natural spelling for me."
 msgstr "calibre uttalas som cal-i-ber *inte* ca-li-bre. Om du undrar är calibre den brittiska/samväldets stavning för caliber. För att vara indisk, är det den naturliga stavningen för mig."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:782
+#: ../../__w/calibre/calibre/manual/faq.rst:797
 msgid "Why does calibre show only some of my fonts on macOS?"
 msgstr "Varför visar calibre bara några av mina teckensnitt på macOS?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:784
+#: ../../__w/calibre/calibre/manual/faq.rst:799
 msgid ""
 "calibre embeds fonts in e-book files it creates. E-book files support "
 "embedding only TrueType and OpenType (.ttf and .otf) fonts. Most fonts on "
@@ -1487,15 +1508,15 @@ msgid ""
 " to the Library/Fonts folder in your home folder."
 msgstr "calibre bäddar in teckensnitt i e-bokfiler som skapas. E-bokfiler stöder endast inbäddning av Truetype och Opentype (.ttf och .otf) teckensnitt. De flesta teckensnitt på macOS-system är i .dfont-format, vilka inte kan bäddas in. calibre visar endast Truetype- och Opentype-teckensnitt som finns på ditt system. Du kan få många sådana teckensnitt på webben. Helt enkelt hämtar .ttf-/.otf-filer och lägga till dem i biblioteks-/teckensnittsmappen i din hemmapp."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:792
+#: ../../__w/calibre/calibre/manual/faq.rst:807
 msgid "calibre is not starting on Windows?"
 msgstr "calibre startar inte på Windows?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:793
+#: ../../__w/calibre/calibre/manual/faq.rst:808
 msgid "There can be several causes for this:"
 msgstr "Det kan finnas flera orsaker till det här:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:795
+#: ../../__w/calibre/calibre/manual/faq.rst:810
 msgid ""
 "If you get no errors but the calibre window does not appear, it has probably"
 " just appeared off screen. You can gather all windows onto the current "
@@ -1503,46 +1524,53 @@ msgid ""
 "<https://www.wikihow.com/Bring-an-Off-Screen-Window-Back-on-Windows>`__."
 msgstr "Om du inte får några felmeddelanden men calibre-fönstret inte visas har det förmodligen precis dykt upp utanför skärmen. Du kan samla alla fönster på den aktuella skärmen med en av teknikerna som beskrivs `här <https://www.wikihow.com/Bring-an-Off-Screen-Window-Back-on-Windows>`__."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:799
+#: ../../__w/calibre/calibre/manual/faq.rst:814
+msgid ""
+"Some software has been known to interfere with calibre, try rebooting in "
+"Safe mode and see if it works. A known culprit is the `Sunshine "
+"<https://github.com/LizardByte/Sunshine>`__ screen sharing software."
+msgstr "Vissa program har varit kända för att störa calibre, försök starta om i felsäkert läge och se om det fungerar. En känd bov är skärmdelningsprogramvaran `Sunshine <https://github.com/LizardByte/Sunshine>`__."
+
+#: ../../__w/calibre/calibre/manual/faq.rst:818
 msgid ""
 "If you get an error about calibre not being able to open a file because it "
 "is in use by another program, do the following:"
 msgstr "Om du får ett felmeddelande om att calibre inte kan öppna en fil eftersom den används av ett annat program, gör följande:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:801
+#: ../../__w/calibre/calibre/manual/faq.rst:820
 msgid "Uninstall calibre"
 msgstr "Avinstallera calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:802
+#: ../../__w/calibre/calibre/manual/faq.rst:821
 msgid "Reboot your computer"
 msgstr "Starta om din dator"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:803
+#: ../../__w/calibre/calibre/manual/faq.rst:822
 msgid ""
 "Re-install calibre. But do not start calibre from the installation wizard."
 msgstr "Återinstallera calibre. Men starta inte calibre från installationsguiden."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:804
+#: ../../__w/calibre/calibre/manual/faq.rst:823
 msgid ""
 "Temporarily disable your antivirus program (disconnect from the Internet "
 "before doing so, to be safe)"
 msgstr "Inaktivera tillfälligt ditt antivirusprogram (koppla bort från internet innan du gör det, för att vara säker)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:805
+#: ../../__w/calibre/calibre/manual/faq.rst:824
 msgid ""
 "Look inside the folder you chose for your calibre library. If you see a file"
 " named metadata.db, delete it."
 msgstr "Titta inne i mappen du valt till ditt calibre-bibliotek. Om du ser en fil vid namn metadata.db, ta bort den."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:806
+#: ../../__w/calibre/calibre/manual/faq.rst:825
 msgid "Start calibre"
 msgstr "Starta calibre"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:807
+#: ../../__w/calibre/calibre/manual/faq.rst:826
 msgid "From now on you should be able to start calibre normally."
 msgstr "Från och med nu bör du kunna starta calibre normalt."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:809
+#: ../../__w/calibre/calibre/manual/faq.rst:828
 msgid ""
 "If you get an error about a Python function terminating unexpectedly after "
 "upgrading calibre, first uninstall calibre, then delete the folders (if they"
@@ -1550,7 +1578,7 @@ msgid ""
 "Files\\\\Calibre2`. Now re-install and you should be fine."
 msgstr "Om du får ett fel i en Python-funktion som avslutas oväntat efter en uppgradering av calibre, först avinstallera calibre, sedan ta bort mappar (om det finns några) :file:`C:\\\\Program Files\\\\Calibre` och :file:`C:\\\\Program Files\\\\Calibre2`. Nu återinstallera och du bör vara OK."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:811
+#: ../../__w/calibre/calibre/manual/faq.rst:830
 msgid ""
 "If you get an error in the :guilabel:`Welcome wizard` on an initial run of "
 "calibre, try choosing a folder like :file:`C:\\\\library` as the calibre "
@@ -1558,34 +1586,34 @@ msgid ""
 "contains non-English characters, or only numbers, etc.)"
 msgstr "Om du får ett fel i :guilabel:`välkomstguiden` vid en initieringskörning av calibre, försök välja en mapp som :file:`C:\\\\library` för calibre-biblioteket (eftersom calibre ibland har problem med biblioteksplatser om sökvägen innehåller icke-engelska tecken, eller bara siffror etc.)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:813
+#: ../../__w/calibre/calibre/manual/faq.rst:832
 msgid ""
 "Try running it as administrator (Right click on the icon and select "
 ":guilabel:`Run as administrator`)"
 msgstr "Försök köra som administratör (högerklicka på ikonen och välj :guilabel:`Kör som administratör`)"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:815
+#: ../../__w/calibre/calibre/manual/faq.rst:834
 msgid ""
 "If it still won't launch, start a command prompt (press the Windows key and "
 "R; then type :command:`cmd.exe` in the Run dialog that appears). At the "
 "command prompt type the following command and press Enter::"
 msgstr "Om det fortfarande inte startar, starta en kommandotolk (tryck på Windows-tangenten och R; skriv sedan :command:`cmd.exe` i dialogrutan Kör som visas). Skriv följande kommando i kommandotolken och tryck på enter::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:819
+#: ../../__w/calibre/calibre/manual/faq.rst:838
 msgid ""
 "Post any output you see in a help message on the `Forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`_."
 msgstr "Lägg upp någon utmatning som du ser i ett hjälpmeddelande på `forumet <https://www.mobileread.com/forums/forumdisplay.php?f=166>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:822
+#: ../../__w/calibre/calibre/manual/faq.rst:841
 msgid "calibre freezes/crashes occasionally?"
 msgstr "calibre fryser/kraschar ibland?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:824
+#: ../../__w/calibre/calibre/manual/faq.rst:843
 msgid "There are several possible things I know of, that can cause this:"
 msgstr "Det finns flera möjliga saker som jag känner till som kan orsaka detta:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:826
+#: ../../__w/calibre/calibre/manual/faq.rst:845
 msgid ""
 "You recently connected an external monitor or TV to your computer. In this "
 "case, whenever calibre opens a new window like the edit metadata window or "
@@ -1594,7 +1622,7 @@ msgid ""
 "monitor and restart calibre."
 msgstr "Du har nyligen anslutit en extern bildskärm eller TV till din dator. I detta fall, när calibre öppnar ett nytt fönster som redigeringsmetadatafönstret eller konverteringsdialogrutan, visas det på den andra bildskärmen där du inte märker det och så du tror att calibre har frysts. Koppla bort din andra bildskärm och starta om calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:832
+#: ../../__w/calibre/calibre/manual/faq.rst:851
 msgid ""
 "The following programs have been reported to cause crashes in calibre: If "
 "you are running any of these, close them before starting calibre, or "
@@ -1603,21 +1631,21 @@ msgid ""
 "Interface*, *Acronis True Image*."
 msgstr "Följande program har rapporterats orsaka krascher i calibre: Om du kör någon av dessa, stäng av dem innan calibre, eller avinstallera dem: *RoboForm*, *Logitech SetPoint Settings*, *Constant Guard Protection by Xfinity*, *Spybot*, *Killer Network Manager*, *Nahimic UI Interface*, *Acronis True Image*."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:839
+#: ../../__w/calibre/calibre/manual/faq.rst:858
 msgid ""
 "You are using a Wacom branded USB mouse/tablet. There is an incompatibility "
 "between Wacom drivers and the graphics toolkit calibre uses. Try using a "
 "non-Wacom mouse."
 msgstr "Du använder en USB-mus/surfplatta av märket Wacom. Det finns en inkompatibilitet mellan Wacom-drivrutiner och grafikverktygssatserna som calibre använder. Försök använda en mus som inte är av märket Wacom."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:843
+#: ../../__w/calibre/calibre/manual/faq.rst:862
 msgid ""
 "On some 64 bit versions of Windows there are security software/settings that"
 " prevent 64-bit calibre from working properly. If you are using the 64-bit "
 "version of calibre try switching to the 32-bit version."
 msgstr "På vissa 64-bitarsversioner av Windows finns säkerhetsmjukvara/inställningar som förhindrar att 64-bitars calibre fungerar korrekt. Om du använder 64-bitarsversionen av calibre, försök att byta till 32-bitarsversionen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:847
+#: ../../__w/calibre/calibre/manual/faq.rst:866
 msgid ""
 "If the crash happens when you are trying to copy text from the calibre "
 "E-book viewer, it is most likely caused by some clipboard "
@@ -1625,7 +1653,7 @@ msgid ""
 " be fine."
 msgstr "Om kraschen uppstår när du försöker kopiera text från calibres e-bokvisare, är det sannolikt att det orsakas av vissa urklipp övervaknings-/hanteringsprogram som du har igång. Stäng av dem och du bör vara ok."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:852
+#: ../../__w/calibre/calibre/manual/faq.rst:871
 msgid ""
 "If the crashes happen specifically when you are using a file dialog, like "
 "clicking on the :guilabel:`Add books` button or the :guilabel:`Save to Disk`"
@@ -1640,7 +1668,7 @@ msgid ""
 "extensions."
 msgstr "Om kraschar inträffar specifikt när du använder en fildialog, som att klicka på :guilabel:`Lägg till böcker`- eller :guilabel:`Spara till disk`-knappen, har du programvara som har installerat trasiga skaltillägg på din dator. Kända synder inkluderar: *SpiderOak*, *odrive sync* och *Dell Backup and Recovery* and *NetDrive*. Om du har en av dessa, avinstallera dem och det kommer att fungera. Du kan också använda `NirSoft Shell Extension Viewer <https://www.nirsoft.net/utils/shexview.html>`_ för att se vad skal förlängningar är installerade på datorn och stänga av dem individuellt, om du inte vill avinstallera hela programmet. Kom ihåg att använda \"Starta om utforskaren\" eller starta om datorn efter att du inaktiverat skaltilläggen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:864
+#: ../../__w/calibre/calibre/manual/faq.rst:883
 msgid ""
 "If none of the above apply to you, then there is some other program on your "
 "computer that is interfering with calibre. First reboot your computer in "
@@ -1652,18 +1680,18 @@ msgid ""
 "like Voice Control or a Screen Reader."
 msgstr "Om inget av ovanstående gäller dig, så finns det något annat program på din dator som stör calibre. Starta först om din dator i felsäkert läge, för att köra så få program som möjligt och se om krascherna fortfarande inträffar. Om de inte gör det vet du att det är något program som orsakar problemet. Den troligaste syndabocken är ett program som ändrar andra programs beteende, till exempel ett antivirusprogram, en enhetsdrivrutin, något som RoboForm (en automatisk formulärifyllningsapp) eller en hjälpteknik som röstkontroll eller en skärmläsare."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:873
+#: ../../__w/calibre/calibre/manual/faq.rst:892
 msgid ""
 "The only way to find the culprit is to eliminate the programs one by one and"
 " see which one is causing the issue. Basically, stop a program, run calibre,"
 " check for crashes. If they still happen, stop another program and repeat."
 msgstr "Det enda sättet att hitta den skyldige är att eliminera programmen ett efter ett och se vilket som orsakar problemet. I princip, stoppa ett program, kör calibre, kontrollera om det kraschar. Om de fortfarande inträffar, stoppa ett annat program och upprepa."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:879
+#: ../../__w/calibre/calibre/manual/faq.rst:898
 msgid "The calibre E-book viewer and Edit book tools do not work on Windows?"
 msgstr "calibres e-bokvisare och redigeringsverktyget fungerar inte på Windows?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:881
+#: ../../__w/calibre/calibre/manual/faq.rst:900
 msgid ""
 "These two programs use hardware acceleration as they embed a version of the "
 "Chrome browser to render HTML. If they do not work it will be because of "
@@ -1674,13 +1702,13 @@ msgid ""
 "<https://doc.qt.io/qt-6/qtwebengine-debugging.html>`_ for details."
 msgstr "Dessa två program använder hårdvaruacceleration när de bäddar in en version av webbläsaren Chrome för att rendera HTML. Om de inte fungerar kommer det att bero på inkompatibilitet med ditt systems GPU (grafik) drivrutiner. Försök att uppdatera dessa först och starta om. Om det inte löser det kan du ställa in miljövariabeln ``QTWEBENGINE_CHROMIUM_FLAGS`` till värdet ``--disable-gpu`` för att stänga av hårdvaruacceleration. Se `den här sidan <https://doc.qt.io/qt-6/qtwebengine-debugging.html>`_ för detaljer."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:891
+#: ../../__w/calibre/calibre/manual/faq.rst:910
 msgid ""
 "Using the viewer or doing any conversions results in a permission denied "
 "error on Windows"
 msgstr "Användning av visaren eller att göra några konverteringar resulterar i ett felmeddelande om tillstånd nekad på Windows"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:893
+#: ../../__w/calibre/calibre/manual/faq.rst:912
 msgid ""
 "Something on your computer is preventing calibre from accessing its own "
 "temporary files. Most likely the permissions on your :file:`Temp` folder are"
@@ -1691,7 +1719,7 @@ msgid ""
 " full control for this folder."
 msgstr "Något på datorn hindrar calibre från att komma åt sina egna temporära filer. Troligtvis är behörigheterna på din Temp-mapp felaktiga. Gå till mappen file:`C:\\\\Användare\\\\ANVÄNDARNAMN\\\\AppData\\\\Local` i Windows utforskaren och högerklicka på mappen file:` Temp`, välj :guilabel:`Egenskaper` och gå till fliken :guilabel:`Säkerhet`. Se till att ditt användarkonto har full kontroll på den här mappen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:900
+#: ../../__w/calibre/calibre/manual/faq.rst:919
 msgid ""
 "Some users have reported that running the following command in an "
 "Administrator Command Prompt fixed their permissions.  To get an "
@@ -1701,22 +1729,22 @@ msgid ""
 "Enter::"
 msgstr "Vissa användare har rapporterat att körning av följande kommando i en administratörskommandotolk löser deras behörigheter.  För att få en administratörskommandotolk sök efter cmd.exe i startmenyn, högerklicka på kommandotolksposten och välj :guilabel:`Kör som administratör`. Skriv följande kommando i kommandotolken och tryck på enter::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:908
+#: ../../__w/calibre/calibre/manual/faq.rst:927
 msgid ""
 "Alternately, you can run calibre as Administrator, but doing so will cause "
 "some functionality, such as drag and drop to not work."
 msgstr "Alternativt kan du köra calibre som administratör, men detta kommer att leda till vissa problem, till exempel att dra och släppa inte fungerar."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:911
+#: ../../__w/calibre/calibre/manual/faq.rst:930
 msgid ""
 "Finally, some users have reported that disabling UAC fixes the problem."
 msgstr "Slutligen har en del användare rapporterat att inaktivera UAC löser problemet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:915
+#: ../../__w/calibre/calibre/manual/faq.rst:934
 msgid "calibre is not starting/crashing on macOS?"
 msgstr "calibre startar inte/kraschar på macOS?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:917
+#: ../../__w/calibre/calibre/manual/faq.rst:936
 msgid ""
 "One common cause of failures on macOS is the use of accessibility "
 "technologies that are incompatible with the graphics toolkit calibre uses.  "
@@ -1726,14 +1754,14 @@ msgid ""
 "third party apps that modify system behavior, such as Smart Scroll."
 msgstr "En vanlig orsak till fel på macOS är användningen av tillgänglighetsteknik som är oförenliga med grafikverktygen calibre använder. Försök med att stänga av VoiceOver om du har det på. Också gå till System Inställningar->System->Hjälpmedel och stäng av inställningen för att ge tillgång till hjälpmedel i alla flikar. En annan orsak kan vara en tredjepartsapps som modifierar systembeteende, såsom Smart Scroll."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:924
+#: ../../__w/calibre/calibre/manual/faq.rst:943
 msgid ""
 "You can obtain debug output about why calibre is not starting by running "
 "`Console.app`. Debug output will be printed to it. If the debug output "
 "contains a line that looks like::"
 msgstr "Du kan få felsökningsutmatning om varför calibre inte startar genom att köra `Console.app`. Felsökningsutmatning kommer att skrivas till den. Om felsökningsutmatningen innehåller en rad som ser ut så här::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:929
+#: ../../__w/calibre/calibre/manual/faq.rst:948
 msgid ""
 "then the problem is probably a corrupted font cache. You can clear the cache"
 " by following these `instructions "
@@ -1744,12 +1772,12 @@ msgid ""
 "in the File menu, choose \"Validate fonts\"."
 msgstr "då är problemet troligen en skadad teckensnittscache. Du kan rensa cachen genom att följa dessa `instruktioner <https://www.macworld.com/article/1139383/fontcacheclear.html>`_. Om det inte löser det, leta efter en skadad teckensnittsfil på ditt system, i ~/Library/Fonts eller liknande. Ett enkelt sätt att kontrollera om det finns skadade teckensnitt i macOS är att starta programmet \"Font Book\", välj alla teckensnitt och sedan i Arkiv-menyn, välj \"Verifiera teckensnitt\"."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:936
+#: ../../__w/calibre/calibre/manual/faq.rst:955
 msgid ""
 "I get only a black or white screen when running the calibre E-book viewer?"
 msgstr "Jag får bara en svart eller vit skärm när jag kör calibres e-bokvisare?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:938
+#: ../../__w/calibre/calibre/manual/faq.rst:957
 msgid ""
 "This will be because of an incompatibility between Qt WebEngine, which the "
 "viewer uses to render and the GPU drivers on your system. First try "
@@ -1759,11 +1787,11 @@ msgid ""
 ":ref:`customize_env_vars` for how to change environment variables."
 msgstr "Detta kommer att bero på en inkompatibilitet mellan Qt WebEngine, som visaren använder för att ta bort och GPU-drivrutinerna på ditt system. Försök först att uppgradera GPU-drivrutinerna. Om det inte hjälper kan du försöka stänga av hårdvaruacceleration i Qt WebEngine genom att ställa in miljövariabeln ``QTWEBENGINE_CHROMIUM_FLAGS`` till värdet ``--disable-gpu``. Se :ref:`customize_env_vars` för hur man ändrar miljövariabler."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:947
+#: ../../__w/calibre/calibre/manual/faq.rst:966
 msgid "I downloaded the installer, but it is not working?"
 msgstr "Jag hämtade installationsprogrammet, men det fungerar inte?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:949
+#: ../../__w/calibre/calibre/manual/faq.rst:968
 msgid ""
 "Downloading from the Internet can sometimes result in a corrupted download. "
 "If the calibre installer you downloaded is not opening, try downloading it "
@@ -1773,32 +1801,32 @@ msgid ""
 "it from running."
 msgstr "Hämtning från internet kan ibland resultera i en skadad hämtning. Om calibre-installationsprogrammet som du hämtade inte startar kan du testa att hämtar det igen. Om du hämtar det igen och det ändå inte fungerar kan du hämta det från `en alternativ plats <https://github.com/kovidgoyal/calibre/releases/latest>`_. Om installationsprogrammet fortfarande inte fungerar förhindrar något på din dator att det körs."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:951
+#: ../../__w/calibre/calibre/manual/faq.rst:970
 msgid ""
 "Try temporarily disabling your antivirus program (Microsoft Security "
 "Essentials, or Kaspersky or Norton or McAfee or whatever). This is most "
 "likely the culprit if the upgrade process is hanging in the middle."
 msgstr "Försök att tillfälligt inaktivera antivirusprogrammet (Microsoft Security Essentials eller Kaspersky eller Norton eller McAfee eller vad). Detta är troligen den skyldige om uppgraderingen hänger i mitten."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:952
+#: ../../__w/calibre/calibre/manual/faq.rst:971
 msgid ""
 "Similarly, if the installer is failing/rolling back and you have Microsoft "
 "PowerToys running, quit it."
 msgstr "På samma sätt, om installationsprogrammet misslyckas/återställs och du har Microsoft PowerToys igång, avsluta det."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:953
+#: ../../__w/calibre/calibre/manual/faq.rst:972
 msgid ""
 "If you have installed to a non-standard location, try running the installer "
 "as Administrator"
 msgstr "Om du har installerat på en icke-standardplats, försök att köra installationsprogrammet som administratör"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:954
+#: ../../__w/calibre/calibre/manual/faq.rst:973
 msgid ""
 "Try rebooting your computer and running a registry cleaner like `Wise "
 "registry cleaner <https://www.wisecleaner.com>`_."
 msgstr "Försök att starta om din dator och kör ett registerrensningsprogram som `Wise Registry Cleaner <https://www.wisecleaner.com>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:955
+#: ../../__w/calibre/calibre/manual/faq.rst:974
 msgid ""
 "Try a clean install. That is, uninstall calibre, delete :file:`C:\\\\Program"
 " Files\\\\Calibre2` (or wherever you previously chose to install calibre). "
@@ -1806,13 +1834,13 @@ msgid ""
 " settings."
 msgstr "Försök med en ren installation. Det vill säga, avinstallera calibre, ta bort: :file:`C:\\\\Program Files\\\\Calibre2` (eller var du tidigare valde att installera calibre). Därefter ominstallera calibre. Observera att avinstalleringen inte rör dina böcker eller inställningar."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:956
+#: ../../__w/calibre/calibre/manual/faq.rst:975
 msgid ""
 "Try downloading the installer with an alternate browser. For example if you "
 "are using Microsoft Edge, try using Firefox or Chrome instead."
 msgstr "Testa att hämta installationsprogrammet med en alternativ webbläsare. Om du till exempel använder Microsoft Edge, testa istället använda Firefox eller Chrome."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:957
+#: ../../__w/calibre/calibre/manual/faq.rst:976
 msgid ""
 "If you get an error about a missing DLL on Windows, then most likely, the "
 "permissions on your temporary folder are incorrect. Go to the folder "
@@ -1822,18 +1850,18 @@ msgid ""
 "that your user account has full control for this folder."
 msgstr "Om du får ett felmeddelande om en saknad DLL på Windows, är behörigheterna för din tillfälliga mapp troligen felaktiga. Gå till mappen :file:`C:\\\\Users\\\\USERNAME\\\\AppData\\\\Local` i Windows utforskaren och högerklicka sedan på mappen :file:`Temp` och välj :guilabel:`Egenskaper` och gå till fliken :guilabel:`Säkerhet`. Se till att ditt användarkonto har fullständig kontroll över den här mappen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:964
+#: ../../__w/calibre/calibre/manual/faq.rst:983
 msgid ""
 "If you still cannot get the installer to work and you are on Windows, you "
 "can use the :website:`calibre portable install <download_portable>`, which "
 "does not need an installer (it is just a ZIP file)."
 msgstr "Om du fortfarande inte kan få installationsprogrammet att fungera och du använder Windows, kan du använda :website:`calibre portable-installation <download_portable>`, som inte behöver ett installationsprogram (det är bara en ZIP-fil)."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:967
+#: ../../__w/calibre/calibre/manual/faq.rst:986
 msgid "My antivirus program claims calibre is a virus/trojan?"
 msgstr "Mitt antivirusprogram påstår att calibre är ett virus/trojan?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:969
+#: ../../__w/calibre/calibre/manual/faq.rst:988
 msgid ""
 "The first thing to check is that you are downloading calibre from the "
 ":website:`official website <download>`. Make sure you are clicking the "
@@ -1842,7 +1870,7 @@ msgid ""
 "offering it for download to fool the unwary."
 msgstr "Det första du bör kontrollera är att du hämtar calibre från den :website:`officiella webbplatsen <download>`. Se till att du klicka på hämtningslänkar till vänster, inte på annonserna till höger. calibre är ett mycket populärt program och skrupelfria personer försöker skapa webbplatser som erbjuder det för hämtning för att lura oförsiktiga."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:975
+#: ../../__w/calibre/calibre/manual/faq.rst:994
 msgid ""
 "If you have the official download and your antivirus program is still "
 "claiming calibre is a virus, then, your antivirus program is wrong. "
@@ -1856,11 +1884,11 @@ msgid ""
 " and then re-enable it."
 msgstr "Om du har den officiella hämtningen och ditt antivirusprogram fortfarande hävdar att calibre är ett virus, är alltså felet dit antivirusprogram. Antivirusprogram använder heuristik, kodmönster som \"ser misstänkta\" ut för att upptäcka virus. Det är snarare som rasprofilering. calibre är en helt öppen källkodsprodukt. Du kan faktiskt bläddra i källkoden själv (eller anlita någon att göra det åt dig) för att verifiera att det inte är ett virus. Rapportera falsk identifikation till företaget du köper ditt antivirusprogram från. Om antivirusprogrammet hindrar dig från att hämta/installera calibre, inaktivera det tillfälligt, installera calibre och aktivera det sedan igen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:986
+#: ../../__w/calibre/calibre/manual/faq.rst:1005
 msgid "How do I backup calibre?"
 msgstr "Hur säkerhetskopierar jag calibre?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:988
+#: ../../__w/calibre/calibre/manual/faq.rst:1007
 msgid ""
 "The most important thing to backup is the calibre library folder, that "
 "contains all your books and metadata. This is the folder you chose for your "
@@ -1869,7 +1897,7 @@ msgid ""
 " You must backup this complete folder with all its files and sub-folders."
 msgstr "Det viktigaste för att säkerhetskopiera är calibre-biblioteksmappen som innehåller alla dina böcker och metadata. Detta är den mapp du valde för ditt calibre-bibliotek när du körde calibre för första gången. Du kan få sökvägen till biblioteksmappen genom att klicka på calibre-ikonen på verktygslisten. Du måste säkerhetskopiera den här hela mappen med alla filer och undermappar."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:990
+#: ../../__w/calibre/calibre/manual/faq.rst:1009
 msgid ""
 "You can switch calibre to using a backed up library folder by simply "
 "clicking the calibre icon on the toolbar and choosing your backup library "
@@ -1877,7 +1905,7 @@ msgid ""
 "searches as well as all your books and metadata."
 msgstr "Du kan växla calibre till att använda en säkerhetskopierad biblioteksmapp genom att klicka på calibre-ikonen i verktygsfältet och välja din säkerhetskopierade biblioteksmapp. En säkerhetskopierad biblioteksmappen säkerhetskopierar dina egna kolumner och sparade sökningar samt alla dina böcker och metadata."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:992
+#: ../../__w/calibre/calibre/manual/faq.rst:1011
 msgid ""
 "If you want to backup the calibre configuration/plugins, you have to backup "
 "the config folder. You can find this config folder via "
@@ -1887,13 +1915,13 @@ msgid ""
 " to restore."
 msgstr "Om du vill säkerhetskopiera calibre-konfigurationen/insticksmoduler måste du säkerhetskopiera konfigurationsmappen. Du hittar den här konfigurationsmappen via :guilabel:`Inställningar->Diverse`. Observera att återställning av konfigurationsmappar inte stöds officiellt, men bör fungera i de flesta fall. Kopiera bara innehållet i säkerhetskopieringsmappen till den aktuella konfigurationsmappen för att återställa."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:995
+#: ../../__w/calibre/calibre/manual/faq.rst:1014
 msgid ""
 "How do I use purchased EPUB books with calibre (or what do I do with .acsm "
 "files)?"
 msgstr "Hur använder jag köpta EPUB-böcker med calibre (eller vad ska jag göra med .acsm-filer)?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:996
+#: ../../__w/calibre/calibre/manual/faq.rst:1015
 msgid ""
 "Most purchased EPUB books have :doc:`DRM <drm>`. This prevents calibre from "
 "opening them. You can still use calibre to store and transfer them to your "
@@ -1906,44 +1934,44 @@ msgid ""
 "Editions\", from where you can add it to calibre."
 msgstr "De flesta köpta EPUB-böcker har :doc:`DRM <drm>`. Det här förhindrar calibre från att öppna dem. Du kan fortfarande använda calibre för att lagra och överföra dem till din e-bokläsenhet. Först måste du auktorisera din läsenhet på en Windows-maskin med Adobe Digital Editions. När detta är gjort kommer EPUB-böcker som överförts med calibre att fungera bra på din läsenhet. När du köper en EPUB-bok från en webbplats kommer du att få en \".acsm\"-fil. När den här filen öppnas med Adobe Digital Editions kommer det att hämta den faktiska \".epub\"-e-boken. E-bokfilen sparas i mappen \"My Digital Editions\", varifrån du lägga till den i calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:999
+#: ../../__w/calibre/calibre/manual/faq.rst:1018
 msgid "I am getting a \"Permission Denied\" error?"
 msgstr "Jag får felmeddelandet \"Åtkomst nekad\"?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1001
+#: ../../__w/calibre/calibre/manual/faq.rst:1020
 msgid ""
 "A permission denied error can occur because of many possible reasons, none "
 "of them having anything to do with calibre."
 msgstr "En fel om nekad åtkomst kan uppstå på grund av många möjliga orsaker, ingen av dem har något att göra med calibre."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1003
+#: ../../__w/calibre/calibre/manual/faq.rst:1022
 msgid ""
 "You can get permission denied errors if you are using an SD card with write "
 "protect enabled."
 msgstr "Du kan få felmeddelanden om nekad åtkomst om du använder ett SD-kort med skrivskydd aktiverat."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1007
+#: ../../__w/calibre/calibre/manual/faq.rst:1026
 msgid ""
 "If you, or some program you used changed the file permissions of the files "
 "in question to read only."
 msgstr "Om du, eller något program du använde, ändrade filbehörigheterna för filerna i fråga till skrivskyddade."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1008
+#: ../../__w/calibre/calibre/manual/faq.rst:1027
 msgid ""
 "If there is a filesystem error on the device which caused your operating "
 "system to mount the filesystem in read only mode or mark a particular file "
 "as read only pending recovery."
 msgstr "Om det finns ett filsystemfel på enheten som fick ditt operativsystem att montera filsystemet i skrivskyddat läge eller markera en viss fil som skrivskyddad i väntan på återställning."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1009
+#: ../../__w/calibre/calibre/manual/faq.rst:1028
 msgid "If the files have their owner set to a user other than you."
 msgstr "Om filerna har deras ägare inställd till någon annan användare än du."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1010
+#: ../../__w/calibre/calibre/manual/faq.rst:1029
 msgid "If your file is open in another program."
 msgstr "Om din fil är öppen i ett annat program."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1011
+#: ../../__w/calibre/calibre/manual/faq.rst:1030
 msgid ""
 "If the file resides on a device, you may have reached the limit of a maximum"
 " of 256 files in the root of the device. In this case you need to reformat "
@@ -1951,18 +1979,18 @@ msgid ""
 " or delete some files from the SD card/device memory."
 msgstr "Om filen finns på en enhet kan du ha nått gränsen för högst 256 filer i roten av enheten. I det här fallet måste du formatera enheten/sd-kortet som hänvisas till felmeddelandet med ett FAT32-filsystem, eller ta bort några filer från SD-kortet/enhetsminnet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1013
+#: ../../__w/calibre/calibre/manual/faq.rst:1032
 msgid ""
 "You will need to fix the underlying cause of the permissions error before "
 "resuming to use calibre. Read the error message carefully, see what file it "
 "points to and fix the permissions on that file or its containing folders."
 msgstr "Du måste åtgärda den underliggande orsaken till behörighetsfelet innan du fortsätter att använda calibre. Läs felmeddelandet noggrant, se vilken fil den hänvisar till och åtgärda behörigheterna för den filen eller dess mappar."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1016
+#: ../../__w/calibre/calibre/manual/faq.rst:1035
 msgid "Can I have the comment metadata show up on my reader?"
 msgstr "Kan jag få kommentarmetadata att dyka upp på min läsenhet?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1018
+#: ../../__w/calibre/calibre/manual/faq.rst:1037
 msgid ""
 "Most readers do not support this. You should complain to the manufacturer "
 "about it and hopefully if enough people complain, things will change. In the"
@@ -1975,7 +2003,7 @@ msgid ""
 "that format to the same format."
 msgstr "De flesta läsenheter stöder inte detta. Du bör klaga hos tillverkaren om det och förhoppningsvis kommer det att förändras om tillräckligt många klagar. Under tiden kan du infoga metadata, inklusive kommentarer på en \"Omslagssida\" i början av e-boken, genom att använda alternativet \"Infoga metadata som en sida i början på boken\" under konverteringen. Alternativet finns i avsnittet :guilabel:`Strukturdetektering` i konverteringsinställningarna. Observera att för att detta ska ha effekt måste du *konvertera* boken. Om din bok är redan i ett format som inte behöver konverteras, kan du konvertera från det formatet till samma format."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1020
+#: ../../__w/calibre/calibre/manual/faq.rst:1039
 msgid ""
 "Another alternative is to create a catalog in e-book form containing a "
 "listing of all the books in your calibre library, with their metadata. "
@@ -1984,11 +2012,11 @@ msgid ""
 "to\" books on your reader."
 msgstr "Ett annat alternativ är att skapa en katalog i e-bokform som innehåller en lista över alla böcker i ditt calibre-bibliotek, med deras metadata. Klicka och håll knappen :guilabel:`Konvertera` för att komma åt verktyget för att skapa katalog. Och innan du frågar, nej du kan inte ha katalogen att \"länka direkt till\" böcker på din läsenhet."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1023
+#: ../../__w/calibre/calibre/manual/faq.rst:1042
 msgid "How do I get calibre to use my HTTP proxy?"
 msgstr "Hur får jag calibre att använda min HTTP-proxy?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1025
+#: ../../__w/calibre/calibre/manual/faq.rst:1044
 msgid ""
 "By default, calibre uses whatever proxy settings are set in your OS. "
 "Sometimes these are incorrect, for example, on Windows if you don't use "
@@ -2001,21 +2029,21 @@ msgid ""
 "current proxies used by calibre in Preferences->Miscellaneous."
 msgstr "Som standard använder calibre de tillgängliga proxyinställningar som är inställda i ditt operativsystem. Ibland är dessa felaktiga, till exempel på Windows, om du inte använder Microsoft Edge, kanske proxyinställningar inte är uppdaterade. Du kan tala om för calibre att använda en viss proxyserver genom att ställa in miljövariablerna ``http_proxy`` och ``https_proxy``. Formatet på variabeln är: ``http://username:password@servername``, du bör fråga din nätverksadministratör för att ge dig rätt värde för denna variabel. Observera att calibre endast stöder HTTP-proxyer och inte SOCKS-proxyer. Du kan se de aktuella proxyerna som används av calibre i Inställningar->Diverse."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1036
+#: ../../__w/calibre/calibre/manual/faq.rst:1055
 msgid "I want some feature added to calibre. What can I do?"
 msgstr "Jag vill ha en del funktioner tillagda i calibre. Vad kan jag göra?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1037
+#: ../../__w/calibre/calibre/manual/faq.rst:1056
 msgid "You have two choices:"
 msgstr "Du har två val:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1038
+#: ../../__w/calibre/calibre/manual/faq.rst:1057
 msgid ""
 "Create a patch by hacking on calibre and send it to me for review and "
 "inclusion. See :website:`Development <get-involved>`."
 msgstr "Skapa en lösning genom att hacka calibre och skicka det till mig för granskning och inkludering. Se :website:`utveckling <get-involved>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1039
+#: ../../__w/calibre/calibre/manual/faq.rst:1058
 msgid ""
 ":website:`Open a bug requesting the feature <bugs>`. Remember that while you"
 " may think your feature request is extremely important/essential, calibre "
@@ -2026,15 +2054,15 @@ msgid ""
 ":ref:`pluginstutorial`."
 msgstr ":website:`Öppna en funktionsförfrågan <bugs>`. Kom ihåg att även om du tror att din funktionsförfrågan är oerhört viktigt/nödvändlig, kanske inte calibre-utvecklarena håller med. Lyckligtvis har calibre öppen källkod, vilket innebär att du alltid har möjlighet att implementera din funktion själv, eller anställa någon att göra det åt dig. calibre har en omfattande insticksmodulsarkitektur, så du kanske kan utveckla din funktion som ett insticksmodul, se :ref:`pluginstutorial`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1042
+#: ../../__w/calibre/calibre/manual/faq.rst:1061
 msgid "Why doesn't calibre have an automatic update?"
 msgstr "Varför har inte calibre en automatisk uppdatering?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1044
+#: ../../__w/calibre/calibre/manual/faq.rst:1063
 msgid "For many reasons:"
 msgstr "För många orsaker:"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1046
+#: ../../__w/calibre/calibre/manual/faq.rst:1065
 msgid ""
 "*There is no need to update every week*. If you are happy with how calibre "
 "works turn off the update notification and be on your merry way. Check back "
@@ -2042,7 +2070,7 @@ msgid ""
 " off the update notification, on the update notification itself."
 msgstr "*Det finns ingen anledning att uppdatera varje vecka*. Om du är nöjd med hur calibre fungerar så stäng av uppdateringaviseringar och vara på god väg. Återkom för att se om du vill uppdatera en gång om året eller så. Det finns en kryssruta för att stänga av uppdateringsaviseringen, på själva uppdateringsaviseringen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1051
+#: ../../__w/calibre/calibre/manual/faq.rst:1070
 msgid ""
 "calibre downloads currently use :website_base:`about 150TB of bandwidth a "
 "month <dynamic/downloads>`. Implementing automatic updates would greatly "
@@ -2050,7 +2078,7 @@ msgid ""
 " has to pay."
 msgstr "calibre-hämtningar använder för närvarande :website_base:`omkring 150TB bandbredd per månad <dynamic/downloads>`. Att Implementera automatiska uppdateringar skulle avsevärt öka det och i slutändan kosta tusentals dollar i månaden, vilket någon måste betala."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1056
+#: ../../__w/calibre/calibre/manual/faq.rst:1075
 msgid ""
 "If I implement a dialog that downloads the update and launches it, instead "
 "of going to the website as it does now, that would save the most ardent "
@@ -2058,25 +2086,25 @@ msgid ""
 " things to do in calibre development."
 msgstr "Om jag implementerar en dialogruta som hämtar uppdateringen och startar den, istället för att gå till webbplatsen som den gör nu, skulle det spara den ivriga calibre-uppdateraren, *högst fem klick i veckan*. Det finns betydligt högre prioriteringar att göra i calibre-utvecklingen."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1061
+#: ../../__w/calibre/calibre/manual/faq.rst:1080
 msgid ""
 "If you really, really hate downloading calibre every week but still want to "
 "be up to the latest, I encourage you to run from source, which makes "
 "updating trivial. Instructions are :ref:`available here <develop>`."
 msgstr "Om du verkligen, verkligen hatar att hämta calibre varje vecka men ändå vill vara uppdaterad, rekommenderar jag dig att köra från källkod, vilket gör uppdateringen trivial. Instruktioner är :ref:`tillgängliga här <develop>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1065
+#: ../../__w/calibre/calibre/manual/faq.rst:1084
 msgid ""
 "There are third party automatic updaters for calibre made by calibre users "
 "in the `calibre forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
 msgstr "Det finns automatiska tredjepartsuppdaterare för calibre gjorda av calibre-användare på `calibre-forumet <https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1069
+#: ../../__w/calibre/calibre/manual/faq.rst:1088
 msgid "How is calibre licensed?"
 msgstr "Hur är calibre licensierad?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1070
+#: ../../__w/calibre/calibre/manual/faq.rst:1089
 msgid ""
 "calibre is licensed under the GNU General Public License v3 (an open source "
 "license). This means that you are free to redistribute calibre as long as "
@@ -2089,30 +2117,30 @@ msgid ""
 "`The GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 msgstr "calibre licensieras under GNU General Public License v3 (en öppen källkodslicens). Det innebär att du är fri att omdistributera calibre så länge du gör källkoden tillgänglig. Så om du vill lägga calibre på en CD med din produkt måste du också lägga till calibres källkod på CD:en. Källkoden är tillgänglig `för hämtning <https://download.calibre-ebook.com>`_. Du är fri att använda resultaten av konverteringar från calibre hur du vill. Du kan inte använda endera kod eller bibliotek från calibre i ditt program utan att också öppna källkoden för din mjukvara. För mer information, se `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1073
+#: ../../__w/calibre/calibre/manual/faq.rst:1092
 msgid "How do I run calibre from my USB stick?"
 msgstr "Hur kör jag calibre från mitt USB-minne?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1075
+#: ../../__w/calibre/calibre/manual/faq.rst:1094
 msgid ""
 "A portable version of calibre is available :website:`here "
 "<download_portable>`."
 msgstr "En bärbar version av calibre är tillgänglig :website:`här <download_portable>`."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1078
+#: ../../__w/calibre/calibre/manual/faq.rst:1097
 msgid ""
 "How do I run parts of calibre like news download and the Content server on "
 "my own Linux server?"
 msgstr "Hur kör jag delar av calibre som nyhetshämtning och innehållsserver på min egen Linux-server?"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1080
+#: ../../__w/calibre/calibre/manual/faq.rst:1099
 msgid ""
 "First, you must install calibre onto your Linux server. If your server is "
 "using a modern Linux distribution, you should have no problems installing "
 "calibre onto it."
 msgstr "Först måste du installera calibre på din Linux-server. Om din server använder en modern Linux-distribution, borde du inte ha några problem med att installera calibre på den."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1084
+#: ../../__w/calibre/calibre/manual/faq.rst:1103
 msgid ""
 "calibre needs GLIBC >= 2.31 and libstdc++ >= 6.0.28. If you have an older "
 "server, you will either need to compile these from source, or use calibre "
@@ -2126,34 +2154,34 @@ msgid ""
 "cursor0``, ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 msgstr "calibre behöver GLIBC >= 2.31 och libstdc++ >= 6.0.28. Om du har en äldre server behöver du antingen kompilera dessa från källkod, eller använd calibre 3.48 som kräver GLIBC >= 2.17 eller 2.85.1 som kräver GLIBC >= 2.13 eller calibre 1.48 som endast kräver GLIBC >= 2.10. Dessutom, även om kommandoradsverktygen för calibre inte behöver ha en körande X-server, kräver vissa av dem att X-serverbiblioteken är installerade på ditt system. Detta beror på Qt, som används för bildbehandlingsuppgifter, och länkar mot dessa bibliotek. Om du får ett importfel om några Qt-moduler, är det sannolikt att du saknar vissa X-bibliotek. Typiska kandidater är: ``libxcb-cursor0``, ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1095
+#: ../../__w/calibre/calibre/manual/faq.rst:1114
 msgid "You can run the calibre server via the command::"
 msgstr "Du kan köra calibre-servern med kommandot::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1099
+#: ../../__w/calibre/calibre/manual/faq.rst:1118
 msgid "You can download news and convert it into an e-book with the command::"
 msgstr "Du kan hämtar nyheter och konvertera dem till en e-bok med kommandot::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1103
+#: ../../__w/calibre/calibre/manual/faq.rst:1122
 msgid ""
 "If you want to generate MOBI, use :file:`outputfile.mobi` instead and use "
 "``--output-profile kindle``."
 msgstr "Om du vill skapa MOBI, använd istället :file:`outputfile.mobi` och använd ``--output-profile kindle``."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1105
+#: ../../__w/calibre/calibre/manual/faq.rst:1124
 msgid "You can email downloaded news with the command::"
 msgstr "Du kan skicka e-post med hämtade nyheter med kommandot::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1109
+#: ../../__w/calibre/calibre/manual/faq.rst:1128
 msgid ""
 "I leave figuring out the exact command line as an exercise for the reader."
 msgstr "Jag lämnar att lista ut exakt kommandorad som en övning för läsenheten."
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1111
+#: ../../__w/calibre/calibre/manual/faq.rst:1130
 msgid "Finally, you can add downloaded news to the calibre library with::"
 msgstr "Slutligen, du kan lägga till hämtade nyheter i calibre-biblioteket med::"
 
-#: ../../__w/calibre/calibre/manual/faq.rst:1115
+#: ../../__w/calibre/calibre/manual/faq.rst:1134
 msgid ""
 "Remember to read the :ref:`cli` section of the calibre User Manual to learn "
 "more about these, and other commands."

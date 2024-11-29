@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-16 02:50+0000\n"
+"POT-Creation-Date: 2024-11-21 15:47+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -525,11 +525,12 @@ msgstr "ஆட்டோ தூய்மைப்படுத்தும் வ�
 #: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
 msgid ""
 "The simulated browser engine to use when downloading from servers. The "
-"default is to use the Python mechanize browser engine. An alternate is "
-"\"qt\" which will use the network engine from the Qt toolkit. The mechanize "
-"engine supports logging in, the Qt engine does not. However, the Qt engine "
-"supports HTTP/2 and similar technologies and also is harder for bot "
-"interception services to fingerprint."
+"default is to use the Python mechanize browser engine, which supports "
+"logging in. However, if you don't need logging in, consider changing this to"
+" either 'webengine' which uses an actual Chromium browser to do the network "
+"requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and "
+"'qt' support HTTP/2, which mechanize does not and are thus harder to "
+"fingerprint for bot protection services."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -543,10 +544,10 @@ msgstr "உண்மை என்றால் வழிசெலுத்தல�
 msgid ""
 "Set this to False to ignore all scaling and compression parameters and pass "
 "images through unmodified. If True and the other compression parameters are "
-"left at their default values, JPEG images will be scaled to fit in the "
-"screen dimensions set by the output profile and compressed to size at most "
-"(w * h)/16 where w x h are the scaled image dimensions."
-msgstr "அனைத்து அளவிடுதல் மற்றும் சுருக்க அளவுருக்களை புறக்கணிக்க இதை பொய்யாக அமைக்கவும், மாற்றப்படாத மூலம் படங்களை அனுப்பவும். உண்மை மற்றும் பிற சுருக்க அளவுருக்கள் அவற்றின் இயல்புநிலை மதிப்புகளில் விடப்பட்டால், வெளியீட்டு சுயவிவரத்தால் அமைக்கப்பட்ட திரை பரிமாணங்களில் பொருந்தும் வகையில் JPEG படங்கள் அளவிடப்படும் மற்றும் அதிகபட்சமாக (W * H)/16 அளவில் சுருக்கப்படும், அங்கு W x H என்பது அளவிடப்பட்ட பட பரிமாணங்கள் ."
+"left at their default values, images will be scaled to fit in the screen "
+"dimensions set by the output profile and compressed to size at most (w * "
+"h)/16 where w x h are the scaled image dimensions."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1

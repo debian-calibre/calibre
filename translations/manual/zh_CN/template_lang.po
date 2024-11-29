@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-24 00:05+0000\n"
+"POT-Creation-Date: 2024-11-21 15:47+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -214,7 +214,8 @@ msgid ""
 msgstr "仅当该书具有系列索引时才会包含连字符，而该索引仅当它具有系列时才包含。 再次继续 Foundation 示例，模板将生成“Foundation - 1 - Second Foundation”。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:83
-#: ../../__w/calibre/calibre/manual/template_lang.rst:287
+#: ../../__w/calibre/calibre/manual/template_lang.rst:289
+#: ../../__w/calibre/calibre/manual/template_lang.rst:438
 msgid "Notes:"
 msgstr ""
 
@@ -470,296 +471,65 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:169
-msgid ""
-"Some functions require regular expressions. In the template language regular"
-" expression matching is case-insensitive."
+msgid "Notes on calling functions in Single Function Mode:"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:171
 msgid ""
-"In the function documentation below, the notation ``[something]*`` means "
-"that ``something`` can be repeated zero or more times. The notation "
+"When functions are used in Single Function Mode, the first parameter, "
+"``value``, is automatically replaced by the content of the field specified "
+"in the template. For example, when the template ``{title:capitalize()}`` is "
+"processed, the content of the ``title`` field is passed as the parameter "
+"``value`` to the capitalize function."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:172
+msgid ""
+"In the function documentation, the notation ``[something]*`` means that "
+"``something`` can be repeated zero or more times. The notation "
 "``[something]+`` means that the ``something`` is repeated one or more times "
 "(must exist at least one time)."
-msgstr "在下面的函数文档中，符号“[something]*”意味着“something”可以重复零次或多次。 符号“[something]+”表示“something”重复一次或多次（必须至少存在一次）。"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:173
-msgid "The functions intended for use in Single Function Mode are:"
+msgid ""
+"Some functions use regular expressions. In the template language regular "
+"expression matching is case-insensitive."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:176
+#: ../../__w/calibre/calibre/manual/template_lang.rst:175
 msgid ""
-"``capitalize()`` -- returns the value with the first letter upper case and "
-"the rest lower case."
+"Functions are documented in :ref:`template_functions_reference`. The "
+"documentation tells you what arguments the functions require and what the "
+"functions do. For example, here is the documentation of the "
+":ref:`ff_ifempty` function."
 msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:177
-msgid ""
-"``contains(pattern, text if match, text if not match)`` -- checks if the "
-"value is matched by the regular expression ``pattern``. Returns ``text if "
-"match`` if the pattern matches the value, otherwise returns ``text if no "
-"match``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:178
-msgid ""
-"``count(separator)`` -- interprets the value as a list of items separated by"
-" ``separator`` and returns the number of items in the list. Most lists use a"
-" comma as the separator, but ``authors`` uses an ampersand (&). Examples: "
-"``{tags:count(,)}``, ``{authors:count(&)}``. Aliases: ``count()``, "
-"``list_count()``"
-msgstr "``count(separator)`` -- 将值解释为由``separator`` 分隔的项目列表，并返回列表中的项目数。 大多数列表使用逗号作为分隔符，但“作者”使用与号（&）。 示例：``{tags:count(,)}``、``{authors:count(&)}``。 别名：“count()”、“list_count()”"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:179
 msgid ""
-"``format_number(template)`` -- interprets the value as a number and formats "
-"that number using a Python formatting template such as ``{0:5.2f}`` or "
-"``{0:,d}`` or ``${0:5,.2f}``. The formatting template must begin with "
-"``{0:`` and end with ``}`` as in the above examples. Exception: you can "
-"leave off the leading \"{0:\" and trailing \"}\" if the format template "
-"contains only a format. See the template language and the `Python "
-"documentation "
-"<https://docs.python.org/3/library/string.html#formatstrings>`_ for more "
-"examples. Returns the empty string if formatting fails."
-msgstr "``format_number(template)`` -- 将值解释为数字，并使用 Python 格式模板，例如 ``{0:5.2f}`` 或 ``{0:,d}`` 或 ` `${0:5,.2f}``。 格式化模板必须以“{0:”开头并以“}”结尾，如上面的示例所示。 例外：如果格式模板仅包含格式，则可以省略前导“{0:”和尾随“}”。 有关更多示例，请参阅模板语言和“Python 文档 <https://docs.python.org/3/library/string.html#formatstrings>`_”。 如果格式化失败，则返回空字符串。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:180
-msgid ""
-"``human_readable()`` -- expects the value to be a number and returns a "
-"string representing that number in KB, MB, GB, etc."
+"You see that the function requires two arguments, ``value`` and "
+"``text_if_empty``. However, because we are using Single Function Mode, we "
+"omit the ``value`` argument, passing only ``text_if_empty``. For example, "
+"this template::"
 msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:181
-msgid ""
-"``ifempty(text if empty)`` -- if the value is not empty then return the "
-"value of the field, otherwise return `text if empty`."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:182
-msgid ""
-"``in_list(separator, [ pattern, found_val, ]* not_found_val)`` -- interpret "
-"the value as a list of items separated by ``separator``, checking the "
-"``pattern`` against each item in the list. If the ``pattern`` matches an "
-"item then return ``found_val``, otherwise return ``not_found_val``. The pair"
-" ``pattern`` and ``found_value`` can be repeated as many times as desired, "
-"permitting returning different values depending on the item's value. The "
-"patterns are checked in order, and the first match is returned."
-msgstr "``in_list(separator, [pattern,found_val,]* not_found_val)`` -- 将值解释为由``separator`` 分隔的项目列表，并对照列表中的每个项目检查``pattern``。 如果“pattern”与某个项目匹配，则返回“found_val”，否则返回“not_found_val”。 ``pattern`` 和 ``found_value`` 对可以根据需要重复多次，允许根据项目的值返回不同的值。 按顺序检查模式，并返回第一个匹配项。"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:183
 msgid ""
-"``language_strings(localize)`` -- return the `language names "
-"<https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the "
-"`language codes <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_"
-" passed in as the value. Example: ``{languages:language_strings()}``.  If "
-"``localize`` is zero, return the strings in English. If ``localize`` is not "
-"zero, return the strings in the language of the current locale. "
-"``Lang_codes`` is a comma-separated list."
-msgstr "``language_strings(localize)`` -- 返回 `语言代码 <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ 的`语言名称 <https:// www.loc.gov/standards/iso639-2/php/code_list.php>`_ 作为值传入。 示例：“{语言：语言字符串()}”。 如果“localize”为零，则返回英文字符串。 如果“localize”不为零，则返回当前语言环境的字符串。 ``Lang_codes`` 是一个以逗号分隔的列表。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:184
-msgid ""
-"``list_item(index, separator)`` -- interpret the value as a list of items "
-"separated by ``separator``, returning the 'index'th item. The first item is "
-"number zero. The last item has the index ``-1`` as in "
-"``list_item(-1,separator)``. If the item is not in the list, then the empty "
-"string is returned."
-msgstr "``list_item(index,separator)`` -- 将值解释为由``separator`` 分隔的项目列表，返回第 'index' 项。 第一项的编号为零。 最后一项的索引为“-1”，如“list_item(-1,separator)”中所示。 如果该项目不在列表中，则返回空字符串。"
+"shows the tags for a book, if any. If it has no tags then it show `No tags "
+"on this book`."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:185
 msgid ""
-"``lookup([ pattern, key, ]* else_key)`` -- The patterns will be checked "
-"against the value in order. If a pattern matches then the value of the field"
-" named by ``key`` is returned. If no pattern matches then the value of the "
-"field named by ``else_key`` is returned. See``switch`` (below)."
-msgstr "``lookup([pattern, key, ]* else_key)`` -- 将按顺序对照值检查模式。 如果模式匹配，则返回由“key”命名的字段的值。 如果没有模式匹配，则返回由“else_key”命名的字段的值。 请参阅``switch``（如下）。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:186
-msgid "``lowercase()`` -- returns the value of the field in lower case."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:187
-msgid ""
-"``rating_to_stars(use_half_stars)`` -- Returns the rating as string of star "
-"(``★``) characters. The value must be a number between 0 and 5. Set "
-"use_half_stars to 1 if you want half star characters for fractional numbers "
-"available with custom ratings columns."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:188
-msgid ""
-"``re(pattern, replacement)`` -- return the value after applying the regular "
-"expression. All instances of ``pattern`` in the value are replaced with "
-"``replacement``. The template language uses case insensitive `Python regular"
-" expressions <https://docs.python.org/3/library/re.html>`_."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:189
-msgid ""
-"``select(key)`` -- interpret the value as a comma-separated list of items "
-"with each item having the form ``id:value`` (the calibre ``identifier`` "
-"format). The function finds the first pair with the id equal to key and "
-"returns the corresponding value. If no id matches then the function returns "
-"the empty string."
-msgstr "``select(key)`` -- 将值解释为以逗号分隔的项目列表，每个项目的形式为``id:value`` （calibre程序``identifier`` 格式）。 该函数查找 id 等于 key 的第一对并返回相应的值。 如果没有 id 匹配，则该函数返回空字符串。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:190
-msgid ""
-"``shorten(left chars, middle text, right chars)`` -- Return a shortened "
-"version of the value, consisting of ``left chars`` characters from the "
-"beginning of the value, followed by ``middle text``, followed by ``right "
-"chars`` characters from the end of the value. ``Left chars`` and ``right "
-"chars`` must be non-negative integers. Example: assume you want to display "
-"the title with a length of at most 15 characters in length. One template "
-"that does this is ``{title:shorten(9,-,5)}``. For a book with the title "
-"`Ancient English Laws in the Times of Ivanhoe` the result will be `Ancient "
-"E-anhoe`: the first 9 characters of the title, a ``-``, then the last 5 "
-"characters. If the value's length is less than ``left chars`` + ``right "
-"chars`` + the length of ``middle text`` then the value will be returned "
-"unchanged. For example, the title `The Dome` would not be changed."
-msgstr "``shorten(left chars, middle text, right chars)`` -- 返回值的缩短版本，由值开头的 ``left chars`` 字符组成，后跟 ``middle text``， 后跟值末尾的“right chars”字符。 “左字符”和“右字符”必须是非负整数。 示例：假设您要显示的标题长度最多为 15 个字符。 执行此操作的一个模板是“{title:shorten(9,-,5)}”。 对于标题为“艾芬豪时代的古代英国法律”的书，结果将是“Ancient E-anhoe”：标题的前 9 个字符，“-”，然后是最后 5 个字符。 如果值的长度小于“左字符”+“右字符”+“中间文本”的长度，则该值将按原样返回。 例如，标题“The Dome”不会改变。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:191
-msgid ""
-"``str_in_list(separator, [ string, found_val, ]+ not_found_val)`` -- "
-"interpret the value as a list of items separated by ``separator`` then "
-"compare ``string`` against each value in the list. The ``string`` is not a "
-"regular expression. If ``string`` is equal to any item (ignoring case) then "
-"return the corresponding ``found_val``. If ``string`` contains "
-"``separators`` then it is also treated as a list and each subvalue is "
-"checked. The ``string`` and ``found_value`` pairs can be repeated as many "
-"times as desired, permitting returning different values depending on "
-"string's value. If none of the strings match then ``not_found_value`` is "
-"returned. The strings are checked in order. The first match is returned."
-msgstr "``str_in_list(separator, [ string,found_val, ]+ not_found_val)`` -- 将值解释为由``separator`` 分隔的项目列表，然后将``string`` 与列表中的每个值进行比较。 “string”不是正则表达式。 如果“string”等于任何项（忽略大小写），则返回相应的“found_val”。 如果“string”包含“separators”，那么它也被视为一个列表，并且每个子值都会被检查。 “string”和“found_value”对可以根据需要重复多次，允许根据字符串的值返回不同的值。 如果没有任何字符串匹配，则返回“not_found_value”。 按顺序检查字符串。 返回第一个匹配项。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:192
-msgid ""
-"``subitems(start_index, end_index)`` -- This function breaks apart lists of "
-"tag-like hierarchical items such as genres. It interprets the value as a "
-"comma-separated list of tag-like items, where each item is a period-"
-"separated list. It returns a new list made by extracting from each item the "
-"components from ``start_index`` to ``end_index``, then merging the results "
-"back together. Duplicates are removed. The first subitem in a period-"
-"separated list has an index of zero. If an index is negative then it counts "
-"from the end of the list. As a special case, an end_index of zero is assumed"
-" to be the length of the list."
-msgstr "``subitems(start_index, end_index)`` -- 此函数分解类似标签的分层项目列表，例如流派。 它将值解释为以逗号分隔的类似标记的项目列表，其中每个项目都是以句点分隔的列表。 它返回一个新列表，该列表是通过从每个项目中提取从“start_index”到“end_index”的组件，然后将结果合并在一起而形成的。 重复项被删除。 以句点分隔的列表中的第一个子项的索引为零。 如果索引为负数，则从列表末尾开始计数。 作为一种特殊情况，假设 end_index 为零是列表的长度。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:194
-#: ../../__w/calibre/calibre/manual/template_lang.rst:417
-msgid "Examples:"
-msgstr "例如："
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:196
-msgid "Assuming a #genre column containing `A.B.C`:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:198
-msgid "``{#genre:subitems(0,1)}`` returns \"A\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:199
-msgid "``{#genre:subitems(0,2)}`` returns \"A.B\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:200
-msgid "``{#genre:subitems(1,0)}`` returns \"B.C\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:202
-msgid "Assuming a #genre column containing \"A.B.C, D.E\":"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:204
-msgid "``{#genre:subitems(0,1)}`` returns \"A, D\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:205
-msgid "``{#genre:subitems(0,2)}`` returns \"A.B, D.E\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:207
-msgid ""
-"``sublist(start_index, end_index, separator)`` -- interpret the value as a "
-"list of items separated by ``separator``, returning a new list made from the"
-" items from ``start_index`` to ``end_index``. The first item is number zero."
-" If an index is negative, then it counts from the end of the list. As a "
-"special case, an end_index of zero is assumed to be the length of the list."
-msgstr "``sublist（start_index，end_index，separator）`` -- 将值解释为由``separator``分隔的项目列表，返回由``start_index``到``end_index``的项目组成的新列表 。 第一项的编号为零。 如果索引为负数，则从列表末尾开始计数。 作为一种特殊情况，假设 end_index 为零是列表的长度。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:209
-msgid ""
-"Examples assuming that the tags column (which is comma-separated) contains "
-"\"A, B ,C\":"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:211
-msgid "``{tags:sublist(0,1,\\,)}`` returns \"A\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:212
-msgid "``{tags:sublist(-1,0,\\,)}`` returns \"C\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:213
-msgid "``{tags:sublist(0,-1,\\,)}`` returns \"A, B\""
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:215
-msgid ""
-"``swap_around_articles(separator)`` -- returns the value with articles moved"
-" to the end. The value can be a list, in which case each item in the list is"
-" processed. If the value is a list then you must provide the ``separator``. "
-"If no ``separator`` is provided then the value is treated as being a single "
-"value, not a list. The `articles` are those used by calibre to generate the "
-"``title_sort``."
-msgstr "``swap_around_articles(separator)`` -- 返回文章移至末尾的值。 该值可以是一个列表，在这种情况下，列表中的每个项目都会被处理。 如果该值是一个列表，那么您必须提供“分隔符”。 如果未提供“separator”，则该值将被视为单个值，而不是列表。 “articles”是 calibre 用于生成“title_sort”的内容。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:216
-msgid ""
-"``swap_around_comma()`` -- given a value of the form ``B, A``, return ``A "
-"B``. This is most useful for converting names in LN, FN format to FN LN. If "
-"there is no comma in the value then the function returns the value "
-"unchanged."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:217
-msgid ""
-"``switch([pattern, value,]+ else_value)`` -- for each ``pattern, value`` "
-"pair, checks if the value matches the regular expression ``pattern`` and if "
-"so returns the associated ``value``. If no ``pattern`` matches, then "
-"``else_value`` is returned. You can have as many ``pattern, value`` pairs as"
-" you wish. The first match is returned."
-msgstr "``switch([pattern, value,]+ else_value)`` -- 对于每个``pattern, value`` 对，检查该值是否与正则表达式``pattern`` 匹配，如果匹配则返回关联的``value' ``。 如果没有“pattern”匹配，则返回“else_value”。 您可以根据需要拥有任意数量的“模式、值”对。 返回第一个匹配项。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:218
-msgid ""
-"``test(text if not empty, text if empty)`` -- return ``text if not empty`` "
-"if the value is not empty, otherwise return ``text if empty``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:219
-msgid "``titlecase()`` -- returns the value of the field in title case."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:220
-msgid ""
-"``transliterate()`` -- Return a string in a latin alphabet formed by "
-"approximating the sound of the words in the source field. For example, if "
-"the source field is ``Фёдор Миха́йлович Достоевский`` this function returns "
-"``Fiodor Mikhailovich Dostoievskii``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:221
-msgid "``uppercase()`` -- returns the value of the field in upper case."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:223
-msgid "**Using functions and formatting in the same template**"
+"The following functions are usable in Single Function Mode because their "
+"first parameter is ``value``."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:225
+msgid "**Using functions and formatting in the same template**"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:227
 msgid ""
 "Suppose you have an integer custom column ``#myint`` that you want displayed"
 " with leading zeros, as in ``003``. One way to do this is to use a format of"
@@ -770,100 +540,100 @@ msgid ""
 "value back to a zero. The template would be::"
 msgstr "假设您有一个整数自定义列“#myint”，您希望显示前导零，如“003”。 实现此目的的一种方法是使用“0>3s”的格式。 但是，默认情况下，如果数字（整数或浮点数）等于零，则该值将显示为空字符串，因此零值将生成空字符串，而不是“000”。 如果您想查看“000”值，则可以使用格式字符串和“ifempty”函数将空值更改回零。 模板将是："
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:229
+#: ../../__w/calibre/calibre/manual/template_lang.rst:231
 msgid ""
 "Note that you can use the prefix and suffix as well. If you want the number "
 "to appear as ``[003]`` or ``[000]``, then use the template::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:236
+#: ../../__w/calibre/calibre/manual/template_lang.rst:238
 msgid "General Program Mode"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:238
+#: ../../__w/calibre/calibre/manual/template_lang.rst:240
 msgid ""
 "`General Program Mode` (`GPM`) replaces `template expressions` with a "
 "program written in the `template language`. The syntax of the language is "
 "defined by the following grammar::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:289
+#: ../../__w/calibre/calibre/manual/template_lang.rst:291
 msgid ""
 "a ``top_expression`` always has a value. The value of an ``expression_list``"
 " is the value of the last ``top_expression`` in the list. For example, the "
 "value of the expression list ``1;2;'foobar';3`` is ``3``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:290
+#: ../../__w/calibre/calibre/manual/template_lang.rst:292
 msgid "In a logical context, any non-empty value is ``True``"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:291
+#: ../../__w/calibre/calibre/manual/template_lang.rst:293
 msgid "In a logical context, the empty value is ``False``"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:292
+#: ../../__w/calibre/calibre/manual/template_lang.rst:294
 msgid ""
 "Strings and numbers can be used interchangeably. For example, ``10`` and "
 "``'10'`` are the same thing."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:293
+#: ../../__w/calibre/calibre/manual/template_lang.rst:295
 msgid ""
 "Comments are lines starting with a '#' character. Comments beginning later "
 "in a line are not supported."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:295
+#: ../../__w/calibre/calibre/manual/template_lang.rst:297
 msgid "**Operator precedence**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:297
+#: ../../__w/calibre/calibre/manual/template_lang.rst:299
 msgid ""
 "The operator precedence (order of evaluation) from highest (evaluated first)"
 " to lowest (evaluated last) is:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:299
+#: ../../__w/calibre/calibre/manual/template_lang.rst:301
 msgid ""
 "Function calls, constants, parenthesized expressions, statement expressions,"
 " assignment expressions, field references."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:300
+#: ../../__w/calibre/calibre/manual/template_lang.rst:302
 msgid ""
 "Unary plus (``+``) and minus (``-``). These operators evaluate right to "
 "left."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:302
+#: ../../__w/calibre/calibre/manual/template_lang.rst:304
 msgid ""
 "These and all the other arithmetic operators return integers if the "
 "expression results in a fractional part equal to zero. For example, if an "
 "expression returns ``3.0`` it is changed to ``3``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:303
+#: ../../__w/calibre/calibre/manual/template_lang.rst:305
 msgid ""
 "Multiply (``*``) and divide (``/``). These operators are associative and "
 "evaluate left to right. Use parentheses if you want to change the order of "
 "evaluation."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:304
+#: ../../__w/calibre/calibre/manual/template_lang.rst:306
 msgid ""
 "Add (``+``) and subtract (``-``). These operators are associative and "
 "evaluate left to right."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:305
+#: ../../__w/calibre/calibre/manual/template_lang.rst:307
 msgid ""
 "Numeric and string comparisons. These operators return ``'1'`` if the "
 "comparison succeeds, otherwise the empty string (``''``). Comparisons are "
 "not associative: ``a < b < c`` is a syntax error."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:306
+#: ../../__w/calibre/calibre/manual/template_lang.rst:308
 msgid ""
 "String concatenation (``&``). The ``&`` operator returns a string formed by "
 "concatenating the left-hand and right-hand expressions. Example: ``'aaa' & "
@@ -871,13 +641,13 @@ msgid ""
 " to right."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:307
+#: ../../__w/calibre/calibre/manual/template_lang.rst:309
 msgid ""
 "Unary logical not (``!``). This operator returns ``'1'`` if the expression "
 "is False (evaluates to the empty string), otherwise ``''``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:308
+#: ../../__w/calibre/calibre/manual/template_lang.rst:310
 msgid ""
 "Logical and (``&&``). This operator returns '1' if both the left-hand and "
 "right-hand expressions are True, or the empty string ``''`` if either is "
@@ -885,7 +655,7 @@ msgid ""
 "circuiting <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:309
+#: ../../__w/calibre/calibre/manual/template_lang.rst:311
 msgid ""
 "Logical or (``||``). This operator returns ``'1'`` if either the left-hand "
 "or right-hand expression is True, or ``''`` if both are False. It is "
@@ -895,23 +665,23 @@ msgid ""
 "expressions are True."
 msgstr "逻辑或 (``||``)。 如果左侧表达式或右侧表达式为 True，则此运算符返回 ``'1'``；如果均为 False，则返回 ``''``。 它是关联的，从左到右求值，并进行“短路”<https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_。 它是一个“包含或”，如果左侧和右侧表达式都为 True，则返回“'1””。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:311
+#: ../../__w/calibre/calibre/manual/template_lang.rst:313
 msgid "**Field references**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:313
+#: ../../__w/calibre/calibre/manual/template_lang.rst:315
 msgid ""
 "A ``field_reference`` evaluates to the value of the metadata field named by "
 "lookup name that follows the ``$`` or ``$$``. Using ``$`` is equivalent to "
-"using the ``field()`` function. Using ``$$`` is equivalent to using the "
-"``raw_field`` function. Examples::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:320
-msgid "**If expressions**"
+"using the :ref:`ff_field` function. Using ``$$`` is equivalent to using the "
+":ref:`ff_raw_field` function. Examples::"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:322
+msgid "**If expressions**"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:324
 msgid ""
 "``If`` expressions first evaluate the ``condition``. If the ``condition`` is"
 " True (a non-empty value) then the ``expression_list`` in the ``then`` "
@@ -927,55 +697,55 @@ msgid ""
 " if no expression list was evaluated."
 msgstr "``If`` 表达式首先评估``condition``。 如果“condition”为 True（非空值），则评估“then”子句中的“expression_list”。 如果为 False，则评估“elif”或“else”子句中的“expression_list”。 ``elif`` 和 ``else`` 部分是可选的。 单词“if”、“then”、“elif”、“else”和“fi”被保留； 您不能将它们用作标识符名称。 您可以在任何有意义的地方放置换行符和空格。 “condition”是“top_expression”，而不是“expression_list”； 不允许使用分号。 “表达式列表”是以分号分隔的“top_表达式”序列。 ``if`` 表达式返回已计算的 ``expression_list`` 中最后一个 ``top_expression`` 的结果，如果没有计算表达式列表，则返回空字符串。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:324
+#: ../../__w/calibre/calibre/manual/template_lang.rst:326
 msgid "Examples::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:337
+#: ../../__w/calibre/calibre/manual/template_lang.rst:339
 msgid "Nested ``if`` example::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:350
+#: ../../__w/calibre/calibre/manual/template_lang.rst:352
 msgid ""
 "As said above, an ``if`` produces a value. This means that all the following"
 " are equivalent::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:356
+#: ../../__w/calibre/calibre/manual/template_lang.rst:358
 msgid ""
-"As a last example, this program returns the value of the ``series`` column "
-"if the book has a series, otherwise the value of the ``title`` column::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:360
-msgid "**For expressions**"
+"For example, this program returns the value of the ``series`` column if the "
+"book has a series, otherwise the value of the ``title`` column::"
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:362
+msgid "**For expressions**"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:364
 msgid ""
 "The ``for`` expression iterates over a list of values, processing them one "
 "at a time. The ``list_expression`` must evaluate either to a metadata field "
 "``lookup name`` e.g., ``tags`` or ``#genre``, or to a list of values. The "
-":ref:`range() function <range_function>` (see below) generates a list of "
-"numbers. If the result is a valid ``lookup name`` then the field's value is "
-"fetched and the separator specified for that field type is used. If the "
-"result isn't a valid lookup name then it is assumed to be a list of values. "
-"The list is assumed to be separated by commas unless the optional keyword "
-"``separator`` is supplied, in which case the list values must be separated "
-"by the result of evaluating the ``separator_expr``. A separator cannot be "
-"used if the list is generated by ``range()``. Each value in the list is "
-"assigned to the specified variable then the ``expression_list`` is "
-"evaluated. You can use ``break`` to jump out of the loop, and ``continue`` "
-"to jump to the beginning of the loop for the next iteration."
-msgstr "``for`` 表达式迭代一系列值，一次处理一个值。 “list_expression” 必须计算为元数据字段“查找名称”，例如“tags” 或“#genre”，或者计算为值列表。 `range() 函数 1`（见下文）生成一个数字列表。 如果结果是有效的“查找名称”，则将获取字段的值并使用为该字段类型指定的分隔符。 如果结果不是有效的查找名称，则假定它是值列表。 除非提供可选关键字“separator”，否则假定列表以逗号分隔，在这种情况下，列表值必须由评估“separator_expr”的结果分隔。 如果列表是由“range()”生成的，则不能使用分隔符。 列表中的每个值都分配给指定的变量，然后计算“表达式列表”。 您可以使用“break”跳出循环，并使用“continue”跳到循环的开头进行下一次迭代。"
+":ref:`ff_range` generates a list of numbers. If the result is a valid "
+"``lookup name`` then the field's value is fetched and the separator "
+"specified for that field type is used. If the result isn't a valid lookup "
+"name then it is assumed to be a list of values. The list is assumed to be "
+"separated by commas unless the optional keyword ``separator`` is supplied, "
+"in which case the list values must be separated by the result of evaluating "
+"the ``separator_expr``. A separator cannot be used if the list is generated "
+"by ``range()``. Each value in the list is assigned to the specified variable"
+" then the ``expression_list`` is evaluated. You can use ``break`` to jump "
+"out of the loop, and ``continue`` to jump to the beginning of the loop for "
+"the next iteration."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:364
+#: ../../__w/calibre/calibre/manual/template_lang.rst:366
 msgid ""
 "Example: This template removes the first hierarchical name for each value in"
 " Genre (``#genre``), constructing a list with the new names::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:374
+#: ../../__w/calibre/calibre/manual/template_lang.rst:376
 msgid ""
 "If the original Genre is `History.Military, Science Fiction.Alternate "
 "History, ReadMe` then the template returns `Military, Alternate History, "
@@ -985,7 +755,7 @@ msgid ""
 "value to Genre."
 msgstr "如果原始类型是“History.Military, Science Fiction.Alternate History, ReadMe”，则模板将返回“Military, Alternate History, ReadMe”。 您可以在 calibre 的“批量编辑元数据 -> 搜索和替换”中使用此模板，并将“搜索”设置为“模板”，以剥离层次结构的第一级并将结果值分配给类型。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:377
+#: ../../__w/calibre/calibre/manual/template_lang.rst:379
 msgid ""
 "Note: the last line in the template, ``new_tags``, isn't strictly necessary "
 "in this case because ``for`` returns the value of the last top_expression in"
@@ -994,19 +764,19 @@ msgid ""
 "``new_tags``."
 msgstr "注意：在这种情况下，模板中的最后一行“new_tags”并不是绝对必要的，因为“for”返回表达式列表中最后一个 top_expression 的值。 赋值的值是其表达式的值，因此“for”语句的值就是分配给“new_tags”的值。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:379
+#: ../../__w/calibre/calibre/manual/template_lang.rst:381
 msgid "**Function definition**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:381
+#: ../../__w/calibre/calibre/manual/template_lang.rst:383
 msgid ""
-"If you have code in a template that repeats then you can put that code into "
-"a local function. The ``def`` keyword starts the definition. It is followed "
-"by the function name, the argument list, then the code in the function. The "
+"If you have repeated code in a template then you can put that code into a "
+"local function. The ``def`` keyword starts the definition. It is followed by"
+" the function name, the argument list, then the code in the function. The "
 "function definition ends with the ``fed`` keyword."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:383
+#: ../../__w/calibre/calibre/manual/template_lang.rst:385
 msgid ""
 "Arguments are positional. When a function is called the supplied arguments "
 "are matched left to right against the defined parameters, with the value of "
@@ -1016,38 +786,38 @@ msgid ""
 "default value is used, otherwise the parameter is set to the empty string."
 msgstr "参数是立场性的。 调用函数时，提供的参数会从左到右与定义的参数进行匹配，并将参数的值分配给参数。 提供的参数多于定义的参数是错误的。 参数可以有默认值，例如“a = 25”。 如果没有为该参数提供参数，则使用默认值，否则该参数将设置为空字符串。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:385
+#: ../../__w/calibre/calibre/manual/template_lang.rst:387
 msgid "The ``return`` statement can be used in a local function."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:387
+#: ../../__w/calibre/calibre/manual/template_lang.rst:389
 msgid "A function must be defined before it can be used."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:389
+#: ../../__w/calibre/calibre/manual/template_lang.rst:391
 msgid ""
 "Example: This template computes an approximate duration in years, months, "
 "and days from a number of days. The function ``to_plural()`` formats the "
 "computed values. Note that the example also uses the ``&`` operator::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:404
+#: ../../__w/calibre/calibre/manual/template_lang.rst:406
 msgid "**Relational operators**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:406
+#: ../../__w/calibre/calibre/manual/template_lang.rst:408
 msgid ""
 "Relational operators return ``'1'`` if the comparison is true, otherwise the"
-" empty string ('')."
+" empty string (``''``)."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:408
+#: ../../__w/calibre/calibre/manual/template_lang.rst:410
 msgid ""
 "There are two forms of relational operators: string comparisons and numeric "
 "comparisons."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:410
+#: ../../__w/calibre/calibre/manual/template_lang.rst:412
 msgid ""
 "String comparisons do case-insensitive string comparison using lexical "
 "order. The supported string comparison operators are ``==``, ``!=``, ``<``, "
@@ -1057,7 +827,7 @@ msgid ""
 "left-hand regular expression matches the value of the right hand expression."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:413
+#: ../../__w/calibre/calibre/manual/template_lang.rst:415
 msgid ""
 "The ``inlist`` operator is true if the left hand regular expression matches "
 "any one of the items in the right hand list where the items in the list are "
@@ -1072,7 +842,7 @@ msgid ""
 " regular expressions are case-insensitive."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:415
+#: ../../__w/calibre/calibre/manual/template_lang.rst:417
 msgid ""
 "The numeric comparison operators are ``==#``, ``!=#``, ``<#``, ``<=#``, "
 "``>#``, ``>=#``. The left and right expressions must evaluate to numeric "
@@ -1081,19 +851,23 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:419
+msgid "Examples:"
+msgstr "例如："
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:421
 msgid ""
 "``program: field('series') == 'foo'`` returns ``'1'`` if the book's series "
-"is 'foo', otherwise ``''``."
+"is `foo`, otherwise ``''``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:420
+#: ../../__w/calibre/calibre/manual/template_lang.rst:422
 msgid ""
 "``program: 'f.o' in field('series')`` returns ``'1'`` if the book's series "
 "matches the regular expression ``f.o`` (e.g., `foo`, `Off Onyx`, etc.), "
 "otherwise ``''``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:421
+#: ../../__w/calibre/calibre/manual/template_lang.rst:423
 msgid ""
 "``program: 'science' inlist $#genre`` returns ``'1'`` if any of the values "
 "retrieved from the book's genres match the regular expression ``science``, "
@@ -1101,7 +875,7 @@ msgid ""
 "``''``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:422
+#: ../../__w/calibre/calibre/manual/template_lang.rst:424
 msgid ""
 "``program: '^science$' inlist $#genre`` returns ``'1'`` if any of the book's"
 " genres exactly match the regular expression ``^science$``, e.g., `Science`,"
@@ -1109,21 +883,21 @@ msgid ""
 "don't match."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:423
+#: ../../__w/calibre/calibre/manual/template_lang.rst:425
 msgid ""
 "``program: 'asimov' inlist $authors`` returns ``'1'`` if any author matches "
 "the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac Asimov`, "
 "otherwise ``''``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:424
+#: ../../__w/calibre/calibre/manual/template_lang.rst:426
 msgid ""
 "``program: 'asimov' inlist_field 'authors'`` returns ``'1'`` if any author "
 "matches the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac "
 "Asimov`, otherwise ``''``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:425
+#: ../../__w/calibre/calibre/manual/template_lang.rst:427
 msgid ""
 "``program: 'asimov$' inlist_field 'authors'`` returns ``'1'`` if any author "
 "matches the regular expression ``asimov$``, e.g., `Isaac Asimov`, otherwise "
@@ -1131,1030 +905,63 @@ msgid ""
 "regular expression."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:426
-#: ../../__w/calibre/calibre/manual/template_lang.rst:427
-msgid ""
-"``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns"
-" ``'bar'`` if the book's series is not ``foo``. Otherwise it returns "
-"``'mumble'``."
-msgstr ""
-
 #: ../../__w/calibre/calibre/manual/template_lang.rst:428
 msgid ""
-"``program: if field('series') == 'foo' || field('series') == '1632' then "
-"'yes' else 'no' fi`` returns ``'yes'`` if series is either ``'foo'`` or "
-"``'1632'``, otherwise ``'no'``."
+"``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns"
+" ``'bar'`` if the book's series is not `foo`. Otherwise it returns "
+"``'mumble'``."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:429
 msgid ""
-"``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` "
-"returns ``'yes'`` if series is either ``'foo'`` or ``'1632'``, otherwise "
-"``'no'``."
+"``program: if field('series') == 'foo' || field('series') == '1632' then "
+"'yes' else 'no' fi`` returns ``'yes'`` if series is either `foo` or `1632`, "
+"otherwise ``'no'``."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:430
+msgid ""
+"``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` "
+"returns ``'yes'`` if series is either `foo` or `1632`, otherwise ``'no'``."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:431
 msgid ""
 "``program: if 11 > 2 then 'yes' else 'no' fi`` returns ``'no'`` because the "
 "``>`` operator does a lexical comparison."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:431
+#: ../../__w/calibre/calibre/manual/template_lang.rst:432
 msgid ""
 "``program: if 11 ># 2 then 'yes' else 'no' fi`` returns ``'yes'`` because "
 "the ``>#`` operator does a numeric comparison."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:433
-msgid "**Additional available functions**"
+#: ../../__w/calibre/calibre/manual/template_lang.rst:434
+msgid "**Functions in General Program Mode**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:435
+#: ../../__w/calibre/calibre/manual/template_lang.rst:436
 msgid ""
-"The following functions are available in addition to those described in "
-":ref:`Single Function Mode <single_mode>`."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:437
-msgid ""
-"In `GPM` the functions described in `Single Function Mode` all require an "
-"additional first parameter specifying the value to operate upon. All "
-"parameters are expression_lists (see the grammar above)."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:439
-msgid ""
-"``add(x [, y]*)`` -- returns the sum of its arguments. Throws an exception "
-"if an argument is not a number. In most cases you can use the ``+`` operator"
-" instead of this function."
+"See :ref:`template_functions_reference` for the list of functions built into"
+" the template language."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:440
 msgid ""
-"``and(value [, value]*)`` -- returns the string \"1\" if all values are not "
-"empty, otherwise returns the empty string. You can have as many values as "
-"you want. In most cases you can use the ``&&`` operator instead of this "
-"function.  One reason not to replace ``and`` with ``&&`` is if short-"
-"circuiting can change the results because of side effects. For example, "
-"``and(a='',b=5)`` will always do both assignments, where the ``&&`` operator"
-" won't do the second."
-msgstr "``and(value [, value]*)`` -- 如果所有值都不为空，则返回字符串“1”，否则返回空字符串。 您可以拥有任意多个值。 在大多数情况下，您可以使用“&&”运算符来代替此函数。 不将“and”替换为“&&”的原因之一是短路是否会因副作用而改变结果。 例如，“and(a='',b=5)”将始终执行两个赋值操作，而“&&”运算符不会执行第二个操作。"
+"As opposed to :ref:`Single Function Mode <single_mode>`, in General Program "
+"Mode you must specify the first parameter ``value``."
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:441
-msgid ""
-"``assign(id, val)`` -- assigns ``val`` to ``id``, then returns ``val``. "
-"``id`` must be an identifier, not an expression. In most cases you can use "
-"the ``=`` operator instead of this function."
+msgid "All parameters are expression_lists (see the grammar above)."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:442
-msgid ""
-"``approximate_formats()`` -- return a comma-separated list of formats "
-"associated with the book. There is no guarantee that the list is correct, "
-"although it probably is. This and other zero-parameter functions can be "
-"called in Template Program Mode (see below) using the template "
-"``{:'approximate_formats()'}``. Note that resulting format names are always "
-"uppercase, as in EPUB. The ``approximate_formats()`` function is "
-"significantly faster than the ``formats_...`` functions discussed below."
-msgstr "``approximate_formats()`` -- 返回与书籍关联的以逗号分隔的格式列表。 尽管可能是正确的，但不能保证该列表是正确的。 可以使用模板``{:'approximate_formats()'}`` 在模板程序模式（见下文）中调用此函数和其他零参数函数。 请注意，生成的格式名称始终为大写，如 EPUB 中那样。 “approximate_formats()”函数比下面讨论的“formats_...”函数要快得多。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:443
-msgid ""
-"``author_links(val_separator, pair_separator)`` -- returns a string "
-"containing a list of authors and those authors' link values in the form::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:447
-msgid ""
-"An author is separated from its link value by the ``val_separator`` string "
-"with no added spaces. ``author:linkvalue`` pairs are separated by the "
-"``pair_separator`` string argument with no added spaces. It is up to you to "
-"choose separator strings that do not occur in author names or links. An "
-"author is included even if the author link is empty."
-msgstr "作者与其链接值由“val_separator”字符串分隔，不添加空格。 “author:linkvalue” 对由 “pair_separator” 字符串参数分隔，不添加空格。 您可以选择不出现在作者姓名或链接中的分隔符字符串。 即使作者链接为空，也会包含作者。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:448
-msgid ""
-"``author_sorts(val_separator)`` -- returns a string containing a list of "
-"author's sort values for the authors of the book. The sort is the one in the"
-" author metadata information (different from the author_sort in books). The "
-"returned list has the form ``author sort 1`` ``val_separator`` ``author sort"
-" 2`` etc. with no added spaces. The author sort values in this list are in "
-"the same order as the authors of the book. If you want spaces around "
-"``val_separator`` then include them in the ``val_separator`` string."
-msgstr "``author_sorts(val_separator)`` -- 返回一个字符串，其中包含书籍作者的作者排序值列表。 排序是作者元数据信息中的排序（与书籍中的author_sort不同）。 返回的列表的形式为``author sort 1`` ``val_separator`` ``author sort 2`` 等，不添加空格。 此列表中的作者排序值与书籍作者的顺序相同。 如果您想要“val_separator”周围有空格，则将它们包含在“val_separator”字符串中。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:449
-msgid ""
-"``book_count(query, use_vl)`` -- returns the count of books found by "
-"searching for ``query``. If ``use_vl`` is ``0`` (zero) then virtual "
-"libraries are ignored. This function and its companion ``book_values()`` are"
-" particularly useful in template searches, supporting searches that combine "
-"information from many books such as looking for series with only one book. "
-"It cannot be used in composite columns unless the tweak "
-"``allow_template_database_functions_in_composites`` is set to True. It can "
-"be used only in the GUI."
-msgstr "``book_count(query, use_vl)`` -- 返回通过搜索 ``query`` 找到的书籍数量。 如果“use_vl”为“0”（零），则虚拟库将被忽略。 此函数及其同伴“book_values()”在模板搜索中特别有用，支持组合多本书信息的搜索，例如查找仅包含一本书的系列。 除非将“allow_template_database_functions_in_composites”调整设置为 True，否则它不能在复合列中使用。 它只能在 GUI 中使用。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:451
-msgid ""
-"For example this template search uses this function and its companion to "
-"find all series with only one book:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:453
-msgid ""
-"Define a stored template (using :guilabel:`Preferences->Advanced->Template "
-"functions`) named ``series_only_one_book`` (the name is arbitrary). The "
-"template is::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:468
-msgid ""
-"The first time the template runs (the first book checked) it stores the "
-"results of the database lookups in a ``global`` template variable named "
-"``vals``. These results are used to check subsequent books without redoing "
-"the lookups."
-msgstr "模板第一次运行时（检查的第一本书）它将数据库查找的结果存储在名为“vals”的“global”模板变量中。 这些结果用于检查后续书籍，而无需重新查找。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:470
-msgid "Use the stored template in a template search::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:474
-msgid ""
-"Using a stored template instead of putting the template into the search "
-"eliminates problems caused by the requirement to escape quotes in search "
-"expressions."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:475
-msgid ""
-"``book_values(column, query, sep, use_vl)`` -- returns a list of the unique "
-"values contained in the column ``column`` (a lookup name), separated by "
-"``sep``, in the books found by searching for ``query``. If ``use_vl`` is "
-"``0`` (zero) then virtual libraries are ignored. This function and its "
-"companion ``book_count()`` are particularly useful in template searches, "
-"supporting searches that combine information from many books such as looking"
-" for series with only one book. It cannot be used in composite columns "
-"unless the tweak ``allow_template_database_functions_in_composites`` is set "
-"to True. It can be used only in the GUI."
-msgstr "``book_values(column, query, sep, use_vl)`` -- 返回列 ``column`` （查找名称）中包含的唯一值的列表，以 ``sep`` 分隔，在找到的书中 通过搜索“查询”。 如果“use_vl”为“0”（零），则虚拟库将被忽略。 该函数及其同伴“book_count()”在模板搜索中特别有用，支持组合多本书信息的搜索，例如查找仅包含一本书的系列。 除非将“allow_template_database_functions_in_composites”调整设置为 True，否则它不能在复合列中使用。 它只能在 GUI 中使用。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:476
-msgid ""
-"``booksize()`` -- returns the value of the calibre 'size' field. Returns '' "
-"if there are no formats."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:477
-msgid ""
-"``check_yes_no(field_name, is_undefined, is_false, is_true)`` -- checks if "
-"the value of the yes/no field named by the lookup name ``field_name`` is one"
-" of the values specified by the parameters, returning ``'yes'`` if a match "
-"is found otherwise returning the empty string. Set the parameter "
-"``is_undefined``, ``is_false``, or ``is_true`` to 1 (the number) to check "
-"that condition, otherwise set it to 0. Example:"
-msgstr "``check_yes_no(field_name, is_undefined, is_false, is_true)`` -- 检查由查找名称 ``field_name`` 命名的是/否字段的值是否是参数指定的值之一，返回 ``' yes'`` 如果找到匹配项，否则返回空字符串。 将参数“is_undefined”、“is_false”或“is_true”设置为 1（数字）以检查该条件，否则将其设置为 0。示例："
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:479
-msgid ""
-"``check_yes_no(\"#bool\", 1, 0, 1)`` returns ``'Yes'`` if the yes/no field "
-"``#bool`` is either True or undefined (neither True nor False)."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:481
-msgid ""
-"More than one of ``is_undefined``, ``is_false``, or ``is_true`` can be set "
-"to 1."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:482
-msgid ""
-"``ceiling(x)`` -- returns the smallest integer greater than or equal to "
-"``x``. Throws an exception if ``x`` is not a number."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:483
-msgid ""
-"``character(character_name)`` -- returns the character named by "
-"character_name. For example, ``character('newline')`` returns a newline "
-"character (``'\\n'``). The supported character names are ``newline``, "
-"``return``, ``tab``, and ``backslash``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:484
-msgid ""
-"``cmp(x, y, lt, eq, gt)`` -- compares ``x`` and ``y`` after converting both "
-"to numbers. Returns ``lt`` if ``x <# y``, ``eq`` if ``x ==# y``, otherwise "
-"``gt``. This function can usually be replaced with one of the numeric "
-"compare operators (``==#``, ``<#``, ``>#``, etc)."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:485
-msgid ""
-"``connected_device_name(storage_location_key)`` -- if a device is connected "
-"then return the device name, otherwise return the empty string. Each storage"
-" location on a device has its own device name. The ``storage_location_key`` "
-"names are ``'main'``, ``'carda'`` and ``'cardb'``. This function works only "
-"in the GUI."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:486
-msgid ""
-"``connected_device_uuid(storage_location_key)`` -- if a device is connected "
-"then return the device uuid (unique id), otherwise return the empty string. "
-"Each storage location on a device has a different uuid. The "
-"``storage_location_key`` location names are ``'main'``, ``'carda'`` and "
-"``'cardb'``. This function works only in the GUI."
-msgstr "``connected_device_uuid(storage_location_key)`` -- 如果设备已连接，则返回设备 uuid（唯一 ID），否则返回空字符串。 设备上的每个存储位置都有不同的 uuid。 ``storage_location_key`` 位置名称为``'main'``、``'carda'`` 和``'cardb'``。 此功能仅在 GUI 中有效。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:487
-msgid ""
-"``current_library_name()`` -- return the last name on the path to the "
-"current calibre library."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:488
-msgid ""
-"``current_library_path()`` -- return the full path to the current calibre "
-"library."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:489
-msgid ""
-"``current_virtual_library_name()`` -- return the name of the current virtual"
-" library if there is one, otherwise the empty string. Library name case is "
-"preserved. Example: ``program: current_virtual_library_name()``. This "
-"function works only in the GUI."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:490
-msgid ""
-"``date_arithmetic(date, calc_spec, fmt)`` -- Calculate a new date from "
-"``date`` using ``calc_spec``. Return the new date formatted according to "
-"optional ``fmt``: if not supplied then the result will be in ISO format. The"
-" calc_spec is a string formed by concatenating pairs of ``vW`` "
-"(``valueWhat``) where ``v`` is a possibly-negative number and W is one of "
-"the following letters:"
-msgstr "``date_arithmetic(date, calc_spec, fmt)`` -- 使用 ``calc_spec`` 从 ``date`` 计算新日期。 返回根据可选“fmt”格式化的新日期：如果未提供，则结果将采用 ISO 格式。 calc_spec 是由一对“vW”（“valueWhat”）连接而成的字符串，其中“v”是可能为负数，W 是以下字母之一："
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:492
-msgid "``s``: add ``v`` seconds to ``date``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:493
-msgid "``m``: add ``v`` minutes to ``date``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:494
-msgid "``h``: add ``v`` hours to ``date``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:495
-msgid "``d``: add ``v`` days to ``date``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:496
-msgid "``w``: add ``v`` weeks to ``date``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:497
-msgid "``y``: add ``v`` years to ``date``, where a year is 365 days."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:499
-msgid ""
-"Example: ``'1s3d-1m'`` will add 1 second, add 3 days, and subtract 1 minute "
-"from ``date``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:500
-msgid ""
-"``days_between(date1, date2)`` -- return the number of days between "
-"``date1`` and ``date2``. The number is positive if ``date1`` is greater than"
-" ``date2``, otherwise negative. If either ``date1`` or ``date2`` are not "
-"dates, the function returns the empty string."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:501
-msgid ""
-"``divide(x, y)`` -- returns ``x / y``. Throws an exception if either ``x`` "
-"or ``y`` are not numbers. This function can usually be replaced by the ``/``"
-" operator."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:502
-msgid ""
-"``eval(string)`` -- evaluates the string as a program, passing the local "
-"variables. This permits using the template processor to construct complex "
-"results from local variables. In :ref:`Template Program Mode "
-"<template_mode>`, because the `{` and `}` characters are interpreted before "
-"the template is evaluated you must use `[[` for the `{` character and `]]` "
-"for the ``}`` character. They are converted automatically. Note also that "
-"prefixes and suffixes (the `|prefix|suffix` syntax) cannot be used in the "
-"argument to this function when using :ref:`Template Program Mode "
-"<template_mode>`."
-msgstr "``eval(string)`` -- 将字符串作为程序求值，传递局部变量。 这允许使用模板处理器从局部变量构造复杂的结果。 在“模板程序模式 <template_mode>”中，由于在评估模板之前解释“{”和“}”字符，因此必须对“{”字符使用“[[”，对“}”使用“]]” 特点。 它们会自动转换。 另请注意，使用“模板程序模式 <template_mode>”时，不能在此函数的参数中使用前缀和后缀（“|prefix|suffix”语法）。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:503
-msgid ""
-"``extra_file_size(file_name)`` -- returns the size in bytes of the extra "
-"file ``file_name`` in the book's ``data/`` folder if it exists, otherwise "
-"``-1``. See also the functions ``has_extra_files()``, ``extra_file_names()``"
-" and ``extra_file_modtime()``. This function can be used only in the GUI."
-msgstr "``extra_file_size(file_name)`` -- 返回书籍的``data/`` 文件夹中额外文件``file_name`` 的大小，如果存在，否则返回``-1``。 另请参见函数“has_extra_files()”、“extra_file_names()”和“extra_file_modtime()”。 该功能只能在 GUI 中使用。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:504
-msgid ""
-"``extra_file_modtime(file_name, format_string)`` -- returns the modification"
-" time of the extra file ``file_name`` in the book's ``data/`` folder if it "
-"exists, otherwise ``-1``. The modtime is formatted according to "
-"``format_string`` (see ``format_date()`` for details). If ``format_string`` "
-"is the empty string, returns the modtime as the floating point number of "
-"seconds since the epoch.  See also the functions ``has_extra_files()``, "
-"``extra_file_names()`` and ``extra_file_size()``. The epoch is OS dependent."
-" This function can be used only in the GUI."
-msgstr "``extra_file_modtime(file_name, format_string)`` -- 返回书籍的``data/`` 文件夹中额外文件``file_name`` 的修改时间，如果存在，否则返回``-1``。 modtime 根据“format_string”进行格式化（有关详细信息，请参阅“format_date()”）。 如果“format_string”是空字符串，则返回 modtime 作为自纪元以来的浮点数秒数。 另请参见函数“has_extra_files()”、“extra_file_names()”和“extra_file_size()”。 纪元取决于操作系统。 该功能只能在 GUI 中使用。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:505
-msgid ""
-"``extra_file_names(sep [, pattern])`` -- returns a ``sep``-separated list of"
-" extra files in the book's ``data/`` folder. If the optional parameter "
-"``pattern``, a regular expression, is supplied then the list is filtered to "
-"files that match ``pattern``. The pattern match is case insensitive. See "
-"also the functions ``has_extra_files()``, ``extra_file_modtime()`` and "
-"``extra_file_size()``. This function can be used only in the GUI."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:506
-msgid ""
-"``field(lookup_name)`` -- returns the value of the metadata field with "
-"lookup name ``lookup_name``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:507
-msgid ""
-"``field_exists(lookup_name)`` -- checks if a field (column) with the lookup "
-"name ``lookup_name`` exists, returning ``'1'`` if so and the empty string if"
-" not."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:508
-msgid ""
-"``finish_formatting(val, fmt, prefix, suffix)`` -- apply the format, prefix,"
-" and suffix to a value in the same way as done in a template like "
-"``{series_index:05.2f| - |- }``. This function is provided to ease "
-"conversion of complex single-function- or template-program-mode templates to"
-" `GPM` Templates. For example, the following program produces the same "
-"output as the above template::"
-msgstr "``finish_formatting(val, fmt, prefix, suffix)`` -- 将格式、前缀和后缀应用于值，其方式与在诸如 ``{series_index:05.2f|' 等模板中执行的方式相同 - |- }``。 提供此功能是为了轻松地将复杂的单功能或模板程序模式模板转换为“GPM”模板。 例如，以下程序产生与上述模板相同的输出："
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:512
-msgid ""
-"Another example: for the template "
-"``{series:re(([^\\s])[^\\s]+(\\s|$),\\1)}{series_index:0>2s| - | - "
-"}{title}`` use::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:521
-msgid ""
-"``first_matching_cmp(val, [ cmp, result, ]* else_result)`` -- compares ``val"
-" < cmp`` in sequence, returning the associated result for the first "
-"comparison that succeeds. Returns else_result if no comparison succeeds. "
-"Example::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:526
-msgid ""
-"returns ``\"large\"``. The same example with a first value of 16 returns "
-"``\"giant\"``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:528
-msgid ""
-"``first_non_empty(value [, value]*)`` -- returns the first ``value`` that is"
-" not empty. If all values are empty, then the empty string is returned. You "
-"can have as many values as you want."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:529
-msgid ""
-"``floor(x)`` -- returns the largest integer less than or equal to ``x``. "
-"Throws an exception if ``x`` is not a number."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:530
-msgid ""
-"``format_date(val, format_string)`` -- format the value, which must be a "
-"date string, using the format_string, returning a string. The formatting "
-"codes are:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:532
-msgid "``d    :`` the day as number without a leading zero (1 to 31)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:533
-msgid "``dd   :`` the day as number with a leading zero (01 to 31)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:534
-msgid "``ddd  :`` the abbreviated localized day name (e.g. \"Mon\" to \"Sun\")."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:535
-msgid "``dddd :`` the long localized day name (e.g. \"Monday\" to \"Sunday\")."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:536
-msgid "``M    :`` the month as number without a leading zero (1 to 12)."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:537
-msgid "``MM   :`` the month as number with a leading zero (01 to 12)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:538
-msgid "``MMM  :`` the abbreviated localized month name (e.g. \"Jan\" to \"Dec\")."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:539
-msgid "``MMMM :`` the long localized month name (e.g. \"January\" to \"December\")."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:540
-msgid "``yy   :`` the year as two digit number (00 to 99)."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:541
-msgid "``yyyy :`` the year as four digit number."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:542
-msgid ""
-"``h    :`` the hours without a leading 0 (0 to 11 or 0 to 23, depending on "
-"am/pm)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:543
-msgid ""
-"``hh   :`` the hours with a leading 0 (00 to 11 or 00 to 23, depending on "
-"am/pm)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:544
-msgid "``m    :`` the minutes without a leading 0 (0 to 59)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:545
-msgid "``mm   :`` the minutes with a leading 0 (00 to 59)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:546
-msgid "``s    :`` the seconds without a leading 0 (0 to 59)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:547
-msgid "``ss   :`` the seconds with a leading 0 (00 to 59)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:548
-msgid ""
-"``ap   :`` use a 12-hour clock instead of a 24-hour clock, with 'ap' "
-"replaced by the localized string for am or pm."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:549
-msgid ""
-"``AP   :`` use a 12-hour clock instead of a 24-hour clock, with 'AP' "
-"replaced by the localized string for AM or PM."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:550
-msgid ""
-"``iso  :`` the date with time and timezone. Must be the only format present."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:551
-msgid ""
-"``to_number   :`` convert the date & time into a floating point number (a "
-"`timestamp`)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:552
-msgid ""
-"``from_number :`` convert a floating point number (a `timestamp`) into an "
-"``iso`` formatted date. If you want a different date format then add the "
-"desired formatting string after ``from_number`` and a colon (``:``). "
-"Example: ``from_number:MMM dd yyyy``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:554
-msgid ""
-"You might get unexpected results if the date you are formatting contains "
-"localized month names, which can happen if you changed the date format "
-"tweaks to contain ``MMMM``. In this case, instead of using the ``field()`` "
-"function as in::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:558
-msgid "use the ``raw_field()`` function as in::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:562
-msgid ""
-"``field_format_date(field_name, format_string)`` -- format the value in the "
-"field ``field_name``, which must be the lookup name of date field, either "
-"standard or custom. See ``format_date()`` for the formatting codes. This "
-"function is much faster than format_date and should be used when you are "
-"formatting the value in a field (column). It can't be used for computed "
-"dates or dates in string variables. Alias: format_date_field. Examples::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:567
-msgid ""
-"``formats_modtimes(date_format_string)`` -- return a comma-separated list of"
-" colon-separated items ``FMT:DATE`` representing modification times for the "
-"formats of a book. The ``date_format_string`` parameter specifies how the "
-"date is to be formatted. See the ``format_date()`` function for details. You"
-" can use the ``select`` function to get the modification time for a specific"
-" format. Note that format names are always uppercase, as in EPUB."
-msgstr "``formats_modtimes(date_format_string)`` -- 返回以冒号分隔的项目的逗号分隔列表 ``FMT:DATE`` 表示书籍格式的修改时间。 “date_format_string”参数指定日期的格式。 有关详细信息，请参阅“format_date()”函数。 您可以使用“select”函数来获取特定格式的修改时间。 请注意，格式名称始终为大写，如 EPUB 中那样。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:568
-msgid ""
-"``formats_paths()`` -- return a comma-separated list of colon-separated "
-"items ``FMT:PATH`` giving the full path to the formats of a book. You can "
-"use the select function to get the path for a specific format. Note that "
-"format names are always uppercase, as in EPUB."
-msgstr "``formats_paths()`` -- 返回以冒号分隔的项目的逗号分隔列表 ``FMT:PATH`` 给出书籍格式的完整路径。 您可以使用 select 函数来获取特定格式的路径。 请注意，格式名称始终为大写，如 EPUB 中那样。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:569
-msgid ""
-"``formats_sizes()`` -- return a comma-separated list of colon-separated "
-"``FMT:SIZE`` items giving the sizes in bytes of the formats of a book. You "
-"can use the select function to get the size for a specific format. Note that"
-" format names are always uppercase, as in EPUB."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:570
-msgid ""
-"``fractional_part(x)`` -- returns the value after the decimal point. For "
-"example, ``fractional_part(3.14)`` returns ``0.14``. Throws an exception if "
-"``x`` is not a number."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:571
-msgid ""
-"``get_link(field_name, field_value)`` -- fetch the link for field "
-"``field_name`` with value ``field_value``. If there is no attached link, "
-"return the empty string. Examples:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:573
-msgid "The following returns the link attached to the tag ``Fiction``::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:577
-msgid ""
-"This template makes a list of the links for all the tags associated with a "
-"book in the form ``value:link, ...``::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:589
-msgid ""
-"``get_note(field_name, field_value, plain_text)`` -- fetch the note for "
-"field 'field_name' with value 'field_value'. If `plain_text` is empty, "
-"return the note's HTML including images. If `plain_text` is `1` (or `'1'`), "
-"return the note's plain text. If the note doesn't exist, return the empty "
-"string in both cases. Example:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:591
-msgid "Return the HTML of the note attached to the tag `Fiction`::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:596
-msgid ""
-"Return the plain text of the note attached to the author `Isaac Asimov`::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:602
-msgid ""
-"``has_cover()`` -- return ``'Yes'`` if the book has a cover, otherwise the "
-"empty string."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:603
-msgid ""
-"``has_extra_files([pattern])`` -- returns the count of extra files, "
-"otherwise '' (the empty string). If the optional parameter ``pattern`` (a "
-"regular expression) is supplied then the list is filtered to files that "
-"match ``pattern`` before the files are counted. The pattern match is case "
-"insensitive. See also the functions ``extra_file_names()``, "
-"``extra_file_size()`` and ``extra_file_modtime()``. This function can be "
-"used only in the GUI."
-msgstr "``has_extra_files([pattern])`` -- 返回额外文件的计数，否则返回 '' （空字符串）。 如果提供了可选参数“pattern”（正则表达式），则在对文件进行计数之前，列表将被过滤为与“pattern”匹配的文件。 模式匹配不区分大小写。 另请参见函数“extra_file_names()”、“extra_file_size()”和“extra_file_modtime()”。 该功能只能在 GUI 中使用。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:604
-msgid ""
-"``identifier_in_list(val, id_name [, found_val, not_found_val])`` -- treat "
-"``val`` as a list of identifiers separated by commas. An identifier has the "
-"format ``id_name:value``. The ``id_name`` parameter is the id_name text to "
-"search for, either ``id_name`` or ``id_name:regexp``. The first case matches"
-" if there is any identifier matching that id_name. The second case matches "
-"if id_name matches an identifier and the regexp matches the identifier's "
-"value. If ``found_val`` and ``not_found_val`` are provided then if there is "
-"a match then return ``found_val``, otherwise return ``not_found_val``. If "
-"``found_val`` and ``not_found_val`` are not provided then if there is a "
-"match then return the ``identifier:value`` pair, otherwise the empty string "
-"(``''``)."
-msgstr "``identifier_in_list(val, id_name [,found_val, not_found_val])`` -- 将 ``val`` 视为以逗号分隔的标识符列表。 标识符的格式为“id_name:value”。 ``id_name`` 参数是要搜索的 id_name 文本，可以是 ``id_name`` 或 ``id_name:regexp``。 如果有任何标识符与 id_name 匹配，则第一种情况匹配。 如果 id_name 与标识符匹配并且正则表达式与标识符的值匹配，则第二种情况匹配。 如果提供了“found_val”和“not_found_val”，则如果存在匹配则返回“found_val”，否则返回“not_found_val”。 如果未提供 ``found_val`` 和 ``not_found_val`` ，则如果存在匹配则返回 ``identifier:value`` 对，否则返回空字符串 (``''``)。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:605
-msgid ""
-"``is_dark_mode()`` -- returns ``'1'`` if calibre is running in dark mode, "
-"``''`` (the empty string) otherwise. This function can be used in advanced "
-"color and icon rules to choose different colors/icons according to the mode."
-" Example::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:609
-msgid ""
-"``is_marked()`` -- check whether the book is `marked` in calibre. If it is "
-"then return the value of the mark, either ``'true'`` (lower case) or a "
-"comma-separated list of named marks. Returns ``''`` (the empty string) if "
-"the book is not marked. This function works only in the GUI."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:610
-msgid ""
-"``language_codes(lang_strings)`` -- return the `language codes "
-"<https://www.loc.gov/standards/iso639-2/php/code_list.php>`_ for the "
-"language names passed in `lang_strings`. The strings must be in the language"
-" of the current locale. ``Lang_strings`` is a comma-separated list."
-msgstr "``language_codes(lang_strings)`` -- 返回 `lang_strings` 中传递的语言名称的`语言代码 <https://www.loc.gov/standards/iso639-2/php/code_list.php>`_。 字符串必须采用当前区域设置的语言。 ``Lang_strings`` 是一个以逗号分隔的列表。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:611
-msgid ""
-"``list_contains(value, separator, [ pattern, found_val, ]* not_found_val)`` "
-"-- (Alias of ``in_list``) Interpreting the value as a list of items "
-"separated by ``separator``, evaluate the ``pattern`` against each value in "
-"the list. If the ``pattern`` matches any value then return ``found_val``, "
-"otherwise return ``not_found_val``. The ``pattern`` and ``found_value`` can "
-"be repeated as many times as desired, permitting returning different values "
-"depending on the search. The patterns are checked in order. The first match "
-"is returned. Aliases: ``in_list()``, ``list_contains()``"
-msgstr "``list_contains(value,separator, [pattern,found_val,]* not_found_val)`` --（``in_list`` 的别名）将值解释为由``separator`` 分隔的项目列表，评估 `` 针对列表中的每个值的pattern``。 如果“pattern”匹配任何值，则返回“found_val”，否则返回“not_found_val”。 “pattern” 和 “found_value” 可以根据需要重复多次，允许根据搜索返回不同的值。 按顺序检查模式。 返回第一个匹配项。 别名：``in_list()``、``list_contains()``"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:612
-msgid ""
-"``list_count(value, separator)`` -- interprets ``value`` as a list of items "
-"separated by ``separator``, returning the count of items in the list. "
-"Aliases: ``count()``, ``list_count()``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:613
-msgid ""
-"``list_count_field(lookup_name)``-- returns the count of items in the field "
-"with the lookup name `lookup_name`. The field must be multi-valued such as "
-"``authors`` or ``tags``, otherwise the function raises an error. This "
-"function is much faster than ``list_count()`` because it operates directly "
-"on calibre data without converting it to a string first. Example: "
-"``list_count_field('tags')``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:614
-msgid ""
-"``list_count_matching(list, pattern, separator)`` -- interprets ``list`` as "
-"a list of items separated by ``separator``, returning the number of items in"
-" the list that match the regular expression ``pattern``. Aliases: "
-"``list_count_matching()``, ``count_matching()``"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:615
-msgid ""
-"``list_difference(list1, list2, separator)`` -- return a list made by "
-"removing from ``list1`` any item found in ``list2`` using a case-insensitive"
-" comparison. The items in ``list1`` and ``list2`` are separated by "
-"separator, as are the items in the returned list."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:616
-msgid ""
-"``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- return "
-"``yes_val`` if ``list1`` and `list2` contain the same items, otherwise "
-"return ``no_val``. The items are determined by splitting each list using the"
-" appropriate separator character (``sep1`` or ``sep2``). The order of items "
-"in the lists is not relevant. The comparison is case-insensitive."
-msgstr "``list_equals(list1, sep1, list2, sep2, yes_val, no_val)`` -- 如果``list1`` 和``list2` 包含相同的项目，则返回``yes_val``，否则返回``no_val``。 通过使用适当的分隔符（“sep1”或“sep2”）分割每个列表来确定项目。 列表中项目的顺序不相关。 比较不区分大小写。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:617
-msgid ""
-"``list_intersection(list1, list2, separator)`` -- return a list made by "
-"removing from ``list1`` any item not found in ``list2``, using a case-"
-"insensitive comparison. The items in ``list1`` and ``list2`` are separated "
-"by separator, as are the items in the returned list."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:618
-msgid ""
-"``list_join(with_separator, list1, separator1 [, list2, separator2]*)`` -- "
-"return a list made by joining the items in the source lists (``list1`` etc) "
-"using ``with_separator`` between the items in the result list. Items in each"
-" source ``list[123...]`` are separated by the associated "
-"``separator[123...]``. A list can contain zero values. It can be a field "
-"like ``publisher`` that is single-valued, effectively a one-item list. "
-"Duplicates are removed using a case-insensitive comparison. Items are "
-"returned in the order they appear in the source lists. If items on lists "
-"differ only in letter case then the last is used. All separators can be more"
-" than one character."
-msgstr "``list_join(with_separator,list1,separator1 [,list2,separator2]*)`` -- 返回通过在项目之间使用``with_separator``连接源列表（``list1``等）中的项目而创建的列表 在结果列表中。 每个源“list[123...]”中的项目由关联的“separator[123...]”分隔。 列表可以包含零值。 它可以是像“publisher”这样的单值字段，实际上是一个单项列表。 使用不区分大小写的比较删除重复项。 项目按照它们在源列表中出现的顺序返回。 如果列表中的项目仅字母大小写不同，则使用最后一个。 所有分隔符都可以是多个字符。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:620
-#: ../../__w/calibre/calibre/manual/template_lang.rst:642
-msgid "Example::"
-msgstr "例如:"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:625
-msgid ""
-"You can use ``list_join`` on the results of previous calls to ``list_join`` "
-"as follows::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:631
-msgid ""
-"You can use expressions to generate a list. For example, assume you want "
-"items for ``authors`` and ``#genre``, but with the genre changed to the word"
-" \"Genre: \" followed by the first letter of the genre, i.e. the genre "
-"\"Fiction\" becomes \"Genre: F\". The following will do that::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:636
-msgid ""
-"``list_re(src_list, separator, include_re, opt_replace)`` -- Construct a "
-"list by first separating ``src_list`` into items using the ``separator`` "
-"character. For each item in the list, check if it matches ``include_re``. If"
-" it does then add it to the list to be returned. If ``opt_replace`` is not "
-"the empty string then apply the replacement before adding the item to the "
-"returned list."
-msgstr "``list_re(src_list,separator, include_re, opt_replace)`` -- 首先使用``separator`` 字符将``src_list`` 分隔成项目来构造一个列表。 对于列表中的每个项目，检查它是否与“include_re”匹配。 如果是，则将其添加到要返回的列表中。 如果“opt_replace”不是空字符串，则在将项目添加到返回的列表之前应用替换。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:637
-msgid ""
-"``list_re_group(src_list, separator, include_re, search_re [, "
-"template_for_group]*)`` -- Like list_re except replacements are not "
-"optional. It uses ``re_group(item, search_re, template ...)`` when doing the"
-" replacements."
-msgstr "``list_re_group(src_list,separator, include_re, search_re [, template_for_group]*)`` -- 与 list_re 类似，但替换不是可选的。 它在进行替换时使用“re_group(item, search_re, template ...)”。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:638
-msgid ""
-"``list_remove_duplicates(list, separator)`` -- return a list made by "
-"removing duplicate items in ``list``. If items differ only in case then the "
-"last is returned. The items in ``list`` are separated by ``separator``, as "
-"are the items in the returned list."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:639
-msgid ""
-"``list_sort(list, direction, separator)`` -- return ``list`` sorted using a "
-"case-insensitive lexical sort. If ``direction`` is zero, ``list`` is sorted "
-"ascending, otherwise descending. The list items are separated by "
-"``separator``, as are the items in the returned list."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:640
-msgid ""
-"``list_split(list_val, sep, id_prefix)`` -- splits ``list_val`` into "
-"separate values using ``sep``, then assigns the values to local variables "
-"named ``id_prefix_N`` where N is the position of the value in the list. The "
-"first item has position 0 (zero). The function returns the last element in "
-"the list."
-msgstr "``list_split(list_val, sep, id_prefix)`` -- 使用“sep”将“list_val”拆分为单独的值，然后将这些值分配给名为“id_precast_N”的局部变量，其中N是该值在列表中的位置。第一项的位置为0（零）。该函数返回列表中的最后一个元素。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:646
-msgid "is equivalent to::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
-msgid ""
-"``list_union(list1, list2, separator)`` -- return a list made by merging the"
-" items in ``list1`` and ``list2``, removing duplicate items using a case-"
-"insensitive comparison. If items differ in case, the one in ``list1`` is "
-"used. The items in ``list1`` and ``list2`` are separated by ``separator``, "
-"as are the items in the returned list. Aliases: ``merge_lists()``, "
-"``list_union()``"
-msgstr "``list_union(list1, list2, separator)`` -- 返回通过合并“list 1”和“list 2”中的项而创建的列表，使用不区分大小写的比较删除重复的项。如果项目的大小写不同，则使用“列表1”中的项目。“list 1”和“list 2”中的项由“分隔符”分隔，返回列表中的项也是如此。别名：``merge_lists()``, ``list_union()``"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:653
-msgid ""
-"``mod(x, y)`` -- returns the ``floor`` of the remainder of ``x / y``. Throws"
-" an exception if either ``x`` or ``y`` is not a number."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:654
-msgid ""
-"``multiply(x [, y]*)`` -- returns the product of its arguments. Throws an "
-"exception if any argument is not a number. This function can usually be "
-"replaced by the ``*`` operator."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:655
-msgid ""
-"``not(value)`` -- returns the string \"1\" if the value is empty, otherwise "
-"returns the empty string. This function can usually be replaced with the "
-"unary not (``!``) operator."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:656
-msgid ""
-"``ondevice()`` -- return the string ``'Yes'`` if ``ondevice`` is set, "
-"otherwise return the empty string."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:657
-msgid ""
-"``or(value [, value]*)`` -- returns the string ``'1'`` if any value is not "
-"empty, otherwise returns the empty string. You can have as many values as "
-"you want. This function can usually be replaced by the ``||`` operator. A "
-"reason it cannot be replaced is if short-circuiting will change the results "
-"because of side effects."
-msgstr "``or(value [, value]*)`` -- 如果任何值不为空，则返回字符串 ``'1'``，否则返回空字符串。 您可以拥有任意多个值。 该函数通常可以用“||”运算符替换。 无法更换的一个原因是短路会因副作用而改变结果。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:658
-msgid ""
-"``print(a [, b]*)`` -- prints the arguments to standard output. Unless you "
-"start calibre from the command line (``calibre-debug -g``), the output will "
-"go into a black hole. The ``print`` function always returns its first "
-"argument."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:662
-msgid ""
-"``range(start, stop, step, limit)`` -- returns a list of numbers generated "
-"by looping over the range specified by the parameters start, stop, and step,"
-" with a maximum length of limit. The first value produced is 'start'. "
-"Subsequent values ``next_v = current_v + step``. The loop continues while "
-"``next_v < stop`` assuming ``step`` is positive, otherwise while ``next_v > "
-"stop``. An empty list is produced if ``start`` fails the test: ``start >= "
-"stop`` if ``step`` is positive. The ``limit`` sets the maximum length of the"
-" list and has a default of 1000. The parameters ``start``, ``step``, and "
-"``limit`` are optional. Calling ``range()`` with one argument specifies "
-"``stop``. Two arguments specify ``start`` and ``stop``. Three arguments "
-"specify ``start``, ``stop``, and ``step``. Four arguments specify ``start``,"
-" ``stop``, ``step`` and ``limit``. Examples::"
-msgstr "``range(start, stop, step, limit)`` -- 返回通过在参数 start、stop 和 step 指定的范围内循环生成的数字列表，最大长度为 limit。 产生的第一个值是“start”。 后续值``next_v = current_v + step``。 假设“step”为正，则“next_v < stop”时循环继续，否则当“next_v > stop”时继续。 如果“start”未通过测试，则会生成一个空列表：如果“step”为正，则“start >= stop”。 “limit” 设置列表的最大长度，默认值为 1000。参数“start”、“step” 和“limit” 是可选的。 使用一个参数调用“range()”指定“stop”。 两个参数指定“start”和“stop”。 三个参数指定“start”、“stop”和“step”。 四个参数指定“start”、“stop”、“step”和“limit”。 例子："
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:672
-msgid ""
-"``raw_field(lookup_name [, optional_default])`` -- returns the metadata "
-"field named by ``lookup_name`` without applying any formatting. It evaluates"
-" and returns the optional second argument ``optional_default`` if the "
-"field's value is undefined (``None``)."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:673
-msgid ""
-"``raw_list(lookup_name, separator)`` -- returns the metadata list named by "
-"``lookup_name`` without applying any formatting or sorting, with the items "
-"separated by separator."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:674
-msgid ""
-"``re_group(value, pattern [, template_for_group]*)`` --  return a string "
-"made by applying the regular expression pattern to ``value`` and replacing "
-"each matched instance with the value returned by the corresponding template."
-" In :ref:`Template Program Mode <template_mode>`, like for the ``template`` "
-"and the ``eval`` functions, you use ``[[`` for ``{`` and ``]]`` for ``}``."
-msgstr "``re_group(value, pattern [, template_for_group]*)`` -- 返回通过将规则表达模式应用于“值”并将每个匹配的实例替换为相应模板返回的值而生成的字符串。 在“模板程序模式<template_mode>”中，就像“模板”和“eval”函数一样，您可以使用“[[”表示“{”，“]]”表示“}”。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:676
-msgid ""
-"The following example looks for a series with more than one word and "
-"uppercases the first word::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:680
-msgid ""
-"``round(x)`` -- returns the nearest integer to ``x``. Throws an exception if"
-" ``x`` is not a number."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:681
-msgid "``series_sort()`` -- returns the series sort value."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:682
-msgid ""
-"``strcat(a [, b]*)`` -- can take any number of arguments. Returns a string "
-"formed by concatenating all the arguments."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:683
-msgid ""
-"``strcat_max(max, string1 [, prefix2, string2]*)`` -- Returns a string "
-"formed by concatenating the arguments. The returned value is initialized to "
-"``string1``. Strings made from ``prefix, string`` pairs are added to the end"
-" of the value as long as the resulting string length is less than ``max``. "
-"Prefixes can be empty. Returns ``string1`` even if ``string1`` is longer "
-"than ``max``. You can pass as many ``prefix, string`` pairs as you wish."
-msgstr "``strcat_max(max, string1 [, prefix2, string2]*)`` -- 返回通过连接参数形成的字符串。 返回值被初始化为“string1”。 只要生成的字符串长度小于“max”，由“prefix, string”对组成的字符串就会添加到值的末尾。 前缀可以为空。 即使“string1”比“max”长，也会返回“string1”。 您可以根据需要传递任意数量的“前缀、字符串”对。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:684
-msgid ""
-"``strcmp(x, y, lt, eq, gt)`` -- does a case-insensitive lexical comparison "
-"of ``x`` and ``y``. Returns ``lt`` if ``x < y``, ``eq`` if ``x == y``, "
-"otherwise ``gt``. This function can often be replaced by one of the lexical "
-"comparison operators (``==``, ``>``, ``<``, etc.)"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:685
-msgid ""
-"``strcmpcase(x, y, lt, eq, gt)`` -- does a case-sensitive lexical comparison"
-" of ``x`` and ``y``. Returns ``lt`` if ``x < y``, ``eq`` if ``x == y``, "
-"otherwise ``gt``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:687
-msgid ""
-"Note: This is NOT the default behavior used by calibre, for example, in the "
-"lexical comparison operators (``==``, ``>``, ``<``, etc.). This function "
-"could cause unexpected results, preferably use ``strcmp()`` whenever "
-"possible."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:689
-msgid "``strlen(value)`` -- Returns the length of the string ``value``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:690
-msgid ""
-"``substr(str, start, end)`` -- returns the ``start``'th through the "
-"``end``'th characters of ``str``. The first character in ``str`` is the "
-"zero'th character. If ``end`` is negative, then it indicates that many "
-"characters counting from the right. If ``end`` is zero, then it indicates "
-"the last character. For example, ``substr('12345', 1, 0)`` returns "
-"``'2345'``, and ``substr('12345', 1, -1)`` returns ``'234'``."
-msgstr "``substr(str, start, end)`` -- 返回``str`` 的第``start``' 个字符到第``end``' 个字符。 “str” 中的第一个字符是第零个字符。 如果“end”为负数，则表示从右边数起有很多字符。 如果“end”为零，则表示最后一个字符。 例如， ``substr('12345', 1, 0)`` 返回 ``'2345'``，而 ``substr('12345', 1, -1)`` 返回 ``'234'`` 。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:691
-msgid ""
-"``subtract(x, y)`` -- returns ``x - y``. Throws an exception if either ``x``"
-" or ``y`` are not numbers. This function can usually be replaced by the "
-"``-`` operator."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:692
-msgid ""
-"``switch_if([test_expression, value_expression,]+ else_expression)`` -- for "
-"each ``test_expression, value_expression`` pair, checks if "
-"``test_expression`` is True (non-empty) and if so returns the result of "
-"``value_expression``. If no ``test_expression`` is True then the result of "
-"``else_expression` is returned. You can have as many ``test_expression, "
-"value_expression`` pairs as you want."
-msgstr "``switch_if([test_expression, value_expression,]+ else_expression)`` -- 对于每个 ``test_expression, value_expression`` 对，检查 ``test_expression`` 是否为 True（非空），如果是则返回 ` `值_表达式``。 如果没有“test_expression”为 True，则返回“else_expression”的结果。 您可以根据需要拥有任意多个“test_expression, value_expression”对。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:693
-msgid ""
-"``today()`` -- return a date+time string for today (now). This value is "
-"designed for use in `format_date` or `days_between`, but can be manipulated "
-"like any other string. The date is in `ISO "
-"<https://en.wikipedia.org/wiki/ISO_8601>`_ date/time format."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:694
-msgid ""
-"``template(x)`` -- evaluates ``x`` as a template. The evaluation is done in "
-"its own context, meaning that variables are not shared between the caller "
-"and the template evaluation."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:695
-msgid ""
-"``to_hex(val)`` -- returns the string ``val`` encoded in hex. This is useful"
-" when constructing calibre URLs."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:696
-msgid ""
-"``urls_from_identifiers(identifiers, sort_results)`` -- given a comma-"
-"separated list of ``identifiers``, where an `identifier` is a colon-"
-"separated pair of values (``id_name:id_value``), returns a comma-separated "
-"list of HTML URLs generated from the identifiers. The list not sorted if "
-"sort_results is ``0`` (character or number), otherwise it is sorted "
-"alphabetically by the identifier name. The URLs are generated in the same "
-"way as the built-in identifiers column when shown in :guilabel:`Book "
-"details`."
-msgstr "``urls_from_identifiers(identifiers, sort_results)`` -- 给定一个以逗号分隔的“identifiers”列表，其中“identifier”是一对以冒号分隔的值（“id_name:id_value”），返回一个 从标识符生成的以逗号分隔的 HTML URL 列表。 如果 sort_results 为“0”（字符或数字），则列表不排序，否则按标识符名称的字母顺序排序。 URL 的生成方式与“图书详细信息”中显示的内置标识符列相同。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:701
+#: ../../__w/calibre/calibre/manual/template_lang.rst:446
 msgid "More complex programs in template expressions - Template Program Mode"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:703
+#: ../../__w/calibre/calibre/manual/template_lang.rst:448
 msgid ""
 "`Template Program Mode` (`TPM`) is a blend of :ref:`General Program Mode "
 "<general_mode>` and :ref:`Single Function Mode <single_mode>`. `TPM` differs"
@@ -2166,7 +973,7 @@ msgid ""
 " Program Mode expression list."
 msgstr "“模板程序模式”(“TPM”) 是“通用程序模式 <general_mode>”和“单功能模式 <single_mode>”的混合。 “TPM”与单函数模式的不同之处在于它允许编写引用其他元数据字段的模板表达式、使用嵌套函数、修改变量和进行算术。 它与“通用程序模式”的不同之处在于，模板包含在“{”和“}”字符之间，并且不以单词“program:”开头。 模板的程序部分是通用程序模式表达式列表。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:706
+#: ../../__w/calibre/calibre/manual/template_lang.rst:451
 msgid ""
 "Example: assume you want a template to show the series for a book if it has "
 "one, otherwise show the value of a custom field #genre. You cannot do this "
@@ -2175,45 +982,44 @@ msgid ""
 "you can, as the following expression demonstrates::"
 msgstr "示例：假设您希望模板显示一本书的系列，如果有，否则显示自定义字段 #genre 的值。 您无法在“单函数模式 <single_mode>”中执行此操作，因为您无法引用模板表达式中的另一个元数据字段。 在“TPM”中，您可以，如以下表达式所示："
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:711
+#: ../../__w/calibre/calibre/manual/template_lang.rst:456
 msgid "The example shows several things:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:713
+#: ../../__w/calibre/calibre/manual/template_lang.rst:458
 msgid ""
 "`TPM` is used if the expression begins with ``:'`` and ends with ``'}``. "
 "Anything else is assumed to be in :ref:`Single Function Mode <single_mode>`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:714
+#: ../../__w/calibre/calibre/manual/template_lang.rst:460
 msgid ""
-"the variable ``$`` stands for the field named in the template: the "
-"expression is operating upon, ``#series`` in this case."
+"If the template contains a prefix and suffix, the expression ends with "
+"``'|`` where the ``|`` is the delimiter for the prefix. Example::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:715
+#: ../../__w/calibre/calibre/manual/template_lang.rst:464
 msgid ""
-"functions must be given all their arguments. There is no default value. For "
-"example, the standard built-in functions must be given an additional initial"
-" parameter indicating the source field."
+"Functions must be given all their arguments. For example, the standard "
+"built-in functions must be given the initial parameter ``value``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:716
+#: ../../__w/calibre/calibre/manual/template_lang.rst:465
+msgid ""
+"The variable ``$`` is usable as the ``value`` argument and stands for the "
+"value of the field named in the template, ``series_index`` in this case."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:466
 msgid "white space is ignored and can be used anywhere within the expression."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:717
+#: ../../__w/calibre/calibre/manual/template_lang.rst:467
 msgid ""
 "constant strings are enclosed in matching quotes, either ``'`` or ``\"``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:719
-msgid ""
-"All the functions listed under `Single Function Mode` and `General Program "
-"Mode` can be used in `TPM`."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:721
+#: ../../__w/calibre/calibre/manual/template_lang.rst:469
 msgid ""
 "In `TPM`, using ``{`` and ``}`` characters in string literals can lead to "
 "errors or unexpected results because they confuse the template processor. It"
@@ -2223,48 +1029,39 @@ msgid ""
 "you should use `General Program Mode`."
 msgstr "在“TPM”中，在字符串文字中使用“{”和“}”字符可能会导致错误或意外结果，因为它们会混淆模板处理器。 它尝试将它们视为模板表达式边界，而不是字符。 在某些情况下，但不是所有情况下，您可以将 ``{`` 替换为 ``[[`` ，将 ``}`` 替换为 `]]` 。 一般来说，如果您的程序包含“{”和“}”字符，那么您应该使用“通用程序模式”。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:723
-msgid ""
-"As with `General Program Mode`, for functions documented under :ref:`Single "
-"Function Mode <single_mode>` you must supply the value the function is to "
-"act upon as the first parameter in addition to the documented parameters. In"
-" `TPM` you can use ``$`` to access the value specified by the ``lookup "
-"name`` for the template expression."
-msgstr "与“通用程序模式”一样，对于“单函数模式 <single_mode>”下记录的函数，除了记录的参数之外，您还必须提供函数要执行的值作为第一个参数。 在“TPM”中，您可以使用“$”来访问模板表达式的“查找名称”指定的值。"
-
-#: ../../__w/calibre/calibre/manual/template_lang.rst:728
+#: ../../__w/calibre/calibre/manual/template_lang.rst:474
 msgid "Python Template Mode"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:730
+#: ../../__w/calibre/calibre/manual/template_lang.rst:476
 msgid ""
-"Python Template Mode (PTM) lets you write templates using native python and "
+"Python Template Mode (PTM) lets you write templates using native Python and "
 "the `calibre API <https://manual.calibre-ebook.com/develop.html#api-"
 "documentation-for-various-parts-of-calibre>`_. The database API will be of "
 "most use; further discussion is beyond the scope of this manual. PTM "
 "templates are faster and can do more complicated operations but you must "
-"know how to write code in python using the calibre API."
-msgstr "Python 模板模式 (PTM) 允许您使用本机 python 和 `calibre API <https://manual.calibre-ebook.com/develop.html#api-documentation-for-various-parts-of-calibre>` 编写模板 _。 数据库 API 将是最常用的； 进一步的讨论超出了本手册的范围。 PTM 模板速度更快，可以执行更复杂的操作，但您必须知道如何使用 calibre API 在 python 中编写代码。"
+"know how to write code in Python using the calibre API."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:732
+#: ../../__w/calibre/calibre/manual/template_lang.rst:478
 msgid "A PTM template begins with:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:750
+#: ../../__w/calibre/calibre/manual/template_lang.rst:496
 msgid ""
 "You can add the above text to your template using the context menu, usually "
 "accessed with a right click. The comments are not significant and can be "
 "removed. You must use python indenting."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:752
+#: ../../__w/calibre/calibre/manual/template_lang.rst:498
 msgid ""
 "The context object supports ``str(context)`` that returns a string of the "
 "context's contents, and ``context.attributes`` that returns a list of the "
 "attribute names in the context."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:754
+#: ../../__w/calibre/calibre/manual/template_lang.rst:500
 msgid ""
 "The ``context.funcs`` attribute allows calling Built-in and User template "
 "functions, and Stored GPM/Python templates, so that you can execute them "
@@ -2273,7 +1070,7 @@ msgid ""
 "name. Examples:"
 msgstr "``context.funcs`` 属性允许调用内置和用户模板函数以及存储的 GPM/Python 模板，以便您可以直接在代码中执行它们。 使用函数的名称来检索函数。 如果名称与 Python 关键字冲突，请在名称末尾添加下划线。 例子："
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:761
+#: ../../__w/calibre/calibre/manual/template_lang.rst:507
 msgid ""
 "Here is an example of a PTM template that produces a list of all the authors"
 " for a series. The list is stored in a `Column built from other columns, "
@@ -2285,19 +1082,19 @@ msgid ""
 "then sorted, which is why the template uses author_sort."
 msgstr "以下是 PTM 模板的示例，该模板生成一个系列的所有作者的列表。 该列表存储在“从其他列构建的列，行为类似于标签”中。 它显示在“书籍详细信息”中，并选中“在单独的行上”（在“首选项->外观->书籍详细信息”中）。 该选项要求列表以逗号分隔。 为了满足该要求，模板将作者姓名中的逗号转换为分号，然后构建以逗号分隔的作者列表。 然后对作者进行排序，这就是模板使用author_sort的原因。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:782
+#: ../../__w/calibre/calibre/manual/template_lang.rst:528
 msgid "The output in :guilabel:`Book details` looks like this:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:784
+#: ../../__w/calibre/calibre/manual/template_lang.rst:530
 msgid "E-book conversion dialog"
 msgstr "电子书转换对话"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:790
+#: ../../__w/calibre/calibre/manual/template_lang.rst:536
 msgid "Stored templates"
 msgstr "保存的模板"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:792
+#: ../../__w/calibre/calibre/manual/template_lang.rst:538
 msgid ""
 "Both :ref:`General Program Mode <general_mode>` and :ref:`Python Template "
 "Mode <python_mode>` support saving templates and calling those templates "
@@ -2309,24 +1106,24 @@ msgid ""
 "template is named ``foo``:"
 msgstr "“通用程序模式 <general_mode>”和“Python 模板模式 <python_mode>”都支持保存模板并从另一个模板调用这些模板，就像调用存储的函数一样。 您可以使用“首选项->高级->模板功能”保存模板。 该对话框中提供了更多信息。 您可以像调用函数一样调用模板，并根据需要传递位置参数。 参数可以是任何表达式。 调用模板的示例，假设存储的模板名为“foo”："
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:794
+#: ../../__w/calibre/calibre/manual/template_lang.rst:540
 msgid "``foo()`` -- call the template passing no arguments."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:795
+#: ../../__w/calibre/calibre/manual/template_lang.rst:541
 msgid ""
 "``foo(a, b)`` call the template passing the values of the two variables "
 "``a`` and ``b``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:796
+#: ../../__w/calibre/calibre/manual/template_lang.rst:542
 msgid ""
 "``foo(if field('series') then field('series_index') else 0 fi)`` -- if the "
 "book has a ``series`` then pass the ``series_index``, otherwise pass the "
 "value ``0``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:798
+#: ../../__w/calibre/calibre/manual/template_lang.rst:544
 msgid ""
 "In GPM you retrieve the arguments passed in the call to the stored template "
 "using the ``arguments`` function. It both declares and initializes local "
@@ -2339,31 +1136,31 @@ msgid ""
 "``alternate``::"
 msgstr "在 GPM 中，您可以使用“arguments”函数检索在调用存储模板时传递的参数。 它声明并初始化局部变量，即有效的参数。 变量是位置变量； 他们在同一位置获取调用中给出的参数值。 如果调用中未提供相应的参数，则“arguments”会为该变量分配提供的默认值。 如果没有默认值，则该变量将设置为空字符串。 例如，以下“arguments”函数声明 2 个变量“key”、“alternate”："
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:802
+#: ../../__w/calibre/calibre/manual/template_lang.rst:548
 msgid "Examples, again assuming the stored template is named ``foo``:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:804
+#: ../../__w/calibre/calibre/manual/template_lang.rst:550
 msgid ""
 "``foo('#myseries')`` -- argument ``key`` is assigned the value "
 "``'myseries'`` and the argument ``alternate`` is assigned the default value "
 "``'series'``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:805
+#: ../../__w/calibre/calibre/manual/template_lang.rst:551
 msgid ""
 "``foo('series', '#genre')`` the variable ``key`` is assigned the value "
 "``'series'`` and the variable ``alternate`` is assigned the value "
 "``'#genre'``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:806
+#: ../../__w/calibre/calibre/manual/template_lang.rst:552
 msgid ""
 "``foo()`` -- the variable ``key`` is assigned the empty string and the "
 "variable ``alternate`` is assigned the value ``'series'``."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:808
+#: ../../__w/calibre/calibre/manual/template_lang.rst:554
 msgid ""
 "In PTM the arguments are passed in the ``arguments`` parameter, which is a "
 "list of strings. There isn't any way to specify default values. You must "
@@ -2371,7 +1168,7 @@ msgid ""
 "arguments is what you expect."
 msgstr "在PTM中，参数在“arguments”参数中传递，该参数是字符串列表。没有任何方法可以指定默认值。您必须检查“参数”列表的长度，以确保参数的数量符合您的期望。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:810
+#: ../../__w/calibre/calibre/manual/template_lang.rst:556
 msgid ""
 "An easy way to test stored templates is using the ``Template tester`` "
 "dialog. For ease of access give it a keyboard shortcut in "
@@ -2380,11 +1177,11 @@ msgid ""
 "rapidly between the tester and editing the stored template's source code."
 msgstr "测试存储模板的一种简单方法是使用“模板测试器”对话框。 为了便于访问，请在“首选项->高级->键盘快捷键->模板测试器”中为其提供键盘快捷键。 为“存储的模板”对话框提供快捷方式将有助于在测试器和编辑存储的模板的源代码之间更快地切换。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:813
+#: ../../__w/calibre/calibre/manual/template_lang.rst:559
 msgid "Providing additional information to templates"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:815
+#: ../../__w/calibre/calibre/manual/template_lang.rst:561
 msgid ""
 "A developer can choose to pass additional information to the template "
 "processor, such as application-specific book metadata or information about "
@@ -2392,11 +1189,11 @@ msgid ""
 "information and use it during the evaluation."
 msgstr "开发人员可以选择将附加信息传递给模板处理器，例如应用程序特定的书籍元数据或有关处理器被要求执行什么的信息。模板可以访问此信息并在评估期间使用它。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:817
+#: ../../__w/calibre/calibre/manual/template_lang.rst:563
 msgid "**Developer: how to pass additional information**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:819
+#: ../../__w/calibre/calibre/manual/template_lang.rst:565
 msgid ""
 "The additional information is a Python dictionary containing pairs "
 "``variable_name: variable_value`` where the values must be strings. The "
@@ -2407,24 +1204,24 @@ msgid ""
 "underscore."
 msgstr "附加信息是一个包含“变量名：变量值”对的 Python 字典，其中值必须是字符串。 模板可以访问字典，创建名为“variable_name”的模板局部变量，其中包含值“variable_value”。 用户无法更改名称，因此最好使用不会与其他模板局部变量冲突的名称，例如在名称前添加下划线。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:821
+#: ../../__w/calibre/calibre/manual/template_lang.rst:567
 msgid ""
 "This dictionary is passed to the template processor (the ``formatter``) "
 "using the named parameter ``global_vars=your_dict``. The full method "
 "signature is::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:829
+#: ../../__w/calibre/calibre/manual/template_lang.rst:575
 msgid "**Template writer: how to access the additional information**"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:831
+#: ../../__w/calibre/calibre/manual/template_lang.rst:577
 msgid ""
 "You access the additional information (the ``globals`` dictionary) in a "
 "template using the template function::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:835
+#: ../../__w/calibre/calibre/manual/template_lang.rst:581
 msgid ""
 "where ``id`` is any legal variable name. This function checks whether the "
 "additional information provided by the developer contains the name. If it "
@@ -2436,13 +1233,13 @@ msgid ""
 "the local variable."
 msgstr "其中“id”是任何合法的变量名称。 该函数检查开发者提供的附加信息中是否包含该名称。 如果是，则该函数将提供的值分配给具有该名称的模板局部变量。 如果附加信息中没有该名称，并且提供了“表达式”，则计算“表达式”并将结果分配给局部变量。 如果既没有提供值也没有提供表达式，函数会将空字符串 (``''``) 分配给局部变量。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:837
+#: ../../__w/calibre/calibre/manual/template_lang.rst:583
 msgid ""
 "A template can set a value in the ``globals`` dictionary using the template "
 "function::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:841
+#: ../../__w/calibre/calibre/manual/template_lang.rst:587
 msgid ""
 "This function sets the ``globals`` dictionary key:value pair ``id:value`` "
 "where ``value`` is the value of the template local variable ``id``. If that "
@@ -2450,11 +1247,11 @@ msgid ""
 "evaluating ``expression``."
 msgstr "此函数用于设置“全局范围”词典，key:value配对``id:value`` ，其中“value”是模板局部变量“id”的值。如果该局部变量不存在，则将“value”设置为“表达式”的求值结果。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:844
+#: ../../__w/calibre/calibre/manual/template_lang.rst:590
 msgid "Notes on the difference between modes"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:846
+#: ../../__w/calibre/calibre/manual/template_lang.rst:592
 msgid ""
 "The three program modes, :ref:`Single Function Mode <single_mode>` (SFM), "
 ":ref:`Template Program Mode <template_mode>` (`TPM`), and :ref:`General "
@@ -2462,51 +1259,51 @@ msgid ""
 "be 'simple' so it hides a lot of programming language bits."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:848
+#: ../../__w/calibre/calibre/manual/template_lang.rst:594
 msgid "Differences:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:850
+#: ../../__w/calibre/calibre/manual/template_lang.rst:596
 msgid ""
 "In SFM the value of the column is always passed as an 'invisible' first "
 "argument to a function included in the template."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:851
+#: ../../__w/calibre/calibre/manual/template_lang.rst:597
 msgid ""
 "SFM doesn't support the difference between variables and strings; all values"
 " are strings."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:852
+#: ../../__w/calibre/calibre/manual/template_lang.rst:598
 msgid ""
 "The following SFM template returns either the series name or the string \"no"
 " series\"::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:856
+#: ../../__w/calibre/calibre/manual/template_lang.rst:602
 msgid "The equivalent template in `TPM` is ::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:860
+#: ../../__w/calibre/calibre/manual/template_lang.rst:606
 msgid "The equivalent template in `GPM` is::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:864
+#: ../../__w/calibre/calibre/manual/template_lang.rst:610
 msgid ""
 "The first argument to ``ifempty`` is the value of the field ``series``. The "
 "second argument is the string ``no series``. In SFM the first argument, the "
 "value of the field, is automatically passed (the invisible argument)."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:865
+#: ../../__w/calibre/calibre/manual/template_lang.rst:611
 msgid ""
 "Several template functions, for example ``booksize()`` and "
 "``current_library_name()``, take no arguments. Because of the 'invisible "
 "argument' you cannot use these functions in SFM."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:866
+#: ../../__w/calibre/calibre/manual/template_lang.rst:612
 msgid ""
 "Nested functions, where a function calls another function to compute an "
 "argument, cannot be used in SFM. For example this template, intended to "
@@ -2514,17 +1311,17 @@ msgid ""
 "SFM::"
 msgstr "嵌套函数，指其中一个函数调用另一个函数来计算参数，不能在SFM中使用。例如，此模板旨在返回升级后的系列值的前5个字符，在SFM中不起作用："
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:870
+#: ../../__w/calibre/calibre/manual/template_lang.rst:616
 msgid ""
 "`TPM` and `GPM` support nested functions. The above template in `TPM` would "
 "be::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:874
+#: ../../__w/calibre/calibre/manual/template_lang.rst:620
 msgid "In `GPM` it would be::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:878
+#: ../../__w/calibre/calibre/manual/template_lang.rst:624
 msgid ""
 "As noted in the above :ref:`Template Program Mode <template_mode>` section, "
 "using ``{`` and ``}`` characters in `TPM` string literals can lead to errors"
@@ -2535,23 +1332,27 @@ msgid ""
 "`General Program Mode`."
 msgstr "如上面“模板程序模式 1”部分所述，在“TPM”字符串文字中使用“{”和“}”字符可能会导致错误或意外结果，因为它们会混淆模板处理器。 它尝试将它们视为模板边界，而不是字符。 在某些情况下，但不是所有情况下，您可以将 ``{`` 替换为 ``[[`` ，将 ``}`` 替换为 `]]` 。 一般来说，如果您的程序包含“{”和“}”字符，那么您应该使用“通用程序模式”。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:882
+#: ../../__w/calibre/calibre/manual/template_lang.rst:628
 msgid "User-defined Python template functions"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:884
+#: ../../__w/calibre/calibre/manual/template_lang.rst:630
 msgid ""
 "You can add your own Python functions to the template processor. Such "
 "functions can be used in any of the three template programming modes. The "
 "functions are added by going to :guilabel:`Preferences -> Advanced -> "
-"Template functions`. Instructions are shown in that dialog."
-msgstr "您可以将自己的 Python 函数添加到模板处理器。 这些函数可以在三种模板编程模式中的任何一种中使用。 通过转到“首选项 -> 高级 -> 模板函数”来添加这些函数。 该对话框中显示了说明。"
+"Template functions`. Instructions are shown in that dialog. Note that you "
+"can use `Python Templates` for a similar purpose. As calling user-defined "
+"functions is faster than calling a Python template, user-defined functions "
+"might be more efficient depending on the complexity of what the function or "
+"template does."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:887
+#: ../../__w/calibre/calibre/manual/template_lang.rst:633
 msgid "Special notes for save/send templates"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:889
+#: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid ""
 "Special processing is applied when a template is used in a `save to disk` or"
 " `send to device` template. The values of the fields are cleaned, replacing "
@@ -2562,18 +1363,18 @@ msgid ""
 "create variable-depth folder structure."
 msgstr "当模板用于“保存到磁盘”或“发送到设备”模板时，会应用特殊处理。 字段的值被清理，用下划线替换文件系统特有的字符，包括斜杠。 这意味着字段文本不能用于创建文件夹。 但是，前缀或后缀字符串中的斜杠不会更改，因此这些字符串中的斜杠将导致创建文件夹。 因此，您可以创建可变深度的文件夹结构。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:891
+#: ../../__w/calibre/calibre/manual/template_lang.rst:637
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:895
+#: ../../__w/calibre/calibre/manual/template_lang.rst:641
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:897
+#: ../../__w/calibre/calibre/manual/template_lang.rst:643
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -2583,25 +1384,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr "查找功能让我们可以进行更高级的处理。 例如，假设一本书有一个系列，那么我们需要文件夹结构“系列/系列索引 - title.fmt”。 如果这本书没有系列，那么我们需要文件夹结构“genre/author_sort/title.fmt”。 如果这本书没有类型，那么我们想使用“未知”。 我们想要两条完全不同的路径，具体取决于系列的值。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:899
+#: ../../__w/calibre/calibre/manual/template_lang.rst:645
 msgid "To accomplish this, we:"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:901
+#: ../../__w/calibre/calibre/manual/template_lang.rst:647
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:902
+#: ../../__w/calibre/calibre/manual/template_lang.rst:648
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "创建一个包含“{#genre：ifempty（Unknown）}/{Author_sort}/{title}'的复合字段（为其查找名称#bb）。此模板生成“genre/Author_sort/title”，其中空的genre被“Unknown”替换。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:903
+#: ../../__w/calibre/calibre/manual/template_lang.rst:649
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb)}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -2609,35 +1410,35 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr "将保存模板设置为“{series:lookup（.，#aa，#bb）}`”。如果系列不为空，则此模板选择复合字段“#aa”，如果系列为空，请选择复合字段。因此，根据“系列”是否为空，我们有两个完全不同的保存路径。"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:906
+#: ../../__w/calibre/calibre/manual/template_lang.rst:652
 msgid "Tips"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:908
+#: ../../__w/calibre/calibre/manual/template_lang.rst:654
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:909
+#: ../../__w/calibre/calibre/manual/template_lang.rst:655
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:910
+#: ../../__w/calibre/calibre/manual/template_lang.rst:656
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:911
+#: ../../__w/calibre/calibre/manual/template_lang.rst:657
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:916
-msgid "Function reference"
-msgstr ""
+#: ../../__w/calibre/calibre/manual/template_lang.rst:662
+msgid "Template function reference"
+msgstr "模板函数参考"

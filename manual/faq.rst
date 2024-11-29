@@ -460,7 +460,7 @@ customer support and complain loudly about this bug. Maybe Amazon will listen.
    If the workaround is not working for you make sure you Kindle firmware
    is at least version 5.12.5, released in April 2020.
 
-Covers for books sent to my Kindle ColorSoft dont show up in the book list?
+Covers for books sent to my Kindle ColorSoft do not show up in the book list?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Amazon deliberately broke this functionality in their ColorSoft in order to
@@ -810,6 +810,10 @@ There can be several causes for this:
     * If you get no errors but the calibre window does not appear, it has
       probably just appeared off screen. You can gather all windows onto the
       current screen using one of the techniques described `here <https://www.wikihow.com/Bring-an-Off-Screen-Window-Back-on-Windows>`__.
+
+    * Some software has been known to interfere with calibre, try rebooting in
+      Safe mode and see if it works. A known culprit is the `Sunshine
+      <https://github.com/LizardByte/Sunshine>`__ screen sharing software.
 
     * If you get an error about calibre not being able to open a file because it is in use by another program, do the following:
 
