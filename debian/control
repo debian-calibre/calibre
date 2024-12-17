@@ -81,6 +81,7 @@ Build-Depends: debhelper-compat (= 13),
                python3-zeroconf,
                qt6-image-formats-plugins,
                qt6-speech-flite-plugin | qt6-speech-speechd-plugin,
+               qt6-svg-plugins,
                qmake6,
                qt6-base-dev,
                qt6-base-private-dev,
@@ -177,7 +178,8 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends}
 Recommends: calibre (>= ${source:Version}),
-            qt6-image-formats-plugins
+            qt6-image-formats-plugins,
+            qt6-svg-plugins
 Description: powerful and easy to use e-book manager (binary plugins)
  Calibre is a complete e-library solution. It includes library management,
  format conversion, news feeds to e-book conversion, e-book viewer and editor,
