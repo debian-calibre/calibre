@@ -1,3 +1,24 @@
+calibre (7.22.0+ds-2) UNRELEASED; urgency=medium
+
+  * Add SVG plugin to Qt image formats support (Closes: #1090197)
+    Qt6 SVG image format plugin was split out from qt6-svg package since
+    qt6-svg:6.7.2-5 .
+    ----------
+    calibre: FTBFS: FAIL: test_qt (calibre.test_build.BuildTest.test_qt)
+    test_qt (calibre.test_build.BuildTest.test_qt) ... FAIL [0.0 s]
+    ======================================================================
+    FAIL: test_qt (calibre.test_build.BuildTest.test_qt)
+    ----------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "/<<PKGBUILDDIR>>/src/calibre/test_build.py", line 353, in test_qt
+        self.assertEqual(testf.intersection(fmts), testf, "Qt doesn't seem to be able to load some of its image plugins. Available plugins: %s" % fmts)
+    AssertionError: Items in the second set but not the first:
+    'svg' : Qt doesn't seem to be able to load some of its image plugins. Available plugins: {'cur', 'xbm', 'xpm', 'webp', 'pbm', 'ico', 'mng', 'png', 'gif', 'ppm', 'icns', 'wbmp', 'tiff', 'tif', 'jpeg', 'bmp', 'pgm', 'jpg', 'tga'}
+    ----------------------------------------------------------------------
+    Ran 1 test in 0.003s
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Tue, 17 Dec 2024 11:48:10 +0900
+
 calibre (7.22.0+ds-1) unstable; urgency=medium
 
   * Drop unused line from debian/not-installed
