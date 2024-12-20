@@ -11812,6 +11812,21 @@ return this.__repr__();
             __module__ : {value: "book_list.library_data"}
         });
 
+        function download_data_file_url(book_id, relpath, content_disposition) {
+            var lid, rpath, ans;
+            lid = current_library_id();
+            rpath = encodeURIComponent(relpath);
+            ans = absolute_path("data-files/get/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", rpath) + "/" + ρσ_str.format("{}", lid) + "");
+            if (content_disposition) {
+                ans += "?content_disposition=" + ρσ_str.format("{}", content_disposition) + "";
+            }
+            return ans;
+        };
+        if (!download_data_file_url.__argnames__) Object.defineProperties(download_data_file_url, {
+            __argnames__ : {value: ["book_id", "relpath", "content_disposition"]},
+            __module__ : {value: "book_list.library_data"}
+        });
+
         function book_metadata(book_id) {
             return (ρσ_expr_temp = library_data.metadata)[(typeof book_id === "number" && book_id < 0) ? ρσ_expr_temp.length + book_id : book_id];
         };
@@ -12018,6 +12033,7 @@ return this.__repr__();
         ρσ_modules["book_list.library_data"].thumbnail_url = thumbnail_url;
         ρσ_modules["book_list.library_data"].cover_url = cover_url;
         ρσ_modules["book_list.library_data"].download_url = download_url;
+        ρσ_modules["book_list.library_data"].download_data_file_url = download_data_file_url;
         ρσ_modules["book_list.library_data"].book_metadata = book_metadata;
         ρσ_modules["book_list.library_data"].set_book_metadata = set_book_metadata;
         ρσ_modules["book_list.library_data"].loaded_book_ids = loaded_book_ids;
@@ -30761,7 +30777,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.22.0";
+        CALIBRE_VERSION = "7.23.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -38135,7 +38151,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "book_list.book_details";
-        var bd_counter, CLASS_NAME, SEARCH_INTERNET_CLASS, COPY_TO_LIBRARY_CLASS, FORMAT_PRIORITIES, IGNORED_FIELDS, default_sort, ρσ_unpack, i, f, current_fetch;
+        var bd_counter, CLASS_NAME, SEARCH_INTERNET_CLASS, COPY_TO_LIBRARY_CLASS, DATA_FILES_CLASS, FORMAT_PRIORITIES, IGNORED_FIELDS, default_sort, ρσ_unpack, i, f, current_fetch, EXTENSIONS_TO_OPEN_IN_BROWSER;
         var E = ρσ_modules.elementmaker.E;
 
         var traceback = ρσ_modules.traceback;
@@ -38151,6 +38167,7 @@ return this.__repr__();
 
         var create_item = ρσ_modules["book_list.item_list"].create_item;
         var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
+        var create_side_action = ρσ_modules["book_list.item_list"].create_side_action;
 
         var all_libraries = ρσ_modules["book_list.library_data"].all_libraries;
         var book_after = ρσ_modules["book_list.library_data"].book_after;
@@ -38162,6 +38179,7 @@ return this.__repr__();
         var library_data = ρσ_modules["book_list.library_data"].library_data;
         var load_status = ρσ_modules["book_list.library_data"].load_status;
         var set_book_metadata = ρσ_modules["book_list.library_data"].set_book_metadata;
+        var download_data_file_url = ρσ_modules["book_list.library_data"].download_data_file_url;
 
         var back = ρσ_modules["book_list.router"].back;
         var home = ρσ_modules["book_list.router"].home;
@@ -38194,11 +38212,16 @@ return this.__repr__();
         var svgicon = ρσ_modules.dom.svgicon;
         var unique_id = ρσ_modules.dom.unique_id;
 
+        var update_status_widget = ρσ_modules.file_uploads.update_status_widget;
+        var upload_files_widget = ρσ_modules.file_uploads.upload_files_widget;
+        var upload_status_widget = ρσ_modules.file_uploads.upload_status_widget;
+
         var _ = ρσ_modules.gettext.gettext;
 
         var create_custom_dialog = ρσ_modules.modals.create_custom_dialog;
         var error_dialog = ρσ_modules.modals.error_dialog;
         var warning_dialog = ρσ_modules.modals.warning_dialog;
+        var question_dialog = ρσ_modules.modals.question_dialog;
 
         var copy_touch = ρσ_modules["read_book.touch"].copy_touch;
         var install_handlers = ρσ_modules["read_book.touch"].install_handlers;
@@ -38223,6 +38246,7 @@ return this.__repr__();
         CLASS_NAME = "book-details-panel";
         SEARCH_INTERNET_CLASS = "book-details-search-internet";
         COPY_TO_LIBRARY_CLASS = "book-details-copy-to-library";
+        DATA_FILES_CLASS = "book-details-data-files";
         FORMAT_PRIORITIES = ρσ_list_decorate([ "EPUB", "AZW3", "DOCX", "LIT", "MOBI", "ODT", "RTF", "MD", "MARKDOWN", "TXT", "PDF" ]);
         function sort_formats_key(fmt) {
             var ans;
@@ -39006,6 +39030,8 @@ return this.__repr__();
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " ul > li > a"].concat([ρσ_desugar_kwargs({padding: "2ex 1em", display: "block", width: "100%"})]));
                 sel = "." + COPY_TO_LIBRARY_CLASS;
                 style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "1ex 1em"})]));
+                sel = "." + DATA_FILES_CLASS;
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "1ex 1em"})]));
                 return style;
             };
             if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
@@ -39557,6 +39583,14 @@ return this.__repr__();
                     __module__ : {value: "book_list.book_details"}
                 });
                 return ρσ_anonfunc;
+            })()})])), ρσ_interpolate_kwargs.call(this, create_item, [_("Manage data files")].concat([ρσ_desugar_kwargs({subtitle: _("Upload or download additional data files to this book"), action: (function() {
+                var ρσ_anonfunc = function () {
+                    ρσ_interpolate_kwargs.call(this, show_subsequent_panel, ["data_files"].concat([ρσ_desugar_kwargs({replace: true})]));
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "book_list.book_details"}
+                });
+                return ρσ_anonfunc;
             })()})])) ]);
             container.appendChild(E.div());
             create_item_list(container.lastChild, items);
@@ -39601,6 +39635,354 @@ return this.__repr__();
             __module__ : {value: "book_list.book_details"}
         });
 
+        EXTENSIONS_TO_OPEN_IN_BROWSER = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["pdf"] = true;
+            ρσ_d["jpeg"] = true;
+            ρσ_d["jpg"] = true;
+            ρσ_d["png"] = true;
+            ρσ_d["gif"] = true;
+            ρσ_d["webp"] = true;
+            ρσ_d["txt"] = true;
+            ρσ_d["html"] = true;
+            ρσ_d["htm"] = true;
+            ρσ_d["xhtml"] = true;
+            return ρσ_d;
+        }).call(this);
+        function download_data_file(book_id, relpath) {
+            var ext, open_inline, cd, url;
+            ext = relpath.toLowerCase().rpartition(".")[2];
+            open_inline = bool(EXTENSIONS_TO_OPEN_IN_BROWSER[(typeof ext === "number" && ext < 0) ? EXTENSIONS_TO_OPEN_IN_BROWSER.length + ext : ext]);
+            cd = (open_inline) ? "inline" : "attachment";
+            url = download_data_file_url(book_id, relpath, cd);
+            if (open_inline) {
+                window.open(url);
+            } else {
+                window.location = url;
+            }
+        };
+        if (!download_data_file.__argnames__) Object.defineProperties(download_data_file, {
+            __argnames__ : {value: ["book_id", "relpath"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function on_progress(container_id, book_id, loaded, total, xhr) {
+            var container;
+            container = document.getElementById(container_id);
+            if (container && total) {
+                update_status_widget(container, loaded, total);
+            }
+        };
+        if (!on_progress.__argnames__) Object.defineProperties(on_progress, {
+            __argnames__ : {value: ["container_id", "book_id", "loaded", "total", "xhr"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function data_files_submitted(container_id, book_id, end_type, xhr, ev) {
+            var res, mi;
+            if (end_type === "abort") {
+                back();
+                return;
+            }
+            if (end_type !== "load") {
+                error_dialog(_("Failed to upload files to server"), _("Uploading data files for book: {} failed.").format(book_id), xhr.error_html);
+                return;
+            }
+            try {
+                res = JSON.parse(xhr.responseText);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                if (ρσ_Exception instanceof Error) {
+                    var err = ρσ_Exception;
+                    error_dialog(_("Could not upload data files for book"), _("Server returned an invalid response"), err.toString());
+                    return;
+                } else {
+                    throw ρσ_Exception;
+                }
+            }
+            mi = book_metadata(book_id);
+            if (mi) {
+                mi.data_files = res.data_files;
+            }
+            if (res.error) {
+                error_dialog(_("Could not upload data files for book"), _("There was an error: ") + res.error);
+            } else {
+                back();
+            }
+        };
+        if (!data_files_submitted.__argnames__) Object.defineProperties(data_files_submitted, {
+            __argnames__ : {value: ["container_id", "book_id", "end_type", "xhr", "ev"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function submit_data_files(top_container_id, container_id, book_id, added) {
+            var c, w;
+            c = document.getElementById(container_id);
+            clear(c);
+            c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Uploading changes to server, please wait...")].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem"})])));
+            w = upload_status_widget();
+            c.appendChild(w);
+            ajax_send("data-files/upload/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", current_library_id()) + "", added, data_files_submitted.bind(null, container_id, book_id), on_progress.bind(null, container_id, book_id));
+        };
+        if (!submit_data_files.__argnames__) Object.defineProperties(submit_data_files, {
+            __argnames__ : {value: ["top_container_id", "container_id", "book_id", "added"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function files_added(check_existing, top_container_id, book_id, container_id, files) {
+            var container, mi, added, existing, file, data, r;
+            container = document.getElementById(container_id);
+            mi = book_metadata(book_id);
+            if (!container || !mi || !files[0]) {
+                return;
+            }
+            added = [];
+            function exists(fname) {
+                var q, relpath;
+                var ρσ_Iter16 = ρσ_Iterable(mi.data_files);
+                for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                    relpath = ρσ_Iter16[ρσ_Index16];
+                    q = relpath.partition("/")[2];
+                    if (q === fname) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            if (!exists.__argnames__) Object.defineProperties(exists, {
+                __argnames__ : {value: ["fname"]},
+                __module__ : {value: "book_list.book_details"}
+            });
+
+            if (check_existing) {
+                existing = (function() {
+                    var ρσ_Iter = ρσ_Iterable(files), ρσ_Result = [], file;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        file = ρσ_Iter[ρσ_Index];
+                        if (exists(file.name)) {
+                            ρσ_Result.push(file.name);
+                        }
+                    }
+                    ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                    return ρσ_Result;
+                })();
+                if (existing.length) {
+                    return question_dialog(_("Replace existing data files?"), _("The following data files already exist, are you sure you want to replace them?") + " " + existing.join(", "), (function() {
+                        var ρσ_anonfunc = function (yes) {
+                            if (yes) {
+                                files_added(false, top_container_id, book_id, container_id, files);
+                            } else {
+                                back();
+                            }
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["yes"]},
+                            __module__ : {value: "book_list.book_details"}
+                        });
+                        return ρσ_anonfunc;
+                    })());
+                }
+            }
+            var ρσ_Iter17 = ρσ_Iterable(files);
+            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                file = ρσ_Iter17[ρσ_Index17];
+                data = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["name"] = file.name;
+                    ρσ_d["size"] = file.size;
+                    ρσ_d["type"] = file.type;
+                    ρσ_d["data_url"] = null;
+                    return ρσ_d;
+                }).call(this);
+                added.push(data);
+                r = new FileReader;
+                r.onload = (function() {
+                    var ρσ_anonfunc = function (evt) {
+                        var entry;
+                        data.data_url = evt.target.result;
+                        var ρσ_Iter18 = ρσ_Iterable(added);
+                        for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                            entry = ρσ_Iter18[ρσ_Index18];
+                            if (!entry.data_url) {
+                                return;
+                            }
+                        }
+                        submit_data_files(top_container_id, container_id, book_id, added);
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["evt"]},
+                        __module__ : {value: "book_list.book_details"}
+                    });
+                    return ρσ_anonfunc;
+                })();
+                r.readAsDataURL(file);
+            }
+        };
+        if (!files_added.__argnames__) Object.defineProperties(files_added, {
+            __argnames__ : {value: ["check_existing", "top_container_id", "book_id", "container_id", "files"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function upload_data_file(container_id) {
+            var book_id, container, div;
+            if (!render_book.book_id || !book_metadata(render_book.book_id)) {
+                return return_to_book_details();
+            }
+            book_id = render_book.book_id;
+            container = document.getElementById(container_id);
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Upload data files"), action: back, icon: "close"})]));
+            div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: unique_id()})]);
+            container.appendChild(div);
+            ρσ_interpolate_kwargs.call(this, upload_files_widget, [div, files_added.bind(null, true, container_id, book_id), _("Upload files by <a>selecting the files</a> or drag and drop of the files here.")].concat([ρσ_desugar_kwargs({single_file: false})]));
+        };
+        if (!upload_data_file.__argnames__) Object.defineProperties(upload_data_file, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function rebuild_data_files_list(container_id, book_id, relpath_being_deleted) {
+            var container, mi, items, fname_map, relpath, df, fname, being_deleted, subtitle, side_actions;
+            function delete_data_file(relpath, fname, ev) {
+                question_dialog(_("Are you sure?"), _("Do you want to permanently delete the data file {0} from the book {1}?").format(fname, mi.title), (function() {
+                    var ρσ_anonfunc = function (yes) {
+                        var data;
+                        if (yes) {
+                            data = [relpath];
+                            ajax_send("data-files/remove/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", current_library_id()) + "", data, data_file_deleted.bind(null, container_id, book_id, relpath));
+                            rebuild_data_files_list(container_id, book_id, relpath_being_deleted);
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["yes"]},
+                        __module__ : {value: "book_list.book_details"}
+                    });
+                    return ρσ_anonfunc;
+                })());
+            };
+            if (!delete_data_file.__argnames__) Object.defineProperties(delete_data_file, {
+                __argnames__ : {value: ["relpath", "fname", "ev"]},
+                __module__ : {value: "book_list.book_details"}
+            });
+
+            function ddf(relpath, fname, ev) {
+                download_data_file(book_id, relpath);
+            };
+            if (!ddf.__argnames__) Object.defineProperties(ddf, {
+                __argnames__ : {value: ["relpath", "fname", "ev"]},
+                __module__ : {value: "book_list.book_details"}
+            });
+
+            function upload_data_file(ev) {
+                ρσ_interpolate_kwargs.call(this, show_subsequent_panel, ["upload_data_file"].concat([ρσ_desugar_kwargs({replace: false})]));
+            };
+            if (!upload_data_file.__argnames__) Object.defineProperties(upload_data_file, {
+                __argnames__ : {value: ["ev"]},
+                __module__ : {value: "book_list.book_details"}
+            });
+
+            container = document.getElementById(container_id);
+            mi = book_metadata(book_id);
+            if (!container || !mi) {
+                return;
+            }
+            container = container.querySelector("[data-component=data-files-list-container]");
+            clear(container);
+            items = ρσ_list_decorate([ ρσ_interpolate_kwargs.call(this, create_item, [_("Upload new data file")].concat([ρσ_desugar_kwargs({icon: "plus", action: upload_data_file})])) ]);
+            if (mi.data_files) {
+                fname_map = (function() {
+                    var ρσ_Iter = ρσ_Iterable(mi.data_files), ρσ_Result = Object.create(null), relpath;
+                    for (var ρσ_Index = 0; ρσ_Index < ρσ_Iter.length; ρσ_Index++) {
+                        relpath = ρσ_Iter[ρσ_Index];
+                        ρσ_Result[relpath] = (relpath.partition("/")[2]);
+                    }
+                    return ρσ_Result;
+                })();
+                df = ρσ_interpolate_kwargs.call(this, sorted, [Object.keys(fname_map)].concat([ρσ_desugar_kwargs({key: (function() {
+                    var ρσ_anonfunc = function (x) {
+                        return fname_map[(typeof x === "number" && x < 0) ? fname_map.length + x : x].toLowerCase();
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["x"]},
+                        __module__ : {value: "book_list.book_details"}
+                    });
+                    return ρσ_anonfunc;
+                })()})]));
+                var ρσ_Iter19 = ρσ_Iterable(df);
+                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                    relpath = ρσ_Iter19[ρσ_Index19];
+                    fname = fname_map[(typeof relpath === "number" && relpath < 0) ? fname_map.length + relpath : relpath];
+                    being_deleted = relpath === relpath_being_deleted;
+                    subtitle = null;
+                    side_actions = ρσ_list_decorate([]);
+                    if (being_deleted) {
+                        subtitle = _("This file is being deleted");
+                    } else {
+                        side_actions.push(ρσ_interpolate_kwargs.call(this, create_side_action, ["trash"].concat([ρσ_desugar_kwargs({tooltip: _("Delete the file: {}").format(fname), action: delete_data_file.bind(null, relpath, fname)})])));
+                    }
+                    items.push(ρσ_interpolate_kwargs.call(this, create_item, [fname].concat([ρσ_desugar_kwargs({icon: "cloud-download", subtitle: subtitle, side_actions: side_actions, action: ddf.bind(null, relpath, fname)})])));
+                }
+            }
+            create_item_list(container, items);
+        };
+        if (!rebuild_data_files_list.__argnames__) Object.defineProperties(rebuild_data_files_list, {
+            __argnames__ : {value: ["container_id", "book_id", "relpath_being_deleted"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function data_file_deleted(container_id, book_id, relpath, end_type, xhr, ev) {
+            var res, mi;
+            if (end_type === "abort") {
+                back();
+                return;
+            }
+            if (end_type !== "load") {
+                error_dialog(_("Failed to delete data file from server"), _("Deleting data file for book: {} failed.").format(book_id), xhr.error_html);
+                return;
+            }
+            try {
+                res = JSON.parse(xhr.responseText);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                if (ρσ_Exception instanceof Error) {
+                    var err = ρσ_Exception;
+                    error_dialog(_("Could not delete data file for book"), _("Server returned an invalid response"), err.toString());
+                    return;
+                } else {
+                    throw ρσ_Exception;
+                }
+            }
+            mi = book_metadata(book_id);
+            if (mi) {
+                mi.data_files = res.data_files;
+            }
+            if (res.errors) {
+                error_dialog(_("Failed to delete data file"), _("Failed to delete data file: {}").format(relpath), (ρσ_expr_temp = res.errors)[(typeof relpath === "number" && relpath < 0) ? ρσ_expr_temp.length + relpath : relpath]);
+            }
+            rebuild_data_files_list(container_id, book_id);
+        };
+        if (!data_file_deleted.__argnames__) Object.defineProperties(data_file_deleted, {
+            __argnames__ : {value: ["container_id", "book_id", "relpath", "end_type", "xhr", "ev"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function data_files(container_id) {
+            var book_id, container;
+            if (!render_book.book_id || !book_metadata(render_book.book_id)) {
+                return return_to_book_details();
+            }
+            book_id = render_book.book_id;
+            container = document.getElementById(container_id);
+            ρσ_interpolate_kwargs.call(this, create_top_bar, [container].concat([ρσ_desugar_kwargs({title: _("Manage data files"), action: back, icon: "close"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: DATA_FILES_CLASS})]));
+            container = container.lastChild;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({data_component: "data-files-list-container"})]));
+            rebuild_data_files_list(container_id, book_id);
+        };
+        if (!data_files.__argnames__) Object.defineProperties(data_files, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
         function search_internet(container_id) {
             var container, mi, data, interface_data, author_links, book_links, links, entry, ρσ_unpack, name, url;
             if (!render_book.book_id || !book_metadata(render_book.book_id)) {
@@ -39627,26 +40009,26 @@ return this.__repr__();
             author_links = E.ul();
             book_links = E.ul();
             if (interface_data.search_the_net_urls) {
-                var ρσ_Iter16 = ρσ_Iterable(interface_data.search_the_net_urls);
-                for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                    entry = ρσ_Iter16[ρσ_Index16];
+                var ρσ_Iter20 = ρσ_Iterable(interface_data.search_the_net_urls);
+                for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
+                    entry = ρσ_Iter20[ρσ_Index20];
                     links = (entry.type === "book") ? book_links : author_links;
                     links.appendChild(E.li(link_for(entry.name, entry.url)));
                 }
             }
-            var ρσ_Iter17 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
+            var ρσ_Iter21 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
             "https://en.wikipedia.org/w/index.php?search={author}"], [_("Google Books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"] ]));
-            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                ρσ_unpack = ρσ_Iter17[ρσ_Index17];
+            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
+                ρσ_unpack = ρσ_Iter21[ρσ_Index21];
                 name = ρσ_unpack[0];
                 url = ρσ_unpack[1];
                 author_links.appendChild(E.li(link_for(name, url)));
             }
-            var ρσ_Iter18 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google Books"), 
+            var ρσ_Iter22 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google Books"), 
             "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22"], [_("Amazon"), 
             "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}"] ]));
-            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                ρσ_unpack = ρσ_Iter18[ρσ_Index18];
+            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
+                ρσ_unpack = ρσ_Iter22[ρσ_Index22];
                 name = ρσ_unpack[0];
                 url = ρσ_unpack[1];
                 book_links.appendChild(E.li(link_for(name, url)));
@@ -39784,9 +40166,9 @@ return this.__repr__();
             }
             container.appendChild(E.h2(_("Choose the library to copy to below")));
             items = ρσ_list_decorate([]);
-            var ρσ_Iter19 = ρσ_Iterable(libraries);
-            for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                ρσ_unpack = ρσ_Iter19[ρσ_Index19];
+            var ρσ_Iter23 = ρσ_Iterable(libraries);
+            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
+                ρσ_unpack = ρσ_Iter23[ρσ_Index23];
                 library_id = ρσ_unpack[0];
                 library_name = ρσ_unpack[1];
                 if (library_id === current_library_id()) {
@@ -39813,10 +40195,13 @@ return this.__repr__();
         set_panel_handler("book_details^more_actions", create_more_actions_panel);
         set_panel_handler("book_details^search_internet", search_internet);
         set_panel_handler("book_details^copy_to_library", copy_to_library);
+        set_panel_handler("book_details^data_files", data_files);
+        set_panel_handler("book_details^upload_data_file", upload_data_file);
         ρσ_modules["book_list.book_details"].bd_counter = bd_counter;
         ρσ_modules["book_list.book_details"].CLASS_NAME = CLASS_NAME;
         ρσ_modules["book_list.book_details"].SEARCH_INTERNET_CLASS = SEARCH_INTERNET_CLASS;
         ρσ_modules["book_list.book_details"].COPY_TO_LIBRARY_CLASS = COPY_TO_LIBRARY_CLASS;
+        ρσ_modules["book_list.book_details"].DATA_FILES_CLASS = DATA_FILES_CLASS;
         ρσ_modules["book_list.book_details"].FORMAT_PRIORITIES = FORMAT_PRIORITIES;
         ρσ_modules["book_list.book_details"].IGNORED_FIELDS = IGNORED_FIELDS;
         ρσ_modules["book_list.book_details"].default_sort = default_sort;
@@ -39824,6 +40209,7 @@ return this.__repr__();
         ρσ_modules["book_list.book_details"].i = i;
         ρσ_modules["book_list.book_details"].f = f;
         ρσ_modules["book_list.book_details"].current_fetch = current_fetch;
+        ρσ_modules["book_list.book_details"].EXTENSIONS_TO_OPEN_IN_BROWSER = EXTENSIONS_TO_OPEN_IN_BROWSER;
         ρσ_modules["book_list.book_details"].sort_formats_key = sort_formats_key;
         ρσ_modules["book_list.book_details"].get_preferred_format = get_preferred_format;
         ρσ_modules["book_list.book_details"].field_sorter = field_sorter;
@@ -39862,6 +40248,15 @@ return this.__repr__();
         ρσ_modules["book_list.book_details"].return_to_book_details = return_to_book_details;
         ρσ_modules["book_list.book_details"].toggle_fields = toggle_fields;
         ρσ_modules["book_list.book_details"].url_for = url_for;
+        ρσ_modules["book_list.book_details"].download_data_file = download_data_file;
+        ρσ_modules["book_list.book_details"].on_progress = on_progress;
+        ρσ_modules["book_list.book_details"].data_files_submitted = data_files_submitted;
+        ρσ_modules["book_list.book_details"].submit_data_files = submit_data_files;
+        ρσ_modules["book_list.book_details"].files_added = files_added;
+        ρσ_modules["book_list.book_details"].upload_data_file = upload_data_file;
+        ρσ_modules["book_list.book_details"].rebuild_data_files_list = rebuild_data_files_list;
+        ρσ_modules["book_list.book_details"].data_file_deleted = data_file_deleted;
+        ρσ_modules["book_list.book_details"].data_files = data_files;
         ρσ_modules["book_list.book_details"].search_internet = search_internet;
         ρσ_modules["book_list.book_details"].do_copy_to_library = do_copy_to_library;
         ρσ_modules["book_list.book_details"].copy_to_library = copy_to_library;

@@ -636,6 +636,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         r('tag_browser_old_look', gprefs)
         r('tag_browser_hide_empty_categories', gprefs)
         r('tag_browser_always_autocollapse', gprefs)
+        r('tag_browser_restore_tree_expansion', gprefs)
         r('tag_browser_show_tooltips', gprefs)
         r('tag_browser_allow_keyboard_focus', gprefs)
         r('bd_show_cover', gprefs)
@@ -714,7 +715,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         r('cb_double_click_to_activate', gprefs)
 
         choices = [(_('Off'), 'off'), (_('Small'), 'small'),
-            (_('Medium'), 'medium'), (_('Large'), 'large')]
+            (_('Medium-small'), 'mid-small'), (_('Medium'), 'medium'), (_('Large'), 'large')]
         r('toolbar_icon_size', gprefs, choices=choices)
 
         choices = [(_('If there is enough room'), 'auto'), (_('Always'), 'always'),
