@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "листопада 29, 2024" "7.22.0" "calibre"
+.TH "CALIBREDB" "1" "грудня 20, 2024" "7.23.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -532,16 +532,15 @@ calibredb export [параметри] ідентифікатори
 .INDENT 3.5
 .sp
 .EX
-calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+calibredb catalog /шлях/до/призначення.(csv|epub|mobi|xml...) [параметри]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options. To
-see the different options, specify the name of the output file and then the
-\-\-help option.
+Експортувати каталог у форматі, вказаної параметром «шлях/до/призначення.суфікс_назви».
+Параметри керують способом показу у виведених даних каталогу.
+Зауважте, що у різних форматах каталогів передбачено підтримку різних наборів параметрів. Щоб переглянути варіанти,
+вкажіть назву файла результатів, а потім параметр \-\-help.
 .sp
 Якщо ви передаєте аргументи calibredb, які містять пробіли, додайте навколо таких аргументів лапки. Приклад: «/some path/with spaces»
 .INDENT 0.0

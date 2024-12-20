@@ -12,20 +12,13 @@ from calibre.ebooks.BeautifulSoup import NavigableString, Tag
 from calibre.web.feeds.news import BasicNewsRecipe
 
 
-def E(parent, name, text='', **attrs):
-    ans = parent.makeelement(name, **attrs)
-    ans.text = text
-    parent.append(ans)
-    return ans
-
-
 def process_node(node):
     ntype = node.get('type', '')
     if ntype == 'CROSSHEAD':
         if node.get('textHtml'):
             return f'<h4>{node.get("textHtml")}</h4>'
         return f'<h4>{node.get("text", "")}</h4>'
-    if ntype == 'PARAGRAPH':
+    elif ntype == 'PARAGRAPH':
         if node.get('textHtml'):
             return f'<p>{node.get("textHtml")}</p>'
         return f'<p>{node.get("text", "")}</p>'
@@ -138,10 +131,6 @@ class EconomistWorld(BasicNewsRecipe):
     extra_css = '''
         em { color:#202020; }
         img {display:block; margin:0 auto;}
-        .sub { font-size:small; }
-        #subhead { color: #404040; font-size:small; font-weight:bold; }'
-        #descrip { font-style: italic; color:#202020; }
-        #date { color: gray; font-size:small; }
     '''
 
     resolve_internal_links = True
@@ -189,10 +178,9 @@ class EconomistWorld(BasicNewsRecipe):
 
     def get_browser(self, *args, **kwargs):
         kwargs['user_agent'] = (
-            'Mozilla/5.0 (Linux; Android 14; 330333QCG Build/AP1A.140705.005; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/125.0.6422.165 Mobile Safari/537.36 Lamarr/3.37.0-3037003 (android)' # noqa
+            'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.103 Mobile Safari/537.36 Lamarr' # noqa
         )
         br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
-        br.addheaders += [('x-requested-with', 'com.economist.lamarr')]
         return br
 
     def economist_test_article(self):

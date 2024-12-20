@@ -1844,11 +1844,13 @@ You can use expressions to generate a list. For example, assume you want items
 for ``authors`` and ``#genre``, but with the genre changed to the word "Genre: "
 followed by the first letter of the genre, i.e. the genre "Fiction" becomes
 "Genre: F". The following will do that:
+{}''').format('''\
 [CODE]
 program:
-    list_join('#@#', $authors, '&', list_re($#genre, ',', '^(.).*$', 'Genre: \1'),  ',')
+    list_join('#@#', $authors, '&', list_re($#genre, ',', '^(.).*$', 'Genre: \\1'),  ',')
 [/CODE]
-''')
+''')  # not translated as \1 gets mistranslated as a control char in transifex
+      # for some reason. And yes, the double backslash is required, for some reason.
 
     def evaluate(self, formatter, kwargs, mi, locals, with_separator, *args):
         if len(args) % 2 != 0:
@@ -2531,8 +2533,7 @@ on a device has its own device name. The ``storage_location_key`` names are
             try:
                 if storage_location not in {'main', 'carda', 'cardb'}:
                     raise ValueError(
-                         _('connected_device_name: invalid storage location "{}"'
-                                    .format(storage_location)))
+                         _('connected_device_name: invalid storage location "{}"').format(storage_location))
                 info = info['info'][4]
                 if storage_location not in info:
                     return ''
@@ -2569,8 +2570,7 @@ only in the GUI.
             try:
                 if storage_location not in {'main', 'carda', 'cardb'}:
                     raise ValueError(
-                         _('connected_device_name: invalid storage location "{}"'
-                                    .format(storage_location)))
+                         _('connected_device_name: invalid storage location "{}"').format(storage_location))
                 info = info['info'][4]
                 if storage_location not in info:
                     return ''

@@ -53,7 +53,7 @@ from calibre.gui2.widgets2 import Dialog, HTMLDisplay
 from calibre.library.coloring import color_row_key, displayable_columns
 from calibre.utils.config_base import tweaks
 from calibre.utils.date import DEFAULT_DATE
-from calibre.utils.ffml_processor import FFMLProcessor
+from calibre.utils.ffml_processor import MARKUP_ERROR, FFMLProcessor
 from calibre.utils.formatter import PythonTemplateContext, StopException
 from calibre.utils.formatter_functions import StoredObjectType, formatter_functions
 from calibre.utils.icu import lower as icu_lower
@@ -141,7 +141,7 @@ class DocViewer(Dialog):
 
     def get_doc(self, func):
         doc = func.doc if hasattr(func, 'doc') else ''
-        return doc.raw_text if self.english_cb.isChecked() and hasattr(doc, 'raw_text') else doc
+        return getattr(doc, 'formatted_english', doc) if self.english_cb.isChecked() else doc
 
     def no_doc_string(self):
         if self.english_cb.isChecked():
@@ -154,7 +154,7 @@ class DocViewer(Dialog):
             self._show_function(fname)
 
     def _show_function(self, fname):
-        self.last_operation = partial(self.show_function, fname)
+        self.last_operation = partial(self._show_function, fname)
         bif = self.builtins[fname]
         if fname not in self.builtins or not bif.doc:
             self.set_html(self.header_line(fname) + self.no_doc_string())
@@ -179,13 +179,14 @@ class DocViewer(Dialog):
                 if not doc:
                     a(self.no_doc_string())
                 else:
-                    html = self.ffml.document_to_html(doc.strip(), name)
-                    name_pos = html.find(name + '(')
-                    if name_pos < 0:
-                        rest_of_doc = ' -- ' + html
-                    else:
-                        rest_of_doc = html[name_pos + len(name):]
-                    html = f'<a href="ffdoc:{name}">{name}</a>{rest_of_doc}'
+                    html = self.ffml.document_to_html(doc, name)
+                    if MARKUP_ERROR not in html:
+                        name_pos = html.find(name + '(')
+                        if name_pos < 0:
+                            rest_of_doc = ' -- ' + html
+                        else:
+                            rest_of_doc = html[name_pos + len(name):]
+                        html = f'<a href="ffdoc:{name}">{name}</a>{rest_of_doc}'
                     a(html)
             except Exception:
                 print('Exception in', name)
@@ -1122,7 +1123,7 @@ def evaluate(book, context):
         self.documentation.clear()
         self.func_type.clear()
         if name in self.all_functions:
-            doc = self.all_functions[name].doc.strip()
+            doc = self.all_functions[name].doc
             self.documentation.setHtml(self.ffml.document_to_html(doc, name))
             if self.doc_viewer is not None:
                 self.doc_viewer.show_function(name)

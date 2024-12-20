@@ -20,7 +20,7 @@ from io import DEFAULT_BUFFER_SIZE, BytesIO
 from queue import Queue
 from threading import Lock
 from time import mktime, monotonic, sleep, time
-from typing import NamedTuple, Optional, Tuple
+from typing import Iterable, NamedTuple, Optional, Tuple
 
 from calibre import as_unicode, detect_ncpus, isbytestring
 from calibre.constants import iswindows, preferred_encoding
@@ -1542,12 +1542,13 @@ class Cache:
 
     @api
     def get_categories(self, sort='name', book_ids=None, already_fixed=None,
-                       first_letter_sort=False):
+                       first_letter_sort=False, uncollapsed_categories=None):
         ' Used internally to implement the Tag Browser '
         try:
             with self.safe_read_lock:
                 return get_categories(self, sort=sort, book_ids=book_ids,
-                                      first_letter_sort=first_letter_sort)
+                                      first_letter_sort=first_letter_sort,
+                                      uncollapsed_categories=uncollapsed_categories)
         except InvalidLinkTable as err:
             bad_field = err.field_name
             if bad_field == already_fixed:
@@ -3355,6 +3356,17 @@ class Cache:
                         added.add(self.backend.add_extra_file(relpath, file_path, path, replace=replace, auto_rename=True))
         self._clear_extra_files_cache(dest_id)
         return added
+
+    @write_api
+    def remove_extra_files(self, book_id: int, relpaths: Iterable[str], permanent=False) -> dict[str, Exception | None]:
+        '''
+        Delete the specified extra files, either to Recycle Bin or permanently.
+        '''
+        path = self._field_for('path', book_id)
+        if path:
+            self._clear_extra_files_cache(book_id)
+            return self.backend.remove_extra_files(path, relpaths, permanent)
+        return dict.fromkeys(relpaths)
 
     @read_api
     def list_extra_files(self, book_id, use_cache=False, pattern='') -> Tuple[ExtraFile, ...]:
