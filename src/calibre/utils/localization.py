@@ -610,3 +610,8 @@ def localize_website_link(url):
     parts = list(parts)
     parts[2] = path
     return urlunparse(parts)
+
+
+def is_rtl_lang(lang):
+    lang = canonicalize_lang(lang)
+    return lang and lang in ('ara', 'heb')

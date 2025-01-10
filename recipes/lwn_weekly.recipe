@@ -11,6 +11,7 @@ lwn.net
 import re
 import sys
 
+from calibre.utils.date import now as nowf
 from calibre.web.feeds.news import BasicNewsRecipe
 
 
@@ -49,6 +50,13 @@ class WeeklyLWN(BasicNewsRecipe):
     oldest_article = 7.0
     needs_subscription = 'optional'
 
+    recipe_specific_options = {
+        'issue': {
+            'short': 'The ID of the edition to download',
+            'long': 'For example, 998950\nHint: The ID can be found within the edition URL'
+        }
+    }
+
     def get_browser(self):
         br = BasicNewsRecipe.get_browser(self)
         if self.username is not None and self.password is not None:
@@ -75,12 +83,29 @@ class WeeklyLWN(BasicNewsRecipe):
 
         return url
 
+    def publication_date(self):
+        return self.pub_date
+
+    def parse_publication_date(self, soup):
+        from dateutil.parser import ParserError, parse
+        try:
+            date_match = re.match(r'.* +for +([^\[]*)', self.tag_to_string(soup.head.title.string))
+            # dateutil.parser.parse() is considered thread-safe
+            self.pub_date = parse(date_match[1])
+        except (TypeError, ParserError):
+            self.log.warning('Failed to parse publication date from title: %r, using current time' % soup.head.title.string)
+            self.pub_date = nowf()
+
     def parse_index(self):
-        if self.username is not None and self.password is not None:
+        past_edition = self.recipe_specific_options.get('issue')
+        if past_edition and isinstance(past_edition, str):
+            index_url = self.print_version(f'/Articles/{past_edition}/bigpage')
+        elif self.username is not None and self.password is not None:
             index_url = self.print_version('/current/bigpage')
         else:
             index_url = self.print_version('/free/bigpage')
         soup = self.index_to_soup(index_url)
+        self.parse_publication_date(soup)
         curr = soup.body
 
         articles = {}

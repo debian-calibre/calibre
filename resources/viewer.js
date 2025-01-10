@@ -11909,9 +11909,8 @@ return this.__repr__();
             __module__ : {value: "book_list.router"}
         });
 
-        function open_book_url(book_id, fmt, extra_query) {
-            var lid, ans, q;
-            lid = current_library_id();
+        function open_book_url_in_library(library_id, book_id, fmt, extra_query) {
+            var ans, q;
             ans = absolute_path("");
             q = (function(){
                 var ρσ_d = Object.create(null);
@@ -11920,13 +11919,21 @@ return this.__repr__();
                 ρσ_d["mode"] = read_book_mode;
                 return ρσ_d;
             }).call(this);
-            if (lid) {
-                q.library_id = lid;
+            if (library_id) {
+                q.library_id = library_id;
             }
             if (extra_query) {
                 Object.assign(q, extra_query);
             }
             return ans + encode_query(q, "#");
+        };
+        if (!open_book_url_in_library.__argnames__) Object.defineProperties(open_book_url_in_library, {
+            __argnames__ : {value: ["library_id", "book_id", "fmt", "extra_query"]},
+            __module__ : {value: "book_list.router"}
+        });
+
+        function open_book_url(book_id, fmt, extra_query) {
+            return open_book_url_in_library(current_library_id(), book_id, fmt, extra_query);
         };
         if (!open_book_url.__argnames__) Object.defineProperties(open_book_url, {
             __argnames__ : {value: ["book_id", "fmt", "extra_query"]},
@@ -12101,6 +12108,7 @@ return this.__repr__();
         ρσ_modules["book_list.router"].apply_url = apply_url;
         ρσ_modules["book_list.router"].request_full_screen_if_wanted = request_full_screen_if_wanted;
         ρσ_modules["book_list.router"].open_book = open_book;
+        ρσ_modules["book_list.router"].open_book_url_in_library = open_book_url_in_library;
         ρσ_modules["book_list.router"].open_book_url = open_book_url;
         ρσ_modules["book_list.router"].show_note = show_note;
         ρσ_modules["book_list.router"].push_state = push_state;
@@ -28713,7 +28721,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.23.0";
+        CALIBRE_VERSION = "7.24.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -36998,6 +37006,7 @@ return this.__repr__();
         var open_book = ρσ_modules["book_list.router"].open_book;
         var report_a_load_failure = ρσ_modules["book_list.router"].report_a_load_failure;
         var show_note = ρσ_modules["book_list.router"].show_note;
+        var open_book_url_in_library = ρσ_modules["book_list.router"].open_book_url_in_library;
 
         var color_scheme = ρσ_modules["book_list.theme"].color_scheme;
         var get_color = ρσ_modules["book_list.theme"].get_color;
@@ -37292,6 +37301,85 @@ return this.__repr__();
         if ((typeof window !== "undefined" && window !== null)) {
             window.addEventListener("resize", debounce(adjust_all_iframes, 250));
         }
+        function replace_calibre_links_to_books(html) {
+            var parser, dom, changed;
+            parser = new DOMParser();
+            dom = parser.parseFromString(html, "text/html");
+            changed = false;
+            dom.body.querySelectorAll("a[href]").forEach((function() {
+                var ρσ_anonfunc = function (link) {
+                    var url, path, parts, ρσ_unpack, lib, book_id, new_href, fmt, extra_query;
+                    if (!link.href) {
+                        return;
+                    }
+                    if (link.href.startswith("calibre://")) {
+                        url = new URL(link.href, window.location.origin);
+                        if (url.hostname !== "show-book" && url.hostname !== "view-book") {
+                            return;
+                        }
+                        path = url.pathname;
+                        parts = str.split(path, "/");
+                        ρσ_unpack = [parts[1], parts[2]];
+                        lib = ρσ_unpack[0];
+                        book_id = ρσ_unpack[1];
+                        try {
+                            book_id = int(book_id);
+                        } catch (ρσ_Exception) {
+                            ρσ_last_exception = ρσ_Exception;
+                            {
+                                return;
+                            } 
+                        }
+                        if (lib.startswith("_hex_-")) {
+                            lib = lib.slice(6);
+                            const uint8Array = new Uint8Array(lib.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));;
+                            lib = new TextDecoder("utf-8").decode(uint8Array);;
+                        }
+                        if (url.hostname === "show-book") {
+                            new_href = query_as_href((function(){
+                                var ρσ_d = Object.create(null);
+                                ρσ_d["book_id"] = book_id + "";
+                                ρσ_d["library_id"] = lib;
+                                return ρσ_d;
+                            }).call(this), "book_details");
+                        } else {
+                            fmt = parts[3];
+                            extra_query = Object.create(null);
+                            url.searchParams.forEach((function() {
+                                var ρσ_anonfunc = function (val, key) {
+                                    extra_query[(typeof key === "number" && key < 0) ? extra_query.length + key : key] = val;
+                                };
+                                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                    __argnames__ : {value: ["val", "key"]},
+                                    __module__ : {value: "book_list.book_details"}
+                                });
+                                return ρσ_anonfunc;
+                            })());
+                            new_href = open_book_url_in_library(lib, book_id, fmt, extra_query);
+                            if (url.search) {
+                                new_href;
+                            }
+                        }
+                        link.href = new_href;
+                        changed = true;
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["link"]},
+                    __module__ : {value: "book_list.book_details"}
+                });
+                return ρσ_anonfunc;
+            })());
+            if (!changed) {
+                return html;
+            }
+            return new XMLSerializer().serializeToString(dom);;
+        };
+        if (!replace_calibre_links_to_books.__argnames__) Object.defineProperties(replace_calibre_links_to_books, {
+            __argnames__ : {value: ["html"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
         function adjusting_sandboxed_html(html, extra_css) {
             var color, css, ans;
             color = get_color_as_rgba("window-foreground");
@@ -37808,7 +37896,7 @@ return this.__repr__();
                     all_html += comment;
                 }
             }
-            iframe = adjusting_sandboxed_html(all_html, iframe_css);
+            iframe = adjusting_sandboxed_html(replace_calibre_links_to_books(all_html), iframe_css);
             iframe.style.marginTop = "2ex";
             table.parentNode.appendChild(iframe);
         };
@@ -39031,6 +39119,7 @@ return this.__repr__();
         ρσ_modules["book_list.book_details"].setup_iframe = setup_iframe;
         ρσ_modules["book_list.book_details"].adjust_all_iframes = adjust_all_iframes;
         ρσ_modules["book_list.book_details"].add_stars_to = add_stars_to;
+        ρσ_modules["book_list.book_details"].replace_calibre_links_to_books = replace_calibre_links_to_books;
         ρσ_modules["book_list.book_details"].adjusting_sandboxed_html = adjusting_sandboxed_html;
         ρσ_modules["book_list.book_details"].render_metadata = render_metadata;
         ρσ_modules["book_list.book_details"].basic_table_rules = basic_table_rules;
