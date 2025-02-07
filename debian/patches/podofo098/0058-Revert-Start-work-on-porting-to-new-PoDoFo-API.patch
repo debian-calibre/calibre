@@ -25,8 +25,8 @@ diff --git a/setup/build.py b/setup/build.py
 index 1abe017..0a25563 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -234,12 +234,8 @@ class Environment(NamedTuple):
-     def lib_dirs_to_ldflags(self, dirs) -> List[str]:
+@@ -234,11 +234,7 @@ class Environment(NamedTuple):
+     def lib_dirs_to_ldflags(self, dirs) -> list[str]:
          return [self.libdir_prefix+x for x in dirs if x]
  
 -    def libraries_to_ldflags(self, libs):
@@ -37,7 +37,6 @@ index 1abe017..0a25563 100644
 -        return list(map(map_name, libs))
 +    def libraries_to_ldflags(self, dirs):
 +        return [self.lib_prefix+x+self.lib_suffix for x in dirs]
- 
  
  
 diff --git a/setup/build_environment.py b/setup/build_environment.py
