@@ -32,7 +32,7 @@ def download_updates(ver_map={}, server='https://code.calibre-ebook.com'):
     from calibre.utils.https import get_https_resource_securely
     data = {k:str(v) for k, v in iteritems(ver_map)}
     data['ver'] = '1'
-    url = '%s/stores?%s'%(server, urlencode(data))
+    url = f'{server}/stores?{urlencode(data)}'
     # We use a timeout here to ensure the non-daemonic update thread does not
     # cause calibre to hang indefinitely during shutdown
     raw = get_https_resource_securely(url, timeout=90.0)
@@ -200,4 +200,4 @@ if __name__ == '__main__':
         print(name)
         print(code.encode('utf-8'))
         print('\n', '_'*80, '\n', sep='')
-    print('Time to download all %d plugins: %.2f seconds'%(count, time.time() - st))
+    print(f'Time to download all {count} plugins: {time.time() - st:.2f} seconds')

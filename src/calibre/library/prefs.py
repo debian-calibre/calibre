@@ -64,7 +64,7 @@ class DBPrefs(dict):
         self.__setitem__(key, val)
 
     def get_namespaced(self, namespace, key, default=None):
-        key = 'namespaced:%s:%s'%(namespace, key)
+        key = f'namespaced:{namespace}:{key}'
         try:
             return dict.__getitem__(self, key)
         except KeyError:
@@ -76,7 +76,7 @@ class DBPrefs(dict):
         if ':' in namespace:
             raise KeyError('Colons are not allowed in'
                 ' the namespace')
-        key = 'namespaced:%s:%s'%(namespace, key)
+        key = f'namespaced:{namespace}:{key}'
         self[key] = val
 
     def write_serialized(self, library_path):
@@ -85,7 +85,7 @@ class DBPrefs(dict):
             data = json.dumps(self, indent=2, default=to_json)
             if not isinstance(data, bytes):
                 data = data.encode('utf-8')
-            with open(to_filename, "wb") as f:
+            with open(to_filename, 'wb') as f:
                 f.write(data)
         except:
             import traceback
@@ -96,7 +96,7 @@ class DBPrefs(dict):
         try:
             from_filename = os.path.join(library_path,
                     'metadata_db_prefs_backup.json')
-            with open(from_filename, "rb") as f:
+            with open(from_filename, 'rb') as f:
                 d = json.load(f, object_hook=from_json)
                 if not recreate_prefs:
                     return d

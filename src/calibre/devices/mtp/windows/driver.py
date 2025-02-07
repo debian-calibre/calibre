@@ -5,6 +5,7 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import os
 import threading
 import time
 import traceback
@@ -36,6 +37,17 @@ def same_thread(func):
             raise ThreadingViolation()
         return func(self, *args, **kwargs)
     return check_thread
+
+
+def sorted_storage(storage):
+    storage = sorted(storage, key=lambda x:x.get('id', 'zzzzz'))
+    if len(storage) > 1 and 'removable' in storage[0].get('type', ''):
+        for i in range(1, len(storage)):
+            x = storage[i]
+            if 'fixed' in x.get('type', ''):
+                storage[0], storage[i] = storage[i], storage[0]
+                break
+    return storage
 
 
 class MTP_DEVICE(MTPDeviceBase):
@@ -157,7 +169,7 @@ class MTP_DEVICE(MTPDeviceBase):
         try:
             pnp_ids = frozenset(self.wpd.enumerate_devices())
         except:
-            p("Failed to get list of PNP ids on system")
+            p('Failed to get list of PNP ids on system')
             p(traceback.format_exc())
             return False
 
@@ -246,7 +258,7 @@ class MTP_DEVICE(MTPDeviceBase):
         path = tuple(reversed(path))
         ok = not self.is_folder_ignored(self._currently_getting_sid, path)
         if not ok:
-            debug('Ignored object: %s' % '/'.join(path))
+            debug('Ignored object: {}'.format('/'.join(path)))
         return ok
 
     @property
@@ -277,8 +289,7 @@ class MTP_DEVICE(MTPDeviceBase):
                 all_storage.append(storage)
                 items.append(itervalues(id_map))
             self._filesystem_cache = FilesystemCache(all_storage, chain(*items))
-            debug('Filesystem metadata loaded in %g seconds (%d objects)'%(
-                time.time()-st, len(self._filesystem_cache)))
+            debug(f'Filesystem metadata loaded in {time.time()-st:g} seconds ({len(self._filesystem_cache)} objects)')
         return self._filesystem_cache
 
     @same_thread
@@ -318,21 +329,20 @@ class MTP_DEVICE(MTPDeviceBase):
                 self.dev = self.wpd.Device(connected_device)
             except self.wpd.WPDError as e:
                 self.blacklisted_devices.add(connected_device)
-                raise OpenFailed('Failed to open %s with error: %s'%(
-                    connected_device, as_unicode(e)))
+                raise OpenFailed(f'Failed to open {connected_device} with error: {as_unicode(e)}')
         devdata = self.dev.data
         storage = [s for s in devdata.get('storage', []) if s.get('rw', False)]
         if not storage:
             self.blacklisted_devices.add(connected_device)
-            raise OpenFailed('No storage found for device %s'%(connected_device,))
+            raise OpenFailed(f'No storage found for device {connected_device}')
         snum = devdata.get('serial_number', None)
         if snum in self.prefs.get('blacklist', []):
             self.blacklisted_devices.add(connected_device)
             self.dev = None
             raise BlacklistedDevice(
-                'The %s device has been blacklisted by the user'%(connected_device,))
+                f'The {connected_device} device has been blacklisted by the user')
 
-        storage.sort(key=lambda x:x.get('id', 'zzzzz'))
+        storage = sorted_storage(storage)
 
         self._main_id = storage[0]['id']
         if len(storage) > 1:
@@ -381,9 +391,49 @@ class MTP_DEVICE(MTPDeviceBase):
         return tuple(ans)
 
     @same_thread
+    def list_mtp_folder_by_name(self, parent, *names: str):
+        if not parent.is_folder:
+            raise ValueError(f'{parent.full_path} is not a folder')
+        x = self.dev.list_folder_by_name(parent.object_id, names)
+        if x is None:
+            raise FileNotFoundError(f'Could not find folder named: {"/".join(names)} in {parent.full_path}')
+        return list(x.values())
+
+    @same_thread
+    def get_mtp_metadata_by_name(self, parent, *names: str):
+        if not parent.is_folder:
+            raise ValueError(f'{parent.full_path} is not a folder')
+        x = self.dev.get_metadata_by_name(parent.object_id, names)
+        if x is None:
+            raise DeviceError(f'Could not find folder named: {"/".join(names)} in {parent.full_path}')
+        return x
+
+    @same_thread
+    def get_mtp_file_by_name(self, parent, *names: str, stream=None, callback=None):
+        if not parent.is_folder:
+            raise ValueError(f'{parent.full_path} is not a folder')
+        set_name = stream is None
+        if stream is None:
+            stream = SpooledTemporaryFile(5*1024*1024, '_wpd_receive_file.dat')
+        try:
+            try:
+                self.dev.get_file_by_name(parent.object_id, names, stream, callback)
+            except self.wpd.WPDFileBusy:
+                time.sleep(2)
+                self.dev.get_file_by_name(parent.object_id, names, stream, callback)
+        except KeyError as e:
+            raise FileNotFoundError(f'Failed to find the file {os.sep.join(names)} in {parent.full_path}') from e
+        except Exception as e:
+            raise DeviceError(f'Failed to fetch the file {os.sep.join(names)} in {parent.full_path} with error: {as_unicode(e)}')
+        stream.seek(0)
+        if set_name:
+            stream.name = '/'.join(names)
+        return stream
+
+    @same_thread
     def get_mtp_file(self, f, stream=None, callback=None):
         if f.is_folder:
-            raise ValueError('%s if a folder'%(f.full_path,))
+            raise ValueError(f'{f.full_path} if a folder')
         set_name = stream is None
         if stream is None:
             stream = SpooledTemporaryFile(5*1024*1024, '_wpd_receive_file.dat')
@@ -394,8 +444,7 @@ class MTP_DEVICE(MTPDeviceBase):
                 time.sleep(2)
                 self.dev.get_file(f.object_id, stream, callback)
         except Exception as e:
-            raise DeviceError('Failed to fetch the file %s with error: %s'%
-                    (f.full_path, as_unicode(e)))
+            raise DeviceError(f'Failed to fetch the file {f.full_path} with error: {as_unicode(e)}')
         stream.seek(0)
         if set_name:
             stream.name = f.name
@@ -404,7 +453,7 @@ class MTP_DEVICE(MTPDeviceBase):
     @same_thread
     def create_folder(self, parent, name):
         if not parent.is_folder:
-            raise ValueError('%s is not a folder'%(parent.full_path,))
+            raise ValueError(f'{parent.full_path} is not a folder')
         e = parent.folder_named(name)
         if e is not None:
             return e
@@ -420,14 +469,11 @@ class MTP_DEVICE(MTPDeviceBase):
         if obj.deleted:
             return
         if not obj.can_delete:
-            raise ValueError('Cannot delete %s as deletion not allowed'%
-                    (obj.full_path,))
+            raise ValueError(f'Cannot delete {obj.full_path} as deletion not allowed')
         if obj.is_system:
-            raise ValueError('Cannot delete %s as it is a system object'%
-                    (obj.full_path,))
+            raise ValueError(f'Cannot delete {obj.full_path} as it is a system object')
         if obj.files or obj.folders:
-            raise ValueError('Cannot delete %s as it is not empty'%
-                    (obj.full_path,))
+            raise ValueError(f'Cannot delete {obj.full_path} as it is not empty')
         parent = obj.parent
         self.dev.delete_object(obj.object_id)
         parent.remove_child(obj)
@@ -437,13 +483,11 @@ class MTP_DEVICE(MTPDeviceBase):
     def put_file(self, parent, name, stream, size, callback=None, replace=True):
         e = parent.folder_named(name)
         if e is not None:
-            raise ValueError('Cannot upload file, %s already has a folder named: %s'%(
-                parent.full_path, e.name))
+            raise ValueError(f'Cannot upload file, {parent.full_path} already has a folder named: {e.name}')
         e = parent.file_named(name)
         if e is not None:
             if not replace:
-                raise ValueError('Cannot upload file %s, it already exists'%(
-                    e.full_path,))
+                raise ValueError(f'Cannot upload file {e.full_path}, it already exists')
             self.delete_file_or_folder(e)
         sid, pid = parent.storage_id, parent.object_id
         ans = self.dev.put_file(pid, name, stream, size, callback)

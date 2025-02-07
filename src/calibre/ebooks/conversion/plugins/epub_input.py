@@ -9,7 +9,7 @@ from itertools import cycle
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 
-ADOBE_OBFUSCATION =  'http://ns.adobe.com/pdf/enc#RC'
+ADOBE_OBFUSCATION = 'http://ns.adobe.com/pdf/enc#RC'
 IDPF_OBFUSCATION = 'http://www.idpf.org/2008/embedding'
 
 
@@ -46,7 +46,7 @@ class EPUBInput(InputFormatPlugin):
         from lxml import etree
         idpf_key = opf.raw_unique_identifier
         if idpf_key:
-            idpf_key = re.sub('[\u0020\u0009\u000d\u000a]', '', idpf_key)
+            idpf_key = re.sub(r'[ \t\r\n]', '', idpf_key)
             idpf_key = hashlib.sha1(idpf_key.encode('utf-8')).digest()
         key = None
         for item in opf.identifier_iter():
@@ -244,7 +244,7 @@ class EPUBInput(InputFormatPlugin):
             with open('META-INF/container.xml', 'rb') as f:
                 root = safe_xml_fromstring(f.read())
                 for r in root.xpath('//*[local-name()="rootfile"]'):
-                    if attr(r, 'media-type') != "application/oebps-package+xml":
+                    if attr(r, 'media-type') != 'application/oebps-package+xml':
                         continue
                     path = attr(r, 'full-path')
                     if not path:
@@ -281,7 +281,7 @@ class EPUBInput(InputFormatPlugin):
         path = getattr(stream, 'name', 'stream')
 
         if opf is None:
-            raise ValueError('%s is not a valid EPUB file (could not find opf)'%path)
+            raise ValueError(f'{path} is not a valid EPUB file (could not find opf)')
 
         opf = os.path.relpath(opf, os.getcwd())
         parts = os.path.split(opf)
@@ -369,7 +369,7 @@ class EPUBInput(InputFormatPlugin):
         root = parse(raw, log=log)
         ncx = safe_xml_fromstring('<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="eng"><navMap/></ncx>')
         navmap = ncx[0]
-        et = '{%s}type' % EPUB_NS
+        et = f'{{{EPUB_NS}}}type'
         bn = os.path.basename(nav_path)
 
         def add_from_li(li, parent):

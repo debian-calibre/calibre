@@ -86,7 +86,7 @@ def add_quick_start_guide(library_view, refresh_cover_browser=None):
     gprefs['quick_start_guide_added'] = True
     imgbuf = BytesIO(calibre_cover2(_('Quick Start Guide'), ''))
     try:
-        with open(P('quick_start/%s.epub' % l), 'rb') as src:
+        with open(P(f'quick_start/{l}.epub'), 'rb') as src:
             buf = BytesIO(src.read())
     except OSError as err:
         if err.errno != errno.ENOENT:
@@ -112,7 +112,6 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         SavedSearchBoxMixin, SearchRestrictionMixin, LayoutMixin, UpdateMixin,
         EbookDownloadMixin
         ):
-
     'The main GUI'
 
     proceed_requested = pyqtSignal(object, object)
@@ -368,7 +367,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 import traceback
                 traceback.print_exc()
         for view in ('library', 'memory', 'card_a', 'card_b'):
-            v = getattr(self, '%s_view' % view)
+            v = getattr(self, f'{view}_view')
             v.selectionModel().selectionChanged.connect(self.update_status_bar)
             v.model().count_changed_signal.connect(self.update_status_bar)
 
@@ -765,7 +764,6 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 item_val = itemx[4:]
             else:
                 prints('Ignoring invalid item hexval', itemx, file=sys.stderr)
-                return
 
             def doit():
                 nonlocal item_id, item_val
@@ -875,12 +873,12 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             try:
                 argv = json.loads(msg[len('launched:'):])
             except ValueError:
-                prints('Failed to decode message from other instance: %r' % msg)
+                prints(f'Failed to decode message from other instance: {msg!r}')
                 if DEBUG:
                     error_dialog(self, 'Invalid message',
                                  'Received an invalid message from other calibre instance.'
                                  ' Do you have multiple versions of calibre installed?',
-                                 det_msg='Invalid msg: %r' % msg, show=True)
+                                 det_msg=f'Invalid msg: {msg!r}', show=True)
                 argv = ()
             if isinstance(argv, (list, tuple)) and len(argv) > 1:
                 self.handle_cli_args(argv[1:])
@@ -911,7 +909,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             try:
                 data = json.loads(msg[len('web-store:'):])
             except ValueError:
-                prints('Failed to decode message from other instance: %r' % msg)
+                prints(f'Failed to decode message from other instance: {msg!r}')
             path = data['path']
             if data['tags']:
                 before = self.current_db.new_api.all_book_ids()
@@ -924,7 +922,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                     tags += list(data['tags'])
                     self.current_db.new_api.set_field('tags', {book_id: tags})
         else:
-            prints('Ignoring unknown message from other instance: %r' % msg[:20])
+            prints(f'Ignoring unknown message from other instance: {msg[:20]!r}')
 
     def current_view(self):
         '''Convenience method that returns the currently visible view '''
@@ -1010,7 +1008,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             if db.new_api.pref('virtual_lib_on_startup'):
                 self.apply_virtual_library(db.new_api.pref('virtual_lib_on_startup'))
             self.rebuild_vl_tabs()
-            self._restore_tb_expansion_state() # Do this before plugins library_changed()
+            self._restore_tb_expansion_state()  # Do this before plugins library_changed()
             for action in self.iactions.values():
                 try:
                     action.library_changed(db)
@@ -1134,7 +1132,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                     msg = msg[msg.find('calibre.web.feeds.input.RecipeDisabled:'):]
                     msg = msg.partition(':')[-1]
                     d = error_dialog(self, _('Recipe Disabled'),
-                        '<p>%s</p>'%msg)
+                        f'<p>{msg}</p>')
                     d.setModal(False)
                     d.show()
                     self._modeless_dialogs.append(d)
@@ -1150,7 +1148,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                             'error':error_dialog}.get(payload['level'],
                                     error_dialog)
                     d = d(self, payload['title'],
-                            '<p>%s</p>'%payload['msg'],
+                            '<p>{}</p>'.format(payload['msg']),
                             det_msg=payload['det_msg'])
                     d.setModal(False)
                     d.show()
@@ -1202,12 +1200,12 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             return
         if confirm_quit and not self.confirm_quit():
             return
+        self.restart_after_quit = restart
         try:
             self.shutdown()
         except:
             import traceback
             traceback.print_exc()
-        self.restart_after_quit = restart
         self.debug_on_restart = debug_on_restart
         self.no_plugins_on_restart = no_plugins_on_restart
         if self.system_tray_icon is not None and self.restart_after_quit:
@@ -1239,6 +1237,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         return True
 
     def shutdown(self, write_settings=True):
+        timed_print('Shutdown starting...')
         self.shutting_down = True
         if hasattr(self.library_view, 'connect_to_book_display_timer'):
             self.library_view.connect_to_book_display_timer.stop()
@@ -1300,19 +1299,18 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.library_view.model().close()
 
         try:
-            try:
-                if self.content_server is not None:
-                    # If the Content server has any sockets being closed then
-                    # this can take quite a long time (minutes). Tell the user that it is
-                    # happening.
-                    self.show_shutdown_message(
-                        _('Shutting down the Content server. This could take a while...'))
-                    s = self.content_server
-                    self.content_server = None
-                    s.exit()
-            except:
-                pass
+            if self.content_server is not None:
+                # If the Content server has any sockets being closed then
+                # this can take quite a long time (minutes). Tell the user that it is
+                # happening.
+                self.show_shutdown_message(
+                    _('Shutting down the Content server. This could take a while...'))
+                s = self.content_server
+                self.content_server = None
+                s.exit()
         except KeyboardInterrupt:
+            pass
+        except Exception:
             pass
         self.hide_windows()
         if self._spare_pool is not None:
@@ -1326,6 +1324,11 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         wait_for_cleanup()
         wait_for_stop()
         self.shutdown_completed.emit()
+        timed_print('Shutdown complete, quitting...')
+        try:
+            sys.stdout.flush()  # Make sure any buffered prints are written for debug mode
+        except Exception:
+            pass
         return True
 
     def run_wizard(self, *args):

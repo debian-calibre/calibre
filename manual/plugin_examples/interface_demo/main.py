@@ -55,7 +55,7 @@ class DemoDialog(QDialog):
         self.l.addWidget(self.view_button)
 
         self.update_metadata_button = QPushButton(
-            'Update metadata in a book\'s files', self)
+            "Update metadata in a book's files", self)
         self.update_metadata_button.clicked.connect(self.update_metadata)
         self.l.addWidget(self.update_metadata_button)
 
@@ -145,7 +145,7 @@ class DemoDialog(QDialog):
                 db.add_format(book_id, fmt, ffile, run_hooks=False)
 
         info_dialog(self, 'Updated files',
-                'Updated the metadata in the files of %d book(s)'%len(ids),
+                f'Updated the metadata in the files of {len(ids)} book(s)',
                 show=True)
 
     def config(self):

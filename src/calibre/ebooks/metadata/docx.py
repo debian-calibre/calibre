@@ -30,7 +30,7 @@ def get_cover(docx):
             if width < 0 or height < 0:
                 continue
             if 0.8 <= height/width <= 1.8 and height*width >= 160000:
-                return (fmt, raw)
+                return fmt, raw
 
 
 def get_metadata(stream):
@@ -64,7 +64,7 @@ def set_metadata(stream, mi):
     replacements = {}
     if ap_raw is not None:
         ap = safe_xml_fromstring(ap_raw)
-        comp = ap.makeelement('{%s}Company' % c.namespace.namespaces['ep'])
+        comp = ap.makeelement('{{{}}}Company'.format(c.namespace.namespaces['ep']))
         for child in tuple(ap):
             if child.tag == comp.tag:
                 ap.remove(child)

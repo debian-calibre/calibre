@@ -9,14 +9,14 @@
 # Ptit Prince <leporello1791@gmail.com>, 2014
 # Ptit Prince <leporello1791@gmail.com>, 2016-2018,2020-2022
 # sengian <sengian1@gmail.com>, 2016
-# un_pogaz, 2022-2024
+# un_pogaz, 2022-2025
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:47+0000\n"
+"POT-Creation-Date: 2025-01-23 13:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: un_pogaz, 2022-2024\n"
+"Last-Translator: un_pogaz, 2022-2025\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1352,32 +1352,97 @@ msgid ""
 msgstr "Vous pouvez ajouter vos propres fonctions Python au processeur de modèles. Ces fonctions peuvent être utilisées dans l'un des trois modes de programmation du modèle. Les fonctions sont ajoutées en allant dans :guilabel:`Préférences -> Avancé -> Fonctions de modèle`. Les instructions sont affichées dans cette boite de dialogue. Notez que vous pouvez utiliser les `Modèles Python` dans un but similaire. Comme l'appel à des fonctions définies par l'utilisateur est plus rapide que l'appel à un modèle Python, les fonctions définies par l'utilisateur peuvent être plus efficaces en fonction de la complexité de ce que fait la fonction ou le modèle."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:633
-msgid "Special notes for save/send templates"
-msgstr "Notes spéciales pour la sauvergarde/l'envoi des modèles"
+msgid "Special notes for using templates in different contexts"
+msgstr "Remarque particulières pour l'utilisation des modèles dans différents contextes"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid ""
-"Special processing is applied when a template is used in a `save to disk` or"
-" `send to device` template. The values of the fields are cleaned, replacing "
-"characters that are special to file systems with underscores, including "
-"slashes. This means that field text cannot be used to create folders. "
-"However, slashes are not changed in prefix or suffix strings, so slashes in "
-"these strings will cause folders to be created. Because of this, you can "
-"create variable-depth folder structure."
-msgstr "Un traitement spécial est appliqué quand un modèle est utilisé dans un modèle `Enregistrer sur le disque` ou `Envoyer au périphérique`. Les valeurs des champs sont nettoyées, les caractères qui sont propres aux systèmes de fichiers sont remplacées par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte d'un champ ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiés dans des chaînes préfixe ou suffixe. Vous pouvez donc insérer des barres obliques qui et provoquer ainsi la création de dossiers. Ainsi, vous pouvez créer une structure de dossier avec des profondeurs variables."
+"In the GUI (:guilabel:`Columns made from other columns` and "
+":guilabel:`Template searches`):"
+msgstr "Dans l'interface graphique (:guilabel:`Colonnes créées à partir d'autres colonnes` et :guilabel:`Recherches de modèles`) :"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:637
+msgid "GPM templates work as before."
+msgstr "Les modèles GPM fonctionnent comme auparavant."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:638
+msgid "Python templates have full access to the calibre database."
+msgstr "Les modèles Python ont un accès complet à la base de données Calibre."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:640
+msgid "In icon rules:"
+msgstr "Dans les définition d'icônes :"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:642
+msgid ""
+"icon rule templates have no book data so field-based functions such as "
+":ref:`ff_format_date_field`, :ref:`ff_list_count_field`, and "
+":ref:`ff_check_yes_no` won't work."
+msgstr "Les modèles de règles d'icônes n'ont pas de données de livre, donc les fonctions basées sur les champs telles que :ref:`ff_format_date_field`, :ref:`ff_list_count_field`, et :ref:`ff_check_yes_no` ne fonctionneront pas."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:644
+msgid "In the Content server:"
+msgstr "Dans le serveur de contenu :"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:646
+msgid ""
+"Templates have access to the new API but not the old API (LibraryDatabase)."
+msgstr "Les modèles ont accès à la nouvelle API mais pas à l'ancienne (LibraryDatabase)."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+msgid ""
+"Because of the above, the following formatter functions are not guaranteed "
+"to work in GPM templates (composite columns, icon rules, etc) and should be "
+"avoided if you use the content server:"
+msgstr "En raison de ce qui précède, le fonctionnement des fonctions de formatage suivantes n'est pas garanti dans les modèles GPM (colonnes composées, règles d'icône, etc.) et devrait être évité si vous utilisez le serveur de contenu :"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+msgid ":ref:`ff_connected_device_name`"
+msgstr ":ref:`ff_connected_device_name`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:650
+msgid ":ref:`ff_connected_device_uuid`"
+msgstr ":ref:`ff_connected_device_uuid`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:651
+msgid ":ref:`ff_current_virtual_library_name`"
+msgstr ":ref:`ff_current_virtual_library_name`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+msgid ":ref:`ff_is_marked`"
+msgstr ":ref:`ff_is_marked`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
+msgid ":ref:`ff_virtual_libraries`"
+msgstr ":ref:`ff_virtual_libraries`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+msgid "Special notes for save/send templates"
+msgstr "Notes spéciales pour la sauvergarde/l'envoi des modèles"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:658
+msgid ""
+"Special processing is applied when a template is used in a :guilabel:`Save "
+"to disk` or :guilabel:`Send to device` template. The values of the fields "
+"are cleaned, replacing characters that are special to file systems with "
+"underscores, including slashes. This means that field text cannot be used to"
+" create folders. However, slashes are not changed in prefix or suffix "
+"strings, so slashes in these strings will cause folders to be created. "
+"Because of this, you can create variable-depth folder structure."
+msgstr "Un traitement spécial est appliqué lorsqu'un modèle est utilisé dans un modèle :guilabel:`Enregistrer sur le disque` ou :guilabel:`Envoyer vers le périphérique`. Les valeurs des champs sont nettoyées, en remplaçant les caractères spéciaux des systèmes de fichiers par des traits de soulignement, y compris les barres obliques. Cela signifie que le texte des champs ne peut pas être utilisé pour créer des dossiers. Toutefois, les barres obliques ne sont pas modifiées dans les chaînes de préfixes ou de suffixes, de sorte que les barres obliques dans ces chaînes entraîneront la création de dossiers. Il est donc possible de créer une structure de dossiers à profondeur variable."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:660
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Par exemple, supposons que nous voulons que la structure des dossiers soit `series/series_index - titre`, en prévoyant que si la série n'existe pas, alors le titre devrait être dans le dossier racine (le premier dossier, pas le sous-dossier). Le modèle pour faire cela est :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:641
+#: ../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "La barre oblique et le trait d'union apparaissent uniquement si la série n'est pas vide."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:643
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1387,25 +1452,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr "La fonction de recherche nous permet de faire le traitement encore plus poussé. Par exemple, supposons que si un livre est dans une série, alors nous voulons que la structure soit la suivante : `series/series index - title.fmt`.. Si le livre n'est pas dans une série, alors nous voulons que la structure des dossiers soit  `genre/author_sort/title.fmt`. Si le livre n'a pas de genre, alors nous voulons utiliser 'Inconnu'. Nous voulons deux chemins de répertoire totalement différents en fonction de la valeur de la série."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:645
+#: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid "To accomplish this, we:"
 msgstr "Pour accomplir cela, nous :"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Créer un champ composite (donner-lui le nom de recherche #aa) contenant ``{series}/{series_index} - {titre}``. Si la série n'est pas vide, alors ce modèle produira `series/series_index - titre`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:648
+#: ../../__w/calibre/calibre/manual/template_lang.rst:671
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Créons une champ composite (appelons-le #bb) contenant ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Ce modèle produit `genre/author_sort/title`, où un genre vide est remplacé par `Inconnu`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+#: ../../__w/calibre/calibre/manual/template_lang.rst:672
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb)}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -1413,35 +1478,35 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr "Paramétrez le modèle de sauvegarde à ``{series:lookup(.,#aa,#bb)}``. Ce modèle choisit le champ composite ``#aa`` si série n'est pas vide, et le champ composite ``#bb`` si série est vide. Nous avons dès lors deux chemins de sauvegarde complètement différents, dépendant du fait que `series` soit vide ou pas."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+#: ../../__w/calibre/calibre/manual/template_lang.rst:675
 msgid "Tips"
 msgstr "Astuces"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:654
+#: ../../__w/calibre/calibre/manual/template_lang.rst:677
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr "Utilisez le Testeur de Modèles pour tester les modèles. Ajoutez le testeur au menu contextuel des livres de la bibliothèque et/ou donnez-lui un raccourci clavier."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:655
+#: ../../__w/calibre/calibre/manual/template_lang.rst:678
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr "Les modèles peuvent utiliser d'autres modèles en faisant référence à des colonnes composites construites avec le modèle souhaité. Vous pouvez également utiliser des Modèles Stockés comme alternative."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+#: ../../__w/calibre/calibre/manual/template_lang.rst:679
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "Dans un tableau de connexions, vous pouvez paramétrer un champ à vide (ou quelque soit sont équivalent à vide) en utilisant le modèle spécial ``{}``. Ce modèle sera toujours évalué à une chaîne vide."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:657
+#: ../../__w/calibre/calibre/manual/template_lang.rst:680
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "La technique indiquée ci-dessus pour montrer les nombre même s'ils ont une valeur zéro fonctionne avec le champ standard series_index."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:662
+#: ../../__w/calibre/calibre/manual/template_lang.rst:685
 msgid "Template function reference"
 msgstr "Référence des modèles de fonctions"

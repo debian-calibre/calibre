@@ -198,7 +198,7 @@ class IgnoredDevices(QWidget):  # {{{
                 iteritems(devs)]
         for dev, x in sorted(devs, key=lambda x:x[1][1], reverse=True):
             name = x[0]
-            name = '%s [%s]'%(name, dev)
+            name = f'{name} [{dev}]'
             item = QListWidgetItem(name, f)
             item.setData(Qt.ItemDataRole.UserRole, dev)
             item.setFlags(Qt.ItemFlag.ItemIsEnabled|Qt.ItemFlag.ItemIsUserCheckable|Qt.ItemFlag.ItemIsSelectable)
@@ -219,8 +219,8 @@ class IgnoredDevices(QWidget):  # {{{
 
 # }}}
 
-# Rules {{{
 
+# Rules {{{
 
 class Rule(QWidget):
 
@@ -445,7 +445,7 @@ class MTPConfig(QTabWidget):
         bb.rejected.connect(d.reject)
         l.addWidget(bb)
         bb.addButton(_('Copy to clipboard'), QDialogButtonBox.ButtonRole.ActionRole)
-        bb.clicked.connect(lambda :
+        bb.clicked.connect(lambda:
                 QApplication.clipboard().setText(v.toPlainText()))
         d.exec()
 

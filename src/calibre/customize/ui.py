@@ -74,11 +74,10 @@ def load_plugin(path_to_zip_file):  # {{{
     :return: A :class:`Plugin` instance.
     '''
     return loader.load(path_to_zip_file)
-
 # }}}
 
-# Enable/disable plugins {{{
 
+# Enable/disable plugins {{{
 
 def disable_plugin(plugin_or_name):
     x = getattr(plugin_or_name, 'name', plugin_or_name)
@@ -86,7 +85,7 @@ def disable_plugin(plugin_or_name):
     if plugin is None:
         raise ValueError(f'No plugin named: {x} found')
     if not plugin.can_be_disabled:
-        raise ValueError('Plugin %s cannot be disabled'%x)
+        raise ValueError(f'Plugin {x} cannot be disabled')
     dp = config['disabled_plugins']
     dp.add(x)
     config['disabled_plugins'] = dp
@@ -131,8 +130,8 @@ def is_disabled(plugin):
             plugin.name in default_disabled_plugins
 # }}}
 
-# File type plugins {{{
 
+# File type plugins {{{
 
 _on_import           = {}
 _on_postimport       = {}
@@ -200,7 +199,7 @@ def _run_filetype_plugins(path_to_file, ft=None, occasion='preprocess'):
             try:
                 nfp = plugin.run(nfp) or nfp
             except:
-                print('Running file type plugin %s failed with traceback:'%plugin.name, file=oe)
+                print(f'Running file type plugin {plugin.name} failed with traceback:', file=oe)
                 traceback.print_exc(file=oe)
         sys.stdout, sys.stderr = oo, oe
     def x(j):
@@ -270,8 +269,8 @@ def run_plugins_on_postadd(db, book_id, fmt_map):
 
 # }}}
 
-# Plugin customization {{{
 
+# Plugin customization {{{
 
 def customize_plugin(plugin, custom):
     d = config['plugin_customization']
@@ -284,8 +283,8 @@ def plugin_customization(plugin):
 
 # }}}
 
-# Input/Output profiles {{{
 
+# Input/Output profiles {{{
 
 def input_profiles():
     for plugin in _initialized_plugins:
@@ -299,8 +298,8 @@ def output_profiles():
             yield plugin
 # }}}
 
-# Interface Actions # {{{
 
+# Interface Actions # {{{
 
 def interface_actions():
     customization = config['plugin_customization']
@@ -311,8 +310,8 @@ def interface_actions():
                 yield plugin
 # }}}
 
-# Preferences Plugins # {{{
 
+# Preferences Plugins # {{{
 
 def preferences_plugins():
     customization = config['plugin_customization']
@@ -323,8 +322,8 @@ def preferences_plugins():
                 yield plugin
 # }}}
 
-# Library Closed Plugins # {{{
 
+# Library Closed Plugins # {{{
 
 def available_library_closed_plugins():
     customization = config['plugin_customization']
@@ -343,8 +342,8 @@ def has_library_closed_plugins():
     return False
 # }}}
 
-# Store Plugins # {{{
 
+# Store Plugins # {{{
 
 def store_plugins():
     customization = config['plugin_customization']
@@ -375,8 +374,8 @@ def available_stores():
 
 # }}}
 
-# Metadata read/write {{{
 
+# Metadata read/write {{{
 
 _metadata_readers = {}
 _metadata_writers = {}
@@ -519,18 +518,18 @@ def can_set_metadata(ftype):
 
 # }}}
 
-# Add/remove plugins {{{
 
+# Add/remove plugins {{{
 
 def add_plugin(path_to_zip_file):
     make_config_dir()
     plugin = load_plugin(path_to_zip_file)
     if plugin.name in builtin_names:
         raise NameConflict(
-            'A builtin plugin with the name %r already exists' % plugin.name)
+            f'A builtin plugin with the name {plugin.name!r} already exists')
     if plugin.name in get_system_plugins():
         raise NameConflict(
-            'A system plugin with the name %r already exists' % plugin.name)
+            f'A system plugin with the name {plugin.name!r} already exists')
     plugin = initialize_plugin(plugin, path_to_zip_file, PluginInstallationType.EXTERNAL)
     plugins = config['plugins']
     zfp = os.path.join(plugin_dir, plugin.name+'.zip')
@@ -565,8 +564,8 @@ def remove_plugin(plugin_or_name):
 
 # }}}
 
-# Input/Output format plugins {{{
 
+# Input/Output format plugins {{{
 
 def input_format_plugins():
     for plugin in _initialized_plugins:
@@ -623,8 +622,8 @@ def available_output_formats():
 
 # }}}
 
-# Catalog plugins {{{
 
+# Catalog plugins {{{
 
 def catalog_plugins():
     for plugin in _initialized_plugins:
@@ -648,8 +647,8 @@ def plugin_for_catalog_format(fmt):
 
 # }}}
 
-# Device plugins {{{
 
+# Device plugins {{{
 
 def device_plugins(include_disabled=False):
     for plugin in _initialized_plugins:
@@ -670,8 +669,8 @@ def disabled_device_plugins():
                     yield plugin
 # }}}
 
-# Metadata sources2 {{{
 
+# Metadata sources2 {{{
 
 def metadata_plugins(capabilities):
     capabilities = frozenset(capabilities)
@@ -702,8 +701,8 @@ def patch_metadata_plugins(possibly_updated_plugins):
         _initialized_plugins[i] = pup
 # }}}
 
-# Editor plugins {{{
 
+# Editor plugins {{{
 
 def all_edit_book_tool_plugins():
     for plugin in _initialized_plugins:
@@ -711,8 +710,8 @@ def all_edit_book_tool_plugins():
             yield plugin
 # }}}
 
-# Initialize plugins {{{
 
+# Initialize plugins {{{
 
 _initialized_plugins = []
 
@@ -809,7 +808,7 @@ def initialize_plugins(perf=False):
     sys.stdout, sys.stderr = ostdout, ostderr
     if perf:
         for x in sorted(times, key=lambda x: times[x]):
-            print('%50s: %.3f'%(x, times[x]))
+            print(f'{x:50}: {times[x]:.3f}')
     _initialized_plugins.sort(key=lambda x: x.priority, reverse=True)
     reread_filetype_plugins()
     reread_metadata_plugins()
@@ -823,8 +822,8 @@ def initialized_plugins():
 
 # }}}
 
-# CLI {{{
 
+# CLI {{{
 
 def build_plugin(path):
     from calibre import prints
@@ -893,7 +892,7 @@ def main(args=sys.argv):
             name, custom = opts.customize_plugin, ''
         plugin = find_plugin(name.strip())
         if plugin is None:
-            print('No plugin with the name %s exists'%name)
+            print(f'No plugin with the name {name} exists')
             return 1
         customize_plugin(plugin, custom)
     if opts.enable_plugin is not None:

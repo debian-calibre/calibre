@@ -23,7 +23,7 @@ class SingleSubstitution(UnknownLookupSubTable):
             self.delta = data.unpack('h')
         else:
             count = data.unpack('H')
-            self.substitutes = data.unpack('%dH'%count, single_special=False)
+            self.substitutes = data.unpack(f'{count}H', single_special=False)
 
     def all_substitutions(self, glyph_ids):
         gid_index_map = self.coverage.coverage_indices(glyph_ids)
@@ -61,8 +61,8 @@ class LigatureSubstitution(UnknownLookupSubTable):
 
     def read_ligature(self, data):
         lig_glyph, count = data.unpack('HH')
-        components = data.unpack('%dH'%(count-1), single_special=False)
-        return (lig_glyph, components)
+        components = data.unpack(f'{count - 1}H', single_special=False)
+        return lig_glyph, components
 
     def all_substitutions(self, glyph_ids):
         gid_index_map = self.coverage.coverage_indices(glyph_ids)
@@ -113,16 +113,16 @@ class ReverseChainSingleSubstitution(UnknownLookupSubTable):
 
     def initialize(self, data):
         backtrack_count = data.unpack('H')
-        backtrack_offsets = data.unpack('%dH'%backtrack_count,
+        backtrack_offsets = data.unpack(f'{backtrack_count}H',
                 single_special=False)
         lookahead_count = data.unpack('H')
-        lookahead_offsets = data.unpack('%dH'%lookahead_count,
+        lookahead_offsets = data.unpack(f'{lookahead_count}H',
                 single_special=False)
         backtrack_offsets = [data.start_pos + x for x in backtrack_offsets]
         lookahead_offsets = [data.start_pos + x for x in lookahead_offsets]
         backtrack_offsets, lookahead_offsets  # TODO: Use these
         count = data.unpack('H')
-        self.substitutes = data.unpack('%dH'%count)
+        self.substitutes = data.unpack(f'{count}H')
 
     def all_substitutions(self, glyph_ids):
         gid_index_map = self.coverage.coverage_indices(glyph_ids)
@@ -163,8 +163,7 @@ class GSUBTable(UnknownTable):
         (self._version, self.scriptlist_offset, self.featurelist_offset,
                 self.lookuplist_offset) = unpack_from(b'>L3H', self.raw)
         if self._version != 0x10000:
-            raise UnsupportedFont('The GSUB table has unknown version: 0x%x'%
-                    self._version)
+            raise UnsupportedFont(f'The GSUB table has unknown version: 0x{self._version:x}')
 
         self.script_list_table = ScriptListTable(self.raw,
                 self.scriptlist_offset)

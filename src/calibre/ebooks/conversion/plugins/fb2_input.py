@@ -1,8 +1,8 @@
 __license__   = 'GPL v3'
 __copyright__ = '2008, Anatoly Shipitsin <norguhtar at gmail.com>'
-"""
+'''
 Convert .fb2 files to .lrf
-"""
+'''
 import os
 import re
 
@@ -77,7 +77,7 @@ class FB2Input(InputFormatPlugin):
             parser = css_parser.CSSParser(fetcher=None,
                     log=logging.getLogger('calibre.css'))
 
-            XHTML_CSS_NAMESPACE = '@namespace "%s";\n' % XHTML_NS
+            XHTML_CSS_NAMESPACE = f'@namespace "{XHTML_NS}";\n'
             text = XHTML_CSS_NAMESPACE + css
             log.debug('Parsing stylesheet...')
             stylesheet = parser.parseString(text)
@@ -91,7 +91,7 @@ class FB2Input(InputFormatPlugin):
         log.debug('Converting XML to HTML...')
         with open(P('templates/fb2.xsl'), 'rb') as f:
             ss = f.read().decode('utf-8')
-        ss = ss.replace("__FB_NS__", fb_ns)
+        ss = ss.replace('__FB_NS__', fb_ns)
         if options.no_inline_fb2_toc:
             log('Disabling generation of inline FB2 TOC')
             ss = re.compile(r'<!-- BUILD TOC -->.*<!-- END BUILD TOC -->',
@@ -105,17 +105,17 @@ class FB2Input(InputFormatPlugin):
         # Handle links of type note and cite
         notes = {a.get('href')[1:]: a for a in result.xpath('//a[@link_note and @href]') if a.get('href').startswith('#')}
         cites = {a.get('link_cite'): a for a in result.xpath('//a[@link_cite]') if not a.get('href', '')}
-        all_ids = {x for x in result.xpath('//*/@id')}
+        all_ids = set(result.xpath('//*/@id'))
         for cite, a in iteritems(cites):
             note = notes.get(cite, None)
             if note:
                 c = 1
-                while 'cite%d' % c in all_ids:
+                while f'cite{c}' in all_ids:
                     c += 1
                 if not note.get('id', None):
-                    note.set('id', 'cite%d' % c)
+                    note.set('id', f'cite{c}')
                     all_ids.add(note.get('id'))
-                a.set('href', '#%s' % note.get('id'))
+                a.set('href', '#{}'.format(note.get('id')))
         for x in result.xpath('//*[@link_note or @link_cite]'):
             x.attrib.pop('link_note', None)
             x.attrib.pop('link_cite', None)
@@ -148,7 +148,7 @@ class FB2Input(InputFormatPlugin):
             cpath = os.path.abspath('fb2_cover_calibre_mi.jpg')
         else:
             for img in doc.xpath('//f:coverpage/f:image', namespaces=NAMESPACES):
-                href = img.get('{%s}href'%XLINK_NS, img.get('href', None))
+                href = img.get(f'{{{XLINK_NS}}}href', img.get('href', None))
                 if href is not None:
                     if href.startswith('#'):
                         href = href[1:]
@@ -182,8 +182,7 @@ class FB2Input(InputFormatPlugin):
                 try:
                     data = base64_decode(raw)
                 except TypeError:
-                    self.log.exception('Binary data with id=%s is corrupted, ignoring'%(
-                        elem.get('id')))
+                    self.log.exception('Binary data with id={} is corrupted, ignoring'.format(elem.get('id')))
                 else:
                     with open(fname, 'wb') as f:
                         f.write(data)

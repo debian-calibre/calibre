@@ -36,7 +36,7 @@ class TOCItem:
     def serialize(self, body, makeelement):
         p = makeelement(body, 'w:p', append=False)
         ppr = makeelement(p, 'w:pPr')
-        makeelement(ppr, 'w:pStyle', w_val="Normal")
+        makeelement(ppr, 'w:pStyle', w_val='Normal')
         makeelement(ppr, 'w:ind', w_left='0', w_firstLineChars='0', w_firstLine='0', w_leftChars=str(200 * self.level))
         if self.is_first:
             makeelement(ppr, 'w:pageBreakBefore', w_val='off')
@@ -84,7 +84,7 @@ class LinksManager:
         if key in self.anchor_map:
             return self.anchor_map[key]
         if anchor == self.top_anchor:
-            name = ('Top of %s' % posixpath.basename(current_item.href))
+            name = (f'Top of {posixpath.basename(current_item.href)}')
             self.document_hrefs.add(current_item.href)
         else:
             name = start_text(html_tag).strip() or anchor
@@ -92,7 +92,7 @@ class LinksManager:
         i, bname = 0, name
         while name in self.used_bookmark_names:
             i += 1
-            name  = bname + ('_%d' % i)
+            name  = bname + f'_{i}'
         self.anchor_map[key] = name
         self.used_bookmark_names.add(name)
         return name
@@ -129,7 +129,7 @@ class LinksManager:
                     bmark = self.anchor_map[(href, self.top_anchor)]
                 return make_link(parent, anchor=bmark, tooltip=tooltip)
             else:
-                self.log.warn('Ignoring internal hyperlink with href (%s) pointing to unknown destination' % url)
+                self.log.warn(f'Ignoring internal hyperlink with href ({url}) pointing to unknown destination')
         if purl.scheme in {'http', 'https', 'ftp'}:
             if url not in self.external_links:
                 self.external_links[url] = self.document_relationships.add_relationship(url, self.namespace.names['LINKS'], target_mode='External')
@@ -164,7 +164,7 @@ class LinksManager:
 
     def serialize_toc(self, body, primary_heading_style):
         pbb = body[0].xpath('//*[local-name()="pageBreakBefore"]')[0]
-        pbb.set('{%s}val' % self.namespace.namespaces['w'], 'on')
+        pbb.set('{{{}}}val'.format(self.namespace.namespaces['w']), 'on')
         for block in reversed(self.toc):
             block.serialize(body, self.namespace.makeelement)
         title = __('Table of Contents')

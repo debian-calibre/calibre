@@ -24,6 +24,7 @@ from qt.core import (
     QHBoxLayout,
     QIcon,
     QItemSelectionModel,
+    QKeySequence,
     QLabel,
     QModelIndex,
     QPlainTextEdit,
@@ -73,7 +74,7 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
     job_done  = pyqtSignal(int)
 
     def __init__(self):
-        self.header_titles = _('Job'), _('Status'), _('Progress'), _('Running time'), _('Start time'),
+        self.header_titles = _('Job'), _('Status'), _('Progress'), _('Running time'), _('Start time')
         QAbstractTableModel.__init__(self)
         SearchQueryParser.__init__(self, ['all'])
 
@@ -121,7 +122,7 @@ class JobManager(QAbstractTableModel, AdaptSQP):  # {{{
             if not desc:
                 desc = _('Unknown job')
             p = 100. if job.is_finished else job.percent
-            lines.append('%s:  %.0f%% done'%(desc, p))
+            lines.append(f'{desc}:  {p:.0f}% done')
         l = ngettext('There is a waiting job', 'There are {} waiting jobs', len(waiting_jobs)).format(len(waiting_jobs))
         lines.extend(['', l])
         for job in waiting_jobs:
@@ -416,8 +417,8 @@ class FilterModel(QSortFilterProxyModel):  # {{{
 
 # }}}
 
-# Jobs UI {{{
 
+# Jobs UI {{{
 
 class ProgressBarDelegate(QAbstractItemDelegate):  # {{{
 
@@ -435,7 +436,7 @@ class ProgressBarDelegate(QAbstractItemDelegate):  # {{{
         except (TypeError, ValueError):
             percent = 0
         opts.progress = percent
-        opts.text = (_('Unavailable') if percent == 0 else '%d%%'%percent)
+        opts.text = (_('Unavailable') if percent == 0 else f'{percent}%')
         QApplication.style().drawControl(QStyle.ControlElement.CE_ProgressBar, opts, painter)
 # }}}
 
@@ -487,7 +488,7 @@ class DetailView(Dialog):  # {{{
             if len(html) > self.next_pos:
                 self.next_pos = len(html)
                 self.tb.setHtml(
-                    '<pre style="font-family:monospace">%s</pre>'%html)
+                    f'<pre style="font-family:monospace">{html}</pre>')
         else:
             f = self.job.log_file
             f.seek(self.next_pos)
@@ -526,12 +527,18 @@ class JobsButton(QWidget):  # {{{
         self._jobs.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         b = _('Click to see list of jobs')
-        self.setToolTip(b + _(' [Alt+Shift+J]'))
         self.action_toggle = QAction(b, parent)
         parent.addAction(self.action_toggle)
         self.action_toggle.triggered.connect(self.toggle)
+        self.action_toggle.changed.connect(self.update_tooltip)
         if hasattr(parent, 'keyboard'):
             parent.keyboard.register_shortcut('toggle jobs list', _('Show/hide the Jobs List'), default_keys=(self.shortcut,), action=self.action_toggle)
+        self.update_tooltip()
+
+    def update_tooltip(self):
+        sc = ', '.join(sc.toString(QKeySequence.SequenceFormat.NativeText) for sc in self.action_toggle.shortcuts())
+        self.shortcut = sc or ''
+        self.setToolTip(_('Click to see list of jobs [{}]').format(self.shortcut))
 
     def update_label(self):
         n = self.jobs()
@@ -725,8 +732,7 @@ class JobsDialog(QDialog, Ui_JobsDialog):
         self.proxy_model.beginResetModel(), self.proxy_model.endResetModel()
 
     def hide_all(self, *args):
-        self.model.hide_jobs(list(range(0,
-            self.model.rowCount(QModelIndex()))))
+        self.model.hide_jobs(list(range(self.model.rowCount(QModelIndex()))))
         self.proxy_model.beginResetModel(), self.proxy_model.endResetModel()
 
     def show_hidden(self, *args):

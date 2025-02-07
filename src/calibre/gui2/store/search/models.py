@@ -31,7 +31,7 @@ def comparable_price(text):
         m = re.sub(r'[.,\' ]', '.', match.group())
         # remove all separators accept fraction,
         # leave only 2 digits in fraction
-        m = re.sub(r'\.(?!\d*$)', r'', m)
+        m = re.sub(r'\.(?!\d*$)', '', m)
         text = f'{float(m) * 100.:0>8.0f}'
     return text
 
@@ -155,12 +155,12 @@ class Matches(QAbstractItemModel):
         # Remove filter identifiers
         # Remove the prefix.
         for loc in ('all', 'author', 'author2', 'authors', 'title', 'title2'):
-            query = re.sub(r'%s:"(?P<a>[^\s"]+)"' % loc, r'\g<a>', query)
-            query = query.replace('%s:' % loc, '')
+            query = re.sub(rf'{loc}:"(?P<a>[^\s"]+)"', r'\g<a>', query)
+            query = query.replace(f'{loc}:', '')
         # Remove the prefix and search text.
         for loc in ('cover', 'download', 'downloads', 'drm', 'format', 'formats', 'price', 'store'):
-            query = re.sub(r'%s:"[^"]"' % loc, '', query)
-            query = re.sub(r'%s:[^\s]*' % loc, '', query)
+            query = re.sub(rf'{loc}:"[^"]"', '', query)
+            query = re.sub(rf'{loc}:[^\s]*', '', query)
         # Remove whitespace
         query = re.sub(r'\s', '', query)
         mod_query = re.sub(r'\s', '', mod_query)
@@ -231,7 +231,7 @@ class Matches(QAbstractItemModel):
                     return (self.DONATE_ICON)
         elif role == Qt.ItemDataRole.ToolTipRole:
             if col == 1:
-                return ('<p>%s</p>' % result.title)
+                return (f'<p>{result.title}</p>')
             elif col == 2:
                 if result.price:
                     return ('<p>' + _(
@@ -242,13 +242,13 @@ class Matches(QAbstractItemModel):
                     'No price was found')
             elif col == 3:
                 if result.drm == SearchResult.DRM_LOCKED:
-                    return ('<p>' + _('This book as been detected as having DRM restrictions. This book may not work with your reader and you will have limitations placed upon you as to what you can do with this book. Check with the store before making any purchases to ensure you can actually read this book.') + '</p>')  # noqa
+                    return ('<p>' + _('This book as been detected as having DRM restrictions. This book may not work with your reader and you will have limitations placed upon you as to what you can do with this book. Check with the store before making any purchases to ensure you can actually read this book.') + '</p>')  # noqa: E501
                 elif result.drm == SearchResult.DRM_UNLOCKED:
-                    return ('<p>' + _('This book has been detected as being DRM Free. You should be able to use this book on any device provided it is in a format calibre supports for conversion. However, before making a purchase double check the DRM status with the store. The store may not be disclosing the use of DRM.') + '</p>')  # noqa
+                    return ('<p>' + _('This book has been detected as being DRM Free. You should be able to use this book on any device provided it is in a format calibre supports for conversion. However, before making a purchase double check the DRM status with the store. The store may not be disclosing the use of DRM.') + '</p>')  # noqa: E501
                 else:
-                    return ('<p>' + _('The DRM status of this book could not be determined. There is a very high likelihood that this book is actually DRM restricted.') + '</p>')  # noqa
+                    return ('<p>' + _('The DRM status of this book could not be determined. There is a very high likelihood that this book is actually DRM restricted.') + '</p>')  # noqa: E501
             elif col == 4:
-                return ('<p>%s</p>' % result.formats)
+                return (f'<p>{result.formats}</p>')
             elif col == 5:
                 if result.downloads:
                     return ('<p>' + _('The following formats can be downloaded directly: %s.') % ', '.join(result.downloads.keys()) + '</p>')
@@ -397,15 +397,15 @@ class SearchFilter(SearchQueryParser):
         all_locs = set(self.USABLE_LOCATIONS) - {'all'}
         locations = all_locs if location == 'all' else [location]
         q = {
-             'affiliate': attrgetter('affiliate'),
-             'author': lambda x: x.author.lower(),
-             'cover': attrgetter('cover_url'),
-             'drm': attrgetter('drm'),
-             'download': attrgetter('downloads'),
-             'format': attrgetter('formats'),
-             'price': lambda x: comparable_price(x.price),
-             'store': lambda x: x.store_name.lower(),
-             'title': lambda x: x.title.lower(),
+            'affiliate': attrgetter('affiliate'),
+            'author': lambda x: x.author.lower(),
+            'cover': attrgetter('cover_url'),
+            'drm': attrgetter('drm'),
+            'download': attrgetter('downloads'),
+            'format': attrgetter('formats'),
+            'price': lambda x: comparable_price(x.price),
+            'store': lambda x: x.store_name.lower(),
+            'title': lambda x: x.title.lower(),
         }
         for x in ('author', 'download', 'format'):
             q[x+'s'] = q[x]

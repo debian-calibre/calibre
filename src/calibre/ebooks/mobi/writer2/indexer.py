@@ -37,7 +37,7 @@ class TAGX:  # {{{
     BITMASKS.update({x:(1 << i) for i, x in enumerate([1, 2, 3, 4, 5, 21, 22, 23])})
     BITMASKS.update({x:(1 << i) for i, x in enumerate([69, 70, 71, 72, 73])})
 
-    NUM_VALUES = defaultdict(lambda :1)
+    NUM_VALUES = defaultdict(lambda:1)
     NUM_VALUES[11] = 3
     NUM_VALUES[0] = 0
 
@@ -64,7 +64,7 @@ class TAGX:  # {{{
         '''
         TAGX block for the Primary index header of a periodical
         '''
-        for i in (1, 2, 3, 4, 5, 21, 22, 23, 0, 69, 70, 71, 72,73, 0):
+        for i in (1, 2, 3, 4, 5, 21, 22, 23, 0, 69, 70, 71, 72, 73, 0):
             self.add_tag(i)
         return self.header(2) + bytes(self.byts)
 
@@ -86,8 +86,8 @@ class TAGX:  # {{{
             self.add_tag(i)
         return self.header(1) + bytes(self.byts)
 
-
 # }}}
+
 
 # Index Entries {{{
 
@@ -108,7 +108,7 @@ class IndexEntry:
             'author_offset': 71,
 
     }
-    RTAG_MAP = {v:k for k, v in iteritems(TAG_VALUES)}  # noqa
+    RTAG_MAP = {v:k for k, v in iteritems(TAG_VALUES)}
 
     def __init__(self, offset, label_offset):
         self.offset, self.label_offset = offset, label_offset
@@ -127,9 +127,8 @@ class IndexEntry:
         self.desc_offset = None
 
     def __repr__(self):
-        return ('IndexEntry(offset=%r, depth=%r, length=%r, index=%r,'
-                ' parent_index=%r)')%(self.offset, self.depth, self.length,
-                        self.index, self.parent_index)
+        return (f'IndexEntry(offset={self.offset!r}, depth={self.depth!r}, length={self.length!r}, index={self.index!r},'
+                f' parent_index={self.parent_index!r})')
 
     @property
     def size(self):
@@ -448,8 +447,7 @@ class Indexer:  # {{{
         if self.is_periodical and self.masthead_offset is None:
             raise ValueError('Periodicals must have a masthead')
 
-        self.log('Generating MOBI index for a %s'%('periodical' if
-            self.is_periodical else 'book'))
+        self.log('Generating MOBI index for a {}'.format('periodical' if self.is_periodical else 'book'))
         self.is_flat_periodical = False
         if self.is_periodical:
             periodical_node = next(iter(oeb.toc))
@@ -531,7 +529,7 @@ class Indexer:  # {{{
 
         ans = header + body
         if len(ans) > 0x10000:
-            raise ValueError('Too many entries (%d) in the TOC'%len(offsets))
+            raise ValueError(f'Too many entries ({len(offsets)}) in the TOC')
         return ans
     # }}}
 
@@ -638,8 +636,7 @@ class Indexer:  # {{{
                 offset = id_offsets[node.href]
                 label = self.cncx[node.title]
             except:
-                self.log.warn('TOC item %s [%s] not found in document'%(
-                    node.title, node.href))
+                self.log.warn(f'TOC item {node.title} [{node.href}] not found in document')
                 continue
 
             if offset in seen:

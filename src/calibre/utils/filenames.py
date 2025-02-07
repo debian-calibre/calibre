@@ -201,7 +201,7 @@ def case_preserving_open_file(path, mode='wb', mkdir_mode=0o777):
 
     components = path.split(sep)
     if not components:
-        raise ValueError('Invalid path: %r'%path)
+        raise ValueError(f'Invalid path: {path!r}')
 
     cpath = sep
     if iswindows:
@@ -338,8 +338,8 @@ def windows_hardlink(src, dest):
 
     sz = windows_get_size(dest)
     if sz != src_size:
-        msg = f'Creating hardlink from {src} to {dest} failed: %s'
-        raise OSError(msg % ('hardlink size: %d not the same as source size' % sz))
+        msg = f'Creating hardlink from {src} to {dest} failed: '
+        raise OSError(msg + (f'hardlink size: {sz} not the same as source size'))
 
 
 def windows_fast_hardlink(src, dest):
@@ -347,8 +347,8 @@ def windows_fast_hardlink(src, dest):
     winutil.create_hard_link(dest, src)
     ssz, dsz = windows_get_size(src), windows_get_size(dest)
     if ssz != dsz:
-        msg = f'Creating hardlink from {src} to {dest} failed: %s'
-        raise OSError(msg % ('hardlink size: %d not the same as source size: %s' % (dsz, ssz)))
+        msg = f'Creating hardlink from {src} to {dest} failed: '
+        raise OSError(msg + (f'hardlink size: {dsz} not the same as source size: {ssz}'))
 
 
 def windows_nlinks(path):
@@ -359,7 +359,6 @@ def windows_nlinks(path):
 
 
 class WindowsAtomicFolderMove:
-
     '''
     Move all the files inside a specified folder in an atomic fashion,
     preventing any other process from locking a file while the operation is
@@ -416,15 +415,15 @@ class WindowsAtomicFolderMove:
 
                 self.close_handles()
                 if e.winerror == winutil.ERROR_SHARING_VIOLATION:
-                    err = IOError(errno.EACCES,
+                    err = OSError(errno.EACCES,
                             _('File is open in another process'))
                     err.filename = f
                     raise err
-                prints('CreateFile failed for: %r' % f)
+                prints(f'CreateFile failed for: {f!r}')
                 raise
             except:
                 self.close_handles()
-                prints('CreateFile failed for: %r' % f)
+                prints(f'CreateFile failed for: {f!r}')
                 raise
             self.handle_map[f] = h
 
@@ -437,10 +436,10 @@ class WindowsAtomicFolderMove:
                 break
         if handle is None:
             if os.path.exists(path):
-                raise ValueError('The file %r did not exist when this move'
-                        ' operation was started'%path)
+                raise ValueError(f'The file {path!r} did not exist when this move'
+                        ' operation was started')
             else:
-                raise ValueError('The file %r does not exist'%path)
+                raise ValueError(f'The file {path!r} does not exist')
 
         with suppress(OSError):
             windows_hardlink(path, dest)
@@ -681,7 +680,7 @@ if iswindows:
         except FileNotFoundError:
             return path
         except OSError as e:
-            if e.winerror == 123: # ERR_INVALID_NAME
+            if e.winerror == 123:  # ERR_INVALID_NAME
                 return path
             raise
 

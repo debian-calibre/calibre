@@ -15,6 +15,7 @@ from qt.core import (
     QColor,
     QDialog,
     QEasingCurve,
+    QFontMetrics,
     QIcon,
     QKeySequence,
     QMenu,
@@ -329,7 +330,7 @@ def render_html(mi, vertical, widget, all_fields=False, render_data_func=None,
 
     comments = ''
     if comment_fields:
-        comments = '\n'.join('<div>%s</div>' % x for x in comment_fields)
+        comments = '\n'.join(f'<div>{x}</div>' for x in comment_fields)
         # Comments cause issues with rendering in QTextBrowser
         comments = comments_pat().sub('', comments)
 
@@ -352,8 +353,7 @@ def render_parts(table, comments, vertical):
         ans = templ%(table+right_pane)
     else:
         ans = templ % (
-                '<table><tr><td valign="top" width="40%">{}</td><td valign="top" width="60%">{}</td></tr></table>'.format(
-                    table, right_pane))
+                f'<table><tr><td valign="top" width="40%">{table}</td><td valign="top" width="60%">{right_pane}</td></tr></table>')
     return ans
 
 
@@ -394,17 +394,21 @@ def render_data(mi, use_roman_numbers=True, all_fields=False, pref_name='book_di
                 if db.notes_for(field, item_id):
                     return item_id
 
+    # Compute the size of the link and note icons by scaling the current font
+    # height by the option specified in Preferences / L&F / Book details.
+    icon_size = int(QFontMetrics(QApplication.font()).height() * gprefs['book_details_note_link_icon_width'])
     return mi_to_html(
         mi, field_list=field_list, use_roman_numbers=use_roman_numbers, rtl=is_rtl(),
         rating_font=rating_font(), default_author_link=default_author_link(),
         comments_heading_pos=gprefs['book_details_comments_heading_pos'], for_qt=True,
-        vertical_fields=vertical_fields, show_links=show_links, item_id_if_has_note=item_id_if_has_note
+        vertical_fields=vertical_fields, show_links=show_links, item_id_if_has_note=item_id_if_has_note,
+        link_note_icon_size=icon_size
     )
 
 # }}}
 
-# Context menu {{{
 
+# Context menu {{{
 
 def add_format_entries(menu, data, book_info, copy_menu, search_menu):
     from calibre.ebooks.oeb.polish.main import SUPPORTED
@@ -432,7 +436,7 @@ def add_format_entries(menu, data, book_info, copy_menu, search_menu):
             t = _('Compare to the %s format') % (fmt[9:] if fmt.startswith('ORIGINAL_') else ofmt)
         else:
             t = t % fmt
-        ac = getattr(book_info, '%s_format_action'%a)
+        ac = getattr(book_info, f'{a}_format_action')
         ac.current_fmt = (book_id, fmt)
         ac.setText(t)
         menu.addAction(ac)
@@ -474,10 +478,10 @@ def add_format_entries(menu, data, book_info, copy_menu, search_menu):
 def add_link_submenu(menu: QMenu, link, book_info, field='', item_name=''):
     if field and item_name:
         m = menu.addMenu(QIcon.ic('external-link'), _('Associated link'))
-        m.addAction(QIcon.ic('reference'), _('Open: {}').format(link), lambda : book_info.link_clicked.emit(link))
-        m.addAction(QIcon.ic('minus'), _('Remove the link').format(link), lambda : book_info.link_removal_requested.emit(field, item_name))
+        m.addAction(QIcon.ic('reference'), _('Open: {}').format(link), lambda: book_info.link_clicked.emit(link))
+        m.addAction(QIcon.ic('minus'), _('Remove the link').format(link), lambda: book_info.link_removal_requested.emit(field, item_name))
     else:
-        menu.addAction(QIcon.ic('external-link'), _('Open associated link').format(link), lambda : book_info.link_clicked.emit(link))
+        menu.addAction(QIcon.ic('external-link'), _('Open associated link').format(link), lambda: book_info.link_clicked.emit(link))
 
 
 def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
@@ -519,7 +523,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
             menu.addAction(ac)
         # See if we need to add a click associated link menu line for the author
         link_map = get_gui().current_db.new_api.get_all_link_maps_for_book(data.get('book_id', -1))
-        link = link_map.get("authors", {}).get(author)
+        link = link_map.get('authors', {}).get(author)
         if link:
             add_link_submenu(menu, link, book_info, 'authors', author)
     elif dt in ('path', 'devpath'):
@@ -537,7 +541,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
         if path:
             path = os.path.join(path, DATA_DIR_NAME)
             ac.current_url = path
-            ac.setText(_('The location of the book\'s data files'))
+            ac.setText(_("The location of the book's data files"))
             copy_menu.addAction(ac)
     else:
         field = data.get('field')
@@ -614,7 +618,7 @@ def create_copy_links(menu, data=None):
         all_links.append(url)
         copy_to_clipboard_action(text, url)
 
-    sep = menu.addSeparator() # Note: separators are really actions
+    sep = menu.addSeparator()  # Note: separators are really actions
 
     link_action(_('Link to show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
     link_action(_('Link to show book details in a popup window'),
@@ -638,13 +642,13 @@ def create_copy_links(menu, data=None):
                                          note_data['searchable_text'].partition('\n')[2], sep)
             if field.startswith('#'):
                 field = '_' + field[1:]
-            url = f"calibre://show-note/{library_id}/{field}/id_{item_id}"
+            url = f'calibre://show-note/{library_id}/{field}/id_{item_id}'
             link_action(_('Link to show note in calibre'), url)
         else:
             field = data.get('field')
             if data['type'] == 'author':
                 field = 'authors'
-            if field and field in ('tags', 'series', 'publisher', 'authors') or is_category(field):
+            if (field and field in ('tags', 'series', 'publisher', 'authors')) or is_category(field):
                 name = data['name' if data['type'] == 'author' else 'value']
                 eq = f'{field}:"={name}"'.encode().hex()
                 link_action(_('Link to show books matching {} in calibre').format(name),
@@ -775,7 +779,6 @@ class CoverView(QWidget):  # {{{
         self.animation.setStartValue(QSize(0, 0))
         self.animation.valueChanged.connect(self.value_changed)
 
-
         self.default_pixmap = QApplication.instance().cached_qpixmap('default_cover.png', device_pixel_ratio=self.devicePixelRatio())
         self.pixmap = self.default_pixmap
         self.pwidth = self.pheight = None
@@ -858,7 +861,7 @@ class CoverView(QWidget):  # {{{
             f = p.font()
             f.setBold(True)
             p.setFont(f)
-            sz = '\u00a0%d x %d\u00a0'%(self.pixmap.width(), self.pixmap.height())
+            sz = f'\xa0{self.pixmap.width()} x {self.pixmap.height()}\xa0'
             flags = Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignRight|Qt.TextFlag.TextSingleLine
             szrect = p.boundingRect(sztgt, flags, sz)
             p.fillRect(szrect.adjusted(0, 0, 0, 4), QColor(0, 0, 0, 200))
@@ -1031,8 +1034,8 @@ class CoverView(QWidget):  # {{{
 
     # }}}
 
-# Book Info {{{
 
+# Book Info {{{
 
 class BookInfo(HTMLDisplay):
 
@@ -1068,8 +1071,8 @@ class BookInfo(HTMLDisplay):
             ac = QAction(QIcon.ic(icon), '', self)
             ac.current_fmt = None
             ac.current_url = None
-            ac.triggered.connect(getattr(self, '%s_triggerred'%x))
-            setattr(self, '%s_action'%x, ac)
+            ac.triggered.connect(getattr(self, f'{x}_triggerred'))
+            setattr(self, f'{x}_action', ac)
         self.manage_action = QAction(self)
         self.manage_action.current_fmt = self.manage_action.current_url = None
         self.manage_action.triggered.connect(self.manage_action_triggered)
@@ -1107,8 +1110,8 @@ class BookInfo(HTMLDisplay):
             self.remove_item.emit(book_id, field, value)
 
     def context_action_triggered(self, which):
-        f = getattr(self, '%s_action'%which).current_fmt
-        url = getattr(self, '%s_action'%which).current_url
+        f = getattr(self, f'{which}_action').current_fmt
+        url = getattr(self, f'{which}_action').current_url
         if f and 'format' in which:
             book_id, fmt = f
             getattr(self, which).emit(book_id, fmt)
@@ -1310,6 +1313,7 @@ class DetailsLayout(QSplitter):  # {{{
         self.restore_splitter_state()  # only required on first call to do_layout, but ...
         cover.do_layout()
 # }}}
+
 
 # Drag 'n drop {{{
 

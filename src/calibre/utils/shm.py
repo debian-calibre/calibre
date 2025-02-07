@@ -8,7 +8,6 @@ import os
 import secrets
 import stat
 import struct
-from typing import Optional, Union
 
 from calibre.constants import ismacos, iswindows
 
@@ -20,7 +19,7 @@ else:
 
 
 def make_filename(prefix: str) -> str:
-    "Create a random filename for the shared memory object."
+    'Create a random filename for the shared memory object.'
     # number of random bytes to use for name. Use a largeish value
     # to make double unlink safe.
     if not iswindows and not prefix.startswith('/'):
@@ -44,7 +43,7 @@ class SharedMemory:
     '''
     _fd: int = -1
     _name: str = ''
-    _mmap: Optional[mmap.mmap] = None
+    _mmap: mmap.mmap | None = None
     _size: int = 0
     size_fmt = '!I'
     num_bytes_for_size = struct.calcsize(size_fmt)
@@ -158,7 +157,7 @@ class SharedMemory:
     def flush(self) -> None:
         self.mmap.flush()
 
-    def write_data_with_size(self, data: Union[str, bytes]) -> None:
+    def write_data_with_size(self, data: str | bytes) -> None:
         if isinstance(data, str):
             data = data.encode('utf-8')
         sz = struct.pack(self.size_fmt, len(data))
@@ -203,8 +202,8 @@ class SharedMemory:
         return f'{self.__class__.__name__}({self.name!r}, size={self.size})'
 
     def close(self) -> None:
-        """Closes access to the shared memory from this instance but does
-        not destroy the shared memory block."""
+        '''Closes access to the shared memory from this instance but does
+        not destroy the shared memory block.'''
         if self._mmap is not None:
             self._mmap.close()
             self._mmap = None
@@ -214,11 +213,11 @@ class SharedMemory:
         self.unlink()
 
     def unlink(self) -> None:
-        """Requests that the underlying shared memory block be destroyed.
+        '''Requests that the underlying shared memory block be destroyed.
 
         In order to ensure proper cleanup of resources, unlink should be
         called once (and only once) across all processes which have access
-        to the shared memory block."""
+        to the shared memory block.'''
         if self._name:
             if not iswindows:
                 try:

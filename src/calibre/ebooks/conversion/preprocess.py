@@ -16,23 +16,23 @@ XMLDECL_RE    = re.compile(r'^\s*<[?]xml.*?[?]>')
 SVG_NS       = 'http://www.w3.org/2000/svg'
 XLINK_NS     = 'http://www.w3.org/1999/xlink'
 
-_span_pat = re.compile('<span.*?</span>', re.DOTALL|re.IGNORECASE)
+_span_pat = re.compile(r'<span.*?</span>', re.DOTALL|re.IGNORECASE)
 
 LIGATURES = {
-#        '\u00c6': 'AE',
-#        '\u00e6': 'ae',
-#        '\u0152': 'OE',
-#        '\u0153': 'oe',
-#        '\u0132': 'IJ',
-#        '\u0133': 'ij',
-#        '\u1D6B': 'ue',
-        '\uFB00': 'ff',
-        '\uFB01': 'fi',
-        '\uFB02': 'fl',
-        '\uFB03': 'ffi',
-        '\uFB04': 'ffl',
-        '\uFB05': 'ft',
-        '\uFB06': 'st',
+        # 'Æ': 'AE',
+        # 'æ': 'ae',
+        # 'Œ': 'OE',
+        # 'œ': 'oe',
+        # 'Ĳ': 'IJ',
+        # 'ĳ': 'ij',
+        # 'ᵫ': 'ue',
+        'ﬀ': 'ff',
+        'ﬁ': 'fi',
+        'ﬂ': 'fl',
+        'ﬃ': 'ffi',
+        'ﬄ': 'ffl',
+        'ﬅ': 'ft',
+        'ﬆ': 'st',
         }
 
 _ligpat = re.compile('|'.join(LIGATURES))
@@ -41,7 +41,7 @@ _ligpat = re.compile('|'.join(LIGATURES))
 def sanitize_head(match):
     x = match.group(1).strip()
     x = _span_pat.sub('', x)
-    return '<head>\n%s\n</head>' % x
+    return f'<head>\n{x}\n</head>'
 
 
 def chap_head(match):
@@ -92,9 +92,9 @@ class DocAnalysis:
         elif format == 'pdf':
             linere = re.compile(r'(?<=<br>)(?!\s*<br>).*?(?=<br>)', re.DOTALL)
         elif format == 'spanned_html':
-            linere = re.compile('(?<=<span).*?(?=</span>)', re.DOTALL)
+            linere = re.compile(r'(?<=<span).*?(?=</span>)', re.DOTALL)
         elif format == 'txt':
-            linere = re.compile('.*?\n')
+            linere = re.compile(r'.*?\n')
         self.lines = linere.findall(raw)
 
     def line_length(self, percent):
@@ -143,20 +143,20 @@ class DocAnalysis:
         maxLineLength=1900  # Discard larger than this to stay in range
         buckets=20  # Each line is divided into a bucket based on length
 
-        # print("there are "+str(len(lines))+" lines")
+        # print('there are '+str(len(lines))+' lines')
         # max = 0
         # for line in self.lines:
-        #    l = len(line)
-        #    if l > max:
-        #        max = l
-        # print("max line found is "+str(max))
+        #     l = len(line)
+        #     if l > max:
+        #         max = l
+        # print('max line found is '+str(max))
         # Build the line length histogram
-        hRaw = [0 for i in range(0,buckets)]
+        hRaw = [0 for i in range(buckets)]
         for line in self.lines:
             l = len(line)
             if l > minLineLength and l < maxLineLength:
                 l = int(l // 100)
-                # print("adding "+str(l))
+                # print('adding '+str(l))
                 hRaw[l]+=1
 
         # Normalize the histogram into percents
@@ -165,20 +165,20 @@ class DocAnalysis:
             h = [float(count)/totalLines for count in hRaw]
         else:
             h = []
-        # print("\nhRaw histogram lengths are: "+str(hRaw))
-        # print("              percents are: "+str(h)+"\n")
+        # print('\nhRaw histogram lengths are: '+str(hRaw))
+        # print('              percents are: '+str(h)+'\n')
 
         # Find the biggest bucket
         maxValue = 0
-        for i in range(0,len(h)):
+        for i in range(len(h)):
             if h[i] > maxValue:
                 maxValue = h[i]
 
         if maxValue < percent:
-            # print("Line lengths are too variable. Not unwrapping.")
+            # print('Line lengths are too variable. Not unwrapping.')
             return False
         else:
-            # print(str(maxValue)+" of the lines were in one bucket")
+            # print(str(maxValue)+' of the lines were in one bucket')
             return True
 
 
@@ -200,12 +200,12 @@ class Dehyphenator:
             "((ed)?ly|'?e?s||a?(t|s)?ion(s|al(ly)?)?|ings?|er|(i)?ous|"
             "(i|a)ty|(it)?ies|ive|gence|istic(ally)?|(e|a)nce|m?ents?|ism|ated|"
             "(e|u)ct(ed)?|ed|(i|ed)?ness|(e|a)ncy|ble|ier|al|ex|ian)$")
-        self.suffixes = re.compile(r"^%s" % self.suffix_string, re.IGNORECASE)
-        self.removesuffixes = re.compile(r"%s" % self.suffix_string, re.IGNORECASE)
+        self.suffixes = re.compile(rf'^{self.suffix_string}', re.IGNORECASE)
+        self.removesuffixes = re.compile(rf'{self.suffix_string}', re.IGNORECASE)
         # remove prefixes if the prefix was not already the point of hyphenation
         self.prefix_string = '^(dis|re|un|in|ex)'
-        self.prefixes = re.compile(r'%s$' % self.prefix_string, re.IGNORECASE)
-        self.removeprefix = re.compile(r'%s' % self.prefix_string, re.IGNORECASE)
+        self.prefixes = re.compile(rf'{self.prefix_string}$', re.IGNORECASE)
+        self.removeprefix = re.compile(rf'{self.prefix_string}', re.IGNORECASE)
 
     def dehyphenate(self, match):
         firsthalf = match.group('firstpart')
@@ -214,7 +214,7 @@ class Dehyphenator:
             wraptags = match.group('wraptags')
         except:
             wraptags = ''
-        hyphenated = str(firsthalf) + "-" + str(secondhalf)
+        hyphenated = str(firsthalf) + '-' + str(secondhalf)
         dehyphenated = str(firsthalf) + str(secondhalf)
         if self.suffixes.match(secondhalf) is None:
             lookupword = self.removesuffixes.sub('', dehyphenated)
@@ -223,7 +223,7 @@ class Dehyphenator:
         if len(firsthalf) > 4 and self.prefixes.match(firsthalf) is None:
             lookupword = self.removeprefix.sub('', lookupword)
         if self.verbose > 2:
-            self.log("lookup word is: "+lookupword+", orig is: " + hyphenated)
+            self.log('lookup word is: '+lookupword+', orig is: ' + hyphenated)
         try:
             searchresult = self.html.find(lookupword.lower())
         except:
@@ -231,33 +231,33 @@ class Dehyphenator:
         if self.format == 'html_cleanup' or self.format == 'txt_cleanup':
             if self.html.find(lookupword) != -1 or searchresult != -1:
                 if self.verbose > 2:
-                    self.log("    Cleanup:returned dehyphenated word: " + dehyphenated)
+                    self.log('    Cleanup:returned dehyphenated word: ' + dehyphenated)
                 return dehyphenated
             elif self.html.find(hyphenated) != -1:
                 if self.verbose > 2:
-                    self.log("        Cleanup:returned hyphenated word: " + hyphenated)
+                    self.log('        Cleanup:returned hyphenated word: ' + hyphenated)
                 return hyphenated
             else:
                 if self.verbose > 2:
-                    self.log("            Cleanup:returning original text "+firsthalf+" + linefeed "+secondhalf)
-                return firsthalf+'\u2014'+wraptags+secondhalf
+                    self.log('            Cleanup:returning original text '+firsthalf+' + linefeed '+secondhalf)
+                return firsthalf+'—'+wraptags+secondhalf
 
         else:
             if self.format == 'individual_words' and len(firsthalf) + len(secondhalf) <= 6:
                 if self.verbose > 2:
-                    self.log("too short, returned hyphenated word: " + hyphenated)
+                    self.log('too short, returned hyphenated word: ' + hyphenated)
                 return hyphenated
             if len(firsthalf) <= 2 and len(secondhalf) <= 2:
                 if self.verbose > 2:
-                    self.log("too short, returned hyphenated word: " + hyphenated)
+                    self.log('too short, returned hyphenated word: ' + hyphenated)
                 return hyphenated
             if self.html.find(lookupword) != -1 or searchresult != -1:
                 if self.verbose > 2:
-                    self.log("     returned dehyphenated word: " + dehyphenated)
+                    self.log('     returned dehyphenated word: ' + dehyphenated)
                 return dehyphenated
             else:
                 if self.verbose > 2:
-                    self.log("          returned hyphenated word: " + hyphenated)
+                    self.log('          returned hyphenated word: ' + hyphenated)
                 return hyphenated
 
     def __call__(self, html, format, length=1):
@@ -265,16 +265,16 @@ class Dehyphenator:
         self.format = format
         if format == 'html':
             intextmatch = re.compile((
-                r'(?<=.{%i})(?P<firstpart>[^\W\-]+)(-|‐)\s*(?=<)(?P<wraptags>(</span>)?'
+                r'(?<=.{%i})(?P<firstpart>[^\W\-]+)(-|‐)\s*(?=<)(?P<wraptags>(</span>)?'  # noqa: UP031
                 r'\s*(</[iubp]>\s*){1,2}(?P<up2threeblanks><(p|div)[^>]*>\s*(<p[^>]*>\s*</p>\s*)'
                 r'?</(p|div)>\s+){0,3}\s*(<[iubp][^>]*>\s*){1,2}(<span[^>]*>)?)\s*(?P<secondpart>[\w\d]+)') % length)
         elif format == 'pdf':
             intextmatch = re.compile((
-                r'(?<=.{%i})(?P<firstpart>[^\W\-]+)(-|‐)\s*(?P<wraptags><p>|'
+                r'(?<=.{%i})(?P<firstpart>[^\W\-]+)(-|‐)\s*(?P<wraptags><p>|'  # noqa: UP031
                 r'</[iub]>\s*<p>\s*<[iub]>)\s*(?P<secondpart>[\w\d]+)')% length)
         elif format == 'txt':
             intextmatch = re.compile(
-                '(?<=.{%i})(?P<firstpart>[^\\W\\-]+)(-|‐)(\u0020|\u0009)*(?P<wraptags>(\n(\u0020|\u0009)*)+)(?P<secondpart>[\\w\\d]+)'% length)
+                r'(?<=.{%i})(?P<firstpart>[^\W\-]+)(-|‐)( |\t)*(?P<wraptags>(\n( |\t)*)+)(?P<secondpart>[\w\d]+)'% length)  # noqa: UP031
         elif format == 'individual_words':
             intextmatch = re.compile(
                 r'(?!<)(?P<firstpart>[^\W\-]+)(-|‐)\s*(?P<secondpart>\w+)(?![^<]*?>)', re.UNICODE)
@@ -295,10 +295,10 @@ class CSSPreProcessor:
     # Remove some of the broken CSS Microsoft products
     # create
     MS_PAT     = re.compile(r'''
-        (?P<start>^|;|\{)\s*    # The end of the previous rule or block start
-        (%s).+?                 # The invalid selectors
-        (?P<end>$|;|\})         # The end of the declaration
-        '''%'mso-|panose-|text-underline|tab-interval',
+        (?P<start>^|;|\{{)\s*    # The end of the previous rule or block start
+        ({}).+?                 # The invalid selectors
+        (?P<end>$|;|\}})         # The end of the declaration
+        '''.format('mso-|panose-|text-underline|tab-interval'),
         re.MULTILINE|re.IGNORECASE|re.VERBOSE)
 
     def ms_sub(self, match):
@@ -326,8 +326,7 @@ class CSSPreProcessor:
         ans, namespaced = [], False
         for line in data.splitlines():
             ll = line.lstrip()
-            if not (namespaced or ll.startswith('@import') or not ll or
-                        ll.startswith('@charset')):
+            if not (namespaced or ll.startswith(('@import', '@charset')) or not ll):
                 ans.append(XHTML_CSS_NAMESPACE.strip())
                 namespaced = True
             ans.append(line)
@@ -430,17 +429,17 @@ def book_designer_rules():
     if ans is None:
         ans = book_designer_rules.ans = [
         # HR
-        (re.compile('<hr>', re.IGNORECASE),
+        (re.compile(r'<hr>', re.IGNORECASE),
         lambda match : '<span style="page-break-after:always"> </span>'),
         # Create header tags
         (re.compile(r'<h2[^><]*?id=BookTitle[^><]*?(align=)*(?(1)(\w+))*[^><]*?>[^><]*?</h2>', re.IGNORECASE),
-        lambda match : '<h1 id="BookTitle" align="%s">%s</h1>'%(match.group(2) if match.group(2) else 'center', match.group(3))),
+        lambda match : '<h1 id="BookTitle" align="{}">{}</h1>'.format(match.group(2) if match.group(2) else 'center', match.group(3))),
         (re.compile(r'<h2[^><]*?id=BookAuthor[^><]*?(align=)*(?(1)(\w+))*[^><]*?>[^><]*?</h2>', re.IGNORECASE),
-        lambda match : '<h2 id="BookAuthor" align="%s">%s</h2>'%(match.group(2) if match.group(2) else 'center', match.group(3))),
-        (re.compile('<span[^><]*?id=title[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
-        lambda match : '<h2 class="title">%s</h2>'%(match.group(1),)),
-        (re.compile('<span[^><]*?id=subtitle[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
-        lambda match : '<h3 class="subtitle">%s</h3>'%(match.group(1),)),
+        lambda match : '<h2 id="BookAuthor" align="{}">{}</h2>'.format(match.group(2) if match.group(2) else 'center', match.group(3))),
+        (re.compile(r'<span[^><]*?id=title[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
+        lambda match : f'<h2 class="title">{match.group(1)}</h2>'),
+        (re.compile(r'<span[^><]*?id=subtitle[^><]*?>(.*?)</span>', re.IGNORECASE|re.DOTALL),
+        lambda match : f'<h3 class="subtitle">{match.group(1)}</h3>'),
     ]
     return ans
 
@@ -458,10 +457,10 @@ class HTMLPreProcessor:
                           re.IGNORECASE).search(src) is not None
 
     def is_book_designer(self, raw):
-        return re.search('<H2[^><]*id=BookTitle', raw) is not None
+        return re.search(r'<H2[^><]*id=BookTitle', raw) is not None
 
     def is_pdftohtml(self, src):
-        return '<!-- created by calibre\'s pdftohtml -->' in src[:1000]
+        return "<!-- created by calibre's pdftohtml -->" in src[:1000]
 
     def __call__(self, html, remove_special_chars=None,
             get_preprocess_html=False):
@@ -481,7 +480,7 @@ class HTMLPreProcessor:
         start_rules = []
 
         if not getattr(self.extra_opts, 'keep_ligatures', False):
-            html = _ligpat.sub(lambda m:LIGATURES[m.group()], html)
+            html = _ligpat.sub(lambda m: LIGATURES[m.group()], html)
 
         user_sr_rules = {}
         # Function for processing search and replace
@@ -495,12 +494,11 @@ class HTMLPreProcessor:
                 rules.insert(0, (search_re, replace_txt))
                 user_sr_rules[(search_re, replace_txt)] = search_pattern
             except Exception as e:
-                self.log.error('Failed to parse %r regexp because %s' %
-                        (search, as_unicode(e)))
+                self.log.error(f'Failed to parse {search!r} regexp because {as_unicode(e)}')
 
         # search / replace using the sr?_search / sr?_replace options
         for i in range(1, 4):
-            search, replace = 'sr%d_search'%i, 'sr%d_replace'%i
+            search, replace = f'sr{i}_search', f'sr{i}_replace'
             search_pattern = getattr(self.extra_opts, search, '')
             replace_txt = getattr(self.extra_opts, replace, '')
             if search_pattern:
@@ -528,14 +526,14 @@ class HTMLPreProcessor:
             docanalysis = DocAnalysis('pdf', html)
             length = docanalysis.line_length(getattr(self.extra_opts, 'unwrap_factor'))
             if length:
-                # print("The pdf line length returned is " + str(length))
+                # print('The pdf line length returned is ' + str(length))
                 # unwrap em/en dashes
                 end_rules.append((re.compile(
-                    r'(?<=.{%i}[–—])\s*<p>\s*(?=[\[a-z\d])' % length), lambda match: ''))
+                    r'(?<=.{%i}[–—])\s*<p>\s*(?=[\[a-z\d])' % length), lambda match: ''))  # noqa: UP031
                 end_rules.append(
                     # Un wrap using punctuation
                     (re.compile((
-                        r'(?<=.{%i}([a-zäëïöüàèìòùáćéíĺóŕńśúýâêîôûçąężıãõñæøþðßěľščťžňďřů,:)\\IAß]'
+                        r'(?<=.{%i}([a-zäëïöüàèìòùáćéíĺóŕńśúýâêîôûçąężıãõñæøþðßěľščťžňďřů,:)\\IAß]'  # noqa: UP031
                         r'|(?<!\&\w{4});))\s*(?P<ital></(i|b|u)>)?\s*(</p>\s*<p>\s*)+\s*(?=(<(i|b|u)>)?'
                         r'\s*[\w\d$(])') % length, re.UNICODE), wrap_lines),
                 )
@@ -561,7 +559,7 @@ class HTMLPreProcessor:
                     name, i = None, 0
                     while not name or os.path.exists(os.path.join(odir, name)):
                         i += 1
-                        name = '%04d.html'%i
+                        name = f'{i:04}.html'
                     with open(os.path.join(odir, name), 'wb') as f:
                         f.write(raw.encode('utf-8'))
 
@@ -573,9 +571,8 @@ class HTMLPreProcessor:
             except Exception as e:
                 if rule in user_sr_rules:
                     self.log.error(
-                        'User supplied search & replace rule: %s -> %s '
-                        'failed with error: %s, ignoring.'%(
-                            user_sr_rules[rule], rule[1], e))
+                        f'User supplied search & replace rule: {user_sr_rules[rule]} -> {rule[1]} '
+                        f'failed with error: {e}, ignoring.')
                 else:
                     raise
 
@@ -596,10 +593,10 @@ class HTMLPreProcessor:
         # Handle broken XHTML w/ SVG (ugh)
         if 'svg:' in html and SVG_NS not in html:
             html = html.replace(
-                '<html', '<html xmlns:svg="%s"' % SVG_NS, 1)
+                '<html', f'<html xmlns:svg="{SVG_NS}"', 1)
         if 'xlink:' in html and XLINK_NS not in html:
             html = html.replace(
-                '<html', '<html xmlns:xlink="%s"' % XLINK_NS, 1)
+                '<html', f'<html xmlns:xlink="{XLINK_NS}"', 1)
 
         html = XMLDECL_RE.sub('', html)
 
@@ -617,7 +614,7 @@ class HTMLPreProcessor:
             html = preprocessor(html)
 
         if is_pdftohtml:
-            html = html.replace('<!-- created by calibre\'s pdftohtml -->', '')
+            html = html.replace("<!-- created by calibre's pdftohtml -->", '')
 
         if getattr(self.extra_opts, 'smarten_punctuation', False):
             html = smarten_punctuation(html, self.log)

@@ -107,13 +107,15 @@ def mi_to_html(
         mi,
         field_list=None, default_author_link=None, use_roman_numbers=True,
         rating_font='Liberation Serif', rtl=False, comments_heading_pos='hide',
-        for_qt=False, vertical_fields=(), show_links=True, item_id_if_has_note=None
+        for_qt=False, vertical_fields=(), show_links=True, item_id_if_has_note=None,
+        link_note_icon_size=16
     ):
 
-    link_markup =  '↗️'
+    link_markup = '↗️'
     if for_qt:
-        link_markup = '<img valign="bottom" src="calibre-icon:///external-link.png" width=16 height=16>'
-        note_markup = '<img valign="bottom" src="calibre-icon:///notes.png" width=16 height=16>'
+        s = link_note_icon_size
+        link_markup = f'<img valign="bottom" src="calibre-icon:///external-link.png" width={s} height={s}>'
+        note_markup = f'<img valign="bottom" src="calibre-icon:///notes.png" width={s} height={s}>'
     def get_link_map(column):
         try:
             return mi.link_maps[column]
@@ -180,9 +182,9 @@ def mi_to_html(
                 ctype = disp.get('interpret_as') or 'html'
                 val = force_unicode(val)
                 if ctype == 'long-text':
-                    val = '<pre style="white-space:pre-wrap">%s</pre>' % p(val)
+                    val = f'<pre style="white-space:pre-wrap">{p(val)}</pre>'
                 elif ctype == 'short-text':
-                    val = '<span>%s</span>' % p(val)
+                    val = f'<span>{p(val)}</span>'
                 elif ctype == 'markdown':
                     val = markdown(val)
                 else:
@@ -199,9 +201,8 @@ def mi_to_html(
             if val:
                 star_string = rating_to_stars(val, disp.get('allow_half_stars', False))
                 ans.append((field,
-                    '<td class="title">%s</td><td class="rating value" '
-                    'style=\'font-family:"%s"\'>%s</td>'%(
-                        name, rating_font, star_string)))
+                    f'<td class="title">{name}</td><td class="rating value" '
+                    f'style=\'font-family:"{rating_font}"\'>{star_string}</td>'))
         elif metadata['datatype'] == 'composite' and not disp.get('composite_show_in_comments', ''):
             val = getattr(mi, field)
             if val:
@@ -234,8 +235,7 @@ def mi_to_html(
                     durl = path
                     if durl.startswith('mtp:::'):
                         durl = ':::'.join((durl.split(':::'))[2:])
-                    extra = '<br><span style="font-size:smaller">%s</span>'%(
-                            prepare_string_for_xml(durl))
+                    extra = f'<br><span style="font-size:smaller">{prepare_string_for_xml(durl)}</span>'
                 if show_links:
                     num_of_folders = 1
                     if isdevice:
@@ -249,8 +249,7 @@ def mi_to_html(
                                     break
                         text = _('Book files')
                         name = ngettext('Folder', 'Folders', num_of_folders) + title_sep
-                    links = ['<a href="{}" title="{}">{}</a>{}'.format(action(scheme, book_id=book_id, loc=loc),
-                        prepare_string_for_xml(path, True), text, extra)]
+                    links = [f'<a href="{action(scheme, book_id=book_id, loc=loc)}" title="{prepare_string_for_xml(path, True)}">{text}</a>{extra}']
                     if num_of_folders > 1:
                         links.append('<a href="{}" title="{}">{}</a>'.format(
                             action('data-path', book_id=book_id, loc=book_id),
@@ -301,7 +300,7 @@ def mi_to_html(
                     else:
                         aut = p(aut)
                 if link:
-                    val = '<a title="%s" href="%s">%s</a>'%(a(lt), action('author', book_id=book_id,
+                    val = '<a title="{}" href="{}">{}</a>'.format(a(lt), action('author', book_id=book_id,
                                                               url=link, name=aut, title=lt), aut)
                 else:
                     val = aut
@@ -353,7 +352,7 @@ def mi_to_html(
                     val = _(
                         '%(sidx)s of <a href="%(href)s" title="%(tt)s">'
                         '<span class="%(cls)s">%(series)s</span></a>') % dict(
-                            sidx=fmt_sidx(sidx, use_roman=use_roman_numbers), cls="series_name",
+                            sidx=fmt_sidx(sidx, use_roman=use_roman_numbers), cls='series_name',
                             series=p(series), href=search_action_with_data(st, series, book_id, field),
                             tt=p(_('Click to see books in this series')))
                     val += add_other_links(field, series)
@@ -433,11 +432,11 @@ def mi_to_html(
             dt = mi.metadata_for_field(field)['datatype']
         except:
             dt = 'text'
-        return 'datatype_%s'%dt
+        return f'datatype_{dt}'
 
-    ans = ['<tr id="%s" class="%s">%s</tr>'%(fieldl.replace('#', '_'),
+    ans = ['<tr id="{}" class="{}">{}</tr>'.format(fieldl.replace('#', '_'),
         classname(fieldl), html) for fieldl, html in ans]
-    # print '\n'.join(ans)
+    # print('\n'.join(ans))
     direction = 'rtl' if rtl else 'ltr'
     rans = f'<table class="fields" style="direction: {direction}; '
     if not for_qt:

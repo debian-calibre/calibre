@@ -95,7 +95,7 @@ class MobiReader:
 
         self.ident = self.header[0x3C:0x3C + 8].upper()
         if self.ident not in (b'BOOKMOBI', b'TEXTREAD'):
-            raise MobiError('Unknown book type: %s' % repr(self.ident))
+            raise MobiError(f'Unknown book type: {self.ident!r}')
 
         self.sections = []
         self.section_headers = []
@@ -345,7 +345,7 @@ class MobiReader:
                     href = ref.get('href', '')
                     if href.startswith('#'):
                         href = href[1:]
-                    anchors = root.xpath('//*[@id="%s"]' % href)
+                    anchors = root.xpath(f'//*[@id="{href}"]')
                     if anchors:
                         cpos = anchors[0]
                         reached = False
@@ -368,19 +368,19 @@ class MobiReader:
         self.processed_html = self.processed_html.replace('> <', '>\n<')
         self.processed_html = self.processed_html.replace('<mbp: ', '<mbp:')
         self.processed_html = re.sub(r'<\?xml[^>]*>', '', self.processed_html)
-        self.processed_html = re.sub(r'<\s*(/?)\s*o:p[^>]*>', r'', self.processed_html)
+        self.processed_html = re.sub(r'<\s*(/?)\s*o:p[^>]*>', '', self.processed_html)
         # Swap inline and block level elements, and order block level elements according to priority
         # - lxml and beautifulsoup expect/assume a specific order based on xhtml spec
         self.processed_html = re.sub(
-            r'(?i)(?P<styletags>(<(h\d+|i|b|u|em|small|big|strong|tt)>\s*){1,})(?P<para><p[^>]*>)', r'\g<para>'+r'\g<styletags>', self.processed_html)
+            r'(?i)(?P<styletags>(<(h\d+|i|b|u|em|small|big|strong|tt)>\s*){1,})(?P<para><p[^>]*>)', r'\g<para>\g<styletags>', self.processed_html)
         self.processed_html = re.sub(
-            r'(?i)(?P<para></p[^>]*>)\s*(?P<styletags>(</(h\d+|i|b|u|em|small|big|strong|tt)>\s*){1,})', r'\g<styletags>'+r'\g<para>', self.processed_html)
+            r'(?i)(?P<para></p[^>]*>)\s*(?P<styletags>(</(h\d+|i|b|u|em|small|big|strong|tt)>\s*){1,})', r'\g<styletags>\g<para>', self.processed_html)
         self.processed_html = re.sub(
-            r'(?i)(?P<blockquote>(</(blockquote|div)[^>]*>\s*){1,})(?P<para></p[^>]*>)', r'\g<para>'+r'\g<blockquote>', self.processed_html)
+            r'(?i)(?P<blockquote>(</(blockquote|div)[^>]*>\s*){1,})(?P<para></p[^>]*>)', r'\g<para>\g<blockquote>', self.processed_html)
         self.processed_html = re.sub(
-            r'(?i)(?P<para><p[^>]*>)\s*(?P<blockquote>(<(blockquote|div)[^>]*>\s*){1,})', r'\g<blockquote>'+r'\g<para>', self.processed_html)
+            r'(?i)(?P<para><p[^>]*>)\s*(?P<blockquote>(<(blockquote|div)[^>]*>\s*){1,})', r'\g<blockquote>\g<para>', self.processed_html)
         bods = htmls = 0
-        for x in re.finditer('</body>|</html>', self.processed_html):
+        for x in re.finditer(r'</body>|</html>', self.processed_html):
             if x == '</body>':
                 bods +=1
             else:
@@ -393,8 +393,7 @@ class MobiReader:
             self.processed_html = self.processed_html.replace('</html>', '')
 
     def remove_random_bytes(self, html):
-        return re.sub('\x14|\x15|\x19|\x1c|\x1d|\xef|\x12|\x13|\xec|\x08|\x01|\x02|\x03|\x04|\x05|\x06|\x07',
-                    '', html)
+        return re.sub(r'\x14|\x15|\x19|\x1c|\x1d|\xef|\x12|\x13|\xec|\x08|\x01|\x02|\x03|\x04|\x05|\x06|\x07', '', html)
 
     def ensure_unit(self, raw, unit='px'):
         if re.search(r'\d+$', raw) is not None:
@@ -460,10 +459,9 @@ class MobiReader:
                             # Insert nbsp so that the element is never
                             # discarded by a renderer
                             tag.text = '\u00a0'  # nbsp
-                            styles.append('height: %s' %
-                                    self.ensure_unit(height))
+                            styles.append(f'height: {self.ensure_unit(height)}')
                         else:
-                            styles.append('margin-top: %s' % self.ensure_unit(height))
+                            styles.append(f'margin-top: {self.ensure_unit(height)}')
             if 'width' in attrib:
                 width = attrib.pop('width').strip()
                 if width and re.search(r'\d+', width):
@@ -473,14 +471,14 @@ class MobiReader:
                         tag.set('width', width)
                     else:
                         ewidth = self.ensure_unit(width)
-                        styles.append('text-indent: %s' % ewidth)
+                        styles.append(f'text-indent: {ewidth}')
                         try:
                             ewidth_val = unit_convert(ewidth, 12, 500, 166)
                             self.text_indents[tag] = ewidth_val
                         except:
                             pass
                         if width.startswith('-'):
-                            styles.append('margin-left: %s' % self.ensure_unit(width[1:]))
+                            styles.append(f'margin-left: {self.ensure_unit(width[1:])}')
                             try:
                                 ewidth_val = unit_convert(ewidth[1:], 12, 500, 166)
                                 self.left_margins[tag] = ewidth_val
@@ -494,7 +492,7 @@ class MobiReader:
                     if align == 'baseline':
                         styles.append('vertical-align: '+align)
                     else:
-                        styles.append('text-align: %s' % align)
+                        styles.append(f'text-align: {align}')
             if tag.tag == 'hr':
                 if mobi_version == 1:
                     tag.tag = 'div'
@@ -527,7 +525,7 @@ class MobiReader:
                     except Exception:
                         pass
                     else:
-                        attrib['src'] = 'images/' + image_name_map.get(recindex, '%05d.jpg' % recindex)
+                        attrib['src'] = 'images/' + image_name_map.get(recindex, f'{recindex:05}.jpg')
                 for attr in ('width', 'height'):
                     if attr in attrib:
                         val = attrib[attr]
@@ -535,7 +533,7 @@ class MobiReader:
                             try:
                                 nval = float(val[:-2])
                                 nval *= 16 * (168.451/72)  # Assume this was set using the Kindle profile
-                                attrib[attr] = "%dpx"%int(nval)
+                                attrib[attr] = f'{int(nval)}px'
                             except:
                                 del attrib[attr]
                         elif val.lower().endswith('%'):
@@ -560,7 +558,7 @@ class MobiReader:
             if 'filepos' in attrib:
                 filepos = attrib.pop('filepos')
                 try:
-                    attrib['href'] = "#filepos%d" % int(filepos)
+                    attrib['href'] = f'#filepos{int(filepos)}'
                 except ValueError:
                     pass
             if (tag.tag == 'a' and attrib.get('id', '').startswith('filepos') and
@@ -579,7 +577,7 @@ class MobiReader:
                         ncls = sel
                         break
                 if ncls is None:
-                    ncls = 'calibre_%d' % i
+                    ncls = f'calibre_{i}'
                     self.tag_css_rules[ncls] = rule
                 cls = attrib.get('class', '')
                 cls = cls + (' ' if cls else '') + ncls
@@ -660,11 +658,11 @@ class MobiReader:
             mi = MetaInformation(self.book_header.title, [_('Unknown')])
         opf = OPFCreator(os.path.dirname(htmlfile), mi)
         if hasattr(self.book_header.exth, 'cover_offset'):
-            opf.cover = 'images/%05d.jpg' % (self.book_header.exth.cover_offset + 1)
+            opf.cover = f'images/{self.book_header.exth.cover_offset + 1:05}.jpg'
         elif mi.cover is not None:
             opf.cover = mi.cover
         else:
-            opf.cover = 'images/%05d.jpg' % 1
+            opf.cover = f'images/{1:05}.jpg'
             if not os.path.exists(os.path.join(os.path.dirname(htmlfile),
                 * opf.cover.split('/'))):
                 opf.cover = None
@@ -704,7 +702,7 @@ class MobiReader:
         ncx_manifest_entry = None
         if toc:
             ncx_manifest_entry = 'toc.ncx'
-            elems = root.xpath('//*[@id="%s"]' % toc.partition('#')[-1])
+            elems = root.xpath('//*[@id="{}"]'.format(toc.partition('#')[-1]))
             tocobj = None
             if elems:
                 tocobj = TOC()
@@ -829,7 +827,7 @@ class MobiReader:
             def unpack(x):
                 return x
         else:
-            raise MobiError('Unknown compression algorithm: %r' % self.book_header.compression_type)
+            raise MobiError(f'Unknown compression algorithm: {self.book_header.compression_type!r}')
         self.mobi_html = b''.join(map(unpack, text_sections))
         if self.mobi_html.endswith(b'#'):
             self.mobi_html = self.mobi_html[:-1]
@@ -922,7 +920,7 @@ class MobiReader:
                 except OSError:
                     self.log.warn(f'Ignoring undecodeable GIF image at index {image_index}')
                     continue
-            path = os.path.join(output_dir, '%05d.%s' % (image_index, imgfmt))
+            path = os.path.join(output_dir, f'{image_index:05}.{imgfmt}')
             image_name_map[image_index] = os.path.basename(path)
             if imgfmt == 'png':
                 with open(path, 'wb') as f:
@@ -951,4 +949,4 @@ def test_mbp_regex():
         }):
         ans = MobiReader.PAGE_BREAK_PAT.sub(r'\1', raw)
         if ans != m:
-            raise Exception('%r != %r for %r'%(ans, m, raw))
+            raise Exception(f'{ans!r} != {m!r} for {raw!r}')

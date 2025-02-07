@@ -1,7 +1,7 @@
 ''' CHM File decoding support '''
 __license__ = 'GPL v3'
-__copyright__  = '2008, Kovid Goyal <kovid at kovidgoyal.net>,' \
-                 ' and Alex Bramley <a.bramley at gmail.com>.'
+__copyright__  = ('2008, Kovid Goyal <kovid at kovidgoyal.net>,'
+                  ' and Alex Bramley <a.bramley at gmail.com>.')
 
 import codecs
 import os
@@ -55,7 +55,7 @@ class CHMReader(CHMFile):
                     t.write(open(input, 'rb').read())
                 input = t.name
         if not self.LoadCHM(input):
-            raise CHMError("Unable to open CHM file '%s'"%(input,))
+            raise CHMError(f"Unable to open CHM file '{input}'")
         self.log = log
         self.input_encoding = input_encoding
         self._sourcechm = input
@@ -73,7 +73,7 @@ class CHMReader(CHMFile):
         # location of '.hhc' file, which is the CHM TOC.
         base = self.topics or self.home
         self.root = os.path.splitext(base.lstrip('/'))[0]
-        self.hhc_path = self.root + ".hhc"
+        self.hhc_path = self.root + '.hhc'
 
     def relpath_to_first_html_file(self):
         # See https://www.nongnu.org/chmspec/latest/Internal.html#SYSTEM
@@ -141,14 +141,14 @@ class CHMReader(CHMFile):
             else:
                 frag = None
             name = self._deentity(li.object('param', {'name': 'Name'})[0]['value'])
-            # print "========>", name
+            # print('========>', name)
             toc.add_item(href, frag, name, play_order=self._playorder)
             self._playorder += 1
             if li.ul:
                 child = self._parse_toc(li.ul)
                 child.parent = toc
                 toc.append(child)
-        # print toc
+        # print(toc)
         return toc
 
     def ResolveObject(self, path):
@@ -170,10 +170,10 @@ class CHMReader(CHMFile):
             path = '/' + path
         res, ui = self.ResolveObject(path)
         if res != chmlib.CHM_RESOLVE_SUCCESS:
-            raise CHMError(f"Unable to locate {path!r} within CHM file {self.filename!r}")
+            raise CHMError(f'Unable to locate {path!r} within CHM file {self.filename!r}')
         size, data = self.RetrieveObject(ui)
         if size == 0:
-            raise CHMError(f"{path!r} is zero bytes in length!")
+            raise CHMError(f'{path!r} is zero bytes in length!')
         return data
 
     def get_home(self):
@@ -188,7 +188,7 @@ class CHMReader(CHMFile):
             try:
                 data = self.GetFile(path)
             except:
-                self.log.exception('Failed to extract %s from CHM, ignoring'%path)
+                self.log.exception(f'Failed to extract {path} from CHM, ignoring')
                 continue
             if lpath.find(';') != -1:
                 # fix file names with ";<junk>" at the end, see _reformat()
@@ -203,7 +203,7 @@ class CHMReader(CHMFile):
                     pass
             except:
                 if iswindows and len(lpath) > 250:
-                    self.log.warn('%r filename too long, skipping'%path)
+                    self.log.warn(f'{path!r} filename too long, skipping')
                     continue
                 raise
 
@@ -254,7 +254,7 @@ class CHMReader(CHMFile):
             soup = BeautifulSoup(data)
         except ValueError:
             # hit some strange encoding problems...
-            self.log.exception("Unable to parse html for cleaning, leaving it")
+            self.log.exception('Unable to parse html for cleaning, leaving it')
             return data
         # nuke javascript...
         [s.extract() for s in soup('script')]

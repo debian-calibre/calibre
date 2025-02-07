@@ -11,7 +11,7 @@ from threading import Lock
 
 from calibre.constants import config_dir
 from calibre.db.categories import Tag, category_display_order
-from calibre.db.constants import DATA_FILE_PATTERN
+from calibre.db.constants import DATA_FILE_PATTERN, TEMPLATE_ICON_INDICATOR
 from calibre.ebooks.metadata.sources.identify import urls_from_identifiers
 from calibre.library.comments import comments_to_html, markdown
 from calibre.library.field_metadata import category_icon_map
@@ -30,7 +30,7 @@ IGNORED_FIELDS = frozenset('cover ondevice path marked au_map'.split())
 
 def encode_datetime(dateval):
     if dateval is None:
-        return "None"
+        return 'None'
     if not isinstance(dateval, datetime):
         dateval = datetime.combine(dateval, time())
     if hasattr(dateval, 'tzinfo') and dateval.tzinfo is None:
@@ -157,6 +157,54 @@ def category_item_as_json(x, clear_rating=False):
     return ans
 
 
+def get_gpref(name: str, defval=None):
+    gprefs = getattr(get_gpref, 'gprefs', None)
+    if gprefs is None:
+        from calibre.utils.config import JSONConfig
+        gprefs = get_gpref.gprefs = JSONConfig('gui')
+    return gprefs.get(name, defval)
+
+
+def get_icon_for_node(node, parent, node_to_tag_map, tag_map, eval_formatter, db):
+    category = node['category']
+    if category in ('search', 'formats') or category.startswith('@'):
+        return
+
+    def name_for_icon(node):
+        return node.get('original_name', node.get('name'))
+
+    value_icons = get_gpref('tags_browser_value_icons')
+    val_icon, for_children = value_icons.get(category, {}).get(name_for_icon(node), (None, False))
+    if val_icon is None:
+        # No specific icon. Walk up the hierarchy checking parents.
+        par = parent
+        while True:
+            pid = str(par['id'])
+            if not pid.startswith('n'):
+                # 'Real' nodes (tag nodes) start with 'n'
+                break
+            pt = node_to_tag_map[pid]
+            pd = tag_map[id(pt)][1]
+            val_icon, for_children = value_icons.get(pd['category'], {}).get(name_for_icon(pd), (None, False))
+            if val_icon is not None and for_children:
+                break
+            par = pd
+            val_icon = None
+    if val_icon is None and TEMPLATE_ICON_INDICATOR in value_icons.get(category, {}):
+        v = {'category': category, 'value': name_for_icon(node),
+            'count': node.get('count', ''), 'avg_rating': node.get('avg_rating', '')}
+        t = eval_formatter.safe_format(
+            value_icons[category][TEMPLATE_ICON_INDICATOR][0], v,
+            'VALUE_ICON_TEMPLATE_ERROR', {}, database=db)
+        if t:
+            # Use POSIX path separator
+            val_icon = 'template_icons/' + t
+        else:
+            val_icon = None
+    if val_icon:
+        node['value_icon'] = val_icon
+
+
 CategoriesSettings = namedtuple(
     'CategoriesSettings', 'dont_collapse collapse_model collapse_at sort_by'
     ' template using_hierarchy grouped_search_terms hidden_categories hide_empty_categories')
@@ -164,7 +212,7 @@ CategoriesSettings = namedtuple(
 
 class GroupedSearchTerms:
 
-    __slots__ = ('keys', 'vals', 'hash')
+    __slots__ = ('hash', 'keys', 'vals')
 
     def __init__(self, src):
         self.keys = frozenset(src)
@@ -202,7 +250,7 @@ def icon_map():
                 if os.access(os.path.join(config_dir, 'tb_icons', v), os.R_OK):
                     _icon_map[k] = '_' + quote(v)
             _icon_map['file_type_icons'] = {
-                k:'mimetypes/%s.png' % v for k, v in iteritems(EXT_MAP)
+                k:f'mimetypes/{v}.png' for k, v in iteritems(EXT_MAP)
             }
         return _icon_map
 
@@ -224,7 +272,7 @@ def categories_settings(query, db, gst_container=GroupedSearchTerms):
     if collapse_model != 'disable':
         if sort_by != 'name':
             collapse_model = 'partition'
-        template = tweaks['categories_collapsed_%s_template' % sort_by]
+        template = tweaks[f'categories_collapsed_{sort_by}_template']
     using_hierarchy = frozenset(db.pref('categories_using_hierarchy', []))
     hidden_categories = frozenset(db.pref('tag_browser_hidden_categories', set()))
     return CategoriesSettings(
@@ -234,7 +282,7 @@ def categories_settings(query, db, gst_container=GroupedSearchTerms):
 
 
 def create_toplevel_tree(category_data, items, field_metadata, opts, db):
-    # Create the basic tree, containing all top level categories , user
+    # Create the basic tree, containing all top level categories, user
     # categories and grouped search terms
     last_category_node, category_node_map, root = None, {}, {'id':None, 'children':[]}
     node_id_map = {}
@@ -382,7 +430,7 @@ def collapse_first_letter(collapse_nodes, items, category_node, cl_list, idx, is
 def process_category_node(
         category_node, items, category_data, eval_formatter, field_metadata,
         opts, tag_map, hierarchical_tags, node_to_tag_map, collapse_nodes,
-        intermediate_nodes, hierarchical_items):
+        intermediate_nodes, hierarchical_items, db):
     category = items[category_node['id']]['category']
     if category not in category_data:
         # This can happen for user categories that are hierarchical and missing their parent.
@@ -414,7 +462,7 @@ def process_category_node(
         # reflect that in the node structure as well.
         node_data = tag_map.get(id(tag), None)
         if node_data is None:
-            node_id = 'n%d' % len(tag_map)
+            node_id = f'n{len(tag_map)}'
             node_data = items[node_id] = category_item_as_json(tag, clear_rating=clear_rating)
             tag_map[id(tag)] = (node_id, node_data)
             node_to_tag_map[node_id] = tag
@@ -422,6 +470,11 @@ def process_category_node(
             node_id, node_data = node_data
         node = {'id':node_id, 'children':[]}
         parent['children'].append(node)
+        try:
+            get_icon_for_node(node_data, parent, node_to_tag_map, tag_map, eval_formatter, db)
+        except Exception:
+            import traceback
+            traceback.print_exc()
         return node, node_data
 
     for idx, tag in enumerate(category_items):
@@ -504,7 +557,7 @@ def iternode_descendants(node):
         yield from iternode_descendants(child)
 
 
-def fillout_tree(root, items, node_id_map, category_nodes, category_data, field_metadata, opts, book_rating_map):
+def fillout_tree(root, items, node_id_map, category_nodes, category_data, field_metadata, opts, book_rating_map, db):
     eval_formatter = EvalFormatter()
     tag_map, hierarchical_tags, node_to_tag_map = {}, set(), {}
     first, later, collapse_nodes, intermediate_nodes, hierarchical_items = [], [], [], {}, set()
@@ -521,7 +574,7 @@ def fillout_tree(root, items, node_id_map, category_nodes, category_data, field_
             process_category_node(
                 cnode, items, category_data, eval_formatter, field_metadata,
                 opts, tag_map, hierarchical_tags, node_to_tag_map,
-                collapse_nodes, intermediate_nodes, hierarchical_items)
+                collapse_nodes, intermediate_nodes, hierarchical_items, db)
 
     # Do not store id_set in the tag items as it is a lot of data, with not
     # much use. Instead only update the ratings and counts based on id_set
@@ -549,24 +602,24 @@ def render_categories(opts, db, category_data):
     items = {}
     with db.safe_read_lock:
         root, node_id_map, category_nodes, recount_nodes = create_toplevel_tree(category_data, items, db.field_metadata, opts, db)
-        fillout_tree(root, items, node_id_map, category_nodes, category_data, db.field_metadata, opts, db.fields['rating'].book_value_map)
+        fillout_tree(root, items, node_id_map, category_nodes, category_data, db.field_metadata, opts, db.fields['rating'].book_value_map, db)
     for node in recount_nodes:
         item = items[node['id']]
         item['count'] = sum(1 for x in iternode_descendants(node) if not items[x['id']].get('is_category', False))
     if opts.hidden_categories:
         # We have to remove hidden categories after all processing is done as
         # items from a hidden category could be in a user category
-        root['children'] = list(filter((lambda child:items[child['id']]['category'] not in opts.hidden_categories), root['children']))
+        root['children'] = list(filter((lambda child: items[child['id']]['category'] not in opts.hidden_categories), root['children']))
     if opts.hide_empty_categories:
-        root['children'] = list(filter((lambda child:items[child['id']]['count'] > 0), root['children']))
+        root['children'] = list(filter((lambda child: items[child['id']]['count'] > 0), root['children']))
     return {'root':root, 'item_map': items}
 
 
 def categories_as_json(ctx, rd, db, opts, vl):
     return ctx.get_tag_browser(rd, db, opts, partial(render_categories, opts), vl=vl)
 
-# Test tag browser {{{
 
+# Test tag browser {{{
 
 def dump_categories_tree(data):
     root, items = data['root'], data['item_map']
@@ -576,7 +629,7 @@ def dump_categories_tree(data):
         item = items[node['id']]
         rating = item.get('avg_rating', None) or 0
         if rating:
-            rating = ',rating=%.1f' % rating
+            rating = f',rating={rating:.1f}'
         try:
             ans.append(indent*level + item['name'] + ' [count={}{}]'.format(item['count'], rating or ''))
         except KeyError:

@@ -94,7 +94,7 @@ class NewsCategory(NewsTreeItem):
 
     def data(self, role):
         if role == Qt.ItemDataRole.DisplayRole:
-            return (self.cdata + ' [%d]'%len(self.children))
+            return (self.cdata + f' [{len(self.children)}]')
         elif role == Qt.ItemDataRole.FontRole:
             return self.bold_font
         elif role == Qt.ItemDataRole.ForegroundRole and self.category == _('Scheduled'):
@@ -134,7 +134,7 @@ class NewsItem(NewsTreeItem):
             return (self.title)
         if role == Qt.ItemDataRole.DecorationRole:
             if self.icon is None:
-                icon = '%s.png'%self.urn[8:]
+                icon = f'{self.urn[8:]}.png'
                 p = QPixmap()
                 if icon in self.favicons:
                     try:
@@ -211,7 +211,7 @@ class RecipeModel(QAbstractItemModel, AdaptSQP):
         script_ids = []
         for urn, title_script in iteritems(script_urn_map):
             id_ = int(urn[len('custom:'):])
-            (title, script) = title_script
+            title, script = title_script
             script_ids.append((id_, title, script))
 
         update_custom_recipes(script_ids)

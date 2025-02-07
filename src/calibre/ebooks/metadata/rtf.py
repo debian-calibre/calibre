@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
-"""
+'''
 Edit metadata in RTF files.
-"""
+'''
 
 import codecs
 import re
@@ -20,15 +20,15 @@ publisher_pat = re.compile(br'\{\\info.*?\{\\manager(.*?)(?<!\\)\}', re.DOTALL)
 
 
 def get_document_info(stream):
-    """
+    '''
     Extract the \\info block from an RTF file.
     Return the info block as a string and the position in the file at which it
     starts.
     @param stream: File like object pointing to the RTF file.
-    """
+    '''
     block_size = 4096
     stream.seek(0)
-    found, block = False, b""
+    found, block = False, b''
     while not found:
         prefix = block[-6:]
         block = prefix + stream.read(block_size)
@@ -109,9 +109,9 @@ def decode(raw, codec):
 
 
 def get_metadata(stream):
-    """
+    '''
     Return metadata as a L{MetaInfo} object
-    """
+    '''
     stream.seek(0)
     if stream.read(5) != br'{\rtf':
         return MetaInformation(_('Unknown'))
@@ -157,24 +157,24 @@ def create_metadata(stream, options):
     md = [r'{\info']
     if options.title:
         title = encode(options.title)
-        md.append(r'{\title %s}'%(title,))
+        md.append(rf'{{\title {title}}}')
     if options.authors:
         au = options.authors
         if not isinstance(au, string_or_bytes):
             au = ', '.join(au)
         author = encode(au)
-        md.append(r'{\author %s}'%(author,))
+        md.append(rf'{{\author {author}}}')
     comp = options.comment if hasattr(options, 'comment') else options.comments
     if comp:
         comment = encode(comp)
-        md.append(r'{\subject %s}'%(comment,))
+        md.append(rf'{{\subject {comment}}}')
     if options.publisher:
         publisher = encode(options.publisher)
-        md.append(r'{\manager %s}'%(publisher,))
+        md.append(rf'{{\manager {publisher}}}')
     if options.tags:
         tags = ', '.join(options.tags)
         tags = encode(tags)
-        md.append(r'{\category %s}'%(tags,))
+        md.append(rf'{{\category {tags}}}')
     if len(md) > 1:
         md.append('}')
         stream.seek(0)

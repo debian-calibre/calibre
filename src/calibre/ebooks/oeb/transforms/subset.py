@@ -123,7 +123,6 @@ def elem_style(style_rules, cls, inherited_style):
 
 
 class SubsetFonts:
-
     '''
     Subset all embedded fonts. Must be run after CSS flattening, as it requires
     CSS normalization and flattening to work.
@@ -156,7 +155,7 @@ class SubsetFonts:
 
         for font in fonts.values():
             if not font['chars']:
-                self.log('The font %s is unused. Removing it.'%font['src'])
+                self.log('The font {} is unused. Removing it.'.format(font['src']))
                 remove(font)
                 continue
             old_raw = font['item'].data
@@ -165,7 +164,7 @@ class SubsetFonts:
             try:
                 subset(BytesIO(old_raw), output, font_type, font['chars'])
             except Exception as e:
-                self.log.warn('The font %s is unsupported for subsetting. %s'%(font['src'], e))
+                self.log.warn('The font {} is unsupported for subsetting. {}'.format(font['src'], e))
                 sz = len(font['item'].data)
                 totals[0] += sz
                 totals[1] += sz
@@ -173,16 +172,14 @@ class SubsetFonts:
                 font['item'].data = output.getvalue()
                 nlen = len(font['item'].data)
                 olen = len(old_raw)
-                self.log('Decreased the font %s to %.1f%% of its original size'%
-                        (font['src'], nlen/olen *100))
+                self.log('Decreased the font {} to {:.1f}% of its original size'.format(font['src'], nlen/olen *100))
                 totals[0] += nlen
                 totals[1] += olen
 
             font['item'].unload_data_from_memory()
 
         if totals[0]:
-            self.log('Reduced total font size to %.1f%% of original'%
-                    (totals[0]/totals[1] * 100))
+            self.log(f'Reduced total font size to {totals[0]/totals[1]*100:.1f}% of original')
 
     def find_embedded_fonts(self):
         '''
@@ -302,7 +299,7 @@ class SubsetFonts:
 
     def find_chars(self, elem, style):
         ans = set()
-        transform = lambda x: x  # noqa
+        transform = lambda x: x  # noqa: E731
         tt = style.get('text-transform')
         if tt:
             if tt in ('uppercase', 'capitalize'):

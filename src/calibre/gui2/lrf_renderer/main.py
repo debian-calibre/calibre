@@ -160,7 +160,7 @@ class Main(MainWindow, Ui_MainWindow):
 
     def parsed(self):
         if not self.renderer.aborted and self.renderer.lrf is not None:
-            width, height =  self.renderer.lrf.device_info.width, \
+            width, height = self.renderer.lrf.device_info.width, \
                                             self.renderer.lrf.device_info.height
             hdelta = self.tool_bar.height()+3
 
@@ -188,7 +188,7 @@ class Main(MainWindow, Ui_MainWindow):
             self.graphics_view.show()
             self.spin_box.setRange(1, self.document.num_of_pages)
             self.slider.setRange(1, self.document.num_of_pages)
-            self.spin_box.setSuffix(' of %d'%(self.document.num_of_pages,))
+            self.spin_box.setSuffix(f' of {self.document.num_of_pages}')
             self.spin_box.updateGeometry()
             self.stack.setCurrentIndex(0)
             self.graphics_view.setFocus(Qt.FocusReason.OtherFocusReason)
@@ -197,7 +197,7 @@ class Main(MainWindow, Ui_MainWindow):
             print('Error rendering document', file=sys.stderr)
             print(exception, file=sys.stderr)
             print(self.renderer.formatted_traceback, file=sys.stderr)
-            msg =  '<p><b>%s</b>: '%(exception.__class__.__name__,) + as_unicode(exception) + '</p>'
+            msg = f'<p><b>{exception.__class__.__name__}</b>: ' + as_unicode(exception) + '</p>'
             msg += '<p>Failed to render document</p>'
             msg += '<p>Detailed <b>traceback</b>:<pre>'
             msg += self.renderer.formatted_traceback + '</pre>'

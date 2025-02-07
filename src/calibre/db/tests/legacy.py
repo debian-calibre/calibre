@@ -32,8 +32,8 @@ class ET:
         legacy = self.legacy or test.init_legacy(test.cloned_library)
         oldres = getattr(old, self.func_name)(*self.args, **self.kwargs)
         newres = getattr(legacy, self.func_name)(*self.args, **self.kwargs)
-        test.assertEqual(oldres, newres, 'Equivalence test for {} with args: {} and kwargs: {} failed'.format(
-            self.func_name, reprlib.repr(self.args), reprlib.repr(self.kwargs)))
+        test.assertEqual(oldres, newres,
+            f'Equivalence test for {self.func_name} with args: {reprlib.repr(self.args)} and kwargs: {reprlib.repr(self.kwargs)} failed')
         self.retval = newres
         return newres
 
@@ -78,7 +78,6 @@ def run_funcs(self, db, ndb, funcs):
 
 
 class LegacyTest(BaseTest):
-
     ''' Test the emulation of the legacy interface. '''
 
     def test_library_wide_properties(self):  # {{{
@@ -356,9 +355,9 @@ class LegacyTest(BaseTest):
     def test_legacy_adding_books(self):  # {{{
         'Test various adding/deleting books methods'
         import sqlite3
-        con = sqlite3.connect(":memory:")
+        con = sqlite3.connect(':memory:')
         try:
-            con.execute("create virtual table recipe using fts5(name, ingredients)")
+            con.execute('create virtual table recipe using fts5(name, ingredients)')
         except Exception:
             self.skipTest('python sqlite3 module does not have FTS5 support')
         con.close()
@@ -463,7 +462,7 @@ class LegacyTest(BaseTest):
             'find_books_in_directory', 'import_book_directory', 'import_book_directory_multiple', 'recursive_import',
 
             # Internal API
-            'clean_user_categories',  'cleanup_tags',  'books_list_filter', 'conn', 'connect', 'construct_file_name',
+            'clean_user_categories', 'cleanup_tags', 'books_list_filter', 'conn', 'connect', 'construct_file_name',
             'construct_path_name', 'clear_dirtied', 'initialize_database', 'initialize_dynamic',
             'run_import_plugins', 'vacuum', 'set_path', 'row_factory', 'rows', 'rmtree', 'series_index_pat',
             'import_old_database', 'dirtied_lock', 'dirtied_cache', 'dirty_books_referencing',
@@ -545,7 +544,7 @@ class LegacyTest(BaseTest):
         n = now()
         ndb = self.init_legacy(self.cloned_library)
         amap = ndb.new_api.get_id_map('authors')
-        sorts = [(aid, 's%d' % aid) for aid in amap]
+        sorts = [(aid, f's{aid}') for aid in amap]
         db = self.init_old(self.cloned_library)
         run_funcs(self, db, ndb, (
             ('+format_metadata', 1, 'FMT1', itemgetter('size')),

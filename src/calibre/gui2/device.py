@@ -343,22 +343,20 @@ class DeviceManager(Thread):  # {{{
                 try:
                     cd = dev.detect_managed_devices(self.scanner.devices)
                 except:
-                    prints('Error during device detection for %s:'%dev)
+                    prints(f'Error during device detection for {dev}:')
                     traceback.print_exc()
                 else:
                     if cd is not None:
                         try:
                             dev.open(cd, self.current_library_uuid)
                         except BlacklistedDevice as e:
-                            prints('Ignoring blacklisted device: %s'%
-                                    as_unicode(e))
+                            prints(f'Ignoring blacklisted device: {as_unicode(e)}')
                         except OpenActionNeeded as e:
                             if e.only_once_id not in self.open_feedback_only_once_seen:
                                 self.open_feedback_only_once_seen.add(e.only_once_id)
                                 self.open_feedback_msg(e.device_name, e)
                         except:
-                            prints('Error while trying to open %s (Driver: %s)'%
-                                    (cd, dev))
+                            prints(f'Error while trying to open {cd} (Driver: {dev})')
                             traceback.print_exc()
                         else:
                             self.after_device_connect(dev, 'unmanaged-device')
@@ -428,7 +426,7 @@ class DeviceManager(Thread):  # {{{
             name = dev.__class__.__name__
             dev.startup()
         except:
-            prints('Startup method for device %s threw exception'%name)
+            prints(f'Startup method for device {name} threw exception')
             traceback.print_exc()
 
     def run(self):
@@ -444,8 +442,7 @@ class DeviceManager(Thread):  # {{{
             kls = None
             while True:
                 try:
-                    (kls,device_kind, folder_path) = \
-                                self.mount_connection_requests.get_nowait()
+                    kls, device_kind, folder_path = self.mount_connection_requests.get_nowait()
                 except queue.Empty:
                     break
             if kls is not None:
@@ -458,7 +455,7 @@ class DeviceManager(Thread):  # {{{
                     self.call_shutdown_on_disconnect = True
                     self.do_connect([[dev, None],], device_kind=device_kind)
                 except:
-                    prints('Unable to open %s as device (%s)'%(device_kind, folder_path))
+                    prints(f'Unable to open {device_kind} as device ({folder_path})')
                     traceback.print_exc()
             else:
                 self.detect_device()
@@ -566,7 +563,7 @@ class DeviceManager(Thread):  # {{{
         mainlist = self.device.books(oncard=None, end_session=False)
         cardalist = self.device.books(oncard='carda')
         cardblist = self.device.books(oncard='cardb')
-        return (mainlist, cardalist, cardblist)
+        return mainlist, cardalist, cardblist
 
     def books(self, done, add_as_step_to_job=None):
         '''Return callable that returns the list of books on device as two booklists'''
@@ -764,8 +761,7 @@ class DeviceAction(QAction):  # {{{
         self.a_s.emit(self)
 
     def __repr__(self):
-        return self.__class__.__name__ + ':%s:%s:%s'%(self.dest, self.delete,
-                self.specific)
+        return self.__class__.__name__ + f':{self.dest}:{self.delete}:{self.specific}'
     # }}}
 
 
@@ -785,7 +781,7 @@ class DeviceMenu(QMenu):  # {{{
         self.set_default_menu.setIcon(QIcon.ic('config.png'))
 
         basic_actions = [
-                ('main:', False, False,  'reader.png',
+                ('main:', False, False, 'reader.png',
                     _('Send to main memory')),
                 ('carda:0', False, False, 'sd.png',
                     _('Send to storage card A')),
@@ -794,16 +790,16 @@ class DeviceMenu(QMenu):  # {{{
         ]
 
         delete_actions = [
-                ('main:', True, False,   'reader.png',
+                ('main:', True, False, 'reader.png',
                     _('Main memory')),
-                ('carda:0', True, False,  'sd.png',
+                ('carda:0', True, False, 'sd.png',
                     _('Storage card A')),
-                ('cardb:0', True, False,  'sd.png',
+                ('cardb:0', True, False, 'sd.png',
                     _('Storage card B')),
         ]
 
         specific_actions = [
-                ('main:', False, True,  'reader.png',
+                ('main:', False, True, 'reader.png',
                     _('Main memory')),
                 ('carda:0', False, True, 'sd.png',
                     _('Storage card A')),
@@ -1432,15 +1428,14 @@ class DeviceMixin:  # {{{
                 if not isinstance(prefix, str):
                     prefix = prefix.decode(preferred_encoding, 'replace')
                 prefix = ascii_filename(prefix)
-                names.append('%s_%d%s'%(prefix, book_id,
-                    os.path.splitext(files[-1])[1]))
+                names.append(f'{prefix}_{book_id}{os.path.splitext(files[-1])[1]}')
                 self.update_thumbnail(mi)
             dynamic.set('catalogs_to_be_synced', set())
             if files:
                 remove = []
-                space = {self.location_manager.free[0] : None,
-                    self.location_manager.free[1] : 'carda',
-                    self.location_manager.free[2] : 'cardb'}
+                space = {self.location_manager.free[0]: None,
+                    self.location_manager.free[1]: 'carda',
+                    self.location_manager.free[2]: 'cardb'}
                 on_card = space.get(sorted(space.keys(), reverse=True)[0], None)
                 self.upload_books(files, names, metadata,
                         on_card=on_card,
@@ -1510,15 +1505,14 @@ class DeviceMixin:  # {{{
                 if not isinstance(prefix, str):
                     prefix = prefix.decode(preferred_encoding, 'replace')
                 prefix = ascii_filename(prefix)
-                names.append('%s_%d%s'%(prefix, book_id,
-                    os.path.splitext(files[-1])[1]))
+                names.append(f'{prefix}_{book_id}{os.path.splitext(files[-1])[1]}')
                 self.update_thumbnail(mi)
             self.news_to_be_synced = set()
             if config['upload_news_to_device'] and files:
                 remove = ids if del_on_upload else []
-                space = {self.location_manager.free[0] : None,
-                    self.location_manager.free[1] : 'carda',
-                    self.location_manager.free[2] : 'cardb'}
+                space = {self.location_manager.free[0]: None,
+                    self.location_manager.free[1]: 'carda',
+                    self.location_manager.free[2]: 'cardb'}
                 on_card = space.get(sorted(space.keys(), reverse=True)[0], None)
                 try:
                     total_size = sum(os.stat(f).st_size for f in files)
@@ -1530,7 +1524,7 @@ class DeviceMixin:  # {{{
                         pass
                     total_size = self.location_manager.free[0]
                 loc = tweaks['send_news_to_device_location']
-                loc_index = {"carda": 1, "cardb": 2}.get(loc, 0)
+                loc_index = {'carda': 1, 'cardb': 2}.get(loc, 0)
                 if self.location_manager.free[loc_index] > total_size + (1024**2):
                     # Send news to main memory if enough space available
                     # as some devices like the Nook Color cannot handle
@@ -1589,7 +1583,7 @@ class DeviceMixin:  # {{{
                 if not isinstance(prefix, str):
                     prefix = prefix.decode(preferred_encoding, 'replace')
                 prefix = ascii_filename(prefix)
-                names.append('%s_%d%s'%(prefix, id, os.path.splitext(f)[1]))
+                names.append(f'{prefix}_{id}{os.path.splitext(f)[1]}')
         remove = remove_ids if delete_from_library else []
         self.upload_books(gf, names, good, on_card, memory=(_files, remove))
         self.status_bar.show_message(_('Sending books to device.'), 5000)
@@ -1631,7 +1625,7 @@ class DeviceMixin:  # {{{
                     self.iactions['Convert Books'].auto_convert(auto, on_card, format)
 
         if bad:
-            bad = '\n'.join('%s'%(i,) for i in bad)
+            bad = '\n'.join(f'{i}' for i in bad)
             d = warning_dialog(self, _('No suitable formats'),
                     _('Could not upload the following books to the device, '
                 'as no suitable formats were found. Convert the book(s) to a '
@@ -1714,7 +1708,7 @@ class DeviceMixin:  # {{{
                 d = error_dialog(self, _('No space on device'),
                                  _('<p>Cannot upload books to device there '
                                  'is no more free space available ')+where+
-                                 '</p>\n<ul>%s</ul>'%(titles,))
+                                 f'</p>\n<ul>{titles}</ul>')
                 d.exec()
             elif isinstance(job.exception, WrongDestinationError):
                 error_dialog(self, _('Incorrect destination'),
@@ -1900,7 +1894,7 @@ class DeviceMixin:  # {{{
         books_with_future_dates = []
         first_call_to_synchronize_with_db = [True]
 
-        def update_book(id_, book) :
+        def update_book(id_, book):
             if not update_metadata:
                 return
             mi = db.get_metadata(id_, index_is_id=True, get_cover=get_covers)

@@ -56,16 +56,16 @@ def _get_series_values(val):
     import re
     series_index_pat = re.compile(r'(.*)\s+\[([.0-9]+)\]$')
     if not val:
-        return (val, None)
+        return val, None
     match = series_index_pat.match(val.strip())
     if match is not None:
         idx = match.group(2)
         try:
             idx = float(idx)
-            return (match.group(1).strip(), idx)
+            return match.group(1).strip(), idx
         except:
             pass
-    return (val, None)
+    return val, None
 
 
 def get_data_as_dict(self, prefix=None, authors_as_string=False, ids=None, convert_to_local_tz=True):
@@ -93,7 +93,7 @@ def get_data_as_dict(self, prefix=None, authors_as_string=False, ids=None, conve
         'languages'}.union(set(fdata))
     for x, data in iteritems(fdata):
         if data['datatype'] == 'series':
-            FIELDS.add('%d_index'%x)
+            FIELDS.add(f'{x}_index')
     data = []
     for record in self.data:
         if record is None:

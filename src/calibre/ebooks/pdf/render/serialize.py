@@ -43,7 +43,7 @@ class IndirectObjects:
     def write_obj(self, stream, num, obj):
         stream.write(EOL)
         self._offsets[num-1] = stream.tell()
-        stream.write('%d 0 obj'%num)
+        stream.write(f'{num} 0 obj')
         stream.write(EOL)
         serialize(obj, stream)
         if stream.last_char != EOL:
@@ -55,7 +55,7 @@ class IndirectObjects:
         try:
             return self._map[id(self._list[o] if isinstance(o, numbers.Integral) else o)]
         except (KeyError, IndexError):
-            raise KeyError('The object %r was not found'%o)
+            raise KeyError(f'The object {o!r} was not found')
 
     def pdf_serialize(self, stream):
         for i, obj in enumerate(self._list):
@@ -66,13 +66,13 @@ class IndirectObjects:
     def write_xref(self, stream):
         self.xref_offset = stream.tell()
         stream.write(b'xref'+EOL)
-        stream.write('0 %d'%(1+len(self._offsets)))
+        stream.write(f'0 {1 + len(self._offsets)}')
         stream.write(EOL)
-        stream.write('%010d 65535 f '%0)
+        stream.write(f'{0:010} 65535 f ')
         stream.write(EOL)
 
         for offset in self._offsets:
-            line = '%010d 00000 n '%offset
+            line = f'{offset:010} 00000 n '
             stream.write(line.encode('ascii') + EOL)
         return self.xref_offset
 
@@ -92,24 +92,24 @@ class Page(Stream):
 
     def set_opacity(self, opref):
         if opref not in self.opacities:
-            self.opacities[opref] = 'Opa%d'%len(self.opacities)
+            self.opacities[opref] = f'Opa{len(self.opacities)}'
         name = self.opacities[opref]
         serialize(Name(name), self)
         self.write(b' gs ')
 
     def add_font(self, fontref):
         if fontref not in self.fonts:
-            self.fonts[fontref] = 'F%d'%len(self.fonts)
+            self.fonts[fontref] = f'F{len(self.fonts)}'
         return self.fonts[fontref]
 
     def add_image(self, imgref):
         if imgref not in self.xobjects:
-            self.xobjects[imgref] = 'Image%d'%len(self.xobjects)
+            self.xobjects[imgref] = f'Image{len(self.xobjects)}'
         return self.xobjects[imgref]
 
     def add_pattern(self, patternref):
         if patternref not in self.patterns:
-            self.patterns[patternref] = 'Pat%d'%len(self.patterns)
+            self.patterns[patternref] = f'Pat{len(self.patterns)}'
         return self.patterns[patternref]
 
     def add_resources(self):
@@ -228,7 +228,7 @@ class Image(Stream):
 
     def add_extra_keys(self, d):
         d['Type'] = Name('XObject')
-        d['Subtype']=  Name('Image')
+        d['Subtype']= Name('Image')
         d['Width'] = self.width
         d['Height'] = self.height
         if self.depth == 1:
@@ -260,14 +260,14 @@ class PDFStream:
 
     PATH_OPS = {
         # stroke fill   fill-rule
-        (False, False, 'winding')  : 'n',
-        (False, False, 'evenodd')  : 'n',
-        (False, True,  'winding')  : 'f',
-        (False, True,  'evenodd')  : 'f*',
-        (True,  False, 'winding')  : 'S',
-        (True,  False, 'evenodd')  : 'S',
-        (True,  True,  'winding')  : 'B',
-        (True,  True,  'evenodd')  : 'B*',
+        (False, False, 'winding'): 'n',
+        (False, False, 'evenodd'): 'n',
+        (False, True,  'winding'): 'f',
+        (False, True,  'evenodd'): 'f*',
+        (True,  False, 'winding'): 'S',
+        (True,  False, 'evenodd'): 'S',
+        (True,  True,  'winding'): 'B',
+        (True,  True,  'evenodd'): 'B*',
     }
 
     def __init__(self, stream, page_size, compress=False, mark_links=False,
@@ -276,9 +276,8 @@ class PDFStream:
         self.compress = compress
         self.write_line(PDFVER)
         self.write_line('%íì¦"'.encode())
-        creator = ('%s %s [https://calibre-ebook.com]'%(__appname__,
-                                    __version__))
-        self.write_line('%% Created by %s'%creator)
+        creator = (f'{__appname__} {__version__} [https://calibre-ebook.com]')
+        self.write_line(f'% Created by {creator}')
         self.objects = IndirectObjects()
         self.objects.add(PageTree(page_size))
         self.objects.add(Catalog(self.page_tree))
@@ -345,7 +344,7 @@ class PDFStream:
         self.current_page.write_line('Q q')
 
     def draw_rect(self, x, y, width, height, stroke=True, fill=False):
-        self.current_page.write('%s re '%' '.join(map(fmtnum, (x, y, width, height))))
+        self.current_page.write('{} re '.format(' '.join(map(fmtnum, (x, y, width, height)))))
         self.current_page.write_line(self.PATH_OPS[(stroke, fill, 'winding')])
 
     def write_path(self, path):
@@ -397,11 +396,10 @@ class PDFStream:
         name = self.current_page.add_font(fontref)
         self.current_page.write(b'BT ')
         serialize(Name(name), self.current_page)
-        self.current_page.write(' %s Tf '%fmtnum(size))
-        self.current_page.write('%s Tm '%' '.join(map(fmtnum, transform)))
+        self.current_page.write(f' {fmtnum(size)} Tf ')
+        self.current_page.write('{} Tm '.format(' '.join(map(fmtnum, transform))))
         for x, y, glyph_id in glyphs:
-            self.current_page.write_raw(('%s %s Td <%04X> Tj '%(
-                fmtnum(x), fmtnum(y), glyph_id)).encode('ascii'))
+            self.current_page.write_raw((f'{fmtnum(x)} {fmtnum(y)} Td <{glyph_id:04X}> Tj ').encode('ascii'))
         self.current_page.write_line(b' ET')
 
     def get_image(self, cache_key):
@@ -496,11 +494,11 @@ class PDFStream:
         if color is not None and pattern is None:
             wl(' '.join(map(fmtnum, color)) + (' RG' if stroke else ' rg'))
         elif color is None and pattern is not None:
-            wl('/Pattern %s /%s %s'%('CS' if stroke else 'cs', pattern,
+            wl('/Pattern {} /{} {}'.format('CS' if stroke else 'cs', pattern,
                                      'SCN' if stroke else 'scn'))
         elif color is not None and pattern is not None:
             col = ' '.join(map(fmtnum, color))
-            wl('/PCSp %s %s /%s %s'%('CS' if stroke else 'cs', col, pattern,
+            wl('/PCSp {} {} /{} {}'.format('CS' if stroke else 'cs', col, pattern,
                                      'SCN' if stroke else 'scn'))
 
     def apply_fill(self, color=None, pattern=None, opacity=None):
@@ -528,5 +526,5 @@ class PDFStream:
                               'ID':Array([file_id, file_id]), 'Info':inforef})
         serialize(trailer, self.stream)
         self.write_line('startxref')
-        self.write_line('%d'%startxref)
+        self.write_line(f'{startxref}')
         self.stream.write('%%EOF')

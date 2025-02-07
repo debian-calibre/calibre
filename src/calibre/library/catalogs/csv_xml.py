@@ -17,7 +17,6 @@ from calibre.utils.localization import _
 
 
 class CSV_XML(CatalogPlugin):
-
     'CSV/XML catalog generator'
 
     Option = namedtuple('Option', 'option, default, dest, action, help')
@@ -71,20 +70,20 @@ class CSV_XML(CatalogPlugin):
             opts_dict = vars(opts)
             log(f"{self.name}('{current_library}'): Generating {self.fmt.upper()}")
             if opts.connected_device['is_device_connected']:
-                log(" connected_device: %s" % opts.connected_device['name'])
+                log(' connected_device: {}'.format(opts.connected_device['name']))
             if opts_dict['search_text']:
-                log(" --search='%s'" % opts_dict['search_text'])
+                log(" --search='{}'".format(opts_dict['search_text']))
 
             if opts_dict['ids']:
-                log(" Book count: %d" % len(opts_dict['ids']))
+                log(' Book count: {}'.format(len(opts_dict['ids'])))
                 if opts_dict['search_text']:
-                    log(" (--search ignored when a subset of the database is specified)")
+                    log(' (--search ignored when a subset of the database is specified)')
 
             if opts_dict['fields']:
                 if opts_dict['fields'] == 'all':
-                    log(" Fields: %s" % ', '.join(FIELDS[1:]))
+                    log(' Fields: {}'.format(', '.join(FIELDS[1:])))
                 else:
-                    log(" Fields: %s" % opts_dict['fields'])
+                    log(' Fields: {}'.format(opts_dict['fields']))
 
         # If a list of ids are provided, don't use search_text
         if opts.ids:
@@ -93,7 +92,7 @@ class CSV_XML(CatalogPlugin):
         data = self.search_sort_db(db, opts)
 
         if not len(data):
-            log.error("\nNo matching database entries for search criteria '%s'" % opts.search_text)
+            log.error(f"\nNo matching database entries for search criteria '{opts.search_text}'")
             # raise SystemExit(1)
 
         # Get the requested output fields as a list
@@ -113,7 +112,7 @@ class CSV_XML(CatalogPlugin):
             outfile.write('\ufeff')
 
             # Output the field headers
-            outfile.write('%s\n' % ','.join(fields))
+            outfile.write('{}\n'.format(','.join(fields)))
 
             # Output the entry fields
             for entry in data:
@@ -147,24 +146,24 @@ class CSV_XML(CatalogPlugin):
                         item = ', '.join(item)
                     elif field == 'isbn':
                         # Could be 9, 10 or 13 digits, with hyphens, possibly ending in 'X'
-                        item = '%s' % re.sub(r'[^\dX-]', '', item)
+                        item = '{}'.format(re.sub(r'[^\dX-]', '', item))
                     elif fm.get(field, {}).get('datatype') == 'datetime':
                         item = isoformat(item, as_utc=False)
                     elif field == 'comments':
                         item = item.replace('\r\n', ' ')
                         item = item.replace('\n', ' ')
                     elif fm.get(field, {}).get('datatype', None) == 'rating' and item:
-                        item = '%.2g' % (item / 2)
+                        item = f'{item/2:.2g}'
 
                     # Convert HTML to markdown text
                     if isinstance(item, str):
                         opening_tag = re.search(r'<(\w+)( |>)', item)
                         if opening_tag:
-                            closing_tag = re.search(r'<\/%s>$' % opening_tag.group(1), item)
+                            closing_tag = re.search(rf'</{opening_tag.group(1)}>$', item)
                             if closing_tag:
                                 item = html2text(item)
 
-                    outstr.append('"%s"' % str(item).replace('"', '""'))
+                    outstr.append('"{}"'.format(str(item).replace('"', '""')))
 
                 outfile.write(','.join(outstr) + '\n')
             outfile.close()
@@ -198,7 +197,7 @@ class CSV_XML(CatalogPlugin):
                             if not isinstance(val, (bytes, str)):
                                 if (fm.get(field, {}).get('datatype', None) ==
                                         'rating' and val):
-                                    val = '%.2g' % (val / 2)
+                                    val = f'{val/2:.2g}'
                                 val = str(val)
                             item = getattr(E, field)(val)
                             record.append(item)

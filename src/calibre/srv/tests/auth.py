@@ -55,7 +55,7 @@ def router(prefer_basic_auth=False, ban_for=0, ban_after=5):
 
 def urlopen(server, path='/closed', un='testuser', pw='testpw', method='digest'):
     auth_handler = HTTPBasicAuthHandler() if method == 'basic' else HTTPDigestAuthHandler()
-    url = 'http://localhost:%d%s' % (server.address[1], path)
+    url = f'http://localhost:{server.address[1]}{path}'
     auth_handler.add_password(realm=REALM, uri=url, user=un, passwd=pw)
     return build_opener(auth_handler).open(url)
 
@@ -98,7 +98,7 @@ class TestAuth(BaseTest):
             conn.request('GET', '/closed')
             r = conn.getresponse()
             self.ae(r.status, http_client.UNAUTHORIZED)
-            self.ae(r.getheader('WWW-Authenticate'), 'Basic realm="%s"' % REALM)
+            self.ae(r.getheader('WWW-Authenticate'), f'Basic realm="{REALM}"')
             self.assertFalse(r.read())
             conn.request('GET', '/closed', headers={'Authorization': b'Basic ' + as_base64_bytes(b'testuser:testpw')})
             r = conn.getresponse()
@@ -131,7 +131,7 @@ class TestAuth(BaseTest):
         opts = Options(userdb=':memory:')
         Data = namedtuple('Data', 'username')
         with TemporaryDirectory() as base:
-            l1, l2, l3 = map(lambda x: os.path.join(base, 'l' + x), '123')
+            l1, l2, l3 = (os.path.join(base, 'l' + x) for x in '123')
             for l in (l1, l2, l3):
                 create_backend(l).close()
             ctx = Handler((l1, l2, l3), opts).router.ctx
@@ -147,15 +147,15 @@ class TestAuth(BaseTest):
                 return lmap, defaultlib
 
             self.assertEqual(get_library(), 'l1')
-            self.assertEqual(library_info()[0], {'l%d'%i:'l%d'%i for i in range(1, 4)})
+            self.assertEqual(library_info()[0], {f'l{i}':f'l{i}' for i in range(1, 4)})
             self.assertEqual(library_info()[1], 'l1')
             self.assertRaises(HTTPForbidden, get_library, 'xxx')
             um.add_user('a', 'a')
-            self.assertEqual(library_info('a')[0], {'l%d'%i:'l%d'%i for i in range(1, 4)})
+            self.assertEqual(library_info('a')[0], {f'l{i}':f'l{i}' for i in range(1, 4)})
             um.update_user_restrictions('a', {'blocked_library_names': ['L2']})
-            self.assertEqual(library_info('a')[0], {'l%d'%i:'l%d'%i for i in range(1, 4) if i != 2})
+            self.assertEqual(library_info('a')[0], {f'l{i}':f'l{i}' for i in range(1, 4) if i != 2})
             um.update_user_restrictions('a', {'allowed_library_names': ['l3']})
-            self.assertEqual(library_info('a')[0], {'l%d'%i:'l%d'%i for i in range(1, 4) if i == 3})
+            self.assertEqual(library_info('a')[0], {f'l{i}':f'l{i}' for i in range(1, 4) if i == 3})
             self.assertEqual(library_info('a')[1], 'l3')
             self.assertRaises(HTTPForbidden, get_library, 'a', 'l1')
             self.assertRaises(HTTPForbidden, get_library, 'xxx')
@@ -214,19 +214,19 @@ class TestAuth(BaseTest):
                 return test(conn, '/closed', headers={'Authorization':digest(**args)}, **kw)
 
             # Check modified nonce fails
-            fail_test(conn, lambda da:setattr(da, 'nonce', 'xyz'))
-            fail_test(conn, lambda da:setattr(da, 'nonce', 'x' + da.nonce))
+            fail_test(conn, lambda da: setattr(da, 'nonce', 'xyz'))
+            fail_test(conn, lambda da: setattr(da, 'nonce', 'x' + da.nonce))
 
             # Check mismatched uri fails
-            fail_test(conn, lambda da:setattr(da, 'uri', '/'))
-            fail_test(conn, lambda da:setattr(da, 'uri', '/closed2'))
-            fail_test(conn, lambda da:setattr(da, 'uri', '/closed/2'))
+            fail_test(conn, lambda da: setattr(da, 'uri', '/'))
+            fail_test(conn, lambda da: setattr(da, 'uri', '/closed2'))
+            fail_test(conn, lambda da: setattr(da, 'uri', '/closed/2'))
 
             # Check that incorrect user/password fails
-            fail_test(conn, lambda da:setattr(da, 'pw', '/'))
-            fail_test(conn, lambda da:setattr(da, 'username', '/'))
-            fail_test(conn, lambda da:setattr(da, 'username', ''))
-            fail_test(conn, lambda da:setattr(da, 'pw', ''))
+            fail_test(conn, lambda da: setattr(da, 'pw', '/'))
+            fail_test(conn, lambda da: setattr(da, 'username', '/'))
+            fail_test(conn, lambda da: setattr(da, 'username', ''))
+            fail_test(conn, lambda da: setattr(da, 'pw', ''))
             fail_test(conn, lambda da:(setattr(da, 'pw', ''), setattr(da, 'username', '')))
 
             # Check against python's stdlib
@@ -236,7 +236,7 @@ class TestAuth(BaseTest):
             curl = shutil.which('curl')
             if curl and not (is_ci and ismacos):  # curl mysteriously returns b'' in CI with no errors
                 def docurl(data, *args):
-                    cmd = [curl, '--silent'] + list(args) + ['http://localhost:%d/closed' % server.address[1]]
+                    cmd = [curl, '--silent'] + list(args) + [f'http://localhost:{server.address[1]}/closed']
                     p = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     stdout, stderr = p.communicate()
                     p.wait()
@@ -283,7 +283,7 @@ class TestAuth(BaseTest):
             self.ae(r.status, http_client.UNAUTHORIZED)
 
             auth_handler = HTTPDigestAuthHandler()
-            url = 'http://localhost:%d%s' % (server.address[1], '/android')
+            url = f'http://localhost:{server.address[1]}/android'
             auth_handler.add_password(realm=REALM, uri=url, user='testuser', passwd='testpw')
             cj = CookieJar()
             cookie_handler = HTTPCookieProcessor(cj)

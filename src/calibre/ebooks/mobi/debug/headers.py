@@ -30,7 +30,7 @@ class PalmDOCAttributes:
             self.val = val & field
 
         def __str__(self):
-            return '%s: %s'%(self.name, bool(self.val))
+            return f'{self.name}: {bool(self.val)}'
         __unicode__ = __str__
 
     def __init__(self, raw):
@@ -40,14 +40,14 @@ class PalmDOCAttributes:
                 ('Backup this database', 0x08),
                 ('Okay to install newer over existing copy, if present on PalmPilot', 0x10),
                 ('Force the PalmPilot to reset after this database is installed', 0x12),
-                ('Don\'t allow copy of file to be beamed to other Pilot',
+                ("Don't allow copy of file to be beamed to other Pilot",
                     0x14)]:
             self.attributes.append(PalmDOCAttributes.Attr(name, field,
                 self.val))
 
     def __str__(self):
         attrs = '\n\t'.join([str(x) for x in self.attributes])
-        return 'PalmDOC Attributes: %s\n\t%s'%(bin(self.val), attrs)
+        return f'PalmDOC Attributes: {bin(self.val)}\n\t{attrs}'
     __unicode__ = __str__
 
 
@@ -80,7 +80,7 @@ class PalmDB:
         self.creator = self.raw[64:68]
         self.ident = self.type + self.creator
         if self.ident not in (b'BOOKMOBI', b'TEXTREAD'):
-            raise ValueError('Unknown book ident: %r'%self.ident)
+            raise ValueError(f'Unknown book ident: {self.ident!r}')
         self.last_record_uid, = struct.unpack(b'>I', self.raw[68:72])
         self.next_rec_list_id = self.raw[72:76]
 
@@ -88,23 +88,20 @@ class PalmDB:
 
     def __str__(self):
         ans = ['*'*20 + ' PalmDB Header '+ '*'*20]
-        ans.append('Name: %r'%self.name)
+        ans.append(f'Name: {self.name!r}')
         ans.append(str(self.attributes))
-        ans.append('Version: %s'%self.version)
-        ans.append('Creation date: %s (%s)'%(self.creation_date.isoformat(),
-            self.creation_date_raw))
-        ans.append('Modification date: %s (%s)'%(self.modification_date.isoformat(),
-            self.modification_date_raw))
-        ans.append('Backup date: %s (%s)'%(self.last_backup_date.isoformat(),
-            self.last_backup_date_raw))
-        ans.append('Modification number: %s'%self.modification_number)
-        ans.append('App Info ID: %r'%self.app_info_id)
-        ans.append('Sort Info ID: %r'%self.sort_info_id)
-        ans.append('Type: %r'%self.type)
-        ans.append('Creator: %r'%self.creator)
-        ans.append('Last record UID +1: %r'%self.last_record_uid)
-        ans.append('Next record list id: %r'%self.next_rec_list_id)
-        ans.append('Number of records: %s'%self.number_of_records)
+        ans.append(f'Version: {self.version}')
+        ans.append(f'Creation date: {self.creation_date.isoformat()} ({self.creation_date_raw})')
+        ans.append(f'Modification date: {self.modification_date.isoformat()} ({self.modification_date_raw})')
+        ans.append(f'Backup date: {self.last_backup_date.isoformat()} ({self.last_backup_date_raw})')
+        ans.append(f'Modification number: {self.modification_number}')
+        ans.append(f'App Info ID: {self.app_info_id!r}')
+        ans.append(f'Sort Info ID: {self.sort_info_id!r}')
+        ans.append(f'Type: {self.type!r}')
+        ans.append(f'Creator: {self.creator!r}')
+        ans.append(f'Last record UID +1: {self.last_record_uid!r}')
+        ans.append(f'Next record list id: {self.next_rec_list_id!r}')
+        ans.append(f'Number of records: {self.number_of_records}')
 
         return '\n'.join(ans)
     __unicode__ = __str__
@@ -119,12 +116,11 @@ class Record:  # {{{
 
     @property
     def header(self):
-        return 'Offset: %d Flags: %d UID: %d First 4 bytes: %r Size: %d'%(self.offset, self.flags,
-                self.uid, self.raw[:4], len(self.raw))
+        return f'Offset: {self.offset} Flags: {self.flags} UID: {self.uid} First 4 bytes: {self.raw[:4]!r} Size: {len(self.raw)}'
 # }}}
 
-# EXTH {{{
 
+# EXTH {{{
 
 class EXTHRecord:
 
@@ -216,7 +212,7 @@ class EXTHRecord:
             self.data = binascii.hexlify(self.data)
 
     def __str__(self):
-        return '%s (%d): %r'%(self.name, self.type, self.data)
+        return f'{self.name} ({self.type}): {self.data!r}'
 
 
 class EXTHHeader:
@@ -257,8 +253,8 @@ class EXTHHeader:
 
     def __str__(self):
         ans = ['*'*20 + ' EXTH Header '+ '*'*20]
-        ans.append('EXTH header length: %d'%self.length)
-        ans.append('Number of EXTH records: %d'%self.count)
+        ans.append(f'EXTH header length: {self.length}')
+        ans.append(f'Number of EXTH records: {self.count}')
         ans.append('EXTH records...')
         for r in self.records:
             ans.append(str(r))
@@ -293,23 +289,23 @@ class MOBIHeader:  # {{{
 
         self.identifier = self.raw[16:20]
         if self.identifier != b'MOBI':
-            raise ValueError('Identifier %r unknown'%self.identifier)
+            raise ValueError(f'Identifier {self.identifier!r} unknown')
 
         self.length, = struct.unpack(b'>I', self.raw[20:24])
         self.type_raw, = struct.unpack(b'>I', self.raw[24:28])
         self.type = {
-                2 : 'Mobipocket book',
-                3 : 'PalmDOC book',
-                4 : 'Audio',
-                257 : 'News',
-                258 : 'News Feed',
-                259 : 'News magazine',
-                513 : 'PICS',
-                514 : 'Word',
-                515 : 'XLS',
-                516 : 'PPT',
-                517 : 'TEXT',
-                518 : 'HTML',
+                2  : 'Mobipocket book',
+                3  : 'PalmDOC book',
+                4  : 'Audio',
+                257: 'News',
+                258: 'News Feed',
+                259: 'News magazine',
+                513: 'PICS',
+                514: 'Word',
+                515: 'XLS',
+                516: 'PPT',
+                517: 'TEXT',
+                518: 'HTML',
             }.get(self.type_raw, repr(self.type_raw))
 
         self.encoding_raw, = struct.unpack(b'>I', self.raw[28:32])
@@ -419,79 +415,77 @@ class MOBIHeader:  # {{{
                 self.last_resource_record = self.exth.kf8_header_index - 2
 
     def __str__(self):
-        ans = ['*'*20 + ' MOBI %d Header '%self.file_version+ '*'*20]
+        ans = ['*'*20 + f' MOBI {self.file_version} Header '+ '*'*20]
 
         a = ans.append
 
         def i(d, x):
             x = 'NULL' if x == NULL_INDEX else x
-            a('%s: %s'%(d, x))
+            a(f'{d}: {x}')
 
         def r(d, attr):
             x = getattr(self, attr)
             if attr in self.relative_records and x != NULL_INDEX:
-                a('%s: Absolute: %d Relative: %d'%(d, x, x-self.header_offset))
+                a(f'{d}: Absolute: {x} Relative: {x - self.header_offset}')
             else:
                 i(d, x)
 
-        a('Compression: %s'%self.compression)
-        a('Unused: %r'%self.unused)
-        a('Text length: %d'%self.text_length)
-        a('Number of text records: %d'%self.number_of_text_records)
-        a('Text record size: %d'%self.text_record_size)
-        a('Encryption: %s'%self.encryption_type)
-        a('Unknown: %r'%self.unknown)
-        a('Identifier: %r'%self.identifier)
-        a('Header length: %d'% self.length)
-        a('Type: %s'%self.type)
-        a('Encoding: %s'%self.encoding)
-        a('UID: %r'%self.uid)
-        a('File version: %d'%self.file_version)
+        a(f'Compression: {self.compression}')
+        a(f'Unused: {self.unused!r}')
+        a(f'Text length: {self.text_length}')
+        a(f'Number of text records: {self.number_of_text_records}')
+        a(f'Text record size: {self.text_record_size}')
+        a(f'Encryption: {self.encryption_type}')
+        a(f'Unknown: {self.unknown!r}')
+        a(f'Identifier: {self.identifier!r}')
+        a(f'Header length: {self.length}')
+        a(f'Type: {self.type}')
+        a(f'Encoding: {self.encoding}')
+        a(f'UID: {self.uid!r}')
+        a(f'File version: {self.file_version}')
         r('Meta Orth Index', 'meta_orth_indx')
         r('Meta Infl Index', 'meta_infl_indx')
         r('Secondary index record', 'secondary_index_record')
-        a('Reserved: %r'%self.reserved)
+        a(f'Reserved: {self.reserved!r}')
         r('First non-book record', 'first_non_book_record')
-        a('Full name offset: %d'%self.fullname_offset)
-        a('Full name length: %d bytes'%self.fullname_length)
-        a('Langcode: %r'%self.locale_raw)
-        a('Language: %s'%self.language)
-        a('Sub language: %s'%self.sublanguage)
-        a('Input language: %r'%self.input_language)
-        a('Output language: %r'%self.output_langauage)
-        a('Min version: %d'%self.min_version)
+        a(f'Full name offset: {self.fullname_offset}')
+        a(f'Full name length: {self.fullname_length} bytes')
+        a(f'Langcode: {self.locale_raw!r}')
+        a(f'Language: {self.language}')
+        a(f'Sub language: {self.sublanguage}')
+        a(f'Input language: {self.input_language!r}')
+        a(f'Output language: {self.output_langauage!r}')
+        a(f'Min version: {self.min_version}')
         r('First Image index', 'first_image_index')
         r('Huffman record offset', 'huffman_record_offset')
-        a('Huffman record count: %d'%self.huffman_record_count)
+        a(f'Huffman record count: {self.huffman_record_count}')
         r('Huffman table offset', 'datp_record_offset')
-        a('Huffman table length: %r'%self.datp_record_count)
-        a('EXTH flags: %s (%s)'%(bin(self.exth_flags)[2:], self.has_exth))
+        a(f'Huffman table length: {self.datp_record_count!r}')
+        a(f'EXTH flags: {bin(self.exth_flags)[2:]} ({self.has_exth})')
         if self.has_drm_data:
-            a('Unknown3: %r'%self.unknown3)
+            a(f'Unknown3: {self.unknown3!r}')
             r('DRM Offset', 'drm_offset')
-            a('DRM Count: %s'%self.drm_count)
-            a('DRM Size: %s'%self.drm_size)
-            a('DRM Flags: %r'%self.drm_flags)
+            a(f'DRM Count: {self.drm_count}')
+            a(f'DRM Size: {self.drm_size}')
+            a(f'DRM Flags: {self.drm_flags!r}')
         if self.has_extra_data_flags:
-            a('Unknown4: %r'%self.unknown4)
+            a(f'Unknown4: {self.unknown4!r}')
             if hasattr(self, 'first_text_record'):
-                a('First content record: %d'%self.first_text_record)
-                a('Last content record: %d'%self.last_text_record)
+                a(f'First content record: {self.first_text_record}')
+                a(f'Last content record: {self.last_text_record}')
             else:
                 r('FDST Index', 'fdst_idx')
-            a('FDST Count: %d'% self.fdst_count)
+            a(f'FDST Count: {self.fdst_count}')
             r('FCIS number', 'fcis_number')
-            a('FCIS count: %d'% self.fcis_count)
+            a(f'FCIS count: {self.fcis_count}')
             r('FLIS number', 'flis_number')
-            a('FLIS count: %d'% self.flis_count)
-            a('Unknown6: %r'% self.unknown6)
+            a(f'FLIS count: {self.flis_count}')
+            a(f'Unknown6: {self.unknown6!r}')
             r('SRCS record index', 'srcs_record_index')
-            a('Number of SRCS records?: %d'%self.num_srcs_records)
-            a('Unknown7: %r'%self.unknown7)
-            a(('Extra data flags: %s (has multibyte: %s) '
-                '(has indexing: %s) (has uncrossable breaks: %s)')%(
-                    bin(self.extra_data_flags), self.has_multibytes,
-                    self.has_indexing_bytes, self.has_uncrossable_breaks))
+            a(f'Number of SRCS records?: {self.num_srcs_records}')
+            a(f'Unknown7: {self.unknown7!r}')
+            a(f'Extra data flags: {bin(self.extra_data_flags)} (has multibyte: {self.has_multibytes}) '
+                f'(has indexing: {self.has_indexing_bytes}) (has uncrossable breaks: {self.has_uncrossable_breaks})')
             r('NCX index', 'primary_index_record')
         if self.length >= 248:
             r('Sections Index', 'sect_idx')
@@ -499,20 +493,17 @@ class MOBIHeader:  # {{{
             r('DATP Index', 'datp_idx')
             r('Other Index', 'oth_idx')
             if self.unknown9:
-                a('Unknown9: %r'%self.unknown9)
+                a(f'Unknown9: {self.unknown9!r}')
 
         ans = '\n'.join(ans)
 
         if self.has_exth:
             ans += '\n\n' + str(self.exth)
-            ans += '\n\nBytes after EXTH (%d bytes): %s'%(
-                    len(self.bytes_after_exth),
-                    format_bytes(self.bytes_after_exth))
+            ans += f'\n\nBytes after EXTH ({len(self.bytes_after_exth)} bytes): {format_bytes(self.bytes_after_exth)}'
 
-        ans += '\nNumber of bytes after full name: %d' % (len(self.raw) - (self.fullname_offset +
-                self.fullname_length))
+        ans += f'\nNumber of bytes after full name: {len(self.raw) - (self.fullname_offset + self.fullname_length)}'
 
-        ans += '\nRecord 0 length: %d'%len(self.raw)
+        ans += f'\nRecord 0 length: {len(self.raw)}'
         return ans
 # }}}
 
@@ -606,18 +597,17 @@ class TextRecord:  # {{{
 
         for typ, val in iteritems(self.trailing_data):
             if isinstance(typ, numbers.Integral):
-                print('Record %d has unknown trailing data of type: %d : %r'%
-                        (idx, typ, val))
+                print(f'Record {idx} has unknown trailing data of type: {typ} : {val!r}')
 
         self.idx = idx
 
     def dump(self, folder):
-        name = '%06d'%self.idx
+        name = f'{self.idx:06}'
         with open(os.path.join(folder, name+'.txt'), 'wb') as f:
             f.write(self.raw)
         with open(os.path.join(folder, name+'.trailing_data'), 'wb') as f:
             for k, v in iteritems(self.trailing_data):
-                raw = '%s : %r\n\n'%(k, v)
+                raw = f'{k} : {v!r}\n\n'
                 f.write(raw.encode('utf-8'))
 
     def __len__(self):

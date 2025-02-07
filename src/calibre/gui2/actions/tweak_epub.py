@@ -105,7 +105,7 @@ class TweakEpubAction(InterfaceActionWithLibraryDrop):
                 return error_dialog(self.gui, _('Cannot edit book'), _(
                     'The book "{0}" must be in the {1} formats to edit.'
                     '\n\nFirst convert the book to one of these formats.'
-                ).format(title,  _(' or ').join(SUPPORTED)), show=True)
+                ).format(title, _(' or ').join(SUPPORTED)), show=True)
         from calibre.gui2.tweak_book import tprefs
         tprefs.refresh()  # In case they were changed in a Tweak Book process
         if len(tweakable_fmts) > 1:
@@ -140,7 +140,7 @@ class TweakEpubAction(InterfaceActionWithLibraryDrop):
             self.gui.setCursor(Qt.CursorShape.BusyCursor)
             if tprefs['update_metadata_from_calibre']:
                 db.new_api.embed_metadata((book_id,), only_fmts={fmt})
-            notify = '%d:%s:%s:%s' % (book_id, fmt, db.library_id, db.library_path)
+            notify = f'{book_id}:{fmt}:{db.library_id}:{db.library_path}'
             self.gui.job_manager.launch_gui_app('ebook-edit', kwargs=dict(path=path, notify=notify))
             time.sleep(2)
         finally:

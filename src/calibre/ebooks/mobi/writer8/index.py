@@ -11,10 +11,13 @@ from struct import pack
 from calibre.ebooks.mobi.utils import CNCX, align_block, encint
 from calibre.ebooks.mobi.writer8.header import Header
 
-TagMeta_ = namedtuple('TagMeta',
-        'name number values_per_entry bitmask end_flag')
+TagMeta_ = namedtuple('TagMeta', 'name number values_per_entry bitmask end_flag')
+
+
 def TagMeta(x):
     return TagMeta_(*x)
+
+
 EndTagTable = TagMeta(('eof', 0, 0, 0, 1))
 
 # map of mask to number of shifts needed, works with 1 bit and two-bit wide masks
@@ -29,9 +32,9 @@ class IndexHeader(Header):  # {{{
     ALIGN_BLOCK = True
     HEADER_LENGTH = 192
 
-    DEFINITION = '''
+    DEFINITION = f'''
     # 4 - 8: Header Length
-    header_length = {header_length}
+    header_length = {HEADER_LENGTH}
 
     # 8 - 16: Unknown
     unknown1 = zeroes(8)
@@ -70,7 +73,7 @@ class IndexHeader(Header):  # {{{
     unknown3 = zeroes(124)
 
     # 180 - 184: TAGX offset
-    tagx_offset = {header_length}
+    tagx_offset = {HEADER_LENGTH}
 
     # 184 - 192: Unknown
     unknown4 = zeroes(8)
@@ -83,7 +86,7 @@ class IndexHeader(Header):  # {{{
 
     # IDXT
     idxt = DYN
-    '''.format(header_length=HEADER_LENGTH)
+    '''
 
     POSITIONS = {'idxt_offset':'idxt'}
 # }}}
@@ -160,8 +163,7 @@ class Index:  # {{{
                         try:
                             buf.write(encint(val))
                         except ValueError:
-                            raise ValueError('Invalid values for %r: %r'%(
-                                tag, values))
+                            raise ValueError(f'Invalid values for {tag!r}: {values!r}')
             raw = buf.getvalue()
             offset = index_blocks[-1].tell()
             idxt_pos = idxt_blocks[-1].tell()
@@ -265,7 +267,7 @@ class ChunkIndex(Index):
         self.cncx = CNCX(c.selector for c in chunk_table)
 
         self.entries = [
-                ('%010d'%c.insert_pos, {
+                (f'{c.insert_pos:010}', {
 
                     'cncx_offset':self.cncx[c.selector],
                     'file_number':c.file_number,
@@ -278,8 +280,8 @@ class ChunkIndex(Index):
 class GuideIndex(Index):
 
     tag_types = tuple(map(TagMeta, (
-        ('title',           1, 1, 1, 0),
-        ('pos_fid',         6, 2, 2, 0),
+        ('title',   1, 1, 1, 0),
+        ('pos_fid', 6, 2, 2, 0),
         EndTagTable
     )))
 
@@ -296,7 +298,6 @@ class GuideIndex(Index):
 
 
 class NCXIndex(Index):
-
     ''' The commented out parts have been seen in NCX indexes from MOBI 6
     periodicals. Since we have no MOBI 8 periodicals to reverse engineer, leave
     it for now. '''
@@ -338,7 +339,7 @@ class NCXIndex(Index):
             largest = max(x['index'] for x in toc_table)
         except ValueError:
             largest = 0
-        fmt = '%0{}X'.format(max(2, len('%X' % largest)))
+        fmt = '%0{}X'.format(max(2, len(f'{largest:X}')))
 
         def to_entry(x):
             ans = {}
@@ -377,7 +378,7 @@ if __name__ == '__main__':
     import os
     import subprocess
     os.chdir('/t')
-    paras = ['<p>%d</p>' % i for i in range(4000)]
+    paras = [f'<p>{i}</p>' for i in range(4000)]
     raw = '<html><body>' + '\n\n'.join(paras) + '</body></html>'
 
     src = 'index.html'

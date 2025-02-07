@@ -99,7 +99,7 @@ def get_font_characteristics(raw, raw_is_table=False, return_all=False):
     offset = struct.calcsize(common_fields)
     panose = struct.unpack_from(b'>10B', os2_table, offset)
     offset += 10
-    (range1, range2, range3, range4) = struct.unpack_from(b'>4L', os2_table, offset)
+    range1, range2, range3, range4 = struct.unpack_from(b'>4L', os2_table, offset)
     offset += struct.calcsize(b'>4L')
     vendor_id = os2_table[offset:offset+4]
     vendor_id
@@ -174,7 +174,7 @@ def decode_name_record(recs):
             if codec is None:
                 continue
             try:
-                windows_names[language_id] = src.decode('utf-%d-be'%codec)
+                windows_names[language_id] = src.decode(f'utf-{codec}-be')
             except ValueError:
                 continue
 
@@ -320,7 +320,7 @@ def verify_checksums(raw):
             offset = table_offset
             checksum = table_checksum
         elif checksum_of_block(table) != table_checksum:
-            raise ValueError('The %r table has an incorrect checksum'%table_tag)
+            raise ValueError(f'The {table_tag!r} table has an incorrect checksum')
 
     if head_table is not None:
         table = head_table
@@ -358,7 +358,7 @@ def set_table_checksum(f, name):
 def remove_embed_restriction(raw):
     ok, sig = is_truetype_font(raw)
     if not ok:
-        raise UnsupportedFont('Not a supported font, sfnt_version: %r'%sig)
+        raise UnsupportedFont(f'Not a supported font, sfnt_version: {sig!r}')
 
     table, table_index, table_offset = get_table(raw, 'os/2')[:3]
     if table is None:
@@ -384,7 +384,7 @@ def is_font_embeddable(raw):
     # https://www.microsoft.com/typography/otspec/os2.htm#fst
     ok, sig = is_truetype_font(raw)
     if not ok:
-        raise UnsupportedFont('Not a supported font, sfnt_version: %r'%sig)
+        raise UnsupportedFont(f'Not a supported font, sfnt_version: {sig!r}')
 
     table, table_index, table_offset = get_table(raw, 'os/2')[:3]
     if table is None:
@@ -449,7 +449,7 @@ def get_bmp_glyph_ids(table, bmp, codes):
 
 def get_glyph_ids(raw, text, raw_is_table=False):
     if not isinstance(text, str):
-        raise TypeError('%r is not a unicode object'%text)
+        raise TypeError(f'{text!r} is not a unicode object')
     if raw_is_table:
         table = raw
     else:
@@ -474,7 +474,7 @@ def get_glyph_ids(raw, text, raw_is_table=False):
 
 def supports_text(raw, text, has_only_printable_chars=False):
     if not isinstance(text, str):
-        raise TypeError('%r is not a unicode object'%text)
+        raise TypeError(f'{text!r} is not a unicode object')
     if not has_only_printable_chars:
         text = get_printable_characters(text)
     try:

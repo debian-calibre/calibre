@@ -68,29 +68,29 @@ class MessageBox(QDialog):  # {{{
     resize_needed = pyqtSignal()
 
     def setup_ui(self):
-        self.setObjectName("Dialog")
+        self.setObjectName('Dialog')
         self.resize(497, 235)
         self.gridLayout = l = QGridLayout(self)
-        l.setObjectName("gridLayout")
+        l.setObjectName('gridLayout')
         self.icon_widget = Icon(self)
         l.addWidget(self.icon_widget)
         self.msg = la = QLabel(self)
         la.setWordWrap(True), la.setMinimumWidth(400)
         la.setOpenExternalLinks(True)
-        la.setObjectName("msg")
+        la.setObjectName('msg')
         l.addWidget(la, 0, 1, 1, 1)
         self.det_msg = dm = QTextBrowser(self)
         dm.setReadOnly(True)
-        dm.setObjectName("det_msg")
+        dm.setObjectName('det_msg')
         l.addWidget(dm, 1, 0, 1, 2)
         self.bb = bb = QDialogButtonBox(self)
         bb.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
-        bb.setObjectName("bb")
+        bb.setObjectName('bb')
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         l.addWidget(bb, 3, 0, 1, 2)
         self.toggle_checkbox = tc = QCheckBox(self)
-        tc.setObjectName("toggle_checkbox")
+        tc.setObjectName('toggle_checkbox')
         l.addWidget(tc, 2, 0, 1, 2)
 
     def __init__(
@@ -108,12 +108,12 @@ class MessageBox(QDialog):  # {{{
         self.aborted = False
         if q_icon is None:
             icon = {
-                    self.ERROR : 'error',
+                    self.ERROR: 'error',
                     self.WARNING: 'warning',
                     self.INFO:    'information',
                     self.QUESTION: 'question',
             }[type_]
-            icon = 'dialog_%s.png'%icon
+            icon = f'dialog_{icon}.png'
             self.icon = QIcon.ic(icon)
         else:
             self.icon = q_icon if isinstance(q_icon, QIcon) else QIcon.ic(q_icon)
@@ -229,7 +229,7 @@ class ViewLog(QDialog):  # {{{
         self.setLayout(l)
 
         self.tb = QTextBrowser(self)
-        self.tb.setHtml('<pre style="font-family: monospace">%s</pre>' % html)
+        self.tb.setHtml(f'<pre style="font-family: monospace">{html}</pre>')
         l.addWidget(self.tb)
 
         self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok)
@@ -446,10 +446,8 @@ class JobError(QDialog):  # {{{
         d = QTextDocument()
         d.setHtml(self.msg_label.text())
         QApplication.clipboard().setText(
-                'calibre, version %s (%s, embedded-python: %s)\n%s: %s\n\n%s' %
-                (__version__, sys.platform, isfrozen,
-                    str(self.windowTitle()), str(d.toPlainText()),
-                    str(self.det_msg.toPlainText())))
+                f'calibre, version {__version__} ({sys.platform}, embedded-python: {isfrozen})\n'
+                f'{self.windowTitle()!s}: {d.toPlainText()!s}\n\n{self.det_msg.toPlainText()!s}')
         if hasattr(self, 'ctc_button'):
             self.ctc_button.setText(_('Copied'))
 

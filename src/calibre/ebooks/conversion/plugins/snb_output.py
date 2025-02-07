@@ -97,27 +97,27 @@ class SNBOutput(OutputFormatPlugin):
                     href = g['cover'].href
 
             # Output book info file
-            bookInfoTree = etree.Element("book-snbf", version="1.0")
-            headTree = etree.SubElement(bookInfoTree, "head")
-            etree.SubElement(headTree, "name").text = title
-            etree.SubElement(headTree, "author").text = ' '.join(authors)
-            etree.SubElement(headTree, "language").text = lang
-            etree.SubElement(headTree, "rights")
-            etree.SubElement(headTree, "publisher").text = publishers
-            etree.SubElement(headTree, "generator").text = __appname__ + ' ' + __version__
-            etree.SubElement(headTree, "created")
-            etree.SubElement(headTree, "abstract").text = abstract
+            bookInfoTree = etree.Element('book-snbf', version='1.0')
+            headTree = etree.SubElement(bookInfoTree, 'head')
+            etree.SubElement(headTree, 'name').text = title
+            etree.SubElement(headTree, 'author').text = ' '.join(authors)
+            etree.SubElement(headTree, 'language').text = lang
+            etree.SubElement(headTree, 'rights')
+            etree.SubElement(headTree, 'publisher').text = publishers
+            etree.SubElement(headTree, 'generator').text = __appname__ + ' ' + __version__
+            etree.SubElement(headTree, 'created')
+            etree.SubElement(headTree, 'abstract').text = abstract
             if href is not None:
-                etree.SubElement(headTree, "cover").text = ProcessFileName(href)
+                etree.SubElement(headTree, 'cover').text = ProcessFileName(href)
             else:
-                etree.SubElement(headTree, "cover")
+                etree.SubElement(headTree, 'cover')
             with open(os.path.join(snbfDir, 'book.snbf'), 'wb') as f:
                 f.write(etree.tostring(bookInfoTree, pretty_print=True, encoding='utf-8'))
 
             # Output TOC
-            tocInfoTree = etree.Element("toc-snbf")
-            tocHead = etree.SubElement(tocInfoTree, "head")
-            tocBody = etree.SubElement(tocInfoTree, "body")
+            tocInfoTree = etree.Element('toc-snbf')
+            tocHead = etree.SubElement(tocInfoTree, 'head')
+            tocBody = etree.SubElement(tocInfoTree, 'body')
             outputFiles = {}
             if oeb_book.toc.count() == 0:
                 log.warn('This SNB file has no Table of Contents. '
@@ -131,39 +131,39 @@ class SNBOutput(OutputFormatPlugin):
                     # "Cover Pages".
                     # oeb_book.toc does not support "insert", so we generate
                     # the tocInfoTree directly instead of modifying the toc
-                    ch = etree.SubElement(tocBody, "chapter")
-                    ch.set("src", ProcessFileName(first.href) + ".snbc")
+                    ch = etree.SubElement(tocBody, 'chapter')
+                    ch.set('src', ProcessFileName(first.href) + '.snbc')
                     ch.text = _('Cover pages')
                     outputFiles[first.href] = []
-                    outputFiles[first.href].append(("", _("Cover pages")))
+                    outputFiles[first.href].append(('', _('Cover pages')))
 
             for tocitem in oeb_book.toc:
                 if tocitem.href.find('#') != -1:
                     item = tocitem.href.split('#')
                     if len(item) != 2:
-                        log.error('Error in TOC item: %s' % tocitem)
+                        log.error(f'Error in TOC item: {tocitem}')
                     else:
                         if item[0] in outputFiles:
                             outputFiles[item[0]].append((item[1], tocitem.title))
                         else:
                             outputFiles[item[0]] = []
-                            if "" not in outputFiles[item[0]]:
-                                outputFiles[item[0]].append(("", tocitem.title + _(" (Preface)")))
-                                ch = etree.SubElement(tocBody, "chapter")
-                                ch.set("src", ProcessFileName(item[0]) + ".snbc")
-                                ch.text = tocitem.title + _(" (Preface)")
+                            if '' not in outputFiles[item[0]]:
+                                outputFiles[item[0]].append(('', tocitem.title + _(' (Preface)')))
+                                ch = etree.SubElement(tocBody, 'chapter')
+                                ch.set('src', ProcessFileName(item[0]) + '.snbc')
+                                ch.text = tocitem.title + _(' (Preface)')
                             outputFiles[item[0]].append((item[1], tocitem.title))
                 else:
                     if tocitem.href in outputFiles:
-                        outputFiles[tocitem.href].append(("", tocitem.title))
+                        outputFiles[tocitem.href].append(('', tocitem.title))
                     else:
                         outputFiles[tocitem.href] = []
-                        outputFiles[tocitem.href].append(("", tocitem.title))
-                ch = etree.SubElement(tocBody, "chapter")
-                ch.set("src", ProcessFileName(tocitem.href) + ".snbc")
+                        outputFiles[tocitem.href].append(('', tocitem.title))
+                ch = etree.SubElement(tocBody, 'chapter')
+                ch.set('src', ProcessFileName(tocitem.href) + '.snbc')
                 ch.text = tocitem.title
 
-            etree.SubElement(tocHead, "chapters").text = '%d' % len(tocBody)
+            etree.SubElement(tocHead, 'chapters').text = str(len(tocBody))
 
             with open(os.path.join(snbfDir, 'toc.snbf'), 'wb') as f:
                 f.write(etree.tostring(tocInfoTree, pretty_print=True, encoding='utf-8'))
@@ -176,16 +176,16 @@ class SNBOutput(OutputFormatPlugin):
                 from calibre.ebooks.oeb.base import OEB_DOCS, OEB_IMAGES
                 if m.hrefs[item.href].media_type in OEB_DOCS:
                     if item.href not in outputFiles:
-                        log.debug('File %s is unused in TOC. Continue in last chapter' % item.href)
+                        log.debug(f'File {item.href} is unused in TOC. Continue in last chapter')
                         mergeLast = True
                     else:
                         if oldTree is not None and mergeLast:
-                            log.debug('Output the modified chapter again: %s' % lastName)
+                            log.debug(f'Output the modified chapter again: {lastName}')
                             with open(os.path.join(snbcDir, lastName), 'wb') as f:
                                 f.write(etree.tostring(oldTree, pretty_print=True, encoding='utf-8'))
                             mergeLast = False
 
-                    log.debug('Converting %s to snbc...' % item.href)
+                    log.debug(f'Converting {item.href} to snbc...')
                     snbwriter = SNBMLizer(log)
                     snbcTrees = None
                     if not mergeLast:
@@ -194,16 +194,16 @@ class SNBOutput(OutputFormatPlugin):
                             postfix = ''
                             if subName != '':
                                 postfix = '_' + subName
-                            lastName = ProcessFileName(item.href + postfix + ".snbc")
+                            lastName = ProcessFileName(item.href + postfix + '.snbc')
                             oldTree = snbcTrees[subName]
                             with open(os.path.join(snbcDir, lastName), 'wb') as f:
                                 f.write(etree.tostring(oldTree, pretty_print=True, encoding='utf-8'))
                     else:
-                        log.debug('Merge %s with last TOC item...' % item.href)
-                        snbwriter.merge_content(oldTree, oeb_book, item, [('', _("Start"))], opts)
+                        log.debug(f'Merge {item.href} with last TOC item...')
+                        snbwriter.merge_content(oldTree, oeb_book, item, [('', _('Start'))], opts)
 
             # Output the last one if needed
-            log.debug('Output the last modified chapter again: %s' % lastName)
+            log.debug(f'Output the last modified chapter again: {lastName}')
             if oldTree is not None and mergeLast:
                 with open(os.path.join(snbcDir, lastName), 'wb') as f:
                     f.write(etree.tostring(oldTree, pretty_print=True, encoding='utf-8'))
@@ -211,7 +211,7 @@ class SNBOutput(OutputFormatPlugin):
 
             for item in m:
                 if m.hrefs[item.href].media_type in OEB_IMAGES:
-                    log.debug('Converting image: %s ...' % item.href)
+                    log.debug(f'Converting image: {item.href} ...')
                     content = m.hrefs[item.href].data
                     # Convert & Resize image
                     self.HandleImage(content, os.path.join(snbiDir, ProcessFileName(item.href)))

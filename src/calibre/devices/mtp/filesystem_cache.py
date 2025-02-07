@@ -13,7 +13,6 @@ from collections import defaultdict, deque
 from datetime import datetime
 from itertools import chain
 from operator import attrgetter
-from typing import Dict, Tuple
 
 from calibre import force_unicode, human_readable, prints
 from calibre.constants import iswindows
@@ -22,6 +21,16 @@ from calibre.utils.date import as_utc, local_tz
 from calibre.utils.icu import lower, sort_key
 
 bexts = frozenset(BOOK_EXTENSIONS) - {'mbp', 'tan', 'rar', 'zip', 'xml'}
+
+
+def convert_timestamp(md):
+    try:
+        if isinstance(md, tuple):
+            return datetime(*(list(md)+[local_tz]))
+        else:
+            return datetime.fromtimestamp(md, local_tz)
+    except Exception:
+        return datetime.fromtimestamp(0, local_tz)
 
 
 class ListEntry:
@@ -55,19 +64,12 @@ class FileOrFolder:
         self.name = force_unicode(n, 'utf-8')
         self.size = entry.get('size', 0)
         md = entry.get('modified', 0)
-        try:
-            if isinstance(md, tuple):
-                self.last_modified = datetime(*(list(md)+[local_tz]))
-            else:
-                self.last_modified = datetime.fromtimestamp(md, local_tz)
-        except Exception:
-            self.last_modified = datetime.fromtimestamp(0, local_tz)
+        self.last_modified = convert_timestamp(md)
         self.last_mod_string = self.last_modified.strftime('%Y/%m/%d %H:%M')
         self.last_modified = as_utc(self.last_modified)
 
         if self.storage_id not in fs_cache.all_storage_ids:
-            raise ValueError('Storage id %s not valid for %s, valid values: %s'%(self.storage_id,
-                entry, fs_cache.all_storage_ids))
+            raise ValueError(f'Storage id {self.storage_id} not valid for {entry}, valid values: {fs_cache.all_storage_ids}')
 
         self.is_hidden = entry.get('is_hidden', False)
         self.is_system = entry.get('is_system', False)
@@ -89,11 +91,18 @@ class FileOrFolder:
         self.deleted = False
 
         if self.is_storage:
-            self.storage_prefix = 'mtp:::%s:::'%self.persistent_id
+            self.storage_prefix = f'mtp:::{self.persistent_id}:::'
 
         # Ignore non ebook files and AppleDouble files
         self.is_ebook = (not self.is_folder and not self.is_storage and
                 self.name.rpartition('.')[-1].lower() in bexts and not self.name.startswith('._'))
+
+        # allow Kindle Scribe notebooks to be imported and preserve the notebook name
+        if self.name == 'nbk' and not (self.is_folder or self.is_storage):
+            if len(self.full_path) >= 3 and self.full_path[-3] == '.notebooks':
+                nbk_name = self.full_path[-2].replace('!!notebook', '').replace('!!', ' ')
+                self.name = f'Scribe {nbk_name} Notebook.kfx'
+                self.is_ebook = True
 
     def __repr__(self):
         if self.is_storage:
@@ -104,11 +113,10 @@ class FileOrFolder:
             path = str(self.full_path)
         except Exception:
             path = ''
-        datum = 'size=%s'%(self.size)
+        datum = f'size={self.size}'
         if self.is_folder or self.is_storage:
-            datum = 'children=%s'%(len(self.files) + len(self.folders))
-        return '%s(id=%s, storage_id=%s, %s, path=%s, modified=%s)'%(name, self.object_id,
-                self.storage_id, datum, path, self.last_mod_string)
+            datum = f'children={len(self.files)+len(self.folders)}'
+        return f'{name}(id={self.object_id}, storage_id={self.storage_id}, {datum}, path={path}, modified={self.last_mod_string})'
 
     __str__ = __repr__
     __unicode__ = __repr__
@@ -118,7 +126,7 @@ class FileOrFolder:
         return not self.files and not self.folders
 
     @property
-    def id_map(self) -> Dict[int, 'FileOrFolder']:
+    def id_map(self) -> dict[int, 'FileOrFolder']:
         return self.fs_cache().id_maps[self.storage_id]
 
     @property
@@ -138,7 +146,7 @@ class FileOrFolder:
         return self.fs_cache().storage(self.storage_id)
 
     @property
-    def full_path(self) -> Tuple[str, ...]:
+    def full_path(self) -> tuple[str, ...]:
         parts = deque()
         parts.append(self.name)
         p = self.parent
@@ -168,13 +176,13 @@ class FileOrFolder:
 
     def dump(self, prefix='', out=sys.stdout):
         c = '+' if self.is_folder else '-'
-        data = ('%s children'%(sum(map(len, (self.files, self.folders))))
+        data = (f'{sum(map(len, (self.files, self.folders)))} children'
             if self.is_folder else human_readable(self.size))
-        data += ' modified=%s'%self.last_mod_string
-        line = '%s%s %s [id:%s %s]'%(prefix, c, self.name, self.object_id, data)
+        data += f' modified={self.last_mod_string}'
+        line = f'{prefix}{c} {self.name} [id:{self.object_id} {data}]'
         prints(line, file=out)
         for c in (self.folders, self.files):
-            for e in sorted(c, key=lambda x:sort_key(x.name)):
+            for e in sorted(c, key=lambda x: sort_key(x.name)):
                 e.dump(prefix=prefix+'  ', out=out)
 
     def list(self, recurse=False):
@@ -287,14 +295,14 @@ class FilesystemCache:
 
     def resolve_mtp_id_path(self, path):
         if not path.startswith('mtp:::'):
-            raise ValueError('%s is not a valid MTP path'%path)
+            raise ValueError(f'{path} is not a valid MTP path')
         parts = path.split(':::', 2)
         if len(parts) < 3:
-            raise ValueError('%s is not a valid MTP path'%path)
+            raise ValueError(f'{path} is not a valid MTP path')
         try:
             object_id = json.loads(parts[1])
         except Exception:
-            raise ValueError('%s is not a valid MTP path'%path)
+            raise ValueError(f'{path} is not a valid MTP path')
         id_map = {}
         path = parts[2]
         storage_name = path.partition('/')[0]
@@ -305,4 +313,4 @@ class FilesystemCache:
         try:
             return id_map[object_id]
         except KeyError:
-            raise ValueError('No object found with MTP path: %s'%path)
+            raise ValueError(f'No object found with MTP path: {path}')

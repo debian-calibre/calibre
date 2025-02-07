@@ -85,7 +85,7 @@ class MyBlockingBusy(QDialog):  # {{{
     def __init__(self, args, ids, db, refresh_books, cc_widgets, s_r_func, do_sr, sr_calls, parent=None, window_title=_('Working')):
         QDialog.__init__(self, parent)
 
-        self._layout =  l = QVBoxLayout()
+        self._layout = l = QVBoxLayout()
         self.setLayout(l)
         self.cover_sizes = {'old': 0, 'new': 0}
         # Every Path that will be taken in do_all
@@ -114,8 +114,8 @@ class MyBlockingBusy(QDialog):  # {{{
         if args.series_map_rules:
             self.selected_options += 1
         if DEBUG:
-            print("Number of steps for bulk metadata: %d" % self.selected_options)
-            print("Optionslist: ")
+            print(f'Number of steps for bulk metadata: {self.selected_options}')
+            print('Optionslist: ')
             print(options)
 
         self.msg = QLabel(_('Processing %d books, please wait...') % len(ids))
@@ -123,13 +123,13 @@ class MyBlockingBusy(QDialog):  # {{{
         self.font.setPointSize(self.font.pointSize() + 8)
         self.msg.setFont(self.font)
         self.current_step_pb = QProgressBar(self)
-        self.current_step_pb.setFormat(_("Current step progress: %p %"))
+        self.current_step_pb.setFormat(_('Current step progress: %p %'))
         if self.selected_options > 1:
             # More than one Option needs to be done! Add Overall ProgressBar
             self.overall_pb = QProgressBar(self)
             self.overall_pb.setRange(0, self.selected_options)
             self.overall_pb.setValue(0)
-            self.overall_pb.setFormat(_("Step %v/%m"))
+            self.overall_pb.setFormat(_('Step %v/%m'))
             self._layout.addWidget(self.overall_pb)
             self._layout.addSpacing(15)
         self.current_option = 0
@@ -159,9 +159,9 @@ class MyBlockingBusy(QDialog):  # {{{
         pass
 
     def on_progress_update(self, processed_steps):
-        """
+        '''
         This signal should be emitted if a step can be traced with numbers.
-        """
+        '''
         self.current_step_value += processed_steps
         self.current_step_pb.setValue(self.current_step_value)
 
@@ -171,10 +171,10 @@ class MyBlockingBusy(QDialog):  # {{{
             self.overall_pb.setValue(self.current_option)
 
     def on_progress_next_step_range(self, steps_of_progress):
-        """
+        '''
         If steps_of_progress equals 0 results this in a indetermined ProgressBar
         Otherwise the range is from 0..steps_of_progress
-        """
+        '''
         self.current_step_value = 0
         self.current_step_pb.setRange(0, steps_of_progress)
 
@@ -557,11 +557,11 @@ class MyBlockingBusy(QDialog):  # {{{
 
 class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
 
-    s_r_functions = {''              : lambda x: x,
-                            _('Lower Case') : lambda x: icu_lower(x),
-                            _('Upper Case') : lambda x: icu_upper(x),
-                            _('Title Case') : lambda x: titlecase(x),
-                            _('Capitalize') : lambda x: capitalize(x),
+    s_r_functions = {'': lambda x: x,
+        _('Lower Case'): lambda x: icu_lower(x),
+        _('Upper Case'): lambda x: icu_upper(x),
+        _('Title Case'): lambda x: titlecase(x),
+        _('Capitalize'): lambda x: capitalize(x),
                     }
 
     s_r_match_modes = [_('Character match'),
@@ -584,7 +584,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.refresh_book_list.toggled.connect(self.save_refresh_booklist)
         self.ids = [self.db.id(r) for r in rows]
         self.first_title = self.db.title(self.ids[0], index_is_id=True)
-        self.cover_clone.setToolTip(str(self.cover_clone.toolTip()) + ' (%s)' % self.first_title)
+        self.cover_clone.setToolTip(str(self.cover_clone.toolTip()) + f' ({self.first_title})')
         self.setWindowTitle(ngettext(
             'Editing metadata for one book',
             'Editing metadata for {} books', len(rows)).format(len(rows)))
@@ -603,7 +603,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.initialize_combos()
 
         self.series.currentIndexChanged.connect(self.series_changed)
-        connect_lambda(self.rating.currentIndexChanged, self, lambda self:self.apply_rating.setChecked(True))
+        connect_lambda(self.rating.currentIndexChanged, self, lambda self: self.apply_rating.setChecked(True))
         self.series.editTextChanged.connect(self.series_changed)
         self.tag_editor_button.clicked.connect(self.tag_editor)
         self.autonumber_series.stateChanged[int].connect(self.auto_number_changed)
@@ -660,10 +660,8 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.button_transform_publishers.clicked.connect(self.transform_publishers)
         self.button_transform_series.clicked.connect(self.transform_series)
         self.tag_map_rules = self.author_map_rules = self.publisher_map_rules = self.series_map_rules = ()
-        tuple(map(lambda b: (b.clicked.connect(self.clear_transform_rules_for), b.setIcon(QIcon.ic('clear_left.png')), b.setToolTip(_(
-            'Clear the rules'))),
-            (self.button_clear_tags_rules, self.button_clear_authors_rules, self.button_clear_publishers_rules)
-        ))
+        tuple((b.clicked.connect(self.clear_transform_rules_for), b.setIcon(QIcon.ic('clear_left.png')), b.setToolTip(_('Clear the rules')))
+            for b in (self.button_clear_tags_rules, self.button_clear_authors_rules, self.button_clear_publishers_rules))
         self.update_transform_labels()
         if starting_tab < 0:
             starting_tab = gprefs.get('bulk_metadata_window_tab', 0)
@@ -801,19 +799,19 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.testgrid.setColumnStretch(2, 1)
         offset = 10
         self.s_r_number_of_books = min(10, len(self.ids))
-        for i in range(1,self.s_r_number_of_books+1):
+        for i in range(1, self.s_r_number_of_books+1):
             w = QLabel(self.tabWidgetPage3)
             w.setText(_('Book %d:')%i)
             self.testgrid.addWidget(w, i+offset, 0, 1, 1)
             w = QLineEdit(self.tabWidgetPage3)
             w.setReadOnly(True)
-            name = 'book_%d_text'%i
+            name = f'book_{i}_text'
             setattr(self, name, w)
             self.book_1_text.setObjectName(name)
             self.testgrid.addWidget(w, i+offset, 1, 1, 1)
             w = QLineEdit(self.tabWidgetPage3)
             w.setReadOnly(True)
-            name = 'book_%d_result'%i
+            name = f'book_{i}_result'
             setattr(self, name, w)
             self.book_1_text.setObjectName(name)
             self.testgrid.addWidget(w, i+offset, 2, 1, 1)
@@ -857,8 +855,8 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                  'matching and replacement is to be assigned. You can replace '
                  'the text in the field, or prepend or append the matched text. '
                  'See <a href="https://docs.python.org/library/re.html">'
-                 'this reference</a> for more information on Python\'s regular '
-                 'expressions, and in particular the \'sub\' function.'
+                 "this reference</a> for more information on Python's regular "
+                 "expressions, and in particular the 'sub' function."
                  )
 
         self.search_mode.addItems(self.s_r_match_modes)
@@ -900,9 +898,9 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.save_button.clicked.connect(self.s_r_save_query)
         self.remove_button.clicked.connect(self.s_r_remove_query)
 
-        self.queries = JSONConfig("search_replace_queries")
+        self.queries = JSONConfig('search_replace_queries')
         self.saved_search_name = ''
-        self.query_field.addItem("")
+        self.query_field.addItem('')
         self.query_field_values = sorted(self.queries, key=sort_key)
         self.query_field.addItems(self.query_field_values)
         self.query_field.currentIndexChanged.connect(self.s_r_query_change)
@@ -941,7 +939,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                 if id_type:
                     val = [val.get(id_type, '')]
                 else:
-                    val = ['%s:%s'%(t[0], t[1]) for t in iteritems(val)]
+                    val = [f'{t[0]}:{t[1]}' for t in iteritems(val)]
             if val is None:
                 val = [] if fm['is_multiple'] else ['']
             elif not fm['is_multiple']:
@@ -967,7 +965,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                     break
                 mi.append(self.db.new_api.get_proxy_metadata(_id))
         except Exception as e:
-            prints(f'TemplateLineEditor: exception fetching metadata: {str(e)}')
+            prints(f'TemplateLineEditor: exception fetching metadata: {e}')
             mi = None
         t = TemplateDialog(self, self.s_r_template.text(), mi=mi)
         t.setWindowTitle(_('Edit search/replace template'))
@@ -992,8 +990,8 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
             self.s_r_src_ident_label.setVisible(True)
             self.s_r_src_ident.setVisible(True)
 
-        for i in range(0, self.s_r_number_of_books):
-            w = getattr(self, 'book_%d_text'%(i+1))
+        for i in range(self.s_r_number_of_books):
+            w = getattr(self, f'book_{i + 1}_text')
             mi = self.db.get_metadata(self.ids[i], index_is_id=True)
             src = self.s_r_sf_itemdata(idx)
             t = self.s_r_get_field(mi, src)
@@ -1062,8 +1060,8 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
             tt = error_message(self.s_r_error)
             self.test_result.setText(tt)
         update_status_actions(self.test_result, self.s_r_error is None, tt)
-        for i in range(0,self.s_r_number_of_books):
-            getattr(self, 'book_%d_result'%(i+1)).setText('')
+        for i in range(self.s_r_number_of_books):
+            getattr(self, f'book_{i + 1}_result').setText('')
 
     def s_r_func(self, match):
         rfunc = self.s_r_functions[str(self.replace_func.currentText())]
@@ -1131,7 +1129,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
                     dest_val = [dest_val.get(dst_id_type, '')]
                 else:
                     # convert the csp dict into a list
-                    dest_val = ['%s:%s'%(t[0], t[1]) for t in iteritems(dest_val)]
+                    dest_val = [f'{t[0]}:{t[1]}' for t in iteritems(dest_val)]
             if dest_val is None:
                 dest_val = []
             elif not isinstance(dest_val, list):
@@ -1186,9 +1184,9 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
             self.s_r_set_colors()
             return
 
-        for i in range(0,self.s_r_number_of_books):
+        for i in range(self.s_r_number_of_books):
             mi = self.db.get_metadata(self.ids[i], index_is_id=True)
-            wr = getattr(self, 'book_%d_result'%(i+1))
+            wr = getattr(self, f'book_{i + 1}_result')
             try:
                 result = self.s_r_do_regexp(mi)
                 t = self.s_r_do_destination(mi, result)
@@ -1279,7 +1277,7 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
 
     def initalize_authors(self):
         all_authors = self.db.all_authors()
-        all_authors.sort(key=lambda x : sort_key(x[1]))
+        all_authors.sort(key=lambda x: sort_key(x[1]))
 
         self.authors.set_separator('&')
         self.authors.set_space_before_sep(True)
@@ -1450,9 +1448,9 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         if self.query_field.currentIndex() == 0:
             return
 
-        if not question_dialog(self, _("Delete saved search/replace"),
-                _("The selected saved search/replace will be deleted. "
-                    "Are you sure?")):
+        if not question_dialog(self, _('Delete saved search/replace'),
+                _('The selected saved search/replace will be deleted. '
+                    'Are you sure?')):
             return
 
         item_id = self.query_field.currentIndex()
@@ -1476,19 +1474,19 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
             dex = 0
         name = ''
         while not name:
-            name, ok =  QInputDialog.getItem(self, _('Save search/replace'),
+            name, ok = QInputDialog.getItem(self, _('Save search/replace'),
                     _('Search/replace name:'), names, dex, True)
             if not ok:
                 return
             if not name:
-                error_dialog(self, _("Save search/replace"),
-                        _("You must provide a name."), show=True)
+                error_dialog(self, _('Save search/replace'),
+                        _('You must provide a name.'), show=True)
         new = True
         name = str(name)
         if name in list(self.queries.keys()):
-            if not question_dialog(self, _("Save search/replace"),
-                    _("That saved search/replace already exists and will be overwritten. "
-                        "Are you sure?")):
+            if not question_dialog(self, _('Save search/replace'),
+                    _('That saved search/replace already exists and will be overwritten. '
+                        'Are you sure?')):
                 return
             new = False
 
@@ -1580,10 +1578,10 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         # as it was
         self.search_field.setCurrentIndex(0)
         self.s_r_src_ident.setCurrentIndex(0)
-        self.s_r_template.setText("")
-        self.search_for.setText("")
+        self.s_r_template.setText('')
+        self.search_for.setText('')
         self.case_sensitive.setChecked(False)
-        self.replace_with.setText("")
+        self.replace_with.setText('')
         self.replace_func.setCurrentIndex(0)
         self.destination_field.setCurrentIndex(0)
         self.s_r_dst_ident.setText('')
@@ -1591,4 +1589,4 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.comma_separated.setChecked(True)
         self.results_count.setValue(999)
         self.starting_from.setValue(1)
-        self.multiple_separator.setText(" ::: ")
+        self.multiple_separator.setText(' ::: ')

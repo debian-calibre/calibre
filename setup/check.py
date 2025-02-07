@@ -11,7 +11,7 @@ import json
 import os
 import subprocess
 
-from setup import Command, build_cache_dir, dump_json, edit_file, require_clean_git, require_git_master
+from setup import Command, build_cache_dir, dump_json, edit_file
 
 
 class Message:
@@ -23,16 +23,19 @@ class Message:
         return f'{self.filename}:{self.lineno}: {self.msg}'
 
 
+def files_walker(root_path, ext):
+    for x in os.walk(root_path):
+        for f in x[-1]:
+            y = os.path.join(x[0], f)
+            if f.endswith(ext):
+                yield y
+
+
 def checkable_python_files(SRC):
     for dname in ('odf', 'calibre'):
-        for x in os.walk(os.path.join(SRC, dname)):
-            for f in x[-1]:
-                y = os.path.join(x[0], f)
-                if (f.endswith('.py') and f not in (
-                        'dict_data.py', 'unicodepoints.py', 'krcodepoints.py',
-                        'jacodepoints.py', 'vncodepoints.py', 'zhcodepoints.py') and
-                        'prs500/driver.py' not in y) and not f.endswith('_ui.py'):
-                    yield y
+        for f in files_walker(os.path.join(SRC, dname), '.py'):
+            if not f.endswith('_ui.py'):
+                yield f
 
 
 class Check(Command):
@@ -43,24 +46,15 @@ class Check(Command):
 
     def add_options(self, parser):
         parser.add_option('--fix', '--auto-fix', default=False, action='store_true',
-                help='Try to automatically fix some of the smallest errors')
-        parser.add_option('--pep8', '--pep8-commit', default=False, action='store_true',
-                help='Try to automatically fix some of the smallest errors, then perform a pep8 commit')
+                help='Try to automatically fix some of the smallest errors instead of opening an editor for bad files.')
 
     def get_files(self):
         yield from checkable_python_files(self.SRC)
 
-        for x in os.walk(self.j(self.d(self.SRC), 'recipes')):
-            for f in x[-1]:
-                f = self.j(x[0], f)
-                if f.endswith('.recipe'):
-                    yield f
+        yield from files_walker(self.j(self.d(self.SRC), 'recipes'), '.recipe')
 
-        for x in os.walk(self.j(self.SRC, 'pyj')):
-            for f in x[-1]:
-                f = self.j(x[0], f)
-                if f.endswith('.pyj'):
-                    yield f
+        yield from files_walker(self.j(self.SRC, 'pyj'), '.pyj')
+
         if self.has_changelog_check:
             yield self.j(self.d(self.SRC), 'Changelog.txt')
 
@@ -88,8 +82,11 @@ class Check(Command):
     def file_has_errors(self, f):
         ext = os.path.splitext(f)[1]
         if ext in {'.py', '.recipe'}:
-            p2 = subprocess.Popen(['ruff', 'check', f])
-            return p2.wait() != 0
+            if self.auto_fix:
+                p = subprocess.Popen(['ruff', 'check', '--fix', f])
+            else:
+                p = subprocess.Popen(['ruff', 'check', f])
+            return p.wait() != 0
         if ext == '.pyj':
             p = subprocess.Popen(['rapydscript', 'lint', f])
             return p.wait() != 0
@@ -97,31 +94,12 @@ class Check(Command):
             p = subprocess.Popen(['python', self.j(self.wn_path, 'whats_new.py'), f])
             return p.wait() != 0
 
-    def perform_auto_fix(self):
-        cp = subprocess.run(['ruff', 'check', '--fix-only'], stdout=subprocess.PIPE)
-        if cp.returncode != 0:
-            raise SystemExit('ruff fixing failed')
-        return cp.stdout.decode('utf-8') or 'Fixed 0 errors.'
-
-    def perform_pep8_git_commit(self):
-        return subprocess.run(['git', 'commit', '--all', '-m pep8']).returncode != 0
-
-    def check_errors_remain(self):
-        return subprocess.run(['ruff', 'check', '--statistics']).returncode != 0
-
     def run(self, opts):
-        if opts.fix and opts.pep8:
-            self.info('setup.py check: error: options --fix and --pep8 are mutually exclusive')
-            raise SystemExit(2)
-
         self.fhash_cache = {}
         self.wn_path = os.path.expanduser('~/work/srv/main/static')
         self.has_changelog_check = os.path.exists(self.wn_path)
         self.auto_fix = opts.fix
-        if opts.pep8:
-            self.run_pep8_commit()
-        else:
-            self.run_check_files()
+        self.run_check_files()
 
     def run_check_files(self):
         cache = {}
@@ -131,16 +109,12 @@ class Check(Command):
         except OSError as err:
             if err.errno != errno.ENOENT:
                 raise
-        if self.auto_fix:
-            self.info('\tAuto-fixing')
-            msg = self.perform_auto_fix()
-            self.info(msg+'\n')
         dirty_files = tuple(f for f in self.get_files() if not self.is_cache_valid(f, cache))
         try:
             for i, f in enumerate(dirty_files):
                 self.info('\tChecking', f)
                 if self.file_has_errors(f):
-                    self.info('%d files left to check' % (len(dirty_files) - i - 1))
+                    self.info(f'{len(dirty_files) - i - 1} files left to check')
                     try:
                         edit_file(f)
                     except FileNotFoundError:
@@ -150,17 +124,6 @@ class Check(Command):
                 cache[f] = self.file_hash(f)
         finally:
             self.save_cache(cache)
-
-    def run_pep8_commit(self):
-        require_git_master()
-        require_clean_git()
-        msg = self.perform_auto_fix()
-        self.info(msg+'\n')
-        self.info('Commit the pep8 change...')
-        self.perform_pep8_git_commit()
-        self.info()
-        if self.check_errors_remain():
-            self.info('There are remaining errors. Execute "setup.py check" without options to locate them.')
 
     def report_errors(self, errors):
         for err in errors:
@@ -189,4 +152,4 @@ class UpgradeSourceCode(Command):
             if '/metadata/sources/' in q or '/store/stores/' in q:
                 continue
             files.append(q)
-        subprocess.call(['pyupgrade', '--py38-plus'] + files)
+        subprocess.call(['pyupgrade', '--py310-plus'] + files)

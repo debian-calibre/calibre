@@ -35,9 +35,9 @@ if iswindows:
 
     _ACCESS_MASK = os.O_RDONLY | os.O_WRONLY | os.O_RDWR
     _ACCESS_MAP  = {
-        os.O_RDONLY : winutil.GENERIC_READ,
-        os.O_WRONLY : winutil.GENERIC_WRITE,
-        os.O_RDWR   : winutil.GENERIC_READ | winutil.GENERIC_WRITE
+        os.O_RDONLY: winutil.GENERIC_READ,
+        os.O_WRONLY: winutil.GENERIC_WRITE,
+        os.O_RDWR  : winutil.GENERIC_READ | winutil.GENERIC_WRITE
     }
 
     _CREATE_MASK = os.O_CREAT | os.O_EXCL | os.O_TRUNC
@@ -62,7 +62,7 @@ if iswindows:
             raise TypeError('mode must be an integer')
 
         if share_flags & ~winutil.FILE_SHARE_VALID_FLAGS:
-            raise ValueError('bad share_flags: %r' % share_flags)
+            raise ValueError(f'bad share_flags: {share_flags!r}')
 
         access_flags = _ACCESS_MAP[flags & _ACCESS_MASK]
         create_flags = _CREATE_MAP[flags & _CREATE_MASK]

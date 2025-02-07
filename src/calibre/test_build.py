@@ -106,8 +106,8 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(data, decompress(cdata))
 
     def test_html5lib(self):
-        import html5lib.html5parser  # noqa
-        from html5lib import parse  # noqa
+        import html5lib.html5parser  # noqa: F401
+        from html5lib import parse  # noqa: F401
 
     def test_html5_parser(self):
         from html5_parser import parse
@@ -161,7 +161,7 @@ class BuildTest(unittest.TestCase):
         root = etree.fromstring(raw, parser=etree.XMLParser(recover=True, no_network=True, resolve_entities=False))
         self.assertEqual(etree.tostring(root), raw)
         from lxml import html
-        html.fromstring("<p>\U0001f63a")
+        html.fromstring('<p>\U0001f63a')
 
     def test_certgen(self):
         from calibre.utils.certgen import create_key_pair
@@ -303,7 +303,7 @@ class BuildTest(unittest.TestCase):
         os.rmdir(dpath)
         del h
         shutil.rmtree(tdir)
-        m = winutil.create_mutex("test-mutex", False)
+        m = winutil.create_mutex('test-mutex', False)
         self.assertRaises(OSError, winutil.create_mutex, 'test-mutex', False)
         m.close()
         self.assertEqual(winutil.parse_cmdline('"c:\\test exe.exe" "some arg" 2'), ('c:\\test exe.exe', 'some arg', '2'))
@@ -344,9 +344,9 @@ class BuildTest(unittest.TestCase):
         # package. On non-frozen builds, it should just work because the
         # hard-coded paths of the Qt installation should work. If they do not,
         # then it is a distro problem.
-        fmts = set(map(lambda x: x.data().decode('utf-8'), QImageReader.supportedImageFormats()))  # no2to3
+        fmts = {x.data().decode('utf-8') for x in QImageReader.supportedImageFormats()}  # no2to3
         testf = {'jpg', 'png', 'svg', 'ico', 'gif', 'webp'}
-        self.assertEqual(testf.intersection(fmts), testf, "Qt doesn't seem to be able to load some of its image plugins. Available plugins: %s" % fmts)
+        self.assertEqual(testf.intersection(fmts), testf, f"Qt doesn't seem to be able to load some of its image plugins. Available plugins: {fmts}")
         data = P('images/blank.png', allow_user_override=False, data=True)
         img = image_from_data(data)
         image_from_data(P('catalog/mastheadImage.gif', allow_user_override=False, data=True))
@@ -422,7 +422,7 @@ class BuildTest(unittest.TestCase):
 
     def test_pykakasi(self):
         from calibre.ebooks.unihandecode.jadecoder import Jadecoder
-        self.assertEqual(Jadecoder().decode("自転車生活の愉しみ"), 'Jitensha Seikatsu no Tanoshi mi')
+        self.assertEqual(Jadecoder().decode('自転車生活の愉しみ'), 'Jitensha Seikatsu no Tanoshi mi')
 
     def test_imaging(self):
         from PIL import Image
@@ -486,13 +486,13 @@ class BuildTest(unittest.TestCase):
         from calibre.ebooks.pdf.pdftohtml import PDFTOHTML, PDFTOTEXT
         from calibre.utils.ipc.launch import Worker
         w = Worker({})
-        self.assertTrue(os.path.exists(w.executable), 'calibre-parallel (%s) does not exist' % w.executable)
-        self.assertTrue(os.path.exists(w.gui_executable), 'calibre-parallel-gui (%s) does not exist' % w.gui_executable)
-        self.assertTrue(os.path.exists(PDFTOHTML), 'pdftohtml (%s) does not exist' % PDFTOHTML)
-        self.assertTrue(os.path.exists(PDFTOTEXT), 'pdftotext (%s) does not exist' % PDFTOTEXT)
+        self.assertTrue(os.path.exists(w.executable), f'calibre-parallel ({w.executable}) does not exist')
+        self.assertTrue(os.path.exists(w.gui_executable), f'calibre-parallel-gui ({w.gui_executable}) does not exist')
+        self.assertTrue(os.path.exists(PDFTOHTML), f'pdftohtml ({PDFTOHTML}) does not exist')
+        self.assertTrue(os.path.exists(PDFTOTEXT), f'pdftotext ({PDFTOTEXT}) does not exist')
         if iswindows:
             from calibre.devices.usbms.device import eject_exe
-            self.assertTrue(os.path.exists(eject_exe()), 'calibre-eject.exe (%s) does not exist' % eject_exe())
+            self.assertTrue(os.path.exists(eject_exe()), f'calibre-eject.exe ({eject_exe()}) does not exist')
 
     def test_netifaces(self):
         import netifaces

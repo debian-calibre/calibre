@@ -45,11 +45,9 @@ class USBDevice(_USBDevice):
         return self
 
     def __repr__(self):
-        return ('USBDevice(busnum=%s, devnum=%s, '
-                'vendor_id=0x%04x, product_id=0x%04x, bcd=0x%04x, '
-                'manufacturer=%s, product=%s, serial=%s)')%(
-                self.busnum, self.devnum, self.vendor_id, self.product_id,
-                self.bcd, self.manufacturer, self.product, self.serial)
+        return (f'USBDevice(busnum={self.busnum}, devnum={self.devnum}, '
+                f'vendor_id=0x{self.vendor_id:04x}, product_id=0x{self.product_id:04x}, bcd=0x{self.bcd:04x}, '
+                f'manufacturer={self.manufacturer}, product={self.product}, serial={self.serial})')
 
     __str__ = __repr__
     __unicode__ = __repr__
@@ -221,8 +219,7 @@ def test_for_mem_leak():
         for i in range(3):
             gc.collect()
         usedmem = memory(startmem)
-        prints('Memory used in %d repetitions of scan(): %.5f KB'%(reps,
-            1024*usedmem))
+        prints(f'Memory used in {reps} repetitions of scan(): {1024 * usedmem:.5f} KB')
         prints('Differences in python object counts:')
         diff_hists(h1, gc_histogram())
         prints()

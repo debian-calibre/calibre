@@ -73,7 +73,7 @@ def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func
     global rename_counter
 
     # Avoid too many items in a single directory for performance
-    base = os.path.join(rd.tdir, 'fcache', (('%x' % book_id)[-3:]))
+    base = os.path.join(rd.tdir, 'fcache', ((f'{book_id:x}')[-3:]))
     if iswindows:
         base = '\\\\?\\' + os.path.abspath(base)  # Ensure fname is not too long for windows' API
 
@@ -99,7 +99,7 @@ def create_file_copy(ctx, rd, prefix, library_id, book_id, ext, mtime, copy_func
                     # On windows in order to re-use bname, we have to rename it
                     # before deleting it
                     rename_counter += 1
-                    dname = os.path.join(base, '_%x' % rename_counter)
+                    dname = os.path.join(base, f'_{rename_counter:x}')
                     atomic_rename(fname, dname)
                     os.remove(dname)
                 else:
@@ -222,8 +222,8 @@ def book_fmt(ctx, rd, library_id, db, book_id, fmt):
             dest.seek(0)
 
     cd = rd.query.get('content_disposition', 'attachment')
-    rd.outheaders['Content-Disposition'] = '''{}; filename="{}"; filename*=utf-8''{}'''.format(
-        cd, book_filename(rd, book_id, mi, fmt), book_filename(rd, book_id, mi, fmt, as_encoded_unicode=True))
+    rd.outheaders['Content-Disposition'] = (
+        f'''{cd}; filename="{book_filename(rd, book_id, mi, fmt)}"; filename*=utf-8''{book_filename(rd, book_id, mi, fmt, as_encoded_unicode=True)}''')
 
     return create_file_copy(ctx, rd, 'fmt', library_id, book_id, fmt, mtime, copy_func, extra_etag_data=extra_etag_data)
 # }}}
@@ -283,7 +283,7 @@ def icon(ctx, rd, which):
         except OSError:
             raise HTTPNotFound()
     with lock:
-        cached = os.path.join(rd.tdir, 'icons', '%d-%s.png' % (sz, which))
+        cached = os.path.join(rd.tdir, 'icons', f'{sz}-{which}.png')
         try:
             return share_open(cached, 'rb')
         except OSError:
@@ -349,10 +349,10 @@ def get(ctx, rd, what, book_id, library_id):
     try:
         book_id = int(book_id)
     except Exception:
-        raise HTTPNotFound('Book with id %r does not exist' % book_id)
+        raise HTTPNotFound(f'Book with id {book_id!r} does not exist')
     db = get_db(ctx, rd, library_id)
     if db is None:
-        raise HTTPNotFound('Library %r not found' % library_id)
+        raise HTTPNotFound(f'Library {library_id!r} not found')
     with db.safe_read_lock:
         if not ctx.has_id(rd, db, book_id):
             raise BookNotFound(book_id, db)
@@ -466,8 +466,8 @@ def get_note_resource(ctx, rd, scheme, digest, library_id):
         raise HTTPNotFound(f'Notes resource {scheme}:{digest} not found')
     name = d['name']
     rd.outheaders['Content-Type'] = guess_type(name)[0] or 'application/octet-stream'
-    rd.outheaders['Content-Disposition'] = '''inline; filename="{}"; filename*=utf-8''{}'''.format(
-        fname_for_content_disposition(name), fname_for_content_disposition(name, as_encoded_unicode=True))
+    rd.outheaders['Content-Disposition'] = (
+        f'''inline; filename="{fname_for_content_disposition(name)}"; filename*=utf-8''{fname_for_content_disposition(name, as_encoded_unicode=True)}''')
     rd.outheaders['Last-Modified'] = http_date(d['mtime'])
     return d['data']
 
@@ -514,9 +514,9 @@ def set_note(ctx, rd, field, item_id, library_id):
         db_replacements[key] = f'{RESOURCE_URL_SCHEME}://{scheme}/{digest}'
     db_html = srv_html = html
     if db_replacements:
-        db_html = re.sub('|'.join(map(re.escape, db_replacements)), lambda m: db_replacements[m.group()], html)
+        db_html = re.sub(r'|'.join(map(re.escape, db_replacements)), lambda m: db_replacements[m.group()], html)
     if srv_replacements:
-        srv_html = re.sub('|'.join(map(re.escape, srv_replacements)), lambda m: srv_replacements[m.group()], html)
+        srv_html = re.sub(r'|'.join(map(re.escape, srv_replacements)), lambda m: srv_replacements[m.group()], html)
     db.set_notes_for(field, item_id, db_html, searchable_text, resources)
     rd.outheaders['Content-Type'] = 'text/html; charset=UTF-8'
     return srv_html
@@ -524,10 +524,9 @@ def set_note(ctx, rd, field, item_id, library_id):
 
 def data_file(rd, fname, path, stat_result):
     cd = rd.query.get('content_disposition', 'attachment')
-    rd.outheaders['Content-Disposition'] = '''{}; filename="{}"; filename*=utf-8''{}'''.format(
-        cd, fname_for_content_disposition(fname), fname_for_content_disposition(fname, as_encoded_unicode=True))
+    rd.outheaders['Content-Disposition'] = (
+        f'''{cd}; filename="{fname_for_content_disposition(fname)}"; filename*=utf-8''{fname_for_content_disposition(fname, as_encoded_unicode=True)}''')
     return rd.filesystem_file_with_custom_etag(share_open(path, 'rb'), stat_result.st_dev, stat_result.st_ino, stat_result.st_size, stat_result.st_mtime)
-
 
 
 @endpoint('/data-files/get/{book_id}/{relpath}/{library_id=None}', types={'book_id': int})

@@ -211,7 +211,7 @@ class CenteredToolButton(RightClickButton):
         self.setIcon(icon)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
         self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
-        self.text_flags =  Qt.TextFlag.TextSingleLine | Qt.AlignmentFlag.AlignCenter
+        self.text_flags = Qt.TextFlag.TextSingleLine | Qt.AlignmentFlag.AlignCenter
 
     def paintEvent(self, ev):
         painter = QStylePainter(self)
@@ -239,7 +239,6 @@ class CenteredToolButton(RightClickButton):
 
 
 class Dialog(QDialog):
-
     '''
     An improved version of Qt's QDialog class. This automatically remembers the
     last used size, automatically connects the signals for QDialogButtonBox,
@@ -383,7 +382,7 @@ class RatingEditor(QComboBox):
             self.redo()
             return ev.accept()
         k = ev.key()
-        num = {getattr(Qt, 'Key_%d'%i):i for i in range(6)}.get(k)
+        num = {getattr(Qt, f'Key_{i}'):i for i in range(6)}.get(k)
         if num is None:
             return QComboBox.keyPressEvent(self, ev)
         ev.accept()
@@ -601,7 +600,7 @@ class HTMLDisplay(QTextBrowser):
         if app.is_dark_theme:
             pal = app.palette()
             col = pal.color(QPalette.ColorRole.Link)
-            self.default_css = 'a { color: %s }\n\n' % col.name(QColor.NameFormat.HexRgb)
+            self.default_css = f'a {{ color: {col.name(QColor.NameFormat.HexRgb)} }}\n\n'
         else:
             self.default_css = ''
         self.document().setDefaultStyleSheet(self.default_css + self.process_external_css(self.external_css))
@@ -697,7 +696,7 @@ class ScrollingTabWidget(QTabWidget):
         sw.setWidget(page)
         sw.setWidgetResizable(True)
         page.setAutoFillBackground(False)
-        sw.setStyleSheet('#%s { background: transparent }' % name)
+        sw.setStyleSheet(f'#{name} {{ background: transparent }}')
         return sw
 
     def indexOf(self, page):
@@ -874,7 +873,6 @@ class MessagePopup(QLabel):
     def position_in_parent(self):
         p = self.parent()
         self.move((p.width() - self.width()) // 2, self.OFFSET_FROM_TOP)
-
 
 
 if __name__ == '__main__':

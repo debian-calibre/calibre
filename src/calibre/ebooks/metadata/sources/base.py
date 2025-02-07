@@ -26,8 +26,8 @@ def create_log(ostream=None):
 
 
 # Comparing Metadata objects for relevance {{{
-words = ("the", "a", "an", "of", "and")
-prefix_pat = re.compile(r'^(%s)\s+'%("|".join(words)))
+words = ('the', 'a', 'an', 'of', 'and')
+prefix_pat = re.compile(r'^(%s)\s+'%('|'.join(words)))
 trailing_paren_pat = re.compile(r'\(.*\)$')
 whitespace_pat = re.compile(r'\s+')
 
@@ -44,7 +44,6 @@ def cleanup_title(s):
 
 @total_ordering
 class InternalMetadataCompareKeyGen:
-
     '''
     Generate a sort key for comparison of the relevance of Metadata objects,
     given a search query. This is used only to compare results from the same
@@ -164,7 +163,7 @@ def fixcase(x):
 
 
 class Option:
-    __slots__ = ['type', 'default', 'label', 'desc', 'name', 'choices']
+    __slots__ = ('choices', 'default', 'desc', 'label', 'name', 'type')
 
     def __init__(self, name, type_, default, label, desc, choices=None):
         '''
@@ -180,7 +179,7 @@ class Option:
         self.name, self.type, self.default, self.label, self.desc = (name,
                 type_, default, label, desc)
         if choices and not isinstance(choices, dict):
-            choices = dict([(x, x) for x in choices])
+            choices = {x: x for x in choices}
         self.choices = choices
 
 
@@ -488,7 +487,7 @@ class Source(Plugin):
         consistent, so only implement it if it is possible to construct the URL
         from a known scheme given identifiers.
         '''
-        return None
+        return
 
     def get_book_url_name(self, idtype, idval, url):
         '''
@@ -514,7 +513,7 @@ class Source(Plugin):
         Note that this method must only return validated URLs, i.e. not URLS
         that could result in a generic cover image or a not found error.
         '''
-        return None
+        return
 
     def id_from_url(self, url):
         '''
@@ -523,7 +522,7 @@ class Source(Plugin):
         If the URL does not match the pattern for the metadata source,
         return None.
         '''
-        return None
+        return
 
     def identify_results_keygen(self, title=None, authors=None,
             identifiers={}):
@@ -582,7 +581,7 @@ class Source(Plugin):
                  of the error suitable for showing to the user
 
         '''
-        return None
+        return
 
     def download_cover(self, log, result_queue, abort,
             title=None, authors=None, identifiers={}, timeout=30, get_best_cover=False):

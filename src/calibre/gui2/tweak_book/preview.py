@@ -65,8 +65,8 @@ def get_data(name):
         return editors[name].get_raw_data()
     return current_container().raw_data(name)
 
-# Parsing of html to add linenumbers {{{
 
+# Parsing of html to add linenumbers {{{
 
 def parse_html(raw):
     root = parse(raw, decoder=lambda x:x.decode('utf-8'), line_numbers=True, linenumber_attribute='data-lnum')
@@ -78,7 +78,7 @@ def parse_html(raw):
 
 class ParseItem:
 
-    __slots__ = ('name', 'length', 'fingerprint', 'parsing_done', 'parsed_data')
+    __slots__ = ('fingerprint', 'length', 'name', 'parsed_data', 'parsing_done')
 
     def __init__(self, name):
         self.name = name
@@ -87,8 +87,9 @@ class ParseItem:
         self.parsing_done = False
 
     def __repr__(self):
-        return 'ParsedItem(name={!r}, length={!r}, fingerprint={!r}, parsing_done={!r}, parsed_data_is_None={!r})'.format(
-            self.name, self.length, self.fingerprint, self.parsing_done, self.parsed_data is None)
+        return (
+            f'ParsedItem(name={self.name!r}, length={self.length!r}, fingerprint={self.fingerprint!r}, '
+            f'parsing_done={self.parsing_done!r}, parsed_data_is_None={self.parsed_data is None!r})')
 
 
 class ParseWorker(Thread):
@@ -139,7 +140,7 @@ class ParseWorker(Thread):
                 pi.parsing_done = True
                 parsed_data = res['result']
                 if res['tb']:
-                    prints("Parser error:")
+                    prints('Parser error:')
                     prints(res['tb'])
                 else:
                     pi.parsed_data = parsed_data
@@ -175,8 +176,8 @@ class ParseWorker(Thread):
 parse_worker = ParseWorker()
 # }}}
 
-# Override network access to load data "live" from the editors {{{
 
+# Override network access to load data "live" from the editors {{{
 
 class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
@@ -237,7 +238,6 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
 
         if self.requests:
             return QTimer.singleShot(10, self.check_for_parse)
-
 
 # }}}
 
@@ -599,7 +599,7 @@ class Preview(QWidget):
         self.bar.addSeparator()
         self.bar.addWidget(self.search)
         for d in ('next', 'prev'):
-            ac = actions['find-%s-preview' % d]
+            ac = actions[f'find-{d}-preview']
             ac.triggered.connect(getattr(self, 'find_' + d))
             self.bar.addAction(ac)
 

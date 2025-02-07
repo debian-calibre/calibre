@@ -44,7 +44,7 @@ from calibre.utils.icu import lower as icu_lower
 from polyglot.builtins import itervalues
 
 SERVER = 'https://code.calibre-ebook.com/plugins/'
-INDEX_URL = '%splugins.json.bz2' % SERVER
+INDEX_URL = f'{SERVER}plugins.json.bz2'
 FILTER_ALL = 0
 FILTER_INSTALLED = 1
 FILTER_UPDATE_AVAILABLE = 2
@@ -132,7 +132,6 @@ def get_installed_plugin_status(display_plugin):
 
 
 class ImageTitleLayout(QHBoxLayout):
-
     '''
     A reusable layout widget displaying an image followed by a title
     '''
@@ -158,7 +157,6 @@ class ImageTitleLayout(QHBoxLayout):
 
 
 class SizePersistedDialog(QDialog):
-
     '''
     This dialog is a base class for any dialogs that want their size/position
     restored when they are next opened.
@@ -248,7 +246,7 @@ class DisplayPluginSortFilterModel(QSortFilterProxyModel):
         self.setSortRole(Qt.ItemDataRole.UserRole)
         self.setSortCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.filter_criteria = FILTER_ALL
-        self.filter_text = ""
+        self.filter_text = ''
 
     def filterAcceptsRow(self, sourceRow, sourceParent):
         index = self.sourceModel().index(sourceRow, 0, sourceParent)
@@ -509,7 +507,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         header_layout.addWidget(la)
         self.filter_by_name_lineedit = QLineEdit(self)
         la.setBuddy(self.filter_by_name_lineedit)
-        self.filter_by_name_lineedit.setText("")
+        self.filter_by_name_lineedit.setText('')
         self.filter_by_name_lineedit.textChanged.connect(self._filter_name_lineedit_changed)
 
         header_layout.addWidget(self.filter_by_name_lineedit)
@@ -652,7 +650,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         self.plugin_view.setFocus()
 
     def _filter_combo_changed(self, idx):
-        self.filter_by_name_lineedit.setText("")  # clear the name filter text when a different group was selected
+        self.filter_by_name_lineedit.setText('')  # clear the name filter text when a different group was selected
         self.proxy_model.set_filter_criteria(idx)
         if idx == FILTER_NOT_INSTALLED:
             self.plugin_view.sortByColumn(5, Qt.SortOrder.DescendingOrder)
@@ -754,7 +752,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
             display_plugin.installed_version = display_plugin.available_version
         except:
             if DEBUG:
-                prints('ERROR occurred while installing plugin: %s'%display_plugin.name)
+                prints(f'ERROR occurred while installing plugin: {display_plugin.name}')
                 traceback.print_exc()
             error_dialog(self.gui, _('Install plugin failed'),
                          _('A problem occurred while installing this plugin.'
@@ -763,7 +761,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
                            ' the forum thread for this plugin and restart calibre.'),
                          det_msg=traceback.format_exc(), show=True)
             if DEBUG:
-                prints('Due to error now uninstalling plugin: %s'%display_plugin.name)
+                prints(f'Due to error now uninstalling plugin: {display_plugin.name}')
             remove_plugin(display_plugin.name)
             display_plugin.plugin = None
 
@@ -796,7 +794,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
         display_plugin = self._selected_display_plugin()
         plugin = display_plugin.plugin
         if not plugin.can_be_disabled:
-            return error_dialog(self,_('Plugin cannot be disabled'),
+            return error_dialog(self, _('Plugin cannot be disabled'),
                          _('The plugin: %s cannot be disabled')%plugin.name, show=True)
         if is_disabled(plugin):
             enable_plugin(plugin)

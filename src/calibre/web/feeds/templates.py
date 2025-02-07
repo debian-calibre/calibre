@@ -23,8 +23,8 @@ def attrs(*args, **kw):
         kw['class'] = ' '.join(args)
     return kw
 
-# Regular templates
 
+# Regular templates
 
 class Template:
 
@@ -103,10 +103,10 @@ class IndexTemplate(Template):
         for i, feed in enumerate(feeds):
             if len(feed):
                 li = LI(A(feed.title, attrs('feed', rescale=120,
-                    href='feed_%d/index.html'%i)), id='feed_%d'%i)
+                    href=f'feed_{i}/index.html')), id=f'feed_{i}')
                 ul.append(li)
         div = DIV(
-                PT(IMG(src=masthead,alt="masthead"),style='text-align:center'),
+                PT(IMG(src=masthead, alt='masthead'), style='text-align:center'),
                 PT(date, style='text-align:right'),
                 ul,
                 attrs(rescale=100))
@@ -129,14 +129,14 @@ class FeedTemplate(Template):
             hr.tail = '| '
 
         if f+1 < len(feeds):
-            link = A(_('Next section'), href='../feed_%d/index.html'%(f+1))
+            link = A(_('Next section'), href=f'../feed_{f + 1}/index.html')
             link.tail = ' | '
             navbar.append(link)
-        link = A(_('Main menu'), href="../index.html")
+        link = A(_('Main menu'), href='../index.html')
         link.tail = ' | '
         navbar.append(link)
         if f > 0:
-            link = A(_('Previous section'), href='../feed_%d/index.html'%(f-1))
+            link = A(_('Previous section'), href=f'../feed_{f - 1}/index.html')
             link.tail = ' |'
             navbar.append(link)
         if top:
@@ -178,7 +178,7 @@ class FeedTemplate(Template):
                     A(article.title, attrs('article', rescale=120,
                                     href=article.url)),
                     SPAN(article.formatted_date, attrs('article_date')),
-                    attrs(rescale=100, id='article_%d'%i,
+                    attrs(rescale=100, id=f'article_{i}',
                             style='padding-bottom:0.5em')
                     )
             if article.summary:
@@ -220,20 +220,20 @@ class NavBarTemplate(Template):
                 navbar.append(BR())
             navbar.append(BR())
         else:
-            next_art = 'feed_%d'%(feed+1) if art == number_of_articles_in_feed - 1 \
-                    else 'article_%d'%(art+1)
+            next_art = f'feed_{feed + 1}' if art == number_of_articles_in_feed - 1 \
+                    else f'article_{art + 1}'
             up = '../..' if art == number_of_articles_in_feed - 1 else '..'
-            href = '%s%s/%s/index.html'%(prefix, up, next_art)
+            href = f'{prefix}{up}/{next_art}/index.html'
             navbar.text = '| '
             navbar.append(A(_('Next'), href=href))
-        href = '%s../index.html#article_%d'%(prefix, art)
+        href = f'{prefix}../index.html#article_{art}'
         next(navbar.iterchildren(reversed=True)).tail = ' | '
         navbar.append(A(_('Section menu'), href=href))
-        href = '%s../../index.html#feed_%d'%(prefix, feed)
+        href = f'{prefix}../../index.html#feed_{feed}'
         next(navbar.iterchildren(reversed=True)).tail = ' | '
         navbar.append(A(_('Main menu'), href=href))
         if art > 0 and not bottom:
-            href = '%s../article_%d/index.html'%(prefix, art-1)
+            href = f'{prefix}../article_{art - 1}/index.html'
             next(navbar.iterchildren(reversed=True)).tail = ' | '
             navbar.append(A(_('Previous'), href=href))
         next(navbar.iterchildren(reversed=True)).tail = ' | '
@@ -249,11 +249,11 @@ class TouchscreenIndexTemplate(Template):
     def _generate(self, title, masthead, datefmt, feeds, extra_css=None, style=None):
         self.IS_HTML = False
         date = '{}, {} {}, {}'.format(strftime('%A'), strftime('%B'), strftime('%d').lstrip('0'), strftime('%Y'))
-        masthead_p = etree.Element("p")
-        masthead_p.set("style","text-align:center")
-        masthead_img = etree.Element("img")
-        masthead_img.set("src",masthead)
-        masthead_img.set("alt","masthead")
+        masthead_p = etree.Element('p')
+        masthead_p.set('style','text-align:center')
+        masthead_img = etree.Element('img')
+        masthead_img.set('src',masthead)
+        masthead_img.set('alt','masthead')
         masthead_p.append(masthead_img)
 
         head = HEAD(TITLE(title))
@@ -262,12 +262,12 @@ class TouchscreenIndexTemplate(Template):
         if extra_css:
             head.append(STYLE(extra_css, type='text/css'))
 
-        toc = TABLE(attrs('toc'),width="100%",border="0",cellpadding="3px")
+        toc = TABLE(attrs('toc'),width='100%',border='0',cellpadding='3px')
         for i, feed in enumerate(feeds):
             if len(feed):
                 tr = TR()
-                tr.append(TD(attrs(rescale=120), A(feed.title, href='feed_%d/index.html'%i)))
-                tr.append(TD('%s' % len(feed.articles), style="text-align:right"))
+                tr.append(TD(attrs(rescale=120), A(feed.title, href=f'feed_{i}/index.html')))
+                tr.append(TD(f'{len(feed.articles)}', style='text-align:right'))
                 toc.append(tr)
         div = DIV(
                 masthead_p,
@@ -284,7 +284,7 @@ class TouchscreenFeedTemplate(Template):
     def _generate(self, f, feeds, cutoff, extra_css=None, style=None):
         from calibre.utils.cleantext import clean_xml_chars
 
-        def trim_title(title,clip=18):
+        def trim_title(title, clip=18):
             if len(title)>clip:
                 tokens = title.split(' ')
                 new_title_tokens = []
@@ -313,11 +313,11 @@ class TouchscreenFeedTemplate(Template):
         if f > 0:
             link = A(attrs('feed_link'),
                      trim_title(feeds[f-1].title),
-                     href='../feed_%d/index.html' % int(f-1))
+                     href=f'../feed_{int(f-1)}/index.html')
         navbar_tr.append(TD(attrs('feed_prev'),link))
 
         # Up to Sections
-        link = A(_('Sections'), href="../index.html")
+        link = A(_('Sections'), href='../index.html')
         navbar_tr.append(TD(attrs('feed_up'),link))
 
         # Next Section
@@ -325,12 +325,12 @@ class TouchscreenFeedTemplate(Template):
         if f < len(feeds)-1:
             link = A(attrs('feed_link'),
                      trim_title(feeds[f+1].title),
-                     href='../feed_%d/index.html' % int(f+1))
+                     href=f'../feed_{int(f+1)}/index.html')
         navbar_tr.append(TD(attrs('feed_next'),link))
         navbar_t.append(navbar_tr)
         top_navbar = navbar_t
         bottom_navbar = copy.copy(navbar_t)
-        # print "\n%s\n" % etree.tostring(navbar_t, pretty_print=True)
+        # print('\n%s\n' % etree.tostring(navbar_t, pretty_print=True))
 
         # Build the page
         head = HEAD(TITLE(feed.title))
@@ -402,27 +402,27 @@ class TouchscreenNavBarTemplate(Template):
             navbar.append(BR())
         # | Previous
         if art > 0:
-            link = A(attrs('article_link'),_('Previous'),href='%s../article_%d/index.html'%(prefix, art-1))
+            link = A(attrs('article_link'),_('Previous'),href=f'{prefix}../article_{art - 1}/index.html')
             navbar_tr.append(TD(attrs('article_prev'),link))
         else:
             navbar_tr.append(TD(attrs('article_prev'),''))
 
         # | Articles | Sections |
-        link = A(attrs('articles_link'),_('Articles'), href='%s../index.html#article_%d'%(prefix, art))
+        link = A(attrs('articles_link'),_('Articles'), href=f'{prefix}../index.html#article_{art}')
         navbar_tr.append(TD(attrs('article_articles_list'),link))
 
-        link = A(attrs('sections_link'),_('Sections'), href='%s../../index.html#feed_%d'%(prefix, feed))
+        link = A(attrs('sections_link'),_('Sections'), href=f'{prefix}../../index.html#feed_{feed}')
         navbar_tr.append(TD(attrs('article_sections_list'),link))
 
         # | Next
-        next_art = 'feed_%d'%(feed+1) if art == number_of_articles_in_feed - 1 \
-                else 'article_%d'%(art+1)
+        next_art = f'feed_{feed + 1}' if art == number_of_articles_in_feed - 1 \
+                else f'article_{art + 1}'
         up = '../..' if art == number_of_articles_in_feed - 1 else '..'
 
-        link = A(attrs('article_link'), _('Next'), href='%s%s/%s/index.html'%(prefix, up, next_art))
+        link = A(attrs('article_link'), _('Next'), href=f'{prefix}{up}/{next_art}/index.html')
         navbar_tr.append(TD(attrs('article_next'),link))
         navbar_t.append(navbar_tr)
         navbar.append(navbar_t)
-        # print "\n%s\n" % etree.tostring(navbar, pretty_print=True)
+        # print('\n%s\n' % etree.tostring(navbar, pretty_print=True))
 
         self.root = HTML(head, BODY(navbar))

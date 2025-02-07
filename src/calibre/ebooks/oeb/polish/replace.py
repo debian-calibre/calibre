@@ -48,7 +48,7 @@ class LinkReplacer:
         if purl.fragment:
             nfrag = self.frag_map(name, purl.fragment)
             if nfrag:
-                href += '#%s'%nfrag
+                href += f'#{nfrag}'
         if href != url:
             self.replaced = True
         return href
@@ -190,13 +190,13 @@ def rename_files(container, file_map):
     '''
     overlap = set(file_map).intersection(set(itervalues(file_map)))
     if overlap:
-        raise ValueError('Circular rename detected. The files %s are both rename targets and destinations' % ', '.join(overlap))
+        raise ValueError('Circular rename detected. The files {} are both rename targets and destinations'.format(', '.join(overlap)))
     for name, dest in iteritems(file_map):
         if container.exists(dest):
             if name != dest and name.lower() == dest.lower():
                 # A case change on an OS with a case insensitive file-system.
                 continue
-            raise ValueError('Cannot rename {0} to {1} as {1} already exists'.format(name, dest))
+            raise ValueError(f'Cannot rename {name} to {dest} as {dest} already exists')
     if len(tuple(itervalues(file_map))) != len(set(itervalues(file_map))):
         raise ValueError('Cannot rename, the set of destination files contains duplicates')
     link_map = {}
@@ -218,13 +218,13 @@ def replace_file(container, name, path, basename, force_mt=None):
             b, e = nname.rpartition('.')[0::2]
             while container.exists(nname):
                 count += 1
-                nname = b + ('_%d.%s' % (count, e))
+                nname = b + f'_{count}.{e}'
             rename_files(container, {name:nname})
             mt = force_mt or container.guess_type(nname)
             container.mime_map[nname] = mt
             for itemid, q in iteritems(container.manifest_id_map):
                 if q == nname:
-                    for item in container.opf_xpath('//opf:manifest/opf:item[@href and @id="%s"]' % itemid):
+                    for item in container.opf_xpath(f'//opf:manifest/opf:item[@href and @id="{itemid}"]'):
                         item.set('media-type', mt)
         container.dirty(container.opf_name)
         with container.open(nname, 'wb') as dest:
@@ -308,7 +308,7 @@ def rationalize_folders(container, folder_type_map):
                 while new_name in all_names or new_name in new_names:
                     c += 1
                     n, ext = bn.rpartition('.')[0::2]
-                    new_name = posixpath.join(folder, '%s_%d.%s' % (n, c, ext))
+                    new_name = posixpath.join(folder, f'{n}_{c}.{ext}')
                 name_map[name] = new_name
                 new_names.add(new_name)
     return name_map

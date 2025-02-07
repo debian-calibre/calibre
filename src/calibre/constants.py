@@ -11,10 +11,10 @@ from functools import lru_cache
 from polyglot.builtins import environ_item, hasenv
 
 __appname__   = 'calibre'
-numeric_version = (7, 24, 0)
+numeric_version = (7, 25, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
-__author__    = "Kovid Goyal <kovid@kovidgoyal.net>"
+__author__    = 'Kovid Goyal <kovid@kovidgoyal.net>'
 
 '''
 Various run time constants.
@@ -146,7 +146,7 @@ def _get_cache_dir():
 
     if iswindows:
         try:
-            candidate = os.path.join(winutil.special_folder_path(winutil.CSIDL_LOCAL_APPDATA), '%s-cache'%__appname__)
+            candidate = os.path.join(winutil.special_folder_path(winutil.CSIDL_LOCAL_APPDATA), f'{__appname__}-cache')
         except ValueError:
             return confcache
     elif ismacos:
@@ -341,7 +341,7 @@ class Plugins(collections.abc.Mapping):
         try:
             return import_module('calibre_extensions.' + name), ''
         except ModuleNotFoundError:
-            raise KeyError('No plugin named %r'%name)
+            raise KeyError(f'No plugin named {name!r}')
         except Exception as err:
             return None, str(err)
 
@@ -409,7 +409,6 @@ else:
                 pass
         atexit.register(cleanup_cdir)
 # }}}
-
 
 is_running_from_develop = False
 if getattr(sys, 'frozen', False):

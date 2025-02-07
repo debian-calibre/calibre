@@ -110,11 +110,10 @@ class FormatterFunctions:
 
     def register_builtin(self, func_class):
         if not isinstance(func_class, FormatterFunction):
-            raise ValueError('Class %s is not an instance of FormatterFunction'%(
-                                    func_class.__class__.__name__))
+            raise ValueError(f'Class {func_class.__class__.__name__} is not an instance of FormatterFunction')
         name = func_class.name
         if name in self._functions:
-            raise ValueError('Name %s already used'%name)
+            raise ValueError(f'Name {name} already used')
         self._builtins[name] = func_class
         self._functions[name] = func_class
         for a in func_class.aliases:
@@ -122,11 +121,10 @@ class FormatterFunctions:
 
     def _register_function(self, func_class, replace=False):
         if not isinstance(func_class, FormatterFunction):
-            raise ValueError('Class %s is not an instance of FormatterFunction'%(
-                                    func_class.__class__.__name__))
+            raise ValueError(f'Class {func_class.__class__.__name__} is not an instance of FormatterFunction')
         name = func_class.name
         if not replace and name in self._functions:
-            raise ValueError('Name %s already used'%name)
+            raise ValueError(f'Name {name} already used')
         self._functions[name] = func_class
 
     def register_functions(self, library_uuid, funcs):
@@ -211,10 +209,10 @@ def get_database(mi, name):
         if name is not None:
             raise ValueError(_('In function {}: The database has been closed').format(name))
         return None
-    wr = getattr(cache, 'library_database_instance', None)
+    wr = getattr(cache, 'database_instance', None)
     if wr is None:
         if name is not None:
-            only_in_gui_error()
+            only_in_gui_error(name)
         return None
     db = wr()
     if db is None:
@@ -248,8 +246,21 @@ class FormatterFunction:
     def only_in_gui_error(self):
         only_in_gui_error(self.name)
 
-    def get_database(self, mi):
-        return get_database(mi, self.name)
+    def get_database(self, mi, formatter=None):
+        # Prefer the db that comes from proxy_metadata because it is probably an
+        # instance of LibraryDatabase where the one in the formatter might be an
+        # instance of Cache
+        formatter_db = getattr(formatter, 'database', None)
+        if formatter_db is None:
+            # The formatter doesn't have a database. Try to get one from
+            # proxy_metadata. This will raise an exception because the name
+            # parameter is not None
+            return get_database(mi, self.name)
+        else:
+            # We have a formatter db. Try to get the db from proxy_metadata but
+            # don't raise an exception if one isn't available.
+            legacy_db = get_database(mi, None)
+            return legacy_db if legacy_db is not None else formatter_db
 
 
 class BuiltinFormatterFunction(FormatterFunction):
@@ -376,7 +387,7 @@ arguments.[/] Can take any number of arguments. In most cases you can use the
     def evaluate(self, formatter, kwargs, mi, locals, *args):
         i = 0
         res = ''
-        for i in range(0, len(args)):
+        for i in range(len(args)):
             res += args[i]
         return res
 
@@ -709,7 +720,7 @@ separated by ``separator``.
     def evaluate(self, formatter, kwargs, mi, locals, name, separator):
         res = getattr(mi, name, None)
         if not isinstance(res, list):
-            return "%s is not a list" % name
+            return f'{name} is not a list'
         return separator.join(res)
 
 
@@ -985,14 +996,14 @@ return ``found_val``, otherwise return ``not_found_val``. If ``found_val`` and
             fv = args[0]
             nfv = args[1]
         else:
-            raise ValueError(_("{} requires 2 or 4 arguments").format(self.name))
+            raise ValueError(_('{} requires 2 or 4 arguments').format(self.name))
 
         l = [v.strip() for v in val.split(',') if v.strip()]
-        (id_, __, regexp) = ident.partition(':')
+        id_, __, regexp = ident.partition(':')
         if not id_:
             return nfv
         for candidate in l:
-            i, __, v =  candidate.partition(':')
+            i, __, v = candidate.partition(':')
             if v and i == id_:
                 if not regexp or re.search(regexp, v, flags=re.I):
                     return candidate if fv_is_id else fv
@@ -1041,7 +1052,7 @@ program: re_group(field('series'), "(\S* )(.*)", "{$:uppercase()}", "{$}")'}
         def repl(mo):
             res = ''
             if mo and mo.lastindex:
-                for dex in range(0, mo.lastindex):
+                for dex in range(mo.lastindex):
                     gv = mo.group(dex+1)
                     if gv is None:
                         continue
@@ -1255,7 +1266,6 @@ the :ref:`select` function to get the modification time for a specific format. N
 that format names are always uppercase, as in EPUB.
 ''')
 
-
     def evaluate(self, formatter, kwargs, mi, locals, fmt):
         fmt_data = mi.get('format_metadata', {})
         try:
@@ -1374,7 +1384,7 @@ items from ``start_index`` to ``end_index``.[/] The first item is number zero. I
 an index is negative, then it counts from the end of the list. As a special
 case, an end_index of zero is assumed to be the length of the list.
 
-Examples assuming that the tags column (which is comma-separated) contains "A, B ,C":
+Examples assuming that the tags column (which is comma-separated) contains "A, B, C":
 [LIST]
 [*]``{tags:sublist(0,1,\,)}`` returns "A"
 [*]``{tags:sublist(-1,0,\,)}`` returns "C"
@@ -1676,11 +1686,12 @@ class BuiltinAnnotationCount(BuiltinFormatterFunction):
     __doc__ = doc = _(
 r'''
 ``annotation_count()`` -- return the total number of annotations of all types
-attached to the current book.[/] This function works only in the GUI.
+attached to the current book.[/] This function works only in the GUI and the
+content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals):
-        c = self.get_database(mi).new_api.annotation_count_for_book(mi.id)
+        c = self.get_database(mi, formatter=formatter).new_api.annotation_count_for_book(mi.id)
         return '' if c == 0 else str(c)
 
 
@@ -1697,7 +1708,7 @@ not marked. This function works only in the GUI.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals):
-        c = self.get_database(mi).data.get_marked(mi.id)
+        c = self.get_database(mi, formatter=formatter).data.get_marked(mi.id)
         return c if c else ''
 
 
@@ -1850,7 +1861,7 @@ program:
     list_join('#@#', $authors, '&', list_re($#genre, ',', '^(.).*$', 'Genre: \\1'),  ',')
 [/CODE]
 ''')  # not translated as \1 gets mistranslated as a control char in transifex
-      # for some reason. And yes, the double backslash is required, for some reason.
+    # for some reason. And yes, the double backslash is required, for some reason.
 
     def evaluate(self, formatter, kwargs, mi, locals, with_separator, *args):
         if len(args) % 2 != 0:
@@ -1859,7 +1870,7 @@ program:
                   "associated separator"))
 
         # Starting in python 3.7 dicts preserve order so we don't need OrderedDict
-        result = dict()
+        result = {}
         i = 0
         while i < len(args):
             lst = [v.strip() for v in args[i].split(args[i+1]) if v.strip()]
@@ -1938,7 +1949,7 @@ range(1, 5, 2, 1) -> error(limit exceeded)
         r = range(start_val, stop_val, step_val)
         if len(r) > limit_val:
             raise ValueError(
-                _("{0}: length ({1}) longer than limit ({2})").format(
+                _('{0}: length ({1}) longer than limit ({2})').format(
                             'range', len(r), str(limit_val)))
         return ', '.join([str(v) for v in r])
 
@@ -2027,8 +2038,8 @@ by ``separator``, as are the items in the returned list.
     def evaluate(self, formatter, kwargs, mi, locals, value, direction, separator):
         res = [l.strip() for l in value.split(separator) if l.strip()]
         if separator == ',':
-            return ', '.join(sorted(res, key=sort_key, reverse=direction != "0"))
-        return separator.join(sorted(res, key=sort_key, reverse=direction != "0"))
+            return ', '.join(sorted(res, key=sort_key, reverse=direction != '0'))
+        return separator.join(sorted(res, key=sort_key, reverse=direction != '0'))
 
 
 class BuiltinListEquals(BuiltinFormatterFunction):
@@ -2101,7 +2112,7 @@ uses ``re_group(item, search_re, template ...)`` when doing the replacements.
             def repl(mo):
                 newval = ''
                 if mo and mo.lastindex:
-                    for dex in range(0, mo.lastindex):
+                    for dex in range(mo.lastindex):
                         gv = mo.group(dex+1)
                         if gv is None:
                             continue
@@ -2161,7 +2172,7 @@ returns the empty string.
         except:
             return ''
         i = d1 - d2
-        return '%.1f'%(i.days + (i.seconds/(24.0*60.0*60.0)))
+        return f'{i.days+(i.seconds/(24.0*60.0*60.0)):.1f}'
 
 
 class BuiltinDateArithmetic(BuiltinFormatterFunction):
@@ -2213,7 +2224,7 @@ Example: ``'1s3d-1m'`` will add 1 second, add 3 days, and subtract 1 minute from
             raise e
         except Exception as e:
             traceback.print_exc()
-            raise ValueError(_("{0}: error: {1}").format('date_arithmetic', str(e)))
+            raise ValueError(_('{0}: error: {1}').format('date_arithmetic', str(e)))
 
 
 class BuiltinLanguageStrings(BuiltinFormatterFunction):
@@ -2342,11 +2353,12 @@ r'''
 contain this book.[/] This function works only in the GUI. If you want to use these
 values in save-to-disk or send-to-device templates then you must make a custom
 "Column built from other columns", use the function in that column's template,
-and use that column's value in your save/send templates.
+and use that column's value in your save/send templates. This function works
+only in the GUI.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals_):
-        db = self.get_database(mi)
+        db = self.get_database(mi, formatter=formatter)
         try:
             a = db.data.get_virtual_libraries_for_books((mi.id,))
             return ', '.join(a[mi.id])
@@ -2370,7 +2382,7 @@ This function works only in the GUI.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals):
-        return self.get_database(mi).data.get_base_restriction_name()
+        return self.get_database(mi, formatter=formatter).data.get_base_restriction_name()
 
 
 class BuiltinUserCategories(BuiltinFormatterFunction):
@@ -2438,10 +2450,11 @@ program:
 ans
 [/CODE]
 [/LIST]
+This function works only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, field_name, field_value):
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         try:
             link = None
             item_id = db.get_item_id(field_name, field_value, case_sensitive=True)
@@ -2518,7 +2531,6 @@ return the device name, otherwise return the empty string.[/] Each storage locat
 on a device has its own device name. The ``storage_location_key`` names are
 ``'main'``, ``'carda'`` and ``'cardb'``. This function works only in the GUI.
 ''')
-
 
     def evaluate(self, formatter, kwargs, mi, locals, storage_location):
         # We can't use get_database() here because we need the device manager.
@@ -2598,24 +2610,26 @@ Example: ``check_yes_no("#bool", 1, 0, 1)`` returns ``'Yes'`` if the yes/no fiel
 ``#bool`` is either True or undefined (neither True nor False).
 
 More than one of ``is_undefined``, ``is_false``, or ``is_true`` can be set to 1.
+
+This function works only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, field, is_undefined, is_false, is_true):
         # 'field' is a lookup name, not a value
-        if field not in self.get_database(mi).field_metadata:
+        if field not in self.get_database(mi, formatter=formatter).field_metadata:
             raise ValueError(_("The column {} doesn't exist").format(field))
         res = getattr(mi, field, None)
         if res is None:
             if is_undefined == '1':
                 return 'Yes'
-            return ""
+            return ''
         if not isinstance(res, bool):
             raise ValueError(_('check_yes_no requires the field be a Yes/No custom column'))
         if is_false == '1' and not res:
             return 'Yes'
         if is_true == '1' and res:
             return 'Yes'
-        return ""
+        return ''
 
 
 class BuiltinRatingToStars(BuiltinFormatterFunction):
@@ -2858,6 +2872,7 @@ Using a stored template instead of putting the template into the search
 eliminates problems caused by the requirement to escape quotes in search
 expressions.
 [/LIST]
+This function can be used only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, query, use_vl):
@@ -2865,10 +2880,15 @@ expressions.
         if (not tweaks.get('allow_template_database_functions_in_composites', False) and
                 formatter.global_vars.get(rendering_composite_name, None)):
             raise ValueError(_('The book_count() function cannot be used in a composite column'))
-        db = self.get_database(mi)
+        db = self.get_database(mi, formatter=formatter)
         try:
-            ids = db.search_getting_ids(query, None, use_virtual_library=use_vl != '0')
-            return len(ids)
+            if use_vl == '0':
+                # use the new_api search that doesn't use virtual libraries to let
+                # the function work in content server icon rules.
+                ids = db.new_api.search(query, None)
+            else:
+                ids = db.search_getting_ids(query, None, use_virtual_library=True)
+            return str(len(ids))
         except Exception:
             traceback.print_exc()
 
@@ -2886,8 +2906,8 @@ then virtual libraries are ignored. This function and its companion
 ``book_count()`` are particularly useful in template searches, supporting
 searches that combine information from many books such as looking for series
 with only one book. It cannot be used in composite columns unless the tweak
-``allow_template_database_functions_in_composites`` is set to True. It can be
-used only in the GUI.
+``allow_template_database_functions_in_composites`` is set to True. This function
+can be used only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, column, query, sep, use_vl):
@@ -2895,11 +2915,14 @@ used only in the GUI.
         if (not tweaks.get('allow_template_database_functions_in_composites', False) and
                 formatter.global_vars.get(rendering_composite_name, None)):
             raise ValueError(_('The book_values() function cannot be used in a composite column'))
-        db = self.get_database(mi)
+        db = self.get_database(mi, formatter=formatter)
         if column not in db.field_metadata:
             raise ValueError(_("The column {} doesn't exist").format(column))
         try:
-            ids = db.search_getting_ids(query, None, use_virtual_library=use_vl != '0')
+            if use_vl == '0':
+                ids = db.new_api.search(query, None)
+            else:
+                ids = db.search_getting_ids(query, None, use_virtual_library=True)
             s = set()
             for id_ in ids:
                 f = db.new_api.get_proxy_metadata(id_).get(column, None)
@@ -2923,14 +2946,14 @@ r'''
 is supplied then the list is filtered to files that match ``pattern`` before the
 files are counted. The pattern match is case insensitive. See also the functions
 :ref:`extra_file_names`, :ref:`extra_file_size` and :ref:`extra_file_modtime`.
-This function can be used only in the GUI.
+This function can be used only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, *args):
         if len(args) > 1:
             raise ValueError(_('Incorrect number of arguments for function {0}').format('has_extra_files'))
         pattern = args[0] if len(args) == 1 else None
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         try:
             files = tuple(f.relpath.partition('/')[-1] for f in
                           db.list_extra_files(mi.id, use_cache=True, pattern=DATA_FILE_PATTERN))
@@ -2954,14 +2977,15 @@ extra files in the book's ``data/`` folder.[/] If the optional parameter
 ``pattern``, a regular expression, is supplied then the list is filtered to
 files that match ``pattern``. The pattern match is case insensitive. See also
 the functions :ref:`has_extra_files`, :ref:`extra_file_modtime` and
-:ref:`extra_file_size`. This function can be used only in the GUI.
+:ref:`extra_file_size`. This function can be used only in the GUI and the
+content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, sep, *args):
         if len(args) > 1:
             raise ValueError(_('Incorrect number of arguments for function {0}').format('has_extra_files'))
         pattern = args[0] if len(args) == 1 else None
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         try:
             files = tuple(f.relpath.partition('/')[-1] for f in
                           db.list_extra_files(mi.id, use_cache=True, pattern=DATA_FILE_PATTERN))
@@ -2983,11 +3007,12 @@ r'''
 ``extra_file_size(file_name)`` -- returns the size in bytes of the extra file
 ``file_name`` in the book's ``data/`` folder if it exists, otherwise ``-1``.[/] See
 also the functions :ref:`has_extra_files`, :ref:`extra_file_names` and
-:ref:`extra_file_modtime`. This function can be used only in the GUI.
+:ref:`extra_file_modtime`. This function can be used only in the GUI and the
+content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, file_name):
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         try:
             q = posixpath.join(DATA_DIR_NAME, file_name)
             for f in db.list_extra_files(mi.id, use_cache=True, pattern=DATA_FILE_PATTERN):
@@ -3012,11 +3037,11 @@ exists, otherwise ``-1``. The modtime is formatted according to
 the empty string, returns the modtime as the floating point number of seconds
 since the epoch.  See also the functions :ref:`has_extra_files`,
 :ref:`extra_file_names` and :ref:`extra_file_size`. The epoch is OS dependent.
-This function can be used only in the GUI.
+This function can be used only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, file_name, format_string):
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         try:
             q = posixpath.join(DATA_DIR_NAME, file_name)
             for f in db.list_extra_files(mi.id, use_cache=True, pattern=DATA_FILE_PATTERN):
@@ -3054,10 +3079,11 @@ program:
     get_note('authors', 'Isaac Asimov', 1)
 [/CODE]
 [/LIST]
+This function works only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, field_name, field_value, plain_text):
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         try:
             note = None
             item_id = db.get_item_id(field_name, field_value, case_sensitive=True)
@@ -3122,10 +3148,11 @@ values in ``field_name``. Example:
 [CODE]
     list_count(has_note('authors', ''), '&') ==# list_count_field('authors')
 [/CODE]
+This function works only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, field_name, field_value):
-        db = self.get_database(mi).new_api
+        db = self.get_database(mi, formatter=formatter).new_api
         if field_value:
             note = None
             try:
@@ -3138,7 +3165,7 @@ values in ``field_name``. Example:
             return '1' if note is not None else ''
         try:
             notes_for_book = db.items_with_notes_in_book(mi.id)
-            values = [v for v in notes_for_book.get(field_name, {}).values()]
+            values = list(notes_for_book.get(field_name, {}).values())
             return db.field_metadata[field_name]['is_multiple'].get('list_to_ui', ', ').join(values)
         except Exception as e:
             traceback.print_exc()
@@ -3309,9 +3336,9 @@ def compile_user_template_functions(funcs):
                 func_name = func[0]
             except Exception:
                 func_name = 'Unknown'
-            prints('**** Compilation errors in user template function "%s" ****' % func_name)
+            prints(f'**** Compilation errors in user template function "{func_name}" ****')
             traceback.print_exc(limit=10)
-            prints('**** End compilation errors in %s "****"' % func_name)
+            prints(f'**** End compilation errors in {func_name} "****"')
     return compiled_funcs
 
 

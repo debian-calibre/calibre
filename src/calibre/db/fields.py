@@ -7,9 +7,9 @@ __docformat__ = 'restructuredtext en'
 
 import sys
 from collections import Counter, defaultdict
+from collections.abc import Iterable
 from functools import partial
 from threading import Lock
-from typing import Iterable
 
 from calibre.db.tables import MANY_MANY, MANY_ONE, ONE_ONE, null
 from calibre.db.utils import atof, force_to_bool
@@ -64,9 +64,10 @@ class Field:
     is_many_many = False
     is_composite = False
 
-    def __init__(self, name, table, bools_are_tristate, get_template_functions):
+    def __init__(self, name, table, bools_are_tristate, get_template_functions, db_weakref):
         self.name, self.table = name, table
         dt = self.metadata['datatype']
+        self.db_weakref = db_weakref  # this can be an instance of either Cache or LibraryDatabase
         self.has_text_data = dt in {'text', 'comments', 'series', 'enumeration'}
         self.table_type = self.table.table_type
         self._sort_key = (sort_key if dt in ('text', 'series', 'enumeration') else IDENTITY)
@@ -88,7 +89,7 @@ class Field:
             if tweaks['sort_dates_using_visible_fields']:
                 fmt = None
                 if name in {'timestamp', 'pubdate', 'last_modified'}:
-                    fmt = tweaks['gui_%s_display_format' % name]
+                    fmt = tweaks[f'gui_{name}_display_format']
                 elif self.metadata['is_custom']:
                     fmt = self.metadata.get('display', {}).get('date_format', None)
                 self._sort_key = partial(clean_date_for_sort, fmt=fmt)
@@ -96,7 +97,7 @@ class Field:
             self._default_sort_key = ''
 
         if self.name == 'languages':
-            self._sort_key = lambda x:sort_key(calibre_langcode_to_name(x))
+            self._sort_key = lambda x: sort_key(calibre_langcode_to_name(x))
         self.is_multiple = (bool(self.metadata['is_multiple']) or self.name ==
                 'formats')
         self.sort_sort_key = True
@@ -223,8 +224,8 @@ class OneToOneField(Field):
                         ans = dk
                     return ans
                 return none_safe_key
-            return lambda book_id:bcmg(book_id, dk)
-        return lambda book_id:sk(bcmg(book_id, dk))
+            return lambda book_id: bcmg(book_id, dk)
+        return lambda book_id: sk(bcmg(book_id, dk))
 
     def iter_searchable_values(self, get_metadata, candidates, default_value=None):
         cbm = self.table.book_col_map
@@ -237,8 +238,8 @@ class CompositeField(OneToOneField):
     is_composite = True
     SIZE_SUFFIX_MAP = {suffix:i for i, suffix in enumerate(('', 'K', 'M', 'G', 'T', 'P', 'E'))}
 
-    def __init__(self, name, table, bools_are_tristate, get_template_functions):
-        OneToOneField.__init__(self, name, table, bools_are_tristate, get_template_functions)
+    def __init__(self, name, table, bools_are_tristate, get_template_functions, db_weakref):
+        super().__init__(name, table, bools_are_tristate, get_template_functions, db_weakref)
 
         self._render_cache = {}
         self._lock = Lock()
@@ -297,11 +298,12 @@ class CompositeField(OneToOneField):
 
     def __render_composite(self, book_id, mi, formatter, template_cache):
         ' INTERNAL USE ONLY. DO NOT USE THIS OUTSIDE THIS CLASS! '
+        db = self.db_weakref()
         ans = formatter.safe_format(
             self.metadata['display']['composite_template'], mi, _('TEMPLATE ERROR'),
             mi, column_name=self._composite_name, template_cache=template_cache,
             template_functions=self.get_template_functions(),
-            global_vars={rendering_composite_name:'1'}).strip()
+            global_vars={rendering_composite_name:'1'}, database=db).strip()
         with self._lock:
             self._render_cache[book_id] = ans
         return ans
@@ -337,8 +339,8 @@ class CompositeField(OneToOneField):
         gv = self.get_value_with_cache
         sk = self._sort_key
         if sk is IDENTITY:
-            return lambda book_id:gv(book_id, get_metadata)
-        return lambda book_id:sk(gv(book_id, get_metadata))
+            return lambda book_id: gv(book_id, get_metadata)
+        return lambda book_id: sk(gv(book_id, get_metadata))
 
     def iter_searchable_values(self, get_metadata, candidates, default_value=None):
         val_map = defaultdict(set)
@@ -364,7 +366,7 @@ class CompositeField(OneToOneField):
         for book_id in candidates:
             vals = self.get_value_with_cache(book_id, get_metadata)
             if splitter:
-                length = len(list(vv.strip() for vv in vals.split(splitter) if vv.strip()))
+                length = len([vv.strip() for vv in vals.split(splitter) if vv.strip()])
             elif vals.strip():
                 length = 1
             else:
@@ -404,8 +406,9 @@ class CompositeField(OneToOneField):
 
 class OnDeviceField(OneToOneField):
 
-    def __init__(self, name, table, bools_are_tristate, get_template_functions):
+    def __init__(self, name, table, bools_are_tristate, get_template_functions, db_weakref):
         self.name = name
+        self.db_weakref = db_weakref
         self.book_on_device_func = None
         self.is_multiple = False
         self.cache = {}
@@ -451,7 +454,7 @@ class OnDeviceField(OneToOneField):
                 loc.append(_('Card A'))
             if b is not None:
                 loc.append(_('Card B'))
-        return ', '.join(loc) + ((' (%s books)'%count) if count > 1 else '')
+        return ', '.join(loc) + ((f' ({count} books)') if count > 1 else '')
 
     def __iter__(self):
         return iter(())
@@ -468,7 +471,7 @@ class OnDeviceField(OneToOneField):
 
 class LazySortMap:
 
-    __slots__ = ('default_sort_key', 'sort_key_func', 'id_map', 'cache')
+    __slots__ = ('cache', 'default_sort_key', 'id_map', 'sort_key_func')
 
     def __init__(self, default_sort_key, sort_key_func, id_map):
         self.default_sort_key = default_sort_key
@@ -514,7 +517,7 @@ class ManyToOneField(Field):
     def sort_keys_for_books(self, get_metadata, lang_map):
         sk_map = LazySortMap(self._default_sort_key, self._sort_key, self.table.id_map)
         bcmg = self.table.book_col_map.get
-        return lambda book_id:sk_map(bcmg(book_id, None))
+        return lambda book_id: sk_map(bcmg(book_id, None))
 
     def iter_searchable_values(self, get_metadata, candidates, default_value=None):
         cbm = self.table.col_book_map
@@ -698,7 +701,7 @@ class FormatsField(ManyToManyField):
 
 class LazySeriesSortMap:
 
-    __slots__ = ('default_sort_key', 'sort_key_func', 'id_map', 'cache')
+    __slots__ = ('cache', 'default_sort_key', 'id_map', 'sort_key_func')
 
     def __init__(self, default_sort_key, sort_key_func, id_map):
         self.default_sort_key = default_sort_key
@@ -799,7 +802,7 @@ class TagsField(ManyToManyField):
         return ans
 
 
-def create_field(name, table, bools_are_tristate, get_template_functions):
+def create_field(name, table, bools_are_tristate, get_template_functions, db_weakref):
     cls = {
             ONE_ONE: OneToOneField,
             MANY_ONE: ManyToOneField,
@@ -819,4 +822,4 @@ def create_field(name, table, bools_are_tristate, get_template_functions):
         cls = CompositeField
     elif table.metadata['datatype'] == 'series':
         cls = SeriesField
-    return cls(name, table, bools_are_tristate, get_template_functions)
+    return cls(name, table, bools_are_tristate, get_template_functions, db_weakref)

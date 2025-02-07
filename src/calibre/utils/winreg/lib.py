@@ -17,7 +17,6 @@ try:
 except ImportError:
     import _winreg as winreg
 
-
 # Binding to C library {{{
 advapi32 = ctypes.windll.advapi32
 HKEY = types.HKEY
@@ -43,7 +42,7 @@ RRF_ZEROONFAILURE = 0x20000000
 
 
 class FILETIME(ctypes.Structure):
-    _fields_ = [("dwLowDateTime", DWORD), ("dwHighDateTime", DWORD)]
+    _fields_ = [('dwLowDateTime', DWORD), ('dwHighDateTime', DWORD)]
 
 
 def default_errcheck(result, func, args):
@@ -131,7 +130,7 @@ def convert_to_registry_data(value, has_expansions=False):
     if isinstance(value, bytes):
         buf = ctypes.create_string_buffer(value)
         return buf, winreg.REG_BINARY, len(buf)
-    raise ValueError('Unknown data type: %r' % value)
+    raise ValueError(f'Unknown data type: {value!r}')
 
 
 def convert_registry_data(raw, size, dtype):
@@ -154,7 +153,7 @@ def convert_registry_data(raw, size, dtype):
         if size == 0:
             return 0
         return ctypes.cast(raw, ctypes.POINTER(ctypes.c_uint64)).contents.value
-    raise ValueError('Unsupported data type: %r' % dtype)
+    raise ValueError(f'Unsupported data type: {dtype!r}')
 
 
 try:

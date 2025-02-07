@@ -147,7 +147,7 @@ def find_icons():
                     try:
                         cache[d] = read_icon_theme_dir(d)
                     except Exception:
-                        prints('Failed to read icon theme dir: %r with error:' % d)
+                        prints(f'Failed to read icon theme dir: {d!r} with error:')
                         import traceback
                         traceback.print_exc()
                     mtimes[d] = mtime
@@ -228,7 +228,7 @@ def find_programs(extensions):
             continue
         if data is not None and mime_types.intersection(data['MimeType']):
             ans.append(process_desktop_file(data))
-    ans.sort(key=lambda d:sort_key(d.get('Name')))
+    ans.sort(key=lambda d: sort_key(d.get('Name')))
     return ans
 
 

@@ -112,7 +112,7 @@ def register_text_editor_actions(_reg, palette):
     for i, name in enumerate(('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p')):
         text = ('&' + name) if name == 'p' else (name[0] + '&' + name[1])
         desc = _('Convert the paragraph to &lt;%s&gt;') % name
-        ac = reg(create_icon(name), text, ('rename_block_tag', name), 'rename-block-tag-' + name, 'Ctrl+%d' % (i + 1), desc, syntaxes=())
+        ac = reg(create_icon(name), text, ('rename_block_tag', name), 'rename-block-tag-' + name, f'Ctrl+{i + 1}', desc, syntaxes=())
         ac.setToolTip(desc)
 
     for transform, text in [
@@ -382,10 +382,10 @@ class Editor(QMainWindow):
         for bar in self.bars:
             if bar.isFloating():
                 return
-        tprefs['%s-editor-state' % self.syntax] = bytearray(self.saveState())
+        tprefs[f'{self.syntax}-editor-state'] = bytearray(self.saveState())
 
     def restore_state(self):
-        state = tprefs.get('%s-editor-state' % self.syntax, None)
+        state = tprefs.get(f'{self.syntax}-editor-state', None)
         if state is not None:
             self.restoreState(state)
         for bar in self.bars:
@@ -402,7 +402,7 @@ class Editor(QMainWindow):
                 ac = actions[name]
             except KeyError:
                 if DEBUG:
-                    prints('Unknown editor tool: %r' % name)
+                    prints(f'Unknown editor tool: {name!r}')
                 return
             bar.addAction(ac)
             if name == 'insert-tag':
@@ -423,13 +423,13 @@ class Editor(QMainWindow):
                     # For some unknown reason this button is occasionally a
                     # QPushButton instead of a QToolButton
                     ch.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-                for name in tuple('h%d' % d for d in range(1, 7)) + ('p',):
-                    m.addAction(actions['rename-block-tag-%s' % name])
+                for name in tuple(f'h{d}' for d in range(1, 7)) + ('p',):
+                    m.addAction(actions[f'rename-block-tag-{name}'])
 
         for name in tprefs.get('editor_common_toolbar', ()):
             add_action(name, self.action_bar)
 
-        for name in tprefs.get('editor_%s_toolbar' % self.syntax, ()):
+        for name in tprefs.get(f'editor_{self.syntax}_toolbar', ()):
             add_action(name, self.tools_bar)
 
         if self.syntax == 'html':
@@ -600,7 +600,7 @@ class Editor(QMainWindow):
                 m.addAction(_('Show help for: %s') % word, partial(open_url, url))
 
         for x in ('undo', 'redo'):
-            ac = actions['editor-%s' % x]
+            ac = actions[f'editor-{x}']
             if ac.isEnabled():
                 a(ac)
         m.addSeparator()
@@ -650,7 +650,7 @@ def launch_editor(path_to_edit, path_is_raw=False, syntax='html', callback=None)
     opts = option_parser().parse_args([])
     app = Application([])
     # Create the actions that are placed into the editors toolbars
-    main = Main(opts)  # noqa
+    main = Main(opts)  # noqa: F841
     if path_is_raw:
         raw = path_to_edit
     else:

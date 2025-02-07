@@ -99,7 +99,7 @@ class Matcher:
                 w = [Worker(requests, results) for i in range(max(1, cpu_count()))]
                 [x.start() for x in w]
                 workers.extend(w)
-        items = map(lambda x: normalize('NFC', str(x)), filter(None, items))
+        items = (normalize('NFC', str(x)) for x in filter(None, items))
         self.items = items = tuple(items)
         tasks = split(items, len(workers))
         self.task_maps = [{j: i for j, (i, _) in enumerate(task)} for task in tasks]
@@ -136,7 +136,7 @@ class Matcher:
                     error = x
 
         if error is not None:
-            raise Exception('Failed to score items: %s' % error)
+            raise Exception(f'Failed to score items: {error}')
         items = sorted(((-scores[i], item, positions[i])
                         for i, item in enumerate(self.items)),
                        key=itemgetter(0))
@@ -166,7 +166,6 @@ class FilesystemMatcher(Matcher):
 
 
 # Python implementation of the scoring algorithm {{{
-
 
 def calc_score_for_char(ctx, prev, current, distance):
     factor = 1.0
@@ -226,7 +225,12 @@ def process_item(ctx, haystack, needle):
 
 class PyScorer:
     __slots__ = (
-        'level1', 'level2', 'level3', 'max_score_per_char', 'items', 'memory'
+        'items',
+        'level1',
+        'level2',
+        'level3',
+        'max_score_per_char',
+        'memory',
     )
 
     def __init__(
@@ -245,7 +249,6 @@ class PyScorer:
             self.max_score_per_char = (1.0 / len(item) + 1.0 / len(needle)) / 2.0
             self.memory = {}
             yield process_item(self, item, needle)
-
 
 # }}}
 
@@ -277,7 +280,7 @@ def test(return_tests=False):
 
     class Test(unittest.TestCase):
 
-        @unittest.skipIf(is_sanitized, 'Sanitizer enabled can\'t check for leaks')
+        @unittest.skipIf(is_sanitized, "Sanitizer enabled can't check for leaks")
         def test_mem_leaks(self):
             import gc
 
@@ -343,7 +346,7 @@ def main(basedir=None, query=None):
     from calibre.utils.terminal import ColoredStream
     if basedir is None:
         try:
-            basedir = input_unicode('Enter directory to scan [%s]: ' % os.getcwd()
+            basedir = input_unicode(f'Enter directory to scan [{os.getcwd()}]: '
                                 ).strip() or os.getcwd()
         except (EOFError, KeyboardInterrupt):
             return

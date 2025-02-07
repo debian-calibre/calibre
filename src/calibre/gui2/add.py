@@ -142,7 +142,7 @@ class Adder(QObject):
         if not self.items:
             shutil.rmtree(self.tdir, ignore_errors=True)
         self.setParent(None)
-        self.find_identical_books_data = self.merged_books = self.added_duplicate_info = self.pool = self.items = self.duplicates = self.pd = self.db = self.dbref = self.tdir = self.file_groups = self.scan_thread = None  # noqa
+        self.find_identical_books_data = self.merged_books = self.added_duplicate_info = self.pool = self.items = self.duplicates = self.pd = self.db = self.dbref = self.tdir = self.file_groups = self.scan_thread = None  # noqa: E501
         self.deleteLater()
 
     def tick(self):
@@ -391,7 +391,7 @@ class Adder(QObject):
 
         self.pd.msg = mi.title
 
-        cover_path = os.path.join(self.tdir, '%s.cdata' % group_id) if has_cover else None
+        cover_path = os.path.join(self.tdir, f'{group_id}.cdata') if has_cover else None
 
         if self.db is None:
             if paths:
@@ -474,7 +474,7 @@ class Adder(QObject):
             # detection/automerge will fail for this book.
             traceback.print_exc()
         if DEBUG:
-            prints('Added', mi.title, 'to db in: %.1f' % (time.time() - st))
+            prints('Added', mi.title, f'to db in: {time.time()-st:.1f}')
 
     def add_formats(self, book_id, paths, mi, replace=True, is_an_add=False):
         fmap = {p.rpartition(os.path.extsep)[-1].lower():p for p in paths}

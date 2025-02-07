@@ -11,8 +11,8 @@ from calibre.utils.resources import get_path as P
 from polyglot.builtins import as_bytes, iteritems
 
 border_style_map = {
-        'single' : 'solid',
-        'double-thickness-border' : 'double',
+        'single': 'solid',
+        'double-thickness-border': 'double',
         'shadowed-border': 'outset',
         'double-border': 'double',
         'dotted-border': 'dotted',
@@ -141,7 +141,7 @@ class RTFInput(InputFormatPlugin):
             if fmt is None:
                 fmt = 'wmf'
             count += 1
-            name = '%04d.%s' % (count, fmt)
+            name = f'{count:04}.{fmt}'
             with open(name, 'wb') as f:
                 f.write(data)
             imap[count] = name
@@ -164,7 +164,7 @@ class RTFInput(InputFormatPlugin):
         try:
             return self.rasterize_wmf(name)
         except Exception:
-            self.log.exception('Failed to convert WMF image %r'%name)
+            self.log.exception(f'Failed to convert WMF image {name!r}')
         return self.replace_wmf(name)
 
     def replace_wmf(self, name):
@@ -192,10 +192,8 @@ class RTFInput(InputFormatPlugin):
         return name
 
     def write_inline_css(self, ic, border_styles):
-        font_size_classes = ['span.fs%d { font-size: %spt }'%(i, x) for i, x in
-                enumerate(ic.font_sizes)]
-        color_classes = ['span.col%d { color: %s }'%(i, x) for i, x in
-                enumerate(ic.colors) if x != 'false']
+        font_size_classes = [f'span.fs{i} {{ font-size: {x}pt }}' for i, x in enumerate(ic.font_sizes)]
+        color_classes = [f'span.col{i} {{ color: {x} }}' for i, x in enumerate(ic.colors) if x != 'false']
         css = textwrap.dedent('''
         span.none {
             text-decoration: none; font-weight: normal;
@@ -217,7 +215,7 @@ class RTFInput(InputFormatPlugin):
         css += '\n' +'\n'.join(color_classes)
 
         for cls, val in iteritems(border_styles):
-            css += '\n\n.%s {\n%s\n}'%(cls, val)
+            css += f'\n\n.{cls} {{\n{val}\n}}'
 
         with open('styles.css', 'ab') as f:
             f.write(css.encode('utf-8'))
@@ -229,21 +227,21 @@ class RTFInput(InputFormatPlugin):
             style = ['border-style: hidden', 'border-width: 1px',
                     'border-color: black']
             for x in ('bottom', 'top', 'left', 'right'):
-                bs = elem.get('border-cell-%s-style'%x, None)
+                bs = elem.get(f'border-cell-{x}-style', None)
                 if bs:
                     cbs = border_style_map.get(bs, 'solid')
-                    style.append('border-%s-style: %s'%(x, cbs))
-                bw = elem.get('border-cell-%s-line-width'%x, None)
+                    style.append(f'border-{x}-style: {cbs}')
+                bw = elem.get(f'border-cell-{x}-line-width', None)
                 if bw:
-                    style.append('border-%s-width: %spt'%(x, bw))
-                bc = elem.get('border-cell-%s-color'%x, None)
+                    style.append(f'border-{x}-width: {bw}pt')
+                bc = elem.get(f'border-cell-{x}-color', None)
                 if bc:
-                    style.append('border-%s-color: %s'%(x, bc))
+                    style.append(f'border-{x}-color: {bc}')
             style = ';\n'.join(style)
             if style not in border_styles:
                 border_styles.append(style)
             idx = border_styles.index(style)
-            cls = 'border_style%d'%idx
+            cls = f'border_style{idx}'
             style_map[cls] = style
             elem.set('class', cls)
         return style_map
@@ -288,7 +286,7 @@ class RTFInput(InputFormatPlugin):
         self.log('Converting XML to HTML...')
         inline_class = InlineClass(self.log)
         styledoc = safe_xml_fromstring(P('templates/rtf.xsl', data=True), recover=False)
-        extensions = {('calibre', 'inline-class') : inline_class}
+        extensions = {('calibre', 'inline-class'): inline_class}
         transform = etree.XSLT(styledoc, extensions=extensions)
         result = transform(doc)
         html = 'index.xhtml'
@@ -296,11 +294,11 @@ class RTFInput(InputFormatPlugin):
             res = as_bytes(transform.tostring(result))
             # res = res[:100].replace('xmlns:html', 'xmlns') + res[100:]
             # clean multiple \n
-            res = re.sub(b'\n+', b'\n', res)
+            res = re.sub(br'\n+', b'\n', res)
             # Replace newlines inserted by the 'empty_paragraphs' option in rtf2xml with html blank lines
-            # res = re.sub('\s*<body>', '<body>', res)
-            # res = re.sub('(?<=\n)\n{2}',
-            # u'<p>\u00a0</p>\n'.encode('utf-8'), res)
+            # res = re.sub(br'\s*<body>', '<body>', res)
+            # res = re.sub(br'(?<=\n)\n{2}',
+            # '<p>\u00a0</p>\n'.encode('utf-8'), res)
             f.write(res)
         self.write_inline_css(inline_class, border_styles)
         stream.seek(0)

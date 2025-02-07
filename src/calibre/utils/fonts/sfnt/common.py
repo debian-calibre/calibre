@@ -28,7 +28,6 @@ class Unpackable:
 
 
 class SimpleListTable(list):
-
     'A table that contains a list of subtables'
 
     child_class = None
@@ -53,7 +52,6 @@ class SimpleListTable(list):
 
 
 class ListTable(OrderedDict):
-
     'A table that contains an ordered mapping of table tag to subtable'
 
     child_class = None
@@ -108,7 +106,7 @@ class LanguageSystemTable(IndexTable):
         self.lookup_order, self.required_feature_index = data.unpack('2H')
         if self.lookup_order != 0:
             raise UnsupportedFont('This LanguageSystemTable has an unknown'
-                    ' lookup order: 0x%x'%self.lookup_order)
+                    f' lookup order: 0x{self.lookup_order:x}')
 
 
 class ScriptTable(ListTable):
@@ -137,7 +135,7 @@ class FeatureTable(IndexTable):
         if False and self.feature_params != 0:
             # Source code pro sets this to non NULL
             raise UnsupportedFont(
-                'This FeatureTable has non NULL FeatureParams: 0x%x'%self.feature_params)
+                f'This FeatureTable has non NULL FeatureParams: 0x{self.feature_params:x}')
 
 
 class FeatureListTable(ListTable):
@@ -163,7 +161,7 @@ def ExtensionSubstitution(raw, offset, subtable_map={}):
     data = Unpackable(raw, offset)
     subst_format, extension_lookup_type, offset = data.unpack('2HL')
     if subst_format != 1:
-        raise UnsupportedFont('ExtensionSubstitution has unknown format: 0x%x'%subst_format)
+        raise UnsupportedFont(f'ExtensionSubstitution has unknown format: 0x{subst_format:x}')
     return subtable_map[extension_lookup_type](raw, offset+data.start_pos)
 
 
@@ -177,15 +175,14 @@ class Coverage:
         self.format, count = data.unpack('2H')
 
         if self.format not in {1, 2}:
-            raise UnsupportedFont('Unknown Coverage format: 0x%x in %s'%(
-                self.format, parent_table_name))
+            raise UnsupportedFont(f'Unknown Coverage format: 0x{self.format:x} in {parent_table_name}')
         if self.format == 1:
-            self.glyph_ids = data.unpack('%dH'%count, single_special=False)
+            self.glyph_ids = data.unpack(f'{count}H', single_special=False)
             self.glyph_ids_map = {gid:i for i, gid in
                     enumerate(self.glyph_ids)}
         else:
             self.ranges = []
-            ranges = data.unpack('%dH'%(3*count), single_special=False)
+            ranges = data.unpack(f'{3 * count}H', single_special=False)
             for i in range(count):
                 start, end, start_coverage_index = ranges[i*3:(i+1)*3]
                 self.ranges.append(CoverageRange(start, end, start_coverage_index))
@@ -215,8 +212,7 @@ class UnknownLookupSubTable:
         data = Unpackable(raw, offset)
         self.format = data.unpack('H')
         if self.format not in self.formats:
-            raise UnsupportedFont('Unknown format for Lookup Subtable %s: 0x%x'%(
-                self.__class__.__name__, self.format))
+            raise UnsupportedFont(f'Unknown format for Lookup Subtable {self.__class__.__name__}: 0x{self.format:x}')
         if self.has_initial_coverage:
             coverage_offset = data.unpack('H') + data.start_pos
             self.coverage = Coverage(raw, coverage_offset, self.__class__.__name__)
@@ -233,13 +229,13 @@ class UnknownLookupSubTable:
 
     def read_sets(self, data, read_item=None, set_is_index=False):
         count = data.unpack('H')
-        sets = data.unpack('%dH'%count, single_special=False)
+        sets = data.unpack(f'{count}H', single_special=False)
         coverage_to_items_map = []
         for offset in sets:
             # Read items in the set
             data.offset = start_pos = offset + data.start_pos
             count = data.unpack('H')
-            item_offsets = data.unpack('%dH'%count, single_special=False)
+            item_offsets = data.unpack(f'{count}H', single_special=False)
             items = []
             for offset in item_offsets:
                 data.offset = offset + start_pos

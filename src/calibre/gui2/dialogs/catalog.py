@@ -19,7 +19,6 @@ from calibre.gui2.dialogs.catalog_ui import Ui_Dialog
 
 
 class Catalog(QDialog, Ui_Dialog):
-
     ''' Catalog Dialog builder'''
 
     def __init__(self, parent, dbspec, ids, db):
@@ -55,15 +54,15 @@ class Catalog(QDialog, Ui_Dialog):
                     pw.initialize(name, db)
                     pw.ICON = 'forward.png'
                     self.widgets.append(pw)
-                    [self.fmts.append([file_type.upper(), pw.sync_enabled,pw]) for file_type in plugin.file_types]
+                    [self.fmts.append([file_type.upper(), pw.sync_enabled, pw]) for file_type in plugin.file_types]
                 except ImportError:
-                    info("ImportError initializing %s" % name)
+                    info(f'ImportError initializing {name}')
                     continue
             else:
                 # Load dynamic tab
-                form = os.path.join(plugin.resources_path,'%s.ui' % name)
-                klass = os.path.join(plugin.resources_path,'%s.py' % name)
-                compiled_form = os.path.join(plugin.resources_path,'%s_ui.py' % name)
+                form = os.path.join(plugin.resources_path,f'{name}.ui')
+                klass = os.path.join(plugin.resources_path,f'{name}.py')
+                compiled_form = os.path.join(plugin.resources_path,f'{name}_ui.py')
 
                 if os.path.exists(form) and os.path.exists(klass):
                     # info("Adding widget for user-installed Catalog plugin %s" % plugin.name)
@@ -88,15 +87,15 @@ class Catalog(QDialog, Ui_Dialog):
                         pw.initialize(name)
                         pw.ICON = 'forward.png'
                         self.widgets.append(pw)
-                        [self.fmts.append([file_type.upper(), pw.sync_enabled,pw]) for file_type in plugin.file_types]
+                        [self.fmts.append([file_type.upper(), pw.sync_enabled, pw]) for file_type in plugin.file_types]
                     except ImportError:
-                        info("ImportError with %s" % name)
+                        info(f'ImportError with {name}')
                         continue
                     finally:
                         sys.path.remove(plugin.resources_path)
 
                 else:
-                    info("No dynamic tab resources found for %s" % name)
+                    info(f'No dynamic tab resources found for {name}')
 
         self.widgets = sorted(self.widgets, key=lambda x: x.TITLE)
 
@@ -181,7 +180,7 @@ class Catalog(QDialog, Ui_Dialog):
         '''
         cf = str(self.format.currentText()).lower()
         if cf in ('azw3', 'epub', 'mobi') and hasattr(self.options_widget, 'settings_changed'):
-            self.options_widget.settings_changed("title/format")
+            self.options_widget.settings_changed('title/format')
 
     @property
     def fmt_options(self):

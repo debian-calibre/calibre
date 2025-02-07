@@ -66,7 +66,7 @@ class Extract(ODF2XHTML):
             head = head[0]
             ns = head.nsmap.get(None, '')
             if ns:
-                ns = '{%s}'%ns
+                ns = f'{{{ns}}}'
             etree.SubElement(head, ns+'link', {'type':'text/css',
                 'rel':'stylesheet', 'href':'odfpy.css'})
 
@@ -157,7 +157,7 @@ class Extract(ODF2XHTML):
                     style = div1.attrib.get('style', '').strip()
                     if style and not style.endswith(';'):
                         style = style + ';'
-                    style += 'text-align:%s'%aval
+                    style += f'text-align:{aval}'
                     has_align = True
                     div1.attrib['style'] = style
 
@@ -200,7 +200,7 @@ class Extract(ODF2XHTML):
                 # Replace all the class selectors with a single class selector
                 # This will be added to the class attribute of all elements
                 # that have one of these selectors.
-                replace_name = 'c_odt%d'%count
+                replace_name = f'c_odt{count}'
                 count += 1
                 for sel in r.selectorList:
                     s = sel.selectorText[1:]
@@ -239,14 +239,14 @@ class Extract(ODF2XHTML):
                         # now it should be safe to remove the text:p
                         parent = para.parentNode
                         parent.removeChild(para)
-                        log("Removed cover image paragraph from document...")
+                        log('Removed cover image paragraph from document...')
                         break
 
     def filter_load(self, odffile, mi, log):
-        """ This is an adaption from ODF2XHTML. It adds a step between
+        ''' This is an adaption from ODF2XHTML. It adds a step between
             load and parse of the document where the Element tree can be
             modified.
-        """
+        '''
         # first load the odf structure
         self.lines = []
         self._wfunc = self._wlines
@@ -287,7 +287,7 @@ class Extract(ODF2XHTML):
             # the available screen real estate
             html = html.replace('img { width: 100%; height: 100%; }', '')
             # odf2xhtml creates empty title tag
-            html = html.replace('<title></title>','<title>%s</title>'%(mi.title,))
+            html = html.replace('<title></title>',f'<title>{mi.title}</title>')
             try:
                 html = self.fix_markup(html, log)
             except:

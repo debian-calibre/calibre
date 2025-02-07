@@ -57,7 +57,7 @@ class DeviceConfig:
     @classmethod
     def _config(cls):
         name = cls._config_base_name()
-        c = Config('device_drivers_%s' % name, _('settings for device drivers'))
+        c = Config(f'device_drivers_{name}', _('settings for device drivers'))
         c.add_opt('format_map', default=cls.FORMATS,
                 help=_('Ordered list of formats the device will accept'))
         c.add_opt('use_subdirs', default=cls.SUPPORTS_SUB_DIRS_DEFAULT,
@@ -98,7 +98,7 @@ class DeviceConfig:
         if cls.EXTRA_CUSTOMIZATION_MESSAGE:
             if isinstance(cls.EXTRA_CUSTOMIZATION_MESSAGE, list):
                 ec = []
-                for i in range(0, len(cls.EXTRA_CUSTOMIZATION_MESSAGE)):
+                for i in range(len(cls.EXTRA_CUSTOMIZATION_MESSAGE)):
                     if config_widget.opt_extra_customization[i] is None:
                         ec.append(None)
                         continue

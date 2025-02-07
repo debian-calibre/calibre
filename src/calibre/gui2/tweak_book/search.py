@@ -67,7 +67,6 @@ from polyglot.builtins import error_message, iteritems
 
 
 class AnimatablePushButton(QPushButton):
-
     'A push button that can be animated without actually emitting a clicked signal'
 
     def __init__(self, *args, **kwargs):
@@ -130,7 +129,7 @@ class HistoryBox(HistoryComboBox):
             if not self.ignore_snip_expansion:
                 self.ignore_snip_expansion = True
                 expand_template(self.lineEdit())
-                QTimer.singleShot(100, lambda : setattr(self, 'ignore_snip_expansion', False))
+                QTimer.singleShot(100, lambda: setattr(self, 'ignore_snip_expansion', False))
             ev.accept()
             return True
         return HistoryComboBox.event(self, ev)
@@ -976,7 +975,7 @@ class SavedSearches(QWidget):
         self.move_up_action = a = QAction(self)
         a.setShortcut(QKeySequence('Alt+Up'))
         b.setIcon(QIcon.ic('arrow-up.png'))
-        b.setToolTip(_('Move selected entries up') + ' [%s]' % a.shortcut().toString(QKeySequence.SequenceFormat.NativeText))
+        b.setToolTip(_('Move selected entries up') + f' [{a.shortcut().toString(QKeySequence.SequenceFormat.NativeText)}]')
         connect_lambda(a.triggered, self, lambda self: self.move_entry(-1))
         self.searches.addAction(a)
         connect_lambda(b.clicked, self, lambda self: self.move_entry(-1))
@@ -985,7 +984,7 @@ class SavedSearches(QWidget):
         self.move_down_action = a = QAction(self)
         a.setShortcut(QKeySequence('Alt+Down'))
         b.setIcon(QIcon.ic('arrow-down.png'))
-        b.setToolTip(_('Move selected entries down') + ' [%s]' % a.shortcut().toString(QKeySequence.SequenceFormat.NativeText))
+        b.setToolTip(_('Move selected entries down') + f' [{a.shortcut().toString(QKeySequence.SequenceFormat.NativeText)}]')
         connect_lambda(a.triggered, self, lambda self: self.move_entry(1))
         self.searches.addAction(a)
         connect_lambda(b.clicked, self, lambda self: self.move_entry(1))
@@ -1035,9 +1034,9 @@ class SavedSearches(QWidget):
         self.eb2 = b = pb(_('E&xport'), _('Export saved searches'))
         v.addWidget(b)
         self.em = m = QMenu(_('Export'))
-        m.addAction(_('Export all'), lambda : QTimer.singleShot(0, partial(self.export_searches, all=True)))
-        m.addAction(_('Export selected'), lambda : QTimer.singleShot(0, partial(self.export_searches, all=False)))
-        m.addAction(_('Copy to search panel'), lambda : QTimer.singleShot(0, self.copy_to_search_panel))
+        m.addAction(_('Export all'), lambda: QTimer.singleShot(0, partial(self.export_searches, all=True)))
+        m.addAction(_('Export selected'), lambda: QTimer.singleShot(0, partial(self.export_searches, all=False)))
+        m.addAction(_('Copy to search panel'), lambda: QTimer.singleShot(0, self.copy_to_search_panel))
         b.setMenu(m)
 
         self.searches.setFocus(Qt.FocusReason.OtherFocusReason)

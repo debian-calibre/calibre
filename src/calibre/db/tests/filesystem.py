@@ -160,7 +160,6 @@ class FilesystemTest(BaseTest):
         self.assertEqual(cache.rename_extra_files(1, {'B': 'data/c'}), set())
         self.assertEqual(cache.rename_extra_files(1, {'B': 'data/c'}, replace=True), {'B'})
 
-
     @unittest.skipUnless(iswindows, 'Windows only')
     def test_windows_atomic_move(self):
         'Test book file open in another process when changing metadata'
@@ -280,7 +279,7 @@ class FilesystemTest(BaseTest):
                 self.assertFalse(importer.corrupted_files)
                 self.assertEqual(cache.all_book_ids(), ic.all_book_ids())
                 for book_id in cache.all_book_ids():
-                    self.assertEqual(cache.cover(book_id), ic.cover(book_id), 'Covers not identical for book: %d' % book_id)
+                    self.assertEqual(cache.cover(book_id), ic.cover(book_id), f'Covers not identical for book: {book_id}')
                     for fmt in cache.formats(book_id):
                         self.assertEqual(cache.format(book_id, fmt), ic.format(book_id, fmt))
                         self.assertEqual(cache.format_metadata(book_id, fmt)['mtime'], cache.format_metadata(book_id, fmt)['mtime'])

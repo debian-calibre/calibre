@@ -1,6 +1,6 @@
 __license__   = 'GPL v3'
-__copyright__ = '2009, John Schember <john at nachtimwald.com> ' \
-                '2009, Kovid Goyal <kovid@kovidgoyal.net>'
+__copyright__ = ('2009, John Schember <john at nachtimwald.com> '
+                 '2009, Kovid Goyal <kovid@kovidgoyal.net>')
 __docformat__ = 'restructuredtext en'
 
 '''
@@ -73,7 +73,6 @@ class USBDevice:
 
 
 class Device(DeviceConfig, DevicePlugin):
-
     '''
     This class provides logic common to all drivers for devices that export themselves
     as USB Mass Storage devices. Provides implementations for mounting/ejecting
@@ -175,7 +174,7 @@ class Device(DeviceConfig, DevicePlugin):
             casz = self._windows_space(self._card_a_prefix)[0]
             cbsz = self._windows_space(self._card_b_prefix)[0]
 
-        return (msz, casz, cbsz)
+        return msz, casz, cbsz
 
     def free_space(self, end_session=True):
         msz = casz = cbsz = 0
@@ -194,7 +193,7 @@ class Device(DeviceConfig, DevicePlugin):
             casz = self._windows_space(self._card_a_prefix)[1]
             cbsz = self._windows_space(self._card_b_prefix)[1]
 
-        return (msz, casz, cbsz)
+        return msz, casz, cbsz
 
     def windows_filter_pnp_id(self, pnp_id):
         return False
@@ -257,7 +256,7 @@ class Device(DeviceConfig, DevicePlugin):
             if dl in dlmap['readonly_drives']:
                 filtered.add(dl)
                 if debug:
-                    prints('Ignoring the drive %s as it is readonly' % dl)
+                    prints(f'Ignoring the drive {dl} as it is readonly')
             elif self.windows_filter_pnp_id(pnp_id):
                 filtered.add(dl)
                 if debug:
@@ -265,7 +264,7 @@ class Device(DeviceConfig, DevicePlugin):
             elif not drive_is_ok(dl, debug=debug):
                 filtered.add(dl)
                 if debug:
-                    prints('Ignoring the drive %s because failed to get free space for it' % dl)
+                    prints(f'Ignoring the drive {dl} because failed to get free space for it')
         dlmap['drive_letters'] = [dl for dl in dlmap['drive_letters'] if dl not in filtered]
 
         if not dlmap['drive_letters']:
@@ -517,7 +516,7 @@ class Device(DeviceConfig, DevicePlugin):
                     devnodes.append(node)
 
         devnodes += list(repeat(None, 3))
-        ans = ['/dev/'+x if ok.get(x, False) else None for x in devnodes]
+        ans = ['/dev/'+x if ok.get(x) else None for x in devnodes]
         ans.sort(key=lambda x: x[5:] if x else 'zzzzz')
         return self.linux_swap_drives(ans[:3])
 
@@ -598,7 +597,7 @@ class Device(DeviceConfig, DevicePlugin):
                 continue
             mp, ret = mount(card, typ)
             if mp is None:
-                print('Unable to mount card (Error code: %d)'%ret, file=sys.stderr)
+                print(f'Unable to mount card (Error code: {ret})', file=sys.stderr)
             else:
                 if not mp.endswith('/'):
                     mp += '/'
@@ -673,7 +672,7 @@ class Device(DeviceConfig, DevicePlugin):
         hal = get_hal()
         vols = hal.get_volumes(d)
         if verbose:
-            print("FBSD:\t", vols)
+            print('FBSD:\t', vols)
 
         ok, mv = hal.mount_volumes(vols)
         if not ok:

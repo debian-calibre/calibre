@@ -13,24 +13,24 @@ from polyglot.builtins import iteritems
 
 # Names {{{
 TRANSITIONAL_NAMES = {
-    'DOCUMENT'  : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument',
-    'DOCPROPS'  : 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties',
-    'APPPROPS'  : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties',
-    'STYLES'    : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles',
-    'NUMBERING' : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering',
-    'FONTS'     : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable',
-    'EMBEDDED_FONT' : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/font',
-    'IMAGES'    : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image',
-    'LINKS'     : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink',
-    'FOOTNOTES' : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes',
-    'ENDNOTES'  : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes',
-    'THEMES'    : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme',
-    'SETTINGS'  : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings',
+    'DOCUMENT'     : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument',
+    'DOCPROPS'     : 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties',
+    'APPPROPS'     : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties',
+    'STYLES'       : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles',
+    'NUMBERING'    : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering',
+    'FONTS'        : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable',
+    'EMBEDDED_FONT': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/font',
+    'IMAGES'       : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image',
+    'LINKS'        : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink',
+    'FOOTNOTES'    : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes',
+    'ENDNOTES'     : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes',
+    'THEMES'       : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme',
+    'SETTINGS'     : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings',
     'WEB_SETTINGS' : 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings',
 }
 
 STRICT_NAMES = {
-    k:v.replace('http://schemas.openxmlformats.org/officeDocument/2006',  'http://purl.oclc.org/ooxml/officeDocument')
+    k:v.replace('http://schemas.openxmlformats.org/officeDocument/2006', 'http://purl.oclc.org/ooxml/officeDocument')
     for k, v in iteritems(TRANSITIONAL_NAMES)
 }
 
@@ -93,7 +93,7 @@ def generate_anchor(name, existing):
     x = y = 'id_' + re.sub(r'[^0-9a-zA-Z_]', '', ascii_text(name)).lstrip('_')
     c = 1
     while y in existing:
-        y = '%s_%d' % (x, c)
+        y = f'{x}_{c}'
         c += 1
     return y
 
@@ -131,15 +131,15 @@ class DOCXNamespace:
 
     def ancestor(self, elem, name):
         try:
-            return self.XPath('ancestor::%s[1]' % name)(elem)[0]
+            return self.XPath(f'ancestor::{name}[1]')(elem)[0]
         except IndexError:
             return None
 
     def children(self, elem, *args):
-        return self.XPath('|'.join('child::%s' % a for a in args))(elem)
+        return self.XPath('|'.join(f'child::{a}' for a in args))(elem)
 
     def descendants(self, elem, *args):
-        return self.XPath('|'.join('descendant::%s' % a for a in args))(elem)
+        return self.XPath('|'.join(f'descendant::{a}' for a in args))(elem)
 
     def makeelement(self, root, tag, append=True, **attrs):
         ans = root.makeelement(self.expand(tag), **{self.expand(k, sep='_'):v for k, v in iteritems(attrs)})

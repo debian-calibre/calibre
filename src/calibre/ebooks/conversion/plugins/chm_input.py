@@ -1,7 +1,7 @@
 ''' CHM File decoding support '''
 __license__ = 'GPL v3'
-__copyright__  = '2008, Kovid Goyal <kovid at kovidgoyal.net>,' \
-                 ' and Alex Bramley <a.bramley at gmail.com>.'
+__copyright__  = ('2008, Kovid Goyal <kovid at kovidgoyal.net>, '
+                  'and Alex Bramley <a.bramley at gmail.com>.')
 
 import os
 
@@ -23,7 +23,7 @@ class CHMInput(InputFormatPlugin):
         from calibre.ebooks.chm.reader import CHMReader
         log.debug('Opening CHM file')
         rdr = CHMReader(chm_path, log, input_encoding=self.opts.input_encoding)
-        log.debug('Extracting CHM to %s' % output_dir)
+        log.debug(f'Extracting CHM to {output_dir}')
         rdr.extract_content(output_dir, debug_dump=debug_dump)
         self._chm_reader = rdr
         return rdr.hhc_path
@@ -46,8 +46,8 @@ class CHMInput(InputFormatPlugin):
 
             # closing stream so CHM can be opened by external library
             stream.close()
-            log.debug('tdir=%s' % tdir)
-            log.debug('stream.name=%s' % stream.name)
+            log.debug(f'tdir={tdir}')
+            log.debug(f'stream.name={stream.name}')
             debug_dump = False
             odi = options.debug_pipeline
             if odi:
@@ -127,12 +127,12 @@ class CHMInput(InputFormatPlugin):
                             strip_encoding_pats=True, resolve_entities=True)[0]
         hhcroot = html.fromstring(hhcdata)
         toc = self._process_nodes(hhcroot)
-        # print("=============================")
-        # print("Printing hhcroot")
+        # print('=============================')
+        # print('Printing hhcroot')
         # print(etree.tostring(hhcroot, pretty_print=True))
-        # print("=============================")
-        log.debug('Found %d section nodes' % toc.count())
-        htmlpath = os.path.splitext(hhcpath)[0] + ".html"
+        # print('=============================')
+        log.debug(f'Found {toc.count()} section nodes')
+        htmlpath = os.path.splitext(hhcpath)[0] + '.html'
         base = os.path.dirname(os.path.abspath(htmlpath))
 
         def unquote(x):

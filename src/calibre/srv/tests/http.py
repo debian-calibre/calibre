@@ -217,7 +217,7 @@ class TestHTTP(BaseTest):
             self.ae(r.getheader('Location'), '/somewhere-else')
             self.ae(b'', r.read())
 
-            server.change_handler(lambda data:data.path[0] + data.read().decode('ascii'))
+            server.change_handler(lambda data: data.path[0] + data.read().decode('ascii'))
             conn = server.connect(timeout=base_timeout * 5)
 
             # Test simple GET
@@ -311,7 +311,7 @@ class TestHTTP(BaseTest):
         from calibre.srv.http_response import parse_multipart_byterange
 
         def handler(conn):
-            return conn.generate_static_output('test', lambda : ''.join(conn.path))
+            return conn.generate_static_output('test', lambda: ''.join(conn.path))
         with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
                 TestServer(handler, timeout=1, compress_min_size=0) as server:
             fdata = (string.ascii_letters * 100).encode('ascii')
@@ -323,7 +323,7 @@ class TestHTTP(BaseTest):
             r = conn.getresponse()
             self.ae(r.status, http_client.OK), self.ae(r.read(), b'an_etagged_path')
             etag = r.getheader('ETag')
-            self.ae(etag, '"%s"' % hashlib.sha1(b'an_etagged_path').hexdigest())
+            self.ae(etag, '"{}"'.format(hashlib.sha1(b'an_etagged_path').hexdigest()))
             conn.request('GET', '/an_etagged_path', headers={'If-None-Match':etag})
             r = conn.getresponse()
             self.ae(r.status, http_client.NOT_MODIFIED)
@@ -344,7 +344,7 @@ class TestHTTP(BaseTest):
             def edfunc():
                 num_calls[0] += 1
                 return b'data'
-            server.change_handler(lambda conn:conn.etagged_dynamic_response("xxx", edfunc))
+            server.change_handler(lambda conn: conn.etagged_dynamic_response('xxx', edfunc))
             conn = server.connect()
             conn.request('GET', '/an_etagged_path')
             r = conn.getresponse()
@@ -376,14 +376,14 @@ class TestHTTP(BaseTest):
                 r = conn.getresponse()
                 self.ae(r.status, http_client.PARTIAL_CONTENT)
                 self.ae(str(r.getheader('Accept-Ranges')), 'bytes')
-                self.ae(str(r.getheader('Content-Range')), 'bytes 2-25/%d' % len(fdata))
+                self.ae(str(r.getheader('Content-Range')), f'bytes 2-25/{len(fdata)}')
                 self.ae(int(r.getheader('Content-Length')), 24)
                 self.ae(r.read(), fdata[2:26])
 
                 conn.request('GET', '/test', headers={'Range':'bytes=100000-'})
                 r = conn.getresponse()
                 self.ae(r.status, http_client.REQUESTED_RANGE_NOT_SATISFIABLE)
-                self.ae(str(r.getheader('Content-Range')), 'bytes */%d' % len(fdata))
+                self.ae(str(r.getheader('Content-Range')), f'bytes */{len(fdata)}')
 
                 conn.request('GET', '/test', headers={'Range':'bytes=25-50', 'If-Range':etag})
                 r = conn.getresponse()
@@ -412,7 +412,7 @@ class TestHTTP(BaseTest):
                 # Test sending of larger file
                 start_time = monotonic()
                 lf.seek(0)
-                data =  lf.read()
+                data = lf.read()
                 server.change_handler(lambda conn: lf)
                 conn = server.connect(timeout=1)
                 conn.request('GET', '/test')
