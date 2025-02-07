@@ -1,0 +1,26 @@
+From cd0f9e063fd7108bfde86b04c7a1b102a7233834 Mon Sep 17 00:00:00 2001
+From: un-pogaz <46523284+un-pogaz@users.noreply.github.com>
+Date: Fri, 24 Jan 2025 11:14:14 +0100
+Subject: [PATCH 3/5] Revert "uniform string quote (auto-fix)"
+
+This reverts commit 37771022cec803e861250d376dbcec8e9a7728d6.
+---
+ src/calibre/utils/podofo/__init__.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
+index 28c168d57f..40e27e9f3a 100644
+--- a/src/calibre/utils/podofo/__init__.py
++++ b/src/calibre/utils/podofo/__init__.py
+@@ -238,7 +238,7 @@ def test_podofo():
+         fraw = f.read()
+         wraw = p.write()
+         if fraw != wraw:
+-            raise ValueError('write() and save_to_fileobj() resulted in different output')
++            raise ValueError("write() and save_to_fileobj() resulted in different output")
+     try:
+         p = podofo.PDFDoc()
+         p.open(f.name)
+-- 
+2.47.2
+
