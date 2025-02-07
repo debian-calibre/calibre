@@ -14,7 +14,7 @@ Add some more time to wait test results.
  4 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index 0915533..616528d 100644
+index b57abd5..77b3614 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
 @@ -119,7 +119,7 @@ class TestServer(Thread):
@@ -27,7 +27,7 @@ index 0915533..616528d 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index 5f217d5..0e39f9f 100644
+index ecdd024..4f7e263 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
 @@ -100,7 +100,7 @@ class TestHTTP(BaseTest):
@@ -70,7 +70,7 @@ index 5f217d5..0e39f9f 100644
              self.ae(r.status, 200), self.ae(r.read(), b'something')
 @@ -313,7 +313,7 @@ class TestHTTP(BaseTest):
          def handler(conn):
-             return conn.generate_static_output('test', lambda : ''.join(conn.path))
+             return conn.generate_static_output('test', lambda: ''.join(conn.path))
          with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
 -                TestServer(handler, timeout=1, compress_min_size=0) as server:
 +                TestServer(handler, timeout=100, compress_min_size=0) as server:
@@ -79,7 +79,7 @@ index 5f217d5..0e39f9f 100644
  
 @@ -414,7 +414,7 @@ class TestHTTP(BaseTest):
                  lf.seek(0)
-                 data =  lf.read()
+                 data = lf.read()
                  server.change_handler(lambda conn: lf)
 -                conn = server.connect(timeout=1)
 +                conn = server.connect(timeout=100)
@@ -96,10 +96,10 @@ index 5f217d5..0e39f9f 100644
      # }}}
  
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index ec2f20e..af02b37 100644
+index c0101c8..7cf02a6 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
-@@ -114,8 +114,8 @@ class LoopTest(BaseTest):
+@@ -113,8 +113,8 @@ class LoopTest(BaseTest):
  
          from calibre.srv.bonjour import BonJour
          b = BonJour(wait_for_stop=False)
@@ -111,7 +111,7 @@ index ec2f20e..af02b37 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index efe2301..2d74ada 100644
+index 3658deb..06a9357 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -409,7 +409,7 @@ class BuildTest(unittest.TestCase):
