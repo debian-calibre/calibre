@@ -86,7 +86,7 @@ index 9934168..d5a1aa1 100644
      from lxml.builder import E
 -    from lxml.etree import tostring
 +    from lxml.etree import Element, tostring
-     fpath = os.path.join(base, '%s.metainfo.xml' % key)
+     fpath = os.path.join(base, f'{key}.metainfo.xml')
      screenshots = E.screenshots()
      for w, h, url in entry['screenshots']:
 @@ -1304,6 +1312,14 @@ def write_appdata(key, entry, base, translators):
