@@ -1,0 +1,37 @@
+From bd6e6d77d6ae0200fa770bfead382da40d619786 Mon Sep 17 00:00:00 2001
+From: un-pogaz <46523284+un-pogaz@users.noreply.github.com>
+Date: Fri, 24 Jan 2025 11:14:20 +0100
+Subject: [PATCH 4/7] Revert "always use raw-string for regex (manual)"
+
+This reverts commit 3720de10d2ab7d0e647335fa148b96bd3bd5bdc0.
+---
+ src/calibre/ebooks/unihandecode/jadecoder.py  | 2 +-
+ src/calibre/ebooks/unihandecode/unidecoder.py | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
+index 16a31fcda6..64e8445b88 100644
+--- a/src/calibre/ebooks/unihandecode/jadecoder.py
++++ b/src/calibre/ebooks/unihandecode/jadecoder.py
+@@ -90,4 +90,4 @@ def decode(self, text):
+                 text = self.conv.do(text)
+         except Exception:
+             pass
+-        return re.sub(r'[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
++        return re.sub('[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
+diff --git a/src/calibre/ebooks/unihandecode/unidecoder.py b/src/calibre/ebooks/unihandecode/unidecoder.py
+index aba5069030..6d7c9f16f7 100644
+--- a/src/calibre/ebooks/unihandecode/unidecoder.py
++++ b/src/calibre/ebooks/unihandecode/unidecoder.py
+@@ -73,7 +73,7 @@ def __init__(self):
+ 
+     def decode(self, text):
+         # Replace characters larger than 127 with their ASCII equivalent.
+-        return re.sub(r'[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
++        return re.sub('[^\x00-\x7f]',lambda x: self.replace_point(x.group()), text)
+ 
+     def replace_point(self, codepoint):
+         '''
+-- 
+2.47.2
+

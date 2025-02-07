@@ -1,0 +1,26 @@
+From 804852d34dbf747be033c40af05072e1d8c163cb Mon Sep 17 00:00:00 2001
+From: un-pogaz <46523284+un-pogaz@users.noreply.github.com>
+Date: Tue, 28 Jan 2025 09:37:08 +0200
+Subject: [PATCH 1/7] Revert "Automated conversion of % format specifiers"
+
+This reverts commit e5a65f69ecb0e939a55dfddc727571df899f8d3c.
+---
+ src/calibre/ebooks/unihandecode/unidecoder.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/ebooks/unihandecode/unidecoder.py b/src/calibre/ebooks/unihandecode/unidecoder.py
+index 0bac7ed26e..aba5069030 100644
+--- a/src/calibre/ebooks/unihandecode/unidecoder.py
++++ b/src/calibre/ebooks/unihandecode/unidecoder.py
+@@ -95,7 +95,7 @@ def code_group(self, character):
+         # Code groups within CODEPOINTS take the form 'xAB'
+         if not isinstance(character, str):
+             character = str(character, 'utf-8')
+-        return f'x{ord(character) >> 8:02x}'
++        return 'x%02x' % (ord(character) >> 8)
+ 
+     def grouped_point(self, character):
+         '''
+-- 
+2.47.2
+
