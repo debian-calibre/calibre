@@ -54,24 +54,24 @@ def serialize_secret(secret):
 
 def serialize_binary(key, val):
     key = key.encode('ascii') if not isinstance(key, bytes) else key
-    return struct.pack('=B%ssB' % len(key), len(key), key, int(val))
+    return struct.pack(f'=B{len(key)}sB', len(key), key, int(val))
 
 
 def serialize_string(key, val):
     key = key.encode('ascii') if not isinstance(key, bytes) else key
     val = str(val).encode('utf-8')
     if len(val) > 2**16 - 1:
-        raise ValueError('%s is too long' % key)
-    return struct.pack('=B%dsH%ds' % (len(key), len(val)), len(key), key, len(val), val)
+        raise ValueError(f'{key} is too long')
+    return struct.pack(f'=B{len(key)}sH{len(val)}s', len(key), key, len(val), val)
 
 
 def serialize_file_types(file_types):
-    key = b"FILE_TYPES"
-    buf = [struct.pack('=B%dsH' % len(key), len(key), key, len(file_types))]
+    key = b'FILE_TYPES'
+    buf = [struct.pack(f'=B{len(key)}sH', len(key), key, len(file_types))]
 
     def add(x):
         x = x.encode('utf-8').replace(b'\0', b'')
-        buf.append(struct.pack('=H%ds' % len(x), len(x), x))
+        buf.append(struct.pack(f'=H{len(x)}s', len(x), x))
     for name, extensions in file_types:
         add(name or _('Files'))
         if isinstance(extensions, string_or_bytes):
@@ -123,7 +123,7 @@ def run_file_dialog(
 ):
     from calibre.gui2 import sanitize_env_vars
     secret = os.urandom(32).replace(b'\0', b' ')
-    pipename = '\\\\.\\pipe\\%s' % uuid4()
+    pipename = f'\\\\.\\pipe\\{uuid4()}'
     data = [serialize_string('PIPENAME', pipename), serialize_secret(secret)]
     parent = parent or None
     if parent is not None:
@@ -344,10 +344,10 @@ class PipeServer(Thread):
 
 
 def test(helper=HELPER):
-    pipename = '\\\\.\\pipe\\%s' % uuid4()
+    pipename = f'\\\\.\\pipe\\{uuid4()}'
     echo = '\U0001f431 Hello world!'
     secret = os.urandom(32).replace(b'\0', b' ')
-    data = serialize_string('PIPENAME', pipename) +  serialize_string('ECHO', echo) + serialize_secret(secret)
+    data = serialize_string('PIPENAME', pipename) + serialize_string('ECHO', echo) + serialize_secret(secret)
     server = PipeServer(pipename)
     server.start()
     p = subprocess.Popen([helper], stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -362,7 +362,7 @@ def test(helper=HELPER):
         raise RuntimeError(f'Did not get back secret: {secret!r} != {parts[0]!r}')
     q = parts[1].decode('utf-8')
     if q != echo:
-        raise RuntimeError('Unexpected response: %r' % server.data)
+        raise RuntimeError(f'Unexpected response: {server.data!r}')
 
 
 if __name__ == '__main__':

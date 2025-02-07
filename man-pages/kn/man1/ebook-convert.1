@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "ಜನವರಿ 10, 2025" "7.24.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "ಫೆಬ್ರವರಿ 07, 2025" "7.25.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -48,7 +48,7 @@ The output e\-book format is guessed from the file extension of output_file. out
 After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
 .sp
 For full documentation of the conversion system see
-\fI\%E\-book conversion\fP
+\fI\%ಇ\-ಪುಸ್ತಕ  ಪರಿವರ್ತನೆ\fP
 .sp
 Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .sp
@@ -67,7 +67,7 @@ Below are the options that are common to all conversion, followed by the
 options specific to every input and output format.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%LOOK AND FEEL\fP
+\fI\%ಬಾಹ್ಯ ರೂಪು\fP
 .IP \(bu 2
 \fI\%HEURISTIC PROCESSING\fP
 .IP \(bu 2
@@ -77,7 +77,7 @@ options specific to every input and output format.
 .IP \(bu 2
 \fI\%ಪರಿವಿಡಿ\fP
 .IP \(bu 2
-\fI\%METADATA\fP
+\fI\%ಮೆಟಾದತ್ತಾಂಶ\fP
 .IP \(bu 2
 \fI\%DEBUG\fP
 .IP \(bu 2
@@ -166,7 +166,7 @@ options specific to every input and output format.
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+ಈ ಸಹಾಯ ಸಂದೇಶವನ್ನು ಪ್ರದರ್ಶಿಸಿ ಮತ್ತು ನಿರ್ಗಮಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -188,7 +188,7 @@ Specify the output profile. The output profile tells the conversion system how t
 .B \-\-version
 show program\fB\(aq\fPs version number and exit
 .UNINDENT
-.SH LOOK AND FEEL
+.SH ಬಾಹ್ಯ ರೂಪು
 .sp
 Options to control the look and feel of the output
 .INDENT 0.0
@@ -501,7 +501,7 @@ Maximum number of links to insert into the TOC. Set to 0 to disable. Default is:
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-Don\fB\(aq\fPt add auto\-detected chapters to the Table of Contents.
+ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪತ್ತೆಯಾದ ಅಧ್ಯಾಯಗಳನ್ನು ಪರಿವಿಡಿಗೆ ಸೇರಿಸಬೇಡಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -518,7 +518,7 @@ If fewer than this number of chapters is detected, then links are added to the T
 .B \-\-use\-auto\-toc
 Normally, if the source file already has a Table of Contents, it is used in preference to the auto\-generated one. With this option, the auto\-generated one is always used.
 .UNINDENT
-.SH METADATA
+.SH ಮೆಟಾದತ್ತಾಂಶ
 .sp
 Options to set metadata in the output
 .INDENT 0.0
@@ -529,42 +529,42 @@ String to be used when sorting by author.
 .INDENT 0.0
 .TP
 .B \-\-authors
-Set the authors. Multiple authors should be separated by ampersands.
+ಲೇಖಕರನ್ನು ಹೊಂದಿಸಿ. ಹಲವು ಲೇಖಕರಿದ್ದಲ್ಲಿ && ಚಿಹ್ನೆಯಿಂದ ಪ್ರತ್ಯೇಕಿಸಿರಬೇಕಾಗುತ್ತದೆ
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-producer
-Set the book producer.
+ಪುಸ್ತಕದ ನಿರ್ಮಾಪಕರನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+ಇ\-ಪುಸ್ತಕದ ವಿವರಣೆಯನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover
-Set the cover to the specified file or URL
+ರಕ್ಷಾಪುಟವನ್ನು ನಿಗದಿತ ಕಡತ ಅಥವಾ URL ಗೆ ಹೊಂದಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-isbn
-Set the ISBN of the book.
+ಪುಸ್ತಕದ ISBN ಅನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-language
-Set the language.
+ಭಾಷೆಯನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+ಪ್ರಕಟಣೆಯ ದಿನಾಂಕವನ್ನು ಹೊಂದಿಸಿ (ಕಾಲಮಾನವನ್ನು ವಿಷದವಾಗಿ ಸೂಚಿಸದಿದ್ದಲ್ಲಿ, ಸ್ಥಳೀಯ ಕಾಲಮಾನದಲ್ಲಿದೆ ಎಂದು ಭಾವಿಸಲಾಗುತ್ತದೆ)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+ಇ\-ಪುಸ್ತಕದ ಪ್ರಕಾಶಕರನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -579,7 +579,7 @@ Read metadata from the specified OPF file. Metadata read from this file will ove
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+ಈ ಇ\-ಪುಸ್ತಕ ಸೇರಿರುವ ಸರಣಿಯನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -599,12 +599,12 @@ Set the book timestamp (no longer used anywhere)
 .INDENT 0.0
 .TP
 .B \-\-title
-Set the title.
+ಶೀರ್ಷಿಕೆಯನ್ನು ಹೊಂದಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-The version of the title to be used for sorting.
+ವರ್ಗೀಕರಣಕ್ಕೆ ಬಳಸಬೇಕಾಗಿರುವ ಶೀರ್ಷಿಕೆಯ ಆವೃತ್ತಿ .
 .UNINDENT
 .SH DEBUG
 .sp
@@ -660,7 +660,7 @@ When converting a CBC do not add links to each page to the TOC. Note this only a
 .INDENT 0.0
 .TP
 .B \-\-dont\-grayscale
-Do not convert the image to grayscale (black and white)
+ಚಿತ್ರವನ್ನು ಮಾಸಲುಬಣ್ಣಕ್ಕೆ(ಕಪ್ಪುಬಿಳುಪು) ಪರಿವರ್ತಿಸಬೇಡಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -670,7 +670,7 @@ Disable normalize (improve contrast) color range for pictures. Default: False
 .INDENT 0.0
 .TP
 .B \-\-dont\-sharpen
-Disable sharpening.
+ಮೊನಚಾಗಿಸುವಿಕೆ ಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -754,7 +754,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-no\-inline\-fb2\-toc
-Do not insert a Table of Contents at the beginning of the book
+ಪುಸ್ತಕದ ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಸೇರಿಸಬೇಡಿ
 .UNINDENT
 .SH HTLZ INPUT OPTIONS
 .INDENT 0.0
@@ -944,7 +944,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-markdown\-extensions
-Enable extensions to Markdown syntax. Extensions are formatting that is not part of the standard Markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about Markdown extensions, see \X'tty: link https://python-markdown.github.io/extensions/'\fI\%https://python\-markdown.github.io/extensions/\fP\X'tty: link' This should be a comma separated list of extensions to enable: * abbr: Abbreviations * admonition: Support admonitions * attr_list: Add attribute to HTML tags * codehilite: Add code highlighting via Pygments * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: Footnotes * legacy_attrs: Use legacy element attributes * legacy_em: Use legacy underscore handling for connected words * meta: Metadata in the document * nl2br: Treat newlines as hard breaks * sane_lists: Do not allow mixing list types * smarty: Use Markdown\fB\(aq\fPs internal smartypants parser * tables: Support tables * toc: Generate a table of contents * wikilinks: Wiki style links
+Enable extensions to Markdown syntax. Extensions are formatting that is not part of the standard Markdown format. The extensions enabled by default: footnotes, tables, toc. To learn more about Markdown extensions, see \X'tty: link https://python-markdown.github.io/extensions/'\fI\%https://python\-markdown.github.io/extensions/\fP\X'tty: link' This should be a comma separated list of extensions to enable: * abbr: ಸಂಕ್ಷೇಪಗಳು * admonition: Support admonitions * attr_list: Add attribute to HTML tags * codehilite: Add code highlighting via Pygments * def_list: Definition lists * extra: Enables various common extensions * fenced_code: Alternative code block syntax * footnotes: ಅಡಿಟಿಪ್ಪಣಿಗಳು * legacy_attrs: Use legacy element attributes * legacy_em: Use legacy underscore handling for connected words * meta: Metadata in the document * nl2br: Treat newlines as hard breaks * sane_lists: Do not allow mixing list types * smarty: Use Markdown\fB\(aq\fPs internal smartypants parser * tables: Support tables * toc: ಪರಿವಿಡಿಯನ್ನು ಉತ್ಪಾದಿಸಿ * wikilinks: Wiki style links
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1128,7 +1128,7 @@ Title for any generated inline table of contents.
 .INDENT 0.0
 .TP
 .B \-\-fb2\-genre
-Genre for the book. Choices: sf_history, sf_action, sf_epic, sf_heroic, sf_detective, sf_cyberpunk, sf_space, sf_social, sf_horror, sf_humor, sf_fantasy, sf, det_classic, det_police, det_action, det_irony, det_history, det_espionage, det_crime, det_political, det_maniac, det_hard, thriller, detective, prose_classic, prose_history, prose_contemporary, prose_counter, prose_rus_classic, prose_su_classics, love_contemporary, love_history, love_detective, love_short, love_erotica, adv_western, adv_history, adv_indian, adv_maritime, adv_geo, adv_animal, adventure, child_tale, child_verse, child_prose, child_sf, child_det, child_adv, child_education, children, poetry, dramaturgy, antique_ant, antique_european, antique_russian, antique_east, antique_myths, antique, sci_history, sci_psychology, sci_culture, sci_religion, sci_philosophy, sci_politics, sci_business, sci_juris, sci_linguistic, sci_medicine, sci_phys, sci_math, sci_chem, sci_biology, sci_tech, science, comp_www, comp_programming, comp_hard, comp_soft, comp_db, comp_osnet, computers, ref_encyc, ref_dict, ref_ref, ref_guide, reference, nonf_biography, nonf_publicism, nonf_criticism, design, nonfiction, religion_rel, religion_esoterics, religion_self, religion, humor_anecdote, humor_prose, humor_verse, humor, home_cooking, home_pets, home_crafts, home_entertain, home_health, home_garden, home_diy, home_sport, home_sex, home   See: \X'tty: link http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres'\fI\%http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres\fP\X'tty: link' for a complete list with descriptions.
+ಪುಸ್ತಕದ ಕಲಾಶೈಲಿ. ಆಯ್ಕೆಗಳು: sf_history, sf_action, sf_epic, sf_heroic, sf_detective, sf_cyberpunk, sf_space, sf_social, sf_horror, sf_humor, sf_fantasy, sf, det_classic, det_police, det_action, det_irony, det_history, det_espionage, det_crime, det_political, det_maniac, det_hard, thriller, detective, prose_classic, prose_history, prose_contemporary, prose_counter, prose_rus_classic, prose_su_classics, love_contemporary, love_history, love_detective, love_short, love_erotica, adv_western, adv_history, adv_indian, adv_maritime, adv_geo, adv_animal, adventure, child_tale, child_verse, child_prose, child_sf, child_det, child_adv, child_education, children, poetry, dramaturgy, antique_ant, antique_european, antique_russian, antique_east, antique_myths, antique, sci_history, sci_psychology, sci_culture, sci_religion, sci_philosophy, sci_politics, sci_business, sci_juris, sci_linguistic, sci_medicine, sci_phys, sci_math, sci_chem, sci_biology, sci_tech, science, comp_www, comp_programming, comp_hard, comp_soft, comp_db, comp_osnet, computers, ref_encyc, ref_dict, ref_ref, ref_guide, reference, nonf_biography, nonf_publicism, nonf_criticism, design, nonfiction, religion_rel, religion_esoterics, religion_self, religion, humor_anecdote, humor_prose, humor_verse, humor, home_cooking, home_pets, home_crafts, home_entertain, home_health, home_garden, home_diy, home_sport, home_sex, home  ನೋಡಿ: \X'tty: link http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres'\fI\%http://www.fictionbook.org/index.php/Eng:FictionBook_2.1_genres\fP\X'tty: link' ವಿವರಣೆಗಳೊಂದಿಗೆ  ಸಂಪೂರ್ಣ ಪಟ್ಟಿಗಾಗಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1138,7 +1138,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-sectionize
-Specify how sections are created:  * nothing: A single section  * files: Section per file  * toc: Section per entry in the ToC If ToC based generation fails, adjust the \fB\(dq\fPStructure detection\fB\(dq\fP and/or \fB\(dq\fPTable of Contents\fB\(dq\fP settings (turn on \fB\(dq\fPForce use of auto\-generated Table of Contents\fB\(dq\fP).
+Specify how sections are created:  * nothing: A single section  * files: ಪ್ರತಿ ಕಡತಕ್ಕೆ ವಿಭಾಗ  * toc: Section per entry in the ToC If ToC based generation fails, adjust the \fB\(dq\fPStructure detection\fB\(dq\fP and/or \fB\(dq\fPTable of Contents\fB\(dq\fP settings (turn on \fB\(dq\fPForce use of auto\-generated Table of Contents\fB\(dq\fP).
 .UNINDENT
 .SH HTML OUTPUT OPTIONS
 .INDENT 0.0
@@ -1197,12 +1197,12 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-enable\-autorotation
-Enable auto\-rotation of images that are wider than the screen width.
+ಪರದೆಯ ಆಗಲಕ್ಕಿಂದ ಅಗಲವಾದ ಚಿತ್ರಗಳಿಗೆ ಸ್ವಯಂ\-ತಿರುಗುವಿಕೆ ಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-header
-Add a header to all the pages with title and author.
+ಶೀರ್ಷಿಕೆ ಮತ್ತು ಲೇಖಕರ ವಿವರವಿರುವ ತಲೆಬರಹವನ್ನು ಎಲ್ಲಾ ಪುಟಗಳಿಗೆ   ಸೇರಿಸಿ.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1330,7 +1330,7 @@ Format to use inside the PDB container. Choices are: doc, ereader, ztxt
 .INDENT 0.0
 .TP
 .B \-\-inline\-toc
-Add Table of Contents to beginning of the book.
+ಪುಸ್ತಕದ ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಸೇರಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1366,12 +1366,12 @@ The default font size (in pixels)
 .INDENT 0.0
 .TP
 .B \-\-pdf\-footer\-template
-An HTML template used to generate footers on every page. The strings _PAGENUM_, _TITLE_, _AUTHOR_ and _SECTION_ will be replaced by their current values.
+An HTML template used to generate ಅಡಿಬರಹಗಳು on every page. The strings _PAGENUM_, _TITLE_, _AUTHOR_ and _SECTION_ will be replaced by their current values.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pdf\-header\-template
-An HTML template used to generate headers on every page. The strings _PAGENUM_, _TITLE_, _AUTHOR_ and _SECTION_ will be replaced by their current values.
+An HTML template used to generate ತಲೆಬರಹಗಳು on every page. The strings _PAGENUM_, _TITLE_, _AUTHOR_ and _SECTION_ will be replaced by their current values.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1466,7 +1466,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Title for generated table of contents.
+ತಯಾರಾದ ಪರಿವಿಡಿಗೆ ಶೀರ್ಷಿಕೆ.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1492,7 +1492,7 @@ Do not reduce the size or bit depth of images. Images have their size and depth 
 .INDENT 0.0
 .TP
 .B \-\-inline\-toc
-Add Table of Contents to beginning of the book.
+ಪುಸ್ತಕದ ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಸೇರಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1508,7 +1508,7 @@ If specified, the output plugin will try to create output that is as human reada
 .INDENT 0.0
 .TP
 .B \-\-inline\-toc
-Add Table of Contents to beginning of the book.
+ಪುಸ್ತಕದ ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಸೇರಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1577,7 +1577,7 @@ Force splitting on the max\-line\-length value when no space is present. Also al
 .INDENT 0.0
 .TP
 .B \-\-inline\-toc
-Add Table of Contents to beginning of the book.
+ಪುಸ್ತಕದ ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಸೇರಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1617,7 +1617,7 @@ Specify the character encoding of the output document. The default is utf\-8.
 .INDENT 0.0
 .TP
 .B \-\-txt\-output\-formatting
-Formatting used within the document. * plain: Plain text * markdown: Markdown formatted text * textile: Textile formatted text
+Formatting used within the document. * plain: ಸಾದಾ ಪಠ್ಯ * markdown: Markdown formatted text * textile: Textile formatted text
 .UNINDENT
 .SH TXTZ OUTPUT OPTIONS
 .INDENT 0.0
@@ -1628,7 +1628,7 @@ Force splitting on the max\-line\-length value when no space is present. Also al
 .INDENT 0.0
 .TP
 .B \-\-inline\-toc
-Add Table of Contents to beginning of the book.
+ಪುಸ್ತಕದ ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಸೇರಿಸಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1668,7 +1668,7 @@ Specify the character encoding of the output document. The default is utf\-8.
 .INDENT 0.0
 .TP
 .B \-\-txt\-output\-formatting
-Formatting used within the document. * plain: Plain text * markdown: Markdown formatted text * textile: Textile formatted text
+Formatting used within the document. * plain: ಸಾದಾ ಪಠ್ಯ * markdown: Markdown formatted text * textile: Textile formatted text
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

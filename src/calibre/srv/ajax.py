@@ -34,11 +34,11 @@ def get_pagination(query, num=100, offset=0):
     try:
         num = int(query.get('num', num))
     except:
-        raise HTTPNotFound("Invalid num")
+        raise HTTPNotFound('Invalid num')
     try:
         offset = int(query.get('offset', offset))
     except:
-        raise HTTPNotFound("Invalid offset")
+        raise HTTPNotFound('Invalid offset')
     return num, offset
 
 
@@ -54,8 +54,8 @@ def category_icon(category, meta):  # {{{
     return icon
 # }}}
 
-# Book metadata {{{
 
+# Book metadata {{{
 
 def book_to_json(ctx, rd, db, book_id,
                  get_category_urls=True, device_compatible=False, device_for_template=None):
@@ -233,8 +233,8 @@ def books(ctx, rd, library_id):
 
 # }}}
 
-# Categories (Tag Browser)  {{{
 
+# Categories (Tag Browser) {{{
 
 @endpoint('/ajax/categories/{library_id=None}', postprocess=json)
 def categories(ctx, rd, library_id):
@@ -350,7 +350,7 @@ def category(ctx, rd, encoded_name, library_id):
         try:
             dname = decode_name(encoded_name)
         except:
-            raise HTTPNotFound('Invalid encoding of category name %r'%encoded_name)
+            raise HTTPNotFound(f'Invalid encoding of category name {encoded_name!r}')
         base_url = ctx.url_for(globals()['category'], encoded_name=encoded_name, library_id=db.server_library_id)
 
         if dname in ('newest', 'allbooks'):
@@ -367,7 +367,7 @@ def category(ctx, rd, encoded_name, library_id):
         if toplevel == subcategory:
             subcategory = None
         if toplevel not in categories or toplevel not in fm:
-            raise HTTPNotFound('Category %r not found'%toplevel)
+            raise HTTPNotFound(f'Category {toplevel!r} not found')
 
         # Find items and sub categories
         subcategories = []
@@ -383,7 +383,7 @@ def category(ctx, rd, encoded_name, library_id):
                 # complete set of items, no need to consider sub categories
                 items = categories[fullname]
             except:
-                raise HTTPNotFound('User category %r not found'%fullname)
+                raise HTTPNotFound(f'User category {fullname!r} not found')
 
             parts = fullname.split('.')
             for candidate in categories:
@@ -482,20 +482,20 @@ def books_in(ctx, rd, encoded_category, encoded_item, library_id):
         sort_order = ensure_val(sort_order, 'asc', 'desc')
         sfield = sanitize_sort_field_name(db.field_metadata, sort)
         if sfield not in db.field_metadata.sortable_field_keys():
-            raise HTTPNotFound('%s is not a valid sort field'%sort)
+            raise HTTPNotFound(f'{sort} is not a valid sort field')
 
         if dname in ('allbooks', 'newest'):
             ids = ctx.allowed_book_ids(rd, db)
         elif dname == 'search':
             try:
-                ids = ctx.search(rd, db, 'search:"%s"'%ditem)
+                ids = ctx.search(rd, db, f'search:"{ditem}"')
             except Exception:
-                raise HTTPNotFound('Search: %r not understood'%ditem)
+                raise HTTPNotFound(f'Search: {ditem!r} not understood')
         else:
             try:
                 cid = int(ditem)
             except Exception:
-                raise HTTPNotFound('Category id %r not an integer'%ditem)
+                raise HTTPNotFound(f'Category id {ditem!r} not an integer')
 
             if dname == 'news':
                 dname = 'tags'
@@ -526,8 +526,8 @@ def books_in(ctx, rd, encoded_category, encoded_item, library_id):
         return result
 # }}}
 
-# Search {{{
 
+# Search {{{
 
 def search_result(ctx, rd, db, query, num, offset, sort, sort_order, vl=''):
     multisort = [(sanitize_sort_field_name(db.field_metadata, s), ensure_val(o, 'asc', 'desc') == 'asc')
@@ -535,7 +535,7 @@ def search_result(ctx, rd, db, query, num, offset, sort, sort_order, vl=''):
     skeys = db.field_metadata.sortable_field_keys()
     for sfield, sorder in multisort:
         if sfield not in skeys:
-            raise HTTPNotFound('%s is not a valid sort field'%sort)
+            raise HTTPNotFound(f'{sort} is not a valid sort field')
 
     ids, parse_error = ctx.search(rd, db, query, vl=vl, report_restriction_errors=True)
     ids = db.multisort(fields=multisort, ids_to_sort=ids)

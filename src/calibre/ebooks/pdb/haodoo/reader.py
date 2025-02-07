@@ -19,37 +19,37 @@ BPDB_IDENT = 'BOOKMTIT'
 UPDB_IDENT = 'BOOKMTIU'
 
 punct_table = {
-    "︵": "（",
-    "︶": "）",
-    "︷": "｛",
-    "︸": "｝",
-    "︹": "〔",
-    "︺": "〕",
-    "︻": "【",
-    "︼": "】",
-    "︗": "〖",
-    "︘": "〗",
-    "﹇": "［］",
-    "﹈": "［］",
-    "︽": "《",
-    "︾": "》",
-    "︿": "〈",
-    "﹀": "〉",
-    "﹁": "「",
-    "﹂": "」",
-    "﹃": "『",
-    "﹄": "』",
-    "｜": "—",
-    "︙": "…",
-    "ⸯ": "～",
-    "│": "…",
-    "￤": "…",
-    "　": "  ",
+    '︵': '（',
+    '︶': '）',
+    '︷': '｛',
+    '︸': '｝',
+    '︹': '〔',
+    '︺': '〕',
+    '︻': '【',
+    '︼': '】',
+    '︗': '〖',
+    '︘': '〗',
+    '﹇': '［］',
+    '﹈': '［］',
+    '︽': '《',
+    '︾': '》',
+    '︿': '〈',
+    '﹀': '〉',
+    '﹁': '「',
+    '﹂': '」',
+    '﹃': '『',
+    '﹄': '』',
+    '｜': '—',
+    '︙': '…',
+    'ⸯ': '～',
+    '│': '…',
+    '￤': '…',
+    '　': '  ',
     }
 
 
 def fix_punct(line):
-    for (key, value) in punct_table.items():
+    for key, value in punct_table.items():
         line = line.replace(key, value)
     return line
 
@@ -60,9 +60,7 @@ class LegacyHeaderRecord:
         fields = raw.lstrip().replace(b'\x1b\x1b\x1b', b'\x1b').split(b'\x1b')
         self.title = fix_punct(fields[0].decode('cp950', 'replace'))
         self.num_records = int(fields[1])
-        self.chapter_titles = list(map(
-            lambda x: fix_punct(x.decode('cp950', 'replace').rstrip('\x00')),
-            fields[2:]))
+        self.chapter_titles = [fix_punct(x.decode('cp950', 'replace').rstrip('\x00')) for x in fields[2:]]
 
 
 class UnicodeHeaderRecord:
@@ -72,9 +70,7 @@ class UnicodeHeaderRecord:
                 b'\x1b\x00').split(b'\x1b\x00')
         self.title = fix_punct(fields[0].decode('utf_16_le', 'ignore'))
         self.num_records = int(fields[1])
-        self.chapter_titles = list(map(
-            lambda x: fix_punct(x.decode('utf_16_le', 'replace').rstrip('\x00')),
-            fields[2].split(b'\r\x00\n\x00')))
+        self.chapter_titles = [fix_punct(x.decode('utf_16_le', 'replace').rstrip('\x00')) for x in fields[2].split(b'\r\x00\n\x00')]
 
 
 class Reader(FormatReader):
@@ -123,7 +119,7 @@ class Reader(FormatReader):
 
         self.log.info('Decompressing text...')
         for i in range(1, self.header_record.num_records + 1):
-            self.log.debug('\tDecompressing text section %i' % i)
+            self.log.debug(f'\tDecompressing text section {i}')
             title = self.header_record.chapter_titles[i-1]
             lines = []
             title_added = False
@@ -135,7 +131,7 @@ class Reader(FormatReader):
                     title_added = True
                 else:
                     line = prepare_string_for_xml(line)
-                lines.append('<p>%s</p>' % line)
+                lines.append(f'<p>{line}</p>')
             if not title_added:
                 lines.insert(0, '<h1 class="chapter">' + title + '</h1>\n')
             txt += '\n'.join(lines)

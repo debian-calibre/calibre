@@ -70,154 +70,154 @@ class TilingPattern(Stream):
 class QtPattern(TilingPattern):
 
     qt_patterns = (  # {{{
-        "0 J\n"
-        "6 w\n"
-        "[] 0 d\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "0 4 m\n"
-        "8 4 l\n"
-        "S\n",  # Dense1Pattern
+        '0 J\n'
+        '6 w\n'
+        '[] 0 d\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        '0 4 m\n'
+        '8 4 l\n'
+        'S\n',  # Dense1Pattern
 
-        "0 J\n"
-        "2 w\n"
-        "[6 2] 1 d\n"
-        "0 0 m\n"
-        "0 8 l\n"
-        "8 0 m\n"
-        "8 8 l\n"
-        "S\n"
-        "[] 0 d\n"
-        "2 0 m\n"
-        "2 8 l\n"
-        "6 0 m\n"
-        "6 8 l\n"
-        "S\n"
-        "[6 2] -3 d\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "S\n",  # Dense2Pattern
+        '0 J\n'
+        '2 w\n'
+        '[6 2] 1 d\n'
+        '0 0 m\n'
+        '0 8 l\n'
+        '8 0 m\n'
+        '8 8 l\n'
+        'S\n'
+        '[] 0 d\n'
+        '2 0 m\n'
+        '2 8 l\n'
+        '6 0 m\n'
+        '6 8 l\n'
+        'S\n'
+        '[6 2] -3 d\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        'S\n',  # Dense2Pattern
 
-        "0 J\n"
-        "2 w\n"
-        "[6 2] 1 d\n"
-        "0 0 m\n"
-        "0 8 l\n"
-        "8 0 m\n"
-        "8 8 l\n"
-        "S\n"
-        "[2 2] -1 d\n"
-        "2 0 m\n"
-        "2 8 l\n"
-        "6 0 m\n"
-        "6 8 l\n"
-        "S\n"
-        "[6 2] -3 d\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "S\n",  # Dense3Pattern
+        '0 J\n'
+        '2 w\n'
+        '[6 2] 1 d\n'
+        '0 0 m\n'
+        '0 8 l\n'
+        '8 0 m\n'
+        '8 8 l\n'
+        'S\n'
+        '[2 2] -1 d\n'
+        '2 0 m\n'
+        '2 8 l\n'
+        '6 0 m\n'
+        '6 8 l\n'
+        'S\n'
+        '[6 2] -3 d\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        'S\n',  # Dense3Pattern
 
-        "0 J\n"
-        "2 w\n"
-        "[2 2] 1 d\n"
-        "0 0 m\n"
-        "0 8 l\n"
-        "8 0 m\n"
-        "8 8 l\n"
-        "S\n"
-        "[2 2] -1 d\n"
-        "2 0 m\n"
-        "2 8 l\n"
-        "6 0 m\n"
-        "6 8 l\n"
-        "S\n"
-        "[2 2] 1 d\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "S\n",  # Dense4Pattern
+        '0 J\n'
+        '2 w\n'
+        '[2 2] 1 d\n'
+        '0 0 m\n'
+        '0 8 l\n'
+        '8 0 m\n'
+        '8 8 l\n'
+        'S\n'
+        '[2 2] -1 d\n'
+        '2 0 m\n'
+        '2 8 l\n'
+        '6 0 m\n'
+        '6 8 l\n'
+        'S\n'
+        '[2 2] 1 d\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        'S\n',  # Dense4Pattern
 
-        "0 J\n"
-        "2 w\n"
-        "[2 6] -1 d\n"
-        "0 0 m\n"
-        "0 8 l\n"
-        "8 0 m\n"
-        "8 8 l\n"
-        "S\n"
-        "[2 2] 1 d\n"
-        "2 0 m\n"
-        "2 8 l\n"
-        "6 0 m\n"
-        "6 8 l\n"
-        "S\n"
-        "[2 6] 3 d\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "S\n",  # Dense5Pattern
+        '0 J\n'
+        '2 w\n'
+        '[2 6] -1 d\n'
+        '0 0 m\n'
+        '0 8 l\n'
+        '8 0 m\n'
+        '8 8 l\n'
+        'S\n'
+        '[2 2] 1 d\n'
+        '2 0 m\n'
+        '2 8 l\n'
+        '6 0 m\n'
+        '6 8 l\n'
+        'S\n'
+        '[2 6] 3 d\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        'S\n',  # Dense5Pattern
 
-        "0 J\n"
-        "2 w\n"
-        "[2 6] -1 d\n"
-        "0 0 m\n"
-        "0 8 l\n"
-        "8 0 m\n"
-        "8 8 l\n"
-        "S\n"
-        "[2 6] 3 d\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "S\n",  # Dense6Pattern
+        '0 J\n'
+        '2 w\n'
+        '[2 6] -1 d\n'
+        '0 0 m\n'
+        '0 8 l\n'
+        '8 0 m\n'
+        '8 8 l\n'
+        'S\n'
+        '[2 6] 3 d\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        'S\n',  # Dense6Pattern
 
-        "0 J\n"
-        "2 w\n"
-        "[2 6] -1 d\n"
-        "0 0 m\n"
-        "0 8 l\n"
-        "8 0 m\n"
-        "8 8 l\n"
-        "S\n",  # Dense7Pattern
+        '0 J\n'
+        '2 w\n'
+        '[2 6] -1 d\n'
+        '0 0 m\n'
+        '0 8 l\n'
+        '8 0 m\n'
+        '8 8 l\n'
+        'S\n',  # Dense7Pattern
 
-        "1 w\n"
-        "0 4 m\n"
-        "8 4 l\n"
-        "S\n",  # HorPattern
+        '1 w\n'
+        '0 4 m\n'
+        '8 4 l\n'
+        'S\n',  # HorPattern
 
-        "1 w\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "S\n",  # VerPattern
+        '1 w\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        'S\n',  # VerPattern
 
-        "1 w\n"
-        "4 0 m\n"
-        "4 8 l\n"
-        "0 4 m\n"
-        "8 4 l\n"
-        "S\n",  # CrossPattern
+        '1 w\n'
+        '4 0 m\n'
+        '4 8 l\n'
+        '0 4 m\n'
+        '8 4 l\n'
+        'S\n',  # CrossPattern
 
-        "1 w\n"
-        "-1 5 m\n"
-        "5 -1 l\n"
-        "3 9 m\n"
-        "9 3 l\n"
-        "S\n",  # BDiagPattern
+        '1 w\n'
+        '-1 5 m\n'
+        '5 -1 l\n'
+        '3 9 m\n'
+        '9 3 l\n'
+        'S\n',  # BDiagPattern
 
-        "1 w\n"
-        "-1 3 m\n"
-        "5 9 l\n"
-        "3 -1 m\n"
-        "9 5 l\n"
-        "S\n",  # FDiagPattern
+        '1 w\n'
+        '-1 3 m\n'
+        '5 9 l\n'
+        '3 -1 m\n'
+        '9 5 l\n'
+        'S\n',  # FDiagPattern
 
-        "1 w\n"
-        "-1 3 m\n"
-        "5 9 l\n"
-        "3 -1 m\n"
-        "9 5 l\n"
-        "-1 5 m\n"
-        "5 -1 l\n"
-        "3 9 m\n"
-        "9 3 l\n"
-        "S\n",  # DiagCrossPattern
+        '1 w\n'
+        '-1 3 m\n'
+        '5 9 l\n'
+        '3 -1 m\n'
+        '9 5 l\n'
+        '-1 5 m\n'
+        '5 -1 l\n'
+        '3 9 m\n'
+        '9 3 l\n'
+        'S\n',  # DiagCrossPattern
     )  # }}}
 
     def __init__(self, pattern_num, matrix):
@@ -239,7 +239,7 @@ class TexturePattern(TilingPattern):
                 paint_type=paint_type)
             m = (self.w, 0, 0, -self.h, 0, self.h)
             self.resources['XObject'] = Dictionary({'Texture':imgref})
-            self.write_line('%s cm /Texture Do'%(' '.join(map(fmtnum, m))))
+            self.write_line('{} cm /Texture Do'.format(' '.join(map(fmtnum, m))))
         else:
             super().__init__(
                 clone.cache_key[1], matrix, w=clone.w, h=clone.h,
@@ -419,17 +419,17 @@ class Graphics:
         # Line cap
         cap = {Qt.PenCapStyle.FlatCap:0, Qt.PenCapStyle.RoundCap:1, Qt.PenCapStyle.SquareCap:
                2}.get(pen.capStyle(), 0)
-        pdf.current_page.write('%d J '%cap)
+        pdf.current_page.write(f'{cap} J ')
 
         # Line join
         join = {Qt.PenJoinStyle.MiterJoin:0, Qt.PenJoinStyle.RoundJoin:1,
                 Qt.PenJoinStyle.BevelJoin:2}.get(pen.joinStyle(), 0)
-        pdf.current_page.write('%d j '%join)
+        pdf.current_page.write(f'{join} j ')
 
         # Dash pattern
         if pen.style() == Qt.PenStyle.CustomDashLine:
             pdf.serialize(Array(pen.dashPattern()))
-            pdf.current_page.write(' %d d ' % pen.dashOffset())
+            pdf.current_page.write(f' {pen.dashOffset()} d ')
         else:
             ps = {Qt.PenStyle.DashLine:[3], Qt.PenStyle.DotLine:[1,2], Qt.PenStyle.DashDotLine:[3,2,1,2],
                   Qt.PenStyle.DashDotDotLine:[3, 2, 1, 2, 1, 2]}.get(pen.style(), [])

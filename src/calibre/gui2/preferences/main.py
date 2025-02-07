@@ -44,8 +44,8 @@ from calibre.gui2.preferences import AbortCommit, AbortInitialize, get_plugin, i
 
 ICON_SIZE = 32
 
-# Title Bar {{{
 
+# Title Bar {{{
 
 class Message(QWidget):
 
@@ -215,7 +215,6 @@ class Browser(QScrollArea):  # {{{
             w.plugin_activated.connect(self.show_plugin.emit)
         self._layout.addStretch(1)
 
-
 # }}}
 
 
@@ -329,8 +328,10 @@ class Preferences(QDialog):
     def show_plugin(self, plugin):
         self.showing_widget = plugin.create_widget(self.scroll_area)
         self.showing_widget.genesis(self.gui)
+        self.showing_widget.do_on_child_tabs('genesis', self.gui)
         try:
             self.showing_widget.initialize()
+            self.showing_widget.do_on_child_tabs('initialize')
         except AbortInitialize:
             return
         self.set_tooltips_for_labels()
@@ -357,6 +358,7 @@ class Preferences(QDialog):
             (_('Restoring to defaults not supported for') + ' ' + plugin.gui_name))
         self.restore_defaults_button.setText(_('Restore &defaults'))
         self.showing_widget.changed_signal.connect(self.changed_signal)
+        self.showing_widget.do_on_child_tabs('set_changed_signal', self.changed_signal)
 
     def changed_signal(self):
         b = self.bb.button(QDialogButtonBox.StandardButton.Apply)
@@ -394,7 +396,8 @@ class Preferences(QDialog):
         self.accept()
 
     def commit(self, *args):
-        must_restart = self.showing_widget.commit()
+        # Commit the child widgets first in case the main widget uses the information
+        must_restart = bool(self.showing_widget.do_on_child_tabs('commit')) | bool(self.showing_widget.commit())
         rc = self.showing_widget.restart_critical
         self.committed = True
         do_restart = False
@@ -407,12 +410,15 @@ class Preferences(QDialog):
                         ' Please restart calibre as soon as possible.')
             do_restart = show_restart_warning(msg, parent=self)
 
+        # Same with refresh -- do the child widgets first so the main widget has the info
+        self.showing_widget.do_on_child_tabs('refresh_gui', self.gui)
         self.showing_widget.refresh_gui(self.gui)
         if do_restart:
             self.do_restart = True
         return self.close_after_initial or (must_restart and rc) or do_restart
 
     def restore_defaults(self, *args):
+        self.showing_widget.do_on_child_tabs('restore_defaults')
         self.showing_widget.restore_defaults()
 
     def on_shutdown(self):

@@ -100,9 +100,10 @@ def adjacent_quotes(first_string, second_string):
     if fchar is not None:
         first_char = fchar.group(1)  # First non-space char
 
-    return bool((last_char == '\u0022' and first_char == '\u0022') \
-             or (last_char == '\u2019' and first_char == '\u2018') \
-             or (last_char == '\u201d' and first_char == '\u201c'))
+    return bool((last_char == '"' and first_char == '"') \
+             or (last_char == '’' and first_char == '‘') \
+             or (last_char == '”' and first_char == '“'))
+
 
 class Font:
 
@@ -112,6 +113,7 @@ class Font:
         self.size_em = 0.0
         self.color = spec.get('color')
         self.family = spec.get('family')
+
 
 class Element:
 
@@ -125,12 +127,14 @@ class Element:
     def __hash__(self):
         return hash(self.id)
 
+
 class DocStats:
 
     def __init__(self):
         self.top = self.bottom = self.left_min_odd = self.left_min_even = self.right \
           = self.line_space = self.para_space = self.indent_min_odd = self.indent_min_even = 0
         self.font_size = 0
+
 
 class Image(Element):
 
@@ -147,8 +151,7 @@ class Image(Element):
         self.align = 'L'
 
     def to_html(self):
-        return '<img src="%s" alt="" width="%dpx" height="%dpx"/>' % \
-                (self.src, int(self.width), int(self.height))
+        return f'<img src="{self.src}" alt="" width="{int(self.width)}px" height="{int(self.height)}px"/>'
 
     def dump(self, f):
         f.write(self.to_html())
@@ -166,7 +169,7 @@ class Text(Element):
             ('top', 'left', 'width', 'height'))))
         # This does nothing, as expected,
         # but somewhere left (at least) is changed sometimes to not .0
-        if self.left != round(self.left) :
+        if self.left != round(self.left):
             self.left = round(self.left)
         self.bottom  = self.top + self.height
         self.right = self.left + self.width
@@ -195,7 +198,7 @@ class Text(Element):
             self.font = {}
             self.font_size = 0.0
             self.font_size_em = 0.0
-        #    self.color = 0
+            # self.color = 0
 
         text.tail = ''
         self.text_as_string = etree.tostring(text, method='text', encoding='unicode')
@@ -223,8 +226,7 @@ class Text(Element):
 
     def coalesce(self, other, page_number, left_margin, right_margin):
         if self.opts.verbose > 2:
-            self.log.debug('Coalescing %r with %r on page %d'%(self.text_as_string,
-                other.text_as_string, page_number))
+            self.log.debug(f'Coalescing {self.text_as_string!r} with {other.text_as_string!r} on page {page_number}')
         # Need to work out how to decide this
         # For elements of the same line, is there a space between?
         has_float = ''
@@ -232,7 +234,7 @@ class Text(Element):
         # Or assume any gap = a space?
         if (self.top <= other.top and self.bottom >= other.bottom) \
           and abs(other.left - self.right) < 2.0:
-          #and abs(other.left - self.right) < self.average_character_width / 3.0:
+            # and abs(other.left - self.right) < self.average_character_width / 3.0:
             has_gap = 0
         else:  # Insert n spaces to fill gap.  Use TAB?  Columns?
             if other.left < self.right:
@@ -260,8 +262,8 @@ class Text(Element):
 
         self.left = min(self.left, other.left)
         self.right = max(self.right, other.right)
-        self.width +=  other.width
-        self.final_width =  other.left + other.width
+        self.width += other.width
+        self.final_width = other.left + other.width
         self.height = self.bottom - self.top
         # Need to check for </span> <span... as well
         # This test does not work in its present form
@@ -269,8 +271,8 @@ class Text(Element):
         if self.font_size_em == other.font_size_em \
           and False \
           and self.font.id == other.font.id \
-          and re.match(r'<span style="font-size:', self.raw) is not None \
-          and re.match(r'<span style="font-size:', other.raw) is not None :
+          and self.raw.startswith(r'<span style="font-size:') \
+          and other.raw.startswith(r'<span style="font-size:'):
             # We have the same class, so merge
             m_self = re.match(r'^(.+)</span>$', self.raw)
             m_other = re.match(r'^<span style="font-size:.+em">(.+</span>)$', other.raw)
@@ -278,12 +280,12 @@ class Text(Element):
                 self.raw = m_self.group(1)
                 other.raw = m_other.group(1)
         elif self.font_size_em != other.font_size_em \
-          and self.font_size_em != 1.00 :
-            if re.match(r'<span', self.raw) is None :
-                self.raw = '<span style="font-size:%sem">%s</span>'%(str(self.font_size_em),self.raw)
+          and self.font_size_em != 1.00:
+            if not self.raw.startswith(r'<span'):
+                self.raw = f'<span style="font-size:{self.font_size_em!s}em">{self.raw}</span>'
             # Try to allow for a very large initial character
             elif len(self.text_as_string) <= 2 \
-              and self.font_size_em >= other.font_size_em * 2.0 :
+              and self.font_size_em >= other.font_size_em * 2.0:
                 # Insert 'float: left' etc. into current font info
                 # Unfortunately, processing to generate the .epub file changes things.
                 # The line height gets set to the same as other parts of the file
@@ -296,13 +298,13 @@ class Text(Element):
 
         self.font_size = max(self.font_size, other.font_size)
         self.font_size_em = max(self.font_size_em, other.font_size_em)
-        self.font = other.font if self.font_size == other.font_size else other.font
+        self.font = other.font
         if has_gap > 0:
             if has_gap < 3:  # Small number of spaces = 1 space
                 if not (self.text_as_string.endswith(' ') \
                      or self.text_as_string.endswith('-') \
                      or other.text_as_string.startswith(' ') \
-                     or other.text_as_string.startswith('-') ):
+                     or other.text_as_string.startswith('-')):
                     has_gap = 1
                 else:
                     has_gap = 0
@@ -314,7 +316,7 @@ class Text(Element):
                   and other.right > right_margin - right_margin * RIGHT_FLOAT_FACTOR:
                     has_float = '<span style="float:right">'
                     has_gap = 1
-                #else leave has_gap
+                # else leave has_gap
             old_float = re.match(r'^(.*)(<span style="float:right">.*)</span>\s*$', self.raw)
             if old_float:
                 # There is already a float as parts of a line are near the right.
@@ -332,11 +334,11 @@ class Text(Element):
                 self.text_as_string += ' '
                 self.raw += ' '
                 self.width += self.average_character_width
-                #self.final_width += self.average_character_width
+                # self.final_width += self.average_character_width
                 has_gap -= 1
 
         self.text_as_string += other.text_as_string
-        #self.width += other.width
+        # self.width += other.width
 
         # Try to merge href where there are 2 for the same place
         # Beware multiple hrefs on the same line, but for different places
@@ -347,10 +349,10 @@ class Text(Element):
         # Are there problems if self.raw does not end </a>?
         # Note that the 2 parts could have different font sizes
         matchObj = re.match(r'^([^<]*)(<span[^>]*>)*(<a href[^>]+>)(.*)</a>(</span>)*(\s*)$', self.raw)
-        if matchObj is not None :
+        if matchObj is not None:
             otherObj = re.match(r'^([^<]*)(<span[^>]*>)*(<a href[^>]+>)(.*)(</a>)(</span>)*(.*)$', other.raw)
             # There is another href, but is it for the same place?
-            if otherObj is not None  and  matchObj.group(3) == otherObj.group(3) :
+            if otherObj is not None and matchObj.group(3) == otherObj.group(3):
                 m2 = matchObj.group(2)
                 if m2 is None:
                     m2 = ''
@@ -368,10 +370,10 @@ class Text(Element):
                 # Move the <span... after the <a... and remove the </a>
                 self.raw = matchObj.group(1)+matchObj.group(3)+m2+matchObj.group(4)+m5+matchObj.group(6)
         # This needs more work
-        #if sub_super < 0:
-        #    other.raw = '<sup>' + other.raw + '</sup>'
-        #elif sub_super > 0:
-        #    other.raw = '<sub>' + other.raw + '</sub>'
+        # if sub_super < 0:
+        #     other.raw = '<sup>' + other.raw + '</sup>'
+        # elif sub_super > 0:
+        #     other.raw = '<sub>' + other.raw + '</sub>'
 
         if has_float:
             self.raw += has_float
@@ -379,15 +381,16 @@ class Text(Element):
         if has_float:
             self.raw += '</span>'
         self.set_av_char_width()
-        #self.last_left = other.left
+        # self.last_left = other.left
 
     def to_html(self):
         return self.raw
 
     def dump(self, f):
-        f.write('T top={}, left={}, width={}, height={}: '.format(self.top, self.left, self.width, self.height))
+        f.write(f'T top={self.top}, left={self.left}, width={self.width}, height={self.height}: ')
         f.write(self.to_html().encode('utf-8'))
         f.write('\n')
+
 
 class Paragraph(Text):
 
@@ -408,7 +411,7 @@ class Paragraph(Text):
         else:
             self.font = {}
             self.font_size = 0
-        #    self.color = 0
+            # self.color = 0
 
         text.tail = ''
         self.text_as_string = etree.tostring(text, method='text',
@@ -422,9 +425,10 @@ class Paragraph(Text):
         return self.raw
 
     def dump(self, f):
-        f.write('P top={}, left={}, width={}, height={}: '.format(self.top, self.left, self.width, self.height))
+        f.write(f'P top={self.top}, left={self.left}, width={self.width}, height={self.height}: ')
         f.write(self.to_html().encode('utf-8'))
         f.write('\n')
+
 
 class FontSizeStats(dict):
 
@@ -436,6 +440,7 @@ class FontSizeStats(dict):
             if chars >= self.chars_at_most_common_size:
                 self.most_common_size, self.chars_at_most_common_size = sz, chars
             self[sz] = chars/total
+
 
 class Interval:
 
@@ -460,14 +465,14 @@ class Interval:
         return self.left == other.left and self.right == other.right
 
     def __hash__(self):
-        return hash('(%f,%f)'%self.left, self.right)
+        return hash('({:f},{:f})'.format(*self.left), self.right)
+
 
 class Column:
 
     # A column contains an element if the element bulges out to
     # the left or the right by at most HFUZZ*col width.
     HFUZZ = 0.2
-
 
     def __init__(self):
         self.left = self.right = self.top = self.bottom = 0
@@ -510,13 +515,13 @@ class Column:
     def collect_stats(self):
         if len(self.elements) > 1:
             gaps = [self.elements[i+1].top - self.elements[i].bottom for i in
-                    range(0, len(self.elements)-1)]
+                    range(len(self.elements)-1)]
             self.average_line_separation = sum(gaps)/len(gaps)
         for i, elem in enumerate(self.elements):
             left_margin = elem.left - self.left
             elem.indent_fraction = left_margin/self.width
             elem.width_fraction = elem.width/self.width
-            if i == 0  or  self.average_line_separation == 0:
+            if i == 0 or self.average_line_separation == 0:
                 elem.top_gap_ratio = None
             else:
                 elem.top_gap_ratio = (self.elements[i-1].bottom -
@@ -528,7 +533,7 @@ class Column:
         return self.elements[idx-1]
 
     def dump(self, f, num):
-        f.write('******** Column %d\n\n'%num)
+        f.write(f'******** Column {num}\n\n')
         for elem in self.elements:
             elem.dump(f)
 
@@ -539,14 +544,15 @@ class Box(list):
         self.tag = type
 
     def to_html(self):
-        ans = ['<%s>'%self.tag]
+        ans = [f'<{self.tag}>']
         for elem in self:
             if isinstance(elem, int):
-                ans.append('<a name="page_%d"/>'%elem)
+                ans.append(f'<a name="page_{elem}"/>')
             else:
                 ans.append(elem.to_html()+' ')
-        ans.append('</%s>'%self.tag)
+        ans.append(f'</{self.tag}>')
         return ans
+
 
 class ImageBox(Box):
 
@@ -561,7 +567,7 @@ class ImageBox(Box):
             ans.append('<br/>')
             for elem in self:
                 if isinstance(elem, int):
-                    ans.append('<a name="page_%d"/>'%elem)
+                    ans.append(f'<a name="page_{elem}"/>')
                 else:
                     ans.append(elem.to_html()+' ')
         ans.append('</div>')
@@ -636,16 +642,14 @@ class Region:
                 col = most_suitable_column(elem)
                 if self.opts.verbose > 3:
                     idx = self.columns.index(col)
-                    self.log.debug('Absorbing singleton %s into column'%elem.to_html(),
+                    self.log.debug(f'Absorbing singleton {elem.to_html()} into column',
                             idx)
                 col.add(elem)
-
 
     def collect_stats(self):
         for column in self.columns:
             column.collect_stats()
-        self.average_line_separation = sum([x.average_line_separation for x in
-            self.columns])/float(len(self.columns))
+        self.average_line_separation = sum(x.average_line_separation for x in self.columns)/float(len(self.columns))
 
     def __iter__(self):
         yield from self.columns
@@ -690,7 +694,7 @@ class Region:
 
     def dump(self, f):
         f.write('############################################################\n')
-        f.write('########## Region (%d columns) ###############\n'%len(self.columns))
+        f.write(f'########## Region ({len(self.columns)} columns) ###############\n')
         f.write('############################################################\n\n')
         for i, col in enumerate(self.columns):
             col.dump(f, i)
@@ -725,7 +729,6 @@ class Region:
                 self.boxes[-1].append(elem)
 
 
-
 class Page:
 
     def __init__(self, page, font_map, opts, log, idc):
@@ -735,15 +738,15 @@ class Page:
             if (frst.top <= secnd.top and frst.bottom >= secnd.bottom-BOTTOM_FACTOR) \
               or (secnd.top <= frst.top and secnd.bottom >= frst.bottom-BOTTOM_FACTOR):
                 # Overlap = same line
-                if frst.left < secnd.left :
+                if frst.left < secnd.left:
                     return -1
-                elif frst.left == secnd.left :
+                elif frst.left == secnd.left:
                     return 0
                 return 1
             # Different line so sort into line number
-            if frst.bottom < secnd.bottom :
+            if frst.bottom < secnd.bottom:
                 return -1
-            elif frst.bottom == secnd.bottom :
+            elif frst.bottom == secnd.bottom:
                 return 0
             return 1
 
@@ -755,7 +758,7 @@ class Page:
         self.number = int(page.get('number'))
         self.odd_even = self.number % 2    # Odd = 1
         self.top, self.left, self.width, self.height = map(float, map(page.get, ('top', 'left', 'width', 'height')))
-        self.id = 'page%d'%self.number
+        self.id = f'page{self.number}'
         self.page_break_after = False
 
         self.texts = []
@@ -777,7 +780,7 @@ class Page:
               or text.top > self.height \
               or text.left > self.left+self.width \
               or text.left < self.left:
-              #and re.match(r'href=', text.raw) is None:
+                # and re.match(r'href=', text.raw) is None:
                 self.texts.remove(text)
             elif  (self.opts.pdf_header_skip <= 0 or text.top >= self.opts.pdf_header_skip) \
               and (self.opts.pdf_footer_skip <= 0 or text.top <= self.opts.pdf_footer_skip):
@@ -857,7 +860,7 @@ class Page:
         # Approximate the line spacing for checking overlapped lines
         line_height = frag.bottom - frag.top
         for t in self.texts:
-            if t is not frag :
+            if t is not frag:
                 # Do the parts of a line overlap?
                 # Some files can have separate lines overlapping slightly
                 # BOTTOM_FACTOR allows for this
@@ -955,19 +958,19 @@ class Page:
               and lmargin >= rmargin - rmargin*CENTER_FACTOR \
               and lmargin <= rmargin + rmargin*CENTER_FACTOR \
               and '"float:right"' not in t.raw:
-               #and t.left + t.width + t.left >= self.width + l_offset - t.average_character_width \
-               #and t.left + t.width + t.left <= self.width + l_offset + t.average_character_width:
+                # and t.left + t.width + t.left >= self.width + l_offset - t.average_character_width \
+                # and t.left + t.width + t.left <= self.width + l_offset + t.average_character_width:
                 t.align = 'C'
             # Right aligned if left > FACTOR% of right
             elif lmargin > indent_max \
               and lmargin > rmargin*RIGHT_FACTOR:
-              #and t.right >= self.width - t.average_character_width:
+                # and t.right >= self.width - t.average_character_width:
                 # What about right-aligned but indented on right?
                 # What about indented rather than right-aligned?
                 t.align = 'R'
             if not self.contents:
-              # We can get <a href=...Chapter...  Should this check be done?
-              #if 'href=' not in t.raw:
+                # We can get <a href=...Chapter...  Should this check be done?
+                # if 'href=' not in t.raw:
                 # Check for Roman numerals as the only thing on a line
                 if re.match(r'^\s*[iIxXvV]+\s*$', t.text_as_string) is not None:
                     t.tag = 'h3'
@@ -1077,7 +1080,7 @@ class Page:
                         if last_frag is not None \
                           and stats.para_space > 0 \
                           and frag.bottom - last_frag.bottom > stats.para_space*SECTION_FACTOR:
-                          #and frag.top - last_frag.bottom > frag.height + stats.line_space + (stats.line_space*LINE_FACTOR):
+                            # and frag.top - last_frag.bottom > frag.height + stats.line_space + (stats.line_space*LINE_FACTOR):
                             frag.blank_line_before = 1
                 last_frag = frag
                 tind += 1
@@ -1095,14 +1098,14 @@ class Page:
             for i in range(LINE_SCAN_COUNT):
                 if len(self.texts) < 1:
                     break
-                if re.match(opts.pdf_header_regex, self.texts[0].text_as_string) is not None :
+                if re.match(opts.pdf_header_regex, self.texts[0].text_as_string) is not None:
                     # There could be fragments which are spread out, so join_fragments has not coalesced them
                     # Not sure that this would work as it relies on the first fragment matching regex
                     t = self.texts[0]
-                    #match = self.find_match(t)
-                    #while match is not None:
-                    #    self.texts.remove(match)
-                    #    match = self.find_match(t)
+                    # match = self.find_match(t)
+                    # while match is not None:
+                    #     self.texts.remove(match)
+                    #     match = self.find_match(t)
                     self.texts.remove(t)
 
         if len(opts.pdf_footer_regex) > 0 \
@@ -1111,13 +1114,13 @@ class Page:
             for i in range(LINE_SCAN_COUNT):
                 if len(self.texts) < 1:
                     break
-                if re.match(opts.pdf_footer_regex, self.texts[-1].text_as_string) is not None :
+                if re.match(opts.pdf_footer_regex, self.texts[-1].text_as_string) is not None:
                     # There could be fragments which are spread out, so join_fragments has not coalesced them
                     t = self.texts[-1]
-                    #match = self.find_match(t)
-                    #while match is not None:
-                    #    self.texts.remove(match)
-                    #    match = self.find_match(t)
+                    # match = self.find_match(t)
+                    # while match is not None:
+                    #     self.texts.remove(match)
+                    #     match = self.find_match(t)
                     self.texts.remove(t)
 
     def create_page_format(self, stats, opts):
@@ -1135,7 +1138,7 @@ class Page:
 
     def find_margins(self, tops, indents, line_spaces, bottoms, rights):
 
-        #from collections import Counter
+        # from collections import Counter
 
         # Should check for left margin and indent for this page
         # Find the most used top, left margins, and gaps between lines
@@ -1144,15 +1147,15 @@ class Page:
         max_right = 0
         max_space = 0
         last_top = 0
-        #last_bottom = 0
+        # last_bottom = 0
         first = True
         for text in self.texts:
             top = text.top
             left = text.left
-            if round(left) != left :
+            if round(left) != left:
                 text.left = left = round(left)
             right = text.right
-            if round(right) != right :
+            if round(right) != right:
                 text.right = right = round(right)
             if first:
                 tops[top] = tops.get(top, 0) + 1
@@ -1206,7 +1209,7 @@ class Page:
             self.regions.append(current_region)
 
         if self.opts.verbose > 2:
-            self.debug_dir = 'page-%d'%self.number
+            self.debug_dir = f'page-{self.number}'
             os.mkdir(self.debug_dir)
             self.dump_regions('pre-coalesce')
 
@@ -1217,7 +1220,7 @@ class Page:
     def dump_regions(self, fname):
         fname = 'regions-'+fname+'.txt'
         with open(os.path.join(self.debug_dir, fname), 'wb') as f:
-            f.write('Page #%d\n\n'%self.number)
+            f.write(f'Page #{self.number}\n\n')
             for region in self.regions:
                 region.dump(f)
 
@@ -1261,18 +1264,13 @@ class Page:
                             absorb_into = None
                     else:
                         absorb_into = prev_region
-                        if self.regions[next_region].line_count >= \
-                                self.regions[prev_region].line_count:
-                            avg_column_count = sum([len(r.columns) for r in
-                                regions])/float(len(regions))
-                            if self.regions[next_region].line_count > \
-                                    self.regions[prev_region].line_count \
-                               or abs(avg_column_count -
-                                       len(self.regions[prev_region].columns)) \
-                               > abs(avg_column_count -
-                                       len(self.regions[next_region].columns)):
-                                   absorb_into = next_region
-                                   absorb_at = 'top'
+                        if self.regions[next_region].line_count >= self.regions[prev_region].line_count:
+                            avg_column_count = sum(len(r.columns) for r in regions)/float(len(regions))
+                            if self.regions[next_region].line_count > self.regions[prev_region].line_count \
+                              or abs(avg_column_count - len(self.regions[prev_region].columns)) \
+                               > abs(avg_column_count - len(self.regions[next_region].columns)):
+                                absorb_into = next_region
+                                absorb_at = 'top'
                     if absorb_into is not None:
                         self.regions[absorb_into].absorb_regions(regions, absorb_at)
                         absorbed.update(regions)
@@ -1317,7 +1315,7 @@ class Page:
         for text in self.texts:
             text.font_size_em = self.font_map[text.font.id].size_em
             if text.font_size_em != 0.00 and text.font_size_em != 1.00:
-                text.raw = '<span style="font-size:%sem">%s</span>'%(str(text.font_size_em),text.raw)
+                text.raw = f'<span style="font-size:{text.font_size_em!s}em">{text.raw}</span>'
 
     def second_pass(self, stats, opts):
 
@@ -1341,10 +1339,10 @@ class Page:
 
         self.check_centered(stats)
 
-        #self.elements = list(self.texts)
-        #for img in page.xpath('descendant::img'):
-        #    self.elements.append(Image(img, self.opts, self.log, idc))
-        #self.elements.sort(cmp=lambda x,y:cmp(x.top, y.top))
+        # self.elements = list(self.texts)
+        # for img in page.xpath('descendant::img'):
+        #     self.elements.append(Image(img, self.opts, self.log, idc))
+        # self.elements.sort(cmp=lambda x,y:cmp(x.top, y.top))
 
         return
         # NOT IMPLEMENTED
@@ -1352,7 +1350,6 @@ class Page:
         for region in self.regions:
             region.collect_stats()
             region.linearize()
-
 
     def to_html(self):
         # If ans.append is used, newlines are inserted between each element
@@ -1371,20 +1368,20 @@ class Page:
                     ans[-1] += ' style="text-align:center"'
                 if self.id_used == 0:
                     self.id_used = 1
-                    ans[-1] += ' id="page_%d"'%self.number
+                    ans[-1] += f' id="page_{self.number}"'
                 ans[-1] += '>'
                 ans[-1] += self.imgs[iind].to_html()
                 ans[-1] += '</p>'
                 iind += 1
             if text.blank_line_before > 0:
                 ans.append('<p style="text-align:center">&#160;</p>')
-            ans.append('<%s'%text.tag)
+            ans.append(f'<{text.tag}')
             # Should be only for Headings, but there is no guarantee that the heading will be recognised
             # So put in an ID once per page in case the Contents references it
             #   and  text.tag[0] == 'h'
             if self.id_used == 0:
                 self.id_used = 1
-                ans[-1] += ' id="page_%d"'%self.number
+                ans[-1] += f' id="page_{self.number}"'
             if text.align == 'C':
                 ans[-1] += ' style="text-align:center"'
             elif text.align == 'R':
@@ -1392,7 +1389,7 @@ class Page:
             elif text.indented > 0:
                 ans[-1] += ' style="text-indent:'
                 ans[-1] += str(text.indented)
-                #ans[-1] += '1'
+                # ans[-1] += '1'
                 ans[-1] += 'em"'
             # The margins need more work.  e.g. can have indented + left + right
             elif text.margin_left > 0:
@@ -1405,7 +1402,7 @@ class Page:
                 ans[-1] += 'em"'
             ans[-1] += '>'
             ans[-1] += text.to_html()
-            ans[-1] += '</%s>'%text.tag  # Closing tag
+            ans[-1] += f'</{text.tag}>'  # Closing tag
             if text.blank_line_after > 0:
                 ans.append('<p style="text-align:center">&#160;</p>')
 
@@ -1416,7 +1413,7 @@ class Page:
                 ans[-1] += ' style="text-align:center"'
             if self.id_used == 0:
                 self.id_used = 1
-                ans[-1] += ' id="page_%d"'%self.number
+                ans[-1] += f' id="page_{self.number}"'
             ans[-1] += '>'
             ans[-1] += self.imgs[iind].to_html()
             ans[-1] += '</p>'
@@ -1424,10 +1421,11 @@ class Page:
 
         return ans
 
+
 class PDFDocument:
 
     def __init__(self, xml, opts, log):
-        #from calibre.rpdb import set_trace;  set_trace()
+        # from calibre.rpdb import set_trace;  set_trace()
 
         self.opts, self.log = opts, log
 
@@ -1451,11 +1449,11 @@ class PDFDocument:
             self.font_map[self.fonts[-1].id] = self.fonts[-1]
 
         self.pages = []
-        #self.page_map = {}
+        # self.page_map = {}
 
         for page in self.root.xpath('//page'):
             page = Page(page, self.font_map, opts, log, idc)
-            #self.page_map[page.id] = page
+            # self.page_map[page.id] = page
             self.pages.append(page)
 
         self.tops = {}
@@ -1496,7 +1494,7 @@ class PDFDocument:
         # Join paragraphs across page boundaries
         self.merge_pages(idc)
 
-        #self.linearize()
+        # self.linearize()
         self.render()
 
     def collect_font_statistics(self):
@@ -1752,7 +1750,7 @@ class PDFDocument:
         bcount = 0
         for b in self.bottoms:
             if bcount < self.bottoms[b]:
-              #and b > self.stats.bottom*0.9:
+                # and b > self.stats.bottom*0.9:
                 bcount = self.bottoms[b]
             if b > self.stats.bottom:
                 self.stats.bottom = b
@@ -1801,8 +1799,8 @@ class PDFDocument:
                       or page.texts[head_ind].top > page.height/2:
                         break  # Short page
                     t = page.texts[head_ind].text_as_string
-                    #if len(page.texts) > 1 and page.texts[0].top == page.texts[1].top:
-                    #    t += ' ' + page.texts[1].text_as_string
+                    # if len(page.texts) > 1 and page.texts[0].top == page.texts[1].top:
+                    #     t += ' ' + page.texts[1].text_as_string
                     if len(head_text[head_ind]) == 0:
                         head_text[head_ind] = t
                     else:
@@ -1834,8 +1832,8 @@ class PDFDocument:
                       or page.texts[-foot_ind-1].top < page.height/2:
                         break  # Short page
                     t = page.texts[-foot_ind-1].text_as_string
-                    #if len(page.texts) > 1 and page.texts[-1].top == page.texts[-2].top:
-                    #    t += ' ' + page.texts[-2].text_as_string
+                    # if len(page.texts) > 1 and page.texts[-1].top == page.texts[-2].top:
+                    #     t += ' ' + page.texts[-2].text_as_string
                     if len(foot_text[foot_ind]) == 0:
                         foot_text[foot_ind] = t
                     else:
@@ -1950,7 +1948,7 @@ class PDFDocument:
                 # Do not merge if the next paragraph is indented
                 if page.texts:
                     if candidate:
-                       last_line = candidate.texts[-1]
+                        last_line = candidate.texts[-1]
                     if candidate \
                       and last_line.bottom > orphan_space \
                       and page.texts[0].indented == 0:
@@ -1969,7 +1967,7 @@ class PDFDocument:
                             merged_len = 0  # No merge
                         # Allow where the last line ends with or next line starts with lower case.
                         if re.match(r'.*[a-z,-]\s*$', last_line.text_as_string) is not None \
-                          or re.match(r'^\s*[a-z,-]', merged_text.text_as_string) is not None :
+                          or re.match(r'^\s*[a-z,-]', merged_text.text_as_string) is not None:
                             merged_len = merged_text.right
 
                         # To use merged_len etc.
@@ -1984,7 +1982,7 @@ class PDFDocument:
                             merge_done = True
                             # We don't want to merge partial pages
                             # i.e. if this is the last line, preserve its top/bottom till after merge
-                            if len(page.texts) == 1 :
+                            if len(page.texts) == 1:
                                 save_bottom = merged_text.bottom
                             else:
                                 save_bottom = 0.0
@@ -2014,7 +2012,7 @@ class PDFDocument:
                                  or self.pages[pind+1].texts[0].top > self.pages[pind+1].imgs[0].top)):
                                 page.page_break_after = True
                     elif (re.match(r'.*[a-z, ]$', last_line.text_as_string) is not None \
-                      or  last_line.final_width > page.width*self.opts.unwrap_factor):
+                      or last_line.final_width > page.width*self.opts.unwrap_factor):
                         candidate = page
                 else:
                     candidate = None
@@ -2040,7 +2038,7 @@ class PDFDocument:
                 # Have we removed everything from this page (well, all texts and images)
                 if merged_page.is_empty:
                     # Empty page does/may not actually mean blank line
-                    #candidate.texts[-1].blank_line_before = 1
+                    # candidate.texts[-1].blank_line_before = 1
                     # If pages are merged, and the merged page gets removed (as here),
                     # and the next page is short (forced page break),
                     # then the merge would fail when this loop restarts.
@@ -2071,7 +2069,6 @@ class PDFDocument:
                         self.elements.append(block)
                     last_block = block
                 last_region = region
-
 
     def render(self):
         #### Where does the title come from if not run from command line?

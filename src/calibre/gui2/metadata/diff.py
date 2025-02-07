@@ -55,8 +55,8 @@ from polyglot.builtins import iteritems, itervalues
 
 Widgets = namedtuple('Widgets', 'new old label button')
 
-# Widgets {{{
 
+# Widgets {{{
 
 class LineEdit(EditWithComplete):
 
@@ -265,7 +265,7 @@ class SeriesEdit(LineEdit):
             return
         num = db.get_next_series_num_for(series)
         sidx = fmt_sidx(num)
-        self.setText(self.text() + ' [%s]' % sidx)
+        self.setText(self.text() + f' [{sidx}]')
 
 
 class IdentifiersEdit(LineEdit):
@@ -419,7 +419,7 @@ class CoverView(QWidget):
             f = p.font()
             f.setBold(True)
             p.setFont(f)
-            sz = '\u00a0%d x %d\u00a0'%(self.pixmap.width(), self.pixmap.height())
+            sz = f'\xa0{self.pixmap.width()} x {self.pixmap.height()}\xa0'
             flags = int(Qt.AlignmentFlag.AlignBottom|Qt.AlignmentFlag.AlignRight|Qt.TextFlag.TextSingleLine)
             szrect = p.boundingRect(sztgt, flags, sz)
             p.fillRect(szrect.adjusted(0, 0, 0, 4), QColor(0, 0, 0, 200))
@@ -485,7 +485,7 @@ class CompareSingle(QWidget):
             if isinstance(neww, SeriesEdit):
                 neww.set_db(db.new_api)
             oldw = cls(field, False, self, m, extra)
-            newl = QLabel('&%s:' % m['name'])
+            newl = QLabel('&{}:'.format(m['name']))
             newl.setBuddy(neww)
             button = RightClickButton(self)
             button.setIcon(QIcon.ic('back.png'))
@@ -626,7 +626,6 @@ class CoverZoom(QWidget):
 
 class CompareMany(QDialog):
 
-
     def __init__(self, ids, get_metadata, field_metadata, parent=None,
                  window_title=None,
                  reject_button_tooltip=None,
@@ -747,26 +746,21 @@ class CompareMany(QDialog):
         b.setFocus(Qt.FocusReason.OtherFocusReason)
         self.next_called = False
 
-
     def show_zoomed_cover(self, pixmap):
         self.cover_zoom.set_pixmap(pixmap)
         self.stack.setCurrentIndex(1)
-
 
     @property
     def mark_rejected(self):
         return self.markq.isChecked()
 
-
     def action_button_clicked(self):
         self.action_button_action(self.ids[0])
-
 
     def accept(self):
         self.save_geometry(gprefs, 'diff_dialog_geom')
         self.compare_widget.save_comments_controls_state()
         super().accept()
-
 
     def reject(self):
         if self.stack.currentIndex() == 1:
@@ -780,11 +774,9 @@ class CompareMany(QDialog):
         self.compare_widget.save_comments_controls_state()
         super().reject()
 
-
     @property
     def current_mi(self):
         return self.compare_widget.current_mi
-
 
     def show_current_item(self):
         self.setWindowTitle(self.window_title + _(' [%(num)d of %(tot)d]') % dict(
@@ -819,7 +811,6 @@ class CompareMany(QDialog):
             return self.accept()
         self.show_current_item()
 
-
     def previous_item(self):
         if self.previous_items:
             # get the last book id from the previous items list and remove it from the previous items list
@@ -838,7 +829,6 @@ class CompareMany(QDialog):
             self.ids.insert(0, last_previous_item)
             self.show_current_item()
 
-
     def accept_all_remaining(self):
         self.next_item(True)
         for id_ in self.ids:
@@ -846,7 +836,6 @@ class CompareMany(QDialog):
             self.accepted[id_] = (False, newmi)
         self.ids = []
         self.accept()
-
 
     def reject_all_remaining(self):
         from calibre.gui2.dialogs.confirm_delete import confirm
@@ -862,7 +851,6 @@ class CompareMany(QDialog):
             self.accepted[id_] = (False, None)
         self.ids = []
         self.accept()
-
 
     def keyPressEvent(self, ev):
         if ev.key() in (Qt.Key.Key_Enter, Qt.Key.Key_Return):

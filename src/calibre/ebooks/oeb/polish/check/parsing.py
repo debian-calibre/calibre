@@ -23,7 +23,7 @@ XML_ENTITIES = {'lt', 'gt', 'amp', 'apos', 'quot'}
 ALL_ENTITIES = HTML_ENTITTIES | XML_ENTITIES
 fix_style_tag
 
-replace_pat = re.compile('&(%s);' % '|'.join(re.escape(x) for x in sorted(HTML_ENTITTIES - XML_ENTITIES)))
+replace_pat = re.compile('&({});'.format('|'.join(re.escape(x) for x in sorted(HTML_ENTITTIES - XML_ENTITIES))))
 mismatch_pat = re.compile(r'tag mismatch:.+?line (\d+).+?line \d+')
 
 
@@ -105,7 +105,7 @@ class NamedEntities(BaseError):
         for name, mt in iteritems(container.mime_map):
             if mt in check_types:
                 raw = container.raw_data(name)
-                nraw = replace_pat.sub(lambda m:html5_entities[m.group(1)], raw)
+                nraw = replace_pat.sub(lambda m: html5_entities[m.group(1)], raw)
                 if raw != nraw:
                     changed = True
                     with container.open(name, 'wb') as f:
@@ -146,7 +146,7 @@ class EscapedName(BaseError):
         c = 0
         while self.sname in all_names:
             c += 1
-            self.sname = '%s_%d.%s' % (bn, c, ext)
+            self.sname = f'{bn}_{c}.{ext}'
         rename_files(container, {self.name:self.sname})
         return True
 

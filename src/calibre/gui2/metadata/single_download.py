@@ -90,8 +90,8 @@ class RichTextDelegate(QStyledItemDelegate):  # {{{
             group = (QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else
                     QPalette.ColorGroup.Inactive)
             c = p.color(group, QPalette.ColorRole.HighlightedText)
-            c = 'rgb(%d, %d, %d)'%c.getRgb()[:3]
-            doc.setDefaultStyleSheet(' * { color: %s }'%c)
+            c = 'rgb({}, {}, {})'.format(*c.getRgb()[:3])
+            doc.setDefaultStyleSheet(f' * {{ color: {c} }}')
         doc.setHtml(index.data() or '')
         return doc
 
@@ -291,24 +291,24 @@ class ResultsView(QTableView):  # {{{
         book = self.model().data(index, Qt.ItemDataRole.UserRole)
         parts = [
             '<center>',
-            '<h2>%s</h2>'%book.title,
-            '<div><i>%s</i></div>'%authors_to_string(book.authors),
+            f'<h2>{book.title}</h2>',
+            f'<div><i>{authors_to_string(book.authors)}</i></div>',
         ]
         if not book.is_null('series'):
             series = book.format_field('series')
             if series[1]:
-                parts.append('<div>%s: %s</div>'%series)
+                parts.append('<div>{}: {}</div>'.format(*series))
         if not book.is_null('rating'):
-            style = 'style=\'font-family:"%s"\''%f
-            parts.append('<div %s>%s</div>'%(style, rating_to_stars(int(2 * book.rating))))
+            style = f'style=\'font-family:"{f}"\''
+            parts.append(f'<div {style}>{rating_to_stars(int(2 * book.rating))}</div>')
         parts.append('</center>')
         if book.identifiers:
             urls = urls_from_identifiers(book.identifiers)
-            ids = ['<a href="%s">%s</a>'%(url, name) for name, ign, ign, url in urls]
+            ids = [f'<a href="{url}">{name}</a>' for name, ign, ign, url in urls]
             if ids:
-                parts.append('<div><b>%s:</b> %s</div><br>'%(_('See at'), ', '.join(ids)))
+                parts.append('<div><b>{}:</b> {}</div><br>'.format(_('See at'), ', '.join(ids)))
         if book.tags:
-            parts.append('<div>%s</div><div>\u00a0</div>'%', '.join(book.tags))
+            parts.append('<div>{}</div><div>\u00a0</div>'.format(', '.join(book.tags)))
         if book.comments:
             parts.append(comments_to_html(book.comments))
 
@@ -382,23 +382,23 @@ class Comments(HTMLDisplay):  # {{{
 
         c = color_to_string(QApplication.palette().color(QPalette.ColorGroup.Normal,
                         QPalette.ColorRole.WindowText))
-        templ = '''\
+        templ = f'''\
         <html>
             <head>
             <style type="text/css">
-                body, td {background-color: transparent; color: %s }
-                a { text-decoration: none; }
-                div.description { margin-top: 0; padding-top: 0; text-indent: 0 }
-                table { margin-bottom: 0; padding-bottom: 0; }
+                body, td {{background-color: transparent; color: {c} }}
+                a {{ text-decoration: none; }}
+                div.description {{ margin-top: 0; padding-top: 0; text-indent: 0 }}
+                table {{ margin-bottom: 0; padding-bottom: 0; }}
             </style>
             </head>
             <body>
             <div class="description">
-            %%s
+            %s
             </div>
             </body>
         <html>
-        '''%(c,)
+        '''
         self.setHtml(templ%html)
 # }}}
 
@@ -423,7 +423,7 @@ class IdentifyWorker(Thread):  # {{{
         m1.has_cached_cover_url = True
         m2.has_cached_cover_url = False
         m1.comments  = 'Some comments '*10
-        m1.tags = ['tag%d'%i for i in range(20)]
+        m1.tags = [f'tag{i}' for i in range(20)]
         m1.rating = 4.4
         m1.language = 'en'
         m2.language = 'fr'
@@ -524,10 +524,10 @@ class IdentifyWidget(QWidget):  # {{{
             parts.append('authors:'+authors_to_string(authors))
             simple_desc += _('Authors: %s ') % authors_to_string(authors)
         if identifiers:
-            x = ', '.join('%s:%s'%(k, v) for k, v in iteritems(identifiers))
+            x = ', '.join(f'{k}:{v}' for k, v in iteritems(identifiers))
             parts.append(x)
             if 'isbn' in identifiers:
-                simple_desc += 'ISBN: %s' % identifiers['isbn']
+                simple_desc += 'ISBN: {}'.format(identifiers['isbn'])
         self.query.setText(simple_desc)
         self.log(str(self.query.text()))
 
@@ -558,7 +558,7 @@ class IdentifyWidget(QWidget):  # {{{
             error_dialog(self, _('No matches found'), '<p>' +
                     _('Failed to find any books that '
                         'match your search. Try making the search <b>less '
-                        'specific</b>. For example, use only the author\'s '
+                        "specific</b>. For example, use only the author's "
                         'last name and a single distinctive word from '
                         'the title.<p>To see the full log, click "Show details".'),
                     show=True, det_msg=log)
@@ -679,7 +679,7 @@ class CoversModel(QAbstractListModel):  # {{{
             self.beginResetModel(), self.endResetModel()
 
     def get_item(self, src, pmap, waiting=False):
-        sz = '%dx%d'%(pmap.width(), pmap.height())
+        sz = f'{pmap.width()}x{pmap.height()}'
         text = (src + '\n' + sz)
         scaled = pmap.scaled(
             int(CoverDelegate.ICON_SIZE[0] * pmap.devicePixelRatio()), int(CoverDelegate.ICON_SIZE[1] * pmap.devicePixelRatio()),
@@ -1079,7 +1079,7 @@ class LogViewer(QDialog):  # {{{
         html = self.log.html
         if html != self.last_html:
             self.last_html = html
-            self.tb.setHtml('<pre style="font-family:monospace">%s</pre>'%html)
+            self.tb.setHtml(f'<pre style="font-family:monospace">{html}</pre>')
         QTimer.singleShot(1000, self.update_log)
 
 # }}}

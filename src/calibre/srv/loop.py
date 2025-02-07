@@ -13,7 +13,6 @@ import traceback
 from contextlib import suppress
 from functools import lru_cache, partial
 from io import BytesIO
-from typing import Union
 
 from calibre import as_unicode
 from calibre.constants import iswindows
@@ -43,14 +42,14 @@ from polyglot.queue import Empty, Full
 
 READ, WRITE, RDWR, WAIT = 'READ', 'WRITE', 'RDWR', 'WAIT'
 WAKEUP, JOB_DONE = b'\0', b'\x01'
-IPPROTO_IPV6 = getattr(socket, "IPPROTO_IPV6", 41)
+IPPROTO_IPV6 = getattr(socket, 'IPPROTO_IPV6', 41)
 
 
 class ReadBuffer:  # {{{
 
     ' A ring buffer used to speed up the readline() implementation by minimizing recv() calls '
 
-    __slots__ = ('ba', 'buf', 'read_pos', 'write_pos', 'full_state')
+    __slots__ = ('ba', 'buf', 'full_state', 'read_pos', 'write_pos')
 
     def __init__(self, size=4096):
         self.ba = bytearray(size)
@@ -162,7 +161,7 @@ def is_ip_trusted(remote_addr, trusted_ips):
     return False
 
 
-def is_local_address(addr: Union[ipaddress.IPv4Address, ipaddress.IPv6Address, None]):
+def is_local_address(addr: ipaddress.IPv4Address | ipaddress.IPv6Address | None):
     if addr is None:
         return False
     if addr.is_loopback:
@@ -330,7 +329,7 @@ class Connection:  # {{{
         except ssl.SSLWantReadError:
             return
         except ssl.SSLError as e:
-            self.log.error('Error while reading SSL data from client: %s' % as_unicode(e))
+            self.log.error(f'Error while reading SSL data from client: {as_unicode(e)}')
             self.ready = False
             return
         except OSError as e:
@@ -466,7 +465,7 @@ class ServerLoop:
             self.control_out.close()
 
     def __str__(self):
-        return f"{self.__class__.__name__}({self.bind_address!r})"
+        return f'{self.__class__.__name__}({self.bind_address!r})'
     __repr__ = __str__
 
     @property
@@ -483,19 +482,19 @@ class ServerLoop:
         except socket.gaierror:
             if ':' in host:
                 info = [(socket.AF_INET6, socket.SOCK_STREAM,
-                        0, "", self.bind_address + (0, 0))]
+                        0, '', self.bind_address + (0, 0))]
             else:
                 info = [(socket.AF_INET, socket.SOCK_STREAM,
-                        0, "", self.bind_address)]
+                        0, '', self.bind_address)]
 
         self.socket = None
-        msg = "No socket could be created"
+        msg = 'No socket could be created'
         for res in info:
             af, socktype, proto, canonname, sa = res
             try:
                 self.bind(af, socktype, proto)
             except OSError as serr:
-                msg = f"{msg} -- ({sa}: {as_unicode(serr)})"
+                msg = f'{msg} -- ({sa}: {as_unicode(serr)})'
                 if self.socket:
                     self.socket.close()
                 self.socket = None
@@ -515,8 +514,7 @@ class ServerLoop:
                 ip = get_external_ip()
                 if ip == self.bind_address[0]:
                     raise
-                self.log.warn('Failed to bind to {} with error: {}. Trying to bind to the default interface: {} instead'.format(
-                    self.bind_address[0], as_unicode(err), ip))
+                self.log.warn(f'Failed to bind to {self.bind_address[0]} with error: {as_unicode(err)}. Trying to bind to the default interface: {ip} instead')
                 self.bind_address = (ip, self.bind_address[1])
                 self.do_bind()
         else:
@@ -557,7 +555,7 @@ class ServerLoop:
             self.shutdown()
 
     def serve_forever(self):
-        """ Listen for incoming connections. """
+        ''' Listen for incoming connections. '''
         self.initialize_socket()
         self.serve()
 
@@ -614,7 +612,7 @@ class ServerLoop:
                 write_needed.append(s)
 
         for s, conn in remove:
-            self.log('Closing connection because of extended inactivity: %s' % conn.state_description)
+            self.log(f'Closing connection because of extended inactivity: {conn.state_description}')
             self.close(s, conn)
 
         for x, conn in close_needed:
@@ -654,7 +652,7 @@ class ServerLoop:
                 if not conn.ready:
                     self.close(s, conn)
             except JobQueueFull:
-                self.log.exception('Server busy handling request: %s' % conn.state_description)
+                self.log.exception(f'Server busy handling request: {conn.state_description}')
                 if conn.ready:
                     if conn.response_started:
                         self.close(s, conn)
@@ -670,7 +668,7 @@ class ServerLoop:
                     self.log.warn('Client tried to initiate SSL renegotiation, closing connection')
                     self.close(s, conn)
                 else:
-                    self.log.exception('Unhandled exception in state: %s' % conn.state_description)
+                    self.log.exception(f'Unhandled exception in state: {conn.state_description}')
                     if conn.ready:
                         if conn.response_started:
                             self.close(s, conn)
@@ -680,7 +678,7 @@ class ServerLoop:
                             except Exception:
                                 self.close(s, conn)
                     else:
-                        self.log.error('Error in SSL handshake, terminating connection: %s' % as_unicode(e))
+                        self.log.error(f'Error in SSL handshake, terminating connection: {as_unicode(e)}')
                         self.close(s, conn)
 
     def write_to_control(self, what):
@@ -775,7 +773,7 @@ class ServerLoop:
         for pool in (self.plugin_pool, self.pool):
             pool.stop(wait_till)
             if pool.workers:
-                self.log.warn('Failed to shutdown %d workers in %s cleanly' % (len(pool.workers), pool.__class__.__name__))
+                self.log.warn(f'Failed to shutdown {len(pool.workers)} workers in {pool.__class__.__name__} cleanly')
         self.jobs_manager.wait_for_shutdown(wait_till)
 
 

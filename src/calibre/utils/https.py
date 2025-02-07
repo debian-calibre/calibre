@@ -16,8 +16,7 @@ from polyglot.urllib import urlsplit
 class HTTPError(ValueError):
 
     def __init__(self, url, code):
-        msg = '%s returned an unsupported http response code: %d (%s)' % (
-                url, code, http_client.responses.get(code, None))
+        msg = f'{url} returned an unsupported http response code: {code} ({http_client.responses.get(code, None)})'
         ValueError.__init__(self, msg)
         self.code = code
         self.url = url
@@ -89,7 +88,7 @@ def get_https_resource_securely(
                 raise ValueError('Too many redirects, giving up')
             newurl = response.getheader('Location', None)
             if newurl is None:
-                raise ValueError('%s returned a redirect response with no Location header' % url)
+                raise ValueError(f'{url} returned a redirect response with no Location header')
             return get_https_resource_securely(
                 newurl, cacerts=cacerts, timeout=timeout, max_redirects=max_redirects-1, get_response=get_response)
         if response.status != http_client.OK:

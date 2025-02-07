@@ -1,16 +1,16 @@
 __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
-"""
+'''
 This package contains logic to read and write LRF files.
 The LRF file format is documented at U{http://www.sven.de/librie/Librie/LrfFormat}.
-"""
+'''
 
 from calibre.ebooks import ConversionError
 from calibre.ebooks.lrf.fonts import FONT_FILE_MAP
 from calibre.ebooks.lrf.pylrs.pylrs import BlockStyle, Header, TextBlock, TextStyle
 from calibre.ebooks.lrf.pylrs.pylrs import Book as _Book
 
-__docformat__ = "epytext"
+__docformat__ = 'epytext'
 
 
 class LRFParseError(Exception):
@@ -28,15 +28,15 @@ class PRS500_PROFILE:
     line_space    = 1.2  # : Default (in pt)
     header_font_size = 6  #: In pt
     header_height    = 30  # : In px
-    default_fonts    = {'sans': "Swis721 BT Roman", 'mono': "Courier10 BT Roman",
-                         'serif': "Dutch801 Rm BT Roman"}
+    default_fonts    = {'sans': 'Swis721 BT Roman', 'mono': 'Courier10 BT Roman',
+                         'serif': 'Dutch801 Rm BT Roman'}
 
     name = 'prs500'
 
 
 def find_custom_fonts(options, logger):
     from calibre.utils.fonts.scanner import font_scanner
-    fonts = {'serif' : None, 'sans' : None, 'mono' : None}
+    fonts = {'serif': None, 'sans': None, 'mono': None}
 
     def family(cmd):
         return cmd.split(',')[-1].strip()
@@ -44,17 +44,17 @@ def find_custom_fonts(options, logger):
         f = family(options.serif_family)
         fonts['serif'] = font_scanner.legacy_fonts_for_family(f)
         if not fonts['serif']:
-            logger.warn('Unable to find serif family %s'%f)
+            logger.warn(f'Unable to find serif family {f}')
     if options.sans_family:
         f = family(options.sans_family)
         fonts['sans'] = font_scanner.legacy_fonts_for_family(f)
         if not fonts['sans']:
-            logger.warn('Unable to find sans family %s'%f)
+            logger.warn(f'Unable to find sans family {f}')
     if options.mono_family:
         f = family(options.mono_family)
         fonts['mono'] = font_scanner.legacy_fonts_for_family(f)
         if not fonts['mono']:
-            logger.warn('Unable to find mono family %s'%f)
+            logger.warn(f'Unable to find mono family {f}')
     return fonts
 
 
@@ -106,7 +106,7 @@ def Book(options, logger, font_delta=0, header=None,
 
     for family in ['serif', 'sans', 'mono']:
         if not fonts[family]:
-            fonts[family] = {'normal' : (None, profile.default_fonts[family])}
+            fonts[family] = {'normal': (None, profile.default_fonts[family])}
         elif 'normal' not in fonts[family]:
             raise ConversionError('Could not find the normal version of the ' + family + ' font')
     return book, fonts

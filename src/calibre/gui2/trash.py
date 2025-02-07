@@ -3,8 +3,8 @@
 
 import time
 import traceback
+from collections.abc import Iterator
 from operator import attrgetter
-from typing import Iterator, List
 
 from qt.core import (
     QAbstractItemView,
@@ -102,7 +102,7 @@ class TrashList(QListWidget):
 
     restore_item = pyqtSignal(object, object)
 
-    def __init__(self, entries: List[TrashEntry], parent: 'TrashView', is_books: bool):
+    def __init__(self, entries: list[TrashEntry], parent: 'TrashView', is_books: bool):
         super().__init__(parent)
         self.is_books = is_books
         self.db = parent.db
@@ -312,8 +312,6 @@ class TrashView(Dialog):
             self, _('Failed to process some {}').format(entry_type),
             _('Could not {0} some {1}. Click "Show details" for details.').format(operation, entry_type),
             det_msg='\n'.join(det_msg), show=True)
-
-
 
 
 if __name__ == '__main__':

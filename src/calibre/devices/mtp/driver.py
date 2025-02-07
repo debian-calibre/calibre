@@ -5,43 +5,50 @@ __license__   = 'GPL v3'
 __copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import datetime
 import importlib
 import json
 import os
 import posixpath
 import sys
 import traceback
+from collections.abc import Sequence
 from io import BytesIO
-from typing import Sequence
+from typing import NamedTuple
 
 from calibre import prints
 from calibre.constants import iswindows, numeric_version
 from calibre.devices.errors import PathError
 from calibre.devices.mtp.base import debug
 from calibre.devices.mtp.defaults import DeviceDefaults
-from calibre.devices.mtp.filesystem_cache import FileOrFolder
+from calibre.devices.mtp.filesystem_cache import FileOrFolder, convert_timestamp
 from calibre.ptempfile import PersistentTemporaryDirectory, SpooledTemporaryFile
 from calibre.utils.filenames import shorten_components_to
 from calibre.utils.icu import lower as icu_lower
 from polyglot.builtins import as_bytes, iteritems, itervalues
 
-BASE = importlib.import_module('calibre.devices.mtp.%s.driver'%(
-    'windows' if iswindows else 'unix')).MTP_DEVICE
+BASE = importlib.import_module('calibre.devices.mtp.{}.driver'.format('windows' if iswindows else 'unix')).MTP_DEVICE
 DEFAULT_THUMBNAIL_HEIGHT = 320
 
 
 class MTPInvalidSendPathError(PathError):
 
     def __init__(self, folder):
-        PathError.__init__(self, 'Trying to send to ignored folder: %s'%folder)
+        PathError.__init__(self, f'Trying to send to ignored folder: {folder}')
         self.folder = folder
+
+
+class ListEntry(NamedTuple):
+    name: str
+    is_folder: bool
+    size: int
+    mtime: datetime.datetime
 
 
 class MTP_DEVICE(BASE):
 
     METADATA_CACHE = 'metadata.calibre'
     DRIVEINFO = 'driveinfo.calibre'
-    CAN_SET_METADATA = []
     NEWS_IN_FOLDER = True
     MAX_PATH_LEN = 230
     THUMBNAIL_HEIGHT = DEFAULT_THUMBNAIL_HEIGHT
@@ -91,36 +98,40 @@ class MTP_DEVICE(BASE):
         storage_id = str(getattr(storage_or_storage_id, 'object_id',
                              storage_or_storage_id))
         lpath = tuple(icu_lower(name) for name in path)
+        if self.is_kindle and lpath and lpath[-1].endswith('.sdr'):
+            return True
         if ignored_folders is None:
             ignored_folders = self.get_pref('ignored_folders')
         if storage_id in ignored_folders:
             # Use the users ignored folders settings
             return '/'.join(lpath) in {icu_lower(x) for x in ignored_folders[storage_id]}
-        if self.is_kindle and lpath and lpath[-1].endswith('.sdr'):
-            return True
 
         # Implement the default ignore policy
 
         # Top level ignores
         if lpath[0] in {
-            'alarms', 'dcim', 'movies', 'music', 'notifications',
+            'alarms', 'dcim', 'movies', 'music', 'notifications', 'screenshots',
             'pictures', 'ringtones', 'samsung', 'sony', 'htc', 'bluetooth', 'fonts',
             'games', 'lost.dir', 'video', 'whatsapp', 'image', 'com.zinio.mobile.android.reader'}:
             return True
-        if lpath[0].startswith('.') and lpath[0] != '.tolino':
+        if lpath[0].startswith('.') and lpath[0] not in ('.tolino', '.notebooks'):
             # apparently the Tolino for some reason uses a hidden folder for its library, sigh.
+            # Kindle Scribe stores user notebooks in subfolders of '.notebooks'
             return True
         if lpath[0] == 'system' and not self.is_kindle:
-            # on Kindles we need the system folder for the amazon cover bug workaround
+            # on Kindles we need the system/thumbnails folder for the amazon cover bug workaround
             return True
 
-        if len(lpath) > 1 and lpath[0] == 'android':
-            # Ignore everything in Android apart from a few select folders
-            if lpath[1] != 'data':
-                return True
-            if len(lpath) > 2 and lpath[2] != 'com.amazon.kindle':
-                return True
-
+        if len(lpath) > 1:
+            if lpath[0] == 'android':
+                # Ignore everything in Android apart from a few select folders
+                if lpath[1] != 'data':
+                    return True
+                if len(lpath) > 2 and lpath[2] != 'com.amazon.kindle':
+                    return True
+            elif lpath[0] == 'system':
+                if lpath[1] != 'thumbnails':
+                    return True
         return False
 
     def configure_for_kindle_app(self):
@@ -339,6 +350,21 @@ class MTP_DEVICE(BASE):
         from calibre.customize.ui import quick_metadata
         from calibre.ebooks.metadata.meta import get_metadata
         ext = mtp_file.name.rpartition('.')[-1].lower()
+        if self.is_kindle and ext == 'kfx' and mtp_file.name != 'metadata.kfx':
+            # locate the actual file containing KFX book metadata
+            stream = BytesIO()
+            try:
+                self.get_file_by_name(stream, mtp_file.parent, *(mtp_file.name[:-4] + '.sdr', 'assets', 'metadata.kfx'))
+            except Exception:
+                pass    # expect failure for sideloaded books and personal documents
+            else:
+                stream.name = 'metadata.kfx'
+                with quick_metadata:
+                    metadata = get_metadata(stream, stream_type=ext,
+                            force_read_metadata=True,
+                            pattern=self.build_template_regexp())
+                if metadata.title != 'metadata' and metadata.title != 'Unknown':
+                    return metadata
         stream = self.get_mtp_file(mtp_file)
         with quick_metadata:
             return get_metadata(stream, stream_type=ext,
@@ -377,6 +403,14 @@ class MTP_DEVICE(BASE):
         f = self.filesystem_cache.resolve_mtp_id_path(path)
         self.get_mtp_file(f, outfile)
 
+    def get_file_by_name(self, outfile, parent: FileOrFolder, *names: str) -> None:
+        ' Get the file parent/ + "/".join(names) and put it into outfile. Works with files not cached in FilesystemCache. '
+        self.get_mtp_file_by_name(parent, *names, stream=outfile)
+
+    def list_folder_by_name(self, parent: FileOrFolder, *names: str) ->tuple[ListEntry, ...]:
+        ' List the contents of the folder parent/ + "/".join(names). Works with folders not cached in FilesystemCache. '
+        return tuple(ListEntry(x['name'], x['is_folder'], x['size'], convert_timestamp(x['modified'])) for x in self.list_mtp_folder_by_name(parent, *names))
+
     def prepare_addable_books(self, paths):
         tdir = PersistentTemporaryDirectory('_prepare_mtp')
         ans = []
@@ -386,7 +420,7 @@ class MTP_DEVICE(BASE):
             except Exception as e:
                 ans.append((path, e, traceback.format_exc()))
                 continue
-            base = os.path.join(tdir, '%s'%f.object_id)
+            base = os.path.join(tdir, f'{f.object_id}')
             os.mkdir(base)
             name = f.name
             if iswindows:
@@ -399,7 +433,26 @@ class MTP_DEVICE(BASE):
                     ans.append((path, e, traceback.format_exc()))
                 else:
                     ans.append(out.name)
+                    if self.is_kindle and path.endswith('.kfx'):
+                        # copy additional KFX files from the associated .sdr folder
+                        try:
+                            sdr_folder_name = f.name[:-4] + '.sdr'
+                            new_sdr_path = os.path.join(os.path.split(out.name)[0], sdr_folder_name)
+                            os.mkdir(new_sdr_path)
+                            self.scan_sdr_for_kfx_files(f.parent, (sdr_folder_name, 'assets'), new_sdr_path)
+                        except Exception:
+                            traceback.print_exc()
         return ans
+
+    def scan_sdr_for_kfx_files(self, parent, folders, new_sdr_path):
+        for ff in self.list_folder_by_name(parent, *folders):
+            if ff.is_folder:
+                self.scan_sdr_for_kfx_files(parent, folders + (ff.name,), new_sdr_path)
+            elif ff.name.endswith('.kfx') or ff.name == 'voucher':
+                name = ''.join(shorten_components_to(245 - len(new_sdr_path), [ff.name])) if iswindows else ff.name
+                with open(os.path.join(new_sdr_path, name), 'wb') as out:
+                    self.get_file_by_name(out, parent, *(folders + (ff.name,)))
+
     # }}}
 
     # Sending files to the device {{{
@@ -467,7 +520,7 @@ class MTP_DEVICE(BASE):
         self.report_progress(0, _('Transferring books to device...'))
         i, total = 0, len(files)
 
-        routing = {fmt:dest for fmt,dest in self.get_pref('rules')}
+        routing = dict(self.get_pref('rules'))
 
         for infile, fname, mi in zip(files, names, metadata):
             path = self.create_upload_path(prefix, mi, fname, routing)
@@ -609,8 +662,7 @@ class MTP_DEVICE(BASE):
             try:
                 self.recursive_delete(parent)
             except:
-                prints('Failed to delete parent: %s, ignoring'%(
-                    '/'.join(parent.full_path)))
+                prints('Failed to delete parent: {}, ignoring'.format('/'.join(parent.full_path)))
 
     def delete_books(self, paths, end_session=True):
         self.report_progress(0, _('Deleting books from device...'))
@@ -654,7 +706,7 @@ class MTP_DEVICE(BASE):
         If that is not found looks for a device default and if that is not
         found uses the global default.'''
         dd = self.current_device_defaults if self.is_mtp_device_connected else {}
-        dev_settings = self.prefs.get('device-%s'%self.current_serial_num, {})
+        dev_settings = self.prefs.get(f'device-{self.current_serial_num}', {})
         default_value = dd.get(key, self.prefs[key])
         return dev_settings.get(key, default_value)
 
@@ -693,6 +745,8 @@ class MTP_DEVICE(BASE):
 
 def main():
     import io
+    from pprint import pprint
+    io
     dev = MTP_DEVICE(None)
     dev.startup()
     try:
@@ -706,17 +760,27 @@ def main():
         dev.set_progress_reporter(prints)
         dev.open(cd, None)
         dev.filesystem_cache.dump()
-        print('Prefix for main mem:', dev.prefix_for_location(None), flush=True)
-        raw = os.urandom(32 * 1024)
-        folder = dev.create_folder(dev.filesystem_cache.entries[0], 'developing-mtp-driver')
-        f = dev.put_file(folder, 'developing-mtp-driver.bin', io.BytesIO(raw), len(raw))
-        print('Put file:', f, flush=True)
-        buf = io.BytesIO()
-        dev.get_file(f.mtp_id_path, buf)
-        if buf.getvalue() != raw:
-            raise ValueError('Getting previously put file did not return expected data')
-        print('Successfully got previously put file', flush=True)
-        dev.recursive_delete(f)
+        print(dev.device_debug_info(), flush=True)
+        docs = dev.prefix_for_location(None)
+        print('Prefix for main mem:', docs, flush=True)
+        parent = dev.filesystem_cache.entries[0]
+        entries = dev.list_folder_by_name(parent, docs)
+        pprint(entries)
+        pprint(dev.get_mtp_metadata_by_name(parent, docs, entries[0].name))
+        files = [x for x in entries if not x.is_folder]
+        f = io.BytesIO()
+        dev.get_file_by_name(f, parent, docs, files[0].name)
+        data = f.getvalue()
+        print('Got', files[0].name, 'of size:', len(data))
+        parent = parent.folder_named(docs)
+        f.seek(0)
+        destname = 'mtp-driver-test.' + files[0].name.rpartition('.')[2]
+        m = dev.put_file(parent, destname, f, len(data))
+        print('Put', destname, 'in the', docs, 'folder')
+        pprint(m)
+    except Exception:
+        import traceback
+        traceback.print_exc()
     finally:
         dev.shutdown()
 

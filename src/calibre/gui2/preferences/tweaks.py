@@ -85,7 +85,7 @@ class Tweak:  # {{{
         self.doc = ' ' + self.doc
         self.var_names = var_names
         if self.var_names:
-            self.doc = "%s: %s\n\n%s"%(_('ID'), self.var_names[0], format_doc(self.doc))
+            self.doc = '{}: {}\n\n{}'.format(_('ID'), self.var_names[0], format_doc(self.doc))
         self.default_values = OrderedDict()
         for x in var_names:
             self.default_values[x] = defaults[x]
@@ -101,7 +101,7 @@ class Tweak:  # {{{
                 ans.append('# ' + line)
         for key, val in iteritems(self.default_values):
             val = self.custom_values.get(key, val)
-            ans.append('%s = %r'%(key, val))
+            ans.append(f'{key} = {val!r}')
         ans = '\n'.join(ans)
         return ans
 
@@ -120,13 +120,13 @@ class Tweak:  # {{{
     @property
     def edit_text(self):
         from pprint import pformat
-        ans = ['# %s'%self.name]
+        ans = [f'# {self.name}']
         for x, val in iteritems(self.default_values):
             val = self.custom_values.get(x, val)
             if isinstance(val, (list, tuple, dict, set, frozenset)):
                 ans.append(f'{x} = {pformat(val)}')
             else:
-                ans.append('%s = %r'%(x, val))
+                ans.append(f'{x} = {val!r}')
         return '\n\n'.join(ans)
 
     def restore_to_default(self):
@@ -166,7 +166,7 @@ class Tweaks(QAbstractListModel, AdaptSQP):  # {{{
                 tt = '<p>'+_('This tweak has been customized')
                 tt += '<pre>'
                 for varn, val in iteritems(tweak.custom_values):
-                    tt += '%s = %r\n\n'%(varn, val)
+                    tt += f'{varn} = {val!r}\n\n'
             return textwrap.fill(tt)
         if role == Qt.ItemDataRole.UserRole:
             return tweak
@@ -230,11 +230,11 @@ class Tweaks(QAbstractListModel, AdaptSQP):  # {{{
             if spidx > 0:
                 var = line[:spidx]
                 if var not in defaults:
-                    raise ValueError('%r not in default tweaks dict'%var)
+                    raise ValueError(f'{var!r} not in default tweaks dict')
                 var_names.append(var)
             pos += 1
         if not var_names:
-            raise ValueError('Failed to find any variables for %r'%name)
+            raise ValueError(f'Failed to find any variables for {name!r}')
         self.tweaks.append(Tweak(name, doc, var_names, defaults, custom))
         return pos
 
@@ -268,14 +268,14 @@ class Tweaks(QAbstractListModel, AdaptSQP):  # {{{
             ans.extend(['', '',
                 '# The following are tweaks for installed plugins', ''])
             for key, val in iteritems(self.plugin_tweaks):
-                ans.extend(['%s = %r'%(key, val), '', ''])
+                ans.extend([f'{key} = {val!r}', '', ''])
         return '\n'.join(ans)
 
     @property
     def plugin_tweaks_string(self):
         ans = []
         for key, val in iteritems(self.plugin_tweaks):
-            ans.extend(['%s = %r'%(key, val), '', ''])
+            ans.extend([f'{key} = {val!r}', '', ''])
         ans = '\n'.join(ans)
         if isbytestring(ans):
             ans = ans.decode('utf-8')
@@ -386,8 +386,8 @@ class ConfigWidget(ConfigWidgetBase):
     def setupUi(self, x):
         self.l = l = QVBoxLayout(self)
         self.la1 = la = QLabel(
-            _("Values for the tweaks are shown below. Edit them to change the behavior of calibre."
-              " Your changes will only take effect <b>after a restart</b> of calibre."))
+            _('Values for the tweaks are shown below. Edit them to change the behavior of calibre.'
+              ' Your changes will only take effect <b>after a restart</b> of calibre.'))
         l.addWidget(la), la.setWordWrap(True)
         self.splitter = s = QSplitter(self)
         s.setChildrenCollapsible(False)
@@ -399,8 +399,8 @@ class ConfigWidget(ConfigWidgetBase):
         self.tweaks_view = tv = TweaksView(self)
         l2.addWidget(tv)
         self.plugin_tweaks_button = b = QPushButton(self)
-        b.setToolTip(_("Edit tweaks for any custom plugins you have installed"))
-        b.setText(_("&Plugin tweaks"))
+        b.setToolTip(_('Edit tweaks for any custom plugins you have installed'))
+        b.setText(_('&Plugin tweaks'))
         l2.addWidget(b)
         s.addWidget(lv)
 
@@ -416,16 +416,16 @@ class ConfigWidget(ConfigWidgetBase):
         g.setColumnStretch(0, 100)
         g.addWidget(self.search, 0, 0, 1, 1)
         self.next_button = b = QPushButton(self)
-        b.setIcon(QIcon.ic("arrow-down.png"))
-        b.setText(_("&Next"))
+        b.setIcon(QIcon.ic('arrow-down.png'))
+        b.setText(_('&Next'))
         g.addWidget(self.next_button, 0, 1, 1, 1)
         self.previous_button = b = QPushButton(self)
-        b.setIcon(QIcon.ic("arrow-up.png"))
-        b.setText(_("&Previous"))
+        b.setIcon(QIcon.ic('arrow-up.png'))
+        b.setText(_('&Previous'))
         g.addWidget(self.previous_button, 0, 2, 1, 1)
 
         self.hb = hb = QGroupBox(self)
-        hb.setTitle(_("Help"))
+        hb.setTitle(_('Help'))
         hb.l = l2 = QVBoxLayout(hb)
         self.help = h = QPlainTextEdit(self)
         l2.addWidget(h)
@@ -434,19 +434,19 @@ class ConfigWidget(ConfigWidgetBase):
 
         self.eb = eb = QGroupBox(self)
         g.addWidget(eb, 2, 0, 1, 3)
-        eb.setTitle(_("Edit tweak"))
+        eb.setTitle(_('Edit tweak'))
         eb.g = ebg = QGridLayout(eb)
         self.edit_tweak = et = QPlainTextEdit(self)
         et.setMinimumWidth(400)
         et.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
         ebg.addWidget(et, 0, 0, 1, 2)
         self.restore_default_button = b = QPushButton(self)
-        b.setToolTip(_("Restore this tweak to its default value"))
-        b.setText(_("&Reset this tweak"))
+        b.setToolTip(_('Restore this tweak to its default value'))
+        b.setText(_('&Reset this tweak'))
         ebg.addWidget(b, 1, 0, 1, 1)
         self.apply_button = ab = QPushButton(self)
-        ab.setToolTip(_("Apply any changes you made to this tweak"))
-        ab.setText(_("&Apply changes to this tweak"))
+        ab.setToolTip(_('Apply any changes you made to this tweak'))
+        ab.setText(_('&Apply changes to this tweak'))
         ebg.addWidget(ab, 1, 1, 1, 1)
 
     def genesis(self, gui):
@@ -476,7 +476,7 @@ class ConfigWidget(ConfigWidgetBase):
         self.context_menu.addAction(self.copy_icon,
                             _('Copy to clipboard'),
                             partial(self.copy_item_to_clipboard,
-                                    val="%s (%s: %s)"%(tweak.name,
+                                    val='{} ({}: {})'.format(tweak.name,
                                                         _('ID'),
                                                         tweak.var_names[0])))
         self.context_menu.popup(self.mapToGlobal(point))

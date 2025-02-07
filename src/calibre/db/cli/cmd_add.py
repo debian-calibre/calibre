@@ -163,7 +163,7 @@ def format_group(db, notify_changes, is_remote, args):
         mi = metadata_from_formats(paths)
         if mi.title is None:
             return None, set(), set(), False
-        if cover_data and not mi.cover_data or not mi.cover_data[1]:
+        if cover_data and (not mi.cover_data or not mi.cover_data[1]):
             mi.cover_data = 'jpeg', cover_data
         format_map = create_format_map(paths)
         added_ids, updated_ids, duplicates = do_adding(
@@ -400,7 +400,7 @@ the folder related options below.
         try:
             getattr(parser.values, option.dest).append(compile_rule(rule))
         except Exception:
-            raise OptionValueError('%r is not a valid filename pattern' % value)
+            raise OptionValueError(f'{value!r} is not a valid filename pattern')
 
     g.add_option(
         '-1',

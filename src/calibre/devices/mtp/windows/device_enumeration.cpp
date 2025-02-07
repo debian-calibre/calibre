@@ -151,7 +151,7 @@ get_storage_info(IPortableDevice *device) { // {{{
 } // }}}
 
 PyObject*
-get_device_information(CComPtr<IPortableDevice> &device, CComPtr<IPortableDevicePropertiesBulk> &pb) { // {{{
+get_device_information(const wchar_t *pnp_id, CComPtr<IPortableDevice> &device, CComPtr<IPortableDevicePropertiesBulk> &pb) { // {{{
     CComPtr<IPortableDeviceContent> content = NULL;
     CComPtr<IPortableDeviceProperties> properties = NULL;
     CComPtr<IPortableDeviceKeyCollection> keys = NULL;
@@ -260,6 +260,8 @@ get_device_information(CComPtr<IPortableDevice> &device, CComPtr<IPortableDevice
         }
     }
     PyDict_SetItemString(ans, "has_storage", has_storage ? Py_True : Py_False);
+    pyobject_raii pid(PyUnicode_FromWideChar(pnp_id, -1));
+    if (pid) PyDict_SetItemString(ans, "pnp_id", pid.ptr());
 
     if (has_storage) {
         pyobject_raii storage(get_storage_info(device));
@@ -278,10 +280,23 @@ get_device_information(CComPtr<IPortableDevice> &device, CComPtr<IPortableDevice
 		}
     }
 
-    Py_BEGIN_ALLOW_THREADS;
-    hr = properties->QueryInterface(IID_PPV_ARGS(&pb));
-    Py_END_ALLOW_THREADS;
-    PyDict_SetItemString(ans, "has_bulk_properties", (FAILED(hr)) ? Py_False: Py_True);
+    bool is_buggy_piece_of_shit_device = false;
+    PyObject *q = PyDict_GetItemString(ans, "manufacturer_name");
+    if (q && PyUnicode_CompareWithASCIIString(q, "BarnesAndNoble") == 0) {
+        // https://bugs.launchpad.net/calibre/+bug/2068527
+        q = PyDict_GetItemString(ans, "model_name");
+        if (q && PyUnicode_CompareWithASCIIString(q, "BNRV1300") == 0) is_buggy_piece_of_shit_device = true;
+    }
+
+    if (is_buggy_piece_of_shit_device) {
+        PyDict_SetItemString(ans, "has_bulk_properties", Py_False);
+        pb = NULL;
+    } else {
+        Py_BEGIN_ALLOW_THREADS;
+        hr = properties->QueryInterface(IID_PPV_ARGS(&pb));
+        Py_END_ALLOW_THREADS;
+        PyDict_SetItemString(ans, "has_bulk_properties", (FAILED(hr)) ? Py_False: Py_True);
+    }
     return ans;
 } // }}}
 

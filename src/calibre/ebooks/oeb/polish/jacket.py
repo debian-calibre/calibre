@@ -21,7 +21,7 @@ def render_jacket(container, jacket):
     output_profile = opmap.get(op, opmap['default'])
     root = render(mi, output_profile)
     for img, path in referenced_images(root):
-        container.log('Embedding referenced image: %s into jacket' % path)
+        container.log(f'Embedding referenced image: {path} into jacket')
         ext = path.rpartition('.')[-1]
         jacket_item = container.generate_item('jacket_image.'+ext, id_prefix='jacket_img')
         name = container.href_to_name(jacket_item.get('href'), container.opf_name)
@@ -105,4 +105,3 @@ def add_or_replace_jacket(container):
         container.insert_into_xml(container.opf_xpath('//opf:spine')[0], itemref,
                               index=index)
     return found
-

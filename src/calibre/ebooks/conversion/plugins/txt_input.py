@@ -21,7 +21,7 @@ MD_EXTENSIONS = {
     'meta': _('Metadata in the document'),
     'nl2br': _('Treat newlines as hard breaks'),
     'sane_lists': _('Do not allow mixing list types'),
-    'smarty': _('Use Markdown\'s internal smartypants parser'),
+    'smarty': _("Use Markdown's internal smartypants parser"),
     'tables': _('Support tables'),
     'toc': _('Generate a table of contents'),
     'wikilinks': _('Wiki style links'),
@@ -43,7 +43,7 @@ class TXTInput(InputFormatPlugin):
             'single': _('Assume every line is a paragraph'),
             'print': _('Assume every line starting with 2+ spaces or a tab starts a paragraph'),
             'unformatted': _('Most lines have hard line breaks, few/no blank lines or indents'),
-            'off': _('Don\'t modify the paragraph structure'),
+            'off': _("Don't modify the paragraph structure"),
         },
         'formatting_types': {
             'auto': _('Automatically decide which formatting processor to use'),
@@ -83,7 +83,7 @@ class TXTInput(InputFormatPlugin):
         OptionRecommendation(name='txt_in_remove_indents', recommended_value=False,
             help=_('Normally extra space at the beginning of lines is retained. '
                    'With this option they will be removed.')),
-        OptionRecommendation(name="markdown_extensions", recommended_value='footnotes, tables, toc',
+        OptionRecommendation(name='markdown_extensions', recommended_value='footnotes, tables, toc',
             help=_('Enable extensions to Markdown syntax. Extensions are formatting that is not part '
                    'of the standard Markdown format. The extensions enabled by default: %default.\n'
                    'To learn more about Markdown extensions, see {}\n'
@@ -198,13 +198,13 @@ class TXTInput(InputFormatPlugin):
             if file_ext in {'md', 'textile', 'markdown'}:
                 options.formatting_type = {'md': 'markdown'}.get(file_ext, file_ext)
                 log.info('File extension indicates particular formatting. '
-                        'Forcing formatting type to: %s'%options.formatting_type)
+                        f'Forcing formatting type to: {options.formatting_type}')
                 options.paragraph_type = 'off'
 
         # Get the encoding of the document.
         if options.input_encoding:
             ienc = options.input_encoding
-            log.debug('Using user specified input encoding of %s' % ienc)
+            log.debug(f'Using user specified input encoding of {ienc}')
         else:
             det_encoding = detect(txt[:4096])
             det_encoding, confidence = det_encoding['encoding'], det_encoding['confidence']
@@ -218,7 +218,7 @@ class TXTInput(InputFormatPlugin):
             log.debug(f'Detected input encoding as {ienc} with a confidence of {confidence * 100}%')
         if not ienc:
             ienc = 'utf-8'
-            log.debug('No input encoding specified and could not auto detect using %s' % ienc)
+            log.debug(f'No input encoding specified and could not auto detect using {ienc}')
         # Remove BOM from start of txt as its presence can confuse markdown
         import codecs
         for bom in (codecs.BOM_UTF16_LE, codecs.BOM_UTF16_BE, codecs.BOM_UTF8, codecs.BOM_UTF32_LE, codecs.BOM_UTF32_BE):
@@ -240,12 +240,12 @@ class TXTInput(InputFormatPlugin):
                 log.debug('Could not reliably determine paragraph type using block')
                 options.paragraph_type = 'block'
             else:
-                log.debug('Auto detected paragraph type as %s' % options.paragraph_type)
+                log.debug(f'Auto detected paragraph type as {options.paragraph_type}')
 
         # Detect formatting
         if options.formatting_type == 'auto':
             options.formatting_type = detect_formatting_type(txt)
-            log.debug('Auto detected formatting as %s' % options.formatting_type)
+            log.debug(f'Auto detected formatting as {options.formatting_type}')
 
         if options.formatting_type == 'heuristic':
             setattr(options, 'enable_heuristics', True)

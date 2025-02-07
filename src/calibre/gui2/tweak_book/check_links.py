@@ -138,12 +138,12 @@ class CheckExternalLinks(Dialog):
 
     def populate_results(self, preserve_pos=False):
         num = len(self.errors) - len(self.fixed_errors)
-        text = '<h3>%s</h3><ol>' % (ngettext(
+        text = '<h3>{}</h3><ol>'.format(ngettext(
             'Found a broken link', 'Found {} broken links', num).format(num))
         for i, (locations, err, url) in enumerate(self.errors):
             if i in self.fixed_errors:
                 continue
-            text += '<li><b>%s</b> \xa0<a href="err:%d">[%s]</a><br>%s<br><ul>' % (url, i, _('Fix this link'), err)
+            text += '<li><b>{}</b> \xa0<a href="err:{}">[{}]</a><br>{}<br><ul>'.format(url, i, _('Fix this link'), err)
             for name, href, lnum, col in locations:
                 text += '<li>{name} \xa0<a href="loc:{lnum},{name}">[{line}: {lnum}]</a></li>'.format(
                     name=name, lnum=lnum, line=_('line number'))

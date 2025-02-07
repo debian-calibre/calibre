@@ -322,8 +322,7 @@ class Plugin:  # {{{
         interface. It is called when the user does: calibre-debug -r "Plugin
         Name". Any arguments passed are present in the args variable.
         '''
-        raise NotImplementedError('The %s plugin has no command line interface'
-                                  %self.name)
+        raise NotImplementedError(f'The {self.name} plugin has no command line interface')
 
 # }}}
 
@@ -474,7 +473,8 @@ class MetadataReaderPlugin(Plugin):  # {{{
             in :attr:`file_types`.
         :return: A :class:`calibre.ebooks.metadata.book.Metadata` object
         '''
-        return None
+        return
+
 # }}}
 
 
@@ -539,7 +539,7 @@ class CatalogPlugin(Plugin):  # {{{
         Custom fields sort after standard fields
         '''
         if key.startswith('#'):
-            return '~%s' % key[1:]
+            return f'~{key[1:]}'
         else:
             return key
 
@@ -573,11 +573,10 @@ class CatalogPlugin(Plugin):  # {{{
             # Validate requested_fields
             if requested_fields - all_fields:
                 from calibre.library import current_library_name
-                invalid_fields = sorted(list(requested_fields - all_fields))
-                print("invalid --fields specified: %s" % ', '.join(invalid_fields))
-                print("available fields in '%s': %s" %
-                      (current_library_name(), ', '.join(sorted(list(all_fields)))))
-                raise ValueError("unable to generate catalog with specified fields")
+                invalid_fields = sorted(requested_fields - all_fields)
+                print('invalid --fields specified: {}'.format(', '.join(invalid_fields)))
+                print("available fields in '{}': {}".format(current_library_name(), ', '.join(sorted(all_fields))))
+                raise ValueError('unable to generate catalog with specified fields')
 
             fields = [x for x in of if x in all_fields]
         else:
@@ -600,7 +599,7 @@ class CatalogPlugin(Plugin):  # {{{
         from calibre.ptempfile import PersistentTemporaryDirectory
 
         if type(self) not in builtin_plugins and self.name not in config['disabled_plugins']:
-            files_to_copy = [f"{self.name.lower()}.{ext}" for ext in ["ui","py"]]
+            files_to_copy = [f'{self.name.lower()}.{ext}' for ext in ['ui','py']]
             resources = zipfile.ZipFile(self.plugin_path,'r')
 
             if self.resources_path is None:
@@ -610,7 +609,7 @@ class CatalogPlugin(Plugin):  # {{{
                 try:
                     resources.extract(file, self.resources_path)
                 except:
-                    print(f" customize:__init__.initialize(): {file} not found in {os.path.basename(self.plugin_path)}")
+                    print(f' customize:__init__.initialize(): {file} not found in {os.path.basename(self.plugin_path)}')
                     continue
             resources.close()
 

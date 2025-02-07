@@ -140,9 +140,9 @@ class RationalizeFolders(Dialog):  # {{{
         folders = tprefs['folders_for_types']
         for i, (typ, text) in enumerate(self.TYPE_MAP):
             la = QLabel('&' + text)
-            setattr(self, '%s_label' % typ, la)
+            setattr(self, f'{typ}_label', la)
             le = QLineEdit(self)
-            setattr(self, '%s_folder' % typ, le)
+            setattr(self, f'{typ}_folder', le)
             val = folders.get(typ, '')
             if val and not val.endswith('/'):
                 val += '/'
@@ -161,7 +161,7 @@ class RationalizeFolders(Dialog):  # {{{
     def folder_map(self):
         ans = {}
         for typ, x in self.TYPE_MAP:
-            val = str(getattr(self, '%s_folder' % typ).text()).strip().strip('/')
+            val = str(getattr(self, f'{typ}_folder').text()).strip().strip('/')
             ans[typ] = val
         return ans
 
@@ -287,8 +287,8 @@ class ImportForeign(Dialog):  # {{{
         return src, dest
 # }}}
 
-# Quick Open {{{
 
+# Quick Open {{{
 
 def make_highlighted_text(emph, text, positions):
     positions = sorted(set(positions) - {-1})
@@ -376,7 +376,7 @@ class Results(QWidget):
     def __call__(self, results):
         if results:
             self.current_result = 0
-            prefixes = [QStaticText('<b>%s</b>' % os.path.basename(x)) for x in results]
+            prefixes = [QStaticText(f'<b>{os.path.basename(x)}</b>') for x in results]
             [(p.setTextFormat(Qt.TextFormat.RichText), p.setTextOption(self.text_option)) for p in prefixes]
             self.maxwidth = max(int(ceil(x.size().width())) for x in prefixes)
             self.results = tuple((prefix, self.make_text(text, positions), text)
@@ -457,8 +457,8 @@ class QuickOpen(Dialog):
 
     def default_help_text(self):
         example = '<pre>{0}i{1}mages/{0}c{1}hapter1/{0}s{1}cene{0}3{1}.jpg</pre>'.format(
-            '<span style="%s">' % emphasis_style(), '</span>')
-        chars = '<pre style="%s">ics3</pre>' % emphasis_style()
+            f'<span style="{emphasis_style()}">', '</span>')
+        chars = f'<pre style="{emphasis_style()}">ics3</pre>'
 
         return _('''<p>Quickly choose a file by typing in just a few characters from the file name into the field above.
         For example, if want to choose the file:
@@ -509,15 +509,15 @@ class QuickOpen(Dialog):
     @classmethod
     def test(cls):
         from calibre.utils.matcher import get_items_from_dir
-        items = get_items_from_dir(os.getcwd(), lambda x:not x.endswith('.pyc'))
+        items = get_items_from_dir(os.getcwd(), lambda x: not x.endswith('.pyc'))
         d = cls(items)
         d.exec()
         print(d.selected_result)
 
 # }}}
 
-# Filterable names list {{{
 
+# Filterable names list {{{
 
 class NamesDelegate(QStyledItemDelegate):
 
@@ -545,10 +545,10 @@ class NamesDelegate(QStyledItemDelegate):
             to.setWrapMode(QTextOption.WrapMode.NoWrap)
             to.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
             positions = sorted(set(positions) - {-1}, reverse=True)
-            text = '<body>%s</body>' % make_highlighted_text(emphasis_style(), text, positions)
+            text = f'<body>{make_highlighted_text(emphasis_style(), text, positions)}</body>'
             doc = QTextDocument()
-            c = 'rgb(%d, %d, %d)'%c.getRgb()[:3]
-            doc.setDefaultStyleSheet(' body { color: %s }'%c)
+            c = 'rgb({}, {}, {})'.format(*c.getRgb()[:3])
+            doc.setDefaultStyleSheet(f' body {{ color: {c} }}')
             doc.setHtml(text)
             doc.setDefaultFont(option.font)
             doc.setDocumentMargin(0.0)
@@ -619,8 +619,8 @@ def create_filterable_names_list(names, filter_text=None, parent=None, model=Nam
 
 # }}}
 
-# Insert Link {{{
 
+# Insert Link {{{
 
 class AnchorsModel(QAbstractListModel):
 
@@ -814,10 +814,8 @@ class InsertLink(Dialog):
 
 # }}}
 
-# Insert Semantics {{{
 
-
-class InsertSemantics(Dialog):
+class InsertSemantics(Dialog):  # {{{
 
     def __init__(self, container, parent=None):
         self.container = container
@@ -1112,8 +1110,8 @@ class FilterCSS(Dialog):  # {{{
 
 # }}}
 
-# Add Cover {{{
 
+# Add Cover {{{
 
 class CoverView(QWidget):
 
@@ -1230,8 +1228,7 @@ class AddCover(Dialog):
         if name is not None:
             data = self.container.raw_data(name, decode=False)
             self.cover_view.set_pixmap(data)
-            self.info_label.setText('{}x{}px | {}'.format(
-                self.cover_view.pixmap.width(), self.cover_view.pixmap.height(), human_readable(len(data))))
+            self.info_label.setText(f'{self.cover_view.pixmap.width()}x{self.cover_view.pixmap.height()}px | {human_readable(len(data))}')
 
     def import_image(self):
         ans = choose_images(self, 'add-cover-choose-image', _('Choose a cover image'), formats=(

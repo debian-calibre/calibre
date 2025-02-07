@@ -117,20 +117,20 @@ def error_codes(*errnames):
     return ans
 
 
-socket_errors_eintr = error_codes("EINTR", "WSAEINTR")
+socket_errors_eintr = error_codes('EINTR', 'WSAEINTR')
 
 socket_errors_socket_closed = error_codes(  # errors indicating a disconnected connection
-    "EPIPE",
-    "EBADF", "WSAEBADF",
-    "ENOTSOCK", "WSAENOTSOCK",
-    "ENOTCONN", "WSAENOTCONN",
-    "ESHUTDOWN", "WSAESHUTDOWN",
-    "ETIMEDOUT", "WSAETIMEDOUT",
-    "ECONNREFUSED", "WSAECONNREFUSED",
-    "ECONNRESET", "WSAECONNRESET",
-    "ECONNABORTED", "WSAECONNABORTED",
-    "ENETRESET", "WSAENETRESET",
-    "EHOSTDOWN", "EHOSTUNREACH",
+    'EPIPE',
+    'EBADF', 'WSAEBADF',
+    'ENOTSOCK', 'WSAENOTSOCK',
+    'ENOTCONN', 'WSAENOTCONN',
+    'ESHUTDOWN', 'WSAESHUTDOWN',
+    'ETIMEDOUT', 'WSAETIMEDOUT',
+    'ECONNREFUSED', 'WSAECONNREFUSED',
+    'ECONNRESET', 'WSAECONNRESET',
+    'ECONNABORTED', 'WSAECONNABORTED',
+    'ENETRESET', 'WSAENETRESET',
+    'EHOSTDOWN', 'EHOSTUNREACH',
 )
 socket_errors_nonblocking = error_codes(
     'EAGAIN', 'EWOULDBLOCK', 'WSAEWOULDBLOCK')
@@ -154,14 +154,14 @@ def create_sock_pair():
 
 
 def parse_http_list(header_val):
-    """Parse lists as described by RFC 2068 Section 2.
+    '''Parse lists as described by RFC 2068 Section 2.
 
     In particular, parse comma-separated lists where the elements of
     the list may include quoted-strings.  A quoted-string could
     contain a comma.  A non-quoted string could have quotes in the
     middle.  Neither commas nor quotes count if they are escaped.
     Only double-quotes count, not single-quotes.
-    """
+    '''
     if isinstance(header_val, bytes):
         slash, dquote, comma = b'\\",'
         empty = b''
@@ -265,8 +265,8 @@ class Cookie(SimpleCookie):
 def custom_fields_to_display(db):
     return frozenset(db.field_metadata.ignorable_field_keys())
 
-# Logging {{{
 
+# Logging {{{
 
 class ServerLog(ThreadSafeLog):
     exception_traceback_level = ThreadSafeLog.WARN
@@ -316,9 +316,9 @@ class RotatingStream:
             return
         self.stream.close()
         for i in range(self.history - 1, 0, -1):
-            src, dest = '%s.%d' % (self.filename, i), '%s.%d' % (self.filename, i+1)
+            src, dest = f'{self.filename}.{i}', f'{self.filename}.{i + 1}'
             self.rename(src, dest)
-        self.rename(self.filename, '%s.%d' % (self.filename, 1))
+        self.rename(self.filename, f'{self.filename}.1')
         self.set_output()
 
     def clear(self):
@@ -421,7 +421,7 @@ class Accumulator:  # {{{
 def get_db(ctx, rd, library_id):
     db = ctx.get_library(rd, library_id)
     if db is None:
-        raise HTTPNotFound('Library %r not found' % library_id)
+        raise HTTPNotFound(f'Library {library_id!r} not found')
     return db
 
 
@@ -443,7 +443,7 @@ class Offsets:
         if offset < 0:
             offset = 0
         if offset >= total:
-            raise HTTPNotFound('Invalid offset: %r'%offset)
+            raise HTTPNotFound(f'Invalid offset: {offset!r}')
         last_allowed_index = total - 1
         last_current_index = offset + delta - 1
         self.slice_upper_bound = offset+delta

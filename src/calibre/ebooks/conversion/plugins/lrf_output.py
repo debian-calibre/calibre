@@ -102,7 +102,7 @@ class LRFOutput(OutputFormatPlugin):
         OptionRecommendation(name='header', recommended_value=False,
             help=_('Add a header to all the pages with title and author.')
         ),
-        OptionRecommendation(name='header_format', recommended_value="%t by %a",
+        OptionRecommendation(name='header_format', recommended_value='%t by %a',
             help=_('Set the format of the header. %a is replaced by the author '
             'and %t by the title. Default is %default')
         ),
@@ -153,7 +153,7 @@ class LRFOutput(OutputFormatPlugin):
         ps['textheight']     = height
         book = Book(title=opts.title, author=opts.author,
                 bookid=uuid4().hex,
-                publisher='%s %s'%(__appname__, __version__),
+                publisher=f'{__appname__} {__version__}',
                 category=_('Comic'), pagestyledefault=ps,
                 booksetting=BookSetting(screenwidth=width, screenheight=height))
         for page in pages:

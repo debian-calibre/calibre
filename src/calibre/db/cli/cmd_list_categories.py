@@ -54,8 +54,8 @@ information is the equivalent of what is shown in the Tag browser.
         '--categories',
         default='',
         dest='report',
-        help=_("Comma-separated list of category lookup names. "
-               "Default: all")
+        help=_('Comma-separated list of category lookup names. '
+               'Default: all')
     )
     parser.add_option(
         '-w',
@@ -74,7 +74,7 @@ def do_list(fields, data, opts):
     from calibre.utils.terminal import ColoredStream, geometry
 
     separator = ' '
-    widths = list(map(lambda x: 0, fields))
+    widths = [0 for x in fields]
     for i in data:
         for j, field in enumerate(fields):
             widths[j] = max(widths[j], max(len(field), len(str(i[field]))))
@@ -83,7 +83,7 @@ def do_list(fields, data, opts):
     if not screen_width:
         screen_width = 80
     field_width = screen_width // len(fields)
-    base_widths = list(map(lambda x: min(x + 1, field_width), widths))
+    base_widths = [min(x + 1, field_width) for x in widths]
 
     while sum(base_widths) < screen_width:
         adjusted = False
@@ -99,12 +99,12 @@ def do_list(fields, data, opts):
 
     widths = list(base_widths)
     titles = map(
-        lambda x, y: '%-*s%s' % (x - len(separator), y, separator), widths, fields
+        lambda x, y: '%-*s%s' % (x - len(separator), y, separator), widths, fields  # noqa: UP031
     )
     with ColoredStream(sys.stdout, fg='green'):
         prints(''.join(titles))
 
-    wrappers = list(map(lambda x: TextWrapper(x - 1), widths))
+    wrappers = [TextWrapper(x - 1) for x in widths]
 
     for record in data:
         text = [
@@ -115,7 +115,7 @@ def do_list(fields, data, opts):
         for l in range(lines):
             for i, field in enumerate(text):
                 ft = text[i][l] if l < len(text[i]) else ''
-                filler = '%*s' % (widths[i] - len(ft) - 1, '')
+                filler = ' '*(widths[i] - len(ft) - 1)
                 print(ft.encode('utf-8') + filler.encode('utf-8'), end=separator)
             print()
 
@@ -156,7 +156,7 @@ def main(opts, args, dbctx):
 
     def fmtr(v):
         v = v or 0
-        ans = '%.1f' % v
+        ans = f'{v:.1f}'
         if ans.endswith('.0'):
             ans = ans[:-2]
         return ans

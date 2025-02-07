@@ -37,8 +37,8 @@ Elem = namedtuple('Elem',
 FlowInfo = namedtuple('FlowInfo',
         'type format dir fname')
 
-# locate beginning and ending positions of tag with specific aid attribute
 
+# locate beginning and ending positions of tag with specific aid attribute
 
 def locate_beg_end_of_tag(ml, aid):
     pattern = br'''<[^>]*\said\s*=\s*['"]%s['"][^>]*>''' % aid
@@ -200,7 +200,7 @@ class Mobi8Reader:
                                     self.elems[divptr]
                 if i == 0:
                     aidtext = idtext[12:-2]
-                    filename = 'part%04d.html' % filenum
+                    filename = f'part{filenum:04}.html'
                 part = text[baseptr:baseptr + length]
                 insertpos = insertpos - skelpos
                 head = skeleton[:insertpos]
@@ -212,8 +212,8 @@ class Mobi8Reader:
                     # example, https://bugs.launchpad.net/bugs/1082669
                     if not inspos_warned:
                         self.log.warn(
-                            'The div table for %s has incorrect insert '
-                            'positions. Calculating manually.'%skelname)
+                            f'The div table for {skelname} has incorrect insert '
+                            'positions. Calculating manually.')
                         inspos_warned = True
                     bp, ep = locate_beg_end_of_tag(skeleton, aidtext if
                         isinstance(aidtext, bytes) else aidtext.encode('utf-8'))
@@ -256,7 +256,7 @@ class Mobi8Reader:
         image_tag_pattern = re.compile(br'''(<(?:svg:)?image[^>]*>)''', re.IGNORECASE)
         for j in range(1, len(self.flows)):
             flowpart = self.flows[j]
-            nstr = '%04d' % j
+            nstr = f'{j:04}'
             m = svg_tag_pattern.search(flowpart)
             if m is not None:
                 # svg
@@ -272,7 +272,7 @@ class Mobi8Reader:
                     flowpart = from_svg
                 else:
                     format = 'file'
-                    dir = "images"
+                    dir = 'images'
                     fname = 'svgimg' + nstr + '.svg'
             else:
                 # search for CDATA and if exists inline it
@@ -286,7 +286,7 @@ class Mobi8Reader:
                     # css - assume as standalone css file
                     typ = 'css'
                     format = 'file'
-                    dir = "styles"
+                    dir = 'styles'
                     fname = nstr + '.css'
 
             self.flows[j] = flowpart
@@ -313,14 +313,14 @@ class Mobi8Reader:
         # so find the closest "id=" before position the file by actually
         # searching in that file
         idtext = self.get_id_tag(pos)
-        return '%s/%s'%(fi.type, fi.filename), idtext
+        return f'{fi.type}/{fi.filename}', idtext
 
     def get_id_tag(self, pos):
         # Find the first tag with a named anchor (name or id attribute) before
         # pos
         fi = self.get_file_info(pos)
         if fi.num is None and fi.start is None:
-            raise ValueError('No file contains pos: %d'%pos)
+            raise ValueError(f'No file contains pos: {pos}')
         textblock = self.parts[fi.num]
         npos = pos - fi.start
         pgt = textblock.find(b'>', npos)
@@ -373,7 +373,7 @@ class Mobi8Reader:
                 linktgt = fi.filename
                 if idtext:
                     linktgt += '#' + idtext
-                g = Guide.Reference('%s/%s'%(fi.type, linktgt), os.getcwd())
+                g = Guide.Reference(f'{fi.type}/{linktgt}', os.getcwd())
                 g.title, g.type = 'start', 'text'
                 guide.append(g)
 
@@ -391,15 +391,14 @@ class Mobi8Reader:
                 pos = entry['pos']
                 fi = self.get_file_info(pos)
                 if fi.filename is None:
-                    raise ValueError('Index entry has invalid pos: %d'%pos)
+                    raise ValueError(f'Index entry has invalid pos: {pos}')
                 idtag = self.get_id_tag(pos)
-                href = '%s/%s'%(fi.type, fi.filename)
+                href = f'{fi.type}/{fi.filename}'
             else:
                 try:
                     href, idtag = self.get_id_tag_by_pos_fid(*pos_fid)
                 except ValueError:
-                    self.log.warn('Invalid entry in NCX (title: %s), ignoring'
-                                  %entry['text'])
+                    self.log.warn('Invalid entry in NCX (title: {}), ignoring'.format(entry['text']))
                     remove.append(entry)
                     continue
 
@@ -430,12 +429,11 @@ class Mobi8Reader:
                     pass  # Ignore these records
                 elif typ == b'FONT':
                     font = read_font_record(data)
-                    href = "fonts/%05d.%s" % (fname_idx, font['ext'])
+                    href = f"fonts/{fname_idx:05}.{font['ext']}"
                     if font['err']:
-                        self.log.warn('Reading font record %d failed: %s'%(
-                            fname_idx, font['err']))
+                        self.log.warn(f"Reading font record {fname_idx} failed: {font['err']}")
                         if font['headers']:
-                            self.log.debug('Font record headers: %s'%font['headers'])
+                            self.log.debug('Font record headers: {}'.format(font['headers']))
                     with open(href.replace('/', os.sep), 'wb') as f:
                         f.write(font['font_data'] if font['font_data'] else
                                 font['raw_data'])
@@ -449,7 +447,7 @@ class Mobi8Reader:
                 elif typ == b'CRES':
                     data, imgtype = container.load_image(data)
                     if data is not None:
-                        href = 'images/%05d.%s'%(container.resource_index, imgtype)
+                        href = f'images/{container.resource_index:05}.{imgtype}'
                         with open(href.replace('/', os.sep), 'wb') as f:
                             f.write(data)
                 elif typ == b'\xa0\xa0\xa0\xa0' and len(data) == 4 and container is not None:
@@ -457,7 +455,7 @@ class Mobi8Reader:
                 elif container is None:
                     if not (len(data) == len(PLACEHOLDER_GIF) and data == PLACEHOLDER_GIF):
                         imgtype = find_imgtype(data)
-                        href = 'images/%05d.%s'%(fname_idx, imgtype)
+                        href = f'images/{fname_idx:05}.{imgtype}'
                         with open(href.replace('/', os.sep), 'wb') as f:
                             f.write(data)
 
@@ -545,7 +543,7 @@ class Mobi8Reader:
             start = None
             reached = True
         if frag:
-            elems = XPath('//*[@id="%s"]'%frag)(root)
+            elems = XPath(f'//*[@id="{frag}"]')(root)
             if elems:
                 start = elems[0]
 

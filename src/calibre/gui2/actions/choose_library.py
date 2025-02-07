@@ -121,7 +121,7 @@ class LibraryUsageStats:  # {{{
         if lpath in locs:
             locs.remove(lpath)
         limit = tweaks['many_libraries'] if limit is None else limit
-        key = (lambda x:sort_key(os.path.basename(x))) if len(locs) > limit else self.stats.get
+        key = (lambda x: sort_key(os.path.basename(x))) if len(locs) > limit else self.stats.get
         locs.sort(key=key, reverse=len(locs)<=limit)
         for loc in locs:
             yield self.pretty(loc), loc
@@ -226,7 +226,7 @@ class BackupStatus(QDialog):  # {{{
             return
         dirty_text = 'no'
         try:
-            dirty_text = '%s' % db.dirty_queue_length()
+            dirty_text = f'{db.dirty_queue_length()}'
         except:
             dirty_text = _('none')
         self.msg.setText('<p>' + _(
@@ -325,7 +325,7 @@ class ChooseLibraryAction(InterfaceAction):
         self.switch_actions = []
         for i in range(5):
             ac = self.create_action(spec=('', None, None, None),
-                    attr='switch_action%d'%i)
+                    attr=f'switch_action{i}')
             ac.setObjectName(str(i))
             self.switch_actions.append(ac)
             ac.setVisible(False)
@@ -607,8 +607,7 @@ class ChooseLibraryAction(InterfaceAction):
             os.rename(loc, newloc)
         except:
             import traceback
-            det_msg = 'Location: %r New Location: %r\n%s'%(loc, newloc,
-                                                        traceback.format_exc())
+            det_msg = f'Location: {loc!r} New Location: {newloc!r}\n{traceback.format_exc()}'
             error_dialog(self.gui, _('Rename failed'),
                     _('Failed to rename the library at %s. '
                 'The most common cause for this is if one of the files'
@@ -626,7 +625,7 @@ class ChooseLibraryAction(InterfaceAction):
                 self.gui, _('Library removed'), _(
                 'The library %s has been removed from calibre. '
                 'The files remain on your computer, if you want '
-                'to delete them, you will have to do so manually.') % ('<code>%s</code>' % loc),
+                'to delete them, you will have to do so manually.') % (f'<code>{loc}</code>'),
                 override_icon='dialog_information.png',
                 yes_text=_('&OK'), no_text=_('&Undo'), yes_icon='ok.png', no_icon='edit-undo.png'):
             return

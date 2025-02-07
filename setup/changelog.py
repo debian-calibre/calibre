@@ -138,7 +138,7 @@ def migrate():
         lines = []
         for entry in entries:
             lines.append('')
-            lines.append('{' '{' '{' f' {entry["version"]} {entry["date"]}')
+            lines.append('{' '{' '{'+f' {entry["version"]} {entry["date"]}')
             for w in ('new features', 'bug fixes'):
                 nf = entry.get(w)
                 if nf:

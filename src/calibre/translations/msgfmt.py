@@ -2,7 +2,7 @@
 # Written by Martin v. Löwis <loewis@informatik.hu-berlin.de>
 
 
-"""Generate binary message catalog from textual translation description.
+'''Generate binary message catalog from textual translation description.
 
 This program converts a textual Uniforum-style message catalog (.po file) into
 a binary GNU catalog (.mo file).  This is essentially the same function as the
@@ -24,7 +24,7 @@ Options:
     -V
     --version
         Display version information and exit.
-"""
+'''
 
 import array
 import ast
@@ -34,7 +34,7 @@ import struct
 import sys
 from email.parser import HeaderParser
 
-__version__ = "1.2"
+__version__ = '1.2'
 
 MESSAGES = {}
 STATS = {'translated': 0, 'untranslated': 0, 'uniqified': 0}
@@ -50,7 +50,7 @@ def usage(code, msg=''):
 
 
 def add(ctxt, msgid, msgstr, fuzzy):
-    "Add a non-fuzzy translation to the dictionary."
+    'Add a non-fuzzy translation to the dictionary.'
     if (not fuzzy or not msgid) and msgstr:
         if msgid:
             STATS['translated'] += 1
@@ -63,14 +63,14 @@ def add(ctxt, msgid, msgstr, fuzzy):
                 NON_UNIQUE.add(msgstr)
             MESSAGES[msgid] = msgstr
         else:
-            MESSAGES[b"%b\x04%b" % (ctxt, msgid)] = msgstr
+            MESSAGES[b'%b\x04%b' % (ctxt, msgid)] = msgstr
     else:
         if msgid:
             STATS['untranslated'] += 1
 
 
 def generate():
-    "Return the generated output."
+    'Return the generated output.'
     # the keys are sorted in the .mo file
     keys = sorted(MESSAGES.keys())
     offsets = []
@@ -96,17 +96,17 @@ def generate():
         koffsets += [l1, o1+keystart]
         voffsets += [l2, o2+valuestart]
     offsets = koffsets + voffsets
-    output = struct.pack("Iiiiiii",
+    output = struct.pack('Iiiiiii',
                          0x950412de,       # Magic
                          0,                 # Version
-                         len(keys),         # # of entries
+                         len(keys),         # of entries
                          7*4,               # start of key index
                          7*4+len(keys)*8,   # start of value index
                          0, 0)              # size and offset of hash table
     try:
-        output += array.array("i", offsets).tobytes()
+        output += array.array('i', offsets).tobytes()
     except AttributeError:
-        output += array.array("i", offsets).tostring()
+        output += array.array('i', offsets).tostring()
     output += ids
     output += strs
     return output
@@ -185,7 +185,7 @@ def make(filename, outfile):
         # This is a message with plural forms
         elif l.startswith('msgid_plural'):
             if section != ID:
-                print('msgid_plural not preceded by msgid on %s:%d' % (infile, lno),
+                print(f'msgid_plural not preceded by msgid on {infile}:{lno}',
                       file=sys.stderr)
                 sys.exit(1)
             l = l[12:]
@@ -196,7 +196,7 @@ def make(filename, outfile):
             section = STR
             if l.startswith('msgstr['):
                 if not is_plural:
-                    print('plural without msgid_plural on %s:%d' % (infile, lno),
+                    print(f'plural without msgid_plural on {infile}:{lno}',
                           file=sys.stderr)
                     sys.exit(1)
                 l = l.split(']', 1)[1]
@@ -204,7 +204,7 @@ def make(filename, outfile):
                     msgstr += b'\0'  # Separator of the various plural forms
             else:
                 if is_plural:
-                    print('indexed msgstr required for plural on  %s:%d' % (infile, lno),
+                    print(f'indexed msgstr required for plural on  {infile}:{lno}',
                           file=sys.stderr)
                     sys.exit(1)
                 l = l[6:]
@@ -221,7 +221,7 @@ def make(filename, outfile):
         elif section == STR:
             msgstr += lb
         else:
-            print('Syntax error on %s:%d' % (infile, lno),
+            print(f'Syntax error on {infile}:{lno}',
                   'before:', file=sys.stderr)
             print(l, file=sys.stderr)
             sys.exit(1)
@@ -235,7 +235,7 @@ def make(filename, outfile):
         if hasattr(outfile, 'write'):
             outfile.write(output)
         else:
-            with open(outfile, "wb") as f:
+            with open(outfile, 'wb') as f:
                 f.write(output)
     except OSError as msg:
         print(msg, file=sys.stderr)
@@ -250,7 +250,7 @@ def make_with_stats(filename, outfile):
 
 
 def run_batch(pairs):
-    for (filename, outfile) in pairs:
+    for filename, outfile in pairs:
         yield make_with_stats(filename, outfile)
 
 
@@ -277,7 +277,7 @@ def main():
         if opt in ('-h', '--help'):
             usage(0)
         elif opt in ('-V', '--version'):
-            print("msgfmt.py", __version__, file=sys.stderr)
+            print('msgfmt.py', __version__, file=sys.stderr)
             sys.exit(0)
         elif opt in ('-o', '--output-file'):
             outfile = arg

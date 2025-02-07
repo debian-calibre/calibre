@@ -214,12 +214,12 @@ class UpdateMixin:
             if has_plugin_updates:
                 plt = ngettext(' and one plugin update', ' and {} plugin updates', number_of_plugin_updates).format(number_of_plugin_updates)
             green = 'darkgreen' if QApplication.instance().is_dark_theme else 'green'
-            msg = ('<span style="color:%s; font-weight: bold">%s: '
-                    '<a href="update:%s">%s%s</a></span>') % (
+            msg = ('<span style="color:{}; font-weight: bold">{}: '
+                    '<a href="update:{}">{}{}</a></span>').format(
                             green, _('Update available'), version_url, calibre_version, plt)
         else:
             plt = ngettext('plugin update available', 'plugin updates available', number_of_plugin_updates)
-            msg = ('<a href="update:%s">%d %s</a>')%(version_url, number_of_plugin_updates, plt)
+            msg = f'<a href="update:{version_url}">{number_of_plugin_updates} {plt}</a>'
         self.status_bar.update_label.setText(msg)
         self.status_bar.update_label.setVisible(True)
 

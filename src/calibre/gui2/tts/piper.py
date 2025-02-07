@@ -8,12 +8,13 @@ import os
 import re
 import sys
 from collections import deque
+from collections.abc import Iterable, Iterator
 from contextlib import suppress
 from dataclasses import dataclass
 from functools import lru_cache
 from itertools import count
 from time import monotonic
-from typing import BinaryIO, Iterable, Iterator
+from typing import BinaryIO
 
 from qt.core import (
     QAudio,
@@ -754,7 +755,6 @@ class ThreadedPipeReader(PipeReader):
                 break
             else:
                 self.queue.put((data, is_stdout, None))
-
 
 
 def duration_of_raw_audio_data(data: bytes, sample_rate: int = HIGH_QUALITY_SAMPLE_RATE, bytes_per_sample: int = 2, num_channels: int = 1) -> float:

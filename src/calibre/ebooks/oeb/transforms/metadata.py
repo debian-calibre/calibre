@@ -24,17 +24,17 @@ def meta_info_to_oeb_metadata(mi, m, log, override_input_metadata=False):
         m.clear('title_sort')
         m.add('title_sort', mi.title_sort)
     if not mi.is_null('authors'):
-        m.filter('creator', lambda x : x.role.lower() in ['aut', ''])
+        m.filter('creator', lambda x: x.role.lower() in ['aut', ''])
         for a in mi.authors:
             attrib = {'role':'aut'}
             if mi.author_sort:
                 attrib[OPF('file-as')] = mi.author_sort
             m.add('creator', a, attrib=attrib)
     if not mi.is_null('book_producer'):
-        m.filter('contributor', lambda x : x.role.lower() == 'bkp')
+        m.filter('contributor', lambda x: x.role.lower() == 'bkp')
         m.add('contributor', mi.book_producer, role='bkp')
     elif override_input_metadata:
-        m.filter('contributor', lambda x : x.role.lower() == 'bkp')
+        m.filter('contributor', lambda x: x.role.lower() == 'bkp')
     if not mi.is_null('comments'):
         m.clear('description')
         m.add('description', mi.comments)
@@ -76,7 +76,7 @@ def meta_info_to_oeb_metadata(mi, m, log, override_input_metadata=False):
         m.clear('series_index')
     if not mi.is_null('rating'):
         m.clear('rating')
-        m.add('rating', '%.2f'%mi.rating)
+        m.add('rating', f'{mi.rating:.2f}')
     elif override_input_metadata:
         m.clear('rating')
     if not mi.is_null('tags'):
@@ -213,8 +213,8 @@ class MergeMetadata:
                 text = ''
             text = re.sub(r'\s+', '', text)
             if not text and not XPath('//h:img|//svg:svg')(item.data):
-                self.log('Removing %s as it is a wrapper around'
-                        ' the cover image'%item.href)
+                self.log(f'Removing {item.href} as it is a wrapper around'
+                        ' the cover image')
                 self.oeb.spine.remove(item)
                 self.oeb.manifest.remove(item)
                 self.oeb.guide.remove_by_href(item.href)

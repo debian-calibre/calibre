@@ -107,17 +107,13 @@ class Restore(Thread):
 
         if self.conflicting_custom_cols:
             ans += '\n\n'
-            ans += 'The following custom columns have conflicting definitions ' \
-                    'and were not fully restored:\n'
+            ans += ('The following custom columns have conflicting definitions '
+                    'and were not fully restored:\n')
             for x in self.conflicting_custom_cols:
                 ans += '\t#'+x+'\n'
-                ans += '\tused:\t%s, %s, %s, %s\n'%(self.custom_columns[x][1],
-                                                    self.custom_columns[x][2],
-                                                    self.custom_columns[x][3],
-                                                    self.custom_columns[x][5])
+                ans += f'\tused:\t{self.custom_columns[x][1]}, {self.custom_columns[x][2]}, {self.custom_columns[x][3]}, {self.custom_columns[x][5]}\n'
                 for coldef in self.conflicting_custom_cols[x]:
-                    ans += '\tother:\t%s, %s, %s, %s\n'%(coldef[1], coldef[2],
-                                                         coldef[3], coldef[5])
+                    ans += f'\tother:\t{coldef[1]}, {coldef[2]}, {coldef[3]}, {coldef[5]}\n'
 
         if self.mismatched_dirs:
             ans += '\n\n'
@@ -162,10 +158,10 @@ class Restore(Thread):
             self.tb = traceback.format_exc()
             if self.failed_dirs:
                 for x in self.failed_dirs:
-                    for (dirpath, tb) in self.failed_dirs:
+                    for dirpath, tb in self.failed_dirs:
                         self.tb += f'\n\n-------------\nFailed to restore: {dirpath}\n{tb}'
             if self.failed_restores:
-                for (book, tb) in self.failed_restores:
+                for book, tb in self.failed_restores:
                     self.tb += f'\n\n-------------\nFailed to restore: {book["path"]}\n{tb}'
 
     def load_preferences(self):
@@ -253,7 +249,7 @@ class Restore(Thread):
             dest = self.link_maps.setdefault(field, {})
             for item, link in lmap.items():
                 existing_link, timestamp = dest.get(item, (None, None))
-                if existing_link is None or existing_link != link and timestamp < mi.timestamp:
+                if existing_link is None or (existing_link != link and timestamp < mi.timestamp):
                     dest[item] = link, mi.timestamp
 
     def create_cc_metadata(self):

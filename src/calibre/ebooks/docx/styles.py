@@ -14,7 +14,6 @@ from polyglot.builtins import iteritems, itervalues
 
 
 class PageProperties:
-
     '''
     Class representing page level properties (page size/margins) read from
     sectPr elements.
@@ -104,7 +103,6 @@ class Style:
 
 
 class Styles:
-
     '''
     Collection of all styles defined in the document. Used to get the final styles applicable to elements in the document markup.
     '''
@@ -387,7 +385,7 @@ class Styles:
 
         fs = promote_most_common(block_styles, 'font_size', int(self.body_font_size[:2]))
         if fs is not None:
-            self.body_font_size = '%.3gpt' % fs
+            self.body_font_size = f'{fs:.3g}pt'
 
         color = promote_most_common(block_styles, 'color', self.body_color, inherit_means='currentColor')
         if color is not None:
@@ -429,7 +427,7 @@ class Styles:
         ans, _ = self.classes.get(h, (None, None))
         if ans is None:
             self.counter[prefix] += 1
-            ans = '%s_%d' % (prefix, self.counter[prefix])
+            ans = f'{prefix}_{self.counter[prefix]}'
             self.classes[h] = (ans, css)
         return ans
 
@@ -501,7 +499,7 @@ class Styles:
             prefix = ef + '\n' + prefix
 
         ans = []
-        for (cls, css) in sorted(itervalues(self.classes), key=lambda x:x[0]):
+        for cls, css in sorted(itervalues(self.classes), key=lambda x:x[0]):
             b = (f'\t{k}: {v};' for k, v in iteritems(css))
             b = '\n'.join(b)
             ans.append('.{} {{\n{}\n}}\n'.format(cls, b.rstrip(';')))

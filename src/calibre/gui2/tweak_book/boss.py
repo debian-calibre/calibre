@@ -273,7 +273,7 @@ class Boss(QObject):
 
     def mkdtemp(self, prefix=''):
         self.container_count += 1
-        return tempfile.mkdtemp(prefix='%s%05d-' % (prefix, self.container_count), dir=self.tdir)
+        return tempfile.mkdtemp(prefix=f'{prefix}{self.container_count:05}-', dir=self.tdir)
 
     def _check_before_open(self):
         if self.gui.action_save.isEnabled():
@@ -585,7 +585,7 @@ class Boss(QObject):
                 while c.exists(name) or c.manifest_has_name(name) or c.has_name_case_insensitive(name):
                     i += 1
                     name, ext = name.rpartition('.')[0::2]
-                    name = '%s_%d.%s' % (name, i, ext)
+                    name = f'{name}_{i}.{ext}'
                 try:
                     with open(path, 'rb') as f:
                         c.add_file(name, f.read())
@@ -828,7 +828,7 @@ class Boss(QObject):
                   ' it will look like: {1}Try to use only the English alphabet [a-z], numbers [0-9],'
                   ' hyphens and underscores for file names. Other characters can cause problems for '
                   ' different e-book viewers. Are you sure you want to proceed?').format(
-                      '<pre>%s</pre>'%newname, '<pre>%s</pre>' % urlnormalize(newname)),
+                      f'<pre>{newname}</pre>', f'<pre>{urlnormalize(newname)}</pre>'),
                 'confirm-urlunsafe-change', parent=self.gui, title=_('Are you sure?'), config_set=tprefs):
                 return
         self.add_savepoint(_('Before: Rename %s') % oldname)
@@ -881,7 +881,7 @@ class Boss(QObject):
     def update_global_history_actions(self):
         gu = self.global_undo
         for x, text in (('undo', _('&Revert to')), ('redo', _('&Revert to'))):
-            ac = getattr(self.gui, 'action_global_%s' % x)
+            ac = getattr(self.gui, f'action_global_{x}')
             ac.setEnabled(getattr(gu, 'can_' + x))
             ac.setText(text + ' "%s"'%(getattr(gu, x + '_msg') or '...'))
 
@@ -1484,7 +1484,7 @@ class Boss(QObject):
         if not name:
             return
         editor = self.open_editor_for_name(name)
-        if anchor and hasattr(editor, 'go_to_anchor') :
+        if anchor and hasattr(editor, 'go_to_anchor'):
             if editor.go_to_anchor(anchor):
                 self.gui.preview.pending_go_to_anchor = anchor
             elif show_anchor_not_found:
@@ -1756,7 +1756,7 @@ class Boss(QObject):
             lnum = node.get('data-lnum')
             if lnum:
                 tags_before = []
-                for tag in root.xpath('//*[@data-lnum="%s"]' % lnum):
+                for tag in root.xpath(f'//*[@data-lnum="{lnum}"]'):
                     tags_before.append(barename(tag))
                     if tag is node:
                         break

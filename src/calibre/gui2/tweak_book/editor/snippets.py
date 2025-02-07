@@ -47,6 +47,8 @@ from polyglot.builtins import codepoint_to_chr, iteritems, itervalues
 
 def string_length(x):
     return strlen(str(x))  # Needed on narrow python builds, as subclasses of unicode dont work
+
+
 KEY = Qt.Key.Key_J
 MODIFIER = Qt.KeyboardModifier.MetaModifier if ismacos else Qt.KeyboardModifier.ControlModifier
 
@@ -108,6 +110,7 @@ obtain some advantage from it? But.</p>
 
 }  # }}}
 
+
 # Parsing of snippets {{{
 escape = unescape = None
 
@@ -156,8 +159,9 @@ class TabStop(str):
         return self
 
     def __repr__(self):
-        return 'TabStop(text=%s num=%d start=%d is_mirror=%s takes_selection=%s is_toplevel=%s)' % (
-            str.__repr__(self), self.num, self.start, self.is_mirror, self.takes_selection, self.is_toplevel)
+        return (
+            f'TabStop(text={str.__repr__(self)} num={self.num} start={self.start} is_mirror={self.is_mirror}'
+            f' takes_selection={self.takes_selection} is_toplevel={self.is_toplevel})')
 
 
 def parse_template(template, start_offset=0, is_toplevel=True, grouped=True):
@@ -199,11 +203,11 @@ def snippets(refresh=False):
             if snip['trigger'] and isinstance(snip['trigger'], str):
                 key = snip_key(snip['trigger'], *snip['syntaxes'])
                 _snippets[key] = {'template':snip['template'], 'description':snip['description']}
-        _snippets = sorted(iteritems(_snippets), key=(lambda key_snip:string_length(key_snip[0].trigger)), reverse=True)
+        _snippets = sorted(iteritems(_snippets), key=(lambda key_snip: string_length(key_snip[0].trigger)), reverse=True)
     return _snippets
 
-# Editor integration {{{
 
+# Editor integration {{{
 
 class EditorTabStop:
 
@@ -231,8 +235,9 @@ class EditorTabStop:
         self.join_previous_edit = False
 
     def __repr__(self):
-        return 'EditorTabStop(num={!r} text={!r} left={!r} right={!r} is_deleted={!r} mirrors={!r})'.format(
-            self.num, self.text, self.left, self.right, self.is_deleted, self.mirrors)
+        return (
+            f'EditorTabStop(num={self.num!r} text={self.text!r} left={self.left!r} right={self.right!r} '
+            f'is_deleted={self.is_deleted!r} mirrors={self.mirrors!r})')
     __str__ = __unicode__ = __repr__
 
     def apply_selected_text(self, text):
@@ -457,8 +462,8 @@ class SnippetManager(QObject):
         return False
 # }}}
 
-# Config {{{
 
+# Config {{{
 
 class SnippetTextEdit(PlainTextEdit):
 

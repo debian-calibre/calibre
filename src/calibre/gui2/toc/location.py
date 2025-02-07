@@ -149,7 +149,7 @@ class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
         if fail_code is None:
             fail_code = QWebEngineUrlRequestJob.Error.UrlNotFound
         rq.fail(fail_code)
-        print(f"Blocking FAKE_PROTOCOL request: {rq.requestUrl().toString()} with code: {fail_code}", file=sys.stderr)
+        print(f'Blocking FAKE_PROTOCOL request: {rq.requestUrl().toString()} with code: {fail_code}', file=sys.stderr)
 
 
 class Page(QWebEnginePage):  # {{{
@@ -221,10 +221,10 @@ class Page(QWebEnginePage):  # {{{
 
     def show_frag(self, ok):
         if ok and self.current_frag:
-            self.runJavaScript('''
+            self.runJavaScript(f'''
                 document.location = '#non-existent-anchor';
-                document.location = '#' + {};
-            '''.format(json.dumps(self.current_frag)))
+                document.location = '#' + {json.dumps(self.current_frag)};
+            ''')
             self.current_frag = None
             self.runJavaScript('window.pageYOffset/document.body.scrollHeight', QWebEngineScript.ScriptWorldId.ApplicationWorld, self.frag_shown.emit)
 
@@ -309,7 +309,7 @@ class ItemEdit(QWidget):
         sp.addWidget(f)
 
         f.la = la = QLabel('<p>'+_(
-            'Here you can choose a destination for the Table of Contents\' entry'
+            "Here you can choose a destination for the Table of Contents' entry"
             ' to point to. First choose a file from the book in the left-most panel. The'
             ' file will open in the central panel.<p>'
 
@@ -445,13 +445,13 @@ class ItemEdit(QWidget):
         if frac == 0:
             loctext = _('Top of the file')
         else:
-            loctext =  _('Approximately %d%% from the top')%frac
+            loctext = _('Approximately %d%% from the top')%frac
         return loctext
 
     def elem_clicked(self, tag, frac, elem_id, loc, totals):
         self.current_frag = elem_id or (loc, totals)
         base = _('Location: A &lt;%s&gt; tag inside the file')%tag
-        loctext = base + ' [%s]'%self.get_loctext(frac)
+        loctext = base + f' [{self.get_loctext(frac)}]'
         self.dest_label.setText(self.base_msg + '<br>' +
                     _('File:') + ' ' + self.current_name + '<br>' + loctext)
 

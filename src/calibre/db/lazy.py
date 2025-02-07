@@ -263,7 +263,7 @@ def composite_getter(mi, field, dbref, book_id, cache, formatter, template_cache
         except Exception:
             import traceback
             traceback.print_exc()
-            return 'ERROR WHILE EVALUATING: %s' % field
+            return f'ERROR WHILE EVALUATING: {field}'
         return ret
 
 
@@ -365,7 +365,7 @@ class ProxyMetadata(Metadata):
         try:
             return ga(self, '_cache')[field]
         except KeyError:
-            raise AttributeError('Metadata object has no attribute named: %r' % field)
+            raise AttributeError(f'Metadata object has no attribute named: {field!r}')
 
     def __setattr__(self, field, val, extra=None):
         cache = ga(self, '_cache')
@@ -384,8 +384,8 @@ class ProxyMetadata(Metadata):
     # compatibility, flag __iter__ as unimplemented. This won't break anything
     # because the Metadata version raises AttributeError
     def __iter__(self):
-        raise NotImplementedError("__iter__() cannot be used in this context. "
-                                   "Use the explicit methods such as all_field_keys()")
+        raise NotImplementedError('__iter__() cannot be used in this context. '
+                                   'Use the explicit methods such as all_field_keys()')
 
     def has_key(self, key):
         return key in STANDARD_METADATA_FIELDS or key in ga(self, '_user_metadata')

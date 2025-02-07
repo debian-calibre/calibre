@@ -38,9 +38,9 @@ class AllIpAddressesGetter(Thread):
 
     def run(self):
         global _all_ip_addresses
-#        print 'sleeping'
-#        time.sleep(15)
-#        print 'slept'
+        # print('sleeping')
+        # time.sleep(15)
+        # print('slept')
         _all_ip_addresses = self.get_all_ips()
 
 
@@ -74,7 +74,7 @@ def _get_external_ip():
                     break
             except:
                 time.sleep(0.3)
-    # print 'ipaddr: %s' % ipaddr
+    # print('ipaddr: %s' % ipaddr)
     return ipaddr
 
 
@@ -141,10 +141,10 @@ def create_service(desc, service_type, port, properties, add_hostname, use_ip_ad
 
     if add_hostname:
         try:
-            desc += ' (on %s port %d)'%(hostname, port)
+            desc += f' (on {hostname} port {port})'
         except:
             try:
-                desc += ' (on %s)'%hostname
+                desc += f' (on {hostname})'
             except:
                 pass
 

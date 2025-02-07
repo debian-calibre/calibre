@@ -261,9 +261,9 @@ class RuleItem(QListWidgetItem):
             '<b>{action}</b> the tag, if it <i>{match_type}</i>: <b>{query}</b>').format(
                 action=RuleEdit.ACTION_MAP[rule['action']], match_type=RuleEdit.MATCH_TYPE_MAP[rule['match_type']], query=query)
         if rule['action'] == 'replace':
-            text += '<br>' + _('with the tag:') + ' <b>%s</b>' % rule['replace']
+            text += '<br>' + _('with the tag:') + ' <b>{}</b>'.format(rule['replace'])
         if rule['action'] == 'split':
-            text += '<br>' + _('on the character:') + ' <b>%s</b>' % rule['replace']
+            text += '<br>' + _('on the character:') + ' <b>{}</b>'.format(rule['replace'])
         return '<div style="white-space: nowrap">' + text + '</div>'
 
     def __init__(self, rule, parent):
@@ -488,7 +488,7 @@ class SaveLoadMixin:
                 self.PREFS_OBJECT[text] = self.rules
                 self.loaded_ruleset = text
                 self.ruleset_changed.emit()
-            elif text in self.PREFS_OBJECT: # Don't think we can get here because 'if rules:' is always True
+            elif text in self.PREFS_OBJECT:  # Don't think we can get here because 'if rules:' is always True
                 del self.PREFS_OBJECT[text]
                 if self.loaded_ruleset == text:
                     self.loaded_ruleset = ''

@@ -28,8 +28,8 @@ EQUALS_MATCH   = 1
 REGEXP_MATCH   = 2
 ACCENT_MATCH   = 3
 
-# Utils {{{
 
+# Utils {{{
 
 def _matchkind(query, case_sensitive=False):
     matchkind = CONTAINS_MATCH
@@ -108,7 +108,7 @@ class DateSearch:  # {{{
         self.local_today         = {'_today', 'today', icu_lower(_('today'))}
         self.local_yesterday     = {'_yesterday', 'yesterday', icu_lower(_('yesterday'))}
         self.local_thismonth     = {'_thismonth', 'thismonth', icu_lower(_('thismonth'))}
-        self.daysago_pat = regex.compile(r'(%s|daysago|_daysago)$'%_('daysago'), flags=regex.UNICODE | regex.VERSION1)
+        self.daysago_pat = regex.compile(r'({}|daysago|_daysago)$'.format(_('daysago')), flags=regex.UNICODE | regex.VERSION1)
 
     def eq(self, dbdate, query, field_count):
         if dbdate.year == query.year:
@@ -416,7 +416,7 @@ class SavedSearchQueries:  # {{{
             self._db = weakref.ref(db)
         except TypeError:
             # db could be None
-            self._db = lambda : None
+            self._db = lambda: None
         self.load_from_db()
 
     def load_from_db(self):
@@ -657,7 +657,7 @@ class Parser(SearchQueryParser):  # {{{
 
         if location == 'template':
             try:
-                template, sep, query = regex.split('#@#:([tdnb]):', query, flags=regex.IGNORECASE)
+                template, sep, query = regex.split(r'#@#:([tdnb]):', query, flags=regex.IGNORECASE)
                 if sep:
                     sep = sep.lower()
                 else:
@@ -677,7 +677,7 @@ class Parser(SearchQueryParser):  # {{{
                 val = mi.formatter.safe_format(template, {}, error_string, mi,
                                             column_name='search template',
                                             template_cache=template_cache,
-                                            global_vars=global_vars)
+                                            global_vars=global_vars, database=self.dbcache)
                 if val.startswith(error_string):
                     raise ParseException(val[len(error_string):])
                 if sep == 't':

@@ -189,7 +189,7 @@ class Bookmarks(BadLink):
     HELP = _(
         'This file stores the bookmarks and last opened information from'
         ' the calibre E-book viewer. You can remove it if you do not'
-        ' need that information, or don\'t want to share it with'
+        " need that information, or don't want to share it with"
         ' other people you send this book to.')
     INDIVIDUAL_FIX = _('Remove this file')
     level = INFO
@@ -231,11 +231,11 @@ class MimetypeMismatch(BaseError):
             c = 0
             while container.has_name(new_name):
                 c += 1
-                new_name = self.file_name.rpartition('.')[0] + ('%d.' % c) + self.change_ext_to
+                new_name = self.file_name.rpartition('.')[0] + f'{c}.' + self.change_ext_to
             rename_files(container, {self.file_name:new_name})
             changed = True
         else:
-            for item in container.opf_xpath('//opf:manifest/opf:item[@href and @media-type="%s"]' % self.opf_mt):
+            for item in container.opf_xpath(f'//opf:manifest/opf:item[@href and @media-type="{self.opf_mt}"]'):
                 name = container.href_to_name(item.get('href'), container.opf_name)
                 if name == self.file_name:
                     changed = True
@@ -454,7 +454,7 @@ def check_external_links(container, progress_callback=(lambda num, total:None), 
                 done.append(None)
                 progress_callback(len(done), len(external_links))
 
-    workers = [Thread(name="CheckLinks", target=check_links) for i in range(min(10, len(external_links)))]
+    workers = [Thread(name='CheckLinks', target=check_links) for i in range(min(10, len(external_links)))]
     for w in workers:
         w.daemon = True
         w.start()

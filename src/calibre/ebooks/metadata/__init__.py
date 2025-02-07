@@ -5,9 +5,9 @@ __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
 __docformat__ = 'restructuredtext en'
 
-"""
+'''
 Provides abstraction for metadata reading.writing from a variety of ebook formats.
-"""
+'''
 import os
 import re
 import sys
@@ -166,13 +166,13 @@ def get_title_sort_pat(lang=None):
         ans = frozenset((r'A\s+', r'The\s+', r'An\s+'))
     if ans:
         ans = '|'.join(ans)
-        ans = '^(%s)'%ans
+        ans = f'^({ans})'
         try:
             ans = re.compile(ans, re.IGNORECASE)
         except:
             ans = re.compile(r'^(A|The|An)\s+', re.IGNORECASE)
     else:
-        ans = re.compile('^$')  # matches only the empty string
+        ans = re.compile(r'^$')  # matches only the empty string
     _title_pats[lang] = ans
     return ans
 
@@ -228,7 +228,7 @@ def title_sort(title, order=None, lang=None):
 
 coding = list(zip(
 [1000,900,500,400,100,90,50,40,10,9,5,4,1],
-["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"]
+['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I']
 ))
 
 
@@ -251,7 +251,7 @@ def fmt_sidx(i, fmt='%.2f', use_roman=False):
     except Exception:
         return str(i)
     if int(i) == i:
-        return roman(int(i)) if use_roman else '%d'%int(i)
+        return roman(int(i)) if use_roman else str(int(i))
     ans = fmt%i
     if '.' in ans:
         ans = ans.rstrip('0')
@@ -259,7 +259,6 @@ def fmt_sidx(i, fmt='%.2f', use_roman=False):
 
 
 class Resource:
-
     '''
     Represents a resource (usually a file on the filesystem or a URL pointing
     to the web. Such resources are commonly referred to in OPF files.
@@ -336,7 +335,7 @@ class Resource:
         return self._basedir
 
     def __repr__(self):
-        return 'Resource(%s, %s)'%(repr(self.path), repr(self.href()))
+        return f'Resource({self.path!r}, {self.href()!r})'
 
 
 class ResourceCollection:
@@ -358,7 +357,7 @@ class ResourceCollection:
 
     def __str__(self):
         resources = map(repr, self)
-        return '[%s]'%', '.join(resources)
+        return '[{}]'.format(', '.join(resources))
 
     def __repr__(self):
         return str(self)

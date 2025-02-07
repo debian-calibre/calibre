@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:47+0000\n"
+"POT-Creation-Date: 2025-01-23 13:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Turkish (http://app.transifex.com/calibre/calibre/language/tr/)\n"
@@ -1345,32 +1345,97 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:633
-msgid "Special notes for save/send templates"
-msgstr "Kayıt et/gönder şablonları ile ilgili özel notlar"
+msgid "Special notes for using templates in different contexts"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid ""
-"Special processing is applied when a template is used in a `save to disk` or"
-" `send to device` template. The values of the fields are cleaned, replacing "
-"characters that are special to file systems with underscores, including "
-"slashes. This means that field text cannot be used to create folders. "
-"However, slashes are not changed in prefix or suffix strings, so slashes in "
-"these strings will cause folders to be created. Because of this, you can "
-"create variable-depth folder structure."
-msgstr "Bir şablon `diske kaydet` veya `aygıta gönder` şablonu ile kullanıldığında özel işlemler uygulanır. Alanların değerleri temizlenir, dosya sistemine özel karakterler alt çizgiler ile değiştirilir, yatık çizgiler dahil. Bunun anlamı alan metni kullanılarak klasör oluşturulamayacağıdır. Ancak yatık çizgiler ön ek veya son ek karakter dizilerinden değiştirilmezler, yani bu karakter dizilerindeki yatık çizgiler klasörlerin oluşturulmasına sebep olur. Bu sebepten, değişken derinlikli klasör yapıları oluşturabilirsiniz."
+"In the GUI (:guilabel:`Columns made from other columns` and "
+":guilabel:`Template searches`):"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:637
+msgid "GPM templates work as before."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:638
+msgid "Python templates have full access to the calibre database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:640
+msgid "In icon rules:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:642
+msgid ""
+"icon rule templates have no book data so field-based functions such as "
+":ref:`ff_format_date_field`, :ref:`ff_list_count_field`, and "
+":ref:`ff_check_yes_no` won't work."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:644
+msgid "In the Content server:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:646
+msgid ""
+"Templates have access to the new API but not the old API (LibraryDatabase)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+msgid ""
+"Because of the above, the following formatter functions are not guaranteed "
+"to work in GPM templates (composite columns, icon rules, etc) and should be "
+"avoided if you use the content server:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+msgid ":ref:`ff_connected_device_name`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:650
+msgid ":ref:`ff_connected_device_uuid`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:651
+msgid ":ref:`ff_current_virtual_library_name`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+msgid ":ref:`ff_is_marked`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
+msgid ":ref:`ff_virtual_libraries`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+msgid "Special notes for save/send templates"
+msgstr "Kayıt et/gönder şablonları ile ilgili özel notlar"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:658
+msgid ""
+"Special processing is applied when a template is used in a :guilabel:`Save "
+"to disk` or :guilabel:`Send to device` template. The values of the fields "
+"are cleaned, replacing characters that are special to file systems with "
+"underscores, including slashes. This means that field text cannot be used to"
+" create folders. However, slashes are not changed in prefix or suffix "
+"strings, so slashes in these strings will cause folders to be created. "
+"Because of this, you can create variable-depth folder structure."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:660
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Örneğin, `series/series_index - title` dizin yapısını istediğimizi varsayın, series'in olmama durumunda, başlık en üst klasörde olmalıdır. Bunu yapan şablon şu şekildedir::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:641
+#: ../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "Yatık çizgi ve tire sadece seriler boş değilken görülür."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:643
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1380,25 +1445,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:645
+#: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid "To accomplish this, we:"
 msgstr "Bunu elde etmek için:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:648
+#: ../../__w/calibre/calibre/manual/template_lang.rst:671
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+#: ../../__w/calibre/calibre/manual/template_lang.rst:672
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb)}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -1406,35 +1471,35 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+#: ../../__w/calibre/calibre/manual/template_lang.rst:675
 msgid "Tips"
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:654
+#: ../../__w/calibre/calibre/manual/template_lang.rst:677
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:655
+#: ../../__w/calibre/calibre/manual/template_lang.rst:678
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr ""
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+#: ../../__w/calibre/calibre/manual/template_lang.rst:679
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "Bir santralde, özel şablon ``{}`` kullanarak bir alanı boş olarak ayarlayabilirsiniz (ya da boşla eş değer neyse). Bu şablon her zaman boş karakter dizisi olarak değerlenecektir."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:657
+#: ../../__w/calibre/calibre/manual/template_lang.rst:680
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "Yukarıda sıfır değeri olsa bile sayıları göstermeye yarayan teknik standart alan series_index ile de çalışır."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:662
+#: ../../__w/calibre/calibre/manual/template_lang.rst:685
 msgid "Template function reference"
 msgstr "Şablon fonksiyon rehberi"

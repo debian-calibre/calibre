@@ -118,7 +118,7 @@ class Server(Thread):
     def launch_worker(self, gui=False, redirect_output=None, job_name=None):
         start = time.monotonic()
         id = next(self.launched_worker_counter)
-        fd, rfile = tempfile.mkstemp(prefix='ipc_result_%d_%d_'%(self.id, id),
+        fd, rfile = tempfile.mkstemp(prefix=f'ipc_result_{self.id}_{id}_',
                 dir=base_dir(), suffix='.pickle')
         os.close(fd)
         if redirect_output is None:
@@ -136,7 +136,7 @@ class Server(Thread):
         with a:
             env = {
                 'CALIBRE_WORKER_FD': str(a.fileno()),
-                'CALIBRE_WORKER_RESULT' : environ_item(as_hex_unicode(rfile))
+                'CALIBRE_WORKER_RESULT': environ_item(as_hex_unicode(rfile))
             }
             w = Worker(env, gui=gui, job_name=job_name)
 

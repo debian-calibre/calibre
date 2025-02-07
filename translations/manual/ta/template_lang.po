@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-05 04:38+0000\n"
+"POT-Creation-Date: 2025-01-23 13:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -1345,32 +1345,97 @@ msgid ""
 msgstr "உங்கள் சொந்த பைதான் செயல்பாடுகளை வார்ப்புரு செயலியில் சேர்க்கலாம். இத்தகைய செயல்பாடுகளை மூன்று வார்ப்புரு நிரலாக்க முறைகளில் பயன்படுத்தலாம். செல்வதன் மூலம் செயல்பாடுகள் சேர்க்கப்படுகின்றன: கிலாபெல்: `விருப்பத்தேர்வுகள் -> மேம்பட்ட -> வார்ப்புரு செயல்பாடுகள்`. அந்த உரையாடலில் வழிமுறைகள் காட்டப்பட்டுள்ளன. இதேபோன்ற நோக்கத்திற்காக நீங்கள் `பைதான் வார்ப்புருக்கள்` பயன்படுத்தலாம் என்பதை நினைவில் கொள்க. பைதான் வார்ப்புருவை அழைப்பதை விட பயனர் வரையறுக்கப்பட்ட செயல்பாடுகளை அழைப்பது வேகமானது என்பதால், செயல்பாடு அல்லது வார்ப்புரு என்ன செய்கிறது என்பதன் சிக்கலைப் பொறுத்து பயனர் வரையறுக்கப்பட்ட செயல்பாடுகள் மிகவும் திறமையானதாக இருக்கலாம்."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:633
-msgid "Special notes for save/send templates"
-msgstr "வார்ப்புருக்கள் சேமிக்க/அனுப்ப சிறப்பு குறிப்புகள்"
+msgid "Special notes for using templates in different contexts"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid ""
-"Special processing is applied when a template is used in a `save to disk` or"
-" `send to device` template. The values of the fields are cleaned, replacing "
-"characters that are special to file systems with underscores, including "
-"slashes. This means that field text cannot be used to create folders. "
-"However, slashes are not changed in prefix or suffix strings, so slashes in "
-"these strings will cause folders to be created. Because of this, you can "
-"create variable-depth folder structure."
-msgstr "ஒரு வார்ப்புரு `சேமி வட்டுக்கு` அல்லது` சாதனத்திற்கு அனுப்புங்கள்` வார்ப்புருவில் பயன்படுத்தப்படும்போது சிறப்பு செயலாக்கம் பயன்படுத்தப்படுகிறது. புலங்களின் மதிப்புகள் தூய்மை செய்யப்படுகின்றன, கோப்பு முறைமைகளுக்கு சிறப்பு வாய்ந்த எழுத்துக்களை மாற்றியமைக்கின்றன, அவை ச்லாச்கள் உட்பட அடிக்கோடிட்டுக் காட்டுகின்றன. கோப்புறைகளை உருவாக்க புல உரையை பயன்படுத்த முடியாது என்பதே இதன் பொருள். இருப்பினும், முன்னொட்டு அல்லது பின்னொட்டு சரங்களில் ச்லாச்கள் மாற்றப்படவில்லை, எனவே இந்த சரங்களில் உள்ள குறைப்புக்கள் கோப்புறைகளை உருவாக்கும். இதன் காரணமாக, நீங்கள் மாறி-ஆழமான கோப்புறை கட்டமைப்பை உருவாக்கலாம்."
+"In the GUI (:guilabel:`Columns made from other columns` and "
+":guilabel:`Template searches`):"
+msgstr ""
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:637
+msgid "GPM templates work as before."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:638
+msgid "Python templates have full access to the calibre database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:640
+msgid "In icon rules:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:642
+msgid ""
+"icon rule templates have no book data so field-based functions such as "
+":ref:`ff_format_date_field`, :ref:`ff_list_count_field`, and "
+":ref:`ff_check_yes_no` won't work."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:644
+msgid "In the Content server:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:646
+msgid ""
+"Templates have access to the new API but not the old API (LibraryDatabase)."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+msgid ""
+"Because of the above, the following formatter functions are not guaranteed "
+"to work in GPM templates (composite columns, icon rules, etc) and should be "
+"avoided if you use the content server:"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+msgid ":ref:`ff_connected_device_name`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:650
+msgid ":ref:`ff_connected_device_uuid`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:651
+msgid ":ref:`ff_current_virtual_library_name`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+msgid ":ref:`ff_is_marked`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
+msgid ":ref:`ff_virtual_libraries`"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+msgid "Special notes for save/send templates"
+msgstr "வார்ப்புருக்கள் சேமிக்க/அனுப்ப சிறப்பு குறிப்புகள்"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:658
+msgid ""
+"Special processing is applied when a template is used in a :guilabel:`Save "
+"to disk` or :guilabel:`Send to device` template. The values of the fields "
+"are cleaned, replacing characters that are special to file systems with "
+"underscores, including slashes. This means that field text cannot be used to"
+" create folders. However, slashes are not changed in prefix or suffix "
+"strings, so slashes in these strings will cause folders to be created. "
+"Because of this, you can create variable-depth folder structure."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:660
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "எடுத்துக்காட்டாக, `தொடர்/தொடர்_இண்டெக்ச் - தலைப்பு` என்ற கோப்புறை அமைப்பு வேண்டும் என்று வைத்துக் கொள்ளுங்கள், தொடர் இல்லை என்றால், தலைப்பு சிறந்த கோப்புறையில் இருக்க வேண்டும். இதைச் செய்வதற்கான வார்ப்புரு ::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:641
+#: ../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "தொடர் காலியாக இல்லாவிட்டால் மட்டுமே ச்லாச் மற்றும் ஐபன் தோன்றும்."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:643
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1380,25 +1445,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr "தேடல் செயல்பாடு ஆர்வமுள்ள செயலாக்கத்தை கூட செய்ய அனுமதிக்கிறது. எடுத்துக்காட்டாக, ஒரு புத்தகத்தில் ஒரு தொடர் இருந்தால், கோப்புறை கட்டமைப்பை `தொடர்/தொடர் குறியீட்டு - title.fmt` வேண்டும் என்று வைத்துக் கொள்ளுங்கள். புத்தகத்தில் ஒரு தொடர் இல்லையென்றால், `வகை/எழுத்தாளர்_சார்ட்/தலைப்பு. fmt` என்ற கோப்புறை கட்டமைப்பை நாங்கள் விரும்புகிறோம். புத்தகத்தில் எந்த வகையும் இல்லை என்றால், நாம் 'தெரியாத' பயன்படுத்த விரும்புகிறோம். தொடரின் மதிப்பைப் பொறுத்து இரண்டு முற்றிலும் மாறுபட்ட பாதைகளை நாங்கள் விரும்புகிறோம்."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:645
+#: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid "To accomplish this, we:"
 msgstr "இதை நிறைவேற்ற, நாங்கள்:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "`` {series}/{series_index} - {title} `` ஆகியவற்றைக் கொண்ட ஒரு கலப்பு புலத்தை உருவாக்கவும் (#aa க்கு #aa ஐ கொடுங்கள்). தொடர் காலியாக இல்லாவிட்டால், இந்த வார்ப்புரு `தொடர்/தொடர்_இண்டெக்ச் - தலைப்பு` ஐ உருவாக்கும்."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:648
+#: ../../__w/calibre/calibre/manual/template_lang.rst:671
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "`` {#genre: ifempty (அறியப்படாத)}/{author_sort}/{title} `` கொண்ட ஒரு கலப்பு புலத்தை உருவாக்கவும் (#bb க்கு #bb ஐ கொடுங்கள்) உருவாக்கவும். இந்த வார்ப்புரு `வகை/ஆசிரியர்_சார்ட்/தலைப்பு` ஐ உருவாக்குகிறது, அங்கு வெற்று வகை` தெரியாத` உடன் மாற்றப்படுகிறது."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+#: ../../__w/calibre/calibre/manual/template_lang.rst:672
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb)}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -1406,35 +1471,35 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr "சேமி வார்ப்புருவை `` {தொடர்: தேடல் (.,#aa,#bb)} `` என அமைக்கவும். தொடர் காலியாக இல்லாவிட்டால் கலப்பு புலம் ``#aa`` ஐ தேர்வு செய்கிறது ``#பிபி`` தொடர் காலியாக இருந்தால். ஆகவே, `தொடர்` காலியாக உள்ளதா இல்லையா என்பதைப் பொறுத்து எங்களிடம் இரண்டு முற்றிலும் மாறுபட்ட சேமிப்பு பாதைகள் உள்ளன."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+#: ../../__w/calibre/calibre/manual/template_lang.rst:675
 msgid "Tips"
 msgstr "உதவிக்குறிப்புகள்"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:654
+#: ../../__w/calibre/calibre/manual/template_lang.rst:677
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr "வார்ப்புருக்களை சோதிக்க வார்ப்புரு சோதனையாளரைப் பயன்படுத்தவும். நூலகத்தில் உள்ள புத்தகங்களுக்கான சூழல் பட்டியலில் சோதனையாளரைச் சேர்த்து/அல்லது விசைப்பலகை குறுக்குவழியைக் கொடுங்கள்."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:655
+#: ../../__w/calibre/calibre/manual/template_lang.rst:678
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr "விரும்பிய வார்ப்புருவுடன் கட்டமைக்கப்பட்ட கலப்பு நெடுவரிசைகளைக் குறிப்பிடுவதன் மூலம் வார்ப்புருக்கள் பிற வார்ப்புருக்களைப் பயன்படுத்தலாம். மாற்றாக, நீங்கள் சேமிக்கப்பட்ட வார்ப்புருக்களைப் பயன்படுத்தலாம்."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+#: ../../__w/calibre/calibre/manual/template_lang.rst:679
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "ஒரு பிளக் போர்டில், சிறப்பு வார்ப்புருவைப் பயன்படுத்தி `{}` `` பயன்படுத்துவதன் மூலம் ஒரு புலத்தை காலியாக (அல்லது காலியாக எதுவுமில்லை) அமைக்கலாம். இந்த வார்ப்புரு எப்போதும் வெற்று சரத்திற்கு மதிப்பீடு செய்யும்."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:657
+#: ../../__w/calibre/calibre/manual/template_lang.rst:680
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "எண்களைக் காட்ட மேலே விவரிக்கப்பட்ட நுட்பம் சுழிய மதிப்பு இருந்தாலும் அவை நிலையான புலம் தொடர்_இண்டெக்சுடன் வேலை செய்கின்றன."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:662
+#: ../../__w/calibre/calibre/manual/template_lang.rst:685
 msgid "Template function reference"
 msgstr "வார்ப்புரு செயல்பாடு குறிப்பு"

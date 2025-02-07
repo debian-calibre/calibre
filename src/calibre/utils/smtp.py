@@ -59,7 +59,7 @@ def safe_localhost():
             addr = socket.gethostbyname(socket.gethostname())
         except socket.gaierror:
             pass
-        local_hostname = '[%s]' % addr
+        local_hostname = f'[{addr}]'
     return local_hostname
 
 
@@ -89,7 +89,7 @@ def create_mail(from_, to, subject, text=None, attachment_data=None,
     outer['To'] = to
     outer['Subject'] = subject
     outer['Date'] = formatdate(localtime=True)
-    outer['Message-Id'] = f"<{uuid.uuid4()}@{get_msgid_domain(from_)}>"
+    outer['Message-Id'] = f'<{uuid.uuid4()}@{get_msgid_domain(from_)}>'
     outer.preamble = 'You will not see this in a MIME-aware mail reader.\n'
 
     if text is not None:
@@ -132,7 +132,7 @@ def sendmail_direct(from_, to, msg, timeout, localhost, verbose,
     s = smtplib.SMTP(**kwargs)
     s.set_debuglevel(verbose)
     if not hosts:
-        raise ValueError('No mail server found for address: %s'%to)
+        raise ValueError(f'No mail server found for address: {to}')
     last_error = last_traceback = None
     for host in hosts:
         try:
@@ -341,7 +341,7 @@ def main(args=sys.argv):
 def config(defaults=None):
     from calibre.utils.config import Config, StringConfig
     desc = _('Control email delivery')
-    c = Config('smtp',desc) if defaults is None else StringConfig(defaults,desc)
+    c = Config('smtp', desc) if defaults is None else StringConfig(defaults, desc)
     c.add_opt('from_')
     c.add_opt('accounts', default={})
     c.add_opt('subjects', default={})

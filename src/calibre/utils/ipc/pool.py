@@ -40,7 +40,7 @@ if iswindows:
     # Note that when running via the "Restart in debug mode" action, stdout is
     # not a console (its already redirected to a log file), so no redirection
     # is required.
-    if getattr(sys, 'gui_app', False) or getattr(sys.stdout, 'isatty', lambda : False)():
+    if getattr(sys, 'gui_app', False) or getattr(sys.stdout, 'isatty', lambda: False)():
         if DEBUG:
             # We are running in a windows console with calibre-debug -g
             import subprocess
@@ -457,7 +457,7 @@ def test():
     for r in itervalues(get_results(p)):
         c += 1
         if not r.traceback or 'ZeroDivisionError' not in r.traceback:
-            raise SystemExit('Unexpected result: %s' % r)
+            raise SystemExit(f'Unexpected result: {r}')
     if c != 1000:
         raise SystemExit('Incorrect number of results')
     p.shutdown(), p.join()

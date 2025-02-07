@@ -26,12 +26,12 @@ class ReadingTest(BaseTest):
         'Test the reading of data from the database'
         cache = self.init_cache(self.library_path)
         tests = {
-                3  : {
+                3: {
                     'title': 'Unknown',
                     'sort': 'Unknown',
                     'authors': ('Unknown',),
                     'author_sort': 'Unknown',
-                    'series' : None,
+                    'series': None,
                     'series_index': 1.0,
                     'rating': None,
                     'tags': (),
@@ -58,12 +58,12 @@ class ReadingTest(BaseTest):
                     'size':None,
                 },
 
-                2 : {
+                2: {
                     'title': 'Title One',
                     'sort': 'One',
                     'authors': ('Author One',),
                     'author_sort': 'One, Author',
-                    'series' : 'A Series One',
+                    'series': 'A Series One',
                     'series_index': 1.0,
                     'tags':('Tag One', 'Tag Two'),
                     'formats': ('FMT1',),
@@ -88,12 +88,12 @@ class ReadingTest(BaseTest):
                     '#comments': '<div>My Comments One<p></p></div>',
                     'size':9,
                 },
-                1  : {
+                1: {
                     'title': 'Title Two',
                     'sort': 'Title Two',
                     'authors': ('Author Two', 'Author One'),
                     'author_sort': 'Two, Author & One, Author',
-                    'series' : 'A Series One',
+                    'series': 'A Series One',
                     'series_index': 2.0,
                     'rating': 6.0,
                     'tags': ('Tag One', 'News'),
@@ -126,8 +126,7 @@ class ReadingTest(BaseTest):
                 if isinstance(val, tuple) and 'authors' not in field and 'languages' not in field:
                     val, expected_val = set(val), set(expected_val)
                 self.assertEqual(expected_val, val,
-                        'Book id: %d Field: %s failed: %r != %r'%(
-                            book_id, field, expected_val, val))
+                        f'Book id: {book_id} Field: {field} failed: {expected_val!r} != {val!r}')
         # }}}
 
     def test_sorting(self):  # {{{
@@ -165,10 +164,10 @@ class ReadingTest(BaseTest):
             x = list(reversed(order))
             ae(order, cache.multisort([(field, True)],
                 ids_to_sort=x),
-                    'Ascending sort of %s failed'%field)
+                    f'Ascending sort of {field} failed')
             ae(x, cache.multisort([(field, False)],
                 ids_to_sort=order),
-                    'Descending sort of %s failed'%field)
+                    f'Descending sort of {field} failed')
 
         # Test sorting of is_multiple fields.
 
@@ -206,7 +205,7 @@ class ReadingTest(BaseTest):
             ('title', True)]), 'Subsort failed')
         from calibre.ebooks.metadata.book.base import Metadata
         for i in range(7):
-            cache.create_book_entry(Metadata('title%d' % i), apply_import_tags=False)
+            cache.create_book_entry(Metadata(f'title{i}'), apply_import_tags=False)
         cache.create_custom_column('one', 'CC1', 'int', False)
         cache.create_custom_column('two', 'CC2', 'int', False)
         cache.create_custom_column('three', 'CC3', 'int', False)
@@ -217,7 +216,7 @@ class ReadingTest(BaseTest):
         cache.set_field('#two', {10:2})
         cache.set_field('#three', {i:i for i in range(1, 11)})
         ae(list(range(1, 11)), cache.multisort([('#one', True), ('#two', True)], ids_to_sort=sorted(cache.all_book_ids())))
-        ae([4, 5, 1, 2, 3, 7,8, 9, 10, 6], cache.multisort([('#one', True), ('#two', False)], ids_to_sort=sorted(cache.all_book_ids())))
+        ae([4, 5, 1, 2, 3, 7, 8, 9, 10, 6], cache.multisort([('#one', True), ('#two', False)], ids_to_sort=sorted(cache.all_book_ids())))
         ae([5, 4, 3, 2, 1, 10, 9, 8, 7, 6], cache.multisort([('#one', True), ('#two', False), ('#three', False)], ids_to_sort=sorted(cache.all_book_ids())))
     # }}}
 
@@ -337,8 +336,7 @@ class ReadingTest(BaseTest):
         for query, ans in iteritems(oldvals):
             nr = cache.search(query, '')
             self.assertEqual(ans, nr,
-                'Old result: %r != New result: %r for search: %s'%(
-                    ans, nr, query))
+                f'Old result: {ans!r} != New result: {nr!r} for search: {query}')
 
         # Test searching by id, which was introduced in the new backend
         self.assertEqual(cache.search('id:1', ''), {1})
@@ -371,8 +369,8 @@ class ReadingTest(BaseTest):
         cache.set_field('timestamp', {1:p('2002-02-06'), 2:p('2000-10-06'), 3:p('2001-06-06')})
         # Test numeric compare search
         self.assertEqual(cache.search("template:\"program: "
-                                      "floor(days_between(field(\'pubdate\'), "
-                                      "field(\'timestamp\')))#@#:n:>0\""), {2,3})
+                                      "floor(days_between(field('pubdate'), "
+                                      "field('timestamp')))#@#:n:>0\""), {2,3})
         # Test date search
         self.assertEqual(cache.search('template:{pubdate}#@#:d:<2001-09-01"'), {1,3})
         # Test boolean search
@@ -380,7 +378,7 @@ class ReadingTest(BaseTest):
         self.assertEqual(cache.search('template:{series}#@#:b:false'), {3})
 
         # test primary search
-        cache.set_field('title', {1: "Gravity’s Raiñbow"})
+        cache.set_field('title', {1: 'Gravity’s Raiñbow'})
         self.assertEqual(cache.search('title:"Gravity\'s Rainbow"'), {1})
         # Note that the old db searched uuid for un-prefixed searches, the new
         # db does not, for performance
@@ -414,13 +412,12 @@ class ReadingTest(BaseTest):
                 ):
                     continue
                 self.assertEqual(oval, nval,
-                    'The attribute %s for %s in category %s does not match. Old is %r, New is %r'
-                                %(attr, old.name, category, oval, nval))
+                    f'The attribute {attr} for {old.name} in category {category} does not match. Old is {oval!r}, New is {nval!r}')
 
         for category in old_categories:
             old, new = old_categories[category], new_categories[category]
             self.assertEqual(len(old), len(new),
-                'The number of items in the category %s is not the same'%category)
+                f'The number of items in the category {category} is not the same')
             for o, n in zip(old, new):
                 compare_category(category, o, n)
 
@@ -595,7 +592,7 @@ class ReadingTest(BaseTest):
         test(True, {3}, 'Unknown')
         c.limit = 5
         for i in range(6):
-            test(False, set(), 'nomatch_%s' % i)
+            test(False, set(), f'nomatch_{i}')
         test(False, {3}, 'Unknown')  # cached search expired
         test(False, {3}, '', 'unknown', num=1)
         test(True, {3}, '', 'unknown', num=1)
@@ -638,7 +635,7 @@ class ReadingTest(BaseTest):
                     v = pmi.get_standard_metadata(field)
                     self.assertTrue(v is None or isinstance(v, dict))
                     self.assertEqual(f(mi.get_standard_metadata(field, False)), f(v),
-                                     'get_standard_metadata() failed for field %s' % field)
+                                     f'get_standard_metadata() failed for field {field}')
             for field, meta in cache.field_metadata.custom_iteritems():
                 if meta['datatype'] != 'composite':
                     self.assertEqual(f(getattr(mi, field)), f(getattr(pmi, field)),
@@ -711,7 +708,6 @@ class ReadingTest(BaseTest):
         self.assertRaises(NotImplementedError, pmi.remove_stale_user_metadata, {})
         self.assertRaises(NotImplementedError, pmi.template_to_attribute, {}, {})
         self.assertRaises(NotImplementedError, pmi.smart_update, {})
-
 
     # }}}
 
@@ -945,7 +941,7 @@ def evaluate(book, ctx):
         from calibre.utils.formatter_functions import load_user_template_functions, unload_user_template_functions
         load_user_template_functions('aaaaa',
                                      [['python_stored_template',
-                                      "",
+                                      '',
                                       0,
                                       '''python:
 def evaluate(book, ctx):

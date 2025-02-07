@@ -725,6 +725,49 @@ You can easily find any item in the Tag browser by clicking the search button at
 
 You can control how items are sorted in the Tag browser via the :guilabel:`Configure` button at the lower-left of the Tag browser. You can choose to sort by name, average rating or popularity (popularity is the number of books with an item in your library; for example, the popularity of Isaac Asimov is the number of books in your library by Isaac Asimov).
 
+You can use your own icons for categories and values in categories. To change the icon for a category,
+right-click on the category (the outer-level item) and choose `Change (category name) category icon`. A dialog will open where you can pick an image to be used as the icon. To restore the icon to its default choose `Restore (category name) default icon`.
+
+To choose icons for values in categories, right-click on a value then choose `Manage icon for (value name)`. You will see a list of choices:
+
+* `Choose an icon for this value but not its children`. A dialog will open where you choose an icon for the value. Children of that value will not inherit that icon.
+* `Choose an icon for this value and its children`. A dialog will open where you choose an icon for the value. Any children that don't have their own specified icon will inherit this icon.
+* `Use the existing icon for this value but not its children`. This option is offered if the value already has an icon that is inherited by the value's children. Selecting it will make the icon apply to the value but not its children.
+* `Use the existing icon for this value and its children`. This option is offered if the value already has an icon that is not inherited by the value's children. Selecting it will make the icon apply to the value and its children.
+* `Use the default icon for this value`. This option is offered if the item has an icon. It removes the icon from the value and any children inheriting the icon. The default icon is what is specified below.
+* `Reset all value icons to the default icon`. This option removes all item value icons for the category. It does not remove a template if one exists. There is no undo.
+* `Use/edit a template to choose the default value icon`. This option permits you to provide a calibre template that returns the name of an icon file to be used as a default icon. The template can use two variables:
+
+  * ``category``: the lookup name of the category, for example ``authors``, ``series``, ``#mycolumn``.
+  * ``value``: the value of the item within the category.
+  * ``count``: the number of books with this value. If the value is part of a hierarchy then the count includes the children.
+  * ``avg_rating``: the average rating for books with this value. If the value is part of a hierarchy then the average includes the children.
+
+  Book metadata such as title is not available. Template database functions such as :ref:`ff_book_count` and :ref:`ff_book_values` will work, but the performance might not be acceptable. The following template functions will work in the GUI but won't work in the content server: :ref:`ff_connected_device_name`, :ref:`ff_connected_device_uuid`, :ref:`ff_current_virtual_library_name`, :ref:`ff_is_marked`, and :ref:`ff_virtual_libraries`.
+
+  In the GUI, Python templates have full access to the calibre database. In the content server, Python templates have access to new API (see `API documentation for the database interface <https://manual.calibre-ebook.com/db_api.html>`_) but not the old API (LibraryDatabase).
+
+  For example, this template specifies that any value in the clicked-on category beginning with `History` will have an icon named ``flower.png``::
+
+    program:
+      if substr($value, 0, 7) == 'History' then 'flower.png' fi
+
+  If a template returns the empty string (``''``) then the category icon will be used. If the template
+  returns a file name that doesn't exist then no icon is displayed.
+
+* `Use the category icon as the default`. This option specifies that the icon used for the category should be used for any value that doesn't otherwise have an icon. Selecting this option removes any template icon specification.
+
+
+The icon is chosen using the following hierarchy:
+
+#. The icon specified for the value, if it exists.
+#. The icon specified for a parent node found by walking up the tree, if one exists.
+#. The icon from a template, if a template exists and it returns a non-empty string.
+#. The default category icon, which always exists.
+
+Icons are per-user, not per-library, stored in the calibre configuration folder. Icons for item values are stored in the :file:`tb_icons` subfolder. Icons used by templates are in the :file:`template_icons` subfolder of :file:`tb_icons`.
+
+
 .. raw:: html epub
 
     <div style="clear:both"></div>

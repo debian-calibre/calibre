@@ -215,7 +215,7 @@ def split(container, name, loc_or_xpath, before=True, totals=None):
     nname, s = None, 0
     while not nname or container.exists(nname):
         s += 1
-        nname = '%s_split%d.%s' % (base, s, ext)
+        nname = f'{base}_split{s}.{ext}'
     manifest_item = container.generate_item(nname, media_type=container.mime_map[name])
     bottom_name = container.href_to_name(manifest_item.get('href'), container.opf_name)
 
@@ -287,7 +287,7 @@ def multisplit(container, name, xpath, before=True):
     current = name
     all_names = [name]
     for i in range(len(nodes)):
-        current = split(container, current, '//*[@calibre-split-point="%d"]' % i, before=before)
+        current = split(container, current, f'//*[@calibre-split-point="{i}"]', before=before)
         all_names.append(current)
 
     for x in all_names:
@@ -345,7 +345,7 @@ def unique_anchor(seen_anchors, current):
     ans = current
     while ans in seen_anchors:
         c += 1
-        ans = '%s_%d' % (current, c)
+        ans = f'{current}_{c}'
     return ans
 
 
@@ -503,11 +503,11 @@ def merge(container, category, names, master):
     :param master: Which of the merged files is the *master* file, that is, the file that will remain after merging.
     '''
     if category not in {'text', 'styles'}:
-        raise AbortError('Cannot merge files of type: %s' % category)
+        raise AbortError(f'Cannot merge files of type: {category}')
     if len(names) < 2:
         raise AbortError('Must specify at least two files to be merged')
     if master not in names:
-        raise AbortError('The master file (%s) must be one of the files being merged' % master)
+        raise AbortError(f'The master file ({master}) must be one of the files being merged')
 
     if category == 'text':
         merge_html(container, names, master)

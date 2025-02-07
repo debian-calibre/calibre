@@ -37,8 +37,8 @@ LocalHeader = namedtuple('LocalHeader',
 
 if hasattr(sys, 'getwindowsversion'):
     windows_reserved_filenames = (
-        'CON', 'PRN', 'AUX', 'CLOCK$', 'NUL' 'COM0', 'COM1', 'COM2', 'COM3',
-        'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9' 'LPT0', 'LPT1', 'LPT2',
+        'CON', 'PRN', 'AUX', 'CLOCK$', 'NUL', 'COM0', 'COM1', 'COM2', 'COM3',
+        'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT0', 'LPT1', 'LPT2',
         'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9')
 
     def is_reserved_filename(x):
@@ -186,8 +186,7 @@ def copy_compressed_file(src, size, dest):
             dest.write(d.decompress(d.unconsumed_tail, 200*1024))
 
             if count > 100:
-                raise ValueError('This ZIP file contains a ZIP bomb in %s'%
-                        os.path.basename(dest.name))
+                raise ValueError(f'This ZIP file contains a ZIP bomb in {os.path.basename(dest.name)}')
 
 
 def _extractall(f, path=None, file_info=None):
@@ -228,7 +227,7 @@ def _extractall(f, path=None, file_info=None):
             except OSError:
                 if is_reserved_filename(os.path.basename(dest)):
                     raise ValueError('This ZIP file contains a file with a reserved filename'
-                            ' that cannot be processed on Windows: {}'.format(os.path.basename(dest)))
+                            f' that cannot be processed on Windows: {os.path.basename(dest)}')
                 raise
             with df:
                 if header.compression_method == ZIP_STORED:
@@ -269,7 +268,7 @@ class LocalZipFile:
     def _get_file_info(self, name):
         fi = self.file_info.get(name)
         if fi is None:
-            raise ValueError('This ZIP container has no file named: %s'%name)
+            raise ValueError(f'This ZIP container has no file named: {name}')
         return fi
 
     def open(self, name, spool_size=5*1024*1024):

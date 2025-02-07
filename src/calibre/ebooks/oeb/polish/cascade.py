@@ -102,7 +102,6 @@ def iterdeclaration(decl):
 
 
 class Values(tuple):
-
     ''' A tuple of `css_parser.css.Value ` (and its subclasses) objects. Also has a
     `sheet_name` attribute that is the canonical name relative to which URLs
     for this property should be resolved. '''
@@ -163,7 +162,7 @@ def resolve_styles(container, name, select=None, sheet_callback=None):
     style_map = defaultdict(list)
     pseudo_style_map = defaultdict(list)
     rule_index_counter = count()
-    pseudo_pat = re.compile(':{1,2}(%s)' % ('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
+    pseudo_pat = re.compile(':{{1,2}}({})'.format('|'.join(INAPPROPRIATE_PSEUDO_CLASSES)), re.I)
 
     def process_sheet(sheet, sheet_name):
         if sheet_callback is not None:

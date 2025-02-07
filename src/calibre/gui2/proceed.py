@@ -71,7 +71,7 @@ class Icon(QWidget):
         self.set_icon('dialog_question.png')
         self.default_icon = self.icon
         self._fraction = 0.0
-        self.animation = a = QPropertyAnimation(self, b"fraction", self)
+        self.animation = a = QPropertyAnimation(self, b'fraction', self)
         a.setDuration(2000), a.setEasingCurve(QEasingCurve.Type.Linear)
         a.setStartValue(0.0), a.setEndValue(2.0), a.setLoopCount(10)
 
@@ -123,7 +123,7 @@ class ProceedQuestion(QWidget):
         parent.installEventFilter(self)
 
         self._show_fraction = 0.0
-        self.show_animation = a = QPropertyAnimation(self, b"show_fraction", self)
+        self.show_animation = a = QPropertyAnimation(self, b'show_fraction', self)
         a.setDuration(1000), a.setEasingCurve(QEasingCurve.Type.OutQuad)
         a.setStartValue(0.0), a.setEndValue(1.0)
         a.finished.connect(self.stop_show_animation)
@@ -193,10 +193,7 @@ class ProceedQuestion(QWidget):
 
     def copy_to_clipboard(self, *args):
         QApplication.clipboard().setText(
-                'calibre, version %s\n%s: %s\n\n%s' %
-                (__version__, str(self.windowTitle()),
-                    str(self.msg_label.text()),
-                    str(self.det_msg.toPlainText())))
+                f'calibre, version {__version__}\n{self.windowTitle()!s}: {self.msg_label.text()!s}\n\n{self.det_msg.toPlainText()!s}')
         self.copy_button.setText(_('Copied'))
 
     def action_clicked(self):

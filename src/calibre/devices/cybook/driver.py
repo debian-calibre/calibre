@@ -34,7 +34,7 @@ class CYBOOK(USBMS):
 
     VENDOR_NAME = 'BOOKEEN'
     WINDOWS_MAIN_MEM = re.compile(r'CYBOOK_(OPUS|GEN3)__-FD')
-    WINDOWS_CARD_A_MEM = re.compile('CYBOOK_(OPUS|GEN3)__-SD')
+    WINDOWS_CARD_A_MEM = re.compile(r'CYBOOK_(OPUS|GEN3)__-SD')
     OSX_MAIN_MEM_VOL_PAT = re.compile(r'/Cybook')
 
     EBOOK_DIR_MAIN = 'eBooks'
@@ -49,7 +49,7 @@ class CYBOOK(USBMS):
             coverdata = coverdata[2]
         else:
             coverdata = None
-        with open('%s_6090.t2b' % os.path.join(path, filename), 'wb') as t2bfile:
+        with open(f'{os.path.join(path, filename)}_6090.t2b', 'wb') as t2bfile:
             t2b.write_t2b(t2bfile, coverdata)
             fsync(t2bfile)
 
@@ -72,7 +72,7 @@ class ORIZON(CYBOOK):
 
     VENDOR_NAME = ['BOOKEEN', 'LINUX']
     WINDOWS_MAIN_MEM = re.compile(r'(CYBOOK_ORIZON__-FD)|(FILE-STOR_GADGET)')
-    WINDOWS_CARD_A_MEM = re.compile('(CYBOOK_ORIZON__-SD)|(FILE-STOR_GADGET)')
+    WINDOWS_CARD_A_MEM = re.compile(r'(CYBOOK_ORIZON__-SD)|(FILE-STOR_GADGET)')
 
     EBOOK_DIR_MAIN = EBOOK_DIR_CARD_A = 'Digital Editions'
 
@@ -89,7 +89,7 @@ class ORIZON(CYBOOK):
             coverdata = coverdata[2]
         else:
             coverdata = None
-        with open('%s.thn' % filepath, 'wb') as thnfile:
+        with open(f'{filepath}.thn', 'wb') as thnfile:
             t4b.write_t4b(thnfile, coverdata)
             fsync(thnfile)
 

@@ -15,31 +15,31 @@ from calibre.ptempfile import TemporaryDirectory
 from polyglot.builtins import as_bytes
 
 block_level_tags = (
-      'address',
-      'body',
-      'blockquote',
-      'center',
-      'dir',
-      'div',
-      'dl',
-      'fieldset',
-      'form',
-      'h1',
-      'h2',
-      'h3',
-      'h4',
-      'h5',
-      'h6',
-      'hr',
-      'isindex',
-      'menu',
-      'noframes',
-      'noscript',
-      'ol',
-      'p',
-      'pre',
-      'table',
-      'ul',
+    'address',
+    'body',
+    'blockquote',
+    'center',
+    'dir',
+    'div',
+    'dl',
+    'fieldset',
+    'form',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'hr',
+    'isindex',
+    'menu',
+    'noframes',
+    'noscript',
+    'ol',
+    'p',
+    'pre',
+    'table',
+    'ul',
 )
 
 
@@ -77,7 +77,7 @@ class EPUBOutput(OutputFormatPlugin):
         ),
 
         OptionRecommendation(name='no_default_epub_cover', recommended_value=False,
-            help=_('Normally, if the input file has no cover and you don\'t'
+            help=_("Normally, if the input file has no cover and you don't"
             ' specify one, a default cover is generated with the title, '
             'authors, etc. This option disables the generation of this cover.')
         ),
@@ -335,7 +335,7 @@ class EPUBOutput(OutputFormatPlugin):
 
         key = re.sub(r'[^a-fA-F0-9]', '', uuid)
         if len(key) < 16:
-            raise ValueError('UUID identifier %r is invalid'%uuid)
+            raise ValueError(f'UUID identifier {uuid!r} is invalid')
         key = bytearray(from_hex_bytes((key + key)[:32]))
         paths = []
         with CurrentDir(tdir):
@@ -362,10 +362,10 @@ class EPUBOutput(OutputFormatPlugin):
                 <enc:EncryptedData>
                     <enc:EncryptionMethod Algorithm="http://ns.adobe.com/pdf/enc#RC"/>
                     <enc:CipherData>
-                    <enc:CipherReference URI="%s"/>
+                    <enc:CipherReference URI="{}"/>
                     </enc:CipherData>
                 </enc:EncryptedData>
-                '''%(uri.replace('"', '\\"')))
+                '''.format(uri.replace('"', '\\"')))
             if fonts:
                 ans = '''<encryption
                     xmlns="urn:oasis:names:tc:opendocument:xmlns:container"
@@ -409,7 +409,7 @@ class EPUBOutput(OutputFormatPlugin):
                 frag = urlunquote(frag)
                 if frag and frag_pat.match(frag) is None:
                     self.log.warn(
-                            'Removing fragment identifier %r from TOC as Adobe Digital Editions cannot handle it'%frag)
+                            f'Removing fragment identifier {frag!r} from TOC as Adobe Digital Editions cannot handle it')
                     node.href = base
 
         for x in self.oeb.spine:
@@ -452,7 +452,7 @@ class EPUBOutput(OutputFormatPlugin):
                     br.tag = XHTML('p')
                     br.text = '\u00a0'
                     style = br.get('style', '').split(';')
-                    style = list(filter(None, map(lambda x: x.strip(), style)))
+                    style = list(filter(None, (x.strip() for x in style)))
                     style.append('margin:0pt; border:0pt')
                     # If the prior tag is a block (including a <br> we replaced)
                     # then this <br> replacement should have a 1-line height.
@@ -503,7 +503,7 @@ class EPUBOutput(OutputFormatPlugin):
                     tag.tag = XHTML('div')
 
             # ADE fails to render non breaking hyphens/soft hyphens/zero width spaces
-            special_chars = re.compile('[\u200b\u00ad]')
+            special_chars = re.compile(r'[\u200b\u00ad]')
             for elem in root.iterdescendants('*'):
                 if elem.text:
                     elem.text = special_chars.sub('', elem.text)
@@ -540,7 +540,7 @@ class EPUBOutput(OutputFormatPlugin):
         from calibre.ebooks.oeb.polish.toc import item_at_top
 
         def frag_is_at_top(root, frag):
-            elem = XPath('//*[@id="%s" or @name="%s"]'%(frag, frag))(root)
+            elem = XPath(f'//*[@id="{frag}" or @name="{frag}"]')(root)
             if elem:
                 elem = elem[0]
             else:

@@ -50,14 +50,14 @@ PROP_METADATA_VALUE = b'P307'
 PROP_IMAGE = b'P417'
 
 METADATA_PROPERTIES = {
-    b'P10' : "languages",
-    b'P153': "title",
-    b'P154': "description",
-    b'P222': "author",
-    b'P232': "publisher",
+    b'P10' : 'languages',
+    b'P153': 'title',
+    b'P154': 'description',
+    b'P222': 'author',
+    b'P232': 'publisher',
 }
 
-COVER_KEY = "cover_image_base64"
+COVER_KEY = 'cover_image_base64'
 
 
 def hexs(string, sep=' '):
@@ -65,11 +65,10 @@ def hexs(string, sep=' '):
         string = bytearray(string)
     else:
         string = map(ord, string)
-    return sep.join('%02x' % b for b in string)
+    return sep.join(f'{b:02x}' for b in string)
 
 
 class PackedData:
-
     '''
     Simplify unpacking of packed binary data structures
     '''
@@ -101,7 +100,6 @@ class PackedData:
 
 
 class PackedBlock(PackedData):
-
     '''
     Common header structure of container and entity blocks
     '''
@@ -111,15 +109,13 @@ class PackedBlock(PackedData):
 
         self.magic = self.unpack_one('4s')
         if self.magic != magic:
-            raise InvalidKFX('%s magic number is incorrect (%s)' %
-                            (magic, hexs(self.magic)))
+            raise InvalidKFX(f'{magic} magic number is incorrect ({hexs(self.magic)})')
 
         self.version = self.unpack_one('<H')
         self.header_len = self.unpack_one('<L')
 
 
 class Container(PackedBlock):
-
     '''
     Container file containing data entities
     '''
@@ -143,7 +139,6 @@ class Container(PackedBlock):
 
 
 class Entity(PackedBlock):
-
     '''
     Data entity inside a container
     '''
@@ -164,7 +159,6 @@ class Entity(PackedBlock):
 
 
 class PackedIon(PackedData):
-
     '''
     Packed structured binary data format used by KFX
     '''
@@ -248,7 +242,7 @@ class PackedIon(PackedData):
 def property_name(property_number):
     # This should be changed to translate property numbers to the proper
     # strings using a symbol table
-    return b"P%d" % property_number
+    return b'P%d' % property_number
 
 
 def extract_metadata(container_data):

@@ -11932,6 +11932,32 @@ return this.__repr__();
             __module__ : {value: "book_list.router"}
         });
 
+        function search_url_in_library(library_id, search, vl, sort) {
+            var ans, q;
+            ans = absolute_path("");
+            q = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["mode"] = "book_list";
+                ρσ_d["search"] = search;
+                ρσ_d["panel"] = "book_list";
+                return ρσ_d;
+            }).call(this);
+            if (library_id) {
+                q.library_id = library_id;
+            }
+            if (vl) {
+                q.vl = vl;
+            }
+            if (sort) {
+                q.sort = sort;
+            }
+            return ans + encode_query(q, "#");
+        };
+        if (!search_url_in_library.__argnames__) Object.defineProperties(search_url_in_library, {
+            __argnames__ : {value: ["library_id", "search", "vl", "sort"]},
+            __module__ : {value: "book_list.router"}
+        });
+
         function open_book_url(book_id, fmt, extra_query) {
             return open_book_url_in_library(current_library_id(), book_id, fmt, extra_query);
         };
@@ -12109,6 +12135,7 @@ return this.__repr__();
         ρσ_modules["book_list.router"].request_full_screen_if_wanted = request_full_screen_if_wanted;
         ρσ_modules["book_list.router"].open_book = open_book;
         ρσ_modules["book_list.router"].open_book_url_in_library = open_book_url_in_library;
+        ρσ_modules["book_list.router"].search_url_in_library = search_url_in_library;
         ρσ_modules["book_list.router"].open_book_url = open_book_url;
         ρσ_modules["book_list.router"].show_note = show_note;
         ρσ_modules["book_list.router"].push_state = push_state;
@@ -28721,7 +28748,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.24.0";
+        CALIBRE_VERSION = "7.25.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -35332,10 +35359,27 @@ return this.__repr__();
         });
 
         function icon_for_node(node) {
-            var interface_data, ans;
+            var interface_data, fallback, fmt, ans;
             interface_data = get_interface_data();
-            ans = (ρσ_expr_temp = interface_data.icon_map)[ρσ_bound_index(node.data.category, ρσ_expr_temp)] || "column.png";
-            return absolute_path(interface_data.icon_path + "/" + ans);
+            fallback = "";
+            if (node.data.category === "formats" && !node.data.is_category) {
+                fmt = node.data.name.lower();
+                if (fmt.startswith("original_")) {
+                    fmt = fmt.partition("_")[2];
+                }
+                ans = "mimetypes/" + ρσ_str.format("{}", fmt) + ".png";
+                fallback = (ρσ_expr_temp = interface_data.icon_map)[ρσ_bound_index(node.data.category, ρσ_expr_temp)];
+            } else {
+                ans = (ρσ_expr_temp = interface_data.icon_map)[ρσ_bound_index(node.data.category, ρσ_expr_temp)] || "column.png";
+                if (node.data.value_icon) {
+                    fallback = ans;
+                    ans = "_" + node.data.value_icon;
+                }
+            }
+            if (fallback) {
+                fallback = absolute_path(interface_data.icon_path + "/" + fallback);
+            }
+            return [absolute_path(interface_data.icon_path + "/" + ans), fallback];
         };
         if (!icon_for_node.__argnames__) Object.defineProperties(icon_for_node, {
             __argnames__ : {value: ["node"]},
@@ -35573,13 +35617,29 @@ return this.__repr__();
             __module__ : {value: "book_list.search"}
         });
 
+        function show_fallback(fallback, ev) {
+            if (fallback) {
+                if (ev.target.src !== fallback) {
+                    ev.target.src = fallback;
+                }
+            }
+        };
+        if (!show_fallback.__argnames__) Object.defineProperties(show_fallback, {
+            __argnames__ : {value: ["fallback", "ev"]},
+            __module__ : {value: "book_list.search"}
+        });
+
         function menu_clicked(i) {
             function create_details(container, hide_modal) {
-                var node, data, name, title, ul, items, interface_data, li, ρσ_unpack, text, search_type, f, and_control, about_items, footer;
+                var node, data, name, ρσ_unpack, icon, fallback, title, ul, items, interface_data, li, text, search_type, f, and_control, about_items, footer;
                 node = (ρσ_expr_temp = node_for_path().children)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
                 data = node.data;
                 name = data.original_name || data.name || data.sort;
-                title = ρσ_interpolate_kwargs.call(E, E.h2, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: icon_for_node(node), style: "height:2ex; margin-right: 0.5rem"})]), E.span(name)].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center; border-bottom: solid 1px currentColor; font-weight:bold; font-size:" + get_font_size("title")})]));
+                ρσ_unpack = icon_for_node(node);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                icon = ρσ_unpack[0];
+                fallback = ρσ_unpack[1];
+                title = ρσ_interpolate_kwargs.call(E, E.h2, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: icon, onerror: show_fallback.bind(null, fallback), style: "height:2ex; margin-right: 0.5rem"})]), E.span(name)].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center; border-bottom: solid 1px currentColor; font-weight:bold; font-size:" + get_font_size("title")})]));
                 function edit_note(field, item_name) {
                     hide_modal();
                     ρσ_interpolate_kwargs.call(this, show_note, [field, 0, item_name].concat([ρσ_desugar_kwargs({panel: "edit_note"})]));
@@ -35666,7 +35726,7 @@ return this.__repr__();
         });
 
         function render_children(container, children) {
-            var data, tooltip, div, ρσ_unpack, i, node;
+            var data, tooltip, ρσ_unpack, icon, fallback, div, i, node;
             var ρσ_Iter4 = ρσ_Iterable(enumerate(children));
             for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
                 ρσ_unpack = ρσ_Iter4[ρσ_Index4];
@@ -35680,7 +35740,11 @@ return this.__repr__();
                 if (data.avg_rating !== undefined) {
                     tooltip += "\n" + _("Average rating for books in this category: {:.1f}").format(data.avg_rating);
                 }
-                div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: icon_for_node(node), style: "display:inline-block; max-height:2.5ex"})]), E.span(data.name)].concat([ρσ_desugar_kwargs({class_: "tag-name", style: "border-right:solid 1px currentColor; padding: 1ex; display:flex; align-items: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({class_: "tag-menu", style: "padding: 1ex; display:flex; align-items:center"})]))].concat([ρσ_desugar_kwargs({title: tooltip.lstrip(), style: "display:flex; align-items: stretch"})]));
+                ρσ_unpack = icon_for_node(node);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                icon = ρσ_unpack[0];
+                fallback = ρσ_unpack[1];
+                div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: icon, onerror: show_fallback.bind(null, fallback), style: "display:inline-block; max-height:2.5ex"})]), E.span(data.name)].concat([ρσ_desugar_kwargs({class_: "tag-name", style: "border-right:solid 1px currentColor; padding: 1ex; display:flex; align-items: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({class_: "tag-menu", style: "padding: 1ex; display:flex; align-items:center"})]))].concat([ρσ_desugar_kwargs({title: tooltip.lstrip(), style: "display:flex; align-items: stretch"})]));
                 ρσ_interpolate_kwargs.call(this, set_css, [div].concat([ρσ_desugar_kwargs({max_width: "95vw", border: "solid 1px currentColor", border_radius: "20px", margin: "0.5rem", cursor: "pointer", overflow: "hidden", user_select: "none"})]));
                 div.firstChild.addEventListener("click", node_clicked.bind(null, i));
                 div.lastChild.addEventListener("click", menu_clicked.bind(null, i));
@@ -36046,6 +36110,7 @@ return this.__repr__();
         ρσ_modules["book_list.search"].add_to_search = add_to_search;
         ρσ_modules["book_list.search"].remove_expression = remove_expression;
         ρσ_modules["book_list.search"].render_search_expression = render_search_expression;
+        ρσ_modules["book_list.search"].show_fallback = show_fallback;
         ρσ_modules["book_list.search"].menu_clicked = menu_clicked;
         ρσ_modules["book_list.search"].render_children = render_children;
         ρσ_modules["book_list.search"].render_breadcrumbs = render_breadcrumbs;
@@ -37007,6 +37072,7 @@ return this.__repr__();
         var report_a_load_failure = ρσ_modules["book_list.router"].report_a_load_failure;
         var show_note = ρσ_modules["book_list.router"].show_note;
         var open_book_url_in_library = ρσ_modules["book_list.router"].open_book_url_in_library;
+        var search_url_in_library = ρσ_modules["book_list.router"].search_url_in_library;
 
         var color_scheme = ρσ_modules["book_list.theme"].color_scheme;
         var get_color = ρσ_modules["book_list.theme"].get_color;
@@ -37301,6 +37367,29 @@ return this.__repr__();
         if ((typeof window !== "undefined" && window !== null)) {
             window.addEventListener("resize", debounce(adjust_all_iframes, 250));
         }
+        function hex_decode(lib) {
+            const uint8Array = new Uint8Array(lib.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));;
+            lib = new TextDecoder("utf-8").decode(uint8Array);;
+            return lib;
+        };
+        if (!hex_decode.__argnames__) Object.defineProperties(hex_decode, {
+            __argnames__ : {value: ["lib"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
+        function decode_calibre_url_library_id(lib) {
+            if (lib.startswith("_hex_-")) {
+                lib = hex_decode(lib.slice(6));
+            } else if (lib === "_") {
+                lib = current_library_id();
+            }
+            return lib;
+        };
+        if (!decode_calibre_url_library_id.__argnames__) Object.defineProperties(decode_calibre_url_library_id, {
+            __argnames__ : {value: ["lib"]},
+            __module__ : {value: "book_list.book_details"}
+        });
+
         function replace_calibre_links_to_books(html) {
             var parser, dom, changed;
             parser = new DOMParser();
@@ -37308,20 +37397,41 @@ return this.__repr__();
             changed = false;
             dom.body.querySelectorAll("a[href]").forEach((function() {
                 var ρσ_anonfunc = function (link) {
-                    var url, path, parts, ρσ_unpack, lib, book_id, new_href, fmt, extra_query;
-                    if (!link.href) {
+                    var url, path, parts, ρσ_unpack, lib, book_id, q, vl, new_href, fmt, extra_query;
+                    if (!link.href || !link.href.startswith("calibre://")) {
                         return;
                     }
-                    if (link.href.startswith("calibre://")) {
-                        url = new URL(link.href, window.location.origin);
-                        if (url.hostname !== "show-book" && url.hostname !== "view-book") {
+                    url = new URL(link.href, window.location.origin);
+                    if (url.hostname !== "show-book" && url.hostname !== "view-book" && url.hostname !== "search") {
+                        return;
+                    }
+                    path = url.pathname;
+                    parts = str.split(path, "/");
+                    ρσ_unpack = [parts[1], parts[2]];
+                    lib = ρσ_unpack[0];
+                    book_id = ρσ_unpack[1];
+                    lib = decode_calibre_url_library_id(lib);
+                    if (url.hostname === "search") {
+                        q = vl = "";
+                        if (url.searchParams.get("eq")) {
+                            q = hex_decode(url.searchParams.get("eq"));
+                        } else if (url.searchParams.get("q")) {
+                            q = url.searchParams.get("q");
+                        }
+                        if (!q) {
                             return;
                         }
-                        path = url.pathname;
-                        parts = str.split(path, "/");
-                        ρσ_unpack = [parts[1], parts[2]];
-                        lib = ρσ_unpack[0];
-                        book_id = ρσ_unpack[1];
+                        if (url.searchParams.get("encoded_virtual_library")) {
+                            vl = hex_decode(url.searchParams.get("encoded_virtual_library"));
+                        } else if (url.searchParams.get("virtual_library")) {
+                            vl = url.searchParams.get("virtual_library");
+                        }
+                        if (vl === "_") {
+                            vl = "";
+                        }
+                        link.href = search_url_in_library(lib, q, vl);
+                        changed = true;
+                    } else {
                         try {
                             book_id = int(book_id);
                         } catch (ρσ_Exception) {
@@ -37329,11 +37439,6 @@ return this.__repr__();
                             {
                                 return;
                             } 
-                        }
-                        if (lib.startswith("_hex_-")) {
-                            lib = lib.slice(6);
-                            const uint8Array = new Uint8Array(lib.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));;
-                            lib = new TextDecoder("utf-8").decode(uint8Array);;
                         }
                         if (url.hostname === "show-book") {
                             new_href = query_as_href((function(){
@@ -37347,6 +37452,9 @@ return this.__repr__();
                             extra_query = Object.create(null);
                             url.searchParams.forEach((function() {
                                 var ρσ_anonfunc = function (val, key) {
+                                    if (key === "open_at") {
+                                        key = "bookpos";
+                                    }
                                     extra_query[(typeof key === "number" && key < 0) ? extra_query.length + key : key] = val;
                                 };
                                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
@@ -37370,10 +37478,10 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            if (!changed) {
-                return html;
+            if (changed) {
+                return new XMLSerializer().serializeToString(dom);;
             }
-            return new XMLSerializer().serializeToString(dom);;
+            return html;
         };
         if (!replace_calibre_links_to_books.__argnames__) Object.defineProperties(replace_calibre_links_to_books, {
             __argnames__ : {value: ["html"]},
@@ -39119,6 +39227,8 @@ return this.__repr__();
         ρσ_modules["book_list.book_details"].setup_iframe = setup_iframe;
         ρσ_modules["book_list.book_details"].adjust_all_iframes = adjust_all_iframes;
         ρσ_modules["book_list.book_details"].add_stars_to = add_stars_to;
+        ρσ_modules["book_list.book_details"].hex_decode = hex_decode;
+        ρσ_modules["book_list.book_details"].decode_calibre_url_library_id = decode_calibre_url_library_id;
         ρσ_modules["book_list.book_details"].replace_calibre_links_to_books = replace_calibre_links_to_books;
         ρσ_modules["book_list.book_details"].adjusting_sandboxed_html = adjusting_sandboxed_html;
         ρσ_modules["book_list.book_details"].render_metadata = render_metadata;

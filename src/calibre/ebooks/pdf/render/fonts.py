@@ -100,14 +100,14 @@ class CMap(Stream):
             for c in glyph_map[glyph_id]:
                 c = ord(c)
                 val.append(to_hex_string(c))
-            glyph_id = '<%s>'%to_hex_string(glyph_id)
-            current_map[glyph_id] = '<%s>'%''.join(val)
+            glyph_id = f'<{to_hex_string(glyph_id)}>'
+            current_map[glyph_id] = '<{}>'.format(''.join(val))
         if current_map:
             maps.append(current_map)
         mapping = []
         for m in maps:
-            meat = '\n'.join('%s %s'%(k, v) for k, v in iteritems(m))
-            mapping.append('%d beginbfchar\n%s\nendbfchar'%(len(m), meat))
+            meat = '\n'.join(f'{k} {v}' for k, v in iteritems(m))
+            mapping.append(f'{len(m)} beginbfchar\n{meat}\nendbfchar')
         try:
             name = name.encode('ascii').decode('ascii')
         except Exception:
@@ -121,7 +121,7 @@ class Font:
         self.metrics, self.compress = metrics, compress
         self.is_otf = self.metrics.is_otf
         self.subset_tag = str(
-            re.sub('.', lambda m: codepoint_to_chr(int(m.group())+ord('A')), oct(num).replace('o', '')
+            re.sub(r'.', lambda m: codepoint_to_chr(int(m.group())+ord('A')), oct(num).replace('o', '')
         )).rjust(6, 'A')
         self.font_stream = FontStream(metrics.is_otf, compress=compress)
         try:
@@ -130,7 +130,7 @@ class Font:
             psname = uuid4()
         self.font_descriptor = Dictionary({
             'Type': Name('FontDescriptor'),
-            'FontName': Name('%s+%s'%(self.subset_tag, psname)),
+            'FontName': Name(f'{self.subset_tag}+{psname}'),
             'Flags': 0b100,  # Symbolic font
             'FontBBox': Array(metrics.pdf_bbox),
             'ItalicAngle': metrics.post.italic_angle,
@@ -172,13 +172,13 @@ class Font:
         try:
             pdf_subset(self.metrics.sfnt, self.used_glyphs)
         except UnsupportedFont as e:
-            debug('Subsetting of %s not supported, embedding full font. Error: %s'%(
+            debug('Subsetting of {} not supported, embedding full font. Error: {}'.format(
                 self.metrics.names.get('full_name', 'Unknown'), as_unicode(e)))
         except NoGlyphs:
             if self.used_glyphs:
                 debug(
-                    'Subsetting of %s failed, font appears to have no glyphs for the %d characters it is used with, some text may not be rendered in the PDF' %
-                    (self.metrics.names.get('full_name', 'Unknown'), len(self.used_glyphs)))
+                    'Subsetting of {} failed, font appears to have no glyphs for the {} characters it is used with, some text may not be rendered in the PDF'
+                    .format(self.metrics.names.get('full_name', 'Unknown'), len(self.used_glyphs)))
         if self.is_otf:
             self.font_stream.write(self.metrics.sfnt['CFF '].raw)
         else:
@@ -205,7 +205,7 @@ class Font:
         widths = {g:w for g, w in iteritems(widths) if w != most_common}
 
         groups = Array()
-        for k, g in groupby(enumerate(widths), lambda i_x:i_x[0]-i_x[1]):
+        for k, g in groupby(enumerate(widths), lambda i_x: i_x[0]-i_x[1]):
             group = list(map(itemgetter(1), g))
             gwidths = [widths[g] for g in group]
             if len(set(gwidths)) == 1 and len(group) > 1:
@@ -238,7 +238,7 @@ class FontManager:
 
     def add_standard_font(self, name):
         if name not in STANDARD_FONTS:
-            raise ValueError('%s is not a standard font'%name)
+            raise ValueError(f'{name} is not a standard font')
         if name not in self.std_map:
             self.std_map[name] = self.objects.add(Dictionary({
                 'Type':Name('Font'),

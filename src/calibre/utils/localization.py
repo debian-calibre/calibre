@@ -90,7 +90,7 @@ def get_system_locale():
 
 def sanitize_lang(lang):
     if lang:
-        match = re.match('[a-z]{2,3}(_[A-Z]{2}){0,1}', lang)
+        match = re.match(r'[a-z]{2,3}(_[A-Z]{2}){0,1}', lang)
         if match:
             lang = match.group()
     if lang == 'zh':
@@ -163,8 +163,7 @@ def get_single_translator(mpath, which='messages'):
             traceback.print_exc()
             import hashlib
             sig = hashlib.sha1(data).hexdigest()
-            raise ValueError('Failed to load translations for: {} (size: {} and signature: {}) with error: {}'.format(
-                path, len(data), sig, e))
+            raise ValueError(f'Failed to load translations for: {path} (size: {len(data)} and signature: {sig}) with error: {e}')
 
 
 def get_iso639_translator(lang):
@@ -218,7 +217,7 @@ def load_po(path):
     try:
         make(path, buf)
     except Exception:
-        print(('Failed to compile translations file: %s, ignoring') % path)
+        print(f'Failed to compile translations file: {path}, ignoring')
         buf = None
     else:
         buf = io.BytesIO(buf.getvalue())
@@ -340,13 +339,13 @@ set_translators.lang = None
 
 _iso639 = None
 _extra_lang_codes = {
-        'pt_BR' : _('Brazilian Portuguese'),
-        'zh_CN' : _('Simplified Chinese'),
-        'zh_TW' : _('Traditional Chinese'),
-        'bn_IN' : _('Indian Bengali'),
-        'bn_BD' : _('Bangladeshi Bengali'),
-        'en'    : _('English'),
-        'und'   : _('Unknown')
+        'pt_BR': _('Brazilian Portuguese'),
+        'zh_CN': _('Simplified Chinese'),
+        'zh_TW': _('Traditional Chinese'),
+        'bn_IN': _('Indian Bengali'),
+        'bn_BD': _('Bangladeshi Bengali'),
+        'en'   : _('English'),
+        'und'  : _('Unknown')
         }
 
 if False:
@@ -549,7 +548,10 @@ def get_udc():
     global _udc
     if _udc is None:
         from calibre.ebooks.unihandecode import Unihandecoder
-        _udc = Unihandecoder(lang=get_lang())
+        from calibre.utils.config_base import tweaks
+        lang = tweaks.get('east_asian_base_language', '')
+        lang = lang if lang in ('ja', 'kr', 'vn', 'zh') else get_lang()
+        _udc = Unihandecoder(lang=lang)
     return _udc
 
 
@@ -581,7 +583,7 @@ def localize_user_manual_link(url):
         return url
     from polyglot.urllib import urlparse, urlunparse
     parts = urlparse(url)
-    path = re.sub(r'/generated/[a-z]+/', '/generated/%s/' % lc, parts.path or '')
+    path = re.sub(r'/generated/[a-z]+/', f'/generated/{lc}/', parts.path or '')
     path = f'/{lc}{path}'
     parts = list(parts)
     parts[2] = path
@@ -614,4 +616,5 @@ def localize_website_link(url):
 
 def is_rtl_lang(lang):
     lang = canonicalize_lang(lang)
-    return lang and lang in ('ara', 'heb')
+    # Aramaic, Arabic, Azeri, Hebrew, Dhivehi, Sorani, Urdu, Farsi
+    return lang and lang in ('ara', 'heb', 'aze', 'div', 'arc', 'syc', 'myz', 'ckb', 'urd', 'fas')

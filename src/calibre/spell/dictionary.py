@@ -32,16 +32,15 @@ not_present = object()
 
 class UserDictionary:
 
-    __slots__ = ('name', 'is_active', 'words')
+    __slots__ = ('is_active', 'name', 'words')
 
     def __init__(self, **kwargs):
         self.name = kwargs['name']
         self.is_active = kwargs['is_active']
-        self.words = {(w, langcode) for w, langcode in kwargs['words']}
+        self.words = set(map(tuple, kwargs['words']))
 
     def serialize(self):
-        return {'name':self.name, 'is_active': self.is_active, 'words':[
-            (w, l) for w, l in self.words]}
+        return {'name':self.name, 'is_active': self.is_active, 'words': list(self.words)}
 
 
 _builtins = _custom = None
@@ -57,8 +56,8 @@ def builtin_dictionaries():
             locale = locales[0]
             base = os.path.dirname(lc)
             dics.append(Dictionary(
-                parse_lang_code(locale), frozenset(map(parse_lang_code, locales)), os.path.join(base, '%s.dic' % locale),
-                os.path.join(base, '%s.aff' % locale), True, None, None))
+                parse_lang_code(locale), frozenset(map(parse_lang_code, locales)), os.path.join(base, f'{locale}.dic'),
+                os.path.join(base, f'{locale}.aff'), True, None, None))
         _builtins = frozenset(dics)
     return _builtins
 
@@ -91,8 +90,8 @@ def custom_dictionaries(reread=False):
             if ploc.countrycode is None:
                 continue
             dics.append(Dictionary(
-                ploc, frozenset(filter(lambda x:x.countrycode is not None, map(parse_lang_code, locales))), os.path.join(base, '%s.dic' % locale),
-                os.path.join(base, '%s.aff' % locale), False, name, os.path.basename(base)))
+                ploc, frozenset(filter(lambda x: x.countrycode is not None, map(parse_lang_code, locales))), os.path.join(base, f'{locale}.dic'),
+                os.path.join(base, f'{locale}.aff'), False, name, os.path.basename(base)))
         _custom = frozenset(dics)
     return _custom
 
@@ -194,7 +193,7 @@ def load_dictionary(dictionary):
 class Dictionaries:
 
     def __init__(self):
-        self.remove_hyphenation = re.compile('[\u2010-]+')
+        self.remove_hyphenation = re.compile(r'[\u2010-]+')
         self.negative_pat = re.compile(r'-[.\d+]')
         self.fix_punctuation_pat = re.compile(r'''[:.]''')
         self.dictionaries = {}
@@ -287,7 +286,7 @@ class Dictionaries:
     def add_to_user_dictionary(self, name, word, locale):
         ud = self.user_dictionary(name)
         if ud is None:
-            raise ValueError('Cannot add to the dictionary named: %s as no such dictionary exists' % name)
+            raise ValueError(f'Cannot add to the dictionary named: {name} as no such dictionary exists')
         wl = len(ud.words)
         if isinstance(word, (set, frozenset)):
             ud.words |= word
@@ -344,7 +343,7 @@ class Dictionaries:
 
     def create_user_dictionary(self, name):
         if name in {d.name for d in self.all_user_dictionaries}:
-            raise ValueError('A dictionary named %s already exists' % name)
+            raise ValueError(f'A dictionary named {name} already exists')
         d = UserDictionary(name=name, is_active=True, words=())
         self.active_user_dictionaries.append(d)
         self.save_user_dictionaries()
@@ -456,7 +455,7 @@ def find_tests():
 
         def ar(self, w):
             if not self.recognized(w):
-                raise AssertionError('The word %r was not recognized' % w)
+                raise AssertionError(f'The word {w!r} was not recognized')
 
         def test_dictionaries(self):
             for w in 'recognized one-half one\u2010half'.split():

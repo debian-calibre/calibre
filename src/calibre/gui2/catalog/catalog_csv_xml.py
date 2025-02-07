@@ -68,7 +68,7 @@ class PluginWidget(QWidget):
         self.db_fields.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         self.db_fields.setDefaultDropAction(Qt.DropAction.CopyAction if ismacos else Qt.DropAction.MoveAction)
         self.db_fields.setAlternatingRowColors(True)
-        self.db_fields.setObjectName("db_fields")
+        self.db_fields.setObjectName('db_fields')
         h = QHBoxLayout()
         l.addLayout(h)
         h.addWidget(la), h.addStretch(10)
@@ -136,10 +136,10 @@ class PluginWidget(QWidget):
             pos = cpos.get(x, sys.maxsize)
             if x == 'series_index':
                 pos = cpos.get('series', sys.maxsize)
-            ListWidgetItem(x, name(x) + ' (%s)' % x, pos, self.db_fields)
+            ListWidgetItem(x, name(x) + f' ({x})', pos, self.db_fields)
             if x.startswith('#') and fm[x]['datatype'] == 'series':
                 x += '_index'
-                ListWidgetItem(x, name(x) + ' (%s)' % x, pos, self.db_fields)
+                ListWidgetItem(x, name(x) + f' ({x})', pos, self.db_fields)
 
         # Restore the activated fields from last use
         for x in range(self.db_fields.count()):

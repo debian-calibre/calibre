@@ -40,7 +40,7 @@ class Tracker:
         self.last_pos = 0
         self.queue: deque[Utterance] = deque()
 
-    def parse_marked_text(self, marked_text, limit = MAX_UTTERANCE_LENGTH):
+    def parse_marked_text(self, marked_text, limit=MAX_UTTERANCE_LENGTH):
         self.clear()
         text = []
         text_len = chunk_len = index_in_positions = offset_in_text = 0
@@ -125,7 +125,7 @@ class TTSManager(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._tts: 'TTSBackend' | None = None
+        self._tts: 'TTSBackend' | None = None  # noqa: UP037
         self.state = QTextToSpeech.State.Ready
         self.speaking_simple_text = False
         self.tracker = Tracker()

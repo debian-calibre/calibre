@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <layout class="QVBoxLayout">
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QCheckBox" name="opt_tag_browser_show_category_icons">
+       <property name="text">
+        <string>Show icons on &amp;categories in the Tag browser</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="opt_tag_browser_show_value_icons">
+       <property name="text">
+        <string>Show icons on &amp;values in the Tag browser</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="tb_icon_rules_groupbox">
+     <property name="title">
+      <string>Value icon rules</string>
+     </property>
+     <layout class="QGridLayout" name="tb_icon_rules_gridlayout">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="l12345">
+        <property name="text">
+         <string>&lt;p&gt;View all the defined value icon rules, including template rules.
+Rules are defined and edited in the Tag browser context menus. Rules can be deleted in
+this dialog by selecting the Category cell then using the button, the delete key,
+or the context menu. The value icon rules are defined per-user, not per-library.&lt;/p&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+      <widget class="QCheckBox" name="show_only_current_library">
+       <property name="text">
+        <string>Show only categories and values available in the current library</string>
+       </property>
+      </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QTableWidget" name="rules_table"/>
+      </item>
+      <item row="2" column="0">
+       <layout class="QVBoxLayout">
+        <item>
+         <widget class="QToolButton" name="delete_button">
+          <property name="icon">
+           <iconset resource="../../../../resources/images.qrc">
+            <normaloff>:/images/trash.png</normaloff>:/images/trash.png</iconset>
+          </property>
+          <property name="toolTip">
+           <string>Delete the selected rule. The Category cell for the rule must be selected</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="edit_button">
+          <property name="icon">
+           <iconset resource="../../../../resources/images.qrc">
+            <normaloff>:/images/edit_input.png</normaloff>:/images/edit_input.png</iconset>
+          </property>
+          <property name="toolTip">
+           <string>Edit the selected cell</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="undo_button">
+          <property name="icon">
+           <iconset resource="../../../../resources/images.qrc">
+            <normaloff>:/images/edit-undo.png</normaloff>:/images/edit-undo.png</iconset>
+          </property>
+          <property name="toolTip">
+           <string>Undo changes in the selected cell, if any.</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+</ui>

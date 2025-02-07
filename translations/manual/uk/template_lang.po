@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2020-2024
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2020-2025
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-21 15:47+0000\n"
+"POT-Creation-Date: 2025-01-23 13:39+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2020-2024\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2020-2025\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1346,32 +1346,97 @@ msgid ""
 msgstr "Ви можете додавати власні функції мовою Python до обробника шаблонів. Такими функціями можна скористатися в усіх трьох режимах програмування шаблонів. Додати функції можна за допомогою сторінки :guilabel:`Налаштування -> Додатково -> Шаблонні функції`. У діалоговому вікні, яке буде відкрито програмою, можна знайти відповідні настанови. Зауважте, що для досягнення тієї самої мети ви можете скористатися `Шаблонами Python`. Оскільки виклик визначених користувачем функцій є швидшим за виклик шаблона Python, визначені користувачем функції можуть бути ефективнішими, залежно від складності функції чи шаблона."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:633
-msgid "Special notes for save/send templates"
-msgstr "Спеціальні нотатки щодо шаблонів збереження або надсилання"
+msgid "Special notes for using templates in different contexts"
+msgstr "Особливі нотатки щодо використання шаблонів у різних контекстах"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:635
 msgid ""
-"Special processing is applied when a template is used in a `save to disk` or"
-" `send to device` template. The values of the fields are cleaned, replacing "
-"characters that are special to file systems with underscores, including "
-"slashes. This means that field text cannot be used to create folders. "
-"However, slashes are not changed in prefix or suffix strings, so slashes in "
-"these strings will cause folders to be created. Because of this, you can "
-"create variable-depth folder structure."
-msgstr "До шаблонів, які використовуються для дій `зберегти на диск` і `надіслати на пристрій`, застосовується спеціальна обробка. Значення полів буде очищено із заміною символів, які мають спеціальне значення у файлових системах, зокрема символів похилих рисок, на символи підкреслювання. Це означає, що текст поля не можна використовувати для створення тек. Втім, похилі риски не замінюватимуться у рядках префікса і суфікса, отже похилі риски у цих рядках можна використати для створення тек. Таким чином, ви можете створити структуру тек довільного рівня вкладеності."
+"In the GUI (:guilabel:`Columns made from other columns` and "
+":guilabel:`Template searches`):"
+msgstr "У графічному інтерфейсі (:guilabel:`Стовпчики на основі інших стовпчиків` і :guilabel:`Шаблонні пошуки`):"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:637
+msgid "GPM templates work as before."
+msgstr "Шаблони GPM працюють так, як і у попередніх версіях."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:638
+msgid "Python templates have full access to the calibre database."
+msgstr "Шаблони Python мають повний доступ до бази даних calibre."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:640
+msgid "In icon rules:"
+msgstr "У правилах піктограм:"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:642
+msgid ""
+"icon rule templates have no book data so field-based functions such as "
+":ref:`ff_format_date_field`, :ref:`ff_list_count_field`, and "
+":ref:`ff_check_yes_no` won't work."
+msgstr "шаблони правил піктограм не мають доступу до даних книги, а засновані на полях функції, зокрема :ref:`ff_format_date_field`, :ref:`ff_list_count_field` і :ref:`ff_check_yes_no` не працюватимуть."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:644
+msgid "In the Content server:"
+msgstr "У сервері даних:"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:646
+msgid ""
+"Templates have access to the new API but not the old API (LibraryDatabase)."
+msgstr "Шаблони мають доступ до нового програмного інтерфейсу, але не до старого (LibraryDatabase)."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+msgid ""
+"Because of the above, the following formatter functions are not guaranteed "
+"to work in GPM templates (composite columns, icon rules, etc) and should be "
+"avoided if you use the content server:"
+msgstr "Через наведене вище, не можемо гарантувати працездатності вказаних нижче функцій у шаблонах GPM (складені стовпчики, правила піктограм тощо); не варто використовувати ці функції, якщо ви користуєтеся сервером даних:"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+msgid ":ref:`ff_connected_device_name`"
+msgstr ":ref:`ff_connected_device_name`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:650
+msgid ":ref:`ff_connected_device_uuid`"
+msgstr ":ref:`ff_connected_device_uuid`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:651
+msgid ":ref:`ff_current_virtual_library_name`"
+msgstr ":ref:`ff_current_virtual_library_name`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+msgid ":ref:`ff_is_marked`"
+msgstr ":ref:`ff_is_marked`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:653
+msgid ":ref:`ff_virtual_libraries`"
+msgstr ":ref:`ff_virtual_libraries`"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+msgid "Special notes for save/send templates"
+msgstr "Спеціальні нотатки щодо шаблонів збереження або надсилання"
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:658
+msgid ""
+"Special processing is applied when a template is used in a :guilabel:`Save "
+"to disk` or :guilabel:`Send to device` template. The values of the fields "
+"are cleaned, replacing characters that are special to file systems with "
+"underscores, including slashes. This means that field text cannot be used to"
+" create folders. However, slashes are not changed in prefix or suffix "
+"strings, so slashes in these strings will cause folders to be created. "
+"Because of this, you can create variable-depth folder structure."
+msgstr "До шаблонів, які використовуються для дій :guilabel:`Зберегти на диск` і :guilabel:`Надіслати на пристрій`, застосовується спеціальна обробка. Значення полів буде очищено із заміною символів, які мають спеціальне значення у файлових системах, зокрема символів похилих рисок, на символи підкреслювання. Це означає, що текст поля не можна використовувати для створення тек. Втім, похилі риски не замінюватимуться у рядках префікса і суфікса, отже похилі риски у цих рядках можна використати для створення тек. Таким чином, ви можете створити структуру тек довільного рівня вкладеності."
+
+#: ../../__w/calibre/calibre/manual/template_lang.rst:660
 msgid ""
 "For example, assume we want the folder structure `series/series_index - "
 "title`, with the caveat that if series does not exist, then the title should"
 " be in the top folder. The template to do this is::"
 msgstr "Наприклад, припустімо ми хочемо створити структуру тек `цикл/номер_у_циклі - назва`, із умовою, що якщо циклу не існує, назву слід розташувати у верхній теці. Шаблон для виконання цього завдання::"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:641
+#: ../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid "The slash and the hyphen appear only if series is not empty."
 msgstr "Похила риска і дефіс мають з'являтися, лише якщо цикл не є порожнім."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:643
+#: ../../__w/calibre/calibre/manual/template_lang.rst:666
 msgid ""
 "The lookup function lets us do even fancier processing. For example, assume "
 "that if a book has a series, then we want the folder structure "
@@ -1381,25 +1446,25 @@ msgid ""
 "paths, depending on the value of series."
 msgstr "Функція `lookup` надає вам змогу виконувати виконувати навіть ще вишуканішу обробку. Наприклад, припустімо, що якщо книга належить до циклу, ми хочемо мати структуру тек `цикл/номер у циклі - назва.формат`. Якщо книга не належить до циклу, нам потрібна структура тек `жанр/упорядковане ім’я автора/назва.формат`. Якщо ж книга не належить до певного жанру, слід скористатися текою 'Unknown'. Нам потрібно два повністю різних шляхи, залежно від значення параметра циклу."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:645
+#: ../../__w/calibre/calibre/manual/template_lang.rst:668
 msgid "To accomplish this, we:"
 msgstr "Для виконання цього завдання ми:"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:647
+#: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid ""
 "Create a composite field (give it lookup name #aa) containing "
 "``{series}/{series_index} - {title}``. If the series is not empty, then this"
 " template will produce `series/series_index - title`."
 msgstr "Створимо складене поле (надавши йому назву #aa), що міститиме дані ``{series}/{series_index} - {title}``. Якщо значення циклу (series) є непорожнім, такий шаблон дасть нам `цикл/номер_у_циклі - назва`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:648
+#: ../../__w/calibre/calibre/manual/template_lang.rst:671
 msgid ""
 "Create a composite field (give it lookup name #bb) containing "
 "``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. This template produces "
 "`genre/author_sort/title`, where an empty genre is replaced with `Unknown`."
 msgstr "Створимо складене поле (надавши йому назву #bb) із вмістом ``{#genre:ifempty(Unknown)}/{author_sort}/{title}``. Цей шаблон дає `жанр/упорядковані_автори/назва`. Якщо немає даних щодо жанру, запис жанру буде замінено на `Unknown`."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:649
+#: ../../__w/calibre/calibre/manual/template_lang.rst:672
 msgid ""
 "Set the save template to ``{series:lookup(.,#aa,#bb)}``. This template "
 "chooses composite field ``#aa`` if series is not empty and composite field "
@@ -1407,35 +1472,35 @@ msgid ""
 "paths, depending on whether or not `series` is empty."
 msgstr "Встановимо шаблон збереження ``{series:lookup(.,#aa,#bb)}``. Цей шаблон вибирає складене поле ``#aa``, якщо значення запису циклу є непорожнім, і складене поле ``#bb``, якщо значення запису циклу є порожнім. Таким чином, ми матимемо повністю різні шляхи для збереження книг, залежно від того, чи є запис `series` порожнім."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:652
+#: ../../__w/calibre/calibre/manual/template_lang.rst:675
 msgid "Tips"
 msgstr "Підказки"
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:654
+#: ../../__w/calibre/calibre/manual/template_lang.rst:677
 msgid ""
 "Use the Template Tester to test templates. Add the tester to the context "
 "menu for books in the library and/or give it a keyboard shortcut."
 msgstr "Для перевірки шаблонів скористайтеся засобом перевірки шаблонів. Додайте пункт засобу до контекстного меню для книг у бібліотеці і/або встановіть для нього клавіатурне скорочення."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:655
+#: ../../__w/calibre/calibre/manual/template_lang.rst:678
 msgid ""
 "Templates can use other templates by referencing composite columns built "
 "with the desired template. Alternatively, you can use Stored Templates."
 msgstr "У шаблонах можна використовувати інші шаблони шляхом посилання на складені стовпчики, які побудовано за допомогою бажаних шаблонів. Крім того, ви можете скористатися «Збереженими шаблонами»."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:656
+#: ../../__w/calibre/calibre/manual/template_lang.rst:679
 msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
 msgstr "У наборі метаданих ви можете вказати порожні значення поля (або вказати будь-який еквівалент порожнього поля) за допомогою спеціального шаблона ``{}``. Цей шаблон завжди обробляється як порожній рядок."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:657
+#: ../../__w/calibre/calibre/manual/template_lang.rst:680
 msgid ""
 "The technique described above to show numbers even if they have a zero value"
 " works with the standard field series_index."
 msgstr "Описана вище методика для показу чисел працює зі стандартним полем series_index, навіть якщо вміст відповідного поля є порожнім."
 
-#: ../../__w/calibre/calibre/manual/template_lang.rst:662
+#: ../../__w/calibre/calibre/manual/template_lang.rst:685
 msgid "Template function reference"
 msgstr "Посилання на функцію шаблона"

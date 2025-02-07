@@ -67,7 +67,7 @@ changes needed for the desired effect.</p>
 <p>You should use this tool as the last step in your e-book creation process.</p>
 {0}
 <p>Note that polishing only works on files in the %s formats.</p>\
-''')%_(' or ').join(sorted('<b>%s</b>'%x for x in SUPPORTED)),
+''')%_(' or ').join(sorted(f'<b>{x}</b>' for x in SUPPORTED)),
 
 'embed': _('''\
 <p>Embed all fonts that are referenced in the document and are not already embedded.
@@ -155,7 +155,7 @@ def hfix(name, raw):
     return raw
 
 
-CLI_HELP = {x:hfix(x, re.sub('<.*?>', '', y)) for x, y in iteritems(HELP)}
+CLI_HELP = {x:hfix(x, re.sub(r'<.*?>', '', y)) for x, y in iteritems(HELP)}
 # }}}
 
 

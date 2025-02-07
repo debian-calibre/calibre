@@ -46,7 +46,7 @@ class MultiDeleter(QObject):  # {{{
             self.cleanup()
             return
         id_ = self.ids.pop()
-        title = 'id:%d'%id_
+        title = f'id:{id_}'
         try:
             title_ = self.model.db.title(id_, index_is_id=True)
             if title_:
@@ -438,7 +438,7 @@ class DeleteAction(InterfaceActionWithLibraryDrop):
             try:
                 view.model().delete_books_by_id(to_delete_ids)
             except OSError as err:
-                err.locking_violation_msg = _('Could not change on-disk location of this book\'s files.')
+                err.locking_violation_msg = _("Could not change on-disk location of this book's files.")
                 raise
             self.library_ids_deleted2(to_delete_ids, next_id=next_id, can_undo=True)
         else:

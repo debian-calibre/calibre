@@ -85,7 +85,7 @@ def setup_css_parser_serialization(tab_width=2):
 def actual_case_for_name(container, name):
     from calibre.utils.filenames import samefile
     if not container.exists(name):
-        raise ValueError('Cannot get actual case for %s as it does not exist' % name)
+        raise ValueError(f'Cannot get actual case for {name} as it does not exist')
     parts = name.split('/')
     base = ''
     ans = []
@@ -117,7 +117,7 @@ def corrected_case_for_name(container, name):
             correctx = x
         else:
             try:
-                candidates = {q for q in os.listdir(os.path.dirname(container.name_to_abspath(base)))}
+                candidates = set(os.listdir(os.path.dirname(container.name_to_abspath(base))))
             except OSError:
                 return None  # one of the non-terminal components of name is a file instead of a directory
             for q in candidates:
@@ -213,7 +213,7 @@ def lead_text(top_elem, num_words=10):
         if attr == 'text':
             if elem is not top_elem:
                 stack.append((elem, 'tail'))
-            stack.extend(reversed(list((c, 'text') for c in elem.iterchildren('*'))))
+            stack.extend(reversed([(c, 'text') for c in elem.iterchildren('*')]))
     return ' '.join(words[:num_words])
 
 

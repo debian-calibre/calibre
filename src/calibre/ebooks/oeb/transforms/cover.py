@@ -73,7 +73,7 @@ class CoverManager:
             style = 'style="height: 100%%"'
         else:
             width, height = fixed_size
-            style = 'style="height: %s; width: %s"'%(height, width)
+            style = f'style="height: {height}; width: {width}"'
         self.non_svg_template = self.NONSVG_TEMPLATE.replace('__style__',
                 style)
 
@@ -140,9 +140,9 @@ class CoverManager:
                 self.log.warning('Failed to read cover dimensions')
                 width, height = 600, 800
             # if self.preserve_aspect_ratio:
-            #    width, height = 600, 800
+            #     width, height = 600, 800
             self.svg_template = self.svg_template.replace('__viewbox__',
-                    '0 0 %d %d'%(width, height))
+                    f'0 0 {width} {height}')
             self.svg_template = self.svg_template.replace('__width__',
                     str(width))
             self.svg_template = self.svg_template.replace('__height__',

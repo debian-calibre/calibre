@@ -84,7 +84,7 @@ class LoopTest(BaseTest):
         self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
         # Test shutdown with hung worker
         block = Event()
-        with TestServer(lambda data:block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
+        with TestServer(lambda data: block.wait(), worker_count=3, shutdown_timeout=0.1, timeout=0.1) as server:
             pool = server.loop.pool
             self.ae(3, sum(int(w.is_alive()) for w in pool.workers))
             conn = server.connect()
@@ -92,9 +92,8 @@ class LoopTest(BaseTest):
             with self.assertRaises(socket.timeout):
                 res = conn.getresponse()
                 if int(res.status) == int(http_client.REQUEST_TIMEOUT):
-                    raise socket.timeout('Timeout')
-                raise Exception('Got unexpected response: code: {} {} headers: {!r} data: {!r}'.format(
-                    res.status, res.reason, res.getheaders(), res.read()))
+                    raise TimeoutError('Timeout')
+                raise Exception(f'Got unexpected response: code: {res.status} {res.reason} headers: {res.getheaders()!r} data: {res.read()!r}')
             self.ae(pool.busy, 1)
         self.ae(1, sum(int(w.is_alive()) for w in pool.workers))
         block.set()
@@ -198,7 +197,7 @@ class LoopTest(BaseTest):
         'Test serving over SSL'
         address = '127.0.0.1'
         with TemporaryDirectory('srv-test-ssl') as tdir:
-            cert_file, key_file, ca_file = map(lambda x:os.path.join(tdir, x), 'cka')
+            cert_file, key_file, ca_file = (os.path.join(tdir, x) for x in 'cka')
             create_server_cert(address, ca_file, cert_file, key_file, key_size=2048)
             ctx = ssl.create_default_context(cafile=ca_file)
             ctx.verify_flags |= ssl.VERIFY_X509_STRICT

@@ -80,8 +80,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
             self.mc = '='
         else:
             self.mc = '~'
-        all, any, phrase, none = list(map(lambda x: str(x.text()),
-                (self.all, self.any, self.phrase, self.none)))
+        all, any, phrase, none = [str(x.text()) for x in (self.all, self.any, self.phrase, self.none)]
         all, any, none = list(map(self.tokens, (all, any, none)))
         phrase = phrase.strip()
         all = ' and '.join(all)
@@ -89,7 +88,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
         none = ' and not '.join(none)
         ans = ''
         if phrase:
-            ans += '"%s"'%phrase
+            ans += f'"{phrase}"'
         if all:
             ans += (' and ' if ans else '') + all
         if none:
@@ -105,7 +104,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
                 txt = '!'+txt
             tok = self.FIELDS[str(self.field.currentText())]+txt
             if re.search(r'\s', tok):
-                tok = '"%s"'%tok
+                tok = f'"{tok}"'
             return tok
 
     def box_search_string(self):
