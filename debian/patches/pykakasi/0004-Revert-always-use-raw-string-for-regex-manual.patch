@@ -11,20 +11,20 @@ This reverts commit 3720de10d2ab7d0e647335fa148b96bd3bd5bdc0.
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
-index 16a31fcda6..64e8445b88 100644
+index 16a31fc..64e8445 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
 +++ b/src/calibre/ebooks/unihandecode/jadecoder.py
-@@ -90,4 +90,4 @@ def decode(self, text):
+@@ -90,4 +90,4 @@ class Jadecoder(Unidecoder):
                  text = self.conv.do(text)
          except Exception:
              pass
 -        return re.sub(r'[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
 +        return re.sub('[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
 diff --git a/src/calibre/ebooks/unihandecode/unidecoder.py b/src/calibre/ebooks/unihandecode/unidecoder.py
-index aba5069030..6d7c9f16f7 100644
+index aba5069..6d7c9f1 100644
 --- a/src/calibre/ebooks/unihandecode/unidecoder.py
 +++ b/src/calibre/ebooks/unihandecode/unidecoder.py
-@@ -73,7 +73,7 @@ def __init__(self):
+@@ -73,7 +73,7 @@ class Unidecoder:
  
      def decode(self, text):
          # Replace characters larger than 127 with their ASCII equivalent.
@@ -33,6 +33,3 @@ index aba5069030..6d7c9f16f7 100644
  
      def replace_point(self, codepoint):
          '''
--- 
-2.47.2
-

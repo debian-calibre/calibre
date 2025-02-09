@@ -9,18 +9,18 @@ Forwarded: not-needed
 
 This reverts commit ec8c06caa9d977890a5b5cf95713ff67a7a582be.
 ---
- bypy/sources.json                                        |   18 
- src/calibre/ebooks/unihandecode/jadecoder.py             |   22 
- src/calibre/ebooks/unihandecode/pykakasi/__init__.py     |    5 
- src/calibre/ebooks/unihandecode/pykakasi/h2a.py          |  180 
- src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8 |  564 
- src/calibre/ebooks/unihandecode/pykakasi/j2h.py          |   82 
- src/calibre/ebooks/unihandecode/pykakasi/jisyo.py        |   49 
- src/calibre/ebooks/unihandecode/pykakasi/k2a.py          |   46 
- src/calibre/ebooks/unihandecode/pykakasi/kakasi.py       |   96 
- src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8 |121826 +++++++++++++++
- src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8   |  317 
- src/calibre/test_build.py                                |    4 
+ bypy/sources.json                                  |     18 -
+ src/calibre/ebooks/unihandecode/jadecoder.py       |     22 +-
+ .../ebooks/unihandecode/pykakasi/__init__.py       |      5 +
+ src/calibre/ebooks/unihandecode/pykakasi/h2a.py    |    180 +
+ .../ebooks/unihandecode/pykakasi/itaijidict.utf8   |    564 +
+ src/calibre/ebooks/unihandecode/pykakasi/j2h.py    |     82 +
+ src/calibre/ebooks/unihandecode/pykakasi/jisyo.py  |     49 +
+ src/calibre/ebooks/unihandecode/pykakasi/k2a.py    |     46 +
+ src/calibre/ebooks/unihandecode/pykakasi/kakasi.py |     96 +
+ .../ebooks/unihandecode/pykakasi/kakasidict.utf8   | 121826 ++++++++++++++++++
+ .../ebooks/unihandecode/pykakasi/kanadict.utf8     |    317 +
+ src/calibre/test_build.py                          |      4 -
  12 files changed, 123173 insertions(+), 36 deletions(-)
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/__init__.py
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/h2a.py
@@ -32,14 +32,15 @@ This reverts commit ec8c06caa9d977890a5b5cf95713ff67a7a582be.
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8
 
-Index: b/bypy/sources.json
-===================================================================
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 4a631cf..84c57b7 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -1035,24 +1035,6 @@
+@@ -1034,24 +1034,6 @@
+         }
      },
  
-     {
+-    {
 -        "name": "jaconv",
 -        "unix": {
 -            "filename": "jaconv-0.40.tar.gz",
@@ -57,12 +58,11 @@ Index: b/bypy/sources.json
 -        }
 -    },
 -
--    {
+     {
          "name": "poetry_core",
          "comment": "Needed for building zeroconf",
-         "unix": {
-Index: b/src/calibre/ebooks/unihandecode/jadecoder.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
+index 8284385..635e35c 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
 +++ b/src/calibre/ebooks/unihandecode/jadecoder.py
 @@ -18,30 +18,24 @@ Copyright (c) 2010 Hiroshi Miura
@@ -104,8 +104,9 @@ Index: b/src/calibre/ebooks/unihandecode/jadecoder.py
 +            return re.sub('[^\x00-\x7f]', lambda x: self.replace_point(x.group()),result)
 +        except:
 +            return re.sub('[^\x00-\x7f]', lambda x: self.replace_point(x.group()),text)
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/__init__.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/__init__.py b/src/calibre/ebooks/unihandecode/pykakasi/__init__.py
+new file mode 100644
+index 0000000..7900e91
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/__init__.py
 @@ -0,0 +1,5 @@
@@ -114,8 +115,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/__init__.py
 +kakasi
 +
 +__all__ = ["pykakasi"]
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/h2a.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/h2a.py b/src/calibre/ebooks/unihandecode/pykakasi/h2a.py
+new file mode 100644
+index 0000000..1c3c748
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/h2a.py
 @@ -0,0 +1,180 @@
@@ -299,8 +301,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/h2a.py
 +                    max_len = x
 +                    Hstr = self.H2a_table[text[:x]]
 +        return (Hstr, max_len)
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8 b/src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8
+new file mode 100644
+index 0000000..cb6e38c
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8
 @@ -0,0 +1,564 @@
@@ -868,8 +871,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8
 +瑤瑶
 +凜凛
 +熙煕
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/j2h.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/j2h.py b/src/calibre/ebooks/unihandecode/pykakasi/j2h.py
+new file mode 100644
+index 0000000..78d2133
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/j2h.py
 @@ -0,0 +1,82 @@
@@ -955,8 +959,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/j2h.py
 +                            Hstr=''.join([yomi,text[length]])
 +                            max_len = length+1
 +        return (Hstr, max_len)
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/jisyo.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/jisyo.py b/src/calibre/ebooks/unihandecode/pykakasi/jisyo.py
+new file mode 100644
+index 0000000..c4ff561
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/jisyo.py
 @@ -0,0 +1,49 @@
@@ -1009,8 +1014,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/jisyo.py
 +            except:
 +                return None
 +        return table
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/k2a.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/k2a.py b/src/calibre/ebooks/unihandecode/pykakasi/k2a.py
+new file mode 100644
+index 0000000..b658552
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/k2a.py
 @@ -0,0 +1,46 @@
@@ -1060,8 +1066,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/k2a.py
 +                    max_len = x
 +                    Hstr = self.kanwa.kanadict[text[:x]]
 +        return (Hstr, max_len)
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/kakasi.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/kakasi.py b/src/calibre/ebooks/unihandecode/pykakasi/kakasi.py
+new file mode 100644
+index 0000000..04db2fc
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/kakasi.py
 @@ -0,0 +1,96 @@
@@ -1161,8 +1168,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/kakasi.py
 +                i += 1
 +
 +        return otext
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8 b/src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8
+new file mode 100644
+index 0000000..959a133
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8
 @@ -0,0 +1,121826 @@
@@ -122992,8 +123000,9 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8
 +じゅん 駲
 +めばる 鮴
 +とび 鵈
-Index: b/src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8 b/src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8
+new file mode 100644
+index 0000000..631de9a
 --- /dev/null
 +++ b/src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8
 @@ -0,0 +1,317 @@
@@ -123314,8 +123323,8 @@ Index: b/src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8
 +welcome ウエルカム
 +wikinomics ウィキノミクス
 +york ヨーク
-Index: b/src/calibre/test_build.py
-===================================================================
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index 5c9d506..602e8ce 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -424,10 +424,6 @@ class BuildTest(unittest.TestCase):

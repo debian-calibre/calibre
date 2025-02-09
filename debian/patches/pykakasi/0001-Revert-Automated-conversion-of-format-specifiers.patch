@@ -10,10 +10,10 @@ This reverts commit e5a65f69ecb0e939a55dfddc727571df899f8d3c.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/calibre/ebooks/unihandecode/unidecoder.py b/src/calibre/ebooks/unihandecode/unidecoder.py
-index 0bac7ed26e..aba5069030 100644
+index 0bac7ed..aba5069 100644
 --- a/src/calibre/ebooks/unihandecode/unidecoder.py
 +++ b/src/calibre/ebooks/unihandecode/unidecoder.py
-@@ -95,7 +95,7 @@ def code_group(self, character):
+@@ -95,7 +95,7 @@ class Unidecoder:
          # Code groups within CODEPOINTS take the form 'xAB'
          if not isinstance(character, str):
              character = str(character, 'utf-8')
@@ -22,6 +22,3 @@ index 0bac7ed26e..aba5069030 100644
  
      def grouped_point(self, character):
          '''
--- 
-2.47.2
-

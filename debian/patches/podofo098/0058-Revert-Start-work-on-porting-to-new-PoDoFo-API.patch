@@ -22,10 +22,10 @@ This reverts commit 76fbbef9d08d4d335c5408584ed26bfc165b5fdc.
  13 files changed, 463 insertions(+), 454 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index 1abe017..0a25563 100644
+index 4097876..400c95c 100644
 --- a/setup/build.py
 +++ b/setup/build.py
-@@ -234,11 +234,7 @@ class Environment(NamedTuple):
+@@ -234,12 +234,8 @@ class Environment(NamedTuple):
      def lib_dirs_to_ldflags(self, dirs) -> list[str]:
          return [self.libdir_prefix+x for x in dirs if x]
  
@@ -39,8 +39,9 @@ index 1abe017..0a25563 100644
 +        return [self.lib_prefix+x+self.lib_suffix for x in dirs]
  
  
+ def init_env(debug=False, sanitize=False, compiling_for='native'):
 diff --git a/setup/build_environment.py b/setup/build_environment.py
-index 7b595fc..e09e3a1 100644
+index 139a3be..4ba3fa5 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
 @@ -223,7 +223,6 @@ if os.path.exists(os.path.join(sw, 'ffmpeg')):

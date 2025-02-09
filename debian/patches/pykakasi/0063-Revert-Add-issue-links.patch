@@ -10,7 +10,7 @@ This reverts commit 0c86a7918fb186ee0aadd00d728d61defb3b2804.
  1 file changed, 2 deletions(-)
 
 diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
-index cd05c24..4f654c0 100644
+index 6291c76..26257c0 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
 +++ b/src/calibre/ebooks/unihandecode/jadecoder.py
 @@ -33,7 +33,6 @@ from calibre.ebooks.unihandecode.unidecoder import Unidecoder
@@ -21,7 +21,7 @@ index cd05c24..4f654c0 100644
  def dictdata(dbfile: str):
      t = files('pykakasi')
      q = t.joinpath('data').joinpath(dbfile)
-@@ -68,7 +67,6 @@ class Jadecoder(Unidecoder):
+@@ -71,7 +70,6 @@ class Jadecoder(Unidecoder):
  
          # We have to use the deprecated API as the new API does not capitalize
          # words. Sigh.

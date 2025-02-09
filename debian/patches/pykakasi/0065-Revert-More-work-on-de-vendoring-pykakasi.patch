@@ -6,17 +6,17 @@ Forwarded: not-needed
 
 This reverts commit 04d5728ef9549ddfce380d71690ab4bc76f93dd8.
 ---
- COPYRIGHT                                    |    7 +
- bypy/linux/__main__.py                       |    5 -
- bypy/macos/__main__.py                       |    7 -
- bypy/sources.json                            |   18 ----
- setup/commands.py                            |    5 -
- setup/resources.py                           |  117 ++++++++++++++++++++++++++-
- src/calibre/ebooks/unihandecode/jadecoder.py |   36 --------
+ COPYRIGHT                                    |   7 ++
+ bypy/linux/__main__.py                       |   5 +-
+ bypy/macos/__main__.py                       |   7 +-
+ bypy/sources.json                            |  18 -----
+ setup/commands.py                            |   5 +-
+ setup/resources.py                           | 117 ++++++++++++++++++++++++++-
+ src/calibre/ebooks/unihandecode/jadecoder.py |  36 ---------
  7 files changed, 128 insertions(+), 67 deletions(-)
 
-Index: b/COPYRIGHT
-===================================================================
+diff --git a/COPYRIGHT b/COPYRIGHT
+index e305108..a44d756 100644
 --- a/COPYRIGHT
 +++ b/COPYRIGHT
 @@ -323,6 +323,13 @@ License: GPL-3
@@ -33,11 +33,11 @@ Index: b/COPYRIGHT
  Files: src/calibre/ebooks/unihandecode/*
  Copyright: 2010-2011, Hiroshi Miura <miurahr@linux.com>
  Copyright: 2009, John Schember
-Index: b/bypy/linux/__main__.py
-===================================================================
+diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
+index 12ab7b1..ad94a2e 100644
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
-@@ -85,12 +85,11 @@ def ignore_in_lib(base, items, ignored_d
+@@ -85,12 +85,11 @@ def ignore_in_lib(base, items, ignored_dirs=None):
          ignored_dirs = {'.svn', '.bzr', '.git', 'test', 'tests', 'testing'}
      for name in items:
          path = j(base, name)
@@ -52,8 +52,8 @@ Index: b/bypy/linux/__main__.py
                  ans.append(name)
      return ans
  
-Index: b/bypy/macos/__main__.py
-===================================================================
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index 152c39a..8e45153 100644
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
 @@ -617,15 +617,12 @@ class Freeze:
@@ -74,14 +74,15 @@ Index: b/bypy/macos/__main__.py
                      ans.append(y)
  
              return ans
-Index: b/bypy/sources.json
-===================================================================
+diff --git a/bypy/sources.json b/bypy/sources.json
+index 94a4102..4a631cf 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
-@@ -1044,24 +1044,6 @@
+@@ -1043,24 +1043,6 @@
+         }
      },
  
-     {
+-    {
 -        "name": "wrapt",
 -        "unix": {
 -            "filename": "wrapt-1.16.0-py3-none-any.whl",
@@ -99,12 +100,11 @@ Index: b/bypy/sources.json
 -        }
 -    },
 -
--    {
+     {
          "name": "pykakasi",
          "unix": {
-             "filename": "pykakasi-2.3.0-py3-none-any.whl",
-Index: b/setup/commands.py
-===================================================================
+diff --git a/setup/commands.py b/setup/commands.py
+index 8cabf34..82b8d13 100644
 --- a/setup/commands.py
 +++ b/setup/commands.py
 @@ -11,7 +11,7 @@ __all__ = [
@@ -128,8 +128,8 @@ Index: b/setup/commands.py
  cacerts = CACerts()
  recent_uas = RecentUAs()
  rapydscript = RapydScript()
-Index: b/setup/resources.py
-===================================================================
+diff --git a/setup/resources.py b/setup/resources.py
+index 15edea7..e4376d6 100644
 --- a/setup/resources.py
 +++ b/setup/resources.py
 @@ -9,11 +9,13 @@ import errno
@@ -280,11 +280,11 @@ Index: b/setup/resources.py
          for x in ('builtin_recipes.xml', 'builtin_recipes.zip',
                  'template-functions.json', 'user-manual-translation-stats.json'):
              x = self.j(self.RESOURCES, x)
-Index: b/src/calibre/ebooks/unihandecode/jadecoder.py
-===================================================================
+diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
+index 9148ae8..8284385 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
 +++ b/src/calibre/ebooks/unihandecode/jadecoder.py
-@@ -16,51 +16,15 @@ This functionality is owned by Kakasi Ja
+@@ -16,51 +16,15 @@ This functionality is owned by Kakasi Japanese processing engine.
  Copyright (c) 2010 Hiroshi Miura
  '''
  

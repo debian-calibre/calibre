@@ -10,10 +10,10 @@ This reverts commit 19b9d979abbfc38a867f7ce8c6dad39ad4ef25ad.
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
-index 2bf5998c54..16a31fcda6 100644
+index 2bf5998..16a31fc 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
 +++ b/src/calibre/ebooks/unihandecode/jadecoder.py
-@@ -75,12 +75,12 @@ def __init__(self):
+@@ -75,12 +75,12 @@ class Jadecoder(Unidecoder):
          with warnings.catch_warnings():
              warnings.simplefilter('ignore')
              self.kakasi = kakasi()
@@ -32,6 +32,3 @@ index 2bf5998c54..16a31fcda6 100644
              self.conv = self.kakasi.getConverter()
  
      def decode(self, text):
--- 
-2.47.2
-
