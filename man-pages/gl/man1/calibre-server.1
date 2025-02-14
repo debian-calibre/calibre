@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "febreiro 07, 2025" "7.25.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "febreiro 14, 2025" "7.26.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -44,7 +44,7 @@ bibliotecas de calibre en internet. Podes especificar o camiño á biblioteca
 carpetas como argumentos para \fBcalibre\-server\fP\&. Se non especifica ningún camiño, todos os
 utilizaranse bibliotecas que coñece o programa principal calibre.
 .sp
-Sempre que lle pases argumentos a \fBcalibre\-server\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a \fBcalibre\-server\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .SH [OPCIÓNS]
 .INDENT 0.0
 .TP
@@ -59,7 +59,7 @@ Tempo (en segundos) para esperar unha resposta do servidor ao facer consultas.
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Escolla o tipo de autenticación empregada.  Establece o modo de autenticación HTTP utilizado polo servidor. Establécese como \fB\(dq\fPbásico\fB\(dq\fP se está a poñer este servidor detrás dun proxy SSL. En caso contrario, déixao como \fB\(dq\fPauto\fB\(dq\fP, que usará \fB\(dq\fPbásico\fB\(dq\fP se se configura SSL, se non, utilizará \fB\(dq\fPdigest\fB\(dq\fP\&.
+Escolla o tipo de autenticación empregada.  Establece o modo de autenticación HTTP utilizado polo servidor. Establécese como «básico» se está a poñer este servidor detrás dun proxy SSL. En caso contrario, déixao como «auto», que usará «básico» se se configura SSL, se non, utilizará «digest».
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -149,7 +149,7 @@ Ignoráronse os campos de metadatos definidos polo usuario.  Lista separada por 
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-A interface na que escoitar as conexións.   O predeterminado é escoitar en todas as interfaces IPv6 e IPv4 dispoñibles. Podes cambiar isto a, por exemplo, \fB\(dq\fP127.0.0.1\fB\(dq\fP para escoitar só as conexións IPv4 desde a máquina local, ou a \fB\(dq\fP0.0.0.0\fB\(dq\fP para escoitar todas as conexións IPv4 entrantes.
+A interface na que escoitar as conexións.   O predeterminado é escoitar en todas as interfaces IPv6 e IPv4 dispoñibles. Podes cambiar isto a, por exemplo, «127.0.0.1» para escoitar só as conexións IPv4 desde a máquina local, ou a «0.0.0.0» para escoitar todas as conexións IPv4 entrantes.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -214,7 +214,7 @@ O porto no que escoitar as conexións.
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Ruta a un ficheiro JSON que contén URL para a función \fB\(dq\fPBuscar en Internet\fB\(dq\fP\&. O xeito máis sinxelo de crear un ficheiro deste tipo é ir a Preferencias\-> Compartir na rede\->Buscar en internet con calibre, crear os URL e exportalos.
+Ruta a un ficheiro JSON que contén URL para a función «Buscar en Internet». O xeito máis sinxelo de crear un ficheiro deste tipo é ir a Preferencias\-> Compartir na rede\->Buscar en internet con calibre, crear os URL e exportalos.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -620,6 +620,8 @@ def create_copy_links(menu, data=None):
 
     sep = menu.addSeparator()  # Note: separators are really actions
 
+    if data and data.get('type', '') == 'cc_url' and (u := data.get('url', '')):
+        link_action(_('Custom web search link'), u)
     link_action(_('Link to show book in calibre'), f'calibre://show-book/{library_id}/{book_id}')
     link_action(_('Link to show book details in a popup window'),
                 f'calibre://book-details/{library_id}/{book_id}')
@@ -1479,6 +1481,9 @@ class BookDetails(DetailsLayout, DropMixin):  # {{{
             if dt == 'search':
                 field = data.get('field')
                 search_term(data['term'], data['value'])
+            elif dt == 'cc_url':
+                if data['url']:
+                    browse(data['url'])
             elif dt == 'author':
                 url = data['url']
                 if url == 'calibre':

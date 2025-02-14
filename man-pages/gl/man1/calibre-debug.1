@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "febreiro 07, 2025" "7.25.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "febreiro 14, 2025" "7.26.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -56,7 +56,7 @@ como un shebang nos guións, así:
 .sp
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .sp
-Sempre que lle pases argumentos a \fBcalibre\-debug\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a \fBcalibre\-debug\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .SH [OPCIÓNS]
 .INDENT 0.0
 .TP
@@ -86,7 +86,7 @@ Executar a ferramenta diff de calibre. Por exemplo: calibre\-debug \fI\%\-\-diff
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Inicie a ferramenta de calibre \fB\(dq\fPEditar libro\fB\(dq\fP no modo de depuración.
+Inicie a ferramenta de calibre «Editar libro» no modo de depuración.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,7 +101,7 @@ Explota o libro no cartafol especificado. Uso: \-x file.epub output_dir Exporta 
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Exporta todos os datos de calibre (libros/configuracións/complementos). Normalmente, pediráselle o cartafol de exportación e as bibliotecas para exportar. Tamén pode especificalos como argumentos da liña de comandos para omitir as preguntas. Use camiños absolutos para o cartafol de exportación e as bibliotecas. A palabra clave especial \fB\(dq\fPtodos\fB\(dq\fP pode usarse para exportar todas as bibliotecas. Exemplos:  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/empty/export/carpeta /ruta/a/biblioteca/carpeta1 /ruta/a/biblioteca2 calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all # exportar todas as bibliotecas coñecidas
+Exporta todos os datos de calibre (libros/configuracións/complementos). Normalmente, pediráselle o cartafol de exportación e as bibliotecas para exportar. Tamén pode especificalos como argumentos da liña de comandos para omitir as preguntas. Use camiños absolutos para o cartafol de exportación e as bibliotecas. A palabra clave especial «todos» pode usarse para exportar todas as bibliotecas. Exemplos:  calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP # para uso interactivo calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /ruta/a/empty/export/carpeta /ruta/a/biblioteca/carpeta1 /ruta/a/biblioteca2 calibre\-debug \fI\%\-\-export\-all\-calibre\-data\fP /export/folder all # exportar todas as bibliotecas coñecidas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Executar un complemento que proporciona unha interface de liña de comandos. Por
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Executa a(s) proba(s) nomeada(s). Use o valor especial \fB\(dq\fPtodos\fB\(dq\fP para executar todas as probas. Se o nome da proba comeza cun punto, suponse que é un nome de módulo. Se o nome da proba comeza por @, suponse que é un nome de categoría.
+Executa a(s) proba(s) nomeada(s). Use o valor especial «todos» para executar todas as probas. Se o nome da proba comeza cun punto, suponse que é un nome de módulo. Se o nome da proba comeza por @, suponse que é un nome de categoría.
 .UNINDENT
 .INDENT 0.0
 .TP
