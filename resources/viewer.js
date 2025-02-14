@@ -7539,6 +7539,7 @@ return parser;
             ρσ_d["library_map"] = null;
             ρσ_d["search_the_net_urls"] = ρσ_list_decorate([]);
             ρσ_d["donate_link"] = "https://calibre-ebook.com/donate";
+            ρσ_d["default_author_link"] = "";
             ρσ_d["icon_map"] = Object.create(null);
             ρσ_d["icon_path"] = "";
             ρσ_d["custom_list_template"] = null;
@@ -8979,6 +8980,14 @@ return this.__repr__();
             __module__ : {value: "book_list.library_data"}
         });
 
+        function web_search_url(book_id, field, item_val) {
+            return absolute_path("web-search/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", encodeURIComponent(field)) + "/" + ρσ_str.format("{}", encodeURIComponent(item_val)) + "?library_id=" + ρσ_str.format("{}", encodeURIComponent(current_library_id())) + "");
+        };
+        if (!web_search_url.__argnames__) Object.defineProperties(web_search_url, {
+            __argnames__ : {value: ["book_id", "field", "item_val"]},
+            __module__ : {value: "book_list.library_data"}
+        });
+
         function book_metadata(book_id) {
             return (ρσ_expr_temp = library_data.metadata)[(typeof book_id === "number" && book_id < 0) ? ρσ_expr_temp.length + book_id : book_id];
         };
@@ -9186,6 +9195,7 @@ return this.__repr__();
         ρσ_modules["book_list.library_data"].cover_url = cover_url;
         ρσ_modules["book_list.library_data"].download_url = download_url;
         ρσ_modules["book_list.library_data"].download_data_file_url = download_data_file_url;
+        ρσ_modules["book_list.library_data"].web_search_url = web_search_url;
         ρσ_modules["book_list.library_data"].book_metadata = book_metadata;
         ρσ_modules["book_list.library_data"].set_book_metadata = set_book_metadata;
         ρσ_modules["book_list.library_data"].loaded_book_ids = loaded_book_ids;
@@ -28748,7 +28758,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.25.0";
+        CALIBRE_VERSION = "7.26.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -37065,6 +37075,7 @@ return this.__repr__();
         var load_status = ρσ_modules["book_list.library_data"].load_status;
         var set_book_metadata = ρσ_modules["book_list.library_data"].set_book_metadata;
         var download_data_file_url = ρσ_modules["book_list.library_data"].download_data_file_url;
+        var web_search_url = ρσ_modules["book_list.library_data"].web_search_url;
 
         var back = ρσ_modules["book_list.router"].back;
         var home = ρσ_modules["book_list.router"].home;
@@ -37610,20 +37621,48 @@ return this.__repr__();
                 }
                 is_vertical = vertical_categories[(typeof field === "number" && field < 0) ? vertical_categories.length + field : field];
                 function add_val(v) {
-                    var parent, text_rep, url;
+                    var parent, websearch_link, fm, text_rep, target, calibre_search_url, calibre_search_tooltip, url, tooltip;
                     if (!v.appendChild) {
                         v += "";
                     }
                     parent = table.lastChild.lastChild;
                     if (is_searchable) {
+                        websearch_link = false;
+                        if (field === "authors") {
+                            websearch_link = bool(interface_data.default_author_link) && interface_data.default_author_link !== "search-calibre";
+                        } else {
+                            fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
+                            if ((typeof fm !== "undefined" && fm !== null ? fm : Object.create(null)).display && fm.display.web_search_template && ρσ_in(fm.display.web_search_template.partition(":")[0], ["http", 
+                            "https"])) {
+                                websearch_link = true;
+                            }
+                        }
                         text_rep = search_text || v;
-                        parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [v].concat([ρσ_desugar_kwargs({title: _("Click to see books with {0}: {1}").format(name, text_rep), class_: "blue-link", href: ρσ_interpolate_kwargs.call(this, href_for_search, [is_searchable, text_rep].concat([ρσ_desugar_kwargs({use_quotes: use_quotes})]))})])));
+                        target = "_self";
+                        if (websearch_link && typeof v !== "string") {
+                            websearch_link = false;
+                        }
+                        calibre_search_url = ρσ_interpolate_kwargs.call(this, href_for_search, [is_searchable, text_rep].concat([ρσ_desugar_kwargs({use_quotes: use_quotes})]));
+                        calibre_search_tooltip = _("Click to see books with {0}: {1}").format(name, text_rep);
+                        if (websearch_link) {
+                            url = web_search_url(book_id, field, v);
+                            target = "_blank";
+                            tooltip = _("Click to browse for {} on the web").format(text_rep);
+                        } else {
+                            url = calibre_search_url;
+                            tooltip = calibre_search_tooltip;
+                        }
+                        parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [v].concat([ρσ_desugar_kwargs({target: target, title: tooltip, class_: "blue-link", href: url})])));
                         if (link_maps[(typeof field === "number" && field < 0) ? link_maps.length + field : field] && (ρσ_expr_temp = link_maps[(typeof field === "number" && field < 0) ? link_maps.length + field : field])[(typeof text_rep === "number" && text_rep < 0) ? ρσ_expr_temp.length + text_rep : text_rep]) {
                             url = (ρσ_expr_temp = link_maps[(typeof field === "number" && field < 0) ? link_maps.length + field : field])[(typeof text_rep === "number" && text_rep < 0) ? ρσ_expr_temp.length + text_rep : text_rep];
                             if (url.startswith("https://") || url.startswith("http://")) {
                                 parent.appendChild(document.createTextNode(" "));
-                                parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [svgicon("external-link")].concat([ρσ_desugar_kwargs({title: _("Click to open") + ": " + url, href: url, target: "_new", class_: "blue-link"})])));
+                                parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [svgicon("external-link")].concat([ρσ_desugar_kwargs({title: _("Click to open") + ": " + url, href: url, target: "_blank", class_: "blue-link"})])));
                             }
+                        }
+                        if (websearch_link) {
+                            parent.appendChild(document.createTextNode(" "));
+                            parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [svgicon("search")].concat([ρσ_desugar_kwargs({title: calibre_search_tooltip, href: calibre_search_url, class_: "blue-link"})])));
                         }
                     } else {
                         if (v.appendChild) {
@@ -49770,7 +49809,8 @@ return this.__repr__();
         function body_font_size() {
             var ans, q;
             ans = body_font_size.ans;
-            if (!ans) {
+            if (!ans || window.devicePixelRatio !== body_font_size.dpr) {
+                body_font_size.dpr = window.devicePixelRatio;
                 q = window.getComputedStyle(document.body).fontSize;
                 if (q && q.endsWith("px")) {
                     q = parseInt(q);
@@ -49779,7 +49819,7 @@ return this.__repr__();
                         return ans;
                     }
                 }
-                ans = body_font_size.ans = 12;
+                ans = body_font_size.ans = 16;
             }
             return ans;
         };

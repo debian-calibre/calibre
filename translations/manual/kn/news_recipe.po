@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# R Murthy <rudramurthy@yahoo.com>, 2025
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-23 07:19+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Kannada (http://www.transifex.com/calibre/calibre/language/kn/)\n"
+"POT-Creation-Date: 2025-02-13 02:21+0000\n"
+"PO-Revision-Date: 2014-06-17 08:36+0000\n"
+"Last-Translator: R Murthy <rudramurthy@yahoo.com>, 2025\n"
+"Language-Team: Kannada (http://app.transifex.com/calibre/calibre/language/kn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -78,16 +79,7 @@ msgid ""
 "links may be resolved incorrectly."
 msgstr ""
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Parameters"
 msgstr ""
 
@@ -161,15 +153,12 @@ msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
+"refreshes and has a random common user agent."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
+msgid "To customize the browser override this method in your sub-class as::"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -221,21 +210,45 @@ msgid ""
 "If you set `articles_are_obfuscated` this method is called with every "
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
-"fetching engine, so it can contain links to pages/images on the web."
+"fetching engine, so it can contain links to pages/images on the web. "
+"Alternately, you can return a dictionary of the form: {'data': <HTML data>, "
+"'url': <the resolved URL of the article>}. This avoids needing to create "
+"temporary files. The `url` key in the dictionary is useful if the effective "
+"URL of the article is different from the URL passed into this method, for "
+"example, because of redirects. It can be omitted if the URL is unchanged."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
 msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
+msgid ""
+"Return the delay in seconds before downloading this URL. If you want to "
+"programmatically determine the delay for the specified URL, override this "
+"method in your subclass, returning self.delay by default for URLs you do not"
+" want to affect."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/news_recipe.rst:0
+msgid "Returns"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
+msgid "A floating point number, the delay in seconds."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL."
+"for dynamically generated images, etc.) and return the processed URL. Return"
+" None or an empty string to skip fetching the image."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -428,6 +441,13 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
+msgid ""
+"Use this method to set the date when this issue was published. Defaults to "
+"the moment of download. Must return a :class:`datetime.datetime` object."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
 msgid ""
 "This method is called with the source of each downloaded :term:`HTML` file, "
@@ -503,6 +523,18 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine, which supports "
+"logging in. However, if you don't need logging in, consider changing this to"
+" either 'webengine' which uses an actual Chromium browser to do the network "
+"requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and "
+"'qt' support HTTP/2, which mechanize does not and are thus harder to "
+"fingerprint for bot protection services."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
@@ -513,9 +545,9 @@ msgstr ""
 msgid ""
 "Set this to False to ignore all scaling and compression parameters and pass "
 "images through unmodified. If True and the other compression parameters are "
-"left at their default values, JPEG images will be scaled to fit in the "
-"screen dimensions set by the output profile and compressed to size at most "
-"(w * h)/16 where w x h are the scaled image dimensions."
+"left at their default values, images will be scaled to fit in the screen "
+"dimensions set by the output profile and compressed to size at most (w * "
+"h)/16 where w x h are the scaled image dimensions."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -567,8 +599,9 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
-"Delay between consecutive downloads in seconds. The argument may be a "
-"floating point number to indicate a more precise time."
+"The default delay between consecutive downloads in seconds. The argument may"
+" be a floating point number to indicate a more precise time. See "
+":meth:`get_url_specific_delay` to implement per URL delays."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -630,8 +663,8 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you dont want to use gzipped transfers. Note that some old "
-"servers flake out with gzip"
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -679,7 +712,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
-" Override this in your recipe to provide a url to use as a masthead."
+" Override this in your recipe to provide a URL to use as a masthead."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -751,6 +784,25 @@ msgstr ""
 msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:1
+msgid ""
+"Specify options specific to this recipe. These will be available for the "
+"user to customize in the Advanced tab of the Fetch News dialog or at the "
+"ebook-convert command line. The options are specified as a dictionary "
+"mapping option name to metadata about the option. For example::"
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
+msgid ""
+"When the recipe is run, self.recipe_specific_options will be a dict mapping "
+"option name to the option value specified by the user. When the option is "
+"unspecified by the user, it will have the value specified by 'default'. If "
+"no default is specified, the option will not be in the dict at all, when "
+"unspecified by the user."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -895,7 +947,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1
 msgid "The title to use for the e-book"
-msgstr ""
+msgstr "ಇ-ಪುಸ್ತಕಕ್ಕೆ ಬಳಸಲು ಶೀರ್ಷಿಕೆ"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1

@@ -26,11 +26,13 @@ from qt.core import (
     QRadioButton,
     QSpinBox,
     Qt,
+    QToolButton,
     QVBoxLayout,
     QWidget,
 )
 
 from calibre.gui2 import error_dialog
+from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.dialogs.template_line_editor import TemplateLineEditor
 from calibre.utils.date import UNDEFINED_DATE, parse_date
 from calibre.utils.localization import ngettext
@@ -231,6 +233,7 @@ class CreateCustomColumn(QDialog):
         elif ct == '*text':
             self.is_names.setChecked(c['display'].get('is_names', False))
         self.description_box.setText(c['display'].get('description', ''))
+        self.web_search_template.setText(c['display'].get('web_search_template', ''))
         self.decimals_box.setValue(min(9, max(1, int(c['display'].get('decimals', 2)))))
 
         all_colors = [str(s) for s in list(QColor.colorNames())]
@@ -486,6 +489,7 @@ class CreateCustomColumn(QDialog):
         l.addWidget(cch)
         l.addStretch()
         add_row(None, l)
+
         l = QHBoxLayout()
         self.composite_in_comments_box = cmc = QCheckBox(_('Show with comments in Book details'))
         cmc.setToolTip('<p>' + _('If you check this box then the column contents '
@@ -533,8 +537,56 @@ class CreateCustomColumn(QDialog):
             'Rating columns enter a number between 0 and 5.') + '</p>')
         self.default_value_label = add_row(_('&Default value:'), dv)
 
+        l = QHBoxLayout()
+        self.web_search_label = QLabel(_('Search tem&plate:'))
+        l.addWidget(self.web_search_label)
+        wst = self.web_search_template = QLineEdit()
+        wst.setToolTip('<p>' + _(
+            "Fill in this box if you want clicking on the value in book details to do a "
+            "web search instead of searching your calibre library. The book's metadata is "
+            "available to the template.</p><p>Additional fields '{0}', `{1}`, and '{2}' are also available "
+            "to the template. For multiple-valued (tags-like) columns they are the value being examined, "
+            "telling you which value to use to generate the link. The two values '{1}' and '{2}' are "
+            "automatically escaped for use in URLs. In '{1}', spaces are replaced by plus signs. In '{2}' "
+            "spaces are replaced by '%20'.</p><p> The template functions '{3}' (the easiest to use), "
+            "'{4}', '{5}', and '{6}' are useful for constructing the desired URL. There are examples in "
+            "the template function documentation.").format(
+                'item_value', 'item_value_quoted', 'item_value_no_plus', 'make_url()', 'make_url_extended()',
+                'query_string()', 'quote_for_url()') + '</p>')
+        l.addWidget(wst)
+        self.web_search_label.setBuddy(wst)
+        wst_tb = self.web_search_toolbutton = QToolButton()
+        wst_tb.setIcon(QIcon.ic('edit_input.png'))
+        l.addWidget(wst_tb)
+        wst_tb.clicked.connect(self.cws_template_button_clicked)
+        add_row(None, l)
+
         self.resize(self.sizeHint())
     # }}}
+
+    def cws_template_button_clicked(self):
+        db = self.gui.current_db.new_api
+        lv = self.gui.library_view
+        rows = lv.selectionModel().selectedRows()
+        from calibre.ebooks.metadata.search_internet import qquote
+        if not self.editing_col or not rows:
+            vals = [{'item_value': _('Item value'),
+                     'item_value_quoted': qquote(_('Item value'), True),
+                     'item_value_no_plus': qquote(_('Item value'), False),
+                     'lookup_name': _('Lookup name'),'author': _('Author'),
+                     'title': _('Title'), 'author_sort': _('Author sort')}]
+        else:
+            vals = []
+            for row in rows:
+                book_id = lv.model().id(row)
+                mi = db.new_api.get_metadata(book_id)
+                mi.set('item_value', _('Item value'))
+                mi.set('item_value_quoted', qquote(_('Item value'), True))
+                mi.set('item_value_no_plus', qquote(_('Item value'), False))
+                vals.append(mi)
+        d = TemplateDialog(parent=self, text=self.web_search_template.text(), mi=vals)
+        if d.exec() == QDialog.DialogCode.Accepted:
+            self.web_search_template.setText(d.rule[1])
 
     def bool_radio_button_clicked(self, button, clicked):
         if clicked:
@@ -617,7 +669,7 @@ class CreateCustomColumn(QDialog):
                         'after the decimal point and thousands separated by commas.') + '</p>'
                     )
             self.format_label.setText(l), self.format_default_label.setText(dl)
-        for x in ('in_comments_box', 'heading_position', 'heading_position_label'):
+        for x in ('in_comments_box', 'heading_position', 'heading_position_label',):
             getattr(self, 'composite_'+x).setVisible(col_type == 'composite')
         for x in ('box', 'default_label', 'label', 'sort_by', 'sort_by_label',
                   'make_category', 'contains_html'):
@@ -638,6 +690,12 @@ class CreateCustomColumn(QDialog):
         self.comments_heading_position_label.setVisible(is_comments)
         self.comments_type.setVisible(is_comments)
         self.comments_type_label.setVisible(is_comments)
+
+        has_url_template = col_type in ('text', '*text', 'composite', '*composite', 'series', 'enumeration')
+        self.web_search_label.setVisible(has_url_template)
+        self.web_search_template.setVisible(has_url_template)
+        self.web_search_toolbutton.setVisible(has_url_template)
+
         self.allow_half_stars.setVisible(col_type == 'rating')
 
         is_bool = col_type == 'bool'
@@ -811,6 +869,7 @@ class CreateCustomColumn(QDialog):
             display_dict['default_value'] = default_val
 
         display_dict['description'] = self.description_box.text().strip()
+        display_dict['web_search_template'] = self.web_search_template.text().strip()
 
         if not self.editing_col:
             self.caller.custcols[key] = {
@@ -911,21 +970,26 @@ class CreateNewCustomColumn:
         'make_category': True or False -- whether the column is shown in the tag browser
         'contains_html': True or False -- whether the column is interpreted as HTML
         'use_decorations': True or False -- should check marks be displayed
+        'search_template': a template used to construct a search URL for book details
       datetime columns:
         'date_format': a string specifying the display format
       enumerated columns
         'enum_values': a string containing comma-separated valid values for an enumeration
         'enum_colors': a string containing comma-separated colors for an enumeration
         'use_decorations': True or False -- should check marks be displayed
+        'search_template': a template used to construct a search URL for book details
       float columns:
         'decimals': the number of decimal digits to allow when editing (int). Range: 1 - 9
       float and int columns:
         'number_format': the format to apply when displaying the column
       rating columns:
         'allow_half_stars': True or False -- are half-stars allowed
+      series columns:
+        'search_template': a template used to construct a search URL for book details
       text columns:
         'is_names': True or False -- whether the items are comma or ampersand separated
         'use_decorations': True or False -- should check marks be displayed
+        'search_template': a template used to construct a search URL for book details
 
     This method returns a tuple (Result.enum_value, message). If tuple[0] is
     Result.COLUMN_ADDED then the message is the lookup name including the '#'.

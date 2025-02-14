@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "febreiro 07, 2025" "7.25.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "febreiro 14, 2025" "7.26.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -43,14 +43,14 @@ Converte un libro electrónico dun formato a outro.
 .sp
 input_file é a entrada e output_file é a saída. Ambos deben especificarse como os dous primeiros argumentos do comando.
 .sp
-O formato de saída do libro electrónico dedícase a partir da extensión do ficheiro output_file. ficheiro_saída tamén pode ter o formato especial .EXT onde EXT é a extensión do ficheiro de saída. Neste caso, o nome do ficheiro de saída deriva do nome do ficheiro de entrada. Teña en conta que os nomes de ficheiros non deben comezar cun guión. Finalmente, se output_file non ten extensión, entón trátase como un cartafol e escríbese nese cartafol un \(dqlibro electrónico aberto\(dq (OEB) composto por ficheiros HTML. Estes ficheiros son os ficheiros que normalmente se pasarían ao complemento de saída.
+O formato de saída do libro electrónico dedícase a partir da extensión do ficheiro output_file. ficheiro_saída tamén pode ter o formato especial .EXT onde EXT é a extensión do ficheiro de saída. Neste caso, o nome do ficheiro de saída deriva do nome do ficheiro de entrada. Teña en conta que os nomes de ficheiros non deben comezar cun guión. Finalmente, se output_file non ten extensión, entón trátase como un cartafol e escríbese nese cartafol un «libro electrónico aberto» (OEB) composto por ficheiros HTML. Estes ficheiros son os ficheiros que normalmente se pasarían ao complemento de saída.
 .sp
 Despois de especificar o ficheiro de entrada e saída, pode personalizar a conversión especificando varias opcións. As opcións dispoñibles dependen dos tipos de ficheiros de entrada e saída. Para obter axuda sobre eles, especifique o ficheiro de entrada e saída e despois use a opción \-h.
 .sp
 Para a documentación completa do sistema de conversión consulte
 \fI\%E\-book conversion\fP
 .sp
-Sempre que lle pases argumentos a \fBebook\-convert\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a \fBebook\-convert\fP que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .sp
 As opcións e os valores predeterminados das opcións cambian dependendo de ambos
 formatos de entrada e saída, polo que sempre debes comprobar con:
@@ -98,7 +98,7 @@ Especificar o perfil de entrada. O perfil de entrada dálle información ao sist
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-Lista os nomes das receitas integradas. Podes crear un libro electrónico a partir dunha receita integrada como esta: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
+Lista os nomes das receitas integradas. Podes crear un libro electrónico a partir dunha receita integrada como esta: ebook\-convert «Recipe Name.recipe» output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ Opcións para controlar o aspecto da saída
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Translitera os caracteres Unicode a unha representación ASCII. Use con coidado porque isto substituirá os caracteres Unicode por ASCII. Por exemplo, substituirá \fB\(dq\fPPelé\fB\(dq\fP por \fB\(dq\fPPele\fB\(dq\fP\&. Ademais, teña en conta que nos casos nos que hai varias representacións dun carácter (caracteres compartidos por chinés e xaponés, por exemplo) empregarase a representación baseada na linguaxe da interface de calibre actual.
+Translitera os caracteres Unicode a unha representación ASCII. Use con coidado porque isto substituirá os caracteres Unicode por ASCII. Por exemplo, substituirá «Pelé» por «Pele». Ademais, teña en conta que nos casos nos que hai varias representacións dun carácter (caracteres compartidos por chinés e xaponés, por exemplo) empregarase a representación baseada na linguaxe da interface de calibre actual.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -217,7 +217,7 @@ Incrustar todos os tipos de letra a que se fai referencia no documento de entrad
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Inserir a familia de fontes especificada no libro. Isto especifica a fonte \fB\(dq\fPbase\fB\(dq\fP utilizada para o libro. Se o documento de entrada especifica as súas propias fontes, poden substituír esta fonte base. Podes usar a opción de información de estilo de filtro para eliminar fontes do documento de entrada. Teña en conta que a incorporación de fontes só funciona con algúns formatos de saída, principalmente EPUB, AZW3 e DOCX.
+Inserir a familia de fontes especificada no libro. Isto especifica a fonte «base» utilizada para o libro. Se o documento de entrada especifica as súas propias fontes, poden substituír esta fonte base. Podes usar a opción de información de estilo de filtro para eliminar fontes do documento de entrada. Teña en conta que a incorporación de fontes só funciona con algúns formatos de saída, principalmente EPUB, AZW3 e DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -312,12 +312,12 @@ Subconxunta todas as fontes incrustadas. Cada tipo de letra incrustado redúcese
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Ruta a un ficheiro que contén regras para transformar os estilos CSS deste libro. O xeito máis sinxelo de crear un ficheiro deste tipo é usar o asistente para crear regras na GUI de calibre. Accede a el na sección \fB\(dq\fPAspecto e sensación\->Transformar estilos\fB\(dq\fP do diálogo de conversión. Unha vez creadas as regras, pode usar o botón \fB\(dq\fPExportar\fB\(dq\fP para gardalas nun ficheiro.
+Ruta a un ficheiro que contén regras para transformar os estilos CSS deste libro. O xeito máis sinxelo de crear un ficheiro deste tipo é usar o asistente para crear regras na GUI de calibre. Accede a el na sección «Aspecto e sensación\->Transformar estilos» do diálogo de conversión. Unha vez creadas as regras, pode usar o botón «Exportar» para gardalas nun ficheiro.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Ruta a un ficheiro que contén regras para transformar o HTML deste libro. O xeito máis sinxelo de crear un ficheiro deste tipo é usar o asistente para crear regras na GUI de calibre. Accede a el na sección \fB\(dq\fPAspecto e sensación\->Transformar HTML\fB\(dq\fP do diálogo de conversión. Unha vez creadas as regras, pode usar o botón \fB\(dq\fPExportar\fB\(dq\fP para gardalas nun ficheiro.
+Ruta a un ficheiro que contén regras para transformar o HTML deste libro. O xeito máis sinxelo de crear un ficheiro deste tipo é usar o asistente para crear regras na GUI de calibre. Accede a el na sección «Aspecto e sensación\->Transformar HTML» do diálogo de conversión. Unha vez creadas as regras, pode usar o botón «Exportar» para gardalas nun ficheiro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -359,7 +359,7 @@ Buscar palabras e patróns que habitualmente estean en cursiva e poñelos en cur
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detectar cabeceiras e subcabeceiras de capítulos sen formato e convertilas en etiquetas h2 e h3. Esta configuración non creará un Índice (TOC), pero pódese utilizar xunto coa detección de estrutura para crear uno.
+Detectar cabeceiras e subcabeceiras de capítulos sen formato e convertilas en etiquetas h2 e h3. Esta configuración non creará un índice, pero pódese utilizar xunto coa detección de estrutura para crear uno.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -435,7 +435,7 @@ Cando unha <img> etiqueta non ten atributo alt, comprobe o ficheiro de imaxe aso
 .INDENT 0.0
 .TP
 .B \-\-chapter
-Unha expresión XPath para detectar títulos de capítulos. O predeterminado é considerar <h1>ou<h2> etiquetas que conteñan as palabras \fB\(dq\fPcapítulo\fB\(dq\fP, \fB\(dq\fPlibro\fB\(dq\fP, \fB\(dq\fPsección\fB\(dq\fP, \fB\(dq\fPprólogo\fB\(dq\fP, \fB\(dq\fPepílogo\fB\(dq\fP ou \fB\(dq\fPparte\fB\(dq\fP como títulos de capítulo, así como calquera etiqueta que teña class=\fB\(dq\fPchapter\fB\(dq\fP\&. A expresión utilizada debe avaliarse como unha lista de elementos. Para desactivar a detección de capítulos, use a expresión \fB\(dq\fP/\fB\(dq\fP\&. Consulte o Titorial de XPath no Manual de usuario de calibre para obter máis axuda sobre o uso desta función.
+Unha expresión XPath para detectar títulos de capítulos. O predeterminado é considerar <h1>ou<h2> etiquetas que conteñan as palabras «capítulo», «libro», «sección», «prólogo», «epílogo» ou «parte» como títulos de capítulo, así como calquera etiqueta que teña class=\fB\(dq\fPchapter\fB\(dq\fP\&. A expresión utilizada debe avaliarse como unha lista de elementos. Para desactivar a detección de capítulos, use a expresión «/». Consulte o Titorial de XPath no Manual de usuario de calibre para obter máis axuda sobre o uso desta función.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -478,7 +478,7 @@ Controla a xeración automática do Índice. De modo predeterminado, se o fichei
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-Ao crear un TOC a partir de ligazóns no documento de entrada, permita entradas duplicadas, é dicir. permiten máis dunha entrada co mesmo texto, sempre que apunten a unha localización diferente.
+Ao crear un índice a partir de ligazóns no documento de entrada, permita entradas duplicadas, é dicir. permiten máis dunha entrada co mesmo texto, sempre que apunten a unha localización diferente.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "febreiro 07, 2025" "7.25.0" "calibre"
+.TH "CALIBREDB" "1" "febreiro 14, 2025" "7.26.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -189,7 +189,7 @@ calibredb list [opcións]
 .sp
 Lista dos libros dispoñíbeis na base de datos do Calibre.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-ascending
@@ -198,7 +198,7 @@ Ordenar resultados en orde ascendente
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Os campos que se mostrarán cando se listan libros na base de datos. Debe ser unha lista de campos separados por comas. Campos dispoñibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Predeterminado: %predeterminado. O campo especial \fB\(dq\fPtodos\fB\(dq\fP pódese usar para seleccionar todos os campos. Ademais dos campos integrados anteriores, os campos personalizados tamén están dispoñibles como *field_name, por exemplo, para un campo personalizado #rating, use o nome: *rating
+Os campos que se mostrarán cando se listan libros na base de datos. Debe ser unha lista de campos separados por comas. Campos dispoñibles: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Predeterminado: %predeterminado. O campo especial «todos» pódese usar para seleccionar todos os campos. Ademais dos campos integrados anteriores, os campos personalizados tamén están dispoñibles como *field_name, por exemplo, para un campo personalizado #rating, use o nome: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -238,12 +238,12 @@ O campo polo que ordenar os resultados. Podes especificar varios campos separán
 .INDENT 0.0
 .TP
 .B \-\-template
-O modelo a executar se \fB\(dq\fPtemplate\fB\(dq\fP está na lista de campos. Teña en conta que os modelos ignóranse ao conectarse a un servidor calibre. Predeterminado: Ningún
+O modelo a executar se «template» está na lista de campos. Teña en conta que os modelos ignóranse ao conectarse a un servidor calibre. Predeterminado: Ningún
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Ruta a un ficheiro que contén o modelo para executar se \fB\(dq\fPtemplate\fB\(dq\fP está na lista de campos. Predeterminado: Ningún
+Ruta a un ficheiro que contén o modelo para executar se «template» está na lista de campos. Predeterminado: Ningún
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -262,7 +262,7 @@ calibredb engade [opcións] ficheiro1 ficheiro2 ficheiro3 ...
 .sp
 Engadir os ficheiros especificados como libros na base de datos. Tamén pode especificar cartafoles, vexa as opcións relacionadas con cartafoles a seguir.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
@@ -271,7 +271,7 @@ Establece os autores do(s) libro(s) engadido(s)
 .INDENT 0.0
 .TP
 .B \-\-automerge, \-m
-Se se atopan libros con títulos e autores similares, combine os formatos (arquivos) entrantes automaticamente nos rexistros de libros existentes. Un valor de \fB\(dq\fPignorar\fB\(dq\fP significa que se descartan os formatos duplicados. Un valor de \fB\(dq\fPsobrescribir\fB\(dq\fP significa que os formatos duplicados na biblioteca se sobrescriben cos ficheiros recén engadidos. Un valor de \fB\(dq\fPnew_record\fB\(dq\fP significa que os formatos duplicados colócanse nun novo rexistro de libro.
+Se se atopan libros con títulos e autores similares, combine os formatos (arquivos) entrantes automaticamente nos rexistros de libros existentes. Un valor de «ignorar» significa que se descartan os formatos duplicados. Un valor de «sobrescribir» significa que os formatos duplicados na biblioteca se sobrescriben cos ficheiros recén engadidos. Un valor de «new_record» significa que os formatos duplicados colócanse nun novo rexistro de libro.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -358,7 +358,7 @@ calibredb eliminar ids
 .sp
 Elimina os libros identificados por ID da base de datos. os ids deben ser unha lista separada por comas de números de identificación (podes obter números de identificación usando o comando de busca). Por exemplo, 23,34,57\-85 (ao especificar un intervalo, non se inclúe o último número do intervalo).
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-permanent
@@ -376,7 +376,7 @@ calibredb add_format [opcións] id ebook_file
 .sp
 Engade o libro electrónico en ebook_file aos formatos dispoñibles para o libro lóxico identificado por id. Podes obter a identificación usando o comando de busca. Se o formato xa existe, substitúese, a non ser que se especifique a opción non substituír.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
@@ -399,7 +399,7 @@ calibredb remove_format [opcións] id fmt
 .sp
 Elimina o formato fmt do libro lóxico identificado por id. Podes obter a identificación usando o comando de busca. fmt debería ser unha extensión de ficheiro como LRF ou TXT ou EPUB. Se o libro lóxico non ten fmt dispoñible, non faga nada.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .SH SHOW_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -413,7 +413,7 @@ calibredb show_metadata [opcións] id
 Mostra os metadatos almacenados na base de datos calibre para o libro identificado por id.
 id é un número de identificación do comando de busca.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
@@ -436,7 +436,7 @@ comando de busca. Podes ter unha idea rápida do formato OPF usando o
 campos individuais coa opción \-\-field. Se usa a opción \-\-field, alí
 non é necesario especificar un ficheiro OPF.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
@@ -462,7 +462,7 @@ A operación de exportación garda todos os formatos do libro, a súa portada e 
 un ficheiro OPF). Tamén se gardan os ficheiros de datos adicionais asociados co libro.
 Podes obter números de identificación do comando de busca.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -516,7 +516,7 @@ Exportar todos os libros a un cartafol único
 .INDENT 0.0
 .TP
 .B \-\-template
-O modelo para controlar o nome do ficheiro e a estrutura do cartafol dos ficheiros gardados. O predeterminado é \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP que gardará os libros nun subcartafol por autor con nomes de ficheiro que conteñan título e autor. Os controis dispoñibles son: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+O modelo para controlar o nome do ficheiro e a estrutura do cartafol dos ficheiros gardados. O predeterminado é «{author_sort}/{title}/{title} \- {authors}» que gardará os libros nun subcartafol por autor con nomes de ficheiro que conteñan título e autor. Os controis dispoñibles son: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -549,7 +549,7 @@ Teña en conta que os distintos formatos de catálogo admiten diferentes conxunt
 ver as diferentes opcións, especifique o nome do ficheiro de saída e despois o
 \-\-help opción.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
@@ -584,47 +584,47 @@ Garda a saída das diferentes etapas da canalización de conversión no cartafol
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-Regex que describe etiquetas para excluír como xéneros. Valor predeterminado: \fB\(dq\fP%defecto\fB\(dq\fP exclúe as etiquetas entre corchetes, por exemplo. \fB\(aq\fP[Proxecto Gutenberg]\fB\(aq\fP e \fB\(aq\fP+\fB\(aq\fP, a etiqueta predeterminada para os libros de lectura. Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Regex que describe etiquetas para excluír como xéneros. Valor predeterminado: «[.+]|^+$» exclúe as etiquetas entre corchetes, por exemplo. «[Proxecto Gutenberg]» e «+», a etiqueta predeterminada para os libros de lectura. Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Especifica as regras utilizadas para excluír libros do catálogo xerado. O modelo para unha regra de exclusión é calquera (\fB\(aq\fP\fB\(aq\fP<rule name>,\fB\(aq\fPEtiquetas\fB\(aq\fP,<comma\-separated list of tags>\fB\(aq\fP\fB\(aq\fP) ou (\fB\(aq\fP\fB\(aq\fP<rule name>,<custom column>\fB\(aq\fP\fB\(aq\fP,<pattern>\fB\(aq\fP\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLibros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) excluirá un libro cun valor de \fB\(dq\fPArquivado\fB\(dq\fP na columna personalizada \fB\(dq\fPestado\fB\(dq\fP\&. Cando se definen varias regras, aplicaranse todas. Por defecto: \fB\(dq\fP%defecto\fB\(dq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Especifica as regras utilizadas para excluír libros do catálogo xerado. O modelo para unha regra de exclusión é calquera (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<lista de etiquetas separadas por comas>\fB\(aq\fP) ou (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<columna pernonalizada>\fB\(aq\fP,\fB\(aq\fP<patrón>\fB\(aq\fP). Por exemplo: ((\fB\(aq\fPLibros arquivados\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArquivado\fB\(aq\fP),) excluirá un libro cun valor de «Arquivado» na columna personalizada «status» (estado). Cando se definen varias regras, aplicaranse todas. Predeterminado: «((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)» Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Incluír a sección \fB\(dq\fPAutores\fB\(dq\fP no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Incluír a sección «Autores» no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Incluír a sección \fB\(dq\fPDescricións\fB\(dq\fP no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Incluír a sección «Descricións» no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Incluír a sección \fB\(dq\fPXéneros\fB\(dq\fP no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Incluír a sección «Xéneros» no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Incluír a sección \fB\(dq\fPEngadidos recentemente\fB\(dq\fP no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Incluír a sección «Engadidos recentemente» no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Incluír a sección \fB\(dq\fPSerie\fB\(dq\fP no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Incluír a sección «Serie» no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Incluír a sección \fB\(dq\fPTítulos\fB\(dq\fP no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Incluír a sección «Títulos» no catálogo. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-genre\-source\-field
-Campo de orixe para a sección \fB\(dq\fPXéneros\fB\(dq\fP\&. Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Campo de orixe para a sección «Xéneros». Valor predeterminado: \fB\(aq\fP%defecto\fB\(aq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -644,7 +644,7 @@ Especifica o perfil de saída. Nalgúns casos, é necesario un perfil de saída 
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Especifica as regras utilizadas para incluír prefixos que indican libros lidos, elementos da lista de desexos e outros prefixos especificados polo usuario. O modelo dunha regra de prefixo é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Cando se definen varias regras, utilizarase a primeira regra de coincidencia. Por defecto: \fB\(dq\fP%defecto\fB\(dq\fP Aplícase a: formatos de saída AZW3, EPUB, MOBI
+Especifica as regras utilizadas para incluír prefixos que indican libros lidos, elementos da lista de desexos e outros prefixos especificados polo usuario. O modelo dunha regra de prefixo é (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Cando se definen varias regras, utilizarase a primeira regra de coincidencia. Predeterminado: «((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))» Aplícase a: formatos de saída AZW3, EPUB, MOBI
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -683,7 +683,7 @@ Sintaxe para eliminar:
 .sp
 calibredb save_searches eliminar search_name
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .SH ADD_CUSTOM_COLUMN
 .INDENT 0.0
 .INDENT 3.5
@@ -694,15 +694,15 @@ calibredb add_custom_column [opcións] etiqueta nome tipo\-de\-dato
 .UNINDENT
 .UNINDENT
 .sp
-Crea un campo personalizado. A \(aqetiqueta\(aq é o nome amigábel  da columna. Non debería
-conter espazos nin vírgulas. O \(aqnome\(aq é o nome do campo que se amosará.
-O \(aqtipo\-de\-dato\(aq pode ser un dos seguintes: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+Crea un campo personalizado. A «etiqueta» é o nome amigábel  da columna. Non debería
+conter espazos nin vírgulas. O «nome» é o nome do campo que se amosará.
+O «tipo\-de\-dato» pode ser un dos seguintes: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-display
-Un dicionario de opcións para personalizar como se interpretarán os datos desta columna. Esta é unha cadea JSON. Para as columnas de enumeración, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Hai moitas opcións que poden entrar na variable de visualización. As opcións por tipo de columna son: composto: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: data_format enumeración: valores_enum, cores_enum, use_decorations int, float: formato_número texto: is_names, use_decorations  A mellor forma de atopar combinacións legais é crear unha columna personalizada do tipo apropiado na GUI e despois mirar o OPF de copia de seguridade dun libro (asegúrese de que se creou un novo OPF desde que se engadiu a columna). Verá o JSON para a \fB\(dq\fPvisualización\fB\(dq\fP da nova columna no OPF.
+Un dicionario de opcións para personalizar como se interpretarán os datos desta columna. Esta é unha cadea JSON. Para as columnas de enumeración, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Hai moitas opcións que poden entrar na variable de visualización. As opcións por tipo de columna son: composto: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: data_format enumeración: valores_enum, cores_enum, use_decorations int, float: formato_número texto: is_names, use_decorations  A mellor forma de atopar combinacións legais é crear unha columna personalizada do tipo apropiado na GUI e despois mirar o OPF de copia de seguridade dun libro (asegúrese de que se creou un novo OPF desde que se engadiu a columna). Verá o JSON para a «visualización» da nova columna no OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -721,7 +721,7 @@ calibredb custom_columns [opcións]
 .sp
 Lista de columnas personalizadas dispoñibles. Mostra as etiquetas e os ID das columnas.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
@@ -740,7 +740,7 @@ calibredb remove_custom_column [opcións] etiqueta
 Elimina a columna personalizada identificada pola etiqueta. Podes ver dispoñibles
 columnas co comando custom_columns.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-force, \-f
@@ -761,7 +761,7 @@ Podes obter unha lista de IDs usando o comando de busca.
 Podes obter unha lista de nomes de columnas personalizadas usando custom_columns
 mando.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
@@ -786,7 +786,7 @@ todas as buscas gardadas, categorías de usuarios, plugboards, conversión almac
 configuracións e receitas personalizadas. Os metadatos restaurados só serán tan precisos como
 o que se atopa nos ficheiros OPF.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
@@ -804,7 +804,7 @@ calibredb check_library [opcións]
 .sp
 Realiza algunhas comprobacións no sistema de ficheiros que contén a biblioteca. O resultado é invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
@@ -843,7 +843,7 @@ calibredb list_categories [opcións]
 Elaborar un informe da información da categoría na base de datos. O
 a información é o equivalente ao que se mostra no navegador de etiquetas.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
@@ -886,7 +886,7 @@ comando para forzar a rexeneración dos ficheiros OPF, coa  \-\-opción todos.
 Teña en conta que normalmente non é necesario facelo, xa que se fai unha copia de seguranza dos ficheiros OPF
 automaticamente, cada vez que se cambian os metadatos.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-all
@@ -908,7 +908,7 @@ mesmas columnas personalizadas, bibliotecas virtuais e outras opcións que a bib
 A biblioteca clonada non conterá ningún libro. Se queres crear un duplicado completo, incluído
 todos os libros, entón simplemente use as ferramentas do sistema de ficheiros para copiar o cartafol da biblioteca.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .SH EMBED_METADATA
 .INDENT 0.0
 .INDENT 3.5
@@ -923,11 +923,11 @@ Actualiza os metadatos dos ficheiros de libros reais almacenados na biblioteca c
 os metadatos na base de datos calibre. Normalmente, os metadatos só se actualizan cando
 exportando ficheiros desde calibre, este comando é útil se queres que o fagan
 ser actualizado no seu lugar. Teña en conta que os diferentes formatos de ficheiro admiten cantidades diferentes
-de metadatos. Podes usar o valor especial \(dqall\(dq para book_id para actualizar os metadatos
+de metadatos. Podes usar o valor especial «all» para book_id para actualizar os metadatos
 en todos os libros. Tamén podes especificar moitos ID de libros separados por espazos e intervalos de ID
 separados por guións. Por exemplo: rog \fBembed_metadata\fP 1 2 10\-15 23
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
@@ -950,7 +950,7 @@ para alimentar outros comandos que aceptan unha lista de IDs como entrada.
 A expresión de busca pode ser calquera cousa desde a poderosa consulta de busca de calibre
 idioma, por exemplo: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-limit, \-l
@@ -981,7 +981,7 @@ especifique os ID do libro como argumentos adicionais despois do
 comando reindex. Se non se especifican ID de libro o
 toda a biblioteca está reindexada.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
@@ -1004,7 +1004,7 @@ calibredb fts_search [opcións] expresión de busca
 .sp
 Fai unha busca de texto completo en toda a biblioteca ou nun subconxunto dela.
 .sp
-Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: \(dq/some path/with spaces\(dq
+Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os argumentos entre comiñas. Por exemplo: «/some path/with spaces»
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
@@ -1033,7 +1033,7 @@ O marcador usado para indicar o inicio dunha palabra coincidente dentro dun frag
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-O formato no que se mostrarán os resultados da busca. Ou \fB\(dq\fPtexto\fB\(dq\fP para o texto simple ou \fB\(dq\fPjson\fB\(dq\fP para a saída JSON.
+O formato no que se mostrarán os resultados da busca. Ou «texto» para o texto simple ou «json» para a saída JSON.
 .UNINDENT
 .INDENT 0.0
 .TP
