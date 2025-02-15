@@ -43,7 +43,7 @@ endif
 
 .PHONY: calibre_auto_test calibre_auto_install blhc-note
 
-DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query -f'$${source:Version}' -W python3-pyqt6)
+DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query --showformat='$${source:Version}' --show python3-pyqt6)
 
 blhc-note:
 #	# Add false-positive info for blhc(1) check
