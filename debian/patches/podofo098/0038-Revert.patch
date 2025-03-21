@@ -1,0 +1,34 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 30 Jun 2023 17:07:06 +0900
+Subject: Revert "..."
+
+Forwarded: not-needed
+
+This reverts commit 27981cd3aa5babacffcfaa224b78017c9aa4715a.
+---
+ bypy/macos/__main__.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
+index c55c976..08c72bb 100644
+--- a/bypy/macos/__main__.py
++++ b/bypy/macos/__main__.py
+@@ -420,6 +420,9 @@ class Freeze:
+             raise SystemExit('No calibre plugins found in: ' + self.ext_dir)
+         for f in plugins:
+             self.fix_dependencies_in_lib(f)
++            if f.endswith('/podofo.so'):
++                self.change_dep('libpodofo.0.9.7.dylib',
++                    '@executable_path/../Frameworks/libpodofo.0.9.7.dylib', False, f)
+ 
+     @flush
+     def create_plist(self):
+@@ -479,7 +482,7 @@ class Freeze:
+     @flush
+     def add_podofo(self):
+         print('\nAdding PoDoFo')
+-        pdf = join(PREFIX, 'lib', 'libpodofo.2.dylib')
++        pdf = join(PREFIX, 'lib', 'libpodofo.1.dylib')
+         self.install_dylib(pdf)
+ 
+     @flush
