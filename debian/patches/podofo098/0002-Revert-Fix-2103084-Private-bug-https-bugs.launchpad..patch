@@ -12,7 +12,7 @@ This reverts commit 3eb3484cc019fea215b2bb2a313423c4c2b3b416.
  2 files changed, 9 insertions(+), 14 deletions(-)
 
 diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
-index 5fdda27616..6387ee8035 100644
+index 5fdda27..6387ee8 100644
 --- a/src/calibre/utils/podofo/__init__.py
 +++ b/src/calibre/utils/podofo/__init__.py
 @@ -242,8 +242,6 @@ def test_podofo():
@@ -25,7 +25,7 @@ index 5fdda27616..6387ee8035 100644
              raise ValueError('podofo failed to set title and author in Info dict {} != {}'.format(
                  (p.title, p.author, p.keywords), ('info title', 'info author', 'a, b')))
 diff --git a/src/calibre/utils/podofo/doc.cpp b/src/calibre/utils/podofo/doc.cpp
-index 047f319e57..648a90c1bb 100644
+index 047f319..648a90c 100644
 --- a/src/calibre/utils/podofo/doc.cpp
 +++ b/src/calibre/utils/podofo/doc.cpp
 @@ -731,21 +731,19 @@ PDFDoc_version_getter(PDFDoc *self, void *closure) {
