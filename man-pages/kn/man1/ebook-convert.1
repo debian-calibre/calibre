@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "ಫೆಬ್ರವರಿ 14, 2025" "7.26.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "ಮಾರ್ಚ್ 21, 2025" "8.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -136,6 +136,8 @@ options specific to every input and output format.
 \fI\%HTML Output Options\fP
 .IP \(bu 2
 \fI\%HTMLZ Output Options\fP
+.IP \(bu 2
+\fI\%KEPUB Output Options\fP
 .IP \(bu 2
 \fI\%LIT Output Options\fP
 .IP \(bu 2
@@ -428,7 +430,7 @@ Control auto\-detection of document structure.
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute is used by screen readers for assisting the visually challenged.
+When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute improves accessibility by providing text descriptions for users who cannot see or fully interpret visual content.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -827,7 +829,7 @@ Specify the character encoding of the input document. If set this option will ov
 .INDENT 0.0
 .TP
 .B \-\-no\-images
-Do not extract images from the document
+ದಾಖಲಾತಿಯಿಂದ ಚಿತ್ರಗಳನ್ನು ಸಂಗ್ರಹಿಸಬೇಡಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -949,7 +951,7 @@ Enable extensions to Markdown syntax. Extensions are formatting that is not part
 .INDENT 0.0
 .TP
 .B \-\-paragraph\-type
-Paragraph structure to assume. The value of \fB\(dq\fPoff\fB\(dq\fP is useful for formatted documents such as Markdown or Textile. Choices are: * auto: Try to auto detect paragraph type * block: Treat a blank line as a paragraph break * single: Assume every line is a paragraph * print:  Assume every line starting with 2+ spaces or a tab starts a paragraph * unformatted: Most lines have hard line breaks, few/no blank lines or indents * off: Don\fB\(aq\fPt modify the paragraph structure
+Paragraph structure to assume. The value of \fB\(dq\fPoff\fB\(dq\fP is useful for formatted documents such as Markdown or Textile. Choices are: * auto: Try to auto detect paragraph type * block: Treat a blank line as a paragraph break * single: ಪ್ರತಿ ಸಾಲನ್ನು ಪ್ಯಾರಾಗ್ರಾಫ್ ನಂತೆ ಭಾವಿಸಿ * print:  Assume every line starting with 2+ spaces or a tab starts a paragraph * unformatted: Most lines have hard line breaks, few/no blank lines or indents * off: ಪ್ಯಾರಾಗ್ರಾಫ್ ವಿನ್ಯಾಸವನ್ನು ಮಾರ್ಪಡಿಸಬೇಡಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1016,7 +1018,7 @@ Do not insert the book cover as an image at the start of the document. If you us
 .INDENT 0.0
 .TP
 .B \-\-docx\-no\-toc
-Do not insert the table of contents as a page at the start of the document.
+ದಾಖಲಾತಿಯ  ಆರಂಭದಲ್ಲಿ ಪರಿವಿಡಿಯನ್ನು ಪುಟದಂತೆ ಸೇರಿಸಬೇಡಿ
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1092,7 +1094,7 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated EPUB file to the specified folder. The contents of the folder are first deleted, so be careful.
+Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1170,7 +1172,7 @@ Template used for generation of the HTML index file instead of the default file
 .INDENT 0.0
 .TP
 .B \-\-htmlz\-class\-style
-How to handle the CSS when using css\-type = \fB\(aq\fPclass\fB\(aq\fP\&. Default is external. external: Use an external CSS file inline: Use a <style> tag in the HTML file
+How to handle the CSS when using css\-type = \fB\(aq\fPclass\fB\(aq\fP\&. Default is external. external: ಒಂದು ಬಾಹ್ಯ CSS ಕಡತ ಬಳಸಿ inline: Use a <style> tag in the HTML file
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1181,6 +1183,62 @@ Specify the handling of CSS. Default is class. class: Use CSS classes inline: Us
 .TP
 .B \-\-htmlz\-title\-filename
 If set this option causes the file name of the HTML file inside the HTMLZ archive to be based on the book title.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+If specified, the output plugin will try to create output that is as human readable as possible. May not have any effect for some output plugins.
+.UNINDENT
+.SH KEPUB OUTPUT OPTIONS
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Split all HTML files larger than this size (in KB). This is necessary as some devices cannot handle large file sizes. Set to 0 to disable size based splitting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-affect\-hyphenation
+Modify how hyphenation is performed for this book. Note that hyphenation does not perform well for all languages, as it depends on the dictionaries present on the device, which are not always of the highest quality.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-disable\-hyphenation
+Override all hyphenation settings in book, forcefully disabling hyphenation completely.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-hyphenation\-limit\-lines
+Maximum consecutive hyphenated lines.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-hyphenation\-min\-chars
+Minimum word length to hyphenate, in characters.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-hyphenation\-min\-chars\-after
+Minimum characters after hyphens.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-hyphenation\-min\-chars\-before
+Minimum characters before hyphens.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-max\-image\-size
+The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "veebruar 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "märts 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -146,6 +146,11 @@ Uuri määratud rajal (radadel) MOBI faili (faile)
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Väljasta calibre keskkonna seadistamiseks vajalikud rajad
 .UNINDENT
@@ -178,6 +183,11 @@ Subset the specified font. Use \fB\-\-\fP after this option to pass option to th
 .TP
 .B \-\-test\-build
 Test binary modules in build
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -8718,7 +8718,7 @@ return this.__repr__();
                 library_data.field_names = Object.create(null);
             }
             library_data.for_library = current_library_id();
-            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories fts_enabled fields_that_support_notes".split(" "));
+            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories fts_enabled fields_that_support_notes categories_using_hierarchy".split(" "));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 key = ρσ_Iter0[ρσ_Index0];
                 library_data[(typeof key === "number" && key < 0) ? library_data.length + key : key] = data[(typeof key === "number" && key < 0) ? data.length + key : key];
@@ -27267,7 +27267,7 @@ return this.__repr__();
         function get_bounding_client_rect(elem) {
             var br, r;
             br = elem.getBoundingClientRect();
-            if (br.width === 0 && br.height === 0) {
+            if (br.width === 0 && br.height === 0 && br.x === 0 && br.y === 0) {
                 r = document.createRange();
                 r.selectNodeContents(elem);
                 br = r.getBoundingClientRect();
@@ -28758,7 +28758,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "7.26.0";
+        CALIBRE_VERSION = "8.0.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -37621,14 +37621,16 @@ return this.__repr__();
                 }
                 is_vertical = vertical_categories[(typeof field === "number" && field < 0) ? vertical_categories.length + field : field];
                 function add_val(v) {
-                    var parent, websearch_link, fm, text_rep, target, calibre_search_url, calibre_search_tooltip, url, tooltip;
+                    var parent, websearch_link, no_link, fm, text_rep, target, calibre_search_url, calibre_search_tooltip, url, tooltip;
                     if (!v.appendChild) {
                         v += "";
                     }
                     parent = table.lastChild.lastChild;
                     if (is_searchable) {
                         websearch_link = false;
+                        no_link = false;
                         if (field === "authors") {
+                            no_link = interface_data.default_author_link === "__no_link__";
                             websearch_link = bool(interface_data.default_author_link) && interface_data.default_author_link !== "search-calibre";
                         } else {
                             fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
@@ -37652,7 +37654,11 @@ return this.__repr__();
                             url = calibre_search_url;
                             tooltip = calibre_search_tooltip;
                         }
-                        parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [v].concat([ρσ_desugar_kwargs({target: target, title: tooltip, class_: "blue-link", href: url})])));
+                        if (no_link) {
+                            parent.appendChild((v.appendChild) ? v : document.createTextNode(v));
+                        } else {
+                            parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [v].concat([ρσ_desugar_kwargs({target: target, title: tooltip, class_: "blue-link", href: url})])));
+                        }
                         if (link_maps[(typeof field === "number" && field < 0) ? link_maps.length + field : field] && (ρσ_expr_temp = link_maps[(typeof field === "number" && field < 0) ? link_maps.length + field : field])[(typeof text_rep === "number" && text_rep < 0) ? ρσ_expr_temp.length + text_rep : text_rep]) {
                             url = (ρσ_expr_temp = link_maps[(typeof field === "number" && field < 0) ? link_maps.length + field : field])[(typeof text_rep === "number" && text_rep < 0) ? ρσ_expr_temp.length + text_rep : text_rep];
                             if (url.startswith("https://") || url.startswith("http://")) {
@@ -37660,16 +37666,12 @@ return this.__repr__();
                                 parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [svgicon("external-link")].concat([ρσ_desugar_kwargs({title: _("Click to open") + ": " + url, href: url, target: "_blank", class_: "blue-link"})])));
                             }
                         }
-                        if (websearch_link) {
+                        if (websearch_link || no_link) {
                             parent.appendChild(document.createTextNode(" "));
                             parent.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [svgicon("search")].concat([ρσ_desugar_kwargs({title: calibre_search_tooltip, href: calibre_search_url, class_: "blue-link"})])));
                         }
                     } else {
-                        if (v.appendChild) {
-                            parent.appendChild(v);
-                        } else {
-                            parent.appendChild(document.createTextNode(v));
-                        }
+                        parent.appendChild((v.appendChild) ? v : document.createTextNode(v));
                     }
                     if (typeof v === "string" && !is_html) {
                         add_note_link(field, name, v, parent);

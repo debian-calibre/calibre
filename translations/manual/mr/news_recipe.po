@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# sabretou <sabretou@gmail.com>, 2024
+# sabretou <sabretou@gmail.com>, 2024-2025
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 07:43+0000\n"
+"POT-Creation-Date: 2025-02-20 13:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: sabretou <sabretou@gmail.com>, 2024\n"
+"Last-Translator: sabretou <sabretou@gmail.com>, 2024-2025\n"
 "Language-Team: Marathi (http://app.transifex.com/calibre/calibre/language/mr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -153,15 +153,12 @@ msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
+"refreshes and has a random common user agent."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
+msgid "To customize the browser override this method in your sub-class as::"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
@@ -250,7 +247,7 @@ msgstr ""
 #: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
 msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL. Return"
+"for dynamically generated images, etc.) and return the processed URL. Return"
 " None or an empty string to skip fetching the image."
 msgstr ""
 
@@ -346,7 +343,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
 msgid "Parsed HTML belonging to this article"
-msgstr ""
+msgstr "या लेखाशी संबंधित HTML पार्स केले"
 
 #: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
@@ -526,6 +523,18 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine, which supports "
+"logging in. However, if you don't need logging in, consider changing this to"
+" either 'webengine' which uses an actual Chromium browser to do the network "
+"requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and "
+"'qt' support HTTP/2, which mechanize does not and are thus harder to "
+"fingerprint for bot protection services."
+msgstr ""
+
+#: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
@@ -536,9 +545,9 @@ msgstr ""
 msgid ""
 "Set this to False to ignore all scaling and compression parameters and pass "
 "images through unmodified. If True and the other compression parameters are "
-"left at their default values, JPEG images will be scaled to fit in the "
-"screen dimensions set by the output profile and compressed to size at most "
-"(w * h)/16 where w x h are the scaled image dimensions."
+"left at their default values, images will be scaled to fit in the screen "
+"dimensions set by the output profile and compressed to size at most (w * "
+"h)/16 where w x h are the scaled image dimensions."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of
@@ -654,8 +663,8 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you do not want to use gzipped transfers. Note that some old"
-" servers flake out with gzip"
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
 msgstr ""
 
 #: ../../__w/calibre/calibre/manual/docstring of

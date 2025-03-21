@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "februāris 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "marts 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -146,6 +146,11 @@ Pārbaudīt MOBI datni(es) norādītajā(s) mapē(s)
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Izvades ceļi vajadzīgi, lai iestatītu Calibre vidi
 .UNINDENT
@@ -178,6 +183,11 @@ Iegult norādītā fonta apakškopu. Izmantojiet \fB\-\-\fP pēc šī papildiesp
 .TP
 .B \-\-test\-build
 Pārbaudīt bināros moduļus laidienā
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
 .UNINDENT
 .INDENT 0.0
 .TP

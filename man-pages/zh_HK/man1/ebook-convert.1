@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "2月 14, 2025" "7.26.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "3月 21, 2025" "8.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -152,7 +152,7 @@ The maximum image size (width x height). A value of none means use the screen si
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-解压EPUB文件的内容到指定文件夹。请注意，该文件夹的内容会先被清空。
+Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -424,7 +424,7 @@ pt 行高。控制兩行高度距離。僅僅適用於未定義行高的元素�
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute is used by screen readers for assisting the visually challenged.
+When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute improves accessibility by providing text descriptions for users who cannot see or fully interpret visual content.
 .UNINDENT
 .INDENT 0.0
 .TP

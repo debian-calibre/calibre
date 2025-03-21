@@ -45,6 +45,10 @@ or the context menu. The value icon rules are defined per-user, not per-library.
        <property name="text">
         <string>Show only categories and values available in the current library</string>
        </property>
+       <property name="toolTip">
+        <string>This check box cannot be changed after any other changes have been made.
+Otherwise all edits would be lost.</string>
+       </property>
       </widget>
       </item>
       <item row="2" column="1">
@@ -82,6 +86,18 @@ or the context menu. The value icon rules are defined per-user, not per-library.
           </property>
           <property name="toolTip">
            <string>Undo changes in the selected cell, if any.</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="add_button">
+          <property name="icon">
+          <iconset resource="../../../../../resources/images.qrc">
+            <normaloff>:/images/plus.png</normaloff>:/images/plus.png</iconset>
+          </property>
+          <property name="toolTip">
+           <string>Add a new rule. The rule is added immediately. If you decide you don't
+want it then you must delete it.</string>
           </property>
          </widget>
         </item>

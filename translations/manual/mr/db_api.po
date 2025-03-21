@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# sabretou <sabretou@gmail.com>, 2024
+# sabretou <sabretou@gmail.com>, 2024-2025
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 07:43+0000\n"
+"POT-Creation-Date: 2025-02-20 13:44+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: sabretou <sabretou@gmail.com>, 2024\n"
+"Last-Translator: sabretou <sabretou@gmail.com>, 2024-2025\n"
 "Language-Team: Marathi (http://app.transifex.com/calibre/calibre/language/mr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -136,7 +136,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_extra_files:1
 msgid "Add extra data files"
-msgstr ""
+msgstr "अतिरिक्त डेटा फायली जोडा"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
@@ -184,6 +184,33 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_types:1
+msgid "Return a tuple of all annotation types in the database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_users:1
+msgid "Return a tuple of all (user_type, user name) that have annotations."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations:1
+msgid ""
+"Return a tuple of all annotations matching the specified criteria. "
+"`ignore_removed` controls whether removed (deleted) annotations are also "
+"returned. Removed annotations are just a skeleton used for merging of "
+"annotations."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations_for_book:1
+msgid ""
+"Return a tuple containing all annotations for the specified book_id as a "
+"dict with keys: `format`, `user_type`, `user`, `annotation`. Here, "
+"annotation is the annotation data."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
 msgstr ""
@@ -203,6 +230,20 @@ msgstr ""
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotation_count_for_book:1
+msgid ""
+"Return the number of annotations for the specified book available in the "
+"database."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotations_map_for_book:1
+msgid ""
+"Return a map of annotation type -> annotation data for the specified "
+"book_id, format, user and user_type."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -326,6 +367,11 @@ msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_annotations:1
+msgid "Delete annotations with the specified ids."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -571,12 +617,15 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 msgid ""
-"Return the item id for item_name (case-insensitive) or None if not found"
+"Return the item id for item_name or None if not found. This function is very"
+" slow if doing lookups for multiple names use either get_item_ids() or "
+"get_item_name_map(). Similarly, case sensitive lookups are faster than case "
+"insensitive ones."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
-msgid "Return the item id for item_name (case-insensitive)"
+msgid "Return a dict mapping item_name to the item id or None"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -728,6 +777,13 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_annotations_for_book:1
+msgid ""
+"Merge the specified annotations into the existing annotations for book_id, "
+"fm, user_type, and user."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
 msgid ""
 "Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
@@ -737,12 +793,12 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
 msgid "Undelete a book from the trash directory"
-msgstr ""
+msgstr "कचरा फोल्डरमधून पुस्तक अनडिलीट करा"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_format_from_trash:1
 msgid "Undelete a format from the trash directory"
-msgstr ""
+msgstr "कचरा फोल्डरमधून स्वरूप अनडिलीट करा"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
@@ -798,6 +854,12 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_extra_files:1
+msgid ""
+"Delete the specified extra files, either to Recycle Bin or permanently."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
 msgid "Remove the specified formats from the specified books."
 msgstr ""
@@ -832,7 +894,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_extra_files:1
 msgid "Rename extra data files"
-msgstr ""
+msgstr "अतिरिक्त डेटा फायलींची नावे बदला"
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
@@ -923,10 +985,22 @@ msgid ""
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_annotations:1
+msgid ""
+"Return of a tuple of annotations matching the specified Full-text query."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search_notes:1
 msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_annotations_for_book:1
+msgid ""
+"Set all annotations for the specified book_id, fmt, user_type and user."
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -1069,6 +1143,11 @@ msgid ""
 "Unretire a previously retired note for the specified item. Notes are retired"
 " when an item is removed from the database"
 msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_annotations:1
+msgid "Update annotations."
+msgstr "अ‍ॅनोटेशन अपडेट करा."
 
 #: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

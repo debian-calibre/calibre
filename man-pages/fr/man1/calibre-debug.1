@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "février 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "mars 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -139,6 +139,11 @@ Inspecter le(s) fichier(s) MOBI à/aux (l\fB\(aq\fP)emplacement(s) spécifié(s)
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Convertit le fichier EPUB spécifié en KEPUB sans effectuer une conversion complète. C\fB\(aq\fPest ce que fait le pilote Kobo lorsqu\fB\(aq\fPil envoie des fichiers sur le périphérique.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Sort les emplacements nécessaires pour configurer l\fB\(aq\fPenvironnement  de calibre
 .UNINDENT
@@ -171,6 +176,11 @@ Créer un sous\-ensemble avec les polices spécifiées. Utilisez \fB\-\-\fP apr�
 .TP
 .B \-\-test\-build
 Tester les modules binaires en construction
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convertit le fichier KEPUB spécifié en EPUB sans effectuer une conversion complète. C\fB\(aq\fPest ce que fait le pilote Kobo lorsqu\fB\(aq\fPil importe des fichiers depuis le périphérique.
 .UNINDENT
 .INDENT 0.0
 .TP

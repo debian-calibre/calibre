@@ -12,6 +12,7 @@ from calibre.gui2 import error_dialog, gprefs
 from calibre.gui2.dialogs.match_books_ui import Ui_MatchBooks
 from calibre.utils.icu import sort_key
 from calibre.utils.localization import ngettext
+from calibre.utils.search_query_parser import ParseException
 
 
 class TableItem(QTableWidgetItem):
@@ -87,6 +88,7 @@ class MatchBooks(QDialog, Ui_MatchBooks):
         self.books_table.setHorizontalHeaderItem(2, t)
         self.books_table_header_height = self.books_table.height()
         self.books_table.cellDoubleClicked.connect(self.book_doubleclicked)
+        self.books_table.selectionModel().selectionChanged.connect(self.selection_changed)
         self.books_table.cellClicked.connect(self.book_clicked)
         self.books_table.sortByColumn(0, Qt.SortOrder.AscendingOrder)
 
@@ -133,7 +135,11 @@ class MatchBooks(QDialog, Ui_MatchBooks):
         try:
             self.search_button.setEnabled(False)
             QApplication.setOverrideCursor(QCursor(Qt.CursorShape.WaitCursor))
-            books = self.library_db.data.search(query, return_matches=True)
+            try:
+                books = self.library_db.data.search(query, return_matches=True)
+            except ParseException as e:
+                return error_dialog(self.gui, _('Could not search'), _(
+                    'The search expression {} is not valid.').format(query), det_msg=str(e), show=True)
             self.books_table.setRowCount(len(books))
 
             self.books_table.setSortingEnabled(False)
@@ -172,6 +178,12 @@ class MatchBooks(QDialog, Ui_MatchBooks):
             for c in range(self.books_table.columnCount()):
                 self.books_table.setColumnWidth(c, w)
         self.save_state()
+
+    def selection_changed(self):
+        x = self.books_table.selectedIndexes()
+        if x:
+            id_ = x[0].data(Qt.ItemDataRole.UserRole)
+            self.current_library_book_id = id_
 
     def book_clicked(self, row, column):
         self.book_selected = True

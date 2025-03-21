@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 02:21+0000\n"
+"POT-Creation-Date: 2025-02-20 13:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: un_pogaz, 2022-2025\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -1168,8 +1168,8 @@ msgid ""
 "For example, assume you have a custom column `Translators` "
 "(``#translators``) where the names are `Last name, First name`. You might "
 "need to convert the name to `First name Last name` when creating the URL. "
-"You can use the :ref:`make_url` function to do this::"
-msgstr "Par exemple, supposons que vous ayez une colonne personnalisée `Traducteurs` (`#translators`) dont les noms sont `Nom, Prénom`. Vous pourriez avoir besoin de convertir le nom en `Prénom Nom` lors de la création de l'URL. Vous pouvez utiliser la fonction :ref:`make_url` pour ce faire ::"
+"You can use the :ref:`ff_make_url` function to do this::"
+msgstr "Par exemple, supposons que vous ayez une colonne personnalisée `Traducteurs` (`#translators`) dont les noms sont `Nom, Prénom`. Vous pourriez avoir besoin de convertir le nom en `Prénom Nom` lors de la création de l'URL. Vous pouvez utiliser la fonction :ref:`ff_make_url` pour ce faire ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:573
 msgid ""
@@ -1185,10 +1185,10 @@ msgstr "Notez que le prénom de la personne est maintenant en premier, que l'esp
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:579
 msgid ""
-"The functions :ref:`make_url_extended`, :ref:`query_string`, and "
-":ref:`encode_for_url` might be useful depending upon any additional "
+"The functions :ref:`ff_make_url_extended`, :ref:`ff_query_string`, and "
+":ref:`ff_encode_for_url` might be useful depending upon any additional "
 "processing complexity."
-msgstr "Les fonctions :ref:`make_url_extended`, :ref:`query_string`, et :ref:`encode_for_url` peuvent être utiles en fonction de la complexité du traitement."
+msgstr "Les fonctions :ref:`ff_make_url_extended`, :ref:`ff_query_string`, et :ref:`ff_encode_for_url` peuvent être utiles en fonction de la complexité du traitement."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:581
 msgid "**The calibre URL scheme**"
@@ -1212,9 +1212,9 @@ msgid ""
 "is a simple name, not the file path to the library. You must spell it as "
 "shown in the title bar, including letter case. The character ``_`` "
 "(underscore) stands for the current library. If the name contains any spaces"
-" or special characters then it must be hex encoded using the :ref:`to_hex` "
-"function, as in the following example::"
-msgstr "``Library_Name`` doit être remplacé par le nom de la bibliothèque Calibre que vous souhaitez ouvrir. Le nom de la bibliothèque est affiché dans la barre de titre de la fenêtre. Il s'agit d'un nom simple, et non du chemin d'accès à la bibliothèque. Vous devez l'épeler comme indiqué dans la barre de titre, en respectant les majuscules et les minuscules. Le caractère ``_`` (trait de soulignement) représente la bibliothèque courante. Si le nom contient des espaces ou des caractères spéciaux, il doit être codé en hexadécimal à l'aide de la fonction :ref:`to_hex`, comme dans l'exemple suivant ::"
+" or special characters then it must be hex encoded using the "
+":ref:`ff_to_hex` function, as in the following example::"
+msgstr "``Library_Name`` doit être remplacé par le nom de la bibliothèque Calibre que vous souhaitez ouvrir. Le nom de la bibliothèque est affiché dans la barre de titre de la fenêtre. Il s'agit d'un nom simple, et non du chemin d'accès à la bibliothèque. Vous devez l'épeler comme indiqué dans la barre de titre, en respectant les majuscules et les minuscules. Le caractère ``_`` (trait de soulignement) représente la bibliothèque courante. Si le nom contient des espaces ou des caractères spéciaux, il doit être codé en hexadécimal à l'aide de la fonction :ref:`ff_to_hex`, comme dans l'exemple suivant ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:598
 msgid "The template generates the URL::"
@@ -1265,8 +1265,8 @@ msgstr "L'URL obtenue est ::"
 #: ../../__w/calibre/calibre/manual/template_lang.rst:634
 msgid ""
 "Here is an example of the same URL built using the "
-":ref:``make_url_extended`` function instead of :ref:`strcat`()::"
-msgstr "Voici un exemple de la même URL construite en utilisant la fonction :ref:``make_url_extended`` au lieu de :ref:`strcat` ::"
+":ref:``ff_make_url_extended`` function instead of :ref:`ff_strcat`::"
+msgstr "Voici un exemple de la même URL construite en utilisant la fonction :ref:``ff_make_url_extended`` au lieu de :ref:`ff_strcat` ::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:639
 msgid ""
@@ -1296,9 +1296,9 @@ msgid ""
 "``Item_Id`` is the internal numeric ID of the value in the field. There "
 "isn't a template function that returns the ``Item_Id``, so templates will "
 "normally use the second form, ``Hex_Encoded_Item_Name``. Here is a sample "
-"template that opens the note for the person `Boy-Żeleński, Tadeusz` in the "
-"field ``#authtest``::"
-msgstr "``Field_Name`` est le nom du champ. Si le champ est une colonne personnalisée, remplacez le caractère ``#`` par un trait de soulignement (``_``). ``Item_Id`` est l'identifiant numérique interne de la valeur du champ. Il n'y a pas de fonction de template qui retourne l'``Item_Id``, donc les templates utiliseront normalement la seconde forme, ``Hex_Encoded_Item_Name``. Voici un exemple de modèle qui ouvre la note pour la personne `Boy-Żeleński, Tadeusz` dans le champ `#authtest` ::\n "
+"template that opens the note for the person ``Boy-Żeleński, Tadeusz`` in the"
+" field ``#authtest``::"
+msgstr "``Field_Name`` est le nom du champ. Si le champ est une colonne personnalisée, remplacez le caractère ``#`` par un trait de soulignement (``_``). ``Item_Id`` est l'identifiant numérique interne de la valeur du champ. Il n'y a pas de fonction de template qui retourne l'``Item_Id``, donc les templates utiliseront normalement la seconde forme, ``Hex_Encoded_Item_Name``. Voici un exemple de modèle qui ouvre la note pour la personne ``Boy-Żeleński, Tadeusz`` dans le champ `#authtest` ::\n "
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid "Stored templates"

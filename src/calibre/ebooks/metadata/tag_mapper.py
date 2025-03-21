@@ -15,19 +15,23 @@ def compile_pat(pat):
     return regex.compile(pat, flags=REGEX_FLAGS)
 
 
-def matcher(rule):
+def matcher(rule, separator=','):
     import unicodedata
     def n(x):
         return unicodedata.normalize('NFC', as_unicode(x or '', errors='replace'))
 
     mt = rule['match_type']
     if mt == 'one_of':
-        tags = {icu_lower(n(x.strip())) for x in rule['query'].split(',')}
-        return lambda x: x in tags
+        if separator:
+            tags = {icu_lower(n(x.strip())) for x in rule['query'].split(separator)}
+            return tags.__contains__
+        return icu_lower(n(rule['query'].strip())).__eq__
 
     if mt == 'not_one_of':
-        tags = {icu_lower(n(x.strip())) for x in rule['query'].split(',')}
-        return lambda x: x not in tags
+        if separator:
+            tags = {icu_lower(n(x.strip())) for x in rule['query'].split(',')}
+            return lambda x: x not in tags
+        return icu_lower(n(rule['query'].strip())).__ne__
 
     if mt == 'matches':
         pat = compile_pat(n(rule['query']))
@@ -44,7 +48,7 @@ def matcher(rule):
     return lambda x: False
 
 
-def apply_rules(tag, rules):
+def apply_rules(tag, rules, separator=','):
     ans = []
     tags = deque()
     tags.append(tag)
@@ -66,7 +70,7 @@ def apply_rules(tag, rules):
                         tag = compile_pat(rule['query']).sub(rule['replace'], tag)
                     else:
                         tag = rule['replace']
-                    if ',' in tag:
+                    if separator and separator in tag:
                         replacement_tags = []
                         self_added = False
                         for rtag in (x.strip() for x in tag.split(',')):
@@ -122,15 +126,15 @@ def uniq(vals, kmap=icu_lower):
     return [x for x, k in zip(vals, lvals) if k not in seen and not seen_add(k)]
 
 
-def map_tags(tags, rules=()):
+def map_tags(tags, rules=(), separator=','):
     if not tags:
         return []
     if not rules:
         return list(tags)
-    rules = [(r, matcher(r)) for r in rules]
+    rules = [(r, matcher(r, separator)) for r in rules]
     ans = []
     for t in tags:
-        ans.extend(apply_rules(t, rules))
+        ans.extend(apply_rules(t, rules, separator))
     return uniq(list(filter(None, ans)))
 
 
@@ -147,14 +151,14 @@ def find_tests():
                     ans['replace'] = replace
                 return ans
 
-            def run(rules, tags, expected):
+            def run(rules, tags, expected, sep=','):
                 if isinstance(rules, dict):
                     rules = [rules]
                 if isinstance(tags, str):
-                    tags = [x.strip() for x in tags.split(',')]
+                    tags = [x.strip() for x in tags.split(sep)] if sep else [tags]
                 if isinstance(expected, str):
-                    expected = [x.strip() for x in expected.split(',')]
-                ans = map_tags(tags, rules)
+                    expected = [x.strip() for x in expected.split(sep)] if sep else [expected]
+                ans = map_tags(tags, rules, sep)
                 self.assertEqual(ans, expected)
 
             run(rule('capitalize', 't1,t2'), 't1,x1', 'T1,x1')
@@ -176,6 +180,7 @@ def find_tests():
             run(rule('split', '/', '/', 'has'), '/a/', 'a')
             run(rule('split', 'a,b', '/'), 'a,b', 'a,b')
             run(rule('split', 'a b', ' ', 'has'), 'a b', 'a,b')
+            run(rule('upper', 'a, b, c'), 'a, b, c', 'A, B, C', sep='')
     return unittest.defaultTestLoader.loadTestsFromTestCase(TestTagMapper)
 
 

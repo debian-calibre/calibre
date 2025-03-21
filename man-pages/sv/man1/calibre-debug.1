@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "februari 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "mars 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -143,6 +143,11 @@ Undersök MOBI\-filen eller MOBI\-filerna i den angivna sökvägen eller de angi
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Konvertera den angivna EPUB\-filen till KEPUB utan att göra en fullständig konvertering. Detta är vad Kobo\-drivrutinen gör när den skickar filer till enheten.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Mata ut nödvändiga sökvägar för att anpassa calibre\-miljön
 .UNINDENT
@@ -175,6 +180,11 @@ Underuppsätt det angivna teckensnittet. Använd \fB\-\-\fP efter denna flagga f
 .TP
 .B \-\-test\-build
 Testa binärmoduler i bygge
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Konvertera den angivna KEPUB\-filen till EPUB utan att göra en fullständig konvertering. Detta är vad Kobo\-drivrutinen gör när den importerar filer från enheten.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "फेब्रुवारी 14, 2025" "7.26.0" "calibre"
+.TH "CALIBREDB" "1" "मार्च 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -235,7 +235,7 @@ Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+साचा स्तंभाचा मथळा. डिफॉल्ट: %d. हा पर्याय तेव्हा दुर्लक्ष केला जाईल जेव्हा \fI\%\-\-for\-machine\fP हा पर्याय सेट केला असेल
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -289,7 +289,7 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-languages, \-l
-A comma separated list of languages (best to use ISO639 language codes, though some language names may also be recognized)
+स्वल्पविरामांनी विभाजित केलेली भाषांची यादी (ISO639 भाषा कोड वापरणे सर्वात योग्य, पण काही भाषांची नावेदेखील ओळखली जातील)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -332,7 +332,7 @@ Assume that each folder has only a single logical book and that all files in it 
 .INDENT 0.0
 .TP
 .B \-\-recurse, \-r
-Process folders recursively
+फोल्डरांचे प्रत्यावर्तनाने संस्करण करा
 .UNINDENT
 .SH REMOVE
 .INDENT 0.0
@@ -433,7 +433,7 @@ The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tag
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fI\%\-\-field\fP option
+\fI\%\-\-field\fP पर्यायाशी वापरल्या जाऊ शकणार्‍या मेटाडेटा रकाना नावांची यादी दाखवा
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -582,32 +582,32 @@ Specifies the rules used to exclude books from the generated catalog. The model 
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Include \fB\(aq\fPAuthors\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+कॅटालॉगमध्ये \fB\(aq\fPलेखक\fB\(aq\fP विभाग समाविष्ट करा. डिफॉल्ट: \fB\(aq\fPFalse\fB\(aq\fP यांवर लागू होईल: AZW3, EPUB, MOBI आउटपुट स्वरूप
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-descriptions
-Include \fB\(aq\fPDescriptions\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+कॅटालॉगमध्ये \fB\(aq\fPवर्णने\fB\(aq\fP विभाग समाविष्ट करा. डिफॉल्ट: \fB\(aq\fPFalse\fB\(aq\fP यांवर लागू होईल: AZW3, EPUB, MOBI आउटपुट स्वरूप
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-genres
-Include \fB\(aq\fPGenres\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+कॅटालॉगमध्ये \fB\(aq\fPझाँरे\fB\(aq\fP विभाग समाविष्ट करा. डिफॉल्ट: \fB\(aq\fPFalse\fB\(aq\fP यांवर लागू होईल: AZW3, EPUB, MOBI आउटपुट स्वरूप
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Include \fB\(aq\fPRecently Added\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+कॅटालॉगमध्ये \fB\(aq\fPअलीकडील जोडलेली\fB\(aq\fP विभाग समाविष्ट करा. डिफॉल्ट: \fB\(aq\fPFalse\fB\(aq\fP यांवर लागू होईल: AZW3, EPUB, MOBI आउटपुट स्वरूप
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Include \fB\(aq\fPSeries\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+कॅटालॉगमध्ये \fB\(aq\fPमालिका\fB\(aq\fP विभाग समाविष्ट करा. डिफॉल्ट: \fB\(aq\fPFalse\fB\(aq\fP यांवर लागू होईल: AZW3, EPUB, MOBI आउटपुट स्वरूप
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-titles
-Include \fB\(aq\fPTitles\fB\(aq\fP section in catalog. Default: \fB\(aq\fPFalse\fB\(aq\fP Applies to: AZW3, EPUB, MOBI output formats
+कॅटालॉगमध्ये \fB\(aq\fPशीर्षके\fB\(aq\fP विभाग समाविष्ट करा. डिफॉल्ट: \fB\(aq\fPFalse\fB\(aq\fP यांवर लागू होईल: AZW3, EPUB, MOBI आउटपुट स्वरूप
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -778,7 +778,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
-Really do the recovery. The command will not run unless this option is specified.
+खरच पुनःप्राप्ति करा. हा पर्याय विनिर्दिष्ट केल्याशिवाय हा हुकूम बजावला जाणार नाही.
 .UNINDENT
 .SH CHECK_LIBRARY
 .INDENT 0.0

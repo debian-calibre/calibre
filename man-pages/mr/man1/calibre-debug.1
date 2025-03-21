@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "फेब्रुवारी 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "मार्च 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -117,7 +117,7 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-डीबग सक्रिय करून GUI चालवा. डीबगचे आउटपुट stdout आणि stderr येथे छापले जाईल.
+डीबग करणे सक्रिय करून GUI चालवा. डीबगचे आउटपुट stdout आणि stderr येथे छापले जाईल.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,6 +143,11 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .TP
 .B \-\-inspect\-mobi, \-m
 विनिर्दिष्ट पाथ येथील MOBI फाईल (किंवा फायली) तपासा
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepubify
+Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -178,6 +183,11 @@ Subset the specified font. Use \fB\-\-\fP after this option to pass option to th
 .TP
 .B \-\-test\-build
 बिल्डमध्ये बायनरी मॉड्यूलांची चाचणी करा
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
 .UNINDENT
 .INDENT 0.0
 .TP

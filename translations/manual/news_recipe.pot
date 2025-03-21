@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.26.0\n"
+"Project-Id-Version: calibre 8.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-14 08:48+0530\n"
+"POT-Creation-Date: 2025-03-21 08:11+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,6 +28,30 @@ msgstr ""
 msgid "Base class that contains logic needed in all recipes. By overriding progressively more of the functionality in this class, you can make progressively more customized/powerful recipes. For a tutorial introduction to creating recipes, see :doc:`news`."
 msgstr ""
 
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
+msgid "If your recipe when converted to EPUB has problems with images when viewed in Adobe Digital Editions, call this method from within :meth:`postprocess_html`."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
+msgid "Perform some processing on image urls (perhaps removing size restrictions for dynamically generated images, etc.) and return the processed URL. Return None or an empty string to skip fetching the image."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.print_version:1
+msgid "Take a `url` pointing to the webpage with article content and return the :term:`URL` pointing to the print version of the article. By default does nothing. For example::"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
+msgid "Convenience method to take a `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and extract the text from it recursively, including any CDATA sections and alt tag attributes. Return a possibly empty Unicode string."
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
+msgid "`use_alt`: If `True` try to use the alt attribute for tags that don't have any textual content"
+msgstr ""
+
+#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
+msgid "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+msgstr ""
+
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
 msgid "Call this method inside any of the preprocess methods to abort the download for the current article. Useful to skip articles that contain inappropriate content, such as pure video articles."
 msgstr ""
@@ -38,10 +62,6 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
 msgid "Call this from populate_article_metadata with the src attribute of an <img> tag from the article that is appropriate for use as the thumbnail representing the article in the Table of Contents. Whether the thumbnail is actually used is device dependent (currently only used by the Kindles). Note that the referenced image must be one that was successfully downloaded, otherwise it will be ignored."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
-msgid "If your recipe when converted to EPUB has problems with images when viewed in Adobe Digital Editions, call this method from within :meth:`postprocess_html`."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
@@ -130,10 +150,6 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
 msgid "A floating point number, the delay in seconds."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
-msgid "Perform some processing on image urls (perhaps removing size restrictions for dynamically generated images, etc.) and return the processed URL. Return None or an empty string to skip fetching the image."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
@@ -245,10 +261,6 @@ msgstr ""
 msgid "This method must return the processed raw_html as a unicode object."
 msgstr ""
 
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.print_version:1
-msgid "Take a `url` pointing to the webpage with article content and return the :term:`URL` pointing to the print version of the article. By default does nothing. For example::"
-msgstr ""
-
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
 msgid "Use this method to set the date when this issue was published. Defaults to the moment of download. Must return a :class:`datetime.datetime` object."
 msgstr ""
@@ -267,18 +279,6 @@ msgstr ""
 
 #: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:6
 msgid "`weights`: A dictionary that maps weights to titles. If any titles in index are not in weights, they are assumed to have a weight of 0."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
-msgid "Convenience method to take a `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and extract the text from it recursively, including any CDATA sections and alt tag attributes. Return a possibly empty Unicode string."
-msgstr ""
-
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
-msgid "`use_alt`: If `True` try to use the alt attribute for tags that don't have any textual content"
-msgstr ""
-
-#: ../../home/kovid/work/calibre/src/calibre/web/feeds/news.py:docstring of calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
-msgid "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/docstring of calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "února 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "března 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -145,6 +145,11 @@ Zkontrolovat soubory MOBI v zadaných cestách
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Výstup cest potřebných pro nastavení prostředí Calibre
 .UNINDENT
@@ -177,6 +182,11 @@ Způsobí vypnutí spuštěných instancí Calibre. Pamatujte, že pokud máte s
 .TP
 .B \-\-test\-build
 Testovat binární moduly v sestavení
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
 .UNINDENT
 .INDENT 0.0
 .TP

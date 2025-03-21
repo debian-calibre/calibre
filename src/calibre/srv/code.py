@@ -232,6 +232,7 @@ def get_library_init_data(ctx, rd, db, num, sorts, orders, vl):
         ans['fts_enabled'] = db.is_fts_enabled()
         ans['book_details_vertical_categories'] = db._pref('book_details_vertical_categories', ())
         ans['fields_that_support_notes'] = tuple(db._field_supports_notes())
+        ans['categories_using_hierarchy'] = db._pref('categories_using_hierarchy', ())
         mdata = ans['metadata'] = {}
         try:
             extra_books = {
@@ -437,7 +438,6 @@ def web_search(ctx, rd, book_id, field, item_val):
     with db.safe_read_lock:
         if not ctx.has_id(rd, db, book_id):
             raise BookNotFound(book_id, db)
-        mi = db.get_metadata(book_id, get_cover=False)
         url, tooltip = web_search_link(db, book_id, field, item_val)
         if url:
             raise HTTPTempRedirect(url)

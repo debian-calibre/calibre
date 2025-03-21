@@ -6,14 +6,15 @@
 # Artur de Carvalho Alves <arturcalves@gmail.com>, 2015
 # Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020
 # Dante Barros <danteaurelio@hotmail.com>, 2015
+# Marcello Oliveira <marcello.mco@gmail.com>, 2025
 # Victor Cornaglia Marques Ventura <euventura@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 13:56+0000\n"
+"POT-Creation-Date: 2025-03-19 14:59+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2020\n"
+"Last-Translator: Marcello Oliveira <marcello.mco@gmail.com>, 2025\n"
 "Language-Team: Portuguese (Brazil) (http://app.transifex.com/calibre/calibre/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,12 +44,12 @@ msgstr "Um plugin calibre. Membros úteis incluem:"
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:3
 msgid "``self.installation_type``: Stores how the plugin was installed."
-msgstr ""
+msgstr "``self.installation_type``: Registra como o plugin foi instalado."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:4
 msgid "``self.plugin_path``: Stores path to the ZIP file that contains"
-msgstr ""
+msgstr "``self.plugin_path``: Armazena caminho do arquivo ZIP que contém"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin:5
@@ -128,7 +129,7 @@ msgstr "Lista de plataformas em que este plugin funciona. Por exemplo : \" [' wi
 msgid ""
 "The name of this plugin. You must set it something other than Trivial Plugin"
 " for it to work."
-msgstr ""
+msgstr "O nome deste plugin. É necessário determinar algo além de Plugin Trivial para que ele funcione."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.MetadataReaderPlugin.version:1
@@ -137,7 +138,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.version:1
 msgid "The version of this plugin as a 3-tuple (major, minor, revision)"
-msgstr ""
+msgstr "A versão deste plugin em 3 partes (versão principal, sub-versão, revisão)"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.description:1
@@ -170,17 +171,17 @@ msgid ""
 "order of decreasing priority. Plugins with higher priority will be run "
 "first. The highest possible priority is ``sys.maxsize``. Default priority is"
 " 1."
-msgstr ""
+msgstr "Quando existe mais de um plugin para um tipo de arquivo, os plugins são executados em ordem decrescente de prioridade. Os plugins com prioridade maior serão executados primeiro. A maior prioridade possível é ``sys.maxsize``. A prioridade padrão é 1."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.minimum_calibre_version:1
 msgid "The earliest version of calibre this plugin requires"
-msgstr ""
+msgstr "A menor versão do calibre que este plugin necessita"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.Plugin.installation_type:1
 msgid "The way this plugin is installed"
-msgstr ""
+msgstr "A forma como este plugin está instalado"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.InterfaceActionBase.can_be_disabled:1
@@ -218,7 +219,7 @@ msgstr "Se falso, o usuário não será capaz de desativar este plugin. Use com 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.type:1
 msgid "The type of this plugin. Used for categorizing plugins in the GUI"
-msgstr ""
+msgstr "O tipo deste plugin. Usado para definir categorias de plugins na interface gráfica"
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:1
@@ -227,7 +228,7 @@ msgid ""
 "initialized every time a new plugin is added. Also note that if the plugin "
 "is run in a worker process, such as for adding books, then the plugin will "
 "be initialized for every new worker process."
-msgstr ""
+msgstr "Chamado uma vez quando os plugins do calibre são inicializados.  Os plugins são reinicializados sempre que um novo plugin é acrescentado. Além disso, repare que se o plugin é executado em um processo de operação, como ao adicionar livros, então o plugin será inicializado para cada novo processo de operação."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:6
@@ -235,13 +236,13 @@ msgid ""
 "Perform any plugin specific initialization here, such as extracting "
 "resources from the plugin ZIP file. The path to the ZIP file is available as"
 " ``self.plugin_path``."
-msgstr ""
+msgstr "Execute qualquer inicialização específica de plugin aqui, como extração de recursos do arquivo ZIP do plugin. O caminho do arquivo ZIP está disponível como  ``self.plugin_path``."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:10
 msgid ""
 "Note that ``self.site_customization`` is **not** available at this point."
-msgstr ""
+msgstr "Repare que ``self.site_customization`` **não** está disponível neste momento."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:1
@@ -251,7 +252,7 @@ msgid ""
 "Implement this method and :meth:`save_settings` in your plugin to use a "
 "custom configuration dialog, rather then relying on the simple string based "
 "default customization."
-msgstr ""
+msgstr "Implemente este método e :meth:`save_settings` no seu plugin para usar uma janela de configuração personalizada, ao invés de confiar na configuração padrão baseada em strings simples."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:5
@@ -262,7 +263,7 @@ msgid ""
 "optional method validate() that takes no arguments and is called immediately"
 " after the user clicks OK. Changes are applied if and only if the method "
 "returns True."
-msgstr ""
+msgstr "Este método, se implementado, deve retornar um QWidget. O widget pode ter um método opcional validate() que não aceita argumentos e é chamado imediatamente depois de o usuário clicar em OK. As alterações são aplicadas se, e somente se, o método retornar Verdadeiro."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:10
@@ -279,7 +280,7 @@ msgstr ""
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.save_settings:1
 msgid "Save the settings specified by the user with config_widget."
-msgstr ""
+msgstr "Salvas as configurações especificadas pelo usuário com config_widget."
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:0
 msgid "Parameters"
@@ -290,7 +291,7 @@ msgstr "Parâmetros"
 #: ../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.save_settings:3
 msgid "The widget returned by :meth:`config_widget`."
-msgstr ""
+msgstr "O widget retornado por :meth:`config_widget`."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.do_user_config:1
@@ -753,13 +754,13 @@ msgstr ""
 msgid ""
 "A list of :class:`Option` objects. They will be used to automatically "
 "construct the configuration widget for this plugin"
-msgstr ""
+msgstr "Uma lista de objetos :class:`Option`. Eles serão utilizados para construir automaticamente o widget de configuração para este plugin"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.config_help_message:1
 msgid ""
 "A string that is displayed at the top of the config widget for this plugin"
-msgstr ""
+msgstr "Uma string que é exibida no topo do widget de configuração para este plugin"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.ebooks.metadata.sources.base.Source.can_get_multiple_covers:1
@@ -1219,7 +1220,7 @@ msgid ""
 "Called to create the widget used for configuring this plugin in the calibre "
 "GUI. The widget must be an instance of the PluginWidget class. See the "
 "builtin input plugins for examples."
-msgstr ""
+msgstr "Chamado para criar o widget usado para configurar este plugin na interface gráfica do calibre. O widget precisa ser uma instância da classe PluginWidget. Veja os plugins de entrada internos para exemplos."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring of
 #: calibre.customize.conversion.OutputFormatPlugin:1
@@ -1322,7 +1323,7 @@ msgid ""
 "Called to create the widget used for configuring this plugin in the calibre "
 "GUI. The widget must be an instance of the PluginWidget class. See the "
 "builtin output plugins for examples."
-msgstr ""
+msgstr "Chamado para criar o widget usado para configurar este plugin na interface gráfica do calibre. O widget precisa ser uma instância da classe PluginWidget. Veja os plugins de entrada internos para exemplos."
 
 #: ../../__w/calibre/calibre/manual/plugins.rst:91
 msgid "Device drivers"
@@ -1493,6 +1494,13 @@ msgstr ""
 msgid ""
 "GUI displays this as a non-modal popup. Should be an instance of "
 "OpenPopupMessage"
+msgstr ""
+
+#: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.model_metadata:1
+#: ../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring of
+#: calibre.devices.usbms.device.Device.model_metadata:1
+msgid "Metadata about all the actual device models this driver supports"
 msgstr ""
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
@@ -1975,14 +1983,14 @@ msgstr ""
 msgid ""
 "Should return a QWidget. The QWidget contains the settings for the device "
 "interface"
-msgstr ""
+msgstr "Deve retornar um QWidget. O QWidget contém a configuração para a interface do dispositivo"
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.save_settings:1
 msgid ""
 "Should save settings to disk. Takes the widget created in "
 ":meth:`config_widget` and saves all settings to disk."
-msgstr ""
+msgstr "Deveria salvar a configuração em disco. Pega o widget criado em :meth:`config_widget` e salva todas as configurações em disco."
 
 #: ../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.settings:1
@@ -2814,21 +2822,21 @@ msgstr "Plugins de Preferências"
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin:1
 msgid "A plugin representing a widget displayed in the Preferences dialog."
-msgstr ""
+msgstr "Um plugin representando um widget exibido na caixa de diálogo Preferências."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin:3
 msgid ""
 "This plugin has only one important method :meth:`create_widget`. The various"
 " fields of the plugin control how it is categorized in the UI."
-msgstr ""
+msgstr "Este plugin tem apenas um método importante, :meth:`create_widget`. Os vários campos do plugin controlam como ele é categorizado na interface gráfica."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.PreferencesPlugin.config_widget:1
 msgid ""
 "Import path to module that contains a class named ConfigWidget which "
 "implements the ConfigWidgetInterface. Used by :meth:`create_widget`."
-msgstr ""
+msgstr "Caminho de importação para módulo que contém uma classe chamada ConfigWidget, que implementa ConfigWidgetInterface. Usado por :meth:`create_widget`."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.customize.PreferencesPlugin.category_order:1
@@ -2875,14 +2883,14 @@ msgid ""
 "Create and return the actual Qt widget used for setting this group of "
 "preferences. The widget must implement the "
 ":class:`calibre.gui2.preferences.ConfigWidgetInterface`."
-msgstr ""
+msgstr "Cria e retorna o widget Qt usado efetivamente para configurar este grupo de preferências. o widget precisa implementar a :class:`calibre.gui2.preferences.ConfigWidgetInterface`."
 
 #: ../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.create_widget:5
 msgid ""
 "The default implementation uses :attr:`config_widget` to instantiate the "
 "widget."
-msgstr ""
+msgstr "A implementação padrão usa :attr:`config_widget` para instanciar o widget."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface:1
@@ -2891,7 +2899,7 @@ msgid ""
 "Preferences dialog must implement. See :class:`ConfigWidgetBase` for a base "
 "class that implements this interface and defines various convenience methods"
 " as well."
-msgstr ""
+msgstr "Esta classe define a interface que todos os widgets exibidos na caixa de diálogo Preferências precisam implementar. Veja :class:`ConfigWidgetBase` para uma classe básica que implementa esta interface e define vários métodos de conveniência também."
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetBase.changed_signal:1
@@ -2899,7 +2907,7 @@ msgstr ""
 #: calibre.gui2.preferences.ConfigWidgetInterface.changed_signal:1
 msgid ""
 "This signal must be emitted whenever the user changes a value in this widget"
-msgstr ""
+msgstr "Este sinal deve ser emitido sempre que o usuário alterar um valor neste widget"
 
 #: ../../__w/calibre/calibre/manual/docstring of
 #: calibre.gui2.preferences.ConfigWidgetBase.supports_restoring_to_defaults:1
@@ -2927,7 +2935,7 @@ msgstr ""
 msgid ""
 "Called once before the widget is displayed, should perform any necessary "
 "setup."
-msgstr ""
+msgstr "Chamado uma vez antes de o widget ser exibido, deveria executar qualquer ajuste necessário."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:4
@@ -2968,14 +2976,14 @@ msgid ""
 "Called once after this widget is committed. Responsible for causing the gui "
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
-msgstr ""
+msgstr "Chamado uma vez após o widget ser finalizado. Responsável por fazer com que a interface gráfica leia novamente qualquer configuração alterada. Repare que, por padrão, a interface gráfica reinicializa vários elementos, então a maioria dos widgets não precisarão usar este método."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.initial_tab_changed:1
 msgid ""
 "Called if the initially displayed tab is changed before the widget is shown,"
 " but after it is initialized."
-msgstr ""
+msgstr "Chamado se a aba exibida inicialmente for alterada antes de o widget ser exibido, mas depois de ser inicializado."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1
@@ -2983,7 +2991,7 @@ msgid ""
 "Base class that contains code to easily add standard config widgets like "
 "checkboxes, combo boxes, text fields and so on. See the :meth:`register` "
 "method."
-msgstr ""
+msgstr "Classe base que contém código para adicionar com rapidez widgets de configuração padrão, como caixas de seleção, caixas de combo, campos de texto e afins. Veja o método :meth:`register`."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:5
@@ -2999,7 +3007,7 @@ msgid ""
 "If your config widget inherits from this class but includes setting that are"
 " not registered, you should override the :class:`ConfigWidgetInterface` "
 "methods and call the base class methods inside the overrides."
-msgstr ""
+msgstr "Se o seu widget de configuração herdar desta classe, mas incluir configuração que não está registrada, você precisa ignorar os métodos :class:`ConfigWidgetInterface` e chamar os métodos da classe base dentro dos substitutos."
 
 #: ../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:1
