@@ -4,10 +4,29 @@ __license__   = 'GPL v3'
 __copyright__ = '2015-2019, Kovid Goyal <kovid at kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
+import json
 import textwrap
 
-from qt.core import QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
+from qt.core import (
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QFormLayout,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QListWidget,
+    QListWidgetItem,
+    QPlainTextEdit,
+    QPushButton,
+    QSpinBox,
+    Qt,
+    QVBoxLayout,
+    QWidget,
+)
 
+from calibre.devices.interface import ModelMetadata
 from calibre.gui2 import error_dialog
 from calibre.gui2.device_drivers.tabbed_device_config import DeviceConfigTab, DeviceOptionsGroupBox, TabbedDeviceConfig
 from calibre.gui2.dialogs.template_dialog import TemplateDialog
@@ -51,9 +70,13 @@ class KOBOTOUCHConfig(TabbedDeviceConfig):
 
         self.tab1 = Tab1Config(self, self.device)
         self.tab2 = Tab2Config(self, self.device)
+        self.tab3 = Tab3Config(self, self.device)
+        self.tab4 = Tab4Config(self, self.device)
 
         self.addDeviceTab(self.tab1, _('Collections, covers && uploads'))
         self.addDeviceTab(self.tab2, _('Metadata, on device && advanced'))
+        self.addDeviceTab(self.tab3, _('Hyphenation'))
+        self.addDeviceTab(self.tab4, _('Modify CSS'))
 
     def get_pref(self, key):
         return self.device.get_pref(key)
@@ -130,11 +153,21 @@ class KOBOTOUCHConfig(TabbedDeviceConfig):
         p['bookstats_timetoread_lower_template'] = self.bookstats_timetoread_lower_template
 
         p['modify_css'] = self.modify_css
+        p['per_device_css'] = self.per_device_css
+        p['kepubify'] = self.kepubify
+        p['template_for_kepubify'] = self.template_for_kepubify
         p['override_kobo_replace_existing'] = self.override_kobo_replace_existing
 
         p['support_newer_firmware'] = self.support_newer_firmware
         p['debugging_title'] = self.debugging_title
         p['driver_version'] = '.'.join([str(i) for i in self.device.version])
+
+        p['affect_hyphenation'] = self.affect_hyphenation
+        p['disable_hyphenation'] = self.disable_hyphenation
+        p['hyphenation_min_chars'] = self.hyphenation_min_chars
+        p['hyphenation_min_chars_before'] = self.hyphenation_min_chars_before
+        p['hyphenation_min_chars_after'] = self.hyphenation_min_chars_after
+        p['hyphenation_limit_lines'] = self.hyphenation_limit_lines
 
         return p
 
@@ -191,6 +224,124 @@ class Tab2Config(DeviceConfigTab):  # {{{
 # }}}
 
 
+class Tab3Config(DeviceConfigTab):  # {{{
+
+    def __init__(self, parent, device):
+        super().__init__(parent)
+        self.l = l = QVBoxLayout(self)
+        self.hyphenation_options = h = HyphenationGroupBox(self, device)
+        self.addDeviceWidget(h)
+        l.addWidget(h)
+        l.addStretch()
+
+    def validate(self):
+        return self.hyphenation_options.validate()
+
+# }}}
+
+
+class Tab4Config(DeviceConfigTab):  # {{{
+
+    def __init__(self, parent, device):
+        super().__init__(parent)
+        self.l = l = QVBoxLayout(self)
+        self.modify_css_options = h = ModifyCSSGroupBox(self, device)
+        self.addDeviceWidget(h)
+        l.addWidget(h)
+        l.addStretch()
+
+    def validate(self):
+        return self.modify_css_options.validate()
+
+# }}}
+
+
+class ModifyCSSGroupBox(DeviceOptionsGroupBox):
+
+    def __init__(self, parent, device):
+        super().__init__(parent, device)
+        self.setTitle(_('Modify CSS of books sent to the device'))
+        self.setCheckable(True)
+        self.setChecked(device.get_pref('modify_css'))
+        self.l = l = QVBoxLayout(self)
+        self.la = la = QLabel(
+            _('This allows addition of user CSS rules and removal of some CSS. '
+            'When sending a book, the driver adds the contents of {0} to all stylesheets in the book. '
+            'This file is searched for in the root folder of the main memory of the device. '
+            'As well as this, if the file contains settings for "orphans" or "widows", '
+            'these are removed from all styles in the original stylesheet.').format(device.KOBO_EXTRA_CSSFILE),
+        )
+        la.setWordWrap(True)
+        l.addWidget(la)
+        self.la2 = la = QLabel(_(
+            'Additionally, model specific CSS can be specified below:'))
+        la.setWordWrap(True)
+        l.addWidget(la)
+
+        try:
+            pdcss = json.loads(device.get_pref('per_device_css') or '{}')
+        except Exception:
+            pdcss = {}
+        self.dev_list = QListWidget(self)
+        self.css_edit = QPlainTextEdit(self)
+        self.css_edit.setPlaceholderText(_('Enter the CSS to use for books on this model of device'))
+        self.css_edit.textChanged.connect(self.css_text_changed)
+        h = QHBoxLayout()
+        h.addWidget(self.dev_list), h.addWidget(self.css_edit, stretch=100)
+        l.addLayout(h)
+        for mm in [ModelMetadata('', _('All models'), -1, -1, -1, type(device))] + sorted(
+                device.model_metadata(), key=lambda x: x.model_name.lower()):
+            css = pdcss.get(f'pid={mm.product_id}', '')
+            i = QListWidgetItem(mm.model_name, self.dev_list)
+            i.setData(Qt.ItemDataRole.UserRole, (mm, css or ''))
+        self.dev_list.setCurrentRow(0)
+        self.dev_list.currentItemChanged.connect(self.current_device_changed)
+        self.current_device_changed()
+        self.clear_button = b = QPushButton(_('&Clear all model specific CSS'))
+        l.addWidget(b)
+        b.clicked.connect(self.clear_all_css)
+
+    def items(self):
+        for i in range(self.dev_list.count()):
+            yield self.dev_list.item(i)
+
+    def clear_all_css(self):
+        for item in self.items():
+            mm, css = item.data(Qt.ItemDataRole.UserRole)
+            item.setData(Qt.ItemDataRole.UserRole, (mm, ''))
+        self.current_device_changed()
+
+    def current_device_changed(self):
+        i = self.dev_list.currentItem()
+        css = ''
+        if i is not None:
+            mm, css = i.data(Qt.ItemDataRole.UserRole)
+        self.css_edit.setPlainText(css or '')
+
+    def css_text_changed(self):
+        i = self.dev_list.currentItem()
+        if i is not None:
+            mm, css = i.data(Qt.ItemDataRole.UserRole)
+            css = self.css_edit.toPlainText().strip()
+            i.setData(Qt.ItemDataRole.UserRole, (mm, css))
+
+    def validate(self):
+        return True
+
+    @property
+    def modify_css(self):
+        return self.isChecked()
+
+    @property
+    def per_device_css(self):
+        ans = {}
+        for item in self.items():
+            mm, css = item.data(Qt.ItemDataRole.UserRole)
+            if css:
+                ans[f'pid={mm.product_id}'] = css
+        return json.dumps(ans)
+
+
 class BookUploadsGroupBox(DeviceOptionsGroupBox):
 
     def __init__(self, parent, device):
@@ -201,15 +352,32 @@ class BookUploadsGroupBox(DeviceOptionsGroupBox):
         self.options_layout.setObjectName('options_layout')
         self.setLayout(self.options_layout)
 
-        self.modify_css_checkbox = create_checkbox(
-                _('Modify CSS'),
-                _('This allows addition of user CSS rules and removal of some CSS. '
-                'When sending a book, the driver adds the contents of {0} to all stylesheets in the EPUB. '
-                'This file is searched for in the root folder of the main memory of the device. '
-                'As well as this, if the file contains settings for the "orphans" or "widows", '
-                'these are removed for all styles in the original stylesheet.').format(device.KOBO_EXTRA_CSSFILE),
-                device.get_pref('modify_css')
-                )
+        self.kepubify_checkbox = create_checkbox(
+            _('Use Kobo viewer for EPUB books'), _(
+                'Kobo devices have two viewer programs for EPUB files on their devices. An older one from Adobe and'
+                ' the Kobo one. The Kobo one has much better performance and features and so, by default,'
+                ' calibre will auto-convert EPUB books to the Kobo KEPUB format so that they are viewed by'
+                ' the Kobo viewer. If you would rather use the legacy viewer for EPUB, disable this option. Note'
+                ' that this option has no effect if the device does not support KEPUB, such as for Tolino devices'
+                ' that also use this driver.'
+            ), device.get_pref('kepubify'))
+
+        self.template_la = la = QLabel('\xa0\xa0' + _('Template to decide conversion:'))
+        self.kepubify_template_edit = TemplateConfig(
+            device.get_pref('template_for_kepubify'),
+            tooltip='<p>' + _(
+                'Enter a template to decide if an EPUB book is to be auto converted to KEPUB. '
+                'If the template returns false or no result, the book will not be '
+                'converted to KEPUB. For example to only kepubify books that have the tag <i>{0}</i>, use the template: <code>{1}</code>'
+                ' or to only convert books that do not have the tag <i>{2}</i>, use the template: <code>{3}</code>').format(
+                    'as_kepub', r'{tags:str_in_list(\,,as_kepub,true,false)}', 'as_epub', r'{tags:str_in_list(\,,as_epub,false,true)}'
+                ) + '<p>'+_(
+                'If no template is specified conversion to KEPUB is controlled only by the setting above to use the Kobo viewer. '
+                'Note that the setting above must be enabled for the template to be checked.'
+            )
+        )
+        la.setBuddy(self.kepubify_template_edit)
+
         self.override_kobo_replace_existing_checkbox = create_checkbox(
                 _('Do not treat replacements as new books'),
                 _('When a new book is side-loaded, the Kobo firmware imports details of the book into the internal database. '
@@ -221,16 +389,102 @@ class BookUploadsGroupBox(DeviceOptionsGroupBox):
                 device.get_pref('override_kobo_replace_existing')
                 )
 
-        self.options_layout.addWidget(self.modify_css_checkbox, 0, 0, 1, 2)
-        self.options_layout.addWidget(self.override_kobo_replace_existing_checkbox, 1, 0, 1, 2)
+        self.options_layout.addWidget(self.kepubify_checkbox, 0, 0, 1, 2)
+        self.options_layout.addWidget(self.template_la, 1, 0, 1, 1)
+        self.options_layout.addWidget(self.kepubify_template_edit, 1, 1, 1, 1)
+        self.options_layout.addWidget(self.override_kobo_replace_existing_checkbox, 2, 0, 1, 2)
+        self.update_template_state()
+        self.kepubify_checkbox.toggled.connect(self.update_template_state)
 
-    @property
-    def modify_css(self):
-        return self.modify_css_checkbox.isChecked()
+    def update_template_state(self):
+        self.kepubify_template_edit.setEnabled(self.kepubify)
 
     @property
     def override_kobo_replace_existing(self):
         return self.override_kobo_replace_existing_checkbox.isChecked()
+
+    @property
+    def kepubify(self):
+        return self.kepubify_checkbox.isChecked()
+
+    @property
+    def template_for_kepubify(self):
+        return (self.kepubify_template_edit.template or '').strip()
+
+
+class HyphenationGroupBox(DeviceOptionsGroupBox):
+
+    def __init__(self, parent, device):
+        super().__init__(parent, device)
+        self.setTitle(_('Enable/disable hyphenation in KEPUB books'))
+        self.setCheckable(True)
+        self.setChecked(device.get_pref('affect_hyphenation'))
+        self.l = l = QFormLayout(self)
+        la = QLabel(_(
+            'When sending EPUB as converted KEPUB to the device, you can optionally'
+            ' modify how the device will perform hyphenation for the book. Note that hyphenation'
+            ' does not work well for all languages, as it depends on dictionaries present on the device,'
+            ' which are not always of the highest quality.'))
+        la.setWordWrap(True)
+        l.addRow(la)
+
+        self.disable_hyphenation_checkbox = d = QCheckBox(_('Turn off all hyphenation'))
+        d.setChecked(device.get_pref('disable_hyphenation'))
+        d.setToolTip(_('Override all hyphenation settings in book, forcefully disabling hyphenation completely'))
+        l.addRow(d)
+
+        self.min_chars = mc = QSpinBox(self)
+        l.addRow(_('Minimum word length to hyphenate') + ':', mc)
+        mc.setSuffix(_(' characters'))
+        mc.setSpecialValueText(_('Disabled'))
+        mc.setRange(0, 20)
+        mc.setValue(device.get_pref('hyphenation_min_chars'))
+
+        self.min_chars_before = mc = QSpinBox(self)
+        l.addRow(_('Minimum characters before hyphens') + ':', mc)
+        mc.setSuffix(_(' characters'))
+        mc.setRange(2, 20)
+        mc.setValue(device.get_pref('hyphenation_min_chars_before'))
+
+        self.min_chars_after = mc = QSpinBox(self)
+        l.addRow(_('Minimum characters after hyphens') + ':', mc)
+        mc.setSuffix(_(' characters'))
+        mc.setRange(2, 20)
+        mc.setValue(device.get_pref('hyphenation_min_chars_after'))
+
+        self.limit_lines = mc = QSpinBox(self)
+        l.addRow(_('Maximum consecutive hyphenated lines') + ':', mc)
+        mc.setSuffix(_(' lines'))
+        mc.setSpecialValueText(_('Disabled'))
+        mc.setRange(0, 20)
+        mc.setValue(device.get_pref('hyphenation_limit_lines'))
+
+    def validate(self):
+        return True
+
+    @property
+    def affect_hyphenation(self):
+        return self.isChecked()
+
+    @property
+    def disable_hyphenation(self):
+        return self.disable_hyphenation_checkbox.isChecked()
+
+    @property
+    def hyphenation_min_chars(self):
+        return self.min_chars.value()
+
+    @property
+    def hyphenation_min_chars_before(self):
+        return self.min_chars_before.value()
+
+    @property
+    def hyphenation_min_chars_after(self):
+        return self.min_chars_after.value()
+
+    @property
+    def hyphenation_limit_lines(self):
+        return self.limit_lines.value()
 
 
 class CollectionsGroupBox(DeviceOptionsGroupBox):
@@ -287,6 +541,8 @@ class CollectionsGroupBox(DeviceOptionsGroupBox):
         self.ignore_collections_names_edit.setToolTip(_('List the names of collections to be ignored by '
                 'the collection management. The collections listed '
                 'will not be changed. Names are separated by commas.'))
+        self.ignore_collections_names_label.setToolTip(self.ignore_collections_names_edit.toolTip())
+        self.ignore_collections_names_label.setBuddy(self.ignore_collections_names_edit)
         self.ignore_collections_names_edit.setText(device.get_pref('ignore_collections_names'))
 
         self.options_layout.addWidget(self.use_collections_columns_checkbox,  1, 0, 1, 1)

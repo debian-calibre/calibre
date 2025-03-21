@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "febrúar 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "mars 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -146,6 +146,11 @@ Kanna MOBI skrá(r) á tilgreindri slóð/slóðum
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Keyra út allar slóðir sem nauðsynlegar eru til að setja upp Calibre umhverfið
 .UNINDENT
@@ -178,6 +183,11 @@ Setja tilgreindar stafagerðir í undirmengi. Notaðu \fB\-\-\fP á eftir þessu
 .TP
 .B \-\-test\-build
 Prófa tvíundareiningu í byggju
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
 .UNINDENT
 .INDENT 0.0
 .TP

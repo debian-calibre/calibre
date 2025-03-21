@@ -27,7 +27,7 @@ from calibre.gui2.convert import bulk_defaults_for_input_format
 from calibre.gui2.convert.bulk import BulkConfig
 from calibre.gui2.convert.metadata import create_cover_file, create_opf_file
 from calibre.gui2.convert.single import Config as SingleConfig
-from calibre.ptempfile import PersistentTemporaryFile
+from calibre.ptempfile import PersistentTemporaryDirectory, PersistentTemporaryFile
 from calibre.utils.config import prefs
 from polyglot.builtins import as_bytes
 
@@ -371,8 +371,17 @@ def generate_catalog(parent, dbspec, ids, device_manager, db):  # {{{
         except:
             pass
 
+    # Create a temporary copy of the databases to pass into the generation
+    # process. The backend looks for the notes directory (.calnotes) in the
+    # directory containing the metadata.db file. Copy the one from the current
+    # library.
+    temp_db_directory = PersistentTemporaryDirectory('callib')
+    temp_db_path = db.new_api.clone_for_readonly_access(temp_db_directory)
+
     # These args are passed inline to gui2.convert.gui_conversion:gui_catalog
     args = [
+        db.library_path,
+        temp_db_path,
         d.catalog_format,
         d.catalog_title,
         dbspec,

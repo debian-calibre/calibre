@@ -420,7 +420,7 @@ class MyBlockingBusy(QDialog):  # {{{
             publishers_map = cache.all_field_for('publisher', self.ids)
             changed = {}
             for book_id, publisher in publishers_map.items():
-                new_publishers = map_tags([publisher], args.publisher_map_rules)
+                new_publishers = map_tags([publisher], args.publisher_map_rules, separator='')
                 new_publisher = new_publishers[0] if new_publishers else ''
                 if new_publisher != publisher:
                     changed[book_id] = new_publisher
@@ -433,7 +433,7 @@ class MyBlockingBusy(QDialog):  # {{{
             series_map = cache.all_field_for('series', self.ids)
             changed = {}
             for book_id, series in series_map.items():
-                new_series = map_tags([series], args.series_map_rules)
+                new_series = map_tags([series], args.series_map_rules, separator='')
                 new_series = new_series[0] if new_series else ''
                 if new_series != series:
                     changed[book_id] = new_series
@@ -624,6 +624,12 @@ class MetadataBulkDialog(QDialog, Ui_MetadataBulkDialog):
         self.adddate.setSpecialValueText(_('Undefined'))
         self.clear_adddate_button.clicked.connect(self.clear_adddate)
         self.adddate.dateTimeChanged.connect(self.do_apply_adddate)
+        cuh = self.db.new_api.pref('categories_using_hierarchy', default=())
+        if 'series' in cuh:
+            self.series.set_hierarchy_separator('.')
+        if 'tags' in cuh:
+            self.tags.set_hierarchy_separator('.')
+            self.remove_tags.set_hierarchy_separator('.')
         self.casing_algorithm.addItems([
             _('Title case'), _('Capitalize'), _('Upper case'), _('Lower case'), _('Swap case')
         ])

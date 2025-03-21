@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "лютого 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "березня 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -143,6 +143,11 @@ calibre\-debug [параметри]
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Перетворити вказаний файл EPUB на KEPUB без повного перетворення. Таке перетворення виконує драйвер Kobo при надсиланні файлів на пристрій.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Вивести записи шляхів, необхідних для налаштовування середовища calibre.
 .UNINDENT
@@ -175,6 +180,11 @@ calibre\-debug [параметри]
 .TP
 .B \-\-test\-build
 Перевірити бінарні модулі у збірці.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Перетворити вказаний файл KEPUB на EPUB без повного перетворення. Таке перетворення виконує драйвер Kobo при імпортуванні файлів з пристрою.
 .UNINDENT
 .INDENT 0.0
 .TP

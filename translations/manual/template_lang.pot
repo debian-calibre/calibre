@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 7.26.0\n"
+"Project-Id-Version: calibre 8.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-14 08:48+0530\n"
+"POT-Creation-Date: 2025-03-21 08:11+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -723,7 +723,7 @@ msgid "In some cases you might want to do more processing. There are four templa
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:569
-msgid "For example, assume you have a custom column `Translators` (``#translators``) where the names are `Last name, First name`. You might need to convert the name to `First name Last name` when creating the URL. You can use the :ref:`make_url` function to do this::"
+msgid "For example, assume you have a custom column `Translators` (``#translators``) where the names are `Last name, First name`. You might need to convert the name to `First name Last name` when creating the URL. You can use the :ref:`ff_make_url` function to do this::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:573
@@ -735,7 +735,7 @@ msgid "Note that the person's first name is now first, the space is now a plus, 
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:579
-msgid "The functions :ref:`make_url_extended`, :ref:`query_string`, and :ref:`encode_for_url` might be useful depending upon any additional processing complexity."
+msgid "The functions :ref:`ff_make_url_extended`, :ref:`ff_query_string`, and :ref:`ff_encode_for_url` might be useful depending upon any additional processing complexity."
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:581
@@ -751,7 +751,7 @@ msgid "Switch to a specific library. The syntax of this URL is::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:590
-msgid "``Library_Name`` must be replaced with the name of the calibre library you wish to open. The library name is shown in the title bar of the window. It is a simple name, not the file path to the library. You must spell it as shown in the title bar, including letter case. The character ``_`` (underscore) stands for the current library. If the name contains any spaces or special characters then it must be hex encoded using the :ref:`to_hex` function, as in the following example::"
+msgid "``Library_Name`` must be replaced with the name of the calibre library you wish to open. The library name is shown in the title bar of the window. It is a simple name, not the file path to the library. You must spell it as shown in the title bar, including letter case. The character ``_`` (underscore) stands for the current library. If the name contains any spaces or special characters then it must be hex encoded using the :ref:`ff_to_hex` function, as in the following example::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:598
@@ -787,7 +787,7 @@ msgid "The resulting URL is::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:634
-msgid "Here is an example of the same URL built using the :ref:``make_url_extended`` function instead of :ref:`strcat`()::"
+msgid "Here is an example of the same URL built using the :ref:``ff_make_url_extended`` function instead of :ref:`ff_strcat`::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:639
@@ -808,7 +808,7 @@ msgid "Open the notes associated with an author/series/etc. The syntax of the UR
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:656
-msgid "``Field_Name`` is the lookup name of the field. If the field is a custom column then replace the ``#`` character with an underscore (``_``). ``Item_Id`` is the internal numeric ID of the value in the field. There isn't a template function that returns the ``Item_Id``, so templates will normally use the second form, ``Hex_Encoded_Item_Name``. Here is a sample template that opens the note for the person `Boy-Żeleński, Tadeusz` in the field ``#authtest``::"
+msgid "``Field_Name`` is the lookup name of the field. If the field is a custom column then replace the ``#`` character with an underscore (``_``). ``Item_Id`` is the internal numeric ID of the value in the field. There isn't a template function that returns the ``Item_Id``, so templates will normally use the second form, ``Hex_Encoded_Item_Name``. Here is a sample template that opens the note for the person ``Boy-Żeleński, Tadeusz`` in the field ``#authtest``::"
 msgstr ""
 
 #: ../../home/kovid/work/calibre/manual/template_lang.rst:670

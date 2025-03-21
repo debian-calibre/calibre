@@ -167,14 +167,14 @@ class CHMMetadataReader(MetadataReaderPlugin):
 class EPUBMetadataReader(MetadataReaderPlugin):
 
     name        = 'Read EPUB metadata'
-    file_types  = {'epub'}
-    description = _('Read metadata from %s files')%'EPUB'
+    file_types  = {'epub', 'kepub'}
+    description = _('Read metadata from EPUB and KEPUB files')
 
     def get_metadata(self, stream, ftype):
         from calibre.ebooks.metadata.epub import get_metadata, get_quick_metadata
         if self.quick:
-            return get_quick_metadata(stream)
-        return get_metadata(stream)
+            return get_quick_metadata(stream, ftype=ftype)
+        return get_metadata(stream, ftype=ftype)
 
 
 class FB2MetadataReader(MetadataReaderPlugin):
@@ -440,13 +440,14 @@ plugins += [x for x in list(locals().values()) if isinstance(x, type) and
 class EPUBMetadataWriter(MetadataWriterPlugin):
 
     name = 'Set EPUB metadata'
-    file_types = {'epub'}
-    description = _('Set metadata in %s files')%'EPUB'
+    file_types = {'epub', 'kepub'}
+    description = _('Set metadata in EPUB and KEPUB files')
 
-    def set_metadata(self, stream, mi, type):
+    def set_metadata(self, stream, mi, ftype):
         from calibre.ebooks.metadata.epub import set_metadata
         q = self.site_customization or ''
-        set_metadata(stream, mi, apply_null=self.apply_null, force_identifiers=self.force_identifiers, add_missing_cover='disable-add-missing-cover' != q)
+        set_metadata(stream, mi, apply_null=self.apply_null, force_identifiers=self.force_identifiers, ftype=ftype,
+                     add_missing_cover='disable-add-missing-cover' != q or ftype == 'kepub')
 
     def customization_help(self, gui=False):
         h = 'disable-add-missing-cover'
@@ -596,7 +597,7 @@ from calibre.ebooks.conversion.plugins.djvu_input import DJVUInput
 from calibre.ebooks.conversion.plugins.docx_input import DOCXInput
 from calibre.ebooks.conversion.plugins.docx_output import DOCXOutput
 from calibre.ebooks.conversion.plugins.epub_input import EPUBInput
-from calibre.ebooks.conversion.plugins.epub_output import EPUBOutput
+from calibre.ebooks.conversion.plugins.epub_output import EPUBOutput, KEPUBOutput
 from calibre.ebooks.conversion.plugins.fb2_input import FB2Input
 from calibre.ebooks.conversion.plugins.fb2_output import FB2Output
 from calibre.ebooks.conversion.plugins.html_input import HTMLInput
@@ -655,6 +656,7 @@ plugins += [
 ]
 plugins += [
     EPUBOutput,
+    KEPUBOutput,
     DOCXOutput,
     FB2Output,
     LITOutput,

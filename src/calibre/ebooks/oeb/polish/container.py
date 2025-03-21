@@ -46,9 +46,10 @@ from calibre.ebooks.oeb.base import (
 )
 from calibre.ebooks.oeb.parse_utils import NotHTML, parse_html
 from calibre.ebooks.oeb.polish.errors import DRMError, InvalidBook
+from calibre.ebooks.oeb.polish.parsing import decode_xml
 from calibre.ebooks.oeb.polish.parsing import parse as parse_html_tweak
-from calibre.ebooks.oeb.polish.utils import OEB_FONTS, CommentFinder, PositionFinder, adjust_mime_for_epub, guess_type, parse_css
-from calibre.ptempfile import PersistentTemporaryDirectory, PersistentTemporaryFile
+from calibre.ebooks.oeb.polish.utils import OEB_FONTS, CommentFinder, PositionFinder, adjust_mime_for_epub, guess_type, insert_self_closing, parse_css
+from calibre.ptempfile import PersistentTemporaryDirectory, PersistentTemporaryFile, TemporaryDirectory
 from calibre.utils.filenames import hardlink_file, nlinks_file, retry_on_fail
 from calibre.utils.ipc.simple_worker import WorkerError, fork_job
 from calibre.utils.logging import default_log
@@ -84,14 +85,14 @@ def clone_dir(src, dest):
                 shutil.copy2(spath, dpath)
 
 
-def clone_container(container, dest_dir):
+def clone_container(container, dest_dir, container_class=None):
     ' Efficiently clone a container using hard links '
     dest_dir = os.path.abspath(os.path.realpath(dest_dir))
     clone_data = container.clone_data(dest_dir)
-    cls = type(container)
-    if cls is Container:
-        return cls(None, None, container.log, clone_data=clone_data)
-    return cls(None, container.log, clone_data=clone_data)
+    container_class = container_class or type(container)
+    if container_class is Container:
+        return container_class(None, None, container.log, clone_data=clone_data)
+    return container_class(None, container.log, clone_data=clone_data)
 
 
 def name_to_abspath(name, root):
@@ -130,7 +131,7 @@ def href_to_name(href, root, base=None):
 
 
 def seconds_to_timestamp(duration: float) -> str:
-    seconds = int(floor(duration))
+    seconds = floor(duration)
     float_part = duration - seconds
     hours = seconds // 3600
     minutes = (seconds % 3600) // 60
@@ -168,36 +169,10 @@ class ContainerBase:  # {{{
 
         :param normalize_to_nfc: Normalize returned unicode to the NFC normal form as is required by both the EPUB and AZW3 formats.
         '''
-        def fix_data(d):
-            return d.replace('\r\n', '\n').replace('\r', '\n')
-        if isinstance(data, str):
-            return fix_data(data)
-        bom_enc = None
-        if data[:4] in {b'\0\0\xfe\xff', b'\xff\xfe\0\0'}:
-            bom_enc = {b'\0\0\xfe\xff':'utf-32-be',
-                       b'\xff\xfe\0\0':'utf-32-le'}[data[:4]]
-            data = data[4:]
-        elif data[:2] in {b'\xff\xfe', b'\xfe\xff'}:
-            bom_enc = {b'\xff\xfe':'utf-16-le', b'\xfe\xff':'utf-16-be'}[data[:2]]
-            data = data[2:]
-        elif data[:3] == b'\xef\xbb\xbf':
-            bom_enc = 'utf-8'
-            data = data[3:]
-        if bom_enc is not None:
-            try:
-                self.used_encoding = bom_enc
-                return fix_data(data.decode(bom_enc))
-            except UnicodeDecodeError:
-                pass
-        try:
-            self.used_encoding = 'utf-8'
-            return fix_data(data.decode('utf-8'))
-        except UnicodeDecodeError:
-            pass
-        data, self.used_encoding = xml_to_unicode(data)
-        if normalize_to_nfc:
-            data = unicodedata.normalize('NFC', data)
-        return fix_data(data)
+        html, used_encoding = decode_xml(data, normalize_to_nfc)
+        if used_encoding:
+            self.used_encoding = used_encoding
+        return html
 
     def parse_xml(self, data):
         data, self.used_encoding = xml_to_unicode(
@@ -254,6 +229,7 @@ class Container(ContainerBase):  # {{{
 
     SUPPORTS_TITLEPAGES = True
     SUPPORTS_FILENAMES = True
+    MAX_HTML_FILE_SIZE = 0
 
     @property
     def book_type_for_display(self):
@@ -337,14 +313,14 @@ class Container(ContainerBase):  # {{{
         clone_dir(self.root, dest_dir)
         return self.data_for_clone(dest_dir)
 
-    def add_name_to_manifest(self, name, process_manifest_item=None):
+    def add_name_to_manifest(self, name, process_manifest_item=None, suggested_id=''):
         ' Add an entry to the manifest for a file with the specified name. Returns the manifest id. '
         all_ids = {x.get('id') for x in self.opf_xpath('//*[@id]')}
         c = 0
-        item_id = 'id'
+        item_id = suggested_id = suggested_id or 'id'
         while item_id in all_ids:
             c += 1
-            item_id = f'id{c}'
+            item_id = f'{suggested_id}-{c}'
         manifest = self.opf_xpath('//opf:manifest')[0]
         href = self.name_to_href(name, self.opf_name)
         item = manifest.makeelement(OPF('item'),
@@ -372,7 +348,11 @@ class Container(ContainerBase):  # {{{
             name = f'{base}-{c}.{ext}'
         return name
 
-    def add_file(self, name, data, media_type=None, spine_index=None, modify_name_if_needed=False, process_manifest_item=None):
+    def add_file(
+            self, name, data=b'', media_type=None, spine_index=None,
+            modify_name_if_needed=False, process_manifest_item=None,
+            suggested_id='',
+        ):
         ''' Add a file to this container. Entries for the file are
         automatically created in the OPF manifest and spine
         (if the file is a text document) '''
@@ -399,7 +379,7 @@ class Container(ContainerBase):  # {{{
         self.mime_map[name] = mt
         if self.ok_to_be_unmanifested(name):
             return name
-        item_id = self.add_name_to_manifest(name, process_manifest_item=process_manifest_item)
+        item_id = self.add_name_to_manifest(name, process_manifest_item=process_manifest_item, suggested_id=suggested_id)
         if mt in OEB_DOCS:
             manifest = self.opf_xpath('//opf:manifest')[0]
             spine = self.opf_xpath('//opf:spine')[0]
@@ -942,27 +922,7 @@ class Container(ContainerBase):  # {{{
     def insert_into_xml(self, parent, item, index=None):
         '''Insert item into parent (or append if index is None), fixing
         indentation. Only works with self closing items.'''
-        if index is None:
-            parent.append(item)
-        else:
-            parent.insert(index, item)
-        idx = parent.index(item)
-        if idx == 0:
-            item.tail = parent.text
-            # If this is the only child of this parent element, we need a
-            # little extra work as we have gone from a self-closing <foo />
-            # element to <foo><item /></foo>
-            if len(parent) == 1:
-                sibling = parent.getprevious()
-                if sibling is None:
-                    # Give up!
-                    return
-                parent.text = sibling.text
-                item.tail = sibling.tail
-        else:
-            item.tail = parent[idx-1].tail
-            if idx == len(parent)-1:
-                parent[idx-1].tail = parent.text
+        insert_self_closing(parent, item, index)
 
     def opf_get_or_create(self, name):
         ''' Convenience method to either return the first XML element with the
@@ -1162,6 +1122,7 @@ def walk_dir(basedir):
 class EpubContainer(Container):
 
     book_type = 'epub'
+    MAX_HTML_FILE_SIZE = 260 * 1024
 
     @property
     def book_type_for_display(self):
@@ -1418,6 +1379,12 @@ class EpubContainer(Container):
                 f.write(decrypt_font_data(key, data, alg))
         if outpath is None:
             outpath = self.pathtoepub
+        self.commit_epub(outpath)
+        for name, data in iteritems(restore_fonts):
+            with self.open(name, 'wb') as f:
+                f.write(data)
+
+    def commit_epub(self, outpath: str) -> None:
         if self.is_dir:
             # First remove items from the source dir that do not exist any more
             for is_root, dirpath, fname in walk_dir(self.pathtoepub):
@@ -1454,9 +1421,6 @@ class EpubContainer(Container):
                     et = et.encode('ascii')
                 f.write(et)
             zip_rebuilder(self.root, outpath)
-            for name, data in iteritems(restore_fonts):
-                with self.open(name, 'wb') as f:
-                    f.write(data)
 
     @property
     def path_to_ebook(self):
@@ -1467,6 +1431,26 @@ class EpubContainer(Container):
         self.pathtoepub = val
 
 # }}}
+
+
+class KEPUBContainer(EpubContainer):
+    book_type = 'kepub'
+    MAX_HTML_FILE_SIZE = 512 * 1024
+
+    def __init__(self, pathtokepub, log, clone_data=None, tdir=None):
+        super().__init__(pathtokepub, log=log, clone_data=clone_data, tdir=tdir)
+        from calibre.ebooks.oeb.polish.kepubify import unkepubify_container
+        Container.commit(self, keep_parsed=True)
+        unkepubify_container(self)
+
+    def commit_epub(self, outpath: str) -> None:
+        if self.is_dir:
+            return super().commit_epub(outpath)
+        from calibre.ebooks.oeb.polish.kepubify import Options, kepubify_container
+        with TemporaryDirectory() as tdir:
+            container = clone_container(self, tdir, container_class=EpubContainer)
+            kepubify_container(container, Options())
+            container.commit(outpath)
 
 
 # AZW3 {{{
@@ -1622,7 +1606,7 @@ class AZW3Container(Container):
 # }}}
 
 
-def get_container(path, log=None, tdir=None, tweak_mode=False):
+def get_container(path, log=None, tdir=None, tweak_mode=False, ebook_cls=None) -> Container:
     if log is None:
         log = default_log
     try:
@@ -1630,8 +1614,14 @@ def get_container(path, log=None, tdir=None, tweak_mode=False):
     except Exception:
         isdir = False
     own_tdir = not tdir
-    ebook_cls = (AZW3Container if path.rpartition('.')[-1].lower() in {'azw3', 'mobi', 'original_azw3', 'original_mobi'} and not isdir
-            else EpubContainer)
+    if ebook_cls is None:
+        ext = path.rpartition('.')[-1].lower()
+        ebook_cls = EpubContainer
+        if not isdir:
+            if ext in {'azw3', 'mobi', 'original_azw3', 'original_mobi'}:
+                ebook_cls = AZW3Container
+            elif ext in {'kepub', 'original_kepub'}:
+                ebook_cls = KEPUBContainer
     if own_tdir:
         tdir = PersistentTemporaryDirectory(f'_{ebook_cls.book_type}_container')
     try:

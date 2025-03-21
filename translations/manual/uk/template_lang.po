@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 02:21+0000\n"
+"POT-Creation-Date: 2025-02-20 13:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2020-2025\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -1162,8 +1162,8 @@ msgid ""
 "For example, assume you have a custom column `Translators` "
 "(``#translators``) where the names are `Last name, First name`. You might "
 "need to convert the name to `First name Last name` when creating the URL. "
-"You can use the :ref:`make_url` function to do this::"
-msgstr "Наприклад, припустімо, що у вас є нетиповий стовпчик `Перекладачі` (``#translators``), де імена записано так: «Прізвище, Ім’я». Під час створення адреси вам може знадобитися перетворити ім’я на `Ім’я Прізвище’. Для цього можна використати функцію :ref:`make_url`::"
+"You can use the :ref:`ff_make_url` function to do this::"
+msgstr "Наприклад, припустімо, що у вас є нетиповий стовпчик `Перекладачі` (``#translators``), де імена записано так: «Прізвище, Ім’я». Під час створення адреси вам може знадобитися перетворити ім’я на `Ім’я Прізвище’. Для цього можна використати функцію :ref:`ff_make_url`::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:573
 msgid ""
@@ -1179,10 +1179,10 @@ msgstr "Зауважте, що ім’я особи тепер є першим, 
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:579
 msgid ""
-"The functions :ref:`make_url_extended`, :ref:`query_string`, and "
-":ref:`encode_for_url` might be useful depending upon any additional "
+"The functions :ref:`ff_make_url_extended`, :ref:`ff_query_string`, and "
+":ref:`ff_encode_for_url` might be useful depending upon any additional "
 "processing complexity."
-msgstr "Залежно від складності додаткової обробки, можуть бути корисними функції :ref:`make_url_extended`, :ref:`query_string` і :ref:`encode_for_url`."
+msgstr "Залежно від складності додаткової обробки, можуть бути корисними функції :ref:`ff_make_url_extended`, :ref:`ff_query_string` і :ref:`ff_encode_for_url`."
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:581
 msgid "**The calibre URL scheme**"
@@ -1206,9 +1206,9 @@ msgid ""
 "is a simple name, not the file path to the library. You must spell it as "
 "shown in the title bar, including letter case. The character ``_`` "
 "(underscore) stands for the current library. If the name contains any spaces"
-" or special characters then it must be hex encoded using the :ref:`to_hex` "
-"function, as in the following example::"
-msgstr "`Library_Name`` слід замінити назвою бібліотеки calibre, яку ви хочете відкрити. Назву бібліотеки буде показано у рядку заголовка вікна. Це проста назва, а не шлях до бібліотеки. Вам слід написати його так, як показано у рядку заголовка, включаючи регістр літер. Символ ``_`` (підкреслення) позначає поточну бібліотеку. Якщо назва містить пробіли або спеціальні символи, вона має бути закодована у шістнадцятковому форматі за допомогою функції :ref:`to_hex`, як у наступному прикладі:"
+" or special characters then it must be hex encoded using the "
+":ref:`ff_to_hex` function, as in the following example::"
+msgstr "`Library_Name`` слід замінити назвою бібліотеки calibre, яку ви хочете відкрити. Назву бібліотеки буде показано у рядку заголовка вікна. Це проста назва, а не шлях до бібліотеки. Вам слід написати його так, як показано у рядку заголовка, включаючи регістр літер. Символ ``_`` (підкреслення) позначає поточну бібліотеку. Якщо назва містить пробіли або спеціальні символи, вона має бути закодована у шістнадцятковому форматі за допомогою функції :ref:`ff_to_hex`, як у наступному прикладі:"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:598
 msgid "The template generates the URL::"
@@ -1259,8 +1259,8 @@ msgstr "Адреса-результат::"
 #: ../../__w/calibre/calibre/manual/template_lang.rst:634
 msgid ""
 "Here is an example of the same URL built using the "
-":ref:``make_url_extended`` function instead of :ref:`strcat`()::"
-msgstr "Ось приклад тієї самої адреси, яку побудовано за допомогою функції :ref:``make_url_extended``, замість :ref:`strcat`()::"
+":ref:``ff_make_url_extended`` function instead of :ref:`ff_strcat`::"
+msgstr "Ось приклад тієї самої адреси, яку побудовано за допомогою функції :ref:``ff_make_url_extended``, замість :ref:`ff_strcat`()::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:639
 msgid ""
@@ -1290,9 +1290,9 @@ msgid ""
 "``Item_Id`` is the internal numeric ID of the value in the field. There "
 "isn't a template function that returns the ``Item_Id``, so templates will "
 "normally use the second form, ``Hex_Encoded_Item_Name``. Here is a sample "
-"template that opens the note for the person `Boy-Żeleński, Tadeusz` in the "
-"field ``#authtest``::"
-msgstr "``Field_Name`` — це пошукова назва поля. Якщо поле є нетиповим стовпчиком, замініть символ ``#`` на підкреслення (``_``). ``Item_Id`` – це внутрішній числовий ідентифікатор значення у полі. Немає шаблонної функції, яка повертає ``Item_Id``, тому шаблони зазвичай використовують другу форму, ``Hex_Encoded_Item_Name``. Ось зразок шаблону, який відкриває нотатку для особи `Boy-Żeleński, Tadeusz` у полі ``#authtest``::"
+"template that opens the note for the person ``Boy-Żeleński, Tadeusz`` in the"
+" field ``#authtest``::"
+msgstr "``Field_Name`` — це пошукова назва поля. Якщо поле є нетиповим стовпчиком, замініть символ ``#`` на підкреслення (``_``). ``Item_Id`` – це внутрішній числовий ідентифікатор значення у полі. Немає шаблонної функції, яка повертає ``Item_Id``, тому шаблони зазвичай використовують другу форму, ``Hex_Encoded_Item_Name``. Ось зразок шаблону, який відкриває нотатку для особи ``Boy-Żeleński, Tadeusz`` у полі ``#authtest``::"
 
 #: ../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid "Stored templates"

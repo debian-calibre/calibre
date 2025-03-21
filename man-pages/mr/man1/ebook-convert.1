@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "फेब्रुवारी 14, 2025" "7.26.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "मार्च 21, 2025" "8.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -112,7 +112,7 @@ Specify the output profile. The output profile tells the conversion system how t
 .UNINDENT
 .SH इनपुट पर्याय
 .sp
-Options to control the processing of the input mobi file
+mobi या इनपुट फाईलच्या संस्करणाचे नियंत्रण करण्यास पर्याय
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
@@ -120,7 +120,7 @@ Specify the character encoding of the input document. If set this option will ov
 .UNINDENT
 .SH आउटपुट पर्याय
 .sp
-Options to control the processing of the output epub
+epub या आउटपुट फाईलच्या संस्करणाचे नियंत्रण करण्यास पर्याय
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
@@ -154,7 +154,7 @@ The version of the EPUB file to generate. EPUB 2 is the most widely compatible, 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-उत्पन्न केलेल्या EPUB फाईलची सामग्री बाहेर काढून विनिर्दिष्ट फोल्डरात ठेवा. चेतावणी: या फोल्डरची अस्तित्वातील सामग्री डिलीट केली जाईल, तर हा पर्याय सांभाळून वापरा.
+Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -188,7 +188,7 @@ Title for any generated inline table of contents.
 .UNINDENT
 .SH रूप आणि भाव
 .sp
-Options to control the look and feel of the output
+आउटपुटचे रूप आणि भाव नियंत्रित करण्यासाठी पर्याय
 .INDENT 0.0
 .TP
 .B \-\-asciiize
@@ -426,7 +426,7 @@ Control auto\-detection of document structure.
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute is used by screen readers for assisting the visually challenged.
+When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute improves accessibility by providing text descriptions for users who cannot see or fully interpret visual content.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -522,7 +522,7 @@ Remove entries from the Table of Contents whose titles match the specified regul
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
-String to be used when sorting by author.
+लेखकानुसार क्रमवारी लावताना वापरायची स्ट्रिंग.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -602,7 +602,7 @@ Set the book timestamp (no longer used anywhere)
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-The version of the title to be used for sorting.
+क्रमवारी लावताना वापरायची शीर्षकाची आवृत्ती.
 .UNINDENT
 .SH डीबग
 .sp

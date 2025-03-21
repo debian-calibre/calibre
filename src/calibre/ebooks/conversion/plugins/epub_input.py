@@ -33,7 +33,7 @@ class EPUBInput(InputFormatPlugin):
     name        = 'EPUB Input'
     author      = 'Kovid Goyal'
     description = _('Convert EPUB files (.epub) to HTML')
-    file_types  = {'epub'}
+    file_types  = {'epub', 'kepub'}
     output_encoding = None
     commit_name = 'epub_input'
 
@@ -261,6 +261,7 @@ class EPUBInput(InputFormatPlugin):
         from calibre.ebooks import DRMError
         from calibre.ebooks.metadata.opf2 import OPF
         from calibre.utils.zipfile import ZipFile
+        is_kepub = file_ext.lower() == 'kepub'
         try:
             zf = ZipFile(stream)
             zf.extractall(os.getcwd())
@@ -282,6 +283,9 @@ class EPUBInput(InputFormatPlugin):
 
         if opf is None:
             raise ValueError(f'{path} is not a valid EPUB file (could not find opf)')
+
+        if is_kepub:
+            self.unkepubify(path, opf, log)
 
         opf = os.path.relpath(opf, os.getcwd())
         parts = os.path.split(opf)
@@ -352,6 +356,21 @@ class EPUBInput(InputFormatPlugin):
             nopf.write(opf.render())
 
         return os.path.abspath('content.opf')
+
+    def unkepubify(self, path: str, opf: str, log) -> None:
+        from calibre.ebooks.oeb.polish.container import Container
+        from calibre.ebooks.oeb.polish.errors import drm_message
+        from calibre.ebooks.oeb.polish.kepubify import check_for_kobo_drm, unkepubify_container
+        container = Container(os.getcwd(), opf, log)
+        if self.for_viewer:
+            log('Checking for Kobo DRM...')
+            with drm_message(_('The file {} is locked with DRM. It cannot be viewed').format(path)):
+                check_for_kobo_drm(container)
+        else:
+            log('Removing Kobo markup...')
+            with drm_message(_('The file {} is locked with DRM. It cannot be converted').format(path)):
+                unkepubify_container(container)
+                container.commit()
 
     def convert_epub3_nav(self, nav_path, opf, log, opts):
         from tempfile import NamedTemporaryFile

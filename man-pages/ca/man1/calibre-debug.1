@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "de febrer 14, 2025" "7.26.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "de març 21, 2025" "8.0.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -146,6 +146,11 @@ Inspecciona els fitxers MOBI als camins especificats
 .UNINDENT
 .INDENT 0.0
 .TP
+.B \-\-kepubify
+Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-paths
 Sortida dels camins necessaris per configurar l\fB\(aq\fPentorn de calibre
 .UNINDENT
@@ -178,6 +183,11 @@ Subconjunt de la lletra especificada. Utilitzeu \fB\-\-\fP després d\fB\(aq\fPa
 .TP
 .B \-\-test\-build
 Prova els mòduls binaris a la construcció
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
 .UNINDENT
 .INDENT 0.0
 .TP

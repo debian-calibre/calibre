@@ -2,10 +2,30 @@ __license__   = 'GPL v3'
 __copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
 import os
 from collections import namedtuple
+from typing import NamedTuple
 
 from calibre import prints
 from calibre.constants import iswindows
 from calibre.customize import Plugin
+
+FAKE_DEVICE_SERIAL = '__fake_device_for_use_with_connect_to_folder__:'
+
+
+class ModelMetadata(NamedTuple):
+    manufacturer_name: str
+    model_name: str
+    vendor_id: int
+    product_id: int
+    bcd: int
+    driver_class: type
+
+    @property
+    def settings_key(self) -> str:
+        return f'{self.manufacturer_name} - {self.model_name}'
+
+    def detected_device(self, folder_path):
+        from calibre.devices.scanner import USBDevice
+        return USBDevice(self.vendor_id, self.product_id, self.bcd, self.manufacturer_name, self.model_name, FAKE_DEVICE_SERIAL + folder_path)
 
 
 class OpenPopupMessage:
@@ -139,6 +159,11 @@ class DevicePlugin(Plugin):
     def get_open_popup_message(self):
         ' GUI displays this as a non-modal popup. Should be an instance of OpenPopupMessage '
         return
+
+    @classmethod
+    def model_metadata(self) -> tuple[ModelMetadata, ...]:
+        ' Metadata about all the actual device models this driver supports '
+        return ()
 
     # Device detection {{{
     def test_bcd(self, bcdDevice, bcd):
