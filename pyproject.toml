@@ -39,7 +39,7 @@ select = [
     'RUF047',  # needless else
     'E302', 'E303', 'E304', 'E305', 'W391',  # blank-line standard
     'E111', 'E112', 'E113', 'E117',  # code indentation
-    'E114', 'E115', 'E116', 'E261', 'E262', 'E265',  # comment formating
+    'E114', 'E115', 'E116', 'E261', 'E262', 'E265',  # comment formatting
     'E201', 'E202', 'E211', 'E251', 'E275',  # various whitespace
 ]
 unfixable = ['PIE794', 'ISC001']
@@ -73,6 +73,112 @@ avoid-escape = true
 docstring-quotes = 'single'
 inline-quotes = 'single'
 multiline-quotes = 'single'
+
+[tool.codespell]
+count = false
+summary = false
+quiet-level = 3
+regex = '''\b[\w\-'’]+\b'''
+ignore-regex = '''\b[\w\-'’]*&(amp;)?[\w\-'’]*\b'''
+builtin = [
+    'clear',
+    'rare',
+    'informal',
+    'code',
+]
+exclude-file = "codespell.exclude"
+ignore-words-list = [
+    "alo",
+    "ans",
+    "clen",
+    "eto",
+    "fo",
+    "nam",
+    "nd",
+    "som",
+    "te",
+    "atLeast",
+    "Implementor",
+    "implementor",
+    "Implementors",
+    "implementors",
+    "missings",
+    "re-use",
+    "re-used",
+    "re-using",
+    "splited",
+    "succeded",
+    # code
+    "ro",
+    "ws",
+    "deque",
+    "assertIn",
+    "atEnd",
+    "errorString",
+    "FocusIn",
+    "iff",
+    "lets",
+    "lite",
+    "UINT",
+    "uInt",
+    "uint",
+    "KeyPair",
+    "Keypair",
+    "keypair",
+    "seeked",
+    "stdio",
+    "thead",
+]
+uri-ignore-words-list = '*'
+skip = [
+    "*.svg",
+    "*.rcc",
+    "*_ui.py",
+    "./src/calibre/ebooks/rtf2xml/char_set.py",
+    "./src/calibre/ebooks/unihandecode/*",
+    "./src/calibre/ebooks/html_entities.h",
+    "./src/calibre/ebooks/html_entities.py",
+    "./src/calibre/utils/icu_test.py",
+    "./src/calibre/utils/search_query_parser_test.py",
+    "./Changelog.old.txt",
+    "./COPYRIGHT",
+    "./LICENSE",
+    "./LICENSE.rtf",
+    "./session.vim",
+    "./build/*",
+    "./docs/*",
+    "./nbproject/*",
+    "./recipes/*",
+    "./translations/*",
+    "./tags/*",
+    "./manual/generated/*",
+    "./manual/locale/*",
+    "./resources/dictionaries/*",
+    "./resources/localization/*",
+    "./resources/hyphenation/*",
+    "./resources/mathjax/*",
+    "./resources/builtin_recipes.xml",
+    "./resources/changelog.json",
+    "./resources/editor.js",
+    "./resources/editor-functions.json",
+    "./resources/mime.types",
+    "./resources/piper-voices.json",
+    "./resources/stylelint-bundle.min.js",
+    "./resources/user-manual-translation-stats.json",
+    "./resources/template-functions.json",
+    "./resources/viewer.js",
+    "./resources/viewer.html",
+    "./resources/content-server/index-generated.html",
+    "./setup/installer/*",
+    "./setup/pyqt_enums/*",
+    "./setup/lc_data.py",
+    "./setup/linux-installer.py",
+    "./src/css_selectors/*",
+    "./src/polyglot/*",
+    "./src/templite/*",
+    "./src/tinycss/*",
+    "./src/unicode_names/*",
+]
 
 [tool.flynt]
 line-length = 400  # over value to catch every case

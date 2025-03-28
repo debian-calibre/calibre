@@ -2299,7 +2299,7 @@ class KOBOTOUCH(KOBO):
                     continue
                 debug_print('KoboTouch:upload_books: Processing book: {} by {}'.format(mi.title, ' and '.join(mi.authors)))
                 debug_print(f'KoboTouch:upload_books: file={file}, name={n}')
-                self.report_progress(i / float(len(modifiable)), 'Processing book: {} by {}'.format(mi.title, ' and '.join(mi.authors)))
+                self.report_progress(i / float(len(modifiable)), _('Processing book: {0} by {1}').format(mi.title, ' and '.join(mi.authors)))
                 if mi.uuid in kepubifiable:
                     self._kepubify(file, n, mi)
                 else:
@@ -2347,10 +2347,10 @@ class KOBOTOUCH(KOBO):
             extra_css=self.extra_css or '',
             affect_hyphenation=bool(self.get_pref('affect_hyphenation')),
             disable_hyphenation=bool(self.get_pref('disable_hyphenation')),
-            hyphenation_min_chars=bool(self.get_pref('hyphenation_min_chars')),
-            hyphenation_min_chars_before=bool(self.get_pref('hyphenation_min_chars_before')),
-            hyphenation_min_chars_after=bool(self.get_pref('hyphenation_min_chars_after')),
-            hyphenation_limit_lines=bool(self.get_pref('hyphenation_limit_lines')),
+            hyphenation_min_chars=self.get_pref('hyphenation_min_chars'),
+            hyphenation_min_chars_before=self.get_pref('hyphenation_min_chars_before'),
+            hyphenation_min_chars_after=self.get_pref('hyphenation_min_chars_after'),
+            hyphenation_limit_lines=self.get_pref('hyphenation_limit_lines'),
             remove_at_page_rules=self.extra_css_options.get('has_atpage', False),
             remove_widows_and_orphans=self.extra_css_options.get('has_widows_orphans', False),
         )
@@ -2358,6 +2358,8 @@ class KOBOTOUCH(KOBO):
             kepubify_path(path, outpath=path, opts=opts, allow_overwrite=True)
         except DRMError:
             debug_print(f'Not converting {mi.title} ({name}) to KEPUB as it is DRMed')
+        except Exception as e:
+            raise ValueError(_('Could not kepubify the book {title} ({name}) failed with error: {e}').format(title=mi.title, name=name, e=e)) from e
         else:
             debug_print(f'Conversion of {mi.title} ({name}) to KEPUB succeeded')
             self.files_to_rename_to_kepub.add(mi.uuid)
@@ -3698,7 +3700,7 @@ class KOBOTOUCH(KOBO):
             m('Aura One', cls.AURA_ONE_PRODUCT_ID),
             m('Clara HD', cls.CLARA_HD_PRODUCT_ID),
             m('Clara 2E', cls.CLARA_2E_PRODUCT_ID),
-            m('Clara Black and White', cls.CLARA_BW_PRODUCT_ID),
+            m('Clara BW', cls.CLARA_BW_PRODUCT_ID),
             m('Clara Colour', cls.CLARA_COLOR_PRODUCT_ID),
             m('Elipsa', cls.ELIPSA_PRODUCT_ID),
             m('Elipsa 2E', cls.ELIPSA_2E_PRODUCT_ID),

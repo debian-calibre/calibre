@@ -28758,7 +28758,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.0.1";
+        CALIBRE_VERSION = "8.1.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -40267,6 +40267,9 @@ return this.__repr__();
 
         var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
 
+        var MAX_FONT_SIZE = ρσ_modules["read_book.prefs.font_size"].MAX_FONT_SIZE;
+        var MIN_FONT_SIZE = ρσ_modules["read_book.prefs.font_size"].MIN_FONT_SIZE;
+
         CONTAINER = unique_id("standalone-font-settings");
         DEFAULT_STANDARD_FONT = "serif";
         DEFAULT_MINIMUM_FONT_SIZE = 8;
@@ -40322,7 +40325,7 @@ return this.__repr__();
 
         function minimum_font_size(settings) {
             var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: "0", step: "1", type: "number", name: "minimum_font_size"})]);
+            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: str(MAX_FONT_SIZE), min: str(MIN_FONT_SIZE), step: "1", type: "number", name: "minimum_font_size"})]);
             if (typeof settings.minimum_font_size === "number") {
                 ans.value = settings.minimum_font_size + "";
             } else {
@@ -40337,7 +40340,7 @@ return this.__repr__();
 
         function zoom_step_size(settings) {
             var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: "1", step: "1", type: "number", name: "zoom_step_size"})]);
+            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: "10", step: "1", type: "number", name: "zoom_step_size"})]);
             if (typeof settings.zoom_step_size === "number") {
                 ans.value = settings.zoom_step_size + "";
             } else {
@@ -52683,9 +52686,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter3 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                key = ρσ_Iter3[ρσ_Index3];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);

@@ -19,7 +19,7 @@ from __python__ import hash_literals
 #    at_current(): Returns the CFI corresponding to the current viewport scroll location
 #
 #    scroll_to(cfi): which scrolls the browser to a point corresponding to the
-#                    given cfi, and returns the x and y co-ordinates of the point.
+#                    given cfi, and returns the x and y coordinates of the point.
 
 from read_book.viewport import scroll_viewport, rem_size
 
@@ -105,7 +105,7 @@ def find_offset_for_point(x, y, node, cdoc):
                 return v'[child, offset_in_text_node(child, range_, x, y)]'
         child = child.nextSibling
 
-    # The point must be after the last bit of text/in the padding/border, we dont know
+    # The point must be after the last bit of text/in the padding/border, we don't know
     # how to get a good point in this case
     return None, None
 
@@ -304,7 +304,7 @@ def node_for_text_offset(nodes, offset, first_node):
                 return node, offset, True
             last_text_node = node
             offset -= l
-        # mathml nodes dont have dataset
+        # mathml nodes don't have dataset
         elif node.nodeType is Node.ELEMENT_NODE and node.dataset?.calibreRangeWrapper:
             qn, offset, ok = node_for_text_offset(unwrapped_nodes(node), offset)
             if ok:
@@ -507,7 +507,7 @@ def sort_cfis(array_of_cfis):
 # }}}
 
 def at(x, y, doc):  # {{{
-    # x, y are in viewport co-ordinates
+    # x, y are in viewport coordinates
     doc = doc or window.document
     cdoc = doc
     target = None
