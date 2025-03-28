@@ -40,13 +40,11 @@ def socket_address(which):
                 ans += '-' + user[:100] + 'x'
     else:
         user = force_unicode(os.environ.get('USER') or os.path.basename(os.path.expanduser('~')), filesystem_encoding)
-        sock_name = '{}-calibre-{}.socket'.format(ascii_filename(user).replace(' ', '_'), which)
         if islinux:
+            sock_name = '{}-calibre-{}.socket'.format(ascii_filename(user).replace(' ', '_'), which)
             ans = '\0' + sock_name
         else:
-            from tempfile import gettempdir
-            tmp = force_unicode(gettempdir(), filesystem_encoding)
-            ans = os.path.join(tmp, sock_name)
+            ans = f'/tmp/calibre-{os.getuid()}-{which}.sock'
     return ans
 
 
