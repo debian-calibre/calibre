@@ -84,7 +84,10 @@ def set_html(mi, html, text_browser):
     search_paths = []
     db, _ = db_for_mi(mi)
     if db and book_id is not None:
-        path = db.abspath(book_id, index_is_id=True)
+        try:
+            path = db.abspath(book_id, index_is_id=True)
+        except Exception:  # deleted book
+            path = ''
         if path:
             search_paths = [path]
     text_browser.setSearchPaths(search_paths)
@@ -744,16 +747,16 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
 # }}}
 
 
-def create_open_cover_with_menu(self, parent_menu):
+def create_open_cover_with_menu(self, parent_menu, text=''):
     from calibre.gui2.open_with import edit_programs, populate_menu
-    m = QMenu(_('Open cover with...'))
+    m = QMenu(text or _('Open cover with...'))
 
     def connect_action(ac, entry):
         connect_lambda(ac.triggered, self, lambda self: self.open_with(entry))
 
     populate_menu(m, connect_action, 'cover_image')
     if len(m.actions()) == 0:
-        parent_menu.addAction(_('Open cover with...'), self.choose_open_with)
+        parent_menu.addAction(text or _('Open cover with...'), self.choose_open_with)
     else:
         m.addSeparator()
         m.addAction(_('Add another application to open cover with...'), self.choose_open_with)

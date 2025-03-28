@@ -373,7 +373,7 @@ class Cache:
             mi.format_metadata = FormatMetadata(self, book_id, formats)
             good_formats = FormatsList(sorted(formats), mi.format_metadata)
         # These three attributes are returned by the db2 get_metadata(),
-        # however, we dont actually use them anywhere other than templates, so
+        # however, we don't actually use them anywhere other than templates, so
         # they have been removed, to avoid unnecessary overhead. The templates
         # all use _proxy_metadata.
         # mi.book_size   = self._field_for('size', book_id, default_value=0)
@@ -528,7 +528,7 @@ class Cache:
 
     @staticmethod
     def dispatch_fts_jobs(queue, stop_dispatch, dbref):
-        from .fts.text import is_fmt_ok
+        from .fts.text import is_fmt_extractable
 
         def do_one():
             self = dbref()
@@ -542,7 +542,7 @@ class Cache:
                 if book_id is None:
                     return False
                 path = self._format_abspath(book_id, fmt)
-            if not path or not is_fmt_ok(fmt):
+            if not path or not is_fmt_extractable(fmt):
                 with self.write_lock:
                     self.backend.remove_dirty_fts(book_id, fmt)
                     self._update_fts_indexing_numbers()
@@ -3308,6 +3308,10 @@ class Cache:
         self._set_annotations_for_book(book_id, fmt, alist, user_type=user_type, user=user)
 
     @write_api
+    def save_annotations_list(self, book_id: int, book_fmt: str, sync_annots_user: str, alist: list[dict]) -> None:
+        self.backend.save_annotations_list(book_id, book_fmt, sync_annots_user, alist)
+
+    @write_api
     def reindex_annotations(self):
         self.backend.reindex_annotations()
 
@@ -3474,7 +3478,7 @@ class Cache:
                         self._add_extra_files(dest_id, {q: BytesIO(cdata)}, replace=False, auto_rename=True)
                         break
 
-        for key in self.field_metadata:  # loop thru all defined fields
+        for key in self.field_metadata:  # loop through all defined fields
             fm = self.field_metadata[key]
             if not fm['is_custom']:
                 continue

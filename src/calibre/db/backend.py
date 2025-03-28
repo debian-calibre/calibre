@@ -338,6 +338,26 @@ def save_annotations_for_book(cursor, book_id, fmt, annots_list, user_type='loca
     cursor.executemany(
         'INSERT OR REPLACE INTO annotations (book, format, user_type, user, timestamp, annot_id, annot_type, annot_data, searchable_text)'
         ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
+
+
+def save_annotations_list_to_cursor(cursor, alist, sync_annots_user, book_id, book_fmt):
+    from calibre.db.annotations import annotations_as_copied_list, merge_annotations
+    book_fmt = book_fmt.upper()
+    amap = {}
+    for annot in annotations_for_book(cursor, book_id, book_fmt):
+        amap.setdefault(annot['type'], []).append(annot)
+    merge_annotations((x[0] for x in alist), amap)
+    if sync_annots_user:
+        other_amap = {}
+        for annot in annotations_for_book(cursor, book_id, book_fmt, user_type='web', user=sync_annots_user):
+            other_amap.setdefault(annot['type'], []).append(annot)
+        merge_annotations(amap, other_amap)
+    alist = tuple(annotations_as_copied_list(amap))
+    save_annotations_for_book(cursor, book_id, book_fmt, alist)
+    if sync_annots_user:
+        alist = tuple(annotations_as_copied_list(other_amap))
+        save_annotations_for_book(cursor, book_id, book_fmt, alist, user_type='web', user=sync_annots_user)
+
 # }}}
 
 
@@ -2283,7 +2303,7 @@ class DB:
 
     def remove_trash_formats_dir_if_empty(self, book_id):
         bdir = os.path.join(self.trash_dir, 'f', str(book_id))
-        if os.path.isdir(bdir) and len(os.listdir(bdir)) <= 1:  # dont count metadata.json
+        if os.path.isdir(bdir) and len(os.listdir(bdir)) <= 1:  # don't count metadata.json
             self.rmtree(bdir)
 
     def list_trash_entries(self):
@@ -2399,6 +2419,11 @@ class DB:
 
     def annotations_for_book(self, book_id, fmt, user_type, user):
         yield from annotations_for_book(self.conn, book_id, fmt, user_type, user)
+
+    def save_annotations_list(self, book_id, book_fmt, sync_annots_user, alist):
+        conn = self.conn
+        with conn:
+            save_annotations_list_to_cursor(conn.cursor(), alist, sync_annots_user, book_id, book_fmt)
 
     def search_annotations(self,
         fts_engine_query, use_stemming, highlight_start, highlight_end, snippet_size, annotation_type,
