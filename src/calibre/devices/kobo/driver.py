@@ -76,10 +76,13 @@ class DummyCSSPreProcessor:
         return data
 
 
+GENERIC_GUI_NAME = 'Kobo eReader'
+
+
 class KOBO(USBMS):
 
     name = 'Kobo Reader Device Interface'
-    gui_name = 'Kobo Reader'
+    gui_name = GENERIC_GUI_NAME
     description = _('Communicate with the original Kobo Reader and the Kobo WiFi.')
     author = 'Timothy Legge and David Forrester'
     version = (2, 6, 0)
@@ -1380,7 +1383,7 @@ class KOBO(USBMS):
 
 class KOBOTOUCH(KOBO):
     name        = 'KoboTouch'
-    gui_name    = 'Kobo eReader'
+    gui_name    = GENERIC_GUI_NAME
     author      = 'David Forrester'
     description = _(
         'Communicate with the Kobo Touch, Glo, Mini, Aura HD,'
@@ -1393,7 +1396,7 @@ class KOBOTOUCH(KOBO):
         ' Based on the existing Kobo driver by %s.') % KOBO.author
     # icon        = 'devices/kobotouch.jpg'
 
-    supported_dbversion             = 191
+    supported_dbversion             = 193
     min_supported_dbversion         = 53
     min_dbversion_series            = 65
     min_dbversion_externalid        = 65
@@ -1408,7 +1411,7 @@ class KOBOTOUCH(KOBO):
     # Starting with firmware version 3.19.x, the last number appears to be is a
     # build number. A number will be recorded here but it can be safely ignored
     # when testing the firmware version.
-    max_supported_fwversion         = (5, 6, 209315)
+    max_supported_fwversion         = (5, 7, 212781)
     # The following document firmware versions where new function or devices were added.
     # Not all are used, but this feels a good place to record it.
     min_fwversion_shelves           = (2, 0, 0)
@@ -1612,6 +1615,9 @@ class KOBOTOUCH(KOBO):
         self.device_database_path = os.path.join(self._main_prefix, KOBO_ROOT_DIR_NAME, 'KoboReader.sqlite')
         self.db_manager = Database(self.device_database_path)
         self.dbversion = self.db_manager.dbversion
+
+    def on_device_close(self):
+        self.__class__.gui_name = GENERIC_GUI_NAME
 
     def database_transaction(self, use_row_factory=False):
         self.db_manager.use_row_factory = use_row_factory
