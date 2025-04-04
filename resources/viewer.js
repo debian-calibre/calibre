@@ -28758,7 +28758,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.1.1";
+        CALIBRE_VERSION = "8.2.1";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -39621,7 +39621,7 @@ return this.__repr__();
             if (abs(amt) < 1) {
                 amt = (amt < 0) ? -1 : 1;
             }
-            nsz = int(sz + amt);
+            nsz = Math.round(sz + amt);
             nsz = max(MIN_FONT_SIZE, min(nsz, MAX_FONT_SIZE));
             change_font_size(nsz);
         };
@@ -40254,7 +40254,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.prefs.fonts";
-        var CONTAINER, DEFAULT_STANDARD_FONT, DEFAULT_MINIMUM_FONT_SIZE, DEFAULT_ZOOM_STEP_SIZE, develop;
+        var CONTAINER, DEFAULT_STANDARD_FONT, DEFAULT_MINIMUM_FONT_SIZE, DEFAULT_ZOOM_STEP_SIZE, MIN_ZOOM_STEP_SIZE, develop;
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
@@ -40274,6 +40274,7 @@ return this.__repr__();
         DEFAULT_STANDARD_FONT = "serif";
         DEFAULT_MINIMUM_FONT_SIZE = 8;
         DEFAULT_ZOOM_STEP_SIZE = 20;
+        MIN_ZOOM_STEP_SIZE = 10;
         function current_zoom_step_size() {
             var s;
             s = get_session_data().get("standalone_font_settings");
@@ -40340,9 +40341,9 @@ return this.__repr__();
 
         function zoom_step_size(settings) {
             var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: "10", step: "1", type: "number", name: "zoom_step_size"})]);
+            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: MIN_ZOOM_STEP_SIZE + "", step: "1", type: "number", name: "zoom_step_size"})]);
             if (typeof settings.zoom_step_size === "number") {
-                ans.value = settings.zoom_step_size + "";
+                ans.value = max(10, parseInt(settings.zoom_step_size)) + "";
             } else {
                 ans.value = "" + DEFAULT_ZOOM_STEP_SIZE;
             }
@@ -40409,7 +40410,7 @@ return this.__repr__();
             vals = Object.create(null);
             zss = parseInt(container.querySelector("[name=zoom_step_size]").value);
             if (zss !== DEFAULT_ZOOM_STEP_SIZE) {
-                vals.zoom_step_size = zss;
+                vals.zoom_step_size = max(MIN_ZOOM_STEP_SIZE, zss);
             }
             mfs = parseInt(container.querySelector("[name=minimum_font_size]").value);
             if (mfs !== DEFAULT_MINIMUM_FONT_SIZE) {
@@ -40438,6 +40439,7 @@ return this.__repr__();
         ρσ_modules["read_book.prefs.fonts"].DEFAULT_STANDARD_FONT = DEFAULT_STANDARD_FONT;
         ρσ_modules["read_book.prefs.fonts"].DEFAULT_MINIMUM_FONT_SIZE = DEFAULT_MINIMUM_FONT_SIZE;
         ρσ_modules["read_book.prefs.fonts"].DEFAULT_ZOOM_STEP_SIZE = DEFAULT_ZOOM_STEP_SIZE;
+        ρσ_modules["read_book.prefs.fonts"].MIN_ZOOM_STEP_SIZE = MIN_ZOOM_STEP_SIZE;
         ρσ_modules["read_book.prefs.fonts"].develop = develop;
         ρσ_modules["read_book.prefs.fonts"].current_zoom_step_size = current_zoom_step_size;
         ρσ_modules["read_book.prefs.fonts"].font_select = font_select;

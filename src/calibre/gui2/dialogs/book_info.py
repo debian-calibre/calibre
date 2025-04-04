@@ -3,6 +3,7 @@
 
 
 import textwrap
+from contextlib import suppress
 from enum import IntEnum
 
 from qt.core import (
@@ -19,6 +20,7 @@ from qt.core import (
     QLabel,
     QListView,
     QModelIndex,
+    QObject,
     QPalette,
     QPixmap,
     QPushButton,
@@ -35,6 +37,7 @@ from qt.core import (
 
 from calibre import fit_image
 from calibre.db.constants import RESOURCE_URL_SCHEME
+from calibre.db.listeners import EventType
 from calibre.gui2 import BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY, NO_URL_FORMATTING, gprefs
 from calibre.gui2.book_details import DropMixin, create_open_cover_with_menu, details_context_menu_event, render_html, resolved_css, set_html
 from calibre.gui2.ui import get_gui
@@ -101,13 +104,20 @@ class Configure(Dialog):
         h.addWidget(fdo)
         v = QVBoxLayout()
         self.mub = b = QToolButton(self)
+        self.ds = s = QShortcut(QKeySequence('Ctrl+Up'), self)
+        s.activated.connect(b.click)
         connect_lambda(b.clicked, self, lambda self: move_field_up(fdo, self.model))
         b.setIcon(QIcon.ic('arrow-up.png'))
-        b.setToolTip(_('Move the selected field up'))
+        b.setToolTip(_('Move the selected field up [{}]').format(
+            str(s.key().toString(QKeySequence.SequenceFormat.NativeText))))
         v.addWidget(b), v.addStretch(10)
+
         self.mud = b = QToolButton(self)
+        self.ds = s = QShortcut(QKeySequence('Ctrl+Down'), self)
+        s.activated.connect(b.click)
         b.setIcon(QIcon.ic('arrow-down.png'))
-        b.setToolTip(_('Move the selected field down'))
+        b.setToolTip(_('Move the selected field down [{}]').format(
+            str(s.key().toString(QKeySequence.SequenceFormat.NativeText))))
         connect_lambda(b.clicked, self, lambda self: move_field_down(fdo, self.model))
         v.addWidget(b)
         h.addLayout(v)
@@ -170,6 +180,26 @@ class DialogNumbers(IntEnum):
     Slaved = 0
     Locked = 1
     DetailsLink = 2
+
+
+class ListenerSignal(QObject):
+    # We need to create a long-lived object to contain a metadata changed
+    # signal. Creating the listener in BookInfo doesn't work because the
+    # weakref dies for some reason. Instead the BookInfo object connects to
+    # this signal.
+    #
+    # As a side benefit we don't need to worry about unregistering the listener
+    # when the window is closed. Qt takes care of unregistering objects
+    # listening to the signal.
+    metadata_changed = pyqtSignal()
+
+
+listener_object = ListenerSignal()
+
+
+def book_metatada_changed(event_type: EventType, library_id, event_data):
+    if event_type not in (EventType.book_created, EventType.books_removed, EventType.book_edited, EventType.indexing_progress_changed):
+        listener_object.metadata_changed.emit()
 
 
 class BookInfo(QDialog, DropMixin):
@@ -251,6 +281,10 @@ class BookInfo(QDialog, DropMixin):
         t.setInterval(BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY)
         t.setSingleShot(True)
         t.timeout.connect(self._debounce_refresh)
+        self.update_debounce_timer = t = QTimer(self)
+        t.setInterval(BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY)
+        t.setSingleShot(True)
+        t.timeout.connect(self.do_update_book_details)
         if library_path is not None:
             self.view = None
             db = get_gui().library_broker.get_library(library_path)
@@ -299,11 +333,23 @@ class BookInfo(QDialog, DropMixin):
             self.clabel.linkActivated.connect(self.configure)
             hl.addWidget(self.clabel)
         self.fit_cover.stateChanged.connect(self.toggle_cover_fit)
+        if dialog_number == DialogNumbers.Locked:
+            get_gui().current_db.new_api.add_listener(book_metatada_changed, check_already_added=True)
+            listener_object.metadata_changed.connect(self.do_update_book_details_debounce, type=Qt.ConnectionType.QueuedConnection)
         self.restore_geometry(gprefs, self.geometry_string('book_info_dialog_geometry'))
         try:
             self.splitter.restoreState(gprefs.get(self.geometry_string('book_info_dialog_splitter_state')))
         except Exception:
             pass
+
+    def do_update_book_details_debounce(self):
+        self.update_debounce_timer.start()
+
+    def do_update_book_details(self):
+        if self.current_row is not None:
+            mi = self.view.model().get_book_display_info(self.current_row)
+            if mi is not None:
+                self.refresh(self.current_row, mi=mi)
 
     def on_files_dropped(self, event, paths):
         gui = get_gui()
@@ -358,8 +404,11 @@ class BookInfo(QDialog, DropMixin):
         if self.slave_connected:
             self.view.model().new_bookdisplay_data.disconnect(self.slave)
         self.slave_debounce_timer.stop()  # OK if it isn't running
+        self.update_debounce_timer.stop()
         self.view = self.link_delegate = self.gui = None
         self.closed.emit(self)
+        with suppress(Exception):
+            listener_object.metadata_changed.disconnect(self.do_update_book_details_debounce)
         return ret
 
     def cover_changed(self, data):

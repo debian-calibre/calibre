@@ -29,7 +29,7 @@ from calibre.ebooks.oeb.parse_utils import barename, merge_multiple_html_heads_a
 from calibre.ebooks.oeb.polish.container import Container, EpubContainer, get_container
 from calibre.ebooks.oeb.polish.cover import find_cover_image, find_cover_image3, find_cover_page
 from calibre.ebooks.oeb.polish.errors import DRMError
-from calibre.ebooks.oeb.polish.parsing import parse
+from calibre.ebooks.oeb.polish.parsing import decode_xml, parse
 from calibre.ebooks.oeb.polish.tts import lang_for_elem
 from calibre.ebooks.oeb.polish.utils import extract, insert_self_closing
 from calibre.spell.break_iterator import sentence_positions
@@ -38,6 +38,7 @@ from calibre.utils.localization import canonicalize_lang, get_lang
 from calibre.utils.short_uuid import uuid4
 
 KOBO_CSS_ID = 'kobostylehacks'  # kepubify uses class, actual books from Kobo use id
+EXTRA_CSS_ID = 'kepubify-extra-css'
 EXTRA_KOBO_CSS_IDS = ('koboSpanStyle',)  # these are present in some kepub files from kobo such as dark forest by cixin liu
 KOBO_JS_NAME = 'kobo.js'
 KOBO_CSS_NAME = 'kobo.css'
@@ -62,7 +63,8 @@ def css_parser() -> CSSParser:
 
 
 class Options(NamedTuple):
-    extra_css: str = KOBO_CSS
+    extra_css: str = ''
+    hyphenation_css: str = ''
     remove_widows_and_orphans: bool = False
     remove_at_page_rules: bool = False
 
@@ -86,8 +88,14 @@ def add_style_and_script(root, kobo_js_href: str, opts: Options) -> bool:
 
     def add(parent):
         e = parent.makeelement(XHTML('style'), type='text/css', id=KOBO_CSS_ID)
-        e.text = opts.extra_css
+        e.text = KOBO_CSS
         insert_self_closing(parent, e)
+        extra_css = (opts.hyphenation_css + '\n\n' + opts.extra_css).strip()
+        if extra_css:
+            e = parent.makeelement(XHTML('style'), type='text/css', id=EXTRA_CSS_ID)
+            e.text = '\n' + extra_css
+            insert_self_closing(parent, e)
+            e.text += (e.tail or '')
         e = parent.makeelement(XHTML('script'), type='text/javascript', src=kobo_js_href)
         insert_self_closing(parent, e)
 
@@ -105,7 +113,7 @@ def is_href_to_fname(href: str | None, fname: str) -> bool:
 
 
 def remove_kobo_styles_and_scripts(root):
-    ids_to_remove = EXTRA_KOBO_CSS_IDS + (KOBO_CSS_ID,)
+    ids_to_remove = EXTRA_KOBO_CSS_IDS + (KOBO_CSS_ID, EXTRA_CSS_ID,)
     for style in XPath('//h:style')(root):
         if style.get('id') in ids_to_remove:
             extract(style)
@@ -337,7 +345,7 @@ def kepubify_parsed_html(root: etree.Element, kobo_js_href: str, opts: Options, 
 
 
 def kepubify_html_data(raw: str | bytes, kobo_js_href: str = KOBO_JS_NAME, opts: Options = Options(), metadata_lang: str = 'en'):
-    root = parse(raw)
+    root = parse(raw, decoder=lambda x: decode_xml(x)[0])
     kepubify_parsed_html(root, kobo_js_href, opts, metadata_lang)
     return root
 
@@ -622,13 +630,9 @@ h1, h2, h3, h4, h5, h6, td {{
     hyphens: none !important;
 }}
 '''
-    if extra_css:
-        extra_css = KOBO_CSS + '\n\n' + extra_css
-    else:
-        extra_css = KOBO_CSS
-    if hyphen_css:
-        extra_css += '\n\n' + hyphen_css
-    return Options(extra_css=extra_css, remove_widows_and_orphans=remove_widows_and_orphans, remove_at_page_rules=remove_at_page_rules)
+    return Options(
+        extra_css=extra_css, hyphenation_css=hyphen_css, remove_widows_and_orphans=remove_widows_and_orphans,
+        remove_at_page_rules=remove_at_page_rules)
 
 
 def profile():
@@ -655,7 +659,7 @@ def kepubify_main(args=sys.argv):
         outpath = ''
         if path.endswith('.epub'):
             outpath = path[:-4] + 'kepub.epub'
-        kepub_path = kepubify_path(path, outpath, allow_overwrite=True)
+        kepub_path = kepubify_path(path, outpath, allow_overwrite=True, opts=make_options())
         print(f'{path} converted to: {kepub_path}')
 
 
