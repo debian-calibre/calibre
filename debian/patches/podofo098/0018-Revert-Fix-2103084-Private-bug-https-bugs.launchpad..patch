@@ -7,23 +7,9 @@ Forwarded: not-needed
 
 This reverts commit 3eb3484cc019fea215b2bb2a313423c4c2b3b416.
 ---
- src/calibre/utils/podofo/__init__.py |  2 --
- src/calibre/utils/podofo/doc.cpp     | 21 +++++++++------------
- 2 files changed, 9 insertions(+), 14 deletions(-)
+ src/calibre/utils/podofo/doc.cpp | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/src/calibre/utils/podofo/__init__.py b/src/calibre/utils/podofo/__init__.py
-index 5fdda27..6387ee8 100644
---- a/src/calibre/utils/podofo/__init__.py
-+++ b/src/calibre/utils/podofo/__init__.py
-@@ -242,8 +242,6 @@ def test_podofo():
-     try:
-         p = podofo.PDFDoc()
-         p.open(f.name)
--        print(1111111111111111111)
--        print(22222222, repr(p.title))
-         if (p.title, p.author, p.keywords) != ('info title', 'info author', 'a, b'):
-             raise ValueError('podofo failed to set title and author in Info dict {} != {}'.format(
-                 (p.title, p.author, p.keywords), ('info title', 'info author', 'a, b')))
 diff --git a/src/calibre/utils/podofo/doc.cpp b/src/calibre/utils/podofo/doc.cpp
 index 047f319..648a90c 100644
 --- a/src/calibre/utils/podofo/doc.cpp
