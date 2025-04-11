@@ -24,6 +24,7 @@ from calibre.ebooks.oeb.polish.toc import from_xpaths, get_landmarks, get_toc
 from calibre.ebooks.oeb.polish.utils import guess_type
 from calibre.srv.metadata import encode_datetime
 from calibre.utils.date import EPOCH
+from calibre.utils.forked_map import forked_map, forked_map_is_supported
 from calibre.utils.logging import default_log
 from calibre.utils.serialize import json_dumps, json_loads, msgpack_loads
 from calibre.utils.short_uuid import uuid4
@@ -535,17 +536,12 @@ def virtualize_html(container, name, link_uid, link_to_map, virtualized_names):
 __smil_file_names__ = ''
 
 
-def process_book_files(names, container_dir, opfpath, virtualize_resources, link_uid, data_for_clone=None, container=None):
-    if container is None:
-        container = SimpleContainer(container_dir, opfpath, default_log, clone_data=data_for_clone)
-        container.cloned = False
+def process_book_file(virtualize_resources, link_uid, container, name):
     link_to_map = {}
     html_data = {}
     smil_map = {__smil_file_names__: []}
     virtualized_names = set()
-    for name in names:
-        if name is None:
-            continue
+    if name is not None:
         mt = container.mime_map[name].lower()
         if mt in OEB_DOCS:
             root = container.parsed(name)
@@ -645,15 +641,15 @@ def process_exploded_book(
     names_that_need_work = tuple(n for n, mt in container.mime_map.items() if needs_work(mt))
     num_workers = calculate_number_of_workers(names_that_need_work, container, max_workers)
     results = []
+    f = partial(process_book_file, virtualize_resources, book_render_data['link_uid'], container)
     if num_workers < 2:
-        results.append(process_book_files(names_that_need_work, tdir, opfpath, virtualize_resources, book_render_data['link_uid'], container=container))
+        results.extend(map(f, names_that_need_work))
     else:
-        with ThreadPoolExecutor(max_workers=num_workers) as executor:
-            futures = tuple(
-                executor.submit(process_book_files, (name,), tdir, opfpath, virtualize_resources, book_render_data['link_uid'], container=container)
-                for name in names_that_need_work)
-            for future in futures:
-                results.append(future.result())
+        if forked_map_is_supported:
+            results.extend(forked_map(f, names_that_need_work, num_workers=num_workers))
+        else:
+            with ThreadPoolExecutor(max_workers=num_workers) as executor:
+                results.extend(executor.map(f, names_that_need_work))
 
     ltm = book_render_data['link_to_map']
     html_data = {}
@@ -845,6 +841,104 @@ def viewer_main():
     render_for_viewer(*args)
 
 
+# QuickLook {{{
+
+def quicklook(pathtoebook: str, output_dir: str) -> dict[str, object]:
+    pathtoebook = os.path.abspath(pathtoebook)
+    output_dir = os.path.abspath(output_dir)
+    book_fmt, opfpath, input_fmt = extract_book(pathtoebook, output_dir, log=default_log)
+    container = SimpleContainer(output_dir, opfpath, default_log)
+    from calibre.customize.ui import quick_metadata
+    from calibre.ebooks.metadata.meta import get_metadata
+    with open(pathtoebook, 'rb') as f, quick_metadata:
+        mi = get_metadata(f, os.path.splitext(pathtoebook)[1][1:].lower())
+    from calibre.ebooks.metadata.book.serialize import metadata_as_dict
+    d = metadata_as_dict(mi)
+    d.pop('cover_data', None)
+    serialize_datetimes(d), serialize_datetimes(d.get('user_metadata', {}))
+    input_plugin = plugin_for_input_format(input_fmt)
+    is_comic = bool(getattr(input_plugin, 'is_image_collection', False))
+    raster_cover_name, titlepage_name = create_cover_page(container, input_fmt.lower(), is_comic, mi)
+    spine = []
+    for name, linear in container.spine_names:
+        spine.append({'path': container.get_file_path_for_processing(name, allow_modification=False), 'is_linear': linear})
+    ans = {'spine': spine, 'metadata': d, 'is_comic': is_comic}
+    if raster_cover_name:
+        ans['raster_cover'] = container.get_file_path_for_processing(raster_cover_name, allow_modification=False)
+    if titlepage_name:
+        ans['titlepage'] = container.get_file_path_for_processing(titlepage_name, allow_modification=False)
+    return ans
+
+
+def handle_quicklook_client(c) -> None:
+    with c.makefile('r', encoding='utf-8') as inf:
+        for line in inf:
+            line = line.rstrip()
+            if not line:
+                return
+            req = json.loads(line)
+        try:
+            output = {'ok': True, 'path': req['path'], 'result': quicklook(req['path'], req['output_dir'])}
+        except Exception as e:
+            import traceback
+            output = {'ok': False, 'path': req['path'], 'error': str(e), 'traceback': traceback.format_exc()}
+        with c.makefile('w', encoding='utf-8') as outf:
+            json.dump(output, outf)
+            print(file=outf, flush=True)
+
+
+def quicklook_service(path_to_socket: str) -> None:
+    '''
+    A server to service requests to generate QuickLook previews.
+    Connect to the socket and send JSON of the form:
+        {"path": /path/to/ebook, "output_dir": /path/to/output_dir}
+    In response, the service will extract the ebook as HTML into the output_dir
+    and return a JSON dict containing the list of HTML files and metadata about the
+    book on the socket.
+
+    You can send requests for multiple books, with the JSON objects separated by newlines.
+    The output JSON will also be separated by newlines.
+
+    Send an empty line to instruct the server to shutdown.
+
+    Example, having the server listen at /tmp/qs and prepare the book /t/demo.epub in /t/qs:
+    calibre-debug -c "from calibre.srv.render_book import *; quicklook_service("/tmp/qs")"
+    echo '{"path": "/t/demo.epub", "output_dir": "/t/qs"}' | socat - unix-connect:/tmp/qs
+    '''
+    import socket
+    from contextlib import closing, suppress
+
+    from calibre.constants import debug
+    from calibre.ptempfile import reset_base_dir
+    from calibre.utils.safe_atexit import remove_file_atexit, reset_after_fork
+    debug(False)
+    s = socket.socket(socket.AF_UNIX)
+    s.setblocking(True)
+    s.bind(path_to_socket)
+    with suppress(KeyboardInterrupt), closing(s):
+        if path_to_socket and not path_to_socket.startswith('\0'):
+            remove_file_atexit(path_to_socket)
+        s.listen(16)
+        while True:
+            c, addr = s.accept()
+            c.setblocking(True)
+            os.set_inheritable(c.fileno(), True)
+            if child_pid := os.fork():  # parent
+                c.close()
+                os.waitpid(child_pid, 0)
+            else:  # child
+                os.set_inheritable(c.fileno(), False)
+                reset_after_fork()
+                reset_base_dir()
+                try:
+                    handle_quicklook_client(c)
+                finally:
+                    c.shutdown(socket.SHUT_RDWR)
+                    c.close()
+
+# }}}
+
+
 class Profiler:
 
     def __init__(self):
@@ -876,16 +970,19 @@ def profile():
         )
 
 
-def develop():
+def develop(max_workers=1, wait_for_input=True):
     from calibre.ptempfile import TemporaryDirectory
     path = sys.argv[-1]
+    if max_workers < 1:
+        max_workers = os.cpu_count()
     with TemporaryDirectory() as tdir:
         render(
             path, tdir, serialize_metadata=True,
-            extract_annotations=True, virtualize_resources=True, max_workers=1
+            extract_annotations=True, virtualize_resources=True, max_workers=max_workers
         )
         print('Extracted to:', tdir)
-        input('Press Enter to quit')
+        if wait_for_input:
+            input('Press Enter to quit')
 
 
 if __name__ == '__main__':

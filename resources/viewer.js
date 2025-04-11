@@ -9244,7 +9244,7 @@ return this.__repr__();
             var ans;
             ans = fmt_date_pat.ans;
             if (!(typeof ans !== "undefined" && ans !== null)) {
-                ans = fmt_date_pat.ans = /(s{1,2})|(m{1,2})|(h{1,2})|(H{1,2})|(zzz)|(z)|(ap)|(AP)|(a)|(A)|(t)|(d{1,4}|M{1,4}|(?:yyyy|yy))/g;
+                ans = fmt_date_pat.ans = /(s{1,2})|(m{1,2})|(h{1,2})|(H{1,2})|(zzz)|(z)|(ap)|(AP)|(Ap)|(aP)|(a)|(A)|(t)|(d{1,4}|M{1,4}|(?:yyyy|yy))/g;
             }
             return ans;
         };
@@ -9325,11 +9325,48 @@ return this.__repr__();
             __module__ : {value: "date"}
         });
 
+        function get_ampm_text(which) {
+            var ans, d, x;
+            ans = get_ampm_text[(typeof which === "number" && which < 0) ? get_ampm_text.length + which : which];
+            if (!ans) {
+                try {
+                    d = new Date;
+                    if (which === "am") {
+                        d.setHours(1, 0, 0, 0);
+                    } else {
+                        d.setHours(13, 0, 0, 0);
+                    }
+                    x = window.Intl.DateTimeFormat("default", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["hour"] = "numeric";
+                        ρσ_d["hour12"] = true;
+                        return ρσ_d;
+                    }).call(this)).format(d);
+                    ans = x.replace(/\d+/g, "").trim() || which.toUpperCase();
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        ans = which.toUpperCase();
+                    } 
+                }
+                get_ampm_text[(typeof which === "number" && which < 0) ? get_ampm_text.length + which : which] = ans;
+            }
+            return ans;
+        };
+        if (!get_ampm_text.__argnames__) Object.defineProperties(get_ampm_text, {
+            __argnames__ : {value: ["which"]},
+            __module__ : {value: "date"}
+        });
+
         function fd_format_ampm(dt, ampm, ap, as_utc) {
             var h, ans;
             h = (as_utc) ? dt.getUTCHours() : dt.getHours();
             ans = (h < 12) ? "am" : "pm";
-            return (ap === "ap" || ap === "a") ? ans : ans.toUpperCase();
+            ans = get_ampm_text(ans);
+            if (ans === "Ap" || ans === "aP") {
+                return ans;
+            }
+            return (ap === "ap" || ap === "a") ? ans.toLowerCase() : ans.toUpperCase();
         };
         if (!fd_format_ampm.__argnames__) Object.defineProperties(fd_format_ampm, {
             __argnames__ : {value: ["dt", "ampm", "ap", "as_utc"]},
@@ -9422,6 +9459,10 @@ return this.__repr__();
             ρσ_d["s"] = fd_format_second;
             ρσ_d["a"] = fd_format_ampm;
             ρσ_d["A"] = fd_format_ampm;
+            ρσ_d["ap"] = fd_format_ampm;
+            ρσ_d["AP"] = fd_format_ampm;
+            ρσ_d["Ap"] = fd_format_ampm;
+            ρσ_d["aP"] = fd_format_ampm;
             ρσ_d["z"] = fd_format_ms;
             ρσ_d["t"] = fd_format_timezone;
             return ρσ_d;
@@ -9430,7 +9471,7 @@ return this.__repr__();
             var ans;
             ans = am_pm_pat.ans;
             if (!(typeof ans !== "undefined" && ans !== null)) {
-                ans = am_pm_pat.ans = /(ap)|(a)|(AP)|(A)/;
+                ans = am_pm_pat.ans = /(ap)|(AP)|(Ap)|(aP)|(a)|(A)/;
             }
             return ans;
         };
@@ -9529,6 +9570,7 @@ return this.__repr__();
         ρσ_modules.date.fd_format_second = fd_format_second;
         ρσ_modules.date.fd_format_ms = fd_format_ms;
         ρσ_modules.date.fd_format_timezone = fd_format_timezone;
+        ρσ_modules.date.get_ampm_text = get_ampm_text;
         ρσ_modules.date.fd_format_ampm = fd_format_ampm;
         ρσ_modules.date.fd_format_day = fd_format_day;
         ρσ_modules.date.fd_format_month = fd_format_month;
@@ -28758,7 +28800,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.2.1";
+        CALIBRE_VERSION = "8.2.100";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
