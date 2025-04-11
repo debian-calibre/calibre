@@ -2,7 +2,6 @@
 Read and write ZIP files. Modified by Kovid Goyal to support replacing files in
 a zip archive, detecting filename encoding, updating zip files, etc.
 '''
-import binascii
 import io
 import os
 import re
@@ -11,7 +10,11 @@ import stat
 import struct
 import sys
 import time
-from contextlib import closing
+import zlib
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing, suppress
+from threading import Lock
+from zlib import crc32
 
 from calibre import sanitize_file_name
 from calibre.constants import filesystem_encoding
@@ -20,11 +23,9 @@ from calibre.ptempfile import SpooledTemporaryFile
 from polyglot.builtins import as_bytes, string_or_bytes
 
 try:
-    import zlib  # We may need its compression method
-    crc32 = zlib.crc32
+    from calibre_extensions.speedup import pread_all
 except ImportError:
-    zlib = None
-    crc32 = binascii.crc32
+    pread_all = None  # running from source
 
 __all__ = [
     'ZIP_DEFLATED',
@@ -510,6 +511,12 @@ class _ZipDecrypter:
         self._UpdateKeys(c)
         return c
 
+    def decrypt_bytes(self, raw: bytes) -> bytes:
+        ba = bytearray(raw)
+        for i, b in ba:
+            ba[i] = self(b)
+        return bytes(ba)
+
 
 class ZipExtFile(io.BufferedIOBase):
     '''File-like object for reading an archive member.
@@ -525,10 +532,11 @@ class ZipExtFile(io.BufferedIOBase):
     # Search for universal newlines or line chunks.
     PATTERN = re.compile(br'^(?P<chunk>[^\r\n]+)|(?P<newline>\n|\r\n?)')
 
-    def __init__(self, fileobj, mode, zipinfo, decrypter=None):
+    def __init__(self, fileobj, pos, mode, zipinfo, decrypter=None, pread_fd=-1):
         self._fileobj = fileobj
+        self._pread_fd = pread_fd
         self._decrypter = decrypter
-        self._orig_pos = fileobj.tell()
+        self._orig_pos = self._pread_pos = pos
 
         self._compress_type = zipinfo.compress_type
         self._compress_size = zipinfo.compress_size
@@ -551,6 +559,7 @@ class ZipExtFile(io.BufferedIOBase):
 
         self.mode = mode
         self.name = zipinfo.filename
+        self.uncompressed_size = zipinfo.file_size
 
         if hasattr(zipinfo, 'CRC'):
             self._expected_crc = zipinfo.CRC
@@ -664,11 +673,15 @@ class ZipExtFile(io.BufferedIOBase):
             nbytes = max(nbytes, self.MIN_READ_SIZE)
             nbytes = min(nbytes, self._compress_left)
 
-            data = self._fileobj.read(nbytes)
+            if self._pread_fd > -1:
+                data = pread_all(self._pread_fd, nbytes, self._pread_pos)
+                self._pread_pos += len(data)
+            else:
+                data = self._fileobj.read(nbytes)
             self._compress_left -= len(data)
 
             if data and self._decrypter is not None:
-                data = b''.join(bytes(bytearray(map(self._decrypter, bytearray(data)))))
+                data = self._decrypter.decrypt_bytes(data)
 
             if self._compress_type == ZIP_STORED:
                 self._update_crc(data, eof=(self._compress_left==0))
@@ -701,16 +714,35 @@ class ZipExtFile(io.BufferedIOBase):
         return data
 
     def read_raw(self):
-        pos = self._fileobj.tell()
-        self._fileobj.seek(self._orig_pos)
         bytes_to_read = self._compress_size
         if self._decrypter is not None:
             bytes_to_read -= 12
         raw = b''
-
         if bytes_to_read > 0:
-            raw = self._fileobj.read(bytes_to_read)
-        self._fileobj.seek(pos)
+            if self._pread_fd > -1:
+                raw = pread_all(self._pread_fd, bytes_to_read, self._orig_pos)
+            else:
+                pos = self._fileobj.tell()
+                self._fileobj.seek(self._orig_pos)
+                raw = self._fileobj.read(bytes_to_read)
+                self._fileobj.seek(pos)
+        return raw
+
+    def decrypt_and_uncompress(self, raw: bytes) -> bytes:
+        if self._decrypter is not None and raw:
+            raw = self._decrypter.decrypt_bytes(raw)
+        if self._compress_type == ZIP_DEFLATED:
+            raw = zlib.decompress(raw, -15, max(self.uncompressed_size, zlib.DEF_BUF_SIZE))
+        return raw
+
+    def check_crc(self, raw: bytes) -> None:
+        if self._expected_crc is not None and (crc32(raw) & 0xffffffff) != self._expected_crc:
+            raise BadZipfile(f'Bad CRC-32 for file {self.name!r}')
+
+    def readall(self):
+        raw = self.read_raw()
+        raw = self.decrypt_and_uncompress(raw)
+        self.check_crc(raw)
         return raw
 
 
@@ -736,13 +768,7 @@ class ZipFile:
         if mode not in ('r', 'w', 'a'):
             raise RuntimeError(f'ZipFile() requires mode "r", "w", or "a" not {mode}')
 
-        if compression == ZIP_STORED:
-            pass
-        elif compression == ZIP_DEFLATED:
-            if not zlib:
-                raise RuntimeError(
-                      'Compression requires the (missing) zlib module')
-        else:
+        if compression not in (ZIP_STORED, ZIP_DEFLATED):
             raise RuntimeError(f'The compression method {compression} is not supported')
 
         self._allowZip64 = allowZip64
@@ -772,6 +798,16 @@ class ZipFile:
             self._filePassed = 1
             self.fp = file
             self.filename = getattr(file, 'name', None)
+        self.pread_fd = -1
+        if pread_all is not None:
+            try:
+                fd = self.fp.fileno()
+            except Exception:
+                fd = -1
+            if fd > -1:
+                with suppress(Exception):
+                    pread_all(fd, 1, 0)
+                    self.pread_fd = fd
 
         if key == 'r':
             self._GetContents()
@@ -1005,12 +1041,13 @@ class ZipFile:
 
     def read(self, name, pwd=None):
         '''Return file bytes (as a string) for name.'''
-        return self.open(name, 'r', pwd).read()
+        with closing(self.open(name, 'r', pwd)) as f:
+            return f.readall()
 
     def read_raw(self, name, mode='r', pwd=None):
         '''Return the raw bytes in the zipfile corresponding to name.'''
-        zef = self.open(name, mode=mode, pwd=pwd)
-        return zef.read_raw()
+        with closing(self.open(name, mode=mode, pwd=pwd)) as zef:
+            return zef.read_raw()
 
     def open(self, name, mode='r', pwd=None):
         '''Return file-like object for 'name'.'''
@@ -1020,13 +1057,6 @@ class ZipFile:
             raise RuntimeError(
                   'Attempt to read ZIP archive that was already closed')
 
-        # Only open a new file for instances where we were not
-        # given a file object in the constructor
-        if self._filePassed:
-            zef_file = self.fp
-        else:
-            zef_file = open(self.filename, 'rb')
-
         # Make sure we have an info object
         if isinstance(name, ZipInfo):
             # 'name' is already an info object
@@ -1035,18 +1065,31 @@ class ZipFile:
             # Get info object for name
             zinfo = self.getinfo(name)
 
-        zef_file.seek(zinfo.header_offset, 0)
+        pos = zinfo.header_offset
+        if self.pread_fd > -1:
+            def read(n):
+                nonlocal pos
+                ans = pread_all(self.pread_fd, n, pos)
+                pos += len(ans)
+                return ans
+        else:
+            self.fp.seek(zinfo.header_offset, os.SEEK_SET)
+            def read(n):
+                nonlocal pos
+                ans = self.fp.read(n)
+                pos += len(ans)
+                return ans
 
         # Skip the file header:
-        fheader = zef_file.read(sizeFileHeader)
+        fheader = read(sizeFileHeader)
         if fheader[0:4] != stringFileHeader:
             raise BadZipfile('Bad magic number for file header')
 
         fheader = struct.unpack(structFileHeader, fheader)
-        fname = zef_file.read(fheader[_FH_FILENAME_LENGTH])
+        fname = read(fheader[_FH_FILENAME_LENGTH])
         fname = decode_zip_internal_file_name(fname, zinfo.flag_bits)
         if fheader[_FH_EXTRA_FIELD_LENGTH]:
-            zef_file.read(fheader[_FH_EXTRA_FIELD_LENGTH])
+            read(fheader[_FH_EXTRA_FIELD_LENGTH])
 
         if fname != zinfo.orig_filename:
             print(f'WARNING: Header ({fname!r}) and directory ({zinfo.orig_filename!r}) filenames do not'
@@ -1072,7 +1115,7 @@ class ZipFile:
             # completely random, while the 12th contains the MSB of the CRC,
             # or the MSB of the file time depending on the header type
             # and is used to check the correctness of the password.
-            byts = zef_file.read(12)
+            byts = read(12)
             h = list(map(zd, bytearray(byts[0:12])))
             if zinfo.flag_bits & 0x8:
                 # compare against the file type from extended local headers
@@ -1083,7 +1126,7 @@ class ZipFile:
             if h[11] != check_byte:
                 raise RuntimeError('Bad password for file', name)
 
-        return ZipExtFile(zef_file, mode, zinfo, zd)
+        return ZipExtFile(self.fp, pos, mode, zinfo, zd, self.pread_fd)
 
     def extract(self, member, path=None, pwd=None):
         '''Extract a member from the archive to the current working directory,
@@ -1100,25 +1143,30 @@ class ZipFile:
         return self._extract_member(member, path, pwd)
 
     def extractall(self, path=None, members=None, pwd=None):
-        '''Extract all members from the archive to the current working
-           directory. `path' specifies a different directory to extract to.
-           `members' is optional and must be a subset of the list returned
-           by namelist().
+        '''
+        Extract all members from the archive to the current working
+        directory. `path' specifies a different directory to extract to.
+        `members' is optional and must be a subset of the list returned
+        by namelist(). Uses multiple worker threads for max throughput.
         '''
         if members is None:
             members = self.namelist()
+        if path is None:
+            path = os.getcwd()
 
-        # Kovid: Extract longer names first, just in case the zip file has
-        # an entry for a directory without a trailing slash
-        members.sort(key=len, reverse=True)
+        args = []
+        for name in members:
+            zi = self.getinfo(name)
+            dest = self._get_targetpath(zi, path)
+            args.append((zi, dest, pwd))
 
-        for zipinfo in members:
-            self.extract(zipinfo, path, pwd)
+        lock = Lock()
+        def do_one(a):
+            return self._extract_member_to(*a, lock=lock)
+        with ThreadPoolExecutor(max_workers=12, thread_name_prefix='ZipFile-') as e:
+            tuple(e.map(do_one, args))
 
-    def _extract_member(self, member, targetpath, pwd):
-        '''Extract the ZipInfo object 'member' to a physical
-           file on the path targetpath.
-        '''
+    def _get_targetpath(self, member: ZipInfo, targetpath: str) -> str:
         # build the destination pathname, replacing
         # forward slashes to platform specific separators.
         # Strip trailing path separator, unless it represents the root.
@@ -1147,42 +1195,57 @@ class ZipFile:
         if upperdirs and not os.path.exists(upperdirs):
             try:
                 os.makedirs(upperdirs)
-            except:  # Added by Kovid
-                targetpath = os.path.join(base_target,
-                        sanitize_file_name(fname))
+            except OSError:  # Added by Kovid
                 upperdirs = os.path.dirname(targetpath)
+                targetpath = os.path.join(upperdirs, sanitize_file_name(fname))
                 if upperdirs and not os.path.exists(upperdirs):
                     os.makedirs(upperdirs)
+        return targetpath
 
+    def _extract_member(self, member, targetpath, pwd):
+        return self._extract_member_to(member, self._get_targetpath(member, targetpath), pwd)
+
+    def _extract_member_to(self, member, targetpath, pwd, lock=None):
+        '''Extract the ZipInfo object 'member' to a physical
+           file on the path targetpath.
+        '''
         if member.filename[-1] == '/':
             if not os.path.isdir(targetpath):
                 try:
                     os.mkdir(targetpath)
-                except Exception:  # Added by Kovid
-                    targetpath = os.path.join(base_target, sanitize_file_name(fname))
+                except OSError:  # Added by Kovid
+                    targetpath = os.path.join(os.path.dirname(targetpath), sanitize_file_name(os.path.basename(targetpath)))
                     os.mkdir(targetpath)
             return targetpath
 
-        if not os.path.exists(targetpath):
-            # Kovid: Could be a previously automatically created directory
-            # in which case it is ignored
-            with closing(self.open(member, pwd=pwd)) as source:
-                try:
-                    with open(targetpath, 'wb') as target:
-                        shutil.copyfileobj(source, target)
-                except:
-                    # Try sanitizing the file name to remove invalid characters
-                    components = list(os.path.split(targetpath))
-                    components[-1] = sanitize_file_name(components[-1])
-                    targetpath = os.sep.join(components)
-                    with open(targetpath, 'wb') as target:
-                        shutil.copyfileobj(source, target)
+        try:
+            target = open(targetpath, 'wb')
+        except IsADirectoryError:
+            return targetpath
+        except OSError:
+            targetpath = os.path.join(os.path.dirname(targetpath), sanitize_file_name(os.path.basename(targetpath)))
+            target = open(targetpath, 'wb')
+
+        with target:
+            if max(member.compress_size, member.file_size) > 256*1024*1024:
+                with lock, closing(self.open(member, pwd=pwd)) as source:
+                    shutil.copyfileobj(source, target)
+            else:
+                if self.pread_fd > -1:
+                    with closing(self.open(member, pwd=pwd)) as source:
+                        src = source.read_raw()
+                else:
+                    with lock, closing(self.open(member, pwd=pwd)) as source:
+                        src = source.read_raw()
+                src = source.decrypt_and_uncompress(src)
+                source.check_crc(src)
+                target.write(src)
         # Kovid: Try to preserve the timestamps in the ZIP file
         try:
             mtime = time.localtime()
             mtime = time.mktime(member.date_time + (0, 0) + (mtime.tm_isdst,))
             os.utime(targetpath, (mtime, mtime))
-        except:
+        except Exception:
             pass
         return targetpath
 
@@ -1669,20 +1732,7 @@ def main(args=None):
             print(USAGE)
             sys.exit(1)
 
-        zf = ZipFile(args[1], 'r')
-        out = args[2]
-        for path in zf.namelist():
-            if path.startswith('./'):
-                tgt = os.path.join(out, path[2:])
-            else:
-                tgt = os.path.join(out, path)
-
-            tgtdir = os.path.dirname(tgt)
-            if not os.path.exists(tgtdir):
-                os.makedirs(tgtdir)
-            with open(tgt, 'wb') as fp:
-                fp.write(zf.read(path))
-        zf.close()
+        extractall(args[1], args[2])
 
     elif args[0] == '-c':
         if len(args) < 3:

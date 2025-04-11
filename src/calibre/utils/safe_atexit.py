@@ -10,12 +10,12 @@ import sys
 import time
 from contextlib import suppress
 from functools import wraps
-from threading import Lock
+from threading import RLock
 
 _plat = sys.platform.lower()
 iswindows = 'win32' in _plat or 'win64' in _plat
 
-lock = Lock()
+lock = RLock()
 worker = None
 RMTREE_ACTION = 'rmtree'
 UNLINK_ACTION = 'unlink'
@@ -47,16 +47,29 @@ def unlink(path):
             oss.remove(path)
 
 
+def close_worker(worker):
+    import subprocess
+    worker.stdin.close()
+    try:
+        worker.wait(10)
+    except subprocess.TimeoutExpired:
+        worker.kill()
+    worker.wait()
+
+
 def ensure_worker():
     global worker
     if worker is None:
         from calibre.utils.ipc.simple_worker import start_pipe_worker
         worker = start_pipe_worker('from calibre.utils.safe_atexit import main; main()', stdout=None)
-        def close_worker():
-            worker.stdin.close()
-            worker.wait(10)
-        atexit.register(close_worker)
+        atexit.register(close_worker, worker)
     return worker
+
+
+def reset_after_fork():
+    global worker
+    atexit.unregister(close_worker)
+    worker = None
 
 
 def _send_command(action: str, payload: str) -> None:
