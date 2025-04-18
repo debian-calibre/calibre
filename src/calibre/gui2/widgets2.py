@@ -37,6 +37,7 @@ from qt.core import (
     QScrollArea,
     QSize,
     QSizePolicy,
+    QSplitter,
     QStyle,
     QStyledItemDelegate,
     QStyleOptionToolButton,
@@ -51,6 +52,7 @@ from qt.core import (
     QUndoCommand,
     QUndoStack,
     QUrl,
+    QVBoxLayout,
     QWidget,
     pyqtSignal,
 )
@@ -408,9 +410,21 @@ class FlowLayout(QLayout):  # {{{
     def __init__(self, parent=None):
         QLayout.__init__(self, parent)
         self.items = []
+        self.height_for_width_cache = {}
+
+    def clear_caches(self):
+        self.height_for_width_cache.clear()
 
     def addItem(self, item):
+        self.clear_caches()
         self.items.append(item)
+
+    def isEmpty(self):
+        return not bool(self.items)
+
+    def invalidate(self):
+        self.clear_caches()
+        super().invalidate()
 
     def itemAt(self, idx):
         try:
@@ -432,7 +446,9 @@ class FlowLayout(QLayout):  # {{{
         return True
 
     def heightForWidth(self, width):
-        return self.do_layout(QRect(0, 0, width, 0), apply_geometry=False)
+        if (ans := self.height_for_width_cache.get(width)) is None:
+            ans = self.height_for_width_cache[width] = self.do_layout(QRect(0, 0, width, 0), apply_geometry=False)
+        return ans
 
     def setGeometry(self, rect):
         QLayout.setGeometry(self, rect)
@@ -510,7 +526,18 @@ class FlowLayout(QLayout):  # {{{
 
     @staticmethod
     def test():
+        s = QSplitter()
+        h = QSplitter()
+        h.setOrientation(Qt.Orientation.Vertical)
+        def filler():
+            la = QLabel(' filler')
+            la.sizeHint = lambda *a: QSize(10000, 10000)
+            la.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+            return la
         w = QWidget()
+        h.addWidget(w), h.addWidget(filler())
+        s.addWidget(h)
+        s.addWidget(filler())
         l = FlowLayout(w)
         la = QLabel('Some text in a label')
         l.addWidget(la)
@@ -519,7 +546,7 @@ class FlowLayout(QLayout):  # {{{
         cb = QComboBox()
         cb.addItems(['Item one'])
         l.addWidget(cb)
-        return w
+        return s
 # }}}
 
 
@@ -703,6 +730,11 @@ class ScrollingTabWidget(QTabWidget):
         sw.setStyleSheet(f'#{name} {{ background: transparent }}')
         return sw
 
+    @property
+    def all_widgets(self):
+        for i in range(self.count()):
+            yield self.widget(i).widget()
+
     def indexOf(self, page):
         for i in range(self.count()):
             t = self.widget(i)
@@ -883,6 +915,8 @@ if __name__ == '__main__':
     from calibre.gui2 import Application
     app = Application([])
     app.load_builtin_fonts()
-    w = RatingEditor.test()
-    w.show()
-    app.exec()
+    d = QDialog()
+    l = QVBoxLayout(d)
+    w = FlowLayout.test()
+    l.addWidget(w)
+    d.exec()
