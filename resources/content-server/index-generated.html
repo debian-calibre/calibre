@@ -30822,7 +30822,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.2.100";
+        CALIBRE_VERSION = "8.3.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -49265,19 +49265,19 @@ return this.__repr__();
             __argnames__ : {value: ["frac"]},
             __module__ : {value: "read_book.scrollbar"}
         });
-        BookScrollbar.prototype._sync_to_contents = function _sync_to_contents(frac) {
+        BookScrollbar.prototype._sync_to_contents = function _sync_to_contents() {
             var self = this;
             self.sync_to_contents_timer = 0;
-            self.set_position(frac);
+            self.set_position(self.sync_to_contents_frac);
         };
-        if (!BookScrollbar.prototype._sync_to_contents.__argnames__) Object.defineProperties(BookScrollbar.prototype._sync_to_contents, {
-            __argnames__ : {value: ["frac"]},
+        if (!BookScrollbar.prototype._sync_to_contents.__module__) Object.defineProperties(BookScrollbar.prototype._sync_to_contents, {
             __module__ : {value: "read_book.scrollbar"}
         });
         BookScrollbar.prototype.sync_to_contents = function sync_to_contents(frac) {
             var self = this;
+            self.sync_to_contents_frac = frac;
             if (!self.sync_to_contents_timer) {
-                self.sync_to_contents_timer = window.setTimeout(self._sync_to_contents.bind(null, frac), 50);
+                self.sync_to_contents_timer = window.setTimeout(self._sync_to_contents, 50);
             }
         };
         if (!BookScrollbar.prototype.sync_to_contents.__argnames__) Object.defineProperties(BookScrollbar.prototype.sync_to_contents, {
