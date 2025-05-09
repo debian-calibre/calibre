@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "أبريل 18, 2025" "8.3.0" "calibre"
+.TH "CALIBREDB" "1" "مايو 09, 2025" "8.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -368,12 +368,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+أضف الملف كبيانات إضافية للكتاب، وليس بتنسيق كتاب إلكتروني
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-replace
-Do not replace the format if it already exists
+لا تستبدل التنسيق إذا كان موجودًا بالفعل
 .UNINDENT
 .SH REMOVE_FORMAT
 .INDENT 0.0
@@ -531,27 +531,30 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options. To
-see the different options, specify the name of the output file and then the
-\-\-help option.
+تصدير قائمة بتنسيق مُحدد بامتداد المسار/إلى/الوجهة.
+.sp
+تتحكم الخيارات في كيفية عرض المدخلات في مُخرجات القائمة المُولّدة.
+.sp
+يُرجى العلم أن تنسيقات القائمة المختلفة تدعم مجموعات مُختلفة من الخيارات.
+.sp
+لعرض الخيارات المُختلفة، حدد اسم ملف الإخراج
+ثم الخيار \-\-help.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Comma\-separated list of database IDs to catalog. If declared, \fI\%\-\-search\fP is ignored. Default: all
+قائمة مفصولة بفواصل لمعرفات قواعد البيانات المراد فهرستها. في حال التعبير عن ذلك، يتم تجاهل أمر البحث.  افتراضياً: الكل
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search\-related documentation in the User Manual. Default: no filtering
+تصفية النتائج حسب استعلام البحث. للاطلاع على صيغة استعلام البحث، يُرجى مراجعة الوثائق المتعلقة بالبحث في دليل المستخدم.  افتراضياً: بدون تصفية
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Show detailed output information. Useful for debugging
+عرض المعلومات النتائج التفصيلية. مفيد لتصحيح الأخطاء.
 .UNINDENT
 .SS خيارات EPUB
 .INDENT 0.0
@@ -796,17 +799,17 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+المخرجات بصيغة CSV
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore_extensions, \-e
-Comma\-separated list of extensions to ignore. Default: all
+قائمة مفصولة بفواصل للامتدادات المراد تجاهلها.  افتراضياً: الكل
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore_names, \-n
-Comma\-separated list of names to ignore. Default: all
+قائمة أسماء مفصولة بفواصل لتجاهلها.  افتراضياً: الكل
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -816,7 +819,7 @@ Comma\-separated list of names to ignore. Default: all
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+تنظيف قاعدة بيانات البحث عن النص الكامل. قد يكون هذا بطيئًا جدًا ويستهلك الكثير من الذاكرة، وذلك حسب حجم قاعدة البيانات.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -840,7 +843,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-csv, \-c
-Output in CSV
+المخرجات بصيغة CSV
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -867,18 +870,15 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+انسخ البيانات الوصفية المخزنة في قاعدة البيانات احتياطيًا إلى ملفات OPF فردية في كل مجلد كتب. عادةً ما يتم ذلك تلقائيًا، ولكن يمكنك تشغيل هذا الأمر لإعادة إنشاء ملفات OPF، باستخدام الخيار \-\-all.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+لاحظ أنه عادةً لا توجد حاجة للقيام بذلك، حيث يتم نسخ ملفات OPF احتياطيًا تلقائيًا في كل مرة يتم فيها تغيير البيانات الوصفية.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
-Normally, this command only operates on books that have out of date OPF files. This option makes it operate on all books.
+عادةً، يعمل هذا الأمر فقط على الكتب التي تحتوي على ملفات بصيغة OPF قديمة. هذا الخيار يجعله يعمل على جميع الكتب.
 .UNINDENT
 .SH CLONE
 .INDENT 0.0

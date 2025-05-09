@@ -11,6 +11,7 @@ from calibre.constants import __appname__, filesystem_encoding, get_windows_temp
 from calibre.utils.safe_atexit import remove_dir, remove_file_atexit, remove_folder_atexit, unlink
 
 _base_dir = _osx_cache_dir = None
+_prevent_recursion = False
 cleanup = unlink  # some plugins import this function
 
 
@@ -38,11 +39,14 @@ get_default_tempdir = tempfile.gettempdir
 
 
 def base_dir():
-    global _base_dir
+    global _base_dir, _prevent_recursion
     if _base_dir is not None and not os.path.exists(_base_dir):
         # Some people seem to think that running temp file cleaners that
         # delete the temp dirs of running programs is a good idea!
-        _base_dir = None
+        if _prevent_recursion:
+            _base_dir = get_default_tempdir()
+        else:
+            _base_dir = None
     if _base_dir is None:
         td = os.environ.get('CALIBRE_WORKER_TEMP_DIR', None)
         if td is not None:
@@ -76,7 +80,12 @@ def base_dir():
                     base = osx_cache_dir()
 
             _base_dir = tempfile.mkdtemp(prefix=prefix, dir=base or get_default_tempdir())
-            remove_folder_atexit(_base_dir)
+            orig = _prevent_recursion
+            _prevent_recursion = True
+            try:
+                remove_folder_atexit(_base_dir)
+            finally:
+                _prevent_recursion = orig
 
     return _base_dir
 

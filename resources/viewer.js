@@ -28800,7 +28800,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.3.0";
+        CALIBRE_VERSION = "8.4.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29978,7 +29978,11 @@ return this.__repr__();
                     return;
                 } 
             }
-            self.activate_link(data.name, data.frag, evt.currentTarget);
+            if (data.missing) {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["link_to_missing_activated"].concat([ρσ_desugar_kwargs({name: data.name})]));
+            } else {
+                self.activate_link(data.name, data.frag, evt.currentTarget);
+            }
         };
         if (!IframeBoss.prototype.link_activated.__argnames__) Object.defineProperties(IframeBoss.prototype.link_activated, {
             __argnames__ : {value: ["evt"]},
@@ -49988,6 +49992,7 @@ return this.__repr__();
             this.goto_frac = View.prototype.goto_frac.bind(this);
             this.goto_book_position = View.prototype.goto_book_position.bind(this);
             this.goto_pagelist_item = View.prototype.goto_pagelist_item.bind(this);
+            this.on_link_to_missing_activated = View.prototype.on_link_to_missing_activated.bind(this);
             this.on_scroll_to_anchor = View.prototype.on_scroll_to_anchor.bind(this);
             this.link_in_content_popup_activated = View.prototype.link_in_content_popup_activated.bind(this);
             this.goto_cfi = View.prototype.goto_cfi.bind(this);
@@ -50150,6 +50155,7 @@ return this.__repr__();
                 ρσ_d["report_cfi"] = self.on_report_cfi;
                 ρσ_d["request_size"] = self.on_request_size;
                 ρσ_d["scroll_to_anchor"] = self.on_scroll_to_anchor;
+                ρσ_d["link_to_missing_activated"] = self.on_link_to_missing_activated;
                 ρσ_d["selectionchange"] = self.on_selection_change;
                 ρσ_d["update_selection_position"] = self.update_selection_position;
                 ρσ_d["columns_per_screen_changed"] = self.on_columns_per_screen_changed;
@@ -51113,7 +51119,7 @@ return this.__repr__();
         });
         View.prototype.apply_color_scheme = function apply_color_scheme() {
             var self = this;
-            var ans, iframe, m, s, mc, ρσ_unpack, which, sd, bg_image;
+            var ans, iframe, m, s, mc, ρσ_unpack, which, sd, node, bg_image;
             self.current_color_scheme = ans = resolve_color_scheme();
             iframe = self.iframe;
             if (runtime.is_standalone_viewer) {
@@ -51135,32 +51141,37 @@ return this.__repr__();
                     s.color = ρσ_unpack[1];
                 } else {
                     s.color = ans.foreground;
-                    s.backgroundColor = ans.background;
+                    s.backgroundColor = "transparent";
                 }
             }
             sd = get_session_data();
-            iframe.style.backgroundColor = ans.background || "white";
+            var ρσ_Iter8 = ρσ_Iterable(ρσ_list_decorate([ iframe, iframe.parentNode ]));
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                node = ρσ_Iter8[ρσ_Index8];
+                node.style.backgroundColor = "transparent";
+                node.style.backgroundImage = "none";
+            }
+            s = iframe.parentNode.parentNode.style;
             bg_image = sd.get("background_image");
             if (bg_image) {
-                iframe.style.backgroundImage = "url(" + ρσ_str.format("{}", modify_background_image_url_for_fetch(bg_image)) + ")";
+                s.backgroundImage = "url(" + ρσ_str.format("{}", modify_background_image_url_for_fetch(bg_image)) + ")";
             } else {
-                iframe.style.backgroundImage = "none";
+                s.backgroundColor = ans.background || "white";
+                s.backgroundImage = "none";
             }
             if (sd.get("background_image_style") === "scaled") {
-                iframe.style.backgroundSize = "100% 100%";
-                iframe.style.backgroundRepeat = "no-repeat";
-                iframe.style.backgroundAttachment = "scroll";
-                iframe.style.backgroundPosition = "center";
+                s.backgroundSize = "100% 100%";
+                s.backgroundRepeat = "no-repeat";
+                s.backgroundAttachment = "scroll";
+                s.backgroundPosition = "center";
             } else {
-                iframe.style.backgroundSize = "auto";
-                iframe.style.backgroundRepeat = "repeat";
-                iframe.style.backgroundAttachment = "scroll";
-                iframe.style.backgroundPosition = "0 0";
+                s.backgroundSize = "auto";
+                s.backgroundRepeat = "repeat";
+                s.backgroundAttachment = "scroll";
+                s.backgroundPosition = "0 0";
             }
             self.content_popup_overlay.apply_color_scheme(ans.background, ans.foreground);
             self.book_scrollbar.apply_color_scheme(ans);
-            iframe.parentNode.style.backgroundColor = ans.background;
-            iframe.parentNode.parentNode.style.backgroundColor = ans.background;
             return ans;
         };
         if (!View.prototype.apply_color_scheme.__module__) Object.defineProperties(View.prototype.apply_color_scheme, {
@@ -51556,9 +51567,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter8 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                name = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter9 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                name = ρσ_Iter9[ρσ_Index9];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -51618,6 +51629,14 @@ return this.__repr__();
         };
         if (!View.prototype.goto_pagelist_item.__argnames__) Object.defineProperties(View.prototype.goto_pagelist_item, {
             __argnames__ : {value: ["item"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.on_link_to_missing_activated = function on_link_to_missing_activated(data) {
+            var self = this;
+            ui_operations.show_error(_("Invalid link"), _("This link points to the file {} which does not exist in the book").format(data.name));
+        };
+        if (!View.prototype.on_link_to_missing_activated.__argnames__) Object.defineProperties(View.prototype.on_link_to_missing_activated, {
+            __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.on_scroll_to_anchor = function on_scroll_to_anchor(data) {
@@ -51756,9 +51775,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter9 = ρσ_Iterable(x.children);
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    c = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter10 = ρσ_Iterable(x.children);
+                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                    c = ρσ_Iter10[ρσ_Index10];
                     process_node(c);
                 }
             };
@@ -52046,9 +52065,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter10 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                edge = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter11 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                edge = ρσ_Iter11[ρσ_Index11];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -52091,9 +52110,9 @@ return this.__repr__();
             }
             if (runtime.is_standalone_viewer) {
                 r = [];
-                var ρσ_Iter11 = ρσ_Iterable(self.current_toc_families);
-                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                    fam = ρσ_Iter11[ρσ_Index11];
+                var ρσ_Iter12 = ρσ_Iterable(self.current_toc_families);
+                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                    fam = ρσ_Iter12[ρσ_Index12];
                     if (fam.length) {
                         r.push(fam[fam.length-1].id);
                     }
@@ -52140,9 +52159,9 @@ return this.__repr__();
         View.prototype.on_content_loaded = function on_content_loaded(data) {
             var self = this;
             var x;
-            var ρσ_Iter12 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                x = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter13 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                x = ρσ_Iter13[ρσ_Index13];
                 if (!x.dont_hide_on_content_loaded) {
                     x.hide();
                 }
@@ -52165,9 +52184,9 @@ return this.__repr__();
             if (self.read_aloud.is_visible) {
                 self.read_aloud.play();
             }
-            var ρσ_Iter13 = ρσ_Iterable(self.currently_showing.on_load);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                x = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter14 = ρσ_Iterable(self.currently_showing.on_load);
+            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                x = ρσ_Iter14[ρσ_Index14];
                 x();
             }
             self.currently_showing.on_load = [];

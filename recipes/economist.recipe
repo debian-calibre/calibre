@@ -252,7 +252,7 @@ class Economist(BasicNewsRecipe):
     # downloaded with connection reset by peer (104) errors.
     delay = 3
 
-    from_archive = False
+    from_archive = True
 
     recipe_specific_options = {
         'date': {
@@ -283,7 +283,7 @@ class Economist(BasicNewsRecipe):
     def get_browser(self, *args, **kwargs):
         if self.from_archive:
             kwargs['user_agent'] = (
-                'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.103 Mobile Safari/537.36 Lamarr'
+                'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.103 Mobile Safari/537.36 Liskov'
             )
             br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
         else:
