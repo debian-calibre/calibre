@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "ಏಪ್ರಿಲ್ 18, 2025" "8.3.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "ಮೇ 09, 2025" "8.4.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -1239,6 +1239,11 @@ Minimum characters before hyphens.
 .TP
 .B \-\-kepub\-max\-image\-size
 The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepub\-prefer\-justification
+The KEPUB renderer on the Kobo has a bug when text justification is turned on. It will either not justify text properly or when highlighting there will be gaps between neighboring highlighted parts of text. By default, calibre generates KEPUB that avoid the highlighting gaps at the expense of worse text justification. This option reverses that tradeoff. Use this option if you use justification when reading on your Kobo device.
 .UNINDENT
 .INDENT 0.0
 .TP
