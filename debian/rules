@@ -56,6 +56,7 @@ override_dh_auto_configure:
 override_dh_auto_build: blhc-note
 	$(SETUP) build
 	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation
+	$(SETUP) mathjax --path-to-mathjax=/usr/share/nodejs/mathjax-full/es5
 	$(SETUP) gui
 	$(SETUP) kakasi
 
@@ -98,6 +99,7 @@ override_dh_installman:
 
 override_dh_auto_clean:
 	$(SETUP) build --clean
+	$(SETUP) mathjax --clean
 	$(SETUP) liberation_fonts --clean
 	py3clean src/calibre/gui2
 	$(SETUP) gui --clean
