@@ -27,14 +27,14 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-META" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "EBOOK-META" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-meta ebook_file [options]
+ebook\-meta ملف_كتاب_إلكتروني [خيارات]
 .EE
 .UNINDENT
 .UNINDENT
@@ -49,7 +49,7 @@ ebook\-meta ebook_file [options]
 بعض البيانات الوصفية في نوع ملف لا يدعمها، فإنّ البيانات الوصفية سوف
 تُهمَل بصمت.
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBebook\-meta\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
@@ -74,7 +74,7 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-comments, \-c
-Set the e\-book description.
+تعيين وصف الكتاب الإلكتروني.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -89,67 +89,67 @@ Set the e\-book description.
 .INDENT 0.0
 .TP
 .B \-\-disallow\-rendered\-cover
-For formats like EPUB that use a \fB\(dq\fPdefault cover\fB\(dq\fP of the first page rendered, disallow such default covers
+بالنسبة لتنسيقات مثل EPUB التي تستخدم \fB\(dq\fPغلافًا افتراضيًا\fB\(dq\fP للصفحة الأولى المعروضة، لا تسمح بهذه الأغلفة الافتراضية
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+اقرأ البيانات الوصفية من ملف OPF المحدد واستخدمها لتعيين البيانات الوصفية في الكتاب الإلكتروني. البيانات الوصفية المحددة في سطر الأوامر ستلغي البيانات الوصفية المقروءة من ملف OPF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+احصل على الغلاف من الكتاب الإلكتروني واحفظه في الملف المحدد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Set the identifiers for the book, can be specified multiple times. For example: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fI\%\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
+قم بتعيين المعرفات للكتاب، يمكن تحديدها عدة مرات. على سبيل المثال: \fI\%\-\-identifier\fP uri:https://acme.com \fI\%\-\-identifier\fP isbn:12345 لإزالة معرف، لا تحدد قيمة، \fI\%\-\-identifier\fP isbn: لاحظ أنه بالنسبة لملفات EPUB، لا يمكن إزالة معرف محدد كمعرف الحزمة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-index, \-i
-تعيين فهرس للكتاب في هذه السلسلة.
+تعيين فهرس الكتاب في هذه السلسلة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-isbn
-تعيين ISBN للكتاب.
+تعيين الرقم المعياري الدولي للكتاب (ISBN).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-language, \-l
-تعيين البريدالالكتروني.
+تعيين اللغة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-lrf\-bookid
-Set the BookID in LRF files
+تعيين معرّف الكتاب في ملفات LRF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher, \-p
-Set the e\-book publisher.
+تعيين ناشر الكتاب الإلكتروني.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-rating, \-r
-تعيين التصنيف. يجب أن يكون رقماً بين 1 و 5.
+تعيين التقييم. يجب أن يكون رقمًا بين 1 و 5.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series, \-s
-Set the series this e\-book belongs to.
+تعيين السلسلة التي ينتمي إليها هذا الكتاب الإلكتروني.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags
-تعيين علامات للكتاب. وينبغي أن تكون قائمة مفصولة بفواصل.
+تعيين علامات الكتاب. يجب أن تكون قائمة مفصولة بفواصل.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -169,7 +169,7 @@ Set the series this e\-book belongs to.
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

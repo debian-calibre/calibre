@@ -23,6 +23,17 @@ def common_english_words():
     return ans
 
 
+def random_english_text(max_num_sentences=3, min_words_per_sentence=8, max_words_per_sentence=41):
+    import random
+    num_sentences = random.randrange(1, max_num_sentences+1)
+    words = common_english_words()
+
+    def sentence():
+        num_words = random.randrange(min_words_per_sentence, max_words_per_sentence+1)
+        return ' '.join(random.choice(words) for i in range(num_words)).capitalize() + '.'
+    return ' '.join(sentence() for i in range(num_sentences))
+
+
 def common_user_agents():
     return user_agent_data()['common_user_agents']
 

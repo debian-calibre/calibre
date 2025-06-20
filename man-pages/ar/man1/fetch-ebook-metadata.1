@@ -27,62 +27,62 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "FETCH-EBOOK-METADATA" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-fetch\-ebook\-metadata [options]
+fetch\-ebook\-metadata [خيارات]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Fetch book metadata from online sources. You must specify at least one
-of title, authors or ISBN.
+جلب بيانات الكتاب الوصفية من المصادر عبر الإنترنت. يجب تحديد واحد على الأقل
+من العنوان أو المؤلفين أو ISBN.
 .sp
-Whenever you pass arguments to \fBfetch\-ebook\-metadata\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBfetch\-ebook\-metadata\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
+حدد اسم مكون إضافي لتنزيل البيانات الوصفية لاستخدامه. بشكل افتراضي، سيتم استخدام جميع مكونات البيانات الوصفية الإضافية. يمكن تحديدها عدة مرات لمكونات إضافية متعددة. جميع أسماء المكونات الإضافية: Google, Google Images, Amazon.com, Edelweiss, Open Library, Big Book Search
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-authors, \-a
-Book author(s)
+مؤلف (مؤلفو) الكتاب
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Specify a filename. The cover, if available, will be saved to it. Without this option, no cover will be downloaded.
+حدد اسم ملف. سيتم حفظ الغلاف، إذا كان متاحًا، فيه. بدون هذا الخيار، لن يتم تنزيل أي غلاف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identifiers such as ASIN/Goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fI\%\-\-identifier\fP asin:B0082BAJA0
+المعرفات مثل ASIN/معرف Goodreads وما إلى ذلك. يمكن تحديدها عدة مرات لمعرفات متعددة. على سبيل المثال: \fI\%\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-isbn, \-i
-Book ISBN
+رقم ISBN للكتاب
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Output the metadata in OPF format instead of human readable text.
+أخرج البيانات الوصفية بتنسيق OPF بدلاً من النص المقروء.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-d
-Timeout in seconds. Default is 30
+مهلة بالثواني. الافتراضي هو 30
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -92,12 +92,12 @@ Timeout in seconds. Default is 30
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Print the log to the console (stderr)
+اطبع السجل إلى وحدة التحكم (stderr)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

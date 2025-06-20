@@ -7,21 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 13:48+0000\n"
-"PO-Revision-Date: 2020-07-03 02:15+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Arabic (http://www.transifex.com/calibre/calibre/language/ar/)\n"
+"POT-Creation-Date: 2025-06-18 13:55+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Arabic (http://app.transifex.com/calibre/calibre/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:4
+#: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
-msgstr ""
+msgstr "دليل XPath التعليمي"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:6
+#: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -30,37 +30,37 @@ msgid ""
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for e-book related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr ""
+msgstr "في هذا الدليل التعليمي، ستحصل على مقدمة لطيفة لـ `XPath <https://en.wikipedia.org/wiki/XPath>`_، وهي لغة استعلام يمكن استخدامها لتحديد أجزاء عشوائية من مستندات `HTML <https://en.wikipedia.org/wiki/HTML>`_ في calibre. XPath هو معيار مستخدم على نطاق واسع، والبحث عنه في جوجل سيؤدي إلى الكثير من المعلومات. ومع ذلك، يركز هذا الدليل التعليمي على استخدام XPath للمهام المتعلقة بالكتب الإلكترونية مثل العثور على عناوين الفصول في مستند HTML غير منظم."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:16
+#: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr "المحتويات"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:19
+#: ../../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
-msgstr ""
+msgstr "التحديد باسم الوسم"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:21
+#: ../../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr ""
+msgstr "أبسط أشكال التحديد هو تحديد الوسوم بالاسم. على سبيل المثال، لنفترض أنك تريد تحديد جميع وسوم ``<h2>`` في مستند. استعلام XPath لذلك هو ببساطة::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:27
+#: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr ""
+msgstr "البادئة `//` تعني *البحث في أي مستوى من المستند*. الآن لنفترض أنك تريد البحث عن وسوم ``<span>`` الموجودة داخل وسوم ``<a>``. يمكن تحقيق ذلك باستخدام::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:33
+#: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr ""
+msgstr "إذا كنت تريد البحث عن وسوم في مستوى معين في المستند، فغير البادئة::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:39
+#: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -68,18 +68,18 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr ""
+msgstr "سيطابق هذا فقط ``<p>كتاب إلكتروني قصير جدًا يوضح استخدام XPath.</p>`` في :ref:`sample_ebook` ولكن ليس أي من وسوم ``<p>`` الأخرى. البادئة ``h:`` في الأمثلة أعلاه ضرورية لمطابقة وسوم XHTML. وذلك لأن calibre يمثل جميع المحتوى داخليًا كـ XHTML. في XHTML، تحتوي الوسوم على *مساحة اسم*، و ``h:`` هي بادئة مساحة الاسم لوسوم HTML."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:45
+#: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
 "we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
 " test that is used to select tags. Tests can be arbitrarily powerful and as "
 "this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "الآن لنفترض أنك تريد تحديد كل من وسوم ``<h1>`` و ``<h2>``. للقيام بذلك، نحتاج إلى بناء XPath يسمى *المسند*. :dfn:`المسند` هو ببساطة اختبار يستخدم لتحديد الوسوم. يمكن أن تكون الاختبارات قوية بشكل تعسفي ومع تقدم هذا الدليل التعليمي، سترى أمثلة أكثر قوة. يتم إنشاء المسند بإحاطة تعبير الاختبار بأقواس مربعة::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:53
+#: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -89,75 +89,75 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr ""
+msgstr "هناك العديد من الميزات الجديدة في تعبير XPath هذا. الأول هو استخدام الرمز البديل ``*``. يعني *مطابقة أي وسم*. الآن انظر إلى تعبير الاختبار ``name()='h1' or name()='h2'``. :term:`name()` هو مثال على *دالة مدمجة*. إنها ببساطة تقيّم إلى اسم الوسم. لذا باستخدامها، يمكننا تحديد الوسوم التي تكون أسماؤها إما `h1` أو `h2`. لاحظ أن دالة :term:`name()` تتجاهل مساحات الأسماء بحيث لا توجد حاجة لـ البادئة ``h:``. يحتوي XPath على العديد من الدوال المدمجة المفيدة. سيتم تقديم المزيد في هذا الدليل التعليمي."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:62
+#: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
-msgstr ""
+msgstr "التحديد حسب السمات"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:64
+#: ../../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr ""
+msgstr "لتحديد الوسوم بناءً على سماتها، يلزم استخدام المسندات::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:70
+#: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr ""
+msgstr "هنا، يشير عامل التشغيل ``@`` إلى سمات الوسم. يمكنك استخدام بعض `وظائف XPath المدمجة`_ لإجراء مطابقة أكثر تعقيدًا على قيم السمات."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
-msgstr ""
+msgstr "التحديد حسب محتوى الوسم"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr ""
+msgstr "باستخدام XPath، يمكنك حتى تحديد الوسوم بناءً على النص الذي تحتويه. أفضل طريقة للقيام بذلك هي استخدام قوة *التعبيرات العادية* عبر الدالة المدمجة :term:`re:test()`::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr ""
+msgstr "هنا يشير عامل التشغيل ``.`` إلى محتويات الوسم، تمامًا كما أشار عامل التشغيل ``@``إلى سماته."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
-msgstr ""
+msgstr "كتاب إلكتروني نموذجي"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
-msgstr ""
+msgstr "وظائف XPath المدمجة"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
-msgstr ""
+msgstr "name()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
-msgstr ""
+msgstr "اسم الوسم الحالي."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
-msgstr ""
+msgstr "contains()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
-msgstr ""
+msgstr "``contains(s1, s2)`` تعيد `true` إذا كانت s1 تحتوي على s2."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
-msgstr ""
+msgstr "re:test()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr ""
+msgstr "``re:test(src, pattern, flags)`` تعيد `true` إذا كانت السلسلة `src` تطابق التعبير النمطي `pattern`. علامة مفيدة بشكل خاص هي ``i``، فهي تجعل المطابقة غير حساسة لحالة الأحرف. يمكن العثور على دليل جيد حول بناء جملة التعبيرات العادية في `بناء جملة regexp <https://docs.python.org/library/re.html>`_"

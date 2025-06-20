@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "WEB2DISK" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "WEB2DISK" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .INDENT 0.0
@@ -39,69 +39,69 @@ web2disk URL
 .UNINDENT
 .UNINDENT
 .sp
-Where URL is for example \X'tty: link https://google.com'\fI\%https://google.com\fP\X'tty: link'
+حيث URL هو على سبيل المثال \X'tty: link https://google.com'\fI\%https://google.com\fP\X'tty: link'
 .sp
-Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBweb2disk\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
 .B \-\-base\-dir, \-d
-Base folder into which URL is saved. Default is .
+المجلد الأساسي الذي يتم حفظ عنوان URL فيه. الافتراضي هو .
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-delay
-Minimum interval in seconds between consecutive fetches. Default is 0 s
+الحد الأدنى للفاصل الزمني بالثواني بين عمليات الجلب المتتالية. الافتراضي هو 0 ثانية
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-download\-stylesheets
-Do not download CSS stylesheets.
+لا تقم بتنزيل أوراق أنماط CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encoding
-The character encoding for the websites you are trying to download. The default is to try and guess the encoding.
+ترميز الأحرف للمواقع التي تحاول تنزيلها. الافتراضي هو محاولة تخمين الترميز.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-Any link that matches this regular expression will be ignored. This option can be specified multiple times, in which case as long as any regexp matches a link, it will be ignored. By default, no links are ignored. If both filter regexp and match regexp are specified, then filter regexp is applied first.
+سيتم تجاهل أي رابط يطابق هذا التعبير النمطي. يمكن تحديد هذا الخيار عدة مرات، وفي هذه الحالة، طالما أن أي تعبير نمطي يطابق رابطًا، فسيتم تجاهله. افتراضيًا، لا يتم تجاهل أي روابط. إذا تم تحديد كل من تعبير التصفية النمطي وتعبير المطابقة النمطي، فسيتم تطبيق تعبير التصفية النمطي أولاً.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-Only links that match this regular expression will be followed. This option can be specified multiple times, in which case as long as a link matches any one regexp, it will be followed. By default all links are followed.
+سيتم اتباع الروابط التي تطابق هذا التعبير النمطي فقط. يمكن تحديد هذا الخيار عدة مرات، وفي هذه الحالة، طالما أن الرابط يطابق أي تعبير نمطي واحد، فسيتم اتباعه. افتراضيًا، يتم اتباع جميع الروابط.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-files, \-n
-The maximum number of files to download. This only applies to files from <a href> tags. Default is 9223372036854775807
+الحد الأقصى لعدد الملفات التي يمكن تنزيلها. ينطبق هذا فقط على الملفات من علامات <a href>. الافتراضي هو 9223372036854775807
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-Maximum number of levels to recurse i.e. depth of links to follow. Default 1
+الحد الأقصى لعدد المستويات للتكرار، أي عمق الروابط التي يجب متابعتها. الافتراضي 1
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout in seconds to wait for a response from the server. Default: 10.0 s
+مهلة بالثواني لانتظار استجابة من الخادم. الافتراضي: 10.0 ثانية
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-عرض المعلومات النتائج التفصيلية. مفيد لتصحيح الأخطاء.
+عرض المعلومات النتائج التفصيلية. مفيد لتصحيح الأخطاء
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
