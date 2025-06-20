@@ -27,45 +27,40 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-smtp [options] [from to text]
+calibre\-smtp [خيارات] [من إلى نص]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+إرسال البريد باستخدام بروتوكول SMTP. \fBcalibre\-smtp\fP لديه وضعان للتشغيل. في وضع الإنشاء، تحدد من إلى ونص ويتم استخدامها لبناء وإرسال رسالة بريد إلكتروني. في وضع التصفية، يقرأ \fBcalibre\-smtp\fP رسالة بريد إلكتروني كاملة من STDIN ويرسلها.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+النص هو نص رسالة البريد الإلكتروني.
+إذا لم يتم تحديد النص، يتم قراءة رسالة بريد إلكتروني كاملة من STDIN.
+من هو عنوان البريد الإلكتروني للمرسل وإلى هو عنوان البريد الإلكتروني للمستلم. عندما يتم قراءة بريد إلكتروني كامل من STDIN، يتم استخدام من وإلى فقط في تفاوض SMTP، ولا يتم تعديل رؤوس الرسالة.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBcalibre\-smtp\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fI\%\-\-outbox\fP to handle delivery failures.
+تفرع وتسليم الرسالة في الخلفية. إذا استخدمت هذا الخيار، يجب عليك أيضًا استخدام \fI\%\-\-outbox\fP للتعامل مع أخطاء التسليم.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+اسم المضيف للكمبيوتر المحلي. يستخدم عند الاتصال بخادم SMTP.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -75,25 +70,25 @@ Host name of localhost. Used when connecting to SMTP server.
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout for connection
+مهلة الاتصال
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-كن أكثر تفصيلا
+كن أكثر تفصيلاً
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+خيارات لإنشاء بريد إلكتروني. يتم تجاهلها إذا لم يتم تحديد النص
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-File to attach to the email
+ملف لإرفاقه بالبريد الإلكتروني
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -102,41 +97,42 @@ File to attach to the email
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+خيارات لاستخدام خادم ترحيل SMTP لإرسال البريد. سيحاول calibre إرسال
+البريد الإلكتروني مباشرة ما لم يتم تحديد \-\-relay.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+مسار إلى ملف من شهادات CA المدمجة بتنسيق PEM، تستخدم للتحقق من شهادة الخادم عند استخدام TLS. افتراضيًا، يتم استخدام شهادات CA للنظام.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+لا تتحقق من شهادة الخادم عند الاتصال باستخدام TLS. كان هذا هو السلوك الافتراضي في إصدارات calibre قبل 3.27. إذا كنت تستخدم ترحيلًا بشهادة ذاتية التوقيع أو غير صالحة، فيمكنك استخدام هذا الخيار لاستعادة السلوك قبل 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+طريقة التشفير للاستخدام عند الاتصال بالترحيل. الخيارات هي TLS و SSL و NONE. الافتراضي هو TLS. تحذير: اختيار NONE غير آمن للغاية
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+كلمة المرور للترحيل
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+المنفذ للاتصال به على خادم الترحيل. الافتراضي هو استخدام 465 إذا كانت طريقة التشفير SSL و 25 بخلاف ذلك.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+خادم ترحيل SMTP لاستخدامه لإرسال البريد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+اسم المستخدم للترحيل
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

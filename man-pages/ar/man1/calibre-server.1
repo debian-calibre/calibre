@@ -27,174 +27,171 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-server [options] [path to library folder...]
+calibre\-server [خيارات] [مسار إلى مجلد المكتبة...]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+ابدأ خادم محتوى calibre. يعرض خادم محتوى calibre مكتبات calibre الخاصة بك عبر الإنترنت. يمكنك تحديد مسار مجلدات المكتبة كمعاملات لـ \fBcalibre\-server\fP\&. إذا لم تحدد أي مسارات، فسيتم استخدام جميع المكتبات التي يعرفها برنامج calibre الرئيسي.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBcalibre\-server\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+مسار ملف سجل الوصول. يحتوي هذا السجل على معلومات حول العملاء الذين يتصلون بالخادم ويقدمون طلبات. افتراضيًا لا يتم تسجيل الوصول.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+الوقت (بالثواني) للانتظار للحصول على رد من الخادم عند إجراء الاستعلامات.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
+اختر نوع المصادقة المستخدم.         حدد وضع مصادقة HTTP الذي يستخدمه الخادم. اضبطه على \fB\(dq\fPbasic\fB\(dq\fP إذا كنت تضع هذا الخادم خلف وكيل SSL. وإلا، اتركه \fB\(dq\fPauto\fB\(dq\fP، والذي سيستخدم \fB\(dq\fPbasic\fB\(dq\fP إذا تم تكوين SSL وإلا فسيستخدم \fB\(dq\fPdigest\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+إعادة تحميل الخادم تلقائيًا عند تغيير الكود المصدري. مفيد للتطوير. يجب عليك أيضًا تحديد قيمة صغيرة لمهلة الإغلاق.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+عدد محاولات تسجيل الدخول الفاشلة للحظر.     عدد محاولات تسجيل الدخول الفاشلة التي يتم بعدها حظر عنوان IP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+حظر عناوين IP التي لديها محاولات تسجيل دخول فاشلة متكررة.   يحظر الوصول مؤقتًا لعناوين IP التي لديها محاولات تسجيل دخول فاشلة متكررة لعدد الدقائق المحدد. مفيد لمنع محاولات تخمين كلمات المرور. إذا تم تعيينه على صفر، فلن يتم أي حظر.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+اختر وضع قائمة الكتب الافتراضي.     حدد وضع قائمة الكتب الافتراضي الذي سيتم استخدامه للمستخدمين الجدد. يمكن للمستخدمين الفرديين تجاوز الإعداد الافتراضي في إعداداتهم الخاصة. الافتراضي هو استخدام شبكة أغلفة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+الحد الأدنى للحجم الذي تستخدم فيه الاستجابات ضغط البيانات (بالبايت).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+مسار إلى ملف JSON يحتوي على قالب لوضع قائمة الكتب المخصصة. أسهل طريقة لإنشاء ملف قالب كهذا هي الانتقال إلى التفضيلات\-> المشاركة عبر الشبكة\-> قالب قائمة الكتب في calibre، وإنشاء القالب وتصديره.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+تشغيل العملية في الخلفية كخفي (Linux فقط).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+تقييد حقول المستخدم المعرفة المعروضة.       قائمة مفصولة بفاصلات من حقول البيانات الوصفية المعرفة من قبل المستخدم والتي سيتم عرضها بواسطة خادم المحتوى في عرضي /opds و /mobile. إذا حددت هذا الخيار، فلن يتم عرض أي حقول غير موجودة في هذه القائمة. على سبيل المثال: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+تخصيص مسبق للمقبس، على سبيل المثال، مع تنشيط مقبس systemd. افتراضيًا، هذا الخيار ممكّن.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+مصادقة قائمة على كلمة المرور للوصول إلى الخادم.     عادةً، يكون الخادم غير مقيد، مما يسمح لأي شخص بالوصول إليه. يمكنك تقييد الوصول إلى المستخدمين المحددين مسبقًا باستخدام هذا الخيار. افتراضيًا، هذا الخيار معطل.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+العودة إلى الواجهة المكتشفة تلقائيًا.       إذا تعذر على الخادم لسبب ما الارتباط بالواجهة المحددة في خيار listen_on، فسيحاول اكتشاف واجهة تتصل بالعالم الخارجي والارتباط بها. افتراضيًا، هذا الخيار ممكّن.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. By default, this option is disabled.
+السماح بالاتصالات المحلية غير المصادق عليها لإجراء تغييرات.         عادةً، إذا لم تقم بتشغيل المصادقة، يعمل الخادم في وضع القراءة فقط، وذلك لمنع المستخدمين المجهولين من إجراء تغييرات على مكتبات calibre الخاصة بك. يسمح هذا الخيار لأي شخص يتصل من نفس الكمبيوتر الذي يعمل عليه الخادم بإجراء تغييرات. هذا مفيد إذا كنت ترغب في تشغيل الخادم بدون مصادقة ولكن لا تزال تستخدم calibredb لإجراء تغييرات على مكتبات calibre الخاصة بك. لاحظ أن تشغيل هذا الخيار يعني أن أي برنامج يعمل على الكمبيوتر يمكنه إجراء تغييرات على مكتبات calibre الخاصة بك. افتراضيًا، هذا الخيار معطل.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+تسجيل طلبات HTTP 404 (غير موجودة).  عادةً، يسجل الخادم جميع طلبات HTTP للموارد غير الموجودة. يمكن أن يولد هذا الكثير من رسائل السجل غير المرغوب فيها إذا كان خادمك مستهدفًا من قبل الروبوتات. استخدم هذا الخيار لإيقاف تشغيله. افتراضيًا، هذا الخيار ممكّن.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+إعلان خلاصات OPDS عبر BonJour.      إعلان خلاصات OPDS عبر خدمة BonJour، بحيث يمكن لتطبيقات القراءة المستندة إلى OPDS اكتشاف الخادم والاتصال به تلقائيًا. افتراضيًا، هذا الخيار ممكّن.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+نقل الملفات بدون نسخ لزيادة الأداء.         سيؤدي هذا إلى استخدام عمليات نقل بدون نسخ داخل النواة عند إرسال الملفات عبر الشبكة، مما يزيد الأداء. ومع ذلك، يمكن أن يتسبب في تلف عمليات نقل الملفات على بعض أنظمة الملفات المعطلة. إذا واجهت عمليات نقل ملفات تالفة، قم بإيقاف تشغيله. افتراضيًا، هذا الخيار ممكّن.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+حقول البيانات الوصفية المعرفة من قبل المستخدم التي تم تجاهلها.      قائمة مفصولة بفاصلات من حقول البيانات الوصفية المعرفة من قبل المستخدم والتي لن يتم عرضها بواسطة خادم المحتوى في عرضي /opds و /mobile. على سبيل المثال: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for IPv4 connections from the local machine, or to \fB\(dq\fP0.0.0.0\fB\(dq\fP to listen to all incoming IPv4 connections.
+الواجهة التي سيتم الاستماع عليها للاتصالات.         الافتراضي هو الاستماع على جميع واجهات IPv6 و IPv4 المتاحة. يمكنك تغيير هذا، على سبيل المثال، إلى \fB\(dq\fP127.0.0.1\fB\(dq\fP للاستماع فقط لاتصالات IPv4 من الجهاز المحلي، أو إلى \fB\(dq\fP0.0.0.0\fB\(dq\fP للاستماع إلى جميع اتصالات IPv4 الواردة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+مسار ملف السجل لسجل الخادم. يحتوي هذا السجل على معلومات وأخطاء الخادم، وليس سجلات الوصول. افتراضيًا يتم كتابته إلى stdout.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fI\%\-\-userdb\fP option.
+إدارة قاعدة بيانات المستخدمين المسموح لهم بالاتصال بهذا الخادم. يمكنك استخدامه في الوضع التلقائي عن طريق إضافة \-\-. راجع calibre\-server \fI\%\-\-manage\-users\fP \fB\-\-\fP help للحصول على التفاصيل. راجع أيضًا الخيار \fI\%\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+الحد الأقصى لحجم رأس HTTP واحد (بالكيلوبايت).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+الحد الأقصى لوقت عمليات العامل.     الحد الأقصى لوقت السماح لعمليات العامل بالتشغيل (بالدقائق). اضبط على صفر لعدم وجود حد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+الحد الأقصى لعدد عمليات العامل.     يتم إطلاق عمليات العامل حسب الحاجة وتستخدم للمهام الكبيرة مثل إعداد كتاب للعرض، إضافة كتب، تحويل، إلخ. عادةً، الحد الأقصى لعدد هذه العمليات يعتمد على عدد أنوية وحدة المعالجة المركزية. يمكنك التحكم في ذلك من خلال هذا الإعداد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+الحد الأقصى لحجم ملف السجل (بالميغابايت).   الحد الأقصى لحجم ملفات السجل التي ينشئها الخادم. عندما يصبح السجل أكبر من هذا الحجم، يتم تدويره تلقائيًا. اضبط على صفر لتعطيل تدوير السجل.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-أقصى عدد كتب في مواجز OPDS.         The maximum number of books that the server will return in a single OPDS acquisition feed.
+أقصى عدد كتب في مواجز OPDS.         الحد الأقصى لعدد الكتب التي سيعيدها الخادم في موجز اكتساب OPDS واحد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+الحد الأقصى لعدد العناصر غير المجمعة في خلاصات OPDS.        تجميع العناصر في فئات مثل المؤلف/الوسوم بالحرف الأول عندما يكون عدد العناصر أكثر من هذا العدد. اضبط على صفر لتعطيل.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+الحد الأقصى للحجم المسموح به للملفات التي تم تحميلها إلى الخادم (بالميغابايت).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -204,62 +201,62 @@ Max. allowed size for files uploaded to the server (in MB).
 .INDENT 0.0
 .TP
 .B \-\-pidfile
-Write process PID to the specified file
+كتابة PID العملية إلى الملف المحدد
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+المنفذ الذي سيتم الاستماع عليه للاتصالات.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+مسار إلى ملف JSON يحتوي على عناوين URL لميزة \fB\(dq\fPالبحث في الإنترنت\fB\(dq\fP\&. أسهل طريقة لإنشاء ملف كهذا هي الانتقال إلى التفضيلات\-> المشاركة عبر الشبكة\-> البحث في الإنترنت في calibre، وإنشاء عناوين URL وتصديرها.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+إجمالي الوقت بالثواني للانتظار لإيقاف التشغيل النظيف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+مسار ملف شهادة SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+مسار ملف مفتاح SSL الخاص.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+الوقت (بالثواني) الذي يتم بعده إغلاق اتصال غير نشط.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+السماح بالاتصالات غير المصادق عليها من عناوين IP محددة لإجراء تغييرات.      عادةً، إذا لم تقم بتشغيل المصادقة، يعمل الخادم في وضع القراءة فقط، وذلك لمنع المستخدمين المجهولين من إجراء تغييرات على مكتبات calibre الخاصة بك. يسمح هذا الخيار لأي شخص يتصل من عناوين IP المحددة بإجراء تغييرات. يجب أن تكون قائمة مفصولة بفاصلات من مواصفات العنوان أو الشبكة. هذا مفيد إذا كنت ترغب في تشغيل الخادم بدون مصادقة ولكن لا تزال تستخدم calibredb لإجراء تغييرات على مكتبات calibre الخاصة بك. لاحظ أن تشغيل هذا الخيار يعني أن أي شخص يتصل من عناوين IP المحددة يمكنه إجراء تغييرات على مكتبات calibre الخاصة بك.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+بادئة لإلحاقها بجميع عناوين URL.    مفيد إذا كنت ترغب في تشغيل هذا الخادم خلف وكيل عكسي. على سبيل المثال، استخدم /calibre كبادئة URL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fI\%\-\-manage\-users\fP\&. You can read more about managing users at: \X'tty: link https://manual.calibre-ebook.com/server.html#managing-user-accounts-from-the-command-line-only'\fI\%https://manual.calibre\-ebook.com/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP\X'tty: link'
+مسار قاعدة بيانات المستخدم لاستخدامها للمصادقة. قاعدة البيانات هي ملف SQLite. لإنشائها استخدم \fI\%\-\-manage\-users\fP\&. يمكنك قراءة المزيد حول إدارة المستخدمين على: \X'tty: link https://manual.calibre-ebook.com/ar/server.html#managing-user-accounts-from-the-command-line-only'\fI\%https://manual.calibre\-ebook.com/ar/server.html#managing\-user\-accounts\-from\-the\-command\-line\-only\fP\X'tty: link'
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+عدد سلاسل العمال المستخدمة لمعالجة الطلبات.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

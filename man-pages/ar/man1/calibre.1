@@ -27,45 +27,45 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "CALIBRE" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 calibre \- calibre
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre [options] [path_to_ebook or calibre url ...]
+calibre [خيارات] [مسار_الكتاب_الإلكتروني أو رابط كاليبر ...]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
-path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
-different actions, than just adding books. For example:
+تشغيل الواجهة الرسومية الرئيسية لـ \fBcalibre\fP وإضافة الكتاب الإلكتروني اختياريًا في
+مسار_الكتاب_الإلكتروني إلى قاعدة البيانات. يمكنك أيضًا تحديد روابط \fBcalibre\fP لتنفيذ إجراءات
+مختلفة، بدلاً من مجرد إضافة الكتب. على سبيل المثال:
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Will open the book with id 1842 in the EPUB format from the library
-\(dqtest_library\(dq in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
-libraries with spaces replaced by underscores. A full description of the
-various URL based actions is in the User Manual.
+سيفتح الكتاب الذي يحمل المعرف 1842 بتنسيق EPUB من المكتبة
+\(dqtest_library\(dq في عارض الكتب الإلكترونية من \fBcalibre\fP\&. أسماء المكتبات هي أسماء المجلدات الخاصة بـ
+المكتبات مع استبدال المسافات بشرطات سفلية. وصف كامل لـ
+الإجراءات المختلفة المستندة إلى URL موجود في دليل المستخدم.
 .sp
-Whenever you pass arguments to \fBcalibre\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBcalibre\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+فصل من الوحدة الطرفية المتحكمة، إن وجدت (Linux فقط)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore\-plugins
-Ignore custom plugins, useful if you installed a plugin that is preventing calibre from starting
+تجاهل الإضافات المخصصة، مفيد إذا قمت بتثبيت إضافة تمنع تشغيل كاليبر
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -75,27 +75,27 @@ Ignore custom plugins, useful if you installed a plugin that is preventing calib
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Cause a running calibre instance, if any, to be shutdown. Note that if there are running jobs, they will be silently aborted, so use with care.
+التسبب في إيقاف تشغيل أي نسخة من calibre قيد التشغيل، إن وجدت. لاحظ أنه إذا كانت هناك مهام قيد التشغيل، فسيتم إجهاضها بصمت، لذا استخدم بحذر.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-in\-tray
-Start minimized to system tray.
+ابدأ مصغرًا إلى علبة النظام.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Ignored, do not use. Present only for legacy reasons
+تم تجاهله، لا تستخدمه. موجود لأسباب قديمة فقط
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-with\-library
-Use the library located at the specified path.
+استخدم المكتبة الموجودة في المسار المحدد.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

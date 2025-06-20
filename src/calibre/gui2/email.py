@@ -164,14 +164,15 @@ def send_mails(jobnames, callback, attachments, to_s, subjects,
             # these companies employ to write their code. It's the height of
             # irony that they are called "tech" companies.
             # https://bugs.launchpad.net/calibre/+bug/1989282
-            from calibre.utils.short_uuid import uuid4
             if not is_for_kindle(to):
+                from calibre.utils.short_uuid import uuid4
                 # Amazon nowadays reads metadata from attachment filename instead of
                 # file internal metadata so don't nuke the filename.
                 # https://www.mobileread.com/forums/showthread.php?t=349290
                 aname = f'{uuid4()}.' + aname.rpartition('.')[-1]
-            subject = uuid4()
-            text = uuid4()
+            from calibre.utils.random_ua import random_english_text
+            subject = random_english_text(min_words_per_sentence=3, max_words_per_sentence=9, max_num_sentences=1).rstrip('.')
+            text = random_english_text()
         job = ThreadedJob('email', description, gui_sendmail, (attachment, aname, to,
                 subject, text), {}, callback)
         job_manager.run_threaded_job(job)

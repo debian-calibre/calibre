@@ -27,111 +27,111 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "EBOOK-POLISH" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-polish [options] input_file [output_file]
+ebook\-polish [خيارات] ملف_الإدخال [ملف_الإخراج]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Polishing books is all about putting the shine of perfection onto
-your carefully crafted e\-books.
+صقل الكتب يدور حول إضافة لمسة الكمال إلى كتبك الإلكترونية المصممة
+بعناية.
 .sp
-Polishing tries to minimize the changes to the internal code of your e\-book.
-Unlike conversion, it does not flatten CSS, rename files, change font
-sizes, adjust margins, etc. Every action performs only the minimum set of
-changes needed for the desired effect.
+يحاول الصقل تقليل التغييرات في الشفرة الداخلية لكتابك الإلكتروني. على عكس
+التحويل، فإنه لا يقوم بتسطيح CSS، أو إعادة تسمية الملفات، أو تغيير أحجام
+الخطوط، أو ضبط الهوامش، وما إلى ذلك. كل إجراء يقوم فقط بالحد الأدنى من
+التغييرات اللازمة للتأثير المطلوب.
 .sp
-You should use this tool as the last step in your e\-book creation process.
+يجب عليك استخدام هذه الأداة كخطوة أخيرة في عملية إنشاء كتابك الإلكتروني.
 .sp
-Note that polishing only works on files in the AZW3 or EPUB or KEPUB formats.
+لاحظ أن الصقل يعمل فقط على الملفات بتنسيقات AZW3 أو EPUB أو KEPUB.
 .sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBebook\-polish\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .SH [خيارات]
 .INDENT 0.0
 .TP
 .B \-\-add\-soft\-hyphens, \-H
-Add soft hyphens to all words in the book. This allows the book to be rendered better when the text is justified, in readers that do not support hyphenation.
+أضف واصلات ناعمة إلى جميع الكلمات في الكتاب. هذا يسمح بعرض الكتاب بشكل أفضل عندما يكون النص مبررًا، في القراء الذين لا يدعمون الواصلات.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-images, \-i
-Losslessly compress images in the book, to reduce the filesize, without affecting image quality.
+ضغط الصور في الكتاب بدون فقدان، لتقليل حجم الملف، دون التأثير على جودة الصورة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+مسار إلى صورة غلاف. يغير الغلاف المحدد في الكتاب الإلكتروني. إذا لم يكن هناك غلاف موجود، أو لم يتم تحديد الغلاف بشكل صحيح، يتم إدراج غلاف جديد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-download\-external\-resources, \-d
-Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book. All such resources will be downloaded and added to the book so that the book no longer references any external resources.
+تنزيل الموارد الخارجية مثل الصور، أوراق الأنماط، إلخ. التي تشير إلى عناوين URL بدلاً من الملفات في الكتاب. سيتم تنزيل جميع هذه الموارد وإضافتها إلى الكتاب بحيث لا يشير الكتاب بعد الآن إلى أي موارد خارجية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-Embed all fonts that are referenced in the document and are not already embedded. This will scan your computer for the fonts, and if they are found, they will be embedded into the document. Please ensure that you have the proper license for embedding the fonts used in this document.
+تضمين جميع الخطوط المشار إليها في المستند والتي لم يتم تضمينها بالفعل. سيقوم هذا بمسح جهاز الكمبيوتر الخاص بك بحثًا عن الخطوط، وإذا تم العثور عليها، فسيتم تضمينها في المستند. يرجى التأكد من أن لديك الترخيص المناسب لتضمين الخطوط المستخدمة في هذا المستند.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Insert a \fB\(dq\fPbook jacket\fB\(dq\fP page at the start of the book that contains all the book metadata such as title, tags, authors, series, comments, etc. Any previous book jacket will be replaced.
+أدخل صفحة \fB\(dq\fPغلاف الكتاب\fB\(dq\fP في بداية الكتاب تحتوي على جميع البيانات الوصفية للكتاب مثل العنوان، والعلامات، والمؤلفين، والسلسلة، والتعليقات، إلخ. سيتم استبدال أي غلاف كتاب سابق.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Path to an OPF file. The metadata in the book is updated from the OPF file.
+مسار إلى ملف OPF. يتم تحديث البيانات الوصفية في الكتاب من ملف OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Remove a previous inserted book jacket page.
+أزل صفحة غلاف كتاب تم إدراجها مسبقًا.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-soft\-hyphens
-Remove soft hyphens from all text in the book.
+أزل الواصلات الناعمة من جميع النصوص في الكتاب.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-unused\-css, \-u
-Remove all unused CSS rules from stylesheets and <style> tags. Some books created from production templates can have a large number of extra CSS rules that don\fB\(aq\fPt match any actual content. These extra rules can slow down readers that need to parse them all.
+أزل جميع قواعد CSS غير المستخدمة من أوراق الأنماط وعلامات <style>. قد تحتوي بعض الكتب التي تم إنشاؤها من قوالب الإنتاج على عدد كبير من قواعد CSS الإضافية التي لا تتطابق مع أي محتوى فعلي. يمكن أن تبطئ هذه القواعد الإضافية برامج القراءة التي تحتاج إلى تحليلها كلها.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into their typographically correct equivalents. Note that the algorithm can sometimes generate incorrect results, especially when single quotes at the start of contractions are involved.
+حوّل الشُرَط والنقاط الثلاث وعلامات الاقتباس والواصلات المتعددة وما إلى ذلك في النص العادي إلى ما يعادلها طباعيًا. لاحظ أن الخوارزمية يمكن أن تولد أحيانًا نتائج غير صحيحة، خاصةً عندما تكون علامات الاقتباس المفردة في بداية الاختصارات متضمنة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-fonts, \-f
-Subsetting fonts means reducing an embedded font to contain only the characters used from that font in the book. This greatly reduces the size of the font files (halving the font file sizes is common). For example, if the book uses a specific font for headers, then subsetting will reduce that font to contain only the characters present in the actual headers in the book. Or if the book embeds the bold and italic versions of a font, but bold and italic text is relatively rare, or absent altogether, then the bold and italic fonts can either be reduced to only a few characters or completely removed. The only downside to subsetting fonts is that if, at a later date you decide to add more text to your books, the newly added text might not be covered by the subset font.
+تقليص الخطوط يعني تقليل الخط المضمن ليحتوي فقط على الأحرف المستخدمة من ذلك الخط في الكتاب. هذا يقلل بشكل كبير من حجم ملفات الخطوط (تخفيض أحجام ملفات الخطوط إلى النصف أمر شائع). على سبيل المثال، إذا كان الكتاب يستخدم خطًا معينًا للعناوين، فسيؤدي تقليص الخط إلى تقليل هذا الخط ليحتوي فقط على الأحرف الموجودة في العناوين الفعلية في الكتاب. أو إذا كان الكتاب يضمّن الإصدارات الغامقة والمائلة لخط ما، ولكن النص الغامق والمائل نادر نسبيًا، أو غائب تمامًا، فيمكن تقليل الخطوط الغامقة والمائلة إلى بضعة أحرف فقط أو إزالتها بالكامل. الجانب السلبي الوحيد لتقليص الخطوط هو أنه إذا قررت في وقت لاحق إضافة المزيد من النصوص إلى كتبك، فقد لا يغطي الخط المقُلَّص النص المضاف حديثًا.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-upgrade\-book, \-U
-رقِّ البِنى الداخلية للكتاب إن أمكن. مثلاً ترقية كتب EPUB 2 إلى EPUB 3.
+رقِّ البِنى الداخلية للكتاب إن أمكن. مثلاً ترقية كتب EPUB 2 إلى EPUB 3.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Produce more verbose output, useful for debugging.
+إنتاج إخراج أكثر تفصيلاً، مفيد لتصحيح الأخطاء.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -4,13 +4,15 @@
 # 
 # Translators:
 # Nader LADHARI, 2023
+# Nader LADHARI, 2023
+# Usama Khalil, 2025
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-04 09:47+0000\n"
+"POT-Creation-Date: 2025-06-18 13:55+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: Nader LADHARI, 2023\n"
+"Last-Translator: Usama Khalil, 2025\n"
 "Language-Team: Arabic (http://app.transifex.com/calibre/calibre/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,386 +20,432 @@ msgstr ""
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:4
+#: ../../../__w/calibre/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
-msgstr "وثائق API لواجهة قاعدة البيانات"
+msgstr "توثيق API لواجهة قاعدة البيانات"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:9
+#: ../../../__w/calibre/calibre/manual/db_api.rst:9
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
-msgstr "هذا الواجهة API آمنة للاستخدام (حيث تستخدم نظام قفل بالقراءة المتعددة والكتابة الفردية). يمكنك الوصول إلى هذا الواجهة بهذه الطريقة:"
+msgstr "هذه الواجهة البرمجية (API) آمنة للخيوط (تستخدم مخطط قفل متعدد القراء، كاتب واحد). يمكنك الوصول إلى هذه الواجهة البرمجية بهذه الطريقة::"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:14
+#: ../../../__w/calibre/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr "إذا كنت في إضافة Calibre التي هي جزء من واجهة المستخدم الرئيسية لـ Calibre، فيمكنك الوصول إليها بهذه الطريقة:"
+msgstr "إذا كنت في إضافة calibre وهي جزء من واجهة المستخدم الرسومية الرئيسية لـ calibre، يمكنك الوصول إليها بهذه الطريقة بدلاً من ذلك::"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
 msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr "ذاكرة التخزين المؤقتة لملف metadata.db من مكتبة Calibre. تعمل هذه الفئة أيضًا كواجهة برمجة تطبيقات آمنة للاستخدام في الخيوط للوصول إلى قاعدة البيانات. يتم الاحتفاظ بذاكرة التخزين المؤقتة في الذاكرة العادية لتحقيق أقصى أداء."
+msgstr "ذاكرة تخزين مؤقتة في الذاكرة لملف metadata.db من مكتبة calibre. هذه الفئة تعمل أيضًا كواجهة برمجة تطبيقات آمنة للخيوط للوصول إلى قاعدة البيانات. يتم الحفاظ على ذاكرة التخزين المؤقتة في الذاكرة بالشكل الطبيعي لتحقيق أقصى أداء."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
 msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr "يُستخدم SQLITE ببساطة كوسيلة للقراءة والكتابة من metadata.db بشكل موثوق. تم يتم إعادة تنفيذ جميع منطق قراءة/فرز/بحث/تخزين الجداول. وهذا ضروريً لتحقيق أفضل أداء ومرونة."
+msgstr "يُستخدم SQLITE ببساطة كوسيلة لقراءة وكتابة البيانات من metadata.db بشكل قوي. تمت إعادة تنفيذ جميع منطق قراءة/فرز/بحث/تخزين الجداول مؤقتًا. كان هذا ضروريًا لتحقيق أقصى أداء ومرونة."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
-msgstr "عند إنشاء سجل كتاب جديد في قاعدة البيانات، باستخدام معرف الكتاب كوسيط وحيد."
+msgstr "عند إنشاء سجل كتاب جديد في قاعدة البيانات، مع معرف الكتاب كـ الوسيط الوحيد"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
 msgid "When a book format is edited, with arguments: (book_id, fmt)"
-msgstr "عند تحرير تنسيق كتاب ما، باستخدام الوسائط: (book_id، fmt)"
+msgstr "عند تحرير تنسيق كتاب، مع الوسائط: (book_id, fmt)"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.books_removed:1
 msgid ""
 "When books are removed from the database with the list of book ids as the "
 "only argument"
-msgstr "عند إزالة الكتب من قاعدة البيانات باستخدام قائمة من معرفات الكتب كوسيط وحيد."
+msgstr "عند إزالة الكتب من قاعدة البيانات مع قائمة معرفات الكتب كـ الوسيط الوحيد"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
-msgstr "عند إضافة تنسيق إلى كتاب، باستخدام الوسائط: (book_id، fmt)"
+msgstr "عند إضافة تنسيق إلى كتاب، مع الوسائط: (book_id, format)"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
-msgstr "عند إزالة التنسيقات من كتاب ما، باستخدام الوسائط: (تعيين معرف الكتاب إلى مجموعة التنسيقات المزالة من الكتاب)"
+msgstr "عند إزالة التنسيقات من كتاب، مع الوسائط: (تعيين معرف الكتاب إلى مجموعة التنسيقات التي تمت إزالتها من الكتاب)."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
 msgid "When the indexing progress changes"
-msgstr ""
+msgstr "عندما يتغير تقدم الفهرسة"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.items_removed:1
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
 "(field_name, affected book ids, ids of removed items)"
-msgstr "عندما تتم إزالة  بعض العناصر  كالعلامات أو كآسامي الكتّاب من بعض الكتب. الوسائط: (اسم الحقل، معرفات الكتب المتأثرة، معرفات العناصر المزالة)."
+msgstr "عند إزالة عناصر مثل العلامات أو المؤلفين من بعض الكتب. الوسائط: (اسم_الحقل، معرفات_الكتب_المتأثرة، معرفات_العناصر_المزالة)"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.items_renamed:1
 msgid ""
 "When items such as tags or authors are renamed in some or all books. "
 "Arguments: (field_name, affected book ids, map of old item id to new item "
 "id)"
-msgstr "عندما تتم م إعادة تسمية بعض العناصر كالعلامات أو آسامي الكتّاب من بعض الكتب. الوسائط: (اسم الحقل، معرفات الكتب المتأثرة، معرفات العناصر المزالة)."
+msgstr "عند إعادة تسمية عناصر مثل العلامات أو المؤلفين في بعض الكتب أو كلها. الوسائط: (اسم_الحقل، معرفات_الكتب_المتأثرة، خريطة_معرف_العنصر_القديم_إلى_معرف_العنصر_الجديد)"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.links_changed:1
+msgid ""
+"When the links associated with items(s) are changed, with arguments: "
+"(field_name, item_ids)"
+msgstr "عند تغيير الروابط المرتبطة بالعناصر، مع الوسائط: (اسم_الحقل، معرفات_العناصر)"
+
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
 msgid ""
 "When some metadata is changed for some books, with arguments: (name of "
 "changed field, set of affected book ids)"
-msgstr "عند تغيير بعض البيانات الوصفية لبعض الكتب، باستخدام الوسائط: (اسم الحقل المتغير، مجموعة معرفات الكتب المقصودة)."
+msgstr "عند تغيير بعض البيانات الوصفية لبعض الكتب، مع الوسائط: (اسم الحقل الذي تم تغييره، مجموعة معرفات الكتب المتأثرة)"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.notes_changed:1
+msgid ""
+"When the notes associated with item(s) are changed, with arguments: "
+"(field_name, item_ids)"
+msgstr "عند تغيير الملاحظات المرتبطة بالعناصر، مع الوسائط: (اسم_الحقل، معرفات_العناصر)"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
 msgid ""
 "Add the specified books to the library. Books should be an iterable of "
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr "أضف الكتب المعيَنة إلى المكتبة. يجب أن تكون الكتب عبارة عن مجموعة من الأزواج. يتكون كل زوج من الشكل التَالي: (mi, format_map) حيث mi هو كائن Metadata و format_map هو قاموس بالصيغة {'التنسيق': 'المسار أو التيار'}، على سبيل المثال: {'EPUB': '/المسار/إلى/الملف.epub'}. "
+msgstr "أضف الكتب المحددة إلى المكتبة. يجب أن تكون الكتب قابلة للتكرار من أزواج (tuples) من عنصرين، كل زوج بالشكل :code:`(mi, format_map)` حيث mi هو كائن Metadata و format_map هو قاموس بالشكل :code:`{fmt: path_or_stream}`، على سبيل المثال: :code:`{'EPUB': '/path/to/file.epub'}`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
 msgid ""
 "Returns a pair of lists: :code:`ids, duplicates`. ``ids`` contains the book "
 "ids for all newly created books in the database. ``duplicates`` contains the"
 " :code:`(mi, format_map)` for all books that already exist in the database "
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
-msgstr ""
+msgstr "يعيد زوجًا من القوائم: :code:`ids, duplicates`. يحتوي ``ids`` على معرفات الكتب لجميع الكتب التي تم إنشاؤها حديثًا في قاعدة البيانات. يحتوي ``duplicates`` على :code:`(mi, format_map)` لجميع الكتب الموجودة بالفعل في قاعدة البيانات وفقًا لأسلوب الكشف البسيط عن التكرارات المستخدم بواسطة :meth:`has_book`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr ""
+msgstr "أضف بيانات للاسم حيث val_map هي خريطة من book_ids إلى القيم. إذا كان delete_first صحيحًا، فسيتم إزالة جميع البيانات المخزنة مسبقًا للاسم."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_extra_files:1
 msgid "Add extra data files"
-msgstr ""
+msgstr "إضافة ملفات بيانات إضافية"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
 msgid ""
 "Add a format to the specified book. Return True if the format was added "
 "successfully."
-msgstr ""
+msgstr "أضف تنسيقًا إلى الكتاب المحدد. أعد True إذا تمت إضافة التنسيق بنجاح."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.add_format:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.cover:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.format:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.format_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_next_series_num_for:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.remove_formats:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.rename_items:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.search:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_field:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.tags_older_than:0
+#: ../../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Parameters"
-msgstr ""
+msgstr "المعلمات"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
-msgstr ""
+msgstr "إذا كان True، استبدل التنسيق الموجود، وإلا إذا كان التنسيق موجودًا بالفعل، أعد False."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
-msgstr ""
+msgstr "إذا كان True، يتم تشغيل إضافات نوع الملف على التنسيق قبل وبعد إضافته."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
-msgstr ""
+msgstr "للاستخدام الداخلي فقط."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_listener:1
 msgid ""
 "Register a callback function that will be called after certain actions are "
 "taken on this database. The function must take three arguments: "
 "(:class:`EventType`, library_id, event_type_specific_data)"
-msgstr ""
+msgstr "سجل دالة رد اتصال سيتم استدعاؤها بعد اتخاذ إجراءات معينة على قاعدة البيانات هذه. يجب أن تأخذ الدالة ثلاثة وسائط: (:class:`EventType`, library_id, event_type_specific_data)"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.add_notes_resource:1
+msgid ""
+"Add the specified resource so it can be referenced by notes and return its "
+"content hash"
+msgstr "أضف المورد المحدد بحيث يمكن الإشارة إليه بواسطة الملاحظات وأعد تجزئة محتواه"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_types:1
+msgid "Return a tuple of all annotation types in the database."
+msgstr "إرجاع tuple بجميع أنواع التعليقات التوضيحية في قاعدة البيانات."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_users:1
+msgid "Return a tuple of all (user_type, user name) that have annotations."
+msgstr "إرجاع tuple بجميع (user_type, user name) التي تحتوي على تعليقات توضيحية."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations:1
+msgid ""
+"Return a tuple of all annotations matching the specified criteria. "
+"`ignore_removed` controls whether removed (deleted) annotations are also "
+"returned. Removed annotations are just a skeleton used for merging of "
+"annotations."
+msgstr "إرجاع tuple بجميع التعليقات التوضيحية التي تطابق المعايير المحددة. يتحكم `ignore_removed` فيما إذا كانت التعليقات التوضيحية التي تمت إزالتها (المحذوفة) تُعاد أيضًا. التعليقات التوضيحية التي تمت إزالتها هي مجرد هيكل عظمي يستخدم لدمج التعليقات التوضيحية."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotations_for_book:1
+msgid ""
+"Return a tuple containing all annotations for the specified book_id as a "
+"dict with keys: `format`, `user_type`, `user`, `annotation`. Here, "
+"annotation is the annotation data."
+msgstr "إرجاع tuple يحتوي على جميع التعليقات التوضيحية لـ book_id المحدد كـ قاموس بمفاتيح: `format`, `user_type`, `user`, `annotation`. هنا، annotation هي بيانات التعليق التوضيحي."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
-msgstr ""
+msgstr "مجموعة مجمدة من جميع معرفات الكتب المعروفة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
 msgid "Same as field_for, except that it operates on multiple books at once"
-msgstr ""
+msgstr "نفس field_for، باستثناء أنه يعمل على كتب متعددة في وقت واحد"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
 msgid "Frozen set of ids for all values in the field ``name``."
-msgstr ""
+msgstr "مجموعة مجمدة من المعرفات لجميع القيم في الحقل ``name``."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
-msgstr ""
+msgstr "مجموعة مجمدة من جميع أسماء الحقول (يجب استخدامها فقط للحقول متعددة إلى واحد ومتعددة إلى متعدد)."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotation_count_for_book:1
+msgid ""
+"Return the number of annotations for the specified book available in the "
+"database."
+msgstr "إرجاع عدد التعليقات التوضيحية للكتاب المحدد المتاحة في قاعدة البيانات."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.annotations_map_for_book:1
+msgid ""
+"Return a map of annotation type -> annotation data for the specified "
+"book_id, format, user and user_type."
+msgstr "إرجاع خريطة من نوع التعليق التوضيحي -> بيانات التعليق التوضيحي لـ book_id المحدد، التنسيق، المستخدم ونوع المستخدم."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
-msgstr ""
+msgstr "إرجاع بيانات المؤلف كقاموس بمفاتيح: name, sort, link"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr ""
+msgstr "إذا لم يتم العثور على مؤلفين بالمعرفات المحددة، يتم إرجاع قاموس فارغ. إذا كان author_ids هو None، يتم إرجاع بيانات جميع المؤلفين."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
 msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr ""
+msgstr "بالنظر إلى قائمة من المؤلفين، أعد سلسلة author_sort للمؤلفين، مع تفضيل ترتيب المؤلف المرتبط بالمؤلف على السلسلة المحسوبة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
-msgstr ""
+msgstr "إرجاع جميع الكتب المرتبطة بالعنصر المحدد بواسطة ``item_id``، حيث ينتمي العنصر إلى الحقل ``name``."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4
 msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
-msgstr ""
+msgstr "القيمة المعادة هي مجموعة من معرفات الكتب، أو المجموعة الفارغة إذا لم يكن العنصر أو الحقل موجودًا."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_in_virtual_library:1
 msgid "Return the set of books in the specified virtual library"
-msgstr ""
+msgstr "إرجاع مجموعة الكتب في المكتبة الافتراضية المحددة"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:1
 msgid ""
 "Compress the cover images for the specified books. A compression quality of "
 "100 will perform lossless compression, otherwise lossy compression."
-msgstr ""
+msgstr "ضغط صور الغلاف للكتب المحددة. جودة ضغط 100 ستؤدي إلى ضغط بدون فقدان، وإلا ضغط مع فقدان."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:4
 msgid ""
 "The progress callback will be called with the book_id and the old and new "
 "sizes for each book that has been processed. If an error occurs, the new "
 "size will be a string with the error details."
-msgstr ""
+msgstr "سيتم استدعاء دالة رد الاتصال بالتقدم مع book_id والأحجام القديمة والجديدة لكل كتاب تم معالجته. إذا حدث خطأ، سيكون الحجم الجديد سلسلة تحتوي على تفاصيل الخطأ."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
 msgid ""
 "Copy the cover to the file like object ``dest``. Returns False if no cover "
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "انسخ الغلاف إلى الكائن الشبيه بالملف ``dest``. يعيد False إذا لم يكن هناك غلاف موجود أو إذا كان dest هو نفس ملف الغلاف الحالي. يمكن أن يكون dest أيضًا مسارًا، وفي هذه الحالة يتم نسخ الغلاف إليه إذا وفقط إذا كان المسار مختلفًا عن المسار الحالي (مع مراعاة حساسية حالة الأحرف)."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
 msgid ""
 "Copy the format ``fmt`` to the file like object ``dest``. If the specified "
 "format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
 "a path (to a file), in which case the format is copied to it, iff the path "
 "is different from the current path (taking case sensitivity into account)."
-msgstr ""
+msgstr "انسخ التنسيق ``fmt`` إلى الكائن الشبيه بالملف ``dest``. إذا لم يكن التنسيق المحدد موجودًا، يطرح خطأ :class:`NoSuchFormat`. يمكن أن يكون dest أيضًا مسارًا (إلى ملف)، وفي هذه الحالة يتم نسخ التنسيق إليه، إذا وفقط إذا كان المسار مختلفًا عن المسار الحالي (مع مراعاة حساسية حالة الأحرف)."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
-msgstr ""
+msgstr "إرجاع صورة الغلاف أو None. افتراضيًا، يعيد الغلاف كسلسلة بايتات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
 msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
 "path to the temp file. You should delete the temp file when you are done "
 "with it."
-msgstr ""
+msgstr "تحذير: استخدام as_path سينسخ الغلاف إلى ملف مؤقت ويعيد المسار إلى الملف المؤقت. يجب عليك حذف الملف المؤقت عند الانتهاء منه."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
-msgstr ""
+msgstr "إذا كان True، أعد الصورة ككائن ملف مفتوح (SpooledTemporaryFile)"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
-msgstr ""
+msgstr "إذا كان True، أعد الصورة ككائن QImage"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a QPixmap object"
-msgstr ""
+msgstr "إذا كان True، أعد الصورة ككائن QPixmap"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:11
 msgid "If True return the image as a path pointing to a temporary file"
-msgstr ""
+msgstr "إذا كان True، أعد الصورة كمسار يشير إلى ملف مؤقت"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
 msgid ""
 "Return data that can be used to implement :meth:`find_identical_books` in a "
 "worker process without access to the db. See db.utils for an implementation."
-msgstr ""
+msgstr "إرجاع البيانات التي يمكن استخدامها لتنفيذ :meth:`find_identical_books` في عملية عاملة دون الوصول إلى قاعدة البيانات. راجع db.utils للحصول على تطبيق."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_has_book:1
 msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
 "implementation of :meth:`has_book` in a worker process without access to the"
 " db."
-msgstr ""
+msgstr "إرجاع البيانات المناسبة للاستخدام في :meth:`has_book`. يمكن استخدام هذا لـ تطبيق :meth:`has_book` في عملية عاملة دون الوصول إلى قاعدة البيانات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.delete_annotations:1
+msgid "Delete annotations with the specified ids."
+msgstr "حذف التعليقات التوضيحية بالمعرفات المحددة."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
 msgid ""
 "Delete data for name. By default deletes all data, if you only want to "
 "delete data for some book ids, pass in a list of book ids."
-msgstr ""
+msgstr "حذف البيانات للاسم. افتراضيًا يحذف جميع البيانات، إذا كنت تريد فقط حذف البيانات لبعض معرفات الكتب، فمرر قائمة بمعرفات الكتب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_trash_entry:1
 msgid ""
 "Delete an entry from the trash. Here category is 'b' for books and 'f' for "
 "formats."
-msgstr ""
+msgstr "حذف إدخال من سلة المهملات. هنا الفئة هي 'b' للكتب و 'f' لـ التنسيقات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
-msgstr ""
+msgstr "تحديث البيانات الوصفية في جميع تنسيقات book_ids المحددة إلى البيانات الوصفية الحالية في قاعدة البيانات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.expire_old_trash:1
 msgid "Expire entries from the trash that are too old"
-msgstr ""
+msgstr "انتهاء صلاحية الإدخالات من سلة المهملات التي تجاوزت مدتها"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.export_note:1
+msgid ""
+"Export the note as a single HTML document with embedded images as data: URLs"
+msgstr "تصدير الملاحظة كوثيقة HTML واحدة مع صور مضمنة كـ data: URLs"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
-msgstr ""
+msgstr "نفس field_for، باستثناء أنه يتجنب البحث الإضافي للحصول على كائن الحقل"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
 msgid ""
 "Return the value of the field ``name`` for the book identified by "
 "``book_id``. If no such book exists or it has no defined value for the field"
 " ``name`` or no such field exists, then ``default_value`` is returned."
-msgstr ""
+msgstr "إرجاع قيمة الحقل ``name`` للكتاب المحدد بواسطة ``book_id``. إذا لم يكن هذا الكتاب موجودًا أو لم يكن له قيمة محددة للحقل ``name`` أو لم يكن هذا الحقل موجودًا، فسيتم إرجاع ``default_value``."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
 msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
 "and series_index. This is because these always have values in the db. "
 "``default_value`` is used for all custom columns."
-msgstr ""
+msgstr "لا تُستخدم ``default_value`` لعناوين title, title_sort, authors, author_sort و series_index. وذلك لأن هذه القيم دائمًا ما تكون موجودة في قاعدة البيانات. تُستخدم ``default_value`` لجميع الأعمدة المخصصة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
 msgid ""
 "The returned value for is_multiple fields are always tuples, even when no "
@@ -405,212 +453,225 @@ msgid ""
 "is identifiers for which the returned value is always a dictionary. The "
 "returned tuples are always in link order, that is, the order in which they "
 "were created."
-msgstr ""
+msgstr "القيمة المعادة للحقول is_multiple هي دائمًا tuples، حتى عندما لا يتم العثور على قيم (بمعنى آخر، يتم تجاهل default_value). الاستثناء هو المعرفات التي تكون القيمة المعادة لها دائمًا قاموسًا. تكون الـ tuples المعادة دائمًا بترتيب الارتباط، أي الترتيب الذي تم إنشاؤها به."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
 msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
-msgstr ""
+msgstr "إرجاع المعرفات (كـ tuple) للقيم التي يحتوي عليها الحقل ``name`` على الكتاب المحدد بواسطة ``book_id``. إذا لم تكن هناك قيم، أو لم يكن هذا الكتاب موجودًا، أو لم يكن هذا الحقل موجودًا، فسيتم إرجاع tuple فارغ."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.field_supports_notes:1
+msgid ""
+"Return True iff the specified field supports notes. If field is None return "
+"frozenset of all fields that support notes."
+msgstr "إرجاع True إذا وفقط إذا كان الحقل المحدد يدعم الملاحظات. إذا كان الحقل None، أعد مجموعة مجمدة من جميع الحقول التي تدعم الملاحظات."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
 msgid ""
 "Finds books that have a superset of the authors in mi and the same title "
 "(title is fuzzy matched). See also :meth:`data_for_find_identical_books`."
-msgstr ""
+msgstr "يعثر على الكتب التي تحتوي على مجموعة فائقة من المؤلفين في mi ونفس العنوان (يتم مطابقة العنوان بشكل تقريبي). راجع أيضًا :meth:`data_for_find_identical_books`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:1
 msgid ""
 "Return the e-book format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the e-book file."
-msgstr ""
+msgstr "إرجاع تنسيق الكتاب الإلكتروني كسلسلة بايتات أو `None` إذا لم يكن التنسيق موجودًا، أو إذا لم يكن لدينا إذن للكتابة إلى ملف الكتاب الإلكتروني."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
 msgid ""
 "If True the e-book format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr ""
+msgstr "إذا كان True، يتم إرجاع تنسيق الكتاب الإلكتروني ككائن ملف. لاحظ أن كائن الملف هو SpooledTemporaryFile، لذا إذا كنت ترغب في نسخ التنسيق إلى ملف آخر، استخدم :meth:`copy_format_to` بدلاً من ذلك للأداء."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
 msgid ""
 "Copies the format file to a temp file and returns the path to the temp file"
-msgstr ""
+msgstr "ينسخ ملف التنسيق إلى ملف مؤقت ويعيد المسار إلى الملف المؤقت"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:10
 msgid ""
 "If True and returning a path the filename is the same as that used in the "
 "library. Note that using this means that repeated calls yield the same temp "
 "file (which is re-created each time)"
-msgstr ""
+msgstr "إذا كان True وإرجاع مسار، فإن اسم الملف هو نفسه المستخدم في المكتبة. لاحظ أن استخدام هذا يعني أن الاستدعاءات المتكررة تنتج نفس الملف المؤقت (الذي يتم إعادة إنشائه في كل مرة)."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
 msgid ""
 "Return absolute path to the e-book file of format `format`. You should "
 "almost never use this, as it breaks the threadsafe promise of this API. "
 "Instead use, :meth:`copy_format_to`."
-msgstr ""
+msgstr "إرجاع المسار المطلق لملف الكتاب الإلكتروني بتنسيق `format`. يجب عليك عدم استخدام هذا أبدًا تقريبًا، لأنه يكسر وعد الأمان للخيوط في واجهة برمجة التطبيقات هذه. بدلاً من ذلك، استخدم :meth:`copy_format_to`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
 msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
 " to original format, open with, bulk metadata edit and the catalogs (via "
 "get_data_as_dict())."
-msgstr ""
+msgstr "يستخدم حاليًا فقط في قائمة calibredb، العارض، تحرير الكتاب، مقارنة التنسيق بالتنسيق الأصلي، الفتح باستخدام، تحرير البيانات الوصفية بالجملة والكتالوجات (عبر get_data_as_dict())."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
 msgid ""
 "Apart from the viewer, open with and edit book, I don't believe any of the "
 "others do any file write I/O with the results of this call."
-msgstr ""
+msgstr "بصرف النظر عن العارض، والفتح باستخدام، وتحرير الكتاب، لا أعتقد أن أيًا من الآخرين يقوم بأي إدخال/إخراج كتابة ملفات مع نتائج هذا الاستدعاء."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_hash:1
 msgid ""
 "Return the hash of the specified format for the specified book. The kind of "
 "hash is backend dependent, but is usually SHA-256."
-msgstr ""
+msgstr "إرجاع تجزئة التنسيق المحدد للكتاب المحدد. نوع التجزئة يعتمد على الواجهة الخلفية، ولكنه عادةً SHA-256."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:1
 msgid ""
 "Return the path, size and mtime for the specified format for the specified "
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr ""
+msgstr "إرجاع المسار والحجم وتاريخ التعديل للتنسيق المحدد للكتاب المحدد. يجب ألا تستخدم المسار إلا إذا اضطررت لذلك، لأن الوصول إليه مباشرة يكسر ضمانات الأمان للخيوط في واجهة برمجة التطبيقات هذه. بدلاً من ذلك، استخدم الأسلوب :meth:`copy_format_to`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
 msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
 "done. The cache values could be out of date if access was performed to the "
 "filesystem outside of this API."
-msgstr ""
+msgstr "إذا كان ``True``، يتم استخدام القيم المخزنة مؤقتًا، وإلا يتم إجراء وصول بطيء إلى نظام الملفات. قد تكون قيم ذاكرة التخزين المؤقت قديمة إذا تم الوصول إلى نظام الملفات خارج واجهة برمجة التطبيقات هذه."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updated for this book."
-msgstr ""
+msgstr "إذا كان ``True``، يتم تحديث حقل max_size في قاعدة البيانات لهذا الكتاب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
-msgstr ""
+msgstr "إرجاع tuple بجميع التنسيقات للكتاب المحدد. إذا كان verify_formats هو True، يتحقق من وجود الملفات على القرص."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_all_items_that_have_notes:1
+msgid ""
+"Return all item_ids for items that have notes in the specified field or all "
+"fields if field_name is None"
+msgstr "إرجاع جميع item_ids للعناصر التي تحتوي على ملاحظات في الحقل المحدد أو جميع الحقول إذا كان field_name هو None"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:1
 msgid ""
 "Returns all links for all fields referenced by book identified by book_id. "
 "If book_id doesn't exist then the method returns {}."
-msgstr ""
+msgstr "يعيد جميع الروابط لجميع الحقول المشار إليها بواسطة الكتاب المحدد بواسطة book_id. إذا لم يكن book_id موجودًا، فإن الأسلوب يعيد {}."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:4
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
 "and tag T has link G. If book 1 has author A and tag T, this method returns "
 "{'authors':{'A':'X'}, 'tags':{'T', 'G'}}. If book 2's author is neither A "
 "nor B and has no tags, this method returns {}."
-msgstr ""
+msgstr "مثال: افترض أن المؤلف أ لديه رابط X، والمؤلف ب لديه رابط Y، والعلامة S لديها رابط F، والعلامة T لديها رابط G. إذا كان الكتاب 1 لديه المؤلف أ والعلامة T، فإن هذا الأسلوب يعيد {'authors':{'A':'X'}, 'tags':{'T', 'G'}}. إذا لم يكن مؤلف الكتاب 2 لا أ ولا ب وليس لديه علامات، فإن هذا الأسلوب يعيد {}."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
 msgid "the book id in question."
-msgstr ""
+msgstr "معرف الكتاب المعني."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_all_link_maps_for_book:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.get_link_map:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.list_extra_files:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.remove_formats:0
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
-#: calibre.db.cache.Cache.set_link_map:0
+#: ../../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Returns"
-msgstr ""
+msgstr "يعيد"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:11
 msgid ""
 "{field: {field_value, link_value}, ...  for all fields with a field_value "
 "having a non-empty link value for that book"
-msgstr ""
+msgstr "{الحقل: {قيمة_الحقل، قيمة_الرابط}، ... لجميع الحقول التي تحتوي على قيمة_الحقل ذات قيمة رابط غير فارغة لذلك الكتاب"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
-msgstr ""
+msgstr "يستخدم داخليًا لتنفيذ متصفح العلامات"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_custom_book_data:1
 msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
 "of book ids if you only want some data. Returns a map of book_id to values. "
 "If a particular value could not be decoded, uses default for it."
-msgstr ""
+msgstr "احصل على بيانات للاسم. افتراضيًا، يعيد البيانات لجميع book_ids، مرر قائمة بمعرفات الكتب إذا كنت تريد بعض البيانات فقط. يعيد خريطة من book_id إلى القيم. إذا تعذر فك ترميز قيمة معينة، فسيستخدم القيمة الافتراضية لها."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr ""
+msgstr "إرجاع تعيين من أرقام المعرفات إلى القيم للحقل المحدد. يجب أن يكون الحقل متعددًا إلى واحد أو متعددًا إلى متعدد، وإلا يتم طرح ValueError."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
 msgid "Return the set of book ids for which name has data."
-msgstr ""
+msgstr "إرجاع مجموعة معرفات الكتب التي تحتوي على بيانات للاسم."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 msgid ""
-"Return the item id for item_name (case-insensitive) or None if not found"
-msgstr ""
+"Return the item id for item_name or None if not found. This function is very"
+" slow if doing lookups for multiple names use either get_item_ids() or "
+"get_item_name_map(). Similarly, case sensitive lookups are faster than case "
+"insensitive ones."
+msgstr "إرجاع معرف العنصر لـ item_name أو None إذا لم يتم العثور عليه. هذه الدالة بطيئة جدًا إذا كنت تقوم بعمليات بحث عن أسماء متعددة، استخدم إما get_item_ids() أو get_item_name_map(). وبالمثل، فإن عمليات البحث الحساسة لحالة الأحرف أسرع من تلك غير الحساسة لحالة الأحرف."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
-msgid "Return the item id for item_name (case-insensitive)"
-msgstr ""
+msgid "Return a dict mapping item_name to the item id or None"
+msgstr "إرجاع قاموس يربط item_name بمعرف العنصر أو None"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
-msgstr ""
+msgstr "إرجاع اسم العنصر للعنصر المحدد بواسطة item_id في الحقل المحدد. راجع أيضًا :meth:`get_id_map`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_item_name_map:1
+msgid "Return mapping of item values to ids"
+msgstr "إرجاع تعيين قيم العناصر إلى معرفاتها"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
 msgid "Return a dictionary of links for the supplied field."
-msgstr ""
+msgstr "إرجاع قاموس بالروابط للحقل المقدم."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:3
 msgid "the lookup name of the field for which the link map is desired"
-msgstr ""
+msgstr "اسم البحث للحقل الذي يراد الحصول على خريطة الرابط له"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:5
 msgid "{field_value:link_value, ...} for non-empty links"
-msgstr ""
+msgstr "{قيمة_الحقل:قيمة_الرابط، ...} للروابط غير الفارغة"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
 msgid ""
 "Return metadata for the book identified by book_id as a "
@@ -618,217 +679,274 @@ msgid ""
 "list of formats is not verified. If get_cover is True, the cover is "
 "returned, either a path to temp file as mi.cover or if cover_as_data is True"
 " then as mi.cover_data."
-msgstr ""
+msgstr "إرجاع البيانات الوصفية للكتاب المحدد بواسطة book_id كـ كائن :class:`calibre.ebooks.metadata.book.base.Metadata`. لاحظ أن قائمة التنسيقات غير متحقق منها. إذا كان get_cover هو True، يتم إرجاع الغلاف، إما مسار إلى ملف مؤقت كـ mi.cover أو إذا كان cover_as_data هو True فحينئذٍ كـ mi.cover_data."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
 msgid ""
 "Return the next series index for the specified series, taking into account "
 "the various preferences that control next series number generation."
-msgstr ""
+msgstr "إرجاع فهرس السلسلة التالي للسلسلة المحددة، مع الأخذ في الاعتبار التفضيلات المختلفة التي تتحكم في إنشاء رقم السلسلة التالي."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
 msgid "The series-like field (defaults to the builtin series column)"
-msgstr ""
+msgstr "الحقل الشبيه بالسلسلة (الافتراضي هو عمود السلسلة المدمج)"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr ""
+msgstr "إذا كان True، يعيد تعيينًا من book_id إلى قيمة series_index الحالية بدلاً من ذلك."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_notes_resource:1
+msgid ""
+"Return a dict containing the resource data and name or None if no resource "
+"with the specified hash is found"
+msgstr "إرجاع قاموس يحتوي على بيانات المورد واسمه أو None إذا لم يتم العثور على مورد بالتجزئة المحددة"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
 " only reads values from the database on demand. This is much faster than "
 "get_metadata when only a small number of fields need to be accessed from the"
 " returned metadata object."
-msgstr ""
+msgstr "مثل :meth:`get_metadata` باستثناء أنه يعيد كائن ProxyMetadata الذي يقرأ القيم من قاعدة البيانات عند الطلب فقط. هذا أسرع بكثير من get_metadata عندما تحتاج إلى الوصول إلى عدد قليل فقط من الحقول من كائن البيانات الوصفية المعادة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_usage_count_by_id:1
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr ""
+msgstr "إرجاع تعيين من المعرف إلى عدد الاستخدام لجميع قيم الحقل المحدد، والذي يجب أن يكون حقلاً متعددًا إلى واحد أو متعددًا إلى متعدد."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
 msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr ""
+msgstr "إرجاع True إذا وفقط إذا كانت قاعدة البيانات تحتوي على إدخال بنفس العنوان مثل كائن Metadata الذي تم تمريره. المقارنة غير حساسة لحالة الأحرف. راجع أيضًا :meth:`data_for_has_book`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
-msgstr ""
+msgstr "إرجاع True إذا وفقط إذا كان التنسيق موجودًا على القرص"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
-msgstr ""
+msgstr "إرجاع True إذا وفقط إذا كان book_id المحدد موجودًا في قاعدة البيانات"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.import_note:1
+msgid ""
+"Import a previously exported note or an arbitrary HTML file as the note for "
+"the specified item"
+msgstr "استيراد ملاحظة تم تصديرها مسبقًا أو ملف HTML عشوائي كملاحظة لـ العنصر المحدد"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
-msgstr ""
+msgstr "تهيئة ذاكرة التخزين المؤقت هذه ببيانات من الواجهة الخلفية."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_with_notes_in_book:1
+msgid ""
+"Return a dict of field to items that have associated notes for that field "
+"for the specified book"
+msgstr "إرجاع قاموس من الحقول إلى العناصر التي تحتوي على ملاحظات مرتبطة بهذا الحقل للكتاب المحدد"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.link_for:1
+msgid ""
+"Return the link, if any, for the specified item or None if no link is found"
+msgstr "إرجاع الرابط، إن وجد، للعنصر المحدد أو None إذا لم يتم العثور على رابط"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:1
 msgid "Get information about extra files in the book's directory."
-msgstr ""
+msgstr "الحصول على معلومات حول الملفات الإضافية في دليل الكتاب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:3
 msgid "the database book id for the book"
-msgstr ""
+msgstr "معرف كتاب قاعدة البيانات للكتاب"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:4
 msgid ""
 "the pattern of filenames to search for. Empty pattern matches all extra "
 "files. Patterns must use / as separator. Use the DATA_FILE_PATTERN constant "
 "to match files inside the data directory."
-msgstr ""
+msgstr "نمط أسماء الملفات للبحث عنها. النمط الفارغ يطابق جميع الملفات الإضافية. يجب أن تستخدم الأنماط / كفاصل. استخدم الثابت DATA_FILE_PATTERN لمطابقة الملفات داخل دليل البيانات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:7
 msgid ""
 "A tuple of all extra files matching the specified pattern. Each element of "
 "the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
 "the relative path of the file to the book directory using / as a separator. "
 "stat_result is the result of calling os.stat() on the file."
-msgstr ""
+msgstr "زوج (tuple) من جميع الملفات الإضافية التي تطابق النمط المحدد. كل عنصر من الزوج هو ExtraFile(relpath, file_path, stat_result). حيث relpath هو المسار النسبي للملف إلى دليل الكتاب باستخدام / كفاصل. stat_result هو نتيجة استدعاء os.stat() على الملف."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.merge_annotations_for_book:1
+msgid ""
+"Merge the specified annotations into the existing annotations for book_id, "
+"fm, user_type, and user."
+msgstr "دمج التعليقات التوضيحية المحددة في التعليقات التوضيحية الموجودة لـ book_id، fm، user_type، والمستخدم."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
 msgid ""
 "Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
 "renamed unless replace=True in which case they are replaced."
-msgstr ""
+msgstr "دمج الملفات الإضافية من src_ids إلى dest_id. يتم إعادة تسمية الملفات المتعارضة تلقائيًا ما لم يكن replace=True، وفي هذه الحالة يتم استبدالها."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
 msgid "Undelete a book from the trash directory"
-msgstr ""
+msgstr "إلغاء حذف كتاب من دليل المهملات"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_format_from_trash:1
 msgid "Undelete a format from the trash directory"
-msgstr ""
+msgstr "إلغاء حذف تنسيق من دليل المهملات"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
 "returned."
-msgstr ""
+msgstr "إرجاع قائمة بمعرفات الكتب المرتبة. إذا كان ids_to_sort هو None، يتم إرجاع جميع معرفات الكتب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:4
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr ""
+msgstr "يجب أن تكون الحقول قائمة من أزواج (tuples) من عنصرين بالشكل (field_name, ascending=True أو False). الحقل الأكثر أهمية هو الزوج الأول."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_data_for:1
+msgid "Return all notes data as a dict or None if note does not exist"
+msgstr "إرجاع جميع بيانات الملاحظات كقاموس أو None إذا لم تكن الملاحظة موجودة"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_for:1
+msgid "Return the notes document or an empty string if not found"
+msgstr "إرجاع مستند الملاحظات أو سلسلة فارغة إذا لم يتم العثور عليه"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.notes_resources_used_by:1
+msgid ""
+"Return the set of resource hashes of all resources used by the note for the "
+"specified item"
+msgstr "إرجاع مجموعة تجزئات الموارد لجميع الموارد المستخدمة بواسطة الملاحظة لـ العنصر المحدد"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr ""
+msgstr "إرجاع القيمة للتفضيل المحدد أو القيمة المحددة كـ ``default`` إذا لم يتم تعيين التفضيل."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
-msgstr ""
+msgstr "إرجاع نسخة احتياطية من بيانات OPF الوصفية للكتاب كسلسلة بايتات أو None إذا لم تكن هناك نسخة احتياطية من هذا القبيل."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
 "placed in the per-library trash directory."
-msgstr ""
+msgstr "إزالة الكتب المحددة بواسطة book_ids من قاعدة البيانات وحذف ملفات تنسيقاتها. إذا كان ``permanent`` هو False، فسيتم وضع ملفات التنسيقات في دليل المهملات الخاص بالمكتبة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_extra_files:1
+msgid ""
+"Delete the specified extra files, either to Recycle Bin or permanently."
+msgstr "حذف الملفات الإضافية المحددة، إما إلى سلة المحذوفات أو بشكل دائم."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
 msgid "Remove the specified formats from the specified books."
-msgstr ""
+msgstr "إزالة التنسيقات المحددة من الكتب المحددة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
 msgid "A mapping of book_id to a list of formats to be removed from the book."
-msgstr ""
+msgstr "تعيين من book_id إلى قائمة من التنسيقات المراد إزالتها من الكتاب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:4
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
-msgstr ""
+msgstr "إذا كان True، فقم فقط بإزالة السجل الخاص بالتنسيق من قاعدة البيانات، ولا تحذف ملف التنسيق الفعلي من نظام الملفات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:5
 msgid ""
 "A map of book id to set of formats actually deleted from the filesystem for "
 "that book"
-msgstr ""
+msgstr "خريطة من معرف الكتاب إلى مجموعة التنسيقات التي تم حذفها فعليًا من نظام الملفات لـ هذا الكتاب"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
 msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
 "set of affected book ids. ``restrict_to_book_ids`` is an optional set of "
 "books ids. If specified the items will only be removed from those books."
-msgstr ""
+msgstr "حذف جميع العناصر في الحقل المحدد بالمعرفات المحددة. يعيد مجموعة معرفات الكتب المتأثرة. ``restrict_to_book_ids`` هي مجموعة اختيارية من معرفات الكتب. إذا تم تحديدها، فسيتم إزالة العناصر من تلك الكتب فقط."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_extra_files:1
 msgid "Rename extra data files"
-msgstr ""
+msgstr "إعادة تسمية ملفات البيانات الإضافية"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr ""
+msgstr "إعادة تسمية العناصر من حقل متعدد إلى واحد أو متعدد إلى متعدد مثل العلامات أو السلاسل."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
 msgid ""
 "When renaming in a series-like field also change the series_index values."
-msgstr ""
+msgstr "عند إعادة التسمية في حقل شبيه بالسلسلة، قم أيضًا بتغيير قيم series_index."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:4
 msgid ""
 "An optional set of book ids for which the rename is to be performed, "
 "defaults to all books."
-msgstr ""
+msgstr "مجموعة اختيارية من معرفات الكتب التي سيتم إجراء إعادة التسمية لها، الافتراضي هو جميع الكتب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_book:1
 msgid ""
 "Restore the book entry in the database for a book that already exists on the"
 " filesystem"
-msgstr ""
+msgstr "استعادة إدخال الكتاب في قاعدة البيانات لكتاب موجود بالفعل على نظام الملفات"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_original_format:1
 msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
 "any. Return True on success. The ORIGINAL_FORMAT is deleted after a "
 "successful restore."
-msgstr ""
+msgstr "استعادة التنسيق المحدد من ORIGINAL_FORMAT المحفوظ سابقًا، إن وجد. أعد True عند النجاح. يتم حذف ORIGINAL_FORMAT بعد استعادة ناجحة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
 msgid ""
 "A safe read lock is a lock that does nothing if the thread already has a "
@@ -838,118 +956,137 @@ msgid ""
 "lock, but searching a composite column involves reading field values via "
 "ProxyMetadata which tries to get a shared lock. There may be other scenarios"
 " that trigger this as well."
-msgstr ""
+msgstr "قفل القراءة الآمن هو قفل لا يفعل شيئًا إذا كان الخيط يمتلك بالفعل قفل كتابة، وإلا فإنه يحصل على قفل قراءة. هذا ضروري لمنع أخطاء DowngradeLockErrors، والتي يمكن أن تحدث عند تحديث ذاكرة التخزين المؤقت للبحث في وجود أعمدة مركبة. يحمل تحديث ذاكرة التخزين المؤقت للبحث قفلًا حصريًا، ولكن البحث في عمود مركب يتضمن قراءة قيم الحقل عبر ProxyMetadata الذي يحاول الحصول على قفل مشترك. قد تكون هناك سيناريوهات أخرى تؤدي إلى ذلك أيضًا."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:9
 msgid ""
 "This property returns a new lock object on every access. This lock object is"
 " not recursive (for performance) and must only be used in a with statement "
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
-msgstr ""
+msgstr "تعيد هذه الخاصية كائن قفل جديد عند كل وصول. كائن القفل هذا غير متكرر (لتحسين الأداء) ويجب استخدامه فقط في عبارة with مثل ``with cache.safe_read_lock:`` وإلا ستحدث أشياء سيئة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
 msgid ""
 "Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
 "existing ORIGINAL_FORMAT."
-msgstr ""
+msgstr "حفظ نسخة من التنسيق المحدد كـ ORIGINAL_FORMAT، مع الكتابة فوق أي ORIGINAL_FORMAT موجود."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:1
 msgid ""
 "Search the database for the specified query, returning a set of matched book"
 " ids."
-msgstr ""
+msgstr "البحث في قاعدة البيانات عن الاستعلام المحدد، وإرجاع مجموعة من معرفات الكتب المطابقة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:3
 msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr ""
+msgstr "قيد يتم ربطه بالاستعلام المحدد بواسطة AND. لاحظ أن القيود يتم تخزينها مؤقتًا، وبالتالي فإن البحث عن a AND b سيكون أبطأ من a مع القيد b."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
 msgid "Used internally (virtual fields such as on_device to search over)."
-msgstr ""
+msgstr "يستخدم داخليًا (حقول افتراضية مثل on_device للبحث فيها)."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:8
 msgid ""
 "If not None, a set of book ids for which books will be searched instead of "
 "searching all books."
-msgstr ""
+msgstr "إذا لم يكن None، فمجموعة من معرفات الكتب التي سيتم البحث عنها بدلاً من البحث في جميع الكتب."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_annotations:1
+msgid ""
+"Return of a tuple of annotations matching the specified Full-text query."
+msgstr "إرجاع tuple من التعليقات التوضيحية التي تطابق استعلام النص الكامل المحدد."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_notes:1
+msgid ""
+"Search the text of notes using an FTS index. If the query is empty return "
+"all notes."
+msgstr "البحث في نص الملاحظات باستخدام فهرس FTS. إذا كان الاستعلام فارغًا، أعد جميع الملاحظات."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_annotations_for_book:1
+msgid ""
+"Set all annotations for the specified book_id, fmt, user_type and user."
+msgstr "عيّن جميع التعليقات التوضيحية لـ book_id المحدد، fmt، user_type، والمستخدم."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
 msgid "options must be a map of the form {book_id:conversion_options}"
-msgstr ""
+msgstr "يجب أن تكون الخيارات خريطة بالشكل {book_id:conversion_options}"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_cover:1
 msgid ""
 "Set the cover for this book. The data can be either a QImage, QPixmap, file "
 "object or bytestring. It can also be None, in which case any existing cover "
 "is removed."
-msgstr ""
+msgstr "عيّن الغلاف لهذا الكتاب. يمكن أن تكون البيانات إما QImage، QPixmap، كائن ملف أو سلسلة بايتات. يمكن أن تكون أيضًا None، وفي هذه الحالة يتم إزالة أي غلاف موجود."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr ""
+msgstr "عيّن قيم الحقل المحدد بواسطة ``name``. يعيد مجموعة جميع معرفات الكتب التي تأثرت بالتغيير."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
 msgid "Mapping of book_ids to values that should be applied."
-msgstr ""
+msgstr "تعيين من book_ids إلى القيم التي يجب تطبيقها."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:4
 msgid ""
 "If True, the case of many-one or many-many fields will be changed. For "
 "example, if a  book has the tag ``tag1`` and you set the tag for another "
 "book to ``Tag1`` then the both books will have the tag ``Tag1`` if "
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
-msgstr ""
+msgstr "إذا كان True، فسيتم تغيير حالة الحقول متعددة إلى واحد أو متعددة إلى متعدد. على سبيل المثال، إذا كان كتاب يحتوي على العلامة ``tag1`` وقمت بتعيين العلامة لكتاب آخر إلى ``Tag1``، فسيحتوي كلا الكتابين على العلامة ``Tag1`` إذا كان allow_case_change هو True، وإلا فسيحتوي كلاهما على العلامة ``tag1``."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
-msgstr ""
+msgstr "يستخدم داخليًا، لا يجب عليك تغييره أبدًا."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
 "Sets links for item values in field. Note: this method doesn't change values"
 " not in the value_to_link_map"
-msgstr ""
+msgstr "يعيّن الروابط لقيم العناصر في الحقل. ملاحظة: هذا الأسلوب لا يغير القيم غير الموجودة في value_to_link_map"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:4
 msgid "the lookup name"
-msgstr ""
+msgstr "اسم البحث"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:5
 msgid ""
 "dict(field_value:link, ...). Note that these are values, not field ids."
-msgstr ""
+msgstr "قاموس (قيمة_الحقل:رابط، ...). لاحظ أن هذه قيم، وليست معرفات حقول."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7
 msgid "books changed by setting the link"
-msgstr ""
+msgstr "الكتب التي تغيرت بتعيين الرابط"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
-msgstr ""
+msgstr "عيّن البيانات الوصفية للكتاب `id` من كائن `Metadata` `mi`"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:3
 msgid ""
 "Setting force_changes=True will force set_metadata to update fields even if "
@@ -961,55 +1098,78 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr ""
+msgstr "تعيين force_changes=True سيجبر set_metadata على تحديث الحقول حتى لو احتوى mi على قيم فارغة. في هذه الحالة، يتم تمييز 'None' عن 'empty'. إذا كان mi.XXX هو None، فلن يتم استبدال XXX، وإلا فسيتم استبداله. علامات، معرفات، وسمات الغلاف هي حالات خاصة. لا يمكن تعيين العلامات والمعرفات إلى None، لذا سيتم استبدالها دائمًا إذا كان force_changes صحيحًا. يجب عليك التأكد من أن mi يحتوي على القيم التي تريد أن يحتوي عليها الكتاب. تتغير الأغلفة دائمًا إذا تم توفير غلاف جديد، ولكنها لا تُحذف أبدًا. لاحظ أيضًا أن force_changes ليس له تأثير على تعيين العنوان أو المؤلفين."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_notes_for:1
+msgid ""
+"Set the notes document. If the searchable text is different from the "
+"document, specify it as searchable_text. If the document references "
+"resources their hashes must be present in resource_hashes. Set "
+"remove_unused_resources to True to cleanup unused resources, note that "
+"updating a note automatically cleans up resources pertaining to that note "
+"anyway."
+msgstr "عيّن مستند الملاحظات. إذا كان النص القابل للبحث مختلفًا عن المستند، حدده كـ searchable_text. إذا كان المستند يشير إلى موارد، فيجب أن تكون تجزئاتها موجودة في resource_hashes. عيّن remove_unused_resources إلى True لتنظيف الموارد غير المستخدمة، لاحظ أن تحديث ملاحظة ينظف تلقائيًا الموارد المتعلقة بتلك الملاحظة على أي حال."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
-msgstr ""
+msgstr "عيّن التفضيل المحدد إلى القيمة المحددة. راجع أيضًا :meth:`pref`."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.split_if_is_multiple_composite:1
 msgid ""
 "If f is a composite column lookup key and the column is is_multiple then "
 "split v into unique non-empty values. The comparison is case sensitive. "
 "Order is not preserved. Return a list() for compatibility with proxy "
 "metadata field getters, for example tags."
-msgstr ""
+msgstr "إذا كان f مفتاح بحث عمود مركب وكان العمود is_multiple، فقم بتقسيم v إلى قيم فريدة غير فارغة. المقارنة حساسة لحالة الأحرف. الترتيب لا يتم الحفاظ عليه. أعد قائمة () للتوافق مع وظائف الحصول على حقول البيانات الوصفية الوكيلة، على سبيل المثال العلامات."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:1
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr ""
+msgstr "إرجاع معرفات جميع الكتب التي تحتوي على العلامة ``tag`` والتي هي أقدم من الوقت المحدد. مقارنة العلامة غير حساسة لحالة الأحرف."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr ""
+msgstr "كائن timedelta أو None. إذا كان None، فسيتم إرجاع جميع المعرفات التي تحتوي على العلامة."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
-msgstr ""
+msgstr "إذا لم يكن None، فسيتم تقييد قائمة التطابقات على الكتب التي تحتوي على هذه العلامة"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10
 msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
-msgstr ""
+msgstr "قائمة من المؤلفين. إذا لم تكن None، فسيتم تقييد قائمة التطابقات على الكتب التي تحتوي على هؤلاء المؤلفين (غير حساسة لحالة الأحرف)."
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.unretire_note_for:1
+msgid ""
+"Unretire a previously retired note for the specified item. Notes are retired"
+" when an item is removed from the database"
+msgstr "إلغاء إيقاف ملاحظة سابقة تم إيقافها للعنصر المحدد. يتم إيقاف الملاحظات عند إزالة عنصر من قاعدة البيانات"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_annotations:1
+msgid "Update annotations."
+msgstr "تحديث التعليقات التوضيحية."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1
 msgid ""
 "Return the user categories for the specified books. proxy_metadata_map is "
 "optional and is useful for a performance boost, in contexts where a "
 "ProxyMetadata object for the books already exists. It should be a mapping of"
 " book_ids to their corresponding ProxyMetadata objects."
-msgstr ""
+msgstr "إرجاع فئات المستخدم للكتب المحددة. proxy_metadata_map اختياري ومفيد لتعزيز الأداء، في السياقات التي يوجد فيها كائن ProxyMetadata للكتب بالفعل. يجب أن يكون تعيينًا من book_ids إلى كائنات ProxyMetadata المقابلة لها."

@@ -54,11 +54,13 @@ class KOBOTOUCHConfig(TabbedDeviceConfig):
 
     def __init__(self, device_settings, all_formats, supports_subdirs,
                     must_read_metadata, supports_use_author_sort,
-                    extra_customization_message, device, extra_customization_choices=None, parent=None):
+                    extra_customization_message, device, extra_customization_choices=None,
+                    parent=None):
 
         super().__init__(device_settings, all_formats, supports_subdirs,
                     must_read_metadata, supports_use_author_sort,
-                    extra_customization_message, device, extra_customization_choices, parent)
+                    extra_customization_message, device, extra_customization_choices, parent,
+                    validate_before_accept=True)
 
         self.device_settings = device_settings
         self.all_formats = all_formats
@@ -88,6 +90,7 @@ class KOBOTOUCHConfig(TabbedDeviceConfig):
     def validate(self):
         validated = super().validate()
         validated &= self.tab2.validate()
+        validated &= self.tab1.validate()
         return validated
 
     @property
@@ -124,6 +127,8 @@ class KOBOTOUCHConfig(TabbedDeviceConfig):
         p['collections_columns'] = self.collections_columns
         p['use_collections_template'] = self.use_collections_template
         p['collections_template'] = self.collections_template
+        p['use_series_index_template'] = self.use_series_index_template
+        p['series_index_template'] = self.series_index_template
         p['ignore_collections_names'] = self.ignore_collections_names
         p['delete_empty_collections'] = self.delete_empty_collections
 
@@ -193,6 +198,12 @@ class Tab1Config(DeviceConfigTab):  # {{{
         self.addDeviceWidget(self.book_uploads_options)
 
         self.l.addStretch()
+
+    def validate(self):
+        v = self.collections_options.validate()
+        v &= self.book_uploads_options.validate()
+        return v
+
 # }}}
 
 
@@ -364,6 +375,7 @@ class BookUploadsGroupBox(DeviceOptionsGroupBox):
 
         self.template_la = la = QLabel('\xa0\xa0' + _('Template to decide conversion:'))
         self.kepubify_template_edit = TemplateConfig(
+            self.kepubify_checkbox.text(),
             device.get_pref('template_for_kepubify'),
             tooltip='<p>' + _(
                 'Enter a template to decide if an EPUB book is to be auto converted to KEPUB. '
@@ -398,6 +410,9 @@ class BookUploadsGroupBox(DeviceOptionsGroupBox):
 
     def update_template_state(self):
         self.kepubify_template_edit.setEnabled(self.kepubify)
+
+    def validate(self):
+        return self.kepubify_template_edit.validate()
 
     @property
     def override_kobo_replace_existing(self):
@@ -507,9 +522,10 @@ class CollectionsGroupBox(DeviceOptionsGroupBox):
                              device.get_pref('use_collections_columns')
                              )
         self.collections_columns_edit = QLineEdit(self)
-        self.collections_columns_edit.setToolTip(_('The Kobo from firmware V2.0.0 supports collections.'
-                ' These are created on the Kobo. '
-                'Specify a tags type column for automatic management.'))
+        self.collections_columns_edit.setToolTip('<p>' +
+                _('The Kobo from firmware V2.0.0 supports collections. '
+                  'These are created on the Kobo. Specify the lookup name for a '
+                  'tags-type column for automatic management.') + '</p>')
         self.collections_columns_edit.setText(device.get_pref('collections_columns'))
 
         self.use_collections_template_checkbox = create_checkbox(
@@ -518,11 +534,14 @@ class CollectionsGroupBox(DeviceOptionsGroupBox):
                              device.get_pref('use_collections_template')
                              )
         self.collections_template_edit = TemplateConfig(
+                            self.use_collections_template_checkbox.text(),
                             device.get_pref('collections_template'),
-                            tooltip=_("Enter a template to generate collections."
-                                      " The result of the template will be combined with the values from Collections column."
-                                      " The template should return a list of collection names separated by ':@:' (without quotes)."
-                                      )
+                            tooltip='<p>' +
+                                _("Enter a template to generate collections. "
+                                  "The result of the template will be combined with the "
+                                  "values from Collections column. The template should "
+                                  "return a list of collection names separated "
+                                  "by ':@:' (without quotes).") + '</p>'
                             )
 
         self.create_collections_checkbox = create_checkbox(
@@ -538,9 +557,10 @@ class CollectionsGroupBox(DeviceOptionsGroupBox):
 
         self.ignore_collections_names_label = QLabel(_('Ignore collections:'))
         self.ignore_collections_names_edit = QLineEdit(self)
-        self.ignore_collections_names_edit.setToolTip(_('List the names of collections to be ignored by '
-                'the collection management. The collections listed '
-                'will not be changed. Names are separated by commas.'))
+        self.ignore_collections_names_edit.setToolTip('<p>' +
+                  _('List the names of collections to be ignored by '
+                    'the collection management. The collections listed '
+                    'will not be changed. Names are separated by commas.') + '</p>')
         self.ignore_collections_names_label.setToolTip(self.ignore_collections_names_edit.toolTip())
         self.ignore_collections_names_label.setBuddy(self.ignore_collections_names_edit)
         self.ignore_collections_names_edit.setText(device.get_pref('ignore_collections_names'))
@@ -558,6 +578,27 @@ class CollectionsGroupBox(DeviceOptionsGroupBox):
         self.use_collections_template_checkbox.clicked.connect(self.use_collections_template_checkbox_clicked)
         self.use_collections_columns_checkbox_clicked(device.get_pref('use_collections_columns'))
         self.use_collections_template_checkbox_clicked(device.get_pref('use_collections_template'))
+
+    def validate(self):
+        v = self.validate_collections_columns()
+        v &= self.collections_template_edit.validate()
+        return v
+
+    def validate_collections_columns(self):
+        from calibre.gui2.ui import get_gui
+        db = get_gui().current_db
+        fm = db.field_metadata
+        bad_names = []
+        for l in [v.strip() for v in self.collections_columns.split(',') if v.strip()]:
+            if l not in fm.keys():
+                bad_names.append(l)
+        if bad_names:
+            s = ', '.join(bad_names)
+            error_dialog(self, _('Kobo configuration: Invalid collection column names'),
+                '<p>'+_("Collection column names that don't exist in the library: {0}").format(s),
+                show=True)
+            return False
+        return True
 
     def use_collections_columns_checkbox_clicked(self, checked):
         self.collections_columns_edit.setEnabled(checked)
@@ -850,6 +891,32 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
                                'in a series to the same value.'),
                              device.get_pref('force_series_id')
                              )
+        self.use_series_index_template_checkbox = create_checkbox(
+                             _('Series number template:'),
+                             _('Use a template to generate what the Kobo displays for the series number.'),
+                             device.get_pref('use_series_index_template')
+                             )
+        self.series_index_template_edit = TemplateConfig(
+                            self.use_series_index_template_checkbox.text(),
+                            device.get_pref('series_index_template'),
+                            tooltip='<p>' +
+                                _('The Kobo can display a series number (book number) '
+                                  'when books are in a series. To do this, the Kobo uses '
+                                  'two values, the "series number" (a floating point value) '
+                                  'and the "series text" (a string). The series number is '
+                                  'used for sorting. The series text is what is displayed. '
+                                  'Normally the series text is the same as the series '
+                                  'number. This option lets you choose a different value '
+                                  'for the series text.</p><p>'
+                                  'A common use is to change the series text to the '
+                                  'empty string when the series number is zero. This General '
+                                  'Program Mode template does that: {0}'
+                                  'You can do more complicated things such as have an omnibus '
+                                  'display "5 to 9". How you do this depends on how you have set '
+                                  'up the series in calibre.').format(
+                                      '<pre style="white-space: nowrap;">program: if $series_index !=# 0 then $series_index else "" fi</pre>')
+                                  + '</p>'
+                            )
         self.update_core_metadata_checkbox = create_checkbox(
                              _('Update metadata on Book Details pages'),
                              _('This will update the metadata in the device database when the device is connected. '
@@ -872,6 +939,7 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
                              device.get_pref('update_subtitle')
                              )
         self.subtitle_template_edit = TemplateConfig(
+                            self.update_subtitle_checkbox.text(),
                             device.get_pref('subtitle_template'),
                             tooltip=_('Enter a template to use to set the subtitle. '
                                       'If the template is empty, the subtitle will be cleared.'
@@ -883,6 +951,7 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
                              device.get_pref('update_bookstats')
                              )
         self.bookstats_wordcount_template_edit = TemplateConfig(
+                            self.update_bookstats_checkbox.text(),
                             device.get_pref('bookstats_wordcount_template'),
                             label=_('Words:'),
                             tooltip=_('Enter a template to use to set the word count for the book. '
@@ -890,6 +959,7 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
                                       )
                             )
         self.bookstats_pagecount_template_edit = TemplateConfig(
+                            _('Pages'),
                             device.get_pref('bookstats_pagecount_template'),
                             label=_('Pages:'),
                             tooltip=_('Enter a template to use to set the page count for the book. '
@@ -899,6 +969,7 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
 
         self.bookstats_timetoread_label = QLabel(_('Hours to read estimates:'))
         self.bookstats_timetoread_upper_template_edit = TemplateConfig(
+                            _('Upper estimate'),
                             device.get_pref('bookstats_timetoread_upper_template'),
                             label=_('Upper:'),
                             tooltip=_('Enter a template to use to set the upper estimate of the time to read for the book. '
@@ -907,6 +978,7 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
                                       )
                             )
         self.bookstats_timetoread_lower_template_edit = TemplateConfig(
+                            _('Lower estimate'),
                             device.get_pref('bookstats_timetoread_lower_template'),
                             label=_('Lower:'),
                             tooltip=_('Enter a template to use to set the lower estimate of the time to read for the book. '
@@ -922,6 +994,9 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
         hbl.addWidget(self.force_series_id_checkbox)
         hbl.addStretch(1)
         self.options_layout.addLayout(hbl,                                           line, 0, 1, 4)
+        line += 1
+        self.options_layout.addWidget(self.use_series_index_template_checkbox,       line, 0, 1, 2)
+        self.options_layout.addWidget(self.series_index_template_edit,               line, 2, 1, 2)
         line += 1
         self.options_layout.addWidget(self.update_core_metadata_checkbox,            line, 0, 1, 4)
         line += 1
@@ -946,11 +1021,16 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
         self.update_core_metadata_checkbox_clicked(device.get_pref('update_core_metadata'))
         self.update_subtitle_checkbox_clicked(device.get_pref('update_subtitle'))
         self.update_bookstats_checkbox_clicked(device.get_pref('update_bookstats'))
+        self.use_series_index_template_checkbox.clicked.connect(self.use_series_index_template_checkbox_clicked)
+        self.use_series_index_template_checkbox_clicked(device.get_pref('use_series_index_template'))
 
     def update_series_checkbox_clicked(self, checked):
         self.force_series_id_checkbox.setEnabled(checked)
         if not checked:
             self.force_series_id_checkbox.setChecked(False)
+
+    def use_series_index_template_checkbox_clicked(self, checked):
+        self.series_index_template_edit.setEnabled(checked)
 
     def update_core_metadata_checkbox_clicked(self, checked):
         self.update_series_checkbox.setEnabled(not checked)
@@ -1000,6 +1080,14 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
         return self.update_series and self.force_series_id_checkbox.isChecked()
 
     @property
+    def use_series_index_template(self):
+        return self.use_series_index_template_checkbox.isChecked()
+
+    @property
+    def series_index_template(self):
+        return self.series_index_template_edit.template
+
+    @property
     def update_core_metadata(self):
         return self.update_core_metadata_checkbox.isChecked()
 
@@ -1042,8 +1130,9 @@ class MetadataGroupBox(DeviceOptionsGroupBox):
 
 class TemplateConfig(QWidget):  # {{{
 
-    def __init__(self, val, label=None, tooltip=None):
+    def __init__(self, name, val, label=None, tooltip=None):
         super().__init__()
+        self.name = name
         self.l = l = QGridLayout(self)
         self.setLayout(l)
         col = 0
@@ -1083,7 +1172,7 @@ class TemplateConfig(QWidget):  # {{{
             validation_formatter.validate(tmpl)
             return True
         except Exception as err:
-            error_dialog(self, _('Invalid template'),
+            error_dialog(self, _('Invalid template for {0}').format(self.name),
                     '<p>'+_('The template "%s" is invalid:')%tmpl +
                     '<br>'+str(err), show=True)
 

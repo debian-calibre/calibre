@@ -27,154 +27,146 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "مايو 09, 2025" "8.4.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "يونيو 20, 2025" "8.5.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-convert input_file output_file [options]
+ebook\-convert ملف_الإدخال ملف_الإخراج [خيارات]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+تحويل كتاب إلكتروني من تنسيق إلى آخر.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+ملف_الإدخال هو الإدخال وملف_الإخراج هو الإخراج. يجب تحديد كلاهما كأول وسيطتين للأمر.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+يتم تخمين تنسيق الكتاب الإلكتروني الناتج من امتداد ملف ملف_الإخراج. يمكن أن يكون ملف_الإخراج أيضًا بالتنسيق الخاص .EXT حيث EXT هو امتداد ملف الإخراج. في هذه الحالة، يتم اشتقاق اسم ملف الإخراج من اسم ملف الإدخال. لاحظ أن أسماء الملفات يجب ألا تبدأ بشرطة. أخيرًا، إذا لم يكن لملف_الإخراج أي امتداد، فسيتم التعامل معه كمجلد وكتاب إلكتروني \(dqمفتوح\(dq (OEB) يتكون من ملفات HTML سيتم كتابتها في هذا المجلد. هذه الملفات هي الملفات التي كان سيتم تمريرها عادةً إلى مكون الإخراج الإضافي.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+بعد تحديد ملف الإدخال والإخراج، يمكنك تخصيص التحويل عن طريق تحديد خيارات متنوعة. تعتمد الخيارات المتاحة على أنواع ملفات الإدخال والإخراج. للحصول على تعليمات حولها، حدد ملف الإدخال والإخراج ثم استخدم الخيار \-h.
 .sp
-For full documentation of the conversion system see
-\fI\%E\-book conversion\fP
+للحصول على وثائق كاملة لنظام التحويل، راجع
+\fI\%تحويل الكتب الإلكترونية\fP
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+عندما تمرر وسائط إلى \fBebook\-convert\fP تحتوي على مسافات، ضع الوسائط بين علامتي اقتباس. على سبيل المثال: \(dq/some path/with spaces\(dq
 .sp
-The options and default values for the options change depending on both the
-input and output formats, so you should always check with:
-.INDENT 0.0
-.INDENT 3.5
+تتغير الخيارات والقيم الافتراضية للخيارات تبعًا لتنسيقي الإدخال والإخراج، لذا يُرجى دائمًا التحقق من:
 .sp
-.EX
 ebook\-convert myfile.input_format myfile.output_format \-h
-.EE
-.UNINDENT
-.UNINDENT
 .sp
-Below are the options that are common to all conversion, followed by the
-options specific to every input and output format.
+فيما يلي الخيارات المشتركة لجميع عمليات التحويل، متبوعة بالخيارات الخاصة بكل تنسيق إدخال وإخراج.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%خيارات الدخل\fP
+\fI\%خيارات الإدخال\fP
 .IP \(bu 2
-\fI\%خيارات الخرج\fP
+\fI\%خيارات الإخراج\fP
 .IP \(bu 2
-\fI\%المظهر والتأثير\fP
+\fI\%المظهر والإحساس\fP
 .IP \(bu 2
-\fI\%المعالجة الإرشادية\fP
+\fI\%المعالجة الاستدلالية\fP
 .IP \(bu 2
-\fI\%بحث واستبدال\fP
+\fI\%البحث والاستبدال\fP
 .IP \(bu 2
-\fI\%كشف البِنية\fP
+\fI\%اكتشاف الهيكل\fP
 .IP \(bu 2
 \fI\%جدول المحتويات\fP
 .IP \(bu 2
 \fI\%البيانات الوصفية\fP
 .IP \(bu 2
-\fI\%تنقيح\fP
+\fI\%تصحيح الأخطاء\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-help, \-h
-show this help message and exit
+إظهار رسالة المساعدة هذه والخروج
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-input\-profile
-تحديد ملف الإدخال. ملف الإدخال يعطي نظام المعلومات التحويل حول كيفية تفسير المعلومات المختلفة في وثيقة الإدخال. لأطوال القرار الصفحة المثال تعتمد  (أطوال عاطفية في خلية). الخيارات هي: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+تحديد ملف الإدخال. ملف الإدخال يعطي نظام التحويل معلومات حول كيفية تفسير المعلومات المختلفة في وثيقة الإدخال. على سبيل المثال، الأطوال المعتمدة على الدقة (أي الأطوال بالبكسل). الخيارات هي: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
+قائمة أسماء الوصفات المضمنة. يمكنك إنشاء كتاب إلكتروني من وصفة مضمنة مثل هذا: ebook\-convert \fB\(dq\fPاسم الوصفة.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device. In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
+تحديد ملف تعريف الإخراج. يخبر ملف تعريف الإخراج نظام التحويل بكيفية تحسين المستند المُنشأ للجهاز المحدد. في بعض الحالات، يمكن استخدام ملف تعريف الإخراج لتحسين الإخراج لجهاز معين، لكن هذا نادرًا ما يكون ضروريًا. الخيارات هي:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-version
-show program\fB\(aq\fPs version number and exit
+إظهار رقم إصدار البرنامج والخروج
 .UNINDENT
-.SH خيارات الدخل
+.SH خيارات الإدخال
 .sp
-خيارات للتحكم في معالجة ملف mobi المُدخل.
+خيارات للتحكم في معالجة ملف الإدخال mobi
 .INDENT 0.0
 .TP
 .B \-\-input\-encoding
 تحديد نوع ترميز المحارف للمستند. إن هذا الخيار سوف سوف يعيد كتابة الترميز متجاوزاً خيارات المستند، هذا الخيار للمستندان التي عاطفية تعلن عن ترميزها أو التي ليس لها ترميز خاطىء.
 .UNINDENT
-.SH خيارات الخرج
+.SH خيارات الإخراج
 .sp
-خيارات للتحكم في معالجة ملف epub المُخرَج.
+خيارات للتحكم في معالجة الإخراج epub
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+إيقاف تقسيم الملفات عند فواصل الصفحات. عادةً، يتم تقسيم ملفات الإدخال تلقائيًا عند كل فاصل صفحة إلى ملفين. ينتج عن هذا كتاب إلكتروني يمكن تحليله بشكل أسرع وبموارد أقل. ومع ذلك، فإن عملية التقسيم بطيئة، وإذا كان ملفك الأصلي يحتوي على عدد كبير جدًا من فواصل الصفحات، فيجب عليك إيقاف تقسيم الملفات عند فواصل الصفحات.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-flatten
-هناك عاطفية إلى هذا الخيار إلا إذا كنت تنوي استخدام EPUB مع فبريديرج. سوف تتسطح نظام الملفات داخل EPUB، ووضع كافة الملفات في أعلى مستوى.
+هذا الخيار ضروري فقط إذا كنت تنوي استخدام EPUB مع FBReaderJ. سيقوم بتسوية نظام الملفات داخل EPUB، ووضع جميع الملفات في المستوى الأعلى.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Insert an inline Table of Contents that will appear as part of the main book content.
+إدراج جدول محتويات مضمن سيظهر كجزء من محتوى الكتاب الرئيسي.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-max\-image\-size
-The maximum image size (width x height). A value of none means use the screen size from the output profile. A value of profile means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
+الحد الأقصى لحجم الصورة (العرض × الارتفاع). القيمة none تعني استخدام حجم الشاشة من ملف تعريف الإخراج. القيمة profile تعني عدم تحديد حجم أقصى. على سبيل المثال، القيمة 100x200 ستتسبب في تغيير حجم جميع الصور بحيث لا يتجاوز عرضها 100 بكسل ولا يتجاوز ارتفاعها 200 بكسل. لاحظ أن هذا يؤثر فقط على حجم ملفات الصور الفعلية نفسها. قد يتم عرض أي صورة معينة بحجم مختلف اعتمادًا على التنسيق المطبق عليها في المستند.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Put the inserted inline Table of Contents at the end of the book instead of the start.
+وضع جدول المحتويات المضمن الذي تم إدراجه في نهاية الكتاب بدلاً من البداية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-version
-The version of the EPUB file to generate. EPUB 2 is the most widely compatible, only use EPUB 3 if you know you actually need it.
+إصدار ملف EPUB المراد إنشاؤه. EPUB 2 هو الأكثر توافقًا على نطاق واسع، استخدم EPUB 3 فقط إذا كنت تعلم أنك تحتاجه بالفعل.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
+استخراج محتويات الكتاب الذي تم إنشاؤه إلى المجلد المحدد. سيتم حذف محتويات المجلد أولاً، لذا كن حذرًا.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+تقسيم جميع ملفات HTML الأكبر من هذا الحجم (بالكيلوبايت). هذا ضروري حيث أن معظم قارئات EPUB لا تستطيع التعامل مع أحجام الملفات الكبيرة. الافتراضي هو 260KB وهو الحجم المطلوب لبرنامج Adobe Digital Editions. اضبط على 0 لتعطيل التقسيم حسب الحجم.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-default\-epub\-cover
-عادة، إذا كان ملف الإدخال يوجد لديه غطاء وأنت لم تحدد عاطفية، يتم إنشاء تغطية الافتراضي مع عنوان الكتاب، ومأ إلى ذلك تعطيل هذا الخيار لتوليد هذا الغطاء.
+عادةً، إذا كان ملف الإدخال لا يحتوي على غلاف ولم تحدد غلافًا، يتم إنشاء غلاف افتراضي يتضمن العنوان والمؤلفين وما إلى ذلك. هذا الخيار يعطل إنشاء هذا الغلاف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-svg\-cover
-تستخدم SVG لغﻻف الكتاب. استخدام هذا الخيار إذا EPUB الخاص بك هو على وشك أن يستخدم على جهاز عاطفية يدعم SVG، مثل فون أو لايت جيتبوك. دون هذا الخيار، وسوف يتم عرض هذه الأجهزة الغطاء كصفحة فارغة.
+لا تستخدم SVG لغلاف الكتاب. استخدم هذا الخيار إذا كان ملف EPUB الخاص بك سيُستخدم على جهاز لا يدعم SVG، مثل iPhone أو JetBook Lite. بدون هذا الخيار، ستعرض هذه الأجهزة الغلاف كصفحة فارغة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-عند استخدام غطاء SVG، فإن هذا الخيار يؤدي إلى توسيع تغطية لتغطية مساحة الشاشة المتوفرة، ولكن عاطفية يزال الحفاظ على نسبة الجانب  (نسبة العرض إلى الارتفاع). وهذا يعني أنه قد يكون هناك حدود بيضاء على الجانبين أو أعلى وأسفل الصورة، ولكن لن تكون الصورة مشوهة. قد يكون هذا الخيار من دون صورة مشوهة قليلاً، ولكن لن تكون هناك أية حدود.
+عند استخدام غلاف SVG، سيتسبب هذا الخيار في تغيير حجم الغلاف ليغطي المساحة المتاحة للشاشة، مع الحفاظ على نسبة العرض إلى الارتفاع (نسبة العرض إلى الارتفاع). هذا يعني أنه قد تكون هناك حدود بيضاء على الجانبين أو أعلى وأسفل الصورة، لكن الصورة لن تتشوه أبدًا. بدون هذا الخيار، قد تتشوه الصورة قليلاً، ولكن لن تكون هناك حدود.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -184,147 +176,147 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Title for any generated inline table of contents.
+عنوان لأي جدول محتويات مضمن يتم إنشاؤه.
 .UNINDENT
-.SH المظهر والتأثير
+.SH المظهر والإحساس
 .sp
-خيارات للتحكم في شكل و مظهر المُخرجات
+خيارات للتحكم في المظهر والإحساس بالإخراج
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+نقل الأحرف اليونيكود إلى تمثيل ASCII. استخدم بحذر لأن هذا سيحل محل أحرف اليونيكود بـ ASCII. على سبيل المثال، سيحل محل \fB\(dq\fPPelé\fB\(dq\fP بـ \fB\(dq\fPPele\fB\(dq\fP\&. لاحظ أيضًا أنه في الحالات التي توجد فيها عدة تمثيلات لحرف (أحرف مشتركة بين الصينية واليابانية على سبيل المثال)، سيتم استخدام التمثيل بناءً على لغة واجهة Calibre الحالية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+حجم الخط الأساسي بالنقاط. ستتم إعادة تحجيم جميع أحجام الخطوط في الكتاب الناتج بناءً على هذا الحجم. باختيار حجم أكبر، يمكنك جعل الخطوط في الإخراج أكبر والعكس صحيح. افتراضيًا، عندما تكون القيمة صفرًا، يتم اختيار حجم الخط الأساسي بناءً على ملف تعريف الإخراج الذي اخترته.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Change text justification. A value of \fB\(dq\fPleft\fB\(dq\fP converts all justified text in the source to left aligned (i.e. unjustified) text. A value of \fB\(dq\fPjustify\fB\(dq\fP converts all unjustified text to justified. A value of \fB\(dq\fPoriginal\fB\(dq\fP (the default) does not change justification in the source file. Note that only some output formats support justification.
+تغيير محاذاة النص. قيمة \fB\(dq\fPleft\fB\(dq\fP (يسار) تحول جميع النصوص المبررة في المصدر إلى نص محاذٍ لليسار (أي غير مبرر). قيمة \fB\(dq\fPjustify\fB\(dq\fP (تبرير) تحول جميع النصوص غير المبررة إلى مبررة. قيمة \fB\(dq\fPoriginal\fB\(dq\fP (الأصل) (الافتراضية) لا تغير المحاذاة في الملف المصدر. ملاحظة: بعض تنسيقات الإخراج فقط تدعم المحاذاة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-font\-rescaling
-تعطيل كافة إعادة الأحجام قياس الخط.
+تعطيل جميع عمليات إعادة تحجيم أحجام الخطوط.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+تضمين كل خط مشار إليه في المستند المدخل ولكن غير مضمن بالفعل. سيبحث هذا في نظامك عن الخطوط، وإذا وجدت، سيتم تضمينها. لن يعمل التضمين إلا إذا كان التنسيق الذي تقوم بالتحويل إليه يدعم الخطوط المضمنة، مثل EPUB أو AZW3 أو DOCX أو PDF. يرجى التأكد من أن لديك الترخيص المناسب لتضمين الخطوط المستخدمة في هذا المستند.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB\(dq\fPbase\fB\(dq\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+تضمين عائلة الخط المحددة في الكتاب. يحدد هذا الخط \fB\(dq\fPالأساسي\fB\(dq\fP المستخدم للكتاب. إذا كان المستند المدخل يحدد خطوطه الخاصة، فقد تتجاوز هذه الخطوط الخط الأساسي. يمكنك استخدام خيار تصفية معلومات النمط لإزالة الخطوط من المستند المدخل. لاحظ أن تضمين الخطوط يعمل فقط مع بعض تنسيقات الإخراج، وبشكل رئيسي EPUB وAZW3 وDOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+افتراضيًا، سيستخدم Calibre الصيغة المختصرة لخصائص CSS المختلفة مثل الهامش، والحشو، والحدود، وما إلى ذلك. سيؤدي هذا الخيار إلى استخدام الصيغة الموسعة الكاملة بدلاً من ذلك. لاحظ أن CSS يتم توسيعه دائمًا عند إنشاء ملفات EPUB مع ضبط ملف تعريف الإخراج على أحد ملفات تعريف Nook حيث لا يمكن لـ Nook التعامل مع CSS المختصر.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Either the path to a CSS stylesheet or raw CSS. This CSS will be appended to the style rules from the source file, so it can be used to override those rules.
+إما المسار إلى ورقة أنماط CSS أو CSS خام. ستتم إضافة هذا الـ CSS إلى قواعد الأنماط من الملف المصدر، بحيث يمكن استخدامه لتجاوز تلك القواعد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-A comma separated list of CSS properties that will be removed from all CSS style rules. This is useful if the presence of some style information prevents it from being overridden on your device. For example: font\-family,color,margin\-left,margin\-right
+قائمة مفصولة بفواصل من خصائص CSS التي ستتم إزالتها من جميع قواعد أنماط CSS. هذا مفيد إذا كان وجود بعض معلومات الأنماط يمنع تجاوزها على جهازك. على سبيل المثال: font\-family,color,margin\-left,margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-font\-size\-mapping
-Mapping from CSS font names to font sizes in pts. An example setting is 12,12,14,16,18,20,22,24. These are the mappings for the sizes xx\-small to xx\-large, with the final size being for huge fonts. The font rescaling algorithm uses these sizes to intelligently rescale fonts. The default is to use a mapping based on the output profile you chose.
+تعيين من أسماء خطوط CSS إلى أحجام الخطوط بالنقاط. إعداد مثال هو 12,12,14,16,18,20,22,24. هذه هي التعيينات للأحجام من xx\-small إلى xx\-large، مع كون الحجم الأخير للخطوط الضخمة. تستخدم خوارزمية إعادة تحجيم الخطوط هذه الأحجام لإعادة تحجيم الخطوط بذكاء. الافتراضي هو استخدام تعيين يعتمد على ملف تعريف الإخراج الذي اخترته.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Insert a blank line between paragraphs. Will not work if the source file does not use paragraphs (<p> or <div> tags).
+إدراج سطر فارغ بين الفقرات. لن يعمل إذا كان الملف المصدر لا يستخدم علامات الفقرات (<p> أو <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-Set the height of the inserted blank lines (in em). The height of the lines between paragraphs will be twice the value set here.
+اضبط ارتفاع الأسطر الفارغة المدخلة (بوحدة em). سيكون ارتفاع الأسطر بين الفقرات ضعف القيمة المحددة هنا.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
+الاحتفاظ بالروابط الخطية الموجودة في المستند المدخل. الرابطة الخطية هي حرف مدمج لزوج من الأحرف مثل ff، fi، fl وما إلى ذلك. معظم القراء لا يدعمون الروابط الخطية في خطوطهم الافتراضية، لذا فمن غير المرجح أن يتم عرضها بشكل صحيح. افتراضيًا، سيقوم Calibre بتحويل الرابطة الخطية إلى الزوج المقابل من الأحرف العادية. لاحظ أن الروابط الخطية هنا تعني فقط الروابط الخطية اليونيكود وليس الروابط الخطية التي تم إنشاؤها عبر CSS أو أنماط الخطوط. سيحافظ هذا الخيار عليها بدلاً من ذلك.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+ارتفاع السطر بالنقاط. يتحكم في التباعد بين الأسطر المتتالية من النص. ينطبق فقط على العناصر التي لا تحدد ارتفاع السطر الخاص بها. في معظم الحالات، يكون خيار الحد الأدنى لارتفاع السطر أكثر فائدة. افتراضيًا، لا يتم إجراء أي معالجة لارتفاع السطر.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-Some badly designed documents use tables to control the layout of text on the page. When converted these documents often have text that runs off the page and other artifacts. This option will extract the content from the tables and present it in a linear fashion.
+تستخدم بعض المستندات سيئة التصميم الجداول للتحكم في تخطيط النص على الصفحة. عند تحويل هذه المستندات، غالبًا ما يظهر النص خارج الصفحة وعناصر أخرى. سيقوم هذا الخيار باستخراج المحتوى من الجداول وتقديمه بطريقة خطية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+ضبط الهامش السفلي بالنقاط. الافتراضي هو 5.0. ضبطه على أقل من صفر لن يؤدي إلى تعيين أي هامش (سيتم الاحتفاظ بإعداد الهامش في المستند الأصلي). ملاحظة: تنسيقات الصفحات مثل PDF و DOCX لها إعدادات هوامش خاصة بها تأخذ الأسبقية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+ضبط الهامش الأيسر بالنقاط. الافتراضي هو 5.0. ضبطه على أقل من صفر لن يؤدي إلى تعيين أي هامش (سيتم الاحتفاظ بإعداد الهامش في المستند الأصلي). ملاحظة: تنسيقات الصفحات مثل PDF و DOCX لها إعدادات هوامش خاصة بها تأخذ الأسبقية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+ضبط الهامش الأيمن بالنقاط. الافتراضي هو 5.0. ضبطه على أقل من صفر لن يؤدي إلى تعيين أي هامش (سيتم الاحتفاظ بإعداد الهامش في المستند الأصلي). ملاحظة: تنسيقات الصفحات مثل PDF و DOCX لها إعدادات هوامش خاصة بها تأخذ الأسبقية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+ضبط الهامش العلوي بالنقاط. الافتراضي هو 5.0. ضبطه على أقل من صفر لن يؤدي إلى تعيين أي هامش (سيتم الاحتفاظ بإعداد الهامش في المستند الأصلي). ملاحظة: تنسيقات الصفحات مثل PDF و DOCX لها إعدادات هوامش خاصة بها تأخذ الأسبقية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB\(dq\fPdouble spaced\fB\(dq\fP text by setting this to 240.
+الحد الأدنى لارتفاع السطر، كنسبة مئوية من حجم الخط المحسوب للعنصر. سيتأكد Calibre من أن كل عنصر له ارتفاع سطر لا يقل عن هذا الإعداد، بغض النظر عما يحدده المستند المدخل. اضبطه على صفر للتعطيل. الافتراضي هو 120%. استخدم هذا الإعداد بدلاً من تحديد ارتفاع السطر المباشر، إلا إذا كنت تعرف ما تفعله. على سبيل المثال، يمكنك تحقيق نص \fB\(dq\fPمزدوج التباعد\fB\(dq\fP عن طريق ضبط هذا على 240.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Remove spacing between paragraphs. Also sets an indent on paragraphs of 1.5em. Spacing removal will not work if the source file does not use paragraphs (<p> or <div> tags).
+إزالة المسافات بين الفقرات. كما يقوم بضبط مسافة بادئة للفقرات بمقدار 1.5em. لن تعمل إزالة المسافات إذا لم يستخدم الملف المصدر علامات الفقرات (<p> أو <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-When calibre removes blank lines between paragraphs, it automatically sets a paragraph indent, to ensure that paragraphs can be easily distinguished. This option controls the width of that indent (in em). If you set this value negative, then the indent specified in the input document is used, that is, calibre does not change the indentation.
+عندما يزيل Calibre الأسطر الفارغة بين الفقرات، فإنه يضبط تلقائيًا مسافة بادئة للفقرة لضمان سهولة التمييز بين الفقرات. يتحكم هذا الخيار في عرض تلك المسافة البادئة (بوحدة em). إذا قمت بضبط هذه القيمة سالبة، فسيتم استخدام المسافة البادئة المحددة في المستند المدخل، أي أن Calibre لا يغير المسافة البادئة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
+تحويل علامات الاقتباس العادية، والشرطات، وعلامات الحذف إلى ما يعادلها الصحيح من الناحية الطباعية. للمزيد من التفاصيل، راجع \X'tty: link https://daringfireball.net/projects/smartypants'\fI\%https://daringfireball.net/projects/smartypants\fP\X'tty: link'\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+تضمين مجموعة فرعية من جميع الخطوط المضمنة. يتم تقليل كل خط مضمن ليحتوي فقط على الرموز الرسومية المستخدمة في هذا المستند. هذا يقلل من حجم ملفات الخطوط. مفيد إذا كنت تقوم بتضمين خط كبير بشكل خاص مع الكثير من الرموز الرسومية غير المستخدمة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform styles\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
+مسار إلى ملف يحتوي على قواعد لتحويل أنماط CSS في هذا الكتاب. أسهل طريقة لإنشاء مثل هذا الملف هي استخدام المعالج لإنشاء قواعد في واجهة مستخدم كاليبر الرسومية. يمكنك الوصول إليه في قسم \fB\(dq\fPالمظهر والتأثير\->تحويل الأنماط\fB\(dq\fP في مربع حوار التحويل. بمجرد إنشاء القواعد، يمكنك استخدام زر \fB\(dq\fPتصدير\fB\(dq\fP لحفظها في ملف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
+مسار إلى ملف يحتوي على قواعد لتحويل HTML في هذا الكتاب. أسهل طريقة لإنشاء مثل هذا الملف هي استخدام المعالج لإنشاء قواعد في واجهة مستخدم كاليبر الرسومية. يمكنك الوصول إليه في قسم \fB\(dq\fPالمظهر والتأثير\->تحويل HTML\fB\(dq\fP في مربع حوار التحويل. بمجرد إنشاء القواعد، يمكنك استخدام زر \fB\(dq\fPتصدير\fB\(dq\fP لحفظها في ملف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-unsmarten\-punctuation
-Convert fancy quotes, dashes and ellipsis to their plain equivalents.
+تحويل علامات الاقتباس المزخرفة، والشرطات، وعلامات الحذف إلى ما يعادلها العادي.
 .UNINDENT
-.SH المعالجة الإرشادية
+.SH المعالجة الاستدلالية
 .sp
 عدّل نص وبِنية الوثيقة باستخدام أنماط متعارفة. معطّل مبدئيا. استخدم \-\-enable\-heuristics لتمكينه. يمكن تعطيل إجراءات مفردة بإجراءات \-\-disable\-
 .nf
@@ -339,22 +331,22 @@ Convert fancy quotes, dashes and ellipsis to their plain equivalents.
 .INDENT 0.0
 .TP
 .B \-\-disable\-delete\-blank\-paragraphs
-إزالة الفقرات الفارغة من المستند عندما كانت موجودة بين كل عروض فقرة أخرى
+إزالة الفقرات الفارغة من المستند عندما توجد بين كل فقرة أخرى
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-fix\-indents
-بدوره المسافة البادئة التي تم إنشاؤها من عدة كيانات الفضائية غير اقتحام البادئة المغلق.
+حوّل المسافة البادئة الناتجة عن كيانات المسافة غير الفاصلة المتعددة إلى مسافات بادئة CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+علامات فواصل المشاهد المحاذية لليسار يتم محاذاتها إلى المنتصف. استبدال فواصل المشاهد الناعمة التي تستخدم عدة أسطر فارغة بقواعد أفقية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-italicize\-common\-cases
-ابحث عن الكلمات الشائعة والأنماط التي تدل المائل ومائلة عليها.
+ابحث عن الكلمات والأنماط الشائعة التي تدل على الخط المائل وقم بتمييزها مائلًا.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -364,17 +356,17 @@ Left aligned scene break markers are center aligned. Replace soft scene breaks t
 .INDENT 0.0
 .TP
 .B \-\-disable\-renumber\-headings
-يبحث عن تواجدات تتابعات وسوم <h1> أو <h2>. ترقّم الوسوم لمنع التقسيم في وسط ترويسات الفصول.
+يبحث عن تكرارات لعلامات <h1> أو <h2> المتسلسلة. يتم إعادة ترقيم العلامات لمنع الانقسام في منتصف عناوين الفصول.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-unwrap\-lines
-خطوط بسط استخدام علامات الترقيم والقرائن والتنسيقات الأخرى.
+فك التفاف الأسطر باستخدام علامات الترقيم وتلميحات التنسيق الأخرى.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-heuristics
-تمكين المعالجة الإرشادية. يجب تعيين هذا الخيار لجعل المعالجة الإرشادية تعمل.
+تمكين المعالجة الاستدلالية (heuristice). يجب تعيين هذا الخيار لكي تتم أي معالجة استدلالية.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -384,154 +376,154 @@ Left aligned scene break markers are center aligned. Replace soft scene breaks t
 .INDENT 0.0
 .TP
 .B \-\-replace\-scene\-breaks
-استبدال فواصل المشهد مع النص المحدد. افتراضيا، يتم استخدام النص من مستند الإدخال.
+استبدال فواصل المشاهد بالنص المحدد. افتراضيًا، يتم استخدام النص من المستند المدخل.
 .UNINDENT
-.SH بحث واستبدال
+.SH البحث والاستبدال
 .sp
-عدّل نص وبِنية الوثيقة باستخدام أنماط عرّفها المستخدم.
+قم بتعديل نص المستند وهيكله باستخدام أنماط معرفة من قبل المستخدم.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+مسار إلى ملف يحتوي على تعبيرات عادية للبحث والاستبدال. يجب أن يحتوي الملف على أسطر متناوبة من التعبير العادي يتبعها نمط الاستبدال (والذي يمكن أن يكون سطرًا فارغًا). يجب أن يكون التعبير العادي بصيغة تعبير Python العادي ويجب أن يكون الملف مشفرًا بـ UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-replace
-استبدال ليستبدل النص الموجود ببحث SR1.
+النص البديل لاستبدال النص الذي تم العثور عليه باستخدام sr1\-search.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr1\-search
-نمط البحث (تعبير نظامي) يُستَبدَل بـ sr1\-replace.
+نمط البحث (تعبير عادي) ليتم استبداله بـ sr1\-replace.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-replace
-استبدال ليستبدل النص الموجود ببحث SR2.
+النص البديل لاستبدال النص الذي تم العثور عليه باستخدام sr2\-search.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr2\-search
-ليحل محله نمط البحث  (تعبير العادية) مع استبدال\-SR2.
+نمط البحث (تعبير عادي) ليتم استبداله بـ sr2\-replace.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr3\-replace
-استبدال ليستبدل النص الموجود ببحث SR3.
+النص البديل لاستبدال النص الذي تم العثور عليه باستخدام sr3\-search.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-sr3\-search
-ليحل محله نمط البحث  (تعبير العادية) مع استبدال\-SR3.
+نمط البحث (تعبير عادي) ليتم استبداله بـ sr3\-replace.
 .UNINDENT
-.SH كشف البِنية
+.SH اكتشاف الهيكل
 .sp
-تحكّم بالكشف الآلي لبنية المستند.
+التحكم في الاكتشاف التلقائي لهيكل المستند.
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute improves accessibility by providing text descriptions for users who cannot see or fully interpret visual content.
+عندما لا تحتوي علامة \fI<img>\fP على سمة \fIalt\fP، يتم التحقق من ملف الصورة المرتبط بحثًا عن بيانات وصفية تحدد نصًا بديلاً، واستخدامها لملء سمة \fIalt\fP\&. تعمل سمة \fIalt\fP على تحسين إمكانية الوصول من خلال توفير أوصاف نصية للمستخدمين الذين لا يستطيعون رؤية المحتوى المرئي أو تفسيره بالكامل.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+تعبير XPath لاكتشاف عناوين الفصول. الافتراضي هو اعتبار علامات <h1> أو <h2> التي تحتوي على الكلمات \fB\(dq\fPchapter\fB\(dq\fP، \fB\(dq\fPbook\fB\(dq\fP، \fB\(dq\fPsection\fB\(dq\fP، \fB\(dq\fPprologue\fB\(dq\fP، \fB\(dq\fPepilogue\fB\(dq\fP أو \fB\(dq\fPpart\fB\(dq\fP كعناوين فصول، بالإضافة إلى أي علامات تحتوي على class=\fB\(dq\fPchapter\fB\(dq\fP\&. يجب أن يقيم التعبير المستخدم إلى قائمة من العناصر. لتعطيل اكتشاف الفصول، استخدم التعبير \fB\(dq\fP/\fB\(dq\fP\&. راجع دليل XPath التعليمي في دليل مستخدم Calibre للحصول على مساعدة إضافية حول استخدام هذه الميزة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Specify how to mark detected chapters. A value of \fB\(dq\fPpagebreak\fB\(dq\fP will insert page breaks before chapters. A value of \fB\(dq\fPrule\fB\(dq\fP will insert a line before chapters. A value of \fB\(dq\fPnone\fB\(dq\fP will disable chapter marking and a value of \fB\(dq\fPboth\fB\(dq\fP will use both page breaks and lines to mark chapters.
+حدد كيفية تمييز الفصول المكتشفة. قيمة \fB\(dq\fPpagebreak\fB\(dq\fP ستدرج فواصل صفحات قبل الفصول. قيمة \fB\(dq\fPrule\fB\(dq\fP ستدرج خطًا قبل الفصول. قيمة \fB\(dq\fPnone\fB\(dq\fP ستعطل تمييز الفصول وقيمة \fB\(dq\fPboth\fB\(dq\fP ستستخدم فواصل الصفحات والخطوط لتمييز الفصول.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-Some documents specify page margins by specifying a left and right margin on each individual paragraph. calibre will try to detect and remove these margins. Sometimes, this can cause the removal of margins that should not have been removed. In this case you can disable the removal.
+تحدد بعض المستندات هوامش الصفحة عن طريق تحديد هامش أيسر وأيمن لكل فقرة على حدة. سيحاول Calibre اكتشاف وإزالة هذه الهوامش. في بعض الأحيان، يمكن أن يتسبب هذا في إزالة هوامش ما كان ينبغي إزالتها. في هذه الحالة، يمكنك تعطيل الإزالة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+إدراج بيانات الكتاب الوصفية في بداية الكتاب. هذا مفيد إذا كان قارئ الكتب الإلكترونية الخاص بك لا يدعم عرض/البحث في البيانات الوصفية مباشرةً.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+تعبير XPath. يتم إدراج فواصل الصفحات قبل العناصر المحددة. لتعطيل هذا، استخدم التعبير: /
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-استخدم الغلاف التي تم كشفه في ملف المصدر بدلاً من الغلاف المحدد.
+استخدم الغلاف الذي تم اكتشافه من الملف المصدر بدلاً من الغلاف المحدد.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+إزالة الصورة الأولى من الكتاب الإلكتروني المدخل. مفيد إذا كان المستند المدخل يحتوي على صورة غلاف لم يتم تحديدها كغلاف. في هذه الحالة، إذا قمت بتعيين غلاف في Calibre، فسينتهي المستند الناتج بصورتين للغلاف إذا لم تحدد هذا الخيار.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+تعبير XPath لاكتشاف الموقع في المستند الذي يجب أن تبدأ القراءة منه. تستخدم بعض برامج قراءة الكتب الإلكترونية (أبرزها Kindle) هذا الموقع كنقطة لفتح الكتاب. راجع دليل XPath التعليمي في دليل مستخدم Calibre للحصول على مساعدة إضافية حول استخدام هذه الميزة.
 .UNINDENT
 .SH جدول المحتويات
 .sp
-السيطرة على الجيل التلقائي لجدول المحتويات. افتراضيا، إذا كان الملف المصدر يحتوي على جدول المحتويات، سيتم استخدامه في تفضيل واحدة ولدت تلقائياً.
+التحكم في الإنشاء التلقائي لجدول المحتويات. بشكل افتراضي، إذا كان ملف المصدر يحتوي على جدول محتويات، فسيتم استخدامه بدلاً من الجدول الذي تم إنشاؤه تلقائيًا.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-When creating a TOC from links in the input document, allow duplicate entries, i.e. allow more than one entry with the same text, provided that they point to a different location.
+عند إنشاء جدول محتويات من الروابط في المستند المدخل، اسمح بالإدخالات المكررة، أي اسمح بأكثر من إدخال واحد بنفس النص، شريطة أن تشير إلى موقع مختلف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level one. If this is specified, it takes precedence over other forms of auto\-detection. See the XPath Tutorial in the calibre User Manual for examples.
+تعبير XPath يحدد جميع العلامات التي يجب إضافتها إلى جدول المحتويات في المستوى الأول. إذا تم تحديد هذا، فإنه يأخذ الأسبقية على الأشكال الأخرى من الكشف التلقائي. راجع دليل XPath التعليمي في دليل مستخدم Calibre للحصول على أمثلة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level two. Each entry is added under the previous level one entry. See the XPath Tutorial in the calibre User Manual for examples.
+تعبير XPath يحدد جميع العلامات التي يجب إضافتها إلى جدول المحتويات في المستوى الثاني. يتم إضافة كل إدخال تحت إدخال المستوى الأول السابق. راجع دليل XPath التعليمي في دليل مستخدم Calibre للحصول على أمثلة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level three. Each entry is added under the previous level two entry. See the XPath Tutorial in the calibre User Manual for examples.
+تعبير XPath يحدد جميع العلامات التي يجب إضافتها إلى جدول المحتويات في المستوى الثالث. يتم إضافة كل إدخال تحت إدخال المستوى الثاني السابق. راجع دليل XPath التعليمي في دليل مستخدم Calibre للحصول على أمثلة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-toc\-links
-Maximum number of links to insert into the TOC. Set to 0 to disable. Default is: 50. Links are only added to the TOC if less than the threshold number of chapters were detected.
+الحد الأقصى لعدد الروابط التي سيتم إدراجها في جدول المحتويات. اضبط على 0 للتعطيل. الافتراضي هو: 50. تتم إضافة الروابط إلى جدول المحتويات فقط إذا تم اكتشاف عدد أقل من الفصول من الحد الأدنى.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-لا تضف الفصول المكتشفة تلقائيا إلى جدول المحتويات.
+لا تضف الفصول المكتشفة تلقائيًا إلى جدول المحتويات.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Remove entries from the Table of Contents whose titles match the specified regular expression. Matching entries and all their children are removed.
+إزالة الإدخالات من جدول المحتويات التي تتطابق عناوينها مع التعبير العادي المحدد. يتم إزالة الإدخالات المتطابقة وجميع عناصرها الفرعية.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-threshold
-إذا يتم كشف عدد أقل من هذا بين الفصول فسوف يضيف وصلات إلى قائمة المحتويات. الإفتراضي هو: 6
+إذا تم اكتشاف عدد أقل من هذا العدد من الفصول، فستتم إضافة روابط إلى جدول المحتويات. الافتراضي: 6
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-عادةً، إذا يوجد قائمة محتويات في الملف المصدر، يتم استخدامه بدلاً من القائمة التي تم إنشاءه آلياً. بهذا الخيار، يتم استخدام القائمة المنشئة آلياً دوماً.
+عادةً، إذا كان الملف المصدر يحتوي بالفعل على جدول محتويات، فإنه يُستخدم بدلاً من الجدول الذي تم إنشاؤه تلقائيًا. مع هذا الخيار، يُستخدم الجدول الذي تم إنشاؤه تلقائيًا دائمًا.
 .UNINDENT
 .SH البيانات الوصفية
 .sp
-خيارات لوضع البيانات الوصفية في المُخرجات
+خيارات لتعيين البيانات الوصفية في الإخراج
 .INDENT 0.0
 .TP
 .B \-\-author\-sort
-String to be used when sorting by author.
+السلسلة النصية المراد استخدامها عند الفرز حسب المؤلف.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-authors
-Set the authors. Multiple authors should be separated by ampersands.
+تعيين المؤلفين. يجب فصل المؤلفين المتعددين بعلامة العطف (&).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -541,7 +533,7 @@ Set the authors. Multiple authors should be separated by ampersands.
 .INDENT 0.0
 .TP
 .B \-\-comments
-Set the e\-book description.
+تعيين وصف الكتاب الإلكتروني.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -551,47 +543,47 @@ Set the e\-book description.
 .INDENT 0.0
 .TP
 .B \-\-isbn
-تعيين ISBN للكتاب.
+تعيين الرقم المعياري الدولي للكتاب (ISBN).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-language
-تعيين البريدالالكتروني.
+تعيين اللغة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+تعيين تاريخ النشر (يُفترض أن يكون في التوقيت المحلي، ما لم يتم تحديد المنطقة الزمنية بشكل صريح)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Set the e\-book publisher.
+تعيين ناشر الكتاب الإلكتروني.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-rating
-تعيين التصنيف. يجب أن يكون رقماً بين 1 و 5.
+تعيين التقييم. يجب أن يكون رقمًا بين 1 و 5.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Read metadata from the specified OPF file. Metadata read from this file will override any metadata in the source file.
+قراءة البيانات الوصفية من ملف OPF المحدد. البيانات الوصفية المقروءة من هذا الملف ستتجاوز أي بيانات وصفية في الملف المصدر.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series
-Set the series this e\-book belongs to.
+تعيين السلسلة التي ينتمي إليها هذا الكتاب الإلكتروني.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-series\-index
-تعيين فهرس للكتاب في هذه السلسلة.
+تعيين فهرس الكتاب في هذه السلسلة.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-tags
-تعيين علامات للكتاب. وينبغي أن تكون قائمة مفصولة بفواصل.
+تعيين علامات الكتاب. يجب أن تكون قائمة مفصولة بفواصل.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -606,20 +598,20 @@ Set the series this e\-book belongs to.
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-The version of the title to be used for sorting.
+نسخة العنوان المراد استخدامها للفرز.
 .UNINDENT
-.SH تنقيح
+.SH تصحيح الأخطاء
 .sp
-خيارات للمساعدة في تصحيح التحويل
+خيارات للمساعدة في تصحيح أخطاء التحويل
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+احفظ الإخراج من المراحل المختلفة لخطوات التحويل في المجلد المحدد. مفيد إذا كنت غير متأكد في أي مرحلة من عملية التحويل يحدث الخطأ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+مستوى الإسهاب. حدد هذا الخيار عدة مرات لزيادة مستوى الإسهاب. تحديده مرتين سينتج عنه إسهاب كامل، ومرة واحدة إسهاب متوسط، وصفر مرة إسهاب أقل.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

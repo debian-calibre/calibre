@@ -127,7 +127,8 @@ class NewYorkTimes(BasicNewsRecipe):
         return self.index_to_soup(url, raw=True)
 
     def preprocess_raw_html(self, raw_html, url):
-        return self.nyt_parser.extract_html(self.index_to_soup(raw_html), url)
+        cleaned = self.nyt_parser.clean_js_json(raw_html)
+        return self.nyt_parser.extract_html(self.index_to_soup(cleaned), url)
 
     articles_are_obfuscated = use_wayback_machine
 
@@ -212,8 +213,9 @@ class NewYorkTimes(BasicNewsRecipe):
         self.nytimes_publication_date = pdate
         script = soup.findAll('script', text=lambda x: x and 'window.__preloadedData' in x)[0]
         script = type(u'')(script)
-        json_data = script[script.find('{'):script.rfind(';')].strip().rstrip(';')  # }}
-        self.nytimes_graphql_config = json.loads(json_data.replace(':undefined', ':null'))['config']
+        raw_json = script[script.find('{'):script.rfind(';')].strip().rstrip(';')  # }}
+        clean_json = self.nyt_parser.clean_js_json(raw_json)
+        self.nytimes_graphql_config = json.loads(clean_json)['config']
         return soup
 
     def nyt_graphql_query(self, qid, operationName='CollectionsQuery'):
@@ -283,12 +285,8 @@ class NewYorkTimes(BasicNewsRecipe):
         return self.parse_todays_page()
 
     def get_browser(self, *args, **kwargs):
-        kwargs['user_agent'] = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        kwargs['user_agent'] = 'User-Agent: Mozilla/5.0 (compatible; archive.org_bot; Wayback Machine Live Record; +http://archive.org/details/archive.org_bot)'
         br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
-        br.addheaders += [
-            ('Referer', 'https://www.google.com/'),
-            ('X-Forwarded-For', '66.249.66.1')
-        ]
         return br
 
     def preprocess_html(self, soup):
