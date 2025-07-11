@@ -21317,7 +21317,6 @@ return this.__repr__();
         function update_settings(settings) {
             settings = Object.assign(Object.create(null), session_defaults(), settings);
             opts.base_font_size = max(8, min(settings.base_font_size, 64));
-            opts.bg_image_fade = settings.bg_image_fade || "transparent";
             opts.color_scheme = settings.color_scheme;
             opts.columns_per_screen = settings.columns_per_screen;
             opts.cover_preserve_aspect_ratio = !!settings.cover_preserve_aspect_ratio;
@@ -21392,7 +21391,7 @@ return this.__repr__();
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = "transparent";
             }
-            des.backgroundColor = opts.bg_image_fade;
+            des.backgroundColor = "transparent";
             ss = document.getElementById("calibre-color-scheme-style-overrides");
             if (!ss) {
                 ss = ρσ_interpolate_kwargs.call(E, E.style, [ρσ_desugar_kwargs({id: styles_id, type: "text/css"})]);
@@ -30822,7 +30821,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.5.0";
+        CALIBRE_VERSION = "8.6.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -52307,7 +52306,7 @@ return this.__repr__();
         });
         View.prototype.apply_color_scheme = function apply_color_scheme() {
             var self = this;
-            var ans, iframe, m, s, mc, ρσ_unpack, which, sd, node, bg_image;
+            var ans, iframe, m, s, mc, ρσ_unpack, which, sd, node, bg_image, fade, rgba, bg_image_fade, ms;
             self.current_color_scheme = ans = resolve_color_scheme();
             iframe = self.iframe;
             if (runtime.is_standalone_viewer) {
@@ -52343,6 +52342,20 @@ return this.__repr__();
             bg_image = sd.get("background_image");
             if (bg_image) {
                 s.backgroundImage = "url(" + ρσ_str.format("{}", modify_background_image_url_for_fetch(bg_image)) + ")";
+                fade = int(sd.get("background_image_fade"));
+                if (fade > 0) {
+                    rgba = cached_color_to_rgba(ans.background);
+                    bg_image_fade = "rgba(" + ρσ_str.format("{}", rgba[0]) + ", " + ρσ_str.format("{}", rgba[1]) + ", " + ρσ_str.format("{}", rgba[2]) + ", " + ρσ_str.format("{}", fade / 100) + ")";
+                    iframe.parentNode.style.backgroundColor = bg_image_fade;
+                    var ρσ_Iter9 = ρσ_Iterable("left right".split(" "));
+                    for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                        which = ρσ_Iter9[ρσ_Index9];
+                        ms = document.getElementById("book-" + ρσ_str.format("{}", which) + "-margin").style;
+                        if (ms.backgroundColor === "transparent") {
+                            ms.backgroundColor = bg_image_fade;
+                        }
+                    }
+                }
             } else {
                 s.backgroundColor = ans.background || "white";
                 s.backgroundImage = "none";
@@ -52618,15 +52631,9 @@ return this.__repr__();
         });
         View.prototype.iframe_settings = function iframe_settings(name) {
             var self = this;
-            var sd, bg_image_fade, cs, fade, rgba;
+            var sd, cs;
             sd = get_session_data();
-            bg_image_fade = "transparent";
             cs = self.apply_color_scheme();
-            fade = int(sd.get("background_image_fade"));
-            rgba = cached_color_to_rgba(cs.background);
-            if (self.iframe.style.backgroundImage !== "none" && fade > 0) {
-                bg_image_fade = "rgba(" + ρσ_str.format("{}", rgba[0]) + ", " + ρσ_str.format("{}", rgba[1]) + ", " + ρσ_str.format("{}", rgba[2]) + ", " + ρσ_str.format("{}", fade / 100) + ")";
-            }
             return (function(){
                 var ρσ_d = Object.create(null);
                 ρσ_d["margin_left"] = (name === self.book.manifest.title_page_name) ? 0 : sd.get("margin_left");
@@ -52638,7 +52645,6 @@ return this.__repr__();
                 ρσ_d["color_scheme"] = cs;
                 ρσ_d["override_book_colors"] = sd.get("override_book_colors");
                 ρσ_d["is_dark_theme"] = cs.is_dark_theme;
-                ρσ_d["bg_image_fade"] = bg_image_fade;
                 ρσ_d["base_font_size"] = sd.get("base_font_size");
                 ρσ_d["user_stylesheet"] = sd.get("user_stylesheet");
                 ρσ_d["keyboard_shortcuts"] = sd.get("keyboard_shortcuts");
@@ -52755,9 +52761,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter9 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                name = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter10 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
+                name = ρσ_Iter10[ρσ_Index10];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -52963,9 +52969,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter10 = ρσ_Iterable(x.children);
-                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                    c = ρσ_Iter10[ρσ_Index10];
+                var ρσ_Iter11 = ρσ_Iterable(x.children);
+                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                    c = ρσ_Iter11[ρσ_Index11];
                     process_node(c);
                 }
             };
@@ -53253,9 +53259,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter11 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                edge = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                edge = ρσ_Iter12[ρσ_Index12];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -53298,9 +53304,9 @@ return this.__repr__();
             }
             if (runtime.is_standalone_viewer) {
                 r = [];
-                var ρσ_Iter12 = ρσ_Iterable(self.current_toc_families);
-                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                    fam = ρσ_Iter12[ρσ_Index12];
+                var ρσ_Iter13 = ρσ_Iterable(self.current_toc_families);
+                for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                    fam = ρσ_Iter13[ρσ_Index13];
                     if (fam.length) {
                         r.push(fam[fam.length-1].id);
                     }
@@ -53347,9 +53353,9 @@ return this.__repr__();
         View.prototype.on_content_loaded = function on_content_loaded(data) {
             var self = this;
             var x;
-            var ρσ_Iter13 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                x = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter14 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                x = ρσ_Iter14[ρσ_Index14];
                 if (!x.dont_hide_on_content_loaded) {
                     x.hide();
                 }
@@ -53372,9 +53378,9 @@ return this.__repr__();
             if (self.read_aloud.is_visible) {
                 self.read_aloud.play();
             }
-            var ρσ_Iter14 = ρσ_Iterable(self.currently_showing.on_load);
-            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                x = ρσ_Iter14[ρσ_Index14];
+            var ρσ_Iter15 = ρσ_Iterable(self.currently_showing.on_load);
+            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
+                x = ρσ_Iter15[ρσ_Index15];
                 x();
             }
             self.currently_showing.on_load = [];

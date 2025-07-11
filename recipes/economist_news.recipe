@@ -11,6 +11,7 @@ from html5_parser import parse
 from lxml import etree
 
 from calibre.ebooks.BeautifulSoup import NavigableString, Tag
+from calibre.ptempfile import PersistentTemporaryFile
 from calibre.web.feeds.news import BasicNewsRecipe
 
 
@@ -25,7 +26,9 @@ def process_web_list(li_node):
     li_html = ''
     for li in li_node['items']:
         if li.get('textHtml'):
-            li_html += f'<li>{li.get("textHtml")}</li>'
+            li_html += f'<li>{li["textHtml"]}</li>'
+        elif li.get('textJson'):
+            li_html += f'<li>{parse_textjson(li["textJson"])}</li>'
         else:
             li_html += f'<li>{li.get("text", "")}</li>'
     return li_html
@@ -38,6 +41,33 @@ def process_info_box(bx):
     return info
 
 
+def parse_txt(ty):
+    typ = ty.get('type', '')
+    children = ty.get('children', [])
+    attr = ty.get('attributes', [{}])[0].get('value', '#')
+
+    tag_map = {
+        'text': lambda: [ty.get('value', '')],
+        'scaps': lambda: [f'<span style="font-variant: all-small-caps;">{"".join(parse_txt(c))}</span>' for c in children],
+        'bold': lambda: [f'<b>{"".join(parse_txt(c))}</b>' for c in children],
+        'drop_caps': lambda: [f'<b>{"".join(parse_txt(c))}</b>' for c in children],
+        'italic': lambda: [f'<i>{"".join(parse_txt(c))}</i>' for c in children],
+        'linebreak': lambda: ['<hr>'],
+        'external_link': lambda: [f'<a href="{attr}">{"".join(parse_txt(children[0]))}</a>'] if children else [],
+        'internal_link': lambda: [f'<a href="{attr}">{"".join(parse_txt(children[0]))}</a>'] if children else [],
+        'ufinish': lambda: [text for c in children for text in parse_txt(c)]
+    }
+
+    if typ in tag_map:
+        yield from tag_map[typ]()
+    else:
+        print('** ', typ)
+
+
+def parse_textjson(nt):
+    return ''.join(''.join(parse_txt(n)) for n in nt)
+
+
 def process_web_node(node):
     ntype = node.get('type', '')
     if ntype == 'CROSSHEAD':
@@ -47,17 +77,25 @@ def process_web_node(node):
     elif ntype in ['PARAGRAPH', 'BOOK_INFO']:
         if node.get('textHtml'):
             return f'<p>{node.get("textHtml")}</p>'
+        elif node.get('textJson'):
+            return f'<p>{parse_textjson(node["textJson"])}</p>'
         return f'<p>{node.get("text", "")}</p>'
-    elif ntype == 'IMAGE':
+    elif (ntype == 'IMAGE') or (node.get('__typename', '') == 'ImageComponent'):
         alt = '' if node.get('altText') is None else node.get('altText')
         cap = ''
         if node.get('caption'):
             if node['caption'].get('textHtml') is not None:
                 cap = node['caption']['textHtml']
+            elif node['caption'].get('textJson') is not None:
+                cap = parse_textjson(node['caption']['textJson'])
+            elif node['caption'].get('text') is not None:
+                cap = node['caption']['text']
         return f'<div><img src="{node["url"]}" title="{alt}"></div><div style="text-align:center; font-size:small;">{cap}</div>'
     elif ntype == 'PULL_QUOTE':
         if node.get('textHtml'):
             return f'<blockquote>{node.get("textHtml")}</blockquote>'
+        elif node.get('textJson'):
+            return f'<blockquote>{parse_textjson(node["textJson"])}</blockquote>'
         return f'<blockquote>{node.get("text", "")}</blockquote>'
     elif ntype == 'DIVIDER':
         return '<hr>'
@@ -77,10 +115,7 @@ def process_web_node(node):
 def load_article_from_web_json(raw):
     # open('/t/raw.json', 'w').write(raw)
     body = ''
-    try:
-        data = json.loads(raw)['props']['pageProps']['cp2Content']
-    except Exception:
-        data = json.loads(raw)['props']['pageProps']['content']
+    data = json.loads(raw)['data']['findArticleByUrl']
     body += f'<div style="color: red; font-size:small; font-weight:bold;">{data.get("flyTitle", "")}</div>'
     body += f'<h1>{data["headline"]}</h1>'
     if data.get('rubric') and data.get('rubric') is not None:
@@ -98,6 +133,9 @@ def load_article_from_web_json(raw):
     main_image_url = safe_dict(data, 'leadComponent') or ''
     if main_image_url:
         body += process_web_node(data['leadComponent'])
+    if data.get('byline'):
+        if data['byline'] is not None:
+            body += f'<p style="color: gray; font-size: small;"><i>{"By " + data["byline"]}</i></p>'
     for node in data.get('body'):
         body += process_web_node(node)
     return '<html><body><article>' + body + '</article></body></html>'
@@ -134,6 +172,30 @@ class NoArticles(Exception):
     pass
 
 
+def get_content(url_):
+    from mechanize import Request
+
+    from calibre import browser
+    headers = {
+        'User-Agent': 'TheEconomist-Liskov-android',
+        'accept': 'multipart/mixed; deferSpec=20220824, application/json',
+        'accept-encoding': 'gzip',
+        'content-type': 'application/json',
+        'x-app-trace-id': str(uuid4()),
+        'x-economist-consumer': 'TheEconomist-Liskov-android',
+        'x-teg-client-name': 'Economist-Android',
+        'x-teg-client-os': 'Android',
+        'x-teg-client-version': '4.40.0'
+    }
+    br = browser()
+    req = Request(
+        url_,
+        headers=headers,
+    )
+    res = br.open(req)
+    return res.read()
+
+
 def process_url(url):
     if url.startswith('/'):
         url = 'https://www.economist.com' + url
@@ -146,13 +208,13 @@ class EconomistNews(BasicNewsRecipe):
     encoding = 'utf-8'
     masthead_url = 'https://www.livemint.com/lm-img/dev/economist-logo-oneline.png'
 
-    __author__ = 'Kovid Goyal'
+    __author__ = 'unkn0wn'
     description = (
         'Global news and current affairs from a European'
         ' perspective. Get the latest articles here.'
     )
     extra_css = '''
-        em { color:#202020; }
+        em, blockquote { color:#202020; }
         img {display:block; margin:0 auto;}
     '''
 
@@ -187,13 +249,13 @@ class EconomistNews(BasicNewsRecipe):
     remove_attributes = ['data-reactid', 'width', 'height']
     # economist.com has started throttling after about 60% of the total has
     # downloaded with connection reset by peer (104) errors.
-    delay = 3
+    delay = 1
     remove_empty_feeds = True
     ignore_duplicate_articles = {'title'}
 
-    needs_subscription = False
+    browser_type = 'webengine'
 
-    from_web = False
+    needs_subscription = False
 
     recipe_specific_options = {
         'days': {
@@ -215,25 +277,14 @@ class EconomistNews(BasicNewsRecipe):
             self.oldest_article = float(d)
 
     def get_browser(self, *args, **kwargs):
-        if self.from_web:
-            kwargs['user_agent'] = (
-                'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.6533.103 Mobile Safari/537.36 Liskov'
-            )
-            br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
-        else:
-            kwargs['user_agent'] = 'TheEconomist-Liskov-android'
-            br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
-            br.addheaders += [
-                ('accept', 'multipart/mixed; deferSpec=20220824, application/json'),
-                ('accept-encoding', 'gzip'),
-                ('content-type', 'application/json'),
-                ('x-app-trace-id', str(uuid4())),
-                ('x-economist-consumer', 'TheEconomist-Liskov-android'),
-                ('x-teg-client-name', 'Economist-Android'),
-                ('x-teg-client-os', 'Android'),
-                ('x-teg-client-version', '4.30.0'),
-            ]
-            return br
+        kwargs['user_agent'] = 'okhttp/4.12.0'
+        br = BasicNewsRecipe.get_browser(self, *args, **kwargs)
+        return br
+
+    def economist_test_article(self):
+        return [('Articles', [{'title': 'test',
+            'url': 'https://www.economist.com/1843/2025/05/16/the-rise-fall-and-contested-future-of-hizbullah'
+        }])]
 
     def economist_return_index(self, ans):
         if not ans:
@@ -246,16 +297,14 @@ class EconomistNews(BasicNewsRecipe):
         return ans
 
     def parse_index(self):
+        # return self.economist_test_article()
         query = {
             'operationName': 'FindHomepage',
             'variables': '{"homepageType":"MOBILE"}',
             'query': 'query FindHomepage($homepageType: HomepageType!) { findHomepage(homepageType: $homepageType) { __typename ...HomepageFragment } }  fragment CtaFragment on Cta { link text }  fragment ContentIdentityFragment on ContentIdentity { articleType forceAppWebView leadMediaType }  fragment ImageTeaserFragment on ImageComponent { altText height imageType source url width }  fragment NarrationFragment on Narration { album bitrate duration filename id provider url }  fragment PodcastAudioFragment on PodcastEpisode { id audio { url durationInSeconds } }  fragment ArticleTeaserFragment on Article { id tegId url rubric headline flyTitle brand byline dateFirstPublished dateline dateModified datePublished dateRevised estimatedReadTime wordCount printHeadline contentIdentity { __typename ...ContentIdentityFragment } section { tegId name } teaserImage { __typename type ...ImageTeaserFragment } leadComponent { __typename type ...ImageTeaserFragment } narration { __typename ...NarrationFragment } podcast { __typename ...PodcastAudioFragment } }  fragment OverridesFragment on Overrides { flyTitle headline rubric teaserImage { __typename ...ImageTeaserFragment } }  fragment CollectionItemFragment on CollectionItem { __typename type ... on CollectionArticleItem { article { __typename ...ArticleTeaserFragment } overrides { __typename ...OverridesFragment } } ... on CollectionRelatedArticleItem { article { __typename ...ArticleTeaserFragment } overrides { __typename ...OverridesFragment } } ... on CollectionExternalLinkItem { url overrides { __typename ...OverridesFragment } } }  fragment HomepageFragment on Homepage { components { __typename id headline type ... on StandardCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on TakeoverCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on DiscoverRailCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on TopStoriesCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on EmbedsCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on CarouselCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } imageLayout variant } ... on VideoCarouselCollection { cta { __typename ...CtaFragment } playlistId source fallbackStoryLink { sourceId } } ... on CoverPackageCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on LatestEditionCollection { cta { __typename ...CtaFragment } items { __typename ...CollectionItemFragment } } ... on Newsletter { slug items { __typename ...CollectionItemFragment } } } }',  # noqa: E501
         }
         url = 'https://cp2-graphql-gateway.p.aws.economist.com/graphql?' + urlencode(query, safe='()!', quote_via=quote)
-        try:
-            raw = self.index_to_soup(url, raw=True)
-        except Exception:
-            raise ValueError('Server is not reachable, try again after some time.')
+        raw = get_content(url)
         ans = self.economist_parse_index(raw)
         return self.economist_return_index(ans)
 
@@ -290,7 +339,6 @@ class EconomistNews(BasicNewsRecipe):
                 self.log('\t', title, '\n\t\t', desc)
             if articles:
                 feeds.append((section, articles))
-        self.from_web = True
         return feeds
 
     def preprocess_html(self, soup):
@@ -305,15 +353,7 @@ class EconomistNews(BasicNewsRecipe):
 
     def preprocess_raw_html(self, raw, url):
         # open('/t/raw.html', 'wb').write(raw.encode('utf-8'))
-        root_ = parse(raw)
-        if '/interactive/' in url:
-            return ('<html><body><article><h1>' + root_.xpath('//h1')[0].text + '</h1><em>'
-                    'This article is supposed to be read in a browser'
-                    '</em></article></body></html>')
-
-        script = root_.xpath('//script[@id="__NEXT_DATA__"]')
-
-        html = load_article_from_web_json(script[0].text)
+        html = load_article_from_web_json(raw)
 
         root = parse(html)
         for div in root.xpath('//div[@class="lazy-image"]'):
@@ -344,6 +384,23 @@ class EconomistNews(BasicNewsRecipe):
             x.set('style', 'color:#404040;')
         raw = etree.tostring(root, encoding='unicode')
         return raw
+
+    def get_article(self, url):
+        query = {
+            'operationName': 'ArticleDeeplinkQuery',
+            'variables': '{{"ref":"{}"}}'.format(url),
+            'query': 'query ArticleDeeplinkQuery($ref: String!, $includeRelatedArticles: Boolean = true ) { findArticleByUrl(url: $ref) { __typename ...ArticleDataFragment } }  fragment ContentIdentityFragment on ContentIdentity { articleType forceAppWebView leadMediaType }  fragment NarrationFragment on Narration { album bitrate duration filename id provider url isAiGenerated fileHash }  fragment ImageTeaserFragment on ImageComponent { altText height imageType source url width }  fragment PodcastAudioFragment on PodcastEpisode { id audio { url durationInSeconds } }  fragment ArticleTeaserFragment on Article { id tegId url rubric headline flyTitle brand byline dateFirstPublished dateline dateModified datePublished dateRevised estimatedReadTime wordCount printHeadline contentIdentity { __typename ...ContentIdentityFragment } section { tegId name } teaserImage { __typename type ...ImageTeaserFragment } leadComponent { __typename type ...ImageTeaserFragment } narration(selectionMethod: PREFER_ACTOR_NARRATION) { __typename ...NarrationFragment } podcast { __typename ...PodcastAudioFragment } }  fragment AnnotatedTextFragment on AnnotatedText { text textJson annotations { type length index attributes { name value } } }  fragment ImageComponentFragment on ImageComponent { altText caption { __typename ...AnnotatedTextFragment } credit height imageType mode source url width }  fragment BlockQuoteComponentFragment on BlockQuoteComponent { text textJson annotations { type length index attributes { name value } } }  fragment BookInfoComponentFragment on BookInfoComponent { text textJson annotations { type length index attributes { name value } } }  fragment ParagraphComponentFragment on ParagraphComponent { text textJson annotations { type length index attributes { name value } } }  fragment PullQuoteComponentFragment on PullQuoteComponent { text textJson annotations { type length index attributes { name value } } }  fragment CrossheadComponentFragment on CrossheadComponent { text }  fragment OrderedListComponentFragment on OrderedListComponent { items { __typename ...AnnotatedTextFragment } }  fragment UnorderedListComponentFragment on UnorderedListComponent { items { __typename ...AnnotatedTextFragment } }  fragment VideoComponentFragment on VideoComponent { url title thumbnailImage }  fragment InfoboxComponentFragment on InfoboxComponent { components { __typename type ...BlockQuoteComponentFragment ...BookInfoComponentFragment ...ParagraphComponentFragment ...PullQuoteComponentFragment ...CrossheadComponentFragment ...OrderedListComponentFragment ...UnorderedListComponentFragment ...VideoComponentFragment } }  fragment InfographicComponentFragment on InfographicComponent { url title width fallback { __typename ...ImageComponentFragment } altText height width }  fragment ArticleDataFragment on Article { id url brand byline rubric headline layout { headerStyle } contentIdentity { __typename ...ContentIdentityFragment } dateline dateFirstPublished dateModified datePublished dateRevised estimatedReadTime narration(selectionMethod: PREFER_ACTOR_NARRATION) { __typename ...NarrationFragment } printFlyTitle printHeadline printRubric flyTitle wordCount section { tegId name articles(pagingInfo: { pagingType: OFFSET pageSize: 6 pageNumber: 1 } ) @include(if: $includeRelatedArticles) { edges { node { __typename ...ArticleTeaserFragment } } } } teaserImage { __typename type ...ImageComponentFragment } tegId leadComponent { __typename type ...ImageComponentFragment } body { __typename type ...BlockQuoteComponentFragment ...BookInfoComponentFragment ...ParagraphComponentFragment ...PullQuoteComponentFragment ...CrossheadComponentFragment ...OrderedListComponentFragment ...UnorderedListComponentFragment ...InfoboxComponentFragment ...ImageComponentFragment ...VideoComponentFragment ...InfographicComponentFragment } footer { __typename type ...ParagraphComponentFragment } tags { name } ads { adData } podcast { __typename ...PodcastAudioFragment } }',  # noqa: E501
+        }
+        deep_url = 'https://cp2-graphql-gateway.p.aws.economist.com/graphql?' + urlencode(query, safe='()!', quote_via=quote)
+        raw = get_content(deep_url)
+        return raw
+
+    def print_version(self, url):
+        art_cont = self.get_article(url)
+        pt = PersistentTemporaryFile('.html')
+        pt.write(art_cont)
+        pt.close()
+        return 'file:///' + pt.name
 
     def eco_find_image_tables(self, soup):
         for x in soup.findAll('table', align=['right', 'center']):

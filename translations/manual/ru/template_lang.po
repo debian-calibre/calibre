@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Aleksandr P, 2019
-# ashed <craysy@gmail.com>, 2020-2024
+# ashed <craysy@gmail.com>, 2020-2025
 # Caarmi, 2021
 # Vlad Loktionov, 2015
 # Victor, 2022
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 14:00+0000\n"
+"POT-Creation-Date: 2025-07-10 12:42+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>, 2020-2024\n"
+"Last-Translator: ashed <craysy@gmail.com>, 2020-2025\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -475,7 +475,7 @@ msgstr "**Не используйте подшаблоны (`{ ... }`) в кач
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:169
 msgid "Notes on calling functions in Single Function Mode:"
-msgstr ""
+msgstr "Примечания по вызову функций в режиме одиночной функции:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:171
 msgid ""
@@ -484,7 +484,7 @@ msgid ""
 "in the template. For example, when the template ``{title:capitalize()}`` is "
 "processed, the content of the ``title`` field is passed as the parameter "
 "``value`` to the capitalize function."
-msgstr ""
+msgstr "Когда функции используются в режиме одиночной функции, первый параметр, ``value``, автоматически заменяется содержимым поля, указанного в шаблоне. Например, когда обрабатывается шаблон ``{title:capitalize()}``, содержимое поля ``title`` передается в качестве параметра ``value`` функции capitalize."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:172
 msgid ""
@@ -492,13 +492,13 @@ msgid ""
 "``something`` can be repeated zero or more times. The notation "
 "``[something]+`` means that the ``something`` is repeated one or more times "
 "(must exist at least one time)."
-msgstr ""
+msgstr "В документации по функциям ниже обозначение ``[something]*`` означает, что ``something`` может повторяться ноль или более раз. Обозначение ``[something]+`` означает, что ``something`` повторяется один или несколько раз (должно существовать хотя бы один раз)."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:173
 msgid ""
 "Some functions use regular expressions. In the template language regular "
 "expression matching is case-insensitive."
-msgstr ""
+msgstr "Некоторые функции используют регулярные выражения. В языке шаблонов сопоставление регулярных выражений не зависит от регистра."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:175
 msgid ""
@@ -506,7 +506,7 @@ msgid ""
 "documentation tells you what arguments the functions require and what the "
 "functions do. For example, here is the documentation of the "
 ":ref:`ff_ifempty` function."
-msgstr ""
+msgstr "Функции задокументированы в :ref:`template_functions_reference`. В документации указано, какие аргументы требуются функциям и что они делают. Например, вот документация функции :ref:`ff_ifempty`."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:179
 msgid ""
@@ -514,19 +514,19 @@ msgid ""
 "``text_if_empty``. However, because we are using Single Function Mode, we "
 "omit the ``value`` argument, passing only ``text_if_empty``. For example, "
 "this template::"
-msgstr ""
+msgstr "Вы видите, что для функции требуется два аргумента: ``value`` и ``text_if_empty``. Однако, поскольку мы используем режим одиночной функции, мы опускаем аргумент ``value``, передавая только ``text_if_empty``. Например, этот шаблон::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:183
 msgid ""
 "shows the tags for a book, if any. If it has no tags then it show `No tags "
 "on this book`."
-msgstr ""
+msgstr "показывает теги для книги, если таковые имеются. Если у неё нет тегов, то отображается `В этой книге нет тегов`."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:185
 msgid ""
 "The following functions are usable in Single Function Mode because their "
 "first parameter is ``value``."
-msgstr ""
+msgstr "Следующие функции можно использовать в режиме одиночной функции, поскольку их первым параметром является ``value``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:226
 msgid "**Using functions and formatting in the same template**"
@@ -582,10 +582,8 @@ msgid ""
 msgstr "Строки и числа могут использоваться как взаимозаменяемые. Например, ``10`` и ``'10'`` - это одно и то же."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:296
-msgid ""
-"Comments are lines starting with a '#' character. Comments beginning later "
-"in a line are not supported."
-msgstr "Комментарии - это строки, начинающиеся с символа '#'. Комментарии, начинающиеся позже в строке, не поддерживаются."
+msgid "Comments are lines starting with blanks or tabs then a '#' character."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:298
 msgid "**Operator precedence**"
@@ -678,7 +676,7 @@ msgid ""
 "lookup name that follows the ``$`` or ``$$``. Using ``$`` is equivalent to "
 "using the :ref:`ff_field` function. Using ``$$`` is equivalent to using the "
 ":ref:`ff_raw_field` function. Examples::"
-msgstr ""
+msgstr "``field_reference`` оценивает значение поля метаданных, названного именем поиска, которое следует за ``$`` или ``$$``. Использование ``$`` эквивалентно использованию функции :ref:`field`. Использование ``$$`` эквивалентно использованию функции :ref:`ff_raw_field`. Примеры::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:323
 msgid "**If expressions**"
@@ -718,7 +716,7 @@ msgstr "Как сказано выше, ``if`` выдаёт значение. Э
 msgid ""
 "For example, this program returns the value of the ``series`` column if the "
 "book has a series, otherwise the value of the ``title`` column::"
-msgstr ""
+msgstr "К примеру эта программа возвращает значение столбца ``series``, если в книге есть серия, в противном случае значение столбца ``title``::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:363
 msgid "**For expressions**"
@@ -740,7 +738,7 @@ msgid ""
 " then the ``expression_list`` is evaluated. You can use ``break`` to jump "
 "out of the loop, and ``continue`` to jump to the beginning of the loop for "
 "the next iteration."
-msgstr ""
+msgstr "Выражение ``for`` выполняет итерацию по списку значений, обрабатывая их по одному за раз. ``list_expression`` должно соответствовать либо полю метаданных ``lookup name``, например, ``tags`` или ``#genre``, либо списку значений. Параметр :ref: `ff_range` генерирует список чисел. Если результатом является допустимое ``lookup name``, то извлекается значение поля и используется разделитель, указанный для этого типа поля. Если результатом не является допустимое имя для поиска, то предполагается, что это список значений. Предполагается, что список разделяется запятыми, если не указано необязательное ключевое слово ``separator``, и в этом случае значения списка должны быть разделены результатом вычисления ``separator_expr``. Разделитель нельзя использовать, если список генерируется с помощью ``range()``. Каждое значение в списке присваивается указанной переменной, после чего вычисляется ``expression_list``. Вы можете использовать ``break``, чтобы выйти из цикла, и ``continue``, чтобы перейти к началу цикла для следующей итерации."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:367
 msgid ""
@@ -777,7 +775,7 @@ msgid ""
 "local function. The ``def`` keyword starts the definition. It is followed by"
 " the function name, the argument list, then the code in the function. The "
 "function definition ends with the ``fed`` keyword."
-msgstr ""
+msgstr "Если у вас есть повторяющийся код в шаблоне, вы можете поместить этот код в локальную функцию. Ключевое слово ``def`` запускает определение. За ним следует имя функции, список аргументов, затем код функции. Определение функции заканчивается ключевым словом ``fed``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:386
 msgid ""
@@ -812,7 +810,7 @@ msgstr "**Операторы отношения**"
 msgid ""
 "Relational operators return ``'1'`` if the comparison is true, otherwise the"
 " empty string (``''``)."
-msgstr ""
+msgstr "Операторы отношения возвращают ``'1'``, если сравнение истинно, в противном случае - пустую строку (``''``)."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:411
 msgid ""
@@ -829,7 +827,7 @@ msgid ""
 "hand expression is interpreted as a regular expression pattern. They are "
 "true if the value of left-hand regular expression matches the value of the "
 "right hand expression. The regular expressions are case-insensitive."
-msgstr ""
+msgstr "При сравнении строк выполняется сравнение строк без учета регистра с использованием лексического порядка. Поддерживаемые операторы сравнения строк:  ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``, ``in`` и ``inlist``. Для оператора ``in`` результат левого выражения интерпретируется как шаблон регулярного выражения. Они являются истинными, если значение регулярного выражения слева совпадает со значением выражения справа. Регулярные выражения не чувствительны к регистру."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:416
 msgid ""
@@ -843,7 +841,7 @@ msgid ""
 "expression to evaluate to a string containing a comma-separated list. "
 "Because of this difference, ``inlist_field`` is substantially faster than "
 "``inlist`` because no string conversions or list constructions are done."
-msgstr ""
+msgstr "Оператор ``inlist`` имеет значение true, если левое регулярное выражение соответствует любому из элементов в правом списке, где элементы в списке разделены запятыми. Оператор ``inlist_field`` имеет значение true, если левое регулярное выражение соответствует любому из элементов в поле (столбце), названном правым выражением, используя разделитель, определённый для поля. ПРИМЕЧАНИЕ: оператор ``inlist_field`` требует, чтобы правое выражение преобразовывалось в имя поля, в то время как оператор ``inlist`` требует, чтобы правое выражение преобразовывалось в строку, содержащую список, разделённый запятыми. Из-за этого различия ``inlist_field`` выполняется существенно быстрее, чем ``inlist``, поскольку не выполняются преобразования строк или построения списков."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:418
 msgid ""
@@ -861,7 +859,7 @@ msgstr "Примеры:"
 msgid ""
 "``program: field('series') == 'foo'`` returns ``'1'`` if the book's series "
 "is `foo`, otherwise ``''``."
-msgstr ""
+msgstr "``program: field('series') == 'foo'`` возвращает ``'1'`` если серия книги - `foo`, иначе - ``''``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:423
 msgid ""
@@ -876,7 +874,7 @@ msgid ""
 "retrieved from the book's genres match the regular expression ``science``, "
 "e.g., `Science`, `History of Science`, `Science Fiction` etc., otherwise "
 "``''``."
-msgstr ""
+msgstr "``program: 'science' inlist $#genre`` вернёт ``'1'`` если какой-либо из жанров книги соответствует регулярному выражению ``science``, например, `Science`, `History of Science`, `Science Fiction` и т. д.), иначе ``''``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:425
 msgid ""
@@ -884,21 +882,21 @@ msgid ""
 " genres exactly match the regular expression ``^science$``, e.g., `Science`,"
 " otherwise ``''``. The genres `History of Science` and `Science Fiction` "
 "don't match."
-msgstr ""
+msgstr "``program: '^science$' inlist $#genre`` вернёт ``'1'`` если какой-либо из жанров книги точно соответствует регулярному выражению ``^science$``, например `Science`. Жанры `History of Science` и `Science Fiction` не совпадают."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:426
 msgid ""
 "``program: 'asimov' inlist $authors`` returns ``'1'`` if any author matches "
 "the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac Asimov`, "
 "otherwise ``''``."
-msgstr ""
+msgstr "``program: 'asimov' inlist $authors`` вернёт ``'1'`` если какой-либо автор соответствует регулярному выражению ``asimov``, например, `Asimov, Isaac` или `Isaac Asimov`, иначе ``''``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:427
 msgid ""
 "``program: 'asimov' inlist_field 'authors'`` returns ``'1'`` if any author "
 "matches the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac "
 "Asimov`, otherwise ``''``."
-msgstr ""
+msgstr "``program: 'asimov' inlist_field 'authors'`` вернёт ``'1'`` если какой-либо автор соответствует регулярному выражению ``asimov``, например, `Asimov, Isaac` или `Isaac Asimov`, иначе ``''``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:428
 msgid ""
@@ -906,27 +904,27 @@ msgid ""
 "matches the regular expression ``asimov$``, e.g., `Isaac Asimov`, otherwise "
 "``''``. It doesn't match `Asimov, Isaac` because of the ``$`` anchor in the "
 "regular expression."
-msgstr ""
+msgstr "``program: 'asimov$' inlist_field 'authors'`` вернёт ``'1'`` если какой-либо автор соответствует регулярному выражению ``asimov$``, например, `Isaac Asimov`, иначе ``''``. Это не соответствует `Asimov, Isaac` из-за привязки ``$`` в регулярном выражении."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:429
 msgid ""
 "``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns"
 " ``'bar'`` if the book's series is not `foo`. Otherwise it returns "
 "``'mumble'``."
-msgstr ""
+msgstr "``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns ``'bar'`` если серия книги не ``foo``. Иначе возвращается ``'mumble'``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:430
 msgid ""
 "``program: if field('series') == 'foo' || field('series') == '1632' then "
 "'yes' else 'no' fi`` returns ``'yes'`` if series is either `foo` or `1632`, "
 "otherwise ``'no'``."
-msgstr ""
+msgstr "``program: if field('series') == 'foo' || field('series') == '1632' then 'yes' else 'no' fi`` returns ``'yes'`` if series is either `foo` or `1632`, otherwise ``'no'``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:431
 msgid ""
 "``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` "
 "returns ``'yes'`` if series is either `foo` or `1632`, otherwise ``'no'``."
-msgstr ""
+msgstr "``program: if '^(foo|1632)$'  field('series') then 'yes' else 'no' fi`` returns ``'yes'`` if series is either ``'foo'`` or ``'1632'``, otherwise ``'no'``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:432
 msgid ""
@@ -942,23 +940,23 @@ msgstr "``program: if 11 ># 2 then 'yes' else 'no' fi`` вернёт ``'yes'``  
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:435
 msgid "**Functions in General Program Mode**"
-msgstr ""
+msgstr "**Функции в Общем программном режиме**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:437
 msgid ""
 "See :ref:`template_functions_reference` for the list of functions built into"
 " the template language."
-msgstr ""
+msgstr "Смотрите :ref:`template_functions_reference` для получения списка функций, встроенных в язык шаблонов."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:441
 msgid ""
 "As opposed to :ref:`Single Function Mode <single_mode>`, in General Program "
 "Mode you must specify the first parameter ``value``."
-msgstr ""
+msgstr "В отличие от :ref:`Single Function Mode <single_mode>`, в Общем программном режиме вы должны указать первый параметр ``value``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:442
 msgid "All parameters are expression_lists (see the grammar above)."
-msgstr ""
+msgstr "Все параметры являются expression_lists (смотрите грамматику выше)."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:447
 msgid "More complex programs in template expressions - Template Program Mode"
@@ -999,19 +997,19 @@ msgstr "`TPM` используется, если выражение начина
 msgid ""
 "If the template contains a prefix and suffix, the expression ends with "
 "``'|`` where the ``|`` is the delimiter for the prefix. Example::"
-msgstr ""
+msgstr "Если шаблон содержит префикс и суффикс, выражение заканчивается на ``'|``, где ``|`` является разделителем префикса. Пример::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:465
 msgid ""
 "Functions must be given all their arguments. For example, the standard "
 "built-in functions must be given the initial parameter ``value``."
-msgstr ""
+msgstr "функциям должны быть даны все их аргументы. Например, стандартные встроенные функции должны иметь дополнительный начальный параметр ``value``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:466
 msgid ""
 "The variable ``$`` is usable as the ``value`` argument and stands for the "
 "value of the field named in the template, ``series`` in this case."
-msgstr ""
+msgstr "Переменная `$` может использоваться в качестве аргумента ``value`` и обозначает значение поля с именем в шаблоне, в данном случае ``series``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:467
 msgid "white space is ignored and can be used anywhere within the expression."
@@ -1030,7 +1028,7 @@ msgid ""
 "some but not all cases you can replace a ``{`` with ``[[`` and a ``}`` with "
 "`]]`. Advice: if your program contains ``{`` and ``}`` characters then you "
 "should use `General Program Mode`."
-msgstr ""
+msgstr "В `TPM` использование символов ``{`` и ``}`` в строковых литералах может привести к ошибкам или неожиданным результатам, поскольку они сбивают с толку обработчик шаблонов. Он пытается рассматривать их как границы выражения шаблона, а не как символы. В некоторых, но не во всех случаях, вы можете заменить ``{`` на ``[[`` и ``}`` на ``]]``. Как правило, если ваша программа содержит символы ``{`` и ​​``}``, вам следует использовать `General Program Mode`."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:475
 msgid "Python Template Mode"
@@ -1044,7 +1042,7 @@ msgid ""
 "most use; further discussion is beyond the scope of this manual. PTM "
 "templates are faster and can do more complicated operations but you must "
 "know how to write code in Python using the calibre API."
-msgstr ""
+msgstr "Режим шаблонов Python (PTM) позволяет создавать шаблоны с использованием родного Python и `calibre API <https://manual.calibre-ebook.com/develop.html#api-documentation-for-various-parts-of-calibre>`_. API базы данных будет наиболее полезным; дальнейшее обсуждение выходит за рамки данного руководства. Шаблоны PTM быстрее и могут выполнять более сложные операции, но вы должны знать, как писать код на Python, используя calibre API."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:479
 msgid "A PTM template begins with:"
@@ -1095,23 +1093,23 @@ msgstr "Диалог конвертации электронной книги"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:539
 msgid "Templates and URLs"
-msgstr ""
+msgstr "Шаблоны и URL"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:541
 msgid "You can use templates to construct URLs. Two cases are described here:"
-msgstr ""
+msgstr "Вы можете использовать шаблоны для создания URL-адресов. Здесь описаны два случая:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:543
 msgid "Custom column :guilabel:`Book details` search URLs"
-msgstr ""
+msgstr "Пользовательский столбец: :guilabel:`Book details guilabel: URL-адреса"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:544
 msgid "The calibre URL scheme"
-msgstr ""
+msgstr "Схема URL-адресов calibre"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:546
 msgid "**Custom column book details search URLs**"
-msgstr ""
+msgstr "**пользовательский столбец URL-адреса для поиска сведений о книге**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:548
 msgid ""
@@ -1120,48 +1118,48 @@ msgid ""
 " column for `Translators` you can define a URL to take you to a site for "
 "translators. Book details search URLs can be provided for `Text`, "
 "`Enumerated`, `Series`, and `Column built from other column` column types."
-msgstr ""
+msgstr "Когда вы создаете пользовательский столбец, вы можете указать URL-адрес, который будет использоваться в :guilabel:`Сведения о книге`, используя шаблон. Например, если у вас есть пользовательский столбец для `Translators`, вы можете определить URL-адрес, который приведет вас на сайт для переводчиков. URL-адреса для поиска сведений о книге могут быть предоставлены для типов столбцов `Текст`, `Перечисляемый', 'Серия' и 'Столбец, построенный из других столбцов`."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:550
 msgid ""
 "When an item with a `search template` is clicked in :guilabel:`Book details`"
 " the template is evaluated. It is provided the normal book metadata. It is "
 "also provided three additional fields:"
-msgstr ""
+msgstr "При нажатии на элемент с `шаблоном поиска` в :guilabel:`Сведения о книге` шаблон оценивается. Ему предоставляются обычные метаданные книги. Также предоставляются три дополнительных поля:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:552
 msgid "``item_value``: the value of the clicked item."
-msgstr ""
+msgstr "``item_value``: значение нажатого элемента."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:553
 msgid ""
 "``item_value_quoted``: the value of clicked item, URL-encoded. Special "
 "characters are escaped to make them valid in URLs and spaces are replaced by"
 " ``'+'`` (plus) signs."
-msgstr ""
+msgstr "``item_value_quoted``: значение нажатого элемента, кодированный URL. Специальные символы экранируются, чтобы сделать их действительными в URL-адресах, а пробелы заменяются на знаки ``'+'`` (плюс)."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:554
 msgid ""
 "``item_value_no_plus``: the value of clicked item, URL-encoded. Special "
 "characters are escaped to make them valid in URLs and spaces are replaced by"
 " the ``%20``, not plus."
-msgstr ""
+msgstr "``item_value_no_plus``: значение нажатого элемента, кодированный URL. Специальные символы экранируются, чтобы сделать их действительными в URL-адресах, а пробелы заменяются на знаки ``'+'`` (плюс)."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:556
 msgid ""
 "There are several ways to construct the URL. The following use Wikipedia as "
 "an example."
-msgstr ""
+msgstr "Существует несколько способов создания URL-адреса. Ниже в качестве примера используется Википедия."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:558
 msgid "The simplest is a basic template::"
-msgstr ""
+msgstr "Самый простой - это базовый шаблон::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:562
 msgid ""
 "In some cases you might want to do more processing. There are four template "
 "functions you can use, depending on the complexity of the processing."
-msgstr ""
+msgstr "В некоторых случаях может потребоваться дополнительная обработка. В зависимости от сложности обработки вы можете использовать четыре шаблонные функции."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:569
 msgid ""
@@ -1169,41 +1167,41 @@ msgid ""
 "(``#translators``) where the names are `Last name, First name`. You might "
 "need to convert the name to `First name Last name` when creating the URL. "
 "You can use the :ref:`ff_make_url` function to do this::"
-msgstr ""
+msgstr "Например, предположим, что у вас есть пользовательский столбец `Переводчики` (``#translators``), где имена - `Last name, First name`. Возможно, при создании URL-адреса вам потребуется преобразовать имя в `First name Last name`. Для этого вы можете использовать функцию :ref: `ff_make_url`::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:573
 msgid ""
 "If we assume that the translator's name is `Boy-Żeleński, Tadeusz` then the "
 "above template produces the link::"
-msgstr ""
+msgstr "Если мы предположим, что переводчика зовут `Boy-Żeleński, Tadeusz`, то приведенный выше шаблон выдает ссылку::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:577
 msgid ""
 "Note that the person's first name is now first, the space is now a plus, and"
 " that the non-English characters in the last name are URL-encoded."
-msgstr ""
+msgstr "Обратите внимание, что имя пользователя теперь стоит первым, пробел - это плюс, а неанглоязычные символы в фамилии URL-кодированы."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:579
 msgid ""
 "The functions :ref:`ff_make_url_extended`, :ref:`ff_query_string`, and "
 ":ref:`ff_encode_for_url` might be useful depending upon any additional "
 "processing complexity."
-msgstr ""
+msgstr "Функции :ref:`ff_make_url_extended`, :ref:`ff_query_string` и :ref:`ff_encode_for_url` могут быть полезны в зависимости от любой дополнительной сложности обработки."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:581
 msgid "**The calibre URL scheme**"
-msgstr ""
+msgstr "**Схема URL-адресов calibre**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:583
 msgid ""
 "Calibre supports several different URLs to navigate your calibre libraries. "
 "This section shows how to use templates to construct some of the URLs. See "
 ":doc:`url_scheme` for details on the URLs available."
-msgstr ""
+msgstr "Calibre поддерживает несколько различных URL-адресов для навигации по вашим библиотекам calibre. В этом разделе показано, как использовать шаблоны для создания URL-адресов. Смотрите :doc:`url_scheme` для получения подробной информации о доступных URL-адресах."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:586
 msgid "Switch to a specific library. The syntax of this URL is::"
-msgstr ""
+msgstr "Переключение на определённую библиотеку. Синтаксис этого URL-адреса следующий::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:590
 msgid ""
@@ -1214,40 +1212,40 @@ msgid ""
 "(underscore) stands for the current library. If the name contains any spaces"
 " or special characters then it must be hex encoded using the "
 ":ref:`ff_to_hex` function, as in the following example::"
-msgstr ""
+msgstr "``Library_Name`` необходимо заменить на название библиотеки calibre, которую вы хотите открыть. Название библиотеки отображается в строке заголовка окна. Это простое имя, а не путь к файлу библиотеки. Вы должны написать его так, как показано в строке заголовка, включая регистр букв. Символ ``_`` (подчеркивание) обозначает текущую библиотеку. Если имя содержит какие-либо пробелы или специальные символы, то оно должно быть закодировано в шестнадцатеричном формате с использованием функции :ref:`ff_to_hex`, как в следующем примере::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:598
 msgid "The template generates the URL::"
-msgstr ""
+msgstr "Шаблон генерирует URL-адрес::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:602
 msgid ""
 "You can replace the ``current_library_name()`` function with the actual name"
 " of the library, as in::"
-msgstr ""
+msgstr "Вы можете заменить функцию ``current_library_name()`` фактическим именем библиотеки, как в::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:606
 msgid ""
 "Links to show books. These links select a book in the calibre library. The "
 "syntax for this URL is::"
-msgstr ""
+msgstr "Ссылки для показа книг. По этим ссылкам выбирается книга в библиотеке calibre. Синтаксис этого URL-адреса следующий::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:610
 msgid ""
 "The ``book id`` is the numeric calibre id for the book, available to "
 "templates as ``$id``. As above, the library name might need to be hex "
 "encoded. Here is an example::"
-msgstr ""
+msgstr "``book id`` - это цифровой идентификатор книги в calibre, доступный в шаблонах как ``$ id``. Как указано выше, название библиотеки может потребоваться в шестнадцатеричном кодировании. Вот пример::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:615
 msgid "It produces the URL::"
-msgstr ""
+msgstr "Он выдает URL-адрес::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:619
 msgid ""
 "Searching for books. These links search for books in the specified calibre "
 "library. The syntax for this URL is::"
-msgstr ""
+msgstr "Поиск книг. Эти ссылки выполняют поиск книг в указанной библиотеке calibre. Синтаксис этого URL-адреса следующий::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:624
 msgid ""
@@ -1256,38 +1254,38 @@ msgid ""
 " of them. For example, the calibre search expression for searching for a "
 "hierarchical tag beginning with 'AA' is ``tags:\"=.AA\"``. This template "
 "constructs a search URL for that expression::"
-msgstr ""
+msgstr "где `query` - любое допустимое поисковое выражение calibre. Вы должны закодировать любой запрос, содержащий пробелы или специальные символы, в шестнадцатеричном формате, что обычно означает их все. Например, поисковое выражение calibre для поиска иерархического тега, начинающегося с 'AA', является ``tags:\"=.AA\"``. Этот шаблон создает URL-адрес поиска для этого выражения::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:630
 msgid "The resulting URL is::"
-msgstr ""
+msgstr "Результирующий URL-адрес выглядит следующим образом::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:634
 msgid ""
 "Here is an example of the same URL built using the "
 ":ref:``ff_make_url_extended`` function instead of :ref:`ff_strcat`::"
-msgstr ""
+msgstr "Вот пример того же URL, созданного с использованием функции :ref:``ff_make_url_extended`` вместо :ref:``ff_strcat``::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:639
 msgid ""
 "Open a book details window on a book in some library. The syntax for this "
 "URL is::"
-msgstr ""
+msgstr "Открыть окно сведений о книге в какой-либо библиотеке. Синтаксис этого URL-адреса следующий::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:643
 msgid "An example template is::"
-msgstr ""
+msgstr "Примером шаблона является::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:647
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid "which produces the URL::"
-msgstr ""
+msgstr "который выдает URL-адрес::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:651
 msgid ""
 "Open the notes associated with an author/series/etc. The syntax of the URL "
 "is::"
-msgstr ""
+msgstr "Открыть примечания, связанные с автором/серией/и т.д. Синтаксис URL-адреса следующий::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:656
 msgid ""
@@ -1298,7 +1296,7 @@ msgid ""
 "normally use the second form, ``Hex_Encoded_Item_Name``. Here is a sample "
 "template that opens the note for the person ``Boy-Żeleński, Tadeusz`` in the"
 " field ``#authtest``::"
-msgstr ""
+msgstr "``Field_Name`` - это поисковое имя поля. Если поле представляет собой пользовательский столбец, замените символ ``#`` символом подчеркивания (``_``). ``Item_Id`` - это внутренний числовой идентификатор значения в поле. Не существует шаблонной функции, которая возвращала бы ``Item_Id``, поэтому шаблоны обычно используют вторую форму, ``Hex_Encoded_Item_Name``. Вот образец шаблона, который открывает заметку для человека ``Boy-Żeleński, Tadeusz`` в поле ``#authtest``::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:670
 msgid "Stored templates"
@@ -1556,72 +1554,72 @@ msgid ""
 "functions is faster than calling a Python template, user-defined functions "
 "might be more efficient depending on the complexity of what the function or "
 "template does."
-msgstr ""
+msgstr "Вы можете добавить свои собственные функции Python в процессор шаблонов. Такие функции можно использовать в любом из трех режимов программирования шаблонов. Функции добавляются по ссылке: guilabel:`Настройки - Расширенные - Функции шаблонов`. Инструкции показаны в этом диалоговом окне. Обратите внимание, что вы можете использовать `Шаблоны Python` для аналогичной цели. Поскольку вызов пользовательских функций выполняется быстрее, чем вызов шаблона Python, пользовательские функции могут быть более эффективными в зависимости от сложности того, что выполняет функция или шаблон."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:767
 msgid "Special notes for using templates in different contexts"
-msgstr ""
+msgstr "Особые указания по использованию шаблонов в различных контекстах"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:769
 msgid ""
 "In the GUI (:guilabel:`Columns made from other columns` and "
 ":guilabel:`Template searches`):"
-msgstr ""
+msgstr "В графическом интерфейсе (:guilabel:`Столбцы, созданные из других столбцов` и:guilabel:`Поиск по шаблону`):"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:771
 msgid "GPM templates work as before."
-msgstr ""
+msgstr "Шаблоны GPM работают по-прежнему."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:772
 msgid "Python templates have full access to the calibre database."
-msgstr ""
+msgstr "Шаблон Python будет иметь полный доступ к базе данных calibre."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:774
 msgid "In icon rules:"
-msgstr ""
+msgstr "В правилах значков:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:776
 msgid ""
 "icon rule templates have no book data so field-based functions such as "
 ":ref:`ff_format_date_field`, :ref:`ff_list_count_field`, and "
 ":ref:`ff_check_yes_no` won't work."
-msgstr ""
+msgstr "шаблоны правил значков не содержат данных книги, поэтому функции на основе полей, такие как :ref:`ff_format_date_field`, :ref:`ff_list_count_field`, и :ref:`ff_check_yes_no` не работают."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:778
 msgid "In the Content server:"
-msgstr ""
+msgstr "В контент-сервере:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:780
 msgid ""
 "Templates have access to the new API but not the old API (LibraryDatabase)."
-msgstr ""
+msgstr "Шаблоны имеют доступ к новому API, но не к старому API (LibraryDatabase)."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:781
 msgid ""
 "Because of the above, the following formatter functions are not guaranteed "
 "to work in GPM templates (composite columns, icon rules, etc) and should be "
 "avoided if you use the content server:"
-msgstr ""
+msgstr "Из-за вышесказанного, работа следующих функций форматирования в шаблонах GPM не гарантируется (составные столбцы, правила значков и т.д.), и их следует избегать, если вы используете контент-сервер:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:783
 msgid ":ref:`ff_connected_device_name`"
-msgstr ""
+msgstr ":ref:`ff_connected_device_name`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:784
 msgid ":ref:`ff_connected_device_uuid`"
-msgstr ""
+msgstr ":ref:`ff_connected_device_uuid`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:785
 msgid ":ref:`ff_current_virtual_library_name`"
-msgstr ""
+msgstr ":ref:`ff_current_virtual_library_name`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:786
 msgid ":ref:`ff_is_marked`"
-msgstr ""
+msgstr ":ref:`ff_is_marked`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:787
 msgid ":ref:`ff_virtual_libraries`"
-msgstr ""
+msgstr ":ref:`ff_virtual_libraries`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:790
 msgid "Special notes for save/send templates"
@@ -1636,7 +1634,7 @@ msgid ""
 " create folders. However, slashes are not changed in prefix or suffix "
 "strings, so slashes in these strings will cause folders to be created. "
 "Because of this, you can create variable-depth folder structure."
-msgstr ""
+msgstr "Специальная обработка применяется, когда шаблон используется в шаблоне :guilabel:`Save to disk` или :guilabel:`Send to device`. Значения полей очищаются, заменяя символы, специальные для файловых систем, подчеркиванием, включая косую черту. Это означает, что текст поля нельзя использовать для создания папок. Однако косые черты не изменяются в строках префиксов или суффиксов, поэтому косые черты в этих строках вызовут создание папок. Благодаря этому вы можете создать структуру папок переменной глубины."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:794
 msgid ""

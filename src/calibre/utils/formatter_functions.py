@@ -193,7 +193,10 @@ def only_in_gui_error(name):
 
 
 def get_database(mi, name):
-    proxy = mi.get('_proxy_metadata', None)
+    try:
+        proxy = mi.get('_proxy_metadata', None)
+    except Exception:
+        proxy = None
     if proxy is None:
         if name is not None:
             only_in_gui_error(name)
@@ -2354,8 +2357,7 @@ r'''
 contain this book.[/] This function works only in the GUI. If you want to use these
 values in save-to-disk or send-to-device templates then you must make a custom
 "Column built from other columns", use the function in that column's template,
-and use that column's value in your save/send templates. This function works
-only in the GUI.
+and use that column's value in your save/send templates.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals_):
@@ -2611,15 +2613,12 @@ Example: ``check_yes_no("#bool", 1, 0, 1)`` returns ``'Yes'`` if the yes/no fiel
 ``#bool`` is either True or undefined (neither True nor False).
 
 More than one of ``is_undefined``, ``is_false``, or ``is_true`` can be set to 1.
-
-This function works only in the GUI and the content server.
 ''')
 
     def evaluate(self, formatter, kwargs, mi, locals, field, is_undefined, is_false, is_true):
-        # 'field' is a lookup name, not a value
-        if field not in self.get_database(mi, formatter=formatter).field_metadata:
-            raise ValueError(_("The column {} doesn't exist").format(field))
         res = getattr(mi, field, None)
+        # Missing fields will return None. Oh well, this lets it be used everywhere,
+        # not just in the GUI.
         if res is None:
             if is_undefined == '1':
                 return 'Yes'
@@ -3417,6 +3416,148 @@ See also the functions :ref:`make_url`, :ref:`make_url_extended` and :ref:`query
         return qquote(value, use_plus=use_plus=='0')
 
 
+class BuiltinFormatDuration(BuiltinFormatterFunction):
+    name = 'format_duration'
+    arg_count = -1
+    category = FORMATTING_VALUES
+    __doc__ = doc = _(
+r'''
+``format_duration(value, template, [largest_unit])`` -- format the value, a number
+of seconds, into a string showing weeks, days, hours, minutes, and seconds. If
+the value is a float then it is rounded to the nearest integer.[/]  You choose
+how to format the value using a template consisting of value selectors
+surrounded by ``[`` and ``]`` characters. The selectors are:
+[LIST]
+[*]``[w]``: weeks
+[*]``[d]``: days
+[*]``[h]``: hours
+[*]``[m]``: minutes
+[*]``[s]``: seconds
+[/LIST]
+You can put arbitrary text between selectors.
+
+The following examples use a duration of 2 days (172,800 seconds) 1 hour (3,600 seconds)
+and 20 seconds, which totals to 176,420 seconds.
+[LIST]
+[*]``format_duration(176420, '[d][h][m][s]')`` will return the value ``2d 1h 0m 20s``.
+[*]``format_duration(176420, '[h][m][s]')`` will return the value ``49h 0m 20s``.
+[*]``format_duration(176420, 'Your reading time is [d][h][m][s]')`` returns the value
+``Your reading time is 49h 0m 20s``.
+[*]``format_duration(176420, '[w][d][h][m][s]')`` will return the value ``2d 1h 0m 20s``.
+Note that the zero weeks value is not returned.
+[/LIST]
+If you want to see zero values for items such as weeks in the above example,
+use an uppercase selector. For example, the following uses ``'W'`` to show zero weeks:
+
+``format_duration(176420, '[W][d][h][m][s]')`` returns ``0w 2d 1h 0m 20s``.
+
+By default the text following a value is the selector followed by a space.
+You can change that to whatever text you want. The format for a selector with
+your text is the selector followed by a colon followed by text
+segments separated by ``'|'`` characters. You must include any space characters
+you want in the output.
+
+You can provide from one to three text segments.
+[LIST]
+[*]If you provide one segment, as in ``[w: weeks ]`` then that segment is used for all values.
+[*]If you provide two segments, as in ``[w: weeks | week ]`` then the first segment
+is used for 0 and more than 1. The second segment is used for 1.
+[*]If you provide three segments, as in ``[w: weeks | week | weeks ]`` then the first
+segment is used for 0, the second segment is used for 1, and the third segment is used for
+more than 1.
+[/LIST]
+The second form is equivalent to the third form in many languages.
+
+For example, the selector:
+[LIST]
+[*]``[w: weeks | week | weeks ]`` produces ``'0 weeks '``, ``'1 week '``, or ``'2 weeks '``.
+[*]``[w: weeks | week ]`` produces ``'0 weeks '``, ``'1 week '``, or ``'2 weeks '``.
+[*]``[w: weeks ]`` produces ``0 weeks '``, ``1 weeks '``, or ``2 weeks '``.
+[/LIST]
+
+The optional ``largest_unit`` parameter specifies the largest of weeks, days, hours, minutes,
+and seconds that will be produced by the template. It must be one of the value selectors.
+This can be useful to truncate a value.
+
+``format_duration(176420, '[h][m][s]', 'd')`` will return the value ``1h 0m 20s`` instead of ``49h 0m 20s``.
+''')
+
+    def evaluate(self, formatter, kwargs, mi, locals, value, template, largest_unit=''):
+        if largest_unit not in 'wdhms':
+            raise ValueError(_('the {0} parameter must be one of {1}').format('largest_unit', 'wdhms'))
+
+        pat = re.compile(r'\[(.)(:(.*?))?\]')
+
+        if not largest_unit:
+            highest_index = 0
+            for m in pat.finditer(template):
+                try:
+                    # We know that m.group(1) is a single character so the only
+                    # exception possible is that the character is not in the string
+                    dex = 'smhdw'.index(m.group(1).lower())
+                    highest_index = dex if dex > highest_index else highest_index
+                except Exception:
+                    raise ValueError(_('The {} format specifier is not valid').format(m.group()))
+            largest_unit = 'smhdw'[highest_index]
+
+        int_val = remainder = round(float(value)) if value else 0
+        weeks,remainder = divmod(remainder, 60*60*24*7) if largest_unit == 'w' else (-1,remainder)
+        days,remainder = divmod(remainder, 60*60*24) if largest_unit in 'wd' else (-1,remainder)
+        hours,remainder = divmod(remainder, 60*60) if largest_unit in 'wdh' else (-1,remainder)
+        minutes,remainder = divmod(remainder, 60) if largest_unit in 'wdhm' else (-1,remainder)
+        seconds = remainder
+
+        def repl(mo):
+            fmt_char = mo.group(1)
+            suffixes = mo.group(3)
+            if suffixes is None:
+                zero_suffix = one_suffix = more_suffix = fmt_char.lower() + ' '
+            else:
+                suffixes = re.split(r'\|', suffixes)
+                match len(suffixes):
+                    case 1:
+                        zero_suffix = one_suffix = more_suffix = suffixes[0]
+                    case 2:
+                        zero_suffix = more_suffix = suffixes[0]
+                        one_suffix = suffixes[1]
+                    case 3:
+                        zero_suffix = suffixes[0]
+                        one_suffix = suffixes[1]
+                        more_suffix = suffixes[2]
+                    case _:
+                        raise ValueError(_('The group {} has too many suffixes').format(fmt_char))
+                        zero_suffix = one_suffix = more_suffix = '@@too many suffixes@@'
+
+            def val_with_suffix(val, test_val):
+                match val:
+                    case -1:
+                        return ''
+                    case 0 if fmt_char.islower() and int_val < test_val:
+                        return ''
+                    case 0:
+                        return str(val) + zero_suffix
+                    case 1:
+                        return str(val) + one_suffix
+                    case _:
+                        return str(val) + more_suffix
+
+            match fmt_char.lower():
+                case 'w':
+                    return val_with_suffix(weeks, 60*60*24*7)
+                case 'd':
+                    return val_with_suffix(days, 60*60*24)
+                case 'h':
+                    return val_with_suffix(hours, 60*60)
+                case 'm':
+                    return val_with_suffix(minutes, 60)
+                case 's':
+                    return val_with_suffix(seconds, -1)
+                case _:
+                    raise ValueError(_('The {} format specifier is not valid').format(fmt_char))
+
+        return pat.sub(repl, template)
+
+
 _formatter_builtins = [
     BuiltinAdd(), BuiltinAnd(), BuiltinApproximateFormats(), BuiltinArguments(),
     BuiltinAssign(),
@@ -3430,8 +3571,8 @@ _formatter_builtins = [
     BuiltinExtraFileNames(), BuiltinExtraFileSize(), BuiltinExtraFileModtime(),
     BuiltinFieldListCount(), BuiltinFirstNonEmpty(), BuiltinField(), BuiltinFieldExists(),
     BuiltinFinishFormatting(), BuiltinFirstMatchingCmp(), BuiltinFloor(),
-    BuiltinFormatDate(), BuiltinFormatDateField(), BuiltinFormatNumber(), BuiltinFormatsModtimes(),
-    BuiltinFormatsPaths(), BuiltinFormatsSizes(), BuiltinFractionalPart(),
+    BuiltinFormatDate(), BuiltinFormatDateField(), BuiltinFormatDuration(), BuiltinFormatNumber(),
+    BuiltinFormatsModtimes(),BuiltinFormatsPaths(), BuiltinFormatsSizes(), BuiltinFractionalPart(),
     BuiltinGetLink(),
     BuiltinGetNote(), BuiltinGlobals(), BuiltinHasCover(), BuiltinHasExtraFiles(),
     BuiltinHasNote(), BuiltinHumanReadable(), BuiltinIdentifierInList(),
