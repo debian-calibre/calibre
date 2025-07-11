@@ -1715,7 +1715,7 @@ class TemplateFormatter(string.Formatter):
             (r'\w+',                     lambda x,t: (_Parser.LEX_ID, t)),
             (r'".*?((?<!\\)")',          lambda x,t: (_Parser.LEX_CONST, t[1:-1])),
             (r'\'.*?((?<!\\)\')',        lambda x,t: (_Parser.LEX_CONST, t[1:-1])),
-            (r'\n#.*?(?:(?=\n)|$)',      lambda x,t: _Parser.LEX_NEWLINE),
+            (r'\n[ \t]*#.*?(?:(?=\n)|$)',lambda x,t: _Parser.LEX_NEWLINE),
             (r'\s',                      lambda x,t: _Parser.LEX_NEWLINE if t == '\n' else None),
         ], flags=re.DOTALL)
 
@@ -2025,17 +2025,22 @@ class TemplateFormatter(string.Formatter):
             self.restore_state(state)
 
 
-class ValidateFormatter(TemplateFormatter):
+class ValidateFormatter:
     '''
-    Provides a formatter that substitutes the validation string for every value
+    Provides a formatter that uses a fake book. This class must be used only
+    in the GUI thread.
+
+    It is a class instead of a function for compatibility reasons.
     '''
 
-    def get_value(self, key, args, kwargs):
-        return self._validation_string
+    def validate(self, template):
+        from calibre.gui2 import is_gui_thread
+        if not is_gui_thread():
+            raise ValueError('A ValidateFormatter must only be used in the GUI thread')
 
-    def validate(self, x):
-        from calibre.ebooks.metadata.book.base import Metadata
-        return self.unsafe_format(x, {}, 'VALIDATE ERROR', Metadata(''))
+        from calibre.ebooks.metadata.book.base import get_model_metadata_instance
+        from calibre.ebooks.metadata.book.formatter import SafeFormat
+        return SafeFormat().unsafe_format(template, {}, get_model_metadata_instance())
 
 
 validation_formatter = ValidateFormatter()
