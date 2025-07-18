@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "七月 11, 2025" "8.6.0" "calibre"
+.TH "CALIBREDB" "1" "七月 18, 2025" "8.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -379,7 +379,7 @@ calibredb add_format [options] id ebook_file
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-将文件作为额外的数据文件而不是电子书格式添加到书籍中
+将文件作为附加的数据文件而不是电子书格式添加到书籍中
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -456,7 +456,7 @@ calibredb export [options] ids
 .sp
 导出指定id(以逗号分隔的列表)的书籍至文件系统。
 导出操作将保存书籍的所有格式，以及其封面和元数据(保存
-至一个opf文件)。也会保存与书籍相关联的任何额外的数据文件。
+至一个opf文件)。也会保存与书籍相关联的任何附加的数据文件。
 你可以使用搜索命令来获得id。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
@@ -626,12 +626,12 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .INDENT 0.0
 .TP
 .B \-\-header\-note\-source\-field
-包含要插入到描述的头部位置的批注文本的自定义字段。 默认值: \fB\(aq\fP\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
+包含要插入到描述的头部位置的备注文本的自定义字段。 默认值: \fB\(aq\fP\fB\(aq\fP 适用于: AZW3, EPUB, MOBI输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[before|after]:[True|False] 设置:  <custom field> 自定义字段包含与书籍简介合并的内容批注  [before|after] 书籍简介相关的内容批注的位置  [True|False] \- 在内容批注和书籍简介之间插入水平线 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
+#<custom field>:[before|after]:[True|False] 设置:  <custom field> 自定义字段包含与书籍简介合并的内容备注  [before|after] 书籍简介相关的内容备注的位置  [True|False] \- 在内容备注和书籍简介之间插入水平线 默认值: \fB\(aq\fP::\fB\(aq\fP 适用于: AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -829,7 +829,7 @@ calibredb list_categories [options]
 .UNINDENT
 .sp
 在数据库中生成一个类别信息的报告。
-该信息与分类浏览器中显示的信息相同。
+该信息与属性浏览器中显示的信息相同。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0

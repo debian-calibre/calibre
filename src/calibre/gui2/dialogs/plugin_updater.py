@@ -35,7 +35,17 @@ from qt.core import (
 from calibre import prints
 from calibre.constants import DEBUG, __appname__, __version__, ismacos, iswindows, numeric_version
 from calibre.customize import PluginInstallationType
-from calibre.customize.ui import NameConflict, add_plugin, disable_plugin, enable_plugin, has_external_plugins, initialized_plugins, is_disabled, remove_plugin
+from calibre.customize.ui import (
+    BLACKLISTED_PLUGINS,
+    NameConflict,
+    add_plugin,
+    disable_plugin,
+    enable_plugin,
+    has_external_plugins,
+    initialized_plugins,
+    is_disabled,
+    remove_plugin,
+)
 from calibre.gui2 import error_dialog, gprefs, info_dialog, open_url, question_dialog
 from calibre.gui2.preferences.plugins import ConfigWidget
 from calibre.utils.date import UNDEFINED_DATE, format_date
@@ -86,17 +96,18 @@ def read_available_plugins(raise_error=False):
         if not raw:
             return
         raw = json.loads(bz2.decompress(raw))
-    except:
+    except Exception:
         if raise_error:
             raise
         traceback.print_exc()
         return
     for plugin in itervalues(raw):
         try:
-            display_plugin = DisplayPlugin(plugin)
-            get_installed_plugin_status(display_plugin)
-            display_plugins.append(display_plugin)
-        except:
+            if plugin['index_name'] not in BLACKLISTED_PLUGINS:
+                display_plugin = DisplayPlugin(plugin)
+                get_installed_plugin_status(display_plugin)
+                display_plugins.append(display_plugin)
+        except Exception:
             if DEBUG:
                 prints('======= Plugin Parse Error =======')
                 traceback.print_exc()
@@ -750,7 +761,7 @@ class PluginUpdaterDialog(SizePersistedDialog):
             display_plugin.plugin = plugin
             # We cannot read the 'actual' version information as the plugin will not be loaded yet
             display_plugin.installed_version = display_plugin.available_version
-        except:
+        except Exception:
             if DEBUG:
                 prints(f'ERROR occurred while installing plugin: {display_plugin.name}')
                 traceback.print_exc()

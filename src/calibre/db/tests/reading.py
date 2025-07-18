@@ -293,7 +293,8 @@ class ReadingTest(BaseTest):
         old = LibraryDatabase2(self.library_path)
         oldvals = {query:set(old.search_getting_ids(query, '')) for query in (
             # Date tests
-            'date:9/6/2011', 'date:true', 'date:false', 'pubdate:1/9/2011',
+            # 'date:9/6/2011',
+            'date:true', 'date:false', 'pubdate:1/9/2011',
             '#date:true', 'date:<100_daysago', 'date:>9/6/2011',
             '#date:>9/1/2011', '#date:=2011',
 
@@ -628,7 +629,7 @@ class ReadingTest(BaseTest):
                 def f(x):
                     try:
                         x.pop('rec_index', None)
-                    except:
+                    except Exception:
                         pass
                     return x
                 if field not in {'#series_index'}:

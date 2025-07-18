@@ -85,7 +85,7 @@ def run_pkgconfig(name, envvar, default, flag, prefix):
                 stdout=subprocess.PIPE).stdout.read().decode('utf-8')
             ans = [x.strip() for x in raw.split(prefix)]
             ans = [x for x in ans if x and (prefix=='-l' or os.path.exists(x))]
-        except:
+        except Exception:
             print('Failed to run pkg-config:', PKGCONFIG, 'for:', name)
 
     return ans or ([default] if default else [])
@@ -109,10 +109,13 @@ def consolidate(envvar, default):
     return [x for x in ans if x and os.path.exists(x)]
 
 
-qraw = subprocess.check_output([QMAKE, '-query']).decode('utf-8')
+qraw = None
 
 
 def readvar(name):
+    global qraw
+    if qraw is None:
+        qraw = subprocess.check_output([QMAKE, '-query']).decode('utf-8')
     return re.search(f'^{name}:(.+)$', qraw, flags=re.M).group(1).strip()
 
 
