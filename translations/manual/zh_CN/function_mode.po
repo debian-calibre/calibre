@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# RERBIN MA, 2025
 # tony shen <anthanny@hotmail.com>, 2024
 # 美洁 黄 <1251388323@qq.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 09:39+0000\n"
+"POT-Creation-Date: 2025-07-17 08:29+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
-"Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
+"Last-Translator: RERBIN MA, 2025\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,11 +20,11 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:2
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
 msgstr "编辑器中搜索和替换功能"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:4
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
 "The :guilabel:`Search & replace` tool in the editor support a *function "
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
@@ -31,7 +32,7 @@ msgid ""
 " processing."
 msgstr "编辑器中的“搜索和替换”工具支持*功能模式*。 在此模式下，您可以将正则表达式（请参阅“regexp”）与任意强大的 Python 函数结合起来，以执行各种高级文本处理。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:9
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
 "In the standard *regexp* mode for search and replace, you specify both a "
 "regular expression to search for as well as a template that is used to "
@@ -41,41 +42,41 @@ msgid ""
 "that are not possible with simple templates."
 msgstr "在搜索和替换的标准 *regexp* 模式中，您指定要搜索的正则表达式以及用于替换所有找到的匹配项的模板。 在函数模式下，您不使用固定模板，而是在“Python 编程语言 <https://docs.python.org>”中指定任意函数。 这使您可以完成许多使用简单模板无法完成的事情。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:16
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:16
 msgid ""
 "Techniques for using function mode and the syntax will be described by means"
 " of examples, showing you how to create functions to perform progressively "
 "more complex tasks."
 msgstr "将通过示例描述使用函数模式和语法的技术，向您展示如何创建函数来执行逐渐复杂的任务。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:21
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:21
 msgid "The Function mode"
 msgstr "功能模式"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:26
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
 msgstr "自动修复文档中标题的大小写"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:28
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:28
 msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
 msgstr "在这里，我们将利用编辑器中的内置函数之一自动将标题标签内所有文本的大小写更改为标题大小写："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:33
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
 "For the function, simply choose the :guilabel:`Title-case text (ignore "
 "tags)` builtin function. The will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr ""
+msgstr "对于函数，只需选择 :guilabel:`Title-case text (ignore tags)` 内置函数即可。它会将类似 ``<h1>some titLE</h1>`` 的标题更改为 ``<h1>Some Title</h1>``。即使标题标签内包含其他 HTML 标签，该函数也能正常工作。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:40
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
 msgstr "您的第一个自定义函数 - 智能连字符"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:42
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:42
 msgid ""
 "The real power of function mode comes from being able to create your own "
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
@@ -83,13 +84,13 @@ msgid ""
 "function to replace them with em-dashes."
 msgstr "函数模式的真正强大之处在于能够创建自己的函数以任意方式处理文本。 编辑器中的 Smarten 标点符号工具会保留单个连字符，因此您可以使用此功能将它们替换为破折号。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:47
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
 "To create a new function, simply click the :guilabel:`Create/edit` button to"
 " create a new function and copy the Python code from below."
 msgstr "要创建新函数，只需单击“创建/编辑”按钮即可创建新函数并复制下面的 Python 代码。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:55
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:55
 msgid ""
 "Every :guilabel:`Search & replace` custom function must have a unique name "
 "and consist of a Python function named replace, that accepts all the "
@@ -103,34 +104,34 @@ msgid ""
 "hyphens."
 msgstr "每个“搜索和替换”自定义函数都必须有一个唯一的名称，并由一个名为“replace”的 Python 函数组成，该函数接受上面显示的所有参数。 目前，我们不必担心“replace()”函数的所有不同参数。 只需关注“match”参数即可。 它表示运行搜索和替换时的匹配。 其完整文档位于“此处 <https://docs.python.org/library/re.html#match-objects>”_。 ``match.group()`` 只是返回所有匹配的文本，我们所做的就是用破折号替换该文本中的连字符，首先替换双连字符，然后替换单连字符。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:65
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
 msgstr "将此函数与查找正则表达式一起使用："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:69
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
 msgstr "它将用破折号替换所有 连字符，但仅限于实际文本中，而不是 HTML 标记定义内。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:74
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
 msgstr "功能模式的力量 - 使用拼写词典来修复错误连字符的单词"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:76
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
 msgstr "通常，通过扫描印刷书籍创建的电子书包含错误连字符的单词，即在印刷页面上的行尾处分开的单词。 我们将编写一个简单的函数来自动查找并修复这些单词。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:101
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
 msgstr "使用与之前相同的查找表达式来使用此函数，即："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:105
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:105
 msgid ""
 "And it will magically fix all mis-hyphenated words in the text of the book. "
 "The main trick is to use one of the useful extra arguments to the replace "
@@ -141,18 +142,18 @@ msgid ""
 " replaced by the hyphen free composite word."
 msgstr "它会神奇地修复书中所有错误连字符的单词。 主要技巧是使用替换函数的有用的额外参数之一“字典”。 这是指编辑器本身用来对书中文本进行拼写检查的词典。 该函数的作用是查找由连字符分隔的单词，删除连字符并检查字典是否识别该复合词，如果是，则将原始单词替换为无连字符的复合词。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:113
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:113
 msgid ""
 "Note that one limitation of this technique is it will only work for mono-"
 "lingual books, because, by default, ``dictionaries.recognized()`` uses the "
 "main language of the book."
 msgstr "请注意，此技术的一个限制是它仅适用于单语言书籍，因为默认情况下，“dictionaries.recognized()”使用书籍的主要语言。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:119
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
 msgstr "自动编号章节"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:121
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:121
 msgid ""
 "Now we will see something a little different. Suppose your HTML file has "
 "many sections, each with a heading in an :code:`<h2>` tag that looks like "
@@ -161,23 +162,23 @@ msgid ""
 "that they look like :code:`<h2>1. Some text</h2>`."
 msgstr "现在我们会看到一些不同的东西。 假设您的 HTML 文件有许多部分，每个部分都有一个位于“<h2>”标记中的标题，看起来像“<h2>Some text</h2>”。 您可以创建一个自定义函数，自动使用连续的节号对这些标题进行编号，使它们看起来像“<h2> 1. Some text </h2>”。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:137
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
 msgstr "将其与查找表达式一起使用："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:141
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
 msgstr "将光标置于文件顶部，然后单击“全部替换”。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:143
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:143
 msgid ""
 "This function uses another of the useful extra arguments to ``replace()``: "
 "the ``number`` argument. When doing a :guilabel:`Replace All` number is "
 "automatically incremented for every successive match."
 msgstr "该函数使用了另一个有用的额外参数“replace()”：“number”参数。 当执行“全部替换”时，每个连续匹配的数字都会自动增加。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:147
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:147
 msgid ""
 "Another new feature is the use of ``replace.file_order`` -- setting that to "
 "``'spine'`` means that if this search is run on multiple HTML files, the "
@@ -185,11 +186,11 @@ msgid ""
 ":ref:`file_order_replace_all` for details."
 msgstr "另一个新功能是使用“replace.file_order”——将其设置为“'spine”意味着如果在多个 HTML 文件上运行此搜索，则文件将按照它们出现的顺序进行处理。 这本书。 有关 详细信息，请参阅“file_order_replace_all”。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:154
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:154
 msgid "Auto create a Table of Contents"
 msgstr "自动创建目录"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:156
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:156
 msgid ""
 "Finally, lets try something a little more ambitious. Suppose your book has "
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
@@ -197,18 +198,18 @@ msgid ""
 "headings. Create the custom function below:"
 msgstr "最后，让我们尝试一些更雄心勃勃的事情。 假设您的书的“h1”和“h2”标签中的标题看起来像“<h1 id=\"someid\"> Some Text </h1>”。 我们将根据这些标题自动生成 HTML 目录。 创建以下自定义函数："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:199
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
 msgstr "并将其与 find 表达式一起使用："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:203
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
 " window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
 msgstr "在“所有文本文件”上运行搜索，在搜索结束时，将弹出一个窗口，其中显示“调试函数的输出”，其中包含 HTML 目录，可以粘贴到“toc.html”中。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:207
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:207
 msgid ""
 "The function above is heavily commented, so it should be easy to follow. The"
 " key new feature is the use of another useful extra argument to the "
@@ -217,7 +218,7 @@ msgid ""
 "``replace()`` during a single :guilabel:`Replace All` operation."
 msgstr "上面的函数有很多注释，所以应该很容易理解。 关键的新功能是对“replace()”函数使用另一个有用的额外参数，即“data”对象。 “data” 对象是一个 Python *字典*，在单个“全部替换”操作期间，在所有连续调用“replace()”之间持续存在。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:213
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:213
 msgid ""
 "Another new feature is the use of ``call_after_last_match`` -- setting that "
 "to ``True`` on the ``replace()`` function means that the editor will call "
@@ -225,7 +226,7 @@ msgid ""
 "extra call, the match object will be ``None``."
 msgstr "另一个新功能是使用“call_after_last_match”——在“replace()”函数上将其设置为“True”意味着编辑器将额外调用一次“replace()” 已找到匹配项。 对于这个额外的调用，匹配对象将为“None”。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:218
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:218
 msgid ""
 "This was just a demonstration to show you the power of function mode, if you"
 " really needed to generate a Table of Contents from headings in your book, "
@@ -233,17 +234,17 @@ msgid ""
 ":guilabel:`Tools->Table of Contents`."
 msgstr "这只是一个演示，向您展示功能模式的强大功能，如果您确实需要根据书中的标题生成目录，您最好使用“工具”->“目录”中的专用目录工具 。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:224
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:224
 msgid "The API for the function mode"
 msgstr "功能模式的API"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:226
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:226
 msgid ""
 "All function mode functions must be Python functions named replace, with the"
 " following signature::"
 msgstr "所有函数模式函数必须是名为replace的Python函数，具有以下签名："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:232
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:232
 msgid ""
 "When a find/replace is run, for every match that is found, the ``replace()``"
 " function will be called, it must return the replacement string for that "
@@ -252,11 +253,11 @@ msgid ""
 "function are documented below."
 msgstr "当运行查找/替换时，对于找到的每个匹配项，将调用“replace()”函数，它必须返回该匹配项的替换字符串。 如果不进行替换，则应返回原始字符串“match.group()”。 下面记录了“replace()”函数的各种参数。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:239
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:239
 msgid "The ``match`` argument"
 msgstr "“match” 参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:241
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:241
 msgid ""
 "The ``match`` argument represents the currently found match. It is a `Python"
 " Match object <https://docs.python.org/library/re.html#match-objects>`_. Its"
@@ -265,22 +266,22 @@ msgid ""
 "expression."
 msgstr "“match”参数代表当前找到的匹配。 它是一个`Python Match 对象<https://docs.python.org/library/re.html#match-objects>`_。 它最有用的方法是“group()”，它可用于获取与搜索正则表达式中的各个捕获组相对应的匹配文本。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:248
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
 msgstr "``number`` 参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:250
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:250
 msgid ""
 "The ``number`` argument is the number of the current match. When you run "
 ":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
 "be called with an increasing number. The first match has number 1."
 msgstr "``number`` 参数是当前匹配的编号。 当您运行“全部替换”时，每个连续的匹配都会导致以递增的数字调用“replace()”。 第一场比赛的号码为 1。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:255
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
 msgstr "“file_name”参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:257
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:257
 msgid ""
 "This is the filename of the file in which the current match was found. When "
 "searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
@@ -288,11 +289,11 @@ msgid ""
 "as the path separator."
 msgstr "这是找到当前匹配项的文件的文件名。 在标记文本内搜索时，``file_name`` 为空。 “file_name” 是规范形式，是相对于本书根目录的路径，使用“/” 作为路径分隔符。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:263
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
 msgstr "“metadata”  参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:265
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:265
 msgid ""
 "This represents the metadata of the current book, such as title, authors, "
 "language, etc. It is an object of class "
@@ -301,11 +302,11 @@ msgid ""
 "language code)."
 msgstr "这代表当前书籍的元数据，例如标题、作者、语言等。它是`calibre.ebooks.metadata.book.base.Metadata` 类的对象。 有用的属性包括“标题”、“作者”（作者列表）和“语言”（语言代码）。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:271
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
 msgstr "“dictionaries” 参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:273
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:273
 msgid ""
 "This represents the collection of dictionaries used for spell checking the "
 "current book. Its most useful method is ``dictionaries.recognized(word)`` "
@@ -313,11 +314,11 @@ msgid ""
 "dictionary for the current book's language."
 msgstr "这代表用于对当前书籍进行拼写检查的词典集合。 它最有用的方法是“dictionaries.recognized(word)”，如果传入的单词被当前书籍语言的字典识别，它将返回“True”。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:279
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
 msgstr "“data” 参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:281
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
 "This a simple Python ``dictionary``. When you run :guilabel:`Replace all`, "
 "every successive match will cause ``replace()`` to be called with the same "
@@ -325,11 +326,11 @@ msgid ""
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
 msgstr "这是一个简单的 Python“字典”。 当您运行“全部替换”时，每个连续的匹配都会导致使用与数据相同的“字典”来调用“replace()”。 因此，您可以使用它在“全部替换”操作期间调用“replace()”之间存储任意数据。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:288
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
 msgstr "“functions” 参数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:290
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:290
 msgid ""
 "The ``functions`` argument gives you access to all other user defined "
 "functions. This is useful for code re-use. You can define utility functions "
@@ -337,13 +338,13 @@ msgid ""
 "suppose you create a function name ``My Function`` like this:"
 msgstr "``functions`` 参数使您可以访问所有其他用户定义的函数。 这对于代码重用很有用。 您可以在一处定义实用函数，然后在所有其他函数中重复使用它们。 例如，假设您创建一个函数名称“My Function”，如下所示："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:303
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
 "Then, in another function, you can access the ``utility()`` function like "
 "this:"
 msgstr "然后，在另一个函数中，您可以像这样访问“utility()”函数："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:311
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:311
 msgid ""
 "You can also use the functions object to store persistent data, that can be "
 "re-used by other functions. For example, you could have one function that "
@@ -352,11 +353,11 @@ msgid ""
 "functions:"
 msgstr "您还可以使用函数对象来存储持久数据，这些数据可以被其他函数重用。 例如，您可以拥有一个函数，当使用“全部替换”运行时会收集一些数据，而另一个函数则在随后运行时使用这些数据。 考虑以下两个函数："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:331
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
 msgstr "调试你的函数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:333
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:333
 msgid ""
 "You can debug the functions you create by using the standard ``print()`` "
 "function from Python. The output of print will be displayed in a popup "
@@ -364,11 +365,11 @@ msgid ""
 "``print()`` to output an entire table of contents above."
 msgstr "您可以使用 Python 中的标准“print()”函数来调试您创建的函数。 查找/替换完成后，打印的输出将显示在弹出窗口中。 您在上面看到了使用“print()”输出整个目录的示例。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:341
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
 msgstr "在多个 HTML 文件上运行时选择文件顺序"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:343
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
 "When you run a :guilabel:`Replace all` on multiple HTML files, the order in "
 "which the files are processes depends on what files you have open for "
@@ -376,19 +377,19 @@ msgid ""
 " appear by setting the ``file_order`` attribute on your function, like this:"
 msgstr "当您对多个 HTML 文件运行“全部替换”时，文件的处理顺序取决于您打开进行编辑的文件。 您可以通过在函数上设置“file_order”属性来强制搜索按文件出现的顺序处理文件，如下所示："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:355
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
 "``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
 "cause the search to process multiple files in the order they appear in the "
 "book, either forwards or backwards, respectively."
 msgstr "``file_order`` 接受两个值，``spine`` 和 ``spine-reverse`` ，这两个值会导致搜索按照文件在书中出现的顺序，分别向前或向后，处理多个文件。"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:360
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:360
 msgid ""
 "Having your function called an extra time after the last match is found"
 msgstr "在找到最后一个匹配项后额外调用您的函数"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:362
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:362
 msgid ""
 "Sometimes, as in the auto generate table of contents example above, it is "
 "useful to have your function called an extra time after the last match is "
@@ -396,11 +397,11 @@ msgid ""
 " your function, like this:"
 msgstr "有时，如上面的自动生成目录示例所示，在找到最后一个匹配项后额外调用函数会很有用。 您可以通过在函数上设置“call_after_last_match”属性来做到这一点，如下所示："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:376
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:376
 msgid "Appending the output from the function to marked text"
 msgstr "将函数的输出附加到标记的文本"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:378
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:378
 msgid ""
 "When running search and replace on marked text, it is sometimes useful to "
 "append so text to the end of the marked text. You can do that by setting the"
@@ -408,22 +409,22 @@ msgid ""
 " also need to set ``call_after_last_match``), like this:"
 msgstr "在标记文本上运行搜索和替换时，有时将文本附加到标记文本的末尾很有用。 您可以通过在函数上设置“append_final_output_to_marked”属性来做到这一点（请注意，您还需要设置“call_after_last_match”），如下所示："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:393
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"
 msgstr "对标记文本执行搜索时禁止显示结果对话框"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:395
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:395
 msgid ""
 "You can also suppress the result dialog (which can slow down the repeated "
 "application of a search/replace on many blocks of text) by setting the "
 "``suppress_result_dialog`` attribute on your function, like this:"
 msgstr "您还可以通过在函数上设置“suppress_result_dialog”属性来抑制结果对话框（这会减慢在许多文本块上重复应用搜索/替换的速度），如下所示："
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:408
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
 msgstr "更多示例"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:410
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:410
 msgid ""
 "More useful examples, contributed by calibre users, can be found in the "
 "`calibre E-book editor forum "

@@ -217,6 +217,26 @@ class KOBO(USBMS):
             debug_print(f"Kobo::get_device_model_id - didn't get model id from file' - Exception: {e}")
         return ''
 
+    def post_open_callback(self):
+        from calibre.devices.kobo.db import Database
+        self.device_version_info(reload=True)
+        # delete empty directories in root they get left behind when deleting
+        # books on device.
+        for prefix in (self._main_prefix, self._card_a_prefix, self._card_b_prefix):
+            if prefix:
+                with suppress(OSError):
+                    for de in os.scandir(prefix):
+                        if not de.name.startswith('.') and de.is_dir():
+                            with suppress(OSError):
+                                os.rmdir(de.path)
+        self.device_database_path = os.path.join(self._main_prefix, KOBO_ROOT_DIR_NAME, 'KoboReader.sqlite')
+        self.db_manager = Database(self.device_database_path)
+        self.dbversion = self.db_manager.dbversion or self.dbversion
+
+    def database_transaction(self, use_row_factory=False):
+        self.db_manager.use_row_factory = use_row_factory
+        return self.db_manager
+
     def sanitize_path_components(self, components):
         invalid_filename_chars_re = re.compile(r'[\/\\\?%\*:;\|\"\'><\$!]', re.IGNORECASE | re.UNICODE)
         return [invalid_filename_chars_re.sub('_', x) for x in components]
@@ -332,7 +352,7 @@ class KOBO(USBMS):
                                 title = 'FILE MISSING: ' + title
                                 book = self.book_class(prefix, lpath, title, authors, mime, date, ContentType, ImageID, size=1048576)
 
-                        except:
+                        except Exception:
                             debug_print('prefix: ', prefix, 'lpath: ', lpath, 'title: ', title, 'authors: ', authors,
                                         'mime: ', mime, 'date: ', date, 'ContentType: ', ContentType, 'ImageID: ', ImageID)
                             raise
@@ -342,7 +362,7 @@ class KOBO(USBMS):
 
                     if bl.add_book(book, replace_metadata=False):
                         changed = True
-            except:  # Probably a path encoding error
+            except Exception:  # Probably a path encoding error
                 import traceback
                 traceback.print_exc()
             return changed
@@ -809,7 +829,7 @@ class KOBO(USBMS):
 
         try:
             cursor.execute(query)
-        except:
+        except Exception:
             debug_print('    Database Exception:  Unable to reset ReadStatus list')
             raise
         finally:
@@ -839,7 +859,7 @@ class KOBO(USBMS):
             try:
                 debug_print(f'Kobo::set_readstatus - Making change - ContentID={ContentID}, ReadStatus={ReadStatus}, DateLastRead={datelastread}')
                 cursor.execute("update content set ReadStatus=?,FirstTimeReading='false',DateLastRead=? where BookID is Null and ContentID = ?", t)
-            except:
+            except Exception:
                 debug_print('    Database Exception: Unable to update ReadStatus')
                 raise
 
@@ -1038,7 +1058,7 @@ class KOBO(USBMS):
         debug_print('KOBO: uploading cover')
         try:
             self._upload_cover(path, filename, metadata, filepath, uploadgrayscale)
-        except:
+        except Exception:
             debug_print('FAILED to upload cover', filepath)
 
     def _upload_cover(self, path, filename, metadata, filepath, uploadgrayscale):
@@ -1248,13 +1268,13 @@ class KOBO(USBMS):
         if bookmark.last_read is not None:
             try:
                 last_read = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(calendar.timegm(time.strptime(bookmark.last_read, '%Y-%m-%dT%H:%M:%S'))))
-            except:
+            except Exception:
                 try:
                     last_read = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(calendar.timegm(time.strptime(bookmark.last_read, '%Y-%m-%dT%H:%M:%S.%f'))))
-                except:
+                except Exception:
                     try:
                         last_read = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(calendar.timegm(time.strptime(bookmark.last_read, '%Y-%m-%dT%H:%M:%SZ'))))
-                    except:
+                    except Exception:
                         last_read = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
         else:
             # self.datetime = time.gmtime()
@@ -1600,28 +1620,8 @@ class KOBOTOUCH(KOBO):
         self.set_device_name()
         return super().get_device_information(end_session)
 
-    def post_open_callback(self):
-        from calibre.devices.kobo.db import Database
-        self.device_version_info(reload=True)
-        # delete empty directories in root they get left behind when deleting
-        # books on device.
-        for prefix in (self._main_prefix, self._card_a_prefix, self._card_b_prefix):
-            if prefix:
-                with suppress(OSError):
-                    for de in os.scandir(prefix):
-                        if not de.name.startswith('.') and de.is_dir():
-                            with suppress(OSError):
-                                os.rmdir(de.path)
-        self.device_database_path = os.path.join(self._main_prefix, KOBO_ROOT_DIR_NAME, 'KoboReader.sqlite')
-        self.db_manager = Database(self.device_database_path)
-        self.dbversion = self.db_manager.dbversion
-
     def on_device_close(self):
         self.__class__.gui_name = GENERIC_GUI_NAME
-
-    def database_transaction(self, use_row_factory=False):
-        self.db_manager.use_row_factory = use_row_factory
-        return self.db_manager
 
     def open_linux(self):
         super().open_linux()
@@ -1846,10 +1846,10 @@ class KOBOTOUCH(KOBO):
                 if DateCreated is not None:
                     try:
                         kobo_metadata.pubdate     = parse_date(DateCreated, assume_utc=True)
-                    except:
+                    except Exception:
                         try:
                             kobo_metadata.pubdate = datetime.strptime(DateCreated, '%Y-%m-%dT%H:%M:%S.%fZ')
-                        except:
+                        except Exception:
                             debug_print(f"KoboTouch:update_booklist - Cannot convert date - DateCreated='{DateCreated}'")
 
                 idx = bl_cache.get(lpath, None)
@@ -1966,7 +1966,7 @@ class KOBOTOUCH(KOBO):
                     if show_debug:
                         debug_print('        book.device_collections', book.device_collections)
                         debug_print('        book.title', book.title)
-            except:  # Probably a path encoding error
+            except Exception:  # Probably a path encoding error
                 import traceback
                 traceback.print_exc()
             return changed
@@ -3338,7 +3338,7 @@ class KOBOTOUCH(KOBO):
             if book.kobo_series_number is not None:
                 try:
                     kobo_series_number = float(book.kobo_series_number)
-                except:
+                except Exception:
                     kobo_series_number = None
             if kobo_series_number == book.series_index:
                 if show_debug:
@@ -3359,7 +3359,7 @@ class KOBOTOUCH(KOBO):
                 debug_print('KoboTouch:set_series - about to set - parameters:', update_values)
             cursor.execute(update_query, update_values)
             self.series_set += 1
-        except:
+        except Exception:
             debug_print('    Database Exception:  Unable to set series info')
             raise
         finally:
@@ -3435,7 +3435,7 @@ class KOBOTOUCH(KOBO):
                         self.series_index_template, newmi, 'Kobo series number template', newmi)
                 else:
                     new_series_number = f'{newmi.series_index:g}'
-            except:
+            except Exception:
                 new_series_number = None
         else:
             new_series = None
@@ -3590,7 +3590,7 @@ class KOBOTOUCH(KOBO):
                     debug_print('KoboTouch:set_core_metadata - about to set - update_query:', update_query)
                 cursor.execute(update_query, update_values)
                 self.core_metadata_set += 1
-            except:
+            except Exception:
                 debug_print('    Database Exception:  Unable to set the core metadata')
                 debug_print(f'    Query was: {update_query}')
                 debug_print(f'    Values were: {update_values}')
@@ -3623,7 +3623,7 @@ class KOBOTOUCH(KOBO):
             cls.opts = cls.settings()
         try:
             return getattr(cls.opts, key)
-        except:
+        except Exception:
             debug_print('KoboTouch::get_prefs - probably an extra_customization:', key)
         return None
 
@@ -4342,7 +4342,7 @@ class KOBOTOUCH(KOBO):
             self.debugging_title = self.get_debugging_title()
         try:
             is_debugging = (len(self.debugging_title) > 0 and title.lower().find(self.debugging_title.lower()) >= 0) or len(title) == 0
-        except:
+        except Exception:
             debug_print(f"KoboTouch::is_debugging_title - Exception checking debugging title for title '{title}'.")
             is_debugging = False
 

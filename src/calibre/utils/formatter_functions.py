@@ -13,6 +13,7 @@ __docformat__ = 'restructuredtext en'
 
 import inspect
 import numbers
+import os.path
 import posixpath
 import re
 import traceback
@@ -273,7 +274,7 @@ class BuiltinFormatterFunction(FormatterFunction):
                         lambda x: inspect.isfunction(x) and x.__name__ == 'evaluate')
         try:
             lines = [l[4:] for l in inspect.getsourcelines(eval_func[0][1])[0]]
-        except:
+        except Exception:
             lines = []
         self.program_text = ''.join(lines)
 
@@ -406,7 +407,7 @@ r'''
     def evaluate(self, formatter, kwargs, mi, locals, a):
         try:
             return len(a)
-        except:
+        except Exception:
             return -1
 
 
@@ -882,7 +883,7 @@ many ``prefix, string`` pairs as you wish.
             raise ValueError(_('strcat_max requires an even number of arguments'))
         try:
             max = int(args[0])
-        except:
+        except Exception:
             raise ValueError(_('first argument to strcat_max must be an integer'))
 
         i = 2
@@ -893,7 +894,7 @@ many ``prefix, string`` pairs as you wish.
                     break
                 result = result + args[i] + args[i+1]
                 i += 2
-        except:
+        except Exception:
             pass
         return result.strip()
 
@@ -1197,7 +1198,7 @@ usually comma but is ampersand for author-like lists.
         val = val.split(sep)
         try:
             return val[index].strip()
-        except:
+        except Exception:
             return ''
 
 
@@ -1274,7 +1275,7 @@ that format names are always uppercase, as in EPUB.
             data = sorted(fmt_data.items(), key=lambda x:x[1]['mtime'], reverse=True)
             return ','.join(k.upper()+':'+format_date(v['mtime'], fmt)
                         for k,v in data)
-        except:
+        except Exception:
             return ''
 
 
@@ -1284,6 +1285,7 @@ class BuiltinFormatsSizes(BuiltinFormatterFunction):
     category = GET_FROM_METADATA
     __doc__ = doc = _(
 r'''
+
 ``formats_sizes()`` -- return a comma-separated list of colon-separated
 ``FMT:SIZE`` items giving the sizes of the formats of a book in bytes.[/] You can
 use the ``select()`` function to get the size for a specific format. Note that
@@ -1294,28 +1296,95 @@ format names are always uppercase, as in EPUB.
         fmt_data = mi.get('format_metadata', {})
         try:
             return ','.join(k.upper()+':'+str(v['size']) for k,v in iteritems(fmt_data))
-        except:
+        except Exception:
             return ''
 
 
 class BuiltinFormatsPaths(BuiltinFormatterFunction):
     name = 'formats_paths'
-    arg_count = 0
+    arg_count = -1
     category = GET_FROM_METADATA
     __doc__ = doc = _(
 r'''
-``formats_paths()`` -- return a comma-separated list of colon-separated items
-``FMT:PATH`` giving the full path to the formats of a book.[/] You can use the
-``select()`` function to get the path for a specific format. Note that format names
-are always uppercase, as in EPUB.
+``formats_paths([separator])`` -- return a ``separator``-separated list of
+colon-separated items ``FMT:PATH`` giving the full path to the formats of a
+book.[/] The ``separator`` argument is optional. If not supplied then the
+separator is ``', '`` (comma space). If the separator is a comma then you can
+use the ``select()`` function to get the path for a specific format. Note that
+format names are always uppercase, as in EPUB.
 ''')
 
-    def evaluate(self, formatter, kwargs, mi, locals):
+    def evaluate(self, formatter, kwargs, mi, locals, sep=','):
         fmt_data = mi.get('format_metadata', {})
         try:
-            return ','.join(k.upper()+':'+str(v['path']) for k,v in iteritems(fmt_data))
-        except:
+            return sep.join(k.upper()+':'+str(v['path']) for k,v in iteritems(fmt_data))
+        except Exception:
             return ''
+
+
+class BuiltinFormatsPathSegments(BuiltinFormatterFunction):
+    name = 'formats_path_segments'
+    arg_count = 5
+    category = GET_FROM_METADATA
+    __doc__ = doc = _(
+r'''
+``formats_path_segments(with_author, with_title, with_format, with_ext, sep)``
+-- return parts of the path to a book format in the calibre library separated
+by ``sep``.[/] The parameter ``sep`` should usually be a slash (``'/'``). One use
+is to be sure that paths generated in Save to disk and Send to device templates
+are shortened consistently. Another is to be sure the paths on the device match
+the paths in the calibre library.
+
+A book path consists of 3 segments: the author, the title including the calibre
+database id in parentheses, and the format (author - title). Calibre can
+shorten any of the three because of file name length limitations. You choose
+which segments to include by passing ``1`` for that segment. If you don't want
+a segment then pass ``0`` or the empty string for that segment. For example,
+the following returns just the format name without the extension:
+[CODE]
+formats_path_segments(0, 0, 1, 0, '/')
+[/CODE]
+Because there is only one segment the separator is ignored.
+
+If there are multiple formats (multiple extensions) then one of the extensions
+will be picked at random. If you care about which extension is used then get
+the path without the extension then add the desired extension to it.
+
+Examples: Assume there is a book in the calibre library with an epub format by
+Joe Blogs with title 'Help'. It would have the path
+[CODE]
+Joe Blogs/Help - (calibre_id)/Help - Joe Blogs.epub
+[/CODE]
+The following shows what is returned for various parameters:
+[LIST]
+[*]``formats_path_segments(0, 0, 1, 0, '/')`` returns `Help - Joe Blogs`
+[*]``formats_path_segments(0, 0, 1, 1, '/')`` returns `Help - Joe Blogs.epub`
+[*]``formats_path_segments(1, 0, 1, 1, '/')`` returns `Joe Blogs/Help - Joe Blogs.epub`
+[*]``formats_path_segments(1, 0, 1, 0, '/')`` returns `Joe Blogs/Help - Joe Blogs`
+[*]``formats_path_segments(0, 1, 0, 0, '/')`` returns `Help - (calibre_id)`
+[/LIST]
+''')
+
+    def evaluate(self, formatter, kwargs, mi, locals, with_author, with_title, with_format, with_ext, sep):
+        fmt_metadata = mi.get('format_metadata', {})
+        if fmt_metadata:
+            for v in fmt_metadata.values():
+                p = v['path']
+                r,fmt = os.path.split(p)
+                if with_ext == '0' or not with_ext:
+                    fmt = os.path.splitext(fmt)[0]
+                r,title = os.path.split(r)
+                r,author  = os.path.split(r)
+                parts = []
+                if with_author == '1':
+                    parts.append(author)
+                if with_title == '1':
+                    parts.append(title)
+                if with_format == '1':
+                    parts.append(fmt)
+                return sep.join(parts)
+        else:
+            return _("No book formats found so the path can't be generated")
 
 
 class BuiltinHumanReadable(BuiltinFormatterFunction):
@@ -1331,7 +1400,7 @@ representing that number in KB, MB, GB, etc.
     def evaluate(self, formatter, kwargs, mi, locals, val):
         try:
             return human_readable(round(float(val)))
-        except:
+        except Exception:
             return ''
 
 
@@ -1359,17 +1428,17 @@ Python[/URL] documentation for more examples. Returns the empty string if format
             template = '{0:' + template + '}'
         try:
             v1 = float(val)
-        except:
+        except Exception:
             return ''
         try:  # Try formatting the value as a float
             return template.format(v1)
-        except:
+        except Exception:
             pass
         try:  # Try formatting the value as an int
             v2 = trunc(v1)
             if v2 == v1:
                 return template.format(v2)
-        except:
+        except Exception:
             pass
         return ''
 
@@ -1409,7 +1478,7 @@ Examples assuming that the tags column (which is comma-separated) contains "A, B
                 return sep.join(val[si:])
             else:
                 return sep.join(val[si:ei])
-        except:
+        except Exception:
             return ''
 
 
@@ -1466,7 +1535,7 @@ Examples:
                     t = '.'.join(components[si:ei]).strip()
                 if t:
                     rv.add(t)
-            except:
+            except Exception:
                 pass
         return ', '.join(sorted(rv, key=sort_key))
 
@@ -1532,7 +1601,7 @@ contain ``MMMM``. Using ``format_date_field()`` avoids this problem.
             else:
                 s = format_date(parse_date(val), format_string)
             return s
-        except:
+        except Exception:
             s = 'BAD DATE'
         return s
 
@@ -1656,7 +1725,7 @@ column's value in your save/send templates
                 if v is not None:
                     return str(mi._proxy_metadata.book_size)
                 return ''
-            except:
+            except Exception:
                 pass
             return ''
         self.only_in_gui_error()
@@ -2173,7 +2242,7 @@ returns the empty string.
             d2 = parse_date(date2)
             if d2 == UNDEFINED_DATE:
                 return ''
-        except:
+        except Exception:
             return ''
         i = d1 - d2
         return f'{i.days+(i.seconds/(24.0*60.0*60.0)):.1f}'
@@ -2253,7 +2322,7 @@ return the strings in the language of the current locale. ``lang_codes`` is a co
                 n = calibre_langcode_to_name(c, localize != '0')
                 if n:
                     retval.append(n)
-            except:
+            except Exception:
                 pass
         return ', '.join(retval)
 
@@ -2277,7 +2346,7 @@ current locale. ``lang_strings`` is a comma-separated list.
                 cv = canonicalize_lang(c)
                 if cv:
                     retval.append(canonicalize_lang(cv))
-            except:
+            except Exception:
                 pass
         return ', '.join(retval)
 
@@ -2650,7 +2719,7 @@ available with custom ratings columns.
         err_msg = _('The rating must be a number between 0 and 5')
         try:
             v = float(value) * 2
-        except:
+        except Exception:
             raise ValueError(err_msg)
         if v < 0 or v > 10:
             raise ValueError(err_msg)
@@ -2681,7 +2750,7 @@ the ``title_sort``.
         try:
             for v in [x.strip() for x in val.split(separator)]:
                 result.append(title_sort(v).replace(',', ';'))
-        except:
+        except Exception:
             traceback.print_exc()
         return separator.join(sorted(result, key=sort_key))
 
@@ -3572,8 +3641,8 @@ _formatter_builtins = [
     BuiltinFieldListCount(), BuiltinFirstNonEmpty(), BuiltinField(), BuiltinFieldExists(),
     BuiltinFinishFormatting(), BuiltinFirstMatchingCmp(), BuiltinFloor(),
     BuiltinFormatDate(), BuiltinFormatDateField(), BuiltinFormatDuration(), BuiltinFormatNumber(),
-    BuiltinFormatsModtimes(),BuiltinFormatsPaths(), BuiltinFormatsSizes(), BuiltinFractionalPart(),
-    BuiltinGetLink(),
+    BuiltinFormatsModtimes(),BuiltinFormatsPaths(), BuiltinFormatsPathSegments(),
+    BuiltinFormatsSizes(), BuiltinFractionalPart(),BuiltinGetLink(),
     BuiltinGetNote(), BuiltinGlobals(), BuiltinHasCover(), BuiltinHasExtraFiles(),
     BuiltinHasNote(), BuiltinHumanReadable(), BuiltinIdentifierInList(),
     BuiltinIfempty(), BuiltinIsDarkMode(), BuiltinLanguageCodes(), BuiltinLanguageStrings(),

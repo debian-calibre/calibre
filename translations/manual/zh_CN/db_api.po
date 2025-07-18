@@ -4,16 +4,16 @@
 # 
 # Translators:
 # nhyj <nhyjabc@msn.com>, 2015
-# RERBIN MA, 2024
+# RERBIN MA, 2024-2025
 # tony shen <anthanny@hotmail.com>, 2020,2024
 # 贵宏 张, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-19 13:27+0000\n"
+"POT-Creation-Date: 2025-07-17 08:29+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: tony shen <anthanny@hotmail.com>, 2020,2024\n"
+"Last-Translator: RERBIN MA, 2024-2025\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,23 +21,23 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:4
+#: ../../../__w/calibre/calibre/manual/db_api.rst:4
 msgid "API documentation for the database interface"
 msgstr "API文档之数据库接口"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:9
+#: ../../../__w/calibre/calibre/manual/db_api.rst:9
 msgid ""
 "This API is thread safe (it uses a multiple reader, single writer locking "
 "scheme).  You can access this API like this::"
 msgstr "此API是线程安全的(它使用多个读取器、单个写入器锁定方案)。您可以通过如下方式访问该API接口："
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:14
+#: ../../../__w/calibre/calibre/manual/db_api.rst:14
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
 msgstr "如果您使用的Calibre插件是主Calibre图形用户界面的一部分，则可以通过以下方式访问该插件："
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
 msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
@@ -45,7 +45,7 @@ msgid ""
 "memory cache is maintained in normal form for maximum performance."
 msgstr "来自 calibre 库的metadata.db 文件的内存缓存。 该类还充当用于访问数据库的线程安全 API。 内存中的缓存以正常形式维护，以获得最佳性能。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
 msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
@@ -53,50 +53,50 @@ msgid ""
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE 只是用作从metadata.db 稳健地读取和写入的一种方式。 所有表读取/排序/搜索/缓存逻辑都被重新实现。 这是获得最大性能和灵活性所必需的。"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
 msgstr "当数据库中创建新的图书记录时，图书 id 作为唯一参数"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
 msgid "When a book format is edited, with arguments: (book_id, fmt)"
 msgstr "编辑书籍格式时, 使用参数: (book_id, fmt)"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.books_removed:1
 msgid ""
 "When books are removed from the database with the list of book ids as the "
 "only argument"
 msgstr "当书籍从数据库中删除时，书籍 ID 列表作为唯一参数"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
 msgstr "当为书籍添加一种格式时, 使用参数: (book_id, fmt)"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
 msgstr "当从书中删除格式时，带有参数：（将图书 ID 映射到从书中删除的格式集）"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
 msgid "When the indexing progress changes"
 msgstr "当索引进度发生变化时"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.items_removed:1
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
 "(field_name, affected book ids, ids of removed items)"
 msgstr "当标签或作者等项目从某些书籍中删除时。 参数：（字段名称、受影响的图书 ID、已删除项目的 ID）"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.items_renamed:1
 msgid ""
 "When items such as tags or authors are renamed in some or all books. "
@@ -104,14 +104,28 @@ msgid ""
 "id)"
 msgstr "当某些或所有书籍中的标签或作者等项目被重命名时。 参数：（字段名称、受影响的图书 ID、旧项目 ID 到新项目 ID 的映射）"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.links_changed:1
+msgid ""
+"When the links associated with items(s) are changed, with arguments: "
+"(field_name, item_ids)"
+msgstr "当与项目关联的链接发生更改时，使用的参数为：（field_name，item_ids）"
+
+#: ../../../__w/calibre/calibre/manual/docstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
 msgid ""
 "When some metadata is changed for some books, with arguments: (name of "
 "changed field, set of affected book ids)"
 msgstr "当某些书籍的某些元数据发生更改时，带有参数：（更改字段的名称，受影响的书籍 ID 集）"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/manual/docstring of
+#: calibre.db.cache.Cache.EventType.notes_changed:1
+msgid ""
+"When the notes associated with item(s) are changed, with arguments: "
+"(field_name, item_ids)"
+msgstr "当与项目相关的注释发生更改时，使用的参数为：（field_name，item_ids）"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
 msgid ""
 "Add the specified books to the library. Books should be an iterable of "
@@ -120,7 +134,7 @@ msgid ""
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
 msgstr "将指定的书籍添加到图书馆。 Books 应该是一个可迭代的 2 元组，每个 2 元组的形式为“(mi, format_map)”，其中 mi 是元数据对象，format_map 是“{fmt: path_or_stream}”形式的字典，例如： {'EPUB': '/path/to/file.epub'}`。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
 msgid ""
 "Returns a pair of lists: :code:`ids, duplicates`. ``ids`` contains the book "
@@ -129,49 +143,49 @@ msgid ""
 "as per the simple duplicate detection heuristic used by :meth:`has_book`."
 msgstr "返回一对列表：“ids，duplicates”。 ``ids`` 包含数据库中所有新创建的图书的图书 ID。 根据“has_book”使用的简单重复检测启发式，“duplicates”包含数据库中已存在的所有书籍的“(mi, format_map)”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_custom_book_data:1
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
 msgstr "添加 name 数据，其中 val_map 是 book_ids 到值的映射。 如果delete_first为True，则所有先前存储的name数据将被删除。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_extra_files:1
 msgid "Add extra data files"
 msgstr "添加额外的数据文件"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:1
 msgid ""
 "Add a format to the specified book. Return True if the format was added "
 "successfully."
 msgstr "为指定的书籍添加格式。 如果格式添加成功，则返回 True。"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:0
+#: ../../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Parameters"
 msgstr "参数"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:3
 msgid ""
 "If True replace existing format, otherwise if the format already exists, "
 "return False."
 msgstr "如果为 True 则替换现有格式，否则如果该格式已存在，则返回 False。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:4
 msgid ""
 "If True, file type plugins are run on the format before and after being "
 "added."
 msgstr "如果为 True，则文件类型插件将在添加之前和之后的格式上运行。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_format:5
 msgid "Internal use only."
 msgstr "仅内部使用。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_listener:1
 msgid ""
 "Register a callback function that will be called after certain actions are "
@@ -179,24 +193,24 @@ msgid ""
 "(:class:`EventType`, library_id, event_type_specific_data)"
 msgstr "注册一个回调函数，该函数将在对此数据库执行某些操作后调用。 该函数必须采用三个参数：(`EventType`、library_id、event_type_specific_data)"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_notes_resource:1
 msgid ""
 "Add the specified resource so it can be referenced by notes and return its "
 "content hash"
 msgstr "添加指定的资源，以便它可以被注释引用并返回其内容哈希"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_types:1
 msgid "Return a tuple of all annotation types in the database."
 msgstr "返回数据库中所有注释类型的数组。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_users:1
 msgid "Return a tuple of all (user_type, user name) that have annotations."
 msgstr "返回所有具有注释的二元组 (user_type, user name)。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotations:1
 msgid ""
 "Return a tuple of all annotations matching the specified criteria. "
@@ -205,7 +219,7 @@ msgid ""
 "annotations."
 msgstr "返回与指定条件匹配的所有注释的多元组。' ignore_removed '控制是否也返回已删除（删除）的注释。删除的注释只是用于合并注释的骨架。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotations_for_book:1
 msgid ""
 "Return a tuple containing all annotations for the specified book_id as a "
@@ -213,55 +227,55 @@ msgid ""
 "annotation is the annotation data."
 msgstr "将包含指定book_id的所有注释的二元组作为带有键的dict返回：`format`, `user_type`, `user`, `annotation`。这里，注释是注释数据。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
 msgstr "所有已知图书 ID 的冻结集。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
 msgid "Same as field_for, except that it operates on multiple books at once"
 msgstr "与 field_for 相同，只不过它同时对多本书进行操作"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
 msgid "Frozen set of ids for all values in the field ``name``."
 msgstr "字段“name”中所有值的冻结 ID 集。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
 "many fields)"
 msgstr "所有字段名称的冻结集（仅应用于多一和多对多字段）"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
 msgid ""
 "Return the number of annotations for the specified book available in the "
 "database."
 msgstr "返回数据库中可用的指定书籍的注释数量。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotations_map_for_book:1
 msgid ""
 "Return a map of annotation type -> annotation data for the specified "
 "book_id, format, user and user_type."
 msgstr "返回注释类型->指定book_id、格式、用户和用户_类型的注释数据的映射。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:1
 msgid "Return author data as a dictionary with keys: name, sort, link"
 msgstr "将作者数据作为带有键的字典返回：名称、排序、链接"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
 msgstr "如果没有找到具有指定 ID 的作者，则返回空字典。 如果author_ids为None，则返回所有作者的数据。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
 msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
@@ -269,33 +283,33 @@ msgid ""
 "string."
 msgstr "给定一个作者列表，返回作者的author_sort字符串，优先选择与作者关联的作者排序而不是计算出的字符串。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
 msgid ""
 "Return all the books associated with the item identified by ``item_id``, "
 "where the item belongs to the field ``name``."
 msgstr "返回与由“item_id”标识的项目关联的所有书籍，其中该项目属于字段“name”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:4
 msgid ""
 "Returned value is a set of book ids, or the empty set if the item or the "
 "field does not exist."
 msgstr "返回值是一组图书 ID，如果该项目或字段不存在，则返回空集。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_in_virtual_library:1
 msgid "Return the set of books in the specified virtual library"
 msgstr "返回指定虚拟书库的图书"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:1
 msgid ""
 "Compress the cover images for the specified books. A compression quality of "
 "100 will perform lossless compression, otherwise lossy compression."
 msgstr "压缩指定书籍的封面图像。 压缩质量为 100 将执行无损压缩，否则将执行有损压缩。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.compress_covers:4
 msgid ""
 "The progress callback will be called with the book_id and the old and new "
@@ -303,7 +317,7 @@ msgid ""
 "size will be a string with the error details."
 msgstr "将使用 book_id 以及已处理的每本书的旧尺寸和新尺寸来调用进度回调。 如果发生错误，新的大小将是包含错误详细信息的字符串。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_cover_to:1
 msgid ""
 "Copy the cover to the file like object ``dest``. Returns False if no cover "
@@ -312,7 +326,7 @@ msgid ""
 "different from the current path (taking case sensitivity into account)."
 msgstr "将封面复制到文件中，如对象“dest”。 如果不存在封面或 dest 与当前封面是同一文件，则返回 False。 dest 也可以是路径，在这种情况下，当且仅当该路径与当前路径不同时（考虑区分大小写），封面才会被复制到该路径。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
 msgid ""
 "Copy the format ``fmt`` to the file like object ``dest``. If the specified "
@@ -321,14 +335,14 @@ msgid ""
 "is different from the current path (taking case sensitivity into account)."
 msgstr "将格式“fmt”复制到文件中，如对象“dest”。 如果指定的格式不存在，则会引发“NoSuchFormat”错误。 dest 也可以是路径（到文件），在这种情况下，格式将复制到其中，前提是该路径与当前路径不同（考虑区分大小写）。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
 msgstr "返回封面图像或无。 默认情况下，以字节字符串形式返回封面。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
 msgid ""
 "WARNING: Using as_path will copy the cover to a temp file and return the "
@@ -336,35 +350,35 @@ msgid ""
 "with it."
 msgstr "警告：使用 as_path 会将封面复制到临时文件并返回临时文件的路径。 使用完临时文件后，您应该将其删除。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:8
 msgid ""
 "If True return the image as an open file object (a SpooledTemporaryFile)"
 msgstr "如果为 True，则将图像作为打开的文件对象（SpooledTemporaryFile）返回"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:9
 msgid "If True return the image as a QImage object"
 msgstr "如果 True 将图像返回为 QImage 对象"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a QPixmap object"
 msgstr "如果 True 返回图像作为 QPixmap 对象"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:11
 msgid "If True return the image as a path pointing to a temporary file"
 msgstr "如果为 True，则将图像作为指向临时文件的路径返回"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_find_identical_books:1
 msgid ""
 "Return data that can be used to implement :meth:`find_identical_books` in a "
 "worker process without access to the db. See db.utils for an implementation."
 msgstr "返回可用于在工作进程中实现“find_identical_books”的数据，而无需访问数据库。 有关执行，请参阅 db.utils。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.data_for_has_book:1
 msgid ""
 "Return data suitable for use in :meth:`has_book`. This can be used for an "
@@ -372,51 +386,51 @@ msgid ""
 " db."
 msgstr "返回适合在“has_book”中使用的数据。 这可用于在工作进程中实现“has_book”，而无需访问数据库。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_annotations:1
 msgid "Delete annotations with the specified ids."
 msgstr "删除具有指定id的注释。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
 msgid ""
 "Delete data for name. By default deletes all data, if you only want to "
 "delete data for some book ids, pass in a list of book ids."
 msgstr "删除名称数据。 默认情况下删除所有数据，如果只想删除某些图书 ID 的数据，请传入图书 ID 列表。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_trash_entry:1
 msgid ""
 "Delete an entry from the trash. Here category is 'b' for books and 'f' for "
 "formats."
 msgstr "从垃圾箱中删除条目。 这里的类别是“b”代表书籍，“f”代表格式。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
 msgstr "将指定book_ids的所有格式的元数据更新为数据库中的当前元数据。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.expire_old_trash:1
 msgid "Expire entries from the trash that are too old"
 msgstr "使垃圾箱中太旧的条目过期"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.export_note:1
 msgid ""
 "Export the note as a single HTML document with embedded images as data: URLs"
 msgstr "将注释导出为单个 HTML 文档，并嵌入图像作为数据：URL"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
 msgstr "与 field_for 相同，只不过它避免了获取字段对象的额外查找"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
 msgid ""
 "Return the value of the field ``name`` for the book identified by "
@@ -424,7 +438,7 @@ msgid ""
 " ``name`` or no such field exists, then ``default_value`` is returned."
 msgstr "返回由“book_id”标识的书籍的字段“name”的值。 如果不存在这样的书，或者没有为字段“name”定义值，或者不存在这样的字段，则返回“default_value”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
 msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
@@ -432,7 +446,7 @@ msgid ""
 "``default_value`` is used for all custom columns."
 msgstr "“default_value” 不用于标题、title_sort、作者、author_sort 和 series_index。 这是因为这些在数据库中总是有值。 “default_value” 用于所有自定义列。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
 msgid ""
 "The returned value for is_multiple fields are always tuples, even when no "
@@ -442,7 +456,7 @@ msgid ""
 "were created."
 msgstr "is_multiple 字段的返回值始终是元组，即使未找到任何值（换句话说，default_value 被忽略）。 例外情况是返回值始终是字典的标识符。 返回的元组始终按链接顺序排列，即它们的创建顺序。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
 msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
@@ -450,28 +464,28 @@ msgid ""
 " or no such field, an empty tuple is returned."
 msgstr "返回由“book_id”标识的书籍上“name”字段的值的 ids（作为元组）。 如果没有值，或者没有这样的书，或者没有这样的字段，则返回一个空元组。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_supports_notes:1
 msgid ""
 "Return True iff the specified field supports notes. If field is None return "
 "frozenset of all fields that support notes."
 msgstr "当且仅当指定字段支持注释时返回 True。 如果字段为“无”，则返回支持注释的所有字段的冻结集。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.find_identical_books:1
 msgid ""
 "Finds books that have a superset of the authors in mi and the same title "
 "(title is fuzzy matched). See also :meth:`data_for_find_identical_books`."
 msgstr "查找mi中具有作者超集且标题相同的图书(标题是模糊匹配的)。另请参阅`data_for_find_aligant_books`。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:1
 msgid ""
 "Return the e-book format as a bytestring or `None` if the format doesn't "
 "exist, or we don't have permission to write to the e-book file."
 msgstr "以字节串形式返回电子书格式，如果格式不存在，或者我们没有写入电子书文件的权限，则返回“None”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:4
 msgid ""
 "If True the e-book format is returned as a file object. Note that the file "
@@ -479,13 +493,13 @@ msgid ""
 "format to another file, use :meth:`copy_format_to` instead for performance."
 msgstr "如果为 True，则电子书格式作为文件对象返回。 请注意，文件对象是 SpooledTemporaryFile，因此如果您想要将格式复制到另一个文件，请使用“copy_format_to”代替以提高性能。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
 msgid ""
 "Copies the format file to a temp file and returns the path to the temp file"
 msgstr "将格式文件复制到临时文件并返回临时文件的路径"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:10
 msgid ""
 "If True and returning a path the filename is the same as that used in the "
@@ -493,7 +507,7 @@ msgid ""
 "file (which is re-created each time)"
 msgstr "如果为 True 并返回路径，则文件名与库中使用的文件名相同。 请注意，使用此方法意味着重复调用会产生相同的临时文件（每次都会重新创建）"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:1
 msgid ""
 "Return absolute path to the e-book file of format `format`. You should "
@@ -501,7 +515,7 @@ msgid ""
 "Instead use, :meth:`copy_format_to`."
 msgstr "返回格式为“format”的电子书文件的绝对路径。 您几乎不应该使用它，因为它破坏了此 API 的线程安全承诺。 而是使用“copy_format_to”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
 msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
@@ -509,21 +523,21 @@ msgid ""
 "get_data_as_dict())."
 msgstr "目前仅在 calibredb 列表、查看器、编辑书籍、将格式与原始格式进行比较、打开方式、批量元数据编辑和目录（通过 get_data_as_dict()）中使用。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
 msgid ""
 "Apart from the viewer, open with and edit book, I don't believe any of the "
 "others do any file write I/O with the results of this call."
 msgstr "除了查看器、打开方式和编辑书籍之外，我不相信其他任何人会使用此调用的结果执行任何文件写入 I/O。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_hash:1
 msgid ""
 "Return the hash of the specified format for the specified book. The kind of "
 "hash is backend dependent, but is usually SHA-256."
 msgstr "返回指定书籍的指定格式的哈希值。 哈希类型取决于后端，但通常是 SHA-256。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:1
 msgid ""
 "Return the path, size and mtime for the specified format for the specified "
@@ -532,7 +546,7 @@ msgid ""
 ":meth:`copy_format_to` method."
 msgstr "返回指定书籍的指定格式的路径、大小和运行时间。 除非绝对必要，否则不应使用路径，因为直接访问它会破坏此 API 的线程安全保证。 而是使用“copy_format_to”方法。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
 msgid ""
 "If ``True`` cached values are used, otherwise a slow filesystem access is "
@@ -540,34 +554,34 @@ msgid ""
 "filesystem outside of this API."
 msgstr "如果使用“True”缓存值，否则文件系统访问速度会很慢。 如果在此 API 之外对文件系统执行访问，则缓存值可能会过期。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updated for this book."
 msgstr "如果为“True”，则数据库的 max_size 字段将针对本书进行更新。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
 msgid ""
 "Return tuple of all formats for the specified book. If verify_formats is "
 "True, verifies that the files exist on disk."
 msgstr "返回指定书籍的所有格式的元组。 如果 verify_formats 为 True，则验证文件是否存在于磁盘上。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_items_that_have_notes:1
 msgid ""
 "Return all item_ids for items that have notes in the specified field or all "
 "fields if field_name is None"
 msgstr "如果 field_name 为 None，则返回在指定字段或所有字段中具有注释的项目的所有 item_id"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:1
 msgid ""
 "Returns all links for all fields referenced by book identified by book_id. "
 "If book_id doesn't exist then the method returns {}."
 msgstr "返回由 book_id 标识的书籍引用的所有字段的所有链接。 如果 book_id 不存在，则该方法返回 {}。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:4
 msgid ""
 "Example: Assume author A has link X, author B has link Y, tag S has link F, "
@@ -576,28 +590,28 @@ msgid ""
 "nor B and has no tags, this method returns {}."
 msgstr "示例：假设作者 A 有链接 X，作者 B 有链接 Y，标签 S 有链接 F，标签 T 有链接 G。如果图书 1 有作者 A 和标签 T，则此方法返回 {'authors':{'A' ：'X'}，'标签'：{'T'，'G'}}。 如果图书 2 的作者既不是 A 也不是 B，并且没有标签，则此方法返回 {}。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:9
 msgid "the book id in question."
 msgstr "这本书id有问题。"
 
-#: ../../__w/calibre/calibre/manual/db_api.rst:0
+#: ../../../__w/calibre/calibre/manual/db_api.rst:0
 msgid "Returns"
 msgstr "返回"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:11
 msgid ""
 "{field: {field_value, link_value}, ...  for all fields with a field_value "
 "having a non-empty link value for that book"
 msgstr "{字段： {field_value， link_value}， ... 对于field_value具有该书的非空链接值的所有字段"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
 msgstr "在内部使用以实现标签浏览器"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_custom_book_data:1
 msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
@@ -605,60 +619,60 @@ msgid ""
 "If a particular value could not be decoded, uses default for it."
 msgstr "获取名称数据。默认情况下，会返回所有book_ids的数据，如果您只需要一些数据，请传入书籍 ID 列表。返回book_id到值的映射。如果无法解码特定值，则对其使用 default。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
 "must be a many-one or many-many field, otherwise a ValueError is raised."
 msgstr "返回id号到指定字段值的映射。字段必须是多-一或多-多字段，否则会引发ValueError。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
 msgid "Return the set of book ids for which name has data."
 msgstr "返回名称包含数据的书籍 ID 集。 "
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_id:1
 msgid ""
 "Return the item id for item_name or None if not found. This function is very"
 " slow if doing lookups for multiple names use either get_item_ids() or "
 "get_item_name_map(). Similarly, case sensitive lookups are faster than case "
 "insensitive ones."
-msgstr ""
+msgstr "返回 item_name 对应的项目 ID，如果未找到则返回 None。如果使用 get_item_ids() 或 get_item_name_map() 查找多个名称，此函数会非常慢。同样，区分大小写的查找比不区分大小写的查找更快。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return a dict mapping item_name to the item id or None"
-msgstr ""
+msgstr "返回一个将 item_name 映射到 item id 的字典，或者 None"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
 msgid ""
 "Return the item name for the item specified by item_id in the specified "
 "field. See also :meth:`get_id_map`."
 msgstr "返回指定字段中由 item_id 指定的项目的项目名称。 另请参阅“get_id_map”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name_map:1
 msgid "Return mapping of item values to ids"
 msgstr "返回条目值到 id 的映射"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:1
 msgid "Return a dictionary of links for the supplied field."
 msgstr "返回所提供字段的链接字典。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:3
 msgid "the lookup name of the field for which the link map is desired"
 msgstr "需要链接映射的字段的查找名称"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_link_map:5
 msgid "{field_value:link_value, ...} for non-empty links"
 msgstr "{field_value:link_value, ...} 用于非空链接"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_metadata:1
 msgid ""
 "Return metadata for the book identified by book_id as a "
@@ -668,32 +682,32 @@ msgid ""
 " then as mi.cover_data."
 msgstr "将 book_id 标识的书籍的元数据返回为 `calibre.ebooks.metadata.book.base.Metadata` 对象。 请注意，格式列表未经验证。 如果 get_cover 为 True，则返回封面，作为 mi.cover 的临时文件的路径，或者如果 cover_as_data 为 True，则返回 mi.cover_data。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:1
 msgid ""
 "Return the next series index for the specified series, taking into account "
 "the various preferences that control next series number generation."
 msgstr "返回指定系列的下一个系列索引，同时考虑控制下一个系列号生成的各种首选项。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:4
 msgid "The series-like field (defaults to the builtin series column)"
 msgstr "类似系列的字段（默认为内置系列列）"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
 msgstr "如果为 True，则返回 book_id 到当前 series_index 值的映射。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_notes_resource:1
 msgid ""
 "Return a dict containing the resource data and name or None if no resource "
 "with the specified hash is found"
 msgstr "返回包含资源数据和名称的字典，如果未找到具有指定哈希的资源，则返回 None"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -702,14 +716,14 @@ msgid ""
 " returned metadata object."
 msgstr "与“get_metadata”类似，不同之处在于它返回一个仅按需从数据库读取值的 ProxyMetadata 对象。 当只需要从返回的元数据对象访问少量字段时，这比 get_metadata 快得多。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_usage_count_by_id:1
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
 msgstr "返回指定字段的所有值的 id 到使用计数的映射，该字段必须是多一或多对字段。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
 msgid ""
 "Return True iff the database contains an entry with the same title as the "
@@ -717,52 +731,52 @@ msgid ""
 ":meth:`data_for_has_book`."
 msgstr "当且仅当数据库包含与传入的 Metadata 对象具有相同标题的条目时返回 True。 比较不区分大小写。 另请参阅“有书的数据”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
 msgid "Return True iff the format exists on disk"
 msgstr "当且仅当磁盘上存在该格式时返回 True"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
 msgstr "如果指定的book_id在数据库中存在就返回真"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.import_note:1
 msgid ""
 "Import a previously exported note or an arbitrary HTML file as the note for "
 "the specified item"
 msgstr "导入先前导出的注释或任意 HTML 文件作为指定项目的注释"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "使用来自后端的数据初始化此缓存。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
 msgid ""
 "Return a dict of field to items that have associated notes for that field "
 "for the specified book"
 msgstr "将字段字典返回到具有指定书籍的该字段的关联注释的项目"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.link_for:1
 msgid ""
 "Return the link, if any, for the specified item or None if no link is found"
 msgstr "返回指定项目的链接，如果有；如果未找到链接，则返回“无”"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:1
 msgid "Get information about extra files in the book's directory."
 msgstr "获取有关书籍目录中额外文件的信息。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:3
 msgid "the database book id for the book"
 msgstr "书籍的数据库书籍 ID"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:4
 msgid ""
 "the pattern of filenames to search for. Empty pattern matches all extra "
@@ -770,7 +784,7 @@ msgid ""
 "to match files inside the data directory."
 msgstr "要搜索的文件名模式。 空模式匹配所有额外文件。 模式必须使用 / 作为分隔符。 使用 DATA_FILE_PATTERN 常量来匹配数据目录内的文件。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.list_extra_files:7
 msgid ""
 "A tuple of all extra files matching the specified pattern. Each element of "
@@ -779,76 +793,76 @@ msgid ""
 "stat_result is the result of calling os.stat() on the file."
 msgstr "与指定模式匹配的所有额外文件的元组。 元组的每个元素都是 ExtraFile(relpath, file_path, stat_result)。 其中 relpath 是文件到图书目录的相对路径，使用 / 作为分隔符。 stat_result 是对文件调用 os.stat() 的结果。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_annotations_for_book:1
 msgid ""
 "Merge the specified annotations into the existing annotations for book_id, "
 "fm, user_type, and user."
 msgstr "将指定的注释合并到book_id、fm、user_ype和user的现有注释中。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_extra_files:1
 msgid ""
 "Merge the extra files from src_ids into dest_id. Conflicting files are auto-"
 "renamed unless replace=True in which case they are replaced."
 msgstr "将 src_ids 中的额外文件合并到 dest_id 中。 冲突的文件会自动重命名，除非replace=True，在这种情况下它们会被替换。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_book_from_trash:1
 msgid "Undelete a book from the trash directory"
 msgstr "从垃圾目录中取消删除书籍"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.move_format_from_trash:1
 msgid "Undelete a format from the trash directory"
 msgstr "从垃圾目录中取消删除格式"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:1
 msgid ""
 "Return a list of sorted book ids. If ids_to_sort is None, all book ids are "
 "returned."
 msgstr "返回已排序图书 ID 的列表。 如果 ids_to_sort 为 None，则返回所有图书 ID。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.multisort:4
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
 msgstr "fields 必须是形式为 (field_name, ascending=True 或 False) 的二元组列表。 最重要的字段是第一个 2 元组。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.notes_data_for:1
 msgid "Return all notes data as a dict or None if note does not exist"
 msgstr "将所有笔记数据作为字典返回，如果笔记不存在则返回 None"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.notes_for:1
 msgid "Return the notes document or an empty string if not found"
 msgstr "返回注释文档，如果找不到则返回空字符串"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.notes_resources_used_by:1
 msgid ""
 "Return the set of resource hashes of all resources used by the note for the "
 "specified item"
 msgstr "返回指定项目的注释所使用的所有资源的资源哈希集"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
 msgstr "返回指定首选项的值，如果未设置首选项，则返回指定为“default”的值。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
 msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
 msgstr "以字节串形式返回书籍的 OPF 元数据备份，如果不存在此类备份，则返回 None。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
@@ -856,31 +870,37 @@ msgid ""
 "placed in the per-library trash directory."
 msgstr "从数据库中删除 book_ids 指定的书籍并删除其格式文件。 如果“permanent”为 False，则格式文件将放置在每个库的垃圾目录中。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_extra_files:1
+msgid ""
+"Delete the specified extra files, either to Recycle Bin or permanently."
+msgstr "删除指定的附加文件，删除至回收站或永久删除。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
 msgid "Remove the specified formats from the specified books."
 msgstr "从指定书籍中删除指定格式。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:3
 msgid "A mapping of book_id to a list of formats to be removed from the book."
 msgstr "book_id 到要从书中删除的格式列表的映射。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:4
 msgid ""
 "If True, only remove the record for the format from the db, do not delete "
 "the actual format file from the filesystem."
 msgstr "如果为 True，则仅从数据库中删除该格式的记录，而不从文件系统中删除实际的格式文件。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:5
 msgid ""
 "A map of book id to set of formats actually deleted from the filesystem for "
 "that book"
 msgstr "书籍 ID 到实际从该书的文件系统中删除的格式集的映射"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_items:1
 msgid ""
 "Delete all items in the specified field with the specified ids. Returns the "
@@ -888,38 +908,38 @@ msgid ""
 "books ids. If specified the items will only be removed from those books."
 msgstr "删除指定字段中具有指定 ID 的所有项目。 返回受影响的图书 ID 集。 ``restrict_to_book_ids`` 是一组可选的书籍 ID。 如果指定，这些项目只会从这些书中删除。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_extra_files:1
 msgid "Rename extra data files"
 msgstr "重命名附加的数据文件"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
 msgstr "重命名多-一或多-多对字段中的项目，例如标签或系列。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
 msgid ""
 "When renaming in a series-like field also change the series_index values."
 msgstr "在类似系列的字段中重命名时，还要更改 series_index 值。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:4
 msgid ""
 "An optional set of book ids for which the rename is to be performed, "
 "defaults to all books."
 msgstr "要执行重命名的一组可选书籍 ID，默认为所有书籍。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_book:1
 msgid ""
 "Restore the book entry in the database for a book that already exists on the"
 " filesystem"
 msgstr "恢复数据库中已存在于文件系统上的书籍的书籍条目"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_original_format:1
 msgid ""
 "Restore the specified format from the previously saved ORIGINAL_FORMAT, if "
@@ -927,7 +947,7 @@ msgid ""
 "successful restore."
 msgstr "从之前保存的 ORIGINAL_FORMAT 中恢复指定的格式，如果有。 成功则返回 True。 成功恢复后，ORIGINAL_FORMAT 将被删除。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:1
 msgid ""
 "A safe read lock is a lock that does nothing if the thread already has a "
@@ -939,7 +959,7 @@ msgid ""
 " that trigger this as well."
 msgstr "安全读锁是一种如果线程已经拥有写锁则不执行任何操作的锁，否则它会获取读锁。 这对于防止 DowngradeLockErrors 是必要的，在存在复合列的情况下更新搜索缓存时可能会发生 DowngradeLockErrors。 更新搜索缓存持有独占锁，但搜索复合列涉及通过尝试获取共享锁的 ProxyMetadata 读取字段值。 可能还有其他情况会触发此情况。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.safe_read_lock:9
 msgid ""
 "This property returns a new lock object on every access. This lock object is"
@@ -947,21 +967,21 @@ msgid ""
 "as ``with cache.safe_read_lock:`` otherwise bad things will happen."
 msgstr "此属性在每次访问时返回一个新的锁定对象。 该锁对象不是递归的（为了性能），并且只能在 with 语句中使用“with cache.safe_read_lock:”，否则会发生不好的事情。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.save_original_format:1
 msgid ""
 "Save a copy of the specified format as ORIGINAL_FORMAT, overwriting any "
 "existing ORIGINAL_FORMAT."
 msgstr "将指定格式的副本保存为 ORIGINAL_FORMAT，覆盖任何现有的 ORIGINAL_FORMAT。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:1
 msgid ""
 "Search the database for the specified query, returning a set of matched book"
 " ids."
 msgstr "在数据库中搜索指定的查询，返回一组匹配的图书 ID。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:3
 msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
@@ -969,43 +989,43 @@ msgid ""
 "restriction b."
 msgstr "与指定查询进行 AND 运算的限制。 请注意，限制已被缓存，因此搜索 a AND b 将比搜索带有限制 b 的 a 慢。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
 msgid "Used internally (virtual fields such as on_device to search over)."
 msgstr "内部使用（虚拟字段，例如用于搜索的 on_device）。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:8
 msgid ""
 "If not None, a set of book ids for which books will be searched instead of "
 "searching all books."
 msgstr "如果不是“无”，则将搜索一组图书 ID，而不是搜索所有图书。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search_annotations:1
 msgid ""
 "Return of a tuple of annotations matching the specified Full-text query."
 msgstr "返回与指定全文查询匹配的注释二元组。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search_notes:1
 msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "使用 FTS 索引搜索笔记文本。 如果查询为空，则返回所有注释。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1
 msgid ""
 "Set all annotations for the specified book_id, fmt, user_type and user."
 msgstr "为指定的book_id、fdt、user_ype和user设置所有注释。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_conversion_options:1
 msgid "options must be a map of the form {book_id:conversion_options}"
 msgstr "options 必须是 {book_id:conversion_options} 形式的映射"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_cover:1
 msgid ""
 "Set the cover for this book. The data can be either a QImage, QPixmap, file "
@@ -1013,19 +1033,19 @@ msgid ""
 "is removed."
 msgstr "设置这本书的封面。 数据可以是 QImage、QPixmap、文件对象或字节串。 它也可以是“无”，在这种情况下，任何现有的覆盖物都会被删除。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:1
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
 msgstr "设置“name”指定的字段的值。 返回受更改影响的所有图书 ID 的集合。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
 msgid "Mapping of book_ids to values that should be applied."
 msgstr "将 book_ids 映射到应应用的值。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:4
 msgid ""
 "If True, the case of many-one or many-many fields will be changed. For "
@@ -1034,40 +1054,40 @@ msgid ""
 "allow_case_change is True, otherwise they will both have the tag ``tag1``."
 msgstr "如果为 True，多对一或多对多字段的大小写将会改变。 例如，如果一本书有标签“tag1”，而您将另一本书的标签设置为“Tag1”，那么如果allow_case_change为True，这两本书都将有标签“Tag1”，否则它们都会有标签“Tag1”。 有标签``tag1``。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:8
 msgid "Used internally, you should never change it."
 msgstr "内部使用，你不应该改变它。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:1
 msgid ""
 "Sets links for item values in field. Note: this method doesn't change values"
 " not in the value_to_link_map"
 msgstr "设置字段中项目值的链接。 注意：此方法不会更改不在 value_to_link_map 中的值"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:4
 msgid "the lookup name"
 msgstr "查找名称"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:5
 msgid ""
 "dict(field_value:link, ...). Note that these are values, not field ids."
 msgstr "字典（字段值：链接，...）。 请注意，这些是值，而不是字段 ID。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7
 msgid "books changed by setting the link"
 msgstr "通过设置链接更改书籍"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
 msgstr "从“Metadata”对象“mi”设置书籍“id”的元数据"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:3
 msgid ""
 "Setting force_changes=True will force set_metadata to update fields even if "
@@ -1081,7 +1101,7 @@ msgid ""
 "title or authors."
 msgstr "设置force_changes=True将强制set_metadata更新字段，即使mi包含空值。 在这种情况下，“无”与“空”不同。 如果 mi.XXX 为 None，则不替换 XXX，否则替换。 标签、标识符和封面属性是特殊情况。 标签和标识符不能设置为 None，因此如果 force_changes 为 true，它们将始终被替换。 您必须确保 mi 包含您希望本书具有的值。 如果提供新封面，封面总是会更改，但永远不会被删除。 另请注意，force_changes 对设置标题或作者没有影响。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_notes_for:1
 msgid ""
 "Set the notes document. If the searchable text is different from the "
@@ -1092,13 +1112,13 @@ msgid ""
 "anyway."
 msgstr "设置注释文档。 如果可搜索文本与文档不同，请将其指定为 searchable_text。 如果文档引用资源，则它们的哈希值必须存在于 resource_hashes 中。 将remove_unused_resources设置为True以清理未使用的资源，请注意，更新注释会自动清理与该注释相关的资源。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
 msgid ""
 "Set the specified preference to the specified value. See also :meth:`pref`."
 msgstr "将指定首选项设置为指定值。 另请参阅“pref”。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.split_if_is_multiple_composite:1
 msgid ""
 "If f is a composite column lookup key and the column is is_multiple then "
@@ -1107,46 +1127,46 @@ msgid ""
 "metadata field getters, for example tags."
 msgstr "如果 f 是复合列查找键并且列是 is_multiple，则将 v 拆分为唯一的非空值。 比较区分大小写。 订单不保留。 返回一个 list() 以与代理元数据字段 getter 兼容，例如标签。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:1
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
 msgstr "返回所有具有早于指定时间的标签“tag”的书籍的 ID。 标签比较不区分大小写。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
 msgstr "timedelta 对象或 None。 如果没有，则返回带有该标签的所有 id。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
 msgstr "如果不是“无”，则匹配列表将仅限于具有此标签的书籍"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10
 msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
 msgstr "作者名单。 如果不是“无”，则匹配列表将仅限于具有这些作者的书籍（不区分大小写）。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.unretire_note_for:1
 msgid ""
 "Unretire a previously retired note for the specified item. Notes are retired"
 " when an item is removed from the database"
 msgstr "取消指定项目之前已停用的注释。 当从数据库中删除项目时，注释将被停用"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "更新注释。"
 
-#: ../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1
 msgid ""
 "Return the user categories for the specified books. proxy_metadata_map is "

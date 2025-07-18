@@ -97,7 +97,8 @@ def author_to_author_sort(
 
     author_use_surname_prefixes = tweaks['author_use_surname_prefixes'] if use_surname_prefixes is None else use_surname_prefixes
     if author_use_surname_prefixes:
-        author_surname_prefixes = frozenset(x.lower() for x in (tweaks['author_surname_prefixes'] if surname_prefixes is None else surname_prefixes))
+        author_surname_prefixes = frozenset(
+            force_unicode(x).lower() for x in (tweaks['author_surname_prefixes'] if surname_prefixes is None else surname_prefixes))
         if len(tokens) == 2 and tokens[0].lower() in author_surname_prefixes:
             return author
 
@@ -169,7 +170,7 @@ def get_title_sort_pat(lang=None):
         ans = f'^({ans})'
         try:
             ans = re.compile(ans, re.IGNORECASE)
-        except:
+        except Exception:
             ans = re.compile(r'^(A|The|An)\s+', re.IGNORECASE)
     else:
         ans = re.compile(r'^$')  # matches only the empty string
@@ -278,7 +279,7 @@ class Resource:
         self.fragment = ''
         try:
             self.mime_type = guess_type(href_or_path)[0]
-        except:
+        except Exception:
             self.mime_type = None
         if self.mime_type is None:
             self.mime_type = 'application/octet-stream'
