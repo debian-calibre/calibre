@@ -22,7 +22,7 @@ This reverts commit 76fbbef9d08d4d335c5408584ed26bfc165b5fdc.
  13 files changed, 463 insertions(+), 454 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index 47ba003..0b7bf60 100644
+index c29c2d7..b32bb2b 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -234,12 +234,8 @@ class Environment(NamedTuple):
@@ -41,10 +41,10 @@ index 47ba003..0b7bf60 100644
  
  def init_env(debug=False, sanitize=False, compiling_for='native'):
 diff --git a/setup/build_environment.py b/setup/build_environment.py
-index 139a3be..4ba3fa5 100644
+index fc217ba..9b1725e 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
-@@ -223,7 +223,6 @@ if os.path.exists(os.path.join(sw, 'ffmpeg')):
+@@ -226,7 +226,6 @@ if os.path.exists(os.path.join(sw, 'ffmpeg')):
  
  podofo_lib = os.environ.get('PODOFO_LIB_DIR', podofo_lib)
  podofo_inc = os.environ.get('PODOFO_INC_DIR', podofo_inc)

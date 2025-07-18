@@ -21,7 +21,7 @@ index 16a31fc..64e8445 100644
 -        return re.sub(r'[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
 +        return re.sub('[^\x00-\x7f]', lambda x: self.replace_point(x.group()), text)
 diff --git a/src/calibre/ebooks/unihandecode/unidecoder.py b/src/calibre/ebooks/unihandecode/unidecoder.py
-index aba5069..6d7c9f1 100644
+index c5529fb..729b03a 100644
 --- a/src/calibre/ebooks/unihandecode/unidecoder.py
 +++ b/src/calibre/ebooks/unihandecode/unidecoder.py
 @@ -73,7 +73,7 @@ class Unidecoder:
