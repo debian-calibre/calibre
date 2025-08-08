@@ -304,7 +304,7 @@ class FFMLProcessor:
         elif tree.node_kind() == NodeKinds.ITALIC_TEXT:
             result += f'<i>{tree.escaped_text()}</i>'
         elif tree.node_kind() == NodeKinds.LIST:
-            result += '\n<ul>\n'
+            result += '<ul>\n'
             for child in tree.children():
                 result += '<li>\n'
                 result += self.tree_to_html(child, depth=depth+1)
@@ -360,6 +360,81 @@ class FFMLProcessor:
         paren = result.find('(')
         result = f'<a href="ffdoc:{fname}">{fname}</a>{result[paren:]}'
         return result
+
+    def tree_to_transifex(self, tree, depth=0):
+        '''
+        Given a Formatter Function Markup Language (FFML) parse tree, return a
+        string containing an encoding suitable for transifex. Simplified
+        explanation: non-significant newlines are removed, collapsing a series
+        of lines into a single line. There are no semantic changes. Assuming
+        correct FFML input, transifex'ed output re-run through the FFML
+        processor produces html and rst documents identical to the original
+        FFML input.
+
+        :param tree:   the parsed FFML.
+        :param depth:  the recursion level. This is used for debugging.
+
+        :return:       a string containing the HTML text
+        '''
+        result = ''
+        if tree.node_kind() == NodeKinds.TEXT:
+            result += tree.text()
+        if tree.node_kind() == NodeKinds.BOLD_TEXT:
+            result += f'[B]{tree.text()}[/B]'
+        elif tree.node_kind() == NodeKinds.BLANK_LINE:
+            result += '\n\n'
+        elif tree.node_kind() == NodeKinds.CHARACTER:
+            result += '\\' + tree.text()
+        elif tree.node_kind() == NodeKinds.CODE_TEXT:
+            t = tree.text()
+            t = t + ' ' if t.endswith('`') else t
+            result += f'``{t}``'
+        elif tree.node_kind() == NodeKinds.CODE_BLOCK:
+            result += '[CODE]\n' + tree.text().replace('[/CODE]', r'[\/CODE]') + '[/CODE]\n'
+        elif tree.node_kind() == NodeKinds.END_SUMMARY:
+            result += '[/]'
+        elif tree.node_kind() == NodeKinds.ERROR_TEXT:
+            result += f'{tree.text()}'
+        elif tree.node_kind() == NodeKinds.GUI_LABEL:
+            result += f':guilabel:`{tree.text()}`'
+        elif tree.node_kind() == NodeKinds.ITALIC_TEXT:
+            result += f'`{tree.text()}`'
+        elif tree.node_kind() == NodeKinds.LIST:
+            result += '[LIST]\n'
+            for child in tree.children():
+                result += '[*]'
+                t = self.tree_to_transifex(child, depth=depth+1)
+                result += t[0:-1] if t.endswith('\n\n') else t
+            result += '[/LIST]\n'
+        elif tree.node_kind() == NodeKinds.REF:
+            result += f':ref:`{tree.text()}`'
+        elif tree.node_kind() == NodeKinds.URL:
+            result += f'[URL href="{tree.url()}"]{tree.label()}[/URL]'
+        elif tree.node_kind() == NodeKinds.LIST_ITEM:
+            for child in tree.children():
+                result += self.tree_to_transifex(child, depth=depth+1)
+            result += '\n'
+        elif tree.node_kind() == NodeKinds.DOCUMENT:
+            for child in tree.children():
+                result += self.tree_to_transifex(child, depth=depth+1)
+        return result
+
+    def document_to_transifex(self, document, name, safe=True):
+        '''
+        Given a document in the Formatter Function Markup Language (FFML), return
+        that document suitable for transifex.
+
+        :param document: the text in FFML.
+        :param name: the name of the document, used during error
+                     processing. It is usually the name of the function.
+        :param safe: if true, do not propagate exceptions. Instead attempt to
+                     recover using the English version as well as display an error.
+
+        :return: a string containing the output for transifex.
+
+        '''
+        tree = self.parse_document(document, name, safe=safe)
+        return self.tree_to_transifex(tree, 0)
 
     def tree_to_rst(self, tree, indent, result=None):
         '''
@@ -501,6 +576,17 @@ class FFMLProcessor:
                 '\\':           NodeKinds.CHARACTER
             }
 
+    can_be_inlined =    (
+        NodeKinds.CODE_TEXT,
+        NodeKinds.ITALIC_TEXT,
+        NodeKinds.BOLD_TEXT,
+        NodeKinds.END_SUMMARY,
+        NodeKinds.GUI_LABEL,
+        NodeKinds.REF,
+        NodeKinds.URL,
+        NodeKinds.CHARACTER
+    )
+
     def __init__(self):
         self.document = DocumentNode()
         self.input = None
@@ -509,11 +595,10 @@ class FFMLProcessor:
     def error(self, message):
         raise ValueError(f'{message} on line {self.input_line} in "{self.document_name}"')
 
-    def find(self, for_what):
-        p = self.input.find(for_what, self.input_pos)
-        if p < 0:
-            return -1
-        return -1 if p < 0 else p - self.input_pos
+    def find(self, for_what, at_pos=-1):
+        pos = at_pos if at_pos >= 0 else self.input_pos
+        p = self.input.find(for_what, pos)
+        return -1 if p < 0 else p - pos
 
     def move_pos(self, to_where):
         for c in self.input[self.input_pos:self.input_pos+to_where]:
@@ -539,13 +624,14 @@ class FFMLProcessor:
     def startswith(self, txt):
         return self.input.startswith(txt, self.input_pos)
 
-    def find_one_of(self):
+    def find_one_of(self, at_pos=-1):
         positions = []
+        pos = at_pos if at_pos >= 0 else self.input_pos
         for s in self.keywords:
-            p = self.find(s)
+            p = self.find(s, pos)
             if p == 0:
                 return self.keywords[s]
-            positions.append(self.find(s))
+            positions.append(p)
         positions = list(filter(lambda x: x >= 0, positions))
         if positions:
             return min(positions)
@@ -655,8 +741,19 @@ class FFMLProcessor:
         while True:
             p = self.find_one_of()
             if p > 0:
-                txt = self.text_to(p).replace('\n', ' ')
-                parent.add_child(TextNode(txt))
+                txt = self.text_to(p)
+                if txt != '\n':
+                    # Look ahead to see if the next parse node's text can be
+                    # inline with this text. If so, change a trailing newline
+                    # to a trailing space.
+                    last_char = txt[-1]
+                    txt = txt[:-1].replace('\n', ' ')
+                    if last_char == '\n' and self.find_one_of(self.input_pos + p) in self.can_be_inlined:
+                        last_char = ' '
+                    parent.add_child(TextNode(txt + last_char))
+                else:
+                    # Bare newlines are passed through unchanged
+                    parent.add_child(TextNode(txt))
                 self.move_pos(p)
             elif p == NodeKinds.BLANK_LINE:
                 parent.add_child(BlankLineNode())

@@ -14,6 +14,7 @@ import functools
 import os
 import re
 from collections import OrderedDict
+from contextlib import suppress
 
 from css_selectors import Select, SelectorError
 from lxml import etree
@@ -64,8 +65,18 @@ class Split:
         self.log('Splitting markup on page breaks and flow limits, if any...')
         self.opts = opts
         self.map = {}
+        self.nav_href = getattr(opts, 'epub3_nav_href', '')
+        self.existing_nav = getattr(opts, 'epub3_nav_parsed', None)
+        output_supports_nav = False
+        with suppress(Exception):
+            output_supports_nav = int(opts.epub_version) >= 3
+        def is_nav(item):
+            ans = item.href == self.nav_href and output_supports_nav
+            if ans:
+                self.log(f'Not splitting {self.nav_href} as it is the EPUB3 nav document')
+            return ans
         for item in list(self.oeb.manifest.items):
-            if item.spine_position is not None and etree.iselement(item.data):
+            if item.spine_position is not None and etree.iselement(item.data) and not is_nav(item):
                 self.split_item(item)
 
         self.fix_links()
@@ -161,10 +172,20 @@ class Split:
         '''
         Fix references to the split files in other content files.
         '''
+        seen = set()
         for item in self.oeb.manifest:
             if etree.iselement(item.data):
                 self.current_item = item
                 rewrite_links(item.data, self.rewrite_links)
+                seen.add(item.data)
+        if self.existing_nav is not None and self.existing_nav not in seen:
+            seen.add(self.existing_nav)
+            from calibre.ebooks.oeb.base import rel_href
+            class FakeManifestItem:
+                href = self.nav_href
+                def abshref(self): return self.href
+                def relhref(self, href): return rel_href(self.href, href)
+            rewrite_links(self.existing_nav, self.rewrite_links)
 
     def rewrite_links(self, url):
         href, frag = urldefrag(url)

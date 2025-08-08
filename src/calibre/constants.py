@@ -11,7 +11,7 @@ from functools import lru_cache
 from polyglot.builtins import environ_item, hasenv
 
 __appname__   = 'calibre'
-numeric_version = (8, 7, 0)
+numeric_version = (8, 8, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = 'Kovid Goyal <kovid@kovidgoyal.net>'
@@ -258,6 +258,7 @@ class ExtensionsImporter:
             'rcc_backend',
             'icu',
             'speedup',
+            'piper',
             'html_as_json',
             'fast_css_transform',
             'fast_html_entities',
@@ -506,19 +507,3 @@ def bundled_binaries_dir() -> str:
     if (islinux or isbsd) and getattr(sys, 'frozen', False):
         return os.path.join(sys.executables_location, 'bin')
     return ''
-
-
-@lru_cache(2)
-def piper_cmdline() -> tuple[str, ...]:
-    ext = '.exe' if iswindows else ''
-    if bbd := bundled_binaries_dir():
-        if ismacos:
-            return (os.path.join(sys.frameworks_dir, 'piper', 'piper'),)
-        return (os.path.join(bbd, 'piper', 'piper' + ext),)
-    if pd := os.environ.get('PIPER_TTS_DIR'):
-        return (os.path.join(pd, 'piper' + ext),)
-    import shutil
-    exe = shutil.which('piper-tts')
-    if exe:
-        return (exe,)
-    return ()

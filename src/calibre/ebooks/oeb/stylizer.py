@@ -115,6 +115,27 @@ class style_map(dict):
         self.important_properties = set()
 
 
+def epub_prefix_properties() -> dict[str, tuple[str, str]]:
+    ans = getattr(epub_prefix_properties, 'ans', None)
+    if ans is None:
+        ans = {}
+        for unprefixed in (
+            'writing-mode', 'text-emphasis', 'text-emphasis-color', 'text-emphasis-position', 'text-emphasis-style'
+        ):
+            ans[f'-epub-{unprefixed}'] = f'-webkit-{unprefixed}', unprefixed
+        setattr(epub_prefix_properties, 'ans', ans)
+    return ans
+
+
+def cleanup_epub_prefixed_properties(style: dict[str, str]) -> None:
+    epub_prefixed = epub_prefix_properties()
+    for x in tuple(filter(epub_prefixed.__contains__, style)):
+        val = style.pop(x)
+        for key in epub_prefixed[x]:
+            if key not in style:
+                style[key] = val
+
+
 class StylizerRules:
 
     def __init__(self, opts, profile, stylesheets):
@@ -185,9 +206,7 @@ class StylizerRules:
                 size = 'xx-small'
             if size in FONT_SIZE_NAMES:
                 style['font-size'] = f'{self.profile.fnames[size]/float(self.profile.fbase):.1f}rem'
-        if '-epub-writing-mode' in style:
-            for x in ('-webkit-writing-mode', 'writing-mode'):
-                style[x] = style.get(x, style['-epub-writing-mode'])
+        cleanup_epub_prefixed_properties(style)
         return style
 
     def _apply_text_align(self, text):

@@ -164,26 +164,32 @@ class WSJ(BasicNewsRecipe):
         return soup
 
     def _download_cover(self):
-        d = self.recipe_specific_options.get('date')
-        if not (d and isinstance(d, str)):
-            import os
-            from contextlib import closing
+        import os
+        from contextlib import closing
 
-            from calibre.utils.img import save_cover_data_to
+        from calibre.utils.img import save_cover_data_to
 
-            br = browser()
-            raw = br.open('https://www.frontpages.com/the-wall-street-journal/')
+        br = browser()
+        dt = self.recipe_specific_options.get('date')
+        if (dt and isinstance(dt, str)):
+            d, m, y = dt.split('-')
+            cu = f'https://www.wsj.com/public/resources/documents/WSJNewsPaper-{int(m)}-{int(d)}-{y}.jpg'
+        else:
+            raw = br.open('https://frontpages.freedomforum.org/newspapers/wsj-The_Wall_Street_Journal')
             soup = BeautifulSoup(raw.read())
-            cu = (
-                'https://www.frontpages.com'
-                + soup.find('img', attrs={'id': 'giornale-img'})['src']
-            )
-            self.report_progress(1, _('Downloading cover from %s') % cu)
-            with closing(br.open(cu, timeout=self.timeout)) as r:
-                cdata = r.read()
-            cpath = os.path.join(self.output_dir, 'cover.jpg')
-            save_cover_data_to(cdata, cpath)
-            self.cover_path = cpath
+            cu = soup.find(
+                    'img',
+                    attrs={
+                        'alt': 'Front Page Image',
+                        'src': lambda x: x and x.endswith('front-page-large.jpg'),
+                    },
+                )['src'].replace('-large', '-medium')
+        self.report_progress(1, _('Downloading cover from %s') % cu)
+        with closing(br.open(cu, timeout=self.timeout)) as r:
+            cdata = r.read()
+        cpath = os.path.join(self.output_dir, 'cover.jpg')
+        save_cover_data_to(cdata, cpath)
+        self.cover_path = cpath
 
     def get_browser(self, *args, **kw):
         br = BasicNewsRecipe.get_browser(self, *args, **kw)
@@ -249,7 +255,10 @@ class WSJ(BasicNewsRecipe):
                 for arts in art['collectionItems']:
                     mobi = arts['content']['mobileSummary']
                     title = mobi['headline']['text']
-                    desc = mobi['description']['content']['text']
+                    try:
+                        desc = mobi['description']['content']['text']
+                    except TypeError:
+                        desc = ''
                     url = arts['id']
                     self.log('          ', title, '\n\t', desc)
                     articles.append({'title': title, 'description': desc, 'url': url})
