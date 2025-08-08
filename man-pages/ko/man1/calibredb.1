@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "7월 18, 2025" "8.7.0" "calibre"
+.TH "CALIBREDB" "1" "8월 08, 2025" "8.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -658,7 +658,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-merge\-comments\-rule
-#<custom field>:[이전|이후]:[참|거짓] 지정: <custom field> 주석과 병합할 메모가 포함된 사용자 정의 필드 [이전|이후] 주석에 대한 주석 배치 [참|거짓] \- 메모와 주석 사이에 가로줄을 삽입합니다. 기본값: \fB\(aq\fP기본값(%d)\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
+#<custom field>:[이전|이후]:[참|거짓] 지정: <custom field> 책 설명과 병합할 메모가 포함된 사용자 정의 필드 [이전|이후] 책 설명에 대한 책 설명 배치 [참|거짓] \- 메모와 책 설명사이에 가로줄을 삽입합니다. 기본값: \fB\(aq\fP::\fB\(aq\fP 적용 대상: AZW3, EPUB, MOBI 출력 형식
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1038,7 +1038,7 @@ Only match on exact words not related words. So correction will not match correc
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+각 일치 항목 주변의 텍스트 스니펫을 포함합니다. 참고로, 이 기능은 검색 속도를 훨씬 느리게 만듭니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1048,12 +1048,12 @@ How much of the library must be indexed before searching is allowed, as a percen
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+스니펫 내에서 일치하는 단어의 끝을 나타내는 데 사용되는 마커입니다
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+스니펫 내에서 일치하는 단어의 시작을 나타내는 데 사용되는 마커입니다
 .UNINDENT
 .INDENT 0.0
 .TP

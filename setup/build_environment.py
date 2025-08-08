@@ -153,6 +153,8 @@ uchardet_inc_dirs, uchardet_lib_dirs, uchardet_libs = [], [], ['uchardet']
 
 openssl_inc_dirs, openssl_lib_dirs = [], []
 
+piper_inc_dirs, piper_lib_dirs, piper_libs = [], [], []
+
 ICU = sw = ''
 
 if iswindows:
@@ -179,6 +181,9 @@ if iswindows:
     zlib_lib_dirs = [sw_lib_dir]
     podofo_inc = os.path.join(sw_inc_dir, 'podofo')
     podofo_lib = sw_lib_dir
+    piper_inc_dirs = [sw_inc_dir, os.path.join(sw_inc_dir, 'onnxruntime')]
+    piper_lib_dirs = [sw_lib_dir]
+    piper_libs = ['espeak-ng', 'onnxruntime']
 elif ismacos:
     sw = os.environ.get('SW', os.path.expanduser('~/sw'))
     sw_inc_dir  = os.path.join(sw, 'include')
@@ -195,6 +200,9 @@ elif ismacos:
     openssl_lib_dirs = [os.path.join(SSL, 'lib')]
     if os.path.exists(os.path.join(sw_bin_dir, 'cmake')):
         CMAKE = os.path.join(sw_bin_dir, 'cmake')
+    piper_inc_dirs = [sw_inc_dir, os.path.join(sw_inc_dir, 'onnxruntime')]
+    piper_lib_dirs = [sw_lib_dir]
+    piper_libs = ['espeak-ng', 'onnxruntime']
 else:
     freetype_inc_dirs = pkgconfig_include_dirs('freetype2', 'FT_INC_DIR',
             '/usr/include/freetype2')
@@ -211,6 +219,10 @@ else:
     uchardet_inc_dirs = pkgconfig_include_dirs('uchardet', '', '/usr/include/uchardet')
     uchardet_lib_dirs = pkgconfig_lib_dirs('uchardet', '', '/usr/lib')
     uchardet_libs = pkgconfig_libs('uchardet', '', '')
+    piper_inc_dirs = pkgconfig_include_dirs('espeak-ng', '', '/usr/include') + pkgconfig_include_dirs(
+            'libonnxruntime', '', '/usr/include/onnxruntime')
+    piper_lib_dirs = pkgconfig_lib_dirs('espeak-ng', '', '/usr/lib') + pkgconfig_lib_dirs('libonnxruntime', '', '/usr/lib')
+    piper_libs = pkgconfig_libs('espeak-ng', '', 'espeak-ng') + pkgconfig_libs('libonnxruntime', '', 'onnxruntime')
     for x in ('libavcodec', 'libavformat', 'libavdevice', 'libavfilter', 'libavutil', 'libpostproc', 'libswresample', 'libswscale'):
         for inc in pkgconfig_include_dirs(x, '', '/usr/include'):
             if inc and inc not in ffmpeg_inc_dirs:
