@@ -22,7 +22,7 @@ This reverts commit 76fbbef9d08d4d335c5408584ed26bfc165b5fdc.
  13 files changed, 463 insertions(+), 454 deletions(-)
 
 diff --git a/setup/build.py b/setup/build.py
-index c29c2d7..b32bb2b 100644
+index d2d77bc..92a041b 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -234,12 +234,8 @@ class Environment(NamedTuple):
@@ -41,10 +41,10 @@ index c29c2d7..b32bb2b 100644
  
  def init_env(debug=False, sanitize=False, compiling_for='native'):
 diff --git a/setup/build_environment.py b/setup/build_environment.py
-index fc217ba..9b1725e 100644
+index 8bc065c..0f0baa4 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
-@@ -226,7 +226,6 @@ if os.path.exists(os.path.join(sw, 'ffmpeg')):
+@@ -238,7 +238,6 @@ if os.path.exists(os.path.join(sw, 'ffmpeg')):
  
  podofo_lib = os.environ.get('PODOFO_LIB_DIR', podofo_lib)
  podofo_inc = os.environ.get('PODOFO_INC_DIR', podofo_inc)
@@ -53,7 +53,7 @@ index fc217ba..9b1725e 100644
          ('PoDoFo not found on your system. Various PDF related',
      ' functionality will not work. Use the PODOFO_INC_DIR and',
 diff --git a/setup/extensions.json b/setup/extensions.json
-index c105031..d0bf00b 100644
+index b39ce6d..2a5feb8 100644
 --- a/setup/extensions.json
 +++ b/setup/extensions.json
 @@ -128,11 +128,11 @@
@@ -69,7 +69,7 @@ index c105031..d0bf00b 100644
 +		"needs_c++": "11"
      },
      {
-         "name": "html_as_json",
+         "name": "piper",
 diff --git a/src/calibre/utils/podofo/doc.cpp b/src/calibre/utils/podofo/doc.cpp
 index 1b9eeac..25f814a 100644
 --- a/src/calibre/utils/podofo/doc.cpp

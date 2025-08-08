@@ -10,7 +10,7 @@ Allow hardening flags from debhelper.
  1 file changed, 13 insertions(+)
 
 diff --git a/setup/build.py b/setup/build.py
-index 2af07d6..e9b79c3 100644
+index 5ed3472..07a363b 100644
 --- a/setup/build.py
 +++ b/setup/build.py
 @@ -267,6 +267,10 @@ def init_env(debug=False, sanitize=False, compiling_for='native'):
@@ -24,7 +24,7 @@ index 2af07d6..e9b79c3 100644
          cflags += base_cflags
          ldflags += base_ldflags
          cflags += ['-fvisibility=hidden']
-@@ -730,6 +734,15 @@ sip-file = {os.path.basename(sipf)!r}
+@@ -732,6 +736,15 @@ sip-file = {os.path.basename(sipf)!r}
          cwd = os.getcwd()
          try:
              os.chdir(os.path.join(src_dir, 'build'))

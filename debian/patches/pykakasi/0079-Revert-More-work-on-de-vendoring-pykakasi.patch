@@ -34,10 +34,10 @@ index e305108..a44d756 100644
  Copyright: 2010-2011, Hiroshi Miura <miurahr@linux.com>
  Copyright: 2009, John Schember
 diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
-index df88bd3..cd5074a 100644
+index 66eef7f..599290d 100644
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
-@@ -85,12 +85,11 @@ def ignore_in_lib(base, items, ignored_dirs=None):
+@@ -84,12 +84,11 @@ def ignore_in_lib(base, items, ignored_dirs=None):
          ignored_dirs = {'.svn', '.bzr', '.git', 'test', 'tests', 'testing'}
      for name in items:
          path = j(base, name)
@@ -53,10 +53,10 @@ index df88bd3..cd5074a 100644
      return ans
  
 diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
-index 08c72bb..77173ff 100644
+index 91bb3fc..c322bf8 100644
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
-@@ -617,15 +617,12 @@ class Freeze:
+@@ -616,15 +616,12 @@ class Freeze:
  
      @flush
      def add_package_dir(self, x, dest=None):
@@ -75,7 +75,7 @@ index 08c72bb..77173ff 100644
  
              return ans
 diff --git a/bypy/sources.json b/bypy/sources.json
-index 5f98cc1..bf424d9 100644
+index 5c1fa21..2b1e80b 100644
 --- a/bypy/sources.json
 +++ b/bypy/sources.json
 @@ -1043,24 +1043,6 @@

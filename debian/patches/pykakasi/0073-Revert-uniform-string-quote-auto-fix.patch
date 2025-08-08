@@ -9,8 +9,8 @@ This reverts commit 37771022cec803e861250d376dbcec8e9a7728d6.
  src/calibre/ebooks/unihandecode/__init__.py      |   4 +-
  src/calibre/ebooks/unihandecode/jadecoder.py     |  16 ++--
  src/calibre/ebooks/unihandecode/unicodepoints.py | 102 +++++++++++------------
- src/calibre/ebooks/unihandecode/unidecoder.py    |   4 +-
- 4 files changed, 63 insertions(+), 63 deletions(-)
+ src/calibre/ebooks/unihandecode/unidecoder.py    |   2 +-
+ 4 files changed, 62 insertions(+), 62 deletions(-)
 
 diff --git a/src/calibre/ebooks/unihandecode/__init__.py b/src/calibre/ebooks/unihandecode/__init__.py
 index 3abdb63..5bb6156 100644
@@ -395,18 +395,9 @@ index 8f5ee89..3573da9 100644
          '~', '+', '+', '+', '+', '', '@', ' // ', '+10+', '+20+', '+30+', '[?]', '[?]', '[?]', '', '',
          '[?]', 'a', 'a', 'i', 'i', 'u', 'u', 'e', 'e', 'o', 'o', 'ka', 'ga', 'ki', 'gi', 'ku',
 diff --git a/src/calibre/ebooks/unihandecode/unidecoder.py b/src/calibre/ebooks/unihandecode/unidecoder.py
-index 729b03a..0a3a203 100644
+index a6b52f7..0ea4361 100644
 --- a/src/calibre/ebooks/unihandecode/unidecoder.py
 +++ b/src/calibre/ebooks/unihandecode/unidecoder.py
-@@ -94,7 +94,7 @@ class Unidecoder:
-         '''
-         # Code groups within CODEPOINTS take the form 'xAB'
-         if not isinstance(character, str):
--            character = str(character, 'utf-8')
-+            character = str(character, "utf-8")
-         return 'x%02x' % (ord(character) >> 8)
- 
-     def grouped_point(self, character):
 @@ -103,5 +103,5 @@ class Unidecoder:
          the group character is a part of.
          '''
