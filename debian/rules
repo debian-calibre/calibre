@@ -29,9 +29,6 @@ CI_ENV =
 # This test always hang-up
 TEST_FLAGS += --exclude-test-name=fts_pool
 
-# Piper TTS is not available on Debian yet
-TEST_FLAGS += --exclude-test-name=piper
-
 # Enable all tests while in UNRELEASED
 ifneq ($(shell dpkg-parsechangelog --show-field=Distribution),UNRELEASED)
   include debian/buildd-options.mak
