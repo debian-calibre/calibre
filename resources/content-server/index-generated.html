@@ -6151,7 +6151,7 @@ return parser;
             self.ws.onmessage = (function() {
                 var ρσ_anonfunc = function (event) {
                     if (event.data !== "ping") {
-                        print("Received mesasge from reload server: " + event.data);
+                        print("Received message from reload server: " + event.data);
                     }
                     if (event.data === "reload") {
                         self.reload_app();
@@ -19225,11 +19225,10 @@ return this.__repr__();
         });
         Client.prototype.configure = function configure() {
             var self = this;
-            var voice_id, rate_id, select_id, default_voice, sd, current_bar_pos;
+            var voice_id, rate_id, select_id, sd, current_bar_pos;
             voice_id = unique_id();
             rate_id = unique_id();
             select_id = unique_id();
-            default_voice = null;
             sd = get_session_data();
             current_bar_pos = sd.get("tts_bar_position");
             function restore_defaults() {
@@ -19243,7 +19242,7 @@ return this.__repr__();
 
             ρσ_interpolate_kwargs.call(this, create_custom_dialog, [_("Configure Text-to-Speech"), (function() {
                 var ρσ_anonfunc = function (parent_div, close_modal) {
-                    var pos_select, select, voices, dflt, option, voice;
+                    var pos_select, select, voices, voice_filter, seen, cloud, option, voice, original, voice_div;
                     pos_select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({id: select_id})]);
                     function apos(text, name) {
                         var option;
@@ -19265,7 +19264,7 @@ return this.__repr__();
                     apos(_("Top left"), "top-left");
                     apos(_("Bottom right"), "bottom-right");
                     apos(_("Bottom left"), "bottom-left");
-                    select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({size: "5", id: voice_id})]);
+                    select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({size: "5", id: voice_id, style: "display:block"})]);
                     voices = window.speechSynthesis.getVoices();
                     voices.sort((function() {
                         var ρσ_anonfunc = function (a, b) {
@@ -19279,28 +19278,88 @@ return this.__repr__();
                         });
                         return ρσ_anonfunc;
                     })());
+                    voice_filter = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", placeholder: _("Filter voices"), style: "display: block"})]);
+                    seen = Object.create(null);
                     var ρσ_Iter2 = ρσ_Iterable(voices);
                     for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
                         voice = ρσ_Iter2[ρσ_Index2];
-                        dflt = "";
-                        if (voice.default) {
-                            default_voice = voice.voiceURI;
-                            dflt = "-- {}".format(_("default"));
+                        if (!seen[ρσ_bound_index(voice.voiceURI, seen)]) {
+                            cloud = "";
+                            if (!voice.localService) {
+                                cloud = " -- " + _("cloud based");
+                            }
+                            option = ρσ_interpolate_kwargs.call(E, E.option, ["" + ρσ_str.format("{}", voice.name) + " (" + ρσ_str.format("{}", voice.lang) + ")" + ρσ_str.format("{}", cloud) + ""].concat([ρσ_desugar_kwargs({value: voice.voiceURI})]));
+                            if (self.current_voice_uri && voice.voiceURI === self.current_voice_uri) {
+                                option.setAttribute("selected", "selected");
+                            }
+                            select.appendChild(option);
+                            seen[ρσ_bound_index(voice.voiceURI, seen)] = true;
                         }
-                        option = ρσ_interpolate_kwargs.call(E, E.option, ["" + ρσ_str.format("{}", voice.name) + " (" + ρσ_str.format("{}", voice.lang) + ")" + ρσ_str.format("{}", dflt) + ""].concat([ρσ_desugar_kwargs({value: voice.voiceURI})]));
-                        if (self.current_voice_uri && voice.voiceURI === self.current_voice_uri || !self.current_voice_uri && voice.default) {
-                            option.setAttribute("selected", "selected");
-                        }
-                        select.appendChild(option);
                     }
-                    parent_div.appendChild(E.div(_("Speed of speech:")));
-                    parent_div.appendChild(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "range", id: rate_id, min: self.min_rate * 10 + "", max: self.max_rate * 10 + "", value: (self.current_rate || 1) * 10 + ""})]));
-                    parent_div.appendChild(E.div(_("Pick a voice below:")));
-                    parent_div.appendChild(select);
-                    if (ρσ_exists.n(select.options.selectedIndex) && (ρσ_expr_temp = select.options)[ρσ_bound_index(select.options.selectedIndex, ρσ_expr_temp)]) {
-                        (ρσ_expr_temp = select.options)[ρσ_bound_index(select.options.selectedIndex, ρσ_expr_temp)].scrollIntoView();
+                    if (len(voices) < 1) {
+                        select.appendChild(E.option(_("No voices available")));
+                        select.lastChild.disabled = true;
+                    } else {
+                        original = Array.from(select.options).map((function() {
+                            var ρσ_anonfunc = function (o) {
+                                return (function(){
+                                    var ρσ_d = Object.create(null);
+                                    ρσ_d["text"] = o.text;
+                                    ρσ_d["value"] = o.value;
+                                    return ρσ_d;
+                                }).call(this);
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["o"]},
+                                __module__ : {value: "read_book.tts"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
+                        voice_filter.addEventListener("input", (function() {
+                            var ρσ_anonfunc = function (ev) {
+                                var q, filtered, frag, item;
+                                q = voice_filter.value.trim().toLowerCase();
+                                filtered = original.filter((function() {
+                                    var ρσ_anonfunc = function (item) {
+                                        return item.text.toLowerCase().includes(q);
+                                    };
+                                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                        __argnames__ : {value: ["item"]},
+                                        __module__ : {value: "read_book.tts"}
+                                    });
+                                    return ρσ_anonfunc;
+                                })());
+                                frag = document.createDocumentFragment();
+                                if (filtered.length === 0) {
+                                    frag.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("No matches")].concat([ρσ_desugar_kwargs({disabled: true})])));
+                                } else {
+                                    var ρσ_Iter3 = ρσ_Iterable(filtered);
+                                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                                        item = ρσ_Iter3[ρσ_Index3];
+                                        frag.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [item.text].concat([ρσ_desugar_kwargs({value: item.value})])));
+                                    }
+                                }
+                                select.replaceChildren(frag);
+                                if (select.selectedIndex > -1) {
+                                    (ρσ_expr_temp = select.options)[ρσ_bound_index(select.selectedIndex, ρσ_expr_temp)].scrollIntoView();
+                                }
+                            };
+                            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                                __argnames__ : {value: ["ev"]},
+                                __module__ : {value: "read_book.tts"}
+                            });
+                            return ρσ_anonfunc;
+                        })());
                     }
-                    parent_div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Position of control bar:") + " ", pos_select].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+                    parent_div.appendChild(E.div(_("Speed of speech:") + " "));
+                    parent_div.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "range", id: rate_id, min: self.min_rate * 10 + "", max: self.max_rate * 10 + "", value: (self.current_rate || 1) * 10 + ""})]));
+                    parent_div.appendChild(E.div(_("Voice:") + " "));
+                    voice_div = ρσ_interpolate_kwargs.call(E, E.div, [select, voice_filter].concat([ρσ_desugar_kwargs({style: "display: inline-block; vertical-align: middle"})]));
+                    parent_div.lastChild.appendChild(voice_div);
+                    if (select.selectedIndex > -1 && (ρσ_expr_temp = select.options)[ρσ_bound_index(select.selectedIndex, ρσ_expr_temp)]) {
+                        (ρσ_expr_temp = select.options)[ρσ_bound_index(select.selectedIndex, ρσ_expr_temp)].scrollIntoView();
+                    }
+                    parent_div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Position of bar:") + " ", pos_select].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
                     parent_div.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Restore defaults")].concat([ρσ_desugar_kwargs({action: restore_defaults})])), ρσ_interpolate_kwargs.call(this, create_button, [_("Close")].concat([ρσ_desugar_kwargs({action: close_modal})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem; display: flex; justify-content: space-between; align-items: flex-start"})])));
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
@@ -19311,14 +19370,11 @@ return this.__repr__();
             })()].concat([ρσ_desugar_kwargs({on_close: (function() {
                 var ρσ_anonfunc = function () {
                     var voice, bar_pos, rate, changed, is_speaking;
-                    voice = document.getElementById(voice_id).value;
+                    voice = document.getElementById(voice_id).value || "";
                     bar_pos = document.getElementById(select_id).value;
                     rate = int(document.getElementById(rate_id).value) / 10;
                     if (rate === 1) {
                         rate = null;
-                    }
-                    if (voice === default_voice) {
-                        voice = "";
                     }
                     changed = voice !== self.current_voice_uri || rate !== self.current_rate || bar_pos !== current_bar_pos;
                     if (changed) {
@@ -30821,7 +30877,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.8.0";
+        CALIBRE_VERSION = "8.9.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -58856,7 +58912,7 @@ return this.__repr__();
                 if (changes.cover === "--remove--") {
                     img.removeAttribute("src");
                     changes.cover = null;
-                } else {
+                } else if (typeof changes.cover !== "string") {
                     r = new FileReader;
                     r.onload = (function() {
                         var ρσ_anonfunc = function (evt) {
