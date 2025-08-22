@@ -4,6 +4,7 @@ __docformat__ = 'restructuredtext en'
 
 import codecs
 import json
+from contextlib import suppress
 
 from qt.core import Qt, QTableWidgetItem
 
@@ -167,14 +168,8 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
     def break_cycles(self):
         Widget.break_cycles(self)
 
-        def d(x):
-            try:
-                x.disconnect()
-            except Exception:
-                pass
-
-        d(self.sr_search)
-
+        with suppress(TypeError):
+            self.sr_search.doc_update.disconnect(self.update_doc)
         self.sr_search.break_cycles()
 
     def update_doc(self, doc):
