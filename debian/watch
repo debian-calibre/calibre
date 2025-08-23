@@ -1,16 +1,17 @@
 # -*- mode: conf -*-
+Version: 5
+
 # watch control file for uscan
-# see uscan(1) for format
+# see debian-watch(5) for format
 
-# Compulsory line, this is a version 4 file
-version=4
+Source: https://api.github.com/repos/kovidgoyal/@PACKAGE@/releases
+Matching-Pattern: https://github.com/kovidgoyal/@PACKAGE@/releases/download/v\d+\.\d+\.\d+/@PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
+Pgp-Mode: next
+Search-Mode: plain
+Dversion-Mangle: s/\+ds//
+Oversion-Mangle: s/$/+ds/
 
-opts="pgpmode=next, \
-      searchmode=plain, \
-      dversionmangle=s/\+ds//, \
-      oversionmangle=s/$/+ds/" \
-  https://api.github.com/repos/kovidgoyal/@PACKAGE@/releases \
-  https://github.com/kovidgoyal/@PACKAGE@/releases/download/v\d+\.\d+\.\d+/@PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz
-opts="pgpmode=previous" \
-  https://calibre-ebook.com/signatures/ \
-  @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig previous
+Source: https://calibre-ebook.com/signatures/
+Matching-Pattern: @PACKAGE@-(\d+\.\d+\.\d+)\.tar\.xz\.sig
+Pgp-Mode: previous
+Version-Schema: previous
