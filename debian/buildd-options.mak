@@ -10,14 +10,8 @@ TEST_FLAGS += --exclude-test-name=recipe_browser_qt
 TEST_FLAGS += --exclude-test-name=recipe_browser_webengine
 
 # Disable some tests for specific platforms
-ifeq       (arm64, $(DEB_HOST_ARCH))
+ifeq (arm64, $(DEB_HOST_ARCH))
   # "Illegal instruction" error on buildd "arm-ubc-*".
   # But buildd "arm-conova-*" works well.
   TEST_FLAGS += --exclude-test=import_of_all_python_modules
-else ifeq  (armhf, $(DEB_HOST_ARCH))
-  # seccomp-bpf crash
-  TEST_FLAGS += --exclude-test-name=qt
-else ifeq (i386,  $(DEB_HOST_ARCH))
-  # seccomp-bpf crash
-  TEST_FLAGS += --exclude-test-name=qt
 endif
