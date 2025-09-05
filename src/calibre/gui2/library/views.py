@@ -43,6 +43,7 @@ from calibre import force_unicode
 from calibre.constants import filesystem_encoding, islinux
 from calibre.gui2 import BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY, FunctionDispatcher, error_dialog, gprefs, show_restart_warning
 from calibre.gui2.dialogs.enum_values_edit import EnumValuesEdit
+from calibre.gui2.dialogs.template_dialog import TemplateDialog
 from calibre.gui2.gestures import GestureManager
 from calibre.gui2.library import DEFAULT_SORT
 from calibre.gui2.library.alternate_views import AlternateViews, setup_dnd_interface
@@ -562,6 +563,23 @@ class BooksView(TableView):  # {{{
             self.resizeColumnToContents(idx)
         elif action == 'edit_enum':
             EnumValuesEdit(self, self._model.db, column).exec()
+        elif action == 'tt_template':
+            db = self._model.db
+            rows = self.selectionModel().selectedRows()
+            mi = []
+            tt_dict = db.new_api.pref('column_tooltip_templates', {})
+            for i in range(min(len(rows), 10)):
+                mi.append(db.new_api.get_proxy_metadata(db.data.index_to_id(i)))
+            template = tt_dict.get(column, '')
+            text_is_placeholder = False
+            if not template:
+                text_is_placeholder = True
+                from calibre.gui2.actions.column_tooltips import column_template_placeholder_text
+                template = column_template_placeholder_text()
+            d = TemplateDialog(self, template, mi=mi, text_is_placeholder=text_is_placeholder)
+            if d.exec():
+                tt_dict[column] = d.rule[1]
+                db.new_api.set_pref('column_tooltip_templates', tt_dict)
         self.save_state()
 
     def create_context_menu(self, col, name, view):
@@ -611,16 +629,23 @@ class BooksView(TableView):  # {{{
                                     partial(handler, action='editcustcol'))
                 if col_manager.must_restart():
                     act.setEnabled(False)
+            db = self._model.db.new_api
+            tt_prefs = db.pref('column_tooltip_templates', {})
+            ans.addAction(QIcon.ic('edit_input.png'),
+                          (_('Define tooltip template for "%s"') if col not in tt_prefs
+                            else _('Edit tooltip template for "%s"')) % name,
+                          partial(handler, action='tt_template', ))
         if self.is_library_view:
+            if self._model.db.field_metadata[col]['datatype'] == 'enumeration':
+                ans.addAction(QIcon.ic('edit_input.png'), _('Edit permissible values for %s') % name,
+                              partial(handler, action='edit_enum'))
             if self._model.db.field_metadata[col]['is_category']:
+                ans.addSeparator()
                 act = ans.addAction(QIcon.ic('quickview.png'), _('Quickview column %s') % name,
                                     partial(handler, action='quickview'))
                 rows = self.selectionModel().selectedRows()
                 if len(rows) > 1:
                     act.setEnabled(False)
-            if self._model.db.field_metadata[col]['datatype'] == 'enumeration':
-                ans.addAction(QIcon.ic('edit_input.png'), _('Edit permissible values for %s') % name,
-                              partial(handler, action='edit_enum'))
 
         hidden_cols = {self.column_map[i]: i for i in range(view.column_header.count())
                        if view.column_header.isSectionHidden(i) and self.column_map[i] not in ('ondevice', 'inlibrary')}

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "augustus 22, 2025" "8.9.0" "calibre"
+.TH "CALIBREDB" "1" "september 04, 2025" "8.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -39,51 +39,69 @@ calibredb \- calibredb
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibrebd\fP is de command line interface naar de calibre database. Het heeft
-verschillende sub\-commando\(aqs, hieronder gedocumenteerd.
+\fBcalibredb\fP is de opdrachtregelinterface voor de Calibre\-database. Het heeft
 .sp
-\fBcalibrebd\fP kan gebruikt worden om ofwel een calibre database te manipuleren
-gespecificeerd bij pad of een calibre Content server draaiend ofwel op
-de lokale machine of over het internet. U kan een calibre Content server
-starten ofwel met het \fBcalibre\-server\fP programma ofwel klik in het calibre
-hoofdprogramma op Connect/share  → Start Content Server\&.
-Aangezien \fBcalibredb\fP veranderingen kan aanbrengen in uw calibre
-bibliotheken, moet u eerst authenticatie instellen op de server. Er zijn twee
-manieren om dat te doen:
-.INDENT 0.0
-.INDENT 3.5
+verschillende subopdrachten, die hieronder worden beschreven.
+.sp
+\fBcalibredb\fP kan worden gebruikt om een Calibre\-database te bewerken
+.sp
+die is opgegeven door een pad of een Calibre Content server die draait op
+.sp
+de lokale machine of via internet. U kunt een Calibre
+.sp
+Content server starten met behulp van het programma \fBcalibre\-server\fP
+.sp
+of in het hoofdprogramma van Calibre door te klikken op :guilabel:
+.nf
+\(ga
+.fi
+Verbinden/delen \->
+.sp
+Content server starten\(ga. Aangezien \fBcalibredb\fP wijzigingen kan aanbrengen in uw
+.sp
+Calibre\-bibliotheken, moet u eerst authenticatie op de server instellen. Er
+.sp
+zijn twee manieren om dat te doen:
 .INDENT 0.0
 .IP \(bu 2
-.INDENT 2.0
-.TP
-.B Als u enkel wil verbinden met een server die draait op dezelfde computer,
-kan u gewoon de \fB\-\-enable\-local\-write\fP optie gebruiken van de
-Content server, om elk programma, inbegrepen calibre, dat draait op
-de lokale computer om dingen te veranderen in uw calibre data. Als u de server
-vanuit het calibre hoofdprogramma draait, is deze optie in
-Preferences → Sharing over het internet → Geavanceerd\&.
-.UNINDENT
-.UNINDENT
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
-.IP \(bu 2
-Als u toegang over het internet wil inschakelen, dan moet u gebruikersaccounts
-instellen op de server en de opties \fI\%\-\-username\fP en \fI\%\-\-password gebruiken\fP
-op \fBcalibredb\fP om het toegang te verlenen. U kan gebruikerauthenticatie
-instellen voor \fBcalibre\-server\fP met de \fB\-\-enable\-auth\fP optie en
-gebruik makend van \fB\-\-manage\-users\fP om de gebruikersaccounts te creëren.
-Als u de server draait vanuit het calibre hoofdprogramma, gebruik
-Voorkeuren → Delen over het net → Vraag gebruikersnaam/wachtwoord\&.
-.UNINDENT
-.UNINDENT
-.UNINDENT
-.UNINDENT
+Als u alleen verbinding wilt maken met een server die op dezelfde computer draait,
 .UNINDENT
 .sp
-Om te verbinden met een draaiende Content server, geef de URL van de server door aan
-de \fI\%\-\-with\-library\fP optie, bekijk de documentatie van die optie voor
-details en voorbeelden.
+kunt u gewoon de optie \fB\-\-enable\-local\-write\fP van de
+.sp
+inhoudsserver gebruiken, zodat elk programma, inclusief calibredb, dat op
+.sp
+de lokale computer draait, wijzigingen kan aanbrengen in uw Calibre\-gegevens. Wanneer u
+.sp
+de server vanuit het hoofdprogramma van Calibre draait, vindt u deze optie in
+.sp
+Voorkeuren → Delen via het netwerk → Geavanceerd\&.
+.INDENT 0.0
+.IP \(bu 2
+Als u toegang via internet wilt inschakelen, moet u
+.UNINDENT
+.sp
+gebruikersaccounts op de server instellen en de opties \fI\%\-\-username\fP en \fI\%\-\-password\fP
+.sp
+gebruiken voor \fBcalibredb\fP om toegang te verlenen. U kunt
+.sp
+gebruikersauthenticatie voor \fBcalibre\-server\fP instellen met de optie \fB\-\-enable\-auth\fP
+.sp
+en \fB\-\-manage\-users\fP om de gebruikersaccounts aan te maken.
+.sp
+Als u de server vanuit het hoofdprogramma van Calibre uitvoert, gebruikt u
+.sp
+Voorkeuren → Delen via het netwerk → Gebruikersnaam/wachtwoord vereist\&.
+.sp
+Om verbinding te maken met een actieve Content server, geeft u de URL van de server door aan de
+.sp
+
+.nf
+:optie:\(ga\-\-with\-library\(ga
+.fi
+\&. Raadpleeg de documentatie van die optie voor
+.sp
+meer informatie en voorbeelden.
 .INDENT 0.0
 .IP \(bu 2
 \fI\%ALGEMENE OPTIES\fP
@@ -478,7 +496,7 @@ Normaal slaat calibre de omslag op in een apart bestand samen met de overige boe
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-extra\-files
-Save any data files associated with the book when saving the book Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Alle gegevensbestanden die bij het boek horen opslaan bij het opslaan van het boek Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -571,7 +589,7 @@ Titel van gegenereerde catalogus gebruikt als titel in metadata. Standaard: \fB\
 .INDENT 0.0
 .TP
 .B \-\-cross\-reference\-authors
-Creëert kruis\-referenties in Auteursonderdeel voor boeken met meerdere auteurs. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten.
+Creëert kruis\-referenties in Auteursonderdeel voor boeken met meerdere auteurs. Standaard: \fB\(aq\fPFalse\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -826,7 +844,7 @@ Kommagescheiden lijst van rapporten. Standaard: all
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Leeg de volledige tekstzoek database. Dit kan erg traag en geheugenintensief zijn, afhankelijk van de grootte van de database
+Leeg de volledige tekstzoek database. Dit kan erg traag en geheugenintensief zijn, afhankelijk van de grootte van de database.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
