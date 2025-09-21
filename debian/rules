@@ -50,9 +50,11 @@ blhc-note:
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 
 override_dh_auto_configure:
+	cmake -B podofo/build -S podofo -DCMAKE_BUILD_TYPE=Debug -DPODOFO_BUILD_LIB_ONLY=TRUE -DPODOFO_BUILD_STATIC=TRUE
 
 override_dh_auto_build: blhc-note
-	$(SETUP) build
+	cmake --build podofo/build
+	env PODOFO_INC_DIR=podofo/src/podofo PODOFO_LIB_DIR=podofo/build/src/podofo $(SETUP) build
 	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation
 	$(SETUP) gui
 	$(SETUP) kakasi
