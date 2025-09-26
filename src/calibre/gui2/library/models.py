@@ -15,7 +15,22 @@ import traceback
 from collections import defaultdict, namedtuple
 from itertools import groupby
 
-from qt.core import QAbstractTableModel, QApplication, QColor, QFont, QFontMetrics, QIcon, QImage, QModelIndex, QPainter, QPixmap, Qt, pyqtSignal
+from qt.core import (
+    QAbstractTableModel,
+    QApplication,
+    QColor,
+    QDateTime,
+    QFont,
+    QFontMetrics,
+    QIcon,
+    QImage,
+    QLocale,
+    QModelIndex,
+    QPainter,
+    QPixmap,
+    Qt,
+    pyqtSignal,
+)
 
 from calibre import fit_image, human_readable, isbytestring, prepare_string_for_xml, strftime
 from calibre.constants import DEBUG, config_dir, dark_link_color, filesystem_encoding
@@ -1008,21 +1023,39 @@ class BooksModel(QAbstractTableModel):  # {{{
             def f(idx):
                 try:
                     template = self.db.new_api.pref('column_tooltip_templates', {}).get(key, '')
+                    # Simulate what Qt does to get the text for non-string data
+                    # types so that idx.data(Qt.ItemDataRole.ToolTipRole)
+                    # always returns a string.
+                    orig_obj = orig_tt_func(idx)
+                    match orig_obj:
+                        case None:
+                            v = ''
+                        case str():
+                            v = orig_obj
+                        case bool():
+                            v = str(orig_obj)
+                        case int() | float() | QDateTime():
+                            v = QLocale().toString(orig_obj)
+                        case _:
+                            v = f'unsupported type {type(orig_obj)}'
                     if template:
-                        global_vars = {'column_lookup_name': key, 'original_text': orig_tt_func(idx)}
+                        global_vars = {'column_lookup_name': key, 'original_text': v}
                         mi = self.db.new_api.get_proxy_metadata(self.db.data.index_to_id(idx))
                         return self.formatter.safe_format(
                                 template, {}, _('tooltip template error'), mi, global_vars=global_vars)
+                    return v
                 except Exception as e:
                     return str(e)
-                return orig_tt_func(idx)
             return f
 
         for f, allow_half in iteritems(rating_fields):
             tc[f] = stars_tooltip(self.dc[f], allow_half)
         for f in bool_fields:
             tc[f] = bool_tooltip(f)
-        for f in self.db.new_api.pref('column_tooltip_templates', {}):
+        # Make all columns use the template tooltip renderer. This avoids the
+        # "first time" problem where a template tooltip is added but not
+        # used until calibre is restarted
+        for f in self.column_map:
             tc[f] = template_tooltip(f, tc[f])
         # build a index column to data converter map, to remove the string lookup in the data loop
         self.column_to_dc_map = [self.dc[col] for col in self.column_map]

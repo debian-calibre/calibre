@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "setembro 04, 2025" "8.10.0" "calibre"
+.TH "CALIBREDB" "1" "setembro 26, 2025" "8.11.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -201,7 +201,7 @@ A expressão utilizada para separar os campos. A predefinição é um espaço.
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-O campo pelo qual ordenar os resultados. Pode especificar múltiplos campos separando\-os por vírgulas. Campos disponíveis: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Predefinição: id
+The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -783,7 +783,7 @@ Lista separada por vírgulas de relatórios: Predefinição: todos
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Esvaziar a base de dados de pesquisa em texto integral. Dependendo do tamanho da base de dados isto pode ser muito lento e consumir muita memória.
+Esvaziar a base de dados de pesquisa por texto integral. Dependendo do tamanho da base de dados isto pode ser muito lento e consumir muita memória.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0

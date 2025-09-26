@@ -202,7 +202,7 @@ def to_metadata(browser, log, entry_, timeout, running_a_test=False):  # {{{
 class GoogleBooks(Source):
 
     name = 'Google'
-    version = (1, 1, 2)
+    version = (1, 1, 3)
     minimum_calibre_version = (2, 80, 0)
     description = _('Downloads metadata and covers from Google Books')
 
@@ -398,6 +398,7 @@ class GoogleBooks(Source):
         timeout=30
     ):
         from calibre.utils.filenames import ascii_text
+        from polyglot.urllib import urlparse
         isbn = check_isbn(identifiers.get('isbn', None))
         q = []
         strip_punc_pat = regex.compile(r'[\p{C}|\p{M}|\p{P}|\p{S}|\p{Z}]+', regex.UNICODE)
@@ -440,7 +441,13 @@ class GoogleBooks(Source):
             pat = re.compile(r'id=([^&]+)')
             for q in se.google_parse_results(root, r[0], log=log, ignore_uncached=False):
                 m = pat.search(q.url)
-                if m is None or not q.url.startswith('https://books.google'):
+                if m is None or not q.url:
+                    continue
+                try:
+                    purl = urlparse(q.url)
+                except Exception:
+                    continue
+                if not purl.hostname.startswith('books.google'):
                     continue
                 google_ids.append(m.group(1))
 
@@ -570,7 +577,7 @@ if __name__ == '__main__':  # tests {{{
     ]),
 
     ({
-        # requires using web search to find the book
+        # requires using web search to find the book, but web search is broken currently
         'title': 'Dragon Done It',
         'authors': ['Eric Flint'],
     }, [
@@ -579,6 +586,6 @@ if __name__ == '__main__':  # tests {{{
     ]),
 
     ]
-    test_identify_plugin(GoogleBooks.name, tests[:])
+    test_identify_plugin(GoogleBooks.name, tests)
 
 # }}}
