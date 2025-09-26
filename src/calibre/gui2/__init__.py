@@ -488,6 +488,8 @@ def create_defs():
     defs['book_details_note_link_icon_width'] = 1.0
     defs['tag_browser_show_category_icons'] = True
     defs['tag_browser_show_value_icons'] = True
+    defs['template_editor_run_as_you_type'] = True
+    defs['template_editor_show_all_selected_books'] = True
 
     def migrate_tweak(tweak_name, pref_name):
         # If the tweak has been changed then leave the tweak in the file so
@@ -1621,6 +1623,10 @@ def ensure_app(headless=True):
     with _ea_lock:
         if _store_app is None and QApplication.instance() is None:
             args = sys.argv[:1]
+            if not headless:
+                _store_app = Application([])
+                sys.excepthook = simple_excepthook
+                return
             has_headless = ismacos or islinux or isbsd
             if headless and has_headless:
                 args += ['-platformpluginpath', plugins_loc, '-platform', os.environ.get('CALIBRE_HEADLESS_PLATFORM', 'headless')]

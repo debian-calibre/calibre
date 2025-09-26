@@ -42,7 +42,7 @@ def binary_includes():
              ' webp webpmux webpdemux sharpyuv exslt ncursesw readline chm hunspell-1.7 hyphen'
              ' icudata icui18n icuuc icuio stemmer gcrypt gpg-error uchardet graphite2 espeak-ng'
              ' brotlicommon brotlidec brotlienc zstd podofo ssl crypto deflate tiff onnxruntime'
-             ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1').split()
+             ' gobject-2.0 glib-2.0 gthread-2.0 gmodule-2.0 gio-2.0 dbus-glib-1 lcms2').split()
         )) + [
             # debian/ubuntu for for some typical stupid reason use libpcre.so.3
             # instead of libpcre.so.0 like other distros. And Qt's idiotic build
@@ -254,7 +254,12 @@ def strip_files(files, argv_max=(256 * 1024)):
             all_files = cmd[len(STRIPCMD):]
             unwritable_files = tuple(filter(None, (None if os.access(x, os.W_OK) else (x, os.stat(x).st_mode) for x in all_files)))
             [os.chmod(x, stat.S_IWRITE | old_mode) for x, old_mode in unwritable_files]
-            subprocess.check_call(cmd)
+            try:
+                subprocess.check_call(cmd)
+            except subprocess.CalledProcessError:
+                # Sometimes get file is busy errors
+                time.sleep(1)
+                subprocess.check_call(cmd)
             [os.chmod(x, old_mode) for x, old_mode in unwritable_files]
 
 

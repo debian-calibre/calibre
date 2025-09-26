@@ -19205,6 +19205,7 @@ return this.__repr__();
         }
         Object.defineProperty(PopupIframeBoss.prototype, "__bind_methods__", {value: function () {
             this.initialize = PopupIframeBoss.prototype.initialize.bind(this);
+            this.on_keydown = PopupIframeBoss.prototype.on_keydown.bind(this);
             this.on_error = PopupIframeBoss.prototype.on_error.bind(this);
             this.display = PopupIframeBoss.prototype.display.bind(this);
             this.connect_links = PopupIframeBoss.prototype.connect_links.bind(this);
@@ -19238,9 +19239,30 @@ return this.__repr__();
         PopupIframeBoss.prototype.initialize = function initialize(data) {
             var self = this;
             window.addEventListener("error", self.on_error);
+            window.addEventListener("keydown", self.on_keydown);
+            document.addEventListener("contextmenu", (function() {
+                var ρσ_anonfunc = function (ev) {
+                    ev.preventDefault();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.footnotes"}
+                });
+                return ρσ_anonfunc;
+            })());
         };
         if (!PopupIframeBoss.prototype.initialize.__argnames__) Object.defineProperties(PopupIframeBoss.prototype.initialize, {
             __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.footnotes"}
+        });
+        PopupIframeBoss.prototype.on_keydown = function on_keydown(ev) {
+            var self = this;
+            if (ev.key === "Escape") {
+                ρσ_interpolate_kwargs.call(self.comm, self.comm.send_message, ["close_requested"].concat([ρσ_desugar_kwargs({from_keypress: true})]));
+            }
+        };
+        if (!PopupIframeBoss.prototype.on_keydown.__argnames__) Object.defineProperties(PopupIframeBoss.prototype.on_keydown, {
+            __argnames__ : {value: ["ev"]},
             __module__ : {value: "read_book.footnotes"}
         });
         PopupIframeBoss.prototype.on_error = function on_error(evt) {
@@ -19668,11 +19690,11 @@ return this.__repr__();
                         if (boundary_node) {
                             if (boundary_node.nodeType === Node.TEXT_NODE) {
                                 if (is_start) {
-                                    r.setStart(boundary_node, boundary_node.length - 1);
-                                    r.setEnd(boundary_node, boundary_node.length);
-                                } else {
                                     r.setStart(boundary_node, 0);
-                                    r.setEnd(boundary_node, 1);
+                                    r.setEnd(boundary_node, 0);
+                                } else {
+                                    r.setStart(boundary_node, boundary_node.length);
+                                    r.setEnd(boundary_node, boundary_node.length);
                                 }
                                 rect = r.getBoundingClientRect();
                             } else {
@@ -19959,12 +19981,13 @@ return this.__repr__();
         });
 
         function select_nodes_from_range(r, predicate) {
-            var parent, doc, iterator, in_range, ans, node;
+            var parent, doc, iterator, in_range, ans, check_for_end, node;
             parent = r.commonAncestorContainer;
             doc = parent.ownerDocument || document;
             iterator = doc.createNodeIterator(parent);
             in_range = false;
             ans = [];
+            check_for_end = !((r.startContainer.isSameNode(r.endContainer) && r.startContainer.isSameNode(parent)));
             while (true) {
                 node = iterator.nextNode();
                 if (!node) {
@@ -19977,7 +20000,7 @@ return this.__repr__();
                     if (predicate(node)) {
                         ans.push(node);
                     }
-                    if (node.isSameNode(r.endContainer)) {
+                    if (check_for_end && node.isSameNode(r.endContainer)) {
                         break;
                     }
                 }
@@ -19990,11 +20013,12 @@ return this.__repr__();
         });
 
         function select_first_node_from_range(r, predicate) {
-            var parent, doc, iterator, in_range, node;
+            var parent, doc, iterator, in_range, check_for_end, node;
             parent = r.commonAncestorContainer;
             doc = parent.ownerDocument || document;
             iterator = doc.createNodeIterator(parent);
             in_range = false;
+            check_for_end = !((r.startContainer.isSameNode(r.endContainer) && r.startContainer.isSameNode(parent)));
             while (true) {
                 node = iterator.nextNode();
                 if (!node) {
@@ -20007,7 +20031,7 @@ return this.__repr__();
                     if (predicate(node)) {
                         return node;
                     }
-                    if (node.isSameNode(r.endContainer)) {
+                    if (check_for_end && node.isSameNode(r.endContainer)) {
                         break;
                     }
                 }
@@ -20027,12 +20051,13 @@ return this.__repr__();
         });
 
         function all_annots_in_range(r, annot_id_uuid_map, ans) {
-            var parent, doc, iterator, is_full_tree, in_range, node, annot_id;
+            var parent, doc, iterator, is_full_tree, in_range, check_for_end, node, annot_id;
             parent = r.commonAncestorContainer;
             doc = parent.ownerDocument || document;
             iterator = doc.createNodeIterator(parent);
             is_full_tree = parent === doc.documentElement;
             in_range = is_full_tree;
+            check_for_end = !is_full_tree && !((r.startContainer.isSameNode(r.endContainer) && r.startContainer.isSameNode(parent)));
             while (true) {
                 node = iterator.nextNode();
                 if (!node) {
@@ -20051,7 +20076,7 @@ return this.__repr__();
                             ans[(typeof annot_id === "number" && annot_id < 0) ? ans.length + annot_id : annot_id] = true;
                         }
                     }
-                    if (!is_full_tree && node.isSameNode(r.endContainer)) {
+                    if (check_for_end && node.isSameNode(r.endContainer)) {
                         break;
                     }
                 }
@@ -28799,7 +28824,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.10.0";
+        CALIBRE_VERSION = "8.11.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30185,9 +30210,9 @@ return this.__repr__();
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
-        IframeBoss.prototype.apply_highlight = function apply_highlight(uuid, existing, has_notes, style) {
+        IframeBoss.prototype.apply_highlight = function apply_highlight(uuid, existing, has_notes, style_defn) {
             var self = this;
-            var sel, anchor_before, text, bounds, cls, ρσ_unpack, annot_id, intersecting_wrappers, removed_highlights, intersecting_uuids, x, crw;
+            var sel, anchor_before, text, bounds, style, cls, ρσ_unpack, annot_id, intersecting_wrappers, removed_highlights, intersecting_uuids, x, crw;
             sel = window.getSelection();
             if (!sel.rangeCount) {
                 return;
@@ -30195,7 +30220,7 @@ return this.__repr__();
             anchor_before = find_anchor_before_range(sel.getRangeAt(0), self.book.manifest.toc_anchor_map, self.book.manifest.page_list_anchor_map);
             text = sel.toString();
             bounds = cfi_for_selection();
-            style = highlight_style_as_css(style, opts.is_dark_theme, opts.color_scheme.foreground);
+            style = highlight_style_as_css(style_defn, opts.is_dark_theme, opts.color_scheme.foreground);
             cls = (has_notes) ? "crw-has-dot" : null;
             ρσ_unpack = wrap_text_in_range(style, null, cls, self.add_highlight_listeners);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
@@ -30233,11 +30258,11 @@ return this.__repr__();
                 sel.removeAllRanges();
                 annot_id_uuid_map[(typeof annot_id === "number" && annot_id < 0) ? annot_id_uuid_map.length + annot_id : annot_id] = uuid;
             }
-            ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "highlight-applied", uuid: uuid, ok: annot_id !== null, bounds: bounds, removed_highlights: removed_highlights, highlighted_text: text, anchor_before: anchor_before})]));
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["annotations"].concat([ρσ_desugar_kwargs({type: "highlight-applied", uuid: uuid, ok: annot_id !== null, bounds: bounds, style: style_defn, removed_highlights: removed_highlights, highlighted_text: text, anchor_before: anchor_before})]));
             reset_find_caches();
         };
         if (!IframeBoss.prototype.apply_highlight.__argnames__) Object.defineProperties(IframeBoss.prototype.apply_highlight, {
-            __argnames__ : {value: ["uuid", "existing", "has_notes", "style"]},
+            __argnames__ : {value: ["uuid", "existing", "has_notes", "style_defn"]},
             __module__ : {value: "read_book.iframe"}
         });
         IframeBoss.prototype.annotations_msg_received = function annotations_msg_received(data) {
@@ -32802,6 +32827,7 @@ return this.__repr__();
             this.create_iframe = ContentPopupOverlay.prototype.create_iframe.bind(this);
             this.on_print = ContentPopupOverlay.prototype.on_print.bind(this);
             this.on_link_activated = ContentPopupOverlay.prototype.on_link_activated.bind(this);
+            this.on_close_requested = ContentPopupOverlay.prototype.on_close_requested.bind(this);
             this.hide = ContentPopupOverlay.prototype.hide.bind(this);
             this.show = ContentPopupOverlay.prototype.show.bind(this);
             this.on_iframe_ready = ContentPopupOverlay.prototype.on_iframe_ready.bind(this);
@@ -32886,6 +32912,7 @@ return this.__repr__();
                 ρσ_d["content_loaded"] = self.on_content_loaded;
                 ρσ_d["print"] = self.on_print;
                 ρσ_d["link_activated"] = self.on_link_activated;
+                ρσ_d["close_requested"] = self.on_close_requested;
                 return ρσ_d;
             }).call(this);
             iframe_kw = (function(){
@@ -32924,6 +32951,14 @@ return this.__repr__();
             self.view.link_in_content_popup_activated(data.name, data.frag, data.is_popup, data.title);
         };
         if (!ContentPopupOverlay.prototype.on_link_activated.__argnames__) Object.defineProperties(ContentPopupOverlay.prototype.on_link_activated, {
+            __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.content_popup"}
+        });
+        ContentPopupOverlay.prototype.on_close_requested = function on_close_requested(data) {
+            var self = this;
+            self.hide();
+        };
+        if (!ContentPopupOverlay.prototype.on_close_requested.__argnames__) Object.defineProperties(ContentPopupOverlay.prototype.on_close_requested, {
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.content_popup"}
         });
@@ -41842,6 +41877,7 @@ return this.__repr__();
             this.show_editor = SelectionBar.prototype.show_editor.bind(this);
             this.place_editor = SelectionBar.prototype.place_editor.bind(this);
             this.hide_editor = SelectionBar.prototype.hide_editor.bind(this);
+            this.add_notes_or_create_highlight = SelectionBar.prototype.add_notes_or_create_highlight.bind(this);
             this.editor_container_clicked = SelectionBar.prototype.editor_container_clicked.bind(this);
             this.copy_to_clipboard = SelectionBar.prototype.copy_to_clipboard.bind(this);
             this.lookup = SelectionBar.prototype.lookup.bind(this);
@@ -43094,6 +43130,34 @@ return this.__repr__();
             __argnames__ : {value: ["apply_changes"]},
             __module__ : {value: "read_book.selection_bar"}
         });
+        SelectionBar.prototype.add_notes_or_create_highlight = function add_notes_or_create_highlight(notes, style) {
+            var self = this;
+            var annot_id, am, existing_notes, q;
+            if (self.state === EDITING) {
+                self.hide_editor();
+            }
+            annot_id = self.view.currently_showing.selection.annot_id;
+            if (annot_id) {
+                am = self.annotations_manager;
+                existing_notes = am.notes_for_highlight(annot_id);
+                if (existing_notes) {
+                    notes = existing_notes + "\n\n------------------------------------\n\n" + notes;
+                }
+                q = am.style_for_highlight(annot_id);
+                if (q) {
+                    style = q;
+                }
+            }
+            self.current_notes = notes;
+            ρσ_interpolate_kwargs.call(self, self.send_message, ["apply-highlight"].concat([ρσ_desugar_kwargs({style: style, uuid: short_uuid(), has_notes: !!self.current_notes, existing: annot_id})]));
+            self.state = WAITING;
+            self.update_position();
+            self.focus();
+        };
+        if (!SelectionBar.prototype.add_notes_or_create_highlight.__argnames__) Object.defineProperties(SelectionBar.prototype.add_notes_or_create_highlight, {
+            __argnames__ : {value: ["notes", "style"]},
+            __module__ : {value: "read_book.selection_bar"}
+        });
         SelectionBar.prototype.editor_container_clicked = function editor_container_clicked(ev) {
             var self = this;
             [ev.stopPropagation(), ev.preventDefault()];
@@ -43325,7 +43389,7 @@ return this.__repr__();
                         toc_family = family_for_toc_node(before.id);
                     }
                 }
-                self.annotations_manager.add_highlight(msg, self.current_highlight_style.style, notes, toc_family);
+                self.annotations_manager.add_highlight(msg, msg.style, notes, toc_family);
             } else if (msg.type === "highlight-overlapped") {
                 question_dialog(_("Are you sure?"), _("This highlight overlaps existing highlights. Creating it will cause notes in the existing highlights to be lost. Create it anyway?"), (function() {
                     var ρσ_anonfunc = function (yes) {
@@ -50000,6 +50064,7 @@ return this.__repr__();
             this.goto_toc_node = View.prototype.goto_toc_node.bind(this);
             this.sync_data_received = View.prototype.sync_data_received.bind(this);
             this.set_notes_for_highlight = View.prototype.set_notes_for_highlight.bind(this);
+            this.add_notes_or_create_highlight = View.prototype.add_notes_or_create_highlight.bind(this);
             this.show_next_spine_item = View.prototype.show_next_spine_item.bind(this);
             this.on_next_spine_item = View.prototype.on_next_spine_item.bind(this);
             this.on_next_section = View.prototype.on_next_section.bind(this);
@@ -51832,6 +51897,17 @@ return this.__repr__();
             __argnames__ : {value: ["uuid", "notes"]},
             __module__ : {value: "read_book.view"}
         });
+        View.prototype.add_notes_or_create_highlight = function add_notes_or_create_highlight(notes, style) {
+            var self = this;
+            if (self.selection_bar.is_visible) {
+                return self.selection_bar.add_notes_or_create_highlight(notes, style);
+            }
+            self.show_error(_("No selection"), _("Cannot create highlight as there is no active selection"));
+        };
+        if (!View.prototype.add_notes_or_create_highlight.__argnames__) Object.defineProperties(View.prototype.add_notes_or_create_highlight, {
+            __argnames__ : {value: ["notes", "style"]},
+            __module__ : {value: "read_book.view"}
+        });
         View.prototype.show_next_spine_item = function show_next_spine_item(previous) {
             var self = this;
             var spine, idx;
@@ -52943,12 +53019,12 @@ return this.__repr__();
             var ρσ_anonfunc = function generic_action(which, data) {
                 if (which === "set-notes-in-highlight") {
                     view.set_notes_for_highlight(data.uuid, data.notes || "");
-                }
-                if (which === "show-status-message") {
+                } else if (which === "show-status-message") {
                     view.show_status_message(data.text);
-                }
-                if (which === "remove-recently-opened") {
+                } else if (which === "remove-recently-opened") {
                     remove_recently_opened(data.path);
+                } else if (which === "add-notes-or-create-highlight") {
+                    view.add_notes_or_create_highlight(data.notes, data.style);
                 }
             };
             if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {

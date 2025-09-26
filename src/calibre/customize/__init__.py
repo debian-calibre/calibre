@@ -6,9 +6,15 @@ import importlib
 import os
 import sys
 import zipfile
+from typing import TYPE_CHECKING
 
 from calibre.constants import ismacos, iswindows, numeric_version
 from calibre.ptempfile import PersistentTemporaryFile
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+    from calibre.ai import ChatMessage, ChatResponse
 
 if iswindows:
     platform = 'windows'
@@ -816,4 +822,76 @@ class LibraryClosedPlugin(Plugin):  # {{{
         '''
         raise NotImplementedError('LibraryClosedPlugin '
                 'run method must be overridden in subclass')
+# }}}
+
+
+class AIProviderPlugin(Plugin):  # {{{
+    '''
+    AIProvider plugins abstract AI services that can be used by the rest of calibre.
+    '''
+    type = _('AI provider')
+
+    # minimum version when support for this plugin type was added
+    minimum_calibre_version = (8, 10, 0)
+
+    # Used by builtin AI Provider plugins to live load the backend code
+    builtin_live_module_name = ''
+
+    # See the AICapabilities enum. Sub-classes *must* implement this to the
+    # capabilities they support. Note this is independent of configuration.
+    @property
+    def capabilities(self):
+        raise NotImplementedError()
+
+    @property
+    def builtin_live_module(self):
+        if not self.builtin_live_module_name:
+            return None
+        if (ans := self._builtin_live_module) is None:
+            from calibre.live import Strategy, load_module
+            ans = self._builtin_live_module = load_module(self.builtin_live_module_name, strategy=Strategy.fast)
+        return ans
+
+    @property
+    def is_ready_for_use(self) -> bool:
+        if not self.builtin_live_module_name:
+            return False
+        return self.builtin_live_module.is_ready_for_use()
+
+    def initialize(self):
+        self._builtin_live_module = None
+
+    def customization_help(self):
+        return ''
+
+    def config_widget(self):
+        '''
+        The config widget for an AI plugin must support validate() and additionally the property
+        is_ready_for_use which must be true iff the plugin is ready to be used,
+        i.e. it does not require configuration such as an API key or the API key is already set.
+        '''
+        if self.builtin_live_module_name:
+            return self.builtin_live_module.config_widget()
+        raise NotImplementedError()
+
+    def save_settings(self, config_widget):
+        if self.builtin_live_module_name:
+            return self.builtin_live_module.save_settings(config_widget)
+        raise NotImplementedError()
+
+    def text_chat(self, messages: 'Iterable[ChatMessage]', use_model: str = '') -> 'Iterator[ChatResponse]':
+        '''
+        Send the specified chat messages to the AI and return an iterable over its streaming responses.
+        The :code:`use_model` parameter will cause the plugin to use a specific model, useful when having
+        a conversation, to ensure the same model responds for every subsequent query.
+        '''
+        if not self.builtin_live_module_name:
+            raise NotImplementedError()
+        yield from self.builtin_live_module.text_chat(messages, use_model)
+
+    def human_readable_model_name(self, model_id: str) -> str:
+        ' Return a human readable model name for the specified model id'
+        if not self.builtin_live_module_name:
+            return model_id
+        return self.builtin_live_module.human_readable_model_name(model_id)
 # }}}
