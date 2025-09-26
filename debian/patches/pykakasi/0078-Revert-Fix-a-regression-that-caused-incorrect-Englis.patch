@@ -9,7 +9,6 @@ Forwarded: not-needed
 
 This reverts commit ec8c06caa9d977890a5b5cf95713ff67a7a582be.
 ---
- bypy/sources.json                                  |     18 -
  src/calibre/ebooks/unihandecode/jadecoder.py       |     22 +-
  .../ebooks/unihandecode/pykakasi/__init__.py       |      5 +
  src/calibre/ebooks/unihandecode/pykakasi/h2a.py    |    180 +
@@ -21,7 +20,7 @@ This reverts commit ec8c06caa9d977890a5b5cf95713ff67a7a582be.
  .../ebooks/unihandecode/pykakasi/kakasidict.utf8   | 121826 ++++++++++++++++++
  .../ebooks/unihandecode/pykakasi/kanadict.utf8     |    317 +
  src/calibre/test_build.py                          |      4 -
- 12 files changed, 123173 insertions(+), 36 deletions(-)
+ 11 files changed, 123173 insertions(+), 18 deletions(-)
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/__init__.py
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/h2a.py
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/itaijidict.utf8
@@ -32,35 +31,6 @@ This reverts commit ec8c06caa9d977890a5b5cf95713ff67a7a582be.
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/kakasidict.utf8
  create mode 100644 src/calibre/ebooks/unihandecode/pykakasi/kanadict.utf8
 
-diff --git a/bypy/sources.json b/bypy/sources.json
-index 1baa04f..59ceaec 100644
---- a/bypy/sources.json
-+++ b/bypy/sources.json
-@@ -1034,24 +1034,6 @@
-         }
-     },
- 
--    {
--        "name": "jaconv",
--        "unix": {
--            "filename": "jaconv-0.40.tar.gz",
--            "hash": "sha256:32da74b247f276e09a52d6b35c153df2387965cb85a6f034cc8af21d446f8161",
--            "urls": ["pypi"]
--        }
--    },
--
--    {
--        "name": "pykakasi",
--        "unix": {
--            "filename": "pykakasi-2.3.0-py3-none-any.whl",
--            "hash": "sha256:26d21b090048ff45c6a4d8e962426b7951767216008ec30358e8a9d74af77f29",
--            "urls": ["pypi"]
--        }
--    },
--
-     {
-         "name": "poetry_core",
-         "comment": "Needed for building zeroconf",
 diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
 index 8284385..635e35c 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
@@ -123324,10 +123294,10 @@ index 0000000..631de9a
 +wikinomics ウィキノミクス
 +york ヨーク
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 85cea10..a64a524 100644
+index 152b1a7..ec0ef99 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -419,10 +419,6 @@ class BuildTest(unittest.TestCase):
+@@ -427,10 +427,6 @@ class BuildTest(unittest.TestCase):
              if display_env_var is not None:
                  os.environ['DISPLAY'] = display_env_var
  

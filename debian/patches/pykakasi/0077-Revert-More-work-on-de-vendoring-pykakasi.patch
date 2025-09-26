@@ -9,11 +9,10 @@ This reverts commit 04d5728ef9549ddfce380d71690ab4bc76f93dd8.
  COPYRIGHT                                    |   7 ++
  bypy/linux/__main__.py                       |   5 +-
  bypy/macos/__main__.py                       |   7 +-
- bypy/sources.json                            |  18 -----
- setup/commands.py                            |   5 +-
+ setup/commands.py                            |   4 +-
  setup/resources.py                           | 117 ++++++++++++++++++++++++++-
  src/calibre/ebooks/unihandecode/jadecoder.py |  36 ---------
- 7 files changed, 128 insertions(+), 67 deletions(-)
+ 6 files changed, 128 insertions(+), 48 deletions(-)
 
 diff --git a/COPYRIGHT b/COPYRIGHT
 index e305108..a44d756 100644
@@ -34,7 +33,7 @@ index e305108..a44d756 100644
  Copyright: 2010-2011, Hiroshi Miura <miurahr@linux.com>
  Copyright: 2009, John Schember
 diff --git a/bypy/linux/__main__.py b/bypy/linux/__main__.py
-index 66eef7f..599290d 100644
+index 6a0e9be..90c18df 100644
 --- a/bypy/linux/__main__.py
 +++ b/bypy/linux/__main__.py
 @@ -84,12 +84,11 @@ def ignore_in_lib(base, items, ignored_dirs=None):
@@ -53,7 +52,7 @@ index 66eef7f..599290d 100644
      return ans
  
 diff --git a/bypy/macos/__main__.py b/bypy/macos/__main__.py
-index e0644cb..95e2790 100644
+index 2483edc..fd6f119 100644
 --- a/bypy/macos/__main__.py
 +++ b/bypy/macos/__main__.py
 @@ -613,15 +613,12 @@ class Freeze:
@@ -74,49 +73,19 @@ index e0644cb..95e2790 100644
                      ans.append(y)
  
              return ans
-diff --git a/bypy/sources.json b/bypy/sources.json
-index 0f764de..1baa04f 100644
---- a/bypy/sources.json
-+++ b/bypy/sources.json
-@@ -1043,24 +1043,6 @@
-         }
-     },
- 
--    {
--        "name": "wrapt",
--        "unix": {
--            "filename": "wrapt-1.16.0-py3-none-any.whl",
--            "hash": "sha256:6906c4100a8fcbf2fa735f6059214bb13b97f75b1a61777fcf6432121ef12ef1",
--            "urls": ["pypi"]
--        }
--    },
--
--    {
--        "name": "deprecated",
--        "unix": {
--            "filename": "Deprecated-1.2.14-py2.py3-none-any.whl",
--            "hash": "sha256:6fac8b097794a90302bdbb17b9b815e732d3c4720583ff1b198499d78470466c",
--            "urls": ["pypi"]
--        }
--    },
--
-     {
-         "name": "pykakasi",
-         "unix": {
 diff --git a/setup/commands.py b/setup/commands.py
-index 8cabf34..82b8d13 100644
+index faba5b4..8de43f3 100644
 --- a/setup/commands.py
 +++ b/setup/commands.py
-@@ -11,7 +11,7 @@ __all__ = [
-     'gui',
-     'git_version',
-     'develop', 'install',
--    'rapydscript', 'cacerts', 'recent_uas', 'resources',
-+    'kakasi', 'rapydscript', 'cacerts', 'recent_uas', 'resources',
-     'check', 'test', 'test_rs', 'upgrade_source_code',
-     'sdist', 'bootstrap', 'extdev',
-     'manual', 'tag_release',
-@@ -90,9 +90,10 @@ from setup.test import Test, TestRS
+@@ -23,6 +23,7 @@ __all__ = [
+     'iso639',
+     'iso3166',
+     'iso_data',
++    'kakasi',
+     'liberation_fonts',
+     'linux',
+     'linux64',
+@@ -132,9 +133,10 @@ from setup.test import Test, TestRS
  test = Test()
  test_rs = TestRS()
  
