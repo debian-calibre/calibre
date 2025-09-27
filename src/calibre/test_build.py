@@ -165,6 +165,9 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(etree.tostring(root), raw)
         from lxml import html
         html.fromstring('<p>\U0001f63a')
+        from calibre.utils.xml_parse import safe_xml_fromstring
+        bad = '\U0001f468' * 8192
+        safe_xml_fromstring(f'<p>{bad}</p>')
 
     def test_certgen(self):
         from calibre.utils.certgen import create_key_pair
