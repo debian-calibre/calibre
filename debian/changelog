@@ -1,12 +1,37 @@
-calibre (8.10.0+ds+~0.10.5-1) UNRELEASED; urgency=medium
+calibre (8.11.0+ds+~0.10.5-1) UNRELEASED; urgency=medium
 
   * Use template syntax for watch file
   * Embed PoDoFo 0.10.
     This fix avoids package removal that affects from Debian bug 1036938.
   * Import PoDoFo while import-orig
   * New upstream version 8.10.0+ds+~0.10.5
+  * Build embedded PoDoFo
+  * Drop PoDoFo 0.9.8 support
+  * Drop system PoDoFo from build-depends
+  * Use absolute path for PoDoFo plugin
+  * Tweak link options for embedded PoDoFo
+  * Rediff patches
+  * Rediff patches
+  * Add required development files for PoDoFo
+  * Rediff patches
+  * Add PoDoFo path to installation process.
+    PoDoFo path is required for installation
+  * Add license text for PoDoFo
+  * Add cleaner for PoDoFo
+  * Drop Piper test on arm64.
+    It avoids test failure by "Illegal instruction" error.
+  * onnxruntime for i386 is now available since onnxruntime:1.21.0+dfsg-2
+  * Change clean target to build PoDoFo.
+    Clean target must works on first time build.
+  * New upstream version 8.11.0+ds+~0.10.5
+  * Rediff patches.
+    Drop pykakasi/0074-Revert-Remove-more-exclusions.patch: empty patch
+  * Renumber patches
+  * Other gbp commands like "export-orig" might wants "component" option.
+    Salsa CI also wants this option to build multiple upstream tarball (MUT)
+    package.
 
- -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 22 Sep 2025 00:53:22 +0900
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 27 Sep 2025 10:07:48 +0900
 
 calibre (8.10.0+ds-3) unstable; urgency=medium
 
