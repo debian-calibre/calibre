@@ -44,6 +44,9 @@ endif
 
 DEB_DH_GENCONTROL_ARGS = -- -Vpyqt:Version=$(shell dpkg-query --showformat='$${source:Version}' --show python3-pyqt6)
 
+# podofo: marge CPPFLAGS into CFLAGS/CXXFLAGS for cmake build
+DEB_PODOFO_CPPFLAGS = $(shell dpkg-buildflags --get CPPFLAGS)
+
 blhc-note:
 #	# Add false-positive info for blhc(1) check
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
@@ -52,7 +55,7 @@ blhc-note:
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 
 override_dh_auto_configure:
-	env CFLAGS="$(CFLAGS) -fPIC" CXXFLAGS="$(CXXFLAGS) -fPIC" cmake -B podofo -S podofo -DPODOFO_BUILD_LIB_ONLY=TRUE -DPODOFO_BUILD_STATIC=TRUE
+	env CFLAGS="$(CFLAGS) $(DEB_PODOFO_CPPFLAGS) -fPIC" CXXFLAGS="$(CXXFLAGS) $(DEB_PODOFO_CPPFLAGS) -fPIC" cmake -B podofo -S podofo -DPODOFO_BUILD_LIB_ONLY=TRUE -DPODOFO_BUILD_STATIC=TRUE
 
 override_dh_auto_build: blhc-note
 	cmake --build podofo --clean-first
