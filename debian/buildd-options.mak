@@ -15,4 +15,5 @@ ifeq (arm64, $(DEB_HOST_ARCH))
   # But buildd "arm-conova-*" works well.
   TEST_FLAGS += --exclude-test-name=import_of_all_python_modules
   TEST_FLAGS += --exclude-test-name=piper
+  TEST_FLAGS += --exclude-test-name=plugins
 endif
