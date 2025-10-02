@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2025-09-17 17:38+UTC\n"
+"POT-Creation-Date: 2025-10-01 08:38+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>, 2025\n"
 "Language-Team: Finnish (http://app.transifex.com/calibre/calibre/language/fi/)\n"
@@ -188,7 +188,7 @@ msgid "AI services from GitHub, with access to many different AI models"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/backend.py:176
-#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:122
+#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:127
 #: /__w/calibre/calibre/src/calibre/ai/openai/backend.py:172
 #, python-brace-format
 msgid "Result was blocked for reason: {}"
@@ -234,7 +234,7 @@ msgid "Browse"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:428
 msgid "Model for &text tasks:"
 msgstr ""
@@ -252,7 +252,7 @@ msgid "You must supply a Personal access token to use GitHub AI."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:97
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:93
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:125
 msgid "No matching model"
 msgstr ""
 
@@ -323,60 +323,78 @@ msgid ""
 " rely on a third party provider."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:23
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:24
 msgid ""
 "Ollama allows you to run AI models locally on your own hardware. Once you "
 "have it running and properly setup, fill in the fields below to have calibre"
 " use it as the AI provider."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:31
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:33
 #, python-brace-format
 msgid "The Ollama URL, defaults to {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:32
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:34
 #, python-brace-format
 msgid ""
 "Enter the URL of the machine running your Ollama server, for example: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:35
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:36
 msgid "Ollama &URL:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:37
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
 msgid " seconds"
 msgstr " sekuntia"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:42
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+msgid "&Timeout:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
 msgid "Enter the name of the model to use for text based tasks."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:44
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:47
 msgid "Enter name of model to use"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:52
+msgid "HTTP headers to send to Ollama, one per line"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:53
+msgid "HTTP &Headers:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:56
+msgid ""
+"A list of HTTP headers to send with every request to the Ollama API. Add a "
+"new header per line in the format: Header-Name: Value"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "No model specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "You specify a model to use for text based tasks."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:89
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:121
 msgid "Failed to get list of available models with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:91
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:123
 msgid "Available models:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:94
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:126
 #, python-brace-format
 msgid ""
 "No model named {} found in Ollama. Click \"Show details\" to see a list of "
@@ -784,7 +802,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:475
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:551
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:61
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:205
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:206
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:196
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:141
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:143
@@ -846,7 +864,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.py:360
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:94
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:138
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:134
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:267
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:374
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:376
@@ -859,7 +877,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:136
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:203
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:241
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:658
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:659
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/utils.py:344
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer2/indexer.py:466
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:394
@@ -868,9 +886,9 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:281
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:991
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:320
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:323
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:327
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:319
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:322
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:326
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:177
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:184
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:121
@@ -959,7 +977,7 @@ msgstr "Ei tee mitään"
 #: /__w/calibre/calibre/src/calibre/srv/content.py:180
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:101
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:110
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:366
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:374
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:41
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:348
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
@@ -979,7 +997,7 @@ msgid "Customize"
 msgstr "Mukauta"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:187
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:446
 msgid "Cannot configure"
 msgstr "Ei voida määrittää"
@@ -1008,10 +1026,10 @@ msgstr "Käyttöliittymätoiminto"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:22
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:30
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:115
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:241
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:341
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:383
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:410
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:82
 msgid "Preferences"
@@ -2858,7 +2876,7 @@ msgstr "%prog saved_searches [options] (list|add|remove)\n\nHallitsee tähän ti
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:59
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:109
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:614
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:622
 msgid "Name:"
 msgstr "Nimi:"
 
@@ -3430,56 +3448,61 @@ msgstr "Laitteen tunnistamisen vianmääritys"
 #: /__w/calibre/calibre/src/calibre/debug.py:60
 msgid ""
 "Run the GUI with debugging enabled. Debug output is printed to stdout and "
-"stderr."
-msgstr "Käynnistä GUI vianmääritys aktivoituna. Vianmääritys tulostaa virtoihin stdout ja stderr."
+"stderr. To pass command line arguments use -- followed by the arguments, for"
+" example: calibre-debug -g -- --with-library /path/to/library"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:63
+#: /__w/calibre/calibre/src/calibre/debug.py:65
 msgid ""
 "Run the GUI with a debug console, logging to the specified path. For "
 "internal use only, use the -g option to run the GUI in debug mode"
 msgstr "Suorita graafinen käyttöliittymä virheenkorjauskonsolilla kirjautumalla määritettyyn polkuun. Käytä vain sisäiseen käyttöön -g-vaihtoehtoa graafisen käyttöliittymän suorittamiseen virheenkorjaustilassa"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:66
+#: /__w/calibre/calibre/src/calibre/debug.py:68
 msgid "Don't run with the DEBUG flag set"
 msgstr "Älä käytä DEBUG-lippua asetettuna"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:68
-msgid "Run the E-book viewer in debug mode"
-msgstr "Käynnistä E-kirjan katseluohjelma virheenkorjaustilassa"
-
 #: /__w/calibre/calibre/src/calibre/debug.py:70
+msgid ""
+"Run the E-book viewer in debug mode. As with -g use -- to pass command line "
+"arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:72
 msgid "Output the paths necessary to setup the calibre environment"
 msgstr "Tulosta hakemistopolut, joita tarvitaan calibre-ympäristön määrittelyyn"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:72
+#: /__w/calibre/calibre/src/calibre/debug.py:74
 msgid ""
 "Add a simple plugin (i.e. a plugin that consists of only a .py file), by "
 "specifying the path to the py file containing the plugin code."
 msgstr "Lisää yksinkertainen laajennus (eli laajennus, joka koostuu vain .py tiedostosta) määrittämällä laajennuskoodin sisältävän py-tiedoston polku."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:77
+#: /__w/calibre/calibre/src/calibre/debug.py:79
 msgid "Inspect the MOBI file(s) at the specified path(s)"
 msgstr "Tutki MOBI-tiedostoja osoitetuissa poluissa"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:79
-msgid "Launch the calibre \"Edit book\" tool in debug mode."
-msgstr "Käynnistä calibren \"Kirjan muokkaus\" -työkalu virheenkorjaustilassa."
-
 #: /__w/calibre/calibre/src/calibre/debug.py:81
+msgid ""
+"Launch the calibre \"Edit book\" tool in debug mode. As with -g use -- to "
+"pass command line arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:83
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
 msgstr "Pura kirja määritettyyn kansioon.\nKäyttö: -x file.epub output_dir\nVie kirjan HTML-tiedostojen ja metadata kokoelmana, jota voit muokata tavallisilla HTML-muokkaustyökaluilla. Toimii EPUB-, AZW3-, HTMLZ- ja DOCX-tiedostojen kanssa."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:87
+#: /__w/calibre/calibre/src/calibre/debug.py:89
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
 msgstr "Kasaa aikaisemmin räjäytetty kirja.\nKäyttö: -i vientikansio tiedosto.epub\nTuo kirjan vientikansion tiedostoista. Kansion sisällön tulee olla aikaisemmin luotu --explode_book-komennolla. Huomaa myös, että tiedostotyypin on oltava sama kuin lähdetiedoston."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:92
+#: /__w/calibre/calibre/src/calibre/debug.py:94
 msgid ""
 "Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \"all\" can be used to export all libraries. Examples:\n"
 "\n"
@@ -3488,62 +3511,62 @@ msgid ""
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
 msgstr "Vie kaikki calibre-tiedot (kirjat/asetukset/laajennukset). Normaalisti sinulta kysytään vientikansiota ja vietäviä kirjastoja. Voit myös ohittaa kysymykset määrittämällä ne komentoriviargumenteiksi. Käytä absoluuttisia polkuja vientikansiossa ja kirjastoissa. Erityistä avainsanaa \"all\" voidaan käyttää kaikkien kirjastojen viemiseen. Esimerkkejä:\n\n  calibre-debug --export-all-calibre-data # interaktiiviseen käyttöön\n  calibre-debug --export-all-calibre-data /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2\n  calibre-debug --export-all-calibre-data /export/folder all # vie kaikki tunnetut kirjastot"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:102
+#: /__w/calibre/calibre/src/calibre/debug.py:104
 msgid "Import previously exported calibre data"
 msgstr "Tuo aikaisemmin vietyjä calibre-tietoja"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:105
+#: /__w/calibre/calibre/src/calibre/debug.py:107
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:63
 msgid ""
 "Cause a running calibre instance, if any, to be shutdown. Note that if there"
 " are running jobs, they will be silently aborted, so use with care."
 msgstr "Pakottaa käynnissä olevien calibre-instanssien sammumisen. Huomaa, että tämä pakottaa kaikkien käynnissä olevien prosessien päättämisen, joten käytä varoen."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:108
+#: /__w/calibre/calibre/src/calibre/debug.py:110
 msgid "Test binary modules in build"
 msgstr "Testaa buildin binäärimoduulit"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:111
+#: /__w/calibre/calibre/src/calibre/debug.py:113
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr "Suorita laajennus, joka tarjoaa komentorivikäyttöliittymän. Esimerkiksi:\ncalibre-debug -r \"Plugin name\" -- file1 --option1\nKaikki -- jälkeen oleva välitetään laajennukselle argumentteina."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:115
+#: /__w/calibre/calibre/src/calibre/debug.py:117
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
 msgstr "Suorita nimetyt testit. Käytä erityistä arvoa \"all\" kaikkien testien suorittamiseen. Jos testin nimi alkaa pisteellä, sen oletetaan olevan moduulin nimi. Jos testin nimi alkaa @-merkillä, sen oletetaan olevan luokan nimi."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:120
+#: /__w/calibre/calibre/src/calibre/debug.py:122
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr "Suorita calibre diff-työkalu. Esimerkiksi:\ncalibre-debug --diff file1 file2"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:123
+#: /__w/calibre/calibre/src/calibre/debug.py:125
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr "Lisää/Poistaa calibren Windows oletusohjelmiin/-sta."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:125
+#: /__w/calibre/calibre/src/calibre/debug.py:127
 msgid ""
 "Convert the specified EPUB file to KEPUB without doing a full conversion. "
 "This is what the Kobo driver does when sending files to the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:127
+#: /__w/calibre/calibre/src/calibre/debug.py:129
 msgid ""
 "Convert the specified KEPUB file to EPUB without doing a full conversion. "
 "This is what the Kobo driver does when importing files from the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:193
+#: /__w/calibre/calibre/src/calibre/debug.py:195
 msgid "Debug log"
 msgstr "Vianmääritysloki"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:284
+#: /__w/calibre/calibre/src/calibre/debug.py:286
 #, python-format
 msgid "No plugin named %s found"
 msgstr "Lisäosaa nimeltä %s ei löydetty"
@@ -3746,7 +3769,7 @@ msgstr "Kommunikoi SpringDesign Alex -lukulaitteen kanssa."
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:552
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:584
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:738
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4206
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4207
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:422
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:429
 msgid "Removing books from device..."
@@ -4059,7 +4082,7 @@ msgid "Adding books to device metadata listing..."
 msgstr "Lisätään kirjoja laitteen metadataluetteloon..."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:740
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4208
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
 msgid "Kobo database version unsupported - See details"
 msgstr "Kobon tietokanta versio ei-tuettu - Katso lisätiedot"
 
@@ -4140,7 +4163,7 @@ msgstr "Käsitellään kirjaa: {0} tekijältä {1}"
 msgid "Could not kepubify the book {title} ({name}) failed with error: {e}"
 msgstr "Kirjan {title} ({name}) kepubify-toiminto epäonnistui virheen: {e} vuoksi"
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4210
 msgid ""
 "Your Kobo is running an updated firmware/database version. As calibre does "
 "not know about this updated firmware, database editing is disabled, to "
@@ -4153,7 +4176,7 @@ msgid ""
 "your Kobo."
 msgstr "Kobo käyttää päivitettyä laiteohjelmistoa / tietokantaversiota. Koska calibre ei tiedä tästä päivitetystä laiteohjelmistosta, tietokannan muokkaus on poistettu käytöstä korruption estämiseksi. Voit silti lähettää kirjoja Kobollesi calibrella, mutta kirjojen poistaminen ja kokoelmien hallinta on poistettu käytöstä. Jos olet valmis kokeilemaan ja osaat palauttaa Kobon tehdasasetuksiin, voit ohittaa tämän tarkistuksen napsauttamalla hiiren kakkospainikkeella laitteen kuvaketta calibressa ja valitsemalla \"Määritä tämä laite\" ja sitten \"Yritys tukea uudempaa laiteohjelmistoa\" -vaihtoehto. Tämä saattaa edellyttää Kobon tehdasasetusten palauttamista."
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4223
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4224
 #, python-format
 msgid ""
 "Discussion of any new Kobo firmware can be found in the Kobo forum at "
@@ -8830,7 +8853,7 @@ msgid ""
 "publishers"
 msgstr "Lataa metadata ja kannet Edelweissistä - Kirjakustantajien päivittämä luettelo"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:207
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:203
 msgid "Downloads metadata and covers from Google Books"
 msgstr "Lataa metadata ja kannet Google Booksista"
 
@@ -8880,14 +8903,14 @@ msgstr "Lataa kannet The Open Librarysta"
 msgid "Sample Book"
 msgstr "Näytekirja"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:42
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:43
 #, python-brace-format
 msgid ""
 "This is an Amazon KFX book. It cannot be processed. See {} for information "
 "on how to handle KFX books."
 msgstr "Tämä on Amazonin KFX-kirja. Sitä ei voida käsitellä. Lue {}  saadaksesi lisätietoja KFX-kirjojen käsittelystä."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:88
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:89
 msgid "This is an Amazon Topaz book. It cannot be processed."
 msgstr "Tämä on Amazonin Topaz-kirja. Sitä ei voida käsitellä."
 
@@ -10662,7 +10685,7 @@ msgstr "Kirjojen lisäämisen hallinta"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:123
 #: /__w/calibre/calibre/src/calibre/gui2/actions/catalog.py:42
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:423
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:168
@@ -11537,52 +11560,52 @@ msgid ""
 " The global variable \"{1}\" contains the original tooltip text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:41
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
 msgid "Column tooltips"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:43
 msgid "Define a custom tooltip for values in a column"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:45
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:46
 msgid "Edit/define column tooltip"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:52
 msgid "Show item tooltip in a dialog"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:58
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
 msgid "No library view available"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:60
 msgid "You can't set custom tooltips for books on the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:63
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
 msgid "No column selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:65
 msgid "A column (cell) must be selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:49
 msgid "At least one book must be selected"
 msgstr "Vähintään yksi kirja on valittava"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:73
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
 msgid "Only one book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:75
 msgid "Only one book can be selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:87
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:88
 #, python-brace-format
 msgid "Tooltip for column {name}, row {row_num}"
 msgstr ""
@@ -11700,7 +11723,7 @@ msgstr "Etsi kirjastoa"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:256
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:158
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:191
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:362
 msgid "&Copy"
@@ -13267,17 +13290,17 @@ msgstr "Käynnistä uudelleen vianjäljitystilassa"
 msgid "Restart ignoring third party plugins"
 msgstr "Käynnistä uudelleen ilman kolmannen osapuolen laajennuksia"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:54
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:55
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:320
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:414
 msgid "Sections"
 msgstr "Kohdat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:81
 msgid "Cannot configure while there are running jobs."
 msgstr "Määritystä ei voi tehdä, kun töitä on käynnissä."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:85
 msgid "Cannot configure before calibre is restarted."
 msgstr "Määritystä ei voi tehdä ennen calibren uudelleenkäynnistystä."
 
@@ -14126,7 +14149,7 @@ msgstr "Ohita"
 
 #: /__w/calibre/calibre/src/calibre/gui2/add_filters.py:24
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:253
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:189
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:186
 msgid "Add"
 msgstr "Lisää"
 
@@ -14388,7 +14411,7 @@ msgstr "Muokkaa"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:447
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:478
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:649
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/live_css.py:378
 msgid "Copy"
 msgstr "Kopioi"
@@ -14631,7 +14654,7 @@ msgid "All book details"
 msgstr "Kaikki kirjan tiedot"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:707
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:501
 msgid "Selected text"
 msgstr "Valittu teksti"
 
@@ -15377,7 +15400,13 @@ msgstr "Vaihda ulkoasua leveän ja kapean välillä"
 msgid "Send query to AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:146
+msgid ""
+"AI generated answers can be inaccurate, please verify any answers before "
+"acting on them."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:192
 msgid "Details:"
 msgstr ""
 
@@ -15572,8 +15601,8 @@ msgid "Choose image"
 msgstr "Valitse kuva"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:836
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:153
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:159
 msgid "Invalid URL"
 msgstr "Kelvoton URL"
 
@@ -17109,7 +17138,7 @@ msgstr "Lisää nykyinen lauseke sovellettavien lausekkeiden luetteloon"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:699
 msgid "&Add"
 msgstr "&Lisää"
 
@@ -17125,7 +17154,7 @@ msgstr "Poista tällä hetkellä valittu lauseke"
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1220
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:409
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:701
 msgid "&Remove"
 msgstr "&Poista"
 
@@ -17181,8 +17210,8 @@ msgstr "<p>Etsi ja korvaa käyttää <i>säännöllisiä lausekkeita</i>. Katso 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/palette.py:261
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:254
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:261
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:366
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:539
 msgid "Restore &defaults"
 msgstr "Palauta &oletusarvot"
@@ -17556,7 +17585,7 @@ msgstr "Valitse väri"
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/adv_search_builder_ui.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:506
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:714
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:115
 msgid "&Name:"
 msgstr "&Nimi:"
 
@@ -17731,7 +17760,7 @@ msgstr "Oma värimaailmani"
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1075
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1028
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:744
 msgid "Cannot edit"
 msgstr "Ei voi muokata"
 
@@ -17742,7 +17771,7 @@ msgstr "Sisäänrakennettua värimaailmaa ei voi muokata. Luo sen sijaan uusi v�
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:457
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:745
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:759
 msgid "Cannot remove"
 msgstr "Ei voida poista"
 
@@ -18218,7 +18247,7 @@ msgstr "Poista laite"
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:965
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Error"
 msgstr "Virhe"
@@ -20189,7 +20218,7 @@ msgstr "Tämän linkin URL-osoite"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:301
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:125
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:122
 msgid "&URL:"
 msgstr "&URL:"
 
@@ -22077,7 +22106,7 @@ msgid "Lock Quickview contents"
 msgstr "Lukitse pikakatselun sisältö"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:283
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:395
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:392
 msgid "Refresh"
 msgstr "Päivitä"
 
@@ -22883,7 +22912,7 @@ msgstr "Valitse formaatit"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:91
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:853
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:617
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:700
 msgid "&Edit"
 msgstr "&Muokkaa"
 
@@ -25364,7 +25393,7 @@ msgid "&Shortcut:"
 msgstr "&Pikanäppäin:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:464
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:187
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:190
 msgid "Done"
 msgstr "Valmis"
 
@@ -25885,7 +25914,7 @@ msgstr "Lisää luokkia, joihin haluat rajoittaa tuloksia.\nJos luokkia ei ole m
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:259
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:76
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:189
 msgid "Remove"
 msgstr "Poista"
 
@@ -27833,7 +27862,7 @@ msgstr "&Automaattinen lisääminen"
 msgid "Very low"
 msgstr "Hyvin matala"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:191
 msgid "Confirmation dialogs have all been reset"
 msgstr "Kaikki vahvistusvalintaikkunat on nollattu"
 
@@ -30505,19 +30534,19 @@ msgstr ""
 msgid "Indicates whether the rule applies to child values."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:640
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:639
 msgid "Delete this rule"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:641
 msgid "Undo delete"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:644
 msgid "Modify this value"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:646
 msgid "Undo modification"
 msgstr ""
 
@@ -30678,37 +30707,42 @@ msgstr "Sarakkeen &väritys"
 msgid "Column &icons"
 msgstr "Sarake&kuvakkeet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:108
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
 msgid "version"
 msgstr "versio"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:110
 msgid "created by Kovid Goyal"
 msgstr ", tekijä Kovid Goyal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:162
+#, python-brace-format
+msgid "Shortcut: <i>{}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:228
 msgid ""
 "The changes you have made require calibre be restarted immediately. You will"
 " not be allowed to set any more preferences, until you restart."
 msgstr "Tekemäsi muutokset edellyttävät, että calibre käynnistetään välittömästi uudelleen. Et voi asettaa muita asetuksia, ennen kuin käynnistät calbreen uudelleen."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:258
 msgid "Run Welcome &wizard"
 msgstr "Suorita &tervetulovaihe"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:275
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:276
 msgid "Cancel and return to overview"
 msgstr "Peru ja palaa yleiskatsaukseen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:365
 msgid "Restoring to defaults not supported for"
 msgstr "Oletusasetusten palauttamista ei tueta seuraavissa tapauksissa"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:416
 msgid ""
 "Some of the changes you made require a restart. Please restart calibre as "
 "soon as possible."
@@ -32972,8 +33006,8 @@ msgid ""
 msgstr "Virtuaalikirjaston nimi tai hakuteksti on muuttunut. Haluatko hylätä nämä muutokset?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:293
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:153
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:150
 msgid "No name"
 msgstr "Ei nimeä"
 
@@ -35205,7 +35239,7 @@ msgid "Server replied with unknown HTTP status code: {}"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tts/download.py:101
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1122
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1123
 msgid "Download finished"
 msgstr "Lataus valmistui"
 
@@ -37689,7 +37723,7 @@ msgstr "Valitse tiedostonimi"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:375
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1222
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
 msgid "No name specified"
 msgstr "Nimeä ei ole määritetty"
 
@@ -42460,168 +42494,168 @@ msgstr "Tässä kirjassa ei ole korostuksia vietäväksi"
 msgid "No highlights selected to export"
 msgstr "Vientiä varten ei ole valittu korostuksia"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:112
 msgid "Explain"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:113
 msgid "Define"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
 msgid "Summarize"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
 msgid "Key points"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
 msgid "Fix grammar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:119
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
 msgid "Translate"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:216
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:221
 msgid "AI Assistant Note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:229
 #: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr "Sinä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:239
 msgid "Conversation record"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:274
 msgid "Type a question to the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
 msgid "&Save as note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
 msgid "Save this conversation as a note on the current highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
 msgid "&New chat"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
 msgid "Start a new conversation"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
 msgid "Copy this conversation to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:294
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:299
 msgid "Se&ttings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:330
 msgid "Quick actions"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:350
 msgid "Select text in the book to begin."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:352
 msgid "First, configure an AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:385
 msgid "Assistant"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:404
 msgid "Save this specific response as the note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:406
 msgid "Copy this specific response to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:410
 msgid "Show the reasoning behind this response from the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
 msgid "answering"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
 msgid "thinking"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:416
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:421
 #, python-brace-format
 msgid "{assistant} {activity}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:438
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:446
 msgid "AI provider not configured."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:447
 msgid "Configure AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 msgid "No text is selected for this conversation."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:472
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:480
 msgid "Talking to AI failed with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:503
 msgid "Or, type a question to the AI below, for example:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:511
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:519
 msgid "free"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:514
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:516
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:522
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:524
 msgid "Queries:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:521
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:543
 msgid "Cannot save note as there is currently no selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:521
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:543
 msgid "No selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:549
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:557
 msgid "Reasoning used by AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:616
 msgid "Add Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:616
 msgid "Edit Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:623
 msgid "Prompt:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:625
 #, python-brace-format
 msgid ""
 "The prompt is a template. If you want the prompt to operate on the currently"
@@ -42630,183 +42664,194 @@ msgid ""
 "AIs work well with all languages)."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
 msgid "You must specify a name for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:658
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:666
 msgid "No prompt specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:658
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:666
 msgid "You must specify a prompt for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:670
 msgid "Invalid prompt"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:670
 #, python-brace-format
 msgid "The prompt you specified is not valid. Error: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:677
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:685
 msgid "&Highlight style:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:679
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:687
+msgid "Ask the AI to respond in the current language"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:688
+msgid ""
+"Ask the AI to respond in the current calibre user interface language. Note "
+"that how well this works depends on the individual model being used. "
+"Different models support different languages."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:692
 msgid "&Quick actions:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:745
 msgid ""
 "Cannot edit builtin actions. Instead uncheck this action and create a new "
 "action with the same name."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:746
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:760
 msgid ""
 "Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
 "showing up as a button."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:748
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:762
 #, python-brace-format
 msgid "Remove the {} action?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:763
 msgid "&Show this confirmation again"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:795
 msgid "AI Settings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:801
 msgid "AI &Provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:788
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:803
 msgid "Actions and &highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:110
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:107
 msgid "Edit lookup source"
 msgstr "Muokkaa hakulähdettä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:113
 msgid "The name of the source"
 msgstr "Lähteen nimi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "The URL template of the source"
 msgstr "Lähteen URL-malli"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:126
 #, python-brace-format
 msgid ""
 "The URL template must starts with https:// and have {word} in it which will "
 "be replaced by the actual query"
 msgstr "URL-mallin on alettava termillä https:// ja siinä on oltava {word}, joka korvataan varsinaisella kyselyllä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:148
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:145
 msgid "You must specify a name"
 msgstr "Nimi tulee määrittää"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:147
 msgid "Name already exists"
 msgstr "Nimi on jo olemassa"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:151
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:148
 #, python-brace-format
 msgid "A lookup source with the name {} already exists"
 msgstr "Hakulähde, jonka nimi on {} on jo olemassa"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:151
 msgid "You must specify a URL"
 msgstr "Sinun on määritettävä URL"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:154
 msgid "The URL must start with https://"
 msgstr "URL on alettava tunnuksella https://"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:160
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:157
 #, python-brace-format
 msgid "The URL must contain the placeholder {word}"
 msgstr "URL on sisällettävä sijoitusmerkki {word}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:168
 msgid "Edit lookup sources"
 msgstr "Muokkaa hakulähteitä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:172
 msgid "Double-click to edit an entry"
 msgstr "Muokkaa merkintää kaksoisklikkaamalla"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:195
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:553
 msgid "Restore defaults"
 msgstr "Palauta oletusasetukset"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:231
 msgid "No sources"
 msgstr "Ei lähteitä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:232
 msgid "You must specify at least one lookup source"
 msgstr "Sinun on määritettävä vähintään yksi hakulähde"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:307
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:304
 msgid "Zoom in"
 msgstr "Lähennä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:305
 msgid "Zoom out"
 msgstr "Loitonna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:306
 msgid "Default zoom"
 msgstr "Oletus-zoomaus"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:307
 msgid "Inspect"
 msgstr "Tarkastele"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:321
 msgid "Double click on a word in the book's text to look it up."
 msgstr "Kaksoisnapsauta kirjan tekstissä olevaa sanaa hakeaksesi sitä."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:355
 msgid "&Dictionary"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:359
 msgid "Ask &AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:379
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:376
 msgid "Lookup &in:"
 msgstr "Haku &paikassa:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:389
 msgid "Add sources"
 msgstr "Lisää lähteitä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:393
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:390
 msgid "Add more sources at which to lookup words"
 msgstr "Lisää enemmän lähteitä, joista sanoja voi etsiä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:396
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:393
 msgid "Refresh the result to match the currently selected text"
 msgstr "Päivitä tulos vastaamaan valittua tekstiä"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:404
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:401
 msgid "Update on selection change"
 msgstr "Päivitä valinnan muutoksesta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:407
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:404
 msgid ""
 "Automatically update the displayed result when selected text in the book "
 "changes. With this disabled the lookup is changed only when clicking the "
@@ -45623,298 +45668,298 @@ msgstr ""
 msgid "File is open in another process"
 msgstr "Tiedosto on avoinna toisessa prosessissa"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:371
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:379
 msgid "the end of the program"
 msgstr "ohjelman loppu"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:373
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:381
 #, python-brace-format
 msgid "{0}: {1} near {2} on line {3}"
 msgstr "{0}: {1} lähellä {2} rivillä {3}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:376
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:384
 #, python-brace-format
 msgid "{0}: {1} near {2}"
 msgstr "{0}: {1} lähellä {2}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:462
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:470
 msgid "'End of program'"
 msgstr "'Ohjelman loppu'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:474
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:482
 #, python-brace-format
 msgid "Failed to scan program. Invalid input '{0}'"
 msgstr "Ohjelman skannaus epäonnistui. Virheellinen syöttö '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:477
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:485
 #, python-brace-format
 msgid "Expected end of program, found '{0}'"
 msgstr "Odotettu ohjelman loppu, löytyi '{0}'."
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:500
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:512
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:524
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:561
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:566
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:617
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:508
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:520
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:532
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:569
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:574
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:625
 #, python-brace-format
 msgid "{0} statement: expected '{1}', found '{2}'"
 msgstr "{0} lauseke: odotettu '{1}', löydetty '{2}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:521
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:529
 #, python-brace-format
 msgid "'{0}' statement: expected an identifier"
 msgstr "'{0}' lauseke: odotettiin tunnusta"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:531
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:539
 #, python-brace-format
 msgid "{0} statement: expected '(', found '{1}'"
 msgstr "{0} lauseke: odotettu '(', löydetty '{1}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:549
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:557
 #, python-brace-format
 msgid "{0} statement: expected ')', found '{1}'"
 msgstr "{0} lauseke: odotettu ')', löydetty '{1}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:577
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:585
 #, python-brace-format
 msgid "'{0}' statement: expected a function name identifier"
 msgstr "'{0}' lauseke: odotettiin funktion nimen tunnusta"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:580
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:588
 #, python-brace-format
 msgid "Function name '{0}' is already defined"
 msgstr "Funktion nimi '{0}' on jo määritelty"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:582
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:590
 #, python-brace-format
 msgid "'{0}' statement: expected a '('"
 msgstr "'{0}' lauseke: odotettiin '('"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:588
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:596
 msgid "Parameters to a function must be variables or assignments"
 msgstr "Funktioparametrien on oltava muuttujia tai osoituksia"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:598
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:606
 #, python-brace-format
 msgid "'{0}' statement: expected a ')' at end of argument list"
 msgstr "'{0}' lauseke: odotettiin ')' argumenttiluettelon lopussa"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:600
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:608
 #, python-brace-format
 msgid "'{0}' statement: missing ':'"
 msgstr "'{0}' lauseke: puuttuu ':'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:604
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:622
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:612
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:630
 #, python-brace-format
 msgid "'{0}' statement: missing the closing '{1}'"
 msgstr "'{0}' lauseke: puuttuu päättävä '{1}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:638
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:646
 #, python-brace-format
 msgid "A stored template must begin with '{0}' or {1}"
 msgstr "Tallennetun mallin on alettava kirjaimella '{0}' tai {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:754
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:764
 #, python-brace-format
 msgid "Expected '{0}', found '{1}'"
 msgstr "Odotettu '{0}', löydetty '{1}'."
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:792
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:802
 #, python-brace-format
 msgid "Unknown function {0}"
 msgstr "Tuntematon toiminto {0}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:805
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:815
 #, python-brace-format
 msgid "Expected a '{0}' for function call, found '{1}'"
 msgstr "Odotettiin '{0}' funktiokutsua varten, löytyi '{1}'."
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:818
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:828
 #, python-brace-format
 msgid "Parameters to '{0}' must be variables or assignments"
 msgstr "Kohteen '{0}' parametrien on oltava muuttujia tai määrityksiä"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:838
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1916
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:848
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1935
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3047
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3079
 #, python-brace-format
 msgid "Incorrect number of arguments for function {0}"
 msgstr "Väärä argumenttien määrä funktiolle {0}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:845
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:855
 #, python-brace-format
 msgid "Expected an expression, found '{0}'"
 msgstr "Odotettiin lauseketta, löytyi '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:850
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:860
 #, python-brace-format
 msgid "{0} outside of for loop"
 msgstr "{0} for-silmukan ulkopuolella"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:953
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:963
 msgid "Keyword arguments are not allowed"
 msgstr "Avainsana-argumentit eivät ole sallittuja"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:957
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:959
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:961
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:967
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:969
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:971
 #, python-brace-format
 msgid "Don't call {0}. Instead use {1}"
 msgstr "Älä kutsu {0}. Käytä sen sijaan {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:966
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:976
 #, python-brace-format
 msgid "Invalid character name '{0}'"
 msgstr "Merkin nimi '{0}' on virheellinen"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:968
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:978
 msgid "Incorrect number of arguments"
 msgstr "Virheellinen argumenttien määrä"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:979
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:989
 #, python-brace-format
 msgid "Error in function {0} :: {1}"
 msgstr "Virhe funktiossa {0} :: {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:988
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:998
 msgid "No function named {!r} exists"
 msgstr "Funktiota nimeltä {!r} ei ole olemassa"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1000
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1010
 #, python-brace-format
 msgid "Interpreter: {0} - line number {1}"
 msgstr "Tulkki: {0} - rivinumero {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1061
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1114
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1165
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1071
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1124
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1175
 #, python-brace-format
 msgid "Unhandled exception '{0}'"
 msgstr "Käsittelemätön poikkeus '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1122
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1126
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1130
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1135
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1132
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1136
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1140
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1145
 #, python-brace-format
 msgid "{0}: {1} must be an integer"
 msgstr "{0}: {1} on oltava kokonaisluku"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1147
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1157
 #, python-brace-format
 msgid "{0}: the range length ({1}) is larger than the limit ({2})"
 msgstr "{0}: alueen pituus ({1}) on suurempi kuin raja ({2})"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1173
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1183
 #, python-brace-format
 msgid "Unknown identifier '{0}'"
 msgstr "Tuntematon tunniste '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1191
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1232
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1201
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1242
 msgid "before evaluating arguments"
 msgstr "ennen argumenttien arviointia"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1204
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1249
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1214
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1259
 msgid "after evaluating arguments"
 msgstr "argumenttien arvioinnin jälkeen"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1221
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1263
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1231
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1273
 msgid " returned value"
 msgstr " palautettu arvo"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1235
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1245
 #, python-brace-format
 msgid ""
 "Function {0}: argument count mismatch -- {1} given, at most {2} required"
 msgstr "Funktio {0}: argumenttien määrä ei täsmää -- {1} annettu, enintään {2} vaadittu"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1305
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1309
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1339
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1315
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1319
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1349
 #, python-brace-format
 msgid "Unknown field '{0}'"
 msgstr "Tuntematon kenttä '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1399
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1449
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1417
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1467
 #, python-brace-format
 msgid "Field '{0}' is either not a field or not a list"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1478
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1496
 #, python-brace-format
 msgid "Error during string comparison: operator '{0}'"
 msgstr "Virhe merkkijonojen vertailussa: operaattori '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1506
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1524
 #, python-brace-format
 msgid "Value used in comparison is not a number: operator '{0}'"
 msgstr "Vertailussa käytetty arvo ei ole luku: operaattori '{0}'."
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1523
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1540
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1562
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1541
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1558
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1580
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1592
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1598
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1610
 #, python-brace-format
 msgid "Error during operator evaluation: operator '{0}'"
 msgstr "Virhe operaattorin arvioinnissa: operaattori '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1607
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1625
 #, python-brace-format
 msgid "Function {0}: invalid character name '{1}"
 msgstr "Funktio {0}: virheellinen merkin nimi '{1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1669
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1688
 #, python-brace-format
 msgid "Internal error evaluating an expression: '{0}'"
 msgstr "Sisäinen virhe lausekkeen arvioinnissa: '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1715
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1734
 #, python-brace-format
 msgid "format: type {0} requires an integer value, got {1}"
 msgstr "formaatti: tyyppi {0} vaatii kokonaislukuarvon, sai {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1721
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1740
 #, python-brace-format
 msgid "format: type {0} requires a decimal (float) value, got {1}"
 msgstr "formaatti: tyyppi {0} vaatii desimaaliarvon (float), sai {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1831
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1850
 #, python-brace-format
 msgid "Error in function {0} on line {1} : {2} - {3}"
 msgstr "Virhe funktiossa {0} rivillä {1} : {2} - {3}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1834
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1853
 msgid "The Python template returned a non-string value: {!r}"
 msgstr "Python-malli palautti arvon, joka ei ole merkkijono: {!r}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1852
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1871
 #, python-brace-format
 msgid "Syntax error on line {0} column {1}: text {2}"
 msgstr "Syntaksivirhe rivillä {0} sarakkeessa {1}: teksti {2}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1854
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1873
 #, python-brace-format
 msgid "The {0} function is not defined in the template"
 msgstr "{0}-funktiota ei ole määritetty mallissa"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1926
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1945
 #, python-format
 msgid "%s: unknown function"
 msgstr "%s: tuntematon toiminto"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1973
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1992
 msgid "Formatter state restored before saved"
 msgstr "Muotoilun tila palautettu ennen tallennusta"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:2105
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:2124
 #, python-brace-format
 msgid "No such variable {0}"
 msgstr "Ei muuttujaa {0}"
@@ -46158,6 +46203,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3759
 msgid "Template output"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3804
+msgid ""
+"This function cannot be called directly. It is built into the formatter"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/html2text.py:20
@@ -46410,7 +46460,7 @@ msgid "%s Document"
 msgstr "%s Asiakirja"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:127
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1651
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1652
 msgid "Unknown section"
 msgstr "Tuntematon osa"
 
@@ -46420,7 +46470,7 @@ msgstr "Tuntematon syöte"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:168
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:208
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1642
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1643
 msgid "Untitled article"
 msgstr "Nimetön artikkeli"
 
@@ -46432,116 +46482,116 @@ msgstr "Tuntematon uutislähde"
 msgid "Article download aborted"
 msgstr "Artikkelin lataaminen keskeytetty"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:878
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:879
 #, python-format
 msgid "Failed to download %s"
 msgstr "Lataus %s ei onnistunut"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:976
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:977
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "Resepti \"%s\" tarvitsee käyttäjätunnuksen ja salasanan."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1124
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1125
 msgid "Failed to download the following articles:"
 msgstr "Seuraavien artikkelien lataaminen epäonnistui:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1130
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1131
 msgid "Failed to download parts of the following articles:"
 msgstr "Seuraavien artikkeliosien lataus epäonnistui:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1132
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1133
 msgid " from "
 msgstr " mistä "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1134
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1135
 msgid "\tFailed links:"
 msgstr "\tEpäonnistuneet linkit:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1240
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1241
 msgid "Could not fetch article."
 msgstr "Artikkelia ei voitu noutaa."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1242
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1243
 msgid "The debug traceback is available earlier in this log"
 msgstr "Vianjäljitys on saatavilla aiemmin tässä lokissa"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1244
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
 msgid "Run with -vv to see the reason"
 msgstr "Suorita -vv nähdäksesi syyn"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1297
 msgid "Fetching feeds..."
 msgstr "Noudetaan syötteitä..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1302
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1303
 msgid "Got feeds from index page"
 msgstr "Sain syötteet indeksisivulta"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1315
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1316
 msgid "Trying to download cover..."
 msgstr "Yritetään ladata kantta..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1317
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1318
 msgid "Generating masthead..."
 msgstr "Pääotsikon luominen..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1377
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1378
 #, python-brace-format
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "Käynnistetään lataus yhdessä säikeessä..."
 msgstr[1] "Käynnistetään lataus [{} säikeessä]..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1392
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Syötteet ladattu osoitteeseen %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1401
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1402
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "Kantta ei voitu ladata: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1414
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Ladataan kansi osoitteesta %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1466
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1467
 msgid "Masthead image downloaded"
 msgstr "Pääotsikkokuva ladattu"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1566
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1567
 msgid "Articles in this issue:"
 msgstr "Tämän numeron artikkelit:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1723
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1724
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Artikkeli ladattu: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1733
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1734
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "Artikkelin lataus keskeytetty: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1741
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Artikkelin lataus epäonnistui: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1763
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1764
 msgid "Fetching feed"
 msgstr "Syötteen nouto"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1956
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1957
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "Kirjautuminen epäonnistui, tarkista käyttäjätunnuksesi ja salasanasi calibre Periodicals -palveluun."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1971
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1972
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
@@ -48083,6 +48133,33 @@ msgid ""
 "``fractional_part(value)`` -- returns the part of the value after the "
 "decimal point.[/] For example, ``fractional_part(3.14)`` returns ``0.14``. "
 "Throws an exception if ``value`` is not a number."
+msgstr ""
+
+#: src/calibre/utils/formatter_function.py:3768
+msgid ""
+"``f_string(string)`` -- interpret ``string`` similar to how python interprets ``f`` strings. The intended use is to simplify long sequences of ``str & str`` or strcat(a,b,c) expressions.\n"
+"\n"
+"Text between braces (``{`` and ``}``) must be General Program Mode template expressions. The expressions, which can be expression lists, are evaluated in the current context (current book and local variables). Text not between braces is passed through unchanged.\n"
+"\n"
+"Examples:\n"
+"[LIST]\n"
+"[*]``f_string('Here is the title: {$title}')`` - returns the string with ``{$title}`` replaced with the title of the current book. For example, if the book's title is `20,000 Leagues Under the Sea` then the ``f_string()`` returns `Here is the title: 20,000 Leagues Under the Sea`.\n"
+"[*]Assuming the current date is 18 Sept 2025, this ``f_string()``\n"
+"[CODE]\n"
+"f_string(\"Today's date: the {d = today(); format_date(d, 'd')} of {format_date(d, 'MMMM')}, {format_date(d, 'yyyy')}\")\n"
+"[/CODE]\n"
+"returns the string `Today's date: the 18 of September, 2025`. Note the expression list (an assignment then an ``if`` statement) used in the first ``{ ... }`` group to assign today's date to a local variable.\n"
+"[*]If the book is book #3 in a series named `Foo` that has 5 books then this template\n"
+"[CODE]\n"
+"program:\n"
+"    if $series then\n"
+"        series_count = book_count('series:\"\"\"=' & $series & '\"\"\"', 0);\n"
+"        return f_string(\"{$series}, book {$series_index} of {series_count}\")\n"
+"    fi;\n"
+"    return 'This book is not in a series'\n"
+"[/CODE]\n"
+"returns `Foo, book 3 of 5`\n"
+"[/LIST]"
 msgstr ""
 
 #: src/calibre/utils/formatter_function.py:2524

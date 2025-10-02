@@ -47,7 +47,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2025-09-25 02:16+UTC\n"
+"POT-Creation-Date: 2025-10-01 08:38+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>, 2014-2025\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
@@ -209,7 +209,7 @@ msgid "AI services from GitHub, with access to many different AI models"
 msgstr "Servicios de IA de GitHub, con acceso a muchos modelos de IA diferentes"
 
 #: /__w/calibre/calibre/src/calibre/ai/github/backend.py:176
-#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:122
+#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:127
 #: /__w/calibre/calibre/src/calibre/ai/openai/backend.py:172
 #, python-brace-format
 msgid "Result was blocked for reason: {}"
@@ -255,7 +255,7 @@ msgid "Browse"
 msgstr "Explorar"
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:428
 msgid "Model for &text tasks:"
 msgstr "Modelo para tareas basadas en &texto:"
@@ -273,7 +273,7 @@ msgid "You must supply a Personal access token to use GitHub AI."
 msgstr "Debe proporcionar un token de acceso personal para usar la IA de GitHub."
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:97
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:93
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:125
 msgid "No matching model"
 msgstr "No hay modelo que coincida"
 
@@ -344,60 +344,78 @@ msgid ""
 " rely on a third party provider."
 msgstr "Servicios de IA de Ollama, cuando quiere ejecutar modelos de IA localmente en lugar de depender de un proveedor."
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:23
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:24
 msgid ""
 "Ollama allows you to run AI models locally on your own hardware. Once you "
 "have it running and properly setup, fill in the fields below to have calibre"
 " use it as the AI provider."
 msgstr "Ollama le permite ejecutar modelos de IA en su equipo local. Una vez que lo tenga instalado y configurado, rellene los campos siguientes para que calibre lo use como proveedor de IA."
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:31
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:33
 #, python-brace-format
 msgid "The Ollama URL, defaults to {}"
 msgstr "El URL de Ollama, de manera predeterminada es {}"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:32
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:34
 #, python-brace-format
 msgid ""
 "Enter the URL of the machine running your Ollama server, for example: {}"
 msgstr "Introduzca el URL del equipo que está ejecutando el servidor de Ollama, por ejemplo: {}"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:35
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:36
 msgid "Ollama &URL:"
 msgstr "&URL de Ollama:"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:37
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
 msgid " seconds"
 msgstr " segundos"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:42
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+msgid "&Timeout:"
+msgstr "&Tiempo máximo de espera:"
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
 msgid "Enter the name of the model to use for text based tasks."
 msgstr "Introduzca el nombre del modelo a usar para tareas basadas en texto."
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:44
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:47
 msgid "Enter name of model to use"
 msgstr "Introduzca el nombre del modelo a usar"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:52
+msgid "HTTP headers to send to Ollama, one per line"
+msgstr "Cabeceras HTTP para enviar a Ollama, una por línea"
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:53
+msgid "HTTP &Headers:"
+msgstr "Cabeceras &HTTP:"
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:56
+msgid ""
+"A list of HTTP headers to send with every request to the Ollama API. Add a "
+"new header per line in the format: Header-Name: Value"
+msgstr "Un lista de cabeceras HTTP para enviar con cada solicitud a la API de Ollama. Añadir una nueva cabecera por línea, con el formato: Nombre-de-Cabecera: Valor"
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "No model specified"
 msgstr "No se ha especificado ningún modelo"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "You specify a model to use for text based tasks."
 msgstr "Especificar un modelo para usar para tareas basadas en texto."
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:89
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:121
 msgid "Failed to get list of available models with error:"
 msgstr "Fallo al obtener una lista de modelos disponibles, con error:"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:91
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:123
 msgid "Available models:"
 msgstr "Modelos disponibles:"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:94
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:126
 #, python-brace-format
 msgid ""
 "No model named {} found in Ollama. Click \"Show details\" to see a list of "
@@ -805,7 +823,7 @@ msgstr "No hace absolutamente nada"
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:475
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:551
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:61
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:205
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:206
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:196
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:141
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:143
@@ -867,7 +885,7 @@ msgstr "No hace absolutamente nada"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.py:360
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:94
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:138
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:134
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:267
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:374
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:376
@@ -880,7 +898,7 @@ msgstr "No hace absolutamente nada"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:136
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:203
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:241
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:658
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:659
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/utils.py:344
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer2/indexer.py:466
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:394
@@ -889,9 +907,9 @@ msgstr "No hace absolutamente nada"
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:281
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:991
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:320
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:323
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:327
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:319
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:322
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:326
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:177
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:184
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:121
@@ -1000,7 +1018,7 @@ msgid "Customize"
 msgstr "Personalizar"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:187
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:446
 msgid "Cannot configure"
 msgstr "No se puede configurar"
@@ -1029,10 +1047,10 @@ msgstr "Acción de interfaz de usuario"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:22
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:30
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:115
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:241
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:341
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:383
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:410
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:82
 msgid "Preferences"
@@ -3455,56 +3473,61 @@ msgstr "Depurar detección de dispositivos"
 #: /__w/calibre/calibre/src/calibre/debug.py:60
 msgid ""
 "Run the GUI with debugging enabled. Debug output is printed to stdout and "
-"stderr."
-msgstr "Ejecutar la interfaz gráfica en modo de depuración. La salida de depuración se imprime en los flujos de salida y error estándar."
+"stderr. To pass command line arguments use -- followed by the arguments, for"
+" example: calibre-debug -g -- --with-library /path/to/library"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:63
+#: /__w/calibre/calibre/src/calibre/debug.py:65
 msgid ""
 "Run the GUI with a debug console, logging to the specified path. For "
 "internal use only, use the -g option to run the GUI in debug mode"
 msgstr "Ejecutar la interfaz gráfica con consola de depuración, con registro en la ruta especificada. Para uso interno, use la opción -g para ejecutar la interfaz gráfica en modo de depuración"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:66
+#: /__w/calibre/calibre/src/calibre/debug.py:68
 msgid "Don't run with the DEBUG flag set"
 msgstr "No ejecutar con DEBUG activado"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:68
-msgid "Run the E-book viewer in debug mode"
-msgstr "Ejecutar el visor de libros en modo de depuración"
-
 #: /__w/calibre/calibre/src/calibre/debug.py:70
+msgid ""
+"Run the E-book viewer in debug mode. As with -g use -- to pass command line "
+"arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:72
 msgid "Output the paths necessary to setup the calibre environment"
 msgstr "Mostrar las rutas necesarias para configurar el entorno de calibre"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:72
+#: /__w/calibre/calibre/src/calibre/debug.py:74
 msgid ""
 "Add a simple plugin (i.e. a plugin that consists of only a .py file), by "
 "specifying the path to the py file containing the plugin code."
 msgstr "Añadir un complemento sencillo (un complemento que conste de un único archivo .py) especificando la ruta al archivo .py que contiene el código del complemento."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:77
+#: /__w/calibre/calibre/src/calibre/debug.py:79
 msgid "Inspect the MOBI file(s) at the specified path(s)"
 msgstr "Inspeccionar los archivos MOBI en las rutas especificadas"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:79
-msgid "Launch the calibre \"Edit book\" tool in debug mode."
-msgstr "Ejecutar la herramienta para modificar libros de calibre en modo de depuración."
-
 #: /__w/calibre/calibre/src/calibre/debug.py:81
+msgid ""
+"Launch the calibre \"Edit book\" tool in debug mode. As with -g use -- to "
+"pass command line arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:83
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
 msgstr "Expandir el libro en la carpeta especificada.\nEmpleo: -x archivo.epub dir_salida\nExporta el libro como una colección de archivos HTML y metadatos, que pueden modificarse con las herramientas habituales para HTML. Funciona con archivos EPUB, AZW3, HTMLZ y DOCX."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:87
+#: /__w/calibre/calibre/src/calibre/debug.py:89
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
 msgstr "Regenerar un libro previamente expandido.\nEmpleo: -l dir_salida archivo.epub\nImporta el libro a partir de los archivos en «dir_salida», que debe haber sido creado por una ejecución previa de --explode-book. Asegúrese de especificar el mismo tipo de archivo que se usó al expandir."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:92
+#: /__w/calibre/calibre/src/calibre/debug.py:94
 msgid ""
 "Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \"all\" can be used to export all libraries. Examples:\n"
 "\n"
@@ -3513,62 +3536,62 @@ msgid ""
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
 msgstr "Exportar todos los datos de calibre (libros, configuración, complementos). Normalmente se le pedirá la carpeta donde exportar y las bibliotecas a exportar. También puede especificarlas como argumentos de línea de órdenes para evitar las preguntas. Use rutas absolutas para la carpeta de exportación y las bibliotecas. Puede usarse la palabra clave «all» para exportar todas las bibliotecas. Ejemplos:\n\n  calibre-debug --export-all-calibre-data # para uso interactivo\n  calibre-debug --export-all-calibre-data /ruta/a/carpeta/de/exportación/vacía /ruta/a/carpeta/de/biblioteca1 /ruta/a/carpeta/de/biblioteca2\n  calibre-debug --export-all-calibre-data /carpeta/de/exportación all # exportar todas las bibliotecas conocidas"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:102
+#: /__w/calibre/calibre/src/calibre/debug.py:104
 msgid "Import previously exported calibre data"
 msgstr "Importar datos de calibre previamente exportados"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:105
+#: /__w/calibre/calibre/src/calibre/debug.py:107
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:63
 msgid ""
 "Cause a running calibre instance, if any, to be shutdown. Note that if there"
 " are running jobs, they will be silently aborted, so use with care."
 msgstr "Cierra una sesión de calibre que pueda estar abierta. Tenga cuidado, porque si hay tareas en ejecución serán abortadas, úselo con precaución."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:108
+#: /__w/calibre/calibre/src/calibre/debug.py:110
 msgid "Test binary modules in build"
 msgstr "Probar módulos binarios incluidos"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:111
+#: /__w/calibre/calibre/src/calibre/debug.py:113
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr "Ejecutar un complemento que proporciona una interfaz de línea de órdenes.\nPor ejemplo:\ncalibre-debug -r \"Nombre del complemento\" -- archivo1 --option1\nTodo lo que aparezca después de -- se pasará al complemento como argumentos."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:115
+#: /__w/calibre/calibre/src/calibre/debug.py:117
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
 msgstr "Ejecutar las pruebas nombradas. Usar el valor especial «all» para ejecutar todas las pruebas. Si el nombre de la prueba empieza por un punto se supone que es un nombre de módulo. Si el nombre de la prueba empieza por @ se supone que es un nombre de categoría."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:120
+#: /__w/calibre/calibre/src/calibre/debug.py:122
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr "Ejecutar la herramienta de comparación de calibre. Por ejemplo:\ncalibre-debug --diff archivo1 archivo2"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:123
+#: /__w/calibre/calibre/src/calibre/debug.py:125
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr "(Des)registrar calibre como programa predeterminado de Windows."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:125
+#: /__w/calibre/calibre/src/calibre/debug.py:127
 msgid ""
 "Convert the specified EPUB file to KEPUB without doing a full conversion. "
 "This is what the Kobo driver does when sending files to the device."
 msgstr "Convertir el archivo EPUB especificado a KEPUB sin hacer una conversión completa. Esto es lo que hace el controlador Kobo al enviar archivos al dispositivo."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:127
+#: /__w/calibre/calibre/src/calibre/debug.py:129
 msgid ""
 "Convert the specified KEPUB file to EPUB without doing a full conversion. "
 "This is what the Kobo driver does when importing files from the device."
 msgstr "Convertir el archivo KEPUB especificado a EPUB sin hacer una conversión completa. Esto es lo que hace el controlador Kobo al importar archivos del dispositivo."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:193
+#: /__w/calibre/calibre/src/calibre/debug.py:195
 msgid "Debug log"
 msgstr "Registro de depuración"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:284
+#: /__w/calibre/calibre/src/calibre/debug.py:286
 #, python-format
 msgid "No plugin named %s found"
 msgstr "No se encontró ningún complemento llamado %s"
@@ -3771,7 +3794,7 @@ msgstr "Comunicar con el lector Alex de SpringDesign."
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:552
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:584
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:738
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4206
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4207
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:422
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:429
 msgid "Removing books from device..."
@@ -4084,7 +4107,7 @@ msgid "Adding books to device metadata listing..."
 msgstr "Añadiendo libros a la lista de metadatos del dispositivo..."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:740
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4208
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
 msgid "Kobo database version unsupported - See details"
 msgstr "No se admite esta versión de la base de datos de Kobo. Ver detalles"
 
@@ -4165,7 +4188,7 @@ msgstr "Procesando libro: {0} de {1}"
 msgid "Could not kepubify the book {title} ({name}) failed with error: {e}"
 msgstr "No se pudo convertir a KEPUB el libro {title} ({name}) falló con error: {e}"
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4210
 msgid ""
 "Your Kobo is running an updated firmware/database version. As calibre does "
 "not know about this updated firmware, database editing is disabled, to "
@@ -4178,7 +4201,7 @@ msgid ""
 "your Kobo."
 msgstr "El lector Kobo tiene una versión de firmware o base de datos actualizada. Puesto que calibre no tiene conocimiento de este firmware nuevo, la edición de base de datos está desactivada para evitar su corrupción. De todas formas puede copiar libros al lector Kobo con calibre, pero el borrado de libros y la gestión de colecciones están desactivados. Si está dispuesto a experimentar y sabe cómo restaurar la configuración de fábrica del lector, puede obviar esta comprobación pulsando en el botón del dispositivo en calibre, seleccionando «Configurar este dispositivo» y después activando la opción «Intentar soportar firmware más reciente». Si lo hace, es posible que tenga que restaurar la configuración de fábrica."
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4223
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4224
 #, python-format
 msgid ""
 "Discussion of any new Kobo firmware can be found in the Kobo forum at "
@@ -8857,7 +8880,7 @@ msgid ""
 "publishers"
 msgstr "Descarga metadatos y portadas de Edelweiss, un catálogo actualizado por las editoriales"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:207
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:203
 msgid "Downloads metadata and covers from Google Books"
 msgstr "Descarga metadatos y portadas desde Google Books"
 
@@ -8907,14 +8930,14 @@ msgstr "Descargar portadas desde The Open Library"
 msgid "Sample Book"
 msgstr "Libro de muestra"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:42
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:43
 #, python-brace-format
 msgid ""
 "This is an Amazon KFX book. It cannot be processed. See {} for information "
 "on how to handle KFX books."
 msgstr "Este es un libro KFX de Amazon. No se puede procesar. Vea {} para más información sobre cómo tratar con libros KFX."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:88
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:89
 msgid "This is an Amazon Topaz book. It cannot be processed."
 msgstr "Este es un libro Topaz de Amazon. No se puede procesar."
 
@@ -10696,7 +10719,7 @@ msgstr "Controlar la adición de libros"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:123
 #: /__w/calibre/calibre/src/calibre/gui2/actions/catalog.py:42
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:423
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:168
@@ -11579,52 +11602,52 @@ msgid ""
 " The global variable \"{1}\" contains the original tooltip text"
 msgstr "Notas:\n La variable global de plantilla «{0}» contiene el nombre de consulta de la columna.\n La variable global «{1}» contiene el texto original de la ayuda emergente"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:41
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
 msgid "Column tooltips"
 msgstr "Ayudas emergentes de columnas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:43
 msgid "Define a custom tooltip for values in a column"
 msgstr "Definir una ayuda emergente personalizada para los valores de una columna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:45
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:46
 msgid "Edit/define column tooltip"
 msgstr "Modificar o definir ayuda emergente de columna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:52
 msgid "Show item tooltip in a dialog"
 msgstr "Mostrar ayuda emergente de elemento en un cuadre de diálogo"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:58
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
 msgid "No library view available"
 msgstr "No hay vista de biblioteca disponible"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:60
 msgid "You can't set custom tooltips for books on the device."
 msgstr "No se puede establecer ayuda emergente para libros en el dispositivo."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:63
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
 msgid "No column selected"
 msgstr "No hay ninguna columna seleccionada"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:65
 msgid "A column (cell) must be selected"
 msgstr "Debe seleccionarse una columna (celda)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:49
 msgid "At least one book must be selected"
 msgstr "Debe seleccionar al menos un libro"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:73
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
 msgid "Only one book"
 msgstr "Sólo un libro"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:75
 msgid "Only one book can be selected"
 msgstr "Sólo puede haber un libro seleccionado"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:87
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:88
 #, python-brace-format
 msgid "Tooltip for column {name}, row {row_num}"
 msgstr "Ayuda emergente para la columna {name}, fila {row_num}"
@@ -13322,17 +13345,17 @@ msgstr "Reiniciar en el modo de depuración"
 msgid "Restart ignoring third party plugins"
 msgstr "Reiniciar omitiendo complementos de terceros"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:54
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:55
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:320
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:414
 msgid "Sections"
 msgstr "Secciones"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:81
 msgid "Cannot configure while there are running jobs."
 msgstr "No se puede configurar mientras haya tareas en ejecución."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:85
 msgid "Cannot configure before calibre is restarted."
 msgstr "No se puede configurar antes de reiniciar calibre."
 
@@ -15440,7 +15463,7 @@ msgstr "Enviar consulta a IA"
 msgid ""
 "AI generated answers can be inaccurate, please verify any answers before "
 "acting on them."
-msgstr ""
+msgstr "Las respuestas generadas por IA pueden ser incorrectas, verifique las respuestas antes de tomar cualquier acción basada en ellas."
 
 #: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:192
 msgid "Details:"
@@ -17246,8 +17269,8 @@ msgstr "<p>Buscar y sustituir utiliza <i>expresiones regulares</i>. Consulte el 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/palette.py:261
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:254
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:261
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:366
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:539
 msgid "Restore &defaults"
 msgstr "Restaurar opciones &predeterminadas"
@@ -30765,37 +30788,42 @@ msgstr "&Coloreado de columna"
 msgid "Column &icons"
 msgstr "&Iconos de columna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:108
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
 msgid "version"
 msgstr "versión"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:110
 msgid "created by Kovid Goyal"
 msgstr "creado por Kovid Goyal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:162
+#, python-brace-format
+msgid "Shortcut: <i>{}"
+msgstr "Atajo: <i>{}"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:228
 msgid ""
 "The changes you have made require calibre be restarted immediately. You will"
 " not be allowed to set any more preferences, until you restart."
 msgstr "Los cambios realizados requieren que calibre se reinicie inmediatamente. No podrá modificar más opciones hasta que no se reinicie."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:258
 msgid "Run Welcome &wizard"
 msgstr "Ejecutar el Asistente de &bienvenida"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:275
 msgid "Save changes"
 msgstr "Guardar cambios"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:276
 msgid "Cancel and return to overview"
 msgstr "Cancelar y volver a la visión general"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:365
 msgid "Restoring to defaults not supported for"
 msgstr "La restauración de las opciones predeterminadas no está soportada para"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:416
 msgid ""
 "Some of the changes you made require a restart. Please restart calibre as "
 "soon as possible."
@@ -35294,7 +35322,7 @@ msgid "Server replied with unknown HTTP status code: {}"
 msgstr "El servidor respondió con un código de estado HTTP desconocido: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tts/download.py:101
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1122
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1123
 msgid "Download finished"
 msgstr "Descarga finalizada"
 
@@ -46531,7 +46559,7 @@ msgid "%s Document"
 msgstr "Documento %s"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:127
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1651
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1652
 msgid "Unknown section"
 msgstr "Sección desconocida"
 
@@ -46541,7 +46569,7 @@ msgstr "Canal RSS desconocido"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:168
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:208
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1642
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1643
 msgid "Untitled article"
 msgstr "Artículo sin título"
 
@@ -46553,61 +46581,61 @@ msgstr "Fuente de noticias desconocida"
 msgid "Article download aborted"
 msgstr "Descarga de artículo cancelada"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:878
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:879
 #, python-format
 msgid "Failed to download %s"
 msgstr "No se pudo descargar %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:976
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:977
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "La fórmula «%s» necesita usuario y contraseña."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1124
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1125
 msgid "Failed to download the following articles:"
 msgstr "Fallo al descargar los siguientes artículos:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1130
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1131
 msgid "Failed to download parts of the following articles:"
 msgstr "Fallo al descargar partes de los siguientes artículos:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1132
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1133
 msgid " from "
 msgstr " desde "
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1134
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1135
 msgid "\tFailed links:"
 msgstr "\tEnlaces fallidos:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1240
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1241
 msgid "Could not fetch article."
 msgstr "No se ha podido obtener el artículo."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1242
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1243
 msgid "The debug traceback is available earlier in this log"
 msgstr "El rastreo de depuración aparece más arriba en este registro"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1244
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
 msgid "Run with -vv to see the reason"
 msgstr "Ejecutar con el parámetro -vv para ver el motivo"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1297
 msgid "Fetching feeds..."
 msgstr "Obteniendo canales de noticias..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1302
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1303
 msgid "Got feeds from index page"
 msgstr "Se obtuvieron canales de noticias desde la página principal"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1315
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1316
 msgid "Trying to download cover..."
 msgstr "Intentando descargar la portada..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1317
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1318
 msgid "Generating masthead..."
 msgstr "Generando cabecera..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1377
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1378
 #, python-brace-format
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
@@ -46615,55 +46643,55 @@ msgstr[0] "Iniciando la descarga en un solo proceso..."
 msgstr[1] "Iniciando la descarga [{} procesos]..."
 msgstr[2] "Iniciando la descarga [{} procesos]..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1392
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "Canales de noticias descargados en %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1401
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1402
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "No se pudo descargar la portada: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1414
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "Descargando portada desde %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1466
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1467
 msgid "Masthead image downloaded"
 msgstr "Imagen de cabecera descargada"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1566
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1567
 msgid "Articles in this issue:"
 msgstr "Artículos en este ejemplar:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1723
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1724
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "Artículo descargado: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1733
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1734
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "Descarga de artículo cancelada: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1741
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 #, python-format
 msgid "Article download failed: %s"
 msgstr "Falló la descarga del artículo: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1763
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1764
 msgid "Fetching feed"
 msgstr "Obteniendo canal de noticias"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1956
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1957
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "No se pudo ingresar, revise su nombre de usuario o contraseña para el Servicio de publicaciones periódicas de calibre."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1971
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1972
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."

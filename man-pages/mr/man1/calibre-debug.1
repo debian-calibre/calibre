@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "सप्टेंबर 26, 2025" "8.11.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "ऑक्टोबर 01, 2025" "8.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -92,7 +92,7 @@ Debug device detection
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-कॅलिबरचे \fB\(dq\fPपुस्तक संपादित करा\fB\(dq\fP औजार हे डीबग मोडमध्ये सुरू करा.
+Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -112,7 +112,7 @@ Export all calibre data (books/settings/plugins). Normally, you will be asked fo
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-डीबग करणे सक्रिय करून GUI चालवा. डीबगचे आउटपुट stdout आणि stderr येथे छापले जाईल.
+Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ Convert the specified KEPUB file to EPUB without doing a full conversion. This i
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-ई\-पुस्तक दृश्यक डीबग मोडमध्ये चालवा
+Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

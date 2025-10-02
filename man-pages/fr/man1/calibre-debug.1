@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "septembre 26, 2025" "8.11.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "octobre 01, 2025" "8.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -85,7 +85,7 @@ Exécuter l\fB\(aq\fPoutil calibre diff. Par exemple: calibre\-debug \fI\%\-\-di
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Lancez l’Éditeur de livre calibre en mode débogage.
+Lancez l’Éditeur de livre calibre en mode débogage. Comme avec \-g, utilisez \fB\-\-\fP pour passer des arguments de ligne de commande.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -105,7 +105,7 @@ Exporter toutes les données calibre (livres/réglages/plugins). Normalement, on
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Exécuter le GUI avec le débogage activé. La sortie de débogage est inscrite dans stdout et stderr.
+Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ affiche le numéro de version du logiciel et quitte
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Exécuter la visionneuse de livre numérique en mode débogage
+Exécuter la visionneuse de livre numérique en mode débogage. Comme avec \-g, utilisez \fB\-\-\fP pour passer des arguments de ligne de commande.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "setembro 26, 2025" "8.11.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "outubro 01, 2025" "8.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -85,7 +85,7 @@ Executar a ferramenta Diff do Calibre. Por exemplo:  Calibre\-debug \fI\%\-\-dif
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Iniciar a ferramenta \fB\(dq\fPEditar livro\fB\(dq\fP em modo de depuração.
+Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -105,7 +105,7 @@ Exporta todos os dados do Calibre (livros/definições/plugins). Normalmente, vo
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Executar a interface de utilizador em modo de depuração. A informação da depuração será escrita em stdout e stderr.
+Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ mostrar o número da versão do programa e sair
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Executar o visualizador de livros digitais no modo de depuração
+Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

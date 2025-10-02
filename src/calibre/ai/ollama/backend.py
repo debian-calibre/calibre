@@ -52,8 +52,8 @@ class Model(NamedTuple):
         )
 
 
-def api_url(path: str = '') -> str:
-    ans = pref('api_url') or OllamaAI.DEFAULT_URL
+def api_url(path: str = '', use_api_url: str | None = None) -> str:
+    ans = (pref('api_url') if use_api_url is None else use_api_url) or OllamaAI.DEFAULT_URL
     purl = urlparse(ans)
     base_path = purl.path or '/'
     if path:
@@ -62,12 +62,14 @@ def api_url(path: str = '') -> str:
     return urlunparse(purl)
 
 
-@lru_cache(2)
-def get_available_models() -> dict[str, Model]:
+@lru_cache(8)
+def get_available_models(use_api_url: str | None = None, headers: Sequence[tuple[str, str]] | None = None) -> dict[str, Model]:
     ans = {}
     o = opener()
-    for model in json.loads(download_data(api_url('api/tags')))['models']:
-        rq = Request(api_url('api/show'), data=json.dumps({'model': model['model']}).encode(), method='POST')
+    if headers is None:
+        headers = pref('headers') or ()
+    for model in json.loads(download_data(api_url('api/tags', use_api_url), headers=headers))['models']:
+        rq = Request(api_url('api/show', use_api_url), headers=dict(headers), data=json.dumps({'model': model['model']}).encode(), method='POST')
         with o.open(rq) as f:
             details = json.loads(f.read())
         e = Model.from_dict(model, details)
@@ -75,8 +77,11 @@ def get_available_models() -> dict[str, Model]:
     return ans
 
 
-def does_model_exist_locally(model_id: str) -> bool:
-    return model_id in get_available_models()
+def does_model_exist_locally(model_id: str, use_api_url: str | None = None, headers: Sequence[tuple[str, str]] | None = None) -> bool:
+    try:
+        return model_id in get_available_models(use_api_url, headers)
+    except Exception:
+        return False
 
 
 def config_widget():

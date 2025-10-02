@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "september 26, 2025" "8.11.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "oktober 01, 2025" "8.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -89,7 +89,7 @@ Kör diffverktyg för calibre. Till exempel: calibre\-debug \fI\%\-\-diff\fP fil
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Starta calibre\-verktyget \fB\(dq\fPRedigera book\fB\(dq\fP i felsökningsläge.
+Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -109,7 +109,7 @@ Exportera all calibre\-data (böcker/inställningar/insticksmoduler). Normalt ko
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Kör det grafiska gränssnittet med felsökning aktiverat. Felsökningsloggar skrivs till stdout och stderr.
+Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -189,7 +189,7 @@ visar programmets versionsnummer och avsluta
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Kör läsenheten i felsökningsläge
+Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal
