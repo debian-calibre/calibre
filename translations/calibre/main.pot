@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 8.11.1\n"
-"POT-Creation-Date: 2025-09-26 17:10+IST\n"
-"PO-Revision-Date: 2025-09-26 17:10+IST\n"
+"Project-Id-Version: calibre 8.12.0\n"
+"POT-Creation-Date: 2025-10-01 19:48+IST\n"
+"PO-Revision-Date: 2025-10-01 19:48+IST\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
@@ -166,7 +166,7 @@ msgid "AI services from GitHub, with access to many different AI models"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/ai/github/backend.py:176
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/backend.py:122
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/backend.py:127
 #: /home/kovid/work/calibre/src/calibre/ai/openai/backend.py:172
 #, python-brace-format
 msgid "Result was blocked for reason: {}"
@@ -205,7 +205,7 @@ msgid "Browse"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/ai/github/config.py:57
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:45
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:48
 #: /home/kovid/work/calibre/src/calibre/ai/open_router/config.py:428
 msgid "Model for &text tasks:"
 msgstr ""
@@ -223,7 +223,7 @@ msgid "You must supply a Personal access token to use GitHub AI."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/ai/github/config.py:97
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:93
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:125
 msgid "No matching model"
 msgstr ""
 
@@ -284,56 +284,72 @@ msgstr ""
 msgid "AI services from Ollama, when you want to run AI models yourself rather than rely on a third party provider."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:23
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:24
 msgid "Ollama allows you to run AI models locally on your own hardware. Once you have it running and properly setup, fill in the fields below to have calibre use it as the AI provider."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:31
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:33
 #, python-brace-format
 msgid "The Ollama URL, defaults to {}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:32
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:34
 #, python-brace-format
 msgid "Enter the URL of the machine running your Ollama server, for example: {}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:35
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:36
 msgid "Ollama &URL:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:37
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:39
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /home/kovid/work/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
 #: /home/kovid/work/calibre/src/calibre/gui2/tts/config.py:92
 msgid " seconds"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:42
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:41
+msgid "&Timeout:"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:45
 msgid "Enter the name of the model to use for text based tasks."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:44
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:47
 msgid "Enter name of model to use"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:82
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:52
+msgid "HTTP headers to send to Ollama, one per line"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:53
+msgid "HTTP &Headers:"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:56
+msgid "A list of HTTP headers to send with every request to the Ollama API. Add a new header per line in the format: Header-Name: Value"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:110
 msgid "No model specified"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:82
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:110
 msgid "You specify a model to use for text based tasks."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:89
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:121
 msgid "Failed to get list of available models with error:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:91
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:123
 msgid "Available models:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:94
+#: /home/kovid/work/calibre/src/calibre/ai/ollama/config.py:126
 #, python-brace-format
 msgid "No model named {} found in Ollama. Click \"Show details\" to see a list of available models."
 msgstr ""
@@ -704,7 +720,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/devices/prst1/driver.py:475
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:551
 #: /home/kovid/work/calibre/src/calibre/ebooks/chm/metadata.py:61
-#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:205
+#: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:206
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:196
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:141
 #: /home/kovid/work/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:143
@@ -766,7 +782,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/base.py:360
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/covers.py:92
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/covers.py:94
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google.py:138
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google.py:134
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/identify.py:267
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/identify.py:374
 #: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/identify.py:376
@@ -779,7 +795,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/headers.py:136
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/headers.py:203
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/headers.py:241
-#: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:658
+#: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:659
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/utils.py:344
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/writer2/indexer.py:466
 #: /home/kovid/work/calibre/src/calibre/ebooks/mobi/writer8/main.py:394
@@ -788,9 +804,9 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/ebooks/odt/input.py:281
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/base.py:991
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:320
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:323
-#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:327
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:319
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:322
+#: /home/kovid/work/calibre/src/calibre/ebooks/oeb/parse_utils.py:326
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/reader.py:177
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/reader.py:184
 #: /home/kovid/work/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:121
@@ -3178,52 +3194,52 @@ msgid "Debug device detection"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/debug.py:60
-msgid "Run the GUI with debugging enabled. Debug output is printed to stdout and stderr."
+msgid "Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use -- followed by the arguments, for example: calibre-debug -g -- /path/to/ebook"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:63
+#: /home/kovid/work/calibre/src/calibre/debug.py:65
 msgid "Run the GUI with a debug console, logging to the specified path. For internal use only, use the -g option to run the GUI in debug mode"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:66
+#: /home/kovid/work/calibre/src/calibre/debug.py:68
 msgid "Don't run with the DEBUG flag set"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:68
-msgid "Run the E-book viewer in debug mode"
-msgstr ""
-
 #: /home/kovid/work/calibre/src/calibre/debug.py:70
-msgid "Output the paths necessary to setup the calibre environment"
+msgid "Run the E-book viewer in debug mode. As with -g use -- to pass command line arguments."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/debug.py:72
+msgid "Output the paths necessary to setup the calibre environment"
+msgstr ""
+
+#: /home/kovid/work/calibre/src/calibre/debug.py:74
 msgid "Add a simple plugin (i.e. a plugin that consists of only a .py file), by specifying the path to the py file containing the plugin code."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:77
+#: /home/kovid/work/calibre/src/calibre/debug.py:79
 msgid "Inspect the MOBI file(s) at the specified path(s)"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:79
-msgid "Launch the calibre \"Edit book\" tool in debug mode."
+#: /home/kovid/work/calibre/src/calibre/debug.py:81
+msgid "Launch the calibre \"Edit book\" tool in debug mode. As with -g use -- to pass command line arguments."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:81
+#: /home/kovid/work/calibre/src/calibre/debug.py:83
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:87
+#: /home/kovid/work/calibre/src/calibre/debug.py:89
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:92
+#: /home/kovid/work/calibre/src/calibre/debug.py:94
 msgid ""
 "Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \"all\" can be used to export all libraries. Examples:\n"
 "\n"
@@ -3232,53 +3248,53 @@ msgid ""
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:102
+#: /home/kovid/work/calibre/src/calibre/debug.py:104
 msgid "Import previously exported calibre data"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:105
+#: /home/kovid/work/calibre/src/calibre/debug.py:107
 #: /home/kovid/work/calibre/src/calibre/gui2/main.py:63
 msgid "Cause a running calibre instance, if any, to be shutdown. Note that if there are running jobs, they will be silently aborted, so use with care."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:108
+#: /home/kovid/work/calibre/src/calibre/debug.py:110
 msgid "Test binary modules in build"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:111
+#: /home/kovid/work/calibre/src/calibre/debug.py:113
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:115
+#: /home/kovid/work/calibre/src/calibre/debug.py:117
 msgid "Run the named test(s). Use the special value \"all\" to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:120
+#: /home/kovid/work/calibre/src/calibre/debug.py:122
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:123
+#: /home/kovid/work/calibre/src/calibre/debug.py:125
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:125
+#: /home/kovid/work/calibre/src/calibre/debug.py:127
 msgid "Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:127
+#: /home/kovid/work/calibre/src/calibre/debug.py:129
 msgid "Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:193
+#: /home/kovid/work/calibre/src/calibre/debug.py:195
 msgid "Debug log"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/debug.py:284
+#: /home/kovid/work/calibre/src/calibre/debug.py:286
 #, python-format
 msgid "No plugin named %s found"
 msgstr ""
@@ -3471,7 +3487,7 @@ msgstr ""
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:552
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:584
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:738
-#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4206
+#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4207
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:422
 #: /home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:429
 msgid "Removing books from device..."
@@ -3737,7 +3753,7 @@ msgid "Adding books to device metadata listing..."
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:740
-#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4208
+#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4209
 msgid "Kobo database version unsupported - See details"
 msgstr ""
 
@@ -3791,11 +3807,11 @@ msgstr ""
 msgid "Could not kepubify the book {title} ({name}) failed with error: {e}"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4209
+#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4210
 msgid "Your Kobo is running an updated firmware/database version. As calibre does not know about this updated firmware, database editing is disabled, to prevent corruption. You can still send books to your Kobo with calibre,  but deleting books and managing collections is disabled. If you are willing to experiment and know how to reset your Kobo to Factory defaults, you can override this check by right clicking the device icon in calibre and selecting \"Configure this device\" and then the \"Attempt to support newer firmware\" option. Doing so may require you to perform a Factory reset of your Kobo."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4223
+#: /home/kovid/work/calibre/src/calibre/devices/kobo/driver.py:4224
 #, python-format
 msgid "Discussion of any new Kobo firmware can be found in the Kobo forum at MobileRead. This is at %s."
 msgstr ""
@@ -7688,7 +7704,7 @@ msgstr ""
 msgid "Downloads metadata and covers from Edelweiss - A catalog updated by book publishers"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google.py:207
+#: /home/kovid/work/calibre/src/calibre/ebooks/metadata/sources/google.py:203
 msgid "Downloads metadata and covers from Google Books"
 msgstr ""
 
@@ -7736,12 +7752,12 @@ msgstr ""
 msgid "Sample Book"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:42
+#: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:43
 #, python-brace-format
 msgid "This is an Amazon KFX book. It cannot be processed. See {} for information on how to handle KFX books."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:88
+#: /home/kovid/work/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:89
 msgid "This is an Amazon Topaz book. It cannot be processed."
 msgstr ""
 
@@ -32461,7 +32477,7 @@ msgid "Server replied with unknown HTTP status code: {}"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/gui2/tts/download.py:101
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1122
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1123
 msgid "Download finished"
 msgstr ""
 
@@ -43097,7 +43113,7 @@ msgid "%s Document"
 msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:127
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1651
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1652
 msgid "Unknown section"
 msgstr ""
 
@@ -43107,7 +43123,7 @@ msgstr ""
 
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:168
 #: /home/kovid/work/calibre/src/calibre/web/feeds/__init__.py:208
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1642
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1643
 msgid "Untitled article"
 msgstr ""
 
@@ -43119,114 +43135,114 @@ msgstr ""
 msgid "Article download aborted"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:878
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:879
 #, python-format
 msgid "Failed to download %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:976
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:977
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1124
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1125
 msgid "Failed to download the following articles:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1130
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1131
 msgid "Failed to download parts of the following articles:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1132
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1133
 msgid " from "
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1134
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1135
 msgid "\tFailed links:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1240
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1241
 msgid "Could not fetch article."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1242
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1243
 msgid "The debug traceback is available earlier in this log"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1244
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1245
 msgid "Run with -vv to see the reason"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1296
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1297
 msgid "Fetching feeds..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1302
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1303
 msgid "Got feeds from index page"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1315
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1316
 msgid "Trying to download cover..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1317
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1318
 msgid "Generating masthead..."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1377
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1378
 #, python-brace-format
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] ""
 msgstr[1] ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1392
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1401
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1402
 #, python-format
 msgid "Could not download cover: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1414
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1415
 #, python-format
 msgid "Downloading cover from %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1466
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1467
 msgid "Masthead image downloaded"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1566
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1567
 msgid "Articles in this issue:"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1723
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1724
 #, python-format
 msgid "Article downloaded: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1733
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1734
 #, python-format
 msgid "Article download aborted: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1741
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1742
 #, python-format
 msgid "Article download failed: %s"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1763
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1764
 msgid "Fetching feed"
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1956
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1957
 msgid "Failed to log in, check your username and password for the calibre Periodicals service."
 msgstr ""
 
-#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1971
+#: /home/kovid/work/calibre/src/calibre/web/feeds/news.py:1972
 msgid "You do not have permission to download this issue. Either your subscription has expired or you have exceeded the maximum allowed downloads for today."
 msgstr ""
 

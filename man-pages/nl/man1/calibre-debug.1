@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "september 26, 2025" "8.11.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "oktober 01, 2025" "8.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -92,7 +92,7 @@ Draait de calibre diff tool. Bijvoorbeeld: calibre\-debug \fI\%\-\-diff\fP besta
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Start het calibre \fB\(dq\fPBewerk Boek\fB\(dq\fP tool in debug modus.
+Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -112,7 +112,7 @@ Exporteer alle Calibre\-gegevens (boeken/instellingen/plug\-ins). Normaal gespro
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Start de GUI met de probleemoplosser ingeschakeld. De output wordt afgedrukt naar stdou en stderr.
+Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ toon programmaversie en stop
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-E\-boek leesvenster in debug modus uitvoeren
+Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

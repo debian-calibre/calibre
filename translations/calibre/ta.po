@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2025-09-17 17:38+UTC\n"
+"POT-Creation-Date: 2025-10-01 08:38+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Vladmir Pigeon, 2021\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -180,7 +180,7 @@ msgid "AI services from GitHub, with access to many different AI models"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/backend.py:176
-#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:122
+#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:127
 #: /__w/calibre/calibre/src/calibre/ai/openai/backend.py:172
 #, python-brace-format
 msgid "Result was blocked for reason: {}"
@@ -226,7 +226,7 @@ msgid "Browse"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:428
 msgid "Model for &text tasks:"
 msgstr ""
@@ -244,7 +244,7 @@ msgid "You must supply a Personal access token to use GitHub AI."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:97
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:93
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:125
 msgid "No matching model"
 msgstr ""
 
@@ -315,60 +315,78 @@ msgid ""
 " rely on a third party provider."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:23
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:24
 msgid ""
 "Ollama allows you to run AI models locally on your own hardware. Once you "
 "have it running and properly setup, fill in the fields below to have calibre"
 " use it as the AI provider."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:31
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:33
 #, python-brace-format
 msgid "The Ollama URL, defaults to {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:32
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:34
 #, python-brace-format
 msgid ""
 "Enter the URL of the machine running your Ollama server, for example: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:35
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:36
 msgid "Ollama &URL:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:37
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
 msgid " seconds"
 msgstr "விநாடிகள்"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:42
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+msgid "&Timeout:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
 msgid "Enter the name of the model to use for text based tasks."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:44
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:47
 msgid "Enter name of model to use"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:52
+msgid "HTTP headers to send to Ollama, one per line"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:53
+msgid "HTTP &Headers:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:56
+msgid ""
+"A list of HTTP headers to send with every request to the Ollama API. Add a "
+"new header per line in the format: Header-Name: Value"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "No model specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "You specify a model to use for text based tasks."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:89
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:121
 msgid "Failed to get list of available models with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:91
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:123
 msgid "Available models:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:94
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:126
 #, python-brace-format
 msgid ""
 "No model named {} found in Ollama. Click \"Show details\" to see a list of "
@@ -776,7 +794,7 @@ msgstr "நிச்சயமாக எதுவும் செய்யாத�
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:475
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:551
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:61
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:205
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:206
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:196
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:141
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:143
@@ -838,7 +856,7 @@ msgstr "நிச்சயமாக எதுவும் செய்யாத�
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.py:360
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:94
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:138
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:134
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:267
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:374
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:376
@@ -851,7 +869,7 @@ msgstr "நிச்சயமாக எதுவும் செய்யாத�
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:136
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:203
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:241
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:658
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:659
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/utils.py:344
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer2/indexer.py:466
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:394
@@ -860,9 +878,9 @@ msgstr "நிச்சயமாக எதுவும் செய்யாத�
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:281
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:991
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:320
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:323
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:327
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:319
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:322
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:326
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:177
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:184
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:121
@@ -951,7 +969,7 @@ msgstr "நிச்சயமாக எதுவும் செய்யாத�
 #: /__w/calibre/calibre/src/calibre/srv/content.py:180
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:101
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:110
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:366
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:374
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:41
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:348
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
@@ -971,7 +989,7 @@ msgid "Customize"
 msgstr "தனிப்பயனாக்கு"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:187
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:446
 msgid "Cannot configure"
 msgstr "கட்டமைக்க முடியாது"
@@ -1000,10 +1018,10 @@ msgstr "பயனாளி இடைமுகத்தின் செயல்�
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:22
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:30
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:115
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:241
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:341
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:383
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:410
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:82
 msgid "Preferences"
@@ -2850,7 +2868,7 @@ msgstr "%prog saved_searchs [விருப்பங்கள்] (பட்ட
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:59
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:109
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:614
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:622
 msgid "Name:"
 msgstr "பெயர்:"
 
@@ -3422,56 +3440,61 @@ msgstr "சாதனம் கண்டறிதல் பிழைத்தி�
 #: /__w/calibre/calibre/src/calibre/debug.py:60
 msgid ""
 "Run the GUI with debugging enabled. Debug output is printed to stdout and "
-"stderr."
-msgstr "பிழைத்திருத்தத்துடன் gui ஐ இயக்கவும். பிழைத்திருத்த வெளியீடு stdout மற்றும் stderr க்கு அச்சிடப்பட்டுள்ளது."
+"stderr. To pass command line arguments use -- followed by the arguments, for"
+" example: calibre-debug -g -- --with-library /path/to/library"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:63
+#: /__w/calibre/calibre/src/calibre/debug.py:65
 msgid ""
 "Run the GUI with a debug console, logging to the specified path. For "
 "internal use only, use the -g option to run the GUI in debug mode"
 msgstr "பிழைத்திருத்த கன்சோலுடன் gui ஐ இயக்கவும், குறிப்பிட்ட பாதையில் உள்நுழைக. உள் பயன்பாட்டிற்கு மட்டும், பிழைத்திருத்த பயன்முறையில் gui ஐ இயக்க -சி விருப்பத்தைப் பயன்படுத்தவும்"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:66
+#: /__w/calibre/calibre/src/calibre/debug.py:68
 msgid "Don't run with the DEBUG flag set"
 msgstr "பிழைத்திருத்த கொடி தொகுப்புடன் இயங்க வேண்டாம்"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:68
-msgid "Run the E-book viewer in debug mode"
-msgstr "பிழைத்திருத்த பயன்முறையில் மின் புத்தக பார்வையாளரை இயக்கவும்"
-
 #: /__w/calibre/calibre/src/calibre/debug.py:70
+msgid ""
+"Run the E-book viewer in debug mode. As with -g use -- to pass command line "
+"arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:72
 msgid "Output the paths necessary to setup the calibre environment"
 msgstr "திறன் சூழலை அமைப்பதற்குத் தேவையான பாதைகளை வெளியிடுங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:72
+#: /__w/calibre/calibre/src/calibre/debug.py:74
 msgid ""
 "Add a simple plugin (i.e. a plugin that consists of only a .py file), by "
 "specifying the path to the py file containing the plugin code."
 msgstr "சொருகி குறியீட்டைக் கொண்ட py கோப்பிற்கான பாதையை குறிப்பிடுவதன் மூலம், ஒரு எளிய சொருகி (அதாவது .py கோப்பை மட்டுமே கொண்ட ஒரு சொருகி) சேர்க்கவும்."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:77
+#: /__w/calibre/calibre/src/calibre/debug.py:79
 msgid "Inspect the MOBI file(s) at the specified path(s)"
 msgstr "குறிப்பிட்ட பாதையில் (கள்) mobi கோப்பு (களை) ஆய்வு செய்யுங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:79
-msgid "Launch the calibre \"Edit book\" tool in debug mode."
-msgstr "பிழைத்திருத்த பயன்முறையில் திறன் \"திருத்து நூல்\" கருவியைத் தொடங்கவும்."
-
 #: /__w/calibre/calibre/src/calibre/debug.py:81
+msgid ""
+"Launch the calibre \"Edit book\" tool in debug mode. As with -g use -- to "
+"pass command line arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:83
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
 msgstr "குறிப்பிட்ட கோப்புறையில் புத்தகத்தை வெடிக்கச் செய்யுங்கள். \n பயன்பாடு: -x file.epub output_dir \n html கோப்புகள் மற்றும் மெட்டாடேட்டாவின் தொகுப்பாக புத்தகத்தை ஏற்றுமதி செய்கிறது, இது நிலையான html திருத்துதல் கருவிகளைப் பயன்படுத்தி திருத்தலாம். epub, azw3, htmlz மற்றும் docx கோப்புகளுடன் வேலை செய்கிறது."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:87
+#: /__w/calibre/calibre/src/calibre/debug.py:89
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
 msgstr "முன்னர் வெடித்த புத்தகத்தை உருவாக்குங்கள். \n பயன்பாடு: -i output_dir file.epub \n -எக்ச்ப்ளோட்-புத்தகத்திற்கான முந்தைய அழைப்பால் உருவாக்கப்பட்டிருக்க வேண்டும். வெடிக்கும் போது பயன்படுத்தப்பட்ட அதே கோப்பு வகையை குறிப்பிட மறக்காதீர்கள்."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:92
+#: /__w/calibre/calibre/src/calibre/debug.py:94
 msgid ""
 "Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \"all\" can be used to export all libraries. Examples:\n"
 "\n"
@@ -3480,62 +3503,62 @@ msgid ""
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
 msgstr "அனைத்து திறன் தரவையும் ஏற்றுமதி செய்யுங்கள் (புத்தகங்கள்/அமைப்புகள்/செருகுநிரல்கள்). பொதுவாக, ஏற்றுமதி கோப்புறை மற்றும் நூலகங்கள் ஏற்றுமதி செய்ய உங்களிடம் கேட்கப்படும். கேள்விகளைத் தவிர்க்க அவற்றை கட்டளை வரி வாதங்களாகவும் குறிப்பிடலாம். ஏற்றுமதி கோப்புறை மற்றும் நூலகங்களுக்கான முழுமையான பாதைகளைப் பயன்படுத்தவும். அனைத்து நூலகங்களையும் ஏற்றுமதி செய்ய \"அனைத்தும்\" சிறப்பு முக்கிய சொல் பயன்படுத்தப்படலாம். எடுத்துக்காட்டுகள்: \n\n   ஊடாடும் பயன்பாட்டிற்காக திறன்-டெபக்-எக்ச்போர்ட்-ஆல்-திறன்-டேட்டா # \n   திறன்-டெபக்-எக்ச்போர்ட்-ஆல்-திறன்-டேட்டா/பாதை/முதல்/வெற்று/ஏற்றுமதி/கோப்புறை/பாதை/வரை/நூலகம்/கோப்புறை 1/பாதை/முதல்/நூலகம் 2 \n   திறன்-டெபக்-எக்ச்போர்ட்-ஆல்-திறன்-டேட்டா /ஏற்றுமதி /கோப்புறை அனைத்தும் # அறியப்பட்ட அனைத்து நூலகங்களையும் ஏற்றுமதி செய்க"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:102
+#: /__w/calibre/calibre/src/calibre/debug.py:104
 msgid "Import previously exported calibre data"
 msgstr "முன்னர் ஏற்றுமதி செய்யப்பட்ட திறன் தரவு இறக்குமதி"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:105
+#: /__w/calibre/calibre/src/calibre/debug.py:107
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:63
 msgid ""
 "Cause a running calibre instance, if any, to be shutdown. Note that if there"
 " are running jobs, they will be silently aborted, so use with care."
 msgstr "இயங்கும் திறமையான நிகழ்வு ஏதேனும் இருந்தால், பணிநிறுத்தம் செய்யப்பட வேண்டும். இயங்கும் வேலைகள் இருந்தால், அவை அமைதியாக கருக்கலைப்பு செய்யப்படும் என்பதை நினைவில் கொள்க, எனவே கவனமாக பயன்படுத்தவும்."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:108
+#: /__w/calibre/calibre/src/calibre/debug.py:110
 msgid "Test binary modules in build"
 msgstr "பைனரி தொகுதிகளை உருவாக்க"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:111
+#: /__w/calibre/calibre/src/calibre/debug.py:113
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr "கட்டளை வரி இடைமுகத்தை வழங்கும் சொருகி இயக்கவும். உதாரணத்திற்கு: \n calibre -debug -r \"சொருகி பெயர்\" -file1 --option1 \n அதற்குப் பிறகு எல்லாம் - சொருகி வாதங்களாக அனுப்பப்படும்."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:115
+#: /__w/calibre/calibre/src/calibre/debug.py:117
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
 msgstr "பெயரிடப்பட்ட சோதனை (களை) இயக்கவும். அனைத்து சோதனைகளையும் இயக்க சிறப்பு மதிப்பை \"அனைத்தையும்\" பயன்படுத்தவும். சோதனை பெயர் ஒரு காலகட்டத்துடன் தொடங்கினால் அது ஒரு தொகுதி பெயராக கருதப்படுகிறது. சோதனை பெயர் தொடங்கினால் @ இது ஒரு வகை பெயராக கருதப்படுகிறது."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:120
+#: /__w/calibre/calibre/src/calibre/debug.py:122
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr "திறன் டிஃப் கருவியை இயக்கவும். உதாரணத்திற்கு: \n calibre-debug--diff file1 file2"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:123
+#: /__w/calibre/calibre/src/calibre/debug.py:125
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr "(ஐ.நா) சாளரங்கள் இயல்புநிலை நிரல்களிலிருந்து காலிபரை பதிவு செய்யுங்கள்."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:125
+#: /__w/calibre/calibre/src/calibre/debug.py:127
 msgid ""
 "Convert the specified EPUB file to KEPUB without doing a full conversion. "
 "This is what the Kobo driver does when sending files to the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:127
+#: /__w/calibre/calibre/src/calibre/debug.py:129
 msgid ""
 "Convert the specified KEPUB file to EPUB without doing a full conversion. "
 "This is what the Kobo driver does when importing files from the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:193
+#: /__w/calibre/calibre/src/calibre/debug.py:195
 msgid "Debug log"
 msgstr "பிழைத்திருத்த பதிவு"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:284
+#: /__w/calibre/calibre/src/calibre/debug.py:286
 #, python-format
 msgid "No plugin named %s found"
 msgstr "%s பெயரிடப்பட்ட சொருகி எதுவும் காணப்படவில்லை"
@@ -3738,7 +3761,7 @@ msgstr "ச்பிரிங் டிசைன் அலெக்ச் மி
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:552
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:584
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:738
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4206
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4207
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:422
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:429
 msgid "Removing books from device..."
@@ -4051,7 +4074,7 @@ msgid "Adding books to device metadata listing..."
 msgstr "சாதன மேனிலை தரவு பட்டியலில் புத்தகங்களைச் சேர்ப்பது..."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:740
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4208
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
 msgid "Kobo database version unsupported - See details"
 msgstr "கோபோ தரவுத்தள பதிப்பு ஆதரிக்கப்படவில்லை - விவரங்களைக் காண்க"
 
@@ -4132,7 +4155,7 @@ msgstr ""
 msgid "Could not kepubify the book {title} ({name}) failed with error: {e}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4210
 msgid ""
 "Your Kobo is running an updated firmware/database version. As calibre does "
 "not know about this updated firmware, database editing is disabled, to "
@@ -4145,7 +4168,7 @@ msgid ""
 "your Kobo."
 msgstr "உங்கள் கோபோ புதுப்பிக்கப்பட்ட ஃபார்ம்வேர்/தரவுத்தள பதிப்பை இயக்குகிறது. இந்த புதுப்பிக்கப்பட்ட ஃபார்ம்வேரைப் பற்றி காலிபருக்கு தெரியாது என்பதால், ஊழலைத் தடுக்க தரவுத்தள திருத்துதல் முடக்கப்பட்டுள்ளது. நீங்கள் இன்னும் உங்கள் கோபோவுக்கு திறன் மூலம் புத்தகங்களை அனுப்பலாம், ஆனால் புத்தகங்களை நீக்குவதும் சேகரிப்புகளை நிர்வகிப்பதும் முடக்கப்பட்டுள்ளது. தொழிற்சாலை இயல்புநிலைகளுக்கு உங்கள் கோபோவை எவ்வாறு மீட்டமைப்பது என்பதை நீங்கள் அறிந்திருந்தால், சாதன ஐகானை காலிபரில் வலது சொடுக்கு செய்து, \"இந்த சாதனத்தை உள்ளமைக்கவும்\" என்பதைத் தேர்ந்தெடுத்து \"புதிய ஃபார்ம்வேரை ஆதரிக்கும் முயற்சி\" விருப்பத்தைத் தேர்ந்தெடுத்து இந்த காசோலையை மேலெழுதலாம். அவ்வாறு செய்ய உங்கள் கோபோவின் தொழிற்சாலை மீட்டமைப்பைச் செய்ய வேண்டும்."
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4223
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4224
 #, python-format
 msgid ""
 "Discussion of any new Kobo firmware can be found in the Kobo forum at "
@@ -8822,7 +8845,7 @@ msgid ""
 "publishers"
 msgstr "எடெல்வீசிடமிருந்து மேனிலை தரவு மற்றும் அட்டைகளைப் பதிவிறக்குகிறது - புத்தக வெளியீட்டாளர்களால் புதுப்பிக்கப்பட்ட ஒரு பட்டியல்"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:207
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:203
 msgid "Downloads metadata and covers from Google Books"
 msgstr "மெட்டாடேட்டாவைப் பதிவிறக்குகிறது மற்றும் கூகிள் புத்தகங்களிலிருந்து அட்டைகள்"
 
@@ -8872,14 +8895,14 @@ msgstr "திறந்த நூலகத்திலிருந்து ப�
 msgid "Sample Book"
 msgstr "மாதிரி நூல்"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:42
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:43
 #, python-brace-format
 msgid ""
 "This is an Amazon KFX book. It cannot be processed. See {} for information "
 "on how to handle KFX books."
 msgstr "இது அமேசான் கே.எஃப்.எக்ச் நூல். அதை செயலாக்க முடியாது. kfx புத்தகங்களை எவ்வாறு கையாள்வது என்பது குறித்த தகவலுக்கு {} ஐப் பார்க்கவும்."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:88
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:89
 msgid "This is an Amazon Topaz book. It cannot be processed."
 msgstr "இது அமேசான் புச்பராகம் நூல். அதை செயலாக்க முடியாது."
 
@@ -10654,7 +10677,7 @@ msgstr "புத்தகங்களைச் சேர்ப்பதைக�
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:123
 #: /__w/calibre/calibre/src/calibre/gui2/actions/catalog.py:42
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:423
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:168
@@ -11529,52 +11552,52 @@ msgid ""
 " The global variable \"{1}\" contains the original tooltip text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:41
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
 msgid "Column tooltips"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:43
 msgid "Define a custom tooltip for values in a column"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:45
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:46
 msgid "Edit/define column tooltip"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:52
 msgid "Show item tooltip in a dialog"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:58
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
 msgid "No library view available"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:60
 msgid "You can't set custom tooltips for books on the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:63
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
 msgid "No column selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:65
 msgid "A column (cell) must be selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:49
 msgid "At least one book must be selected"
 msgstr "குறைந்தது ஒரு புத்தகத்தைத் தேர்ந்தெடுக்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:73
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
 msgid "Only one book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:75
 msgid "Only one book can be selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:87
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:88
 #, python-brace-format
 msgid "Tooltip for column {name}, row {row_num}"
 msgstr ""
@@ -11692,7 +11715,7 @@ msgstr "நூலகத்திற்கு உலாவுக"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:256
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:158
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:191
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:362
 msgid "&Copy"
@@ -13259,17 +13282,17 @@ msgstr "பிழைத்திருத்த பயன்முறையி�
 msgid "Restart ignoring third party plugins"
 msgstr "மூன்றாம் தரப்பு செருகுநிரல்களை புறக்கணித்து மறுதொடக்கம் செய்யுங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:54
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:55
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:320
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:414
 msgid "Sections"
 msgstr "பிரிவுகள்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:81
 msgid "Cannot configure while there are running jobs."
 msgstr "இயங்கும் வேலைகள் இருக்கும்போது உள்ளமைக்க முடியாது."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:85
 msgid "Cannot configure before calibre is restarted."
 msgstr "திறன் மறுதொடக்கம் செய்யப்படுவதற்கு முன்பு உள்ளமைக்க முடியாது."
 
@@ -14118,7 +14141,7 @@ msgstr "புறக்கணிக்கவும்"
 
 #: /__w/calibre/calibre/src/calibre/gui2/add_filters.py:24
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:253
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:189
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:186
 msgid "Add"
 msgstr "சேர்"
 
@@ -14380,7 +14403,7 @@ msgstr "தொகு"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:447
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:478
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:649
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/live_css.py:378
 msgid "Copy"
 msgstr "நகலெடு"
@@ -14623,7 +14646,7 @@ msgid "All book details"
 msgstr "அனைத்து புத்தக விவரங்களும்"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:707
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:501
 msgid "Selected text"
 msgstr "தேர்ந்தெடுக்கப்பட்ட உரை"
 
@@ -15369,7 +15392,13 @@ msgstr "பரந்த மற்றும் குறுகிய இடைய
 msgid "Send query to AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:146
+msgid ""
+"AI generated answers can be inaccurate, please verify any answers before "
+"acting on them."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:192
 msgid "Details:"
 msgstr ""
 
@@ -15564,8 +15593,8 @@ msgid "Choose image"
 msgstr "படத்தைத் தேர்வுசெய்க"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:836
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:153
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:159
 msgid "Invalid URL"
 msgstr "தவறான வலைதள முகவரி"
 
@@ -17101,7 +17130,7 @@ msgstr "பயன்படுத்தப்படும் வெளிப்�
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:699
 msgid "&Add"
 msgstr "&கூட்டு"
 
@@ -17117,7 +17146,7 @@ msgstr "தற்போது தேர்ந்தெடுக்கப்ப�
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1220
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:409
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:701
 msgid "&Remove"
 msgstr "& அகற்று"
 
@@ -17173,8 +17202,8 @@ msgstr "<i> வழக்கமான வெளிப்பாடுகள் </i
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/palette.py:261
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:254
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:261
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:366
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:539
 msgid "Restore &defaults"
 msgstr "மீட்டமை மற்றும் இயல்புநிலை"
@@ -17548,7 +17577,7 @@ msgstr "வண்ணத்தைத் தேர்வுசெய்க"
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/adv_search_builder_ui.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:506
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:714
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:115
 msgid "&Name:"
 msgstr "& பெயர்:"
 
@@ -17723,7 +17752,7 @@ msgstr "எனது வண்ணத் திட்டம்"
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1075
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1028
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:744
 msgid "Cannot edit"
 msgstr "திருத்த முடியாது"
 
@@ -17734,7 +17763,7 @@ msgstr "பில்டின் வண்ணத் திட்டத்தை�
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:457
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:745
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:759
 msgid "Cannot remove"
 msgstr "அகற்ற முடியாது"
 
@@ -18210,7 +18239,7 @@ msgstr "சாதனம் வெளியேற்றவும்"
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:965
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Error"
 msgstr "பிழை"
@@ -20181,7 +20210,7 @@ msgstr "இந்த இணைப்பிற்கான முகவரி"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:301
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:125
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:122
 msgid "&URL:"
 msgstr "& url:"
 
@@ -22069,7 +22098,7 @@ msgid "Lock Quickview contents"
 msgstr "குவிக்வியூ உள்ளடக்கங்களை பூட்டுங்கள்"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:283
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:395
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:392
 msgid "Refresh"
 msgstr "புதுப்பிப்பு"
 
@@ -22875,7 +22904,7 @@ msgstr "வடிவங்களைத் தேர்வுசெய்க"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:91
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:853
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:617
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:700
 msgid "&Edit"
 msgstr "&தொகு"
 
@@ -25356,7 +25385,7 @@ msgid "&Shortcut:"
 msgstr "&குறுக்குவழி:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:464
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:187
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:190
 msgid "Done"
 msgstr "முடிந்தது"
 
@@ -25877,7 +25906,7 @@ msgstr "முடிவுகளை கட்டுப்படுத்து�
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:259
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:76
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:189
 msgid "Remove"
 msgstr "அகற்று"
 
@@ -27825,7 +27854,7 @@ msgstr "& தானியங்கி சேர்த்தல்"
 msgid "Very low"
 msgstr "மிக குறைவு"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:191
 msgid "Confirmation dialogs have all been reset"
 msgstr "உறுதிப்படுத்தல் உரையாடல்கள் அனைத்தும் மீட்டமைக்கப்பட்டுள்ளன"
 
@@ -30497,19 +30526,19 @@ msgstr ""
 msgid "Indicates whether the rule applies to child values."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:640
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:639
 msgid "Delete this rule"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:641
 msgid "Undo delete"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:644
 msgid "Modify this value"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:646
 msgid "Undo modification"
 msgstr ""
 
@@ -30670,37 +30699,42 @@ msgstr "நெடுவரிசை & வண்ணம்"
 msgid "Column &icons"
 msgstr "நெடுவரிசை & சின்னங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:108
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
 msgid "version"
 msgstr "பதிப்பு"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:110
 msgid "created by Kovid Goyal"
 msgstr "கோவிட் கோயல் உருவாக்கியது"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:162
+#, python-brace-format
+msgid "Shortcut: <i>{}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:228
 msgid ""
 "The changes you have made require calibre be restarted immediately. You will"
 " not be allowed to set any more preferences, until you restart."
 msgstr "நீங்கள் செய்த மாற்றங்கள் திறன் உடனடியாக மறுதொடக்கம் செய்யப்பட வேண்டும். நீங்கள் மறுதொடக்கம் செய்யும் வரை, மேலும் விருப்பங்களை அமைக்க நீங்கள் அனுமதிக்கப்பட மாட்டீர்கள்."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:258
 msgid "Run Welcome &wizard"
 msgstr "வரவேற்பு & வழிகாட்டி இயக்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:275
 msgid "Save changes"
 msgstr "மாற்றங்களை சேமியுங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:276
 msgid "Cancel and return to overview"
 msgstr "ரத்துசெய் மற்றும் கண்ணோட்டத்திற்கு திரும்பவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:365
 msgid "Restoring to defaults not supported for"
 msgstr "இயல்புநிலைகளை மீட்டெடுப்பது ஆதரிக்கப்படவில்லை"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:416
 msgid ""
 "Some of the changes you made require a restart. Please restart calibre as "
 "soon as possible."
@@ -32964,8 +32998,8 @@ msgid ""
 msgstr "மெய்நிகர் நூலக பெயர் அல்லது தேடல் உரை மாறிவிட்டது. இந்த மாற்றங்களை நிராகரிக்க விரும்புகிறீர்களா?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:293
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:153
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:150
 msgid "No name"
 msgstr "பெயர் இல்லை"
 
@@ -35197,7 +35231,7 @@ msgid "Server replied with unknown HTTP status code: {}"
 msgstr "அறியப்படாத HTTP நிலை குறியீட்டுடன் சேவையகம் பதிலளித்தது: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tts/download.py:101
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1122
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1123
 msgid "Download finished"
 msgstr "பதிவிறக்கம் முடிந்தது"
 
@@ -37681,7 +37715,7 @@ msgstr "கோப்பு பெயரைத் தேர்வுசெய்�
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:375
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1222
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
 msgid "No name specified"
 msgstr "பெயர் குறிப்பிடப்படவில்லை"
 
@@ -42452,168 +42486,168 @@ msgstr "இந்த புத்தகத்தில் ஏற்றுமத�
 msgid "No highlights selected to export"
 msgstr "ஏற்றுமதி செய்ய சிறப்பம்சங்கள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:112
 msgid "Explain"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:113
 msgid "Define"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
 msgid "Summarize"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
 msgid "Key points"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
 msgid "Fix grammar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:119
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
 msgid "Translate"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:216
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:221
 msgid "AI Assistant Note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:229
 #: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr "நீங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:239
 msgid "Conversation record"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:274
 msgid "Type a question to the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
 msgid "&Save as note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
 msgid "Save this conversation as a note on the current highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
 msgid "&New chat"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
 msgid "Start a new conversation"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
 msgid "Copy this conversation to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:294
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:299
 msgid "Se&ttings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:330
 msgid "Quick actions"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:350
 msgid "Select text in the book to begin."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:352
 msgid "First, configure an AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:385
 msgid "Assistant"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:404
 msgid "Save this specific response as the note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:406
 msgid "Copy this specific response to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:410
 msgid "Show the reasoning behind this response from the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
 msgid "answering"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
 msgid "thinking"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:416
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:421
 #, python-brace-format
 msgid "{assistant} {activity}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:438
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:446
 msgid "AI provider not configured."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:447
 msgid "Configure AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 msgid "No text is selected for this conversation."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:472
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:480
 msgid "Talking to AI failed with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:503
 msgid "Or, type a question to the AI below, for example:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:511
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:519
 msgid "free"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:514
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:516
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:522
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:524
 msgid "Queries:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:521
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:543
 msgid "Cannot save note as there is currently no selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:521
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:543
 msgid "No selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:549
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:557
 msgid "Reasoning used by AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:616
 msgid "Add Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:616
 msgid "Edit Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:623
 msgid "Prompt:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:625
 #, python-brace-format
 msgid ""
 "The prompt is a template. If you want the prompt to operate on the currently"
@@ -42622,183 +42656,194 @@ msgid ""
 "AIs work well with all languages)."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
 msgid "You must specify a name for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:658
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:666
 msgid "No prompt specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:658
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:666
 msgid "You must specify a prompt for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:670
 msgid "Invalid prompt"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:670
 #, python-brace-format
 msgid "The prompt you specified is not valid. Error: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:677
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:685
 msgid "&Highlight style:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:679
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:687
+msgid "Ask the AI to respond in the current language"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:688
+msgid ""
+"Ask the AI to respond in the current calibre user interface language. Note "
+"that how well this works depends on the individual model being used. "
+"Different models support different languages."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:692
 msgid "&Quick actions:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:745
 msgid ""
 "Cannot edit builtin actions. Instead uncheck this action and create a new "
 "action with the same name."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:746
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:760
 msgid ""
 "Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
 "showing up as a button."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:748
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:762
 #, python-brace-format
 msgid "Remove the {} action?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:763
 msgid "&Show this confirmation again"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:795
 msgid "AI Settings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:801
 msgid "AI &Provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:788
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:803
 msgid "Actions and &highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:110
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:107
 msgid "Edit lookup source"
 msgstr "தேடல் மூலத்தைத் திருத்து"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:113
 msgid "The name of the source"
 msgstr "மூலத்தின் பெயர்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "The URL template of the source"
 msgstr "மூலத்தின் முகவரி வார்ப்புரு"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:126
 #, python-brace-format
 msgid ""
 "The URL template must starts with https:// and have {word} in it which will "
 "be replaced by the actual query"
 msgstr "முகவரி வார்ப்புரு https:// உடன் தொடங்க வேண்டும் மற்றும் அதில் {word} இருக்க வேண்டும், இது உண்மையான வினவலால் மாற்றப்படும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:148
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:145
 msgid "You must specify a name"
 msgstr "நீங்கள் ஒரு பெயரைக் குறிப்பிட வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:147
 msgid "Name already exists"
 msgstr "பெயர் ஏற்கனவே உள்ளது"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:151
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:148
 #, python-brace-format
 msgid "A lookup source with the name {} already exists"
 msgstr "{} ஏற்கனவே உள்ளது"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:151
 msgid "You must specify a URL"
 msgstr "நீங்கள் ஒரு முகவரி ஐ குறிப்பிட வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:154
 msgid "The URL must start with https://"
 msgstr "முகவரி https: // உடன் தொடங்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:160
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:157
 #, python-brace-format
 msgid "The URL must contain the placeholder {word}"
 msgstr "முகவரி இல் ஒதுக்கிடம் {word} இருக்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:168
 msgid "Edit lookup sources"
 msgstr "தேடல் ஆதாரங்களைத் திருத்து"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:172
 msgid "Double-click to edit an entry"
 msgstr "ஒரு உள்ளீட்டைத் திருத்த இருமுறை சொடுக்கு செய்யவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:195
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:553
 msgid "Restore defaults"
 msgstr "இயல்புநிலைகளை மீட்டெடு"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:231
 msgid "No sources"
 msgstr "ஆதாரங்கள் இல்லை"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:232
 msgid "You must specify at least one lookup source"
 msgstr "நீங்கள் குறைந்தது ஒரு தேடல் மூலத்தையாவது குறிப்பிட வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:307
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:304
 msgid "Zoom in"
 msgstr "பெரிதாக்க"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:305
 msgid "Zoom out"
 msgstr "பெரிதாக்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:306
 msgid "Default zoom"
 msgstr "இயல்புநிலை சூம்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:307
 msgid "Inspect"
 msgstr "ஆய்வு"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:321
 msgid "Double click on a word in the book's text to look it up."
 msgstr "புத்தகத்தின் உரையில் ஒரு வார்த்தையை இருமுறை சொடுக்கு செய்யவும்."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:355
 msgid "&Dictionary"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:359
 msgid "Ask &AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:379
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:376
 msgid "Lookup &in:"
 msgstr "தேடல் & இல்:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:389
 msgid "Add sources"
 msgstr "ஆதாரங்களைச் சேர்க்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:393
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:390
 msgid "Add more sources at which to lookup words"
 msgstr "சொற்களைத் தேடுவதற்கு கூடுதல் ஆதாரங்களைச் சேர்க்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:396
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:393
 msgid "Refresh the result to match the currently selected text"
 msgstr "தற்போது தேர்ந்தெடுக்கப்பட்ட உரையுடன் பொருந்தக்கூடிய முடிவைப் புதுப்பிக்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:404
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:401
 msgid "Update on selection change"
 msgstr "தேர்வு மாற்றத்தைப் புதுப்பிக்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:407
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:404
 msgid ""
 "Automatically update the displayed result when selected text in the book "
 "changes. With this disabled the lookup is changed only when clicking the "
@@ -45615,298 +45660,298 @@ msgstr ""
 msgid "File is open in another process"
 msgstr "மற்றொரு செயல்பாட்டில் கோப்பு திறந்திருக்கும்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:371
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:379
 msgid "the end of the program"
 msgstr "திட்டத்தின் முடிவு"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:373
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:381
 #, python-brace-format
 msgid "{0}: {1} near {2} on line {3}"
 msgstr "{0}: {1} வரியில் {2} அருகில் {3}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:376
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:384
 #, python-brace-format
 msgid "{0}: {1} near {2}"
 msgstr "{0}: {1} {2}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:462
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:470
 msgid "'End of program'"
 msgstr "'நிரலின் முடிவு'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:474
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:482
 #, python-brace-format
 msgid "Failed to scan program. Invalid input '{0}'"
 msgstr "திட்டத்தை ச்கேன் செய்வதில் தோல்வி. தவறான உள்ளீடு '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:477
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:485
 #, python-brace-format
 msgid "Expected end of program, found '{0}'"
 msgstr "நிரலின் எதிர்பார்க்கப்படும் முடிவு, '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:500
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:512
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:524
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:561
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:566
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:617
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:508
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:520
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:532
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:569
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:574
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:625
 #, python-brace-format
 msgid "{0} statement: expected '{1}', found '{2}'"
 msgstr "{0} அறிக்கை: எதிர்பார்க்கப்படும் '{1}', '{2}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:521
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:529
 #, python-brace-format
 msgid "'{0}' statement: expected an identifier"
 msgstr "'{0}' அறிக்கை: ஒரு அடையாளங்காட்டியை எதிர்பார்க்கலாம்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:531
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:539
 #, python-brace-format
 msgid "{0} statement: expected '(', found '{1}'"
 msgstr "{0} அறிக்கை: எதிர்பார்க்கப்படுகிறது '(', '{1}' கிடைத்தது"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:549
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:557
 #, python-brace-format
 msgid "{0} statement: expected ')', found '{1}'"
 msgstr "{0} அறிக்கை: எதிர்பார்க்கப்படுகிறது ')', '{1}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:577
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:585
 #, python-brace-format
 msgid "'{0}' statement: expected a function name identifier"
 msgstr "'{0}' அறிக்கை: ஒரு செயல்பாட்டு பெயர் அடையாளங்காட்டியை எதிர்பார்க்கலாம்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:580
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:588
 #, python-brace-format
 msgid "Function name '{0}' is already defined"
 msgstr "செயல்பாட்டு பெயர் '{0}' ஏற்கனவே வரையறுக்கப்பட்டுள்ளது"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:582
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:590
 #, python-brace-format
 msgid "'{0}' statement: expected a '('"
 msgstr "'{0}' அறிக்கை: எதிர்பார்க்கப்படுகிறது '('"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:588
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:596
 msgid "Parameters to a function must be variables or assignments"
 msgstr "ஒரு செயல்பாட்டிற்கான அளவுருக்கள் மாறிகள் அல்லது பணிகளாக இருக்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:598
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:606
 #, python-brace-format
 msgid "'{0}' statement: expected a ')' at end of argument list"
 msgstr "'{0}' அறிக்கை: a ')' வாதத்தின் முடிவில்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:600
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:608
 #, python-brace-format
 msgid "'{0}' statement: missing ':'"
 msgstr "'{0}' அறிக்கை: காணவில்லை ':'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:604
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:622
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:612
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:630
 #, python-brace-format
 msgid "'{0}' statement: missing the closing '{1}'"
 msgstr "'{0}' அறிக்கை: நிறைவு காணவில்லை '{1}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:638
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:646
 #, python-brace-format
 msgid "A stored template must begin with '{0}' or {1}"
 msgstr "சேமிக்கப்பட்ட வார்ப்புரு '{0}' அல்லது {1} உடன் தொடங்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:754
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:764
 #, python-brace-format
 msgid "Expected '{0}', found '{1}'"
 msgstr "எதிர்பார்க்கப்படும் '{0}', '{1}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:792
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:802
 #, python-brace-format
 msgid "Unknown function {0}"
 msgstr "அறியப்படாத செயல்பாடு {0}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:805
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:815
 #, python-brace-format
 msgid "Expected a '{0}' for function call, found '{1}'"
 msgstr "செயல்பாட்டு அழைப்புக்கு ஒரு '{0}' எதிர்பார்க்கப்பட்டது, '{1}' கிடைத்தது"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:818
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:828
 #, python-brace-format
 msgid "Parameters to '{0}' must be variables or assignments"
 msgstr "'{0}' க்கான அளவுருக்கள் மாறிகள் அல்லது பணிகளாக இருக்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:838
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1916
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:848
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1935
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3047
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3079
 #, python-brace-format
 msgid "Incorrect number of arguments for function {0}"
 msgstr "செயல்பாட்டிற்கான தவறான வாதங்களின் எண்ணிக்கை {0}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:845
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:855
 #, python-brace-format
 msgid "Expected an expression, found '{0}'"
 msgstr "ஒரு வெளிப்பாடு எதிர்பார்க்க, '{0}' கிடைத்தது"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:850
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:860
 #, python-brace-format
 msgid "{0} outside of for loop"
 msgstr "{0} க்கு வெளியே"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:953
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:963
 msgid "Keyword arguments are not allowed"
 msgstr "முக்கிய வாதங்கள் அனுமதிக்கப்படவில்லை"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:957
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:959
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:961
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:967
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:969
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:971
 #, python-brace-format
 msgid "Don't call {0}. Instead use {1}"
 msgstr "{0} என்று அழைக்க வேண்டாம். அதற்கு பதிலாக {1} பயன்படுத்தவும்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:966
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:976
 #, python-brace-format
 msgid "Invalid character name '{0}'"
 msgstr "தவறான எழுத்து பெயர் '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:968
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:978
 msgid "Incorrect number of arguments"
 msgstr "தவறான வாதங்களின் எண்ணிக்கை"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:979
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:989
 #, python-brace-format
 msgid "Error in function {0} :: {1}"
 msgstr "செயல்பாட்டில் பிழை {0} :: {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:988
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:998
 msgid "No function named {!r} exists"
 msgstr "{! r} என்று பெயரிடப்பட்ட எந்த செயல்பாடும் இல்லை"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1000
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1010
 #, python-brace-format
 msgid "Interpreter: {0} - line number {1}"
 msgstr "மொழிபெயர்ப்பாளர்: {0} - வரி எண் {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1061
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1114
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1165
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1071
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1124
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1175
 #, python-brace-format
 msgid "Unhandled exception '{0}'"
 msgstr "மாற்றப்படாத விதிவிலக்கு '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1122
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1126
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1130
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1135
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1132
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1136
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1140
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1145
 #, python-brace-format
 msgid "{0}: {1} must be an integer"
 msgstr "{0}: {1} ஒரு முழு எண்ணாக இருக்க வேண்டும்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1147
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1157
 #, python-brace-format
 msgid "{0}: the range length ({1}) is larger than the limit ({2})"
 msgstr "{0}: வரம்பு நீளம் ({1}) வரம்பை விட பெரியது ({2})"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1173
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1183
 #, python-brace-format
 msgid "Unknown identifier '{0}'"
 msgstr "அறியப்படாத அடையாளங்காட்டி '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1191
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1232
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1201
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1242
 msgid "before evaluating arguments"
 msgstr "வாதங்களை மதிப்பிடுவதற்கு முன்"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1204
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1249
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1214
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1259
 msgid "after evaluating arguments"
 msgstr "வாதங்களை மதிப்பிட்ட பிறகு"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1221
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1263
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1231
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1273
 msgid " returned value"
 msgstr "திரும்பிய மதிப்பு"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1235
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1245
 #, python-brace-format
 msgid ""
 "Function {0}: argument count mismatch -- {1} given, at most {2} required"
 msgstr "செயல்பாடு {0}: வாத எண்ணிக்கை பொருந்தாதது - {1} கொடுக்கப்பட்டுள்ளது, அதிகபட்சம் {2} தேவை"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1305
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1309
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1339
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1315
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1319
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1349
 #, python-brace-format
 msgid "Unknown field '{0}'"
 msgstr "அறியப்படாத புலம் '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1399
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1449
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1417
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1467
 #, python-brace-format
 msgid "Field '{0}' is either not a field or not a list"
 msgstr "புலம் '{0}' என்பது ஒரு புலம் அல்ல அல்லது பட்டியல் அல்ல"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1478
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1496
 #, python-brace-format
 msgid "Error during string comparison: operator '{0}'"
 msgstr "சரம் ஒப்பீட்டின் போது பிழை: ஆபரேட்டர் '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1506
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1524
 #, python-brace-format
 msgid "Value used in comparison is not a number: operator '{0}'"
 msgstr "ஒப்பிடுகையில் பயன்படுத்தப்படும் மதிப்பு ஒரு எண் அல்ல: ஆபரேட்டர் '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1523
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1540
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1562
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1541
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1558
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1580
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1592
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1598
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1610
 #, python-brace-format
 msgid "Error during operator evaluation: operator '{0}'"
 msgstr "ஆபரேட்டர் மதிப்பீட்டின் போது பிழை: ஆபரேட்டர் '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1607
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1625
 #, python-brace-format
 msgid "Function {0}: invalid character name '{1}"
 msgstr "செயல்பாடு {0}: தவறான எழுத்து பெயர் '{1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1669
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1688
 #, python-brace-format
 msgid "Internal error evaluating an expression: '{0}'"
 msgstr "ஒரு வெளிப்பாட்டை மதிப்பீடு செய்யும் உள் பிழை: '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1715
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1734
 #, python-brace-format
 msgid "format: type {0} requires an integer value, got {1}"
 msgstr "வடிவம்: வகை {0} ஒரு முழு எண் மதிப்பு தேவை, கிடைத்தது {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1721
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1740
 #, python-brace-format
 msgid "format: type {0} requires a decimal (float) value, got {1}"
 msgstr "வடிவம்: {0} க்கு ஒரு தசம (மிதவை) மதிப்பு தேவை, கிடைத்தது {1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1831
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1850
 #, python-brace-format
 msgid "Error in function {0} on line {1} : {2} - {3}"
 msgstr "{3}: {1} - {2} என்ற வரியில் {0} செயல்பாட்டில் பிழை பிழை"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1834
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1853
 msgid "The Python template returned a non-string value: {!r}"
 msgstr "பைதான் வார்ப்புரு ஒரு சரம் அல்லாத மதிப்பைத் திருப்பியது: {! r}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1852
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1871
 #, python-brace-format
 msgid "Syntax error on line {0} column {1}: text {2}"
 msgstr "வரியில் தொடரியல் பிழை {0} நெடுவரிசை {1}: உரை {2}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1854
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1873
 #, python-brace-format
 msgid "The {0} function is not defined in the template"
 msgstr "{0} செயல்பாடு வார்ப்புருவில் வரையறுக்கப்படவில்லை"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1926
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1945
 #, python-format
 msgid "%s: unknown function"
 msgstr "%s: அறியப்படாத செயல்பாடு"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1973
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1992
 msgid "Formatter state restored before saved"
 msgstr "சேமிக்கப்படுவதற்கு முன்பு ஃபார்மேட்டர் நிலை மீட்டெடுக்கப்பட்டது"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:2105
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:2124
 #, python-brace-format
 msgid "No such variable {0}"
 msgstr "அத்தகைய மாறி இல்லை {0}"
@@ -46150,6 +46195,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3759
 msgid "Template output"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3804
+msgid ""
+"This function cannot be called directly. It is built into the formatter"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/html2text.py:20
@@ -46402,7 +46452,7 @@ msgid "%s Document"
 msgstr "%s ஆவணம்"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:127
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1651
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1652
 msgid "Unknown section"
 msgstr "தெரியாத பிரிவு"
 
@@ -46412,7 +46462,7 @@ msgstr "தெரியாத ஊட்டம்"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:168
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:208
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1642
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1643
 msgid "Untitled article"
 msgstr "பெயரிடப்படாத கட்டுரை"
 
@@ -46424,116 +46474,116 @@ msgstr "தெரியாத செய்தி சான்று"
 msgid "Article download aborted"
 msgstr "கட்டுரை பதிவிறக்கம் நிறுத்தப்பட்டது"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:878
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:879
 #, python-format
 msgid "Failed to download %s"
 msgstr "%s ஐ பதிவிறக்கத் தவறிவிட்டது"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:976
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:977
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "\"%s\" செய்முறைக்கு பயனர்பெயர் மற்றும் கடவுச்சொல் தேவை."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1124
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1125
 msgid "Failed to download the following articles:"
 msgstr "பின்வரும் கட்டுரைகளைப் பதிவிறக்குவதில் தோல்வி:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1130
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1131
 msgid "Failed to download parts of the following articles:"
 msgstr "பின்வரும் கட்டுரைகளின் பகுதிகளை பதிவிறக்கம் செய்யத் தவறிவிட்டது:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1132
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1133
 msgid " from "
 msgstr "இருந்து"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1134
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1135
 msgid "\tFailed links:"
 msgstr "தோல்வியுற்ற இணைப்புகள்:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1240
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1241
 msgid "Could not fetch article."
 msgstr "கட்டுரையைப் பெற முடியவில்லை."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1242
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1243
 msgid "The debug traceback is available earlier in this log"
 msgstr "இந்த பதிவில் பிழைத்திருத்த சுவடு முன்னர் கிடைக்கிறது"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1244
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
 msgid "Run with -vv to see the reason"
 msgstr "காரணத்தைக் காண -vv உடன் இயக்கவும்"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1297
 msgid "Fetching feeds..."
 msgstr "ஊட்டங்களைப் பெறுதல்..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1302
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1303
 msgid "Got feeds from index page"
 msgstr "குறியீட்டு பக்கத்திலிருந்து ஊட்டங்கள் கிடைத்தன"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1315
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1316
 msgid "Trying to download cover..."
 msgstr "அட்டை பதிவிறக்க முயற்சிக்கிறது..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1317
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1318
 msgid "Generating masthead..."
 msgstr "மாச்ட்எட்டை உருவாக்குகிறது..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1377
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1378
 #, python-brace-format
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] "ஒற்றை நூலில் பதிவிறக்கத் தொடங்குகிறது..."
 msgstr[1] "பதிவிறக்கம் தொடங்குகிறது [{} நூல்கள்]..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1392
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "%s க்கு பதிவிறக்கம் செய்யப்பட்ட ஊட்டங்கள்"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1401
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1402
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "அட்டையை பதிவிறக்கம் செய்ய முடியவில்லை: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1414
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "%s இலிருந்து அட்டையைப் பதிவிறக்குகிறது"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1466
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1467
 msgid "Masthead image downloaded"
 msgstr "மாச்ட்எட் படம் பதிவிறக்கம் செய்யப்பட்டது"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1566
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1567
 msgid "Articles in this issue:"
 msgstr "இந்த இதழில் கட்டுரைகள்:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1723
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1724
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "கட்டுரை பதிவிறக்கம்: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1733
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1734
 #, python-format
 msgid "Article download aborted: %s"
 msgstr "கட்டுரை பதிவிறக்கம் நிறுத்தப்பட்டது: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1741
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 #, python-format
 msgid "Article download failed: %s"
 msgstr "கட்டுரை பதிவிறக்கம் தோல்வியுற்றது: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1763
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1764
 msgid "Fetching feed"
 msgstr "ஊட்டத்தைப் பெறுதல்"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1956
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1957
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr "உள்நுழைவதில் தோல்வி, திறன் பீரியடிகல் சேவைக்கு உங்கள் பயனர்பெயர் மற்றும் கடவுச்சொல்லை சரிபார்க்கவும்."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1971
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1972
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
@@ -48075,6 +48125,33 @@ msgid ""
 "``fractional_part(value)`` -- returns the part of the value after the "
 "decimal point.[/] For example, ``fractional_part(3.14)`` returns ``0.14``. "
 "Throws an exception if ``value`` is not a number."
+msgstr ""
+
+#: src/calibre/utils/formatter_function.py:3768
+msgid ""
+"``f_string(string)`` -- interpret ``string`` similar to how python interprets ``f`` strings. The intended use is to simplify long sequences of ``str & str`` or strcat(a,b,c) expressions.\n"
+"\n"
+"Text between braces (``{`` and ``}``) must be General Program Mode template expressions. The expressions, which can be expression lists, are evaluated in the current context (current book and local variables). Text not between braces is passed through unchanged.\n"
+"\n"
+"Examples:\n"
+"[LIST]\n"
+"[*]``f_string('Here is the title: {$title}')`` - returns the string with ``{$title}`` replaced with the title of the current book. For example, if the book's title is `20,000 Leagues Under the Sea` then the ``f_string()`` returns `Here is the title: 20,000 Leagues Under the Sea`.\n"
+"[*]Assuming the current date is 18 Sept 2025, this ``f_string()``\n"
+"[CODE]\n"
+"f_string(\"Today's date: the {d = today(); format_date(d, 'd')} of {format_date(d, 'MMMM')}, {format_date(d, 'yyyy')}\")\n"
+"[/CODE]\n"
+"returns the string `Today's date: the 18 of September, 2025`. Note the expression list (an assignment then an ``if`` statement) used in the first ``{ ... }`` group to assign today's date to a local variable.\n"
+"[*]If the book is book #3 in a series named `Foo` that has 5 books then this template\n"
+"[CODE]\n"
+"program:\n"
+"    if $series then\n"
+"        series_count = book_count('series:\"\"\"=' & $series & '\"\"\"', 0);\n"
+"        return f_string(\"{$series}, book {$series_index} of {series_count}\")\n"
+"    fi;\n"
+"    return 'This book is not in a series'\n"
+"[/CODE]\n"
+"returns `Foo, book 3 of 5`\n"
+"[/LIST]"
 msgstr ""
 
 #: src/calibre/utils/formatter_function.py:2524

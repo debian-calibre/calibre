@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "září 26, 2025" "8.11.1" "calibre"
+.TH "CALIBRE-DEBUG" "1" "října 01, 2025" "8.12.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -91,7 +91,7 @@ Spustit rozdílový nástroj Calibre. Například: calibre\-debug \fI\%\-\-diff\
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Spustit nástroj calibre Upravit knihu v režimu ladění.
+Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -111,7 +111,7 @@ Export všech dat Calibre (knihy, nastavení, moduly). Obvykle budete vyzváni k
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Spustit grafické rozhraní s povoleným laděním. Výstup ladění je vytištěn do stdout a stderr.
+Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -191,7 +191,7 @@ zobrazit číslo verze programu a ukončit
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Spustit Prohlížeč e\-knih v režimu ladění
+Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
 .UNINDENT
 .SH AUTHOR
 Kovid Goyal

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2025-09-17 17:38+UTC\n"
+"POT-Creation-Date: 2025-10-01 08:38+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2025\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
@@ -183,7 +183,7 @@ msgid "AI services from GitHub, with access to many different AI models"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/backend.py:176
-#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:122
+#: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:127
 #: /__w/calibre/calibre/src/calibre/ai/openai/backend.py:172
 #, python-brace-format
 msgid "Result was blocked for reason: {}"
@@ -229,7 +229,7 @@ msgid "Browse"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:428
 msgid "Model for &text tasks:"
 msgstr ""
@@ -247,7 +247,7 @@ msgid "You must supply a Personal access token to use GitHub AI."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:97
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:93
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:125
 msgid "No matching model"
 msgstr ""
 
@@ -318,60 +318,78 @@ msgid ""
 " rely on a third party provider."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:23
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:24
 msgid ""
 "Ollama allows you to run AI models locally on your own hardware. Once you "
 "have it running and properly setup, fill in the fields below to have calibre"
 " use it as the AI provider."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:31
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:33
 #, python-brace-format
 msgid "The Ollama URL, defaults to {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:32
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:34
 #, python-brace-format
 msgid ""
 "Enter the URL of the machine running your Ollama server, for example: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:35
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:36
 msgid "Ollama &URL:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:37
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
 msgid " seconds"
 msgstr " 초"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:42
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+msgid "&Timeout:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
 msgid "Enter the name of the model to use for text based tasks."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:44
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:47
 msgid "Enter name of model to use"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:52
+msgid "HTTP headers to send to Ollama, one per line"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:53
+msgid "HTTP &Headers:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:56
+msgid ""
+"A list of HTTP headers to send with every request to the Ollama API. Add a "
+"new header per line in the format: Header-Name: Value"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "No model specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:82
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "You specify a model to use for text based tasks."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:89
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:121
 msgid "Failed to get list of available models with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:91
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:123
 msgid "Available models:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:94
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:126
 #, python-brace-format
 msgid ""
 "No model named {} found in Ollama. Click \"Show details\" to see a list of "
@@ -779,7 +797,7 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/devices/prst1/driver.py:475
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:551
 #: /__w/calibre/calibre/src/calibre/ebooks/chm/metadata.py:61
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:205
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/chm_input.py:206
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/comic_input.py:196
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:141
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/fb2_input.py:143
@@ -841,7 +859,7 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.py:360
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/covers.py:94
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:138
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:134
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:267
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:374
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/identify.py:376
@@ -854,7 +872,7 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:136
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:203
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/headers.py:241
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:658
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:659
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/utils.py:344
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer2/indexer.py:466
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:394
@@ -863,9 +881,9 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:281
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:991
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:320
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:323
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:327
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:319
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:322
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:326
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:177
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/reader.py:184
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:121
@@ -954,7 +972,7 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/srv/content.py:180
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:101
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:110
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:366
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:374
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:41
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:348
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:29
@@ -974,7 +992,7 @@ msgid "Customize"
 msgstr "사용자 정의하기"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:187
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:79
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:446
 msgid "Cannot configure"
 msgstr "구성할 수 없음"
@@ -1003,10 +1021,10 @@ msgstr "사용자 인터페이스 동작"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:22
 #: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:30
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:115
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:241
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:341
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:348
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:383
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:410
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:82
 msgid "Preferences"
@@ -2853,7 +2871,7 @@ msgstr "%prog saved_searches [옵션] (list|add|remove)\n\n이 데이터베이�
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:59
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:109
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:614
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:622
 msgid "Name:"
 msgstr "이름:"
 
@@ -3421,56 +3439,61 @@ msgstr "장치 감지 디버그 "
 #: /__w/calibre/calibre/src/calibre/debug.py:60
 msgid ""
 "Run the GUI with debugging enabled. Debug output is printed to stdout and "
-"stderr."
-msgstr "디버깅이 활성화된 상태로 GUI를 실행합니다. 디버그 출력은 stdout과 stderr로 프린트됩니다."
+"stderr. To pass command line arguments use -- followed by the arguments, for"
+" example: calibre-debug -g -- --with-library /path/to/library"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:63
+#: /__w/calibre/calibre/src/calibre/debug.py:65
 msgid ""
 "Run the GUI with a debug console, logging to the specified path. For "
 "internal use only, use the -g option to run the GUI in debug mode"
 msgstr "지정되 경로에 로그를 남기며, GUI를 디버그 콘솔과 함께 실행합니다. 내부 용도 한정으로, 디버그 모드로 GUI를 띄우려면 -g 옵션을 사용하세요."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:66
+#: /__w/calibre/calibre/src/calibre/debug.py:68
 msgid "Don't run with the DEBUG flag set"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:68
-msgid "Run the E-book viewer in debug mode"
-msgstr "전자책 뷰어를 디버그 모드로 실행합니다."
-
 #: /__w/calibre/calibre/src/calibre/debug.py:70
+msgid ""
+"Run the E-book viewer in debug mode. As with -g use -- to pass command line "
+"arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:72
 msgid "Output the paths necessary to setup the calibre environment"
 msgstr "캘리버 환경을 설정하는데 필요한 경로들을 출력합니다."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:72
+#: /__w/calibre/calibre/src/calibre/debug.py:74
 msgid ""
 "Add a simple plugin (i.e. a plugin that consists of only a .py file), by "
 "specifying the path to the py file containing the plugin code."
 msgstr "플러그인 코드가 담긴 py 파일에 대한 경로를 지정해서, 간단한 플러그인(즉, .py 파일로만 구성된 플러그인)을 추가합니다."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:77
+#: /__w/calibre/calibre/src/calibre/debug.py:79
 msgid "Inspect the MOBI file(s) at the specified path(s)"
 msgstr "지정된 경로의 MOBI 파일을 검사합니다."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:79
-msgid "Launch the calibre \"Edit book\" tool in debug mode."
-msgstr "캘리버 책편집기 도구를 디버그 모드로 띄웁니다."
-
 #: /__w/calibre/calibre/src/calibre/debug.py:81
+msgid ""
+"Launch the calibre \"Edit book\" tool in debug mode. As with -g use -- to "
+"pass command line arguments."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/debug.py:83
 msgid ""
 "Explode the book into the specified folder.\n"
 "Usage: -x file.epub output_dir\n"
 "Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files."
 msgstr "책을 지정된 폴더로 분해합니다.\n사용법: -x file.epub output_dir\n표준 HTML 편집 도구를 사용하여 편집할 수 있는 HTML 파일 및 메타데이터 모음으로 책을 내보냅니다. EPUB, AZW3, HTMLZ 및 DOCX 파일과 함께 작동합니다."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:87
+#: /__w/calibre/calibre/src/calibre/debug.py:89
 msgid ""
 "Implode a previously exploded book.\n"
 "Usage: -i output_dir file.epub\n"
 "Imports the book from the files in output_dir which must have been created by a previous call to --explode-book. Be sure to specify the same file type as was used when exploding."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:92
+#: /__w/calibre/calibre/src/calibre/debug.py:94
 msgid ""
 "Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \"all\" can be used to export all libraries. Examples:\n"
 "\n"
@@ -3479,62 +3502,62 @@ msgid ""
 "  calibre-debug --export-all-calibre-data /export/folder all  # export all known libraries"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:102
+#: /__w/calibre/calibre/src/calibre/debug.py:104
 msgid "Import previously exported calibre data"
 msgstr "이전에 내보낸 캘리버 데이터 가져오기"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:105
+#: /__w/calibre/calibre/src/calibre/debug.py:107
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:63
 msgid ""
 "Cause a running calibre instance, if any, to be shutdown. Note that if there"
 " are running jobs, they will be silently aborted, so use with care."
 msgstr "실행 중인 캘리버 인스턴스가 있다면 종료시킵니다. 만일 실행 중인 작업이 있다면 조용히 처리가 중단되니 조심해서 사용하도록 하십시오."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:108
+#: /__w/calibre/calibre/src/calibre/debug.py:110
 msgid "Test binary modules in build"
 msgstr "빌드 시 바이너리 모듈을 검사합니다."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:111
+#: /__w/calibre/calibre/src/calibre/debug.py:113
 msgid ""
 "Run a plugin that provides a command line interface. For example:\n"
 "calibre-debug -r \"Plugin name\" -- file1 --option1\n"
 "Everything after the -- will be passed to the plugin as arguments."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:115
+#: /__w/calibre/calibre/src/calibre/debug.py:117
 msgid ""
 "Run the named test(s). Use the special value \"all\" to run all tests. If "
 "the test name starts with a period it is assumed to be a module name. If the"
 " test name starts with @ it is assumed to be a category name."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:120
+#: /__w/calibre/calibre/src/calibre/debug.py:122
 msgid ""
 "Run the calibre diff tool. For example:\n"
 "calibre-debug --diff file1 file2"
 msgstr "캘리버의 diff 도구를 실행합니다. 예:\ncalibre-debug --diff 파일1 파일2"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:123
+#: /__w/calibre/calibre/src/calibre/debug.py:125
 msgid "(Un)register calibre from Windows Default Programs."
 msgstr "캘리버를 Windows 기본 프로그램에 등록/제거 합니다."
 
-#: /__w/calibre/calibre/src/calibre/debug.py:125
+#: /__w/calibre/calibre/src/calibre/debug.py:127
 msgid ""
 "Convert the specified EPUB file to KEPUB without doing a full conversion. "
 "This is what the Kobo driver does when sending files to the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:127
+#: /__w/calibre/calibre/src/calibre/debug.py:129
 msgid ""
 "Convert the specified KEPUB file to EPUB without doing a full conversion. "
 "This is what the Kobo driver does when importing files from the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/debug.py:193
+#: /__w/calibre/calibre/src/calibre/debug.py:195
 msgid "Debug log"
 msgstr "로그 디버그"
 
-#: /__w/calibre/calibre/src/calibre/debug.py:284
+#: /__w/calibre/calibre/src/calibre/debug.py:286
 #, python-format
 msgid "No plugin named %s found"
 msgstr "%s라는 이름의 플러그인을 찾을 수 없음"
@@ -3737,7 +3760,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:552
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:584
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:738
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4206
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4207
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:422
 #: /__w/calibre/calibre/src/calibre/devices/usbms/driver.py:429
 msgid "Removing books from device..."
@@ -4050,7 +4073,7 @@ msgid "Adding books to device metadata listing..."
 msgstr "장치 메타데이터 목록에 책을 추가하는 중..."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:740
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4208
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
 msgid "Kobo database version unsupported - See details"
 msgstr "지원되지 않는 Kobo 데이터베이스 버전 - 상세정보를 참조하세요."
 
@@ -4131,7 +4154,7 @@ msgstr ""
 msgid "Could not kepubify the book {title} ({name}) failed with error: {e}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4209
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4210
 msgid ""
 "Your Kobo is running an updated firmware/database version. As calibre does "
 "not know about this updated firmware, database editing is disabled, to "
@@ -4144,7 +4167,7 @@ msgid ""
 "your Kobo."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4223
+#: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:4224
 #, python-format
 msgid ""
 "Discussion of any new Kobo firmware can be found in the Kobo forum at "
@@ -8819,7 +8842,7 @@ msgid ""
 "publishers"
 msgstr "Edelweiss에서 메타데이터와 표지를 다운로드 합니다 - 책 출판사들이 업데이트하는 범주"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:207
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google.py:203
 msgid "Downloads metadata and covers from Google Books"
 msgstr "Google Books에서 메타데이터와 표지를 다운로드합니다"
 
@@ -8869,14 +8892,14 @@ msgstr "Open Library에서 표지를 다운로드합니다"
 msgid "Sample Book"
 msgstr "책 샘플"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:42
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:43
 #, python-brace-format
 msgid ""
 "This is an Amazon KFX book. It cannot be processed. See {} for information "
 "on how to handle KFX books."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:88
+#: /__w/calibre/calibre/src/calibre/ebooks/mobi/reader/mobi6.py:89
 msgid "This is an Amazon Topaz book. It cannot be processed."
 msgstr "이것은 Amazon Topaz 책입니다. 처리할 수 없습니다."
 
@@ -10644,7 +10667,7 @@ msgstr "책 추가 제어"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:208
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:123
 #: /__w/calibre/calibre/src/calibre/gui2/actions/catalog.py:42
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:423
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:168
@@ -11511,52 +11534,52 @@ msgid ""
 " The global variable \"{1}\" contains the original tooltip text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:41
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
 msgid "Column tooltips"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:42
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:43
 msgid "Define a custom tooltip for values in a column"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:45
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:46
 msgid "Edit/define column tooltip"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:51
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:52
 msgid "Show item tooltip in a dialog"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:58
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
 msgid "No library view available"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:59
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:60
 msgid "You can't set custom tooltips for books on the device."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:63
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
 msgid "No column selected"
 msgstr "선택된 열 없음"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:64
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:65
 msgid "A column (cell) must be selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:49
 msgid "At least one book must be selected"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:73
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
 msgid "Only one book"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:74
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:75
 msgid "Only one book can be selected"
 msgstr "한권의 책만 선택 가능"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:87
+#: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:88
 #, python-brace-format
 msgid "Tooltip for column {name}, row {row_num}"
 msgstr ""
@@ -11673,7 +11696,7 @@ msgstr "서재 탐색"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:256
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:158
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:191
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:362
 msgid "&Copy"
@@ -13228,17 +13251,17 @@ msgstr "디버그 모드로 재시작"
 msgid "Restart ignoring third party plugins"
 msgstr "타사 플러그인 무시하고 재시작"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:54
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:55
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:320
 #: /__w/calibre/calibre/src/calibre/web/feeds/templates.py:414
 msgid "Sections"
 msgstr "섹션 목록"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:81
 msgid "Cannot configure while there are running jobs."
 msgstr "실행중인 작업이 있는 동안에는 구성할 수 없습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:84
+#: /__w/calibre/calibre/src/calibre/gui2/actions/preferences.py:85
 msgid "Cannot configure before calibre is restarted."
 msgstr "캘리버가 다시 시작되기 전에는 구성할 수 없습니다."
 
@@ -14083,7 +14106,7 @@ msgstr "무시하기"
 
 #: /__w/calibre/calibre/src/calibre/gui2/add_filters.py:24
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:253
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:189
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:186
 msgid "Add"
 msgstr "추가하기"
 
@@ -14345,7 +14368,7 @@ msgstr "편집"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:447
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:478
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:650
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:649
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/live_css.py:378
 msgid "Copy"
 msgstr "복사"
@@ -14588,7 +14611,7 @@ msgid "All book details"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:707
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:501
 msgid "Selected text"
 msgstr ""
 
@@ -15334,7 +15357,13 @@ msgstr ""
 msgid "Send query to AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:146
+msgid ""
+"AI generated answers can be inaccurate, please verify any answers before "
+"acting on them."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:192
 msgid "Details:"
 msgstr ""
 
@@ -15529,8 +15558,8 @@ msgid "Choose image"
 msgstr "이미지 선택하기"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:836
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:153
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:156
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:159
 msgid "Invalid URL"
 msgstr "잘못된 URL"
 
@@ -17066,7 +17095,7 @@ msgstr "적용할 표현식 목록에 현재 표현식 추가하기"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:699
 msgid "&Add"
 msgstr "추가하기(&A)"
 
@@ -17082,7 +17111,7 @@ msgstr "현재 선택한 표현식을 제거합니다"
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1220
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:409
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:701
 msgid "&Remove"
 msgstr "제거(&R)"
 
@@ -17138,8 +17167,8 @@ msgstr "<p>검색 및 교체는 <i>정규 표현식</i>를 사용합니다. 정�
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:132
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/palette.py:261
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:254
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:261
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:366
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:539
 msgid "Restore &defaults"
 msgstr "기본값 복원(&D)"
@@ -17513,7 +17542,7 @@ msgstr "색상 선택하기"
 #: /__w/calibre/calibre/src/calibre/gui2/store/config/chooser/adv_search_builder_ui.py:222
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/snippets.py:506
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:714
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:115
 msgid "&Name:"
 msgstr "이름(&N):"
 
@@ -17688,7 +17717,7 @@ msgstr "내 색상표"
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1075
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1028
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:744
 msgid "Cannot edit"
 msgstr "편집 불가"
 
@@ -17699,7 +17728,7 @@ msgstr "내장된 색상표를 편집할 수 없습니다. 대신 새 색상표�
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:457
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:745
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:759
 msgid "Cannot remove"
 msgstr "제거할 수 없음"
 
@@ -18174,7 +18203,7 @@ msgstr "장치 꺼내기"
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:965
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Error"
 msgstr "오류"
@@ -20144,7 +20173,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_category_notes.py:64
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:301
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:125
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:122
 msgid "&URL:"
 msgstr "URL(&U):"
 
@@ -22029,7 +22058,7 @@ msgid "Lock Quickview contents"
 msgstr "빠른 보기 내용 잠금"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview.py:283
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:395
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:392
 msgid "Refresh"
 msgstr ""
 
@@ -22835,7 +22864,7 @@ msgstr "형식 선택하기"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:91
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:853
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:617
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:700
 msgid "&Edit"
 msgstr "편집하기(&E)"
 
@@ -25310,7 +25339,7 @@ msgid "&Shortcut:"
 msgstr "단축키(&S):"
 
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:464
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:187
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:190
 msgid "Done"
 msgstr "완료"
 
@@ -25827,7 +25856,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:259
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:76
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:189
 msgid "Remove"
 msgstr "제거"
 
@@ -27769,7 +27798,7 @@ msgstr "자동 추가하기(&A)"
 msgid "Very low"
 msgstr "매우 낮음"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:188
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior.py:191
 msgid "Confirmation dialogs have all been reset"
 msgstr "확인 대화창이 모두 재설정되었습니다"
 
@@ -30440,19 +30469,19 @@ msgstr ""
 msgid "Indicates whether the rule applies to child values."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:640
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:639
 msgid "Delete this rule"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:641
 msgid "Undo delete"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:644
 msgid "Modify this value"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:646
 msgid "Undo modification"
 msgstr ""
 
@@ -30613,37 +30642,42 @@ msgstr "열 색상(&C)"
 msgid "Column &icons"
 msgstr "열 아이콘(&I)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:108
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
 msgid "version"
 msgstr "버전"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:109
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:110
 msgid "created by Kovid Goyal"
 msgstr "(만든 이: Kovid Goyal)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:162
+#, python-brace-format
+msgid "Shortcut: <i>{}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:228
 msgid ""
 "The changes you have made require calibre be restarted immediately. You will"
 " not be allowed to set any more preferences, until you restart."
 msgstr "변경사항을 적용하려면 캘리버를 다시 시작해야 합니다. 다시 시작할 때까지 더 이상 환경설정을 지정할 수 없습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:258
 msgid "Run Welcome &wizard"
 msgstr "시작 마법사 실행(&W)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:268
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:275
 msgid "Save changes"
 msgstr "변경사항 저장"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:276
 msgid "Cancel and return to overview"
 msgstr "취소하고 되돌아갑니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:365
 msgid "Restoring to defaults not supported for"
 msgstr "지원되지 않는 기본값으로 복원"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/main.py:416
 msgid ""
 "Some of the changes you made require a restart. Please restart calibre as "
 "soon as possible."
@@ -32905,8 +32939,8 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:293
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:153
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:150
 msgid "No name"
 msgstr ""
 
@@ -35138,7 +35172,7 @@ msgid "Server replied with unknown HTTP status code: {}"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/tts/download.py:101
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1122
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1123
 msgid "Download finished"
 msgstr "다운로드 완료"
 
@@ -37617,7 +37651,7 @@ msgstr "파일 이름 선택하기"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:375
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1222
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
 msgid "No name specified"
 msgstr ""
 
@@ -42378,168 +42412,168 @@ msgstr ""
 msgid "No highlights selected to export"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:112
 msgid "Explain"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:113
 msgid "Define"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
 msgid "Summarize"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
 msgid "Key points"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
 msgid "Fix grammar"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:119
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
 msgid "Translate"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:216
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:221
 msgid "AI Assistant Note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:229
 #: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:67
 msgid "You"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:239
 msgid "Conversation record"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:274
 msgid "Type a question to the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
 msgid "&Save as note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
 msgid "Save this conversation as a note on the current highlight"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
 msgid "&New chat"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
 msgid "Start a new conversation"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
 msgid "Copy this conversation to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:294
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:299
 msgid "Se&ttings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:330
 msgid "Quick actions"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:350
 msgid "Select text in the book to begin."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:347
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:352
 msgid "First, configure an AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:380
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:385
 msgid "Assistant"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:399
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:404
 msgid "Save this specific response as the note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:406
 msgid "Copy this specific response to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:410
 msgid "Show the reasoning behind this response from the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
 msgid "answering"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:412
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
 msgid "thinking"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:416
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:421
 #, python-brace-format
 msgid "{assistant} {activity}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:438
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:446
 msgid "AI provider not configured."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:439
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:447
 msgid "Configure AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:442
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 msgid "No text is selected for this conversation."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:472
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:480
 msgid "Talking to AI failed with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:503
 msgid "Or, type a question to the AI below, for example:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:511
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:519
 msgid "free"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:514
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:516
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:522
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:524
 msgid "Queries:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:521
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:543
 msgid "Cannot save note as there is currently no selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:521
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:543
 msgid "No selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:549
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:557
 msgid "Reasoning used by AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:616
 msgid "Add Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:616
 msgid "Edit Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:623
 msgid "Prompt:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:625
 #, python-brace-format
 msgid ""
 "The prompt is a template. If you want the prompt to operate on the currently"
@@ -42548,183 +42582,194 @@ msgid ""
 "AIs work well with all languages)."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
 msgid "You must specify a name for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:658
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:666
 msgid "No prompt specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:658
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:666
 msgid "You must specify a prompt for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:670
 msgid "Invalid prompt"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:670
 #, python-brace-format
 msgid "The prompt you specified is not valid. Error: {}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:677
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:685
 msgid "&Highlight style:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:679
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:687
+msgid "Ask the AI to respond in the current language"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:688
+msgid ""
+"Ask the AI to respond in the current calibre user interface language. Note "
+"that how well this works depends on the individual model being used. "
+"Different models support different languages."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:692
 msgid "&Quick actions:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:745
 msgid ""
 "Cannot edit builtin actions. Instead uncheck this action and create a new "
 "action with the same name."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:746
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:760
 msgid ""
 "Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
 "showing up as a button."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:748
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:762
 #, python-brace-format
 msgid "Remove the {} action?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:763
 msgid "&Show this confirmation again"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:780
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:795
 msgid "AI Settings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:801
 msgid "AI &Provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:788
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:803
 msgid "Actions and &highlights"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:110
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:107
 msgid "Edit lookup source"
 msgstr "조회 소스 편집"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:113
 msgid "The name of the source"
 msgstr "사이트 이름"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:123
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:120
 msgid "The URL template of the source"
 msgstr "사이트의 URL 템플릿"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:126
 #, python-brace-format
 msgid ""
 "The URL template must starts with https:// and have {word} in it which will "
 "be replaced by the actual query"
 msgstr "URL 템플릿이 https://로 시작하고 실제 쿼리로 대체될 {word}를 포함해야 합니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:148
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:145
 msgid "You must specify a name"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:147
 msgid "Name already exists"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:151
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:148
 #, python-brace-format
 msgid "A lookup source with the name {} already exists"
 msgstr "이름이 {}인 조회 소스가 이미 존재합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:151
 msgid "You must specify a URL"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:154
 msgid "The URL must start with https://"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:160
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:157
 #, python-brace-format
 msgid "The URL must contain the placeholder {word}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:168
 msgid "Edit lookup sources"
 msgstr "조회 소스 편집"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:172
 msgid "Double-click to edit an entry"
 msgstr "항목을 편집하려면 더블-클릭하세요."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:195
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:553
 msgid "Restore defaults"
 msgstr "기본값 복원"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:234
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:231
 msgid "No sources"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:235
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:232
 msgid "You must specify at least one lookup source"
 msgstr "조회 소스를 하나 이상 지정해야 합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:307
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:304
 msgid "Zoom in"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:305
 msgid "Zoom out"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:306
 msgid "Default zoom"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:307
 msgid "Inspect"
 msgstr "책 내부코드 들여다보기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:324
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:321
 msgid "Double click on a word in the book's text to look it up."
 msgstr "책 텍스트 안에서 찾아보고자 하는 단어를 두 번 클릭하세요."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:358
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:355
 msgid "&Dictionary"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:359
 msgid "Ask &AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:379
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:376
 msgid "Lookup &in:"
 msgstr "조회 위치(&I):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:389
 msgid "Add sources"
 msgstr "찾아볼 사이트 추가하기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:393
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:390
 msgid "Add more sources at which to lookup words"
 msgstr "단어를 조회할 사이트 추가하기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:396
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:393
 msgid "Refresh the result to match the currently selected text"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:404
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:401
 msgid "Update on selection change"
 msgstr "선택 변경시 업데이트"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:407
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:404
 msgid ""
 "Automatically update the displayed result when selected text in the book "
 "changes. With this disabled the lookup is changed only when clicking the "
@@ -45540,298 +45585,298 @@ msgstr ""
 msgid "File is open in another process"
 msgstr "파일이 다른 프로세스에서 열려 있습니다"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:371
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:379
 msgid "the end of the program"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:373
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:381
 #, python-brace-format
 msgid "{0}: {1} near {2} on line {3}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:376
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:384
 #, python-brace-format
 msgid "{0}: {1} near {2}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:462
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:470
 msgid "'End of program'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:474
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:482
 #, python-brace-format
 msgid "Failed to scan program. Invalid input '{0}'"
 msgstr "프로그램을 스캔하지 못했습니다. 잘못된 입력 '{0}'"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:477
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:485
 #, python-brace-format
 msgid "Expected end of program, found '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:500
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:512
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:524
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:561
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:566
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:617
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:508
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:520
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:532
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:569
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:574
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:625
 #, python-brace-format
 msgid "{0} statement: expected '{1}', found '{2}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:521
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:529
 #, python-brace-format
 msgid "'{0}' statement: expected an identifier"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:531
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:539
 #, python-brace-format
 msgid "{0} statement: expected '(', found '{1}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:549
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:557
 #, python-brace-format
 msgid "{0} statement: expected ')', found '{1}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:577
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:585
 #, python-brace-format
 msgid "'{0}' statement: expected a function name identifier"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:580
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:588
 #, python-brace-format
 msgid "Function name '{0}' is already defined"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:582
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:590
 #, python-brace-format
 msgid "'{0}' statement: expected a '('"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:588
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:596
 msgid "Parameters to a function must be variables or assignments"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:598
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:606
 #, python-brace-format
 msgid "'{0}' statement: expected a ')' at end of argument list"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:600
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:608
 #, python-brace-format
 msgid "'{0}' statement: missing ':'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:604
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:622
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:612
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:630
 #, python-brace-format
 msgid "'{0}' statement: missing the closing '{1}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:638
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:646
 #, python-brace-format
 msgid "A stored template must begin with '{0}' or {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:754
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:764
 #, python-brace-format
 msgid "Expected '{0}', found '{1}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:792
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:802
 #, python-brace-format
 msgid "Unknown function {0}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:805
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:815
 #, python-brace-format
 msgid "Expected a '{0}' for function call, found '{1}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:818
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:828
 #, python-brace-format
 msgid "Parameters to '{0}' must be variables or assignments"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:838
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1916
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:848
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1935
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3047
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3079
 #, python-brace-format
 msgid "Incorrect number of arguments for function {0}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:845
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:855
 #, python-brace-format
 msgid "Expected an expression, found '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:850
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:860
 #, python-brace-format
 msgid "{0} outside of for loop"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:953
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:963
 msgid "Keyword arguments are not allowed"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:957
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:959
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:961
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:967
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:969
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:971
 #, python-brace-format
 msgid "Don't call {0}. Instead use {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:966
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:976
 #, python-brace-format
 msgid "Invalid character name '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:968
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:978
 msgid "Incorrect number of arguments"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:979
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:989
 #, python-brace-format
 msgid "Error in function {0} :: {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:988
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:998
 msgid "No function named {!r} exists"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1000
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1010
 #, python-brace-format
 msgid "Interpreter: {0} - line number {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1061
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1114
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1165
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1071
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1124
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1175
 #, python-brace-format
 msgid "Unhandled exception '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1122
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1126
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1130
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1135
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1132
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1136
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1140
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1145
 #, python-brace-format
 msgid "{0}: {1} must be an integer"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1147
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1157
 #, python-brace-format
 msgid "{0}: the range length ({1}) is larger than the limit ({2})"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1173
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1183
 #, python-brace-format
 msgid "Unknown identifier '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1191
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1232
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1201
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1242
 msgid "before evaluating arguments"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1204
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1249
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1214
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1259
 msgid "after evaluating arguments"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1221
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1263
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1231
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1273
 msgid " returned value"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1235
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1245
 #, python-brace-format
 msgid ""
 "Function {0}: argument count mismatch -- {1} given, at most {2} required"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1305
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1309
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1339
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1315
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1319
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1349
 #, python-brace-format
 msgid "Unknown field '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1399
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1449
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1417
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1467
 #, python-brace-format
 msgid "Field '{0}' is either not a field or not a list"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1478
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1496
 #, python-brace-format
 msgid "Error during string comparison: operator '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1506
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1524
 #, python-brace-format
 msgid "Value used in comparison is not a number: operator '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1523
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1540
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1562
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1541
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1558
 #: /__w/calibre/calibre/src/calibre/utils/formatter.py:1580
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1592
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1598
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1610
 #, python-brace-format
 msgid "Error during operator evaluation: operator '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1607
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1625
 #, python-brace-format
 msgid "Function {0}: invalid character name '{1}"
 msgstr "기능 {0}: 잘못된 문자 이름 '{1}"
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1669
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1688
 #, python-brace-format
 msgid "Internal error evaluating an expression: '{0}'"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1715
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1734
 #, python-brace-format
 msgid "format: type {0} requires an integer value, got {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1721
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1740
 #, python-brace-format
 msgid "format: type {0} requires a decimal (float) value, got {1}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1831
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1850
 #, python-brace-format
 msgid "Error in function {0} on line {1} : {2} - {3}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1834
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1853
 msgid "The Python template returned a non-string value: {!r}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1852
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1871
 #, python-brace-format
 msgid "Syntax error on line {0} column {1}: text {2}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1854
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1873
 #, python-brace-format
 msgid "The {0} function is not defined in the template"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1926
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1945
 #, python-format
 msgid "%s: unknown function"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1973
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:1992
 msgid "Formatter state restored before saved"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/utils/formatter.py:2105
+#: /__w/calibre/calibre/src/calibre/utils/formatter.py:2124
 #, python-brace-format
 msgid "No such variable {0}"
 msgstr ""
@@ -46075,6 +46120,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3759
 msgid "Template output"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:3804
+msgid ""
+"This function cannot be called directly. It is built into the formatter"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/utils/html2text.py:20
@@ -46327,7 +46377,7 @@ msgid "%s Document"
 msgstr "%s 문서"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:127
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1651
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1652
 msgid "Unknown section"
 msgstr "알 수 없는 섹션"
 
@@ -46337,7 +46387,7 @@ msgstr "알 수 없는 피드"
 
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:168
 #: /__w/calibre/calibre/src/calibre/web/feeds/__init__.py:208
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1642
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1643
 msgid "Untitled article"
 msgstr "제목없는 기사"
 
@@ -46349,115 +46399,115 @@ msgstr "알 수 없는 뉴스 출처"
 msgid "Article download aborted"
 msgstr "기사 다운로드가 중단됨"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:878
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:879
 #, python-format
 msgid "Failed to download %s"
 msgstr "%s 다운로드 실패"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:976
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:977
 #, python-format
 msgid "The \"%s\" recipe needs a username and password."
 msgstr "'%s' 레시피에는 사용자 이름과 비밀번호가 필요합니다."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1124
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1125
 msgid "Failed to download the following articles:"
 msgstr "다음 기사들의 다운로드를 실패함:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1130
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1131
 msgid "Failed to download parts of the following articles:"
 msgstr "다음 기사들의 일부분을 다운로드 실패함:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1132
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1133
 msgid " from "
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1134
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1135
 msgid "\tFailed links:"
 msgstr "\t실패한 링크:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1240
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1241
 msgid "Could not fetch article."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1242
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1243
 msgid "The debug traceback is available earlier in this log"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1244
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1245
 msgid "Run with -vv to see the reason"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1296
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1297
 msgid "Fetching feeds..."
 msgstr "피드를 가져오는 중..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1302
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1303
 msgid "Got feeds from index page"
 msgstr "색인 페이지에서 가져온 피드"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1315
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1316
 msgid "Trying to download cover..."
 msgstr "표지 다운로드를 시도하는 중..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1317
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1318
 msgid "Generating masthead..."
 msgstr "발행인란 생성 중..."
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1377
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1378
 #, python-brace-format
 msgid "Starting download in a single thread..."
 msgid_plural "Starting download [{} threads]..."
 msgstr[0] ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1392
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1393
 #, python-format
 msgid "Feeds downloaded to %s"
 msgstr "%s 에 다운로드된 피드"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1401
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1402
 #, python-format
 msgid "Could not download cover: %s"
 msgstr "표지를 다운로드할 수 없습니다: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1414
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1415
 #, python-format
 msgid "Downloading cover from %s"
 msgstr "%s 에서 표지를 다운로드합니다"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1466
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1467
 msgid "Masthead image downloaded"
 msgstr "발행인란 이미지 다운로드됨"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1566
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1567
 msgid "Articles in this issue:"
 msgstr "이 이슈의 기사:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1723
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1724
 #, python-format
 msgid "Article downloaded: %s"
 msgstr "다운로드된 기사: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1733
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1734
 #, python-format
 msgid "Article download aborted: %s"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1741
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1742
 #, python-format
 msgid "Article download failed: %s"
 msgstr "기사 다운로드 실패: %s"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1763
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1764
 msgid "Fetching feed"
 msgstr "피드 가져오기:"
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1956
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1957
 msgid ""
 "Failed to log in, check your username and password for the calibre "
 "Periodicals service."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1971
+#: /__w/calibre/calibre/src/calibre/web/feeds/news.py:1972
 msgid ""
 "You do not have permission to download this issue. Either your subscription "
 "has expired or you have exceeded the maximum allowed downloads for today."
@@ -47999,6 +48049,33 @@ msgid ""
 "``fractional_part(value)`` -- returns the part of the value after the "
 "decimal point.[/] For example, ``fractional_part(3.14)`` returns ``0.14``. "
 "Throws an exception if ``value`` is not a number."
+msgstr ""
+
+#: src/calibre/utils/formatter_function.py:3768
+msgid ""
+"``f_string(string)`` -- interpret ``string`` similar to how python interprets ``f`` strings. The intended use is to simplify long sequences of ``str & str`` or strcat(a,b,c) expressions.\n"
+"\n"
+"Text between braces (``{`` and ``}``) must be General Program Mode template expressions. The expressions, which can be expression lists, are evaluated in the current context (current book and local variables). Text not between braces is passed through unchanged.\n"
+"\n"
+"Examples:\n"
+"[LIST]\n"
+"[*]``f_string('Here is the title: {$title}')`` - returns the string with ``{$title}`` replaced with the title of the current book. For example, if the book's title is `20,000 Leagues Under the Sea` then the ``f_string()`` returns `Here is the title: 20,000 Leagues Under the Sea`.\n"
+"[*]Assuming the current date is 18 Sept 2025, this ``f_string()``\n"
+"[CODE]\n"
+"f_string(\"Today's date: the {d = today(); format_date(d, 'd')} of {format_date(d, 'MMMM')}, {format_date(d, 'yyyy')}\")\n"
+"[/CODE]\n"
+"returns the string `Today's date: the 18 of September, 2025`. Note the expression list (an assignment then an ``if`` statement) used in the first ``{ ... }`` group to assign today's date to a local variable.\n"
+"[*]If the book is book #3 in a series named `Foo` that has 5 books then this template\n"
+"[CODE]\n"
+"program:\n"
+"    if $series then\n"
+"        series_count = book_count('series:\"\"\"=' & $series & '\"\"\"', 0);\n"
+"        return f_string(\"{$series}, book {$series_index} of {series_count}\")\n"
+"    fi;\n"
+"    return 'This book is not in a series'\n"
+"[/CODE]\n"
+"returns `Foo, book 3 of 5`\n"
+"[/LIST]"
 msgstr ""
 
 #: src/calibre/utils/formatter_function.py:2524

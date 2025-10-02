@@ -3,12 +3,13 @@
 
 from functools import partial
 
-from qt.core import QFormLayout, QLabel, QLineEdit, QSpinBox, QWidget
+from qt.core import QFormLayout, QLabel, QLineEdit, QPlainTextEdit, QSpinBox, QWidget
 
 from calibre.ai.ollama import OllamaAI
 from calibre.ai.prefs import pref_for_provider, set_prefs_for_provider
 from calibre.ai.utils import configure, plugin_for_name
 from calibre.gui2 import error_dialog
+from calibre.gui2.widgets import BusyCursor
 
 pref = partial(pref_for_provider, OllamaAI.name)
 
@@ -28,15 +29,17 @@ class ConfigWidget(QWidget):
         l.addRow(la)
 
         self.api_url_edit = a = QLineEdit()
+        a.setClearButtonEnabled(True)
         a.setPlaceholderText(_('The Ollama URL, defaults to {}').format(OllamaAI.DEFAULT_URL))
         a.setToolTip(_('Enter the URL of the machine running your Ollama server, for example: {}').format(
             'https://my-ollama-server.com:11434'))
-        self.text_model_edit = lm = QLineEdit(self)
         l.addRow(_('Ollama &URL:'), a)
+        a.setText(pref('api_url') or '')
         self.timeout_sb = t = QSpinBox(self)
         t.setRange(15, 600), t.setSingleStep(1), t.setSuffix(_(' seconds'))
         t.setValue(pref('timeout', 120))
-
+        l.addRow(_('&Timeout:'), t)
+        self.text_model_edit = lm = QLineEdit(self)
         lm.setClearButtonEnabled(True)
         lm.setToolTip(_(
             'Enter the name of the model to use for text based tasks.'
@@ -45,15 +48,24 @@ class ConfigWidget(QWidget):
         l.addRow(_('Model for &text tasks:'), lm)
         lm.setText(pref('text_model') or '')
 
+        self.headers_edit = he = QPlainTextEdit(self)
+        he.setPlaceholderText(_('HTTP headers to send to Ollama, one per line'))
+        l.addRow(_('HTTP &Headers:'), he)
+        he.setPlainText('\n'.join(f'{k}: {v}' for (k, v) in pref('headers') or ()))
+        he.setToolTip('<p>' + _(
+            'A list of HTTP headers to send with every request to the Ollama API.'
+            ' Add a new header per line in the format: Header-Name: Value'
+        ))
+
     def does_model_exist_locally(self, model_name: str) -> bool:
         if not model_name:
             return False
         plugin = plugin_for_name(OllamaAI.name)
-        return plugin.builtin_live_module.does_model_exist_locally(model_name)
+        return plugin.builtin_live_module.does_model_exist_locally(model_name, self.api_url, self.headers)
 
     def available_models(self) -> list[str]:
         plugin = plugin_for_name(OllamaAI.name)
-        return sorted(plugin.builtin_live_module.get_available_models(), key=lambda x: x.lower())
+        return sorted(plugin.builtin_live_module.get_available_models(self.api_url, self.headers), key=lambda x: x.lower())
 
     @property
     def text_model(self) -> str:
@@ -64,13 +76,29 @@ class ConfigWidget(QWidget):
         return self.timeout_sb.value()
 
     @property
+    def api_url(self) -> str:
+        return self.api_url_edit.text().strip()
+
+    @property
+    def headers(self) -> tuple[tuple[str, str]]:
+        ans = []
+        for line in self.headers_edit.toPlainText().splitlines():
+            if line := line.strip():
+                k, sep, v = line.partition(':')
+                k, v = k.strip(), v.strip()
+                if k and v:
+                    ans.append((k, v))
+        return tuple(ans)
+
+    @property
     def settings(self) -> dict[str, str]:
         ans = {
             'text_model': self.text_model, 'timeout': self.timeout,
         }
-        url = self.api_url_edit.text().strip()
-        if url:
+        if url := self.api_url:
             ans['api_url'] = url
+        if headers := self.headers:
+            ans['headers'] = headers
         return ans
 
     @property
@@ -81,14 +109,18 @@ class ConfigWidget(QWidget):
         if not self.text_model:
             error_dialog(self, _('No model specified'), _('You specify a model to use for text based tasks.'), show=True)
             return False
-        if not self.does_model_exist_locally(self.text_model):
-            try:
-                avail = self.available_models()
-            except Exception:
-                import traceback
-                det_msg = _('Failed to get list of available models with error:') + '\n' + traceback.format_exc()
-            else:
-                det_msg = _('Available models:') + '\n' + '\n'.join(avail)
+        with BusyCursor():
+            exists = self.does_model_exist_locally(self.text_model)
+
+        if not exists:
+            with BusyCursor():
+                try:
+                    avail = self.available_models()
+                except Exception:
+                    import traceback
+                    det_msg = _('Failed to get list of available models with error:') + '\n' + traceback.format_exc()
+                else:
+                    det_msg = _('Available models:') + '\n' + '\n'.join(avail)
 
             error_dialog(self, _('No matching model'), _(
                 'No model named {} found in Ollama. Click "Show details" to see a list of available models.').format(
