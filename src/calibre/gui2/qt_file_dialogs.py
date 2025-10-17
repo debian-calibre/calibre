@@ -66,8 +66,7 @@ class FileDialog(QObject):
                 ftext += etext
         if add_all_files_filter or not ftext:
             ftext += 'All files (*)'
-        if ftext.endswith(';;'):
-            ftext = ftext[:-2]
+        ftext = ftext.removesuffix(';;')
 
         self.dialog_name = dialog_name(name, title)
         self.selected_files = None
@@ -80,11 +79,10 @@ class FileDialog(QObject):
             if os.path.exists(prev):
                 if os.path.isfile(prev):
                     prev = os.path.dirname(prev)
+            elif os.path.exists(os.path.dirname(prev)):
+                prev = os.path.dirname(prev)
             else:
-                if os.path.exists(os.path.dirname(prev)):
-                    prev = os.path.dirname(prev)
-                else:
-                    prev = os.path.expanduser('~')
+                prev = os.path.expanduser('~')
             initial_dir = os.path.join(prev, bn)
         elif no_save_dir:
             initial_dir = os.path.expanduser(default_dir)

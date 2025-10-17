@@ -68,15 +68,14 @@ def jump_to_book(book_id, parent=None):
         parent = parent or gui
         if gui.library_view.select_rows((book_id,)):
             gui.raise_and_focus()
+        elif gprefs['fts_library_restrict_books']:
+            error_dialog(parent, _('Not found'), _('This book was not found in the calibre library'), show=True)
         else:
-            if gprefs['fts_library_restrict_books']:
-                error_dialog(parent, _('Not found'), _('This book was not found in the calibre library'), show=True)
-            else:
-                error_dialog(parent, _('Not found'), _(
-                    'This book is not currently visible in the calibre library.'
-                    ' If you have a search or Virtual library active, try clearing that.'
-                    ' Or click the "Restrict searched books" checkbox in this window to'
-                    ' only search currently visible books.'), show=True)
+            error_dialog(parent, _('Not found'), _(
+                'This book is not currently visible in the calibre library.'
+                ' If you have a search or Virtual library active, try clearing that.'
+                ' Or click the "Restrict searched books" checkbox in this window to'
+                ' only search currently visible books.'), show=True)
 
 
 def show_in_viewer(book_id, text, fmt):
@@ -246,6 +245,7 @@ class ResultsModel(QAbstractItemModel):
     def search(self, fts_engine_query, use_stemming=True, restrict_to_book_ids=None):
         db = get_db()
         failure = []
+        matching_book_ids = []
 
         def construct(all_matches):
             self.result_map = r = {}
@@ -259,6 +259,7 @@ class ResultsModel(QAbstractItemModel):
                         results = Results(book_id)
                         r[book_id] = len(sr)
                         sr.append(results)
+                        matching_book_ids.append(book_id)
             except FTSQueryError as e:
                 failure.append(e)
 
@@ -287,9 +288,10 @@ class ResultsModel(QAbstractItemModel):
         else:
             self.current_thread = Thread(
                 name='FTSQuery', daemon=True, target=self.search_text_in_thread, args=(
-                    self.current_query_id, self.current_thread_abort, fts_engine_query,), kwargs=dict(
+                    self.current_query_id, self.current_thread_abort, matching_book_ids, fts_engine_query),
+                kwargs=dict(
                     use_stemming=use_stemming, highlight_start='\x1d', highlight_end='\x1d', snippet_size=64,
-                    restrict_to_book_ids=restrict_to_book_ids, return_text=True)
+                    return_text=True)
             )
         self.current_thread.start()
         return True
@@ -305,15 +307,15 @@ class ResultsModel(QAbstractItemModel):
             return True
         return False
 
-    def search_text_in_thread(self, query_id, abort, *a, **kw):
+    def search_text_in_thread(self, query_id, abort, book_ids, *a, **kw):
         db = get_db()
-        generator = db.fts_search(*a, **kw, result_type=lambda x: x)
-        for result in generator:
-            if abort.wait(0.01):  # wait for some time so that other threads/processes that try to access the db can be scheduled
-                with suppress(StopIteration):
-                    generator.send(True)
-                return
-            self.result_found.emit(query_id, result)
+        for book_id in book_ids:
+            kw['restrict_to_book_ids'] = {book_id}
+            for result in db.fts_search(*a, **kw):
+                # wait for some time so that other threads/processes that try to access the db can be scheduled
+                if abort.wait(0.01):
+                    return
+                self.result_found.emit(query_id, result)
         self.all_results_found.emit(query_id)
 
     def result_with_text_found(self, query_id, result):

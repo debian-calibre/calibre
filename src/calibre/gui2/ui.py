@@ -896,6 +896,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                     print('Failed to update annotations for book from viewer, book or library not found.', file=sys.stderr)
             except Exception:
                 import traceback
+                traceback.print_exc()
                 error_dialog(self, _('Failed to update annotations'), _(
                     'Failed to update annotations in the database for the book being currently viewed.'), det_msg=traceback.format_exc(), show=True)
         elif msg.startswith('bookedited:'):
@@ -1364,15 +1365,14 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 dynamic['systray_msg'] = True
             self.hide_windows()
             e.ignore()
+        elif self.confirm_quit():
+            try:
+                self.shutdown(write_settings=False)
+            except Exception:
+                import traceback
+                traceback.print_exc()
+            e.accept()
         else:
-            if self.confirm_quit():
-                try:
-                    self.shutdown(write_settings=False)
-                except Exception:
-                    import traceback
-                    traceback.print_exc()
-                e.accept()
-            else:
-                e.ignore()
+            e.ignore()
 
     # }}}

@@ -277,21 +277,19 @@ class PRS505(USBMS):
             prefix = None
             if is_main:
                 prefix = self._main_prefix
-            else:
-                if self._card_a_prefix and \
-                    path.startswith(self._card_a_prefix):
-                    prefix = self._card_a_prefix
-                elif self._card_b_prefix and \
-                        path.startswith(self._card_b_prefix):
-                    prefix = self._card_b_prefix
+            elif self._card_a_prefix and \
+                path.startswith(self._card_a_prefix):
+                prefix = self._card_a_prefix
+            elif self._card_b_prefix and \
+                    path.startswith(self._card_b_prefix):
+                prefix = self._card_b_prefix
             if prefix is None:
                 prints('WARNING: Failed to find prefix for:', filepath)
                 return
             thumbnail_dir = os.path.join(prefix, *thumbnail_dir.split('/'))
 
             relpath = os.path.relpath(filepath, prefix)
-            if relpath.startswith('..\\'):
-                relpath = relpath[3:]
+            relpath = relpath.removeprefix('..\\')
             thumbnail_dir = os.path.join(thumbnail_dir, relpath)
             if not os.path.exists(thumbnail_dir):
                 os.makedirs(thumbnail_dir)

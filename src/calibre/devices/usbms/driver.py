@@ -206,7 +206,7 @@ class USBMS(CLI, Device):
         elif oncard == 'cardb' and not self._card_b_prefix:
             self.report_progress(1.0, _('Getting list of books on device...'))
             return dummy_bl
-        elif oncard and oncard != 'carda' and oncard != 'cardb':
+        elif oncard and oncard not in {'carda', 'cardb'}:
             self.report_progress(1.0, _('Getting list of books on device...'))
             return dummy_bl
 
@@ -239,8 +239,7 @@ class USBMS(CLI, Device):
             if path_to_ext(filename) in all_formats and self.is_allowed_book_file(filename, path, prefix):
                 try:
                     lpath = os.path.join(path, filename).partition(self.normalize_path(prefix))[2]
-                    if lpath.startswith(os.sep):
-                        lpath = lpath[len(os.sep):]
+                    lpath = lpath.removeprefix(os.sep)
                     lpath = lpath.replace('\\', '/')
                     idx = bl_cache.get(lpath, None)
                     if idx is not None:
@@ -248,10 +247,9 @@ class USBMS(CLI, Device):
                         if self.update_metadata_item(bl[idx]):
                             # print('update_metadata_item returned true')
                             changed = True
-                    else:
-                        if bl.add_book(self.book_from_path(prefix, lpath),
-                                              replace_metadata=False):
-                            changed = True
+                    elif bl.add_book(self.book_from_path(prefix, lpath),
+                                          replace_metadata=False):
+                        changed = True
                 except Exception:  # Probably a filename encoding error
                     import traceback
                     traceback.print_exc()

@@ -72,6 +72,7 @@ from calibre.constants import (
     isxp,
     numeric_version,
     plugins_loc,
+    sanitize_env_vars,
 )
 from calibre.constants import __appname__ as APP_UID
 from calibre.ebooks.metadata import MetaInformation
@@ -1348,10 +1349,9 @@ class Application(QApplication):
                 f.setFamily('Segoe UI')
                 f.setPointSize(9)
                 QApplication.setFont(f)
-        else:
-            if q == ('Sans Serif', 9):  # Hard coded Qt settings, no user preference detected
-                f.setPointSize(10)
-                QApplication.setFont(f)
+        elif q == ('Sans Serif', 9):  # Hard coded Qt settings, no user preference detected
+            f.setPointSize(10)
+            QApplication.setFont(f)
         f = QFontInfo(f)
         self.original_font = (f.family(), f.pointSize(), f.weight(), f.italic(), 100)
 
@@ -1481,50 +1481,6 @@ class Application(QApplication):
 
 
 _store_app = None
-
-
-@contextmanager
-def sanitize_env_vars():
-    '''Unset various environment variables that calibre uses. This
-    is needed to prevent library conflicts when launching external utilities.'''
-
-    if islinux and isfrozen:
-        env_vars = {
-            'LD_LIBRARY_PATH':'/lib', 'OPENSSL_MODULES': '/lib/ossl-modules',
-        }
-    elif iswindows:
-        env_vars = {'OPENSSL_MODULES': None, 'QTWEBENGINE_DISABLE_SANDBOX': None}
-        if os.environ.get('CALIBRE_USE_SYSTEM_CERTIFICATES', '') != '1':
-            env_vars['SSL_CERT_FILE'] = None
-    elif ismacos:
-        env_vars = {k:None for k in (
-                    'FONTCONFIG_FILE FONTCONFIG_PATH OPENSSL_ENGINES OPENSSL_MODULES').split()}
-        if os.environ.get('CALIBRE_USE_SYSTEM_CERTIFICATES', '') != '1':
-            env_vars['SSL_CERT_FILE'] = None
-    else:
-        env_vars = {}
-
-    originals = {x:os.environ.get(x, '') for x in env_vars}
-    changed = {x:False for x in env_vars}
-    for var, suffix in env_vars.items():
-        paths = [x for x in originals[var].split(os.pathsep) if x]
-        npaths = [] if suffix is None else [x for x in paths if x != (sys.frozen_path + suffix)]
-        if len(npaths) < len(paths):
-            if npaths:
-                os.environ[var] = os.pathsep.join(npaths)
-            else:
-                del os.environ[var]
-            changed[var] = True
-
-    try:
-        yield
-    finally:
-        for var, orig in originals.items():
-            if changed[var]:
-                if orig:
-                    os.environ[var] = orig
-                elif var in os.environ:
-                    del os.environ[var]
 
 
 SanitizeLibraryPath = sanitize_env_vars  # For old plugins
