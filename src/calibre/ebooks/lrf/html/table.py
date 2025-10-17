@@ -148,8 +148,7 @@ class Cell:
             word = word[0] if word else ''
             fl, ft, fr, fb = font.getbbox(word)
             width = fr - fl
-            if width > mwidth:
-                mwidth = width
+            mwidth = max(mwidth, width)
         return parindent + mwidth + 2
 
     def text_block_size(self, tb, maxwidth=sys.maxsize, debug=False):
@@ -162,11 +161,11 @@ class Cell:
             if left + width > maxwidth:
                 left = width + ws
                 top += ls
-                bottom = top+ls if top+ls > bottom else bottom
+                bottom = max(bottom, top + ls)
             else:
                 left += (width + ws)
-                right = left if left > right else right
-                bottom = top+ls if top+ls > bottom else bottom
+                right = max(right, left)
+                bottom = max(bottom, top + ls)
             return left, right, top, bottom
 
         for token, attrs in tokens(tb):
@@ -289,10 +288,10 @@ class Table:
         conv.in_table = False
 
     def number_of_columns(self):
-        max = 0
+        val = 0
         for row in self.rows:
-            max = row.number_of_cells() if row.number_of_cells() > max else max
-        return max
+            val = max(val, row.number_of_cells())
+        return val
 
     def number_or_rows(self):
         return len(self.rows)
@@ -363,8 +362,7 @@ class Table:
 
         xpos = [sum(widths[:i]) for i in range(cols)]
         delta = maxwidth - sum(widths)
-        if delta < 0:
-            delta = 0
+        delta = max(delta, 0)
         for r in range(len(cellmatrix)):
             yield None, 0, heights[r], 0, self.rows[r].targets
             for c in range(len(cellmatrix[r])):

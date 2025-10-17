@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 import codecs
-import collections
-import collections.abc
 import locale
 import os
 import sys
+from collections import namedtuple
+from collections.abc import Mapping
+from contextlib import contextmanager
 from functools import lru_cache
 
 from polyglot.builtins import environ_item, hasenv
 
 __appname__   = 'calibre'
-numeric_version = (8, 12, 0)
+numeric_version = (8, 13, 0)
 __version__   = '.'.join(map(str, numeric_version))
 git_version   = None
 __author__    = 'Kovid Goyal <kovid@kovidgoyal.net>'
@@ -85,7 +86,6 @@ def get_osx_version():
     global _osx_ver
     if _osx_ver is None:
         import platform
-        from collections import namedtuple
         OSX = namedtuple('OSX', 'major minor tertiary')
         try:
             ver = platform.mac_ver()[0].split('.')
@@ -317,7 +317,7 @@ if iswindows:
     from calibre_extensions import winutil
 
 
-class Plugins(collections.abc.Mapping):
+class Plugins(Mapping):
 
     def __iter__(self):
         from importlib.resources import contents
@@ -507,3 +507,47 @@ def bundled_binaries_dir() -> str:
     if (islinux or isbsd) and getattr(sys, 'frozen', False):
         return os.path.join(sys.executables_location, 'bin')
     return ''
+
+
+@contextmanager
+def sanitize_env_vars():
+    '''Unset various environment variables that calibre uses. This
+    is needed to prevent library conflicts when launching external utilities.'''
+
+    if islinux and isfrozen:
+        env_vars = {
+            'LD_LIBRARY_PATH':'/lib', 'OPENSSL_MODULES': '/lib/ossl-modules',
+        }
+    elif iswindows:
+        env_vars = {'OPENSSL_MODULES': None, 'QTWEBENGINE_DISABLE_SANDBOX': None}
+        if os.environ.get('CALIBRE_USE_SYSTEM_CERTIFICATES', '') != '1':
+            env_vars['SSL_CERT_FILE'] = None
+    elif ismacos:
+        env_vars = {k:None for k in (
+                    'FONTCONFIG_FILE FONTCONFIG_PATH OPENSSL_ENGINES OPENSSL_MODULES').split()}
+        if os.environ.get('CALIBRE_USE_SYSTEM_CERTIFICATES', '') != '1':
+            env_vars['SSL_CERT_FILE'] = None
+    else:
+        env_vars = {}
+
+    originals = {x:os.environ.get(x, '') for x in env_vars}
+    changed = {x:False for x in env_vars}
+    for var, suffix in env_vars.items():
+        paths = [x for x in originals[var].split(os.pathsep) if x]
+        npaths = [] if suffix is None else [x for x in paths if x != (sys.frozen_path + suffix)]
+        if len(npaths) < len(paths):
+            if npaths:
+                os.environ[var] = os.pathsep.join(npaths)
+            else:
+                del os.environ[var]
+            changed[var] = True
+
+    try:
+        yield
+    finally:
+        for var, orig in originals.items():
+            if changed[var]:
+                if orig:
+                    os.environ[var] = orig
+                elif var in os.environ:
+                    del os.environ[var]

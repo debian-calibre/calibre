@@ -160,7 +160,9 @@ def install_grype() -> str:
     data = download_with_retry(url)
     with tarfile.open(fileobj=io.BytesIO(data), mode='r') as tf:
         tf.extract('grype', path=dest, filter='fully_trusted')
-    return os.path.join(dest, 'grype')
+    exe = os.path.join(dest, 'grype')
+    subprocess.run([exe, 'db', 'update'])
+    return exe
 
 
 IGNORED_DEPENDENCY_CVES = [
@@ -175,6 +177,14 @@ IGNORED_DEPENDENCY_CVES = [
     'CVE-2017-1000376',  # false match in the database
     # espeak
     'CVE-2023-4990',  # false match because we currently build with a specific commit pending release of espeak 1.53
+    # Qt
+    'CVE-2025-5683',  # we dont use the ICNS image format
+    # ffmpeg cannot be updated till Qt starts using FFMPEG 8 and these CVEs are
+    # anyway for file types we dont use or support
+    'CVE-2025-59733', 'CVE-2025-59731', 'CVE-2025-59732',  # OpenEXR image files, not supported by calibre
+    'CVE-2025-59734',  # SANM decoding unused by calibre
+    'CVE-2025-59729',  # DHAV files unused by calibre ad negligible security impact: https://issuetracker.google.com/issues/433513232
+    'CVE-2025-11579',  # Go rardecode package probably from grype's own dependencies calibre does not use Go code
 ]
 
 
@@ -205,12 +215,16 @@ def check_dependencies() -> None:
         for x in IGNORED_DEPENDENCY_CVES:
             print('  - vulnerability:', x, file=f)
     cmdline = [grype, '--by-cve', '--config', gc, '--fail-on', 'medium', '--only-fixed', '--add-cpes-if-none']
-    if (cp := subprocess.run(cmdline + ['dir:' + SW])).returncode != 0:
-        raise SystemExit(cp.returncode)
-    # Now test against the SBOM
+    # disable testing against dir as it raises false positives on sqlite
+    # embedded in dependencies we dont use at runtime
+    # print('Testing against the bundle directories', flush=True)
+    # if (cp := subprocess.run(cmdline + ['dir:' + SW])).returncode != 0:
+    #     raise SystemExit(cp.returncode)
+    # Test against the SBOM
+    print('Testing against the SBOM', flush=True)
     import runpy
     orig = sys.argv, sys.stdout
-    sys.argv = ['bypy', 'sbom', 'myproject', '1.0.0']
+    sys.argv = ['bypy', 'sbom', 'calibre', '1.0.0']
     buf = io.StringIO()
     sys.stdout = buf
     runpy.run_path('bypy-src')

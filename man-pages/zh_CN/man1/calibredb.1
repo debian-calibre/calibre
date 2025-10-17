@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "十月 01, 2025" "8.12.0" "calibre"
+.TH "CALIBREDB" "1" "十月 17, 2025" "8.13.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -228,7 +228,7 @@ calibredb list [options]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+用于对结果进行排序的字段。您可以通过使用逗号*分隔的方式指定多个字段。 可用字段： author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid 默认值： id。除了上述的内置字段外，自定义字段也可用，格式为 *field_name。例如，对于自定义字段 #rating，请使用名称：*rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -790,7 +790,7 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-对书库的文件系统执行一些检查。报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, failed_folders
+对书库的文件系统执行一些检查。报告是invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, malformed_formats, malformed_paths, failed_folders
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0

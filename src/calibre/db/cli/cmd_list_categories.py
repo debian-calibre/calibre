@@ -77,7 +77,7 @@ def do_list(fields, data, opts):
     widths = [0 for x in fields]
     for i in data:
         for j, field in enumerate(fields):
-            widths[j] = max(widths[j], max(len(field), len(str(i[field]))))
+            widths[j] = max(widths[j], len(field), len(str(i[field])))
 
     screen_width = geometry()[0]
     if not screen_width:
@@ -114,7 +114,7 @@ def do_list(fields, data, opts):
         lines = max(map(len, text))
         for l in range(lines):
             for i, field in enumerate(text):
-                ft = text[i][l] if l < len(text[i]) else ''
+                ft = field[l] if l < len(field) else ''
                 filler = ' '*(widths[i] - len(ft) - 1)
                 print(ft.encode('utf-8') + filler.encode('utf-8'), end=separator)
             print()
@@ -157,8 +157,7 @@ def main(opts, args, dbctx):
     def fmtr(v):
         v = v or 0
         ans = f'{v:.1f}'
-        if ans.endswith('.0'):
-            ans = ans[:-2]
+        ans = ans.removesuffix('.0')
         return ans
 
     if not opts.item_count:
