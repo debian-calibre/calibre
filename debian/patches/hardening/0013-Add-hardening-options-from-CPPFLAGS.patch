@@ -13,7 +13,7 @@ like "-D_FORTIFY_SOURCE=2".
  1 file changed, 1 insertion(+)
 
 diff --git a/src/calibre/headless/CMakeLists.txt b/src/calibre/headless/CMakeLists.txt
-index c2c8fa8..7bfb431 100644
+index 1fd7f0d..52c9087 100644
 --- a/src/calibre/headless/CMakeLists.txt
 +++ b/src/calibre/headless/CMakeLists.txt
 @@ -1,6 +1,7 @@
@@ -21,6 +21,6 @@ index c2c8fa8..7bfb431 100644
  project(headless)
  set(CMAKE_AUTOMOC ON)
 +set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} $ENV{CPPFLAGS}")
- find_package(Qt6Gui REQUIRED)
+ __FIND_GUI__
  add_library(headless MODULE main.cpp headless_backingstore.cpp headless_integration.cpp)
  set_property(TARGET headless PROPERTY QT_PLUGIN_TYPE "platforms")
