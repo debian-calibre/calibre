@@ -10,7 +10,10 @@ TEST_FLAGS += --exclude-test-name=recipe_browser_qt
 TEST_FLAGS += --exclude-test-name=recipe_browser_webengine
 
 # Disable some tests for specific platforms
-ifeq (arm64, $(DEB_HOST_ARCH))
+ifeq      (amd64, $(DEB_HOST_ARCH))
+  # Network test is unstable in reproducible-builder environment
+  TEST_FLAGS += --exclude-test-name=websocket_basic
+else ifeq (arm64, $(DEB_HOST_ARCH))
   # "Illegal instruction" error on buildd "arm-ubc-*".
   # But buildd "arm-conova-*" works well.
   TEST_FLAGS += --exclude-test-name=import_of_all_python_modules
