@@ -145,7 +145,7 @@ def get_tx():
 
 
 def install_grype() -> str:
-    dest = os.path.join(SW, 'bin')
+    dest = '/tmp'
     rq = Request('https://api.github.com/repos/anchore/grype/releases/latest', headers={
         'Accept': 'application/vnd.github.v3+json',
     })
@@ -161,7 +161,7 @@ def install_grype() -> str:
     with tarfile.open(fileobj=io.BytesIO(data), mode='r') as tf:
         tf.extract('grype', path=dest, filter='fully_trusted')
     exe = os.path.join(dest, 'grype')
-    subprocess.run([exe, 'db', 'update'])
+    subprocess.check_call([exe, 'db', 'update'])
     return exe
 
 

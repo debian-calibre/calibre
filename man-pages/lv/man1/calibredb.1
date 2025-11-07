@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "oktobris 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "novembris 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -62,7 +63,7 @@ the server from the main calibre program, this option is in
 Preferences → Sharing over the net → Advanced\&.
 .IP \(bu 2
 If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
 options to \fBcalibredb\fP to give it access. You can setup
 user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
 option and using \fB\-\-manage\-users\fP to create the user accounts.
@@ -73,65 +74,65 @@ Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .sp
 To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
+\fB\-\-with\-library\fP option, see the documentation of that option for
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBĀLIE IESTATĪJUMI\fP
+GLOBĀLIE IESTATĪJUMI
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%PIEVIENOT NO MAPĒM\fP
+PIEVIENOT NO MAPĒM
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPCIJAS\fP
+EPUB OPCIJAS
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH GLOBĀLIE IESTATĪJUMI
 .INDENT 0.0
@@ -142,7 +143,7 @@ parādīt šo palīdzības paziņojumu un iziet
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāto ceļu. Lai veiktu darbības attālinātās bibliotēkās, varat arī izveidot savienojumu ar calibre satura serveri. Lai to izdarītu, izmantojiet URL formu: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link', piemēram, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. Library_id ir tās bibliotēkas id, ar kuru vēlaties izveidot savienojumu ar satura serveri. Jūs varat izmantot īpašo library_id vērtību, lai serverī piekļūtu bibliotēkas identifikācijas sarakstam. Sīkāku informāciju, kā iestatīt piekļuvi, izmantojot satura serveri, skatiet sadaļā \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
+Ceļš uz calibre bibliotēku. Pēc noklusējuma izmanto iestatījumos saglabāto ceļu. Lai veiktu darbības attālinātās bibliotēkās, varat arī izveidot savienojumu ar calibre satura serveri. Lai to izdarītu, izmantojiet URL formu: \%<http://\:hostname:port/#\:library_id>, piemēram, \%<http://\:localhost:8080/#\:mylibrary>\&. Library_id ir tās bibliotēkas id, ar kuru vēlaties izveidot savienojumu ar satura serveri. Jūs varat izmantot īpašo library_id vērtību, lai serverī piekļūtu bibliotēkas identifikācijas sarakstam. Sīkāku informāciju, kā iestatīt piekļuvi, izmantojot satura serveri, skatiet sadaļā \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -235,7 +236,7 @@ Ceļš uz failu, kas satur veidni, kuru palaist, ja lauku sarakstā ir \fB\(dq\f
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Šablona kolonnas virsraksts. Noklusējuma iestatījums: template. Šī opcija tiek ignorēta, ja ir iestatīta opcija \fI\%\-\-for\-machine\fP\&.
+Šablona kolonnas virsraksts. Noklusējuma iestatījums: template. Šī opcija tiek ignorēta, ja ir iestatīta opcija \fB\-\-for\-machine\fP\&.
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -269,7 +270,7 @@ Ceļš līdz pievienotās grāmatas vākam
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Pievienojiet grāmatas datu bāzei pat tad, ja tās jau pastāv. Salīdzinājums tiek veikts, pamatojoties uz grāmatu nosaukumiem un autoriem. Ņemiet vērā, ka opcijai \fI\%\-\-automerge\fP ir prioritāte.
+Pievienojiet grāmatas datu bāzei pat tad, ja tās jau pastāv. Salīdzinājums tiek veikts, pamatojoties uz grāmatu nosaukumiem un autoriem. Ņemiet vērā, ka opcijai \fB\-\-automerge\fP ir prioritāte.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -428,12 +429,12 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Lauks, kas jāiestata. Formāts ir field_name: vērtība, piemēram: \fI\%\-\-field\fP tags:tag1,tag2. Izmantojiet \fB\-\-list\-fields,\fP lai iegūtu sarakstu ar visiem lauku nosaukumiem. Varat norādīt šo opciju vairākas reizes, lai iestatītu vairākus laukus. Piezīme: Valodai jums jāizmanto ISO639 valodu kods (piemēram, angļu valodā en, franču valodā fr utt.). Id sintakse ir \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Loģiskiem (jā/nē) laukiem tiek izmantoti true un false vai yes un no.
+Lauks, kas jāiestata. Formāts ir field_name: vērtība, piemēram: \fB\-\-field\fP tags:tag1,tag2. Izmantojiet \fB\-\-list\-fields,\fP lai iegūtu sarakstu ar visiem lauku nosaukumiem. Varat norādīt šo opciju vairākas reizes, lai iestatītu vairākus laukus. Piezīme: Valodai jums jāizmanto ISO639 valodu kods (piemēram, angļu valodā en, franču valodā fr utt.). Id sintakse ir \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Loģiskiem (jā/nē) laukiem tiek izmantoti true un false vai yes un no.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Ar \fI\%\-\-field\fP papildiespēju izmantojamo metadatu lauku nosaukumu saraksts
+Ar \fB\-\-field\fP papildiespēju izmantojamo metadatu lauku nosaukumu saraksts
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -694,7 +695,7 @@ Katru reizi, kad jūs nododat argumentus calibredb, kam ir atstarpes, pievienoji
 .INDENT 0.0
 .TP
 .B \-\-display
-Opcija, kas pielāgo, kā tiks šajā slejā interpretēta datu vārdnīca. Tā ir JSON virkne. Par slejas numerāciju, izmantojiet \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Ir daudzas iespējas, kā var parādīt ekrānā mainīgos. Šo sleju tipa opcijas ir šādas: salikts: composite_template, composite_sort, make_category, contains_html, use_decorations datums un laiks: date_format uzskaitījums: enum_values, enum_colors, use_decorations skaitlis vai ar peldošo komatu: number_format teksts: is_names, use_decorations  Labākais veids, kā atrast labāko kombināciju ir izveidot pielāgotu attiecīga GUI tipa sleju, tad apskatīt OPF grāmatas dublējumu (nodrošiniet, ka jaunais OPF ir izveidots pēc slejas pievienošanas). Jūs redzēsiet JSON jauno OPF sleju kā \fB\(dq\fPparādītu\fB\(dq\fP\&.
+Opcija, kas pielāgo, kā tiks šajā slejā interpretēta datu vārdnīca. Tā ir JSON virkne. Par slejas numerāciju, izmantojiet \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Ir daudzas iespējas, kā var parādīt ekrānā mainīgos. Šo sleju tipa opcijas ir šādas: salikts: composite_template, composite_sort, make_category, contains_html, use_decorations datums un laiks: date_format uzskaitījums: enum_values, enum_colors, use_decorations skaitlis vai ar peldošo komatu: number_format teksts: is_names, use_decorations  Labākais veids, kā atrast labāko kombināciju ir izveidot pielāgotu attiecīga GUI tipa sleju, tad apskatīt OPF grāmatas dublējumu (nodrošiniet, ka jaunais OPF ir izveidots pēc slejas pievienošanas). Jūs redzēsiet JSON jauno OPF sleju kā \fB\(dq\fPparādītu\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1037,9 +1038,8 @@ Formāts meklēšanas rezultātu izvadīšanai. Vai nu “text” vienkāršam t
 .B \-\-restrict\-to
 Ierobežojiet meklētās grāmatas, izmantojot meklēšanas izteiksmi vai ID. Piemēram: ids:1,2,3, lai ierobežotu pēc ID, vai search:tag:foo, lai ierobežotu tikai grāmatas, kurām ir birka foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

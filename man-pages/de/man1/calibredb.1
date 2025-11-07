@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Oktober 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "November 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -64,7 +65,7 @@ Einstellungen → Über das Netzwerk freigeben → Erweitert\&.
 Wenn Sie den Zugriff über das Internet ermöglichen möchten, sollten Sie
 .UNINDENT
 .sp
-Benutzerkonten auf dem Server einrichten und \fI\%\-\-username\fP und \fI\%\-\-password\fP
+Benutzerkonten auf dem Server einrichten und \fB\-\-username\fP und \fB\-\-password\fP
 von \fBcalibredb\fP verwenden, um ihm den Zugriff zu ermöglichen. Sie können die
 Benutzerauthentifizierung für \fBcalibre\-server\fP aktivieren, indem Sie die Option \fB\-\-enable\-auth\fP
 verwenden und \fB\-\-manage\-users\fP verwenden, um die Benutzerkonten zu erstellen.
@@ -72,64 +73,64 @@ Wenn Sie den Server im Hauptprogramm von Calibre ausführen, verwenden Sie
 Einstellungen → Über das Netzwerk freigeben → Benutzername/Passwort erforderlich\&.
 .sp
 Um eine Verbindung zu einem laufenden Content Server herzustellen, geben Sie die URL des Servers an die
-Option \fI\%\-\-with\-library\fP weiter. Weitere Informationen und Beispiele finden Sie in der Dokumentation dieser Option.
+Option \fB\-\-with\-library\fP weiter. Weitere Informationen und Beispiele finden Sie in der Dokumentation dieser Option.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%Globale Optionen\fP
+Globale Optionen
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%HINZUFÜGEN VON ORDNERN\fP
+HINZUFÜGEN VON ORDNERN
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONEN\fP
+EPUB OPTIONEN
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH GLOBALE OPTIONEN
 .INDENT 0.0
@@ -140,7 +141,7 @@ Diesen Hilfetext anzeigen und beenden.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Pfad zur Calibre\-Bibliothek. Standardmäßig wird der in den Einstellungen gespeicherte Pfad verwendet. Sie können auch mit einem Calibre\-Inhalteserver verbinden, um Aktionen auf Fernbibliotheken anzuwenden. Verwenden Sie hierfür eine URL der Form: \X'tty: link http://hostname:port/#bibliothek_id'\fI\%http://hostname:port/#bibliothek_id\fP\X'tty: link', zum Beispiel \X'tty: link http://localhost:8080/#meinebibliothek'\fI\%http://localhost:8080/#meinebibliothek\fP\X'tty: link'\&. bibliothek_id ist die Bibliothekskennung jener Bibliothek, zu der Sie auf dem Inhalteserver verbinden wollen. Um eine Liste aller auf dem Server verfügbaren Bibliothekskennungen zu erhalten, können Sie den Sonderwert \fB\(dq\fP\-\fB\(dq\fP verwenden. Für Details zum Einrichten des Zugriffs mittels Inhalteserver siehe \X'tty: link https://manual.calibre-ebook.com/de/generated/de/calibredb.html'\fI\%https://manual.calibre\-ebook.com/de/generated/de/calibredb.html\fP\X'tty: link'\&.
+Pfad zur Calibre\-Bibliothek. Standardmäßig wird der in den Einstellungen gespeicherte Pfad verwendet. Sie können auch mit einem Calibre\-Inhalteserver verbinden, um Aktionen auf Fernbibliotheken anzuwenden. Verwenden Sie hierfür eine URL der Form: \%<http://\:hostname:port/#\:bibliothek_id>, zum Beispiel \%<http://\:localhost:8080/#\:meinebibliothek>\&. bibliothek_id ist die Bibliothekskennung jener Bibliothek, zu der Sie auf dem Inhalteserver verbinden wollen. Um eine Liste aller auf dem Server verfügbaren Bibliothekskennungen zu erhalten, können Sie den Sonderwert \fB\(dq\fP\-\fB\(dq\fP verwenden. Für Details zum Einrichten des Zugriffs mittels Inhalteserver siehe \%<https://\:manual\:.calibre-ebook\:.com/\:de/\:generated/\:de/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -233,7 +234,7 @@ Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Heading for the template column. Default: template. This option is ignored if the option \fB\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -427,12 +428,12 @@ Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Bereich festlegen. Das Format ist field_name:value, zum Beispiel: \fI\%\-\-field\fP tags:tag1,tag2. Verwenden Sie \fI\%\-\-list\-fields\fP um eine Liste mit allen Feldnamen zu erhalten. Sie können diese Funktion mehrfach anwenden, um mehrere Felder festzulegen. Hinweis: Für die Sprache muss der ISO639 Sprachcode (z. B. en für Englisch, de für Deutsch, usw.) verwendet werden. Für Kennungen ist die Syntax \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Für boolesche Felder (ja/nein) verwenden Sie true und false oder yes und no.
+Bereich festlegen. Das Format ist field_name:value, zum Beispiel: \fB\-\-field\fP tags:tag1,tag2. Verwenden Sie \fB\-\-list\-fields\fP um eine Liste mit allen Feldnamen zu erhalten. Sie können diese Funktion mehrfach anwenden, um mehrere Felder festzulegen. Hinweis: Für die Sprache muss der ISO639 Sprachcode (z. B. en für Englisch, de für Deutsch, usw.) verwendet werden. Für Kennungen ist die Syntax \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Für boolesche Felder (ja/nein) verwenden Sie true und false oder yes und no.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Listet die Metadaten\-Feldnamen auf, die mit der \fI\%\-\-field\fP option (Feldoption ) verwendet werden können
+Listet die Metadaten\-Feldnamen auf, die mit der \fB\-\-field\fP option (Feldoption ) verwendet werden können
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -540,7 +541,7 @@ Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Kommagetrennte Liste der zu katalogisierenden Datenbank\-IDs. Wenn angegeben, wird \fI\%\-\-search\fP ignoriert. Standardeinstellung: alle
+Kommagetrennte Liste der zu katalogisierenden Datenbank\-IDs. Wenn angegeben, wird \fB\-\-search\fP ignoriert. Standardeinstellung: alle
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -689,7 +690,7 @@ Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese
 .INDENT 0.0
 .TP
 .B \-\-display
-Ein Wörterbuch von Optionen zum Anpassen, wie die Daten in dieser Spalte interpretiert werden. Das ist eine JSON\-Zeichenkette. Zum Aufzählen von Spalten verwenden Sie \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Es gibt einige Optionen, die in der Anzeigevariable enthalten sein können. Diese Optionen nach Art der Spalten sind: Zusammengesetzt – composite: composite_template, composite_sort, make_category,contains_html, use_decorations Datum und Zeit – datetime: date_format Aufzählung – enumeration: enum_values, enum_colors, use_decorations Init, Fluss – int, float: number_format Text – text: is_names, use_decorations  Der beste Weg, um gültige Kombinationen zu finden, ist es, eine benutzerdefinierte Spalte des entsprechenden Typs im GUI zu erstellen und dann auf die Sicherung des OPF des Buches zu schauen. (Stellen Sie sicher, dass es ein neues OPF gibt, nachdem die Spalte hinzugefügt wurde.) Sie werden die JSON für die \fB\(dq\fPAnzeige\fB\(dq\fP in der neuen Spalte im OPF sehen.
+Ein Wörterbuch von Optionen zum Anpassen, wie die Daten in dieser Spalte interpretiert werden. Das ist eine JSON\-Zeichenkette. Zum Aufzählen von Spalten verwenden Sie \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Es gibt einige Optionen, die in der Anzeigevariable enthalten sein können. Diese Optionen nach Art der Spalten sind: Zusammengesetzt – composite: composite_template, composite_sort, make_category,contains_html, use_decorations Datum und Zeit – datetime: date_format Aufzählung – enumeration: enum_values, enum_colors, use_decorations Init, Fluss – int, float: number_format Text – text: is_names, use_decorations  Der beste Weg, um gültige Kombinationen zu finden, ist es, eine benutzerdefinierte Spalte des entsprechenden Typs im GUI zu erstellen und dann auf die Sicherung des OPF des Buches zu schauen. (Stellen Sie sicher, dass es ein neues OPF gibt, nachdem die Spalte hinzugefügt wurde.) Sie werden die JSON für die \fB\(dq\fPAnzeige\fB\(dq\fP in der neuen Spalte im OPF sehen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1030,9 +1031,8 @@ The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for 
 .B \-\-restrict\-to
 Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

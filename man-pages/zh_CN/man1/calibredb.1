@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "十月 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "十一月 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -85,61 +86,61 @@ calibre 书库，必须首先在服务器上设置身份验证。这里
 请参阅该选项的文档。
 .INDENT 0.0
 .IP \(bu 2
-\fI\%全局选项\fP
+全局选项
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%正在从文件夹中添加\fP
+正在从文件夹中添加
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB 个选项\fP
+EPUB 个选项
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH 全局选项
 .INDENT 0.0
@@ -150,7 +151,7 @@ calibre 书库，必须首先在服务器上设置身份验证。这里
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibre 书库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程书库上执行操作。为此使用此格式的URL：\X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link'。例如，\X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'。library_id是要在内容服务器上连接的书库的书库id。您可以使用特殊的library_id值 \- 来获得服务器上可用书库id的列表。有关如何通过内容服务器设置访问的详情，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
+calibre 书库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程书库上执行操作。为此使用此格式的URL：\%<http://\:hostname:port/#\:library_id>。例如，\%<http://\:localhost:8080/#\:mylibrary>。library_id是要在内容服务器上连接的书库的书库id。您可以使用特殊的library_id值 \- 来获得服务器上可用书库id的列表。有关如何通过内容服务器设置访问的详情，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -437,12 +438,12 @@ book_id 是来自搜索命令的 id 号。您可以通过使用 \-\-as\-opf 切�
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-设置字段。格式是field_name:value，例如：\fI\%\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于书籍标识符，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用true 和 false 或者 yes 和 no。
+设置字段。格式是field_name:value，例如：\fB\-\-field\fP tags:tag1,tag2。使用:option:\fI\-\-list\-fields\(ga来获取所有字段名称的列表。你可以多次指定此选项来设置多个字段。注意：对于语言，你必须使用ISO639语言代码（例如en代表英文，fr代表法语等）。对于书籍标识符，语法是:option:\fP\-\-field\(ga identifiers:isbn:XXXX,doi:YYYYY。对于布尔(是/否)字段使用true 和 false 或者 yes 和 no。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-列出可用于 \fI\%\-\-field\fP 选项的元数据字段名称
+列出可用于 \fB\-\-field\fP 选项的元数据字段名称
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -550,7 +551,7 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-要编目的逗号分割的数据库 ID 列表。 一旦声明，则忽略 \fI\%\-\-search\fP 选项 默认值：all
+要编目的逗号分割的数据库 ID 列表。 一旦声明，则忽略 \fB\-\-search\fP 选项 默认值：all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -697,7 +698,7 @@ calibredb add_custom_column [options] label name datatype
 .INDENT 0.0
 .TP
 .B \-\-display
-用于自定义如何解释此栏目中的数据的选项的字典。这是一个 JSON 字符串。对于枚举栏目，使用 \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在图形界面中创建适当类型的自定义栏目，然后查看书籍的备份 OPF（确保自从添加该栏目以后已经创建了新的 OPF）。在 OPF 中的新栏目中，你将看到 JSON 的“显示”。
+用于自定义如何解释此栏目中的数据的选项的字典。这是一个 JSON 字符串。对于枚举栏目，使用 \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在图形界面中创建适当类型的自定义栏目，然后查看书籍的备份 OPF（确保自从添加该栏目以后已经创建了新的 OPF）。在 OPF 中的新栏目中，你将看到 JSON 的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1032,9 +1033,8 @@ calibredb fts_search [options]  search expression
 .B \-\-restrict\-to
 使用搜索表达式或id限制搜索的书籍。例如：ids:1,2,3表示按id限制，或search:tag:foo表示限制具有标签foo的书籍。
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

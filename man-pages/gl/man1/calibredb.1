@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "outubro 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "novembro 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -77,7 +78,7 @@ Preferencias → Compartir a través da rede → Avanzado\&.
 .INDENT 0.0
 .IP \(bu 2
 Se queres habilitar o acceso a través de internet, entón debes configurar
-contas de usuario no servidor e usar as opcións \fI\%\-\-username\fP and \fI\%\-\-password\fP
+contas de usuario no servidor e usar as opcións \fB\-\-username\fP and \fB\-\-password\fP
 con \fBcalibredb\fP para darlle acceso. Podes configurar a autenticación de usuarios para \fBcalibre\-server\fP usando a opción \fB\-\-enable\-auth\fP
 e utilizando \fB\-\-manage\-users\fP para crear as contas de usuario.
 Se estás a executar o servidor desde o programa principal de calibre, usa
@@ -87,64 +88,64 @@ Preferencias → Compartir a través da rede → Requirir nome de usuari
 .UNINDENT
 .sp
 Para conectarte a un Servidor de contidos en execución, pasa a URL do servidor á opción
-\fI\%\-\-with\-library\fP  consulta a documentación desa opción para detalles e exemplos.
+\fB\-\-with\-library\fP  consulta a documentación desa opción para detalles e exemplos.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%OPCIÓNS GLOBAIS\fP
+OPCIÓNS GLOBAIS
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ENGADIR DENDE CARTAFOLES\fP
+ENGADIR DENDE CARTAFOLES
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPCIÓNS\fP
+EPUB OPCIÓNS
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH OPCIÓNS GLOBAIS
 .INDENT 0.0
@@ -155,7 +156,7 @@ mostrar esta mensaxe de axuda e saír
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Camiño á biblioteca calibre. O predeterminado é usar o camiño almacenado na configuración. Tamén pode conectarse a un servidor de contido calibre para realizar accións en bibliotecas remotas. Para facelo, use un URL do formulario: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link', por exemplo, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id é o ID da biblioteca á que queres conectarte no servidor de contido. Podes usar o valor especial library_id de \- para obter unha lista de ID de biblioteca dispoñibles no servidor. Para obter máis información sobre como configurar o acceso a través dun servidor de contido, consulte \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
+Camiño á biblioteca calibre. O predeterminado é usar o camiño almacenado na configuración. Tamén pode conectarse a un servidor de contido calibre para realizar accións en bibliotecas remotas. Para facelo, use un URL do formulario: \%<http://\:hostname:port/#\:library_id>, por exemplo, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id é o ID da biblioteca á que queres conectarte no servidor de contido. Podes usar o valor especial library_id de \- para obter unha lista de ID de biblioteca dispoñibles no servidor. Para obter máis información sobre como configurar o acceso a través dun servidor de contido, consulte \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -248,7 +249,7 @@ Ruta a un ficheiro que contén o modelo para executar se «template» está na l
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Encabezamento para a columna do modelo. Predeterminado: template. Esta opción é ignorada se a opción \fI\%\-\-for\-machine\fP está definida
+Encabezamento para a columna do modelo. Predeterminado: template. Esta opción é ignorada se a opción \fB\-\-for\-machine\fP está definida
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -281,7 +282,7 @@ Camiño ata a portada para usar para o libro engadido
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Engade libros á base de datos aínda que xa existan. A comparación realízase en función dos títulos dos libros e dos autores. Teña en conta que a opción \fI\%\-\-automerge\fP ten prioridade.
+Engade libros á base de datos aínda que xa existan. A comparación realízase en función dos títulos dos libros e dos autores. Teña en conta que a opción \fB\-\-automerge\fP ten prioridade.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -440,7 +441,7 @@ Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os arg
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-O campo a configurar. O formato é nome_campo:valor, por exemplo: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP para obter unha lista de todos os nomes de campo. Podes especificar esta opción varias veces para establecer varios campos. Nota: para os idiomas debes utilizar os códigos de idioma ISO639 (por exemplo, en para inglés, fr para francés, etc.). Para os identificadores, a sintaxe é \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Para os campos booleanos (si/non) use verdadeiro e falso ou si e non.
+O campo a configurar. O formato é nome_campo:valor, por exemplo: \fB\-\-field\fP tags:tag1,tag2. Use \fB\-\-list\-fields\fP para obter unha lista de todos os nomes de campo. Podes especificar esta opción varias veces para establecer varios campos. Nota: para os idiomas debes utilizar os códigos de idioma ISO639 (por exemplo, en para inglés, fr para francés, etc.). Para os identificadores, a sintaxe é \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Para os campos booleanos (si/non) use verdadeiro e falso ou si e non.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -553,7 +554,7 @@ Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os arg
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Lista de identificadores da base de datos, separadas por vírgulas, para o catálogo. Cando se declare, ignorarase \fI\%\-\-search\fP\&. Valor predeterminado: todas
+Lista de identificadores da base de datos, separadas por vírgulas, para o catálogo. Cando se declare, ignorarase \fB\-\-search\fP\&. Valor predeterminado: todas
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -702,7 +703,7 @@ Sempre que lle pases argumentos a calibredb que teñan espazos neles, pon os arg
 .INDENT 0.0
 .TP
 .B \-\-display
-Un dicionario de opcións para personalizar como se interpretarán os datos desta columna. Esta é unha cadea JSON. Para as columnas de enumeración, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Hai moitas opcións que poden entrar na variable de visualización. As opcións por tipo de columna son: composto: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: data_format enumeración: valores_enum, cores_enum, use_decorations int, float: formato_número texto: is_names, use_decorations  A mellor forma de atopar combinacións legais é crear unha columna personalizada do tipo apropiado na GUI e despois mirar o OPF de copia de seguridade dun libro (asegúrese de que se creou un novo OPF desde que se engadiu a columna). Verá o JSON para a «visualización» da nova columna no OPF.
+Un dicionario de opcións para personalizar como se interpretarán os datos desta columna. Esta é unha cadea JSON. Para as columnas de enumeración, use \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Hai moitas opcións que poden entrar na variable de visualización. As opcións por tipo de columna son: composto: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: data_format enumeración: valores_enum, cores_enum, use_decorations int, float: formato_número texto: is_names, use_decorations  A mellor forma de atopar combinacións legais é crear unha columna personalizada do tipo apropiado na GUI e despois mirar o OPF de copia de seguridade dun libro (asegúrese de que se creou un novo OPF desde que se engadiu a columna). Verá o JSON para a «visualización» da nova columna no OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1040,9 +1041,8 @@ O formato no que se mostrarán os resultados da busca. Ou «texto» para o texto
 .B \-\-restrict\-to
 Restrinxa os libros buscados, xa sexa mediante unha expresión de busca ou identificadores. Por exemplo: ids:1,2,3 para restrinxir mediante ids ou search:tag:foo para restrinxir a libros que teñan a etiqueta foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.
