@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "oktober 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "november 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -62,7 +63,7 @@ servern från calibre\-huvudprogrammet är det här alternativet i
 Inställningar → Dela via nätet → Avancerat\&.
 .IP \(bu 2
 Om du vill aktivera åtkomst via internet bör du ställa in
-användarkonton på servern och använda \fI\%\-\-username\fP eller \fI\%\-\-password\fP
+användarkonton på servern och använda \fB\-\-username\fP eller \fB\-\-password\fP
 flaggorna för \fBcalibredb\fP för att ge den åtkomst. Du kan ställa in
 användarautentisering för \fBcalibre server\fP genom att använda \fB\-\-enable\-auth\fP
 flaggan och använda \fB\-\-manage\-users\fP för att skapa användarkonton.
@@ -73,65 +74,65 @@ Inställningar → Dela via nätet → Kräv användarnamn/lösenord\&.
 .UNINDENT
 .sp
 För att ansluta till en körande innehållsserver, skicka server\-URL:en med
-flaggan \fI\%\-\-with\-library\fP, se dokumentationen för den flaggan för
+flaggan \fB\-\-with\-library\fP, se dokumentationen för den flaggan för
 detaljer och exempel.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBALA ALTERNATIV\fP
+GLOBALA ALTERNATIV
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%TILLÄGGNING TILL FRÅN MAPPAR\fP
+TILLÄGGNING TILL FRÅN MAPPAR
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB ALTERNATIV\fP
+EPUB ALTERNATIV
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH GLOBALA ALTERNATIV
 .INDENT 0.0
@@ -142,7 +143,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en URL av formen: \X'tty: link http://hostname:port/#bibliotek_id'\fI\%http://hostname:port/#bibliotek_id\fP\X'tty: link' till exempel \X'tty: link http://localhost:8080/#mittbibliotek'\fI\%http://localhost:8080/#mittbibliotek\fP\X'tty: link'\&. Bibliotek_id är bibliotekets identifierare för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteksidentifierare tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i \X'tty: link https://manual.calibre-ebook.com/sv/generated/sv/calibredb.html'\fI\%https://manual.calibre\-ebook.com/sv/generated/sv/calibredb.html\fP\X'tty: link'\&.
+Sökväg till calibre\-biblioteket. Standard är att använda sökvägen lagrad i inställningarna. Du kan också ansluta till en calibre\-innehållsserver för att utföra åtgärder på fjärrbibliotek. Så här använder du en URL av formen: \%<http://\:hostname:port/#\:bibliotek_id> till exempel \%<http://\:localhost:8080/#\:mittbibliotek>\&. Bibliotek_id är bibliotekets identifierare för det bibliotek du vill ansluta till på innehållsservern. Du kan använda det speciella bibliotek_id\-värdet för att få en lista över biblioteksidentifierare tillgängliga på servern. Mer information om hur du anpassar åtkomst via en innehållsserver finns i \%<https://\:manual\:.calibre-ebook\:.com/\:sv/\:generated/\:sv/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -235,7 +236,7 @@ Sökväg till en fil som innehåller mallen som ska köras om \fB\(dq\fPtemplate
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Rubrik till mallkolumnen. Standard: template. Det här alternativet ignoreras om alternativet \fI\%\-\-for\-machine\fP är inställt
+Rubrik till mallkolumnen. Standard: template. Det här alternativet ignoreras om alternativet \fB\-\-for\-machine\fP är inställt
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -269,7 +270,7 @@ Sökväg till omslaget att använda för den tillagda boken
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Lägg till böcker i databasen även om de redan finns. Jämförelse görs baserat på boktitlar och författare. Observera att alternativet \fI\%\-\-automerge\fP har företräde.
+Lägg till böcker i databasen även om de redan finns. Jämförelse görs baserat på boktitlar och författare. Observera att alternativet \fB\-\-automerge\fP har företräde.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -427,12 +428,12 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Fältet för att ställa in. Format är field_name:value, till exempel: \fI\%\-\-field\fP tags:tag1,tag2. Använd \fI\%\-\-list\-fields\fP för att få en lista över alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639\-språkkoder (t.ex. en för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
+Fältet för att ställa in. Format är field_name:value, till exempel: \fB\-\-field\fP tags:tag1,tag2. Använd \fB\-\-list\-fields\fP för att få en lista över alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639\-språkkoder (t.ex. en för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Ange namn på metadatafälten som kan användas med flaggan \fI\%\-\-field\fP
+Ange namn på metadatafälten som kan användas med flaggan \fB\-\-field\fP
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -540,7 +541,7 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Kommaseparerad lista över databas\-ID till katalogen. Om de deklareras, ignoreras \fI\%\-\-search\fP\&. Standard: alla
+Kommaseparerad lista över databas\-ID till katalogen. Om de deklareras, ignoreras \fB\-\-search\fP\&. Standard: alla
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -689,7 +690,7 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-display
-En ordbok med alternativ för att anpassa hur data i den här kolumnen ska tolkas. Det här är en JSON\-sträng. För uppräkningskolumner, använd \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Det finns många alternativ som kan gå in i visningsvariabel. Alternativen per kolumntyp är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på  OPF\-säkerhetskopian för en bok (se till att en ny OPF har skapats sedan kolumnen lades till). Du kommer att se JSON för \fB\(dq\fPvisningen\fB\(dq\fP av den nya kolumnen i OPF.
+En ordbok med alternativ för att anpassa hur data i den här kolumnen ska tolkas. Det här är en JSON\-sträng. För uppräkningskolumner, använd \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Det finns många alternativ som kan gå in i visningsvariabel. Alternativen per kolumntyp är: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Det bästa sättet att hitta giltiga kombinationer är att skapa en anpassad kolumn av lämplig typ i gränssnittet och sedan titta på  OPF\-säkerhetskopian för en bok (se till att en ny OPF har skapats sedan kolumnen lades till). Du kommer att se JSON för \fB\(dq\fPvisningen\fB\(dq\fP av den nya kolumnen i OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1031,9 +1032,8 @@ Formatet att mata ut sökresultaten i. Antingen \fB\(dq\fPtext\fB\(dq\fP för va
 .B \-\-restrict\-to
 Begränsa de sökta böckerna, antingen med ett sökuttryck eller identifierare. Till exempel: ids:1,2,3 för att begränsa med id eller search:tag:foo för att begränsa till böcker med taggen foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

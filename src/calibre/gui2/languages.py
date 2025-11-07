@@ -30,6 +30,7 @@ class LanguagesEdit(EditWithComplete):
         self._rmap = {lower(v):k for k,v in iteritems(self._lang_map)}
         self.init_langs(db)
         self.item_selected.connect(self.update_recently_used)
+        self.lineEdit().set_use_startswith_search(False)
 
     def init_langs(self, db):
         self.update_items_cache(itervalues(self._lang_map))
@@ -101,3 +102,15 @@ class LanguagesEdit(EditWithComplete):
                 if code is None:
                     bad.append(name)
         return bad
+
+
+if __name__ == '__main__':
+    from calibre.gui2 import Application
+    app = Application([])
+    from qt.core import QMainWindow
+    w = LanguagesEdit()
+    w.setMaximumHeight(50)
+    d = QMainWindow()
+    d.setCentralWidget(w)
+    d.show()
+    app.exec()

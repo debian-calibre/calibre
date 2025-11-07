@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "tháng 10 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "tháng 11 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -62,7 +63,7 @@ the server from the main calibre program, this option is in
 Preferences → Sharing over the net → Advanced\&.
 .IP \(bu 2
 If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fI\%\-\-username\fP and \fI\%\-\-password\fP
+user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
 options to \fBcalibredb\fP to give it access. You can setup
 user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
 option and using \fB\-\-manage\-users\fP to create the user accounts.
@@ -73,65 +74,65 @@ Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .sp
 To connect to a running Content server, pass the URL of the server to the
-\fI\%\-\-with\-library\fP option, see the documentation of that option for
+\fB\-\-with\-library\fP option, see the documentation of that option for
 details and examples.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBAL OPTIONS\fP
+GLOBAL OPTIONS
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%ADDING FROM FOLDERS\fP
+ADDING FROM FOLDERS
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPTIONS\fP
+EPUB OPTIONS
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH GLOBAL OPTIONS
 .INDENT 0.0
@@ -142,7 +143,7 @@ show this help message and exit
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' for example, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -235,7 +236,7 @@ Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Heading for the template column. Default: template. This option is ignored if the option \fB\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -269,7 +270,7 @@ Path to the cover to use for the added book
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fI\%\-\-automerge\fP option takes precedence.
+Add books to database even if they already exist. Comparison is done based on book titles and authors. Note that the \fB\-\-automerge\fP option takes precedence.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -428,12 +429,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+The field to set. Format is field_name:value, for example: \fB\-\-field\fP tags:tag1,tag2. Use \fB\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fI\%\-\-field\fP option
+List the metadata field names that can be used with the \fB\-\-field\fP option
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -541,7 +542,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Comma\-separated list of database IDs to catalog. If declared, \fI\%\-\-search\fP is ignored. Default: all
+Comma\-separated list of database IDs to catalog. If declared, \fB\-\-search\fP is ignored. Default: all
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -690,7 +691,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB\(dq\fPdisplay\fB\(dq\fP for the new column in the OPF.
+A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB\(dq\fPdisplay\fB\(dq\fP for the new column in the OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1033,9 +1034,8 @@ The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for 
 .B \-\-restrict\-to
 Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.
