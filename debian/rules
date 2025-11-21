@@ -28,9 +28,6 @@ export QT_HASH_SEED=0
 TEST_FLAGS =
 CI_ENV =
 
-# This test always hang-up
-TEST_FLAGS += --exclude-test-name=fts_pool
-
 # Enable all tests while in UNRELEASED
 ifneq ($(shell dpkg-parsechangelog --show-field=Distribution),UNRELEASED)
   include debian/buildd-options.mak
