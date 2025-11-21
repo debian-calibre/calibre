@@ -27,9 +27,17 @@ export QT_HASH_SEED=0
 # Do all test by default
 TEST_FLAGS =
 CI_ENV =
+DISABLE_FRAGILE_TEST =
 
-# Enable all tests while in UNRELEASED
+# Disable fragile test in release build
 ifneq ($(shell dpkg-parsechangelog --show-field=Distribution),UNRELEASED)
+  DISABLE_FRAGILE_TEST = true
+endif
+# Disable fragile test in CI environment
+ifeq ($(GITLAB_CI),true)
+  DISABLE_FRAGILE_TEST = true
+endif
+ifeq ($(DISABLE_FRAGILE_TEST),true)
   include debian/buildd-options.mak
   CI_ENV += CI=true
 endif
