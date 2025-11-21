@@ -98,7 +98,7 @@ index faba5b4..8de43f3 100644
  recent_uas = RecentUAs()
  rapydscript = RapydScript()
 diff --git a/setup/resources.py b/setup/resources.py
-index bb1c429..9ec1e15 100644
+index fbd918c..a10dffa 100644
 --- a/setup/resources.py
 +++ b/setup/resources.py
 @@ -9,11 +9,13 @@ import errno
@@ -110,9 +110,9 @@ index bb1c429..9ec1e15 100644
  import zipfile
 +from zlib import compress
  
--from polyglot.builtins import iteritems, itervalues, only_unicode_recursive
+-from polyglot.builtins import only_unicode_recursive
 -from setup import Command, basenames, download_securely, dump_json
-+from polyglot.builtins import codepoint_to_chr, iteritems, itervalues, only_unicode_recursive
++from polyglot.builtins import codepoint_to_chr, iteritems, only_unicode_recursive
 +from setup import Command, __appname__, basenames, download_securely, dump_json
  
  
