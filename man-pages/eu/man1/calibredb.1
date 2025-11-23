@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "urria 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "azaroa 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -65,7 +66,7 @@ Hobespenak → Sarean partekatzea → Aurreratua\&.
 Internet bidez sarbidea gaitu nahi baduzu, konfiguratu beharko zenuke
 .UNINDENT
 .sp
-erabiltzaile\-kontuak zerbitzarian eta erabili \fI\%\-\-username\fP eta \fI\%\-\-password\fP
+erabiltzaile\-kontuak zerbitzarian eta erabili \fB\-\-username\fP eta \fB\-\-password\fP
 aukerak \fBcalibredb\fP sarbidea emateko. Konfiguratu dezakezu
 erabiltzailearen autentifikazioa \fBcalibre\-server\fP \fB\-\-enable\-auth\fP erabiliz
 aukera eta \fB\-\-manage\-users\fP erabiliz erabiltzaile\-kontuak sortzeko.
@@ -73,65 +74,65 @@ Zerbitzaria calibre programa nagusitik exekutatzen ari bazara, erabili
 Hobespenak → Sarean partekatzea → Erabiltzaile izena/pasahitza eskatu\&.
 .sp
 Abian dagoen Eduki zerbitzari batera konektatzeko, pasa zerbitzariaren URLa
-\fI\%\-\-with\-library\fP aukera, ikusi aukera horren dokumentazioa
+\fB\-\-with\-library\fP aukera, ikusi aukera horren dokumentazioa
 xehetasunak eta adibideak.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%AUKERA GLOBALAK\fP
+AUKERA GLOBALAK
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%KARPETETATIK GEHITZEA\fP
+KARPETETATIK GEHITZEA
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB AUKERAK\fP
+EPUB AUKERAK
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH AUKERA GLOBALAK
 .INDENT 0.0
@@ -142,7 +143,7 @@ Erakutsi laguntza mezu hau eta irten
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link' for example, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -235,7 +236,7 @@ Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fI\%\-\-for\-machine\fP is set
+Heading for the template column. Default: template. This option is ignored if the option \fB\-\-for\-machine\fP is set
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -269,7 +270,7 @@ Liburu\-azaleko lasterbidea gehitutako liburuan erabiltzeko
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Gehitu liburuak datu\-basera, lehendik badaude ere. Konparazioa liburuen izenburuetan eta egileetan oinarrituta egiten da. Kontuan izan \fI\%\-\-automerge\fP aukerak lehentasuna duela.
+Gehitu liburuak datu\-basera, lehendik badaude ere. Konparazioa liburuen izenburuetan eta egileetan oinarrituta egiten da. Kontuan izan \fB\-\-automerge\fP aukerak lehentasuna duela.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -428,12 +429,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Ezarri beharreko eremua. Formatua honako hau da: eremuaren_izena:balioa, adibidez: \fI\%\-\-field\fP etiketak:etiketa1,etiketa2. \fI\%\-\-list\-fields\fP erabili eremu izen guztien zerrenda lortzeko. Eremu bat baino gehiago ezartzeko aukera hau behin baino gehiagotan zehaztu. Oharra: hizkuntzak erabiltzeko ISO639 arauan zehazten diren hizkuntza\-kodeak erabili beharko dituzu (adibidez, \fB\(aq\fPeu\fB\(aq\fP euskararako, \fB\(aq\fPes\fB\(aq\fP gaztelerarako, \fB\(aq\fPen\fB\(aq\fP  ingeleserako...). For identifiers, the syntax is \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+Ezarri beharreko eremua. Formatua honako hau da: eremuaren_izena:balioa, adibidez: \fB\-\-field\fP etiketak:etiketa1,etiketa2. \fB\-\-list\-fields\fP erabili eremu izen guztien zerrenda lortzeko. Eremu bat baino gehiago ezartzeko aukera hau behin baino gehiagotan zehaztu. Oharra: hizkuntzak erabiltzeko ISO639 arauan zehazten diren hizkuntza\-kodeak erabili beharko dituzu (adibidez, \fB\(aq\fPeu\fB\(aq\fP euskararako, \fB\(aq\fPes\fB\(aq\fP gaztelerarako, \fB\(aq\fPen\fB\(aq\fP  ingeleserako...). For identifiers, the syntax is \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-\fI\%\-\-field\fP aukerarekin batera erabil daitezkeen metadatuen eremuen izenen zerrenda
+\fB\-\-field\fP aukerarekin batera erabil daitezkeen metadatuen eremuen izenen zerrenda
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -541,7 +542,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Komen bidez bereiziriko IDen datu base zerrenda katalogatzeko. Adierazten bada, \fI\%\-\-search\fP hori baztertu egingo da. Lehenetsita: dena
+Komen bidez bereiziriko IDen datu base zerrenda katalogatzeko. Adierazten bada, \fB\-\-search\fP hori baztertu egingo da. Lehenetsita: dena
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -690,7 +691,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-Zutabe honetako datuen interpretazioa pertsonalizatzeko aukerak azaltzen dituen hiztegia. JSON kate bat da.  Zerrenda motako zutabeentzat \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]} erabili. \fB\(aq\fPDisplay\fB\(aq\fP aldagaian hainbat aukera joan daitezke. Zutabe motaren araberako aukerak hauek dira: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Konbinazio jatorrak lortzeko aukerarik hoberena, zutabe pertsonalizatua Erabiltzailearen Interfaze Grafikoa (GUI) erabiliz sortzea eta ostean liburuen OPF babeskopia begiratzea (zutabea gehitu eta gero OPF fitxategi berria sortu dela ziurtatu lehenago). Bertan agertuko zaizu zutabe berriaren \fB\(aq\fPdisplay\fB\(aq\fPerako erabili beharreko JSONa.
+Zutabe honetako datuen interpretazioa pertsonalizatzeko aukerak azaltzen dituen hiztegia. JSON kate bat da.  Zerrenda motako zutabeentzat \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]} erabili. \fB\(aq\fPDisplay\fB\(aq\fP aldagaian hainbat aukera joan daitezke. Zutabe motaren araberako aukerak hauek dira: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Konbinazio jatorrak lortzeko aukerarik hoberena, zutabe pertsonalizatua Erabiltzailearen Interfaze Grafikoa (GUI) erabiliz sortzea eta ostean liburuen OPF babeskopia begiratzea (zutabea gehitu eta gero OPF fitxategi berria sortu dela ziurtatu lehenago). Bertan agertuko zaizu zutabe berriaren \fB\(aq\fPdisplay\fB\(aq\fPerako erabili beharreko JSONa.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1033,9 +1034,8 @@ The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for 
 .B \-\-restrict\-to
 Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

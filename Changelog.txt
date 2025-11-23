@@ -23,6 +23,36 @@
 # - title by author
 # }}}
 
+{{{ 8.14.0 2025-11-07
+
+:: new features
+
+- Tolino driver: Add support for latest firmware
+
+- [2130804] When showing completions for languages show all languages that contain the typed in string instead of only languages that start with the typed in string
+
+- When showing completions in substring match mode, order the completions by how close to the start the query is
+
+- [2127819] A new shortcut Ctrl+Alt+Shift+P to switch to the previously applied Virtual library
+
+:: bug fixes
+
+- [2130764] FB2 Input: Fix a remote code execution vulnerability from maliciously crafted FB2 files
+
+- [2130603] E-book viewer: Ignore soft hyphens when looking up words
+
+- [2130573] Catalog export: Fix export of languages in BibTeX format
+
+- [2128853] Windows: Fix Open With not working with Microsoft Paint
+
+:: improved recipes
+- Harper's Magazine
+- Afrique 21
+- Orient XXI
+- The Atlantic
+
+}}}
+
 {{{ 8.13.0 2025-10-18
 
 :: new features
@@ -37,7 +67,7 @@
 
 - calibre-server: Fix CALIBRE_OVERRIDE_DATABASE_PATH not working
 
-- Export library: Dont use /tmp on Linux fixes export breaking with large FTS database on Linux distros that mount /tmp in RAM
+- Export library: Don't use /tmp on Linux fixes export breaking with large FTS database on Linux distros that mount /tmp in RAM
 
 - [2126611] Fix a regression in 8.11 that caused errors when trying to open a book from the full text search results while the search was still running
 

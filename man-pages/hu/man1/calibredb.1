@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "október 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "november 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -66,7 +67,7 @@ Beállítások\-
 >Hálózati megosztás\->Speciális menüpontban található.
 .IP \(bu 2
 Ha engedélyezni szeretné az interneten keresztüli hozzáférést, akkor állítson be
-felhasználói fiókokat a szerveren, és használja az \fI\%\-\-username\fP és \fI\%\-\-password\fP opciókat
+felhasználói fiókokat a szerveren, és használja az \fB\-\-username\fP és \fB\-\-password\fP opciókat
 a \fBcalibredb\fP hozzáférésének beállításához. Beállíthatja a felhasználói hitelesítést a
 \fBcalibre\-server\fP számára az \fB\-\-enable\-auth\(ga\(gaopció használatával és a \(ga\(ga\-\-manage\-users\fP
 használatával a felhasználói fiókok létrehozásához. Ha a szervert a fő Calibre programból
@@ -84,65 +85,65 @@ felhasználói név és jelszó szükséges\(ga parancsot.
 .UNINDENT
 .sp
 Egy futó tartalomkiszolgálóhoz való csatlakozáshoz adja meg a kiszolgáló
-URL címét az \fI\%\-\-with\-library\fP opciónak. A részletekért és példákért
+URL címét az \fB\-\-with\-library\fP opciónak. A részletekért és példákért
 tekintse meg az opció dokumentációját.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBÁLIS BEÁLLÍTÁSOK\fP
+GLOBÁLIS BEÁLLÍTÁSOK
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%HOZZÁADÁS MAPPÁKBÓL\fP
+HOZZÁADÁS MAPPÁKBÓL
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB BEÁLLÍTÁSOK\fP
+EPUB BEÁLLÍTÁSOK
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH GLOBÁLIS BEÁLLÍTÁSOK
 .INDENT 0.0
@@ -153,7 +154,7 @@ súgó megjelenítése és kilépés
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Útvonal a Calibre könyvtárhoz. Alapértelmezés szerint a beállításokban tárolt útvonalat kell használni. Csatlakozhat egy Calibre  tartalomkiszolgálóhoz is, hogy távoli könyvtárakon hajtson végre műveleteket. Ehhez használja a következő formátumú URL\-t: \X'tty: link http://hostname:port/#library_id'\fI\%http://hostname:port/#library_id\fP\X'tty: link', például: \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link'\&. A library_id annak a könyvtárnak az azonosítója, amelyhez a tartalomkiszolgálón csatlakozni kíván. Használhatja a \- speciális library_id értékét a szerveren elérhető könyvtárazonosítók listájának megtekintéséhez. A tartalomszerveren keresztüli hozzáférés beállításának részleteiért lásd: \X'tty: link https://manual.calibre-ebook.com/generated/en/calibredb.html'\fI\%https://manual.calibre\-ebook.com/generated/en/calibredb.html\fP\X'tty: link'\&.
+Útvonal a Calibre könyvtárhoz. Alapértelmezés szerint a beállításokban tárolt útvonalat kell használni. Csatlakozhat egy Calibre  tartalomkiszolgálóhoz is, hogy távoli könyvtárakon hajtson végre műveleteket. Ehhez használja a következő formátumú URL\-t: \%<http://\:hostname:port/#\:library_id>, például: \%<http://\:localhost:8080/#\:mylibrary>\&. A library_id annak a könyvtárnak az azonosítója, amelyhez a tartalomkiszolgálón csatlakozni kíván. Használhatja a \- speciális library_id értékét a szerveren elérhető könyvtárazonosítók listájának megtekintéséhez. A tartalomszerveren keresztüli hozzáférés beállításának részleteiért lásd: \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -250,7 +251,7 @@ A futtatandó sablont tartalmazó fájl elérési útja, ha \fB\(dq\fPtemplate\f
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Modell oszlopfejléc. Alapértelmezett érték: template. Ezt a beállítást a rendszer figyelmen kívül hagyja, ha a \fI\%\-\-for\-machine\fP opció be van állítva.
+Modell oszlopfejléc. Alapértelmezett érték: template. Ezt a beállítást a rendszer figyelmen kívül hagyja, ha a \fB\-\-for\-machine\fP opció be van állítva.
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -284,7 +285,7 @@ Hozzáadott címkép helye
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Könyvek hozzáadása az adatbázishoz akkor is, ha már léteznek. Az összehasonlítás a könyvcímek és szerzők alapján történik. Vegye figyelembe, hogy \fI\%\-\-automerge\fP opció élvez elsőbbséget.
+Könyvek hozzáadása az adatbázishoz akkor is, ha már léteznek. Az összehasonlítás a könyvcímek és szerzők alapján történik. Vegye figyelembe, hogy \fB\-\-automerge\fP opció élvez elsőbbséget.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -446,12 +447,12 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-A beállítandó mező. A formátum: field_name:value, például: \fI\%\-\-field\fP tags:tag1,tag2.  \fI\%\-\-list\-fields\fP segítségével lekérheti az összes mezőnév listáját. Ezt a beállítást többször is megadhatja több mező beállításához. Megjegyzés: nyelvek esetén az ISO639 nyelvkódokat kell használnia (pl. en angolhoz, fr franciához stb.). Az azonosítók szintaxisa: \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Logikai (igen/nem) mezőkhöz használja az igaz és hamis vagy az igen és nem értéket.
+A beállítandó mező. A formátum: field_name:value, például: \fB\-\-field\fP tags:tag1,tag2.  \fB\-\-list\-fields\fP segítségével lekérheti az összes mezőnév listáját. Ezt a beállítást többször is megadhatja több mező beállításához. Megjegyzés: nyelvek esetén az ISO639 nyelvkódokat kell használnia (pl. en angolhoz, fr franciához stb.). Az azonosítók szintaxisa: \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Logikai (igen/nem) mezőkhöz használja az igaz és hamis vagy az igen és nem értéket.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-A \fI\%\-\-field\fP paraméterrel használható metaadat\-mezőnevek felsorolása
+A \fB\-\-field\fP paraméterrel használható metaadat\-mezőnevek felsorolása
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -569,7 +570,7 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-A katalogizálandó, adatbázisból vett ID\-k vesszővel tagolt listája. Ha meg van adva, akkor a \fI\%\-\-search\fP opció nem lesz figyelembe véve. Alapértelmezett: „all” (mind)
+A katalogizálandó, adatbázisból vett ID\-k vesszővel tagolt listája. Ha meg van adva, akkor a \fB\-\-search\fP opció nem lesz figyelembe véve. Alapértelmezett: „all” (mind)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -718,7 +719,7 @@ Amikor olyan argumentumokat ad át calibredb\-nak, amelyekben szóköz van, tegy
 .INDENT 0.0
 .TP
 .B \-\-display
-Az ebben az oszlopban lévő adatok értelmezési módjának testreszabására szolgáló lehetőségek szótára. Ez egy JSON karakterlánc. Felsorolási oszlopokhoz használja a \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP A megjelenítési változóban számos lehetőség szerepelhet. Az oszloptípus szerinti beállítások a következők: összetett: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format felsorolás: enum_values, enum_colors, use_decorations int, float: number_format szöveg: is_names, use_decorations  A legális kombinációk megtalálásának legjobb módja, ha létrehoz egy megfelelő típusú egyéni oszlopot a grafikus felhasználói felületen, majd megnézi a könyv biztonsági másolatát (győződjön meg arról, hogy az oszlop hozzáadása óta új OPF jött létre). Látni fogja a JSON\-t az új oszlop \fB\(dq\fPmegjelenítéséhez” az OPF\-ben.
+Az ebben az oszlopban lévő adatok értelmezési módjának testreszabására szolgáló lehetőségek szótára. Ez egy JSON karakterlánc. Felsorolási oszlopokhoz használja a \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP A megjelenítési változóban számos lehetőség szerepelhet. Az oszloptípus szerinti beállítások a következők: összetett: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format felsorolás: enum_values, enum_colors, use_decorations int, float: number_format szöveg: is_names, use_decorations  A legális kombinációk megtalálásának legjobb módja, ha létrehoz egy megfelelő típusú egyéni oszlopot a grafikus felhasználói felületen, majd megnézi a könyv biztonsági másolatát (győződjön meg arról, hogy az oszlop hozzáadása óta új OPF jött létre). Látni fogja a JSON\-t az új oszlop \fB\(dq\fPmegjelenítéséhez” az OPF\-ben.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1061,9 +1062,8 @@ A keresési eredmények kimeneti formátuma. Vagy \fB\(dq\fPtext” az egyszerű
 .B \-\-restrict\-to
 Korlátozza a keresett könyveket keresőkifejezés vagy azonosítók használatával. Például: ids:1,2,3 az azonosítókkal való korlátozáshoz vagy search:tag:foo a foo címkével rendelkező könyvekre való korlátozáshoz.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

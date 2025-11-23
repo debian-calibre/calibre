@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "října 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "listopadu 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -65,7 +66,7 @@ Sdílení po síti → Rozšířené\&.
 Pokud chcete povolit přístup přes internet, měli byste na serveru nastavit
 .UNINDENT
 .sp
-uživatelské účty a použít volby \fI\%\-\-username\fP a \fI\%\-\-password\fP
+uživatelské účty a použít volby \fB\-\-username\fP a \fB\-\-password\fP
 pro \fBcalibredb\fP, aby jim udělil přístup. Ověřování uživatele pro
 \fBcalibre\-server\fP můžete nastavit pomocí volby \fB\-\-enable\-auth\fP
 a pomocí \fB\-\-manage\-users\fP vytvořit uživatelské účty. Pokud spouštíte
@@ -73,65 +74,65 @@ server z hlavního programu Calibre, použijte Předvolby → Sdílení
 po síti → Vyžadovat uživatelské jméno a heslo\&.
 .sp
 Pro připojení k běžícímu serveru s obsahem předejte adresu URL serveru
-volbě \fI\%\-\-with\-library\fP, viz dokumentace této volby pro podrobnosti
+volbě \fB\-\-with\-library\fP, viz dokumentace této volby pro podrobnosti
 a příklady.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%GLOBÁLNÍ VOLBY\fP
+GLOBÁLNÍ VOLBY
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%PŘIDÁVÁNÍ ZE SLOŽEK\fP
+PŘIDÁVÁNÍ ZE SLOŽEK
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%VOLBY EPUB\fP
+VOLBY EPUB
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH GLOBÁLNÍ VOLBY
 .INDENT 0.0
@@ -142,7 +143,7 @@ zobrazit tuto zprávu nápovědy a ukončit
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Cesta ke knihovně Calibre. Výchozí je použít cestu uloženou v nastaveních. Pro provádění akce na vzdálených knihovnách se můžete také připojit k Serveru s obsahem Calibre. Abyste to udělali, použijte URL ve formě: \X'tty: link http://hostitel:port/#id_knihovny'\fI\%http://hostitel:port/#id_knihovny\fP\X'tty: link', například \X'tty: link http://localhost:8080/#mojeknihovna'\fI\%http://localhost:8080/#mojeknihovna\fP\X'tty: link'\&. id_knihovny je identifikátor knihovny, ke které se chcete připojit na Serveru s obsahem. Pomocí speciální hodnoty id_knihovny \- můžete získat seznam identifikátorů knihoven dostupných na serveru. Pro podrobnosti o nastavení přístupu prostřednictvím Serveru s obsahem navštivte \X'tty: link https://manual.calibre-ebook.com/cs/generated/cs/calibredb.html'\fI\%https://manual.calibre\-ebook.com/cs/generated/cs/calibredb.html\fP\X'tty: link'\&.
+Cesta ke knihovně Calibre. Výchozí je použít cestu uloženou v nastaveních. Pro provádění akce na vzdálených knihovnách se můžete také připojit k Serveru s obsahem Calibre. Abyste to udělali, použijte URL ve formě: \%<http://\:hostitel:port/#\:id_knihovny>, například \%<http://\:localhost:8080/#\:mojeknihovna>\&. id_knihovny je identifikátor knihovny, ke které se chcete připojit na Serveru s obsahem. Pomocí speciální hodnoty id_knihovny \- můžete získat seznam identifikátorů knihoven dostupných na serveru. Pro podrobnosti o nastavení přístupu prostřednictvím Serveru s obsahem navštivte \%<https://\:manual\:.calibre-ebook\:.com/\:cs/\:generated/\:cs/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -235,7 +236,7 @@ Cesta k souboru obsahujícímu šablonu, kterou spustit, pokud je „template“
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Záhlaví sloupce šablony. Výchozí: %dvýchozí. Tato volba je ignorována, pokud je nastavena volba \fI\%\-\-for\-machine\fP
+Záhlaví sloupce šablony. Výchozí: %dvýchozí. Tato volba je ignorována, pokud je nastavena volba \fB\-\-for\-machine\fP
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -268,7 +269,7 @@ Nastavit použitou obálku pro přidanou knihu
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Přidat knihy do databáze, i když již existují. Srovnání je prováděno na základě názvů knih. Pamatujte, že volby \fI\%\-\-automerge\fP mají přednost.
+Přidat knihy do databáze, i když již existují. Srovnání je prováděno na základě názvů knih. Pamatujte, že volby \fB\-\-automerge\fP mají přednost.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -427,12 +428,12 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Pole k nastavení. Formát je field_name:value, například : \fI\%\-\-field\fP tags:tag1,tag2. Použijte \fI\%\-\-list\-fields\fP pro získání seznamu všech názvů polí. Tuto volbu můžete zadat vícekrát pro nastavení více polí. Poznámka: Pro jazyky musíte použít kódy jazyka ISO639 (např. cs pro češtinu, en pro angličtinu, fr pro francouzštinu atd.). Pro identifikátory je syntaxe \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Pro pole logických hodnot (ano/ne) použijte pravda a nepravda nebo ano a ne.
+Pole k nastavení. Formát je field_name:value, například : \fB\-\-field\fP tags:tag1,tag2. Použijte \fB\-\-list\-fields\fP pro získání seznamu všech názvů polí. Tuto volbu můžete zadat vícekrát pro nastavení více polí. Poznámka: Pro jazyky musíte použít kódy jazyka ISO639 (např. cs pro češtinu, en pro angličtinu, fr pro francouzštinu atd.). Pro identifikátory je syntaxe \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Pro pole logických hodnot (ano/ne) použijte pravda a nepravda nebo ano a ne.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Vypsat názvy polí metadat, která mohou být použita s volbou \fI\%\-\-field\fP
+Vypsat názvy polí metadat, která mohou být použita s volbou \fB\-\-field\fP
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -539,7 +540,7 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Čárkami oddělený seznam identifikátorů databáze pro katalog. Pokud je deklarováno, \fI\%\-\-search\fP je ignorováno. Výchozí: vše
+Čárkami oddělený seznam identifikátorů databáze pro katalog. Pokud je deklarováno, \fB\-\-search\fP je ignorováno. Výchozí: vše
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -688,7 +689,7 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .TP
 .B \-\-display
-Slovník voleb pro přizpůsobení, jak budou data v tomto sloupci interpretována. Toto je řetězec JSON. Pro sloupce výčtu použijte \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Je mnoho voleb, které mohou přijít do proměnné display. Volby podle typu sloupce jsou: složené: composite_template, composite_sort, make_category,contains_html, use_decorations datum a čas: date_format výčet: enum_values, enum_colors, use_decorations celá část, plovoucí: number_format text: is_names, use_decorations  Nejlepší způsob jak najít zákonité kombinace, je vytvořit v grafickém rozhraní vlastní sloupec vhodného typu, pak vyhledat v záložním OPF knihu (ujistěte se, že byl vytvořen nový OPF od přidání sloupce). Uvidíte JSON pro \fB\(dq\fPdisplay\fB\(dq\fP pro nový sloupec v OPF.
+Slovník voleb pro přizpůsobení, jak budou data v tomto sloupci interpretována. Toto je řetězec JSON. Pro sloupce výčtu použijte \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Je mnoho voleb, které mohou přijít do proměnné display. Volby podle typu sloupce jsou: složené: composite_template, composite_sort, make_category,contains_html, use_decorations datum a čas: date_format výčet: enum_values, enum_colors, use_decorations celá část, plovoucí: number_format text: is_names, use_decorations  Nejlepší způsob jak najít zákonité kombinace, je vytvořit v grafickém rozhraní vlastní sloupec vhodného typu, pak vyhledat v záložním OPF knihu (ujistěte se, že byl vytvořen nový OPF od přidání sloupce). Uvidíte JSON pro \fB\(dq\fPdisplay\fB\(dq\fP pro nový sloupec v OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1033,9 +1034,8 @@ Formát, ve kterém vypisovat výsledky vyhledávání. Buď „text“ pro pros
 .B \-\-restrict\-to
 Omezit vyhledávané knihy buď pomocí vyhledávacího výrazu, nebo identifikátorů. Například: ids:1,2,3 pro omezení podle identifikátorů nebo search:tag:foo pro omezení na knihy se značkou foo.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

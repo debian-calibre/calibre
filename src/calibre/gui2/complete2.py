@@ -32,7 +32,7 @@ from qt.core import (
 from calibre.constants import ismacos
 from calibre.gui2.widgets import EnComboBox, LineEditECM
 from calibre.utils.config import tweaks
-from calibre.utils.icu import primary_contains, primary_startswith, sort_key
+from calibre.utils.icu import primary_contains, primary_find, primary_startswith, sort_key
 
 
 def containsq(x, prefix):
@@ -51,6 +51,7 @@ class CompleteModel(QAbstractListModel):  # {{{
         self.sort_func = sort_func
         self.all_items = self.current_items = ()
         self.current_prefix = ''
+        self.use_startswith_search = tweaks['completion_mode'] == 'prefix'
 
     def set_items(self, items):
         if self.strip_completion_entries:
@@ -75,7 +76,7 @@ class CompleteModel(QAbstractListModel):  # {{{
             return
         subset = prefix.startswith(old_prefix)
         universe = self.current_items if subset else self.all_items
-        func = primary_startswith if tweaks['completion_mode'] == 'prefix' else containsq
+        func = primary_startswith if self.use_startswith_search else containsq
         if func is primary_startswith and hierarchy_separator:
             if hierarchy_separator != '.':
                 func = partial(hierarchy_startswith, sep=hierarchy_separator)
@@ -83,6 +84,17 @@ class CompleteModel(QAbstractListModel):  # {{{
                 func = hierarchy_startswith
         self.beginResetModel()
         self.current_items = tuple(x for x in universe if func(x, prefix))
+        if func is containsq:
+            def skey(x):
+                x = x.lower()
+                try:
+                    ans = primary_find(prefix, x)[0]
+                    if ans == -1:
+                        ans = len(x) + 10
+                    return ans
+                except Exception:
+                    return len(x) + 10
+            self.current_items = tuple(sorted(self.current_items, key=skey))
         self.endResetModel()
 
     def rowCount(self, *args):
@@ -353,6 +365,9 @@ class LineEdit(QLineEdit, LineEditECM):
         self.no_popup = False
 
     # Interface {{{
+    def set_use_startswith_search(self, yes: bool) -> None:
+        self.mcompleter.model().use_startswith_search = yes
+
     def set_sort_func(self, sort_func):
         self.mcompleter.model().sort_func = sort_func
 

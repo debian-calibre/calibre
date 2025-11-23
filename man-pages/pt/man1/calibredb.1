@@ -1,4 +1,5 @@
-.\" Man page generated from reStructuredText.
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.2 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -27,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "outubro 17, 2025" "8.13.0" "calibre"
+.TH "CALIBREDB" "1" "novembro 07, 2025" "8.14.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -58,61 +59,61 @@ Se estiver a executar o servidor a partir do programa Calibre principal, use Pre
 Para ligar a um servidor de conteúdo em execução, passe a URL do servidor para a opção :option: \fI\-\-with\-library\fP\&. Veja a documentação dessa opção para detalhes e exemplos.
 .INDENT 0.0
 .IP \(bu 2
-\fI\%OPÇÕES GLOBAIS\fP
+OPÇÕES GLOBAIS
 .IP \(bu 2
-\fI\%list\fP
+list
 .IP \(bu 2
-\fI\%add\fP
+add
 .INDENT 2.0
 .IP \(bu 2
-\fI\%Adicionar a partir de pastas\fP
+Adicionar a partir de pastas
 .UNINDENT
 .IP \(bu 2
-\fI\%remove\fP
+remove
 .IP \(bu 2
-\fI\%add_format\fP
+add_format
 .IP \(bu 2
-\fI\%remove_format\fP
+remove_format
 .IP \(bu 2
-\fI\%show_metadata\fP
+show_metadata
 .IP \(bu 2
-\fI\%set_metadata\fP
+set_metadata
 .IP \(bu 2
-\fI\%export\fP
+export
 .IP \(bu 2
-\fI\%catalog\fP
+catalog
 .INDENT 2.0
 .IP \(bu 2
-\fI\%EPUB OPÇÕES\fP
+EPUB OPÇÕES
 .UNINDENT
 .IP \(bu 2
-\fI\%saved_searches\fP
+saved_searches
 .IP \(bu 2
-\fI\%add_custom_column\fP
+add_custom_column
 .IP \(bu 2
-\fI\%custom_columns\fP
+custom_columns
 .IP \(bu 2
-\fI\%remove_custom_column\fP
+remove_custom_column
 .IP \(bu 2
-\fI\%set_custom\fP
+set_custom
 .IP \(bu 2
-\fI\%restore_database\fP
+restore_database
 .IP \(bu 2
-\fI\%check_library\fP
+check_library
 .IP \(bu 2
-\fI\%list_categories\fP
+list_categories
 .IP \(bu 2
-\fI\%backup_metadata\fP
+backup_metadata
 .IP \(bu 2
-\fI\%clone\fP
+clone
 .IP \(bu 2
-\fI\%embed_metadata\fP
+embed_metadata
 .IP \(bu 2
-\fI\%search\fP
+search
 .IP \(bu 2
-\fI\%fts_index\fP
+fts_index
 .IP \(bu 2
-\fI\%fts_search\fP
+fts_search
 .UNINDENT
 .SH OPÇÕES GLOBAIS
 .INDENT 0.0
@@ -123,7 +124,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Caminho para a biblioteca do Calibre. Por predefinição é usado o caminho armazenado nas definições. Pode também ligar\-se a um servidor de conteúdos Calibre para executar ações em bibliotecas remotas. Para tal, use um URL na forma: \X'tty: link http://hostname:port/#id_da_biblioteca'\fI\%http://hostname:port/#id_da_biblioteca\fP\X'tty: link' , por exemplo, \X'tty: link http://localhost:8080/#mylibrary'\fI\%http://localhost:8080/#mylibrary\fP\X'tty: link' . id_da_biblioteca é o identificador da biblioteca à qual se pretende ligar no servidor de conteúdos. Pode usar o valor especial de id_da_bilbioteca \- para obter uma lista de identificadores de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um servidor de conteúdos, veja \X'tty: link https://manual.calibre-ebook.com/pt/generated/pt/calibredb.html'\fI\%https://manual.calibre\-ebook.com/pt/generated/pt/calibredb.html\fP\X'tty: link'\&.
+Caminho para a biblioteca do Calibre. Por predefinição é usado o caminho armazenado nas definições. Pode também ligar\-se a um servidor de conteúdos Calibre para executar ações em bibliotecas remotas. Para tal, use um URL na forma: \%<http://\:hostname:port/#\:id_da_biblioteca> , por exemplo, \%<http://\:localhost:8080/#\:mylibrary> . id_da_biblioteca é o identificador da biblioteca à qual se pretende ligar no servidor de conteúdos. Pode usar o valor especial de id_da_bilbioteca \- para obter uma lista de identificadores de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um servidor de conteúdos, veja \%<https://\:manual\:.calibre-ebook\:.com/\:pt/\:generated/\:pt/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -216,7 +217,7 @@ Caminho para um ficheiro contendo o modelo a ser executado se \fB\(dq\fPtemplate
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Cabeçalho para a coluna do modelo. Predefinição: template. Esta opção é ignorada se a opção \fI\%\-\-for\-machine\fP estiver marcada
+Cabeçalho para a coluna do modelo. Predefinição: template. Esta opção é ignorada se a opção \fB\-\-for\-machine\fP estiver marcada
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -249,7 +250,7 @@ Caminho para a capa utilizar no livro adicionado
 .INDENT 0.0
 .TP
 .B \-\-duplicates, \-d
-Adicionar livros à base de dados mesmo se estes já existem. A comparação é feita baseada nos títulos e autores dos livros. Note que a opção \fI\%\-\-automerge\fP tem precedência.
+Adicionar livros à base de dados mesmo se estes já existem. A comparação é feita baseada nos títulos e autores dos livros. Note que a opção \fB\-\-automerge\fP tem precedência.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -406,12 +407,12 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-O campo a ser definido. O formato é field_name:value, por exemplo: \fI\%\-\-field\fP tags:tag1,tag2. Use \fI\%\-\-list\-fields\fP para obter uma lista de todos os nomes de campo. Pode especificar esta opção várias vezes para definir vários campos. Nota: para idiomas deve usar os códigos de idioma ISO639 (por exemplo, en para Inglês, pt para Português e assim por diante). Para identificadores, a sintaxe é \fI\%\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Para campos booleanos (sim/não) use verdadeiro e falso ou sim e não.
+O campo a ser definido. O formato é field_name:value, por exemplo: \fB\-\-field\fP tags:tag1,tag2. Use \fB\-\-list\-fields\fP para obter uma lista de todos os nomes de campo. Pode especificar esta opção várias vezes para definir vários campos. Nota: para idiomas deve usar os códigos de idioma ISO639 (por exemplo, en para Inglês, pt para Português e assim por diante). Para identificadores, a sintaxe é \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Para campos booleanos (sim/não) use verdadeiro e falso ou sim e não.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Lista de nomes de campos de metadados que podem ser usadas com a opção \fI\%\-\-field\fP
+Lista de nomes de campos de metadados que podem ser usadas com a opção \fB\-\-field\fP
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -515,7 +516,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Lista separada por vírgulas de ID de base de dados a catalogar. Se declarada, \fI\%\-\-search\fP será ignorada. Predefinição: all (todas)
+Lista separada por vírgulas de ID de base de dados a catalogar. Se declarada, \fB\-\-search\fP será ignorada. Predefinição: all (todas)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -663,7 +664,7 @@ Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os e
 .INDENT 0.0
 .TP
 .B \-\-display
-Um dicionário de opções para personalizar a forma como os dados nesta coluna serão interpretados. Esta é uma string JSON. Para colunas de enumeração, use \fI\%\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Existem muitas opções que podem ir para as opções de variáveis de exibição. As opções por tipo de coluna são: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  A melhor maneira de encontrar combinações válidas é criar uma coluna personalizada do tipo apropriado na IGU e em seguida olhar para o backup OPF de um livro (assegure\-se que um novo OPF foi criado da coluna foi acrescentado). Vai ver o JSON da \fB\(dq\fPexibição\fB\(dq\fP para a nova coluna em OPF.
+Um dicionário de opções para personalizar a forma como os dados nesta coluna serão interpretados. Esta é uma string JSON. Para colunas de enumeração, use \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Existem muitas opções que podem ir para as opções de variáveis de exibição. As opções por tipo de coluna são: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  A melhor maneira de encontrar combinações válidas é criar uma coluna personalizada do tipo apropriado na IGU e em seguida olhar para o backup OPF de um livro (assegure\-se que um novo OPF foi criado da coluna foi acrescentado). Vai ver o JSON da \fB\(dq\fPexibição\fB\(dq\fP para a nova coluna em OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -983,9 +984,8 @@ O formato de saída dos resultados da pesquisa. Use \fB\(dq\fPtext\fB\(dq\fP par
 .B \-\-restrict\-to
 Restringir os livros pesquisados, seja usando uma expressão de pesquisa ou por ID. Por exemplo: ids:1,2,3 para restringir por ID ou search:tag:foo para restringir a livros com a etiqueta \fB\(aq\fPfoo\fB\(aq\fP\&.
 .UNINDENT
-.SH AUTHOR
+.SH Author
 Kovid Goyal
-.SH COPYRIGHT
+.SH Copyright
 Kovid Goyal
-.\" Generated by docutils manpage writer.
-.
+.\" End of generated man page.

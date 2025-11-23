@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 01:28+0000\n"
+"POT-Creation-Date: 2025-11-06 04:14+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -74,7 +74,7 @@ msgstr "基本テンプレートは、ひとつ以上の ``テンプレート表
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:23
 msgid "For the book \"The Foundation\" by \"Isaac Asimov\" the template will become::"
-msgstr ""
+msgstr "著者 \"Isaac Asimov” の タイトル \"The Foundation\" という本の場合、テンプレートは以下のようになります:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:27
 msgid ""
@@ -99,7 +99,7 @@ msgid ""
 "custom series column named ``#myseries``, there will also be a column named "
 "``#myseries_index``. The standard series column's index is named "
 "``series_index``."
-msgstr "``テンプレート表現`` は、列の ``ルックアップ名`` を使用して、カスタム列 (自分で作成した列) を含む、calibre で使用可能なすべての書誌にアクセスできます。`列` (`フィールド` と呼ばれることもあります) のルックアップ名を見つけるには、マウスを calibre の本リストの列ヘッダに合わせます。カスタム列のルックアップ名は常に ``#`` で始まります。シリーズタイプの列の場合、シリーズ内のその本のシリーズインデックスである ``#lookup name_index`` という名前の追加フィールドがあります。たとえば、``#myseries`` という名前のカスタムシリーズ列がある場合、``#myseries_index`` という名前の列もあります。標準のシリーズ列のインデックスの名前は ``series_index`` です。"
+msgstr "``テンプレート表現`` は、列の ``ルックアップ名`` を使用して、カスタム列 (自分で作成した列) を含む、calibre で使用可能なすべての書誌にアクセスできます。`列` (`フィールド` と呼ばれることもあります) のルックアップ名を見つけるには、マウスを calibre の本リストの列ヘッダに合わせます。カスタム列のルックアップ名は常に ``#`` で始まります。シリーズタイプの列の場合、シリーズ内のその本のシリーズインデックスである ``#ルックアップ名_index`` という名前の追加フィールドがあります。たとえば、``#myseries`` という名前のカスタムシリーズ列がある場合、``#myseries_index`` という名前の列もあります。標準のシリーズ列のインデックスの名前は ``series_index`` です。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:37
 msgid "In addition to the standard column based fields, you also can use:"
@@ -196,7 +196,7 @@ msgstr "この ``テンプレート表現`` は ``field`` の値が `XXXX` の�
 msgid ""
 "**Do not use subtemplates (`{ ... }`) or functions (see below) in the prefix"
 " or the suffix.**"
-msgstr "**プレフィックスとサフィックスには、サブテンプレート (`{ ... }`) や関数 (下を参照) を使用しないでください。**"
+msgstr "**プレフィックスとサフィックスには、サブテンプレート ( `{ ... }` ) や関数 (下を参照) を使用しないでください。**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:77
 msgid ""
@@ -221,7 +221,7 @@ msgstr "メモ:"
 msgid ""
 "You must include the colon after the ``lookup name`` if you are using a "
 "prefix or a suffix."
-msgstr "プレフィックスやサフィックスを使用している場合は、``ルックアップ名`` の後にコロンを含める必要があります。"
+msgstr "プレフィックスやサフィックスを使用している場合は、 ``ルックアップ名`` の後にコロンを含める必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:86
 msgid ""
@@ -233,7 +233,7 @@ msgstr "``|`` の文字は、使用しないか両方使用するかのどちら
 msgid ""
 "It is OK to provide no text for either the prefix or the suffix, such as in "
 "``{series:|| - }``. The template ``{title:||}`` is the same as ``{title}``."
-msgstr "プレフィックスやサフィックスにテキストを指定せず、``{series:|| - }`` にしてもかまいません。テンプレート `{title:||}`` は ``{title}`` と同じです。"
+msgstr "プレフィックスやサフィックスにテキストを指定せず、 ``{series:|| - }`` にしてもかまいません。テンプレート ``{title:||}`` は ``{title}`` と同じです。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:89
 msgid "**Formatting**"
@@ -348,7 +348,7 @@ msgstr "プラグボードを作成するときは、プラグボードを使用
 msgid ""
 "Plugboards are quite flexible and can be written in Single Function Mode, "
 "Template Program Mode, General Program Mode, or Python Template mode."
-msgstr "変換ルールは非常に柔軟性が高く、単一関数モード、テンプレートプログラム モード、一般プログラム モード、または Python テンプレートモードでも記述できます。"
+msgstr "プラグボードは非常に柔軟性が高く、単関数モード、テンプレートプログラム モード、一般プログラム モード、または Python テンプレートモードでも記述できます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:129
 msgid ""
@@ -357,25 +357,25 @@ msgid ""
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
 " the plugboards using the following search order:"
-msgstr "変換ルールが適用される可能性がある場合 (コンテンツサーバ、ディスクに保存、またはデバイスに送信)、calibre は定義された変換ルールを検索して、指定された形式とデバイスに適した変換ルールを選択します。たとえば、ANDROID デバイスに送信される EPUB ブックに適切な変換ルールを見つけるために、calibre は次の検索順で変換ルールを検索します:"
+msgstr "プラグボードが適用される可能性がある場合 (コンテンツサーバ、ディスクに保存、またはデバイスに送信)、calibre は定義されたプラグボードを検索して、指定された形式とデバイスに適したプラグボードを選択します。たとえば、ANDROID デバイスに送信される EPUB ブックに適切なプラグボードを見つけるために、calibre は次の検索順でプラグボードを検索します:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:133
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
-msgstr "形式とデバイスが完全に一致する変換ルール。例: ``EPUB`` かつ ``ANDROID``"
+msgstr "形式とデバイスが完全に一致するプラグボード。例: ``EPUB`` かつ ``ANDROID``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:134
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
-msgstr "形式が完全に一致し、特別な ``任意のデバイス`` を選択できる変換ルール。例: ``EPUB`` かつ ``任意のデバイス``"
+msgstr "形式が完全に一致し、特別な ``任意のデバイス`` を選択できるプラグボード。例: ``EPUB`` かつ ``任意のデバイス``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:135
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
-msgstr "特別な ``任意のフォーマット`` を選択し、デバイス上で完全に一致する変換ルール。例: ``任意のフォーマット`` かつ ``ANDROID``"
+msgstr "特別な ``任意のフォーマット`` を選択し、デバイス上で完全に一致するプラグボード。例: ``任意のフォーマット`` かつ ``ANDROID``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:136
 msgid "a plugboard with ``any format`` and ``any device``"
@@ -391,7 +391,7 @@ msgid ""
 "if the template produces the value ``Thriller, Horror``, then the result "
 "will be two tags, ``Thriller`` and ``Horror``. There is no way to put a "
 "comma in the middle of a tag."
-msgstr "タグフィールドと著者フィールドはどちらも複数のアイテムを保持できるため、特殊な扱いがあります。本にはいくつものタグと何人もの著者を含めることができます。これら 2 つのフィールドのいずれかを変更するように指定すると、テンプレートの結果に複数の項目がないか確認されます。タグの場合、calibre はカンマを見つけるたびに結果を分割します。たとえばテンプレートが値 ``Thriller, Horror`` を生成すると、結果は2つのタグ、``Thriller`` と ``Horror``になります。タグの途中にカンマを入れる方法はありません。"
+msgstr "タグフィールドと著者フィールドはどちらも複数のアイテムを保持できるため、特殊な扱いとなります。本にはいくつものタグと何人もの著者を含めることができます。これら 2 つのフィールドのいずれかを変更するように指定すると、テンプレートの結果に複数の項目がないか確認されます。タグの場合、calibre はカンマを見つけるたびに結果を分割します。たとえばテンプレートが値 ``Thriller, Horror`` を生成すると、結果は2つのタグ、``Thriller`` と ``Horror`` になります。タグの途中にカンマを入れる方法はありません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:141
 msgid ""
@@ -401,7 +401,7 @@ msgid ""
 "with two authors, ``Blogs, Joe`` and ``Posts, Susan``. If the template "
 "produces the value ``Blogs, Joe;Posts, Susan``, then the book will have one "
 "author with a rather strange name."
-msgstr "著者にも同じことが起こりますが、分割に別の文字、カンマの代わりに `&` (アンパサンド) を使用します。たとえばテンプレートが値 ``Blogs, Joe&Posts, Susan`` を生成すると、本の著者は``Blogs, Joe`` と ``Posts, Susan`` の 2 人になります。テンプレートが ``Blogs, Joe;Posts, Susan`` という値を生成すると、その本の著者はかなり変わった名前の 1 人となります。"
+msgstr "著者にも同じことが起こりますが、分割に別の文字、カンマの代わりに `&` (アンパサンド) を使用します。たとえばテンプレートが値 ``Blogs, Joe&Posts, Susan`` を生成すると、本の著者は ``Blogs, Joe``  と ``Posts, Susan`` の 2 人になります。テンプレートが ``Blogs, Joe;Posts, Susan`` という値を生成すると、その本の著者はかなり変わった名前の 1 人となります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:143
 msgid ""
@@ -423,7 +423,7 @@ msgid ""
 " For example, to display the title in upper case use the ``uppercase`` "
 "function, as in ``{title:uppercase()}``. To display it in title case, use "
 "``{title:titlecase()}``."
-msgstr "あるフィールドが通常はタイトルケースで、その値を大文字で表示したいと仮定します。`テンプレート関数` を使用すれば、それが可能です。たとえば、タイトルを大文字で表示するには ``uppercase`` 関数を使用して、`{title:uppercase()}`` とします。タイトルケースで表示するには ``{title:titlecase()}`` を使用します。"
+msgstr "あるフィールドが通常はタイトルケースで、その値を大文字で表示したいと仮定します。`テンプレート関数` を使用すれば、それが可能です。たとえば、タイトルを大文字で表示するには  ``uppercase`` 関数を使用して、 ``{title:uppercase()}`` とします。タイトルケースで表示するには ``{title:titlecase()}`` を使用します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:152
 msgid ""
@@ -466,11 +466,11 @@ msgid ""
 "**Do not use subtemplates (`{ ... }`) as function arguments.** Instead, use "
 ":ref:`Template Program Mode <template_mode>` and :ref:`General Program Mode "
 "<general_mode>`."
-msgstr "**サブテンプレート (`{ ... }`) を関数の引数として使用しないでください。**代わりに :ref:`テンプレートプログラムモード <template_mode>` および :ref:`一般プログラムモード <general_mode>` を使用してください。"
+msgstr "**サブテンプレート ( `{ ... }` ) を関数の引数として使用しないでください。** 代わりに :ref:`テンプレートプログラムモード <template_mode>` および :ref:`一般プログラムモード <general_mode>` を使用してください。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:169
 msgid "Notes on calling functions in Single Function Mode:"
-msgstr ""
+msgstr "単関数モードでの関数の呼び出しに関する注意:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:171
 msgid ""
@@ -479,7 +479,7 @@ msgid ""
 "in the template. For example, when the template ``{title:capitalize()}`` is "
 "processed, the content of the ``title`` field is passed as the parameter "
 "``value`` to the capitalize function."
-msgstr ""
+msgstr "関数を単関数モードで使用する場合、最初のパラメータである ``value`` は、テンプレートで指定されたフィールドの内容に自動的に置き換えられます。例えば、テンプレート ``{title:capitalize()}`` が処理される場合、 ``title`` フィールドの内容がパラメータ ``value`` としてcapitalize関数に渡されます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:172
 msgid ""
@@ -487,13 +487,13 @@ msgid ""
 "``something`` can be repeated zero or more times. The notation "
 "``[something]+`` means that the ``something`` is repeated one or more times "
 "(must exist at least one time)."
-msgstr ""
+msgstr "関数ドキュメントにおいて、 ``[something]*`` という表記は、 ``something`` が0回以上繰り返されることを意味します。 ``[something]+`` という表記は、 ``something`` が1回以上繰り返されること（少なくとも1回は存在する必要があること）を意味します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:173
 msgid ""
 "Some functions use regular expressions. In the template language regular "
 "expression matching is case-insensitive."
-msgstr ""
+msgstr "一部の関数は正規表現を使用します。テンプレート言語における正規表現の一致判定では、大文字と小文字を区別しません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:175
 msgid ""
@@ -501,7 +501,7 @@ msgid ""
 "documentation tells you what arguments the functions require and what the "
 "functions do. For example, here is the documentation of the "
 ":ref:`ff_ifempty` function."
-msgstr ""
+msgstr "関数については、 :ref:`template_functions_reference` に記載されています。このドキュメントには、各関数が必要とする引数と、その関数の機能が説明されています。例えば、以下は :ref:`ff_ifempty` 関数のドキュメントです。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:179
 msgid ""
@@ -509,19 +509,19 @@ msgid ""
 "``text_if_empty``. However, because we are using Single Function Mode, we "
 "omit the ``value`` argument, passing only ``text_if_empty``. For example, "
 "this template::"
-msgstr ""
+msgstr "この関数には ``value`` と ``text_if_empty`` という2つの引数が必要です。ただし、今回は単関数モードを使用しているため、``value`` 引数を省略し、``text_if_empty`` のみを渡します。例えば、このテンプレートは次のようになります:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:183
 msgid ""
 "shows the tags for a book, if any. If it has no tags then it show `No tags "
 "on this book`."
-msgstr ""
+msgstr "この項目には、タグがあれば、本に付けられたタグが表示されます。タグが付けられていない場合は、「この本にはタグがありません」と表示されます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:185
 msgid ""
 "The following functions are usable in Single Function Mode because their "
 "first parameter is ``value``."
-msgstr ""
+msgstr "以下の関数は、最初のパラメータが ``value`` であるため、単関数モードで使用可能です。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:227
 msgid "**Using functions and formatting in the same template**"
@@ -580,7 +580,7 @@ msgstr "文字列と数字は同じ意味で使用できます。たとえば ``
 msgid ""
 "Comments are lines starting with a '#' character, possibly preceded by "
 "blanks or tabs."
-msgstr ""
+msgstr "コメントは、 '#' 文字で始まる複数行で、その前に空白またはタブが入っていても構いません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:301
 msgid "**Operator precedence**"
@@ -629,7 +629,7 @@ msgid ""
 "Numeric and string comparisons. These operators return ``'1'`` if the "
 "comparison succeeds, otherwise the empty string (``''``). Comparisons are "
 "not associative: ``a < b < c`` is a syntax error."
-msgstr "数値と文字列の比較。これらの演算子は、比較が成功した場合は ``'1'`` を返し、それ以外の場合は空の文字列 (``''``)を返します。比較は連想的ではありません。 ``a < b < c`` は構文エラーです。"
+msgstr "数値と文字列の比較。これらの演算子は、比較が成功した場合は ``'1'`` を返し、それ以外の場合は空の文字列 (``''``)を返します。比較は結合的ではありません。 ``a < b < c`` は構文エラーです。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:312
 msgid ""
@@ -643,7 +643,7 @@ msgstr "文字列の連結 (``&``)。``&`` 演算子は、左辺と右辺の式�
 msgid ""
 "Unary logical not (``!``). This operator returns ``'1'`` if the expression "
 "is False (evaluates to the empty string), otherwise ``''``."
-msgstr "単項論理否定 (``!``)。この演算子は、式が False (空の文字列に評価される) なら ``'1'``を返し、そうでなければ ``''``を返します。"
+msgstr "単項論理否定 (``!``)。この演算子は、式が False (空の文字列に評価される) なら ``'1'`` を返し、そうでなければ ``''`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:314
 msgid ""
@@ -651,7 +651,7 @@ msgid ""
 "right-hand expressions are True, or the empty string ``''`` if either is "
 "False. It is associative, evaluates left to right, and does `short-"
 "circuiting <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_."
-msgstr "論理積 (``&&``)。この演算子は、左辺と右辺の両方の式が True のときに '1' を返し、どちらかが False なら空の文字列 ``''`` を返します。これは連想的で、左から右に評価し、 `短絡評価 <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_ を行います。"
+msgstr "論理積 (``&&``)。この演算子は、左辺と右辺の両方の式が True のときに '1' を返し、どちらかが False なら空の文字列 ``''`` を返します。これは結合的で、左から右に評価し、 `短絡評価 <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_ を行います。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:315
 msgid ""
@@ -661,7 +661,7 @@ msgid ""
 "<https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_. It is an "
 "`inclusive or`, returning ``'1'`` if both the left- and right-hand "
 "expressions are True."
-msgstr "論理和 (``||``)。この演算子は、左辺または右辺の式のいずれかが True であれば ``'1'``を返し、両方とも False なら ``''`` を返します。これは連想的で、左から右に評価し、 `短絡評価 <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_ を行います。 これは `包含的論理和` で、左辺または右辺の式の両方が True のときに ``'1'`` を返します。"
+msgstr "論理和 (``||``)。この演算子は、左辺または右辺の式のいずれかが True であれば ``'1'`` を返し、両方とも False なら ``''`` を返します。これは結合的で、左から右に評価し、 `短絡評価 <https://chortle.ccsu.edu/java5/Notes/chap40/ch40_2.html>`_ を行います。 これは `包含的論理和` で、左辺または右辺の式の両方が True のときに ``'1'`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:317
 msgid "**Field references**"
@@ -673,7 +673,7 @@ msgid ""
 "lookup name that follows the ``$`` or ``$$``. Using ``$`` is equivalent to "
 "using the :ref:`ff_field` function. Using ``$$`` is equivalent to using the "
 ":ref:`ff_raw_field` function. Examples::"
-msgstr ""
+msgstr "``field_reference`` は、 ``$`` または ``$$`` に続くルックアップ名で指定された書誌データフィールドの値を評価します。 ``$`` を使用することは、 :ref:`ff_field` 関数を使用することと同等です。 ``$$`` を使用することは、 :ref:`ff_raw_field` 関数を使用することと同等です。例:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:326
 msgid "**If expressions**"
@@ -713,7 +713,7 @@ msgstr "上で説明したように ``if`` は値を生成します。これは�
 msgid ""
 "For example, this program returns the value of the ``series`` column if the "
 "book has a series, otherwise the value of the ``title`` column::"
-msgstr ""
+msgstr "たとえば、このプログラムは、本にシリーズがある場合は ``series``  列の値を返し、そうでない場合は ``title`` 列の値を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:366
 msgid "**For expressions**"
@@ -735,7 +735,7 @@ msgid ""
 " then the ``expression_list`` is evaluated. You can use ``break`` to jump "
 "out of the loop, and ``continue`` to jump to the beginning of the loop for "
 "the next iteration."
-msgstr ""
+msgstr "``for`` 式は値のリストを順番に繰り返し、値を１個づつ処理します。 ``list_expression`` は、書誌データフィールドの「ルックアップ名」（例： ``tags`` や ``#genre`` ）または値のリストのいずれかを評価する必要があります。 :ref:`ff_range` は数値のリストを生成します。結果が有効な ``ルックアップ名`` である場合、そのフィールドの値が取得され、そのフィールドタイプに指定された区切り文字が使用されます。結果が有効なルックアップ名でない場合は、値のリストとみなされます。リストは、オプションのキーワード ``separator`` が指定されていない限り、カンマで区切られているとみなされます。指定されている場合は、 ``separator_expr`` を評価した結果でリストの値が区切られている必要があります。 ``range()`` によって生成されたリストには、区切り文字を使用できません。リスト内の各値は指定された変数に代入され、その後 ``expression_list`` が評価されます。 ``break`` を使用してループから抜け出すことができ、 ``continue`` を使用して次の反復処理のためにループの先頭に戻ることができます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:370
 msgid ""
@@ -774,7 +774,7 @@ msgstr "``with`` 式:"
 msgid ""
 "changes the current book to the book with calibre book id (an integer) "
 "produced by valuating the ``top_expression``."
-msgstr ""
+msgstr "カレントの本を、`top_expression`` を評価して算出した calibre book  id (整数値) を持つ本に変更します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:390
 msgid "runs the ``expression_list``."
@@ -782,24 +782,24 @@ msgstr "``expression_list`` を実行"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:391
 msgid "then resets the current book back to what it was."
-msgstr ""
+msgstr "その後、カレントの本を元に戻します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:393
 msgid ""
 "The ``with`` expression returns the result of the last ``top_expression`` in"
 " the evaluated ``expression_list``, or the empty string if no expression "
 "list was evaluated."
-msgstr ""
+msgstr "``with`` 式は、評価された ``expression_list`` 内の最後の ``top_expression`` の結果を返します。式リストが評価されなかった場合は空の文字列を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:396
 msgid ""
 "For example, this template returns a list of the titles of each book "
 "selected in the GUI::"
-msgstr ""
+msgstr "たとえば、このテンプレートは GUI で選択された複数の本のタイトルのリストを返します:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:408
 msgid "**Return stmt**"
-msgstr ""
+msgstr "**Return 文**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:410
 msgid ""
@@ -807,7 +807,7 @@ msgid ""
 "returns the value of the expression to the caller. If executed in the "
 "outermost context (the template) then it sets the value of the template to "
 "the value of the expression and exits the template."
-msgstr ""
+msgstr "``式`` の値を返します。関数内で実行された場合は、式の値を呼び出し元に返します。最上位のコンテキスト（テンプレート）で実行された場合は、テンプレートの値が式の値に設定され、テンプレートの実行が終了します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:412
 msgid "**Function definition**"
@@ -819,7 +819,7 @@ msgid ""
 "local function. The ``def`` keyword starts the definition. It is followed by"
 " the function name, the argument list, then the code in the function. The "
 "function definition ends with the ``fed`` keyword."
-msgstr ""
+msgstr "テンプレート内に繰り返し出現するコードを、ローカル関数にまとめることもできます。関数の定義は ``def`` キーワードで始まり、その後に関数名、引数リスト、そして関数内のコードが続きます。関数の定義は ``fed`` キーワードで終了します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:416
 msgid ""
@@ -844,7 +844,7 @@ msgid ""
 "Example: This template computes an approximate duration in years, months, "
 "and days from a number of days. The function ``to_plural()`` formats the "
 "computed values. Note that the example also uses the ``&`` operator::"
-msgstr "例: このテンプレートは、日数から年、月、日でおおよその期間を計算します。関数 `to_plural()`` は、計算された値を整形します。ただしこの例では``&`` 演算子も使用してます::eo"
+msgstr "例: このテンプレートは、日数から年、月、日でおおよその期間を計算します。関数 `to_plural()`` は、計算された値を整形します。ただしこの例では ``&`` 演算子も使用しています::eo"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:437
 msgid "**Relational operators**"
@@ -854,7 +854,7 @@ msgstr "**関係演算子**"
 msgid ""
 "Relational operators return ``'1'`` if the comparison is true, otherwise the"
 " empty string (``''``)."
-msgstr ""
+msgstr "関係演算子は、比較が真の場合は ``'1'`` を返し、それ以外の場合は空文字列（ ``''`` ）を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:441
 msgid ""
@@ -871,7 +871,7 @@ msgid ""
 "hand expression is interpreted as a regular expression pattern. They are "
 "true if the value of left-hand regular expression matches the value of the "
 "right hand expression. The regular expressions are case-insensitive."
-msgstr ""
+msgstr "文字列比較は、辞書順に基づいた大文字小文字を区別しない比較を行います。サポートされている文字列比較演算子は、 ``==`` 、 ``!=`` 、 ``<`` 、 ``<=`` 、 ``>`` 、 ``>=`` 、 ``in`` 、 ``inlist`` 、および ``inlist_field`` です。 ``in`` 、 ``inlist`` 、および ``inlist_field`` 演算子の場合、左辺の式の評価結果は正規表現パターンとして解釈されます。これらの演算子は、左辺の正規表現が右辺の値に一致する場合に真となります。正規表現は、大文字小文字を区別しません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:446
 msgid ""
@@ -885,7 +885,7 @@ msgid ""
 "expression to evaluate to a string containing a comma-separated list. "
 "Because of this difference, ``inlist_field`` is substantially faster than "
 "``inlist`` because no string conversions or list constructions are done."
-msgstr ""
+msgstr "``inlist`` 演算子は、左側の正規表現が右側のカンマ区切りリスト内のいずれかの項目に一致する場合に真となります。 ``inlist_field`` 演算子は、左側の正規表現が右側の式で指定されたフィールド（列）内のいずれかの項目に一致する場合に真となります。この場合、フィールドに定義された区切り文字が使用されます。注： ``inlist_field`` 演算子は、右側の式がフィールド名に評価されることを必要としますが、 ``inlist`` 演算子は、右側の式がカンマ区切りリストを含む文字列に評価されることを必要とします。この違いにより、 ``inlist_field`` は文字列変換やリスト構築が行われないため、``inlist`` よりも大幅に高速です。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:448
 msgid ""
@@ -903,7 +903,7 @@ msgstr "例:"
 msgid ""
 "``program: field('series') == 'foo'`` returns ``'1'`` if the book's series "
 "is `foo`, otherwise ``''``."
-msgstr ""
+msgstr "``program: field('series') == 'foo'`` は、本のシリーズが `foo` であれば ``'1'`` を返し、そうでなければ ``''`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:453
 msgid ""
@@ -918,7 +918,7 @@ msgid ""
 "retrieved from the book's genres match the regular expression ``science``, "
 "e.g., `Science`, `History of Science`, `Science Fiction` etc., otherwise "
 "``''``."
-msgstr ""
+msgstr "``program: 'science' inlist $#genre`` は、本のジャンルから取得された値のいずれかが正規表現　 ``science`` に一致する場合（例:  `Science` 、 `History of Science` 、 `Science Fiction` など）は ``1`` を返し、そうでない場合は ``''`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:455
 msgid ""
@@ -926,21 +926,21 @@ msgid ""
 " genres exactly match the regular expression ``^science$``, e.g., `Science`,"
 " otherwise ``''``. The genres `History of Science` and `Science Fiction` "
 "don't match."
-msgstr ""
+msgstr "``program: '^science$' inlist $#genre`` は、本のジャンルのいずれかが正規表現 `^science$` に完全に一致する場合（例: `Science` ）は ``'1'`` を返し、そうでない場合は ``''`` を返します。 ジャンルが `History of Science` や `Science Fiction` は一致しません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:456
 msgid ""
 "``program: 'asimov' inlist $authors`` returns ``'1'`` if any author matches "
 "the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac Asimov`, "
 "otherwise ``''``."
-msgstr ""
+msgstr "``program: 'asimov' inlist $authors`` は、いずれかの著者が正規表現 `asimov` に一致する場合（例: `Asimov, Isaac` や `Isaac Asimov` ）、``'1'`` を返し、そうでない場合は ``''`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:457
 msgid ""
 "``program: 'asimov' inlist_field 'authors'`` returns ``'1'`` if any author "
 "matches the regular expression ``asimov``, e.g., `Asimov, Isaac` or `Isaac "
 "Asimov`, otherwise ``''``."
-msgstr ""
+msgstr "``program: 'asimov' inlist_field 'authors'`` は、いずれかの著者が正規表現 ``asimov`` に一致する場合（例：`Asimov, Isaac` や `Isaac Asimov` ）、``'1'`` を返し、そうでない場合は ``''`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:458
 msgid ""
@@ -948,27 +948,27 @@ msgid ""
 "matches the regular expression ``asimov$``, e.g., `Isaac Asimov`, otherwise "
 "``''``. It doesn't match `Asimov, Isaac` because of the ``$`` anchor in the "
 "regular expression."
-msgstr ""
+msgstr "``program: 'asimov$' inlist_field 'authors'`` は、いずれかの著者が正規表現 ``asimov$`` に一致する場合（例： `Isaac Asimov` ）は ``'1'`` を返し、そうでない場合は ``''`` を返します。正規表現に ``$`` アンカーが含まれているため、`Asimov, Isaac` には一致しません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:459
 msgid ""
 "``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` returns"
 " ``'bar'`` if the book's series is not `foo`. Otherwise it returns "
 "``'mumble'``."
-msgstr ""
+msgstr "``program: if field('series') != 'foo' then 'bar' else 'mumble' fi`` は 本のシリーズが `foo` と等しくない場合は ``'bar'`` を返し、そうでない場合は ``'mumble'`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:460
 msgid ""
 "``program: if field('series') == 'foo' || field('series') == '1632' then "
 "'yes' else 'no' fi`` returns ``'yes'`` if series is either `foo` or `1632`, "
 "otherwise ``'no'``."
-msgstr ""
+msgstr "``program: if field('series') == 'foo' || field('series') == '1632' then 'yes' else 'no' fi``  は 本のシリーズが `foo` か、`1632` と等しい場合は ``'yes'`` を返し、そうでない場合は ``'no'`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:461
 msgid ""
 "``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` "
 "returns ``'yes'`` if series is either `foo` or `1632`, otherwise ``'no'``."
-msgstr ""
+msgstr "``program: if '^(foo|1632)$' in field('series') then 'yes' else 'no' fi`` は 本のシリーズが `foo` か、`1632` と等しい場合は ``'yes'`` を返し、そうでない場合は ``'no'`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:462
 msgid ""
@@ -984,23 +984,23 @@ msgstr "``program: if 11 ># 2 then 'yes' else 'no' fi`` は ``'yes'`` を返し�
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:465
 msgid "**Functions in General Program Mode**"
-msgstr ""
+msgstr "**一般プログラムモードの関数**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:467
 msgid ""
 "See :ref:`template_functions_reference` for the list of functions built into"
 " the template language."
-msgstr ""
+msgstr "テンプレート言語に組み込まれている関数の一覧については、:ref:`template_functions_reference` を参照してください。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:471
 msgid ""
 "As opposed to :ref:`Single Function Mode <single_mode>`, in General Program "
 "Mode you must specify the first parameter ``value``."
-msgstr ""
+msgstr "単関数モードとは異なり、一般プログラムモードでは、最初のパラメータである ``value`` を指定する必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:472
 msgid "All parameters are expression_lists (see the grammar above)."
-msgstr ""
+msgstr "すべてのパラメータは式リストです（上記の文法を参照）。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:477
 msgid "More complex programs in template expressions - Template Program Mode"
@@ -1035,25 +1035,25 @@ msgstr "例からはいくつかのことがわかります:"
 msgid ""
 "`TPM` is used if the expression begins with ``:'`` and ends with ``'}``. "
 "Anything else is assumed to be in :ref:`Single Function Mode <single_mode>`."
-msgstr ""
+msgstr "式が ``:'`` で始まり ``'}`` で終わる場合は `TPM` が使用されます。それ以外の場合は、:ref:`単関数モード`であるとみなされます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:491
 msgid ""
 "If the template contains a prefix and suffix, the expression ends with "
 "``'|`` where the ``|`` is the delimiter for the prefix. Example::"
-msgstr ""
+msgstr "テンプレートにプレフィックスとサフィックスが含まれている場合、式は ``'|`` で終わります。ここで  ``|`` はプレフィックスの区切り文字です。例::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:495
 msgid ""
 "Functions must be given all their arguments. For example, the standard "
 "built-in functions must be given the initial parameter ``value``."
-msgstr ""
+msgstr "関数にはすべての引数を指定する必要があります。例えば、標準の組み込み関数には、最初のパラメータである ``value`` を指定する必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:496
 msgid ""
 "The variable ``$`` is usable as the ``value`` argument and stands for the "
 "value of the field named in the template, ``series`` in this case."
-msgstr ""
+msgstr "変数 ``$`` は ``value`` 引数として使用され、テンプレートで指定されたフィールド（この場合は ``series`` ）の値を示します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:497
 msgid "white space is ignored and can be used anywhere within the expression."
@@ -1072,11 +1072,11 @@ msgid ""
 "some but not all cases you can replace a ``{`` with ``[[`` and a ``}`` with "
 "`]]`. Advice: if your program contains ``{`` and ``}`` characters then you "
 "should use `General Program Mode`."
-msgstr ""
+msgstr "`TPM` では、文字列リテラル内で ``{`` と ``}`` の文字を使用すると、テンプレートプロセッサがこれらの文字をテンプレート式の区切り文字として認識してしまうため、エラーや予期せぬ結果が発生する可能性があります。場合によっては、 ``{`` を `` [[`` に、 ``}`` を ``]]`` に置き換えることで対応できます。アドバイス：プログラムに ``{`` と ``}`` の文字が含まれている場合は、 `一般プログラムモード` を使用してください。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:505
 msgid "Python Template Mode"
-msgstr ""
+msgstr "Python テンプレートモード"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:507
 msgid ""
@@ -1086,25 +1086,25 @@ msgid ""
 "most use; further discussion is beyond the scope of this manual. PTM "
 "templates are faster and can do more complicated operations but you must "
 "know how to write code in Python using the calibre API."
-msgstr ""
+msgstr "Pythonテンプレートモード（PTM）を使用すると、ネイティブPythonと `calibre API  <https://manual.calibre-ebook.com/develop.html#api-documentation-for-various-parts-of-calibre>`_  を使ってテンプレートを作成できます。データベースAPIがもっともよく使われますが、詳細については、このマニュアルの範囲外です。PTMテンプレートは高速で、より複雑な処理を実行できますが、calibre APIを使用してPythonでコードを書く方法を知っている必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:509
 msgid "A PTM template begins with:"
-msgstr ""
+msgstr "PTM テンプレートは次で始まります:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:527
 msgid ""
 "You can add the above text to your template using the context menu, usually "
 "accessed with a right click. The comments are not significant and can be "
 "removed. You must use python indenting."
-msgstr ""
+msgstr "上記のテキストは、通常右クリックで表示されるコンテキストメニューを使用してテンプレートに追加できます。コメントは本質的ではないため、削除しても構いません。Pythonのインデント規則に従う必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:529
 msgid ""
 "The context object supports ``str(context)`` that returns a string of the "
 "context's contents, and ``context.attributes`` that returns a list of the "
 "attribute names in the context."
-msgstr ""
+msgstr "コンテキストオブジェクトは、コンテキストの内容を文字列として返す ``str(context)`` と、コンテキスト内の属性名のリストを返す ``context.attributes`` をサポートしています。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:531
 msgid ""
@@ -1113,7 +1113,7 @@ msgid ""
 "directly in your code. The functions are retrieved using their names. If the"
 " name conflicts with a Python keyword, add an underscore to the end of the "
 "name. Examples:"
-msgstr ""
+msgstr "``context.funcs`` 属性を使用すると、組み込みテンプレート関数、ユーザー定義テンプレート関数、および保存済みのGPM/Pythonテンプレートを呼び出すことができ、コード内で直接実行できます。関数は名前を使用して取得されます。名前がPythonのキーワードと競合する場合は、名前の末尾にアンダースコアを追加してください。例:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:538
 msgid ""
@@ -1125,11 +1125,11 @@ msgid ""
 "To satisfy that requirement the template converts commas in author names to "
 "semicolons then builds a comma-separated list of authors. The authors are "
 "then sorted, which is why the template uses author_sort."
-msgstr ""
+msgstr "これは、シリーズのすべての著者のリストを作成するPTMテンプレートの例です。このリストは、`他の列から構築された列（タグのように動作する）`に保存されます。これは :guilabel:`本の詳細` セクションに表示され、:guilabel:`個別の行に表示` オプションがオンになっています（  :guilabel:`環境設定 -> 外観 -> 本の詳細` ）。このオプションでは、リストがカンマ区切りである必要があります。この要件を満たすために、テンプレートは著者名に含まれるカンマをセミコロンに変換してから、カンマ区切りの著者リストを作成します。その後、著者はソートされるため、テンプレートでは author_sort を使用しています。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:559
 msgid "The output in :guilabel:`Book details` looks like this:"
-msgstr ""
+msgstr ":guilabel:`本の詳細` の出力はこのようです:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:561
 msgid "E-book conversion dialog"
@@ -1137,23 +1137,23 @@ msgstr "電子書籍変換ダイアログ"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:569
 msgid "Templates and URLs"
-msgstr ""
+msgstr "テンプレートとURL"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:571
 msgid "You can use templates to construct URLs. Two cases are described here:"
-msgstr ""
+msgstr "テンプレートを使用してURLを構築することができます。ここでは2つのケースについて説明します:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:573
 msgid "Custom column :guilabel:`Book details` search URLs"
-msgstr ""
+msgstr "カスタム列 :guilabel:`書籍詳細` 検索URL"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:574
 msgid "The calibre URL scheme"
-msgstr ""
+msgstr "calibre URLスキーム"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:576
 msgid "**Custom column book details search URLs**"
-msgstr ""
+msgstr "**カスタム列書籍詳細検索URL**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:578
 msgid ""
@@ -1162,48 +1162,48 @@ msgid ""
 " column for `Translators` you can define a URL to take you to a site for "
 "translators. Book details search URLs can be provided for `Text`, "
 "`Enumerated`, `Series`, and `Column built from other column` column types."
-msgstr ""
+msgstr "カスタム列を作成する際、テンプレートを使用して :guilabel:`書籍詳細` で使用するURLを指定できます。たとえば、``翻訳者`` 用のカスタム列を作成する場合、翻訳者向けのウェブサイトにアクセスできるURLを定義できます。書籍詳細検索用URLは、``テキスト`` 、 ``列挙型`` 、 ``シリーズ`` 、 ``他の列から構築された列`` の各列タイプで指定可能です。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:580
 msgid ""
 "When an item with a `search template` is clicked in :guilabel:`Book details`"
 " the template is evaluated. It is provided the normal book metadata. It is "
 "also provided three additional fields:"
-msgstr ""
+msgstr ":guilabel:`書籍詳細` に `検索テンプレート` が設定された項目をクリックすると、そのテンプレートが評価されます。テンプレートには通常の本の書誌データに加え、以下の3つの追加フィールドが提供されます:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:582
 msgid "``item_value``: the value of the clicked item."
-msgstr ""
+msgstr "``item_value``:  クリックされた項目の値"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:583
 msgid ""
 "``item_value_quoted``: the value of clicked item, URL-encoded. Special "
 "characters are escaped to make them valid in URLs and spaces are replaced by"
 " ``'+'`` (plus) signs."
-msgstr ""
+msgstr "``item_value_quoted``:  クリックされたアイテムの値。URLエンコードされています。特殊文字はURLで有効になるようにエスケープされ、スペースは ``'+'`` (プラス) 記号に置き換えられます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:584
 msgid ""
 "``item_value_no_plus``: the value of clicked item, URL-encoded. Special "
 "characters are escaped to make them valid in URLs and spaces are replaced by"
 " the ``%20``, not plus."
-msgstr ""
+msgstr "``item_value_no_plus``:  クリックされたアイテムの値。URLエンコード済み。特殊文字はURLで有効になるようにエスケープされ、スペースはプラス記号ではなく``%20`` に置き換えられます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:586
 msgid ""
 "There are several ways to construct the URL. The following use Wikipedia as "
 "an example."
-msgstr ""
+msgstr "URLを構築する方法はいくつかあります。以下ではWikipediaを例として説明します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:588
 msgid "The simplest is a basic template::"
-msgstr ""
+msgstr "一番単純なのは基本テンプレートです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:592
 msgid ""
 "In some cases you might want to do more processing. There are four template "
 "functions you can use, depending on the complexity of the processing."
-msgstr ""
+msgstr "場合によっては、さらに高度な処理が必要になることがあります。処理の複雑さに応じて、4種類のテンプレート関数を使用できます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:599
 msgid ""
@@ -1211,41 +1211,41 @@ msgid ""
 "(``#translators``) where the names are `Last name, First name`. You might "
 "need to convert the name to `First name Last name` when creating the URL. "
 "You can use the :ref:`ff_make_url` function to do this::"
-msgstr ""
+msgstr "例えば、カスタム列 `Translators` (``#translators``) があり、名前が `Last name, First name` になっているとします。URLを作成する際に、名前を `First name Last name` に変換する必要があるかもしれません。:ref:`ff_make_url` 関数を使用すると、この変換が可能です。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:603
 msgid ""
 "If we assume that the translator's name is `Boy-Żeleński, Tadeusz` then the "
 "above template produces the link::"
-msgstr ""
+msgstr "翻訳者の名前が `Boy-Żeleński, Tadeusz` であると仮定すると、上記のテンプレートは次のリンクを生成します::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:607
 msgid ""
 "Note that the person's first name is now first, the space is now a plus, and"
 " that the non-English characters in the last name are URL-encoded."
-msgstr ""
+msgstr "なお、名前の順番が姓から名に変わり、スペースがプラス記号に置き換えられ、姓に含まれる英語以外の文字はURLエンコードされていることに注意してください。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:609
 msgid ""
 "The functions :ref:`ff_make_url_extended`, :ref:`ff_query_string`, and "
 ":ref:`ff_encode_for_url` might be useful depending upon any additional "
 "processing complexity."
-msgstr ""
+msgstr "追加の処理の複雑さに応じて、:ref:`ff_make_url_extended` 、 :ref:`ff_query_string` 、および  :ref:`ff_encode_for_url` といった関数が役立つ場合があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:611
 msgid "**The calibre URL scheme**"
-msgstr ""
+msgstr "**calibre URLスキーム**"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:613
 msgid ""
 "Calibre supports several different URLs to navigate your calibre libraries. "
 "This section shows how to use templates to construct some of the URLs. See "
 ":doc:`url_scheme` for details on the URLs available."
-msgstr ""
+msgstr "calibreは、calibreライブラリを操作するための様々なURLをサポートしています。このセクションでは、テンプレートを使用してこれらのURLを構築する方法を説明します。利用可能なURLの詳細については、:doc:`url_scheme` を参照してください。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:616
 msgid "Switch to a specific library. The syntax of this URL is::"
-msgstr ""
+msgstr "指定したライブラリに切り替えます。URLの構文は次のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:620
 msgid ""
@@ -1256,40 +1256,40 @@ msgid ""
 "(underscore) stands for the current library. If the name contains any spaces"
 " or special characters then it must be hex encoded using the "
 ":ref:`ff_to_hex` function, as in the following example::"
-msgstr ""
+msgstr "``Library_Name`` は、開きたいcalibreライブラリの名前に置き換える必要があります。ライブラリ名はウィンドウのタイトルバーに表示されます。これはファイルパスではなく、単純な名前です。タイトルバーに表示されているとおりに、大文字と小文字を含めて正確に入力してください。``_`` （アンダースコア）は現在のライブラリを表します。名前の中にスペースや特殊文字が含まれている場合は、次の例のように、:ref:`ff_to_hex` 関数を使用して16進数エンコードする必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:628
 msgid "The template generates the URL::"
-msgstr ""
+msgstr "テンプレートは URL を生成します::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:632
 msgid ""
 "You can replace the ``current_library_name()`` function with the actual name"
 " of the library, as in::"
-msgstr ""
+msgstr " ``current_library_name()`` 関数を、次のように実際のライブラリ名に置き換えることができます::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:636
 msgid ""
 "Links to show books. These links select a book in the calibre library. The "
 "syntax for this URL is::"
-msgstr ""
+msgstr "本を表示するためのリンクです。これらのリンクをクリックすると、calibreライブラリ内の本が選択されます。このURLの構文は以下のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:640
 msgid ""
 "The ``book id`` is the numeric calibre id for the book, available to "
 "templates as ``$id``. As above, the library name might need to be hex "
 "encoded. Here is an example::"
-msgstr ""
+msgstr "``book id`` は、本の calibre ID の数値で、テンプレートでは ``$id`` として使用できます。上記と同様に、ライブラリ名は 16 進数でエンコードする必要がある場合があります。以下に例を示します::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:645
 msgid "It produces the URL::"
-msgstr ""
+msgstr "次の URL が生成されます::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:649
 msgid ""
 "Searching for books. These links search for books in the specified calibre "
 "library. The syntax for this URL is::"
-msgstr ""
+msgstr "本を検索します。これらのリンクは、指定されたcalibreライブラリ内の本を検索します。このURLの構文は以下のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:654
 msgid ""
@@ -1298,38 +1298,38 @@ msgid ""
 " of them. For example, the calibre search expression for searching for a "
 "hierarchical tag beginning with 'AA' is ``tags:\"=.AA\"``. This template "
 "constructs a search URL for that expression::"
-msgstr ""
+msgstr "ここで `query` は有効なcalibre検索式です。スペースや特殊文字を含む検索式はすべて16進数エンコードする必要があります。つまり、ほとんどすべての検索式が該当します。例えば、 'AA'  で始まる階層タグを検索するためのcalibre検索式は ``tags:\"=.AA\"`` です。このテンプレートは、その検索式に対応する検索URLを生成します::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:660
 msgid "The resulting URL is::"
-msgstr ""
+msgstr "結果の URL は次のようになります::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:664
 msgid ""
 "Here is an example of the same URL built using the "
 ":ref:``ff_make_url_extended`` function instead of :ref:`ff_strcat`::"
-msgstr ""
+msgstr "以下は、:ref:`ff_strcat` 関数ではなく :ref:`ff_make_url_extended` 関数を使用して構築された同じURLの例です::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:669
 msgid ""
 "Open a book details window on a book in some library. The syntax for this "
 "URL is::"
-msgstr ""
+msgstr "いずれかのライブラリにある本について、本の詳細ウィンドウを開きます。このURLの構文は以下のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:673
 msgid "An example template is::"
-msgstr ""
+msgstr "テンプレートの例は次のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:677
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:694
 msgid "which produces the URL::"
-msgstr ""
+msgstr "これにより、次の URL が生成されます::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:681
 msgid ""
 "Open the notes associated with an author/series/etc. The syntax of the URL "
 "is::"
-msgstr ""
+msgstr "著者やシリーズなどに関連付けられた注釈を開きます。URLの構文は以下のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:686
 msgid ""
@@ -1340,7 +1340,7 @@ msgid ""
 "normally use the second form, ``Hex_Encoded_Item_Name``. Here is a sample "
 "template that opens the note for the person ``Boy-Żeleński, Tadeusz`` in the"
 " field ``#authtest``::"
-msgstr ""
+msgstr "``Field_Name``  はフィールドの検索名です。フィールドがカスタム列の場合は、 ``#``  文字をアンダースコア（ ``_`` ）に置き換えてください。 ``Item_Id`` は、フィールド内の値の内部数値IDです。  ``Item_Id`` を返すテンプレート関数はないため、テンプレートでは通常、2番目の形式である ``Hex_Encoded_Item_Name`` を使用します。以下は、 ``#authtest`` フィールドにある ``Boy-Żeleński, Tadeusz`` という人物のメモを開くサンプルテンプレートです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:700
 msgid "Stored templates"
@@ -1356,7 +1356,7 @@ msgid ""
 " call a function, passing positional arguments if desired. An argument can "
 "be any expression. Examples of calling a template, assuming the stored "
 "template is named ``foo``:"
-msgstr ""
+msgstr ":ref:`一般プログラム モード ` と :ref:`Python テンプレート モード ` は両方とも、ストアド関数の呼び出しと同様に、テンプレートの保存と別のテンプレートからの呼び出しをサポートしています。テンプレートを保存するには、[設定 ->  詳細設定 -> テンプレート機能] を使用します。詳細については、そのダイアログに表示されます。関数を呼び出すのと同じ方法でテンプレートを呼び出し、必要に応じて位置引数を渡します。引数には任意の式を指定できます。保存されたテンプレートの名前が ``foo`` であると仮定して、テンプレートを呼び出す例:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:704
 msgid "``foo()`` -- call the template passing no arguments."
@@ -1386,7 +1386,7 @@ msgid ""
 "value then the variable is set to the empty string. For example, the "
 "following ``arguments`` function declares 2 variables, ``key``, "
 "``alternate``::"
-msgstr ""
+msgstr "GPMでは、保存されたテンプレートの呼び出し時に渡された引数を、 ``arguments``  関数を使用して取得します。この関数はローカル変数を宣言し、同時に初期化します。これらの変数は位置に基づいており、呼び出し時に同じ位置で指定された引数の値が代入されます。呼び出し時に対応する引数が指定されていない場合、 ``arguments``  関数はその変数に指定されたデフォルト値を代入します。デフォルト値が指定されていない場合は、変数は空の文字列に設定されます。例えば、次の  ``arguments``  関数は、``key`` と ``alternate`` という2つの変数を宣言します::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:712
 msgid "Examples, again assuming the stored template is named ``foo``:"
@@ -1418,7 +1418,7 @@ msgid ""
 "list of strings. There isn't any way to specify default values. You must "
 "check the length of the ``arguments`` list to be sure that the number of "
 "arguments is what you expect."
-msgstr ""
+msgstr "PTMでは、引数は文字列のリストである ``arguments`` パラメータで渡されます。デフォルト値を指定する方法はありません。引数の数が想定どおりであることを確認するには、 ``arguments`` リストの長さをチェックする必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:720
 msgid ""
@@ -1454,14 +1454,14 @@ msgid ""
 "change the name so it is best to use names that won't collide with other "
 "template local variables, for example by prefixing the name with an "
 "underscore."
-msgstr ""
+msgstr "追加情報は、``変数名と値`` のペアで構成されるPython辞書形式で提供されます。値は文字列のみ許されます。テンプレートはこの辞書にアクセスし、キーである変数名と同じ名前のテンプレートローカル変数を作成し、そこに値として対応する文字列を格納します。ユーザーは変数名を変更できないため、他のテンプレートローカル変数と名前が重複しないように、例えばアンダースコアを先頭に付けるなど、衝突しない名前を使用することが適切です。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:731
 msgid ""
 "This dictionary is passed to the template processor (the ``formatter``) "
 "using the named parameter ``global_vars=your_dict``. The full method "
 "signature is::"
-msgstr ""
+msgstr "この辞書は、名前付きパラメータ ``global_vars=your_dict`` を使用してテンプレートプロセッサ（ ``formatter`` ）に渡されます。メソッドの完全なシグネチャは次のとおりです::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:739
 msgid "**Template writer: how to access the additional information**"
@@ -1471,7 +1471,7 @@ msgstr "**テンプレート作者: 追加情報のアクセス方法**"
 msgid ""
 "You access the additional information (the ``globals`` dictionary) in a "
 "template using the template function::"
-msgstr ""
+msgstr "テンプレート内で追加情報（ ``globals`` 辞書）にアクセスするには、テンプレート関数を使用します::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:745
 msgid ""
@@ -1489,7 +1489,7 @@ msgstr "ここで、``id`` は任意の有効な変数名です。この関数�
 msgid ""
 "A template can set a value in the ``globals`` dictionary using the template "
 "function::"
-msgstr ""
+msgstr "テンプレートは、テンプレート関数を使用して ``globals`` 辞書に値を設定できます::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:751
 msgid ""
@@ -1497,7 +1497,7 @@ msgid ""
 "where ``value`` is the value of the template local variable ``id``. If that "
 "local variable doesn't exist then ``value`` is set to the result of "
 "evaluating ``expression``."
-msgstr ""
+msgstr "この関数は、 ``globals`` 辞書にキーと値のペア ``id:value`` を設定します。ここで ``value`` はテンプレートのローカル変数 ``id`` の値です。もしそのローカル変数が存在しない場合は、``value`` は  ``expression`` を評価した結果の値に設定されます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:754
 msgid "Notes on the difference between modes"
@@ -1567,7 +1567,7 @@ msgstr "関数が別の関数を呼び出して引数を計算する入れ子関
 msgid ""
 "`TPM` and `GPM` support nested functions. The above template in `TPM` would "
 "be::"
-msgstr "`TPM` と`GPM` は、入れ子の関数をサポートします。 `TPM` の上記のテンプレートは次のようになります。"
+msgstr "`TPM` と `GPM` は、入れ子の関数をサポートします。 `TPM` の上記のテンプレートは次のようになります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:784
 msgid "In `GPM` it would be::"
@@ -1582,7 +1582,7 @@ msgid ""
 "cases you can replace a ``{`` with ``[[`` and a ``}`` with `]]`. Generally, "
 "if your program contains ``{`` and ``}`` characters then you should use "
 "`General Program Mode`."
-msgstr "上記のテンプレートプログラムモードのセクションで説明したように、TPM文字列リテラルで{および}文字を使用すると、テンプレートプロセッサが混乱するため、エラーや予期しない結果が発生する可能性があります。それらを文字ではなくテンプレート境界として処理しようとします。すべてではありませんが ``{`` を ``[[`` に、そして ``}`` を `]]` に置き換えることができる場合もあります。一般的に、プログラムに ``{`` や ``}`` の文字が含まれている場合には `一般プログラムモード` を使用すべきです。"
+msgstr "上記のテンプレートプログラムモードのセクションで説明したように、TPM文字列リテラルで ``{`` および ``}`` 文字を使用すると、テンプレートプロセッサが混乱するため、エラーや予期しない結果が発生する可能性があります。それらを文字ではなくテンプレート境界として処理しようとします。すべてではありませんが ``{`` を ``[[`` に、そして ``}`` を ``]]`` に置き換えることができる場合もあります。一般的に、プログラムに ``{`` や ``}`` の文字が含まれている場合には `一般プログラムモード` を使用すべきです。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:792
 msgid "User-defined Python template functions"
@@ -1598,72 +1598,72 @@ msgid ""
 "functions is faster than calling a Python template, user-defined functions "
 "might be more efficient depending on the complexity of what the function or "
 "template does."
-msgstr ""
+msgstr "テンプレートプロセッサに独自のPython関数を追加できます。これらの関数は、3つのテンプレートプログラミングモードすべてで使用可能です。関数を追加するには、:guilabel:`環境設定 ->  詳細設定 ->  テンプレート関数` を選択してください。詳しい手順は、このダイアログに表示されています。なお、同様の目的で `Pythonテンプレート` を使用することもできます。ユーザー定義関数を呼び出す方がPythonテンプレートを呼び出すよりも高速であるため、関数またはテンプレートの処理内容の複雑さによっては、ユーザー定義関数の方が効率的になる場合があります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:797
 msgid "Special notes for using templates in different contexts"
-msgstr ""
+msgstr "異なるコンテキストでテンプレートを使用するときの特別な注意"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:799
 msgid ""
 "In the GUI (:guilabel:`Columns made from other columns` and "
 ":guilabel:`Template searches`):"
-msgstr ""
+msgstr "GUI（:guilabel:`他の列から作成された列` および :guilabel:`テンプレート検索` ）では:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:801
 msgid "GPM templates work as before."
-msgstr ""
+msgstr "GPMテンプレートは以前と同様に機能します。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:802
 msgid "Python templates have full access to the calibre database."
-msgstr ""
+msgstr "Pythonテンプレートは、calibreデータベースにフルアクセスできます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:804
 msgid "In icon rules:"
-msgstr ""
+msgstr "アイコンルールでは:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:806
 msgid ""
 "icon rule templates have no book data so field-based functions such as "
 ":ref:`ff_format_date_field`, :ref:`ff_list_count_field`, and "
 ":ref:`ff_check_yes_no` won't work."
-msgstr ""
+msgstr "アイコンルールテンプレートには本のデータが含まれていないため、`:ref:`ff_format_date_field` 、 `:ref:`ff_list_count_field` 、 `:ref:`ff_check_yes_no` といったフィールドベースの関数は機能しません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:808
 msgid "In the Content server:"
-msgstr ""
+msgstr "コンテンツサーバでは:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:810
 msgid ""
 "Templates have access to the new API but not the old API (LibraryDatabase)."
-msgstr ""
+msgstr "テンプレートは新しいAPIにはアクセスできますが、古いAPI（ライブラリデータベース）にはアクセスできません。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:811
 msgid ""
 "Because of the above, the following formatter functions are not guaranteed "
 "to work in GPM templates (composite columns, icon rules, etc) and should be "
 "avoided if you use the content server:"
-msgstr ""
+msgstr "以上の理由により、以下のフォーマッタ関数はGPMテンプレート（複合列、アイコンルールなど）では正常に動作することが保証されないため、コンテンツサーバーを使用する場合は使用を避けてください。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:813
 msgid ":ref:`ff_connected_device_name`"
-msgstr ""
+msgstr ":ref:`ff_connected_device_name`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:814
 msgid ":ref:`ff_connected_device_uuid`"
-msgstr ""
+msgstr ":ref:`ff_connected_device_uuid`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:815
 msgid ":ref:`ff_current_virtual_library_name`"
-msgstr ""
+msgstr ":ref:`ff_current_virtual_library_name`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:816
 msgid ":ref:`ff_is_marked`"
-msgstr ""
+msgstr ":ref:`ff_is_marked`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:817
 msgid ":ref:`ff_virtual_libraries`"
-msgstr ""
+msgstr ":ref:`ff_virtual_libraries`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:820
 msgid "Special notes for save/send templates"
@@ -1678,7 +1678,7 @@ msgid ""
 " create folders. However, slashes are not changed in prefix or suffix "
 "strings, so slashes in these strings will cause folders to be created. "
 "Because of this, you can create variable-depth folder structure."
-msgstr ""
+msgstr " :guilabel:`ディスクに保存` または  :guilabel:`デバイスに送信` テンプレートでテンプレートを使用する場合、特別な処理が適用されます。フィールドの値はクリーンアップされ、ファイルシステムで特殊な意味を持つ文字（スラッシュを含む）はアンダースコアに置き換えられます。つまり、フィールドのテキストを使用してフォルダを作成することはできません。ただし、プレフィックスまたはサフィックス文字列内のスラッシュは変更されないため、これらの文字列にスラッシュが含まれている場合はフォルダが作成されます。これにより、可変な深さのフォルダ構造を作成できます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:824
 msgid ""
@@ -1725,7 +1725,7 @@ msgid ""
 "chooses composite field ``#aa`` if series is not empty and composite field "
 "``#bb`` if series is empty. We therefore have two completely different save "
 "paths, depending on whether or not `series` is empty."
-msgstr ""
+msgstr "保存テンプレートを ``{series:lookup(.,#aa,#bb)}`` に設定します。このテンプレートは、シリーズが空でない場合は複合フィールド ``#aa`` を、シリーズが空の場合は複合フィールド ``#bb`` を選択します。したがって、 ``series`` が空であるかどうかによって、完全に異なる2つの保存パスを提供することになります。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:839
 msgid "Tips"
@@ -1748,7 +1748,7 @@ msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
-msgstr "書誌の置換に加えて、テンプレートには条件付きで追加のテキストを含め、置換されたデータの整形方法を制御できます。"
+msgstr "プラグボードでは、特殊なテンプレート ``{}`` を使用することで、フィールドを空（または空に相当するもの）に設定できます。このテンプレートは常に空の文字列として評価されます。"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:844
 msgid ""
