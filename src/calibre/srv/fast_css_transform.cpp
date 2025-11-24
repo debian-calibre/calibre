@@ -20,13 +20,10 @@
 #include <iostream>
 #include <string>
 #include <functional>
-#include <locale>
-#include <codecvt>
+#include <charconv>
 #include <frozen/unordered_map.h>
 #include <frozen/string.h>
 #include "../utils/cpp_binding.h"
-#define STB_SPRINTF_IMPLEMENTATION
-#include "../utils/stb_sprintf.h"
 
 // character classes {{{
 static inline bool
@@ -172,6 +169,20 @@ parse_css_number(const T &src, size_t limit = 0) {
 }
 // }}}
 
+template <typename UInt>
+std::size_t format_hex_lower_to_buf(UInt value, char* out, std::size_t out_size) {
+    static_assert(std::is_unsigned<UInt>::value, "UInt must be unsigned");
+    if (out_size == 0) return 0;
+    // to_chars writes lowercase letters for base 16 per the standard.
+    auto res = std::to_chars(out, out + out_size, value, 16);
+    if (res.ec == std::errc()) {
+        // successful: return length
+        return static_cast<std::size_t>(res.ptr - out);
+    }
+    // failure (e.g., buffer too small)
+    return 0;
+}
+
 enum class PropertyType : unsigned int {
 	font_size, page_break, non_standard_writing_mode
 };
@@ -244,11 +255,13 @@ class Token {
             out.push_back('\\');
             if (is_whitespace(ch) || is_hex_digit(ch)) {
                 char buf[8];
-                int num = stbsp_snprintf(buf, sizeof(buf), "%x ", (unsigned int)ch);
-                if (num > 0) {
-                    out.resize(out.size() + num);
-                    for (int i = 0; i < num; i++) out[i + out.size() - num] = buf[i];
-                } else throw std::logic_error("Failed to convert character to hexadecimal escape");
+                size_t num;
+                if (( num = format_hex_lower_to_buf((unsigned int)ch, buf, sizeof(buf)-1)) == 0) {
+                    throw std::logic_error("Failed to convert character to hexadecimal escape");
+                }
+                buf[num++] = ' ';
+                out.resize(out.size() + num);
+                for (unsigned i = 0; i < num; i++) out[i + out.size() - num] = buf[i];
             } else out.push_back(ch);
         }
 
@@ -448,9 +461,10 @@ class Token {
             double new_val = convert_font_size(val, lit->second);
             if (val == new_val) return false;
             char txt[128];
-            // stbsp_snprintf is locale independent unlike std::snprintf
-            int num = stbsp_snprintf(txt, sizeof(txt), "%grem", new_val);
-            if (num <= 0) throw std::runtime_error("Failed to format font size");
+            auto res = std::to_chars(txt, txt + sizeof(txt)-8, new_val, std::chars_format::general);
+            if (res.ec != std::errc()) throw std::runtime_error("Failed to format font size");
+            size_t num = res.ptr - txt;
+            txt[num++] = 'r'; txt[num++] = 'e'; txt[num++] = 'm';
             set_ascii_text(txt, num);
             return true;
         }
@@ -503,9 +517,35 @@ class Token {
 
 std::ostream& operator<<(std::ostream& os, const Token& tok) {
     std::u32string rep;
-    std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> cv;
     tok.serialize(rep);
-    os << cv.to_bytes(rep);
+    std::string utf8; utf8.reserve(4 * rep.size());
+    for (char32_t cp : rep) {
+        if (cp <= 0x7F) {
+            utf8.push_back(static_cast<char>(cp));
+        } else if (cp <= 0x7FF) {
+            utf8.push_back(static_cast<char>(0xC0 | (cp >> 6)));
+            utf8.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
+        } else if (cp <= 0xFFFF) {
+            // Reject surrogate code points if present in u32 string
+            if (cp >= 0xD800 && cp <= 0xDFFF) {
+                // U+FFFD replacement character (UTF-8 EF BF BD)
+                utf8.append("\xEF\xBF\xBD", 3);
+            } else {
+                utf8.push_back(static_cast<char>(0xE0 | (cp >> 12)));
+                utf8.push_back(static_cast<char>(0x80 | ((cp >> 6) & 0x3F)));
+                utf8.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
+            }
+        } else if (cp <= 0x10FFFF) {
+            utf8.push_back(static_cast<char>(0xF0 | (cp >> 18)));
+            utf8.push_back(static_cast<char>(0x80 | ((cp >> 12) & 0x3F)));
+            utf8.push_back(static_cast<char>(0x80 | ((cp >> 6) & 0x3F)));
+            utf8.push_back(static_cast<char>(0x80 | (cp & 0x3F)));
+        } else {
+            // invalid code point -> replacement char
+            utf8.append("\xEF\xBF\xBD", 3);
+        }
+    }
+    os << utf8;
     return os;
 }
 

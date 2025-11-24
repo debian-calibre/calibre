@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.2 manpage writer.
+.\" by the Docutils 0.22.3 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "novembre 07, 2025" "8.14.0" "calibre"
+.TH "CALIBREDB" "1" "novembre 21, 2025" "8.15.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -41,9 +41,9 @@ calibredb command [opzioni] [argomenti]
 .UNINDENT
 .sp
 \fBcalibredb\fP è l\(aqinterfaccia da linea di comando che agisce sul database di calibre. Possiede
-molti sotto\-comandi, descritti più sotto
+molti sotto\-comandi, descritti qui di seguito.
 .sp
-\fBcalibredb\fP può essere usato per manipolare un database di calibre
+\fBcalibredb\fP può essere usato per modificare un database di calibre
 identificato da un percorso oppure da un Server dei contenuti di calibre in esecuzione sulla
 macchina locale o su internet. Puoi avviare un
 Server dei contenuti di calibre con il comando \fBcalibre\-server\fP
@@ -74,11 +74,11 @@ degli utenti per il server e usare le opzioni \fB\-\-username\fP e \fB\-\-passwo
 con \fBcalibredb\fP per permettergli di accedere. Puoi impostare
 l\(aqautenticazione utente per \fBcalibre\-server\fP usando l\(aqopzione \fB\-\-enable\-auth\fP
 e usando \fB\-\-manage\-users\fP per creare gli utenti.
-Se hai avviato il server dall\(aqinterfaccia principale di calibre, usa
+Se hai lanciato il server dall\(aqinterfaccia principale di calibre, usa
 Preferenze → Condivisione via rete → Richiedi nome utente/password\&.
 .sp
-Per connetterti a un server dei contenuti in esecuzione, inserisci l\(aqURL del server dopo l\(aqopzione
-\fB\-\-with\-library\fP, vedi la documentazione dell\(aqopzione per
+Per connetterti a un server dei contenuti in esecuzione, inserisci l\(aqURL del server attraverso l\(aqopzione
+\fB\-\-with\-library\fP; vedi la documentazione dell\(aqopzione per
 dettagli ed esempi.
 .INDENT 0.0
 .IP \(bu 2

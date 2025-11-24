@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.2 manpage writer.
+.\" by the Docutils 0.22.3 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "marraskuuta 07, 2025" "8.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "marraskuuta 21, 2025" "8.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -92,7 +92,7 @@ Suorita calibre diff\-työkalu. Esimerkiksi: calibre\-debug \fB\-\-diff\fP file1
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+Käynnistä calibre \fB\(dq\fPMuokkaa kirjaa\fB\(dq\fP debug\-tilassa. Kuten \-g komennon kohdalla, käytä \fB\-\-\fP valitsinta argumenttien välittämiseen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -112,7 +112,7 @@ Vie kaikki calibre\-tiedot (kirjat/asetukset/laajennukset). Normaalisti sinulta 
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
+Suorita käyttöliittymässä virheenkorjauksen kanssa. Korjaus tulostuu stdout\- ja stderr\-ulostuloihin. Voit välittää komentoriviargumentteja käyttämällä \fB\-\-\fP merkkiä, jota seuraa argumentit, esimerkiksi: calibre\-debug \-g \fB\-\-\fP /e\-kirjan/polku
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -142,7 +142,7 @@ Tutki MOBI\-tiedostoja osoitetuissa poluissa
 .INDENT 0.0
 .TP
 .B \-\-kepubify
-Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+Muunna määritetty EPUB\-tiedosto KEPUB\-muotoon ilman täydellistä muunnosta. Kobo tekee tämän lähettäessään tiedostoja laitteeseen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -182,7 +182,7 @@ Testaa buildin binäärimoduulit
 .INDENT 0.0
 .TP
 .B \-\-un\-kepubify
-Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
+Muunna määritetty KEPUB\-tiedosto EPUB\-muotoon ilman täydellistä muunnosta. Kobo tekee tämän lähettäessään tiedostoja laitteeseen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ näytä ohjelman versionumero ja poistu
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+Suorita e\-kirjan katselu debug\-tilassa. Komennon \-g kohdalla, käytä \fB\-\-\fP valitsinta argumenttien välittämiseen.
 .UNINDENT
 .SH Author
 Kovid Goyal
