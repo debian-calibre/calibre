@@ -1,0 +1,49 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 5 Dec 2025 15:34:17 +0900
+Subject: No need to use tzdata module on Unix
+
+Windows uses tzdata module for zoneinfo, but Unix uses system's zoneinfo
+data.
+
+See also:
+  https://docs.python.org/3/library/zoneinfo.html#module-zoneinfo
+---
+ pyproject.toml            |  2 +-
+ src/calibre/test_build.py | 11 ++++++++---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 4c9e4b3..23ec7c6 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -54,7 +54,7 @@ dependencies = [
+ 	"PyQt6_WebEngine == 6.8.0",
+ 	"MacFSEvents == 0.8.4; sys_platform == 'darwin'",
+ 	"xxhash == 3.3.0",
+-    "tzdata == 2025.2",
++    "tzdata == 2025.2; platform_system == 'Windows'",
+     "tzlocal == 5.3.1",
+ ]
+ 
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index 9773188..dc62e5a 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -86,9 +86,14 @@ class BuildTest(unittest.TestCase):
+         del CHMFile, chmlib
+ 
+     def test_tzdata(self):
+-        import tzdata
+-        import tzlocal
+-        del tzlocal, tzdata
++        if iswindows:
++            # Windows uses tzdata module for zoneinfo
++            import tzdata
++            import tzlocal
++            del tzlocal, tzdata
++        else:
++            import tzlocal
++            del tzlocal
+ 
+     def test_chardet(self):
+         from calibre_extensions.uchardet import detect
