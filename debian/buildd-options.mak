@@ -9,6 +9,10 @@ TEST_FLAGS += --exclude-test-name=recipe_browser_qt
 # Network connection stalled and reaches timeout
 TEST_FLAGS += --exclude-test-name=recipe_browser_webengine
 
+# Builder dose not have OpenGL/OpenGLES device
+# This breaks Qt test
+TEST_FLAGS += --exclude-test-name=qt
+
 # Disable some tests for specific platforms
 ifeq      (amd64, $(DEB_HOST_ARCH))
   # Network test is unstable in reproducible-builder environment
