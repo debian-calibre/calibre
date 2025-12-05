@@ -24,17 +24,26 @@ class SimilarBooksAction(InterfaceAction):
     def genesis(self):
         m = self.qaction.menu()
         for text, icon, target, shortcut in [
-        (_('Books by same author'), 'user_profile.png', 'authors', 'Alt+A'),
-        (_('Books in this series'), 'books_in_series.png', 'series',
-            'Alt+Shift+S'),
-        (_('Books by this publisher'), 'publisher.png', 'publisher', 'Alt+P'),
-        (_('Books with the same tags'), 'tags.png', 'tags', 'Alt+T'),]:
+            (_('Books by same author'), 'user_profile.png', 'authors', 'Alt+A'),
+            (_('Books in this series'), 'books_in_series.png', 'series',
+                'Alt+Shift+S'),
+            (_('Books by this publisher'), 'publisher.png', 'publisher', 'Alt+P'),
+            (_('Books with the same tags'), 'tags.png', 'tags', 'Alt+T'),
+        ]:
             ac = self.create_action(spec=(text, icon, None, shortcut),
                     attr=target)
             ac.setObjectName(target)
             m.addAction(ac)
             connect_lambda(ac.triggered, self, lambda self: self.show_similar_books(self.gui.sender().objectName()))
+        ac = self.create_action(spec=(_('Ask AI for what to read next'), 'ai.png', None, 'Ctrl+Shift+A'), attr='ai')
+        ac.setObjectName('ai')
+        m.addAction(ac)
+        ac.triggered.connect(self.ask_ai)
         self.qaction.setMenu(m)
+
+    def ask_ai(self):
+        from calibre.gui2.dialogs.llm_book import read_next_action
+        self.gui.iactions['Discuss book with AI'].ask_ai_with_action(read_next_action)
 
     def show_similar_books(self, typ, *args):
         idx = self.gui.library_view.currentIndex()

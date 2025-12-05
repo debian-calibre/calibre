@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2025-11-20 10:13+UTC\n"
+"POT-Creation-Date: 2025-12-03 13:48+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2011-2025\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -306,6 +306,83 @@ msgstr "П&отужність міркування:"
 msgid "You must supply an API key to use Google AI."
 msgstr "Для користування ШІ Google потрібен ключ API."
 
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/__init__.py:11
+msgid ""
+"AI services from LM Studio, when you want to run AI models yourself rather "
+"than rely on a third party provider."
+msgstr "Служби ШІ від LM Studio, якщо ви хочете запускати моделі ШІ самостійно, а не покладатися на сторонніх надавачів послуг."
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:25
+msgid ""
+"LM Studio allows you to run AI models locally. Start the LM Studio server "
+"(usually on port 1234) and ensure a model is loaded."
+msgstr "За допомогою продуктів LM Studio ви можете запускати моделі ШІ локально. Запустіть сервер LM Studio (зазвичай, на порту 1234) і переконайтеся, що модель завантажено."
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:31
+#, python-brace-format
+msgid "The LM Studio URL, defaults to {}"
+msgstr "Адреса LM Studio, типово {}"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:32
+msgid "LM Studio &URL:"
+msgstr "&Адреса LM Studio:"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:36
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
+#: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
+msgid " seconds"
+msgstr " секунд"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:38
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+msgid "&Timeout:"
+msgstr "&Час очікування:"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:44
+msgid "Controls randomness. 0 is deterministic, higher is more creative."
+msgstr "Керує випадковістю. 0 — без випадковості, вищі значення роблять результати більш непередбачуваними."
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:45
+msgid "T&emperature:"
+msgstr "&Температура:"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:51
+msgid "Enter model ID or click Refresh"
+msgstr "Введіть ідентифікатор моделі або натисніть кнопку «Освіжити»"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:54
+msgid "&Refresh models"
+msgstr "&Освіжити моделі"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:59
+msgid "&Model:"
+msgstr "&Модель:"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:74
+#, python-brace-format
+msgid "Found {} models: {}"
+msgstr "Знайдено {} моделей: {}"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:78
+msgid "No models found. Ensure a model is loaded in LM Studio."
+msgstr "Не знайдено жодної моделі. Переконайтеся, що модель завантажено до LM Studio."
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:80
+#, python-brace-format
+msgid "Connection failed: {}"
+msgstr "Не вдалося встановити з'єднання: {}"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:107
+#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
+msgid "No model specified"
+msgstr "Модель не задано"
+
+#: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:107
+msgid "You must specify a model ID."
+msgstr "Вам слід вказати ідентифікатор моделі."
+
 #: /__w/calibre/calibre/src/calibre/ai/ollama/__init__.py:11
 msgid ""
 "AI services from Ollama, when you want to run AI models yourself rather than"
@@ -334,17 +411,6 @@ msgstr "Введіть адресу комп'ютера, на якому зап�
 msgid "Ollama &URL:"
 msgstr "&Адреса Ollama:"
 
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:104
-#: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
-msgid " seconds"
-msgstr " секунд"
-
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
-msgid "&Timeout:"
-msgstr "&Час очікування:"
-
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:45
 msgid "Enter the name of the model to use for text based tasks."
 msgstr "Введіть назву моделі, якою слід скористатися для текстових завдань."
@@ -366,10 +432,6 @@ msgid ""
 "A list of HTTP headers to send with every request to the Ollama API. Add a "
 "new header per line in the format: Header-Name: Value"
 msgstr "Список заголовків HTTP, які слід надсилати з кожним запитом до програмного інтерфейсу Ollama. Додайте для кожного нового заголовка рядок у форматі: назва-заголовка: значення"
-
-#: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
-msgid "No model specified"
-msgstr "Модель не задано"
 
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
 msgid "You specify a model to use for text based tasks."
@@ -744,9 +806,9 @@ msgstr "Не робить абсолютно нічого"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:79
 #: /__w/calibre/calibre/src/calibre/db/__init__.py:115
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1523
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1548
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2317
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1526
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1551
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2320
 #: /__w/calibre/calibre/src/calibre/db/cache.py:358
 #: /__w/calibre/calibre/src/calibre/db/cache.py:361
 #: /__w/calibre/calibre/src/calibre/db/cache.py:371
@@ -906,7 +968,7 @@ msgstr "Не робить абсолютно нічого"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:166
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:168
-#: /__w/calibre/calibre/src/calibre/gui2/cover_flow.py:169
+#: /__w/calibre/calibre/src/calibre/gui2/cover_flow.py:173
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1599
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1602
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/tabbed_device_config.py:383
@@ -1044,436 +1106,440 @@ msgstr "Бібліотеку закрито"
 msgid "AI provider"
 msgstr "Надавач даних ШІ"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:24
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:25
 msgid ""
 "Create a PMLZ archive containing the PML file and all images in the folder "
 "pmlname_img or images. This plugin is run every time you add a PML file to "
 "the library."
 msgstr "Створіть PMLZ архів, що буде містити в собі файл PML та всі малюнки, у теці pmlname_img або images. Цей додаток запускається кожен раз, коли ви додаєте файл HTML до бібліотеки."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:55
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:56
 msgid ""
 "Create a TXTZ archive when a TXT file is imported containing Markdown or "
 "Textile references to images. The referenced images as well as the TXT file "
 "are added to the archive."
 msgstr "Створити архів TXTZ у разі імпортування файла TXT, що містить посилання Markdown або Textile на зображення. До архіву буде додано разом з файлом TXT файли зображень."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:110
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:111
 msgid "Extract cover from comic files"
 msgstr "Видобути обкладинки з файлів коміксу"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:164
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:188
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:199
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:210
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:222
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:234
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:245
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:256
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:267
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:278
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:289
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:300
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:311
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:323
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:336
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:359
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:371
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:382
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:394
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:405
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:417
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:165
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:189
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:200
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:211
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:223
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:235
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:246
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:257
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:268
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:279
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:290
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:301
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:312
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:324
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:337
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:360
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:372
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:383
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:395
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:406
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:418
 #, python-format
 msgid "Read metadata from %s files"
 msgstr "Прочитати метадані з %s файлів"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:175
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:176
 msgid "Read metadata from EPUB and KEPUB files"
 msgstr "Читати метадані з файлів EPUB і KEPUB"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:348
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:349
 msgid "Read metadata from e-books in RAR archives"
 msgstr "Прочитати метадані з електронних книг в RAR-архіві"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:429
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:430
 msgid "Read metadata from e-books in ZIP archives"
 msgstr "Прочитати метадані з електронних книг в ZIP-архіві"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:448
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:449
 msgid "Set metadata in EPUB and KEPUB files"
 msgstr "Встановити метадані для файлів EPUB і KEPUB"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:460
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:461
 #, python-brace-format
 msgid ""
 "Enter {0} below to have the EPUB metadata writer plugin not add cover images"
 " to EPUB files that have no existing cover image."
 msgstr "Вкажіть {0} нижче, щоб додаток записування метаданих EPUB не додавав зображенення обкладинок до файлів EPUB, у яких ще немає наявних зображень обкладинок."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:468
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:491
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:502
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:526
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:538
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:549
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:469
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:492
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:503
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:527
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:539
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:550
 #, python-format
 msgid "Set metadata in %s files"
 msgstr "Налаштувати метадані в %s файлах"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:479
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:514
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:561
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:573
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:584
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:480
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:515
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:562
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:574
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:585
 #, python-format
 msgid "Set metadata from %s files"
 msgstr "Взяти метадані з %s файлів"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:864
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:865
 msgid "Add books to calibre or the connected device"
 msgstr "Додати книги до збірки calibre або на під’єднаний пристрій"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:870
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:871
 msgid "Fetch annotations from a connected Kindle (experimental)"
 msgstr "Отримати анотації з під’єднаного пристрою Kindle (експериментальне)"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:876
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:877
 msgid "Generate a catalog of the books in your calibre library"
 msgstr "Створити каталог книг у вашій бібліотеці calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:882
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:883
 msgid "Convert books to various e-book formats"
 msgstr "Перетворити електронні книги у різні формати"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:888
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:889
 msgid "Fine tune your e-books"
 msgstr "Додати блиску вашим книгам"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:894
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:895
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:15
 msgid "Browse highlights and bookmarks from all books in the library"
 msgstr "Навігація підсвічуваннями та закладками з усіх книг у бібліотеці"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:900
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:901
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_notes.py:12
 msgid "Browse notes for authors, tags, etc. in the library"
 msgstr "Навігація нотатками щодо авторів, міток та інших даних у бібліотеці"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:906
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:907
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fts.py:12
 msgid "Search the full text of all books in the calibre library"
 msgstr "Шукати у всьому тексті усіх книг у бібліотеці calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:912
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:913
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:73
 msgid "Edit the Table of Contents in your books"
 msgstr "Редагувати записи змісту ваших книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:918
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:919
 msgid "Delete books from your calibre library or connected device"
 msgstr "Вилучити книги з Calibre або під'єднаного пристрою"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:924
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:925
 msgid ""
 "Embed updated metadata into the actual book files in your calibre library"
 msgstr "Вбудовувати оновлені метадані безпосередньо до файлів електронної книги у вашій бібліотеці calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:930
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:931
 msgid "Edit the metadata of books in your calibre library"
 msgstr "Редагувати метадані книжок у бібліотеці Сalibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:936
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:937
 msgid "Read books in your calibre library"
 msgstr "Читати книги з вашої бібліотеки calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:942
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:943
+msgid "Discuss books in your calibre library with AI"
+msgstr "Обговорити книги у вашій бібліотеці calibre з ШІ"
+
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:949
 msgid "Download news from the internet in e-book form"
 msgstr "Отримати новини з інтернету у форматі електронної книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:948
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:955
 msgid "Show a list of related books quickly"
 msgstr "Показати список пов’язаних книжок"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:954
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:961
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tag_mapper.py:14
 msgid "Filter/transform the tags for books in the library"
 msgstr "Фільтрувати або перетворити мітки книг у бібліотеці"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:960
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:967
 #: /__w/calibre/calibre/src/calibre/gui2/actions/author_mapper.py:15
 msgid "Transform the authors for books in the library"
 msgstr "Перетворити записи авторів для книг у бібліотеці"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:966
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:973
 msgid "Show an editor for testing templates"
 msgstr "Показати вікно редактора для тестових шаблонів"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:972
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:979
 msgid ""
 "Show a dialog for creating and managing template functions and stored "
 "templates"
 msgstr "Показати вікно створення та керування шаблонними функціями та збереженими шаблонами"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:978
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:985
 msgid "Export books from your calibre library to the hard disk"
 msgstr "Експортувати книги з бібліотеки Сalibre на жорсткий диск"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:984
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:991
 msgid "Show Book details in a separate popup"
 msgstr "Показувати параметри книги на окремій панелі підказки"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:990
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:997
 #: /__w/calibre/calibre/src/calibre/gui2/actions/restart.py:15
 msgid "Restart calibre"
 msgstr "Перезапустити Сalibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:996
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1003
 msgid "Open the folder that contains the book files in your calibre library"
 msgstr "Відкрити теку, яка містить файли книг, у вашій бібліотеці calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1003
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1010
 msgid "Auto scroll through the list of books"
 msgstr "Автоматичне гортання списком книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1009
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1016
 msgid "Send books to the connected device"
 msgstr "Надіслати книги на під'єднаний пристрій"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1015
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1022
 msgid ""
 "Send books via email or the web. Also connect to folders on your computer as"
 " if they are devices"
 msgstr "Надіслати книги електронною поштою або інтернетом. Також встановити з’єднання з теками на вашому комп’ютері, неначе вони є пристроями"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1022
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1029
 #: /__w/calibre/calibre/src/calibre/gui2/actions/help.py:18
 msgid "Browse the calibre User Manual"
 msgstr "Переглянути посібник користувача Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1028
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1035
 msgid "Customize calibre"
 msgstr "Налаштувати calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1034
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1041
 msgid "Easily find books similar to the currently selected one"
 msgstr "Знайти книги, подібні до поточної позначеної"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1040
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1047
 msgid ""
 "Switch between different calibre libraries and perform maintenance on them"
 msgstr "Перемкнутися між різними бібліотеками calibre і виконати супровід цих бібліотек"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1047
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1054
 msgid "Copy books from the device to your calibre library"
 msgstr "Копіювати книги з пристрою до бібліотеки calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1053
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1060
 msgid "Edit the collections in which books are placed on your device"
 msgstr "Змінити збірки, у яких зберігатимуться книги на вашому пристрої"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1059
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1066
 msgid "Match book on the devices to books in the library"
 msgstr "Пошук відповідника книги на пристрої у бібліотеці"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1065
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1072
 #: /__w/calibre/calibre/src/calibre/gui2/actions/match_books.py:46
 msgid "Show the book in the calibre library that matches this book"
 msgstr "Показати у бібліотеці calibre книгу, яка відповідає цій книзі"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1071
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1078
 msgid "Copy a book from one calibre library to another"
 msgstr "Скопіювати книги з поточної бібліотеки в іншу"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1077
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid "Edit e-books in the EPUB or AZW3 formats"
 msgstr "Редагувати книгу у форматі EPUB або AZW"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1083
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1090
 msgid "Make small changes to EPUB or HTMLZ files in your calibre library"
 msgstr "Внести невеличкі зміни до файлів EPUB або HTMLZ у вашій бібліотеці calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1089
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1096
 msgid ""
 "Find the next or previous match when searching in your calibre library in "
 "highlight mode"
 msgstr "Знайти наступний або попередній відповідник під час пошуку у вашій бібліотеці calibre у режимі підсвічування"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1096
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1103
 msgid "Choose a random book from your calibre library"
 msgstr "Вибрати випадковим чином книгу із бібліотеки Сalibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1102
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1109
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:52
 msgid "Sort the list of books"
 msgstr "Упорядкувати список книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1108
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1115
 msgid "Temporarily mark books"
 msgstr "Тимчасове позначення книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1115
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1122
 msgid "Manage tag browser categories"
 msgstr "Керування категоріями переглядача міток"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1122
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1129
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:29
 msgid "Show a menu of saved searches"
 msgstr "Показати меню збережених пошуків"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1129
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1136
 msgid "Show a menu of actions to change calibre's layout"
 msgstr "Показати меню дій зі зміни компонування вікна calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1136
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1143
 msgid "Open the context menu for the column"
 msgstr "Відкрити контекстне меню для стовпчика"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1143
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1150
 msgid "Open a menu showing all installed GUI actions"
 msgstr "Відкрити меню із усіма встановленими пунктами дій графічного інтерфейсу"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1149
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1156
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
 msgid "Change the current Virtual library"
 msgstr "Змінити поточну віртуальну бібліотеку"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1156
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1163
 msgid "Search for books from different book sellers"
 msgstr "Шукати книги у різних продавців"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1173
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1180
 msgid "Open a template dialog to define and edit column tooltips"
 msgstr "Відкрити діалогове вікно шаблонів для визначення та редагування підказок до стовпчиків"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1179
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1186
 msgid "Get new calibre plugins or update your existing ones"
 msgstr "Отримати нові додатки для calibre або оновити наявні"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1204
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1211
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel.py:20
 msgid "Look & feel"
 msgstr "Вигляд та поведінка"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1206
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1219
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1231
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1243
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1256
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1213
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1226
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1238
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1250
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1263
 msgid "Interface"
 msgstr "Зовнішній вигляд"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1210
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1217
 msgid "Adjust the look and feel of the calibre interface to suit your tastes"
 msgstr "Налаштуйте зовнішній вигляд Calibre за своїм смаком"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1217
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1224
 msgid "Behavior"
 msgstr "Поведінка"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1223
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1230
 msgid "Change the way calibre behaves"
 msgstr "Змінити спосіб поведінки Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1229
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1236
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:671
 msgid "Add your own columns"
 msgstr "Додати нетиповий стовпчик"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1235
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1242
 msgid "Add/remove your own columns to the calibre book list"
 msgstr "Додати/Вилучити власні стовпчики у списку книг calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1241
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1248
 msgid "Toolbars & menus"
 msgstr "Панелі інструментів і меню"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1254
 msgid ""
 "Customize the toolbars and context menus, changing which actions are "
 "available in each"
 msgstr "Налаштувати панель і контекстне меню"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1254
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1261
 msgid "Searching"
 msgstr "Пошук"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1260
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1267
 msgid "Customize the way searching for books works in calibre"
 msgstr "Налаштувати спосіб пошуку книг в calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1266
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1273
 msgid "Input options"
 msgstr "Вхідні параметри"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1268
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1285
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1297
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1275
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1292
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1304
 msgid "Conversion"
 msgstr "Перетворення"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1272
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1279
 msgid "Set conversion options specific to each input format"
 msgstr "Встановити параметри перетворення окремо для кожного вхідного формату"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1283
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1290
 msgid "Common options"
 msgstr "Загальні параметри"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1289
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1296
 msgid "Set conversion options common to all formats"
 msgstr "Встановити загальні параметри перетворення для всіх форматів"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1295
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1302
 msgid "Output options"
 msgstr "Вихідні параметри"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1301
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1308
 msgid "Set conversion options specific to each output format"
 msgstr "Встановити параметри перетворення окремо для кожного вихідного формату"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1307
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1314
 msgid "Adding books"
 msgstr "Додавання книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1309
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1322
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1335
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1348
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1316
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1329
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1342
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1355
 msgid "Import/export"
 msgstr "Імпортування/Експортування"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1320
 msgid "Control how calibre reads metadata from files when adding books"
 msgstr "Контроль читання метаданих з файлів при додаванні книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1320
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1327
 msgid "Saving books to disk"
 msgstr "Запис книг на диск"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1326
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1333
 msgid ""
 "Control how calibre exports files from its database to disk when using Save "
 "to disk"
 msgstr "Контроль експорту файлів зі своєї бази даних на диску при використанні Зберегти на диск"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1333
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1340
 msgid "Sending books to devices"
 msgstr "Надсилання книг на пристрої"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1339
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1346
 msgid "Control how calibre transfers files to your e-book reader"
 msgstr "Керування передаванням файлів на ваш пристрій для читання ел. книг"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1346
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1353
 msgid "Metadata plugboards"
 msgstr "Засоби обробки метаданих"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1352
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1359
 msgid "Change metadata fields before saving/sending"
 msgstr "Змініть поля метаданих перед збереженням/надсиланням"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1358
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1365
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_stored_templates.py:11
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:296
@@ -1489,100 +1555,100 @@ msgstr "Змініть поля метаданих перед збереженн
 msgid "Template functions"
 msgstr "Шаблонні функції"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1360
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1424
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1437
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1449
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1461
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1199
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1367
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1431
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1444
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1456
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1468
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1200
 msgid "Advanced"
 msgstr "Додатково"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1364
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1371
 msgid "Create your own template functions"
 msgstr "Створити власні шаблонні функції"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1370
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1377
 msgid "Sharing books by email"
 msgstr "Обмін ел. поштою"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1372
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1385
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1399
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1411
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1379
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1392
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1406
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1418
 msgid "Sharing"
 msgstr "Спільний доступ"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1376
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
 msgid ""
 "Setup sharing of books via email. Can be used for automatic sending of "
 "downloaded news to your devices"
 msgstr "Налаштування обміну книг електронною поштою. Може використовуватися для автоматичного надсилання новин, завантажених на ваші пристрої"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1390
 msgid "Sharing over the net"
 msgstr "Обмін мережею"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1389
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1396
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
 msgstr "Налаштування сервера вмісту, який дасть вам доступ до бібліотеки calibre в будь-якому місці та на будь-якому пристрої, через Інтернет"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1397
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1404
 msgid "Metadata download"
 msgstr "Отримання метаданих"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1403
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1410
 msgid "Control how calibre downloads e-book metadata from the net"
 msgstr "Керувати способом отримання Calibre метаданих електронних книжок у інтернеті"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1409
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1416
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:491
 msgid "Ignored devices"
 msgstr "Ігноровані пристрої"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1415
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1422
 msgid ""
 "Control which devices calibre will ignore when they are connected to the "
 "computer."
 msgstr "Керувати списком з’єднуваних з комп’ютером пристроїв, які calibre має ігнорувати."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1422
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1429
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:169
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:305
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.py:85
 msgid "Plugins"
 msgstr "Додатки"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1428
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1435
 msgid "Add/remove/customize various bits of calibre functionality"
 msgstr "Додати/Вилучити/Налаштувати різні частини інтерфейсу calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1435
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1442
 msgid "Tweaks"
 msgstr "Коригування"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1441
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1448
 msgid "Fine tune how calibre behaves in various contexts"
 msgstr "Досконале налаштування поводження calibre в різних ситуаціях"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1447
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1454
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:594
 msgid "Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1453
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1460
 msgid "Customize the keyboard shortcuts used by calibre"
 msgstr "Налаштувати клавіатурні скорочення, використані у calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1459
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1466
 #: /__w/calibre/calibre/src/calibre/devices/usbms/device.py:165
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:162
 msgid "Miscellaneous"
 msgstr "Різне"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1465
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1472
 msgid "Miscellaneous advanced configuration"
 msgstr "Різні додаткові налаштування"
 
@@ -1951,13 +2017,13 @@ msgstr "Каталог"
 msgid "News"
 msgstr "Новини"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:479
+#: /__w/calibre/calibre/src/calibre/db/backend.py:482
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:324
 #, python-brace-format
 msgid "Path to library ({0}) too long. It must be less than {1} characters."
 msgstr "Шлях до бібліотеки надто довгий ({0}). У записі шляху не повинно бути більше {1} символів."
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:487
+#: /__w/calibre/calibre/src/calibre/db/backend.py:490
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_clone.py:56
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:595
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/choose_library.py:126
@@ -1966,38 +2032,38 @@ msgstr "Шлях до бібліотеки надто довгий ({0}). У з�
 msgid "Path to library too long. It must be less than %d characters."
 msgstr "Шлях до бібліотеки є занадто довгим. Шлях має бути коротшим за %d символів."
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:582
+#: /__w/calibre/calibre/src/calibre/db/backend.py:585
 #: /__w/calibre/calibre/src/calibre/library/database2.py:210
 msgid "restored preference "
 msgstr "відновлене налаштування "
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:588
+#: /__w/calibre/calibre/src/calibre/db/backend.py:591
 #: /__w/calibre/calibre/src/calibre/library/database2.py:215
 #: /__w/calibre/calibre/src/calibre/library/restore.py:234
 msgid "creating custom column "
 msgstr "створення нетипового стовпчика "
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1236
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1239
 #: /__w/calibre/calibre/src/calibre/library/custom_columns.py:673
 msgid "No label was provided"
 msgstr "Не вказано мітки"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1238
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1241
 #: /__w/calibre/calibre/src/calibre/library/custom_columns.py:675
 msgid ""
 "The label must contain only lower case letters, digits and underscores, and "
 "start with a letter"
 msgstr "Мітка має складатися лише з малих літер, цифр і символів підкреслювання і має починатися з літери"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1426
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1429
 msgid "Dumping database to SQL"
 msgstr "Створення дампу бази даних у форматі SQL"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1435
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1438
 msgid "Restoring database from SQL"
 msgstr "Відновлюємо базу даних з SQL"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2711
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2714
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3224
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3629
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:224
@@ -2863,9 +2929,9 @@ msgid ""
 msgstr "%prog збережені_пошуки [параметри] (list|add|remove)\n\nКерування збереженими записами пошуків, що зберігаються у цій базі даних.\nЯкщо ви спробуєте додати запит з назвою, яку вже записано до бази даних,\nпопередній запис буде замінено новим.\n\nСинтаксис для додавання:\n\n%prog збережені_пошуки add назва_пошуку вираз_пошуку\n\nСинтаксис для вилучення:\n\n%prog збережені_пошуки remove назва_пошуку"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:58
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:542
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:108
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:620
 msgid "Name:"
 msgstr "Назва:"
 
@@ -3144,7 +3210,7 @@ msgstr "Помилка: слід вказати команду із наведе
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:302
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:155
-#: /__w/calibre/calibre/src/calibre/gui2/cover_flow.py:124
+#: /__w/calibre/calibre/src/calibre/gui2/cover_flow.py:130
 msgid "TEMPLATE ERROR"
 msgstr "Помилка шаблона"
 
@@ -8358,6 +8424,7 @@ msgstr "Теґи"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:824
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:900
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:82
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/match_books.py:89
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:230
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:288
@@ -8598,27 +8665,27 @@ msgstr "Прочитати метадані зі вказаного файла O
 msgid "Set the BookID in LRF files"
 msgstr "Вказати BookID в LRF файлах"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:175
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:231
 msgid "No file specified"
 msgstr "Файл не вказаний"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:191
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:247
 msgid "Original metadata"
 msgstr "Початкові метадані"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:208
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:264
 msgid "Changed metadata"
 msgstr "Змінені метадані"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:220
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:276
 msgid "OPF created in"
 msgstr "OPF створений в"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:226
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:282
 msgid "Cover saved to"
 msgstr "Обкладинка збережена"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:228
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:284
 msgid "No cover found"
 msgstr "Обкладинка не знайдена"
 
@@ -8646,115 +8713,115 @@ msgstr "Amazon"
 msgid "Google Images"
 msgstr "Зображення Google"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1095
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1105
 msgid "Downloads metadata and covers from Amazon"
 msgstr "Отримує метадані і обкладинки з Amazon"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1106
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1116
 msgid "US"
 msgstr "США"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1107
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1117
 msgid "France"
 msgstr "Франція"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1108
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1118
 msgid "Germany"
 msgstr "Німеччина"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1109
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1119
 msgid "UK"
 msgstr "Великобританія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1110
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1120
 msgid "Australia"
 msgstr "Австралія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1111
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1121
 msgid "Italy"
 msgstr "Італія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1112
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1122
 msgid "Japan"
 msgstr "Японія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1113
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1123
 msgid "Spain"
 msgstr "Іспанія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1114
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1124
 msgid "Brazil"
 msgstr "Бразилія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1115
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1125
 msgid "India"
 msgstr "Індія"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1116
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1126
 msgid "Netherlands"
 msgstr "Нідерланди"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1117
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1127
 msgid "China"
 msgstr "Китай"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1118
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1128
 msgid "Canada"
 msgstr "Канада"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1119
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1129
 msgid "Sweden"
 msgstr "Швеція"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1123
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1133
 msgid "Choose server automatically"
 msgstr "Вибрати сервер автоматично"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1124
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1134
 msgid "Amazon servers"
 msgstr "Сервери Amazon"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1125
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1135
 msgid "Bing search cache"
 msgstr "Кеш пошуку Bing"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1126
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1136
 msgid "Google search cache"
 msgstr "Кеш пошуку Google"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1127
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1137
 msgid "Wayback machine cache (slow)"
 msgstr "Кеш машини Wayback (повільно)"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1128
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1138
 msgid "DuckDuckGo search and Google cache"
 msgstr "Пошук DuckDuckGo і кеш Google"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1132
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1142
 msgid "Amazon country website to use:"
 msgstr "Місцевий сайт Amazon, яким слід скористатися:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1133
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1143
 msgid ""
 "Metadata from Amazon will be fetched using this country's Amazon website."
 msgstr "Метадані від Amazon буде отримано з сайта Amazon, призначеного для вказаної країни."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1135
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1145
 msgid "Server to get data from:"
 msgstr "Сервер для отримання даних:"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1137
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1147
 msgid ""
 "Amazon has started blocking attempts to download metadata from its servers. "
 "To get around this problem, calibre can fetch the Amazon data from many "
 "different places where it is cached. Choose the source you prefer."
 msgstr "Компанія Amazon розпочала спроби блокування отримання метаданих зі своїх серверів. Щоб позбутися цієї проблеми, calibre може отримувати дані Amazon з багатьох інших місць, де їх записують до кешу. Виберіть бажане для вас джерело даних."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1142
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1152
 msgid "Use the MOBI-ASIN for metadata search"
 msgstr "Використовувати MOBI-ASIN для пошуку метаданих"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1144
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1154
 msgid ""
 "Enable this option to search for metadata with an ASIN identifier from the "
 "MOBI file at the current country website, unless any other amazon id is "
@@ -8762,18 +8829,18 @@ msgid ""
 "store, you could get incorrect results."
 msgstr "Позначте цей пункт для того, щоб наказати програми шукати метадані з ідентифікатором ASIN з файла MOBI на сайті поточної країни, якщо виявиться, що будь-який інший ідентифікатор amazon є недоступним. Зауважте, що якщо файл MOBI походить з крамниці Amazon іншої країни, ви можете отримати неправильні результати."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1150
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1160
 msgid "Prefer the Kindle edition, when available"
 msgstr "Перевага видання Kindle, якщо таке доступне"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1152
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1162
 msgid ""
 "When searching for a book and the search engine returns both paper and "
 "Kindle editions, always prefer the Kindle edition, instead of whatever the "
 "search engine returns at the top."
 msgstr "При пошуку книги, якщо рушій пошуку повертає паперове видання та видання Kindle, завжди надавати перевагу виданню Kindle, замість верхніх пунктів, які повертає рушій пошуку."
 
-#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1520
+#: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/amazon.py:1530
 msgid "Amazon timed out. Try again later."
 msgstr "Перевищення часу очікування на дані з Amazon. Повторіть спробу пізніше."
 
@@ -10714,7 +10781,7 @@ msgstr "Керування додаванням книг"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:84
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_template_tester.py:48
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:113
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:392
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:403
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:339
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:453
 msgid "No books selected"
@@ -10749,7 +10816,7 @@ msgstr "До буфера обміну не було скопійовано жо
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:73
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/device_category_editor.py:113
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:273
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:806
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:853
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/progress.py:117
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/restore_library.py:57
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/restore_library.py:96
@@ -10943,13 +11010,14 @@ msgstr "Додати до бібліотеки"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:656
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/actions/llm_book.py:41
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:84
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:101
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:108
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tweak_epub.py:76
 #: /__w/calibre/calibre/src/calibre/gui2/actions/unpack_book.py:308
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:212
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:280
 msgid "No book selected"
 msgstr "Не вибрано книгу"
 
@@ -11123,7 +11191,7 @@ msgid "Show the book list header context menu"
 msgstr "Показати контекстне меню заголовка списку книг"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:14
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:69
 msgid "Browse annotations"
 msgstr "Навігація анотаціями"
 
@@ -11386,7 +11454,7 @@ msgid ""
 msgstr "УВАГА! Це означає, що усі адреси calibre://, які посилаються на дані у цій бібліотеці, не працюватимуть."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:590
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:851
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:898
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:323
 msgid "Already exists"
@@ -11756,7 +11824,7 @@ msgstr "Вказати бібліотеку"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:255
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:158
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:474
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:191
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:361
 msgid "&Copy"
@@ -11791,6 +11859,7 @@ msgstr "Дублікати книг"
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_folder_browser.py:136
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:134
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/duplicates.py:52
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:181
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/download.py:137
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:281
@@ -11804,6 +11873,7 @@ msgstr "&Позначити всі"
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_folder_browser.py:138
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/book_info.py:136
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/duplicates.py:54
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:151
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/download.py:137
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:282
@@ -12811,6 +12881,18 @@ msgstr "Перемкнути {}"
 msgid "Do you really want to delete the saved layout {0}?"
 msgstr "Ви справді хочете вилучити збережене компонування {0}?"
 
+#: /__w/calibre/calibre/src/calibre/gui2/actions/llm_book.py:14
+msgid "Ask AI about books"
+msgstr "Запитати у ШІ про книги"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/llm_book.py:14
+msgid "Discuss book with AI"
+msgstr "Обговорити книгу з ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/llm_book.py:41
+msgid "Cannot ask AI"
+msgstr "Не вдалося надіслати запит до ШІ"
+
 #: /__w/calibre/calibre/src/calibre/gui2/actions/manage_categories.py:13
 msgid "Manage categories"
 msgstr "Керування категоріями"
@@ -13554,6 +13636,10 @@ msgstr "Книги цього видавця"
 msgid "Books with the same tags"
 msgstr "Книги з такими ж мітками"
 
+#: /__w/calibre/calibre/src/calibre/gui2/actions/similar_books.py:38
+msgid "Ask AI for what to read next"
+msgstr "Запитати у ШІ щодо рекомендацій для наступного читання"
+
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:52
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:824
@@ -13957,40 +14043,44 @@ msgid "View specific format"
 msgstr "Переглянути в вибраному форматі"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:65
+msgid "Discuss selected book(s) with AI"
+msgstr "Обговорити позначені книги з ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:66
 msgid "View with calibre E-book viewer"
 msgstr "Переглянути за допомогою засобу перегляду calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:66
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:67
 msgid "Read a random book"
 msgstr "Читати випадкову книгу"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:72
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:73
 msgid "Clear recently viewed list"
 msgstr "Спорожнити список нещодавно переглянутих"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:75
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:76
 msgid "Continue reading previous book"
 msgstr "Продовжити читання попередньої книги"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:75
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:76
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/main.py:140
 msgid "Continue reading the last opened book"
 msgstr "Продовжити читання останньої відкритої книги"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:152
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:160
 msgid "E-book file missing"
 msgstr "Не вистачає файла електронної книги"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:153
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:161
 #, python-brace-format
 msgid "The {} format file is missing from the calibre library folder"
 msgstr "У теці бібліотеки calibre не вистачає файла формату {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:200
 msgid "No associated program"
 msgstr "Немає пов’язаної програми"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:193
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:201
 #, python-format
 msgid ""
 "Windows will try to open %s with calibre itself resulting in a duplicate in "
@@ -13999,39 +14089,39 @@ msgid ""
 "type."
 msgstr "Windows спробує відкрити %s за допомогою самої програми calibre, що призведе до появи дублікату у вашій бібліотеці calibre. Вам варто встановити якусь програму, придатну до перегляду цього файла і повідомити Windows про те, що відкривати файли цього типу слід саме у встановленій програмі."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:212
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:345
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:352
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:356
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:363
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:402
 msgid "Cannot view"
 msgstr "Не вдається переглянути"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:226
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:245
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:237
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:256
 msgid "Format unavailable"
 msgstr "Формат недоступний"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:227
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:238
 msgid "Selected books have no formats"
 msgstr "Позначені книги не мають форматування"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:229
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:240
 #: /__w/calibre/calibre/src/calibre/gui2/convert/regex_builder.py:146
 msgid "Choose the format to view"
 msgstr "Вибрати формат для перегляду"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:246
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:257
 #, python-format
 msgid ""
 "Not all the selected books were available in the %s format. You should "
 "convert them first."
 msgstr "Не всі з вибраних книг доступні у форматі %s. Вам слід спочатку перетворити книги у цей формат."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:258
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:269
 msgid "Multiple books selected"
 msgstr "Вибрано кілька книг"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:259
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:270
 #, python-format
 msgid ""
 "You are attempting to open %d books. Opening too many books at once can be "
@@ -14040,21 +14130,21 @@ msgid ""
 "continue?"
 msgstr "Ви намагаєтеся відкрити %d книг. Відкриття завеликої кількості книг одразу може бути дуже тривалим і значно уповільнити роботу вашої системи. Процедуру відкриття не можна буде зупинити, щойно її буде розпочато. Бажаєте виконати відкриття?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:268
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:292
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:303
 msgid "Cannot open folder"
 msgstr "Не можу відкрити теку"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:286
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:297
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:320
 msgid "Failed to create folder"
 msgstr "Не вдалося створити теку"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:346
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:357
 msgid "This book no longer exists in your library"
 msgstr "Цієї книги більше немає у вашій бібліотеці"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:353
+#: /__w/calibre/calibre/src/calibre/gui2/actions/view.py:364
 #, python-format
 msgid "%s has no available formats."
 msgstr "У %s немає доступних форматів."
@@ -14728,7 +14818,7 @@ msgid "All book details"
 msgstr "Усі подробиці щодо книги"
 
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:707
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:499
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:146
 msgid "Selected text"
 msgstr "Позначений текст"
 
@@ -15474,13 +15564,13 @@ msgstr "Перемкнути програму між широким і вузь�
 msgid "Send query to AI"
 msgstr "Надіслати запит до ШІ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:149
 msgid ""
 "AI generated answers can be inaccurate, please verify any answers before "
 "acting on them."
 msgstr "Відповіді, які надано ШІ, можуть бути неточними. Будь ласка, перевіряйте усі відповіді, перш ніж діяти."
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:192
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:198
 msgid "Details:"
 msgstr "Подробиці:"
 
@@ -15879,33 +15969,33 @@ msgstr "Шрифти"
 msgid "Change case"
 msgstr "Змінити регістр"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1197
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1198
 #, python-format
 msgid "%s toolbars"
 msgstr "%s панелі інструментів"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1197
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1198
 #: /__w/calibre/calibre/src/calibre/gui2/layout_menu.py:78
 msgid "Hide"
 msgstr "Приховати"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1197
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1198
 #: /__w/calibre/calibre/src/calibre/gui2/layout_menu.py:78
 msgid "Show"
 msgstr "Показати"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1207
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1208
 #: /__w/calibre/calibre/src/calibre/gui2/markdown_editor.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:489
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:490
 msgid "Smarten punctuation"
 msgstr "Обробити пунктуацію"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1576
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1577
 msgid "&Normal view"
 msgstr "З&вичайний перегляд"
 
-#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1577
+#: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1578
 msgid "&HTML source"
 msgstr "&Код HTML"
 
@@ -17256,7 +17346,7 @@ msgstr "Додати поточний вираз до списку виразі�
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:697
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:627
 msgid "&Add"
 msgstr "&Додати"
 
@@ -17269,10 +17359,10 @@ msgid "Remove the currently selected expression"
 msgstr "Вилучити поточний позначений вираз"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:148
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:629
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1219
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:405
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:699
 msgid "&Remove"
 msgstr "&Вилучити"
 
@@ -17686,7 +17776,7 @@ msgid ""
 "href=\"%s\">XPath Tutorial</a>."
 msgstr "<p>Наприклад, щоб встановити відповідність для усіх теґів h2 з class=\"chapter\", вкажіть для теґу значення <i>h2</i>, для атрибута — <i>class</i>, а для значення — <i>chapter</i>.</p><p>Якщо поле атрибута виявиться порожнім, буде встановлено відповідність для будь-якого атрибута, а якщо порожнім виявиться поле значення — будь-якого значення. Встановлення для теґу значення * відповідає будь-якому теґу.</p><p>Щоб дізнатися більше про використання XPath, ознайомтеся із <a href=\"%s\">підручником з XPath</a>."
 
-#: /__w/calibre/calibre/src/calibre/gui2/cover_flow.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/cover_flow.py:280
 msgid "Browse by covers"
 msgstr "Перегляд за обкладинками"
 
@@ -17876,9 +17966,9 @@ msgstr "Моя схема кольорів"
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:438
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1074
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:671
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1027
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:742
 msgid "Cannot edit"
 msgstr "Редагування неможливе"
 
@@ -17887,9 +17977,9 @@ msgid "Cannot edit a builtin color scheme. Create a new color scheme instead."
 msgstr "Не можна редагувати вбудовану схему кольорів. Для редагування слід створити нову схему кольорів."
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:686
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:757
 msgid "Cannot remove"
 msgstr "Вилучення неможливе"
 
@@ -18365,9 +18455,9 @@ msgid "Eject device"
 msgstr "Від’єднати пристрій"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:963
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:343
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:346
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
 msgid "Error"
 msgstr "Помилка"
@@ -20756,6 +20846,83 @@ msgstr "Зупинити &всі завдання не на пристрої"
 msgid "&Hide all jobs"
 msgstr "С&ховати всі завдання"
 
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:77
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:53
+msgid "Summarize"
+msgstr "Підбити підсумки"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:78
+msgid "Chapters"
+msgstr "Глави"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:79
+msgid "Read next"
+msgstr "Прочитати неступне"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:80
+msgid "Universe"
+msgstr "Всесвіт"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:103
+#, python-brace-format
+msgid ""
+"The prompt is a template. The expression {0} will be replaced by \"book\" "
+"when there is only a single book being discussed and \"books\" otherwise. "
+"Similarly {1} becomes \"is\" or \"are\", as needed. {2}, {3}, {4} are "
+"replaced  by the title, authors and series of the first book, respectively."
+msgstr "Запит є шаблоном. Вираз {0} буде замінено на «book», якщо ведеться обговорення лише однієї книги, і «books», якщо це не так. Так само, {1}  буде замінено на «is» або «are» там, де це потрібно. {2}, {3}, {4} буде замінено на назву, авторів та цикл першої книги, відповідно."
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:130
+msgid ""
+"Select which metadata fields to send to the AI from the selected books. Note"
+" that title and authors are always sent."
+msgstr "Виберіть поля метаданих, вміст яких слід надіслати до ШІ для позначених книг. Зауважте, що дані щодо назви і авторів буде надіслано завжди."
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:189
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:733
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:68
+msgid "AI Settings"
+msgstr "Параметри комп’ютерного гравця"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:192
+msgid "&Actions"
+msgstr "&Дії"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:193
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1012
+#: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1172
+msgid "&Metadata"
+msgstr "&Метадані"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:197
+msgid "AI Assistant Discussion"
+msgstr "Обговорення з ШІ-помічником"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:225
+#, python-brace-format
+msgid "{0} books selected, starting with: <i>{1}</i>"
+msgstr "Позначено {0} книг, початок: <i>{1}</i>"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:227
+#, python-brace-format
+msgid "Selected book: <i>{}</i>"
+msgstr "Позначена книга: <i>{}</i>"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:229
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:148
+msgid "Or, type a question to the AI below, for example:"
+msgstr "Або введіть питання до ШІ нижче; приклад:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:251
+#, python-brace-format
+msgid "Ask AI about {}"
+msgstr "Запитати у ШІ про {}"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:252
+#, python-brace-format
+msgid "Ask AI about {} books"
+msgstr "Запитати у ШІ про {} книг"
+
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/match_books.py:87
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:175
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:352
@@ -22026,71 +22193,71 @@ msgstr "Фільтрувати за &назвою"
 msgid "Description"
 msgstr "Опис"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:645
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:663
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:646
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:664
 msgid "&Install"
 msgstr "Вс&тановити"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:646
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:664
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:665
 msgid "Install the selected plugin"
 msgstr "Встановити позначений додаток"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:650
 msgid "&Customize plugin "
 msgstr "&Налаштувати додаток "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:650
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:703
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:651
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:704
 msgid "Customize the options for this plugin"
 msgstr "Налаштувати параметри для цього додатка"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:668
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:669
 msgid "Plugin &forum thread"
 msgstr "&Гілка додатка на форумі"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:677
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:678
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins_ui.py:105
 msgid "Enable/&disable plugin"
 msgstr "Увімкнути/Ви&мкнути додаток"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:678
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:679
 msgid "Enable or disable this plugin"
 msgstr "Увімкнути або вимкнути цей додаток"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:683
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins_ui.py:107
 msgid "&Remove plugin"
 msgstr "Ви&лучити додаток"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:683
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:684
 msgid "Uninstall the selected plugin"
 msgstr "Вилучити позначений додаток"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:692
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:693
 msgid "Donate to developer"
 msgstr "Фінансово підтримати розробника"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:693
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:694
 msgid "Donate to the developer of this plugin"
 msgstr "Фінансово підтримати розробника цього додатка"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:703
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins_ui.py:106
 msgid "&Customize plugin"
 msgstr "&Налаштувати додаток"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:807
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:854
 #, python-format
 msgid "Are you sure you want to uninstall the <b>%s</b> plugin?"
 msgstr "Ви справді бажаєте вилучити цей додаток <b>%s</b>?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:819
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:866
 #, python-format
 msgid "Install %s"
 msgstr "Встановити «%s»"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:820
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:867
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:312
 msgid ""
 "Installing plugins is a <b>security risk</b>. Plugins can contain a "
@@ -22098,69 +22265,69 @@ msgid ""
 "sure you want to proceed?"
 msgstr "Встановлення додатків <b>може бути небезпечним</b>. У додатках може міститися вірус або зловмисне програмне забезпечення. Встановлюйте лише ті додатки, походження яких ви вважаєте надійним. Ви справді хочете продовжити встановлення?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:837
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:884
 #, python-format
 msgid "Downloading plugin ZIP attachment: %s"
 msgstr "Отримуємо долучення ZIP додатка: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:842
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:889
 #, python-format
 msgid "Installing plugin: %s"
 msgstr "Встановлення додатка: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:857
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:904
 #, python-format
 msgid "Plugin installed: %s"
 msgstr "Додаток встановлено: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:861
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:908
 msgid "Plugin installed"
 msgstr "Додаток встановлено"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:861
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:908
 #, python-brace-format
 msgid "The plugin {} was successfully installed."
 msgstr "Додаток {} було успішно встановлено."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:870
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:917
 msgid "Install plugin failed"
 msgstr "Помилка під час спроби встановлення додатка"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:871
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:918
 msgid ""
 "A problem occurred while installing this plugin. This plugin will now be "
 "uninstalled. Please post the error message in details below into the forum "
 "thread for this plugin and restart calibre."
 msgstr "Під час встановлення цього додатка сталася помилка. Зараз додаток буде вилучено. Будь ласка, повідомте додайте текст повідомлення про помилку та вказані нижче подробиці до вашого допису у гілці форуму програми, присвяченій відповідному додатку, і перезапустіть Calibre."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:896
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:943
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:364
 msgid "Plugin not customizable"
 msgstr "Налаштування додатка неможливе"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:897
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:944
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:365
 #, python-format
 msgid "Plugin: %s does not need customization"
 msgstr "Додаток: налаштування %s не потрібне"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:901
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:948
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:371
 msgid "Must restart"
 msgstr "Потрібне перезавантаження"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:902
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:949
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:372
 #, python-format
 msgid "You must restart calibre before you can configure the <b>%s</b> plugin"
 msgstr "Вам слід перезавантажити calibre, перш ніж ви зможете налаштувати додаток <b>%s</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:910
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:957
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:353
 msgid "Plugin cannot be disabled"
 msgstr "Додаток не може бути вимкнено"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:911
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:958
 #, python-format
 msgid "The plugin: %s cannot be disabled"
 msgstr "Додаток: %s не може бути вимкнено"
@@ -22335,6 +22502,7 @@ msgid "&Dock"
 msgstr "&Швартувати"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:95
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:232
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:75
 msgid "&Close"
@@ -22999,9 +23167,9 @@ msgid "Choose formats"
 msgstr "Обрати формати"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:90
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:628
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:852
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:616
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:698
 msgid "&Edit"
 msgstr "З&міни"
 
@@ -26295,6 +26463,172 @@ msgstr "Підтримки скидання на пристрій не пере�
 msgid "File name"
 msgstr "Назва файла"
 
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:76
+msgid "Reasoning used by AI"
+msgstr "Міркування, які використано ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:162
+msgid "AI Assistant Note"
+msgstr "Нотатка ШІ-помічника"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:171
+#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:66
+msgid "You"
+msgstr "Ви"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:181
+msgid "Conversation record"
+msgstr "Запис спілкування"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:211
+msgid "Type a question to the AI"
+msgstr "Введіть питання до ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:223
+msgid "Se&ttings"
+msgstr "П&араметри"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:261
+msgid "Quick actions"
+msgstr "Швидкі дії"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:280
+msgid "First, configure an AI provider"
+msgstr "Спочатку, налаштуйте надавача даних ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:289
+msgid "Assistant"
+msgstr "Помічник"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:309
+msgid "Copy this specific response to the clipboard"
+msgstr "Копіювати цю відповідь до буфера обміну"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:313
+msgid "Show the reasoning behind this response from the AI"
+msgstr "Показати міркування щодо цієї відповіді від ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:320
+msgid "answering"
+msgstr "відповідь"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:320
+msgid "thinking"
+msgstr "думаю"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:324
+#, python-brace-format
+msgid "{assistant} {activity}"
+msgstr "{assistant} {activity}"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:339
+msgid "AI provider not configured."
+msgstr "Надавача даних ШІ не налаштовано."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:340
+msgid "Configure AI provider"
+msgstr "Налаштувати надавача даних ШІ"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:371
+msgid "Talking to AI failed with error:"
+msgstr "Спроба спілкування з ШІ завершилася помилкою:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:402
+msgid "free"
+msgstr "вільний"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:407
+msgid "Queries:"
+msgstr "Запити:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:472
+msgid "&New chat"
+msgstr "&Нове спілкування"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:472
+msgid "Start a new conversation"
+msgstr "Почати нове спілкування"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:474
+msgid "Copy this conversation to the clipboard"
+msgstr "Скопіювати це спілкування до буфера обміну"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:491
+msgid "Select text in the book to begin."
+msgstr "Для початку позначте текст у книзі."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:536
+msgid "Add Quick action"
+msgstr "Додати швидку дію"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:536
+msgid "Edit Quick action"
+msgstr "Редагувати швидку дію"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:543
+msgid "Prompt:"
+msgstr "Запит:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:580
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:373
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1221
+msgid "No name specified"
+msgstr "Не вказано назви"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:580
+msgid "You must specify a name for the Quick action"
+msgstr "Вам слід вказати назву для швидкої дії"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:582
+msgid "No prompt specified"
+msgstr "Запит не вказано"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:582
+msgid "You must specify a prompt for the Quick action"
+msgstr "Вам слід вказати запит для швидкої дії"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:589
+msgid "Ask the AI to respond in the current language"
+msgstr "Попросити ШІ відповідати поточною мовою"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:591
+msgid ""
+"Ask the AI to respond in the current calibre user interface language. Note "
+"that how well this works depends on the individual model being used. "
+"Different models support different languages."
+msgstr "Попросити ШІ відповідати поточню мовою інтерфейсу calibre. Зауважте, що якість відповіді залежить від моделі, якою ви користуєтеся. Для різних моделей передбачено підтримку різних мов."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:620
+msgid "&Quick actions:"
+msgstr "&Швидкі дії:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:672
+msgid ""
+"Cannot edit builtin actions. Instead uncheck this action and create a new "
+"action with the same name."
+msgstr "Не можна редагувати вбудовані дії. Замість цього слід зняти позначку з цієї дії і створити дію з такою самою назвою."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:687
+msgid ""
+"Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
+"showing up as a button."
+msgstr "Не можна вилучати вбудовані дії. Замість цього, ви можете зняти позначку з дії, щоб її не було показано у форматі кнопки."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:689
+#, python-brace-format
+msgid "Remove the {} action?"
+msgstr "Вилучити дію {}?"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:690
+msgid "&Show this confirmation again"
+msgstr "По&казувати це вікно підтвердження надалі"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:743
+msgid "AI &Provider"
+msgstr "&Надавач даних ШІ"
+
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/config_ui.py:47
 msgid "Configure viewer"
 msgstr "Налаштувати перегляд"
@@ -27381,11 +27715,6 @@ msgstr "Змінити обкладинку"
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:960
 msgid "Co&mments"
 msgstr "&Коментарі"
-
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1012
-#: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1172
-msgid "&Metadata"
-msgstr "&Метадані"
 
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1017
 msgid "&Cover and formats"
@@ -33517,7 +33846,7 @@ msgstr "&Ціна:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:235
 msgid "Match an exact price, usually better to sort the results by price"
-msgstr ""
+msgstr "Відповідність точної ціни, зазвичай, краще упорядковувати результати за ціною"
 
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/adv_search_builder_ui.py:240
 msgid "Download:"
@@ -37855,13 +38184,6 @@ msgstr "Потужність операції (чим більше значен�
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:64
 msgid "Choose file name"
 msgstr "Виберіть назву файла"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:373
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1221
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
-msgid "No name specified"
-msgstr "Не вказано назви"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:91
 msgid "You must specify a file name for the new file, with an extension."
@@ -42650,248 +42972,66 @@ msgstr "У цій книзі немає підсвічувань для експ
 msgid "No highlights selected to export"
 msgstr "Не позначено жодного підсвічування для експортування"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:112
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:51
 msgid "Explain"
 msgstr "Пояснити"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:113
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:52
 msgid "Define"
 msgstr "Визначити"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:114
-msgid "Summarize"
-msgstr "Підбити підсумки"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:54
 msgid "Key points"
 msgstr "Ключові моменти"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:55
 msgid "Fix grammar"
 msgstr "Виправити текст за правописом"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:56
 msgid "Translate"
 msgstr "Перекласти"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:221
-msgid "AI Assistant Note"
-msgstr "Нотатка ШІ-помічника"
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:71
+msgid "Actions and &highlights"
+msgstr "Дії і &підсвічування"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:229
-#: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:66
-msgid "You"
-msgstr "Ви"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:239
-msgid "Conversation record"
-msgstr "Запис спілкування"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:274
-msgid "Type a question to the AI"
-msgstr "Введіть питання до ШІ"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:87
 msgid "&Save as note"
 msgstr "З&берегти як нотатку"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:291
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:87
 msgid "Save this conversation as a note on the current highlight"
 msgstr "Зберегти це спілкування як нотатку до поточного підсвічування"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
-msgid "&New chat"
-msgstr "&Нове спілкування"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:292
-msgid "Start a new conversation"
-msgstr "Почати нове спілкування"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:293
-msgid "Copy this conversation to the clipboard"
-msgstr "Скопіювати це спілкування до буфера обміну"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:299
-msgid "Se&ttings"
-msgstr "П&араметри"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:330
-msgid "Quick actions"
-msgstr "Швидкі дії"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:350
-msgid "Select text in the book to begin."
-msgstr "Для початку позначте текст у книзі."
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:352
-msgid "First, configure an AI provider"
-msgstr "Спочатку, налаштуйте надавача даних ШІ"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:385
-msgid "Assistant"
-msgstr "Помічник"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:404
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:122
 msgid "Save this specific response as the note"
 msgstr "Зберегти цю відповідь як нотатку"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:406
-msgid "Copy this specific response to the clipboard"
-msgstr "Копіювати цю відповідь до буфера обміну"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:410
-msgid "Show the reasoning behind this response from the AI"
-msgstr "Показати міркування щодо цієї відповіді від ШІ"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
-msgid "answering"
-msgstr "відповідь"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:417
-msgid "thinking"
-msgstr "думаю"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:421
-#, python-brace-format
-msgid "{assistant} {activity}"
-msgstr "{assistant} {activity}"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:446
-msgid "AI provider not configured."
-msgstr "Надавача даних ШІ не налаштовано."
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:447
-msgid "Configure AI provider"
-msgstr "Налаштувати надавача даних ШІ"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:450
-msgid "No text is selected for this conversation."
-msgstr "Для цього спілкування не позначено жодного фрагмента тексту."
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:479
-msgid "Talking to AI failed with error:"
-msgstr "Спроба спілкування з ШІ завершилася помилкою:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:501
-msgid "Or, type a question to the AI below, for example:"
-msgstr "Або введіть питання до ШІ нижче; приклад:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:517
-msgid "free"
-msgstr "вільний"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:520
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:522
-msgid "Queries:"
-msgstr "Запити:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:527
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:158
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:165
 msgid "Cannot save note as there is currently no selected text"
 msgstr "Неможливо зберегти нотатку, оскільки зараз не позначено жодного фрагмента тексту"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:527
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:158
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:165
 msgid "No selected text"
 msgstr "Немає позначеного тексту"
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:555
-msgid "Reasoning used by AI"
-msgstr "Міркування, які використано ШІ"
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:192
+msgid "No text is selected for this conversation."
+msgstr "Для цього спілкування не позначено жодного фрагмента тексту."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:614
-msgid "Add Quick action"
-msgstr "Додати швидку дію"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:614
-msgid "Edit Quick action"
-msgstr "Редагувати швидку дію"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:621
-msgid "Prompt:"
-msgstr "Запит:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:212
 #, python-brace-format
 msgid ""
 "The prompt is a template. If you want the prompt to operate on the currently"
-" selected text, add <b>{0}</b> to the end of the prompt. Similarly, use "
-"<b>{1}</b> when you want the AI to respond in the current language (not all "
-"AIs work well with all languages)."
-msgstr "Запит є шаблоном. Якщо вам потрібно, щоб шаблон містив поточний позначений фрагмент тексту, додайте <b>{0}</b> наприкінці запиту. Так само, скористайтеся <b>{1}</b>, якщо вам потрібно, щоб ШІ надав відповідь поточною мовою (не усі ШІ добре працюють з усіма мовами)."
+" selected text, add <b>{0}</b> to the end of the prompt."
+msgstr "Запит є шаблоном. Якщо вам потрібно, щоб запит було виконано лише для поточного позначеного фрагмента тексту, додайте <b>{0}</b> наприкінці запиту."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:662
-msgid "You must specify a name for the Quick action"
-msgstr "Вам слід вказати назву для швидкої дії"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
-msgid "No prompt specified"
-msgstr "Запит не вказано"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:664
-msgid "You must specify a prompt for the Quick action"
-msgstr "Вам слід вказати запит для швидкої дії"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:668
-msgid "Invalid prompt"
-msgstr "Некоректний запит"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:668
-#, python-brace-format
-msgid "The prompt you specified is not valid. Error: {}"
-msgstr "Вказаний вами запит є некоректним. Помилка: {}"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:683
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:223
 msgid "&Highlight style:"
 msgstr "С&тиль підсвічування:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:685
-msgid "Ask the AI to respond in the current language"
-msgstr "Попросити ШІ відповідати поточною мовою"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:686
-msgid ""
-"Ask the AI to respond in the current calibre user interface language. Note "
-"that how well this works depends on the individual model being used. "
-"Different models support different languages."
-msgstr "Попросити ШІ відповідати поточню мовою інтерфейсу calibre. Зауважте, що якість відповіді залежить від моделі, якою ви користуєтеся. Для різних моделей передбачено підтримку різних мов."
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:690
-msgid "&Quick actions:"
-msgstr "&Швидкі дії:"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:743
-msgid ""
-"Cannot edit builtin actions. Instead uncheck this action and create a new "
-"action with the same name."
-msgstr "Не можна редагувати вбудовані дії. Замість цього слід зняти позначку з цієї дії і створити дію з такою самою назвою."
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:758
-msgid ""
-"Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
-"showing up as a button."
-msgstr "Не можна вилучати вбудовані дії. Замість цього, ви можете зняти позначку з дії, щоб її не було показано у форматі кнопки."
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:760
-#, python-brace-format
-msgid "Remove the {} action?"
-msgstr "Вилучити дію {}?"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:761
-msgid "&Show this confirmation again"
-msgstr "По&казувати це вікно підтвердження надалі"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:793
-msgid "AI Settings"
-msgstr "Параметри комп’ютерного гравця"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:799
-msgid "AI &Provider"
-msgstr "&Надавач даних ШІ"
-
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:801
-msgid "Actions and &highlights"
-msgstr "Дії і &підсвічування"
 
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/lookup.py:107
 msgid "Edit lookup source"

@@ -805,18 +805,28 @@ class Worker(Thread):  # Get details {{{
     def parse_series(self, root):
         ans = (None, None)
 
-        # This is found on kindle pages for books on amazon.com
+        # This is found on kindle pages for books on amazon.* (including amazon.co.jp)
         series = root.xpath('//*[@id="rpi-attribute-book_details-series"]')
         if series:
             spans = series[0].xpath('descendant::span')
             if spans:
-                texts = [self.tostring(x, encoding='unicode', method='text', with_tail=False).strip() for x in spans]
+                texts = [self.tostring(x, encoding='unicode', method='text', with_tail=False).strip()
+                         for x in spans]
                 texts = list(filter(None, texts))
                 if len(texts) == 2:
-                    idxinfo, series = texts
-                    m = re.search(r'[0-9.]+', idxinfo.strip())
+                    idxinfo, series_name = texts
+                    idxinfo = idxinfo.strip()
+
+                    # Try Japanese pattern like: "全5巻中第1巻", "全3巻中第2巻"
+                    m = re.search(r'全\s*[0-9.]+\s*(?:巻|冊)中第\s*([0-9.]+)\s*(?:巻|冊)', idxinfo)
                     if m is not None:
-                        ans = series, float(m.group())
+                        ans = (series_name, float(m.group(1)))
+                        return ans
+
+                    # Fallback: original behaviour (first number), used for EN/etc
+                    m = re.search(r'[0-9.]+', idxinfo)
+                    if m is not None:
+                        ans = (series_name, float(m.group()))
                         return ans
 
         # This is found on the paperback/hardback pages for books on amazon.com
@@ -843,7 +853,7 @@ class Worker(Thread):  # Get details {{{
                 if a:
                     raw = self.tostring(a[0], encoding='unicode', method='text', with_tail=False)
                     if self.domain == 'jp':
-                        m = re.search(r'(?P<index>[0-9.]+)\s*(?:巻|冊)\s*\(全\s*([0-9.]+)\s*(?:巻|冊)\):\s*(?P<series>.+)', raw.strip())
+                        m = re.search(r'全\s*[0-9.]+\s*(?:巻|冊)中第\s*(?P<index>[0-9.]+)\s*(?:巻|冊)\s*:\s*(?P<series>.+)', raw.strip())
                     else:
                         m = re.search(r'(?:Book|Libro|Buch)\s+(?P<index>[0-9.]+)\s+(?:of|de|von)\s+([0-9.]+)\s*:\s*(?P<series>.+)', raw.strip())
                     if m is not None:
@@ -1090,7 +1100,7 @@ class Worker(Thread):  # Get details {{{
 class Amazon(Source):
 
     name = 'Amazon.com'
-    version = (1, 3, 13)
+    version = (1, 3, 15)
     minimum_calibre_version = (2, 82, 0)
     description = _('Downloads metadata and covers from Amazon')
 

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Νοεμβρίου 21, 2025" "8.15.0" "calibre"
+.TH "CALIBREDB" "1" "Δεκεμβρίου 05, 2025" "8.16.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -143,17 +143,17 @@ fts_search
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
+Διαδρομή προς τη βιβλιοθήκη calibre. Η προεπιλογή είναι να χρησιμοποιείται η διαδρομή που είναι αποθηκευμένη στις ρυθμίσεις. Μπορείτε επίσης να συνδεθείτε σε έναν διακομιστή περιεχομένου calibre για να εκτελέσετε ενέργειες σε απομακρυσμένες βιβλιοθήκες. Για να το κάνετε, χρησιμοποιήστε μια διεύθυνση URL της μορφής: \%<http://\:hostname:port/#\:library_id>, για παράδειγμα, \%<http://\:localhost:8080/#\:mylibrary>\&. Το library_id είναι το αναγνωριστικό της βιβλιοθήκης στην οποία θέλετε να συνδεθείτε στον διακομιστή περιεχομένου. Μπορείτε να χρησιμοποιήσετε την ειδική τιμή library_id \- για να λάβετε μια λίστα με τα αναγνωριστικά βιβλιοθηκών που είναι διαθέσιμα στον διακομιστή. Για λεπτομέρειες σχετικά με το πώς να ρυθμίσετε την πρόσβαση μέσω ενός διακομιστή περιεχομένου, δείτε το \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password
-Password for connecting to a calibre Content server. To read the password from standard input, use the special value: <stdin>. To read the password from a file, use: <f:/path/to/file> (i.e. <f: followed by the full path to the file and a trailing >). The angle brackets in the above are required, remember to escape them or use quotes for your shell.
+Κωδικός πρόσβασης για σύνδεση σε έναν διακομιστή περιεχομένου calibre. Για να διαβάσετε τον κωδικό πρόσβασης από την τυπική είσοδο, χρησιμοποιήστε την ειδική τιμή: <stdin>. Για να διαβάσετε τον κωδικό πρόσβασης από ένα αρχείο, χρησιμοποιήστε: <f:/path/to/file> (δηλαδή <f: ακολουθούμενο από την πλήρη διαδρομή του αρχείου και ένα κλείσιμο >). Οι γωνιακές αγκύλες παραπάνω είναι απαραίτητες, θυμηθείτε να τις διαφύγετε ή να χρησιμοποιήσετε εισαγωγικά για το shell σας.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-The timeout, in seconds, when connecting to a calibre library over the network. The default is two minutes.
+Ο χρόνος αναμονής, σε δευτερόλεπτα, κατά τη σύνδεση σε μια βιβλιοθήκη calibre μέσω δικτύου. Η προεπιλογή είναι δύο λεπτά.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -175,7 +175,7 @@ calibredb list [options]
 .UNINDENT
 .UNINDENT
 .sp
-List the books available in the calibre database.
+Καταχωρίστε τα βιβλία που είναι διαθέσιμα στη βάση δεδομένων calibre.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -186,12 +186,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-The fields to display when listing books in the database. Should be a comma separated list of fields. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: title,authors. The special field \fB\(dq\fPall\fB\(dq\fP can be used to select all fields. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Τα πεδία που εμφανίζονται κατά την καταχώριση βιβλίων στη βάση δεδομένων. Θα πρέπει να είναι μια λίστα πεδίων διαχωρισμένων με κόμμα. Διαθέσιμα πεδία: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Προεπιλογή: title,authors. Το ειδικό πεδίο \fB\(dq\fPall\fB\(dq\fP μπορεί να χρησιμοποιηθεί για να επιλεγούν όλα τα πεδία. Εκτός από τα ενσωματωμένα πεδία παραπάνω, είναι διαθέσιμα και προσαρμοσμένα πεδία ως *field_name, για παράδειγμα, για ένα προσαρμοσμένο πεδίο #rating, χρησιμοποιήστε το όνομα: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing. Causes the line width and separator options to be ignored.
+Δημιουργήστε έξοδο σε μορφή JSON, η οποία είναι πιο κατάλληλη για ανάλυση από μηχανές. Προκαλεί την αγνόηση των επιλογών πλάτους γραμμής και διαχωριστή.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -201,17 +201,17 @@ Generate output in JSON format, which is more suitable for machine parsing. Caus
 .INDENT 0.0
 .TP
 .B \-\-line\-width, \-w
-The maximum width of a single line in the output. Defaults to detecting screen size.
+Το μέγιστο πλάτος μιας μόνο γραμμής στην έξοδο. Από προεπιλογή ανιχνεύει το μέγεθος της οθόνης.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-prefix
-The prefix for all file paths. Default is the absolute path to the library folder.
+Το πρόθεμα για όλες τις διαδρομές αρχείων. Η προεπιλογή είναι η απόλυτη διαδρομή στο φάκελο της βιβλιοθήκης.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search related documentation in the User Manual. Default is to do no filtering.
+Φιλτράρετε τα αποτελέσματα με βάση το ερώτημα αναζήτησης. Για τη μορφή του ερωτήματος αναζήτησης, ανατρέξτε στην τεκμηρίωση σχετικά με την αναζήτηση στο Εγχειρίδιο Χρήστη. Προεπιλογή είναι χωρίς φιλτράρισμα
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -221,22 +221,22 @@ Filter the results by the search query. For the format of the search query, plea
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Το πεδίο με βάση το οποίο θα ταξινομηθούν τα αποτελέσματα. Μπορείτε να καθορίσετε πολλά πεδία χωρίζοντάς τα με κόμματα. Διαθέσιμα πεδία: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Προεπιλογή: id. Εκτός από τα ενσωματωμένα πεδία παραπάνω, είναι διαθέσιμα και προσαρμοσμένα πεδία ως *field_name, για παράδειγμα, για ένα προσαρμοσμένο πεδίο #rating, χρησιμοποιήστε το όνομα: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Note that templates are ignored while connecting to a calibre server. Default: None
+Το πρότυπο που θα εκτελεστεί εάν το \fB\(dq\fPtemplate\fB\(dq\fP βρίσκεται στη λίστα πεδίων. Σημειώστε ότι τα πρότυπα αγνοούνται κατά τη σύνδεση σε έναν διακομιστή calibre. Προεπιλογή: Κανένα
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Διαδρομή προς ένα αρχείο που περιέχει το πρότυπο για εκτέλεση αν \fB\(dq\fPtemplate\fB\(dq\fP βρίσκεται στη λίστα πεδίων. Προεπιλογή: Καμία
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fB\-\-for\-machine\fP is set
+Επικεφαλίδα για τη στήλη προτύπου. Προεπιλογή: template. Αυτή η επιλογή αγνοείται αν έχει οριστεί η επιλογή \fB\-\-for\-machine\fP\&.
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -279,7 +279,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
+Ορίστε τα αναγνωριστικά για αυτό το βιβλίο, π.χ. \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -322,7 +322,7 @@ Set the identifiers for this book, e.g. \-I asin:XXX \-I isbn:YYY
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Ένα μοτίβο (glob) ονόματος αρχείου, τα αρχεία που ταιριάζουν με αυτό το μοτίβο θα αγνοηθούν κατά τη σάρωση φακέλων για αρχεία. Μπορεί να καθοριστεί πολλές φορές για πολλαπλά μοτίβα. Για παράδειγμα: *.pdf θα αγνοήσει όλα τα αρχεία PDF
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -344,7 +344,7 @@ calibredb remove ids
 .UNINDENT
 .UNINDENT
 .sp
-Remove the books identified by ids from the database. ids should be a comma separated list of id numbers (you can get id numbers by using the search command). For example, 23,34,57\-85 (when specifying a range, the last number in the range is not included).
+Αφαιρέστε τα βιβλία που αναγνωρίζονται από τα ids από τη βάση δεδομένων. Τα ids θα πρέπει να είναι μια λίστα αριθμών id με διαχωρισμό κόμματος (μπορείτε να βρείτε τους αριθμούς id χρησιμοποιώντας την εντολή search). Για παράδειγμα, 23,34,57\-85 (όταν προσδιορίζετε ένα εύρος, ο τελευταίος αριθμός στο εύρος δεν συμπεριλαμβάνεται).
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -362,13 +362,13 @@ calibredb add_format [options] id ebook_file
 .UNINDENT
 .UNINDENT
 .sp
-Add the e\-book in ebook_file to the available formats for the logical book identified by id. You can get id by using the search command. If the format already exists, it is replaced, unless the do not replace option is specified.
+Προσθέστε το ηλεκτρονικό βιβλίο στο αρχείο ebook στις διαθέσιμες μορφές για το λογικό βιβλίο που προσδιορίζεται από το id. Μπορείτε να λάβετε το id χρησιμοποιώντας την εντολή αναζήτησης. Αν η μορφή υπάρχει ήδη, αντικαθίσταται, εκτός αν έχει καθοριστεί η επιλογή μη αντικατάστασης..
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Add the file as an extra data file to the book, not an ebook format
+Προσθέστε το αρχείο ως επιπλέον αρχείο δεδομένων στο βιβλίο, όχι σε μορφή ηλεκτρονικού βιβλίου
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -385,7 +385,7 @@ calibredb remove_format [options] id fmt
 .UNINDENT
 .UNINDENT
 .sp
-Remove the format fmt from the logical book identified by id. You can get id by using the search command. fmt should be a file extension like LRF or TXT or EPUB. If the logical book does not have fmt available, do nothing.
+Αφαίρεση της μορφής fmt από το λογικό βιβλίο που αναγνωρίζεται από το id. Μπορείτε να βρείτε το id χρησιμοποιώντας την εντολή search. fmt θα πρέπει να είναι μια επέκταση αρχείου όπως LRF ή TXT ή EPUB. Αν το λογικό βιβλίο δεν έχει διαθέσιμο το fmt, μην κάνετε τίποτα.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH SHOW_METADATA
@@ -398,8 +398,8 @@ calibredb show_metadata [options] id
 .UNINDENT
 .UNINDENT
 .sp
-Show the metadata stored in the calibre database for the book identified by id.
-id is an id number from the search command.
+Εμφάνισε τα μεταδεδομένα που αποθηκεύονται στη βάση δεδομένων του Calibre για το βιβλίο που αναγνωρίζεται από το id.
+Το id είναι ένας αριθμός αναγνωριστικού από την εντολή αναζήτησης.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -417,23 +417,24 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Ορίστε τα μεταδεδομένα που αποθηκεύονται στη βάση δεδομένων calibre για το
+βιβλίο που προσδιορίζεται με book_id από το αρχείο OPF metadata.opf. Το book_id
+είναι ένας id αριθμός βιβλίου που προέρχεται από την εντολή αναζήτησης.
+Μπορείτε να αποκτήσετε μια γρήγορη αίσθηση της μορφής OPF χρησιμοποιώντας την
+επιλογή \-\-as\-opf στην εντολή show_metadata. Μπορείτε επίσης να ορίσετε τα
+μεταδεδομένα μεμονωμένων πεδίων με την επιλογή \-\-field. Αν χρησιμοποιήσετε
+την επιλογή \-\-field, δεν υπάρχει ανάγκη να καθορίσετε ένα αρχείο OPF.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-The field to set. Format is field_name:value, for example: \fB\-\-field\fP tags:tag1,tag2. Use \fB\-\-list\-fields\fP to get a list of all field names. You can specify this option multiple times to set multiple fields. Note: For languages you must use the ISO639 language codes (e.g. en for English, fr for French and so on). For identifiers, the syntax is \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. For boolean (yes/no) fields use true and false or yes and no.
+Το πεδίο για να οριστεί. Η μορφή είναι field_name:value, για παράδειγμα: \fB\-\-field\fP tags:tag1,tag2. Χρησιμοποιήστε \fB\-\-list\-fields\fP για να λάβετε μια λίστα με όλα τα ονόματα πεδίων. Μπορείτε να καθορίσετε αυτήν την επιλογή πολλές φορές για να ορίσετε πολλαπλά πεδία. Σημείωση: Για γλώσσες πρέπει να χρησιμοποιήσετε τους κωδικούς γλώσσας ISO639 (π.χ. en για Αγγλικά, fr για Γαλλικά κ.λπ.). Για αναγνωριστικά, η σύνταξη είναι \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Για λογικά πεδία (ναι/όχι) χρησιμοποιήστε true και false ή yes και no.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-List the metadata field names that can be used with the \fB\-\-field\fP option
+Καταγράψτε τα ονόματα πεδίων μεταδεδομένων που μπορούν να χρησιμοποιηθούν με την επιλογή \fB\-\-field\fP
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -445,16 +446,17 @@ calibredb export [options] ids
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Εξάγει τα βιβλία που καθορίζονται από τα ids (μια λίστα που διαχωρίζεται με κόμμα)
+στο σύστημα αρχείων. Η λειτουργία εξαγωγής αποθηκεύει όλες τις μορφές του βιβλίου,
+το εξώφυλλο και τα μεταδεδομένα του (σε ένα αρχείο OPF). Αποθηκεύονται επίσης τυχόν
+πρόσθετα αρχεία δεδομένων που σχετίζονται με το βιβλίο.
+Μπορείτε να λάβετε αριθμούς id από την εντολή αναζήτησης.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-all
-Export all books in database, ignoring the list of ids.
+Εξαγωγή όλων των βιβλίων στη βάση δεδομένων, αγνοώντας τη λίστα των ids.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -531,22 +533,22 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options. To
-see the different options, specify the name of the output file and then the
-\-\-help option.
+Εξαγωγή ενός καταλόγου σε μορφή που καθορίζεται από path/to/destination επέκταση.
+Οι επιλογές ελέγχουν τον τρόπο εμφάνισης των καταχωρήσεων στην έξοδο του παραγόμενου
+καταλόγου. Σημειώστε ότι διαφορετικές μορφές καταλόγων υποστηρίζουν διαφορετικά
+σύνολα επιλογών. Για να δείτε τις διάφορες επιλογές, καθορίστε το όνομα του αρχείου
+εξόδου και στη συνέχεια την επιλογή \-\-help.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-ids, \-i
-Comma\-separated list of database IDs to catalog. If declared, \fB\-\-search\fP is ignored. Default: all
+Διαχωρισμένη με κόμμα λίστα αναγνωριστικών βάσης δεδομένων στον κατάλογο. Αν δηλωθεί, το \fB\-\-search\fP αγνοείται. Προεπιλογή: όλα
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Filter the results by the search query. For the format of the search query, please see the search\-related documentation in the User Manual. Default: no filtering
+Φιλτράρετε τα αποτελέσματα με βάση το ερώτημα αναζήτησης. Για τη μορφή του ερωτήματος αναζήτησης, ανατρέξτε στην τεκμηρίωση σχετικά με την αναζήτηση στο Εγχειρίδιο Χρήστη. Προεπιλογή: χωρίς φιλτράρισμα
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -659,15 +661,15 @@ calibredb saved_searches [options] (list|add|remove)
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Διαχείρηση αποθηκευμένων αναζητήσεων που βρίσκονται σε αυτή τη βάση δεδομένων.
+Αν προσπαθήσετε να προσθέσετε ένα ερώτημα με όνομα που υπάρχει ήδη, θα
+αντικατασταθεί.
 .sp
-Syntax for adding:
+Σύνταξη για προσθήκη:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Σύνταξη για αφαίρεση:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -690,7 +692,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-display
-A dictionary of options to customize how the data in this column will be interpreted. This is a JSON  string. For enumeration columns, use \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP There are many options that can go into the display variable.The options by column type are: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  The best way to find legal combinations is to create a custom column of the appropriate type in the GUI then look at the backup OPF for a book (ensure that a new OPF has been created since the column was added). You will see the JSON for the \fB\(dq\fPdisplay\fB\(dq\fP for the new column in the OPF.
+Ένα λεξικό επιλογών για την προσαρμογή του τρόπου ερμηνείας των δεδομένων αυτής της στήλης. Πρόκειται για μια συμβολοσειρά JSON. Για στήλες απαρίθμησης, χρησιμοποιήστε \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Υπάρχουν πολλές επιλογές που μπορούν να εισαχθούν στη μεταβλητή εμφάνισης. Οι επιλογές κατά τύπο στήλης είναι: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Ο καλύτερος τρόπος για να βρείτε τους νόμιμους συνδυασμούς είναι να δημιουργήσετε μια προσαρμοσμένη στήλη του κατάλληλου τύπου στο GUI και στη συνέχεια να εξετάσετε το εφεδρικό OPF για ένα βιβλίο (βεβαιωθείτε ότι έχει δημιουργηθεί νέο OPF από τότε που προστέθηκε η στήλη). Θα δείτε το JSON για το \fB\(dq\fPdisplay\fB\(dq\fP για τη νέα στήλη στο OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -707,7 +709,7 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-List available custom columns. Shows column labels and ids.
+Λίστα διαθέσιμων προσαρμοσμένων στηλών. Εμφανίζει ετικέτες στηλών και αναγνωριστικά.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -725,8 +727,8 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-Remove the custom column identified by label. You can see available
-columns with the custom_columns command.
+Αφαιρέστε την προσαρμοσμένη στήλη που προσδιορίζεται από την ετικέτα. Μπορείτε
+να δείτε τις διαθέσιμες στήλες με την εντολή custom_columns.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -744,10 +746,10 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-Set the value of a custom column for the book identified by id.
-You can get a list of ids using the search command.
-You can get a list of custom column names using the custom_columns
-command.
+Ορισμός τιμής προσαρμοσμένης στήλης για το βιβλίο που προσδιορίζεται από το id.
+Μπορείτε να λάβετε μια λίστα ids χρησιμοποιώντας την εντολή αναζήτησης.
+Μπορείτε να λάβετε μια λίστα με τα ονόματα των προσαρμοσμένων στηλών
+χρησιμοποιώντας τη custom_columns εντολή.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -765,20 +767,21 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Επαναφέρετε αυτή τη βάση δεδομένων από τα μεταδεδομένα που αποθηκεύονται σε
+αρχεία OPF σε κάθε φάκελο της βιβλιοθήκης calibre. Αυτό είναι χρήσιμο αν το
+αρχείο metadata.db σας έχει καταστραφεί.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Αυτή η εντολή αναδημιουργεί πλήρως τη βάση δεδομένων σας. Θα
+χάσετε όλες τις αποθηκευμένες αναζητήσεις, τις κατηγορίες χρηστών, τα plugboards,
+τις αποθηκευμένες ρυθμίσεις μετατροπής ανά βιβλίο και τις προσαρμοσμένες ροές.
+Τα επαναφερθέντα μεταδεδομένα θα είναι τόσο ακριβή όσο αυτά που περιέχονται
+στα αρχεία OPF.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-really\-do\-it, \-r
-Really do the recovery. The command will not run unless this option is specified.
+Κάντε πραγματικά την ανάκτηση. Η εντολή δεν θα εκτελεστεί εκτός αν καθοριστεί αυτή η επιλογή.
 .UNINDENT
 .SH CHECK_LIBRARY
 .INDENT 0.0
@@ -790,7 +793,7 @@ calibredb check_library [options]
 .UNINDENT
 .UNINDENT
 .sp
-Perform some checks on the filesystem representing a library. Reports are invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, malformed_formats, malformed_paths, failed_folders
+Εκτελέστε ορισμένους ελέγχους στο σύστημα αρχείων που αντιπροσωπεύει μια βιβλιοθήκη. Οι αναφορές είναι invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, malformed_formats, malformed_paths, failed_folders
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -816,7 +819,7 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-Vacuum the full text search database. This can be very slow and memory intensive, depending on the size of the database.
+Σκουπίστε τη βάση δεδομένων αναζήτησης πλήρους κειμένου. Αυτό μπορεί να είναι πολύ αργό και απαιτητικό σε μνήμη, ανάλογα με το μέγεθος της βάσης δεδομένων.
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -828,8 +831,8 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Παράγετε μια αναφορά με τις πληροφορίες κατηγορίας στη βάση δεδομένων.
+Οι πληροφορίες αντιστοιχούν σε εκείνες που εμφανίζονται στον περιηγητή Ετικετών.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -850,12 +853,12 @@ Whenever you pass arguments to calibredb that have spaces in them, enclose the a
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-Output only the number of items in a category instead of the counts per item within the category
+Εμφάνιζε μόνο τον αριθμό των αντικειμένων σε μια κατηγορία αντί για τις μετρήσεις ανά αντικείμενο μέσα στην κατηγορία
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-width, \-w
-The maximum width of a single line in the output. Defaults to detecting screen size.
+Το μέγιστο πλάτος μιας μόνο γραμμής στην έξοδο. Από προεπιλογή ανιχνεύει το μέγεθος της οθόνης.
 .UNINDENT
 .SH BACKUP_METADATA
 .INDENT 0.0
@@ -867,12 +870,12 @@ calibredb backup_metadata [options]
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Δημιουργήστε αντίγραφα ασφαλείας των μεταδεδομένων που είναι αποθηκευμένα στη βάση δεδομένων σε μεμονωμένα αρχεία OPF
+σε κάθε φάκελος βιβλίων. Αυτό συνήθως συμβαίνει αυτόματα, αλλά μπορείτε να εκτελέσετε το εξής
+εντολή για να αναγκάσετε την επαναδημιουργία των αρχείων OPF, με την επιλογή \-\-all.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Σημείωση: κανονικά δεν χρειάζεται να το κάνετε αυτό, καθώς τα αρχεία OPF δημιουργούνται με αντίγραφα ασφαλείας.
+αυτόματα, κάθε φορά που αλλάζουν τα μεταδεδομένα.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -890,11 +893,10 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-Create a \fBclone\fP of the current library. This creates a new, empty library that has all the
-same custom columns, Virtual libraries and other settings as the current library.
+Δημιουργήστε έναν κλώνο της τρέχουσας βιβλιοθήκης. Αυτό δημιουργεί μια νέα, κενή βιβλιοθήκη που έχει
+τις ίδιες προσαρμοσμένες στήλες, εικονικές βιβλιοθήκες και άλλες ρυθμίσεις με την τρέχουσα βιβλιοθήκη.
 .sp
-The cloned library will contain no books. If you want to create a full duplicate, including
-all books, then simply use your filesystem tools to copy the library folder.
+Η κλωνοποιημένη βιβλιοθήκη δεν θα περιέχει κανένα βιβλίο. Εάν θέλετε να δημιουργήσετε ένα πλήρες αντίγραφο, συμπεριλαμβανομένων όλων των βιβλίων, τότε απλώς χρησιμοποιήστε τα εργαλεία του συστήματος αρχείων σας για να αντιγράψετε τον φάκελο της βιβλιοθήκης.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .SH EMBED_METADATA
@@ -907,19 +909,21 @@ calibredb embed_metadata [options] book_id
 .UNINDENT
 .UNINDENT
 .sp
-Update the metadata in the actual book files stored in the calibre library from
-the metadata in the calibre database.  Normally, metadata is updated only when
-exporting files from calibre, this command is useful if you want the files to
-be updated in place. Note that different file formats support different amounts
-of metadata. You can use the special value \(aqall\(aq for book_id to update metadata
-in all books. You can also specify many book ids separated by spaces and id ranges
-separated by hyphens. For example: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+Ενημερώστε τα μεταδεδομένα στα πραγματικά αρχεία βιβλίων που αποθηκεύονται στη
+βιβλιοθήκη calibre από τα μεταδεδομένα στη βάση δεδομένων του calibre. Κανονικά,
+τα μεταδεδομένα ενημερώνονται μόνο κατά την εξαγωγή αρχείων από το calibre, αυτή
+η εντολή είναι χρήσιμη εάν θέλετε τα αρχεία να ενημερωθούν επιτόπου. Σημειώστε ότι
+διαφορετικές μορφές αρχείων υποστηρίζουν διαφορετικές ποσότητες μεταδεδομένων.
+Μπορείτε να χρησιμοποιήσετε την ειδική τιμή \(aqall\(aq για το book_id για να ενημερώσετε
+τα μεταδεδομένα σε όλα τα βιβλία. Μπορείτε επίσης να ορίσετε πολλά αναγνωριστικά
+βιβλίων χωρισμένα με κενά και εύρη αναγνωριστικών χωρισμένα με παύλες.
+Για παράδειγμα: calibredb \fBembed_metadata\fP 1 2 10\-15 23
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Only update metadata in files of the specified format. Specify it multiple times for multiple formats. By default, all formats are updated.
+Ενημερώνει μόνο τα μεταδεδομένα σε αρχεία της καθορισμένης μορφής. Καθορίστε το πολλές φορές για πολλαπλές μορφές. Από προεπιλογή, ενημερώνονται όλες οι μορφές.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0
@@ -931,12 +935,12 @@ calibredb search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Αναζητήστε στη βιβλιοθήκη τον καθορισμένο όρο αναζήτησης, επιστρέφοντας μια
+λίστα με ταυτότητες βιβλίων διαχωρισμένες με κόμμα που ταιριάζουν με την
+έκφραση αναζήτησης. Η μορφή εξόδου είναι χρήσιμη για να τροφοδοτεί άλλες
+εντολές που δέχονται μια λίστα ταυτοτήτων ως είσοδο.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+Η έκφραση αναζήτησης μπορεί να είναι οτιδήποτε από τη δυνατή γλώσσα ερωτημάτων αναζήτησης του calibre, για παράδειγμα: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -954,36 +958,36 @@ calibredb fts_index [options] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Έλεγχος της διαδικασίας ευρετηρίασης πλήρους κειμένου.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Ενεργοποίηση ευρετηρίασης ΠΚ για αυτή τη βιβλιοθήκη
 .TP
 .B disable
-Turns off FTS indexing for this library
+Απενεργοποίηση ευρετηρίασης ΠΚ για αυτή τη βιβλιοθήκη
 .TP
 .B status
-Shows the current indexing status
+Εμφανίζει την τρέχουσα κατάσταση ευρετηρίασης
 .TP
 .B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Μπορεί να χρησιμοποιηθεί για επανευρετηρίαση είτε συγκεκριμένων βιβλίων
+είτε ολόκληρης της βιβλιοθήκης. Για να επανευρετηριαστούν συγκεκριμένα
+βιβλία, καθορίστε τα αναγνωριστικά των βιβλίων ως επιπλέον παραμέτρους
+μετά την εντολή reindex. Εάν δεν καθοριστούν αναγνωριστικά βιβλίων
+γίνεται επανευρετηρίαση ολόκληρης της βιβλιοθήκης.
 .UNINDENT
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-indexing\-speed
-The speed of indexing. Use fast for fast indexing using all your computers resources and slow for less resource intensive indexing. Note that the speed is reset to slow after every invocation.
+Η ταχύτητα ευρετηρίασης. Χρησιμοποιήστε την επιλογή \fB\(aq\fPγρήγορα\fB\(aq\fP για γρήγορη ευρετηρίαση χρησιμοποιώντας όλους τους πόρους του υπολογιστή σας και \fB\(aq\fPαργά\fB\(aq\fP για ευρετηρίαση που απαιτεί λιγότερους πόρους. Σημειώστε ότι η ταχύτητα επαναφέρεται σε \fB\(aq\fPαργά\fB\(aq\fP μετά από κάθε εκτέλεση.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-wait\-for\-completion
-Wait till all books are indexed, showing indexing progress periodically
+Περιμένετε μέχρι να ευρετηριαστούν όλα τα βιβλία, δείχνοντας περιοδικά την πρόοδο της ευρετηρίασης
 .UNINDENT
 .SH FTS_SEARCH
 .INDENT 0.0
@@ -995,43 +999,43 @@ calibredb fts_search [options] search expression
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Πραγματοποιήστε αναζήτηση πλήρους κειμένου σε ολόκληρη τη βιβλιοθήκη ή σε ένα υποσύνολό της.
 .sp
 Whenever you pass arguments to calibredb that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Ταιριάζει μόνο σε ακριβείς λέξεις και όχι σε συναφείς λέξεις. Έτσι, η διόρθωση δεν θα ταιριάζει με τη διόρθωση.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Συμπεριλάβετε αποσπάσματα του κειμένου γύρω από κάθε αντιστοιχία. Σημειώστε ότι αυτό καθιστά την αναζήτηση πολύ πιο αργή.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Πόσο μεγάλο μέρος της βιβλιοθήκης πρέπει να είναι ευρετηριασμένο πριν επιτραπεί η αναζήτηση, ως ποσοστό. Προεπιλογή σε 90
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Ο δείκτης που χρησιμοποιείται για να υποδείξει το τέλος μιας ταιριασμένης λέξης μέσα σε ένα απόσπασμα
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Ο δείκτης που χρησιμοποιείται για να υποδείξει την αρχή μιας ταιριασμένης λέξης μέσα σε ένα απόσπασμα
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Η μορφή με την οποία θα εξάγονται τα αποτελέσματα της αναζήτησης. Είτε \fB\(dq\fPtext\fB\(dq\fP για απλό κείμενο ή \fB\(dq\fPjson\fB\(dq\fP για έξοδο JSON.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Περιορίστε τα βιβλία που αναζητούνται, είτε χρησιμοποιώντας μια έκφραση αναζήτησης είτε ids. Για παράδειγμα: ids:1,2,3 για περιορισμό με βάση τα ids ή search:tag:foo για περιορισμό στα βιβλία που έχουν την ετικέτα foo.
 .UNINDENT
 .SH Author
 Kovid Goyal
