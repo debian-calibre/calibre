@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "Νοεμβρίου 21, 2025" "8.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "Δεκεμβρίου 05, 2025" "8.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -74,7 +74,7 @@ options specific to every input and output format.
 .IP \(bu 2
 ΟΨΗ ΚΑΙ ΑΙΣΘΗΣΗ
 .IP \(bu 2
-HEURISTIC PROCESSING
+ΕΥΡΕΤΙΚΉ ΕΠΕΞΕΡΓΑΣΊΑ
 .IP \(bu 2
 ΑΝΑΖΗΤΗΣΗ ΚΑΙ ΑΝΤΙΚΑΤΑΣΤΑΣΗ
 .IP \(bu 2
@@ -104,7 +104,7 @@ List builtin recipe names. You can create an e\-book from a builtin recipe like 
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device. In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
+Καθορίστε το προφίλ εξόδου. Το προφίλ εξόδου ενημερώνει το σύστημα μετατροπής πώς να βελτιστοποιήσει το δημιουργημένο έγγραφο για τη συγκεκριμένη συσκευή. Σε ορισμένες περιπτώσεις, ένα προφίλ εξόδου μπορεί να χρησιμοποιηθεί για τη βελτιστοποίηση της εξόδου για μια συγκεκριμένη συσκευή, αλλά αυτό σπάνια είναι απαραίτητο. Οι επιλογές είναι:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, generic_eink, generic_eink_hd, generic_eink_large, tablet
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -125,7 +125,7 @@ Specify the output profile. The output profile tells the conversion system how t
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Απενεργοποιήστε τη διαίρεση στις αλλαγές σελίδας. Κανονικά, τα αρχεία εισόδου χωρίζονται αυτόματα σε δύο αρχεία σε κάθε αλλαγή σελίδας. Αυτό δίνει ένα ηλεκτρονικό βιβλίο εξόδου που μπορεί να αναλυθεί πιο γρήγορα και με λιγότερους πόρους. Ωστόσο, η διαίρεση είναι αργή και αν το αρχείο προέλευσης περιέχει πολύ μεγάλο αριθμό αλλαγών σελίδας, θα πρέπει να απενεργοποιήσετε τη διαίρεση στις αλλαγές σελίδας.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -135,17 +135,17 @@ Turn off splitting at page breaks. Normally, input files are automatically split
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Insert an inline Table of Contents that will appear as part of the main book content.
+Εισάγετε έναν πίνακα περιεχομένων που θα εμφανίζεται ως μέρος του κύριου περιεχομένου του βιβλίου.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-max\-image\-size
-The maximum image size (width x height). A value of profile means use the screen size from the output profile. A value of none means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
+Το μέγιστο μέγεθος εικόνας (πλάτος x ύψος). Μια τιμή profile σημαίνει χρήση του μεγέθους οθόνης από το προφίλ εξόδου. Μια τιμή none σημαίνει ότι δεν έχει καθοριστεί μέγιστο μέγεθος. Για παράδειγμα, μια τιμή 100x200 θα προκαλέσει την αλλαγή μεγέθους όλων των εικόνων έτσι ώστε το πλάτος τους να μην υπερβαίνει τα 100 pixels και το ύψος τους να μην υπερβαίνει τα 200 pixels. Σημειώστε ότι αυτό επηρεάζει μόνο το μέγεθος των ίδιων των αρχείων εικόνας. Κάθε εικόνα μπορεί να αποδοθεί σε διαφορετικό μέγεθος ανάλογα με το στυλ που εφαρμόζεται σε αυτήν στο έγγραφο.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Put the inserted inline Table of Contents at the end of the book instead of the start.
+Τοποθετήστε τον εισαγόμενο ενσωματωμένο Πίνακα Περιεχομένων στο τέλος του βιβλίου αντί για την αρχή.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,12 +155,12 @@ Put the inserted inline Table of Contents at the end of the book instead of the 
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
+Εξάγετε τα περιεχόμενα του παραγόμενου βιβλίου στον καθορισμένο φάκελο. Τα περιεχόμενα του φακέλου διαγράφονται πρώτα, οπότε να είστε προσεκτικοί.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+Διαίρεση όλων των αρχείων HTML που είναι μεγαλύτερα από αυτό το μέγεθος (σε KB). Αυτό είναι απαραίτητο καθώς οι περισσότεροι αναγνώστες EPUB δεν μπορούν να χειριστούν μεγάλα μεγέθη αρχείων. Η προεπιλεγμένη τιμή 260KB είναι το μέγεθος που απαιτείται για το Adobe Digital Editions. Ορίστε σε 0 για να απενεργοποιήσετε τη διαίρεση βασισμένη στο μέγεθος.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -175,7 +175,7 @@ Split all HTML files larger than this size (in KB). This is necessary as most EP
 .INDENT 0.0
 .TP
 .B \-\-preserve\-cover\-aspect\-ratio
-When using an SVG cover, this option will cause the cover to scale to cover the available screen area, but still preserve its aspect ratio (ratio of width to height). That means there may be white borders at the sides or top and bottom of the image, but the image will never be distorted. Without this option the image may be slightly distorted, but there will be no borders.
+Όταν χρησιμοποιείτε ένα εξώφυλλο SVG, αυτή η επιλογή θα κάνει το εξώφυλλο να κλιμακωθεί ώστε να καλύψει την διαθέσιμη περιοχή της οθόνης, αλλά διατηρώντας πάντα τις αναλογίες του (αναλογία πλάτους προς ύψος). Αυτό σημαίνει ότι μπορεί να υπάρχουν λευκά περιθώρια στα πλάγια ή πάνω και κάτω της εικόνας, αλλά η εικόνα δεν θα παραμορφωθεί ποτέ. Χωρίς αυτή την επιλογή, η εικόνα μπορεί να παραμορφωθεί ελαφρώς, αλλά δεν θα υπάρχουν περιθώρια.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ When using an SVG cover, this option will cause the cover to scale to cover the 
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Title for any generated inline table of contents.
+Τίτλος για οποιονδήποτε δημιουργημένο ενσωματωμένο πίνακα περιεχομένων.
 .UNINDENT
 .SH ΟΨΗ ΚΑΙ ΑΙΣΘΗΣΗ
 .sp
@@ -193,12 +193,12 @@ Title for any generated inline table of contents.
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Μεταγράψτε χαρακτήρες Unicode σε αναπαράσταση ASCII. Χρησιμοποιήστε με προσοχή, καθώς αυτό θα αντικαταστήσει τους χαρακτήρες Unicode με ASCII. Για παράδειγμα, θα αντικαταστήσει το \fB\(dq\fPPelé\fB\(dq\fP με το \fB\(dq\fPPele\fB\(dq\fP\&. Επίσης, σημειώστε ότι σε περιπτώσεις όπου υπάρχουν πολλαπλές αναπαραστάσεις ενός χαρακτήρα (χαρακτήρες που μοιράζονται τα κινέζικα και τα ιαπωνικά, για παράδειγμα), θα χρησιμοποιηθεί η αναπαράσταση που βασίζεται στη γλώσσα διεπαφής calibre που χρησιμοποιείται αυτή τη στιγμή.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+Το βασικό μέγεθος γραμματοσειράς σε pt. Όλα τα μεγέθη γραμματοσειράς στο παραχθέν βιβλίο θα αναπροσαρμοστούν βάσει αυτού του μεγέθους. Επιλέγοντας μεγαλύτερο μέγεθος μπορείτε να κάνετε τις γραμματοσειρές στην έξοδο μεγαλύτερες και το αντίστροφο. Από προεπιλογή, όταν η τιμή είναι μηδέν, το βασικό μέγεθος γραμματοσειράς επιλέγεται βάσει του προφίλ εξόδου που έχετε επιλέξει.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,27 +213,27 @@ Change text justification. A value of \fB\(dq\fPleft\fB\(dq\fP converts all just
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+Ενσωματώστε κάθε γραμματοσειρά που αναφέρεται στο έγγραφο εισόδου αλλά δεν είναι ήδη ενσωματωμένη. Αυτό θα αναζητήσει τις γραμματοσειρές στο σύστημά σας και, αν βρεθούν, θα ενσωματωθούν. Η ενσωμάτωση θα λειτουργήσει μόνο εάν η μορφή στην οποία μετατρέπετε υποστηρίζει ενσωματωμένες γραμματοσειρές, όπως EPUB, AZW3, DOCX ή PDF. Βεβαιωθείτε ότι έχετε την κατάλληλη άδεια για την ενσωμάτωση των γραμματοσειρών που χρησιμοποιούνται σε αυτό το έγγραφο.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB\(dq\fPbase\fB\(dq\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+Ενσωματώστε την καθορισμένη οικογένεια γραμματοσειρών στο βιβλίο. Αυτό καθορίζει τη «βασική» γραμματοσειρά που χρησιμοποιείται για το βιβλίο. Εάν το εισαγόμενο έγγραφο καθορίζει τις δικές του γραμματοσειρές, ενδέχεται να αντικαταστήσουν αυτήν τη βασική γραμματοσειρά. Μπορείτε να χρησιμοποιήσετε την επιλογή πληροφοριών φιλτραρίσματος στυλ για να αφαιρέσετε γραμματοσειρές από το εισαγόμενο έγγραφο. Σημειώστε ότι η ενσωμάτωση γραμματοσειρών λειτουργεί μόνο με ορισμένες μορφές εξόδου, κυρίως EPUB, AZW3 και DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Από προεπιλογή, το calibre θα χρησιμοποιεί τη συντομευμένη μορφή για διάφορες ιδιότητες CSS, όπως margin, padding, border κ.ά. Αυτή η επιλογή θα προκαλέσει τη χρήση της πλήρους εκτεταμένης μορφής αντί αυτής. Σημειώστε ότι η CSS πάντα εκτείνεται όταν δημιουργούνται αρχεία EPUB με το προφίλ εξόδου ρυθμισμένο σε ένα από τα προφίλ Nook, καθώς το Nook δεν μπορεί να επεξεργαστεί συντομευμένη CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-extra\-css
-Either the path to a CSS stylesheet or raw CSS. This CSS will be appended to the style rules from the source file, so it can be used to override those rules.
+Είτε η διαδρομή προς ένα φύλλο στυλ CSS είτε ακατέργαστο CSS. Αυτό το CSS θα προστεθεί στους κανόνες στυλ από το αρχείο προέλευσης, ώστε να μπορεί να χρησιμοποιηθεί για να αντικαταστήσει αυτούς τους κανόνες.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-A comma separated list of CSS properties that will be removed from all CSS style rules. This is useful if the presence of some style information prevents it from being overridden on your device. For example: font\-family,color,margin\-left,margin\-right
+Μια λίστα με ιδιότητες CSS διαχωρισμένες με κόμμα που θα αφαιρεθούν από όλους τους κανόνες στυλ CSS. Αυτό είναι χρήσιμο εάν η παρουσία κάποιων πληροφοριών στυλ εμποδίζει την αντικατάστασή τους στη συσκευή σας. Για παράδειγμα: font\-family,color,margin\-left,margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -243,72 +243,72 @@ A comma separated list of CSS properties that will be removed from all CSS style
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line
-Insert a blank line between paragraphs. Will not work if the source file does not use paragraphs (<p> or <div> tags).
+Εισάγετε μια κενή γραμμή μεταξύ των παραγράφων. Δεν θα λειτουργήσει εάν το αρχείο προέλευσης δεν χρησιμοποιεί παραγράφους (ετικέτες <p> ή <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-blank\-line\-size
-Set the height of the inserted blank lines (in em). The height of the lines between paragraphs will be twice the value set here.
+Ορίστε το ύψος των κενών γραμμών που εισάγονται (σε em). Το ύψος των γραμμών μεταξύ των παραγράφων θα είναι διπλάσιο από την τιμή που έχει οριστεί εδώ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
+Διατηρήστε τις συνδέσεις γραμμάτων που υπάρχουν στο εισαγόμενο έγγραφο. Μια σύνδεση γραμμάτων είναι ένας συνδυασμένος χαρακτήρας από ένα ζεύγος χαρακτήρων όπως ff, fi, fl κ.τ.λ. Οι περισσότεροι αναγνώστες δεν υποστηρίζουν τις συνδέσεις γραμμάτων στις προεπιλεγμένες γραμματοσειρές τους, επομένως είναι απίθανο να εμφανιστούν σωστά. Από προεπιλογή, το calibre θα μετατρέψει μια σύνδεση γραμμάτων στο αντίστοιχο ζεύγος κανονικών χαρακτήρων. Σημειώστε ότι οι συνδέσεις γραμμάτων εδώ αναφέρονται μόνο σε Unicode συνδέσεις και όχι σε συνδέσεις δημιουργημένες μέσω CSS ή στυλ γραμματοσειράς. Αυτή η επιλογή θα τις διατηρήσει αντ\fB\(aq\fP αυτού.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-line\-height
-The line height in pts. Controls spacing between consecutive lines of text. Only applies to elements that do not define their own line height. In most cases, the minimum line height option is more useful. By default no line height manipulation is performed.
+Το ύψος γραμμής σε pts. Ελέγχει τον χώρο μεταξύ διαδοχικών γραμμών κειμένου. Εφαρμόζεται μόνο σε στοιχεία που δεν καθορίζουν το δικό τους ύψος γραμμής. Στις περισσότερες περιπτώσεις, η επιλογή ελάχιστου ύψους γραμμής είναι πιο χρήσιμη. Από προεπιλογή, δεν πραγματοποιείται καμία μεταβολή του ύψους γραμμής.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-linearize\-tables
-Μερικά κακοσχεδιασμένα έγγραφα χρησιμοποιούν πίνακες για να ελέγξουν τη διάταξη του κειμένου στη σελίδα. Όταν μετατρέπονται, μέρος του κειμένου συχνά βγαίνει εκτός της σελίδας ή παρατηρούνται άλλες ανωμαλίες. Αυτή η παράμετρος εξαγάγει το περιεχόμενο απ\fB\(aq\fPαυτούς τους πίνακες και το παρουσιάζει με γραμμικό τρόπο.
+Μερικά κακοσχεδιασμένα έγγραφα χρησιμοποιούν πίνακες για να ελέγξουν τη διάταξη του κειμένου στη σελίδα. Όταν μετατρέπονται, μέρος του κειμένου συχνά βγαίνει εκτός της σελίδας ή παρατηρούνται άλλες ανωμαλίες. Αυτή η παράμετρος εξαγάγει το περιεχόμενο απ\fB\(aq\fP αυτούς τους πίνακες και το παρουσιάζει με γραμμικό τρόπο.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ορίστε το κάτω περιθώριο σε μονάδες pt. Η προεπιλογή είναι 5.0. Ρυθμίζοντας αυτό σε τιμή μικρότερη του μηδενός δεν θα οριστεί κανένα περιθώριο (θα διατηρηθεί η ρύθμιση περιθωρίου στο αρχικό έγγραφο). Σημείωση: Οι μορφές προσανατολισμένες σε σελίδα, όπως τα PDF και DOCX, έχουν τις δικές τους ρυθμίσεις περιθωρίου που υπερισχύουν.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ορίστε το αριστερό περιθώριο σε μονάδες pts. Η προεπιλογή είναι 5.0. Ορισμός αυτού σε τιμή μικρότερη από το μηδέν δεν θα καθορίσει κανένα περιθώριο (θα διατηρηθεί η ρύθμιση περιθωρίου στο αρχικό έγγραφο). Σημείωση: Οι μορφές προσανατολισμού σελίδας όπως PDF και DOCX έχουν δικές τους ρυθμίσεις περιθωρίου που υπερισχύουν.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ορίστε το δεξί περιθώριο σε μονάδες pts. Η προεπιλογή είναι 5.0. Ορισμός αυτού σε τιμή μικρότερη από το μηδέν δεν θα καθορίσει κανένα περιθώριο (θα διατηρηθεί η ρύθμιση περιθωρίου στο αρχικό έγγραφο). Σημείωση: Οι μορφές προσανατολισμού σελίδας όπως PDF και DOCX έχουν δικές τους ρυθμίσεις περιθωρίου που υπερισχύουν.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Ορίστε το επάνω περιθώριο σε μονάδες pts. Η προεπιλογή είναι 5.0. Ορισμός αυτού σε τιμή μικρότερη από το μηδέν δεν θα καθορίσει κανένα περιθώριο (θα διατηρηθεί η ρύθμιση περιθωρίου στο αρχικό έγγραφο). Σημείωση: Οι μορφές προσανατολισμού σελίδας όπως PDF και DOCX έχουν δικές τους ρυθμίσεις περιθωρίου που υπερισχύουν.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-The minimum line height, as a percentage of the element\fB\(aq\fPs calculated font size. calibre will ensure that every element has a line height of at least this setting, irrespective of what the input document specifies. Set to zero to disable. Default is 120%. Use this setting in preference to the direct line height specification, unless you know what you are doing. For example, you can achieve \fB\(dq\fPdouble spaced\fB\(dq\fP text by setting this to 240.
+Το ελάχιστο ύψος γραμμής, ως ποσοστό του υπολογισμένου μεγέθους γραμματοσειράς του στοιχείου. Το calibre θα διασφαλίζει ότι κάθε στοιχείο έχει ύψος γραμμής τουλάχιστον ίσο με αυτήν την ρύθμιση, ανεξάρτητα από το τι καθορίζει το έγγραφο εισόδου. Ορίστε σε μηδέν για απενεργοποίηση. Προεπιλογή είναι 120%. Χρησιμοποιήστε αυτή τη ρύθμιση προτιμησιακά αντί της άμεσης καθορισμένης τιμής ύψους γραμμής, εκτός εάν γνωρίζετε τι κάνετε. Για παράδειγμα, μπορείτε να επιτύχετε κείμενο με \fB\(dq\fPδιπλή απόσταση\fB\(dq\fP ορίζοντας αυτήν την τιμή σε 240.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing
-Remove spacing between paragraphs. Also sets an indent on paragraphs of 1.5em. Spacing removal will not work if the source file does not use paragraphs (<p> or <div> tags).
+Αφαιρέστε τα διαστήματα μεταξύ των παραγράφων. Ορίζει επίσης μια εσοχή στις παραγράφους 1,5em. Η αφαίρεση διαστήματος δεν θα λειτουργήσει εάν το αρχείο προέλευσης δεν χρησιμοποιεί παραγράφους (ετικέτες <p> ή <div>).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-When calibre removes blank lines between paragraphs, it automatically sets a paragraph indent, to ensure that paragraphs can be easily distinguished. This option controls the width of that indent (in em). If you set this value negative, then the indent specified in the input document is used, that is, calibre does not change the indentation.
+Όταν το calibre αφαιρεί τις κενές γραμμές μεταξύ των παραγράφων, θέτει αυτόματα μια εσοχή παραγράφου, για να διασφαλίσει ότι οι παράγραφοι μπορούν να διακριθούν εύκολα. Αυτή η επιλογή ελέγχει το πλάτος αυτής της εσοχής (σε em). Αν ορίσετε αυτήν την τιμή αρνητική, τότε χρησιμοποιείται η εσοχή που καθορίζεται στο έγγραφο εισόδου, δηλαδή το calibre δεν αλλάζει την εσοχή.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
+Μετατρέψτε τα απλά εισαγωγικά, τις παύλες και τις ελλείψεις στα τυπογραφικά ορθά ισοδύναμά τους. Για λεπτομέρειες, δείτε \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+Υποσύνολο όλων των ενσωματωμένων γραμματοσειρών. Κάθε ενσωματωμένη γραμματοσειρά μειώνεται ώστε να περιλαμβάνει μόνο τα γράμματα που χρησιμοποιούνται σε αυτό το έγγραφο. Αυτό μειώνει το μέγεθος των αρχείων γραμματοσειρών. Χρήσιμο εάν ενσωματώνετε μια ιδιαίτερα μεγάλη γραμματοσειρά με πολλά αχρησιμοποίητα γράμματα.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -323,11 +323,15 @@ Path to a file containing rules to transform the HTML in this book. The easiest 
 .INDENT 0.0
 .TP
 .B \-\-unsmarten\-punctuation
-Convert fancy quotes, dashes and ellipsis to their plain equivalents.
+Μετατρέψτε τα περίτεχνα εισαγωγικά, τις παύλες και τις αποσιωπητικές σε απλά ισοδύναμά τους.
 .UNINDENT
-.SH HEURISTIC PROCESSING
+.SH ΕΥΡΕΤΙΚΉ ΕΠΕΞΕΡΓΑΣΊΑ
 .sp
-Modify the document text and structure using common patterns. Disabled by default. Use \-\-enable\-heuristics to enable.  Individual actions can be disabled with the \-\-disable\-* options.
+Τροποποίηση του κειμένου και της δομής του εγγράφου με τη χρήση κοινών προτύπων. Απενεργοποιημένη από προεπιλογή. Χρησιμοποιήστε \-\-enable\-heuristics για να ενεργοποιήσετε.  Μεμονωμένες ενέργειες μπορούν να απενεργοποιηθούν με τις επιλογές \-\-disable\-
+.nf
+*
+.fi
+\&.
 .INDENT 0.0
 .TP
 .B \-\-disable\-dehyphenate
@@ -351,12 +355,12 @@ Left aligned scene break markers are center aligned. Replace soft scene breaks t
 .INDENT 0.0
 .TP
 .B \-\-disable\-italicize\-common\-cases
-Look for common words and patterns that denote italics and italicize them.
+Αναζητήστε κοινές λέξεις και μοτίβα που δηλώνουν πλάγια γράμματα και βάλτε τα σε πλάγια γράμματα.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-markup\-chapter\-headings
-Detect unformatted chapter headings and sub headings. Change them to h2 and h3 tags.  This setting will not create a TOC, but can be used in conjunction with structure detection to create one.
+Ανίχνευση μη μορφοποιημένων επικεφαλίδων και υποκεφαλίδων κεφαλαίου. Αλλάξτε τις σε ετικέτες h2 και h3.  Αυτή η ρύθμιση δεν θα δημιουργήσει ένα TOC, αλλά μπορεί να χρησιμοποιηθεί σε συνδυασμό με την ανίχνευση δομής για τη δημιουργία ενός TOC.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -371,7 +375,7 @@ Unwrap lines using punctuation and other formatting clues.
 .INDENT 0.0
 .TP
 .B \-\-enable\-heuristics
-Enable heuristic processing. This option must be set for any heuristic processing to take place.
+Ενεργοποιήστε την ευρετική επεξεργασία. Αυτή η επιλογή πρέπει να οριστεί για να πραγματοποιηθεί οποιαδήποτε ευρετική επεξεργασία.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -427,27 +431,27 @@ Search pattern (regular expression) to be replaced with sr3\-replace.
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute improves accessibility by providing text descriptions for users who cannot see or fully interpret visual content.
+Όταν μια ετικέτα <img> δεν έχει το χαρακτηριστικό alt, ελέγξτε το συσχετιζόμενο αρχείο εικόνας για μεταδεδομένα που καθορίζουν εναλλακτικό κείμενο και χρησιμοποιήστε τα για να συμπληρώσετε το χαρακτηριστικό alt. Το χαρακτηριστικό alt βελτιώνει την προσβασιμότητα παρέχοντας περιγραφές με κείμενο για χρήστες που δεν μπορούν να δουν ή να ερμηνεύσουν πλήρως το οπτικό περιεχόμενο.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Μια έκφραση XPath για την ανίχνευση των τίτλων κεφαλαίων. Η προεπιλογή είναι να θεωρούνται οι ετικέτες <h1> ή <h2> που περιέχουν τις λέξεις \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP ή \fB\(dq\fPpart\fB\(dq\fP ως τίτλοι κεφαλαίων, καθώς και οποιεσδήποτε ετικέτες έχουν class=\fB\(dq\fPchapter\fB\(dq\fP\&. Η χρησιμοποιούμενη έκφραση πρέπει να αξιολογείται σε μια λίστα στοιχείων. Για να απενεργοποιήσετε την ανίχνευση κεφαλαίων, χρησιμοποιήστε την έκφραση \fB\(dq\fP/\fB\(dq\fP\&. Δείτε το Εγχειρίδιο XPath στο Εγχειρίδιο Χρήστη του calibre για περαιτέρω βοήθεια στη χρήση αυτής της λειτουργίας.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter\-mark
-Specify how to mark detected chapters. A value of \fB\(dq\fPpagebreak\fB\(dq\fP will insert page breaks before chapters. A value of \fB\(dq\fPrule\fB\(dq\fP will insert a line before chapters. A value of \fB\(dq\fPnone\fB\(dq\fP will disable chapter marking and a value of \fB\(dq\fPboth\fB\(dq\fP will use both page breaks and lines to mark chapters.
+Καθορίστε πώς να σημειώνονται τα ανιχνευμένα κεφάλαια. Η τιμή \fB\(dq\fPpagebreak\fB\(dq\fP θα εισάγει αλλαγές σελίδας πριν από τα κεφάλαια. Η τιμή \fB\(dq\fPrule\fB\(dq\fP θα εισάγει μια γραμμή πριν από τα κεφάλαια. Η τιμή \fB\(dq\fPnone\fB\(dq\fP θα απενεργοποιήσει τη σήμανση κεφαλαίων και η τιμή \fB\(dq\fPboth\fB\(dq\fP θα χρησιμοποιεί τόσο αλλαγές σελίδας όσο και γραμμές για τη σήμανση των κεφαλαίων.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-Some documents specify page margins by specifying a left and right margin on each individual paragraph. calibre will try to detect and remove these margins. Sometimes, this can cause the removal of margins that should not have been removed. In this case you can disable the removal.
+Ορισμένα έγγραφα καθορίζουν τα περιθώρια σελίδας ορίζοντας αριστερό και δεξιό περιθώριο σε κάθε μεμονωμένη παράγραφο. Το calibre θα προσπαθήσει να ανιχνεύσει και να αφαιρέσει αυτά τα περιθώρια. Μερικές φορές, αυτό μπορεί να προκαλέσει την αφαίρεση περιθωρίων που δεν θα έπρεπε να έχουν αφαιρεθεί. Σε αυτή την περίπτωση, μπορείτε να απενεργοποιήσετε την αφαίρεση.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Εισάγετε τα μεταδεδομένα του βιβλίου στην αρχή του βιβλίου. Αυτό είναι χρήσιμο εάν ο αναγνώστης ηλεκτρονικού βιβλίου σας δεν υποστηρίζει την άμεση εμφάνιση/αναζήτηση μεταδεδομένων.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -457,17 +461,17 @@ Insert the book metadata at the start of the book. This is useful if your e\-boo
 .INDENT 0.0
 .TP
 .B \-\-prefer\-metadata\-cover
-Use the cover detected from the source file in preference to the specified cover.
+Χρησιμοποιήστε το εξώφυλλο που εντοπίστηκε από το αρχείο προέλευσης αντί του καθορισμένου εξωφύλλου.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Αφαιρέστε την πρώτη εικόνα από το ηλεκτρονικό βιβλίο εισόδου. Χρήσιμο εάν το έγγραφο εισόδου έχει μια εικόνα εξώφυλλου που δεν αναγνωρίζεται ως εξώφυλλο. Σε αυτή την περίπτωση, εάν ορίσετε εξώφυλλο στο calibre, το έγγραφο εξόδου θα καταλήξει με δύο εικόνες εξωφύλλου, εάν δεν καθορίσετε αυτή την επιλογή.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Μια έκφραση XPath για να εντοπίσετε τη θέση στο έγγραφο από την οποία θα ξεκινήσει η ανάγνωση. Κάποια προγράμματα ανάγνωσης ηλεκτρονικών βιβλίων (κυρίως το Kindle) χρησιμοποιούν αυτή τη θέση ως το σημείο όπου θα ανοίξει το βιβλίο. Δείτε το σεμινάριο XPath στο Εγχειρίδιο Χρήστη του calibre για περισσότερη βοήθεια στη χρήση αυτής της δυνατότητας.
 .UNINDENT
 .SH ΠΙΝΑΚΑΣ ΠΕΡΙΕΧΟΜΕΝΩΝ
 .sp
@@ -475,22 +479,22 @@ An XPath expression to detect the location in the document at which to start rea
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
-When creating a TOC from links in the input document, allow duplicate entries, i.e. allow more than one entry with the same text, provided that they point to a different location.
+Κατά τη δημιουργία ενός Πίνακα Περιεχομένων από συνδέσμους στο έγγραφο εισόδου, επιτρέψτε διπλές καταχωρήσεις, δηλαδή επιτρέψτε περισσότερες από μία καταχωρήσεις με το ίδιο κείμενο, υπό την προϋπόθεση ότι δείχνουν σε διαφορετική τοποθεσία.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level one. If this is specified, it takes precedence over other forms of auto\-detection. See the XPath Tutorial in the calibre User Manual for examples.
+Έκφραση XPath που προσδιορίζει όλα τα ετικέτες που θα πρέπει να προστεθούν στον Πίνακα Περιεχομένων στο πρώτο επίπεδο. Εάν καθοριστεί, έχει προτεραιότητα σε σχέση με άλλες μορφές αυτόματης ανίχνευσης. Δείτε το Οδηγός XPath στο Εγχειρίδιο Χρήσης του calibre για παραδείγματα.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level two. Each entry is added under the previous level one entry. See the XPath Tutorial in the calibre User Manual for examples.
+Έκφραση XPath που καθορίζει όλα τα ετικέτες που θα πρέπει να προστεθούν στον Πίνακα Περιεχομένων στο επίπεδο δύο. Κάθε καταχώρηση προστίθεται κάτω από την προηγούμενη καταχώρηση του επιπέδου ένα. Δείτε το σεμινάριο XPath στο εγχειρίδιο χρήστη του calibre για παραδείγματα.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-XPath expression that specifies all tags that should be added to the Table of Contents at level three. Each entry is added under the previous level two entry. See the XPath Tutorial in the calibre User Manual for examples.
+Έκφραση XPath που καθορίζει όλες τις ετικέτες που θα πρέπει να προστεθούν στον Πίνακα Περιεχομένων στο επίπεδο τρία. Κάθε καταχώρηση προστίθεται κάτω από την προηγούμενη καταχώρηση του επιπέδου δύο. Δείτε το Οδηγός XPath στο Εγχειρίδιο Χρήστη του calibre για παραδείγματα.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -558,7 +562,7 @@ XPath expression that specifies all tags that should be added to the Table of Co
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Ορίστε την ημερομηνία δημοσίευσης (υποτίθεται ότι βρίσκεται στην τοπική ζώνη ώρας, εκτός εάν η ζώνη ώρας καθορίζεται ρητά)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -593,7 +597,7 @@ Set the publication date (assumed to be in the local timezone, unless the timezo
 .INDENT 0.0
 .TP
 .B \-\-timestamp
-Set the book timestamp (no longer used anywhere)
+Ορίστε τη χρονική σήμανση του βιβλίου (δεν χρησιμοποιείται πλέον πουθενά)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -603,7 +607,7 @@ Set the book timestamp (no longer used anywhere)
 .INDENT 0.0
 .TP
 .B \-\-title\-sort
-The version of the title to be used for sorting.
+Η έκδοση του τίτλου που θα χρησιμοποιηθεί για ταξινόμηση.
 .UNINDENT
 .SH ΑΠΟΣΦΑΛΜΑΤΩΣΗ
 .sp
@@ -616,7 +620,7 @@ The version of the title to be used for sorting.
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+Επίπεδο πολυλογίας. Καθορίστε το πολλές φορές για μεγαλύτερη πολυλογία. Ο καθορισμός του δύο φορές θα έχει αποτέλεσμα πλήρη πολυλογία, μία φορά μέτρια πολυλογία και καθόλου για την ελάχιστη πολυλογία.
 .UNINDENT
 .SH Author
 Kovid Goyal
