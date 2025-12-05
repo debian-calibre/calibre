@@ -1,3 +1,17 @@
+calibre (8.16.0+ds+~0.10.5-1) UNRELEASED; urgency=medium
+
+  * New upstream version 8.16.0+ds+~0.10.5
+  * Rediff patches.
+    Drop upstream/0029-Bump-fonttools-from-4.47.0-to-4.61.0.patch: Upstream fixed
+  * Add python3-tzlocal for named time zone.
+    Used by src/calibre/utils/iso8601.py
+    * https://github.com/kovidgoyal/calibre/commit/59cee5b4dfd45bcb1652a440b03b9a12a9a76d7c
+  * No need to use tzdata module on Unix
+  * Typo fix
+  * Lintian fix: debian-watch-not-mangling-version
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 05 Dec 2025 18:43:52 +0900
+
 calibre (8.15.0+ds+~0.10.5-2) unstable; urgency=medium
 
   [ dependabot[bot] ]
