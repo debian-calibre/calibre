@@ -5,7 +5,7 @@ from collections.abc import Iterator
 from functools import lru_cache
 from typing import Any
 
-from qt.core import QAbstractItemView, QDialog, QDialogButtonBox, QLabel, QListWidget, QListWidgetItem, QSize, Qt, QUrl, QVBoxLayout, QWidget, pyqtSignal
+from qt.core import QAbstractItemView, QDialog, QDialogButtonBox, QLabel, QListWidget, QListWidgetItem, QSize, Qt, QUrl, QVBoxLayout, QWidget
 
 from calibre.ai import ChatMessage, ChatMessageType
 from calibre.db.cache import Cache
@@ -14,13 +14,14 @@ from calibre.gui2 import Application, gprefs
 from calibre.gui2.llm import ActionData, ConverseWidget, LLMActionsSettingsWidget, LLMSettingsDialogBase, LocalisedResults
 from calibre.gui2.ui import get_gui
 from calibre.gui2.widgets2 import Dialog
+from calibre.library.comments import comments_as_markdown
 from calibre.utils.icu import primary_sort_key
 from polyglot.binary import from_hex_unicode
 
 
 def format_book_for_query(book: Metadata, is_first: bool, num_books: int) -> str:
-    which = '' if num_books < 2 else ('first' if is_first else 'next')
-    ans = f'The {which} book is: {book.title} by {book.format_authors()}.'
+    which = '' if num_books < 2 else ('first ' if is_first else 'next ')
+    ans = f'The {which}book is: {book.title} by {book.format_authors()}.'
     left = get_allowed_fields() - {'title', 'authors'}
     if 'series' in left:
         ans += f' It is in the series: {book.series}.'
@@ -31,17 +32,26 @@ def format_book_for_query(book: Metadata, is_first: bool, num_books: int) -> str
     comments = []
     fields = []
     for field in left:
+        if book.is_null(field):
+            continue
         m = book.metadata_for_field(field)
-        if field == 'comments' or m['datatype'] == 'comments':
-            comments.append(m.get('field'))
+        if field == 'comments':
+            comments.append(comments_as_markdown(book.get(field)))
+        elif m.get('datatype') == 'comments':
+            ctype = m.get('display', {}).get('interpret_as') or 'html'
+            match ctype:
+                case 'long-text' | 'short-text' | 'markdown':
+                    comments.append(book.get(field))
+                case _:
+                    comments.append(comments_as_markdown(book.get(field)))
         else:
             fields.append(book.format_field(field))
     if fields:
         ans += ' It has the following additional metadata.'
         for name, val in fields:
-            ans += f' {name}: {val}'
+            ans += f'\n{name}: {val}'
     if comments:
-        ans += ' Some notes about this book: ' + comments
+        ans += '\nSome notes about this book:\n' + '\n'.join(comments)
     return ans
 
 
@@ -195,12 +205,10 @@ class LLMSettingsDialog(LLMSettingsDialogBase):
 
 class LLMPanel(ConverseWidget):
     NOTE_TITLE = _('AI Assistant Discussion')
-    close_requested = pyqtSignal()
 
     def __init__(self, books: list[Metadata], parent: QWidget | None = None):
         self.books = books
         super().__init__(parent, add_close_button=True)
-        self.close_requested.connect(self.close_requested)
 
     def settings_dialog(self) -> QDialog:
         return LLMSettingsDialog(self)
@@ -257,6 +265,7 @@ class LLMBookDialog(Dialog):
         l.setContentsMargins(0, 0, 0, 0)
         self.llm = llm = LLMPanel(self.books, parent=self)
         self.llm.close_requested.connect(self.accept)
+        self.finished.connect(self.llm.cleanup_on_close)
         l.addWidget(llm)
         self.bb.setVisible(False)
         self.llm.result_display.input.setFocus(Qt.FocusReason.OtherFocusReason)
