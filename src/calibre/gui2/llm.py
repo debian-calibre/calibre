@@ -36,6 +36,7 @@ from qt.core import (
     QVBoxLayout,
     QWidget,
     pyqtSignal,
+    sip,
 )
 
 from calibre.ai import AICapabilities, ChatMessage, ChatMessageType, ChatResponse
@@ -357,9 +358,15 @@ class ConverseWidget(QWidget):
     def do_api_call(
         self, conversation_history: ConversationHistory, current_api_call_number: int, ai_plugin: AIProviderPlugin
     ) -> None:
-        for res in ai_plugin.text_chat(conversation_history.items, conversation_history.model_used):
-            self.response_received.emit(current_api_call_number, res)
-        self.response_received.emit(current_api_call_number, None)
+        try:
+            for res in ai_plugin.text_chat(conversation_history.items, conversation_history.model_used):
+                if sip.isdeleted(self):
+                    return
+                self.response_received.emit(current_api_call_number, res)
+            if not sip.isdeleted(self):
+                self.response_received.emit(current_api_call_number, None)
+        except RuntimeError:
+            pass  # when self gets deleted between call to sip.isdeleted and next statement
 
     def on_response_from_ai(self, current_api_call_number: int, r: ChatResponse | None) -> None:
         if current_api_call_number != self.current_api_call_number:
@@ -502,6 +509,9 @@ class ConverseWidget(QWidget):
 
     def ready_to_start_api_call(self) -> str:
         return ''
+
+    def cleanup_on_close(self) -> None:
+        self.response_received.disconnect(self.on_response_from_ai)
     # }}}
 
 
