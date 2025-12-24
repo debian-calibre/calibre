@@ -10,42 +10,34 @@ data.
 See also:
   https://docs.python.org/3/library/zoneinfo.html#module-zoneinfo
 ---
- pyproject.toml            |  2 +-
- src/calibre/test_build.py | 11 ++++++++---
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ pyproject.toml            | 1 -
+ src/calibre/test_build.py | 3 +--
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/pyproject.toml b/pyproject.toml
-index 4c9e4b3..23ec7c6 100644
+index 4c9e4b3..c2dea84 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -54,7 +54,7 @@ dependencies = [
+@@ -54,7 +54,6 @@ dependencies = [
  	"PyQt6_WebEngine == 6.8.0",
  	"MacFSEvents == 0.8.4; sys_platform == 'darwin'",
  	"xxhash == 3.3.0",
 -    "tzdata == 2025.2",
-+    "tzdata == 2025.2; platform_system == 'Windows'",
      "tzlocal == 5.3.1",
  ]
  
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 9773188..dc62e5a 100644
+index 9773188..2987430 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -86,9 +86,14 @@ class BuildTest(unittest.TestCase):
+@@ -86,9 +86,8 @@ class BuildTest(unittest.TestCase):
          del CHMFile, chmlib
  
      def test_tzdata(self):
 -        import tzdata
--        import tzlocal
+         import tzlocal
 -        del tzlocal, tzdata
-+        if iswindows:
-+            # Windows uses tzdata module for zoneinfo
-+            import tzdata
-+            import tzlocal
-+            del tzlocal, tzdata
-+        else:
-+            import tzlocal
-+            del tzlocal
++        del tzlocal
  
      def test_chardet(self):
          from calibre_extensions.uchardet import detect
