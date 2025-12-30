@@ -1,3 +1,71 @@
+calibre (8.16.2+ds+~0.10.5-3) unstable; urgency=medium
+
+  * Upstream Calibre depends on python3-six by default.
+    See "dependencies" section in "pyproject.toml" at Calibre source code.
+    Some older Calibre plugins depends this module.
+    Reported by Scott Furry.
+  * Simplify patch because the patch was rejected from upstream.
+  * Upgrade Debian standards to 4.7.3
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 28 Dec 2025 01:10:56 +0900
+
+calibre (8.16.2+ds+~0.10.5-2) unstable; urgency=medium
+
+  * Rediff patches
+  * Fix a regression in the previous release that broke calibredb catalog with
+    non-EPUB catalog output formats. (Closes: #1122108)
+  * Nicer error message when not passing caalog filename as first arg to
+    calibredb catalog
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 08 Dec 2025 14:58:25 +0900
+
+calibre (8.16.2+ds+~0.10.5-1) unstable; urgency=medium
+
+  * New upstream version 8.16.2+ds+~0.10.5
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 06 Dec 2025 14:08:18 +0900
+
+calibre (8.16.1+ds+~0.10.5-1) unstable; urgency=medium
+
+  * New upstream version 8.16.1+ds+~0.10.5
+  * Rediff patches
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sat, 06 Dec 2025 02:58:37 +0900
+
+calibre (8.16.0+ds+~0.10.5-2) unstable; urgency=medium
+
+  * Disable Qt test.
+    Qt backend requires OpenGL or OpenGLES device.
+    But builder dose not have usable such device.
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 05 Dec 2025 21:44:33 +0900
+
+calibre (8.16.0+ds+~0.10.5-1) unstable; urgency=medium
+
+  * New upstream version 8.16.0+ds+~0.10.5
+  * Rediff patches.
+    Drop upstream/0029-Bump-fonttools-from-4.47.0-to-4.61.0.patch: Upstream fixed
+  * Add python3-tzlocal for named time zone.
+    Used by src/calibre/utils/iso8601.py
+    * https://github.com/kovidgoyal/calibre/commit/59cee5b4dfd45bcb1652a440b03b9a12a9a76d7c
+  * No need to use tzdata module on Unix
+  * Typo fix
+  * Lintian fix: debian-watch-not-mangling-version
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 05 Dec 2025 18:56:06 +0900
+
+calibre (8.15.0+ds+~0.10.5-2) unstable; urgency=medium
+
+  [ dependabot[bot] ]
+  * Bump fonttools from 4.47.0 to 4.61.0.
+
+  [ YOKOTA Hiroshi ]
+  * Bump fonttools from 4.47.0 to 4.61.0.
+    Move from Git commit to Quilt patch
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Thu, 04 Dec 2025 10:55:01 +0900
+
 calibre (8.15.0+ds+~0.10.5-1~bpo13+1) trixie-backports; urgency=medium
 
   * Rebuild for trixie-backports.

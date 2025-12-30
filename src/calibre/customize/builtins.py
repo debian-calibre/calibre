@@ -6,6 +6,7 @@ import os
 
 from calibre.ai.github import GitHubAI
 from calibre.ai.google import GoogleAI
+from calibre.ai.lm_studio import LMStudioAI
 from calibre.ai.ollama import OllamaAI
 from calibre.ai.open_router import OpenRouterAI
 from calibre.constants import numeric_version
@@ -936,6 +937,12 @@ class ActionView(InterfaceActionBase):
     description = _('Read books in your calibre library')
 
 
+class ActionLLMBook(InterfaceActionBase):
+    name = 'Discuss book with AI'
+    actual_plugin = 'calibre.gui2.actions.llm_book:LLMBookAction'
+    description = _('Discuss books in your calibre library with AI')
+
+
 class ActionFetchNews(InterfaceActionBase):
     name = 'Fetch News'
     actual_plugin = 'calibre.gui2.actions.fetch_news:FetchNewsAction'
@@ -1182,7 +1189,7 @@ class ActionPluginUpdater(InterfaceActionBase):
 
 plugins += [ActionAdd, ActionAllActions, ActionColumnTooltip, ActionFetchAnnotations,
         ActionGenerateCatalog, ActionConvert, ActionDelete, ActionEditMetadata, ActionView,
-        ActionFetchNews, ActionSaveToDisk, ActionQuickview, ActionPolish,
+        ActionFetchNews, ActionSaveToDisk, ActionQuickview, ActionPolish, ActionLLMBook,
         ActionShowBookDetails, ActionRestart, ActionOpenFolder, ActionConnectShare,
         ActionSendToDevice, ActionHelp, ActionPreferences, ActionSimilarBooks,
         ActionAddToLibrary, ActionEditCollections, ActionMatchBooks, ActionShowMatchedBooks, ActionChooseLibrary,
@@ -1980,7 +1987,7 @@ plugins += [
 
 # }}}
 
-plugins.extend((OpenRouterAI, GoogleAI, GitHubAI, OllamaAI))
+plugins.extend((OpenRouterAI, GoogleAI, GitHubAI, OllamaAI, LMStudioAI))
 
 if __name__ == '__main__':
     # Test load speed

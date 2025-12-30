@@ -5,7 +5,6 @@ Uploaders:
     Martin Pitt <mpitt@debian.org>,
     Nicholas D Steeves <sten@debian.org>
 Section: text
-Priority: optional
 Build-Depends:
     debhelper-compat (= 13),
     cmake (>= 3.21),
@@ -84,6 +83,7 @@ Build-Depends:
     python3-sipbuild,
     python3-six,
     python3-speechd,
+    python3-tzlocal,
     python3-xxhash,
     python3-zeroconf,
     qt6-image-formats-plugins,
@@ -95,7 +95,7 @@ Build-Depends:
     qt6-wayland,
     webp,
     xdg-utils
-Standards-Version: 4.7.2
+Standards-Version: 4.7.3
 Vcs-Browser: https://github.com/debian-calibre/calibre
 Vcs-Git: https://github.com/debian-calibre/calibre.git
 Homepage: https://calibre-ebook.com
@@ -146,7 +146,9 @@ Depends:
     python3-pyqt6.sip,
     python3-regex,
     python3-routes,
+    python3-six,
     python3-speechd,
+    python3-tzlocal,
     python3-xxhash,
     python3-zeroconf,
     webp,
@@ -155,7 +157,6 @@ Recommends:
     python3-dnspython,
     python3-ipython,
     python3-requests-toolbelt,
-    python3-six,
     qt6-speech-flite-plugin | qt6-speech-speechd-plugin,
     udisks2
 Suggests: python3-unrardll
