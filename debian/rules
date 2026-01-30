@@ -56,7 +56,7 @@ blhc-note:
 #	# Add false-positive info for blhc(1) check
 	@echo 'blhc: ignore-line-regexp: \tCompiling form /.+\.ui'
 	@echo 'blhc: ignore-line-regexp: .+ -dM -E -o moc_predefs\.h /usr/lib/[^/]+/qt6/mkspecs/features/data/dummy\.cpp'
-	@echo 'blhc: ignore-line-regexp: .+ -dM -E -c /usr/share/cmake-[0-9\.]+/Modules/CMakeCXXCompilerABI\.cpp .+'
+	@echo 'blhc: ignore-line-regexp: .+ -w -dM -E /usr/share/cmake-[0-9\.]+/Modules/CMakeCXXCompilerABI\.cpp .+'
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 
 override_dh_auto_configure:
