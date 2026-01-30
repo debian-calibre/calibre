@@ -1,3 +1,20 @@
+calibre (9.0.0+ds+~0.10.5-1) UNRELEASED; urgency=medium
+
+  * New upstream version 9.0.0+ds+~0.10.5
+  * Rediff patches.
+    Drop upstream/0030-Fix-a-regression-in-the-previous-release-that-broke-.patch: Upstream fixed
+    Drop upstream/0031-Nicer-error-message-when-not-passing-caalog-filename.patch: Upstream fixed
+  * Extend copyright years
+  * Add copyright text for Debian files
+  * Calibre 9 requires Python 3.14
+  * Drop build tool from dependency list.
+    It's only used when in build time.
+  * Update blhc(1) false-positive line
+  * Drop unused Lintian overrides
+  * Lintian fix: drop-python-version-declaration
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Fri, 30 Jan 2026 19:50:37 +0900
+
 calibre (8.16.2+ds+~0.10.5-3) unstable; urgency=medium
 
   * Upstream Calibre depends on python3-six by default.
