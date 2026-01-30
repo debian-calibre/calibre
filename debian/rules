@@ -10,7 +10,7 @@ export LC_MESSAGES=C.UTF-8
 export LANGUAGE=
 
 # building with python3
-PYTHON=$(shell py3versions -d)
+PYTHON=$(shell py3versions -r)
 PYTHON_PATH=$(shell command -v $(PYTHON))
 SETUP=$(PYTHON) setup.py
 
