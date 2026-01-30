@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "十二月 06, 2025" "8.16.2" "calibre"
+.TH "CALIBREDB" "1" "一月 30, 2026" "9.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -151,7 +151,7 @@ fts_search
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibre 书库的路径。默认是使用存储在设置中的路径。您还可以连接到 calibre 内容服务器，以便在远程书库上执行操作。为此使用此格式的URL：\%<http://\:hostname:port/#\:library_id>。例如，\%<http://\:localhost:8080/#\:mylibrary>。library_id是要在内容服务器上连接的书库的书库id。您可以使用特殊的library_id值 \- 来获得服务器上可用书库id的列表。有关如何通过内容服务器设置访问的详情，请参阅https://manual.calibre\-ebook.com/generated/en/calibredb.html。
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -587,7 +587,7 @@ calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-指定用于从生成的书目中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义栏目“status\fB\(aq\fP”中排除值为“已存档”的书籍。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 适用于：AZW3, EPUB, MOBI 输出格式
+指定用于从生成的书目中排除书籍的规则。 排除规则的模型是(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP标签\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) 或(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP)。 例如： ((\fB\(aq\fP存档的书籍\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP\fB\(aq\fP,\fB\(aq\fP已存档\fB\(aq\fP),) 将在自定义列“status\fB\(aq\fP”中排除值为“已存档”的书籍。定义多个规则时，将应用所有规则。 默认: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP 适用于：AZW3, EPUB, MOBI 输出格式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -692,18 +692,18 @@ calibredb add_custom_column [options] label name datatype
 .UNINDENT
 .UNINDENT
 .sp
-创建一个自定义栏目，栏目名为你自定义的名称，不能包含空格或冒号。数据类型可为：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+创建一个自定义列，列名为你自定义的名称，不能包含空格或冒号。数据类型可为：bool, comments, composite, datetime, enumeration, float, int, rating, series, text
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-display
-用于自定义如何解释此栏目中的数据的选项的字典。这是一个 JSON 字符串。对于枚举栏目，使用 \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按栏目类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在图形界面中创建适当类型的自定义栏目，然后查看书籍的备份 OPF（确保自从添加该栏目以后已经创建了新的 OPF）。在 OPF 中的新栏目中，你将看到 JSON 的“显示”。
+用于自定义如何解释此列中的数据的选项的字典。这是一个 JSON 字符串。对于枚举列，使用 \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 有许多选项可以进入显示变量，按列类型的选项是： composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations 找到适当组合的最好方法是在图形界面中创建适当类型的自定义列，然后查看书籍的备份 OPF（确保自从添加该栏目以后已经创建了新的 OPF）。在 OPF 中的新列中，你将看到 JSON 的“显示”。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-is\-multiple
-此栏目存储类似标签的数据(例如，多个逗号分隔的值)。仅当数据类型为文本时才适用。
+此列存储类似标签的数据(例如，多个逗号分隔的值)。仅当数据类型为文本时才适用。
 .UNINDENT
 .SH CUSTOM_COLUMNS
 .INDENT 0.0
@@ -715,13 +715,13 @@ calibredb custom_columns [options]
 .UNINDENT
 .UNINDENT
 .sp
-列出可用的自定义栏目。显示栏目标签和id。
+列出可用的自定义列。显示栏目标签和id。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-details, \-d
-显示每个栏目的详情。
+显示每个列的详情。
 .UNINDENT
 .SH REMOVE_CUSTOM_COLUMN
 .INDENT 0.0
@@ -733,7 +733,7 @@ calibredb remove_custom_column [options] label
 .UNINDENT
 .UNINDENT
 .sp
-删除由标签标识的自定义栏目。可以使用custom_columns command命令查看可用栏目。
+删除由标签标识的自定义列。可以使用custom_columns command命令查看可用列。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -751,15 +751,15 @@ calibredb set_custom [options] column id value
 .UNINDENT
 .UNINDENT
 .sp
-为 id 标识的书籍设置自定义栏目的值。
+为 id 标识的书籍设置自定义列的值。
 您可以使用搜索命令获取id列表。
-您可以使用 custom_columns 命令获取自定义栏目名的列表。
+您可以使用 custom_columns 命令获取自定义列名的列表。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-append, \-a
-如果栏目可以有多个值，将指定值添加到已有值之后，而非覆盖已有值。
+如果列可以有多个值，将指定值添加到已有值之后，而非覆盖已有值。
 .UNINDENT
 .SH RESTORE_DATABASE
 .INDENT 0.0
@@ -773,7 +773,7 @@ calibredb restore_database [options]
 .sp
 从calibre书库每个文件夹中的OPF文件含有的元数据恢复此数据库，如果你的metadata.db文件已损坏，此方法很有用。
 .sp
-警告：此命令会完全重新生成数据库。你会丢失所有搜索记录，自定义属性，元数据处理规则，已保存的每本书的转换设置和自定义的新闻获取规则。恢复的元数据和OPF文件中的一样准确。
+警告：此命令会完全重新生成数据库。你会丢失所有搜索记录，自定义类别，元数据处理规则，已保存的每本书的转换设置和自定义的新闻获取规则。恢复的元数据和OPF文件中的一样准确。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -829,14 +829,14 @@ calibredb list_categories [options]
 .UNINDENT
 .UNINDENT
 .sp
-在数据库中生成一个属性信息的报告。
+在数据库中生成一个类别信息的报告。
 该信息与标签浏览器中显示的信息相同。
 .sp
 每当您将包含空格的参数传递给%p程序时，请将参数放在引号中。例如: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-categories, \-r
-逗号分隔属性列表检索名。默认值：全部
+逗号分隔类别列表检索名。默认值：全部
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -851,7 +851,7 @@ calibredb list_categories [options]
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-只输出每个属性中的项(标签、作者等)的数目，而不是属性内的每项包含的书籍数
+只输出每个类别中的项(标签、作者等)的数目，而不是类别内的每项包含的书籍数
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -891,7 +891,7 @@ calibredb clone path/to/new/library
 .UNINDENT
 .UNINDENT
 .sp
-创建当前书库的副本。这将创建一个新的、空的书库，它所有的自定义栏目、虚拟书库和其他设置与当前书库相同。
+创建当前书库的副本。这将创建一个新的、空的书库，它所有的自定义列、虚拟书库和其他设置与当前书库相同。
 .sp
 副本书库将没有任何书籍。如果您想要创建一个完整的副本书库，包括所有的书籍，那么只需使用您的文件系统工具来复制书库文件夹。
 .sp

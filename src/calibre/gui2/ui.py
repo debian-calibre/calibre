@@ -14,7 +14,6 @@ import os
 import re
 import sys
 import textwrap
-import time
 from collections import OrderedDict, deque
 from io import BytesIO
 from queue import Empty, Queue
@@ -22,24 +21,12 @@ from queue import Empty, Queue
 import apsw
 from qt.core import QAction, QApplication, QDialog, QEvent, QFont, QIcon, QMenu, QSystemTrayIcon, Qt, QTimer, QUrl, pyqtSignal
 
-from calibre import detect_ncpus, force_unicode, prints
+from calibre import detect_ncpus, force_unicode, prints, timed_print
 from calibre.constants import DEBUG, __appname__, config_dir, filesystem_encoding, ismacos, iswindows
 from calibre.customize import PluginInstallationType
 from calibre.customize.ui import available_store_plugins, interface_actions
 from calibre.db.legacy import LibraryDatabase
-from calibre.gui2 import (
-    Dispatcher,
-    GetMetadata,
-    config,
-    error_dialog,
-    gprefs,
-    info_dialog,
-    max_available_height,
-    open_url,
-    question_dialog,
-    timed_print,
-    warning_dialog,
-)
+from calibre.gui2 import Dispatcher, GetMetadata, config, error_dialog, gprefs, info_dialog, max_available_height, open_url, question_dialog, warning_dialog
 from calibre.gui2.auto_add import AutoAdder
 from calibre.gui2.changes import handle_changes
 from calibre.gui2.cover_flow import CoverFlowMixin
@@ -909,6 +896,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                     db.format_metadata(book_id, fmt, allow_cache=False, update_db=True)
                     db.reindex_fts_book(book_id, fmt)
                     db.update_last_modified((book_id,))
+                    db.queue_pages_scan(book_id)
                     m.refresh_ids((book_id,))
                     db.event_dispatcher(db.EventType.book_edited, book_id, fmt)
             except Exception:
@@ -1247,12 +1235,15 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         return True
 
     def shutdown(self, write_settings=True):
+        from time import monotonic
+        st = monotonic()
         timed_print('Shutdown starting...')
         self.shutting_down = True
         if hasattr(self.library_view, 'connect_to_book_display_timer'):
             self.library_view.connect_to_book_display_timer.stop()
         self.shutdown_started.emit()
         self.show_shutdown_message()
+        timed_print('Shutdown message shown...')
         self.server_change_notification_timer.stop()
         self.extra_files_watcher.clear()
         try:
@@ -1266,6 +1257,9 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 _('Running database shutdown plugins. This could take a few seconds...'))
 
         self.grid_view.shutdown()
+        timed_print('Grid view shutdown')
+        self.bookshelf_view.shutdown()
+        timed_print('Bookshelf view shutdown')
         db = None
         try:
             db = self.library_view.model().db
@@ -1281,6 +1275,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             db.prefs.write_serialized(prefs['library_path'])
         for action in self.iactions.values():
             action.shutting_down()
+        timed_print('Actions shutdown')
         if write_settings:
             self.write_settings()
         if getattr(self, 'update_checker', None):
@@ -1290,6 +1285,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.job_manager.threaded_server.close()
         self.device_manager.keep_going = False
         self.auto_adder.stop()
+        timed_print('Various services shutdown')
         # Do not report any errors that happen after the shutdown
         # We cannot restore the original excepthook as that causes PyQt to
         # call abort() on unhandled exceptions
@@ -1305,8 +1301,10 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         mb = self.library_view.model().metadata_backup
         if mb is not None:
             mb.stop()
+        timed_print('Metadata backup shutdown')
 
         self.library_view.model().close()
+        timed_print('Current database closed')
 
         try:
             if self.content_server is not None:
@@ -1318,23 +1316,25 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                 s = self.content_server
                 self.content_server = None
                 s.exit()
+                timed_print('Content server shutdown')
         except KeyboardInterrupt:
             pass
         except Exception:
             pass
         self.hide_windows()
+        timed_print('Windows hidden')
         if self._spare_pool is not None:
             self._spare_pool.shutdown()
         from calibre.scraper.simple import cleanup_overseers
         wait_for_cleanup = cleanup_overseers()
         from calibre.live import async_stop_worker
         wait_for_stop = async_stop_worker()
-        time.sleep(2)
+        timed_print('Waiting for overseers and live to shutdown')
         self.istores.join()
         wait_for_cleanup()
         wait_for_stop()
         self.shutdown_completed.emit()
-        timed_print('Shutdown complete, quitting...')
+        timed_print(f'Shutdown complete in {monotonic()-st:.2f}, quitting...')
         try:
             sys.stdout.flush()  # Make sure any buffered prints are written for debug mode
         except Exception:

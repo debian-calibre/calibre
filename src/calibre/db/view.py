@@ -226,11 +226,21 @@ class View:
     def index_to_id(self, idx):
         return self._map_filtered[idx]
 
+    def index_to_id_map(self) -> tuple[int, ...]:
+        return self._map_filtered
+
     def id_to_index(self, book_id):
         try:
             return self._real_map_filtered_id_to_row[book_id]
         except KeyError:
             raise ValueError(f'No such book_id {book_id} in current view')
+
+    def safe_id_to_index(self, book_id):
+        try:
+            return self._real_map_filtered_id_to_row[book_id]
+        except Exception:
+            return -1
+
     row = index_to_id
 
     def index(self, book_id, cache=False):

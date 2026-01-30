@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# akihiko tanae (tanaeakihiko), 2025
+# akihiko tanae (tanaeakihiko), 2025-2026
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 01:28+0000\n"
+"POT-Creation-Date: 2026-01-18 13:51+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025\n"
+"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -267,6 +267,8 @@ msgstr "著者データをキー付きの辞書として返します: name, sort
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
@@ -279,6 +281,11 @@ msgid ""
 "preferring the author sort associated with the author over the computed "
 "string."
 msgstr "著者のリストを指定して、著者の author_sort 文字列を返します。計算された文字列よりも、著者読みに関連付けられた著者の並べ替えを優先します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:1
+msgid "Return author sorts for specified authors."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -713,6 +720,11 @@ msgid ""
 msgstr "リソースデータと名前を含む辞書を返すか、指定されたハッシュを持つリソースが見つからない場合はNoneを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_pages:1
+msgid "Return page count information for the specified book"
+msgstr "特定の本のページ数情報を返す"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -799,6 +811,11 @@ msgid ""
 msgstr "指定されたパターンに一致するすべての追加ファイルのタプル。タプルの各要素は ExtraFile(relpath, file_path, stat_result) です。relpathは、/を区切り文字として使用した、本ディレクトリへのファイルの相対パスです。stat_resultは、ファイルに対して os.stat() を呼び出した結果です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.mark_for_pages_recount:1
+msgid "Mark all books for recount of pages"
+msgstr "ページ数を再カウントするすべての本をマーク"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_annotations_for_book:1
 msgid ""
 "Merge the specified annotations into the existing annotations for book_id, "
@@ -854,11 +871,27 @@ msgid ""
 msgstr "指定されたアイテムの注釈で使用されるすべてのリソースのハッシュのセットを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.pages_needs_scan:1
+msgid ""
+"Return the subset of books (or all books if empty) that are marked as "
+"needing a scan to update page count"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
 msgstr "指定した環境設定の値、または環境設定に指定がなければデフォルト値を返します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.queue_pages_scan:1
+msgid ""
+"Start a scan updating page counts for all books that need a scan. If book_id"
+" is specified, then only that book is scanned and it is always scanned. When"
+" `force` is True, the existing pages value, if any, is discarded so that the"
+" book is forcibly rescanned even if the existing value was up-to-date."
+msgstr "スキャンが必要なすべての本のページ数を更新しながらスキャンを開始します。book_id が指定されている場合は、その本のみを対象にして常にスキャンされます。`force` が True の場合、既存のページ値（存在する場合）は破棄されます。そのため、既存の値が最新であっても、本は強制的に再スキャンされます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
@@ -1116,6 +1149,11 @@ msgid ""
 "updating a note automatically cleans up resources pertaining to that note "
 "anyway."
 msgstr "注釈のドキュメントを設定します。検索可能なテキストがドキュメントと異なる場合は、searchable_text で指定してください。ドキュメントがリソースを参照している場合は、そのハッシュを resource_hashes に設定する必要があります。未使用のリソースをクリーンアップするには、remove_unused_resources を True に設定します。注釈を更新すると、その注釈に関連するリソースも自動的にクリーンアップされることに注意してください。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_pages:1
+msgid "Set page count information for the specified book"
+msgstr "特定の本のページ数情報を設定する"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

@@ -5,7 +5,7 @@
 # Translators:
 # hjings <hjings@gmail.com>, 2019
 # Kevin Jin <kevin.defan@gmail.com>, 2016
-# RERBIN MA, 2025
+# RERBIN MA, 2025-2026
 # tony shen <anthanny@hotmail.com>, 2020,2023-2024
 # Ennis W, 2021
 # Y.D.X., 2022
@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-31 01:31+0000\n"
+"POT-Creation-Date: 2026-01-22 18:49+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
-"Last-Translator: RERBIN MA, 2025\n"
+"Last-Translator: RERBIN MA, 2025-2026\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1862,14 +1862,14 @@ msgid ""
 "`Choose an icon for this value but not its children`. A dialog will open "
 "where you choose an icon for the value. Children of that value will not "
 "inherit that icon."
-msgstr ""
+msgstr "“为此值选择图标 (不含其子项)”。随后将打开一个对话框，您可以为当前值选择一个图标。该值的子项将不会继承此图标。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:734
 msgid ""
 "`Choose an icon for this value and its children`. A dialog will open where "
 "you choose an icon for the value. Any children that don't have their own "
 "specified icon will inherit this icon."
-msgstr ""
+msgstr "“为此值和其子项选择图标”。随后将打开一个对话框，您可以为当前值选择一个图标。任何没有指定自身图标的子项都将继承此图标。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:735
 msgid ""
@@ -1877,7 +1877,7 @@ msgid ""
 "offered if the value already has an icon that is inherited by the value's "
 "children. Selecting it will make the icon apply to the value but not its "
 "children."
-msgstr ""
+msgstr "“将现有图标仅用于此值(不含其子项)”。如果当前值已有一个被其子项继承的图标，系统将提供此选项。选择它后，该图标将仅应用于当前值，其子项将不再显示该图标。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:736
 msgid ""
@@ -1885,50 +1885,50 @@ msgid ""
 "offered if the value already has an icon that is not inherited by the "
 "value's children. Selecting it will make the icon apply to the value and its"
 " children."
-msgstr ""
+msgstr "“将现有图标用于此值和其子项”。如果当前值已有一个未被其子项继承的图标，系统将提供此选项。选择它后，该图标将应用于当前值及其所有子项。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:737
 msgid ""
 "`Use the default icon for this value`. This option is offered if the item "
 "has an icon. It removes the icon from the value and any children inheriting "
 "the icon. The default icon is what is specified below."
-msgstr ""
+msgstr "“为此值使用默认图标”。如果该项已有关联图标，系统将提供此选项。选择后，将移除该值及其所有继承此图标的子项上的图标。此处的“默认图标”是指下方所指定的图标。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:738
 msgid ""
 "`Reset all value icons to the default icon`. This option removes all item "
 "value icons for the category. It does not remove a template if one exists. "
 "There is no undo."
-msgstr ""
+msgstr "“将所有项的图标重置为默认图标”。此选项将移除该类别下所有项关联的自定义图标。它不会移除已存在的模板。请注意，此操作无法撤销。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:739
 msgid ""
 "`Use/edit a template to choose the default value icon`. This option permits "
 "you to provide a calibre template that returns the name of an icon file to "
 "be used as a default icon. The template can use two variables:"
-msgstr ""
+msgstr "“使用/编辑模板以选择默认图标”。此选项允许您提供一个 Calibre 模板，该模板将返回要作为默认图标使用的图标文件名称。该模板可以使用两个变量："
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:741
 msgid ""
 "``category``: the lookup name of the category, for example ``authors``, "
 "``series``, ``#mycolumn``."
-msgstr ""
+msgstr "``category``: 分类的检索名称, 例如 ``authors``, ``series``, ``#mycolumn``."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:742
 msgid "``value``: the value of the item within the category."
-msgstr ""
+msgstr "``value``: 该类别下具体条目的值（内容）。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:743
 msgid ""
 "``count``: the number of books with this value. If the value is part of a "
 "hierarchy then the count includes the children."
-msgstr ""
+msgstr "``count``: 拥有该值的书籍数量。如果该值属于层级结构的一部分，则计数将包含其子项的数量。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:744
 msgid ""
 "``avg_rating``: the average rating for books with this value. If the value "
 "is part of a hierarchy then the average includes the children."
-msgstr ""
+msgstr "``avg_rating``: 拥有该值的书籍的平均评分。如果该值属于层级结构的一部分，则平均分将包含其子项的评分。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:746
 msgid ""
@@ -1939,7 +1939,7 @@ msgid ""
 ":ref:`ff_connected_device_name`, :ref:`ff_connected_device_uuid`, "
 ":ref:`ff_current_virtual_library_name`, :ref:`ff_is_marked`, and "
 ":ref:`ff_virtual_libraries`."
-msgstr ""
+msgstr "诸如书名之类的书籍元数据在此上下文中不可用. 虽然可以使用模板数据库函数（ :ref:`ff_book_count` 和 :ref:`ff_book_values` ），但其性能可能无法达到理想水平。 此外，以下模板函数仅在图形界面（GUI）中有效，而在内容服务器（Content Server）中将无法运行: :ref:`ff_connected_device_name`, :ref:`ff_connected_device_uuid`, :ref:`ff_current_virtual_library_name`, :ref:`ff_is_marked`, 以及 :ref:`ff_virtual_libraries`."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:748
 msgid ""
@@ -1947,51 +1947,51 @@ msgid ""
 "the content server, Python templates have access to new API (see `API "
 "documentation for the database interface <https://manual.calibre-"
 "ebook.com/db_api.html>`_) but not the old API (LibraryDatabase)."
-msgstr ""
+msgstr "在GUI中，Python 模板拥有对 Calibre 数据库的全权访问访问权限。在内容服务器中，Python 模板可以访问新的 API（参见 `数据库接口 API 文档 <https://manual.calibre-ebook.com/db_api.html>`_），但无法使用旧版的 API（LibraryDatabase）"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:750
 msgid ""
 "For example, this template specifies that any value in the clicked-on "
 "category beginning with `History` will have an icon named ``flower.png``::"
-msgstr ""
+msgstr "例如，以下模板规定：在所点击的分类中，任何以`History` 开头的项都将使用名为``flower.png``:: 的图标："
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:755
 msgid ""
 "If a template returns the empty string (``''``) then the category icon will "
 "be used. If the template returns a file name that doesn't exist then no icon"
 " is displayed."
-msgstr ""
+msgstr "如果模板返回空字符串 (``''``) ，则系统将使用该类别的默认图标。如果模板返回的文件名不存在，则不显示任何图标。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:758
 msgid ""
 "`Use the category icon as the default`. This option specifies that the icon "
 "used for the category should be used for any value that doesn't otherwise "
 "have an icon. Selecting this option removes any template icon specification."
-msgstr ""
+msgstr "“使用类别图标作为默认图标”。此选项规定，类别本身所使用的图标应被应用于任何未设置图标的值。选择此选项将移除任何已有的模板图标规范。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:761
 msgid "The icon is chosen using the following hierarchy:"
-msgstr ""
+msgstr "图标将根据以下层级顺序进行选择："
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:763
 msgid "The icon specified for the value, if it exists."
-msgstr ""
+msgstr "为该值指定的图标（如果存在）。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:764
 msgid ""
 "The icon specified for a parent node found by walking up the tree, if one "
 "exists."
-msgstr ""
+msgstr "通过向上遍历树形（层级）结构所找到的父节点指定的图标（如果存在）。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:765
 msgid ""
 "The icon from a template, if a template exists and it returns a non-empty "
 "string."
-msgstr ""
+msgstr "来自模板的图标（如果存在模板且其返回非空字符串）。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:766
 msgid "The default category icon, which always exists."
-msgstr ""
+msgstr "类别默认图标（该图标始终存在）。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:768
 msgid ""
@@ -1999,7 +1999,7 @@ msgid ""
 "folder. Icons for item values are stored in the :file:`tb_icons` subfolder. "
 "Icons used by templates are in the :file:`template_icons` subfolder of "
 ":file:`tb_icons`."
-msgstr ""
+msgstr "图标是按用户而非按书库设置的，存储在 calibre 的配置文件夹中。条目值的图标存储在  :file:`tb_icons`模板子文件夹内。模板所使用的图标则位于  :file:`tb_icons`下的 :file:`template_icons` 子文件夹中。"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:776
 msgid "Cover grid"
@@ -2372,314 +2372,338 @@ msgid "View last read book"
 msgstr "查看上次阅读的书籍"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:930
+msgid ":kbd:`Ctrl+Alt+A`"
+msgstr ":kbd:`Ctrl+Alt+A`"
+
+#: ../../../__w/calibre/calibre/manual/gui.rst:931
+msgid "Ask AI about the currently selected books"
+msgstr "关于当前选中书籍的 AI 查询"
+
+#: ../../../__w/calibre/calibre/manual/gui.rst:932
 msgid ":kbd:`Alt+V/Cmd+V for macOS`"
 msgstr "“Alt+V/Cmd+V适用于macOS”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:931
+#: ../../../__w/calibre/calibre/manual/gui.rst:933
 msgid "View specific format"
 msgstr "阅读特定格式"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:932
+#: ../../../__w/calibre/calibre/manual/gui.rst:934
 msgid ":kbd:`Alt+Shift+J`"
 msgstr "“Alt+Shift+J”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:933
+#: ../../../__w/calibre/calibre/manual/gui.rst:935
 msgid "Toggle jobs list"
 msgstr "切换任务列表"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:934
+#: ../../../__w/calibre/calibre/manual/gui.rst:936
 msgid ":kbd:`Alt+Shift+B`"
 msgstr "“Alt+Shift+B”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:935
+#: ../../../__w/calibre/calibre/manual/gui.rst:937
 msgid "Toggle Cover browser"
 msgstr "切换封面浏览器"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:936
+#: ../../../__w/calibre/calibre/manual/gui.rst:938
 msgid ":kbd:`Alt+Shift+D`"
 msgstr "“Alt+Shift+D”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:937
+#: ../../../__w/calibre/calibre/manual/gui.rst:939
 msgid "Toggle Book details panel"
 msgstr "切换书籍细节面板"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:938
+#: ../../../__w/calibre/calibre/manual/gui.rst:940
 msgid ":kbd:`Alt+Shift+T`"
 msgstr "“Alt+Shift+T”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:939
+#: ../../../__w/calibre/calibre/manual/gui.rst:941
 msgid "Toggle Tag browser"
 msgstr "切换标签浏览器"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:940
+#: ../../../__w/calibre/calibre/manual/gui.rst:942
 msgid ":kbd:`Alt+Shift+G`"
 msgstr "“Alt+Shift+G”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:941
+#: ../../../__w/calibre/calibre/manual/gui.rst:943
 msgid "Toggle Cover grid"
 msgstr "切换封面网格"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:942
+#: ../../../__w/calibre/calibre/manual/gui.rst:944
 msgid ":kbd:`Alt+A`"
 msgstr "“Alt+A”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:943
+#: ../../../__w/calibre/calibre/manual/gui.rst:945
 msgid "Show books by the same author as the current book"
 msgstr "显示与当前图书相同作者的图书"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:944
+#: ../../../__w/calibre/calibre/manual/gui.rst:946
 msgid ":kbd:`Alt+T`"
 msgstr "“Alt+T”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:945
+#: ../../../__w/calibre/calibre/manual/gui.rst:947
 msgid "Show books with the same tags as current book"
 msgstr "显示与当前图书标签相同的图书"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:946
+#: ../../../__w/calibre/calibre/manual/gui.rst:948
 msgid ":kbd:`Alt+P`"
 msgstr "“Alt+P”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:947
+#: ../../../__w/calibre/calibre/manual/gui.rst:949
 msgid "Show books by the same publisher as current book"
 msgstr "显示与当前图书出版商相同的图书"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:948
+#: ../../../__w/calibre/calibre/manual/gui.rst:950
 msgid ":kbd:`Alt+Shift+S`"
 msgstr "“Alt+Shift+S”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:949
+#: ../../../__w/calibre/calibre/manual/gui.rst:951
 msgid "Show books in the same series as current book"
 msgstr "显示与当前图书属于同一系列的图书"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:950
+#: ../../../__w/calibre/calibre/manual/gui.rst:952
 msgid ":kbd:`/, Ctrl+F`"
 msgstr "“/, Ctrl+F”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:951
+#: ../../../__w/calibre/calibre/manual/gui.rst:953
 msgid "Focus the Search bar"
 msgstr "聚焦搜索栏"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:952
+#: ../../../__w/calibre/calibre/manual/gui.rst:954
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr "“Shift+Ctrl+F”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:953
+#: ../../../__w/calibre/calibre/manual/gui.rst:955
 msgid "Open the Advanced search dialog"
 msgstr "打开高级搜索对话框"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:954
+#: ../../../__w/calibre/calibre/manual/gui.rst:956
 msgid ":kbd:`Shift+Alt+F`"
 msgstr "“Shift+Alt+F”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:955
+#: ../../../__w/calibre/calibre/manual/gui.rst:957
 msgid "Toggle the Search bar"
 msgstr "切换搜索栏"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:956
+#: ../../../__w/calibre/calibre/manual/gui.rst:958
 msgid ":kbd:`Esc`"
 msgstr "“Esc”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:957
+#: ../../../__w/calibre/calibre/manual/gui.rst:959
 msgid "Clear the current search"
 msgstr "清除当前搜索"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:958
+#: ../../../__w/calibre/calibre/manual/gui.rst:960
 msgid ":kbd:`Shift+Esc`"
 msgstr "“Shift+Esc”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:959
+#: ../../../__w/calibre/calibre/manual/gui.rst:961
 msgid "Focus the book list"
 msgstr "聚焦书籍列表"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:960
+#: ../../../__w/calibre/calibre/manual/gui.rst:962
 msgid ":kbd:`Ctrl+Esc`"
 msgstr "“Ctrl+Esc”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:961
+#: ../../../__w/calibre/calibre/manual/gui.rst:963
 msgid "Clear the Virtual library"
 msgstr "清除虚拟书库"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:962
+#: ../../../__w/calibre/calibre/manual/gui.rst:964
 msgid ":kbd:`Alt+Esc`"
 msgstr "“Alt+Esc”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:963
+#: ../../../__w/calibre/calibre/manual/gui.rst:965
 msgid "Clear the additional restriction"
 msgstr "清除附加限制"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:964
+#: ../../../__w/calibre/calibre/manual/gui.rst:966
 msgid ":kbd:`Ctrl+*`"
 msgstr "“Ctrl+*”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:965
+#: ../../../__w/calibre/calibre/manual/gui.rst:967
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "基于当前搜索创建一个临时虚拟书库"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:966
-msgid ":kbd:`Ctrl+Right`"
-msgstr "“Ctrl+Right”"
+#: ../../../__w/calibre/calibre/manual/gui.rst:968
+msgid ":kbd:`Ctrl+Tab`"
+msgstr ":kbd:`Ctrl+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:967
+#: ../../../__w/calibre/calibre/manual/gui.rst:969
 msgid "Select the next Virtual library tab"
 msgstr "选择下一个虚拟书库选项卡"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:968
-msgid ":kbd:`Ctrl+Left`"
-msgstr "“Ctrl+Left”"
+#: ../../../__w/calibre/calibre/manual/gui.rst:970
+msgid ":kbd:`Ctrl+Shift+Tab`"
+msgstr ":kbd:`Ctrl+Shift+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:969
+#: ../../../__w/calibre/calibre/manual/gui.rst:971
 msgid "Select the previous Virtual library tab"
 msgstr "选择前一个虚拟书库选项卡"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:970
+#: ../../../__w/calibre/calibre/manual/gui.rst:972
 msgid ":kbd:`N or F3`"
 msgstr "“N 或 F3”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:971
+#: ../../../__w/calibre/calibre/manual/gui.rst:973
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "查找与当前搜索匹配的下一本书(仅当在搜索首选项中打开搜索突出显示时才起作用)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:972
+#: ../../../__w/calibre/calibre/manual/gui.rst:974
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr "“Shift+N 或 Shift+F3”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:973
+#: ../../../__w/calibre/calibre/manual/gui.rst:975
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "查找与当前搜索匹配的前一本书(仅当在搜索首选项中打开搜索突出显示时才起作用)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:974
+#: ../../../__w/calibre/calibre/manual/gui.rst:976
 msgid ":kbd:`Ctrl+D`"
 msgstr "“Ctrl+D”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:975
+#: ../../../__w/calibre/calibre/manual/gui.rst:977
 msgid "Download metadata and covers"
 msgstr "下载元数据和封面"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:976
+#: ../../../__w/calibre/calibre/manual/gui.rst:978
 msgid ":kbd:`Ctrl+R`"
 msgstr "“Ctrl+”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:977
+#: ../../../__w/calibre/calibre/manual/gui.rst:979
 msgid "Restart calibre"
 msgstr "重启 Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:978
+#: ../../../__w/calibre/calibre/manual/gui.rst:980
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr "“Ctrl+Shift+R”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:979
+#: ../../../__w/calibre/calibre/manual/gui.rst:981
 msgid "Restart calibre in debug mode"
 msgstr "以调试模式重启calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:980
+#: ../../../__w/calibre/calibre/manual/gui.rst:982
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr "“Shift+Ctrl+E”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:981
+#: ../../../__w/calibre/calibre/manual/gui.rst:983
 msgid "Add empty books to calibre"
 msgstr "添加空白书籍到 Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:982
+#: ../../../__w/calibre/calibre/manual/gui.rst:984
 msgid ":kbd:`Ctrl+M`"
 msgstr "“Ctrl+M”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:983
+#: ../../../__w/calibre/calibre/manual/gui.rst:985
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "切换所选图书的标记/未标记状态"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:984
+#: ../../../__w/calibre/calibre/manual/gui.rst:986
 msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
 msgstr "“Ctrl+/` 或“Ctrl+Alt+F”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:985
+#: ../../../__w/calibre/calibre/manual/gui.rst:987
 msgid "Open the popup to search the full text of all books in the library"
 msgstr "打开弹出窗口以搜索书库中所有图书的全文"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:986
+#: ../../../__w/calibre/calibre/manual/gui.rst:988
 msgid ":kbd:`Q`"
 msgstr "“Q”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:987
+#: ../../../__w/calibre/calibre/manual/gui.rst:989
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "通过打开“快速查看”弹出窗口，查看相关系列/标签等中的书籍。"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:988
+#: ../../../__w/calibre/calibre/manual/gui.rst:990
 msgid ":kbd:`Shift+Q`"
 msgstr "“Shift+Q”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:989
+#: ../../../__w/calibre/calibre/manual/gui.rst:991
 msgid "Focus the opened Quick View panel"
 msgstr "聚焦打开的快速查看面板"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:990
+#: ../../../__w/calibre/calibre/manual/gui.rst:992
 msgid ":kbd:`Shift+S`"
 msgstr "“Shift+S”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:991
+#: ../../../__w/calibre/calibre/manual/gui.rst:993
 msgid "Perform a search in the Quick View panel"
 msgstr "在“快速查看”面板执行搜索"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:992
+#: ../../../__w/calibre/calibre/manual/gui.rst:994
 msgid ":kbd:`F5`"
 msgstr "“F5”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:993
+#: ../../../__w/calibre/calibre/manual/gui.rst:995
 msgid "Re-apply the current sort"
 msgstr "重新应用当前排序"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:994
+#: ../../../__w/calibre/calibre/manual/gui.rst:996
 msgid ":kbd:`Ctrl+Q`"
 msgstr "“Ctrl+Q”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:995
+#: ../../../__w/calibre/calibre/manual/gui.rst:997
 msgid "Quit calibre"
 msgstr "退出 Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:996
+#: ../../../__w/calibre/calibre/manual/gui.rst:998
 msgid ":kbd:`X`"
 msgstr "“X”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:997
+#: ../../../__w/calibre/calibre/manual/gui.rst:999
 msgid "Toggle auto scroll of the book list"
 msgstr "切换图书列表的自动滚动"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:998
+#: ../../../__w/calibre/calibre/manual/gui.rst:1000
 msgid ":kbd:`Ctrl+Alt+Shift+F`"
 msgstr "“Ctrl+Alt+Shift+F”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:999
+#: ../../../__w/calibre/calibre/manual/gui.rst:1001
 msgid ""
 "Restrict the displayed books to only those books that are in a category "
 "currently displayed in the :guilabel:`Tag browser`"
 msgstr "将显示的图书限制为当前在“标签浏览器”中显示的图书类别中的图书"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1001
+#: ../../../__w/calibre/calibre/manual/gui.rst:1003
 msgid ":kbd:`B`"
 msgstr "“B”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1002
+#: ../../../__w/calibre/calibre/manual/gui.rst:1004
 msgid ""
 "Browse annotations (highlights and bookmarks) made in the calibre E-book "
 "viewer for all books in the library"
-msgstr ""
+msgstr "浏览在calibre电子书阅读器中为书库中的所有图书制作的标注（突出显示和书签）"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1003
+#: ../../../__w/calibre/calibre/manual/gui.rst:1005
 msgid ":kbd:`Ctrl+Shift+N`"
 msgstr "“Ctrl+Shift+N”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1004
+#: ../../../__w/calibre/calibre/manual/gui.rst:1006
 msgid "Browse notes associated with authors/series/tags/etc."
-msgstr "浏览与作者/系列/标签/等相关的备注。"
+msgstr "浏览与作者/丛书/标签/等相关的备注。"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1005
+#: ../../../__w/calibre/calibre/manual/gui.rst:1007
 msgid ":kbd:`Alt+Shift+L`"
 msgstr "“Alt+Shift+L”"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1006
+#: ../../../__w/calibre/calibre/manual/gui.rst:1008
 msgid "Toggle the layout between wide and narrow views"
 msgstr "在宽大和紧凑视图之间切换布局"
+
+#: ../../../__w/calibre/calibre/manual/gui.rst:1009
+msgid ":kbd:`Ctrl+Alt+P`"
+msgstr ":kbd:`Ctrl+Alt+P`"
+
+#: ../../../__w/calibre/calibre/manual/gui.rst:1010
+msgid "Switch to previous library, if any"
+msgstr "切换到上一个书库，如果有"
+
+#: ../../../__w/calibre/calibre/manual/gui.rst:1011
+msgid ":kbd:`Ctrl+Alt+Shift+P`"
+msgstr ":kbd:`Ctrl+Alt+Shift+P`"
+
+#: ../../../__w/calibre/calibre/manual/gui.rst:1012
+msgid "Switch to previous virtual library, if any"
+msgstr "切换到上一个虚拟书库，如果有"

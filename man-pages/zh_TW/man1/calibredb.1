@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "12月 06, 2025" "8.16.2" "calibre"
+.TH "CALIBREDB" "1" "1月 30, 2026" "9.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,42 +40,45 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP 是 Calibre 資料庫的命令列介面。它有
+幾個子命令，說明如下。
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP 可用來操作透過路徑指定的 Calibre 資料庫，
+或是執行於本機或網際網路上的 Calibre 內容伺服器。
+您可以使用 \fBcalibre\-server\fP 程式來啟動 Calibre
+內容伺服器，或是在 Calibre 主程式中點擊 連線/分享  → 
+啟動內容伺服器。由於 \fBcalibredb\fP 能夠變更您的
+Calibre 書庫，您必須先在伺服器上設定身分驗證。
+這有兩種方法：
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+如果您打算只連線到同一部電腦上執行的伺服器，
 .UNINDENT
+.sp
+則只需使用內容伺服器的 \fB\-\-enable\-local\-write\fP 選項，
+允許本機上執行的任何程式（包括 calibredb）變更
+您的 Calibre 資料。當從 Calibre 主程式執行
+伺服器時，此選項位於
+偏好設定  →  透過網路分享  →  進階。
+.INDENT 0.0
+.IP \(bu 2
+如果您想要啟用透過網際網路的存取，那麼您應該在
+.UNINDENT
+.sp
+伺服器上設定使用者帳號，並使用 \fBcalibredb\fP 的 \fB\-\-username\fP 和 \fB\-\-password\fP
+選項來賦予存取權限。您可以使用 \fI\-\-enable\-auth\fP
+選項為 \fBcalibre\-server\fP 設定使用者驗證，
+並使用 \fI\-\-manage\-users\fP 來建立使用者帳號。
+如果您是從 Calibre 主程式執行伺服器，請使用
+偏好設定  →  透過網路分享  →  需要使用者名稱/密碼。
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+若要連線到執行中的內容伺服器，請將伺服器的 URL 傳遞給
+\fB\-\-with\-library\fP 選項，詳情與範例
+請參閱該選項的說明文件。
 .INDENT 0.0
 .IP \(bu 2
 通用選項
@@ -143,7 +146,7 @@ fts_search
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-calibre 書庫的路徑。預設是使用儲存在設定中的路徑。您還可以連接到 calibre 內容伺服器，以便在遠端書庫上執行操作。為此使用表單的 URL：\%<http://\:hostname:port/#\:library_id> 例如，\%<http://\:localhost:8080/#\:mylibrary>。library_id 是要在內容伺服器上連接的書庫的書庫 id。您可以使用特殊的 library_id 值來取得伺服器上可用書庫 id 的清單。有關如何透過內容伺服器設定存取的詳細資訊，請參閱https://manual.calibre\-ebook.com/generated/en/calibredb.html。
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -16,6 +16,7 @@ import sys
 import time
 import uuid
 from contextlib import closing, suppress
+from datetime import datetime
 from functools import partial
 
 import apsw
@@ -48,6 +49,7 @@ from calibre.db.tables import (
     SizeTable,
     UUIDTable,
 )
+from calibre.db.utils import atomic_write
 from calibre.ebooks.metadata import author_to_author_sort, title_sort
 from calibre.library.field_metadata import FieldMetadata
 from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
@@ -554,6 +556,10 @@ class DB:
         self.initialize_notes()
 
     @property
+    def max_number_of_variables(self) -> int:
+        return self.conn.limit(apsw.SQLITE_LIMIT_VARIABLE_NUMBER)
+
+    @property
     def last_expired_trash_at(self) -> float:
         return float(self.prefs['last_expired_trash_at'])
 
@@ -617,7 +623,7 @@ class DB:
         ('path', True), ('publisher', False), ('rating', False),
         ('author_sort', False), ('sort', False), ('timestamp', False),
         ('uuid', False), ('comments', True), ('id', False), ('pubdate', False),
-        ('last_modified', False), ('size', False), ('languages', False),
+        ('last_modified', False), ('size', False), ('languages', False), ('pages', False),
         ]
         defs['popup_book_display_fields'] = [('title', True)] + [(f[0], True) for f in defs['book_display_fields'] if f[0] != 'title']
         defs['qv_display_fields'] = [('title', True), ('authors', True), ('series', True)]
@@ -632,6 +638,15 @@ class DB:
         defs['edit_metadata_ignore_display_order'] = False
         defs['fts_enabled'] = False
         defs['column_tooltip_templates'] = {}
+        defs['bookshelf_grouping_mode'] = ''
+        defs['bookshelf_title_template'] = '{title}'
+        defs['bookshelf_author_template'] = ''
+        defs['bookshelf_spine_size_template'] = '{pages}'
+        defs['bookshelf_icon_rules'] = []
+
+        # Migrate the beta bookshelf_grouping_mode
+        if self.prefs.get('bookshelf_grouping_mode', '') == 'none':
+            self.prefs.set('bookshelf_grouping_mode', '')
 
         # Migrate the bool tristate tweak
         defs['bools_are_tristate'] = \
@@ -903,7 +918,7 @@ class DB:
     def initialize_tables(self):  # {{{
         tables = self.tables = {}
         for col in ('title', 'sort', 'author_sort', 'series_index', 'comments',
-                'timestamp', 'pubdate', 'uuid', 'path', 'cover',
+                'timestamp', 'pubdate', 'uuid', 'path', 'cover', 'pages',
                 'last_modified'):
             metadata = self.field_metadata[col].copy()
             if col == 'comments':
@@ -934,7 +949,7 @@ class DB:
             'rating':5, 'tags':6, 'comments':7, 'series':8, 'publisher':9,
             'series_index':10, 'sort':11, 'author_sort':12, 'formats':13,
             'path':14, 'pubdate':15, 'uuid':16, 'cover':17, 'au_map':18,
-            'last_modified':19, 'identifiers':20, 'languages':21,
+            'last_modified':19, 'identifiers':20, 'languages':21, 'pages':22,
         }
 
         for k,v in self.FIELD_MAP.items():
@@ -1720,7 +1735,7 @@ class DB:
                 self.move_book_files_to_trash(book_id, paths, metadata_map[book_id])
         return removed_map
 
-    def cover_last_modified(self, path):
+    def cover_last_modified(self, path) -> datetime | None:
         path = os.path.abspath(os.path.join(self.library_path, path, COVER_FILE_NAME))
         try:
             return utcfromtimestamp(os.stat(path).st_mtime)
@@ -1787,6 +1802,14 @@ class DB:
             else:
                 data = f.read()
         return True, data, stat.st_mtime
+
+    def cover_timestamp(self, path: str) -> float | None:
+        path = os.path.abspath(os.path.join(self.library_path, path, COVER_FILE_NAME))
+        try:
+            stat = os.stat(path)
+        except OSError:
+            return None
+        return stat.st_mtime
 
     def compress_covers(self, path_map, jpeg_quality, progress_callback):
         cpath_map = {}
@@ -1877,8 +1900,7 @@ class DB:
                         return True
                     except Exception:
                         pass
-                with open(path, 'rb') as f, open(make_long_path_useable(dest), 'wb') as d:
-                    shutil.copyfileobj(f, d)
+                shutil.copyfile(path, make_long_path_useable(dest))
         return True
 
     def windows_check_if_files_in_use(self, paths):
@@ -2264,8 +2286,7 @@ class DB:
         for path in format_abspaths:
             ext = path.rpartition('.')[-1].lower()
             fmap[path] = os.path.join(dest, ext)
-        with open(os.path.join(dest, 'metadata.json'), 'wb') as f:
-            f.write(json.dumps(metadata).encode('utf-8'))
+        atomic_write(os.path.join(dest, 'metadata.json'), json.dumps(metadata).encode('utf-8'))
         copy_files(fmap, delete_source=True)
 
     def get_metadata_for_trash_book(self, book_id, read_annotations=True):

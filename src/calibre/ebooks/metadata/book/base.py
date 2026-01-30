@@ -32,19 +32,19 @@ def human_readable(size, precision=2):
 
 
 NULL_VALUES = {
-                'user_metadata': {},
-                'cover_data'   : (None, None),
-                'tags'         : [],
-                'identifiers'  : {},
-                'languages'    : [],
-                'device_collections': [],
-                'author_sort_map': {},
-                'authors'      : [_('Unknown')],
-                'author_sort'  : _('Unknown'),
-                'title'        : _('Unknown'),
-                'user_categories' : {},
-                'link_maps'    : {},
-                'language'     : 'und'
+    'user_metadata': {},
+    'cover_data'   : (None, None),
+    'tags'         : [],
+    'identifiers'  : {},
+    'languages'    : [],
+    'device_collections': [],
+    'author_sort_map': {},
+    'authors'      : [_('Unknown')],
+    'author_sort'  : _('Unknown'),
+    'title'        : _('Unknown'),
+    'user_categories' : {},
+    'link_maps'    : {},
+    'language'     : 'und',
 }
 
 field_metadata = FieldMetadata()
@@ -119,9 +119,8 @@ class Metadata:
         Also returns True if the field does not exist.
         '''
         try:
-            null_val = NULL_VALUES.get(field, None)
             val = getattr(self, field, None)
-            return not val or val == null_val
+            return not val or val == NULL_VALUES.get(field)
         except Exception:
             return True
 
@@ -148,11 +147,12 @@ class Metadata:
             d = _data['user_metadata'][field]
             val = d['#value#']
             if val is None and d['datatype'] == 'composite':
+                from calibre.utils.formatter import TEMPLATE_ERROR
                 d['#value#'] = 'RECURSIVE_COMPOSITE FIELD (Metadata) ' + field
                 val = d['#value#'] = self.formatter.safe_format(
                                             d['display']['composite_template'],
                                             self,
-                                            _('TEMPLATE ERROR'),
+                                            TEMPLATE_ERROR,
                                             self, column_name=field,
                                             template_cache=self.template_cache).strip()
             return val
@@ -750,6 +750,14 @@ class Metadata:
                 res = f'{res/2:.2g}'
             elif key == 'size':
                 res = human_readable(res)
+            elif key == 'pages':
+                match res:
+                    case -3:
+                        res = _('DRM')
+                    case -2:
+                        res = _('Error')
+                    case -1:
+                        res = _('None')
             return (name, str(res), orig_res, fmeta)
 
         if kv := self.get(key, None):

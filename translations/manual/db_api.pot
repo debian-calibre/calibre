@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 8.16.2\n"
+"Project-Id-Version: calibre 9.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-06 08:52+0530\n"
+"POT-Creation-Date: 2026-01-30 08:40+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -169,11 +169,16 @@ msgid "Return author data as a dictionary with keys: name, sort, link"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.author_data:3
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.author_sorts:3
 msgid "If no authors with the specified ids are found an empty dictionary is returned. If author_ids is None, data for all authors is returned."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.author_sort_from_authors:1
 msgid "Given a list of authors, return the author_sort string for the authors, preferring the author sort associated with the author over the computed string."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.author_sorts:1
+msgid "Return author sorts for specified authors."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.books_for_field:1
@@ -428,6 +433,10 @@ msgstr ""
 msgid "Return a dict containing the resource data and name or None if no resource with the specified hash is found"
 msgstr ""
 
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_pages:1
+msgid "Return page count information for the specified book"
+msgstr ""
+
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_proxy_metadata:1
 msgid "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that only reads values from the database on demand. This is much faster than get_metadata when only a small number of fields need to be accessed from the returned metadata object."
 msgstr ""
@@ -480,6 +489,10 @@ msgstr ""
 msgid "A tuple of all extra files matching the specified pattern. Each element of the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is the relative path of the file to the book directory using / as a separator. stat_result is the result of calling os.stat() on the file."
 msgstr ""
 
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.mark_for_pages_recount:1
+msgid "Mark all books for recount of pages"
+msgstr ""
+
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.merge_annotations_for_book:1
 msgid "Merge the specified annotations into the existing annotations for book_id, fm, user_type, and user."
 msgstr ""
@@ -516,8 +529,16 @@ msgstr ""
 msgid "Return the set of resource hashes of all resources used by the note for the specified item"
 msgstr ""
 
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.pages_needs_scan:1
+msgid "Return the subset of books (or all books if empty) that are marked as needing a scan to update page count"
+msgstr ""
+
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.pref:1
 msgid "Return the value for the specified preference or the value specified as ``default`` if the preference is not set."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.queue_pages_scan:1
+msgid "Start a scan updating page counts for all books that need a scan. If book_id is specified, then only that book is scanned and it is always scanned. When `force` is True, the existing pages value, if any, is discarded so that the book is forcibly rescanned even if the existing value was up-to-date."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.read_backup:1
@@ -666,6 +687,10 @@ msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_notes_for:1
 msgid "Set the notes document. If the searchable text is different from the document, specify it as searchable_text. If the document references resources their hashes must be present in resource_hashes. Set remove_unused_resources to True to cleanup unused resources, note that updating a note automatically cleans up resources pertaining to that note anyway."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_pages:1
+msgid "Set page count information for the specified book"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_pref:1

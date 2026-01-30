@@ -11,6 +11,7 @@ from functools import partial
 from io import BytesIO
 
 from calibre.db.backend import FTSQueryError
+from calibre.db.cache import Pages
 from calibre.db.constants import RESOURCE_URL_SCHEME
 from calibre.db.tests.base import IMG, BaseTest
 from calibre.ebooks.metadata import author_to_author_sort, title_sort
@@ -29,6 +30,8 @@ class WritingTest(BaseTest):
             else:
                 def ans(db):
                     return partial(db.get_custom, label=name[1:], index_is_id=True)
+        elif callable(getter):
+            return getter
         else:
             def ans(db):
                 return partial(getattr(db, getter), index_is_id=True)
@@ -38,6 +41,8 @@ class WritingTest(BaseTest):
         if setter is None:
             def ans(db):
                 return partial(db.set_custom, label=name[1:], commit=True)
+        elif callable(setter):
+            return setter
         else:
             def ans(db):
                 return partial(getattr(db, setter), commit=True)
@@ -116,6 +121,17 @@ class WritingTest(BaseTest):
             tests.append(self.create_test(name, tuple(vals), getter, setter))
 
         self.run_tests(tests)
+        db = self.init_cache()
+        for val in (-1, -2, 0, 1, 2, None):
+            db.set_field('pages', {1: val})
+            self.assertEqual(db.field_for('pages', 1), val)
+            if val is not None:
+                a = db.get_pages(1)
+                self.assertEqual(Pages(val, 0, '', 0, a.timestamp), a)
+        self.assertIsNone(db.get_pages(1))
+        db.set_pages(1, 12, algorithm=1, format='test', format_size=13)
+        a = db.get_pages(1)
+        self.assertEqual(Pages(12, 1, 'test', 13, a.timestamp), a)
     # }}}
 
     def test_many_one_basic(self):  # {{{
@@ -477,10 +493,10 @@ class WritingTest(BaseTest):
         cache.set_metadata(2, mi)
         nmi = cache.get_metadata(2, get_cover=True, cover_as_data=True)
         ae(oldmi.cover_data, nmi.cover_data)
-        self.compare_metadata(nmi, oldmi, exclude={'last_modified', 'format_metadata', 'formats'})
+        self.compare_metadata(nmi, oldmi, exclude={'last_modified', 'format_metadata', 'formats', 'pages'})
         cache.set_metadata(1, mi2, force_changes=True)
         nmi2 = cache.get_metadata(1, get_cover=True, cover_as_data=True)
-        self.compare_metadata(nmi2, oldmi2, exclude={'last_modified', 'format_metadata', 'formats'})
+        self.compare_metadata(nmi2, oldmi2, exclude={'last_modified', 'format_metadata', 'formats', 'pages'})
 
         cache = self.init_cache(self.cloned_library)
         mi = cache.get_metadata(1)
@@ -702,14 +718,19 @@ class WritingTest(BaseTest):
         ' Test that the composite field cache is properly invalidated on writes '
         cache = self.init_cache()
         cache.create_custom_column('tc', 'TC', 'composite', False, display={
-            'composite_template':'{title} {author_sort} {title_sort} {formats} {tags} {series} {series_index}'})
+            'composite_template':'{title} {author_sort} {title_sort} {formats} {tags} {series} {series_index} {pages}'})
+        cache.close()
         cache = self.init_cache()
+        all_book_ids = cache.all_book_ids()
+        current = {}
 
         def test_invalidate():
-            c = self.init_cache()
-            for bid in cache.all_book_ids():
-                self.assertEqual(cache.field_for('#tc', bid), c.field_for('#tc', bid))
+            nonlocal current
+            nc = {bid:cache.field_for('#tc', bid) for bid in all_book_ids}
+            self.assertNotEqual(current, nc)
+            current = nc
 
+        current = {bid:cache.field_for('#tc', bid) for bid in all_book_ids}
         cache.set_field('title', {1:'xx', 3:'yy'})
         test_invalidate()
         cache.set_field('series_index', {1:9, 3:11})
@@ -721,9 +742,17 @@ class WritingTest(BaseTest):
         cache.set_sort_for_authors({cache.get_item_id('authors', 'Author One'):'meow'})
         test_invalidate()
         cache.remove_formats({1:{'FMT1'}})
+        cache.maintain_page_counts.tick_event.wait()
         test_invalidate()
-        cache.add_format(1, 'ADD', BytesIO(b'xxxx'))
+        cache.maintain_page_counts.tick_event.clear()
+        cache.add_format(1, 'TXT', BytesIO(b'xxxx'))
+        cache.maintain_page_counts.tick_event.wait()
         test_invalidate()
+        cache.set_pages(1, 17)
+        test_invalidate()
+        cache.set_field('pages', {1:11})
+        test_invalidate()
+        cache.close()
     # }}}
 
     def test_dump_and_restore(self):  # {{{
@@ -760,6 +789,8 @@ class WritingTest(BaseTest):
                          'Setting the author link to the same value as before, incorrectly marked some books as dirty')
         sdata = {aid:f'{aid}, changed' for aid in adata}
         self.assertEqual({1,2,3}, cache.set_sort_for_authors(sdata))
+        self.assertEqual(sdata, cache.author_sorts())
+        self.assertEqual(sdata, cache.author_sorts(sdata))
         for bid in (1, 2, 3):
             self.assertIn(', changed', cache.field_for('author_sort', bid))
         sdata = {aid:f'{aid*2 if aid == max(adata) else aid}, changed' for aid in adata}

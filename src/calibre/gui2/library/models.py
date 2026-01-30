@@ -29,6 +29,7 @@ from qt.core import (
     QPainter,
     QPixmap,
     Qt,
+    QTimer,
     pyqtSignal,
 )
 
@@ -49,6 +50,7 @@ from calibre.utils.icu import sort_key
 from calibre.utils.localization import calibre_langcode_to_name, ngettext
 from calibre.utils.resources import get_path as P
 from calibre.utils.search_query_parser import ParseException, SearchQueryParser
+from calibre_extensions.imageops import load_from_data_without_gil
 
 Counts = namedtuple('Counts', 'library_total total current')
 
@@ -210,6 +212,9 @@ class BooksModel(QAbstractTableModel):  # {{{
     def __init__(self, parent=None, buffer=40):
         QAbstractTableModel.__init__(self, parent)
         base_font = parent.font() if parent else QApplication.instance().font()
+        self.zero_page_cache = {}
+        self.update_page_count_timer = t = QTimer(self)
+        t.setSingleShot(True), t.setInterval(1000), t.timeout.connect(self.update_zero_page_values)
         self.bold_font = QFont(base_font)
         self.bold_font.setBold(True)
         self.italic_font = QFont(base_font)
@@ -233,6 +238,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                         'formats'   : _('Formats'),
                         'id'        : _('Id'),
                         'path'      : _('Path'),
+                        'pages'     : _('Pages'),
         }
         self.db = None
 
@@ -254,14 +260,14 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.buffer_size = buffer
         self.metadata_backup = None
         icon_height = (parent.fontMetrics() if hasattr(parent, 'fontMetrics') else QFontMetrics(QApplication.font())).lineSpacing()
-        self.bool_yes_icon = QIcon.ic('ok.png').pixmap(icon_height)
-        self.bool_no_icon = QIcon.ic('list_remove.png').pixmap(icon_height)
-        self.bool_blank_icon = QIcon.ic('blank.png').pixmap(icon_height)
+        self.bool_yes_icon = QIcon.cached_icon('ok.png').pixmap(icon_height)
+        self.bool_no_icon = QIcon.cached_icon('list_remove.png').pixmap(icon_height)
+        self.bool_blank_icon = QIcon.cached_icon('blank.png').pixmap(icon_height)
         # Qt auto-scales marked icon correctly, so we don't need to do it (and
         # remember that the cover grid view needs a larger version of the icon,
         # anyway)
-        self.marked_icon = QIcon.ic('marked.png')
-        self.bool_blank_icon_as_icon = QIcon(self.bool_blank_icon)
+        self.marked_icon = QIcon.cached_icon('marked.png')
+        self.bool_blank_icon_as_icon = QIcon.cached_icon('blank.png')
         self.row_decoration = None
         self.device_connected = False
         self.ids_to_highlight = []
@@ -309,11 +315,14 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.icon_cache = defaultdict(dict)
         self.icon_bitmap_cache = {}
         self.cover_grid_emblem_cache = defaultdict(dict)
+        self.bookshelf_emblem_cache = defaultdict(dict)
         self.cover_grid_bitmap_cache = {}
+        self.bookshelf_bitmap_cache = {}
         self.color_row_fmt_cache = None
         self.color_template_cache = {}
         self.icon_template_cache = {}
         self.cover_grid_template_cache = {}
+        self.bookshelf_template_cache = {}
 
     def set_row_height(self, height):
         self.row_height = height
@@ -371,7 +380,7 @@ class BooksModel(QAbstractTableModel):  # {{{
 
     def set_database(self, db):
         self.ids_to_highlight = []
-
+        self.zero_page_cache = {}
         if db:
             style_map = {'bold': self.bold_font, 'bi': self.bi_font, 'italic': self.italic_font}
             self.styled_columns = {k: style_map.get(v, None) for k, v in db.new_api.pref('styled_columns', {}).items()}
@@ -403,6 +412,33 @@ class BooksModel(QAbstractTableModel):  # {{{
         self.database_changed.emit(db)
         self.stop_metadata_backup()
         self.start_metadata_backup()
+
+    def get_pages_description_for_zero_page(self, book_id: int) -> str:
+        if (ans := self.zero_page_cache.get(book_id)) is None:
+            self.zero_page_cache[book_id] = ans = bool(self.db.new_api.pages_needs_scan((book_id,)))
+        if ans:
+            self.update_page_count_timer.start()
+            return _('calculating')
+        return '0'
+
+    def update_zero_page_values(self) -> None:
+        needs_scan = tuple(bid for bid, needs_scan in self.zero_page_cache.items() if needs_scan)
+        new_needs_scan = self.db.new_api.pages_needs_scan(needs_scan)
+        changed = frozenset(needs_scan) - new_needs_scan
+        if changed:
+            cc = 0
+            for idx, name in enumerate(self.column_map):
+                if name == 'pages':
+                    cc = idx
+                    break
+            for book_id in changed:
+                del self.zero_page_cache[book_id]
+                try:
+                    row = self.db.data.id_to_index(book_id)
+                except Exception:
+                    pass
+                else:
+                    self.dataChanged.emit(self.index(row, cc), self.index(row, cc))
 
     def update_db_prefs_cache(self):
         self.db_prefs = {
@@ -438,6 +474,7 @@ class BooksModel(QAbstractTableModel):  # {{{
                 self.new_bookdisplay_data.emit(self.get_book_display_info(current_row))
 
     def close(self):
+        self.update_page_count_timer.stop()
         if self.db is not None:
             self.db.close()
             self.db = None
@@ -849,10 +886,8 @@ class BooksModel(QAbstractTableModel):  # {{{
         if not data:
             return self.default_image
         img = QImage()
-        img.loadFromData(data)
-        if img.isNull():
-            img = self.default_image
-        return img
+        load_from_data_without_gil(img, data)
+        return self.default_image if img.isNull() else img
 
     def build_data_convertors(self):
         rating_fields = {}
@@ -907,6 +942,21 @@ class BooksModel(QAbstractTableModel):  # {{{
             elif field == 'languages':
                 def func(idx):
                     return (', '.join(calibre_langcode_to_name(x) for x in fffunc(field_obj, idfunc(idx))))
+            elif field == 'pages':
+                def func(idx):
+                    book_id = idfunc(idx)
+                    ans = fffunc(field_obj, book_id, 0)
+                    match ans:
+                        case 0:
+                            return self.get_pages_description_for_zero_page(book_id)
+                        case -1:
+                            return _('None')
+                        case -2:
+                            return _('Error')
+                        case -3:
+                            return _('DRM')
+                        case _:
+                            return str(ans)
             elif field == 'ondevice' and decorator:
                 by = self.bool_yes_icon
                 bb = self.bool_blank_icon
@@ -1538,7 +1588,7 @@ class DeviceBooksModel(BooksModel):  # {{{
         self.search_engine = OnDeviceSearch(self)
         self.editable = ['title', 'authors', 'collections']
         self.book_in_library = None
-        self.sync_icon = QIcon.ic('sync.png')
+        self.sync_icon = QIcon.cached_icon('sync.png')
 
     def counts(self):
         return Counts(len(self.db), len(self.db), len(self.map))
@@ -1723,6 +1773,7 @@ class DeviceBooksModel(BooksModel):  # {{{
 
     def set_database(self, db):
         self.custom_columns = {}
+        self.zero_page_cache = {}
         self.db = db
         self.map = list(range(len(db)))
         self.research(reset=False)
@@ -1738,9 +1789,9 @@ class DeviceBooksModel(BooksModel):  # {{{
                 img.load(cdata.image_path)
             elif cdata:
                 if isinstance(cdata, (tuple, list)):
-                    img.loadFromData(cdata[-1])
+                    load_from_data_without_gil(img, cdata[-1])
                 else:
-                    img.loadFromData(cdata)
+                    load_from_data_without_gil(img, cdata)
         if img.isNull():
             img = self.default_image
         return img

@@ -16,11 +16,15 @@ from qt.core import (
     QCursor,
     QDockWidget,
     QEvent,
+    QImage,
     QMainWindow,
     QMenu,
     QMimeData,
     QModelIndex,
+    QPainter,
     QPixmap,
+    QSizeF,
+    QSvgRenderer,
     Qt,
     QTimer,
     QToolBar,
@@ -54,6 +58,7 @@ from calibre.gui2.viewer.web_view import WebView, get_path_for_name, set_book_pa
 from calibre.live import async_stop_worker
 from calibre.startup import connect_lambda
 from calibre.utils.date import utcnow
+from calibre.utils.filenames import make_long_path_useable
 from calibre.utils.img import image_from_path
 from calibre.utils.ipc.simple_worker import WorkerError
 from calibre.utils.localization import _
@@ -119,7 +124,7 @@ class EbookViewer(MainWindow):
         at.open_book_at_path.connect(self.ask_for_open)
         self.addToolBar(Qt.ToolBarArea.LeftToolBarArea, at)
         try:
-            os.makedirs(annotations_dir)
+            os.makedirs(annotations_dir())
         except OSError:
             pass
         self.current_book_data = {}
@@ -234,6 +239,7 @@ class EbookViewer(MainWindow):
         self.actions_toolbar.set_tooltips(rmap)
         if hasattr(self, 'highlights_widget'):
             self.highlights_widget.set_tooltips(rmap)
+        self.search_widget.set_tooltips(rmap)
 
     def resizeEvent(self, ev):
         self.loading_overlay.resize(self.size())
@@ -419,13 +425,35 @@ class EbookViewer(MainWindow):
     def view_image(self, name):
         path = get_path_for_name(name)
         if path:
-            pmap = QPixmap()
-            if pmap.load(path):
+            from calibre.utils.imghdr import what
+            with open(make_long_path_useable(path), 'rb') as f:
+                fmt = what(f)
+            if fmt == 'svg':
+                r = QSvgRenderer(path)
+                if not r.isValid():
+                    return error_dialog(self, _('Invalid image'), _('Failed to load the image {}').format(name), show=True)
+                dpr = self.devicePixelRatioF()
+                sz = (QSizeF(r.defaultSize()) * dpr).toSize()
+                img = QImage(sz, QImage.Format.Format_ARGB32_Premultiplied)
+                img.fill(Qt.GlobalColor.transparent)
+                p = QPainter(img)
+                r.render(p)
+                p.end()
+                img.setDevicePixelRatio(dpr)
+                pmap = QPixmap.fromImage(img)
                 self.image_popup.current_img = pmap
                 self.image_popup.current_url = QUrl.fromLocalFile(path)
+                self.image_popup.current_image_is_svg = True
                 self.image_popup()
             else:
-                error_dialog(self, _('Invalid image'), _('Failed to load the image {}').format(name), show=True)
+                pmap = QPixmap()
+                if pmap.load(path):
+                    self.image_popup.current_img = pmap
+                    self.image_popup.current_url = QUrl.fromLocalFile(path)
+                    self.image_popup.current_image_is_svg = False
+                    self.image_popup()
+                else:
+                    error_dialog(self, _('Invalid image'), _('Failed to load the image {}').format(name), show=True)
         else:
             error_dialog(self, _('Image not found'), _('Failed to find the image {}').format(name), show=True)
 
@@ -660,7 +688,7 @@ class EbookViewer(MainWindow):
             with open(path, 'rb') as f:
                 raw = f.read()
             merge_annotations(parse_annotations(raw), amap)
-        path = os.path.join(annotations_dir, self.current_book_data['annotations_path_key'])
+        path = os.path.join(annotations_dir(), self.current_book_data['annotations_path_key'])
         if os.path.exists(path):
             with open(path, 'rb') as f:
                 raw = f.read()

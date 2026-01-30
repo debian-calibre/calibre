@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Zoriana Zaiats, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2025
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2026
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-07 14:23+0000\n"
+"POT-Creation-Date: 2026-01-18 13:51+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2025\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -269,6 +269,8 @@ msgstr "Повернути дані щодо авторів у форматі с
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
@@ -281,6 +283,11 @@ msgid ""
 "preferring the author sort associated with the author over the computed "
 "string."
 msgstr "За вказаними списком авторів повертає рядок author_sort для авторів, надаючи перевагу упрядковуванню за авторами, пов’язаному з автором, над обчисленим рядком."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:1
+msgid "Return author sorts for specified authors."
+msgstr "Повертає режим упорядкування запису автора для вказаних авторів."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -715,6 +722,11 @@ msgid ""
 msgstr "Повертає словник, що містить дані і назву ресурсу або None, якщо ресурс із вказаним хешем не було знайдено"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_pages:1
+msgid "Return page count information for the specified book"
+msgstr "Повертає дані щодо кількості сторінок для вказаної книги"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -801,6 +813,11 @@ msgid ""
 msgstr "Кортеж усіх додаткових файлів, що відповідають вказаному взірцю. Кожен елемент кортежу з записом ExtraFile(відн_шлях, шлях_до_файла, статистика), де «відн_шлях» є відносним шляхом до каталогу книги із роздільником /. «статистика» є результатом виклику os.stat() для файла."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.mark_for_pages_recount:1
+msgid "Mark all books for recount of pages"
+msgstr "Позначити усі книги для повторного обліку сторінок"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_annotations_for_book:1
 msgid ""
 "Merge the specified annotations into the existing annotations for book_id, "
@@ -856,11 +873,27 @@ msgid ""
 msgstr "Повертає набір хешів ресурсів усіх ресурсів, які використано нотаткою, для вказаного запису"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.pages_needs_scan:1
+msgid ""
+"Return the subset of books (or all books if empty) that are marked as "
+"needing a scan to update page count"
+msgstr "Повертає підмножину книг (або усі книги, якщо порожня), які позначено як такі, що потребують сканування для оновлення кількості сторінок"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
 msgstr "Повертає значення вказаного налаштування або значення, вказане як ``default``, якщо налаштування не встановлено."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.queue_pages_scan:1
+msgid ""
+"Start a scan updating page counts for all books that need a scan. If book_id"
+" is specified, then only that book is scanned and it is always scanned. When"
+" `force` is True, the existing pages value, if any, is discarded so that the"
+" book is forcibly rescanned even if the existing value was up-to-date."
+msgstr "Запуск сканування призведе до оновлення кількості сторінок для усіх книг, які потребують сканування. Якщо вказано ідентифікатор книги, програма виконає сканування лише вказаної книги за будь-яких умов. Якщо значенням параметра `force` є True, наявне значення кількості сторінок, якщо таке було, буде відкинуто, і програма примусово виконає повторне сканування, навіть якщо наявне значення було актуальним."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
@@ -1118,6 +1151,11 @@ msgid ""
 "updating a note automatically cleans up resources pertaining to that note "
 "anyway."
 msgstr "Встановлює документ нотаток. Якщо придатний до пошуку текст відрізняється від документа, вкажіть його як searchable_text. Якщо документ посилається на ресурси, їхні хеші мають бути у resource_hashes. Встановіть для remove_unused_resources значення True, щоб вилучити невикористані ресурси. Зауважте, що оновлення нотатки автоматично і безумовно вилучає ресурси, що стосуються цієї нотатки."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_pages:1
+msgid "Set page count information for the specified book"
+msgstr "Встановити дані щодо кількості сторінок для вказаної книги"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

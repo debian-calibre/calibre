@@ -49,7 +49,8 @@ from qt.core import (
     Qt,
     QThread,
     QTimer,
-    QTranslator,
+    QToolBar,
+    QToolButton,
     QUrl,
     QWidget,
     pyqtSignal,
@@ -57,7 +58,7 @@ from qt.core import (
 )
 
 import calibre.gui2.pyqt6_compat as pqc
-from calibre import as_unicode, prints
+from calibre import as_unicode, prints, timed_print
 from calibre.constants import (
     DEBUG,
     __version__,
@@ -87,12 +88,14 @@ from calibre.utils.config_base import tweaks
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.img import set_image_allocation_limit
-from calibre.utils.localization import get_lang
+from calibre.utils.localization import get_lang, install_qt_translator
 from calibre.utils.resources import get_image_path as I
 from calibre.utils.resources import get_path as P
 from calibre.utils.resources import user_dir
+from calibre_extensions.progress_indicator import icon_from_name, set_icon_theme
 
 del pqc, geometry_for_restore_as_dict
+timed_print  # for plugin compat
 NO_URL_FORMATTING = QUrl.UrlFormattingOption.None_
 BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY = 100  # 100 ms is threshold for human visual response
 
@@ -137,6 +140,7 @@ class IconResourceManager:
         any_light = (self.user_any_theme_name + '-light') if self.user_any_theme_name else ''
         self.dark_theme_name = self.user_dark_theme_name or any_dark or self.default_dark_theme_name
         self.light_theme_name = self.user_light_theme_name or any_light or self.default_light_theme_name
+        # self.dump_available_icon_resource_names()
 
     @lru_cache(maxsize=4)
     def user_icon_theme_metadata(self, which):
@@ -171,14 +175,20 @@ class IconResourceManager:
     def user_theme_name(self):
         return self.active_user_theme_metadata.get('name', 'default')
 
+    def dump_available_icon_resource_names(self):
+        from qt.core import QDirIterator
+        it = QDirIterator(':', QDirIterator.IteratorFlag.Subdirectories)
+        while it.hasNext():
+            val = it.next()
+            if val.startswith(':/icons/calibre-'):
+                print(val)
+
     def initialize(self):
         if self.initialized:
             return
         self.icon_cache = {}
         self.initialized = True
         QResource.registerResource(P('icons.rcc', allow_user_override=False))
-        QIcon.setFallbackSearchPaths([])
-        QIcon.setThemeSearchPaths([':/icons'])
         self.override_icon_path = None
         q = os.path.join(user_dir, 'images')
         items = []
@@ -249,7 +259,7 @@ class IconResourceManager:
             icon = self.icon_cache[name] = self(name)
         return icon
 
-    def __call__(self, name):
+    def __call__(self, name: str, fallback: bytes = b'') -> QIcon:
         if isinstance(name, QIcon):
             return name
         if not name:
@@ -260,13 +270,8 @@ class IconResourceManager:
             qi = QIcon(self.overriden_icon_path(name))
             if qi.is_ok():
                 return qi
-        icon_name = os.path.splitext(name.replace('\\', '__').replace('/', '__'))[0]
-        ans = QIcon.fromTheme(icon_name)
-        if not ans.is_ok():
-            if 'user-any' in QIcon.themeName():
-                q = QIcon(f':/icons/calibre-default-{self.color_palette}/images/{name}')
-                if q.is_ok():
-                    ans = q
+        icon_name = name.replace('\\', '__').replace('/', '__')
+        ans = icon_from_name(icon_name, fallback)
         return ans
 
     def icon_as_png(self, name, as_bytearray=False, compression_level=0):
@@ -285,15 +290,8 @@ class IconResourceManager:
 
     def set_theme(self):
         self.icon_cache = {}
-        current = QIcon.themeName()
         is_dark = QApplication.instance().is_dark_theme
-        self.color_palette = 'dark' if is_dark else 'light'
-        new = self.dark_theme_name if is_dark else self.light_theme_name
-        if current == new and current not in (self.default_dark_theme_name, self.default_light_theme_name):
-            # force reload of user icons by first changing theme to default and
-            # then to user
-            QIcon.setThemeName(self.default_dark_theme_name if QApplication.instance().is_dark_theme else self.default_light_theme_name)
-        QIcon.setThemeName(new)
+        set_icon_theme(is_dark, bool(self.user_dark_theme_name), bool(self.user_light_theme_name), bool(self.user_any_theme_name))
 
 
 icon_resource_manager = IconResourceManager()
@@ -301,6 +299,17 @@ QIcon.ic = icon_resource_manager
 QIcon.icon_as_png = icon_resource_manager.icon_as_png
 QIcon.is_ok = lambda self: not self.isNull() and len(self.availableSizes()) > 0
 QIcon.cached_icon = icon_resource_manager.cached_icon
+qtb_init = QToolBar.__init__
+
+
+def configure_toolbar_extension_button(self, parent=None):
+    qtb_init(self, parent)
+    if teb := self.findChild(QToolButton, name='qt_toolbar_ext_button'):
+        teb.setToolTip(_('Show more buttons'))
+
+
+QToolBar.__init__ = configure_toolbar_extension_button
+
 
 # Setup gprefs {{{
 gprefs = JSONConfig('gui')
@@ -421,6 +430,7 @@ def create_defs():
     defs['tags_browser_category_icons'] = {}
     defs['tags_browser_value_icons'] = {}
     defs['cover_browser_reflections'] = True
+    defs['cover_browser_max_font_size'] = 11
     defs['book_list_extra_row_spacing'] = 0
     defs['refresh_book_list_on_bulk_edit'] = True
     defs['cover_grid_width'] = 0
@@ -490,6 +500,38 @@ def create_defs():
     defs['tag_browser_show_value_icons'] = True
     defs['template_editor_run_as_you_type'] = True
     defs['template_editor_show_all_selected_books'] = True
+    defs['bookshelf_disk_cache_size'] = 3000
+    defs['bookshelf_cache_size_multiple'] = 5
+    defs['bookshelf_shadow'] = True
+    defs['bookshelf_thumbnail'] = 'crops'
+    defs['bookshelf_thumbnail_opacity'] = 30
+    defs['bookshelf_variable_height'] = True
+    defs['bookshelf_fade_time'] = 400
+    defs['bookshelf_hover'] = 'shift'
+    defs['bookshelf_up_to_down'] = False
+    defs['bookshelf_height'] = 119
+    defs['bookshelf_make_space_for_second_line'] = False
+    defs['bookshelf_emblem_position'] = 'auto'
+    defs['bookshelf_divider_text_right'] = False
+    defs['bookshelf_start_with_divider'] = False
+    defs['bookshelf_divider_style'] = 'text'
+    defs['bookshelf_theme_override'] = 'none'
+    defs['bookshelf_use_custom_background'] = False
+    defs['bookshelf_custom_background'] = {
+        'light': (255, 255, 255), 'dark': (64, 64, 64), 'light_texture': None, 'dark_texture': None
+    }
+    defs['bookshelf_min_font_multiplier'] = 0.75
+    defs['bookshelf_max_font_multiplier'] = 1.3
+    defs['bookshelf_outline_width'] = 0
+    defs['bookshelf_font'] = {'family': None, 'style': None}
+    defs['bookshelf_use_custom_colors'] = False
+    defs['bookshelf_custom_colors'] = {
+        'light': {}, 'dark': {},
+    }
+
+    # Migrate beta bookshelf_thumbnail
+    if isinstance(btv := gprefs.get('bookshelf_thumbnail'), bool):
+        gprefs['bookshelf_thumbnail'] = 'full' if btv else 'none'
 
     def migrate_tweak(tweak_name, pref_name):
         # If the tweak has been changed then leave the tweak in the file so
@@ -1075,22 +1117,6 @@ class ResizableDialog(QDialog):
         self.resize(nw, nh)
 
 
-class Translator(QTranslator):
-    '''
-    Translator to load translations for strings in Qt from the calibre
-    translations. Does not support advanced features of Qt like disambiguation
-    and plural forms.
-    '''
-
-    def translate(self, *args, **kwargs):
-        try:
-            src = str(args[1])
-        except Exception:
-            return ''
-        t = _
-        return t(src)
-
-
 gui_thread = None
 qt_app = None
 
@@ -1205,6 +1231,10 @@ class Application(QApplication):
             args.extend(('-platformpluginpath', plugins_loc, '-platform', os.environ.get('CALIBRE_HEADLESS_PLATFORM', 'headless')))
         else:
             args.extend(self.palette_manager.args_to_qt)
+        # We disable GPU acceleration as it causes crashes/black screen in some Windows systems and
+        # isnt really needed for performance for our use cases.
+        if not tweaks['qt_webengine_uses_gpu']:
+            args.extend(('--webEngineArgs', '--disable-gpu'))
         self.headless = headless
         from calibre_extensions import progress_indicator
         self.pi = progress_indicator
@@ -1271,7 +1301,6 @@ class Application(QApplication):
             QLocale.setDefault(dl)
         global gui_thread, qt_app
         gui_thread = QThread.currentThread()
-        self._translator = None
         self.load_translations()
         qt_app = self
 
@@ -1403,10 +1432,7 @@ class Application(QApplication):
         return ans
 
     def load_translations(self):
-        if self._translator is not None:
-            self.removeTranslator(self._translator)
-        self._translator = Translator(self)
-        self.installTranslator(self._translator)
+        install_qt_translator()
 
     def event(self, e):
         etype = e.type()
@@ -1585,11 +1611,8 @@ def ensure_app(headless=True):
             has_headless = ismacos or islinux or isbsd
             if headless and has_headless:
                 args += ['-platformpluginpath', plugins_loc, '-platform', os.environ.get('CALIBRE_HEADLESS_PLATFORM', 'headless')]
-                if isbsd:
-                    val = os.environ.get('QTWEBENGINE_CHROMIUM_FLAGS', '')
-                    if val:
-                        val += ' '
-                    os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = f'{val}--disable-gpu'
+                # WebEngine GPU not needed in headless mode
+                args += ['--webEngineArgs', '--disable-gpu']
                 if ismacos:
                     os.environ['QT_MAC_DISABLE_FOREGROUND_APPLICATION_TRANSFORM'] = '1'
             if headless and iswindows:
@@ -1726,16 +1749,7 @@ def make_view_use_window_background(view):
     return view
 
 
-def timed_print(*a, **kw):
-    if not DEBUG:
-        return
-    from time import monotonic
-    if not hasattr(timed_print, 'startup_time'):
-        timed_print.startup_time = monotonic()
-    print(f'[{monotonic() - timed_print.startup_time:.2f}]', *a, **kw)
-
-
-def local_path_for_resource(qurl: QUrl, base_qurl: 'QUrl | None' = None) -> str:
+def local_path_for_resource(qurl: QUrl, base_qurl: QUrl | None = None) -> str:
     if base_qurl and qurl.isRelative():
         qurl = base_qurl.resolved(qurl)
 
@@ -1778,12 +1792,12 @@ def clip_border_radius(painter, rect):
         painter.restore()
 
 
-def resolve_grid_color(which='color', for_dark: bool | None = None, use_defaults: bool = False):
+def resolve_custom_background(name: str ,which='color', for_dark: bool | None = None, use_defaults: bool = False):
     if use_defaults:
-        s = gprefs.defaults['cover_grid_background']
+        s = gprefs.defaults[name]
     else:
-        s = gprefs['cover_grid_background']
-        if not s['migrated']:
+        s = gprefs[name]
+        if name == 'cover_grid_background' and not s.get('migrated'):
             s = s.copy()
             s['migrated'] = True
             legacy = gprefs.pop('cover_grid_color', None)
@@ -1792,10 +1806,18 @@ def resolve_grid_color(which='color', for_dark: bool | None = None, use_defaults
             legacy = gprefs.pop('cover_grid_texture', None)
             if legacy is not None:
                 s['light_texture'] = s['dark_texture'] = legacy
-            gprefs['cover_grid_background'] = s
+            gprefs[name] = s
     if for_dark is None:
         for_dark = QApplication.instance().is_dark_theme
     key = 'dark' if for_dark else 'light'
     if which == 'color':
         return s[key]
     return s[f'{key}_texture']
+
+
+def resolve_grid_color(which='color', for_dark: bool | None = None, use_defaults: bool = False):
+    return resolve_custom_background('cover_grid_background', which=which, for_dark=for_dark, use_defaults=use_defaults)
+
+
+def resolve_bookshelf_color(which='color', for_dark: bool | None = None, use_defaults: bool = False):
+    return resolve_custom_background('bookshelf_custom_background', which=which, for_dark=for_dark, use_defaults=use_defaults)

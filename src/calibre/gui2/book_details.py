@@ -8,6 +8,7 @@ from collections import namedtuple
 from contextlib import suppress
 from functools import lru_cache, partial
 from math import ceil
+from time import monotonic
 
 from qt.core import (
     QAction,
@@ -581,7 +582,7 @@ def add_item_specific_entries(menu, data, book_info, copy_menu, search_menu):
                 v = data.get('original_value') or data.get('value')
                 copy_menu.addAction(QIcon.ic('edit-copy.png'), _('The text: {}').format(v),
                                         lambda: QApplication.instance().clipboard().setText(v))
-            if field not in ('size', 'id', 'last_modified', 'sort', 'series_sort', 'uuid', 'author_sort'):
+            if field not in ('size', 'id', 'last_modified', 'sort', 'series_sort', 'uuid', 'author_sort', 'pages'):
                 fm = get_gui().current_db.new_api.field_metadata.get(field) or {}
                 if fm.get('datatype') != 'composite':
                     ac = book_info.remove_item_action
@@ -762,12 +763,14 @@ def details_context_menu_event(view, ev, book_info, add_popup_action=False, edit
     elif edit_metadata is not None:
         ema = get_gui().iactions['Edit Metadata'].menuless_qaction
         menu.addAction(_('Open the Edit metadata window') + '\t' + ema.shortcut().toString(QKeySequence.SequenceFormat.NativeText), edit_metadata)
+    menu.addSeparator()
+    book_id = get_gui().library_view.current_id
     if not reindex_fmt_added:
-        menu.addSeparator()
         menu.addAction(_(
-            'Re-index this book for full text searching'), partial(book_info.reindex_fmt, get_gui().library_view.current_id, '')).setIcon(
+            'Re-index this book for full text searching'), partial(book_info.reindex_fmt, book_id, '')).setIcon(
                 QIcon.ic('fts.png'))
-
+    menu.addAction(_('Re-count the pages in this book'), partial(book_info.recount_pages, book_id)).setIcon(
+            QIcon.ic('bookshelf.png'))
     if len(menu.actions()) > 0:
         menu.exec(ev.globalPos())
 # }}}
@@ -1224,6 +1227,28 @@ class BookInfo(HTMLDisplay):
             db.reindex_fts_book(book_id, fmt)
         else:
             db.reindex_fts_book(book_id)
+
+    def recount_pages(self, book_id):
+        from calibre.gui2.ui import get_gui
+        db = get_gui().current_db.new_api
+        for fmt in db.formats(book_id) or ():
+            db.format_metadata(book_id, fmt, allow_cache=False, update_db=True)
+        db.queue_pages_scan(book_id)
+        QTimer.singleShot(100, partial(self.check_for_recount, monotonic(), db.library_id, book_id))
+
+    def check_for_recount(self, start_time: float, library_id: str, book_id: int) -> None:
+        from calibre.gui2.ui import get_gui
+        db = get_gui().current_db.new_api
+        if db.library_id != library_id or monotonic() - start_time > 10:
+            return
+        if db.pages_needs_scan((book_id,)):
+            QTimer.singleShot(100, partial(self.check_for_recount, start_time, db.library_id, book_id))
+            return
+        lv = get_gui().library_view
+        current_row = lv.currentIndex().row()
+        if lv.current_id != book_id:
+            current_row = -1
+        lv.model().refresh_ids((book_id,), current_row)
 # }}}
 
 

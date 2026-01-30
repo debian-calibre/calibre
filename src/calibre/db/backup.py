@@ -30,7 +30,7 @@ class MetadataBackup(Thread):
     '''
 
     def __init__(self, db, interval=2, scheduling_interval=0.1):
-        Thread.__init__(self)
+        super().__init__(name='MetadataBackup', daemon=True)
         self.daemon = True
         self._db = weakref.ref(getattr(db, 'new_api', db))
         self.stop_running = Event()
@@ -55,7 +55,8 @@ class MetadataBackup(Thread):
     def run(self):
         while not self.stop_running.is_set():
             try:
-                self.wait(self.interval)
+                if self.wait(self.interval):
+                    break
                 self.do_one()
             except Abort:
                 break

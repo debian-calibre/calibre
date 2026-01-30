@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "Decembro 06, 2025" "8.16.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "Januaro 30, 2026" "9.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -1683,6 +1683,11 @@ Specify the character encoding of the output document. The default is utf\-8.
 .B \-\-txt\-output\-formatting
 Formatting used within the document. * plain: Simpla teksto * markdown: Markdown formatted text * textile: Textile formatted text
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-alt\-text\-for\-images
+Replace images with the text from the alt attribute, if any. Ignored if the option to keep image references is specified.
+.UNINDENT
 .SH TXTZ OUTPUT OPTIONS
 .INDENT 0.0
 .TP
@@ -1733,6 +1738,11 @@ Specify the character encoding of the output document. The default is utf\-8.
 .TP
 .B \-\-txt\-output\-formatting
 Formatting used within the document. * plain: Simpla teksto * markdown: Markdown formatted text * textile: Textile formatted text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-alt\-text\-for\-images
+Replace images with the text from the alt attribute, if any. Ignored if the option to keep image references is specified.
 .UNINDENT
 .SH Author
 Kovid Goyal

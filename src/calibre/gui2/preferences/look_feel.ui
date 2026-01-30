@@ -37,6 +37,15 @@
        <string>Cover &amp;grid</string>
       </attribute>
      </widget>
+     <widget class="BookshelfTab" name="bookshelf_tab">
+      <attribute name="icon">
+       <iconset resource="../../../../resources/images.qrc">
+        <normaloff>:/images/bookshelf.png</normaloff>:/images/bookshelf.png</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>&amp;Bookshelf view</string>
+      </attribute>
+     </widget>
      <widget class="BookDetailsTab" name="book_details_tab">
       <attribute name="icon">
        <iconset resource="../../../../resources/images.qrc">
@@ -84,7 +93,7 @@
        </attribute>
       </widget>
      </widget>
-     <widget class="CoverView" name="cover_view">
+     <widget class="CoverView" name="cover_browser_tab">
       <attribute name="icon">
        <iconset resource="../../../../resources/images.qrc">
         <normaloff>:/images/cover_flow.png</normaloff>:/images/cover_flow.png</iconset>
@@ -102,7 +111,7 @@
        <string>&amp;Quickview</string>
       </attribute>
      </widget>
-     <widget class="ColumnColorRules" name="edit_rules">
+     <widget class="ColumnColorRules" name="column_color_rules_tab">
       <attribute name="icon">
        <iconset resource="../../../../resources/images.qrc">
         <normaloff>:/images/format-fill-color.png</normaloff>:/images/format-fill-color.png</iconset>
@@ -111,7 +120,7 @@
        <string>Column &amp;coloring</string>
       </attribute>
      </widget>
-     <widget class="ColumnIconRules" name="icon_rules">
+     <widget class="ColumnIconRules" name="column_icon_rules_tab">
       <attribute name="icon">
        <iconset resource="../../../../resources/images.qrc">
         <normaloff>:/images/icon_choose.png</normaloff>:/images/icon_choose.png</iconset>
@@ -155,6 +164,11 @@
    <class>CoverGridTab</class>
    <extends>ConfigWidgetBase</extends>
    <header>calibre/gui2/preferences/look_feel_tabs/cover_grid.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BookshelfTab</class>
+   <extends>ConfigWidgetBase</extends>
+   <header>calibre/gui2/preferences/look_feel_tabs/bookshelf_view.h</header>
   </customwidget>
   <customwidget>
    <class>BookDetailsTab</class>

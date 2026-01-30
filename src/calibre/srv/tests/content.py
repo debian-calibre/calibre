@@ -8,7 +8,7 @@ import http.client
 import json
 import os
 import time
-import zlib
+from compression import zlib
 from io import BytesIO
 
 from calibre.ebooks.metadata.epub import get_metadata
@@ -228,18 +228,6 @@ class ContentTest(LibraryBaseTest):
             raw = r.read()
             self.ae(zlib.decompress(raw, 16+zlib.MAX_WBITS), data)
 
-    # }}}
-
-    def test_char_count(self):  # {{{
-        from calibre.ebooks.oeb.parse_utils import html5_parse
-        from calibre.srv.render_book import get_length
-
-        root = html5_parse('<p>a b\nc\td\re')
-        self.ae(get_length(root), 5)
-        root = html5_parse('<script>xyz</script>a<iMg>b')
-        self.ae(get_length(root), 1002)
-        root = html5_parse('<p><!-- abc -->m')
-        self.ae(get_length(root), 1)
     # }}}
 
     def test_html_as_json(self):  # {{{

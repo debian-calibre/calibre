@@ -87,6 +87,9 @@ CALIBRE_METADATA_FIELDS = frozenset((
     'user_categories',
     # a dict of items to associated hyperlink
     'link_maps',
+    # Calculated page count, null values are None or 0. -1 is no countable
+    # formats. -2 is error processing formats, -3 is DRMed.
+    'pages',
 ))
 
 ALL_METADATA_FIELDS =      SOCIAL_METADATA_FIELDS.union(
