@@ -5,16 +5,15 @@ __license__   = 'GPL v3'
 __copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
-import atexit
 import gc
 import os
 import shutil
 import tempfile
-import time
 import unittest
 from functools import partial
 from io import BytesIO
 
+from calibre.constants import iswindows
 from calibre.utils.resources import get_image_path as I
 
 rmtree = partial(shutil.rmtree, ignore_errors=True)
@@ -30,20 +29,29 @@ class BaseTest(unittest.TestCase):
     def setUp(self):
         from calibre.utils.recycle_bin import nuke_recycle
         nuke_recycle()
+        self.paths_to_remove = []
+        self.objects_to_close = []
         self.library_path = self.mkdtemp()
         self.create_db(self.library_path)
 
     def tearDown(self):
         from calibre.utils.recycle_bin import restore_recyle
         restore_recyle()
+        for x in self.objects_to_close:
+            x.close()
+        self.objects_to_close = []
         gc.collect(), gc.collect()
-        try:
-            shutil.rmtree(self.library_path)
-        except OSError:
-            # Try again in case something transient has a file lock on windows
-            gc.collect(), gc.collect()
-            time.sleep(2)
-            shutil.rmtree(self.library_path)
+        for x in self.paths_to_remove:
+            try:
+                shutil.rmtree(x)
+            except OSError:
+                if iswindows:
+                    import atexit
+                    atexit.register(shutil.rmtree, x)
+                else:
+                    import time
+                    time.sleep(1)
+                    shutil.rmtree(x)
 
     def create_db(self, library_path):
         from calibre.library.database2 import LibraryDatabase2
@@ -67,25 +75,30 @@ class BaseTest(unittest.TestCase):
         backend = DB(library_path or self.library_path)
         cache = Cache(backend)
         cache.init()
+        self.objects_to_close.append(cache)
         return cache
 
     def mkdtemp(self):
         ans = tempfile.mkdtemp(prefix='db_test_')
-        atexit.register(rmtree, ans)
+        self.paths_to_remove.append(ans)
         return ans
 
     def init_old(self, library_path=None):
         from calibre.library.database2 import LibraryDatabase2
-        return LibraryDatabase2(library_path or self.library_path)
+        ans = LibraryDatabase2(library_path or self.library_path)
+        self.objects_to_close.append(ans)
+        return ans
 
     def init_legacy(self, library_path=None):
         from calibre.db.legacy import LibraryDatabase
-        return LibraryDatabase(library_path or self.library_path)
+        ans = LibraryDatabase(library_path or self.library_path)
+        self.objects_to_close.append(ans)
+        return ans
 
     def clone_library(self, library_path):
         if not hasattr(self, 'clone_dir'):
             self.clone_dir = tempfile.mkdtemp()
-            atexit.register(rmtree, self.clone_dir)
+            self.paths_to_remove.append(self.clone_dir)
             self.clone_count = 0
         self.clone_count += 1
         dest = os.path.join(self.clone_dir, str(self.clone_count))

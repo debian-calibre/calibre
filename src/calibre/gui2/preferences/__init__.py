@@ -16,10 +16,12 @@ from qt.core import (
     QDialog,
     QDialogButtonBox,
     QEvent,
+    QGroupBox,
     QIcon,
     QLineEdit,
     QListView,
     QListWidget,
+    QRadioButton,
     Qt,
     QTableWidget,
     QVBoxLayout,
@@ -122,6 +124,7 @@ class ConfigWidgetInterface:
                     t.lazy_initialize()
                     t.lazy_init_called = True
             r = r | bool(getattr(t, method)(*args))
+            r = r | bool(t.do_on_child_tabs(method, *args))
         return r
 
 
@@ -154,6 +157,12 @@ class Setting:
         if isinstance(self.gui_obj, QCheckBox):
             self.datatype = 'bool'
             self.gui_obj.stateChanged.connect(self.changed)
+        elif isinstance(self.gui_obj, QGroupBox) and self.gui_obj.isCheckable():
+            self.datatype = 'bool'
+            self.gui_obj.clicked.connect(self.changed)
+        elif isinstance(self.gui_obj, QRadioButton):
+            self.datatype = 'bool'
+            self.gui_obj.toggled.connect(self.changed)
         elif isinstance(self.gui_obj, QAbstractSpinBox):
             self.datatype = 'number'
             self.gui_obj.valueChanged.connect(self.changed)

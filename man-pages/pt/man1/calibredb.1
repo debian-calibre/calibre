@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "dezembro 06, 2025" "8.16.2" "calibre"
+.TH "CALIBREDB" "1" "janeiro 30, 2026" "9.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -124,7 +124,7 @@ mostrar esta mensagem de ajuda e sair
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Caminho para a biblioteca do Calibre. Por predefinição é usado o caminho armazenado nas definições. Pode também ligar\-se a um servidor de conteúdos Calibre para executar ações em bibliotecas remotas. Para tal, use um URL na forma: \%<http://\:hostname:port/#\:id_da_biblioteca> , por exemplo, \%<http://\:localhost:8080/#\:mylibrary> . id_da_biblioteca é o identificador da biblioteca à qual se pretende ligar no servidor de conteúdos. Pode usar o valor especial de id_da_bilbioteca \- para obter uma lista de identificadores de bibliotecas disponíveis no servidor. Para detalhes sobre como configurar o acesso através de um servidor de conteúdos, veja \%<https://\:manual\:.calibre-ebook\:.com/\:pt/\:generated/\:pt/\:calibredb\:.html>\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:pt/\:generated/\:pt/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -740,7 +740,7 @@ calibredb restore_database [options]
 .sp
 Restaurar esta base de dados a partir dos metadados armazenados nos ficheiros OPF em cada pasta da biblioteca do Calibre. Isto é útil apenas se o seu ficheiro metadata.db tiver sido corrompido.
 .sp
-AVISO: Este comando regenera completamente a sua base de dados. Vai perder todas as pesquisas guardadas, categorias do utilizador, conectores, preferências de conversão por livro e receitas personalizadas. Os metadados restaurados serão tão exatos quanto os encontrados nos ficheiros OPF.
+ALERTA: Este comando regenera completamente a sua base de dados. Vai perder todas as pesquisas guardadas, categorias do utilizador, conectores, preferências de conversão por livro e receitas personalizadas. Os metadados restaurados serão tão exatos quanto os encontrados nos ficheiros OPF.
 .sp
 Sempre que passar argumentos para o calibredb que contenham espaços ponha\-os entre aspas. Por exemplo: \(dq/some path/with spaces\(dq
 .INDENT 0.0

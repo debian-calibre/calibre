@@ -99,12 +99,12 @@ class BuildTest(unittest.TestCase):
         detector.close()
         self.assertEqual(detector.result['encoding'], 'utf-8')
 
-    def test_lzma(self):
-        import lzma
-        lzma.open
-
-    def test_zstd(self):
-        from pyzstd import compress, decompress
+    def test_compression(self):
+        from compression.zstd import compress, decompress
+        data = os.urandom(4096)
+        cdata = compress(data)
+        self.assertEqual(data, decompress(cdata))
+        from compression.lzma import compress, decompress
         data = os.urandom(4096)
         cdata = compress(data)
         self.assertEqual(data, decompress(cdata))
@@ -336,16 +336,24 @@ class BuildTest(unittest.TestCase):
         conn = apsw.Connection(':memory:')
         conn.close()
 
-    @unittest.skipIf('SKIP_QT_BUILD_TEST' in os.environ, 'Skipping Qt build test as it causes crashes in the macOS VM')
     def test_qt(self):
         if is_sanitized:
             raise unittest.SkipTest('Skipping Qt build test as sanitizer is enabled')
-        from qt.core import QApplication, QFontDatabase, QImageReader, QLoggingCategory, QNetworkAccessManager, QSslSocket, QTimer
-        QLoggingCategory.setFilterRules('''qt.webenginecontext.debug=true''')
-        if hasattr(os, 'geteuid') and os.geteuid() == 0:
-            # likely a container build, webengine cannot run as root with sandbox
-            os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--no-sandbox'
-        from qt.webengine import QWebEnginePage
+        webengine_process = None
+        if not (is_ci and (iswindows or ismacos)):
+            # WebEngine is flaky in CI
+            from calibre.utils.ipc.simple_worker import start_pipe_worker
+            webengine_process = start_pipe_worker('from calibre.test_build import *; test_webengine_worker_main()')
+        try:
+            self.do_qt_test()
+            if webengine_process is not None:
+                self.assertEqual(webengine_process.wait(), 0)
+        finally:
+            if webengine_process is not None:
+                webengine_process.wait()
+
+    def do_qt_test(self):
+        from qt.core import QFontDatabase, QImageReader, QNetworkAccessManager, QSslSocket
 
         from calibre.utils.img import image_from_data, image_to_data, test
 
@@ -357,7 +365,7 @@ class BuildTest(unittest.TestCase):
         # hard-coded paths of the Qt installation should work. If they do not,
         # then it is a distro problem.
         fmts = {x.data().decode('utf-8') for x in QImageReader.supportedImageFormats()}  # no2to3
-        testf = {'jpg', 'png', 'svg', 'ico', 'gif', 'webp'}
+        testf = {'jpg', 'png', 'svg', 'ico', 'gif', 'webp', 'ppm'}
         self.assertEqual(testf.intersection(fmts), testf, f"Qt doesn't seem to be able to load some of its image plugins. Available plugins: {fmts}")
         data = P('images/blank.png', allow_user_override=False, data=True)
         img = image_from_data(data)
@@ -369,7 +377,6 @@ class BuildTest(unittest.TestCase):
         test()
 
         from calibre.gui2 import destroy_app, ensure_app
-        from calibre.utils.webengine import setup_profile
         display_env_var = os.environ.pop('DISPLAY', None)
         try:
             ensure_app()
@@ -381,7 +388,9 @@ class BuildTest(unittest.TestCase):
                 available_tts_engines = tuple(x for x in QTextToSpeech.availableEngines() if x != 'mock')
                 self.assertTrue(available_tts_engines)
 
-                QMediaDevices.audioOutputs()
+                if not islinux or is_ci:
+                    # On some Linux systems this hangs when using the headless backend
+                    QMediaDevices.audioOutputs()
 
             from calibre.ebooks.oeb.transforms.rasterize import rasterize_svg
             img = rasterize_svg(as_qimage=True)
@@ -392,42 +401,8 @@ class BuildTest(unittest.TestCase):
             na = QNetworkAccessManager()
             self.assertTrue(hasattr(na, 'sslErrors'), 'Qt not compiled with openssl')
             self.assertTrue(QSslSocket.availableBackends(), 'Qt tls plugins missings')
-            p = QWebEnginePage()
-            setup_profile(p.profile())
-
-            def callback(result):
-                callback.result = result
-                if hasattr(print_callback, 'result'):
-                    QApplication.instance().quit()
-
-            def print_callback(result):
-                print_callback.result = result
-                if hasattr(callback, 'result'):
-                    QApplication.instance().quit()
-
-            def do_webengine_test(title):
-                nonlocal p
-                p.runJavaScript('1 + 1', callback)
-                p.printToPdf(print_callback)
-
-            def render_process_crashed(status, exit_code):
-                print('Qt WebEngine Render process crashed with status:', status, 'and exit code:', exit_code)
-                QApplication.instance().quit()
-
-            p.titleChanged.connect(do_webengine_test)
-            p.renderProcessTerminated.connect(render_process_crashed)
-            p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
-            timeout = 10
-            QTimer.singleShot(timeout * 1000, lambda: QApplication.instance().quit())
-            QApplication.instance().exec()
-            self.assertTrue(hasattr(callback, 'result'), f'Qt WebEngine failed to run in {timeout} seconds')
-            self.assertEqual(callback.result, 2, 'Simple JS computation failed')
-            self.assertTrue(hasattr(print_callback, 'result'), f'Qt WebEngine failed to print in {timeout} seconds')
-            self.assertIn(b'%PDF-1.4', bytes(print_callback.result), 'Print to PDF failed')
-            del p
             del na
             destroy_app()
-            del QWebEnginePage
         finally:
             if display_env_var is not None:
                 os.environ['DISPLAY'] = display_env_var
@@ -604,6 +579,59 @@ def find_tests(only_build=False):
 def test():
     from calibre.utils.run_tests import run_cli
     run_cli(find_tests())
+
+
+def test_webengine_worker_main():
+    from qt.core import QApplication, QLoggingCategory, QTimer
+    from qt.webengine import QWebEnginePage
+
+    from calibre.gui2 import destroy_app, ensure_app
+    from calibre.utils.webengine import setup_profile
+    QLoggingCategory.setFilterRules('''qt.webenginecontext.debug=true''')
+    if hasattr(os, 'geteuid') and os.geteuid() == 0:
+        # likely a container build, webengine cannot run as root with sandbox
+        os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--no-sandbox'
+
+    ensure_app()
+
+    p = QWebEnginePage()
+    setup_profile(p.profile())
+
+    def callback(result):
+        callback.result = result
+        if hasattr(print_callback, 'result'):
+            QApplication.instance().quit()
+
+    def print_callback(result):
+        print_callback.result = result
+        if hasattr(callback, 'result'):
+            QApplication.instance().quit()
+
+    def do_webengine_test(title):
+        nonlocal p
+        p.runJavaScript('1 + 1', callback)
+        p.printToPdf(print_callback)
+
+    def render_process_crashed(status, exit_code):
+        print('Qt WebEngine Render process crashed with status:', status, 'and exit code:', exit_code)
+        QApplication.instance().quit()
+
+    p.titleChanged.connect(do_webengine_test)
+    p.renderProcessTerminated.connect(render_process_crashed)
+    p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
+    timeout = 10
+    QTimer.singleShot(timeout * 1000, lambda: QApplication.instance().quit())
+    QApplication.instance().exec()
+    if not hasattr(callback, 'result'):
+        raise SystemExit(f'Qt WebEngine failed to run in {timeout} seconds')
+    if callback.result != 2:
+        raise SystemExit('Simple JS computation failed')
+    if not hasattr(print_callback, 'result'):
+        raise SystemExit(f'Qt WebEngine failed to print in {timeout} seconds')
+    if b'%PDF-1.4' not in bytes(print_callback.result):
+        raise SystemExit('Print to PDF failed')
+    del p
+    destroy_app()
 
 
 if __name__ == '__main__':

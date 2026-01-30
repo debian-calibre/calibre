@@ -1,0 +1,157 @@
+#!/usr/bin/env python
+# vim:fileencoding=utf-8
+# License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+from collections import defaultdict
+
+from calibre import browser
+from calibre.web.feeds.news import BasicNewsRecipe, classes, prefixed_classes
+
+web_version = True
+
+
+def absurl(x):
+    if x.startswith('/') and not x.startswith('//'):
+        x = 'https://www.newyorker.com' + x
+    return x
+
+
+class NewYorkerCom(BasicNewsRecipe):
+
+    if web_version:
+        title = 'The New Yorker (All Articles)'
+        description = 'All articles from newyorker.com including daily content, reviews, and magazine pieces'
+    else:
+        title = 'The New Yorker Magazine'
+        description = "Articles of the week's New Yorker magazine"
+    language = 'en_US'
+    __author__ = 'Kovid Goyal'
+    no_stylesheets = True
+    timefmt = ' [%b %d]'
+    encoding = 'utf-8'
+    extra_css = '''
+        img { display:block; margin:0 auto; max-width: 100%; }
+        .rubric__name, .byline, time, .caption { font-size:small; }
+        .byline, .rubric__name { font-size:smaller; font-weight: bold;}
+        h3 { margin-bottom: 6px; }
+        .caption, .contributors { font-size: smaller; font-style: italic; font-weight: normal; }
+        .content-header__accreditation { font-style:italic; }
+    '''
+
+    keep_only_tags = [
+        classes(
+            'article__content-header article__body contributors'
+        ),
+    ]
+    remove_tags = [
+        classes(
+            'social-icons'
+        ),
+        prefixed_classes('ConsentBannerWrapper- ResponsiveCartoonCTA- ContentHeaderContributorImage- ContributorBioAvatar-'),
+        dict(childtypes='iframe'),
+        dict(name='svg'),
+    ]
+    remove_attributes = ['style']
+
+    def preprocess_html(self, soup):
+        w = '/w_320'  # use '/w_640' for highres
+        for img in soup.findAll('img'):
+            if img.has_attr('srcset'):
+                for x in img['srcset'].split():
+                    if w in x:
+                        img['src'] = x
+            elif img.find_previous_sibling('source', attrs={'srcset':True}):
+                srcset = img.find_previous_sibling('source', attrs={'srcset':True})
+                for x in srcset['srcset'].split():
+                    if w in x:
+                        img['src'] = x
+                    elif '/w_560' in x:
+                        img['src'] = x
+        for src in soup.findAll('source'):
+            src.decompose()
+        for noscript in soup.findAll('noscript'):
+            noscript.name = 'div'
+        return soup
+
+    # def preprocess_image(self, img_data, image_url):
+    #     from PIL import Image
+    #     from calibre import fit_image
+    #     from io import BytesIO
+    #     img = Image.open(BytesIO(img_data)).convert('RGB')
+    #     scaled, nwidth, nheight = fit_image(img.width, img.height, 1024, 1024)
+    #     if scaled:
+    #         img = img.resize((nwidth, nheight))
+    #     buf = BytesIO()
+    #     img.save(buf, format='JPEG')
+    #     return buf.getvalue()
+
+    recipe_specific_options = {
+        'date': {
+            'short': 'The date of the edition to download (YYYY/MM/DD format)',
+            'long': 'For example, 2024/07/08'
+        }
+    }
+
+    # The New Yorker changes the content it delivers based on cookies, so the
+    # following ensures that we send no cookies
+    def get_browser(self, *args, **kwargs):
+        return self
+
+    def clone_browser(self, *args, **kwargs):
+        return self.get_browser()
+
+    def open_novisit(self, *args, **kwargs):
+        br = browser()
+        return br.open_novisit(*args, **kwargs)
+
+    open = open_novisit
+
+    if web_version:
+        use_embedded_content = False
+        feeds = [
+            ('The New Yorker', 'https://www.newyorker.com/feed/everything'),
+        ]
+    else:
+        def parse_index(self):
+            issue_url = 'https://www.newyorker.com/magazine?intcid=magazine'
+            d = self.recipe_specific_options.get('date')
+            if d and isinstance(d, str):
+                issue_url = 'https://www.newyorker.com/magazine/' + d
+            soup = self.index_to_soup(issue_url)
+            cover_img = soup.find('picture',
+                attrs={'class': lambda x: x and 'asset-embed__responsive-asset' in x})
+            if cover_img is not None:
+                self.cover_url = cover_img.img['src']
+                self.log('Found cover:', self.cover_url)
+                try:
+                    # the src original resolution w_280 was too low, replace w_280 with w_560
+                    cover_url_width_index = self.cover_url.find('w_')
+                    old_width = self.cover_url[cover_url_width_index:cover_url_width_index+5]
+                    self.cover_url = self.cover_url.replace(old_width, 'w_640')
+                except Exception:
+                    self.log('Failed enlarging cover img, using the original one')
+
+            feeds_dict = defaultdict(list)
+            for section in soup.findAll('section',
+                attrs={'class': lambda x: x and 'SummaryRiverSection-' in x}):
+                for h2 in section.findAll(attrs={'class':lambda x: x and 'SectionTitleHed-' in x}):
+                    secname = self.tag_to_string(h2)
+                self.log(secname)
+                for a in section.findAll('a', href=True, attrs={'class':lambda x: x and 'summary-item__hed-link' in x}):
+                    section = secname
+                    url = absurl(a['href'])
+                    title = self.tag_to_string(a)
+                    desc = ''
+                    summ = a.find_next_sibling(attrs={'class':lambda x: x and 'summary-item__dek' in x})
+                    if summ:
+                        desc = self.tag_to_string(summ)
+                    byl = a.find_next_sibling(attrs={'class':lambda x: x and 'summary-item__byline-' in x})
+                    if byl:
+                        desc = self.tag_to_string(byl) + ' | ' + desc
+                    rub = a.find_previous_sibling(attrs={'class':lambda x: x and 'summary-item__rubric' in x})
+                    if rub:
+                        desc = self.tag_to_string(rub) + ' | ' + desc
+                    self.log('\t', title, '\n\t', desc, '\n\t\t', url)
+                    feeds_dict[section].append({'title': title, 'url': url, 'description': desc})
+            return feeds_dict.items()

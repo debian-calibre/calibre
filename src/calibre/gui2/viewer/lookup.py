@@ -40,6 +40,7 @@ from calibre.ebooks.metadata.sources.search_engines import google_consent_cookie
 from calibre.gui2 import error_dialog
 from calibre.gui2.viewer.web_view import apply_font_settings, vprefs
 from calibre.gui2.widgets2 import Dialog
+from calibre.utils.config import tweaks
 from calibre.utils.localization import _, canonicalize_lang, get_lang, lang_as_iso639_1
 from calibre.utils.resources import get_path as P
 from calibre.utils.webengine import create_script, insert_scripts, secure_webengine, setup_profile
@@ -243,7 +244,7 @@ def create_profile():
         ans = QWebEngineProfile('viewer-lookup', QApplication.instance())
         ans.setHttpUserAgent(random_user_agent(allow_ie=False))
         setup_profile(ans)
-        js = P('lookup.js', data=True, allow_user_override=False)
+        js = P('lookup.js', data=True, allow_user_override=True)
         insert_scripts(ans, create_script('lookup.js', js, injection_point=QWebEngineScript.InjectionPoint.DocumentCreation))
         s = ans.settings()
         s.setDefaultTextEncoding('utf-8')
@@ -357,6 +358,7 @@ class Lookup(QTabWidget):
         self.llm_container = QWidget(self)
         QVBoxLayout(self.llm_container).setContentsMargins(0, 0, 0, 0)
         self.llm_tab_index = self.addTab(self.llm_container, QIcon.ic('ai.png'), _('Ask &AI'))
+        self.setTabVisible(self.llm_tab_index, not tweaks['hide_ai_features'])
 
         self.currentChanged.connect(self._tab_changed)
         set_sync_override.instance = self
@@ -484,6 +486,8 @@ class Lookup(QTabWidget):
         self.is_visible = is_visible
         if is_visible:
             last_idx = vprefs.get('llm_lookup_tab_index', 0)
+            if last_idx == self.llm_tab_index and tweaks['hide_ai_features']:
+                last_idx = 0
             if 0 <= last_idx < self.count():
                 self.setCurrentIndex(last_idx)
             if self.llm_panel:

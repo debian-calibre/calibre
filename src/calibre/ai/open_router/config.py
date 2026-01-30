@@ -170,7 +170,7 @@ class ModelDetails(QTextBrowser):
         <p>{_('Another criterion to look for is if the model is <i>moderated</i> (that is, its output is filtered by the provider).')}</p>
         ''')
 
-    def show_model_details(self, m: 'AIModel'):
+    def show_model_details(self, m: AIModel):
         if m.pricing.is_free:
             price = f"<b>{_('Free')}</b>"
         else:
@@ -234,7 +234,7 @@ class SortLoc(QComboBox):
             case 'oldest':
                 return lambda x: x.created
             case 'newest':
-                now = datetime.datetime.now(datetime.timezone.utc)
+                now = datetime.datetime.now(datetime.UTC)
                 return lambda x: now - x.created
             case 'cheapest':
                 return lambda x: x.pricing.output_token
@@ -268,6 +268,13 @@ class ChooseModel(Dialog):
     @model_id.setter
     def model_id(self, val):
         self.models.setCurrentIndex(self.models.model().index_for_model_id(val))
+
+    @property
+    def model_name(self) -> str:
+        idx = self.models.currentIndex()
+        if idx.isValid():
+            return idx.data(Qt.ItemDataRole.DisplayRole)
+        return ''
 
     def setup_ui(self):
         l = QVBoxLayout(self)
@@ -427,11 +434,11 @@ class ConfigWidget(QWidget):
         l.addRow(_('Model for &text tasks:'), tm)
 
     def select_model(self, model_id: str, for_text: bool) -> None:
-        model_choice_target = self.sender()
+        model_choice_target: Model = self.sender()
         caps = AICapabilities.text_to_text if for_text else AICapabilities.text_to_image
         d = ChooseModel(model_id, caps, self)
         if d.exec() == QDialog.DialogCode.Accepted:
-            model_choice_target.set(d.model_id, d.name)
+            model_choice_target.set(d.model_id, d.model_name)
 
     @property
     def api_key(self) -> str:

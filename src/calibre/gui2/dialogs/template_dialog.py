@@ -515,6 +515,7 @@ class TemplateDialog(QDialog, Ui_TemplateDialog):
         self.coloring = color_field is not None
         self.iconing = icon_field_key is not None
         self.embleming = doing_emblem
+        self.required_txt = self.coloring or self.iconing or self.embleming
         self.dialog_is_st_editor = dialog_is_st_editor
         self.global_vars = global_vars or {}
         self.python_context_object = python_context_object or PythonTemplateContext()
@@ -1194,7 +1195,7 @@ def evaluate(book, context):
 
     def accept(self):
         txt = str(self.textbox.toPlainText()).rstrip()
-        if (self.coloring or self.iconing or self.embleming) and not txt:
+        if (self.required_txt) and not txt:
             error_dialog(self, _('No template provided'),
                 _('The template box cannot be empty'), show=True)
             return

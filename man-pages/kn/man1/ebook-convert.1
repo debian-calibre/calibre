@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "ಡಿಸೆಂಬರ್ 06, 2025" "8.16.2" "calibre"
+.TH "EBOOK-CONVERT" "1" "ಜನವರಿ 30, 2026" "9.0.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -184,7 +184,7 @@ List builtin recipe names. You can create an e\-book from a builtin recipe like 
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device. In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device. In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1683,6 +1683,11 @@ Specify the character encoding of the output document. The default is utf\-8.
 .B \-\-txt\-output\-formatting
 Formatting used within the document. * plain: ಸಾದಾ ಪಠ್ಯ * markdown: Markdown formatted text * textile: Textile formatted text
 .UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-alt\-text\-for\-images
+Replace images with the text from the alt attribute, if any. Ignored if the option to keep image references is specified.
+.UNINDENT
 .SH TXTZ OUTPUT OPTIONS
 .INDENT 0.0
 .TP
@@ -1733,6 +1738,11 @@ Specify the character encoding of the output document. The default is utf\-8.
 .TP
 .B \-\-txt\-output\-formatting
 Formatting used within the document. * plain: ಸಾದಾ ಪಠ್ಯ * markdown: Markdown formatted text * textile: Textile formatted text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-alt\-text\-for\-images
+Replace images with the text from the alt attribute, if any. Ignored if the option to keep image references is specified.
 .UNINDENT
 .SH Author
 Kovid Goyal

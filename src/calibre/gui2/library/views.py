@@ -366,9 +366,13 @@ class BooksView(TableView):  # {{{
         self.alternate_views = AlternateViews(self)
 
         for wv in self, self.pin_view:
-            if not tweaks['horizontal_scrolling_per_column']:
+            if tweaks['horizontal_scrolling_per_column']:
+                wv.update_momentum_scroll_settings(enable_x=False)
+            else:
                 wv.setHorizontalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
-            if not tweaks['vertical_scrolling_per_row']:
+            if tweaks['vertical_scrolling_per_row']:
+                wv.update_momentum_scroll_settings(enable_y=False)
+            else:
                 wv.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
 
             wv.setEditTriggers(QAbstractItemView.EditTrigger.EditKeyPressed)
@@ -689,7 +693,7 @@ class BooksView(TableView):  # {{{
             book_id_col = db.field_metadata['id']['rec_index']
             book_id = db.data[row][book_id_col]
             m = menu.addAction(_('Toggle mark for book'), lambda: db.data.toggle_marked_ids({book_id,}))
-            ic = QIcon.ic('marked.png')
+            ic = QIcon.cached_icon('marked.png')
             m.setIcon(ic)
             from calibre.gui2.actions.mark_books import mark_books_with_text
             m = menu.addAction(_('Mark book with text label'), partial(mark_books_with_text, {book_id,}))
@@ -866,7 +870,7 @@ class BooksView(TableView):  # {{{
         state = {}
         state['hidden_columns'] = [cm[i] for i in range(h.count())
                 if h.isSectionHidden(i) and cm[i] != 'ondevice']
-        for f in ('last_modified', 'languages', 'formats', 'id', 'path'):
+        for f in ('last_modified', 'languages', 'formats', 'id', 'path', 'pages'):
             state[f+'_injected'] = True
         state['sort_history'] = \
             self.cleanup_sort_history(self.model().sort_history, ignore_column_map=self.is_library_view)
@@ -931,6 +935,15 @@ class BooksView(TableView):  # {{{
             cmap[c] = i
             if c != 'ondevice':
                 h.setSectionHidden(i, c in hidden)
+        if db := getattr(self.model().db, 'new_api', None):
+            pages_shown_in_book_details = False
+            if dbf := db.new_api.pref('book_display_fields'):
+                for fname, shown in dbf:
+                    if fname == 'pages':
+                        pages_shown_in_book_details = shown
+                        break
+            if pages_shown_in_book_details or 'pages' not in hidden:
+                db.new_api.queue_pages_scan()
 
         positions = state.get('column_positions', {})
         pmap = {}
@@ -981,7 +994,7 @@ class BooksView(TableView):  # {{{
 
     def get_default_state(self):
         old_state = {
-                'hidden_columns': ['last_modified', 'languages', 'formats', 'id', 'path'],
+                'hidden_columns': ['last_modified', 'languages', 'formats', 'id', 'path', 'pages'],
                 'sort_history':[DEFAULT_SORT],
                 'column_positions': {},
                 'column_sizes': {},
@@ -990,7 +1003,7 @@ class BooksView(TableView):  # {{{
                     'timestamp':'center',
                     'pubdate':'center'},
                 }
-        for f in ('last_modified', 'languages', 'formats', 'id', 'path'):
+        for f in ('last_modified', 'languages', 'formats', 'id', 'path', 'pages'):
             old_state[f+'_injected'] = True
         h = self.column_header
         cm = self.column_map
@@ -1023,7 +1036,7 @@ class BooksView(TableView):  # {{{
                         db.new_api.set_pref(name, ans)
                 else:
                     injected = False
-                    for f in ('last_modified', 'languages', 'formats', 'id', 'path'):
+                    for f in ('last_modified', 'languages', 'formats', 'id', 'path', 'pages'):
                         if not ans.get(f+'_injected', False):
                             injected = True
                             ans[f+'_injected'] = True

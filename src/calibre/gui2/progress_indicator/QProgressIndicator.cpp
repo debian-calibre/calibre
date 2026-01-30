@@ -9,6 +9,8 @@
 #include <QDialogButtonBox>
 #include <QPainterPath>
 #include <QImageReader>
+#include <QCoreApplication>
+#include <QTranslator>
 #include <algorithm>
 #include <qdrawutil.h>
 
@@ -152,4 +154,60 @@ image_from_hbitmap(void* hbitmap) {
     (void)hbitmap;
     return QImage();
 #endif
+}
+
+// Helper to convert sRGB channel to linear RGB
+static double
+channelToLinear(double c) {
+    return (c <= 0.03928) ? (c / 12.92) : std::pow((c + 0.055) / 1.055, 2.4);
+}
+
+// Compute relative luminance for a QColor
+static double
+luminance(const QColor& color) {
+    return 0.2126 * channelToLinear(color.redF()) +
+           0.7152 * channelToLinear(color.greenF()) +
+           0.0722 * channelToLinear(color.blueF());
+}
+
+// Calculate contrast ratio between two QColors using the WCAG algorithm
+double
+contrast_ratio(const QColor& c1, const QColor& c2) {
+    double l1 = luminance(c1);
+    double l2 = luminance(c2);
+    // Ensure l1 is the lighter color
+    if (l1 < l2) std::swap(l1, l2);
+    return (l1 + 0.05) / (l2 + 0.05);
+}
+
+typedef std::string_view(qt_translate)(const char* context, const char* text);
+static qt_translate *qt_translate_func = NULL;
+
+class Translator : public QTranslator {
+    QString translate(const char *context, const char *text, const char *disambiguation = nullptr, int n = -1) const override {
+        (void)context; (void)disambiguation; (void)n;
+        if (qt_translate_func == NULL) return QString();
+        auto ans = qt_translate_func(NULL, text);
+        if (ans.data() == NULL) return QString();
+        return QString::fromUtf8(ans.data(), ans.size());
+    }
+};
+static Translator translator;
+
+void
+install_translator(void *v) {
+    qt_translate_func = reinterpret_cast<qt_translate*>(v);
+    static bool installed = false;
+    if (!installed) {
+        installed = true;
+        auto app = QCoreApplication::instance();
+        if (app) app->installTranslator(&translator);
+    }
+}
+
+QString
+utf16_slice(const QString &src, qsizetype pos, qsizetype n) {
+    if (n < 0) n = src.size() - pos;
+    if (pos < 0 || n < 0 || pos + n > src.size()) return QString();
+    return src.sliced(pos, n);
 }

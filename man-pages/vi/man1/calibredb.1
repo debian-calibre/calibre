@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "tháng 12 06, 2025" "8.16.2" "calibre"
+.TH "CALIBREDB" "1" "tháng 1 30, 2026" "9.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,42 +40,41 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP là giao diện dòng lệnh cho cơ sở dữ liệu calibre. Nó có
+nhiều lệnh con, được ghi lại bên dưới.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP có thể được dùng để thao tác với cơ sở dữ liệu calibre
+được chỉ định theo đường dẫn hoặc một Máy chủ nội dung calibre chạy
+trên máy cục bộ hoặc qua internet. Bạn có thể bắt đầu một
+Máy chủ nội dung calibre bằng cách sử dụng chương trình
+\fBcalibre\-server\fP hoặc trong chương trình chính calibre nhấp
+Kết nối/chia sẻ  →  Bắt đầu Máy chủ nội dung\&. Vì \fBcalibredb\fP
+có thể thay đổi thư viện calibre của bạn, bạn phải thiết lập xác thực trên máy chủ trước.
+Có hai cách để làm điều đó:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Nếu bạn chỉ định kết nối đến một máy chủ chạy trên cùng máy tính,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+bạn có thể đơn giản sử dụng tùy chọn \fB\-\-enable\-local\-write\fP của
+Máy chủ nội dung, để cho phép bất kỳ chương trình nào, bao gồm calibredb,
+chạy trên máy tính cục bộ thực hiện thay đổi dữ liệu calibre của bạn.
+Khi chạy máy chủ từ chương trình chính calibre, tùy chọn này nằm trong
+Tùy chọn → Chia sẻ qua mạng → Nâng cao\&.
+.INDENT 0.0
+.IP \(bu 2
+Nếu bạn muốn bật truy cập qua internet, thì bạn nên thiết lập
+.UNINDENT
+.sp
+tài khoản người dùng trên máy chủ và sử dụng các tùy chọn \fB\-\-username\fP
+và \fB\-\-password\fP cho \fBcalibredb\fP để cấp quyền truy cập.
+Bạn có thể thiết lập xác thực người dùng cho \fBcalibre\-server\fP
+bằng cách sử dụng tùy chọn \fB\-\-enable\-auth\fP và dùng \fB\-\-manage\-users\fP để tạo
+tài khoản người dùng. Nếu bạn đang chạy máy chủ từ chương trình chính calibre,
+hãy dùng Tùy chọn → Chia sẻ qua mạng → Yêu cầu tên người dùng/mật khẩu\&.
+.sp
+Để kết nối đến một Máy chủ nội dung đang chạy, hãy truyền URL của máy chủ vào
+tùy chọn \fB\-\-with\-library\fP, xem tài liệu của tùy chọn đó để biết chi tiết và ví dụ.
 .INDENT 0.0
 .IP \(bu 2
 GLOBAL OPTIONS

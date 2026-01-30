@@ -712,6 +712,7 @@ if (!ρσ_list_extend.__argnames__) Object.defineProperties(ρσ_list_extend, {
 });
 
 function ρσ_list_index(val, start, stop) {
+    var idx;
     start = start || 0;
     if (start < 0) {
         start = this.length + start;
@@ -720,7 +721,11 @@ function ρσ_list_index(val, start, stop) {
         throw new ValueError(val + " is not in list");
     }
     if (stop === undefined) {
-        stop = this.length;
+        idx = this.indexOf(val, start);
+        if (idx === -1) {
+            throw new ValueError(val + " is not in list");
+        }
+        return idx;
     }
     if (stop < 0) {
         stop = this.length + stop;
@@ -757,13 +762,12 @@ if (!ρσ_list_pop.__argnames__) Object.defineProperties(ρσ_list_pop, {
 });
 
 function ρσ_list_remove(value) {
-    for (var i = 0; i < this.length; i++) {
-        if (((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === value || typeof (ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] === "object" && ρσ_equals((ρσ_expr_temp = this)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i], value))) {
-            this.splice(i, 1);
-            return;
-        }
+    var idx;
+    idx = this.indexOf(value);
+    if (idx === -1) {
+        throw new ValueError(value + " not in list");
     }
-    throw new ValueError(value + " not in list");
+    this.splice(idx, 1);
 };
 if (!ρσ_list_remove.__argnames__) Object.defineProperties(ρσ_list_remove, {
     __argnames__ : {value: ["value"]},
@@ -2004,7 +2008,7 @@ Object.defineProperties(ρσ_dict.prototype, (function(){
     });
     return ρσ_anonfunc;
 })();
-ρσ_dict.prototype.set_default = ρσ_dict.prototype.setdefault = (function() {
+ρσ_dict.prototype.set_default = (function() {
     var ρσ_anonfunc = function (key, defval) {
         var j;
         j = this.jsmap;
@@ -2706,7 +2710,6 @@ function ρσ_setitem(obj, key, val) {
         }
         obj[(typeof key === "number" && key < 0) ? obj.length + key : key] = val;
     }
-    return val;
 };
 if (!ρσ_setitem.__argnames__) Object.defineProperties(ρσ_setitem, {
     __argnames__ : {value: ["obj", "key", "val"]},
@@ -28824,7 +28827,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "8.16.2";
+        CALIBRE_VERSION = "9.0.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -31291,7 +31294,7 @@ return this.__repr__();
             if (length < 1) {
                 return "";
             }
-            pages = Math.ceil(length / 1e3);
+            pages = Math.ceil(length / 2520);
             pos = progress_frac * pages;
             return "" + ρσ_str.format("{:.1f}", pos) + " / " + ρσ_str.format("{}", pages) + "";
         };
@@ -33300,20 +33303,9 @@ return this.__repr__();
         });
 
         function create_page_list_overlay(book, overlay, container) {
-            var list_container, pl, text, page_list, items, x;
+            var list_container, pl, text, search_input, page_list, items, x;
             list_container = E.div();
             pl = overlay.view.current_pagelist_items;
-            if (pl && pl.length > 0) {
-                if (pl.length === 1) {
-                    text = _("Currently on page: {}").format(pl[0].pagenum);
-                } else {
-                    text = _("Currently on pages: {}").format(pl[0].pagenum + " - " + pl[1].pagenum);
-                }
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 1em"})])));
-            }
-            container.appendChild(list_container);
-            page_list = book.manifest.page_list || [];
-            items = [];
             function goto(x) {
                 overlay.view.goto_pagelist_item(x);
                 overlay.hide();
@@ -33323,9 +33315,63 @@ return this.__repr__();
                 __module__ : {value: "read_book.goto"}
             });
 
-            var ρσ_Iter1 = ρσ_Iterable(page_list);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                x = ρσ_Iter1[ρσ_Index1];
+            function goto_matching_page(text) {
+                var x, q;
+                var ρσ_Iter1 = ρσ_Iterable(page_list);
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    x = ρσ_Iter1[ρσ_Index1];
+                    if (x.pagenum === text) {
+                        goto(x);
+                        return;
+                    }
+                }
+                q = text.toLowerCase();
+                var ρσ_Iter2 = ρσ_Iterable(page_list);
+                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                    x = ρσ_Iter2[ρσ_Index2];
+                    if (x.pagenum.toLowerCase() === q) {
+                        goto(x);
+                        return;
+                    }
+                }
+                error_dialog(_("No such page"), _("No page {!r} exists").format(text));
+            };
+            if (!goto_matching_page.__argnames__) Object.defineProperties(goto_matching_page, {
+                __argnames__ : {value: ["text"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            if (pl && pl.length > 0) {
+                if (pl.length === 1) {
+                    text = _("Currently on page: {}").format(pl[0].pagenum);
+                } else {
+                    text = _("Currently on pages: {}").format(pl[0].pagenum + " - " + pl[1].pagenum);
+                }
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 1em"})])));
+            }
+            search_input = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", placeholder: _("Enter a page number"), onkeydown: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    var text;
+                    if (ev.key === "Enter") {
+                        text = ev.target.value;
+                        if (text) {
+                            goto_matching_page(text);
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })()})]))].concat([ρσ_desugar_kwargs({style: "margin: 1em"})]));
+            container.appendChild(search_input);
+            container.appendChild(list_container);
+            page_list = book.manifest.page_list || [];
+            items = [];
+            var ρσ_Iter3 = ρσ_Iterable(page_list);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                x = ρσ_Iter3[ρσ_Index3];
                 items.push(ρσ_interpolate_kwargs.call(this, create_item, [x.pagenum].concat([ρσ_desugar_kwargs({action: goto.bind(null, x)})])));
             }
             build_list(list_container, items);
@@ -33450,6 +33496,7 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]), E.span(" "), ρσ_interpolate_kwargs.call(this, create_button, [_("Go")].concat([ρσ_desugar_kwargs({action: goto_pos})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: baseline; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem;"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Note that using a position is not very robust, it is best to use either the location or reference.")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
             if (calibre_book_url) {
                 if (current_cfi) {
                     calibre_book_url += "?open_at=" + encode_query_component(current_cfi);
@@ -45486,7 +45533,7 @@ return this.__repr__();
         MainOverlay.__handles_kwarg_interpolation__ = MainOverlay.prototype.__init__.__handles_kwarg_interpolation__;
         MainOverlay.prototype.show = function show(container) {
             var self = this;
-            var icon_size, sd, sync_action, delete_action, reload_action, back_action, forward_action, nav_actions, reload_actions, bookmarks_action, highlights_action, toc_actions, actions_div, home_action, library_action, book_action, full_screen_actions, text, asa, no_selection_bar, copy_actions, renderer, c, b;
+            var icon_size, sd, sync_action, delete_action, reload_action, back_action, forward_action, nav_actions, reload_actions, editable_formats, fmt, bookmarks_action, highlights_action, toc_actions, actions_div, home_action, library_action, book_action, full_screen_actions, text, asa, no_selection_bar, copy_actions, renderer, c, b;
             self.container_id = container.getAttribute("id");
             icon_size = "3.5ex";
             sd = get_session_data();
@@ -45512,6 +45559,11 @@ return this.__repr__();
             nav_actions = E.ul(back_action, forward_action);
             if (runtime.is_standalone_viewer) {
                 reload_actions = E.ul(ac(_("Open book"), _("Open a book"), self.overlay.open_book, "book"), reload_action);
+                editable_formats = ["EPUB", "KEPUB", "AZW3"];
+                fmt = ρσ_exists.d(ρσ_exists.d(self.overlay.view).book).manifest.book_format || "";
+                if (ρσ_in(fmt.toUpperCase(), editable_formats)) {
+                    reload_actions.appendChild(ac(_("Edit book"), _("Edit this book"), self.overlay.view.edit_book, "edit"));
+                }
             } else {
                 reload_actions = E.ul(sync_action, delete_action, reload_action);
             }
@@ -50010,6 +50062,7 @@ return this.__repr__();
             this.handle_keypress = View.prototype.handle_keypress.bind(this);
             this.overlay_visibility_changed = View.prototype.overlay_visibility_changed.bind(this);
             this.on_handle_shortcut = View.prototype.on_handle_shortcut.bind(this);
+            this.edit_book = View.prototype.edit_book.bind(this);
             this.on_selection_change = View.prototype.on_selection_change.bind(this);
             this.new_bookmark = View.prototype.new_bookmark.bind(this);
             this.update_selection_position = View.prototype.update_selection_position.bind(this);
@@ -50725,7 +50778,7 @@ return this.__repr__();
             } else if (data.name === "metadata") {
                 self.overlay.show_metadata();
             } else if (data.name === "edit_book") {
-                ui_operations.edit_book(current_spine_item(), self.current_file_progress_frac, ρσ_exists.d(ρσ_exists.d(self.currently_showing).selection).text);
+                self.edit_book();
             } else if (data.name === "goto_location") {
                 self.overlay.show_ask_for_location();
             } else if (data.name === "select_all") {
@@ -50758,6 +50811,13 @@ return this.__repr__();
         };
         if (!View.prototype.on_handle_shortcut.__argnames__) Object.defineProperties(View.prototype.on_handle_shortcut, {
             __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.edit_book = function edit_book() {
+            var self = this;
+            ui_operations.edit_book(current_spine_item(), self.current_file_progress_frac, ρσ_exists.d(ρσ_exists.d(self.currently_showing).selection).text);
+        };
+        if (!View.prototype.edit_book.__module__) Object.defineProperties(View.prototype.edit_book, {
             __module__ : {value: "read_book.view"}
         });
         View.prototype.on_selection_change = function on_selection_change(data) {

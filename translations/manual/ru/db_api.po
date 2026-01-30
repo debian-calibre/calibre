@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 13:55+0000\n"
+"POT-Creation-Date: 2026-01-18 13:51+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: ashed <craysy@gmail.com>, 2020-2023,2025\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -270,6 +270,8 @@ msgstr "Вернуть данные об авторе в виде словаря
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
@@ -282,6 +284,11 @@ msgid ""
 "preferring the author sort associated with the author over the computed "
 "string."
 msgstr "Учитывая список авторов, вернуть строку author_sort для авторов, предпочитая сортировку по авторам, связанную с автором, а не вычисленную строку."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:1
+msgid "Return author sorts for specified authors."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -607,6 +614,14 @@ msgid ""
 msgstr "{field: {field_value, link_value}, ... для всех полей с field_value, имеющим непустое значение ссылки для этой книги"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_book_path:1
+msgid ""
+"Return the relative book path for the given id. Prefer this because you can "
+"choose the directory separator, default use the os one. If unsafe is True, "
+"allow to return None if the book_id is not in the library."
+msgstr "Вернуть относительный путь к книге для данного идентификатора. Предпочтительно, потому что вы можете выбрать разделитель каталогов, по умолчанию используется разделитель операционной системы. Если значение unsafe равно True, разрешите возвращать значение None, если book_id отсутствует в библиотеке."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
 msgid "Used internally to implement the Tag Browser"
 msgstr "Используется внутри для реализации браузера тегов"
@@ -708,6 +723,11 @@ msgid ""
 msgstr "Вернуть словарь, содержащий данные ресурса и имя или None, если ресурс с указанным хэшем не найден"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_pages:1
+msgid "Return page count information for the specified book"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -794,6 +814,11 @@ msgid ""
 msgstr "Кортеж всех дополнительных файлов, соответствующих указанному шаблону. Каждый элемент кортежа — это ExtraFile(relpath, file_path, stat_result). Где relpath — это относительный путь файла к каталогу книги с использованием / в качестве разделителя. stat_result — это результат вызова os.stat() для файла."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.mark_for_pages_recount:1
+msgid "Mark all books for recount of pages"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_annotations_for_book:1
 msgid ""
 "Merge the specified annotations into the existing annotations for book_id, "
@@ -849,11 +874,27 @@ msgid ""
 msgstr "Вернуть набор хэшей ресурсов всех ресурсов, используемых примечанием для указанного элемента"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.pages_needs_scan:1
+msgid ""
+"Return the subset of books (or all books if empty) that are marked as "
+"needing a scan to update page count"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
 msgstr "Вернуть значение для указанного предпочтения или значение, указанное как ``по умолчанию``, если предпочтение не установлено."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.queue_pages_scan:1
+msgid ""
+"Start a scan updating page counts for all books that need a scan. If book_id"
+" is specified, then only that book is scanned and it is always scanned. When"
+" `force` is True, the existing pages value, if any, is discarded so that the"
+" book is forcibly rescanned even if the existing value was up-to-date."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
@@ -1111,6 +1152,11 @@ msgid ""
 "updating a note automatically cleans up resources pertaining to that note "
 "anyway."
 msgstr "Установить документ с примечаниями. Если искомый текст отличается от документа, указать его как searchable_text. Если документ ссылается на ресурсы, их хэши должны присутствовать в resource_hashes. Установить remove_unused_resources в True, чтобы очистить неиспользуемые ресурсы, обратите внимание, что обновление примечания автоматически очищает ресурсы, относящиеся к этому примечанию."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_pages:1
+msgid "Set page count information for the specified book"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

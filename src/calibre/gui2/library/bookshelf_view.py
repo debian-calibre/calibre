@@ -1,0 +1,2610 @@
+#!/usr/bin/env python
+# License: GPLv3
+# Copyright: Andy C <achuongdev@gmail.com>, un_pogaz <un.pogaz@gmail.com>, Kovid Goyal <kovid@kovidgoyal.net>
+
+# Imports {{{
+import bisect
+import math
+import random
+import struct
+import weakref
+from collections.abc import Iterable, Iterator
+from contextlib import suppress
+from functools import lru_cache, partial
+from operator import attrgetter
+from queue import LifoQueue, ShutDown
+from threading import Event, RLock, Thread, current_thread
+from typing import NamedTuple
+
+from qt.core import (
+    QAbstractItemView,
+    QAbstractScrollArea,
+    QApplication,
+    QBrush,
+    QBuffer,
+    QColor,
+    QContextMenuEvent,
+    QEasingCurve,
+    QEvent,
+    QFont,
+    QFontDatabase,
+    QFontInfo,
+    QFontMetricsF,
+    QIcon,
+    QImage,
+    QItemSelection,
+    QItemSelectionModel,
+    QKeyEvent,
+    QKeySequence,
+    QLinearGradient,
+    QLocale,
+    QMenu,
+    QModelIndex,
+    QMouseEvent,
+    QObject,
+    QPainter,
+    QPainterPath,
+    QPaintEvent,
+    QPalette,
+    QParallelAnimationGroup,
+    QPen,
+    QPixmap,
+    QPixmapCache,
+    QPoint,
+    QPointF,
+    QPropertyAnimation,
+    QRect,
+    QRectF,
+    QResizeEvent,
+    QSize,
+    QSizeF,
+    QStyle,
+    Qt,
+    QTextLayout,
+    QTimer,
+    QWidget,
+    pyqtProperty,
+    pyqtSignal,
+)
+from xxhash import xxh3_64_intdigest
+
+from calibre import fit_image
+from calibre.db.cache import Cache
+from calibre.ebooks.metadata import authors_to_string, rating_to_stars
+from calibre.gui2 import config, gprefs, resolve_bookshelf_color
+from calibre.gui2.library.alternate_views import (
+    ClickStartData,
+    cached_emblem,
+    double_click_action,
+    handle_enter_press,
+    handle_selection_click,
+    handle_selection_drag,
+    render_emblem,
+    selection_for_rows,
+    setup_dnd_interface,
+)
+from calibre.gui2.library.caches import CoverThumbnailCache, Thumbnailer
+from calibre.gui2.library.models import BooksModel
+from calibre.gui2.momentum_scroll import MomentumScrollMixin
+from calibre.gui2.palette import dark_palette, light_palette
+from calibre.utils.formatter import TEMPLATE_ERROR
+from calibre.utils.icu import numeric_sort_key
+from calibre.utils.img import resize_to_fit
+from calibre.utils.iso8601 import UNDEFINED_DATE
+from calibre.utils.localization import lang_map
+from calibre_extensions.imageops import dominant_color
+from calibre_extensions.progress_indicator import contrast_ratio, utf16_slice
+
+# }}}
+
+
+# Utility functions {{{
+
+
+def random_from_id(book_id: int, limit: int = 21) -> int:
+    ' Return a pseudo random integer in [0, limit) that is fully determined by book_id '
+    return xxh3_64_intdigest(b'', seed=book_id) % limit
+
+
+def normalised_size(size_bytes: int) -> float:
+    '''Estimate page count from file size.'''
+    # Average ebook: ~1-2KB per page, so estimate pages from size
+    if size_bytes and size_bytes > 0:
+        # Estimate: ~1500 bytes per page (conservative)
+        estimated_pages = size_bytes // 1500
+        # Normalise the value
+        return min(estimated_pages / 2000, 1)
+    return 0.
+
+
+def render_spine_text_as_pixmap(
+    text: str, font: QFont, fm: QFontMetricsF, size: QSize, vertical_alignment: Qt.AlignmentFlag, downwards: bool,
+    outline_width: float, device_pixel_ratio: float, text_color: QColor, outline_color: QColor,
+) -> QPixmap:
+    ss = (QSizeF(size) * device_pixel_ratio).toSize()
+    key = f'{font.key()}{ss.width()}{ss.height()}{int(vertical_alignment)}{int(downwards)}{outline_width}{text_color.rgb()}{outline_color.rgb()}{text}'
+    if pmap := QPixmapCache.find(key):
+        return pmap
+    ans = QImage(ss.height(), ss.width(), QImage.Format_ARGB32_Premultiplied)
+    ans.fill(Qt.GlobalColor.transparent)
+    ans.setDevicePixelRatio(device_pixel_ratio)
+    with QPainter(ans) as painter:
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.TextAntialiasing)
+        painter.setFont(font)
+        sz = ans.deviceIndependentSize().transposed()
+        if downwards:
+            painter.translate(sz.height(), 0)
+            painter.rotate(90)
+        else:
+            painter.translate(0, sz.width())
+            painter.rotate(-90)
+        flags = vertical_alignment | Qt.AlignmentFlag.AlignHCenter | Qt.TextFlag.TextSingleLine
+        if outline_width > 0:
+            # Calculate text dimensions
+            br = painter.boundingRect(QRectF(0, 0, sz.width(), sz.height()), flags, text)
+            text_width = br.width()
+            ascent, descent = fm.ascent(), fm.descent()
+            # Calculate horizontal position for centering
+            x = (sz.width() - text_width) / 2
+            # Calculate vertical position based on alignment
+            if vertical_alignment & Qt.AlignmentFlag.AlignTop:
+                y = ascent
+            elif vertical_alignment & Qt.AlignmentFlag.AlignBottom:
+                y = sz.height() - descent
+            else:  # Default to center
+                y = sz.height() / 2 + (ascent - descent) / 2
+
+            # Create path for outlined text
+            path = QPainterPath()
+            path.setFillRule(Qt.FillRule.WindingFill)
+            path.addText(x, y, font, text)
+            # Draw text with outline
+            # Path stroke are draw with the given width,
+            # but we want the width as outline in addition around to the text, so double it.
+            painter.strokePath(path, QPen(outline_color, outline_width * 2,
+                        Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap, Qt.PenJoinStyle.RoundJoin))
+            painter.fillPath(path, text_color)
+        else:
+            painter.setPen(text_color)
+            painter.drawText(QRectF(QPointF(0, 0), sz), flags, text)
+    pmap = QPixmap.fromImage(ans)
+    QPixmapCache.insert(key, pmap)
+    return pmap
+# }}}
+
+
+# Cover functions {{{
+
+class WoodTheme(NamedTuple):
+    background: QColor
+    # Main wood body gradient colors (top to bottom)
+    wood_top: QColor
+    wood_mid_light: QColor
+    wood_mid_dark: QColor
+    wood_bottom: QColor
+
+    # Wood grain color
+    grain_color: QColor
+    grain_alpha_range: tuple[int, int]
+
+    # Knot colors
+    knot_color: QColor
+
+    # Highlight and shadow
+    highlight_color: QColor
+    shadow_color: QColor
+
+    # Edge colors
+    edge_color: QColor
+    end_grain_dark: QColor
+    end_grain_light: QColor
+
+    # Bevel colors
+    bevel_light: QColor
+    bevel_dark: QColor
+
+    # Bookcase colors
+    back_panel_base: QColor
+    back_panel_dark: QColor
+    side_panel_base: QColor
+    side_panel_dark: QColor
+    inner_shadow_color: QColor
+    cavity_color: QColor
+
+    @classmethod
+    def light_theme(cls) -> WoodTheme:
+        # Light oak/pine colors for light mode
+        return WoodTheme(
+            background=QColor(245, 245, 245),
+
+            wood_top=QColor(210, 170, 125),
+            wood_mid_light=QColor(190, 150, 105),
+            wood_mid_dark=QColor(170, 130, 90),
+            wood_bottom=QColor(150, 115, 75),
+
+            grain_color=QColor(120, 80, 50),
+            grain_alpha_range=(15, 40),
+
+            knot_color=QColor(100, 65, 40, 50),
+
+            highlight_color=QColor(255, 255, 255, 80),
+            shadow_color=QColor(0, 0, 0, 30),
+
+            edge_color=QColor(120, 85, 55),
+            end_grain_dark=QColor(130, 95, 65),
+            end_grain_light=QColor(170, 130, 95),
+
+            bevel_light=QColor(230, 195, 160, 100),
+            bevel_dark=QColor(100, 70, 45, 80),
+
+            back_panel_base=QColor(160, 120, 80),
+            back_panel_dark=QColor(130, 95, 60),
+            side_panel_base=QColor(175, 135, 95),
+            side_panel_dark=QColor(145, 105, 70),
+            inner_shadow_color=QColor(60, 40, 25, 20),
+            cavity_color=QColor(90, 60, 40),
+        )
+
+    @classmethod
+    def dark_theme(cls) -> WoodTheme:
+        # Dark walnut/mahogany colors for dark mode
+        return WoodTheme(
+            background=QColor(30, 30, 35),
+
+            wood_top=QColor(85, 55, 40),
+            wood_mid_light=QColor(70, 45, 32),
+            wood_mid_dark=QColor(55, 35, 25),
+            wood_bottom=QColor(42, 28, 20),
+
+            grain_color=QColor(30, 18, 12),
+            grain_alpha_range=(20, 50),
+
+            knot_color=QColor(25, 15, 10, 60),
+
+            highlight_color=QColor(255, 220, 180, 35),
+            shadow_color=QColor(0, 0, 0, 50),
+
+            edge_color=QColor(35, 22, 15),
+            end_grain_dark=QColor(30, 20, 14),
+            end_grain_light=QColor(65, 42, 30),
+
+            bevel_light=QColor(120, 85, 60, 70),
+            bevel_dark=QColor(20, 12, 8, 90),
+
+            back_panel_base=QColor(45, 30, 22),
+            back_panel_dark=QColor(30, 20, 14),
+            side_panel_base=QColor(55, 38, 28),
+            side_panel_dark=QColor(38, 25, 18),
+            inner_shadow_color=QColor(0, 0, 0, 30),
+            cavity_color=QColor(20, 14, 10),
+        )
+
+
+class ColorTheme(NamedTuple):
+    text_color_for_dark_background: QColor
+    text_color_for_light_background: QColor
+    outline_color_for_dark_background: QColor
+    outline_color_for_light_background: QColor
+
+    # Divider colors
+    divider_text_color: QColor
+    divider_line_color: QColor
+    divider_background_color: QColor
+
+    # Selection highlight colors
+    current_selected_color: QColor
+    current_color: QColor
+    selected_color: QColor
+
+    @classmethod
+    def _from_palette(cls, palette: QPalette) -> dict[str, QColor]:
+        return ColorTheme(
+            text_color_for_dark_background=dark_palette().color(QPalette.ColorRole.WindowText),
+            text_color_for_light_background=light_palette().color(QPalette.ColorRole.WindowText),
+            outline_color_for_dark_background=QColor(0, 0, 0),
+            outline_color_for_light_background=QColor(255, 255, 255),
+            divider_text_color=palette.color(QPalette.ColorRole.WindowText),
+            current_selected_color=palette.color(QPalette.ColorRole.LinkVisited),
+            current_color=palette.color(QPalette.ColorRole.Mid),
+            selected_color=palette.color(QPalette.ColorRole.Highlight),
+            divider_background_color=QColor(),
+            divider_line_color=QColor(),
+        )
+
+    @classmethod
+    def light_theme(cls) -> ColorTheme:
+        rslt = ColorTheme._from_palette(light_palette())
+        return rslt._replace(
+            divider_background_color=QColor(250, 250, 250),
+            divider_line_color=QColor(74, 74, 106),
+        )
+
+    @classmethod
+    def dark_theme(cls) -> ColorTheme:
+        rslt = ColorTheme._from_palette(dark_palette())
+        return rslt._replace(
+            divider_background_color=QColor(100, 100, 100),
+            divider_line_color=QColor(180, 180, 182),
+        )
+
+
+def is_dark_theme(value=None):
+    from calibre.gui2 import is_dark_theme
+    if value is None:
+        value = gprefs['bookshelf_theme_override']
+    if value == 'none':
+        return is_dark_theme()
+    return value == 'dark'
+
+
+def color_with_alpha(c: QColor, a: int) -> QColor:
+    ans = QColor(c)
+    ans.setAlpha(a)
+    return ans
+
+
+class RenderCase:
+
+    dark_theme: WoodTheme
+    light_theme: WoodTheme
+    theme: WoodTheme
+
+    def __init__(self):
+        self.last_rendered_shelf_at = QRect(0, 0, 0, 0), False
+        self.last_rendered_background_at = QRect(0, 0, 0, 0), False, False, {}
+        self.last_rendered_divider_at = QRect(0, 0, 0, 0), False, 0, QColor()
+        self.last_rendered_background = QPixmap()
+        self.last_rendered_divider = QPixmap()
+        self.shelf_cache: dict[int, QPixmap] = {}
+        self.back_panel_grain = tuple(self.generate_grain_lines(count=80, seed=42))
+
+    def generate_grain_lines(self, seed: int = 42, count: int = 60) -> Iterator[tuple[float, float, float, float, float]]:
+        r = random.Random(seed)
+        for i in range(count):
+            y_offset = r.uniform(-0.3, 0.3)
+            thickness = r.uniform(0.5, 2.0)
+            alpha = r.uniform(0, 1)
+            wave_amplitude = r.uniform(0, 2)
+            wave_frequency = r.uniform(0.01, 0.03)
+            yield y_offset, thickness, alpha, wave_amplitude, wave_frequency
+
+    def ensure_theme(self, is_dark: bool) -> None:
+        attr = 'dark_theme' if is_dark else 'light_theme'
+        if not hasattr(self, attr):
+            setattr(self, attr, WoodTheme.dark_theme() if is_dark else WoodTheme.light_theme())
+        self.theme = self.dark_theme if is_dark else self.light_theme
+
+    def background_as_pixmap(self, width: int, height: int) -> QPixmap:
+        rect = QRect(0, 0, width, height)
+        is_dark = is_dark_theme()
+        q = rect, is_dark, gprefs['bookshelf_use_custom_background'], gprefs['bookshelf_custom_background']
+        if self.last_rendered_background_at == q:
+            return self.last_rendered_background
+        self.last_rendered_background_at = q
+        self.ensure_theme(is_dark)
+        ans = QImage(width, height, QImage.Format_ARGB32_Premultiplied)
+        with QPainter(ans) as painter:
+            painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+            if gprefs['bookshelf_use_custom_background']:
+                self.draw_custom_background(painter, rect)
+            else:
+                self.draw_back_panel(painter, rect)
+                # Add vertical grain for back panel (typical plywood back)
+                self.draw_back_panel_grain(painter, rect)
+            self.draw_cavity_shadows(painter, rect)
+        self.last_rendered_background = QPixmap.fromImage(ans)
+        return self.last_rendered_background
+
+    def draw_custom_background(self, painter: QPainter, interior_rect: QRect) -> None:
+        r, g, b = resolve_bookshelf_color(for_dark=is_dark_theme())
+        if tex := resolve_bookshelf_color(for_dark=is_dark_theme(), which='texture'):
+            from calibre.gui2.preferences.texture_chooser import texture_path
+            if path := texture_path(tex):
+                texture = QPixmap()
+                if texture.load(path):
+                    painter.fillRect(interior_rect, QBrush(texture))
+                    return
+        painter.fillRect(interior_rect, QBrush(QColor(r, g, b)))
+
+    def draw_back_panel(self, painter: QPainter, interior_rect: QRect) -> None:
+        # Base gradient for back panel (slightly recessed look)
+        back_gradient = QLinearGradient(interior_rect.left(), 0, interior_rect.right(), 0)
+        back_gradient.setColorAt(0.0, self.theme.back_panel_dark)
+        back_gradient.setColorAt(0.15, self.theme.back_panel_base)
+        back_gradient.setColorAt(0.85, self.theme.back_panel_base)
+        back_gradient.setColorAt(1.0, self.theme.back_panel_dark)
+        painter.fillRect(interior_rect, back_gradient)
+
+    def draw_back_panel_grain(self, painter: QPainter, rect: QRect) -> None:
+        painter.save()
+        painter.setClipRect(rect)
+
+        r = random.Random(555)
+        min_alpha, max_alpha = self.theme.grain_alpha_range
+
+        # Vertical grain lines
+        for i in range(50):
+            x = rect.left() + r.randint(0, rect.width())
+            alpha = r.randint(min_alpha // 2, max_alpha // 2)
+
+            grain_color = color_with_alpha(self.theme.grain_color, alpha)
+            pen = QPen(grain_color)
+            pen.setWidthF(r.uniform(0.5, 1.5))
+            painter.setPen(pen)
+
+            # Slightly wavy vertical line
+            y1 = rect.top()
+            y2 = rect.bottom()
+            wave = r.uniform(-3, 3)
+            painter.drawLine(int(x), y1, int(x + wave), y2)
+
+        painter.restore()
+
+    def draw_cavity_shadows(self, painter: QPainter, cavity_rect: QRect) -> None:
+        side_shadow_width = 20
+        # Left side shadow
+        left_shadow_gradient = QLinearGradient(cavity_rect.left(), 0, cavity_rect.left() + side_shadow_width, 0)
+        left_shadow_gradient.setColorAt(0.0, self.theme.inner_shadow_color)
+        left_shadow_gradient.setColorAt(1.0, color_with_alpha(self.theme.inner_shadow_color, 0))
+        painter.fillRect(cavity_rect.x(), cavity_rect.y(), side_shadow_width, cavity_rect.height(), left_shadow_gradient)
+        # Right side shadow
+        right_shadow_gradient = QLinearGradient(cavity_rect. right() - side_shadow_width, 0, cavity_rect.right(), 0)
+        right_shadow_gradient.setColorAt(0.0, color_with_alpha(self.theme.inner_shadow_color, 0))
+        right_shadow_gradient.setColorAt(1.0, self.theme.inner_shadow_color)
+        painter.fillRect(
+            cavity_rect.right() - side_shadow_width, cavity_rect.y(), side_shadow_width, cavity_rect.height(), right_shadow_gradient)
+
+    def shelf_as_pixmap(self, width: int, height: int, instance: int) -> QPixmap:
+        rect = QRect(0, 0, width, height)
+        is_dark = is_dark_theme()
+        q = rect, is_dark
+        if self.last_rendered_shelf_at != q:
+            self.shelf_cache.clear()
+        self.last_rendered_shelf_at = q
+        if ans := self.shelf_cache.get(instance):
+            return ans
+        self.ensure_theme(is_dark)
+        ans = QImage(width, height, QImage.Format_ARGB32_Premultiplied)
+        with QPainter(ans) as painter:
+            painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+            self.draw_shelf_body(painter, rect)
+            self.draw_wood_grain(painter, rect, tuple(self.generate_grain_lines(102 + instance)))
+            self.draw_knots(painter, rect, seed=123 + instance)
+            self.draw_top_highlight(painter, rect)
+            self.draw_bottom_edge(painter, rect)
+            self.draw_front_bevel(painter, rect)
+            self.draw_edges(painter, rect)
+        self.shelf_cache[instance] = p = QPixmap.fromImage(ans)
+        return p
+
+    def draw_shelf_body(self, painter, rect):
+        # Base wood gradient
+        wood_gradient = QLinearGradient(0, rect.top(), 0, rect.bottom())
+        wood_gradient.setColorAt(0.0, self.theme.wood_top)         # Lighter top
+        wood_gradient.setColorAt(0.3, self.theme.wood_mid_light)   # Mid tone
+        wood_gradient.setColorAt(0.7, self.theme.wood_mid_dark)    # Darker
+        wood_gradient.setColorAt(1.0, self.theme.wood_bottom)      # Darkest bottom
+
+        painter.fillRect(rect, wood_gradient)
+
+    def draw_wood_grain(self, painter, rect, grain_lines, alpha_multiplier: float = 1.0):
+        painter.save()
+        painter.setClipRect(rect)
+
+        spacing = rect.height() / len(grain_lines)
+        min_alpha, max_alpha = self.theme.grain_alpha_range
+        for i, (y_offset, thickness, alpha_factor, wave_amp, wave_freq) in enumerate(grain_lines):
+            alpha = int((min_alpha + alpha_factor * (max_alpha - min_alpha)) * alpha_multiplier)
+            # Vary the grain color
+            grain_color = QColor(self.theme.grain_color)
+            grain_color.setAlpha(alpha)
+            pen = QPen(grain_color)
+            pen.setWidthF(thickness)
+            painter. setPen(pen)
+
+            # Calculate y position with offset
+            base_y = rect. top() + i * spacing + y_offset * spacing
+
+            # Draw wavy grain line
+            points = []
+            for x in range(rect. left(), rect.right(), 5):
+                import math
+                wave = wave_amp * math. sin(x * wave_freq + i)
+                points.append((x, base_y + wave))
+
+            for j in range(len(points) - 1):
+                painter.drawLine(
+                    int(points[j][0]), int(points[j][1]),
+                    int(points[j + 1][0]), int(points[j + 1][1])
+                )
+        painter.restore()
+
+    def draw_knots(self, painter: QPainter, rect: QRect, count: int = 3, seed: int = 123):
+        painter.save()
+        painter.setClipRect(rect)
+        r = random.Random(seed)
+        for _ in range(count):
+            knot_x = r.randint(rect.left() + 20, rect.right() - 20)
+            knot_y = r.randint(rect.top() + 5, rect.bottom() - 5)
+            knot_size = r.randint(3, 6)
+
+            knot_gradient = QLinearGradient(knot_x - knot_size, knot_y, knot_x + knot_size, knot_y)
+            knot_color_transparent = color_with_alpha(self.theme.knot_color, 0)
+            knot_gradient.setColorAt(0.0, knot_color_transparent)
+            knot_gradient.setColorAt(0.5, self.theme.knot_color)
+            knot_gradient.setColorAt(1.0, knot_color_transparent)
+
+            painter.setBrush(QBrush(knot_gradient))
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.drawEllipse(knot_x - knot_size, knot_y - knot_size // 2, knot_size * 2, knot_size)
+        painter.restore()
+
+    def draw_top_highlight(self, painter, rect):
+        highlight_gradient = QLinearGradient(0, rect.top(), 0, rect.top() + 8)
+        highlight_gradient.setColorAt(0.0, self.theme.highlight_color)
+        highlight_gradient.setColorAt(0.5, color_with_alpha(self.theme.highlight_color, self.theme.highlight_color.alpha() // 3))
+        highlight_gradient.setColorAt(1.0, color_with_alpha(self.theme.highlight_color, 0))
+        highlight_rect = QRect(rect.x(), rect.y(), rect.width(), 8)
+        painter.fillRect(highlight_rect, highlight_gradient)
+
+    def draw_bottom_edge(self, painter, rect):
+        shadow_gradient = QLinearGradient(0, rect.bottom() - 6, 0, rect.bottom())
+        shadow_gradient.setColorAt(0.0, color_with_alpha(self.theme.shadow_color, 0))
+        shadow_gradient.setColorAt(0.7, self.theme.shadow_color)
+        shadow_gradient.setColorAt(1.0, color_with_alpha(self.theme.shadow_color, self.theme.shadow_color.alpha() * 2))
+        shadow_rect = QRect(rect.x(), rect.bottom() - 6, rect. width(), 6)
+        painter.fillRect(shadow_rect, shadow_gradient)
+
+    def draw_front_bevel(self, painter, rect):
+        # Top chamfer line
+        chamfer_pen = QPen(self.theme.bevel_light)
+        chamfer_pen.setWidth(1)
+        painter.setPen(chamfer_pen)
+        painter.drawLine(rect.left(), rect.top() + 2, rect.right(), rect.top() + 2)
+
+        # Bottom chamfer (darker)
+        chamfer_pen. setColor(self.theme.bevel_dark)
+        painter.setPen(chamfer_pen)
+        painter.drawLine(rect.left(), rect.bottom() - 2, rect. right(), rect.bottom() - 2)
+
+    def draw_edges(self, painter, rect):
+        # Darker edge outline
+        edge_pen = QPen(self.theme.edge_color)
+        edge_pen.setWidth(1)
+        painter.setPen(edge_pen)
+        painter.setBrush(Qt. BrushStyle. NoBrush)
+        painter.drawRect(rect)
+
+        # Left end grain (slightly different tone)
+        end_grain_width = 4
+        left_end = QRect(rect.x(), rect.y(), end_grain_width, rect.height())
+        end_gradient = QLinearGradient(left_end.left(), 0, left_end.right(), 0)
+        end_gradient.setColorAt(0.0, self.theme.end_grain_dark)
+        end_gradient.setColorAt(1.0, color_with_alpha(self.theme.end_grain_light, 0))
+        painter.fillRect(left_end, end_gradient)
+
+        # Right end grain
+        right_end = QRect(rect. right() - end_grain_width, rect.y(), end_grain_width, rect.height())
+        end_gradient = QLinearGradient(right_end.left(), 0, right_end.right(), 0)
+        end_gradient.setColorAt(0.0, color_with_alpha(self.theme.end_grain_light, 0))
+        end_gradient.setColorAt(1.0, self.theme.end_grain_dark)
+        painter.fillRect(right_end, end_gradient)
+
+    def divider_as_pixmap(self, width: int, height: int, divider_color: QColor, corner_radius: int = 0, offset: int = 0) -> QPixmap:
+        rect = QRect(0, 0, width, height + offset)
+        is_dark = is_dark_theme()
+        q = rect, is_dark, corner_radius, divider_color
+        if self.last_rendered_divider_at == q:
+            return self.last_rendered_divider
+        self.last_rendered_divider_at = q
+        ans = QImage(width, height + offset, QImage.Format_ARGB32_Premultiplied)
+        ans.fill(Qt.GlobalColor.transparent)
+        with QPainter(ans) as painter:
+            painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+            path = QPainterPath()
+            path.addRoundedRect(
+                QRectF(0, 0, width, height + offset + corner_radius), corner_radius, corner_radius,
+            )
+            painter.fillPath(path, divider_color)
+        self.last_rendered_divider = p = QPixmap.fromImage(ans)
+        return p
+
+
+class ImageWithDominantColor(QImage):
+
+    _dominant_color: QColor | None = None
+    DEFAULT_DOMINANT_COLOR = QColor('#8B4513')
+
+    @property
+    def dominant_color(self) -> QColor:
+        if self._dominant_color is not None:
+            return self._dominant_color
+        ans = self.DEFAULT_DOMINANT_COLOR if self.isNull() else dominant_color(self)
+        if not ans.isValid():
+            ans = self.DEFAULT_DOMINANT_COLOR
+        self._dominant_color = ans
+        return ans
+
+
+class PixmapWithDominantColor(QPixmap):
+    dominant_color: QColor = QColor()
+
+    @staticmethod
+    def fromImage(img: QImage) -> PixmapWithDominantColor:
+        ans = PixmapWithDominantColor(QPixmap.fromImage(img))
+        if not hasattr(img, 'dominant_color'):
+            img = ImageWithDominantColor(img)
+        ans.dominant_color = img.dominant_color
+        return ans
+
+
+@lru_cache(maxsize=2)
+def default_cover_pixmap(width: int, height: int) -> PixmapWithDominantColor:
+    i = QImage(I('default_cover.png'))
+    _, i = resize_to_fit(i, width, height)
+    return PixmapWithDominantColor.fromImage(ImageWithDominantColor(i))
+
+
+class ThumbnailerWithDominantColor(Thumbnailer):
+    thumbnail_class: type[QImage] = ImageWithDominantColor
+    pixmap_class: type[QPixmap] = PixmapWithDominantColor
+
+    def resize_to_fit(self, cover: QImage, width: int, height: int) -> ImageWithDominantColor:
+        ans = super().resize_to_fit(cover, width, height)
+        if not isinstance(ans, ImageWithDominantColor):
+            ans = ImageWithDominantColor(ans)
+        return ans
+
+    def serialize_img(self, x: ImageWithDominantColor, buf: QBuffer) -> bool:
+        buf.write(struct.pack('@fff', x.dominant_color.redF(), x.dominant_color.greenF(), x.dominant_color.blueF()))
+        return super().serialize_img(x, buf)
+
+    def unserialize_img(self, buf: memoryview) -> ImageWithDominantColor:
+        try:
+            r, g, b = struct.unpack_from('@fff', buf)
+        except Exception:
+            r = g = b = 0
+        dc = QColor()
+        dc.setRedF(r), dc.setGreenF(g), dc.setBlueF(b)
+        qimg = super().unserialize_img(buf[struct.calcsize('@fff'):])
+        ans = ImageWithDominantColor(qimg)
+        ans._dominant_color = dc
+        return ans
+
+
+def draw_pixmap_with_shadow(
+    pixmap: QPixmap, opacity: float = 1.0, has_shadow: bool = True,
+    shadow_color: QColor = QColor(0, 0, 0, 100), fill_color: QColor = QColor(Qt.GlobalColor.transparent),
+) -> tuple[QPixmap, int]:
+    ''' Draw a QPixmap with a nice drop shadow effect. '''
+    # Create a larger image to accommodate the shadow
+    shadow_blur = 10 if has_shadow else 0
+    margin = shadow_blur * 2
+    total_width, total_height = pixmap.width(), pixmap.height()
+    if margin > 0:
+        shadow_offset_x = shadow_offset_y = shadow_blur // 2
+        total_width += margin * 2 + abs(shadow_offset_x)
+        total_height += margin * 2 + abs(shadow_offset_y)
+
+    # Create shadow image
+    shadow_image = QImage(total_width, total_height, QImage.Format_ARGB32_Premultiplied)
+    shadow_image.fill(Qt.GlobalColor.transparent)
+
+    with QPainter(shadow_image) as shadow_painter:
+        shadow_painter.setRenderHint(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.SmoothPixmapTransform)
+        shadow_painter.setPen(Qt.PenStyle.NoPen)
+
+        if margin:
+            # Draw the shadow shape (rounded rect or simple rect based on preference)
+            shadow_rect = QRectF(
+                margin + shadow_offset_x,
+                margin + shadow_offset_y,
+                pixmap.width(),
+                pixmap.height()
+            )
+
+            # Draw multiple layers with decreasing opacity for blur effect
+            for i in range(shadow_blur, 0, -1):
+                alpha = int(shadow_color.alpha() * (1 - i / shadow_blur) * 0.5)
+                blur_color = QColor(shadow_color.red(), shadow_color.green(),
+                                shadow_color.blue(), alpha)
+                shadow_painter.setBrush(blur_color)
+
+                blur_rect = shadow_rect.adjusted(-i, -i, i, i)
+                shadow_painter.drawRoundedRect(blur_rect, 3, 3)
+
+        shadow_painter.fillRect(QRect(margin, margin, pixmap.width(), pixmap.height()), fill_color)
+        shadow_painter.setOpacity(opacity)
+        shadow_painter.drawPixmap(margin, margin, pixmap)
+    return QPixmap.fromImage(shadow_image), margin
+
+
+class CachedCoverRenderer:
+
+    def __init__(self, p: PixmapWithDominantColor) -> None:
+        self.pixmap = p
+        self.last_rendered_size = QSize()
+        self.last_rendered_opacity = -1
+        self.last_rendered_pixmap = QPixmap()
+        self.last_rendered_margin = 0
+    set_pixmap = __init__
+
+    def as_pixmap(self, size: QSize, opacity: float, parent: QWidget) -> tuple[QPixmap, int]:
+        if size == self.last_rendered_size and opacity == self.last_rendered_opacity:
+            return self.last_rendered_pixmap, self.last_rendered_margin
+        dpr = parent.devicePixelRatioF()
+        ss = (QSizeF(size) * dpr).toSize()
+        pmap = self.pixmap.scaled(ss, transformMode=Qt.TransformationMode.SmoothTransformation)
+        self.last_rendered_pixmap, self.last_rendered_margin = draw_pixmap_with_shadow(
+                pmap, has_shadow=gprefs['bookshelf_shadow'], fill_color=self.pixmap.dominant_color, opacity=opacity)
+        self.last_rendered_pixmap.setDevicePixelRatio(dpr)
+        self.last_rendered_margin = int(self.last_rendered_margin / dpr)
+        self.last_rendered_opacity = opacity
+        self.last_rendered_size = size
+        return self.last_rendered_pixmap, self.last_rendered_margin
+# }}}
+
+
+# Layout {{{
+@lru_cache(maxsize=2)
+def all_groupings() -> dict[str, str]:
+    return {
+        'authors': '',
+        'series': _('No series'),
+        'tags': _('Untagged'),
+        'publisher': _('No publisher'),
+        'pubdate': _('Unpublished'),
+        'timestamp': _('Unknown'),
+        'rating': _('Unrated'),
+        'languages': _('No language'),
+    }
+
+
+class LayoutConstraints(NamedTuple):
+    min_spine_width: int = 15
+    max_spine_width: int = 80
+    default_spine_width: int = 40
+    hover_expanded_width: int = 160
+
+    spine_height: int = 200
+    shelf_height: int = 20
+    shelf_gap: int = 20
+
+    divider_width: int = 30
+    horizontal_gap: int = 2
+    width: int = 0
+    side_margin: int = 4
+
+    @property
+    def step_height(self) -> int:
+        return self.spine_height + self.shelf_height
+
+
+def height_reduction_for_book_id(book_id: int) -> int:
+    return random_from_id(book_id) if gprefs['bookshelf_variable_height'] else 0
+
+
+class ShelfItem(NamedTuple):
+    start_x: int
+    case_start_y: int
+    width: int
+    idx: int
+    case_idx: int
+    reduce_height_by: int = 0
+    book_id: int = 0
+    group_name: str = ''
+    is_hover_expanded: bool = False
+
+    @property
+    def is_divider(self) -> bool:
+        return self.book_id == 0
+
+    def rect(self, lc: LayoutConstraints) -> QRect:
+        return QRect(
+            self.start_x + lc.side_margin,
+            self.case_start_y + self.reduce_height_by + lc.shelf_gap,
+            self.width,
+            lc.spine_height - self.reduce_height_by - lc.shelf_gap
+        )
+
+    def contains(self, x: int, gap: int = 0) -> bool:
+        return self.start_x <= x < self.start_x + self.width + gap
+
+    def overlap_length(self, X: ShelfItem) -> int:
+        xs, xl = X.start_x, X.width
+        ys, yl = self.start_x, self.width
+        xe = xs + xl
+        ye = ys + yl
+        return max(0, min(xe, ye) - max(xs, ys))
+
+
+class CaseItem:
+    start_y: int = 0
+    width: int = 0
+    height: int = 0
+    idx: int = 0
+    items: list[ShelfItem] | None = None
+    expanded_item: ShelfItem | None = None
+
+    def __init__(self, y: int = 0, height: int = 0, is_shelf: bool = False, idx: int = 0):
+        self.start_y = y
+        self.height = height
+        self.idx = idx
+        if not is_shelf:
+            self.items = []
+
+    def book_or_divider_at_xpos(self, x: int, lc: LayoutConstraints) -> ShelfItem | None:
+        if self.items:
+            idx = bisect.bisect_right(self.items, x, key=attrgetter('start_x'))
+            if idx > 0:
+                candidate = self.items[idx-1]
+                if candidate.contains(x, lc.horizontal_gap):
+                    if candidate.is_hover_expanded:
+                        return candidate
+                    if candidate.idx and (prev := self.items[candidate.idx-1]).is_hover_expanded and prev.contains(x):
+                        return prev
+                    if idx < len(self.items) and (n := self.items[idx]).is_hover_expanded and n.contains(x):
+                        return n
+                    return candidate
+        return None
+
+    def book_or_divider_at_region(self, region: ShelfItem, lc: LayoutConstraints) -> ShelfItem | None:
+        if self.items:
+            idx = bisect.bisect_right(self.items, region.start_x, key=attrgetter('start_x'))
+            if idx > 0:
+                candidate = self.items[idx-1]
+                if candidate.contains(region.start_x, lc.horizontal_gap):
+                    if idx < len(self.items):
+                        nc = self.items[idx]
+                        a, b = region.overlap_length(candidate), region.overlap_length(nc)
+                        return candidate if a >= b else nc
+                    return candidate
+        return None
+
+    def closest_book_to(self, idx: int) -> ShelfItem | None:
+        q = self.items[idx]
+        if not q.is_divider:
+            return q
+        for delta in range(1, len(self.items)):
+            for i in (idx + delta, idx - delta):
+                if 0 <= i < len(self.items) and not (ans := self.items[i]).is_divider:
+                    return ans
+        return None
+
+    def _get_x_for_item(self, width: int, lc: LayoutConstraints) -> int | None:
+        x = (self.width + lc.horizontal_gap) if self.width else 0
+        if x + width + lc.horizontal_gap > lc.width:
+            return None
+        return x
+
+    def add_group_divider(self, group_name: str, lc: LayoutConstraints) -> bool:
+        if not group_name:
+            return True
+        if (x := self._get_x_for_item(lc.divider_width, lc)) is None:
+            return False
+        s = ShelfItem(start_x=x, group_name=group_name, width=lc.divider_width, case_start_y=self.start_y,
+                      idx=len(self.items), case_idx=self.idx)
+        self.items.append(s)
+        self.width = s.start_x + s.width
+        return True
+
+    def add_book(self, book_id: int, width: int, group_name: str, lc: LayoutConstraints) -> bool:
+        if (x := self._get_x_for_item(width, lc)) is None:
+            return False
+        s = ShelfItem(
+            start_x=x, book_id=book_id, reduce_height_by=height_reduction_for_book_id(book_id),
+            width=width, group_name=group_name, case_start_y=self.start_y, idx=len(self.items), case_idx=self.idx)
+        self.items.append(s)
+        self.width = s.start_x + s.width
+        return True
+
+    @property
+    def is_shelf(self) -> bool:
+        return self.items is None
+
+    def shift_for_expanded_cover(self, shelf_item: ShelfItem, lc: LayoutConstraints, width: int) -> CaseItem:
+        if (extra := width - shelf_item.width) <= 0:
+            return self
+        ans = CaseItem(y=self.start_y, height=self.height, idx=self.idx)
+        space_at_right_edge = max(0, lc.width - self.width)
+        left_shift = 0
+        right_shift = min(space_at_right_edge, extra)
+        extra -= right_shift
+        if extra > 0:
+            shift_left = shelf_item.idx > 2
+            shift_right = shelf_item.idx < len(self.items) - 3
+            if shift_left:
+                if shift_right:
+                    left_shift += extra // 2
+                    right_shift += extra - left_shift
+                else:
+                    left_shift += extra
+            else:
+                right_shift += extra
+        if gprefs['bookshelf_hover'] == 'shift':
+            for i, item in enumerate(self.items):
+                if i < shelf_item.idx:
+                    if left_shift:
+                        item = item._replace(start_x=item.start_x - left_shift)
+                elif i == shelf_item.idx:
+                    item = ans.expanded_item = item._replace(start_x=item.start_x - left_shift, width=width, is_hover_expanded=True)
+                elif right_shift:
+                    item = item._replace(start_x=item.start_x + right_shift)
+                ans.items.append(item)
+                ans.width = item.start_x + item.width
+        else:
+            ans.items = self.items[:]
+            item = ans.items[shelf_item.idx]
+            ans.items[shelf_item.idx] = ans.expanded_item = item._replace(start_x=item.start_x - left_shift, width=width, is_hover_expanded=True)
+        return ans
+
+
+def get_grouped_iterator(db: Cache, book_ids_iter: Iterable[int], field_name: str = '') -> Iterator[tuple[str, Iterable[int]]]:
+    formatter = lambda x: x  # noqa: E731
+    fm = db.field_metadata
+    sort_key = numeric_sort_key
+    get_books_in_group = lambda group: db.books_for_field(field_name, group)  # noqa: E731
+    get_field_id_map = lambda: db.get_id_map(field_name)  # noqa: E731
+    sort_map = {book_id: i for i, book_id in enumerate(book_ids_iter)}
+    all_book_ids = frozenset(sort_map)
+    ungrouped_name = all_groupings().get(field_name, _('Unknown'))
+    dt = fm.get(field_name, {}).get('datatype')
+
+    match field_name:
+        case '':
+            yield '', 0
+            yield '', book_ids_iter
+            return
+        case 'authors':
+            field_id_map = db.get_id_map('authors')
+            author_sort_map = db.author_sorts()
+            def gas(aid: int, au: str) -> str:
+                try:
+                    return author_sort_map[aid]
+                except KeyError:
+                    return au
+            sort_key = {au: gas(aid, au) for aid, au in field_id_map.items()}.__getitem__
+            get_field_id_map = lambda: field_id_map  # noqa: E731
+            del gas
+        case 'languages':
+            lm = lang_map()
+            formatter = lambda x: lm.get(x, x)  # noqa: E731
+            sort_key = lambda x: numeric_sort_key(formatter(x))  # noqa: E731
+        case field_name if dt == 'rating':
+            formatter = rating_to_stars
+            sort_key = lambda x: -x  # noqa: E731
+            ungrouped_name = _('Unrated')
+        case field_name if dt == 'datetime':
+            df = fm[field_name].get('display', {}).get('date_format') or 'dd MMM yyyy'
+            if 'd' in df:
+                lsys = QLocale.system().monthName
+                month_map = db.books_by_month(field=field_name, restrict_to_books=all_book_ids)
+                get_books_in_group = month_map.__getitem__
+                get_field_id_map = lambda: {x: x for x in month_map}  # noqa: E731
+                sort_key = lambda x: (-x[0], -x[1])  # noqa: E731
+                formatter = lambda x: (f'{lsys(x[1], QLocale.FormatType.ShortFormat)} {x[0]}' if x[0] > UNDEFINED_DATE.year else ungrouped_name)  # noqa: E731
+            else:
+                year_map = db.books_by_year(field=field_name, restrict_to_books=all_book_ids)
+                get_books_in_group = year_map.__getitem__
+                get_field_id_map = lambda: {x: x for x in year_map}  # noqa: E731
+                sort_key = lambda x: -x  # noqa: E731
+                formatter = lambda x: str(x) if x > UNDEFINED_DATE.year else ungrouped_name  # noqa: E731
+
+    field_id_map = get_field_id_map()
+    yield '', len(field_id_map)
+    seen = set()
+    for group in sorted(field_id_map, key=lambda fid: sort_key(field_id_map[fid])):
+        books_in_group = (get_books_in_group(group) & all_book_ids) - seen
+        if books_in_group:
+            seen |= books_in_group
+            yield formatter(field_id_map[group]), sorted(books_in_group,  key=sort_map.__getitem__)
+    if ungrouped_name and (leftover := all_book_ids - seen):
+        yield ungrouped_name, sorted(leftover,  key=sort_map.__getitem__)
+
+
+def base_log(f: float, b: float = 1) -> float:
+    return math.log(1+max(0, min(f, 1))*b, b+1)
+
+
+def width_from_pages(pages: int, num_of_pages_for_max_width: int = 1500, logarithmic_factor: float = 2) -> float:
+    return base_log(pages/num_of_pages_for_max_width, b=logarithmic_factor)
+
+
+def width_from_size(sz: int, log_factor: float = 2) -> float:
+    return base_log(normalised_size(sz), b=log_factor)
+
+
+def get_spine_width(
+    book_id: int, db: Cache, spine_size_template: str, template_cache: dict[str, str],
+    lc: LayoutConstraints, cache: dict[int, int]
+) -> int:
+    if (ans := cache.get(book_id)) is not None and lc.min_spine_width <= ans <= lc.max_spine_width:
+        return ans
+
+    def linear(f: float):
+        return lc.min_spine_width + int(max(0, min(f, 1)) * (lc.max_spine_width - lc.min_spine_width))
+
+    ans = -1
+    match spine_size_template:
+        case '{pages}' | 'pages':
+            pages = db.field_for('pages', book_id, 0)
+            if pages > 0:
+                ans = linear(width_from_pages(pages))
+            else:
+                ans = linear(width_from_size(db.field_for('size', book_id, 0)))
+        case '{size}' | 'size':
+            ans = linear(width_from_size(db.field_for('size', book_id, 0)))
+        case '{random}' | 'random':
+            # range: 0.25-0.75
+            ans = linear((25+(random_from_id(book_id, limit=51)))/100)
+        case '':
+            ans = lc.default_spine_width
+        case _:
+            with suppress(Exception):
+                if 0 <= (x := float(spine_size_template)) <= 1:
+                    ans = linear(x)
+            if ans < 0:
+                with suppress(Exception):
+                    mi = db.get_proxy_metadata(book_id)
+                    rslt = mi.formatter.safe_format(spine_size_template, mi, 'template error', mi, template_cache=template_cache)
+                    ans = linear(float(rslt))
+    if ans <= 0:
+        ans = lc.default_spine_width
+    cache[book_id] = ans
+    return ans
+
+
+class LayoutPayload(NamedTuple):
+    invalidate_event: Event
+    layout_constraints: LayoutConstraints
+    group_field_name: str
+    row_to_book_id: tuple[int, ...]
+    book_id_to_item_map: dict[int, ShelfItem]
+    book_id_visual_order_map: dict[int, int]
+    book_ids_in_visual_order: list[int]
+    min_line_height: int
+
+
+class BookCase(QObject):
+    items: list[CaseItem]
+    layout_finished: bool = False
+    height: int = 0
+
+    shelf_added = pyqtSignal(object, object)
+    num_of_groups_changed = pyqtSignal()
+
+    def __init__(self, parent: QObject = None):
+        super().__init__(parent)
+        self.worker: Thread | None = None
+        self.row_to_book_id: tuple[int, ...] = ()
+        self._book_id_to_row_map: dict[int, int] = {}
+        self.book_id_visual_order_map: dict[int, int] = {}
+        self.book_ids_in_visual_order: list[int] = []
+        self.num_of_books_that_need_pages_counted = 0
+        self.using_page_counts = False
+        self.queue: LifoQueue[LayoutPayload] = LifoQueue()
+        self.lock = RLock()
+        self.current_invalidate_event = Event()
+        self.spine_width_cache: dict[int, int] = {}
+        self.num_of_groups = 0
+        self.payload: LayoutPayload | None = None
+        self.invalidate()
+
+    def shutdown(self):
+        self.current_invalidate_event.set()
+        self.current_invalidate_event = Event()
+        with suppress(TypeError):
+            self.num_of_groups_changed.disconnect()
+        with suppress(TypeError):
+            self.shelf_added.disconnect()
+        if self.worker is not None:
+            self.queue.shutdown(immediate=True)
+            w, self.worker = self.worker, None
+            if current_thread().is_alive() and w.is_alive():
+                w.join()
+
+    def clear_spine_width_cache(self):
+        self.spine_width_cache = {}
+
+    def shelf_with_ypos(self, y: int) -> CaseItem | None:
+        ' Return the container of books or shelf that contains the specified y position '
+        for shelf in self.iter_shelves_from_ypos(y):
+            return shelf
+        return None
+
+    def iter_shelves_from_ypos(self, y: int) -> Iterator[CaseItem]:
+        with self.lock:
+            idx = bisect.bisect_right(self.items, y, key=attrgetter('start_y'))
+            if idx > 0:
+                candidate: CaseItem = self.items[idx-1]
+                if y < candidate.start_y + candidate.height:
+                    for i in range(idx-1, len(self.items)):
+                        yield self.items[i]
+
+    @property
+    def current_height(self) -> int:
+        with self.lock:
+            ans = 0
+            if self.items:
+                ans = self.items[-1].start_y + self.items[-1].height
+            if not self.layout_finished:
+                ans += self.layout_constraints.step_height
+        return ans
+
+    @property
+    def max_possible_height(self) -> int:
+        with self.lock:
+            if self.layout_finished or self.layout_constraints.width == 0:
+                return self.current_height
+
+            num_of_rows = (self.num_of_groups + len(self.row_to_book_id)) * self.layout_constraints.max_spine_width // self.layout_constraints.width
+            return (num_of_rows + 1) * self.layout_constraints.step_height
+
+    def invalidate(
+        self, layout_constraints: LayoutConstraints = LayoutConstraints(),
+        model: BooksModel | None = None, group_field_name: str = '', min_line_height: int = 0,
+    ) -> None:
+        with self.lock:
+            self.current_invalidate_event.set()
+            self.current_invalidate_event = Event()
+            self.group_field_name = group_field_name
+            self.items = []
+            self.height = 0
+            self.using_page_counts = False
+            self.num_of_books_that_need_pages_counted = 0
+            self.layout_constraints = layout_constraints
+            self.book_id_visual_order_map: dict[int, int] = {}
+            self.book_ids_in_visual_order = []
+            self.book_id_to_item_map: dict[int, ShelfItem] = {}
+            self.num_of_groups = 0
+            if model is not None and (db := model.db) is not None:
+                # implies set of books to display has changed
+                self.row_to_book_id = db.data.index_to_id_map()
+                self._book_id_to_row_map = {}
+                self.dbref = weakref.ref(db)
+            self.layout_finished = not bool(self.row_to_book_id)
+            self.payload = LayoutPayload(
+                self.current_invalidate_event, self.layout_constraints, self.group_field_name, self.row_to_book_id,
+                self.book_id_to_item_map, self.book_id_visual_order_map, self.book_ids_in_visual_order,
+                min_line_height)
+
+    def ensure_layouting_is_current(self) -> None:
+        with self.lock:
+            if self.layout_constraints.width > 0 and self.payload is not None:
+                if self.worker is None:
+                    self.worker = Thread(target=self.layout_thread, name='BookCaseLayout', daemon=True)
+                    self.worker.start()
+                p, self.payload = self.payload, None
+                self.queue.put(p)
+
+    @property
+    def book_id_to_row_map(self) -> dict[int, int]:
+        if self.row_to_book_id and not self._book_id_to_row_map:
+            self._book_id_to_row_map = {bid: r for r, bid in enumerate(self.row_to_book_id)}
+        return self._book_id_to_row_map
+
+    def layout_thread(self) -> None:
+        while True:
+            try:
+                x = self.queue.get()
+            except ShutDown:
+                break
+            self.do_layout_in_worker(*x)
+
+    def do_layout_in_worker(
+        self, invalidate: Event, lc: LayoutConstraints, group_field_name: str, row_to_book_id: tuple[int, ...],
+        book_id_to_item_map: dict[int, ShelfItem], book_id_visual_order_map: dict[int, int],
+        book_ids_in_visual_order: list[int], min_line_height: int,
+    ) -> None:
+        if lc.width < lc.max_spine_width:
+            return
+        def commit_case_item(x: CaseItem) -> int:
+            with self.lock:
+                if invalidate.is_set():
+                    return self.height
+                self.items.append(x)
+                self.height += lc.spine_height
+                self.items.append(CaseItem(idx=len(self.items), y=self.height, height=lc.shelf_height, is_shelf=True))
+                self.height += lc.shelf_height
+                self.shelf_added.emit(x, self.items[-1])
+                return self.height
+
+        current_case_item = CaseItem(height=lc.spine_height)
+        mdb = self.dbref()
+        if mdb is None or invalidate.is_set():
+            return
+        db = mdb.new_api
+        start_with_divider = gprefs['bookshelf_start_with_divider']
+        spine_size_template = db.pref('bookshelf_spine_size_template', get_default_from_defaults=True) or ''
+        if gprefs['bookshelf_make_space_for_second_line']:
+            author_template = db.pref('bookshelf_author_template', get_default_from_defaults=True) or ''
+            if author_template.strip():
+                min_line_height *= 2
+        template_cache = {}
+        group_iter = get_grouped_iterator(db, row_to_book_id, group_field_name)
+        _, num_of_groups = next(group_iter)
+        with self.lock:
+            if invalidate.is_set():
+                return
+            self.num_of_groups = num_of_groups
+        self.num_of_groups_changed.emit()
+        num_of_books_that_need_pages_counted = db.num_of_books_that_need_pages_counted()
+        # Ensure there is enough width for the spine text
+        min_width = min(max(min_line_height, lc.min_spine_width), lc.max_spine_width-1)
+        lc = lc._replace(min_spine_width=min_width)
+        add_group_dividers = gprefs['bookshelf_divider_style'] != 'hidden'
+        for group_name, book_ids_in_group in group_iter:
+            if invalidate.is_set():
+                return
+            if add_group_dividers and not current_case_item.add_group_divider(group_name, lc):
+                y = commit_case_item(current_case_item)
+                current_case_item = CaseItem(y=y, height=lc.spine_height, idx=len(self.items))
+                current_case_item.add_group_divider(group_name, lc)
+            for book_id in book_ids_in_group:
+                if invalidate.is_set():
+                    return
+                try:
+                    spine_width = get_spine_width(
+                        book_id, db, spine_size_template, template_cache, lc, self.spine_width_cache)
+                except Exception:
+                    spine_width = lc.default_spine_width
+                if not current_case_item.add_book(book_id, spine_width, group_name, lc):
+                    case_end_divider = ''
+                    if current_case_item.items[-1].is_divider:
+                        case_end_divider = current_case_item.items.pop(-1).group_name
+                    y = commit_case_item(current_case_item)
+                    current_case_item = CaseItem(y=y, height=lc.spine_height, idx=len(self.items))
+                    if add_group_dividers:
+                        if case_end_divider:
+                            current_case_item.add_group_divider(case_end_divider, lc)
+                        elif start_with_divider:
+                            current_case_item.add_group_divider(group_name, lc)
+                    current_case_item.add_book(book_id, spine_width, group_name, lc)
+                book_id_to_item_map[book_id] = current_case_item.items[-1]
+                book_id_visual_order_map[book_id] = len(book_id_visual_order_map)
+                book_ids_in_visual_order.append(book_id)
+        if current_case_item.items:
+            commit_case_item(current_case_item)
+        with self.lock:
+            if invalidate.is_set():
+                return
+            self.layout_finished = True
+            self.num_of_books_that_need_pages_counted = num_of_books_that_need_pages_counted
+            self.using_page_counts = spine_size_template in ('{pages}', 'pages')
+            if len(self.items) > 1:
+                self.shelf_added.emit(self.items[-2], self.items[-1])
+            else:
+                self.shelf_added.emit(None, None)
+
+    def visual_row_cmp(self, a: int, b: int) -> int:
+        ' Compares if a or b (book_row numbers) is visually before the other in left-to-right top-to-bottom order'
+        try:
+            a = self.row_to_book_id[a]
+            b = self.row_to_book_id[b]
+        except IndexError:
+            return a - b
+        return self.book_id_visual_order_map[a] - self.book_id_visual_order_map[b]
+
+    def visual_selection_between(self, a: int, b: int) -> Iterator[int]:
+        ' Return all book_rows visually from a to b in left to right top-to-bottom order '
+        a = self.row_to_book_id[a]
+        b = self.row_to_book_id[b]
+        aidx = self.book_ids_in_visual_order.index(a)
+        bidx = self.book_ids_in_visual_order.index(b)
+        s, e = min(aidx, bidx), max(aidx, bidx)
+        yield from map(self.book_id_to_row_map.__getitem__, self.book_ids_in_visual_order[s:e+1])
+
+    def visual_neighboring_book(self, book_id: int, delta: int = 1, allow_wrap: bool = False, in_bound: bool = False) -> int:
+        idx = self.book_id_visual_order_map[book_id]
+        nidx = idx + delta
+        if allow_wrap:
+            nidx = (nidx + len(self.book_ids_in_visual_order)) % len(self.book_ids_in_visual_order)
+        if in_bound:
+            nidx = max(0, min(len(self.book_ids_in_visual_order)-1), nidx)
+        if 0 <= nidx < len(self.book_ids_in_visual_order):
+            return self.book_ids_in_visual_order[nidx]
+        return 0
+
+    def shelf_of_book(self, book_id: int) -> CaseItem | None:
+        if si := self.book_id_to_item_map.get(book_id):
+            return self.items[si.case_idx]
+        return None
+
+    def end_book_on_shelf_of(self, book_id: int, first: bool = False) -> int:
+        if ci := self.shelf_of_book(book_id):
+            return ci.items[0 if first else -1].book_id
+        return 0
+
+    def book_in_column_of(self, book_id: int, delta: int = 1, allow_wrap: bool = False, in_bound: bool = False) -> int:
+        if not (si := self.book_id_to_item_map.get(book_id)):
+            return
+        if not (ci := self.shelf_of_book(book_id)):
+            return 0
+        shelf_idx = ci.idx // 2 + delta
+        num_shelves = len(self.items) // 2
+        if allow_wrap:
+            shelf_idx = (shelf_idx + num_shelves) % num_shelves
+        if in_bound:
+            shelf_idx = max(0, min(shelf_idx, num_shelves-1))
+        if shelf_idx < 0 or shelf_idx >= num_shelves:
+            return 0
+        target_shelf = self.items[shelf_idx * 2]
+        if not (target_si := target_shelf.book_or_divider_at_region(si, self.layout_constraints)):
+            return 0
+        return ans.book_id if (ans := target_shelf.closest_book_to(target_si.idx)) else 0
+# }}}
+
+
+class ExpandedCover(QObject):  # {{{
+
+    updated = pyqtSignal()
+
+    def __init__(self, parent: BookshelfView):
+        super().__init__(parent)
+        self._opacity = 0
+        self._size = QSize()
+        self.is_showing_cover = False
+        self.shelf_item: ShelfItem | None = None
+        self.case_item: CaseItem | None = None
+        self.modified_case_item: CaseItem | None = None
+        self.cover_renderer: CachedCoverRenderer = CachedCoverRenderer(PixmapWithDominantColor())
+        self.opacity_animation = a = QPropertyAnimation(self, b'opacity')
+        a.setEasingCurve(QEasingCurve.Type.InOutCubic)
+        a.setStartValue(0.3)
+        a.setEndValue(1)
+        self.size_animation = a = QPropertyAnimation(self, b'size')
+        a.setEasingCurve(QEasingCurve.Type.OutCubic)
+        self.animation = a = QParallelAnimationGroup(self)
+        a.addAnimation(self.opacity_animation)
+        a.addAnimation(self.size_animation)
+        self.debounce_timer = t = QTimer(self)
+        t.setInterval(120)
+        t.timeout.connect(self.start)
+        t.setSingleShot(True)
+
+    @property
+    def layout_constraints(self) -> LayoutConstraints:
+        return self.parent().layout_constraints
+
+    def shelf_item_hovered(self, case_item: CaseItem | None = None, shelf_item: ShelfItem | None = None) -> None:
+        self.pending_shelf_item, self.pending_case_item = shelf_item, case_item
+        self.debounce_timer.start()
+
+    def start(self) -> None:
+        if getattr(self.pending_shelf_item, 'book_id', -1) == getattr(self.shelf_item, 'book_id', -1):
+            self.pending_case_item = self.pending_shelf_item = None
+            return
+        self.invalidate()
+        self.shelf_item, self.case_item = self.pending_shelf_item, self.pending_case_item
+        self.pending_case_item = self.pending_shelf_item = None
+        if self.shelf_item is not None:
+            duration = 0 if config['disable_animations'] else gprefs['bookshelf_fade_time']
+            if duration > 0:
+                self.opacity_animation.setStartValue(gprefs['bookshelf_thumbnail_opacity'] / 100)
+                self.opacity_animation.setDuration(duration)
+                self.size_animation.setDuration(duration)
+            lc = self.layout_constraints
+            sz = QSize(self.shelf_item.width, lc.spine_height - self.shelf_item.reduce_height_by)
+            self.modified_case_item = self.case_item
+            pixmap, final_sz = self.parent().load_hover_cover(self.shelf_item)
+            self.cover_renderer.set_pixmap(pixmap)
+            self.size_animation.setStartValue(sz)
+            self.size_animation.setEndValue(final_sz)
+            self.is_showing_cover = True
+            if duration > 0:
+                self.animation.start()
+            else:
+                self._opacity = 1
+                self._size = final_sz
+                self.shift_items()
+        self.updated.emit()
+
+    def invalidate(self) -> None:
+        self.shelf_item = self.case_item = self.modified_case_item = None
+        self.animation.stop()
+        self.debounce_timer.stop()
+        self.is_showing_cover = False
+
+    @pyqtProperty(float)
+    def opacity(self) -> float:
+        return self._opacity
+
+    @opacity.setter
+    def opacity(self, val: float) -> None:
+        self._opacity = val
+
+    @pyqtProperty(QSize)
+    def size(self) -> QSize:
+        return self._size
+
+    @size.setter
+    def size(self, val: QSize) -> None:
+        self._size = val
+        self.shift_items()
+        self.updated.emit()
+
+    def shift_items(self) -> None:
+        self.modified_case_item = self.case_item.shift_for_expanded_cover(
+                self.shelf_item, self.layout_constraints, self.size.width())
+
+    @property
+    def expanded_cover_should_be_displayed(self) -> bool:
+        return self.shelf_item is not None and self.modified_case_item is not None and self.is_showing_cover
+
+    def modify_shelf_layout(self, case_item: CaseItem) -> CaseItem:
+        if self.expanded_cover_should_be_displayed and case_item is self.case_item:
+            case_item = self.modified_case_item
+        return case_item
+
+    def is_expanded(self, book_id: int) -> bool:
+        return self.expanded_cover_should_be_displayed and self.shelf_item.book_id == book_id
+
+    def draw_expanded_cover(
+        self, painter: QPainter, scroll_y: int, lc: LayoutConstraints, selection_highlight_color: QColor
+    ) -> None:
+        shelf_item = self.modified_case_item.items[self.shelf_item.idx]
+        cover_rect = shelf_item.rect(lc)
+        cover_rect.translate(0, -scroll_y)
+        pmap, margin = self.cover_renderer.as_pixmap(cover_rect.size(), self.opacity, self.parent())
+        painter.drawPixmap(cover_rect.topLeft() - QPoint(margin, margin), pmap)
+        if selection_highlight_color.isValid():
+            pen = QPen(selection_highlight_color)
+            pen.setWidth(2)
+            pen.setJoinStyle(Qt.PenJoinStyle.MiterJoin)
+            painter.setPen(pen)
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.setOpacity(1.0)
+            painter.drawRect(cover_rect)
+# }}}
+
+
+class SavedState(NamedTuple):
+    current_book_id: int
+    selected_book_ids: set[int]
+
+
+@setup_dnd_interface
+class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
+    '''
+    Enhanced bookshelf view displaying books as spines on shelves.
+
+    This view provides an immersive browsing experience with sorting
+    and grouping capabilities.
+    '''
+
+    files_dropped = pyqtSignal(object)
+    books_dropped = pyqtSignal(object)
+
+    # Dimensions
+    layout_constraints: LayoutConstraints
+    DIVIDER_LINE_WIDTH = 2  # Width of the gradient line in divider
+
+    TEXT_MARGIN = 6
+    EMBLEM_SIZE = 24
+    EMBLEM_MARGIN = 2
+
+    def __init__(self, gui):
+        super().__init__(gui)
+        self.auto_scroll = True
+        self.scroll_to_current_after_layout: bool = False
+        self.theme: ColorTheme = None
+        self.palette_changed()
+
+        self.spine_font = self.default_spine_font = QFont(self.font())
+        self.spine_font.setBold(True)
+        self.divider_font = QFont(self.spine_font)
+        self.base_font_size_pts = QFontInfo(self.spine_font).pointSizeF()
+        self.outline_width = 0
+        self.min_line_height = self.base_font_size_pts * 1.2
+
+        self.gui = gui
+        self._model: BooksModel | None = None
+        self.context_menu: QMenu | None = None
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.resize_debounce_timer = t = QTimer(self)
+        t.timeout.connect(self.resize_debounced)
+        t.setSingleShot(True), t.setInterval(200)
+        self.pages_count_update_check_timer = t = QTimer(self)
+        t.timeout.connect(self.check_pages_count_update)
+        t.setSingleShot(True), t.setInterval(2000)
+
+        self.setMouseTracking(True)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        QApplication.instance().palette_changed.connect(self.palette_changed)
+
+        # Ensure viewport receives mouse events
+        self.viewport().setMouseTracking(True)
+        self.viewport().setAttribute(Qt.WidgetAttribute.WA_MouseTracking, True)
+
+        # Cover template caching
+        self.template_inited = False
+        self.emblem_rules = []
+        self.template_is_empty = {}
+        self.first_line_renderer = self.build_template_renderer('title', '{title}')
+        self.second_line_renderer = self.build_template_renderer('authors', '')
+
+        # Initialize drag and drop
+        # so we set the attributes manually
+        self.drag_allowed = True
+        self.drag_start_pos = None
+        self.bookcase = BookCase(self)
+        self.bookcase.shelf_added.connect(self.on_shelf_layout_done, type=Qt.ConnectionType.QueuedConnection)
+        self.bookcase.num_of_groups_changed.connect(self.update_scrollbar_ranges, type=Qt.ConnectionType.QueuedConnection)
+
+        # Selection tracking
+        self._selection_model: QItemSelectionModel = QItemSelectionModel(None, self)
+        self._selection_model.selectionChanged.connect(self.update_viewport)
+        self._selection_model.currentChanged.connect(self.on_current_changed)
+        self.click_start_data: ClickStartData | None = None
+
+        # Cover loading and caching
+        self.expanded_cover = ExpandedCover(self)
+        self.expanded_cover.updated.connect(self.update_viewport)
+
+        self.layout_constraints = LayoutConstraints()
+        self.layout_constraints = self.layout_constraints._replace(width=self.get_available_width())
+        self.grouping_mode = ''
+        self.refresh_settings()
+        self.cover_cache = CoverThumbnailCache(
+            name='bookshelf-thumbnail-cache', ram_limit=800,
+            max_size=gprefs['bookshelf_disk_cache_size'], thumbnailer=ThumbnailerWithDominantColor(),
+            thumbnail_size=self.thumbnail_size(), parent=self, version=2,
+        )
+        self.cover_cache.rendered.connect(self.update_viewport, type=Qt.ConnectionType.QueuedConnection)
+
+    def calculate_shelf_geometry(self) -> None:
+        lc = self.layout_constraints
+        if (h := gprefs['bookshelf_height']) < 120 or h > 1200:
+            screen_height = 0
+            for screen in QApplication.instance().screens():
+                if screen.availableSize().height() > screen.availableSize().width() * 1.5:
+                    screen_height = max(screen_height, screen.availableSize().width())
+                else:
+                    screen_height = max(screen_height, screen.availableSize().height())
+            h = max(100 + lc.shelf_height, screen_height // 3)
+        lc = lc._replace(spine_height=h - lc.shelf_height, width=self.get_available_width())
+        # Keep aspect ratio of spines
+        default = LayoutConstraints()
+        hr = lc.spine_height / default.spine_height
+        lc = lc._replace(
+            min_spine_width=math.ceil(default.min_spine_width * hr),
+            max_spine_width=math.ceil(default.max_spine_width * hr),
+            default_spine_width=math.ceil(default.default_spine_width * hr),
+            hover_expanded_width=math.ceil(default.hover_expanded_width * hr)
+        )
+        self.layout_constraints = lc
+
+    def thumbnail_size(self) -> tuple[int, int]:
+        lc = self.layout_constraints
+        dpr = self.devicePixelRatioF()
+        sz = QSizeF(lc.max_spine_width * dpr, lc.spine_height * dpr).toSize()
+        return sz.width(), sz.height()
+
+    # Templates rendering methods
+
+    def init_template(self, db):
+        '''Initialize templates and database settings.'''
+        if not db:
+            return
+        if self.template_inited and self.dbref() == db.new_api:
+            return
+
+        def db_pref(key):
+            return db.new_api.pref(key, get_default_from_defaults=True)
+
+        title = db_pref('bookshelf_title_template') or ''
+        self.first_line_renderer = self.build_template_renderer('title', title)
+        authors = db_pref('bookshelf_author_template') or ''
+        self.second_line_renderer = self.build_template_renderer('authors', authors)
+        self.template_inited = True
+        self.emblem_rules = db_pref('bookshelf_icon_rules') or []
+
+    def build_template_renderer(self, column_name: str, template: str) -> partial[str]:
+        self.template_is_empty[column_name] = not template.strip()
+        return partial(self.render_template, column_name, template)
+
+    def render_template(self, column_name: str, template: str, book_id: int) -> str:
+        if not (db := self.dbref()):
+            return ''
+        self.init_template(db)
+        if self.template_is_empty[column_name]:
+            return ''
+        if not (m := self.model()):
+            return ''
+        match template:
+            case '{title}':
+                return db.field_for('title', book_id)
+            case '{author_sort}':
+                return db.field_for('author_sort', book_id)
+            case '{author}' | '{authors}':
+                return authors_to_string(db.field_for('authors', book_id))
+            case '{sort}' | '{title_sort}':
+                return db.field_for('sort', book_id)
+        mi = db.get_proxy_metadata(book_id)
+        rslt = mi.formatter.safe_format(
+            template, mi, TEMPLATE_ERROR, mi, column_name=column_name, template_cache=m.bookshelf_template_cache)
+        return rslt or ''
+
+    def render_emblem(self, book_id: int) -> str:
+        if not (m := self.model()):
+            return
+        db = m.db.new_api
+        self.init_template(db)
+        if not self.emblem_rules:
+            return ''
+        mi = None
+        for i, (kind, column, rule) in enumerate(self.emblem_rules):
+            icon_name, mi = render_emblem(book_id, rule, i, m.bookshelf_emblem_cache, mi, db, m.formatter, m.bookshelf_template_cache, column_name='bookshelf')
+            if icon_name:
+                return icon_name
+        return ''
+
+    def refresh_settings(self):
+        '''Refresh the gui and render settings.'''
+        self.template_inited = False
+        s = gprefs['bookshelf_font']
+        if s and s.get('family'):
+            self.spine_font = QFontDatabase.font(s['family'], s['style'], int(self.base_font_size_pts))
+            self.spine_font.setPointSizeF(self.base_font_size_pts)
+        else:
+            self.spine_font = self.default_spine_font
+        self.get_sized_font.cache_clear()
+        self.get_text_metrics.cache_clear()
+        self.min_font_size = max(0.1, min(gprefs['bookshelf_min_font_multiplier'], 1)) * self.base_font_size_pts
+        self.max_font_size = max(1, min(gprefs['bookshelf_max_font_multiplier'], 3)) * self.base_font_size_pts
+        _, fm, _ = self.get_sized_font(self.min_font_size)
+        self.outline_width = float(max(0, min(gprefs['bookshelf_outline_width'], 5)))
+        self.min_line_height = math.ceil(fm.height() + self.outline_width * 2)
+        self.calculate_shelf_geometry()
+        self.palette_changed()
+        if hasattr(self, 'cover_cache'):
+            self.cover_cache.set_thumbnail_size(*self.thumbnail_size())
+            self.cover_cache.set_disk_cache_max_size(gprefs['bookshelf_disk_cache_size'])
+            self.update_ram_cache_size()
+        self.invalidate(clear_spine_width_cache=True)
+
+    def palette_changed(self):
+        self.setPalette(dark_palette() if is_dark_theme() else light_palette())
+        self.theme = ColorTheme.dark_theme() if is_dark_theme() else ColorTheme.light_theme()
+        if gprefs['bookshelf_use_custom_colors']:
+            values = {}
+            valid = frozenset(self.theme._fields)
+            for k, v in gprefs['bookshelf_custom_colors']['dark' if is_dark_theme() else 'light'].items():
+                if k in valid and v and (c := QColor(v)).isValid():
+                    values[k] = c
+            self.theme = self.theme._replace(**values)
+
+    def view_is_visible(self) -> bool:
+        '''Return if the bookshelf view is visible.'''
+        with suppress(AttributeError):
+            return self.gui.bookshelf_view_button.is_visible
+        return False
+
+    def shutdown(self):
+        self.resize_debounce_timer.stop()
+        self.pages_count_update_check_timer.stop()
+        self.cover_cache.shutdown()
+        self.bookcase.shutdown()
+        self.expanded_cover.invalidate()
+
+    def setModel(self, model: BooksModel | None) -> None:
+        '''Set the model for this view.'''
+        signals = {
+            'dataChanged': 'model_data_changed', 'rowsInserted': 'model_rows_changed',
+            'rowsRemoved': 'model_rows_changed', 'modelReset': 'model_reset',
+        }
+        if self._model is not None:
+            for s, tgt in signals.items():
+                getattr(self._model, s).disconnect(getattr(self, tgt))
+        self._model = model
+        self.selectionModel().setModel(model)
+        if model is not None:
+            # Create selection model for sync
+            for s, tgt in signals.items():
+                getattr(self._model, s).connect(getattr(self, tgt))
+        self.invalidate(set_of_books_changed=True, clear_spine_width_cache=True)
+
+    def model(self) -> BooksModel | None:
+        '''Return the model.'''
+        return self._model
+
+    def selectionModel(self) -> QItemSelectionModel:
+        '''Return the selection model (required for AlternateViews integration).'''
+        return self._selection_model
+
+    def model_data_changed(self, top_left, bottom_right, roles):
+        '''Handle model data changes.'''
+        self.update_viewport()
+
+    def model_rows_changed(self, parent, first, last):
+        '''Handle model row changes.'''
+        self.invalidate(set_of_books_changed=True)
+
+    def model_reset(self):
+        '''Handle model reset.'''
+        self.invalidate(set_of_books_changed=True)
+
+    def dbref(self) -> Cache:
+        '''Return the current database.'''
+        if m := self.model():
+            return m.db.new_api
+        return self.gui.current_db.new_api
+
+    def book_id_from_row(self, row: int) -> int | None:
+        '''Return the book id at this row.'''
+        with suppress(Exception):
+            return self.bookcase.row_to_book_id[row]
+        return None
+
+    def row_from_book_id(self, book_id: int) -> int | None:
+        '''Return the book id at this row.'''
+        return self.bookcase.book_id_to_row_map.get(book_id)
+
+    @property
+    def has_transient_scrollbar(self) -> bool:
+        return self.style().styleHint(QStyle.StyleHint.SH_ScrollBar_Transient, widget=self) != 0
+
+    def resizeEvent(self, ev: QResizeEvent) -> None:
+        self.resize_debounce_timer.start()
+        return super().resizeEvent(ev)
+
+    def resize_debounced(self) -> None:
+        if self.layout_constraints.width != (new_width := self.get_available_width()) and new_width > 20:
+            self.layout_constraints = self.layout_constraints._replace(width=new_width)
+            self.invalidate()
+
+    def update_scrollbar_ranges(self):
+        '''Update scrollbar ranges based on the current shelf layouts.'''
+        total_height = self.bookcase.max_possible_height
+        viewport_height = self.viewport().height()
+        self.verticalScrollBar().setRange(0, max(0, total_height - viewport_height))
+        self.verticalScrollBar().setPageStep(viewport_height)
+        self.verticalScrollBar().setSingleStep(self.layout_constraints.step_height)
+        self.update_ram_cache_size()
+
+    def get_available_width(self) -> int:
+        # We always layout assuming scrollbar takes up space unless it is a
+        # transient scrollbar. This means when all books fit in the viewport there
+        # will be some extra space on the right. This is an acceptable
+        # compromise since, layouting is expensive and we cannot know if the
+        # scrollbar is needed till we do layouting once.
+        sw = 0 if self.has_transient_scrollbar else self.verticalScrollBar().width()
+        return self.width() - (2 * self.layout_constraints.side_margin) - sw
+
+    def invalidate(
+        self, set_of_books_changed: bool = False, clear_spine_width_cache: bool = False,
+    ) -> None:
+        if clear_spine_width_cache:
+            self.bookcase.clear_spine_width_cache()
+        self.bookcase.invalidate(
+            self.layout_constraints, model=self.model() if set_of_books_changed else None,
+            group_field_name=self.grouping_mode, min_line_height=self.min_line_height)
+        if set_of_books_changed:
+            self.expanded_cover.invalidate()
+        self.update_scrollbar_ranges()
+        self.update_viewport()
+
+    def check_for_pages_update(self):
+        # If there are a lot of books with pages yet to be counted, re-layout
+        # once all have been counted
+        if self.bookcase.num_of_books_that_need_pages_counted > 10 and self.bookcase.using_page_counts:
+            self.pages_count_update_check_timer.start()
+
+    def check_pages_count_update(self):
+        if (db := self.dbref()):
+            num_of_books_that_need_pages_counted = db.new_api.num_of_books_that_need_pages_counted()
+            if num_of_books_that_need_pages_counted:
+                self.pages_count_update_check_timer.start()
+            else:
+                self.invalidate(clear_spine_width_cache=True)
+
+    def on_shelf_layout_done(self, books: CaseItem | None, shelf: CaseItem | None) -> None:
+        if self.view_is_visible():
+            if self.bookcase.layout_finished:
+                self.update_scrollbar_ranges()
+                self.check_for_pages_update()
+                if self.scroll_to_current_after_layout:
+                    self.scroll_to_current_after_layout = False
+                    if (idx := self.currentIndex()).isValid():
+                        self.scrollTo(idx)
+            if books is not None and shelf is not None:
+                y = books.start_y
+                height = books.height + shelf.height
+                r = self.viewport().rect()
+                r.moveTop(self.verticalScrollBar().value())
+                if self.bookcase.layout_finished or r.intersects(QRect(r.left(), y, r.width(), height)):
+                    self.update_viewport()
+
+    @property
+    def shelves_per_screen(self) -> int:
+        viewport_height = self.viewport().height()
+        lc = self.layout_constraints
+        return max(1, math.ceil(viewport_height / lc.step_height))
+
+    def update_ram_cache_size(self):
+        if hasattr(self, 'cover_cache'):
+            lc = self.layout_constraints
+            books_per_shelf = self.get_available_width() / lc.min_spine_width
+            lm = gprefs['bookshelf_cache_size_multiple'] * books_per_shelf * self.shelves_per_screen
+            self.cover_cache.set_ram_limit(max(0, int(lm)))
+
+    # Paint and Drawing methods
+
+    def shown(self):
+        '''Called when this view becomes active.'''
+        if db := self.dbref():
+            db.queue_pages_scan()
+        QPixmapCache.setCacheLimit(max(QPixmapCache.cacheLimit(), 20 * 1024))
+        self.bookcase.ensure_layouting_is_current()
+
+    def update_viewport(self):
+        '''Update viewport only if the bookshelf view is visible.'''
+        if not self.view_is_visible():
+            return
+        self.viewport().update()
+
+    def draw_emblems(self, painter: QPainter, item: ShelfItem, scroll_y: int) -> tuple[int, int]:
+        book_id = item.book_id
+        above, below = [], []
+        top, bottom = [], []
+        top_size = bottom_size = 0
+        if m := self.model():
+            from calibre.gui2.ui import get_gui
+            db = m.db
+            marked = db.data.get_marked(book_id)
+            if marked:
+                below.append(m.marked_icon if marked == 'true' else m.marked_text_icon_for(marked))
+            db = db.new_api
+            device_connected = get_gui().device_connected is not None
+            on_device = device_connected and db.field_for('ondevice', book_id)
+            if on_device:
+                which = above if below else below
+                which.append(cached_emblem(0, m.bookshelf_bitmap_cache, ':ondevice'))
+            custom = self.render_emblem(book_id)
+            if custom:
+                match gprefs['bookshelf_emblem_position']:
+                    case 'above':
+                        which = above
+                    case 'below':
+                        which = below
+                    case 'top':
+                        which = top
+                    case 'bottom':
+                        which = bottom
+                    case _:
+                        which = above if below and not above else below
+                if (icon := cached_emblem(0, m.bookshelf_bitmap_cache, custom)) is not None:
+                    which.append(icon)
+
+        def draw_horizontal(emblems: list[QIcon], position: str) -> None:
+            nonlocal top_size, bottom_size
+            if not emblems:
+                return
+            gap = self.EMBLEM_MARGIN
+            max_width = (item.width - gap) // len(emblems)
+            lc = self.layout_constraints
+            match position:
+                case 'above':
+                    max_height = lc.shelf_gap
+                case 'below':
+                    max_height = lc.shelf_height
+                case 'top' | 'bottom':
+                    max_height = self.EMBLEM_SIZE
+            sz = min(max_width, max_height)
+            width = sz
+            if len(emblems) > 1:
+                width += gap + sz
+            x = max(0, (item.width - width) // 2) + item.start_x + lc.side_margin
+            y = item.case_start_y - scroll_y
+            match position:
+                case 'above':
+                    y += lc.shelf_gap + item.reduce_height_by - sz
+                case 'below':
+                    y += lc.spine_height
+                case 'top':
+                    y += lc.shelf_gap + item.reduce_height_by + self.EMBLEM_MARGIN
+                    top_size = sz + self.EMBLEM_MARGIN
+                case 'bottom':
+                    y += lc.spine_height - sz - self.EMBLEM_MARGIN
+                    bottom_size = sz + self.EMBLEM_MARGIN
+            for ic in emblems:
+                p = ic.pixmap(sz, sz)
+                painter.drawPixmap(QPoint(x, y), p)
+                x += sz + gap
+        draw_horizontal(above, 'above')
+        draw_horizontal(below, 'below')
+        draw_horizontal(top, 'top')
+        draw_horizontal(bottom, 'bottom')
+        return top_size, bottom_size
+
+    def paintEvent(self, ev: QPaintEvent) -> None:
+        '''Paint the bookshelf view.'''
+        if not self.view_is_visible():
+            return
+        self.bookcase.ensure_layouting_is_current()
+
+        with QPainter(self.viewport()) as painter:
+            self.do_paint(painter)
+
+    def do_paint(self, painter: QPainter) -> None:
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.SmoothPixmapTransform)
+        # Get visible area
+        scroll_y = self.verticalScrollBar().value()
+        viewport_rect = self.viewport().rect()
+        visible_rect = viewport_rect.translated(0, scroll_y)
+        hovered_item: ShelfItem | None = None
+        sm = self.selectionModel()
+        current_row = sm.currentIndex().row()
+        shelf_bases, shelves = [], []
+
+        for shelf in self.bookcase.iter_shelves_from_ypos(scroll_y):
+            if shelf.start_y > visible_rect.bottom():
+                break
+            if shelf.is_shelf:
+                shelf_bases.append(shelf)
+                continue
+            nshelf = self.expanded_cover.modify_shelf_layout(shelf)
+            shelves.append((nshelf, shelf is not nshelf))
+        if not hasattr(self, 'case_renderer'):
+            self.case_renderer = RenderCase()
+        painter.drawPixmap(
+            QPoint(0, 0), self.case_renderer.background_as_pixmap(viewport_rect.width(), viewport_rect.height()),
+        )
+        n = self.shelves_per_screen
+        for base in shelf_bases:
+            self.draw_shelf_base(painter, base, scroll_y, self.width(), base.idx % n)
+        for shelf, has_expanded in shelves:
+            # Draw books and inline dividers on it
+            if has_expanded:
+                hovered_item = shelf.expanded_item
+            for item in shelf.items:
+                if item.is_divider:
+                    self.draw_inline_divider(painter, item, scroll_y)
+                    continue
+                if item is not shelf.expanded_item:
+                    # Draw a book spine at this position
+                    should_draw_emblems = not has_expanded or gprefs['bookshelf_hover'] != 'above' \
+                        or (item.start_x + (item.width / 2) < hovered_item.start_x) \
+                        or (item.start_x + (item.width / 2) > hovered_item.start_x + hovered_item.width)
+                    row = self.bookcase.book_id_to_row_map[item.book_id]
+                    self.draw_spine(painter, item, scroll_y, sm.isRowSelected(row), row == current_row, should_draw_emblems)
+        if hovered_item is not None:
+            row = self.bookcase.book_id_to_row_map[hovered_item.book_id]
+            is_selected, is_current = sm.isRowSelected(row), row == current_row
+            self.expanded_cover.draw_expanded_cover(
+                painter, scroll_y, self.layout_constraints, self.selection_highlight_color(is_selected, is_current),
+            )
+            self.draw_emblems(painter, hovered_item, scroll_y)
+
+    def draw_shelf_base(self, painter: QPainter, shelf: ShelfItem, scroll_y: int, width: int, instance: int) -> None:
+        p = self.case_renderer.shelf_as_pixmap(width, self.layout_constraints.shelf_height, instance)
+        shelf_rect = QRect(0, shelf.start_y, width, self.layout_constraints.shelf_height)
+        shelf_rect.translate(0, -scroll_y)
+        painter.drawPixmap(QPoint(0, shelf.start_y - scroll_y), p)
+
+    def draw_selection_highlight(self, painter: QPainter, spine_rect: QRect, color: QColor) -> None:
+        painter.save()
+        pen = QPen(color)
+        gap = min(4, self.layout_constraints.horizontal_gap // 2)
+        pen.setWidth(2 * gap)
+        pen.setJoinStyle(Qt.PenJoinStyle.MiterJoin)
+        painter.setPen(pen)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+        painter.setOpacity(1.0)
+        painter.drawRect(spine_rect.adjusted(gap, gap, -gap, -gap))
+        painter.restore()
+
+    @lru_cache(maxsize=128)
+    def get_sized_font(self, sz: float = 9, for_divider: bool = False) -> tuple[QFont, QFontMetricsF, QFontInfo]:
+        font = QFont(self.divider_font if for_divider else self.spine_font)
+        font.setPointSizeF(sz)
+        return font, QFontMetricsF(font), QFontInfo(font)
+
+    @lru_cache(maxsize=4096)
+    def get_text_metrics(
+        self, first_line: str, second_line: str = '', sz: QSize = QSize(), allow_wrap: bool = False,
+        outline_width: float = 0, for_divider: bool = False,
+    ) -> tuple[str, str, QFont, QFontMetricsF, bool]:
+        width, height = sz.width(), sz.height()
+        font, fm, fi = self.get_sized_font(self.base_font_size_pts, for_divider=for_divider)
+        extra_height = outline_width * 2  # stroke width above and below
+        if allow_wrap and not second_line and first_line and fm.boundingRect(first_line).width() > width and height >= 2 * self.min_line_height:
+            # rather than reducing font size if there is available space, wrap to two lines
+            font2, fm2, fi2 = font, fm, fi
+            while math.ceil(2 * (fm2.height() + extra_height)) > height:
+                font2, fm2, fi2 = self.get_sized_font(font2.pointSizeF() - 0.5, for_divider=for_divider)
+            if fm2.boundingRect(first_line).width() >= width:  # two line font size is larger than one line font size
+                font, fm, fi = font2, fm2, fi2
+                has_third_line = False
+                layout = QTextLayout(first_line, font)
+                layout.beginLayout()
+                fl = layout.createLine()
+                fl.setLineWidth(width)
+                sl = layout.createLine()
+                if sl.isValid():
+                    sl.setLineWidth(width)
+                    has_third_line = layout.createLine().isValid()
+                layout.endLayout()
+                if sl.isValid():
+                    second_line = utf16_slice(first_line, sl.textStart())
+                    if has_third_line:
+                        second_line = fm.elidedText(second_line, Qt.TextElideMode.ElideRight, width)
+                    return utf16_slice(first_line, 0, fl.textLength()), second_line, font, fm, True
+
+        # First adjust font size so that lines fit vertically
+        # Use height() rather than lineSpacing() as it allows for slightly
+        # larger font sizes
+        if math.ceil(fm.height() + extra_height) < height:
+            while font.pointSizeF() < self.max_font_size:
+                q, qm, qi = self.get_sized_font(font.pointSizeF() + 1, for_divider=for_divider)
+                if math.ceil(qm.height() + extra_height) < height:
+                    font, fm = q, qm
+                else:
+                    break
+        else:
+            while math.ceil(fm.height() + extra_height) > height:
+                nsz = font.pointSizeF()
+                if nsz < self.min_font_size and second_line:
+                    return '', '', font, fm, False
+                font, fm, fi = self.get_sized_font(nsz - 0.5, for_divider=for_divider)
+
+        # Now reduce the font size as much as needed to fit within width
+        text = first_line
+        if second_line and fm.boundingRect(first_line).width() < fm.boundingRect(second_line).width():
+            text = second_line
+        while fi.pointSizeF() > self.min_font_size and fm.boundingRect(text).width() > width:
+            font, fm, fi = self.get_sized_font(font.pointSizeF() - 1, for_divider=for_divider)
+        if fi.pointSizeF() <= self.min_font_size:
+            first_line = fm.elidedText(first_line, Qt.TextElideMode.ElideRight, width)
+            if second_line:
+                second_line = fm.elidedText(second_line, Qt.TextElideMode.ElideRight, width)
+        return first_line, second_line, font, fm, False
+
+    def draw_inline_divider(self, painter: QPainter, divider: ShelfItem, scroll_y: int):
+        '''Draw an inline group divider with it group name write vertically and a gradient line.'''
+        lc = self.layout_constraints
+        rect = divider.rect(lc).translated(0, -scroll_y)
+        divider_rect = QRect(-rect.height() // 2, -rect.width() // 2, rect.height(), rect.width())
+        text_right = gprefs['bookshelf_divider_text_right']
+
+        def draw_rounded_divider(corner_radius: int, offset: int):
+            p = self.case_renderer.divider_as_pixmap(rect.width(), rect.height(), self.theme.divider_background_color, corner_radius, offset)
+            painter.drawPixmap(rect.adjusted(0, -offset, 0, 0), p)
+
+        match gprefs['bookshelf_divider_style']:
+            case 'block':
+                painter.fillRect(rect, self.theme.divider_background_color)
+            case 'gravestone':
+                radius = rect.width() // 2
+                offset = radius // 4
+                draw_rounded_divider(radius, offset)
+            case 'rounded_corner':
+                radius = rect.width() // 4
+                offset = radius // 3
+                draw_rounded_divider(radius, offset)
+
+        # Bottom margin
+        text_rect = divider_rect.adjusted(
+            0 if text_right else self.TEXT_MARGIN,
+            0,
+            -self.TEXT_MARGIN if text_right else 0,
+            0,
+        )
+        elided_text, _, font, _, _ = self.get_text_metrics(divider.group_name, '', text_rect.size(), for_divider=True)
+        painter.save()
+        painter.setFont(font)
+        painter.setPen(self.theme.divider_text_color)
+        painter.translate(rect.left() + rect.width() // 2, rect.top() + rect.height() // 2)
+        painter.rotate(90 if gprefs['bookshelf_up_to_down'] else -90)
+        alignment = Qt.AlignmentFlag.AlignRight if text_right else Qt.AlignmentFlag.AlignLeft
+        sized_rect = painter.drawText(text_rect, alignment | Qt.AlignmentFlag.AlignVCenter, elided_text)
+        # Calculate line dimensions
+        line_rect = text_rect.adjusted(sized_rect.width(), 0, 0, 0)
+        overflow = (line_rect.height() - self.DIVIDER_LINE_WIDTH) // 2
+        line_rect.adjust(0, overflow, 0, -overflow)
+
+        # Draw vertical gradient line if long enough
+        if line_rect.width() > 8:
+            if text_right:
+                line_rect.translate(-sized_rect.width(), 0)
+            color1 = self.theme.divider_line_color.toRgb()
+            color2 = color1.toRgb()
+            color1.setAlphaF(0.0)  # Transparent at top/bottom
+            color2.setAlphaF(0.75)  # Visible in middle
+            gradient = QLinearGradient(
+                QPointF(line_rect.left(), line_rect.left()),
+                QPointF(line_rect.left() + line_rect.width(), line_rect.left()),
+            )
+            gradient.setColorAt(0, color1)
+            gradient.setColorAt(0.5, color2)
+            gradient.setColorAt(1, color1)
+
+            painter.save()
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.setBrush(QBrush(gradient))
+            painter.drawRect(line_rect)
+            painter.restore()
+
+        painter.restore()
+
+    def default_cover_pixmap(self) -> PixmapWithDominantColor:
+        lc = self.layout_constraints
+        sz = (QSizeF(lc.hover_expanded_width, lc.spine_height) * self.devicePixelRatioF()).toSize()
+        return default_cover_pixmap(sz.width(), sz.height())
+
+    def draw_spine(
+        self, painter: QPainter, spine: ShelfItem, scroll_y: int, is_selected: bool, is_current: bool,
+        should_draw_emblems: bool,
+    ):
+        lc = self.layout_constraints
+        spine_rect = spine.rect(lc).translated(0, -scroll_y)
+        thumbnail = self.cover_cache.thumbnail_as_pixmap(spine.book_id)
+        if thumbnail is None:  # not yet rendered
+            self.case_renderer.ensure_theme(is_dark_theme())
+            spine_color = self.case_renderer.theme.background
+        else:
+            if thumbnail.isNull():
+                thumbnail = self.default_cover_pixmap()
+            spine_color = thumbnail.dominant_color
+            if not spine_color.isValid():
+                spine_color = self.default_cover_pixmap().dominant_color
+
+            if is_selected or is_current:
+                spine_color = spine_color.lighter(120)
+
+            # Draw spine background with gradient (darker edges, lighter center)
+            self.draw_spine_background(painter, spine_rect, spine_color)
+
+            # Draw cover thumbnail overlay
+            self.draw_spine_cover(painter, spine_rect, thumbnail)
+
+        # Draw selection highlight around the spine
+        color = self.selection_highlight_color(is_selected, is_current)
+        if color.isValid():
+            self.draw_selection_highlight(painter, spine_rect, color)
+
+        top_emblem_size = bottom_emblem_size = 0
+        if should_draw_emblems:
+            top_emblem_size, bottom_emblem_size = self.draw_emblems(painter, spine, scroll_y)
+
+        # Draw title (rotated vertically)
+        self.draw_spine_title(painter, spine_rect, spine_color, spine.book_id, top_emblem_size, bottom_emblem_size)
+
+    def selection_highlight_color(self, is_selected: bool, is_current: bool) -> QColor:
+        if is_current and is_selected:
+            return self.theme.current_selected_color
+        if is_current:
+            return self.theme.current_color
+        if is_selected:
+            return self.theme.selected_color
+        return QColor()
+
+    def draw_spine_background(self, painter: QPainter, rect: QRect, spine_color: QColor):
+        '''Draw spine background with gradient (darker edges, lighter center).'''
+        painter.save()
+        painter.setOpacity(1.0)
+        gradient = QLinearGradient(QPointF(rect.topLeft()), QPointF(rect.topRight()))
+        gradient.setColorAt(0, spine_color.darker(115))
+        gradient.setColorAt(0.5, spine_color)
+        gradient.setColorAt(1, spine_color.darker(115))
+        painter.fillRect(rect, QBrush(gradient))
+
+        # Add subtle vertical gradient for depth
+        vertical_gradient = QLinearGradient(QPointF(rect.topLeft()), QPointF(rect.bottomLeft()))
+        vertical_gradient.setColorAt(0, QColor(255, 255, 255, 20))  # Slight highlight at top
+        vertical_gradient.setColorAt(1, QColor(0, 0, 0, 30))  # Slight shadow at bottom
+        painter.fillRect(rect, QBrush(vertical_gradient))
+        painter.restore()
+
+    def draw_spine_title(
+        self, painter: QPainter, rect: QRect, spine_color: QColor, book_id: int,
+        top_emblem_size: int, bottom_emblem_size: int,
+    ) -> None:
+        '''Draw vertically the title on the spine.'''
+        first_line, second_line = self.first_line_renderer(book_id), self.second_line_renderer(book_id)
+        margin = self.TEXT_MARGIN
+
+        def calculate_rects(has_two_lines: bool) -> tuple[QRect, QRect]:
+            if has_two_lines:
+                first_rect = QRect(rect.left(), rect.top() + margin, rect.width() // 2, rect.height() - 2*margin)
+                second_rect = first_rect.translated(first_rect.width(), 0)
+                if gprefs['bookshelf_up_to_down']:
+                    first_rect, second_rect = second_rect, first_rect
+            else:
+                first_rect = QRect(rect.left(), rect.top() + margin, rect.width(), rect.height() - 2*margin)
+                second_rect = QRect()
+            if top_emblem_size:
+                first_rect.adjust(0, top_emblem_size, 0, 0)
+                if has_two_lines:
+                    second_rect.adjust(0, top_emblem_size, 0, 0)
+            if bottom_emblem_size:
+                first_rect.adjust(0, 0, 0, -bottom_emblem_size)
+                if has_two_lines:
+                    second_rect.adjust(0, 0, 0, -bottom_emblem_size)
+            return first_rect, second_rect
+
+        first_rect, second_rect = calculate_rects(bool(second_line))
+
+        nfl, nsl, font, fm, was_wrapped = self.get_text_metrics(
+            first_line, second_line, first_rect.transposed().size(), allow_wrap=True,
+            outline_width=self.outline_width)
+        if not nfl and not nsl:  # two lines dont fit
+            second_line = ''
+            first_rect = QRect(rect.left(), first_rect.top(), rect.width(), first_rect.height())
+            nfl, nsl, font, fm, _ = self.get_text_metrics(
+                first_line, second_line, first_rect.transposed().size(), outline_width=self.outline_width)
+        elif was_wrapped:
+            first_rect, second_rect = calculate_rects(True)
+        first_line, second_line, = nfl, nsl
+
+        # Determine text color based on spine background brightness
+        text_color, outline_color = self.get_contrasting_text_color(spine_color)
+
+        def draw_text(text: str, rect: QRect, alignment: Qt.AlignmentFlag) -> None:
+            pixmap = render_spine_text_as_pixmap(
+                text, font, fm, rect.transposed().size(), alignment, gprefs['bookshelf_up_to_down'],
+                self.outline_width, self.devicePixelRatioF(), text_color, outline_color)
+            painter.drawPixmap(rect.topLeft(), pixmap)
+        if second_line:
+            draw_text(first_line, first_rect, Qt.AlignmentFlag.AlignBottom)
+            draw_text(second_line, second_rect, Qt.AlignmentFlag.AlignTop)
+        else:
+            draw_text(first_line, first_rect, Qt.AlignmentFlag.AlignVCenter)
+
+    def draw_spine_cover(self, painter: QPainter, rect: QRect, thumbnail: PixmapWithDominantColor) -> None:
+        match gprefs['bookshelf_thumbnail']:
+            case 'none':
+                return
+            # Adjust size
+            case 'crops':
+                thumbnail = thumbnail.copy(0, 0, rect.width(), thumbnail.height())
+            case 'edge':
+                width = round(max(10, rect.width() * 0.2))
+                thumbnail = thumbnail.copy(0, 0, width, thumbnail.height())
+                rect = QRect(rect.x(), rect.y(), width, rect.height())
+        # Draw with opacity
+        painter.save()
+        painter.setOpacity(gprefs['bookshelf_thumbnail_opacity'] / 100)
+        dpr = thumbnail.devicePixelRatioF()
+        thumbnail.setDevicePixelRatio(self.devicePixelRatioF())
+        painter.drawPixmap(rect, thumbnail)
+        thumbnail.setDevicePixelRatio(dpr)
+        painter.restore()
+
+    # Cover integration methods
+
+    def load_hover_cover(self, si: ShelfItem) -> tuple[PixmapWithDominantColor, QSize]:
+        lc = self.layout_constraints
+        cover_img = self.dbref().cover(si.book_id, as_image=True)
+        dpr = self.devicePixelRatioF()
+        final_sz = QSize(lc.hover_expanded_width, lc.spine_height - si.reduce_height_by)
+        sz = (QSizeF(final_sz) * dpr).toSize()
+        if cover_img is None or cover_img.isNull():
+            cover_pixmap = self.default_cover_pixmap()
+            resize_needed, nw, nh = fit_image(cover_pixmap.width(), cover_pixmap.height(), sz.width(), sz.height())
+            if resize_needed:
+                cover_pixmap = PixmapWithDominantColor(
+                    cover_pixmap.scaled(int(nw), int(nh), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        else:
+            _, cover_img = resize_to_fit(cover_img, sz.width(), sz.height())
+            cover_pixmap = PixmapWithDominantColor.fromImage(cover_img)
+            tb = self.cover_cache.thumbnail_as_pixmap(si.book_id)
+            if tb and tb.dominant_color.isValid():
+                # ensure that the hover color is the same than the thumbnail/spine
+                cover_pixmap.dominant_color = tb.dominant_color
+        final_sz = (QSizeF(cover_pixmap.size()) / dpr).toSize()
+        return cover_pixmap, final_sz
+
+    def get_contrasting_text_color(self, background_color: QColor) -> tuple[QColor, QColor]:
+        if not background_color or not background_color.isValid():
+            return self.theme.text_color_for_light_background, self.theme.outline_color_for_light_background
+        if (contrast_ratio(background_color, self.theme.text_color_for_dark_background)
+            > contrast_ratio(background_color, self.theme.text_color_for_light_background)):
+            return self.theme.text_color_for_dark_background, self.theme.outline_color_for_dark_background
+        return self.theme.text_color_for_light_background, self.theme.outline_color_for_light_background
+
+    # Selection methods (required for AlternateViews integration)
+
+    def select_rows(self, rows: Iterable[int], using_ids: bool = False) -> None:
+        if not (m := self.model()):
+            return
+        if using_ids:
+            row_indices = []
+            for book_id in rows:
+                if (row := self.row_from_book_id(book_id)) is not None:
+                    row_indices.append(row)
+            rows = row_indices
+
+        sel = selection_for_rows(m, rows)
+        sm = self.selectionModel()
+        sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows)
+
+    def selectAll(self):
+        m = self.model()
+        sm = self.selectionModel()
+        sel = QItemSelection(m.index(0, 0), m.index(m.rowCount(QModelIndex())-1, 0))
+        sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows)
+
+    def set_current_row(self, row):
+        sm = self.selectionModel()
+        sm.setCurrentIndex(self.model().index(row, 0), QItemSelectionModel.SelectionFlag.NoUpdate)
+
+    def set_database(self, newdb, stage=0):
+        if stage == 0:
+            self.grouping_mode = newdb.new_api.pref('bookshelf_grouping_mode', '')
+
+            # Clear caches when database changes
+            self.template_inited = False
+            self.cover_cache.set_database(newdb)
+            self.invalidate(set_of_books_changed=True, clear_spine_width_cache=True)
+
+    def set_context_menu(self, menu: QMenu):
+        self.context_menu = menu
+
+    def populate_group_by_menu(self, grouping_menu: QMenu) -> None:
+        grouping_menu.clear()
+        fm = self.gui.current_db.new_api.field_metadata
+
+        def add(field: str, name: str) -> None:
+            action = grouping_menu.addAction(name)
+            action.setCheckable(True)
+            action.setChecked(self.grouping_mode == field)
+            action.triggered.connect(partial(self.set_grouping_mode, field))
+        add('', _('Ungrouped'))
+        grouping_menu.addSeparator()
+        cf = {}
+        for field, m in fm.custom_field_metadata(include_composites=False).items():
+            if m['is_category'] or m['datatype'] == 'datetime':
+                cf[field] = numeric_sort_key(m['name'])
+        for k in all_groupings():
+            cf[k] = numeric_sort_key(fm[k]['name'])
+        for k in sorted(cf, key=cf.get):
+            add(k, fm[k]['name'])
+
+    def contextMenuEvent(self, ev: QContextMenuEvent):
+        if self.context_menu:
+            self.context_menu.popup(ev.globalPos())
+            ev.accept()
+
+    def set_grouping_mode(self, mode: str):
+        '''Set the grouping mode and refresh display.'''
+        if mode != self.grouping_mode:
+            self.grouping_mode = mode
+            self.dbref().set_pref('bookshelf_grouping_mode', mode)
+            self.invalidate()
+
+    def get_selected_ids(self) -> list[int]:
+        return [self.book_id_from_row(index.row()) for index in self.selectionModel().selectedRows() if index.isValid()]
+
+    def current_book_state(self) -> SavedState:
+        '''Get current book state for restoration.'''
+        sm = self.selectionModel()
+        r = sm.currentIndex().row()
+        current_book_id = 0
+        if r > -1:
+            with suppress(Exception):
+                current_book_id = self.bookcase.row_to_book_id[r]
+        selected_rows = (index.row() for index in sm.selectedRows())
+        selected_book_ids = set()
+        with suppress(Exception):
+            selected_book_ids = {self.bookcase.row_to_book_id[r] for r in selected_rows}
+        return SavedState(current_book_id, selected_book_ids)
+
+    def restore_current_book_state(self, state: SavedState) -> None:
+        m = self.model()
+        if not state or not m:
+            return
+        id_to_index = m.db.data.safe_id_to_index
+        selected_rows = set(map(id_to_index, state.selected_book_ids))
+        selected_rows.discard(-1)
+        orig_auto_scroll, self.auto_scroll = self.auto_scroll, self.bookcase.layout_finished
+        if selected_rows:
+            self.select_rows(selected_rows)
+        if (row := id_to_index(state.current_book_id)) > -1:
+            self.set_current_row(row)
+        elif not self.currentIndex().isValid():
+            self.set_current_row(0)
+        self.auto_scroll = orig_auto_scroll
+        if not self.bookcase.layout_finished and self.auto_scroll:
+            self.scroll_to_current_after_layout = True
+
+    def marked_changed(self, old_marked: set[int], current_marked: set[int]):
+        # Refresh display if marked books changed
+        self.update_viewport()
+
+    def indices_for_merge(self, resolved=True):
+        return self.selectionModel().selectedRows()
+
+    # Mouse and keyboard events {{{
+
+    def keyPressEvent(self, ev: QKeyEvent) -> None:
+        if handle_enter_press(self, ev, has_edit_cell=False):
+            return
+        if ev.matches(QKeySequence.StandardKey.SelectAll):
+            self.selectAll()
+            ev.accept()
+            return
+        if (key := ev.key()) not in (
+            Qt.Key.Key_Left, Qt.Key.Key_Right, Qt.Key.Key_Up, Qt.Key.Key_Down, Qt.Key.Key_PageDown,
+            Qt.Key.Key_PageUp, Qt.Key.Key_Home, Qt.Key.Key_End, Qt.Key.Key_Space,
+        ):
+            return super().keyPressEvent(ev)
+        if not self.bookcase.book_ids_in_visual_order or not (m := self.model()):
+            return
+        ev.accept()
+        target_book_id = 0
+        current_row = self.selectionModel().currentIndex().row()
+        try:
+            current_book_id = self.bookcase.row_to_book_id[current_row]
+        except Exception:
+            current_book_id = self.bookcase.book_ids_in_visual_order[0]
+        has_ctrl = bool(ev.modifiers() & Qt.KeyboardModifier.ControlModifier)
+        has_shift = bool(ev.modifiers() & Qt.KeyboardModifier.ShiftModifier)
+        ctrl_action = QItemSelectionModel.SelectionFlag.Toggle
+        no_mods_action = QItemSelectionModel.SelectionFlag.ClearAndSelect
+        match key:
+            case Qt.Key.Key_Space:
+                target_book_id = current_book_id
+                no_mods_action = QItemSelectionModel.SelectionFlag.Select
+            case Qt.Key.Key_Left:
+                target_book_id = self.bookcase.visual_neighboring_book(current_book_id, delta=-1)
+                ctrl_action = QItemSelectionModel.SelectionFlag.NoUpdate
+            case Qt.Key.Key_Right:
+                target_book_id = self.bookcase.visual_neighboring_book(current_book_id, delta=1)
+                ctrl_action = QItemSelectionModel.SelectionFlag.NoUpdate
+            case Qt.Key.Key_Up:
+                target_book_id = self.bookcase.book_in_column_of(current_book_id, delta=-1)
+                ctrl_action = QItemSelectionModel.SelectionFlag.NoUpdate
+            case Qt.Key.Key_Down:
+                target_book_id = self.bookcase.book_in_column_of(current_book_id, delta=1)
+                ctrl_action = QItemSelectionModel.SelectionFlag.NoUpdate
+            case Qt.Key.Key_PageUp:
+                target_book_id = self.bookcase.book_in_column_of(current_book_id, delta=-self.shelves_per_screen, in_bound=True)
+            case Qt.Key.Key_PageDown:
+                target_book_id = self.bookcase.book_in_column_of(current_book_id, delta=self.shelves_per_screen, in_bound=True)
+            case Qt.Key.Key_Home:
+                if has_ctrl:
+                    target_book_id = self.bookcase.book_ids_in_visual_order[0]
+                    has_ctrl = False
+                else:
+                    target_book_id = self.bookcase.end_book_on_shelf_of(current_book_id, first=True)
+            case Qt.Key.Key_End:
+                if has_ctrl:
+                    target_book_id = self.bookcase.book_ids_in_visual_order[-1]
+                    has_ctrl = False
+                else:
+                    target_book_id = self.bookcase.end_book_on_shelf_of(current_book_id, first=False)
+        if target_book_id <= 0:
+            return
+        target_index = m.index(self.bookcase.book_id_to_row_map[target_book_id], 0)
+        sm = self.selectionModel()
+        if has_shift:
+            handle_selection_click(self, target_index, self.bookcase.visual_row_cmp, self.selection_between)
+        elif has_ctrl:
+            sm.setCurrentIndex(target_index, QItemSelectionModel.SelectionFlag.Rows | ctrl_action)
+        else:
+            sm.setCurrentIndex(target_index, QItemSelectionModel.SelectionFlag.Rows | no_mods_action)
+        self.scrollTo(target_index)
+        self.update_viewport()
+
+    def scrollTo(self, index: QModelIndex, hint: QAbstractItemView.ScrollHint = QAbstractItemView.ScrollHint.EnsureVisible) -> None:
+        si = self.bookcase.book_id_to_item_map.get(self.book_id_from_row(index.row()))
+        if si is None:
+            return
+        viewport_height = self.viewport().height()
+        shelf_height = self.layout_constraints.step_height
+        match hint:
+            case QAbstractItemView.ScrollHint.PositionAtTop:
+                y = 0
+            case QAbstractItemView.ScrollHint.PositionAtBottom:
+                y = max(0, viewport_height - shelf_height)
+            case QAbstractItemView.ScrollHint.PositionAtCenter:
+                y = max(0, (viewport_height - shelf_height)//2)
+            case QAbstractItemView.ScrollHint.EnsureVisible:
+                top = si.case_start_y - self.verticalScrollBar().value()
+                if top >= 0 and top + shelf_height <= viewport_height:
+                    return
+                y = 0 if top < 0 else max(0, viewport_height - shelf_height)
+        self.verticalScrollBar().setValue(si.case_start_y - y)
+        self.update_viewport()
+
+    def on_current_changed(self, current: QModelIndex, previous: QModelIndex) -> None:
+        if self.auto_scroll and self.view_is_visible() and current.isValid():
+            self.scrollTo(current)
+
+    def selection_between(self, a: QModelIndex, b: QModelIndex) -> QItemSelection:
+        if m := self.model():
+            return selection_for_rows(m, self.bookcase.visual_selection_between(a.row(), b.row()))
+        return QItemSelection()
+
+    def handle_mouse_move_event(self, ev: QMouseEvent):
+        ev.accept()
+        if ev.buttons() & Qt.MouseButton.LeftButton:
+            handle_selection_drag(self, self.indexAt(ev.pos()), self.click_start_data, self.bookcase.visual_row_cmp, self.selection_between)
+            return
+        if gprefs['bookshelf_hover'] == 'none':
+            return
+        pos = ev.pos()
+        case_item, _, shelf_item = self.item_at_position(pos.x(), pos.y())
+        if shelf_item is not None and not shelf_item.is_divider:
+            self.expanded_cover.shelf_item_hovered(case_item, shelf_item)
+        else:
+            self.expanded_cover.shelf_item_hovered()
+
+    def currentIndex(self):
+        return self.selectionModel().currentIndex()
+
+    def handle_mouse_press_event(self, ev: QMouseEvent) -> None:
+        if ev.button() not in (Qt.MouseButton.LeftButton, Qt.MouseButton.RightButton) or not (index := self.indexAt(ev.pos())).isValid():
+            return
+        orig_auto_scroll, self.auto_scroll = self.auto_scroll, False  # prevent scrolling while user is interacting
+        sm = self.selectionModel()
+        flags = QItemSelectionModel.SelectionFlag.Rows
+        modifiers = ev.modifiers()
+        if ev.button() == Qt.MouseButton.RightButton:
+            modifiers = Qt.KeyboardModifier.NoModifier  # no extended selection with right button
+        if modifiers & Qt.KeyboardModifier.ControlModifier:
+            # Toggle selection
+            sm.setCurrentIndex(index, flags | QItemSelectionModel.SelectionFlag.Toggle)
+        else:
+            if not modifiers & Qt.KeyboardModifier.ShiftModifier:
+                sm.setCurrentIndex(index, flags | QItemSelectionModel.SelectionFlag.ClearAndSelect)
+            self.click_start_data = handle_selection_click(self, index, self.bookcase.visual_row_cmp, self.selection_between)
+        ev.accept()
+        self.auto_scroll = orig_auto_scroll
+
+    def handle_mouse_release_event(self, ev: QMouseEvent) -> None:
+        self.click_start_data = None
+
+    def mouseDoubleClickEvent(self, ev: QMouseEvent) -> bool:
+        '''Handle mouse double-click events on the viewport.'''
+        index = self.indexAt(ev.pos())
+        self.click_start_data = None
+        if index.isValid() and (row := index.row()) >= 0:
+            # Set as current row first
+            self.set_current_row(row)
+            ev.accept()
+            double_click_action(index)
+
+    def viewportEvent(self, ev: QEvent) -> None:
+        if ev.type() == QEvent.Type.Leave:
+            # Clear hover when mouse leaves viewport
+            self.expanded_cover.invalidate()
+            self.update_viewport()
+            ev.accept()
+            return True
+        return super().viewportEvent(ev)
+    # }}}
+
+    def item_at_position(self, x: int, y: int) -> tuple[CaseItem|None, CaseItem|None, ShelfItem|None]:
+        scroll_y = self.verticalScrollBar().value()
+        content_y = y + scroll_y
+        lc = self.layout_constraints
+        x -= lc.side_margin
+        if (shelf := self.bookcase.shelf_with_ypos(content_y)) is not None:
+            modshelf = self.expanded_cover.modify_shelf_layout(shelf)
+            if (item := modshelf.book_or_divider_at_xpos(x, lc)) is not None:
+                return shelf, modshelf, item
+        return None, None, None
+
+    def book_id_at_position(self, x: int, y: int) -> int:
+        _, _, shelf_item = self.item_at_position(x, y)
+        if shelf_item is not None and not shelf_item.is_divider:
+            return shelf_item.book_id
+        return -1
+
+    def book_row_at_position(self, x: int, y: int) -> int:
+        ' Find which book is at the given position. x, y are in viewport coordinates '
+        book_id = self.book_id_at_position(x, y)
+        if book_id > 0:
+            if (row := self.row_from_book_id(book_id)) is not None:
+                return row
+        return -1
+
+    def indexAt(self, pos: QPoint) -> QModelIndex:
+        if (m := self.model()):
+            row = self.book_row_at_position(pos.x(), pos.y())
+            if row >= 0 and (ans := m.index(row, 0)).isValid():
+                return ans
+        return QModelIndex()

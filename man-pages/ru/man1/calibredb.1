@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "декабря 06, 2025" "8.16.2" "calibre"
+.TH "CALIBREDB" "1" "января 30, 2026" "9.0.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -141,7 +141,7 @@ fts_search
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Путь к библиотеке calibre. По умолчанию используется путь, сохранённый в настройках. Также можно подключиться к контент\-серверу calibre для выполнения действий в удалённых библиотеках. Для этого используйте URL\-адрес: \%<http://\:hostname:port/#\:library_id>, например, \%<http://\:localhost:8080/#\:mylibrary>\&. Library_id \- это идентификатор библиотеки библиотеки, к которой вы хотите подключиться, на контент\-сервере. Можно использовать специальное значение library_id для получения списка идентификаторов библиотеки, доступных на сервере. Подробнее о настройке доступа через контент\-сервер см. в разделе \%<https://\:manual\:.calibre-ebook\:.com/\:ru/\:generated/\:ru/\:calibredb\:.html>\&.
+Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:ru/\:generated/\:ru/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -219,7 +219,7 @@ calibredb список [options]
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Поле, по которому будут отсортированы результаты. Вы можете указать несколько полей, разделяя их запятыми. Доступные поля: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Значение по умолчанию: id. В дополнение к встроенным полям, указанным выше, пользовательские поля также доступны в виде *field_name, например, для пользовательского поля #rating используйте имя: *rating
 .UNINDENT
 .INDENT 0.0
 .TP

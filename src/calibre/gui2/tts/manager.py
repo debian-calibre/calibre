@@ -125,7 +125,7 @@ class TTSManager(QObject):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._tts: 'TTSBackend' | None = None  # noqa: UP037
+        self._tts: TTSBackend | None = None
         self.state = QTextToSpeech.State.Ready
         self.speaking_simple_text = False
         self.tracker = Tracker()
@@ -142,7 +142,7 @@ class TTSManager(QObject):
             self.state_event.emit(event)
 
     @property
-    def tts(self) -> 'TTSBackend':
+    def tts(self) -> TTSBackend:
         if self._tts is None:
             with BusyCursor():
                 from calibre.gui2.tts.types import create_tts_backend

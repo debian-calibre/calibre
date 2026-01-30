@@ -1,5 +1,85 @@
 [
     {
+        "version": "9.0.0",
+        "date": "2026-01-30",
+        "new features": [
+            {
+                "type": "major",
+                "title": "A new Bookshelf view with your books arranged on shelves showing their spines.",
+                "description": "Click the Layout button in the bottom right corner of the calibre window to switch to Bookshelf view."
+            },
+            {
+                "type": "major",
+                "title": "Viewer: Add an \"Edit book\" button to the viewer controls to edit the current book when the current book is in an editable format such as EPUB, AZW3 or KEPUB. It opens the editor at the approximate location that is currently being viewed."
+            },
+            {
+                "title": "Linux: Add momentum based scrolling for the book list when using high resolution scroll devices like touchpads"
+            },
+            {
+                "tickets": [
+                    2137504
+                ],
+                "title": "TXT Output: Add an option to replace images by their alt attribute text"
+            },
+            {
+                "title": "EPUB: Support reading cover images from so called \"Open Manga Format\" non-conformant EPUB files produced by some Japanese publishers."
+            },
+            {
+                "tickets": [
+                    2138862
+                ],
+                "title": "Add a tweak to change the font size of the AI chat widget"
+            },
+            {
+                "title": "E-book viewer: Allow typing in a page number to go to instead of forcing the user to scroll through existing page numbers"
+            },
+            {
+                "title": "Kobo driver: Support for updated firmware"
+            }
+        ],
+        "bug fixes": [
+            {
+                "title": "KEPUB Output: Add some CSS to fix rendering of tate-chu-yoko text on Kobo devices"
+            },
+            {
+                "tickets": [
+                    2138770
+                ],
+                "title": "Only show the Sort button on the search bar if the Sort By action has not been added to the search bar by the user"
+            },
+            {
+                "tickets": [
+                    2137122
+                ],
+                "title": "EPUB3 metadata: Handle identifiers that use HTTP URLs without the url: prefix"
+            },
+            {
+                "title": "Edit book: Check book: Fix spurious unreferenced warnings for SMIL media overlay audio files"
+            },
+            {
+                "tickets": [
+                    2138179
+                ],
+                "title": "Edit book: Reports: Have pressing enter do the same action as double clicking the current entry"
+            },
+            {
+                "title": "E-book viewer: Improve export of SVG images"
+            },
+            {
+                "title": "Disable GPU acceleration for Qt WebEngine by default to prevent crashes on some older systems. Can be re-enabled via Preferences->Tweaks"
+            },
+            {
+                "title": "Speedup calibre shutdown time by a couple of seconds"
+            }
+        ],
+        "improved recipes": [
+            "Times Literary Supplement",
+            "Private Eye",
+            "New Yorker"
+        ],
+        "new recipes": []
+    },
+    {
         "version": "8.16.2",
         "date": "2025-12-04",
         "new features": [
@@ -11,7 +91,7 @@
                 "title": "AI: Allow asking AI what book to read next by right clicking on a book and using the \"Similar books\" menu"
             },
             {
-                "title": "AI: Add a new backend for \"LM Studio\" which allows running various AI models locally"
+                "title": "AI: Add a new plugin for \"LM Studio\" which allows running various AI models locally"
             }
         ],
         "bug fixes": [
