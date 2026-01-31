@@ -744,10 +744,11 @@ class CoverDelegate(QStyledItemDelegate):
             else:
                 if self.animating is not None and self.animating.row() == index.row():
                     cover = cover.scaled(cover.size() * self._animated_size)
-                dpr = cover.devicePixelRatio()
-                cw, ch = int(cover.width() / dpr), int(cover.height() / dpr)
-                dx = max(0, int((rect.width() - cw)/2.0))
-                dy = max(0, int((rect.height() - ch)/2.0))
+                cover = QPixmap(cover)
+                cover.setDevicePixelRatio(painter.device().devicePixelRatioF())
+                sz = cover.deviceIndependentSize()
+                dx = max(0, int((rect.width() - sz.width())/2.0))
+                dy = max(0, int((rect.height() - sz.height())/2.0))
                 right_adjust = dx
                 rect.adjust(dx, dy, -dx, -dy)
                 self.paint_cover(painter, rect, cover)
