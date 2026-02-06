@@ -586,7 +586,7 @@ class DB:
             # Only apply default prefs to a new database
             for i, key in enumerate(default_prefs):
                 # be sure that prefs not to be copied are listed below
-                if restore_all_prefs or key not in frozenset(['news_to_be_synced']):
+                if restore_all_prefs or key != 'news_to_be_synced':
                     self.prefs[key] = default_prefs[key]
                     progress_callback(_('restored preference ') + key, i+1)
             if 'field_metadata' in default_prefs:
@@ -1270,7 +1270,7 @@ class DB:
             dt = 'INT'
         elif datatype in ('text', 'comments', 'series', 'composite', 'enumeration'):
             dt = 'TEXT'
-        elif datatype in ('float',):
+        elif datatype == 'float':
             dt = 'REAL'
         elif datatype == 'datetime':
             dt = 'timestamp'
@@ -1462,8 +1462,11 @@ class DB:
                 finally:
                     self.reopen()
 
-    def vacuum(self, include_fts_db, include_notes_db):
+    def vacuum(self, include_fts_db, include_notes_db, rebuild_annotations_fts):
         self.execute('VACUUM')
+        if rebuild_annotations_fts:
+            self.execute('INSERT INTO annotations_fts(annotations_fts) VALUES("rebuild");')
+            self.execute('INSERT INTO annotations_fts_stemmed(annotations_fts_stemmed) VALUES("rebuild");')
         if self.fts_enabled and include_fts_db:
             self.fts.vacuum()
         if include_notes_db:
@@ -1481,17 +1484,10 @@ class DB:
     def initialize_database(self):
         metadata_sqlite = P('metadata_sqlite.sql', data=True,
                 allow_user_override=False).decode('utf-8')
-        cur = self.conn.cursor()
-        cur.execute('BEGIN EXCLUSIVE TRANSACTION')
-        try:
-            cur.execute(metadata_sqlite)
-        except Exception:
-            cur.execute('ROLLBACK')
-            raise
-        else:
-            cur.execute('COMMIT')
-        if self.user_version == 0:
-            self.user_version = 1
+        with self.conn:
+            self.conn.cursor().execute(metadata_sqlite)
+            if self.user_version == 0:
+                self.user_version = 1
     # }}}
 
     def __enter__(self):
