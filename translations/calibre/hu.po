@@ -51,7 +51,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-01-31 06:13+UTC\n"
+"POT-Creation-Date: 2026-02-05 08:58+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Timinoun <timinoun@freemail.hu>, 2022-2025\n"
 "Language-Team: Hungarian (http://app.transifex.com/calibre/calibre/language/hu/)\n"
@@ -640,7 +640,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:221
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:1196
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:1288
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:408
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:241
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:1265
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:711
@@ -848,9 +848,9 @@ msgstr "Semmit sem csinál"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:79
 #: /__w/calibre/calibre/src/calibre/db/__init__.py:115
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1541
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1566
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2341
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1537
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1562
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2337
 #: /__w/calibre/calibre/src/calibre/db/cache.py:363
 #: /__w/calibre/calibre/src/calibre/db/cache.py:366
 #: /__w/calibre/calibre/src/calibre/db/cache.py:376
@@ -1025,8 +1025,8 @@ msgstr "Semmit sem csinál"
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:431
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:624
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:809
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:757
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:950
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:758
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:951
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:743
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1576
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1807
@@ -2106,7 +2106,7 @@ msgstr "Adatbázis áttöltése SQL-be"
 msgid "Restoring database from SQL"
 msgstr "Adatbázis visszaállítása SQL-ből"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2735
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2731
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3409
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3814
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:224
@@ -6011,21 +6011,21 @@ msgstr "Az alsó margó mérete pontokban. Alapértelmezett érték: 72pt. Felü
 msgid "Convert EPUB files (.epub) to HTML"
 msgstr "Konvertálás EPUB fájlból (.epub) HTML -be"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:127
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:131
 msgid "Cover image"
 msgstr "Borító kép"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:137
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:233
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:141
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:237
 msgid "Cover page"
 msgstr "Borító oldal"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:367
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:371
 #, python-brace-format
 msgid "The file {} is locked with DRM. It cannot be viewed"
 msgstr "{} fájl DRM-mel zárolva van. Nem nézhető meg"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:371
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/epub_input.py:375
 #, python-brace-format
 msgid "The file {} is locked with DRM. It cannot be converted"
 msgstr "{} fájl DRM-mel zárolva van. Nem konvertálható"
@@ -6246,26 +6246,50 @@ msgid ""
 msgstr "Általában a HTML-fájl vagy annak alárendelt forrásai csak akkor engedélyezettek, ha az eredeti HTML-fájl almappájában vannak. Ez az opció lehetővé teszi a helyi fájlok felvételét a számítógép bármely helyéről. Ez biztonsági kockázatot jelenthet, ha nem megbízható HTML-kódot konvertál, és az átalakítás eredményének terjesztésére számít."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:30
-msgid "CSS file used for the output instead of the default file"
-msgstr "CSS filet ad kimenetként az alapértelmezett helyett"
+msgid "CSS file used for the output instead of the default CSS."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:33
 msgid ""
 "Template used for generation of the HTML index file instead of the default "
-"file"
-msgstr "A HTML indexfájl generálásához használt sablon az alapértelmezett fájl helyett"
+"template. In Mustache format."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:36
 msgid ""
 "Template used for the generation of the HTML contents of the book instead of"
-" the default file"
-msgstr "A könyv HTML-tartalmának generálásához használt sablon az alapértelmezett fájl helyett"
+" the default template. In Mustache format."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:39
 msgid ""
 "Extract the contents of the generated ZIP file to the specified folder. "
 "WARNING: The contents of the folder will be deleted."
 msgstr "Kicsomagolja a létrehozott ZIP fájl tartalmát a megadott mappába. FIGYELMEZTETÉS: A mappa tartalma törlődik."
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:143
+msgid "No table of contents present"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:143
+msgid "Table of contents"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:144
+msgid "begin to read"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:144
+msgid "start"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:145
+msgid "next page"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:145
+msgid "previous page"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/htmlz_input.py:15
 msgid "Convert HTMLZ files to HTML"
@@ -19149,51 +19173,61 @@ msgid "Check database integrity and compact it for improved performance."
 msgstr "Ellenőrizze az adatbázis integritását, és tömörítse azt a jobb teljesítmény érdekében."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:67
+msgid "Also rebuild the annotations search index"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:70
+msgid ""
+"This can be a slow operation, depending on the number of annotations you "
+"have."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:74
 msgid "Also compact the Full text search database"
 msgstr "Ezenkívül tömörítse a teljes szöveges keresési adatbázist"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:77
 msgid ""
 "This can be a very slow and memory intensive operation, depending on the "
 "size of the Full text database."
 msgstr "Ez a teljes szöveges adatbázis méretétől függően nagyon lassú és memóriaigényes művelet lehet."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:75
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:82
 msgid "Also compact the notes database"
 msgstr "A jegyzetek adatbázisának tömörítése is"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:78
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:85
 msgid ""
 "This can be a very slow and memory intensive operation, depending on the "
 "size of the notes database."
 msgstr "Ez egy nagyon lassú és memóriaigényes művelet lehet, a jegyzetadatbázis méretétől függően."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:88
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:95
 msgid "Check the database file"
 msgstr "Ellenőrizze az adatbázis fájlt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:91
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:98
 msgid "Vacuuming database to improve performance."
 msgstr "Adatbázis takarítása a teljesítmény növeléséhez."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:99
 msgid "This will take a while, please wait..."
 msgstr "Türelmet kérünk, ez el fog tartani egy ideig..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:104
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:111
 msgid "Vacuuming..."
 msgstr "Takarítás..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:159
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:167
 #, python-brace-format
 msgid "Open folder {}"
 msgstr "{} mappa megnyitása"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:180
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:188
 msgid "Check library -- Problems found"
 msgstr "Könyvtár ellenőrzése -- Problémák"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:195
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:203
 msgid ""
 "        <h1>Help</h1>\n"
 "\n"
@@ -19257,92 +19291,92 @@ msgid ""
 "        "
 msgstr "        <h1>Súgó</h1>\n\n        <p>A Calibre a könyvek listáját és azok metaadatait egy adatbázisban \n        tárolja. A tényleges könyvfájlok és borítók normál fájlokként tárolódnak  \n        a Calibre könyvtár mappájában. Az adatbázis tartalmazza az egyes \n        könyvbejegyzésekhez tartozó akták és borítók listáját. Ez az eszköz \n        ellenőrzi, hogy a számítógépe könyvtármappájában lévő tényleges \n        fájlok megegyeznek-e az adatbázisban található információkkal.</p>\n\n        <p>Az egyes típusú ellenőrzések eredménye a bal oldalon látható. \n        A különböző ellenőrzések a következők:\n        </p>\n        <ul>\n        <li><b>Érvénytelen címek</b>: Ezek olyan mappák, fájlok a Calibre \n        könyvtárában, amelyek nem feleltethetők meg könyv címnek \n        hibás név miatt.\n        <li><b>Extra címek</b>: Ezek olyan extra fájlok a Calibre  könyvtárában, \n        amelyek helyesen formált címeknek tűnnek, de nincs megfelelő  \n        bejegyzésük az adatbázisban..</li>\n        <li><b>Érvénytelen szerzők</b>: Ezek a fájlok a könyvtárban jelennek meg, \n        ahol csak a szerzői mappáknak kell lenniük.</li>\n        <li><b>Extra szerzők</b>: Ezek olyan mappák a Calibre könyvtárban, \n        amelyek szerzőknek tűnnek, de nem tartalmaznak bejegyzéseket \n        az adatbázisban.\n        <li><b>Hiányzó könyvformátumok</b>: Ezek a könyvformátumok, szerepelnek \n        az adatbázisban, de nincs megfelelő formátumú fájl a könyv mappájában.\n        <li><b>Extra könyvformátumok</b>: Ezek olyan könyvformátumú fájlok, \n        amelyek a könyv mappájában találhatók, de az adatbázisban nem.\n        <li><b>Ismeretlen fájlok a könyvekben</b>: Ezek olyan extra fájlok az egyes könyvek \n        mappájában, amelyek nem felelnek meg egy ismert formátumnak vagy \n        borítófájlnak.\n        <li><b>Hiányzó borítófájlok</b>: Ezek olyan könyvek, amelyek az \n        adatbázisban borítóval megjelöltek, de a tényleges borítófájlok \n        hiányoznak.</li>\n        <li><b>Nincsenek borítófájlok az adatbázisban</b>: Ezek olyan könyvek, \n        amelyeknek van borítófájlja, de az adatbázisban úgy van megjelölve, hogy nincs borítója.</li>\n        <li><b>Hibajelzést adó mappák</b>: Ezek a Calibre könyvtárban \n        lévő mappák, amelyeket ez az eszköz nem tudott feldolgozni \n        illetve értelmezni.\n        </ul>\n\n        <p>Kétféle automatikus javítás lehetséges: <i>Kijelölt\n        törlése</i> és <i>kijelölt javítása</i>.</p>\n        <p><i>A kijelölt törlése</i> használható A felesleges fájlok, mappák, borítók eltávolítására,\n        amelyeknek nincs bejegyzése az adatbázisban. Jelölje be a törlendő melletti négyzetet.\n        Óvatosan használja.</p>\n\n        <p><i>A kijelölt javítása</i> csak a hiányzó borítók és fájlformátumok esetén használható\n         (a három \"javítható\" jelzésű sor). A hiányzó borítófájlok esetében a javítható \n        jelölőnégyzet bejelölése és a gomb megnyomása azt jelzi a Calibre számára, hogy a felsorolt \n        könyvek egyikéhez sincs borító. Akkor használja ezt a lehetőséget, ha  \n        nem fogja visszaállítani a borítókat biztonsági mentésből. Felesleges  borítófájlok \n        esetén a javítható jelölőnégyzet bejelölése és e gomb  megnyomása azt jelzi, hogy a talált \n        borítófájlok a felsorolt könyvek mindegyikéhez megfelelőek. Ezt akkor használja, \n        ha nem kívánja törölni a fájl(ok)at. Hiányzó formátumok  esetén a  \n        javítható jelölőnégyzet bejelölése és ennek a gombnak a  megnyomása\n        jelzi, hogy a formátumok valóban eltűntek. Ezt akkor használja, \n        ha nem fogja visszaállítani a formátumokat biztonsági mentésből.</p>\n\n        "
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:263
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:271
 msgid "&Run the check again"
 msgstr "&Újraellenőrzés"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:266
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:274
 msgid "Copy &to clipboard"
 msgstr "Másolás &vágólapról"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:269
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:277
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:764
 msgid "&Done"
 msgstr "&Kész"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:272
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:280
 msgid "Mark &all for delete"
 msgstr "Összes kijelölése törléshez"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:273
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:281
 msgid "Mark all deletable subitems"
 msgstr "Az összes elem kijelölése törléshez"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:284
 msgid "Delete &marked"
 msgstr "Megjelöltek &törlése"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:277
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:285
 msgid "Delete marked files (checked subitems)"
 msgstr "Megjelölt fájlok törlése (kipipált elemek)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:280
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:288
 msgid "Mar&k all for fix"
 msgstr "Összes kijelölése j&avításhoz"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:289
 msgid "Mark all fixable items"
 msgstr "Az összes kijelölt elem javítása"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:284
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:292
 msgid "&Fix marked"
 msgstr "Megjelöltek &javítása"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:295
 msgid "Fix marked sections (checked fixable items)"
 msgstr "Megjelöltek javítása"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:299
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:307
 msgid "Names to ignore:"
 msgstr "Figyelmen kívül hagyott nevek:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:304
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:312
 msgid ""
 "Note: ignoring folders or files inside a book folder can lead to data loss. "
 "Ignored folders and files will be lost if you change the book's title or "
 "author(s)."
 msgstr "Megjegyzés: a könyvmappákon belüli mappák vagy fájlok figyelmen kívül hagyása adatvesztéshez vezethet. A figyelmen kívül hagyott mappák és fájlok elvesznek, ha megváltoztatja a könyv címét vagy szerzőjét."
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:307
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:315
 msgid ""
 "Enter comma-separated standard shell file name wildcards, such as "
 "synctoy*.dat. Used in library, author, and book folders"
 msgstr "Írjon be vesszővel elválasztott szabványos shell fájlnév helyettesítő karaktereket, például synctoy*.dat. Könyvtárban, szerzőben és könyvmappákban használják"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:312
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:320
 msgid "Extensions to ignore:"
 msgstr "Figyelmen kívül hagyott kiterjesztések:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:317
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:325
 msgid ""
 "Enter comma-separated extensions without a leading dot. Used only in book "
 "folders"
 msgstr "Vesszővel elválasztott kiterjesztések megadása kezdőpont nélkül. Csak könyvmappákban használt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:365
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:373
 msgid "(fixable)"
 msgstr "(javítható)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:371
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:376
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:379
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:384
 msgid "(deletable)"
 msgstr "(törölhető)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:408
 msgid "Path from library"
 msgstr "A könyvtár útvonala"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:499
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:507
 msgid ""
 "The marked files and folders will be <b>permanently deleted</b>. Are you "
 "sure?"
@@ -25804,17 +25838,17 @@ msgstr "Kiemelés"
 msgid "<h2>Shutting down</h2><div>"
 msgstr "<h2>Leállítás</h2><div>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:857
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:861
 #, python-format
 msgid "Book %(sidx)s of <span class=\"series_name\">%(series)s</span>"
 msgstr "%(sidx)s. könyv ebből a sorozatból: <span class=\"series_name\">%(series)s</span>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:862
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:866
 #, python-format
 msgid "This book is on the device in %s"
 msgstr "Ez a könyv az eszközön itt: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:870
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:874
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1091
 msgid "tooltip template error"
 msgstr ""
@@ -26057,32 +26091,32 @@ msgstr[1] "Biztos benne, hogy <b>véglegesen</b> töröl {} megjegyzést?"
 msgid "Editing is only supported for the notes associated with highlights"
 msgstr "Szerkesztés csak a kiemelésekhez társított jegyzeteknél támogatott"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:753
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:754
 msgid "No series"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:754
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:755
 msgid "Untagged"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:755
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:756
 msgid "No publisher"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:756
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:757
 msgid "Unpublished"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:758
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:976
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:759
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:977
 msgid "Unrated"
 msgstr "Nem értékelt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:759
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:760
 msgid "No language"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:2356
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:2365
 msgid "Ungrouped"
 msgstr ""
 
@@ -36267,31 +36301,31 @@ msgstr "További információért kattintson a \"Részletek megjelenítése\" go
 msgid "Read aloud failed"
 msgstr "A hangos felolvasás sikertelen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:114
+#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:115
 #, python-brace-format
 msgid "Downloading neural network for the {} voice"
 msgstr "Neurális hálózat letöltése {} hanghoz"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:114
+#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:115
 msgid "Downloading voice for Read aloud"
 msgstr "Hang letöltése a felolvasáshoz"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:116
 msgid "Neural network data"
 msgstr "Neurális hálózati adatok"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:117
 msgid "Neural network metadata"
 msgstr "Neurális hálózat metaadatai"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:460
 #, python-brace-format
 msgid "Failed to download the voice: {}"
 msgstr "Nem sikerült letölteni a hangot: {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:456
+#: /__w/calibre/calibre/src/calibre/gui2/tts/piper.py:460
 msgid "Failed to download voice"
 msgstr "Nem sikerült letölteni a hangot"
 

@@ -14,6 +14,7 @@ from functools import lru_cache, partial
 from operator import attrgetter
 from queue import LifoQueue, ShutDown
 from threading import Event, RLock, Thread, current_thread
+from time import monotonic
 from typing import NamedTuple
 
 from qt.core import (
@@ -1189,7 +1190,11 @@ class BookCase(QObject):
                 x = self.queue.get()
             except ShutDown:
                 break
-            self.do_layout_in_worker(*x)
+            try:
+                self.do_layout_in_worker(*x)
+            except Exception:
+                import traceback
+                traceback.print_exc()
 
     def do_layout_in_worker(
         self, invalidate: Event, lc: LayoutConstraints, group_field_name: str, row_to_book_id: tuple[int, ...],
@@ -1487,6 +1492,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
 
     def __init__(self, gui):
         super().__init__(gui)
+        self.first_painted_at = 0
         self.auto_scroll = True
         self.scroll_to_current_after_layout: bool = False
         self.theme: ColorTheme = None
@@ -1527,9 +1533,8 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         self.second_line_renderer = self.build_template_renderer('authors', '')
 
         # Initialize drag and drop
-        # so we set the attributes manually
-        self.drag_allowed = True
-        self.drag_start_pos = None
+        setup_dnd_interface(self)
+
         self.bookcase = BookCase(self)
         self.bookcase.shelf_added.connect(self.on_shelf_layout_done, type=Qt.ConnectionType.QueuedConnection)
         self.bookcase.num_of_groups_changed.connect(self.update_scrollbar_ranges, type=Qt.ConnectionType.QueuedConnection)
@@ -1924,6 +1929,8 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         '''Paint the bookshelf view.'''
         if not self.view_is_visible():
             return
+        if not self.first_painted_at:
+            self.first_painted_at = monotonic()
         self.bookcase.ensure_layouting_is_current()
 
         with QPainter(self.viewport()) as painter:
@@ -1956,6 +1963,8 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         n = self.shelves_per_screen
         for base in shelf_bases:
             self.draw_shelf_base(painter, base, scroll_y, self.width(), base.idx % n)
+        if self.resize_debounce_timer.isActive() and monotonic() - self.first_painted_at < 2:
+            return
         for shelf, has_expanded in shelves:
             # Draw books and inline dividers on it
             if has_expanded:
