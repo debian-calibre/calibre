@@ -88,16 +88,16 @@ calibre_auto_install:
 	env XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config PODOFO_INC_DIR=$(TOPDIR)/podofo/src/podofo PODOFO_LIB_DIR=$(TOPDIR)/podofo/src/podofo $(SETUP) install --root=debian/tmp/usr
 #
 #	# not needed
-	rm debian/tmp/usr/share/calibre/calibre-portable.*
-	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
-	rmdir debian/tmp/usr/share/desktop-directories
+	rm    -v debian/tmp/usr/share/calibre/calibre-portable.*
+	rm    -v debian/tmp/usr/lib/python*/site-packages/init_calibre.py
+	rmdir -v debian/tmp/usr/share/desktop-directories
 #
 #	# do not install developer's script
-	rm    debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
-	rmdir debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/
+	rm    -v debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
+	rmdir -v debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/
 #	# Debian package "python3-tinycss" doesn't installs test code
-	rm    debian/tmp/usr/lib/calibre/tinycss/tests/*.py
-	rmdir debian/tmp/usr/lib/calibre/tinycss/tests/
+	rm    -v debian/tmp/usr/lib/calibre/tinycss/tests/*.py
+	rmdir -v debian/tmp/usr/lib/calibre/tinycss/tests/
 #
 #	# Remove source path name from pyuic6 outputs
 	find debian/tmp/usr/lib/calibre/calibre/gui2 -name '*_ui.py' -print | xargs --no-run-if-empty sed --separate --file=debian/remove-ui-basepath.sed --in-place
