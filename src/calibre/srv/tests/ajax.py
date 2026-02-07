@@ -83,6 +83,8 @@ class ContentTest(LibraryBaseTest):
             self.ae(set(data['book_ids']), {1, 2})
             r, data = request('/search?' + urlencode({'query': 'tags:"=Tag One"', 'vl':'1'}))
             self.ae(set(data['book_ids']), {2})
+            r, data = request('/search?' + urlencode({'query': 'template:"{tags}#@#:t:=Tag One"'}))
+            self.ae(r.status, 400)
     # }}}
 
     def test_srv_restrictions(self):  # {{{

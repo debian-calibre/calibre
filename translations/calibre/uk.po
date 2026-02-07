@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-02-05 08:58+UTC\n"
+"POT-Creation-Date: 2026-02-06 11:08+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2011-2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -560,7 +560,7 @@ msgid "Content moderated:"
 msgstr "Модерація даних:"
 
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:197
-#: /__w/calibre/calibre/src/calibre/db/search.py:340
+#: /__w/calibre/calibre/src/calibre/db/search.py:344
 #: /__w/calibre/calibre/src/calibre/db/utils.py:44
 #: /__w/calibre/calibre/src/calibre/library/caches.py:135
 #: /__w/calibre/calibre/src/calibre/library/caches.py:621
@@ -569,7 +569,7 @@ msgid "no"
 msgstr "ні"
 
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:197
-#: /__w/calibre/calibre/src/calibre/db/search.py:341
+#: /__w/calibre/calibre/src/calibre/db/search.py:345
 #: /__w/calibre/calibre/src/calibre/db/utils.py:42
 #: /__w/calibre/calibre/src/calibre/library/caches.py:135
 #: /__w/calibre/calibre/src/calibre/library/caches.py:622
@@ -2090,7 +2090,7 @@ msgstr "Збережені результати пошуків"
 
 #: /__w/calibre/calibre/src/calibre/db/cache.py:396
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:231
-#: /__w/calibre/calibre/src/calibre/db/search.py:341
+#: /__w/calibre/calibre/src/calibre/db/search.py:345
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:708
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:267
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1152
@@ -2633,18 +2633,18 @@ msgstr "Чекаємо на завершення індексування для
 msgid "All books indexed!"
 msgstr "Усі книги індексовано!"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:14
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:15
 msgid ""
 "Full text searching is not enabled on this library. Use the calibredb "
 "fts_index enable --wait-until-complete command to enable it"
 msgstr "Для цієї бібліотеки не увімкнено повнотекстовий пошук. Скористайтеся командою calibredb fts_index enable --wait-until-complete, щоб увімкнути його"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:19
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:20
 #, python-brace-format
 msgid "{0} files out of {1} are not yet indexed, searching is disabled"
 msgstr "{0} файлів з {1} ще не індексовано, пошук вимкнено"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:56
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:57
 msgid ""
 "%prog fts_search [options] search expression\n"
 "\n"
@@ -2652,55 +2652,55 @@ msgid ""
 "\n"
 msgstr "%prog fts_search [параметри] вираз для пошуку\n\nВиконати повнотекстовий пошук в усій бібліотеці або її підмножині.\n\n"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:67
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:68
 msgid ""
 "Include snippets of the text surrounding each match. Note that this makes "
 "searching much slower."
 msgstr "Включати фрагменти тексту навколо кожного відповідника. Зауважте, що це значно уповільнить пошук."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:72
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:73
 msgid ""
 "The marker used to indicate the start of a matched word inside a snippet"
 msgstr "Позначка, яку буде використано для початку відповідного слова у фрагменті"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:77
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:78
 msgid "The marker used to indicate the end of a matched word inside a snippet"
 msgstr "Позначка, яку буде використано для кінця відповідного слова у фрагменті"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:84
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:85
 msgid ""
 "Only match on exact words not related words. So correction will not match "
 "correcting."
 msgstr "Встановлювати відповідність лише за точним словом, а не за пов'язаними з ним словами. Таким чином, пошук «виправлення» не призводитиме до показу відповідника «виправити»."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:89
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:90
 msgid ""
 "Restrict the searched books, either using a search expression or ids. For "
 "example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books"
 " having the tag foo."
 msgstr "Обмежити перелік книг для пошуку за допомогою якогось виразу для пошуку або списку ідентифікаторів. Приклад: ids:1,2,3 — обмежити пошук вказаними ідентифікаторами, або search:tag:щось — обмежити пошук книгами із міткою «щось»."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:94
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:95
 msgid ""
 "The format to output the search results in. Either \"text\" for plain text "
 "or \"json\" for JSON output."
 msgstr "Формат виведення результатів пошуку. Може мати значення «text» для звичайного тексту або «json» для виведення у форматі JSON."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:99
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:100
 msgid ""
 "How much of the library must be indexed before searching is allowed, as a "
 "percentage. Defaults to 90"
 msgstr "Частка бібліотеки у відсотках, яку має бути індексовано, перш ніж повнотекстовий пошук буде увімкнено. Типовим є значення 90."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:115
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:127
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:116
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:128
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:302
 #, python-brace-format
 msgid "{0} by {1}"
 msgstr "{0}, {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:148
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:48
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_fts_search.py:149
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:49
 msgid "Error: You must specify the search expression"
 msgstr "Помилка: слід вказати вираз для пошуку"
 
@@ -2969,12 +2969,12 @@ msgstr "вилучено"
 msgid "Error: Action %s not recognized, must be one of: (add|remove|list)"
 msgstr "Помилка: невідома дія %s. Дією може бути одне зі значень: (add|remove|list)"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:16
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:17
 #, python-brace-format
 msgid "Failed to parse search query: ({0}) with error: {1}"
 msgstr "Не вдалося обробити запит щодо пошуку: ({0}) повідомлення щодо помилок: {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:24
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:25
 #, python-brace-format
 msgid ""
 "%prog search [options] search expression\n"
@@ -2987,11 +2987,11 @@ msgid ""
 "language, for example: %prog search {0}\n"
 msgstr "%prog search [параметри] вираз для пошуку\n\nШукати у бібліотеці записи із вказаним ключем для пошуку. Повертає список ідентифікаторів\nвідповідних книг, відокремлених комами. Формат виведення даних корисний\nдля передавання іншим командам, які приймають вхідні дані у форматі списку ідентифікаторів.\n\nВиразом для пошуку може бути будь-який запис потужною мовою запитів calibre. Приклад: %prog search {0}\n"
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:41
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:42
 msgid "The maximum number of results to return. Default is all results."
 msgstr "Максимальна кількість повернутих результатів. Типово буде повернуто усі результати."
 
-#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:57
+#: /__w/calibre/calibre/src/calibre/db/cli/cmd_search.py:58
 msgid "No books matching the search expression:"
 msgstr "Виразу для пошуку не відповідає жодна книга:"
 
@@ -3308,54 +3308,54 @@ msgstr "Оброблено"
 msgid "Creating custom column "
 msgstr "Створюємо нетиповий стовпчик "
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:83
+#: /__w/calibre/calibre/src/calibre/db/search.py:87
 msgid "Invalid regular expression: {!r} with error: {}"
 msgstr "Некоректний формальний вираз: {!r} з такою помилкою: {}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:108
+#: /__w/calibre/calibre/src/calibre/db/search.py:112
 #: /__w/calibre/calibre/src/calibre/library/caches.py:353
 msgid "today"
 msgstr "сьогодні"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:109
+#: /__w/calibre/calibre/src/calibre/db/search.py:113
 #: /__w/calibre/calibre/src/calibre/library/caches.py:354
 msgid "yesterday"
 msgstr "вчора"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:110
+#: /__w/calibre/calibre/src/calibre/db/search.py:114
 #: /__w/calibre/calibre/src/calibre/library/caches.py:355
 msgid "thismonth"
 msgstr "цьогомісяця"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:111
+#: /__w/calibre/calibre/src/calibre/db/search.py:115
 #: /__w/calibre/calibre/src/calibre/library/caches.py:356
 msgid "daysago"
 msgstr "днівтому"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:200
+#: /__w/calibre/calibre/src/calibre/db/search.py:204
 #: /__w/calibre/calibre/src/calibre/library/caches.py:415
 #, python-brace-format
 msgid "Number conversion error: {0}"
 msgstr "Помилка під час перетворення числа: {0}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:206
+#: /__w/calibre/calibre/src/calibre/db/search.py:210
 #: /__w/calibre/calibre/src/calibre/library/caches.py:421
 #, python-brace-format
 msgid "Date conversion error: {0}"
 msgstr "Помилка під час перетворення дати: {0}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:301
+#: /__w/calibre/calibre/src/calibre/db/search.py:305
 #: /__w/calibre/calibre/src/calibre/library/caches.py:510
 #, python-brace-format
 msgid "Non-numeric value in query: {0}"
 msgstr "Не числове значення у запиті: {0}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:316
+#: /__w/calibre/calibre/src/calibre/db/search.py:320
 #, python-brace-format
 msgid "Non-numeric value in column {0}: {1}"
 msgstr "Нечислове значення у стовпчику {0}: {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:340
+#: /__w/calibre/calibre/src/calibre/db/search.py:344
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:708
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:267
 #: /__w/calibre/calibre/src/calibre/gui2/custom_column_widgets.py:1152
@@ -3371,53 +3371,57 @@ msgstr "Нечислове значення у стовпчику {0}: {1}"
 msgid "No"
 msgstr "Ні"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:342
+#: /__w/calibre/calibre/src/calibre/db/search.py:346
 #: /__w/calibre/calibre/src/calibre/db/utils.py:44
 #: /__w/calibre/calibre/src/calibre/library/caches.py:135
 #: /__w/calibre/calibre/src/calibre/library/caches.py:623
 msgid "unchecked"
 msgstr "не позначено"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:343
+#: /__w/calibre/calibre/src/calibre/db/search.py:347
 #: /__w/calibre/calibre/src/calibre/db/utils.py:42
 #: /__w/calibre/calibre/src/calibre/library/caches.py:135
 #: /__w/calibre/calibre/src/calibre/library/caches.py:624
 msgid "checked"
 msgstr "позначено"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:344
+#: /__w/calibre/calibre/src/calibre/db/search.py:348
 #: /__w/calibre/calibre/src/calibre/library/caches.py:625
 msgid "empty"
 msgstr "порожньо"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:345
+#: /__w/calibre/calibre/src/calibre/db/search.py:349
 #: /__w/calibre/calibre/src/calibre/library/caches.py:626
 msgid "blank"
 msgstr "порожньо"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:364
+#: /__w/calibre/calibre/src/calibre/db/search.py:368
 #: /__w/calibre/calibre/src/calibre/library/caches.py:638
 #, python-brace-format
 msgid "Invalid boolean query \"{0}\""
 msgstr "Некоректний булевий запит «{0}»"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:552
+#: /__w/calibre/calibre/src/calibre/db/search.py:557
 #, python-brace-format
 msgid "No such Virtual library: {}"
 msgstr "Цієї віртуальної бібліотеки не існує: {}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:557
+#: /__w/calibre/calibre/src/calibre/db/search.py:562
 #, python-brace-format
 msgid "Virtual library search is recursive: {}"
 msgstr "Пошук віртуальної бібліотеки є рекурсивним: {}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:588
+#: /__w/calibre/calibre/src/calibre/db/search.py:593
 #: /__w/calibre/calibre/src/calibre/library/caches.py:701
 #, python-brace-format
 msgid "Recursive query group detected: {0}"
 msgstr "Виявлено рекурсивну групу запиту щодо пошуку: {0}"
 
-#: /__w/calibre/calibre/src/calibre/db/search.py:687
+#: /__w/calibre/calibre/src/calibre/db/search.py:683
+msgid "Templates are not not allowed in search expressions"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/db/search.py:694
 #, python-brace-format
 msgid ""
 "search template: missing or invalid separator. Valid separators are: {}"
@@ -6219,19 +6223,19 @@ msgstr "Зазвичай, ресурси, які пов'язано із файл
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:30
 msgid "CSS file used for the output instead of the default CSS."
-msgstr ""
+msgstr "Файл CSS, який буде використано для виведеня даних замість типового CSS."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:33
 msgid ""
 "Template used for generation of the HTML index file instead of the default "
 "template. In Mustache format."
-msgstr ""
+msgstr "Шаблон, який буде використано для створення файла індексу HTML замість типового шаблону. У форматі Mustache."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:36
 msgid ""
 "Template used for the generation of the HTML contents of the book instead of"
 " the default template. In Mustache format."
-msgstr ""
+msgstr "Шаблон, який буде використано для створення даних HTML книги замість типового шаблону. У форматі Mustache."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:39
 msgid ""
@@ -6241,27 +6245,27 @@ msgstr "Видобути вміст створеного файла ZIP до в�
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:143
 msgid "No table of contents present"
-msgstr ""
+msgstr "Немає таблиці змісту"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:143
 msgid "Table of contents"
-msgstr ""
+msgstr "Таблиця змісту"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:144
 msgid "begin to read"
-msgstr ""
+msgstr "почати читання"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:144
 msgid "start"
-msgstr ""
+msgstr "початок"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:145
 msgid "next page"
-msgstr ""
+msgstr "наступна сторінка"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/html_output.py:145
 msgid "previous page"
-msgstr ""
+msgstr "попередня сторінка"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/htmlz_input.py:15
 msgid "Convert HTMLZ files to HTML"
@@ -17724,10 +17728,9 @@ msgid ""
 msgstr "Якщо хочете, нижче ви можете увімкнути різноманітні розширення базового синтаксису розмітки."
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_input_ui.py:104
-msgid ""
-"More information on <a href=\"https://python-"
-"markdown.github.io/extensions/\">Markdown extensions</a>"
-msgstr "Докладніші відомості можна знайти на <a href=\"https://python-markdown.github.io/extensions/\">сторінці розширень Markdown</a>"
+#, python-brace-format
+msgid "More information on <a href=\"{}\">Markdown extensions</a>"
+msgstr "Докладніше про <a href=\"{}\">розширення Markdown</a>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output.py:13
 msgid "TXT output"
@@ -22164,7 +22167,7 @@ msgid "Not installed"
 msgstr "Не встановлено"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:240
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:217
 msgid "Update available"
 msgstr "Доступне оновлення"
 
@@ -43403,30 +43406,30 @@ msgid ""
 " context menu of the system tray."
 msgstr "буде згорнуто до системного лотка. Щоб завершити роботу програми, виберіть пункт <b>Вийти</b> у контекстному меню піктограми системного лотка."
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:134
 #, python-brace-format
 msgid ""
 "New version <b>{ver}</b> of {app} is available for download. See the <a "
 "href=\"{url}\">new features</a>."
 msgstr "Випущено нову версію {app} <b>{ver}</b>. Ви можете ознайомитися зі списком нових можливостей <a href=\"{url}\">тут</a>."
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:141
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:140
 msgid "Update available!"
 msgstr "Доступне оновлення!"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:145
 msgid "Show this notification for future updates"
 msgstr "Показувати це сповіщення для наступних оновлень"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:151
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:150
 msgid "&Get update"
 msgstr "&Отримати оновлення"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:155
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:154
 msgid "Update &plugins"
 msgstr "Оновити &додатки"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:214
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:213
 #, python-brace-format
 msgid " and one plugin update"
 msgid_plural " and {} plugin updates"
@@ -43435,7 +43438,7 @@ msgstr[1] "і {} оновлення додатків"
 msgstr[2] "і {} оновлень додатків"
 msgstr[3] " і {} оновлення додатків"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:219
 msgid "plugin update available"
 msgid_plural "plugin updates available"
 msgstr[0] "доступне оновлення додатка"
@@ -43443,12 +43446,12 @@ msgstr[1] "доступні оновлення додатків"
 msgstr[2] "доступні оновлення додатків"
 msgstr[3] "доступні оновлення додатків"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:248
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:254
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:247
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:253
 msgid "Plugin updates"
 msgstr "Оновлення додатків"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:251
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:250
 #, python-brace-format
 msgid "A plugin update is available"
 msgid_plural "There are {} plugin updates available"
@@ -43457,7 +43460,7 @@ msgstr[1] "Доступні {} оновлення додатків"
 msgstr[2] "Доступні {} оновлень додатків"
 msgstr[3] "Доступні {} оновлень додатків"
 
-#: /__w/calibre/calibre/src/calibre/gui2/update.py:256
+#: /__w/calibre/calibre/src/calibre/gui2/update.py:255
 msgid "Install and configure user plugins"
 msgstr "Встановлення і налаштування додатків користувача"
 
@@ -45707,6 +45710,10 @@ msgstr "Довідку щодо використання недокументо�
 msgid "Change language"
 msgstr "Змінити мову"
 
+#: /__w/calibre/calibre/src/calibre/srv/ajax.py:542
+msgid "templates are not allowed in search expressions"
+msgstr ""
+
 #: /__w/calibre/calibre/src/calibre/srv/code.py:134
 #, python-brace-format
 msgid "<b>{title}</b> by {authors}"
@@ -46481,7 +46488,7 @@ msgstr "Складені мітки"
 msgid "Enum"
 msgstr "Перелік"
 
-#: /__w/calibre/calibre/src/calibre/srv/tests/ajax.py:131
+#: /__w/calibre/calibre/src/calibre/srv/tests/ajax.py:133
 #: /__w/calibre/calibre/src/calibre/utils/search_query_parser.py:258
 msgid "Invalid syntax. Expected a lookup name or a word"
 msgstr "Некоректна синтаксична конструкція. Мало бути вказано назву фільтра або слово."
