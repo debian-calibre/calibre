@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-21 06:34+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: Bora Atıcı, 2023\n"
 "Language-Team: Turkish (http://app.transifex.com/calibre/calibre/language/tr/)\n"
@@ -20,43 +20,43 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:6
+#: ../../../__w/calibre/calibre/manual/customize.rst:6
 msgid "Customizing calibre"
 msgstr "Calibre'yi özelleştirmek"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:8
+#: ../../../__w/calibre/calibre/manual/customize.rst:8
 msgid ""
 "calibre has a highly modular design. Various parts of it can be customized."
 "  Here, you will learn:"
 msgstr "calibre oldukça modüler bir tasarıma sahiptir. Çeşitli parçaları özelleştirilebilir. Burada şunları öğreneceksiniz:"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:10
+#: ../../../__w/calibre/calibre/manual/customize.rst:10
 msgid ""
 "how to use environment variables and *tweaks* to customize calibre's "
 "behavior,"
 msgstr "calibre'nin davranışını özelleştirmek için ortam değişkenlerinin ve *ince ayarların* nasıl kullanılacağı,"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:11
+#: ../../../__w/calibre/calibre/manual/customize.rst:11
 msgid ""
 "how to specify your own static resources like icons and templates to "
 "override the defaults"
 msgstr "varsayılanları geçersiz kılmak için simgeler ve şablonlar gibi kendi statik kaynaklarınızı nasıl belirleyeceğiniz"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:12
+#: ../../../__w/calibre/calibre/manual/customize.rst:12
 msgid "how to use *plugins* to add functionality to calibre."
 msgstr "calibre'ye işlevsellik eklemek için *eklentiler* nasıl kullanılır?"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:13
+#: ../../../__w/calibre/calibre/manual/customize.rst:13
 msgid "how to share icon themes and plugins with other calibre users."
 msgstr "simge temaları ve eklentilerinin diğer calibre kullanıcılarıyla nasıl paylaşılacağı."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:14
+#: ../../../__w/calibre/calibre/manual/customize.rst:14
 msgid ""
 "to see how to create *recipes* to add new sources of online content to "
 "calibre visit the Section :ref:`news`."
 msgstr "calibre'ye yeni çevrimiçi içerik kaynakları eklemek amacıyla *tariflerin* nasıl oluşturulacağını görmek için :ref:`haberler` Bölümünü ziyaret edin."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:17
+#: ../../../__w/calibre/calibre/manual/customize.rst:17
 msgid ""
 "Note that although icon themes and plugins are indexed and downloadable via "
 "calibre's builtin updater, they are not part of calibre, and their canonical"
@@ -65,27 +65,27 @@ msgid ""
 "support threads."
 msgstr "Simge temaları ve eklentileri calibre'nin yerleşik güncelleyicisi aracılığıyla indekslenmiş ve indirilebilir olmasına rağmen, bunların calibre'nin parçası olmadığını ve destek ve kaynak kodu için kanonik konumlarının `Mobileread forumlarında <https://www.mobileread.com/forums olduğunu unutmayın. /forumdisplay.php?f=166>`__ destek başlıklarında."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:36
+#: ../../../__w/calibre/calibre/manual/customize.rst:36
 msgid "Environment variables"
 msgstr "Çevresel değişkenler"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:38
+#: ../../../__w/calibre/calibre/manual/customize.rst:38
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the folder where configuration files are"
 " stored/read."
 msgstr "``CALIBRE_CONFIG_DIRECTORY`` - yapılandırma dosyalarının saklandığı/okunduğu klasörü ayarlar."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:39
+#: ../../../__w/calibre/calibre/manual/customize.rst:39
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary folder used by calibre"
 msgstr "``CALIBRE_TEMP_DIR`` - calibre tarafından kullanılan geçici klasörü ayarlar"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:40
+#: ../../../__w/calibre/calibre/manual/customize.rst:40
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the folder calibre uses to cache "
 "persistent data between sessions"
 msgstr "``CALIBRE_CACHE_DIRECTORY`` - calibre'nin oturumlar arasında kalıcı verileri önbelleğe almak için kullandığı klasörü ayarlar"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:41
+#: ../../../__w/calibre/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
 "metadata.db. Using this variable you can have metadata.db be in a location "
@@ -93,38 +93,44 @@ msgid ""
 "networked drive that does not support file locking."
 msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - metadata.db için tam yolu belirtmenize izin verir. Bu değişkeni kullanarak metadata.db dosyasını kitaplık dizininin dışında tutabilirsiniz. Bu kitaplık dizininizi ağ üzerinde dosya kilitleme özelliği olmayan bir diskte tutuyorsanız faydalı olacaktır."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:42
+#: ../../../__w/calibre/calibre/manual/customize.rst:42
+msgid ""
+"``CALIBRE_ALLOW_PYTHON_TEMPLATES`` - if set to a value other than ``1`` "
+"disables the use of Python based templates in calibre."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - used to run from a calibre development "
 "environment. See :ref:`develop`."
 msgstr "``CALIBRE_DEVELOP_FROM`` - calibre geliştirme ortamından çalıştırmak için kullanılır. Bakınız :ref:`geliştirme`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:43
+#: ../../../__w/calibre/calibre/manual/customize.rst:44
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - used to force the language used by the interface"
 " (ISO 639 language code)"
 msgstr "``CALIBRE_OVERRIDE_LANG`` - arayüz tarafından kullanılan dili zorlamak için kullanılır (ISO 639 dil kodu)"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:44
+#: ../../../__w/calibre/calibre/manual/customize.rst:45
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - used to test a translation .po file (should "
 "be the path to the .po file)"
 msgstr "``CALIBRE_TEST_TRANSLATION`` - bir çeviri .po dosyasını test etmek için kullanılır (.po dosyasının yolu olmalıdır)"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:45
+#: ../../../__w/calibre/calibre/manual/customize.rst:46
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - causes calibre to not use native file "
 "dialogs for selecting files/folders."
 msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - calibre'nin dosyaları/klasörleri seçmek için yerel dosya iletişim kutularını kullanmamasına neden olur."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:46
+#: ../../../__w/calibre/calibre/manual/customize.rst:47
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar Linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
 msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - calibre'nin Ubuntu Unity ve benzeri Linux masaüstü ortamlarında yerel (global) bir menü oluşturmamasına neden olur. Menü, geleneksel olduğu gibi pencerenin içine yerleştirilir."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:47
+#: ../../../__w/calibre/calibre/manual/customize.rst:48
 msgid ""
 "``CALIBRE_USE_SYSTEM_THEME`` - by default, on Linux, calibre uses its own "
 "builtin Qt style. This is to avoid crashes and hangs caused by "
@@ -134,34 +140,45 @@ msgid ""
 "to use the system theme -- beware of crashes and hangs."
 msgstr "``CALIBRE_USE_SYSTEM_THEME`` - varsayılan olarak Linux'ta calibre kendi yerleşik Qt stilini kullanır. Bunun amacı Qt calibre'nin oluşturulduğu sürüm ile Qt sistemi arasındaki uyumsuzluklardan kaynaklanan çökmeleri ve takılmaları önlemektir. Dezavantajı ise calibre'nin sistemin görünüşünü ve hissini takip edememesidir. Eğer bu ortam değişkenini Linux'ta ayarlarsanız, calibre'nin sistem temasını kullanmasına neden olur -- çökmelere ve takılmalara karşı dikkatli olun."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:53
+#: ../../../__w/calibre/calibre/manual/customize.rst:54
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - calibre'nin kullanımdan kaldırma uyarılarını stdout'a yazdırmasına neden olur. Calibre geliştiricileri için kullanışlıdır."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:54
+#: ../../../__w/calibre/calibre/manual/customize.rst:55
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - calibre'nin Windows ile işleyebildiği dosya türlerini otomatik olarak kaydetmesini önleyin."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:55
+#: ../../../__w/calibre/calibre/manual/customize.rst:56
+msgid ""
+"``CALIBRE_USE_SYSTEM_CERTIFICATES`` - make calibre use the system "
+"certificate store for SSL certificate verification instead of its own "
+"certificate store on Windows and macOS."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/customize.rst:57
+msgid "``CALIBRE_NO_ICONS_IN_MENUS`` - Disable icons in menus"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/customize.rst:58
 msgid ""
 "``QT_QPA_PLATFORM`` - On Linux set this to ``wayland`` to force calibre to "
 "use Wayland and ``xcb`` to force use of X11."
 msgstr "``QT_QPA_PLATFORM`` - Linux'ta calibre'yi Wayland kullanmaya zorlamak için bunu ``wayland``a ve X11 kullanımını zorlamak için ``xcb``ye ayarlayın."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:56
+#: ../../../__w/calibre/calibre/manual/customize.rst:59
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - sysfs, /sys dizininden başka bir dizine bağlıysa kullanın"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:57
+#: ../../../__w/calibre/calibre/manual/customize.rst:60
 msgid ""
 "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` - Linux'ta bir HTTP(S) proxy belirtmek için kullanılır"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:59
+#: ../../../__w/calibre/calibre/manual/customize.rst:62
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -170,11 +187,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "`Windows'ta ortam değişkenleri nasıl ayarlanır <https://www.computerhope.com/issues/ch000549.htm>`_ konusuna bakın. MacOS kullanıyorsanız, :file:`~/Library/Preferences/calibre/macos-env.txt` dosyasını oluşturarak ve ortam değişkenlerini her satıra bir tane koyarak ortam değişkenlerini ayarlayabilirsiniz, örneğin::"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:69
+#: ../../../__w/calibre/calibre/manual/customize.rst:72
 msgid "Tweaks"
 msgstr "İnce Ayarlar"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:71
+#: ../../../__w/calibre/calibre/manual/customize.rst:74
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -182,11 +199,11 @@ msgid ""
 "reproduced below"
 msgstr "İnce ayarlar calibre davranışının çeşitli yönlerini kontrol etmek için belirtebileceğiniz küçük değişikliklerdir. Bunları Tercihler -> Gelişmiş -> İnce Ayarlar alanından değiştirebilirsiniz. İnce ayarlar için varsayılan değerler aşağıdadır"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:78
+#: ../../../__w/calibre/calibre/manual/customize.rst:81
 msgid "Overriding icons, templates, et cetera"
 msgstr "Simgelerin, şablonların ve benzerlerinin üzerine yazmak"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:81
+#: ../../../__w/calibre/calibre/manual/customize.rst:84
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -194,7 +211,7 @@ msgid ""
 "preferable to use icon themes over overriding individual icons."
 msgstr "calibre'nin simge temaları için doğrudan desteği vardır, calibre için çeşitli simge temaları mevcuttur ve bunları :guilabel:`Tercihler->Arayüz->Görüntü ve Hisset->Simge temasını değiştir` seçeneğine giderek kullanabilirsiniz. Bireysel simgeleri geçersiz kılmak yerine simge temalarının kullanılması tercih edilir."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:86
+#: ../../../__w/calibre/calibre/manual/customize.rst:89
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -207,7 +224,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibre simgeler, JavaScript ve meta veri ceketi, kataloglar vb. için şablonlar gibi statik kaynakları beğendiğiniz özelleştirilmiş sürümlerle geçersiz kılmanıza olanak tanır. Tüm statik kaynaklar calibre kurulum konumunun kaynaklar alt klasöründe saklanır. Windows'ta bu genellikle :file:`C:\\\\Program Files\\\\Calibre2\\\\app\\\\resources` olur. MacOS'ta, :file:`/Applications/calibre.app/Contents/Resources/resources/`. Linux'ta, calibre web sitesinden ikili yükleyiciyi kullanıyorsanız :file:`/opt/calibre/resources` olacaktır. Bu yollar calibre'yi nereye kurmayı seçtiğinize bağlı olarak değişebilir."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:95
+#: ../../../__w/calibre/calibre/manual/customize.rst:98
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -219,7 +236,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Calibre'yi bir sonraki güncellemenizde değişikliklerin üzerine yazılacağı için bu kaynaklar klasöründeki dosyaları değiştirmemelisiniz. Bunun yerine :guilabel:`Tercihler->Gelişmiş->Çeşitli` seçeneğine gidin ve :guilabel:`Calibre yapılandırma klasörünü aç`a tıklayın. Bu yapılandırma klasöründe kaynaklar adında bir alt klasör oluşturun ve geçersiz kılmak istediğiniz dosyaları bu klasöre yerleştirin. Dosyaları uygun alt klasörlere yerleştirin, örneğin görüntüleri :file:`resources/images` içine yerleştirin, vb. calibre bir sonraki başlatılışında yerleşik dosya yerine otomatik olarak özel dosyanızı kullanacaktır."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:104
+#: ../../../__w/calibre/calibre/manual/customize.rst:107
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -232,17 +249,17 @@ msgid ""
 "icon theme."
 msgstr "Örneğin, :guilabel:`Kitapları kaldır` eyleminin simgesini değiştirmek istiyorsanız, önce yerleşik kaynaklar klasörüne bakarsınız ve ilgili dosyanın :file:`resources/images/remove_books.png olduğunu görürsünüz. '. PNG formatında :file:`my_remove_books.png` adında alternatif bir simgeniz olduğunu varsayarsak, bunu yapılandırma klasörüne :file:`resources/images/remove_books.png` olarak kaydedersiniz. Calibre kullanıcı arayüzü tarafından kullanılan tüm simgeler :file:`resources/images` ve onun alt klasörlerindedir. Buraya bir geçersiz kılma dosyası yerleştirmek, özel simge temasından bile daha yüksek önceliğe sahip olacaktır."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:114
+#: ../../../__w/calibre/calibre/manual/customize.rst:117
 msgid "Creating your own icon theme for calibre"
 msgstr "Calibre için özel ikon teman oluşturuluyor"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:116
+#: ../../../__w/calibre/calibre/manual/customize.rst:119
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
 " package up your icons into a theme. To do so, go to "
 ":guilabel:`Preferences->Miscellaneous->Create icon theme`, select the folder"
-" where you have put your icons. Then fill up the theme metadata and click "
+" where you have put your icons. Then fill in the theme metadata and click "
 "OK. This will result in a ZIP file containing the theme icons. You can "
 "upload that to the calibre forum at `Mobileread "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ and then I "
@@ -251,9 +268,9 @@ msgid ""
 "current theme in calibre. If you are testing your theme, remember to remove "
 "the images from the :file:`resources/images` folder so that the icons from "
 "the theme are used."
-msgstr "Güzel bir simge seti oluşturduysanız ve bunları calibre'nin yerleşik simge teması desteği aracılığıyla diğer calibre kullanıcılarıyla paylaşmak istiyorsanız, simgelerinizi kolayca bir tema halinde paketleyebilirsiniz. Bunu yapmak için :guilabel:`Tercihler->Çeşitli->Simge teması oluştur`a gidin, simgelerinizi koyduğunuz klasörü seçin. Ardından tema meta verilerini doldurun ve Tamam'a tıklayın. Bu, tema simgelerini içeren bir ZIP dosyasıyla sonuçlanacaktır. Bunu `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ adresindeki calibre forumuna yükleyebilirsiniz ve ardından temanızı calibre'nin yerleşik simge tema sistemi aracılığıyla kullanılabilir hale getireceğim. Varsayılan olarak az önce oluşturduğunuz simge teması aynı zamanda calibre'de geçerli tema olarak yüklenecektir. Temanızı test ediyorsanız, temadaki simgelerin kullanılabilmesi için :file:`resources/images` klasöründeki görselleri kaldırmayı unutmayın."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/customize.rst:130
+#: ../../../__w/calibre/calibre/manual/customize.rst:133
 msgid ""
 "As of calibre 6, you can have custom icons for light and dark mode. Simply "
 "create two versions of the icon and name the files with the suffix ``-for-"
@@ -262,11 +279,11 @@ msgid ""
 "automatically use the appropriate icon based on the current theme."
 msgstr "Calibre 6'dan itibaren açık ve karanlık mod için özel simgelere sahip olabilirsiniz. Simgenin iki versiyonunu oluşturmanız ve dosyaları ``-for-dark-theme`` ve ``-for-light-theme`` sonekleriyle adlandırmanız yeterlidir. Örneğin, \"karanlık-tema için değiştirildi.png\" ve \"açık-tema için değiştirildi.png\". Daha sonra calibre geçerli temaya göre uygun simgeyi otomatik olarak kullanacaktır."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:137
+#: ../../../__w/calibre/calibre/manual/customize.rst:140
 msgid "Customizing calibre with plugins"
 msgstr "Eklentilerle calibre'yi özelleştirmek"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:139
+#: ../../../__w/calibre/calibre/manual/customize.rst:142
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -276,14 +293,14 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "calibre oldukça modüler bir tasarıma sahiptir. Calibre'deki hemen hemen tüm işlevler eklentiler biçiminde gelir. Eklentiler dönüşüm için, haber indirmek için (bunlara tarif denir), kullanıcı arayüzünün çeşitli bileşenleri için, farklı cihazlara bağlanmak için, dosyaları calibre'ye eklerken işlemek için kullanılır. :guilabel:`Tercihler->Gelişmiş->Eklentiler`'e giderek calibre'deki tüm yerleşik eklentilerin tam listesini alabilirsiniz."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:146
+#: ../../../__w/calibre/calibre/manual/customize.rst:149
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
 " :ref:`pluginstutorial`."
 msgstr "Kendi eklentilerinizi yazarak calibre'yi özelleştirebilir ve davranışlarını genişletebilirsiniz. Eklenti mimarisi çok basittir, :ref:`pluginstutorial` rehberine bakabilirsiniz."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:150
+#: ../../../__w/calibre/calibre/manual/customize.rst:153
 msgid ""
 "Once you have written a plugin, you can upload that to the calibre plugins "
 "forum at `Mobileread "

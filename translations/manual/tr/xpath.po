@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-21 06:34+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Bora Atıcı, 2023\n"
 "Language-Team: Turkish (http://app.transifex.com/calibre/calibre/language/tr/)\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:4
+#: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
 msgstr "XPath Rehberi"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:6
+#: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -34,35 +34,35 @@ msgid ""
 "HTML document."
 msgstr "Bu eğitimde, 'HTML <https:/'nin isteğe bağlı bölümlerini seçmek için kullanılabilecek bir sorgulama dili olan 'XPath <https://en.wikipedia.org/wiki/XPath>'_ hakkında hafif bir giriş yapılacaktır. /en.wikipedia.org/wiki/HTML>`_ calibre'deki belgeler. XPath yaygın olarak kullanılan bir standarttır ve Google'da araştırıldığında tonlarca bilgi elde edilir. Ancak bu eğitim, yapılandırılmamış bir HTML belgesinde bölüm başlıklarını bulmak gibi e-kitapla ilgili görevler için XPath kullanımına odaklanmaktadır."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:16
+#: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr "İçindekiler"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:19
+#: ../../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
 msgstr "Etiket ismine göre seçim"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:21
+#: ../../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
 msgstr "Seçimin en basit formu etiketleri isme göre seçmektir. Örneğin; belgedeki tüm ``<h2>`` etiketlerini seçmek istediğinizi düşünelim. XPath sorgusu basitçe şöyle olacaktır::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:27
+#: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
 msgstr "Baştaki `//` öneki *belgedeki tüm düzeylerde ara* anlamına gelmektedir. Şimdi ise ``<a>`` etiketi içindeki ``<span>``etiketlerini arıyor olalım. Bunu yapan sorgu::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:33
+#: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
 msgstr "Eğer belgedeki belirli bir düzeydeki etiketleri arayacak olursanız öneki değiştirin::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:39
+#: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -72,16 +72,16 @@ msgid ""
 "tags."
 msgstr "Bu yalnızca :ref:`sample_ebook` içindeki ``<p>XPath kullanımını göstermek için çok kısa bir e-kitap.</p>`` ile eşleşir ancak diğer ``<p>`` etiketlerinden hiçbiriyle eşleşmez. Yukarıdaki örneklerde ``h:`` öneki XHTML etiketleriyle eşleşmesi için gereklidir. Bunun nedeni dahili olarak calibre'nin tüm içeriği XHTML olarak temsil etmesidir. XHTML'de etiketlerin bir *ad alanı* vardır ve ``h:`` HTML etiketleri için ad alanı önekidir."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:45
+#: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
-"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
-" test that is used to select tags. Tests can be arbitrarily powerful and as "
-"this tutorial progresses, you will see more powerful examples. A predicate "
+"we need an XPath construct called *predicate*. A :dfn:`predicate` is simply "
+"a test that is used to select tags. Tests can be arbitrarily powerful and as"
+" this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr "Şimdi ``<h1>`` ve ``<h2>`` etiketlerini seçmek isteyelim. Bunu yapabilmek için XPath'in *predicate* isimli yapısına ihtiyacımız vardır. Bir :dfn:`predicate` basitçe etiketleri seçmek için bir testtir. Testler keyfi güçlü olabilir ve bu rehber ilerledikçe, daha güçlü örneklerini göreceksiniz. Bir predicate, test ifadesinin kare parantezler içine alınmasıyla oluşturulur::"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:53
+#: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -93,69 +93,69 @@ msgid ""
 "will be introduced in this tutorial."
 msgstr "Bu XPath ifadesinde pek çok yenilik bulunmaktadır. Bunların ilki ``*`` karakteridir. *herhangi bir etiketle eşleş* anlamına gelmektedir. Şimdi test ifadesine bakalım ``name()='h1' or name()='h2'``. :term:`name()` *tümleşik fonksiyona* bir örnektir. Basitçe etiketin adını değerlendirir. Bu nedenle onu kullanarak, isimleri `h1` veya `h2` olan etiketleri seçebiliriz. :term:`name()` fonksiyonunun isim alanlarını yok saydığını ve bu nedenle ``h:`` ön ekine ihtiyaç olmadığına dikkat edin. XPath çok fazla tümleşik fonksiyona sahiptir. Bunlardan bir kaçına bu rehberde değinilecektir."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:62
+#: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr "Özniteliğe göre seçmek"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:64
+#: ../../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
 msgstr "Etiketleri özniteliklerine göre seçmek için bu ifadelerin kullanılması gereklidir::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:70
+#: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
 msgstr "Buradaki ``@`` operatörü etiketin özniteliğine karşılık gelir. Öznitelik değerleriyle ilgili daha karmaşık eşleşmeler için `XPath tümleşik fonksiyonlarını`_ kullanabilirsiniz."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
 msgstr "Etiket içeriğine göre seçmek"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "XPath kullanarak etiketleri içerdikleri metinlere göre seçebilirsiniz. Bunu yapmanın en iyi yolu :term:`re:test()` tümleşik fonksiyonunun *düzenli ifadelerini* kullanmaktır::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "Buradaki ``.`` operatörü etiketin içeriğine karşılık gelir, ``@`` operatörünün özniteliklere karşılık gelmesi gibidir."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
 msgstr "Örnek e-kitap"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
 msgstr "XPath tümleşik fonksiyonları"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
 msgstr "name()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
 msgstr "Mevcut etiketin adı."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "``contains(s1, s2)`` ifadesi eğer s1, s2'yi içerirse `true` döndürür."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 13:55+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
 "Last-Translator: Usama Khalil, 2025\n"
 "Language-Team: Arabic (http://app.transifex.com/calibre/calibre/language/ar/)\n"
@@ -24,11 +24,11 @@ msgstr "وضع الدالة للبحث والاستبدال في المحرر"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
-"The :guilabel:`Search & replace` tool in the editor support a *function "
+"The :guilabel:`Search & replace` tool in the editor supports a *function "
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr "تدعم أداة :guilabel:`البحث والاستبدال` في المحرر *وضع الدالة*. في هذا الوضع، يمكنك دمج التعبيرات العادية (راجع :doc:`regexp`) مع دوال بايثون قوية بشكل تعسفي للقيام بجميع أنواع معالجة النصوص المتقدمة."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
@@ -65,10 +65,10 @@ msgstr "هنا، سنستفيد من إحدى الدوال المدمجة في �
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
 "For the function, simply choose the :guilabel:`Title-case text (ignore "
-"tags)` builtin function. The will change titles that look like: ``<h1>some "
+"tags)` builtin function. This will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr "بالنسبة للدالة، ما عليك سوى اختيار دالة :guilabel:`نص بحالة العنوان (تجاهل العلامات)` المدمجة. ستغير العناوين التي تبدو كـ: ``<h1>some titLE</h1>`` إلى ``<h1>Some Title</h1>``. ستعمل حتى لو كانت هناك علامات HTML أخرى داخل علامات العناوين."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
@@ -78,9 +78,9 @@ msgstr "دالتك المخصصة الأولى - تحسين الواصلات"
 msgid ""
 "The real power of function mode comes from being able to create your own "
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
-" the editor leaves individual hyphens alone, so you can use the this "
-"function to replace them with em-dashes."
-msgstr "تأتي القوة الحقيقية لوضع الدالة من القدرة على إنشاء دوال خاصة بك لمعالجة النص بطرق عشوائية. أداة تحسين علامات الترقيم في المحرر تترك الواصلات الفردية كما هي، لذا يمكنك استخدام هذه الدالة لاستبدالها بشرطات طويلة (em-dashes)."
+" the editor leaves individual hyphens alone, so you can use this function to"
+" replace them with em-dashes."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
@@ -190,11 +190,11 @@ msgstr "إنشاء جدول محتويات تلقائيًا"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:156
 msgid ""
-"Finally, lets try something a little more ambitious. Suppose your book has "
+"Finally, let's try something a little more ambitious. Suppose your book has "
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
 "Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
 "headings. Create the custom function below:"
-msgstr "أخيرًا، دعنا نجرب شيئًا أكثر طموحًا. لنفترض أن كتابك يحتوي على عناوين في علامات ``h1`` و ``h2`` تبدو كـ ``<h1 id=\"someid\">Some Text</h1>``. سنقوم بإنشاء جدول محتويات HTML تلقائيًا بناءً على هذه العناوين. أنشئ الدالة المخصصة أدناه:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
@@ -333,8 +333,8 @@ msgid ""
 "The ``functions`` argument gives you access to all other user defined "
 "functions. This is useful for code re-use. You can define utility functions "
 "in one place and re-use them in all your other functions. For example, "
-"suppose you create a function name ``My Function`` like this:"
-msgstr "تمنحك وسيطة ``functions`` إمكانية الوصول إلى جميع الدوال الأخرى المعرفة من قبل المستخدم. هذا مفيد لإعادة استخدام الكود. يمكنك تعريف دوال مساعدة في مكان واحد وإعادة استخدامها في جميع الدوال الأخرى. على سبيل المثال، لنفترض أنك أنشأت دالة باسم ``My Function`` كالتالي:"
+"suppose you create a function named ``My Function`` like this:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
@@ -370,10 +370,11 @@ msgstr "اختر ترتيب الملفات عند التشغيل على ملفا
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
 "When you run a :guilabel:`Replace all` on multiple HTML files, the order in "
-"which the files are processes depends on what files you have open for "
-"editing. You can force the search to process files in the order in which the"
-" appear by setting the ``file_order`` attribute on your function, like this:"
-msgstr "عند تشغيل :guilabel:`استبدال الكل` على ملفات HTML متعددة، فإن الترتيب الذي تتم به معالجة الملفات يعتمد على الملفات التي فتحتها للتحرير. يمكنك إجبار البحث على معالجة الملفات بالترتيب الذي تظهر به عن طريق تعيين السمة ``file_order`` على دالتك، كالتالي:"
+"which the files are processed depends on what files you have open for "
+"editing. You can force the search to process files in the order in which "
+"they appear by setting the ``file_order`` attribute on your function, like "
+"this:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
@@ -402,10 +403,10 @@ msgstr "إلحاق الإخراج من الدالة بالنص المحدد"
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:378
 msgid ""
 "When running search and replace on marked text, it is sometimes useful to "
-"append so text to the end of the marked text. You can do that by setting the"
-" ``append_final_output_to_marked`` attribute on your function (note that you"
-" also need to set ``call_after_last_match``), like this:"
-msgstr "عند تشغيل البحث والاستبدال على نص محدد، يكون من المفيد أحيانًا إلحاق نص إلى نهاية النص المحدد. يمكنك القيام بذلك عن طريق تعيين السمة ``append_final_output_to_marked`` على دالتك (لاحظ أنك تحتاج أيضًا إلى تعيين ``call_after_last_match``)، كالتالي:"
+"append some text to the end of the marked text. You can do that by setting "
+"the ``append_final_output_to_marked`` attribute on your function (note that "
+"you also need to set ``call_after_last_match``), like this:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"

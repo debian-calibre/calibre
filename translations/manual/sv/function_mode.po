@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jonatan Nyberg, 2016-2017,2021-2024
-# Jonatan Nyberg, 2019-2021
+# Karl Jonatan Nyberg, 2016-2017,2021-2024
+# Karl Jonatan Nyberg, 2019-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
 # Merarom <merarom@yahoo.es>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 09:39+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
-"Last-Translator: Jonatan Nyberg, 2016-2017,2021-2024\n"
+"Last-Translator: Karl Jonatan Nyberg, 2016-2017,2021-2024\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,19 +21,19 @@ msgstr ""
 "Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:2
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
 msgstr "Funktionsläge för Sök & ersätt i Redigeraren"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:4
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
-"The :guilabel:`Search & replace` tool in the editor support a *function "
+"The :guilabel:`Search & replace` tool in the editor supports a *function "
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr "Verktyget :guilabel:`Sök & ersätt` i redigeraren stöder ett *funktionsläge*. I det här läget kan du kombinera reguljära uttryck (se :doc:`regexp`) med godtyckligt kraftfulla Python-funktioner för att göra alla typer av avancerad textbehandling."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:9
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
 "In the standard *regexp* mode for search and replace, you specify both a "
 "regular expression to search for as well as a template that is used to "
@@ -43,55 +43,55 @@ msgid ""
 "that are not possible with simple templates."
 msgstr "I standardläget *regexp* för sök och ersätt anger du både ett reguljärt uttryck för att söka efter och en mall som används för att ersätta alla hittade matchningar. I funktionsläget, istället för att använda en fast mall, anger du en godtycklig funktion, i  `programmeringsspråket Python  <https://docs.python.org>`_. Det här gör att du kan göra massor av saker som inte är möjliga med enkla mallar."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:16
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:16
 msgid ""
 "Techniques for using function mode and the syntax will be described by means"
 " of examples, showing you how to create functions to perform progressively "
 "more complex tasks."
 msgstr "Tekniker för att använda funktionsläge och syntaxen beskrivs med hjälp av exempel, som visar dig hur du skapar funktioner för att utföra allt mer komplexa uppgifter."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:21
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:21
 msgid "The Function mode"
 msgstr "Funktionsläget"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:26
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
 msgstr "Automatiskt justera skiftläget med rubrikerna i dokumentet"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:28
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:28
 msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
 msgstr "Här kommer vi att utnyttja en av de inbyggda funktioner i redigeraren för att automatiskt ändra skiftläget för all text i rubriktaggar till versal::"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:33
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
 "For the function, simply choose the :guilabel:`Title-case text (ignore "
-"tags)` builtin function. The will change titles that look like: ``<h1>some "
+"tags)` builtin function. This will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr "För funktionen, välj helt enkelt den inbyggda funktionen :guilabel:`Titelskiftlägestext (ignorera taggar)`. Den kommer att ändra titlar som ser ut som: ``<h1>någon titEL</h1>`` till ``Någon Titel``. Det kommer att fungera även om det finns andra HTML-taggar inuti rubriktaggarna."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:40
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
 msgstr "Din första anpassade funktion - smartare bindestreck"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:42
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:42
 msgid ""
 "The real power of function mode comes from being able to create your own "
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
-" the editor leaves individual hyphens alone, so you can use the this "
-"function to replace them with em-dashes."
-msgstr "Den verkliga kraften i funktionsläge kommer från att kunna skapa dina egna funktioner för att bearbeta text på godtyckliga sätt. Förbättra skiljeteckenhanteringsverktyget i redigeraren lämnar enskilda bindestreck i fred, så att du kan använda denna funktion för att ersätta dem med em-streck."
+" the editor leaves individual hyphens alone, so you can use this function to"
+" replace them with em-dashes."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:47
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
 "To create a new function, simply click the :guilabel:`Create/edit` button to"
 " create a new function and copy the Python code from below."
 msgstr "För att skapa en ny funktion, klickar du helt enkelt på knappen :guilabel:`Skapa/redigera` för att skapa en ny funktion och kopiera Python-koden från nedan."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:55
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:55
 msgid ""
 "Every :guilabel:`Search & replace` custom function must have a unique name "
 "and consist of a Python function named replace, that accepts all the "
@@ -105,34 +105,34 @@ msgid ""
 "hyphens."
 msgstr "Varje :guilabel:`Sök och ersätt` anpassad funktion måste ha ett unikt namn och bestå av en Python-funktion med namnet ``replace``, som accepterar alla argument som visas ovan. För tillfället kommer vi inte oroa oss för alla olika argument för funktionen ``replace()``. Fokusera bara på argumentet ``match``. Det representerar en matchning när du söker och ersätter. Dess fullständiga dokumentation finns tillgänglig `här <https://docs.python.org/library/re.html#match-objects>`_. ``match.group()`` returnerar helt enkelt all den matchad text och allt vi gör är att ersätta bindestreck i den texten med em-bindestreck, ersätt först dubbla bindestreck och sedan enkla bindestreck."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:65
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
 msgstr "Använd den här funktionen med det reguljära uttrycket hitta::"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:69
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
 msgstr "Och det kommer att ersätta alla bindestreck med em-streck, men bara i själva texten och inte inne i HTML-taggdefinitioner."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:74
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
 msgstr "Kraften av funktionsläge - med hjälp av en stavningsordboken att åtgärda felaktigt avstavade ord"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:76
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
 msgstr "Ofta innehåller böcker skapade av skanningar av tryckta böcker felavstavade ord -- ord som delades vid slutet av raden på den utskrivna sidan. Vi kommer att skriva en enkel funktion för att automatiskt hitta och åtgärda sådana ord."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:101
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
 msgstr "Använd denna funktion med samma sökuttryck som tidigare, det vill säga::"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:105
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:105
 msgid ""
 "And it will magically fix all mis-hyphenated words in the text of the book. "
 "The main trick is to use one of the useful extra arguments to the replace "
@@ -143,18 +143,18 @@ msgid ""
 " replaced by the hyphen free composite word."
 msgstr "Och det kommer magiskt åtgärda alla felavstavade ord i texten i boken. Huvudtricket är att använda en av de användbara extra argument till replace-funktionen ``dictionaries``. Detta syftar på de ordböcker redigeraren själv använder för att stavningskontrollera text i boken. Vad denna funktion gör är att leta efter ord separerade med ett bindestreck, tar bort bindestrecket och kontrollerar om ordboken godkänner sammansatt ordet, om den gör det, ersättas de ursprungliga orden med de bindestrecksfria sammansatta orden."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:113
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:113
 msgid ""
 "Note that one limitation of this technique is it will only work for mono-"
 "lingual books, because, by default, ``dictionaries.recognized()`` uses the "
 "main language of the book."
 msgstr "Observera att en begränsning av denna teknik är att den bara fungerar för enspråkiga böcker, eftersom ``dictionaries.recognized()`` som standard använder bokens huvudspråk."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:119
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
 msgstr "Automatisk numrera avsnitt"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:121
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:121
 msgid ""
 "Now we will see something a little different. Suppose your HTML file has "
 "many sections, each with a heading in an :code:`<h2>` tag that looks like "
@@ -163,23 +163,23 @@ msgid ""
 "that they look like :code:`<h2>1. Some text</h2>`."
 msgstr "Nu kommer vi att se något lite annorlunda. Anta att din HTML-fil har många avsnitt, var och en med en rubrik i en :code:`<h2>` tagg som ser ut som :code:`<h2>Någon text</h2>`. Du kan skapa en anpassad funktion som automatiskt numrerar dessa rubriker med avsnittsnummer i följd, så att de ser ut :code:`<h2>1. Någon text</h2>`."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:137
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
 msgstr "Använd det med sökuttrycket::"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:141
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
 msgstr "Placera markören överst i filen och klicka på :guilabel:`Ersätt alla`."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:143
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:143
 msgid ""
 "This function uses another of the useful extra arguments to ``replace()``: "
 "the ``number`` argument. When doing a :guilabel:`Replace All` number is "
 "automatically incremented for every successive match."
 msgstr "Den här funktionen använder ett annat av de användbara extraargumenten för argumentet ``replace()``: ``number``. När du gör ett :guilabel:`Ersätt alla`-räknas numret upp automatiskt för varje efterföljande träff."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:147
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:147
 msgid ""
 "Another new feature is the use of ``replace.file_order`` -- setting that to "
 "``'spine'`` means that if this search is run on multiple HTML files, the "
@@ -187,30 +187,30 @@ msgid ""
 ":ref:`file_order_replace_all` for details."
 msgstr "En annan ny funktion är användningen av ``replace.file_order`` -- inställningen att ``'spine'`` betyder att om denna sökning körs på flera HTML-filer bearbetas filerna i den ordning de visas i boken. Se :ref:`file_order_replace_all` för detaljer."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:154
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:154
 msgid "Auto create a Table of Contents"
 msgstr "Skapa automatiskt en innehållsförteckning"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:156
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:156
 msgid ""
-"Finally, lets try something a little more ambitious. Suppose your book has "
+"Finally, let's try something a little more ambitious. Suppose your book has "
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
 "Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
 "headings. Create the custom function below:"
-msgstr "Slutligen, låt oss testa något lite mer ambitiöst. Antag att din bok har rubriker i ``h1`` och ``h2`` taggar som ser ut som  ``<h1 id=\"someid\">Någon text</h1>``. Vi kommer automatiskt skapa en HTML-innehållsförteckning baserad på dessa rubriker. Skapa den anpassade funktionen nedan:"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:199
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
 msgstr "Och använd den med sökuttrycket::"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:203
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
 " window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
 msgstr "Kör sökningen på :guilabel:`Alla textfiler` och vid slutet av sökningen, kommer ett fönster dyka upp med \"Felsök utmatning från din funktion\" vilken kommer ha HTML-innehållsförteckning, klar att klistras in i :file:`toc.html`."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:207
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:207
 msgid ""
 "The function above is heavily commented, so it should be easy to follow. The"
 " key new feature is the use of another useful extra argument to the "
@@ -219,7 +219,7 @@ msgid ""
 "``replace()`` during a single :guilabel:`Replace All` operation."
 msgstr "Funktionen ovan är kraftigt kommenterad, så den borde vara lätt att följa. Den viktigaste nya funktionen är användningen av ett annan användbart extra argument till funktionen ``replace()``, objektet ``data``. Objektet ``data`` är en Python *ordbok* som kvarstår mellan alla efterföljande anrop av ``replace()`` under en enda :guilabel:`Ersätt alla` operation."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:213
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:213
 msgid ""
 "Another new feature is the use of ``call_after_last_match`` -- setting that "
 "to ``True`` on the ``replace()`` function means that the editor will call "
@@ -227,7 +227,7 @@ msgid ""
 "extra call, the match object will be ``None``."
 msgstr "En annan ny funktion är användningen av ``call_after_last_match`` -- genom att ställa in det till ``True`` på funktionen ``replace()`` innebär det att redigeraren kommer att anropa ``replace()`` en extra gång efter att alla träffar har hittats. För detta extra anrop kommer träffobjektet vara ``None``."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:218
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:218
 msgid ""
 "This was just a demonstration to show you the power of function mode, if you"
 " really needed to generate a Table of Contents from headings in your book, "
@@ -235,17 +235,17 @@ msgid ""
 ":guilabel:`Tools->Table of Contents`."
 msgstr "Det var bara en demonstration för att visa styrkan av funktionsläge, om du verkligen behövde skapa en innehållsförteckning från rubriker i din bok, kommer du ha större nytta av att använda det dedikerade innehållsförteckningsverktyget i :guilabel:`Vertyg->Innehållsförteckning`."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:224
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:224
 msgid "The API for the function mode"
 msgstr "API för funktionsläget"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:226
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:226
 msgid ""
 "All function mode functions must be Python functions named replace, with the"
 " following signature::"
 msgstr "Alla funktionsläge funktioner måste vara Python-funktioner som heter \"replace\" med följande signatur::"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:232
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:232
 msgid ""
 "When a find/replace is run, for every match that is found, the ``replace()``"
 " function will be called, it must return the replacement string for that "
@@ -254,11 +254,11 @@ msgid ""
 "function are documented below."
 msgstr "När en sök/ersätt körs, för varje träff som hittas kommer funktionen ``replace()`` att anropas, den måste returnera ersättningssträngen för den träffen. Om inga ersättare ska göras, bör den returnera ``match.group()`` som är den ursprungliga strängen. De olika argumenten för funktionen ``replace()`` dokumenteras nedan."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:239
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:239
 msgid "The ``match`` argument"
 msgstr "Argumentet ``match``"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:241
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:241
 msgid ""
 "The ``match`` argument represents the currently found match. It is a `Python"
 " Match object <https://docs.python.org/library/re.html#match-objects>`_. Its"
@@ -267,22 +267,22 @@ msgid ""
 "expression."
 msgstr "Argumentet ``match`` representerar den aktuella hittade matchningen. Det är ett `Python objekt <https://docs.python.org/library/re.html#match-objects>`_. Den användbaraste metoden är ``group()`` som kan användas för att få den matchande texten som motsvarar enskilda fångstgrupper i reguljära sökuttrycket."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:248
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
 msgstr "Argumentet ``number``"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:250
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:250
 msgid ""
 "The ``number`` argument is the number of the current match. When you run "
 ":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
 "be called with an increasing number. The first match has number 1."
 msgstr "Argumentet ``nummer`` är numret på den aktuella träffen. När du kör :guilabel:`Ersätt alla`, kommer varje efterföljande träff att orsaka ``replace()`` att anropas med ett ökande antal. Första träff har nummer 1."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:255
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
 msgstr "Argumentet ``file_name``"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:257
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:257
 msgid ""
 "This is the filename of the file in which the current match was found. When "
 "searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
@@ -290,11 +290,11 @@ msgid ""
 "as the path separator."
 msgstr "Det här är filnamnet på filen däre den aktuella träffen hittades. När du söker inuti markerad text är ``file_name`` tom. ``file_name`` är i kanonisk form, en relativ sökväg till roten av boken, med ``/`` som sökvägsavgränsare."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:263
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
 msgstr "Argumentet ``metadata``"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:265
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:265
 msgid ""
 "This represents the metadata of the current book, such as title, authors, "
 "language, etc. It is an object of class "
@@ -303,11 +303,11 @@ msgid ""
 "language code)."
 msgstr "Detta representerar metadata för den aktuella boken, som titel, författare, språk, etc. Det är ett objekt av klassen :class:`calibre.ebooks.metadata.book.base.Metadata`. Användbara egenskaper inkluderar, ``title``, ``authors`` (en lista med författare) och ``language`` (språkkod)."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:271
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
 msgstr "Argumentet ``dictionaries``"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:273
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:273
 msgid ""
 "This represents the collection of dictionaries used for spell checking the "
 "current book. Its most useful method is ``dictionaries.recognized(word)`` "
@@ -315,11 +315,11 @@ msgid ""
 "dictionary for the current book's language."
 msgstr "Detta innebär insamling av ordböcker som används för stavningskontroll den aktuella boken. Den användbaraste metoden ``dictionaries.recognized(word)`` vilken som returnerar ``True`` om givet in ord känns igen av ordbok för den aktuella bokens språk."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:279
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
 msgstr "``data``-argumentet"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:281
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
 "This a simple Python ``dictionary``. When you run :guilabel:`Replace all`, "
 "every successive match will cause ``replace()`` to be called with the same "
@@ -327,25 +327,25 @@ msgid ""
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
 msgstr "Detta är en enkel Python ``ordbok``. När du kör :guilabel:`Ersätt alla` kommer varje efterföljande träff att orsaka ``replace()`` att anropas med samma ``ordbok`` som data. Du kan alltså använda den för att lagra godtyckliga data mellan anrop av ``replace()`` under en :guilabel:`Ersätt alla`-operation."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:288
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
 msgstr "``functions``-argumentet"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:290
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:290
 msgid ""
 "The ``functions`` argument gives you access to all other user defined "
 "functions. This is useful for code re-use. You can define utility functions "
 "in one place and re-use them in all your other functions. For example, "
-"suppose you create a function name ``My Function`` like this:"
-msgstr "``functions``-argumentet ger dig tillgång till alla andra användardefinierade funktioner. Detta är användbart för kodåteranvändning. Du kan definiera nyttofunktioner på ett ställe och återanvända dem i alla dina andra funktioner. Anta till exempel att du skapar ett funktionsnamn ``My Function`` så här:"
+"suppose you create a function named ``My Function`` like this:"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:303
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
 "Then, in another function, you can access the ``utility()`` function like "
 "this:"
 msgstr "Sedan, i en annan funktion kan du komma åt ``utility()`` funktionen så här:"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:311
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:311
 msgid ""
 "You can also use the functions object to store persistent data, that can be "
 "re-used by other functions. For example, you could have one function that "
@@ -354,11 +354,11 @@ msgid ""
 "functions:"
 msgstr "Du kan också använda funktionsobjektet för att lagra beständiga data, som kan återanvändas av andra funktioner. Till exempel kan du ha en funktion som när den körs med :guilabel:`Ersätt alla` samlar in en del data och en annan funktion som använder den när den körs efteråt. Betrakta följande två funktioner:"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:331
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
 msgstr "Felsökning av dina funktioner"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:333
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:333
 msgid ""
 "You can debug the functions you create by using the standard ``print()`` "
 "function from Python. The output of print will be displayed in a popup "
@@ -366,31 +366,32 @@ msgid ""
 "``print()`` to output an entire table of contents above."
 msgstr "Du kan felsöka de funktioner som du skapar med hjälp av standard ``print()`` funktionen från Python. Utskriften av print kommer visas i ett extrafönster efter att Sök/ersätt är klar. Du såg ett exempel på att använda ``print()`` för att mata ut en hel innehållsförteckning ovan."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:341
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
 msgstr "Välj filordning när flera HTML-filer körs"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:343
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
 "When you run a :guilabel:`Replace all` on multiple HTML files, the order in "
-"which the files are processes depends on what files you have open for "
-"editing. You can force the search to process files in the order in which the"
-" appear by setting the ``file_order`` attribute on your function, like this:"
-msgstr "När du kör :guilabel:`Ersätt alla` på flera HTML-filer beror ordningen som filerna behandlas på på vilka filer du har öppna för redigering. Du kan tvinga sökningen att behandla filer i den ordning de visas genom att ställa in attributet ``file_order`` i din funktion, så här:"
+"which the files are processed depends on what files you have open for "
+"editing. You can force the search to process files in the order in which "
+"they appear by setting the ``file_order`` attribute on your function, like "
+"this:"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:355
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
 "``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
 "cause the search to process multiple files in the order they appear in the "
 "book, either forwards or backwards, respectively."
 msgstr "``file_order`` accepterar två värden, ``spine`` och ``spine-reverse`` vilka får sökprocessen att behandla flera filer i den ordning de dyker upp i boken, antingen framåt eller bakåt."
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:360
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:360
 msgid ""
 "Having your function called an extra time after the last match is found"
 msgstr "Att få din funktion anropad en extra gång efter att den senaste träffen hittats"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:362
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:362
 msgid ""
 "Sometimes, as in the auto generate table of contents example above, it is "
 "useful to have your function called an extra time after the last match is "
@@ -398,34 +399,34 @@ msgid ""
 " your function, like this:"
 msgstr "Ibland, som i exemplet med den automatiskt skapande av innehållsförteckning ovan, är det användbart att få din funktion anropad en extra gång efter att den sista träffen hittats. Du kan göra detta genom att ställa in attributet ``call_after_last_match`` på din funktion, så här:"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:376
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:376
 msgid "Appending the output from the function to marked text"
 msgstr "Lägga till utmatning från funktionen till markerad text"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:378
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:378
 msgid ""
 "When running search and replace on marked text, it is sometimes useful to "
-"append so text to the end of the marked text. You can do that by setting the"
-" ``append_final_output_to_marked`` attribute on your function (note that you"
-" also need to set ``call_after_last_match``), like this:"
-msgstr "När du kör sök och ersätt på markerad text är det ibland användbart att lägga till sådan text i slutet av den markerade texten. Du kan göra det genom att ställa in attributet ``append_final_output_to_marked`` på din funktion (observera att du också måste ställa in ``call_after_last_match``), så här:"
+"append some text to the end of the marked text. You can do that by setting "
+"the ``append_final_output_to_marked`` attribute on your function (note that "
+"you also need to set ``call_after_last_match``), like this:"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:393
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"
 msgstr "Undertryck resultatdialogrutan när sökning sker med markerad text"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:395
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:395
 msgid ""
 "You can also suppress the result dialog (which can slow down the repeated "
 "application of a search/replace on many blocks of text) by setting the "
 "``suppress_result_dialog`` attribute on your function, like this:"
 msgstr "Du kan också undertrycka resultatdialogrutan (som kan bromsa upp upprepad tillämpning av en sök/ersätt på många textblock ) genom att ställa in ``suppress_result_dialog`` attributet på din funktion, så här:"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:408
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
 msgstr "Fler exempel"
 
-#: ../../__w/calibre/calibre/manual/function_mode.rst:410
+#: ../../../__w/calibre/calibre/manual/function_mode.rst:410
 msgid ""
 "More useful examples, contributed by calibre users, can be found in the "
 "`calibre E-book editor forum "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 14:59+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Simon Lee, 2025\n"
 "Language-Team: Chinese (Taiwan) (http://app.transifex.com/calibre/calibre/language/zh_TW/)\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:4
+#: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
 msgstr "XPath教程"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:6
+#: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -33,35 +33,35 @@ msgid ""
 "HTML document."
 msgstr "在本教程中，將對`XPath <https://en.wikipedia.org/wiki/XPath>`_進行簡要介紹，這是一種查詢語言，在cllibre中可用於選擇`HTML<https://en.wikipedia.org/wiki/HTML>`_文件的任意部分。 XPath是一種廣泛使用的標準，並且對其進行谷歌搜索將產生大量資訊。 但是，本教程重點介紹如何將XPath用於與電子書相關的任務，例如在非結構化HTML文件中查詢章節標題。"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:16
+#: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr "目錄"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:19
+#: ../../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
 msgstr "按標記名選取"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:21
+#: ../../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
 msgstr "最简单的选择形式是按名称选择标记。例如，假设您要选择文档中的所有``<h2>``标签。针对此的XPath查询简单地为：："
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:27
+#: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
 msgstr "前缀`//` 表示“在文档的任何级别搜索”。现在假设您要搜索``<a>``标记内的``<span>``标记。这可以通过以下方式实现："
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:33
+#: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
 msgstr "如果要搜索文件中特定級別的標記，請更改字首：："
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:39
+#: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -71,16 +71,16 @@ msgid ""
 "tags."
 msgstr "这将仅与:ref:``样本_电子书''中的``<p>A非常简短的电子书来演示XPath。</p>的使用''匹配，而不与其他任何``<p>''标记匹配。上面示例中的``h:``前缀需要匹配XHTML标签。这是因为在内部，Calibre将所有内容表示为XHTML。在XHTML标签中，有一个*命名空间*，而且```h:``是HTML标签的命名空间前缀。"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:45
+#: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
-"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
-" test that is used to select tags. Tests can be arbitrarily powerful and as "
-"this tutorial progresses, you will see more powerful examples. A predicate "
+"we need an XPath construct called *predicate*. A :dfn:`predicate` is simply "
+"a test that is used to select tags. Tests can be arbitrarily powerful and as"
+" this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr "现在假设您要同时选择``<h1>``和``<h2>``标记。为此，我们需要一个称为*谓词*的XPath结构。A：dfn：`谓词`只是一个用于选择标签的测试。测试可以是任意强大的，随着本教程的进行，您将看到更强大的示例。谓词是通过将测试表达式括在方括号中创建的：："
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:53
+#: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -92,69 +92,69 @@ msgid ""
 "will be introduced in this tutorial."
 msgstr "此XPath表達式中有幾個新功能。第一個是萬用字元``*``的使用。它的意思是*匹配任何標籤*。現在看一下測試表達式``name()=『h1』或name()=『h2』`。:術語:`名稱()`是一個*內建函式*的例子。 它只是評估標籤的名稱。 因此通過使用它，我們可以選擇名稱為`h1`或`h2`的標籤。注意：:Term:`名稱()`函式忽略名稱空間，因此不需要``h:``字首。XPath有幾個有用的內建函式。本教程還將介紹更多內容。"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:62
+#: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr "按屬性選擇"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:64
+#: ../../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
 msgstr "要根據屬性選擇標籤，需要使用謂詞："
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:70
+#: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
 msgstr "這裡的``@``操作符指的是標籤的屬性。 您可以使用某些`XPath內建函式`_對屬性值執行更復雜的匹配。"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
 msgstr "按標籤內容選擇"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "使用XPath，您甚至可以根据标签中包含的文本选择标签。 最好的方法是通过内置函数:术语:`re:测试()`使用*正则表达式*的功能::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "这里的``.``运算符指代标签的内容，就像``@``运算符指代标签的属性一样。"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
 msgstr "電子書樣本"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
 msgstr "XPath内置函数"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
 msgstr "名称()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
 msgstr "当前标记的名称。"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
 msgstr "包含（）"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "如果s1包含s2，``contains(s1, s2)`` 返回 `true` "
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "

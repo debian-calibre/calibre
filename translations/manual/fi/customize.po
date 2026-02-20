@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-28 11:32+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: Veikko Muurikainen, 2024\n"
 "Language-Team: Finnish (http://app.transifex.com/calibre/calibre/language/fi/)\n"
@@ -19,43 +19,43 @@ msgstr ""
 "Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:6
+#: ../../../__w/calibre/calibre/manual/customize.rst:6
 msgid "Customizing calibre"
 msgstr "calibren mukauttaminen"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:8
+#: ../../../__w/calibre/calibre/manual/customize.rst:8
 msgid ""
 "calibre has a highly modular design. Various parts of it can be customized."
 "  Here, you will learn:"
 msgstr "kaliiperi on erittäin pitkälle modulaarinen. Sen eri osia voidaan mukauttaa. Tässä opit:"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:10
+#: ../../../__w/calibre/calibre/manual/customize.rst:10
 msgid ""
 "how to use environment variables and *tweaks* to customize calibre's "
 "behavior,"
 msgstr "miten käyttää ympäristömuuttujia ja *tweakeja* Calibren käyttäytymisen mukauttamiseksi,"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:11
+#: ../../../__w/calibre/calibre/manual/customize.rst:11
 msgid ""
 "how to specify your own static resources like icons and templates to "
 "override the defaults"
 msgstr "miten voit määrittää omia staattisia resursseja, kuten kuvakkeita ja malleja, jotka ohittavat oletusasetukset."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:12
+#: ../../../__w/calibre/calibre/manual/customize.rst:12
 msgid "how to use *plugins* to add functionality to calibre."
 msgstr "miten käyttää *plugineja* toimintojen lisäämiseksi Calibreen."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:13
+#: ../../../__w/calibre/calibre/manual/customize.rst:13
 msgid "how to share icon themes and plugins with other calibre users."
 msgstr "miten voit jakaa kuvaketeemoja ja laajennuksia muiden Calibren käyttäjien kanssa."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:14
+#: ../../../__w/calibre/calibre/manual/customize.rst:14
 msgid ""
 "to see how to create *recipes* to add new sources of online content to "
 "calibre visit the Section :ref:`news`."
 msgstr "to see how to create *recipes* to add new sources of online content to calibre visit the Section :ref:`news`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:17
+#: ../../../__w/calibre/calibre/manual/customize.rst:17
 msgid ""
 "Note that although icon themes and plugins are indexed and downloadable via "
 "calibre's builtin updater, they are not part of calibre, and their canonical"
@@ -64,27 +64,27 @@ msgid ""
 "support threads."
 msgstr "Huomaa, että vaikka kuvakkeiden teemat ja liitännäiset on indeksoitu ja ladattavissa Calibren sisäänrakennetun päivitysohjelman kautta, ne eivät ole osa Calibrea, ja niiden kanoniset sijainnit tuen ja lähdekoodin osalta ovat `Mobileread-foorumeilla <https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ niiden tukiketjuissa."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:36
+#: ../../../__w/calibre/calibre/manual/customize.rst:36
 msgid "Environment variables"
 msgstr "Ympäristömuuttujat"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:38
+#: ../../../__w/calibre/calibre/manual/customize.rst:38
 msgid ""
 "``CALIBRE_CONFIG_DIRECTORY`` - sets the folder where configuration files are"
 " stored/read."
 msgstr "``CALIBRE_CONFIG_DIRECTORY`` - määrittää kansion, johon konfiguraatiotiedostot tallennetaan/luetaan."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:39
+#: ../../../__w/calibre/calibre/manual/customize.rst:39
 msgid "``CALIBRE_TEMP_DIR`` - sets the temporary folder used by calibre"
 msgstr "``CALIBRE_TEMP_DIR`` - asettaa calibren käyttämän väliaikaisen kansion."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:40
+#: ../../../__w/calibre/calibre/manual/customize.rst:40
 msgid ""
 "``CALIBRE_CACHE_DIRECTORY`` - sets the folder calibre uses to cache "
 "persistent data between sessions"
 msgstr "``CALIBRE_CACHE_DIRECTORY`` - asettaa kansion, jota calibre käyttää pysyvien tietojen välimuistiin tallentamiseen istuntojen välillä."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:41
+#: ../../../__w/calibre/calibre/manual/customize.rst:41
 msgid ""
 "``CALIBRE_OVERRIDE_DATABASE_PATH`` - allows you to specify the full path to "
 "metadata.db. Using this variable you can have metadata.db be in a location "
@@ -92,38 +92,44 @@ msgid ""
 "networked drive that does not support file locking."
 msgstr "``CALIBRE_OVERRIDE_DATABASE_PATH`` - tällä voit asettaa tarkan tiedostopolun metasata.db-tiedostolle. Tämä asetus ohittaa metadata.db:n tallennuksen muuhun kansioon kuin kirjastokansio. Tämä on hyödyllistä, jos kirjastokansio on verkkolevyllä joka ei tue tiedostojen lukitsemista."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:42
+#: ../../../__w/calibre/calibre/manual/customize.rst:42
+msgid ""
+"``CALIBRE_ALLOW_PYTHON_TEMPLATES`` - if set to a value other than ``1`` "
+"disables the use of Python based templates in calibre."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/customize.rst:43
 msgid ""
 "``CALIBRE_DEVELOP_FROM`` - used to run from a calibre development "
 "environment. See :ref:`develop`."
 msgstr "``CALIBRE_DEVELOP_FROM`` - käytetään Calibre-kehitysympäristöstä käsin. Katso :ref:`develop`."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:43
+#: ../../../__w/calibre/calibre/manual/customize.rst:44
 msgid ""
 "``CALIBRE_OVERRIDE_LANG`` - used to force the language used by the interface"
 " (ISO 639 language code)"
 msgstr "``CALIBRE_OVERRIDE_LANG`` - käytetään pakottamaan käyttöliittymän käyttämä kieli (ISO 639 -kielikoodi)."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:44
+#: ../../../__w/calibre/calibre/manual/customize.rst:45
 msgid ""
 "``CALIBRE_TEST_TRANSLATION`` - used to test a translation .po file (should "
 "be the path to the .po file)"
 msgstr "``CALIBRE_TEST_TRANSLATION`` - käytetään .po-käännöstiedoston testaamiseen (pitäisi olla .po-tiedoston polku)."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:45
+#: ../../../__w/calibre/calibre/manual/customize.rst:46
 msgid ""
 "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - causes calibre to not use native file "
 "dialogs for selecting files/folders."
 msgstr "``CALIBRE_NO_NATIVE_FILEDIALOGS`` - aiheuttaa sen, että Calibre ei käytä alkuperäisiä tiedostoikkunoita tiedostojen/kansioiden valintaan."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:46
+#: ../../../__w/calibre/calibre/manual/customize.rst:47
 msgid ""
 "``CALIBRE_NO_NATIVE_MENUBAR`` - causes calibre to not create a native "
 "(global) menu on Ubuntu Unity and similar Linux desktop environments. The "
 "menu is instead placed inside the window, as is traditional."
 msgstr "``CALIBRE_NO_NATIVE_MENUBAR`` - aiheuttaa sen, että Calibre ei luo natiivia (globaalia) valikkoa Ubuntu Unityssä ja vastaavissa Linux-työpöytäympäristöissä. Valikko sijoitetaan sen sijaan ikkunan sisälle, kuten perinteisesti on tapana."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:47
+#: ../../../__w/calibre/calibre/manual/customize.rst:48
 msgid ""
 "``CALIBRE_USE_SYSTEM_THEME`` - by default, on Linux, calibre uses its own "
 "builtin Qt style. This is to avoid crashes and hangs caused by "
@@ -133,34 +139,45 @@ msgid ""
 "to use the system theme -- beware of crashes and hangs."
 msgstr "``CALIBRE_USE_SYSTEM_THEME`` - oletuksena Linuxissa calibre käyttää omaa sisäänrakennettua Qt-tyyliään. Tällä vältetään kaatumiset ja jumitukset, jotka johtuvat yhteensopimattomuuksista Qt:n version, jota vastaan calibre on rakennettu, ja järjestelmän Qt:n välillä. Huonona puolena on, että calibre ei välttämättä noudata järjestelmän ulkoasua. Jos asetat tämän ympäristömuuttujan Linuxissa, se saa calibren käyttämään järjestelmän teemaa -- varo kaatumisia ja jumituksia.\n\nTranslated with www.DeepL.com/Translator (free version)"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:53
+#: ../../../__w/calibre/calibre/manual/customize.rst:54
 msgid ""
 "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - causes calibre to print deprecation "
 "warnings to stdout. Useful for calibre developers."
 msgstr "``CALIBRE_SHOW_DEPRECATION_WARNINGS`` - saa Calibren tulostamaan varoitukset poistoista stdoutiin. Hyödyllinen calibren kehittäjille."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:54
+#: ../../../__w/calibre/calibre/manual/customize.rst:55
 msgid ""
 "``CALIBRE_NO_DEFAULT_PROGRAMS`` - prevent calibre from automatically "
 "registering the filetypes it is capable of handling with Windows."
 msgstr "``CALIBRE_NO_DEFAULT_PROGRAMS`` - estää calibrea rekisteröimästä automaattisesti tiedostotyyppejä, joita se pystyy käsittelemään Windowsissa."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:55
+#: ../../../__w/calibre/calibre/manual/customize.rst:56
+msgid ""
+"``CALIBRE_USE_SYSTEM_CERTIFICATES`` - make calibre use the system "
+"certificate store for SSL certificate verification instead of its own "
+"certificate store on Windows and macOS."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/customize.rst:57
+msgid "``CALIBRE_NO_ICONS_IN_MENUS`` - Disable icons in menus"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/customize.rst:58
 msgid ""
 "``QT_QPA_PLATFORM`` - On Linux set this to ``wayland`` to force calibre to "
 "use Wayland and ``xcb`` to force use of X11."
 msgstr "``QT_QPA_PLATFORM`` - Linuxissa aseta tämän arvoksi ``wayland`` pakottaaksesi calibren käyttämään Waylandia ja ``xcb`` pakottaaksesi X11:n käytön."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:56
+#: ../../../__w/calibre/calibre/manual/customize.rst:59
 msgid "``SYSFS_PATH`` - Use if sysfs is mounted somewhere other than /sys"
 msgstr "``SYSFS_PATH`` - Käytä jos sysfs on asetettu jonnekin muualle kuin polkuun /sys."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:57
+#: ../../../__w/calibre/calibre/manual/customize.rst:60
 msgid ""
 "``http_proxy``, ``https_proxy`` - used on Linux to specify an HTTP(S) proxy"
 msgstr "``http_proxy``, ``https_proxy`` - käytetään Linuxissa HTTP(S)-välityspalvelimen määrittämiseen."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:59
+#: ../../../__w/calibre/calibre/manual/customize.rst:62
 msgid ""
 "See `How to set environment variables in Windows "
 "<https://www.computerhope.com/issues/ch000549.htm>`_. If you are on macOS "
@@ -169,11 +186,11 @@ msgid ""
 "environment variables one per line in it, for example::"
 msgstr "Katso `Ympäristömuuttujien asettaminen Windowsissa <https://www.computerhope.com/issues/ch000549.htm>`_. Jos käytät macOS:ää, voit asettaa ympäristömuuttujia luomalla :file:`~/Library/Preferences/calibre/macos-env.txt` ja laittamalla ympäristömuuttujat yksi per rivi siihen, esimerkiksi::"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:69
+#: ../../../__w/calibre/calibre/manual/customize.rst:72
 msgid "Tweaks"
 msgstr "Hienosäätö"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:71
+#: ../../../__w/calibre/calibre/manual/customize.rst:74
 msgid ""
 "Tweaks are small changes that you can specify to control various aspects of "
 "calibre's behavior. You can change them by going to "
@@ -181,11 +198,11 @@ msgid ""
 "reproduced below"
 msgstr "Säädöt ovat pieniä muutoksia joilla voit muokata erilaisia calibren toimintoja. Voit muokata niitä Asetukset -> Edistyneet asetukset -> Säädöt. Alla on säätöjen oletusasetukset"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:78
+#: ../../../__w/calibre/calibre/manual/customize.rst:81
 msgid "Overriding icons, templates, et cetera"
 msgstr "Kuvakkeiden, mallien ym. ohittaminen"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:81
+#: ../../../__w/calibre/calibre/manual/customize.rst:84
 msgid ""
 "calibre has direct support for icon themes, there are several icon themes "
 "available for calibre, that you can use by going to "
@@ -193,7 +210,7 @@ msgid ""
 "preferable to use icon themes over overriding individual icons."
 msgstr "calibre tukee suoraan kuvaketeemoja, calibreen on saatavilla useita kuvaketeemoja, joita voit käyttää menemällä :guilabel:`Preferences->Interface->Look & Feel->Change icon theme`. On parempi käyttää kuvaketeemoja kuin ohittaa yksittäisiä kuvakkeita."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:86
+#: ../../../__w/calibre/calibre/manual/customize.rst:89
 msgid ""
 "calibre allows you to override the static resources, like icons, JavaScript "
 "and templates for the metadata jacket, catalogs, etc. with customized "
@@ -206,7 +223,7 @@ msgid ""
 "you choose to install calibre."
 msgstr "calibren avulla voit korvata staattiset resurssit, kuten kuvakkeet, JavaScriptin ja metatietomallit, luettelot jne., haluamillasi räätälöidyillä versioilla. Kaikki staattiset resurssit tallennetaan calibren asennuspaikan resurssit-alikansioon. Windowsissa tämä on yleensä :file:`C:\\\\\\Program Files\\\\\\\\Calibre2\\\\\\app\\\\\\resources`. MacOS:ssä :file:`/Applications/calibre.app/Contents/Resources/resources/`. Linuxissa, jos käytät Calibre-sivuston binääriasennusohjelmaa, se on :file:`/opt/calibre/resources`. Nämä polut voivat muuttua sen mukaan, mihin calibre asennetaan."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:95
+#: ../../../__w/calibre/calibre/manual/customize.rst:98
 msgid ""
 "You should not change the files in this resources folder, as your changes "
 "will get overwritten the next time you update calibre. Instead, go to "
@@ -218,7 +235,7 @@ msgid ""
 "file in preference to the built-in one the next time it is started."
 msgstr "Resurssikansiossa olevia tiedostoja ei kannata muuttaa, sillä muutokset korvataan, kun calibre päivitetään seuraavan kerran. Mene sen sijaan kohtaan :guilabel:`Preferences->Advanced->Miscellaneous` ja valitse :guilabel:`Open calibre configuration folder`. Luo tähän konfiguraatiokansioon alakansio nimeltä resources ja sijoita siihen tiedostot, jotka haluat korvata. Sijoita tiedostot sopiviin alikansioihin, esimerkiksi kuvat :file:`resources/images`-kansioon jne. calibre käyttää automaattisesti mukautettua tiedostoasi sisäänrakennetun tiedoston sijasta, kun se käynnistetään seuraavan kerran."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:104
+#: ../../../__w/calibre/calibre/manual/customize.rst:107
 msgid ""
 "For example, if you wanted to change the icon for the :guilabel:`Remove "
 "books` action, you would first look in the built-in resources folder and see"
@@ -231,17 +248,17 @@ msgid ""
 "icon theme."
 msgstr "Jos esimerkiksi haluaisit muuttaa :guilabel:`Remove books` -toiminnon kuvaketta, katso ensin sisäänrakennetusta resurssikansiosta, että kyseinen tiedosto on :file:`resources/images/remove_books.png`. Olettaen, että sinulla on vaihtoehtoinen PNG-muotoinen kuvake nimeltään :file:`my_remove_books.png`, tallentaisit sen määrityskansioon nimellä :file:`resources/images/remove_books.png`. Kaikki calibren käyttöliittymän käyttämät kuvakkeet ovat :file:`resources/images`-kansiossa ja sen alikansioissa. Ohitustiedoston sijoittaminen tänne on vielä tärkeämpää kuin mukautettu kuvaketeema."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:114
+#: ../../../__w/calibre/calibre/manual/customize.rst:117
 msgid "Creating your own icon theme for calibre"
 msgstr "Oman kuvaketeeman luominen calibreen"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:116
+#: ../../../__w/calibre/calibre/manual/customize.rst:119
 msgid ""
 "If you have created a beautiful set of icons and wish to share them with "
 "other calibre users via calibre's builtin icon theme support, you can easily"
 " package up your icons into a theme. To do so, go to "
 ":guilabel:`Preferences->Miscellaneous->Create icon theme`, select the folder"
-" where you have put your icons. Then fill up the theme metadata and click "
+" where you have put your icons. Then fill in the theme metadata and click "
 "OK. This will result in a ZIP file containing the theme icons. You can "
 "upload that to the calibre forum at `Mobileread "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ and then I "
@@ -250,9 +267,9 @@ msgid ""
 "current theme in calibre. If you are testing your theme, remember to remove "
 "the images from the :file:`resources/images` folder so that the icons from "
 "the theme are used."
-msgstr "Jos olet luonut hienon kuvakkesarjan ja haluat jakaa sen muiden calibren käyttäjien kanssa calibren sisäänrakennetun kuvaketeematuen avulla, voit helposti paketoida kuvakkeesi teemaksi. Voit tehdä niin menemällä :guilabel:`Preferences->Miscellaneous->Create icon theme`, valitsemalla kansion, johon olet laittanut kuvakkeesi. Täytä sitten teeman metatiedot ja napsauta OK. Tuloksena on ZIP-tiedosto, joka sisältää teeman kuvakkeet. Voit ladata sen Calibre-foorumille osoitteeseen `Mobileread <https://www.mobileread.com/forums/forumdisplay.php?f=166>`__ ja sitten minä laitan teemasi saataville Calibren sisäänrakennetun ikoniteemajärjestelmän kautta. Oletusarvoisesti juuri luomasi kuvaketeema asennetaan myös Calibren nykyiseksi teemaksi. Jos testaat teemaa, muista poistaa kuvat :file:`resources/images`-kansiosta, jotta teeman kuvakkeet tulevat käyttöön."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/customize.rst:130
+#: ../../../__w/calibre/calibre/manual/customize.rst:133
 msgid ""
 "As of calibre 6, you can have custom icons for light and dark mode. Simply "
 "create two versions of the icon and name the files with the suffix ``-for-"
@@ -261,11 +278,11 @@ msgid ""
 "automatically use the appropriate icon based on the current theme."
 msgstr "Calibre 6 lähtien voit käyttää mukautettuja kuvakkeita vaaleaa ja tummaa tilaa varten. Luo vain kaksi versiota kuvakkeesta ja nimeä tiedostot päätteellä ``-tummalle-teemalle`` ja ``vaalealle-teemalle``. Esimerkiksi ``modified-for-dark-theme.png`` ja ``modified-for-light-theme.png``. Silloin calibre käyttää automaattisesti sopivaa kuvaketta nykyisen teeman mukaan."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:137
+#: ../../../__w/calibre/calibre/manual/customize.rst:140
 msgid "Customizing calibre with plugins"
 msgstr "Calibren mukauttaminen lisäosilla"
 
-#: ../../__w/calibre/calibre/manual/customize.rst:139
+#: ../../../__w/calibre/calibre/manual/customize.rst:142
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -275,14 +292,14 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "Calibren rakenne on hyvin modulaarinen. Lähes kaikki toiminnot on toteutettu lisäosien kautta. Lisäosia käytetään muuntamiseen, uutisten lataamiseen (vaikka niitä silloin kutsutaan resepteiksi), käyttöliittymän eri osiin, eri laitteisiin yhdistämiseen, tiedostojen muokkaamiseen kun niitä lisätään calibreen jne. Löydät täydellisen listan kaikista sisäänrakennetuista lisäosista avaamalla :guilabel:'Asetukset -> Edistyneet asetukset -> Lisäosat'."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:146
+#: ../../../__w/calibre/calibre/manual/customize.rst:149
 msgid ""
 "You can write your own plugins to customize and extend the behavior of "
 "calibre. The plugin architecture in calibre is very simple, see the tutorial"
 " :ref:`pluginstutorial`."
 msgstr "Voit luoda omia lisäosia mukauttaaksesi ja laajentaaksesi calibren toimintaa. Lisäosa-arkkitehtuuri on hyvin yksinkertainen, katso opastus :ref:'pluginstutorial'."
 
-#: ../../__w/calibre/calibre/manual/customize.rst:150
+#: ../../../__w/calibre/calibre/manual/customize.rst:153
 msgid ""
 "Once you have written a plugin, you can upload that to the calibre plugins "
 "forum at `Mobileread "

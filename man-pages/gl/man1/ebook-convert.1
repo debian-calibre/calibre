@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "febreiro 06, 2026" "9.2.1" "calibre"
+.TH "EBOOK-CONVERT" "1" "febreiro 20, 2026" "9.3.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -145,7 +145,7 @@ O tamaño máximo da imaxe (ancho x alto). Un valor de profile significa usar o 
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Poña a táboa de contidos inserida ao final do libro en lugar do comezo.
+Poña o índice inserido ao final do libro no canto do comezo.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ Se está especificado, o complemento de saída tratará de crear unha saída o m
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Título para calquera táboa de contidos en liña xerada.
+Título para calquera índice en liña xerada.
 .UNINDENT
 .SH APARENCIA
 .sp
@@ -303,7 +303,7 @@ Cando calibre elimina liñas en branco entre parágrafos, establece automaticame
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see: \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
+Converter comiñas simples, trazos e puntos suspensivos ás súas equivalencias tipográficas correctas. Para máis detalles, ver: \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -475,7 +475,7 @@ Unha expresión XPath para detectar a localización do documento na que comezar 
 .UNINDENT
 .SH ÍNDICE
 .sp
-Controla a xeración automática do Índice. De modo predeterminado, se o ficheiro orixe ten unha táboa de contidos, usarase esta preferentemente respecto da xerada automaticamente.
+Controla a xeración automática do Índice. De modo predeterminado, se o ficheiro orixe ten un índice, usarase esta preferentemente respecto do xerado automaticamente.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc
@@ -484,17 +484,17 @@ Ao crear un índice a partir de ligazóns no documento de entrada, permita entra
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Expresión XPath que especifica todas as etiquetas que se deben engadir á táboa de contidos no nivel un. Se se especifica isto, terá prioridade sobre outras formas de detección automática. Consulte o Titorial XPath no Manual de usuario de calibre para obter exemplos.
+Expresión XPath que especifica todas as etiquetas que se deben engadir ó índice no nivel un. Se se especifica isto, terá prioridade sobre outras formas de detección automática. Consulte o Titorial XPath no Manual de usuario de calibre para obter exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-Expresión XPath que especifica todas as etiquetas que se deben engadir á táboa de contidos no nivel dous. Cada entrada engádese baixo unha entrada do nivel anterior. Consulte o Titorial XPath no Manual de usuario de calibre para obter exemplos.
+Expresión XPath que especifica todas as etiquetas que se deben engadir ó índice no nivel dous. Cada entrada engádese baixo unha entrada do nivel anterior. Consulte o Titorial XPath no Manual de usuario de calibre para obter exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-Expresión XPath que especifica todas as etiquetas que se deben engadir á táboa de contidos no nivel tres. Cada entrada engádese baixo a entrada de nivel dous anterior. Consulte o Titorial XPath no Manual de usuario de calibre para obter exemplos.
+Expresión XPath que especifica todas as etiquetas que se deben engadir ó índice no nivel tres. Cada entrada engádese baixo a entrada de nivel dous anterior. Consulte o Titorial XPath no Manual de usuario de calibre para obter exemplos.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -504,22 +504,22 @@ Número máximo de ligazóns que se incluirán no Índice de contidos. O valor 0
 .INDENT 0.0
 .TP
 .B \-\-no\-chapters\-in\-toc
-Non engadir os capítulos autodetectados á táboa de contidos.
+Non engadir os capítulos autodetectados ó índice.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-filter
-Retirar entradas do Índice de contidos (IdC) con títulos que se corresponden coa expresión regular especificada. As entradas correspondentes e todas as subordinadas serán retiradas.
+Retirar entradas do Índice con títulos que se corresponden coa expresión regular especificada. As entradas correspondentes e todas as subordinadas serán retiradas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-toc\-threshold
-Se se detecta menos deste número de capítulos, entón engádense ligazóns ao Índice de contidos. Valor predeterminado: 6
+Se se detecta menos deste número de capítulos, entón engádense ligazóns ao Índice. Valor predeterminado: 6
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-use\-auto\-toc
-Normalmente, se o ficheiro de orixe ten un Índice de contidos, úsase este en vez do autoxerado. Con esta opción sempre se usará o autoxerado.
+Normalmente, se o ficheiro de orixe ten un Índice, úsase este en vez do autoxerado. Con esta opción sempre se usará o autoxerado.
 .UNINDENT
 .SH METADATOS
 .sp

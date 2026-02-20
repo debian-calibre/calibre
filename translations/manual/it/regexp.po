@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 17:04+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>, 2021-2023\n"
 "Language-Team: Italian (http://app.transifex.com/calibre/calibre/language/it/)\n"
@@ -22,11 +22,11 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:4
+#: ../../../__w/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
 msgstr "Tutto sull'utilizzo delle espressioni regolari in calibre"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:6
+#: ../../../__w/calibre/calibre/manual/regexp.rst:6
 msgid ""
 "Regular expressions are features used in many places in calibre to perform "
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
@@ -34,15 +34,15 @@ msgid ""
 "in calibre."
 msgstr "Le espressioni regolari sono usate in molte parti di calibre per eseguire manipolazioni avanzate del contenuto e dei metadati degli e-book. Questa guida è un'introduzione amichevole all'uso  delle espressioni regolari in calibre."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:11
+#: ../../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
 msgstr "Contenuti"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:14
+#: ../../../__w/calibre/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
 msgstr "Per prima cosa, una parola di avviso e una di incoraggiamento"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:16
+#: ../../../__w/calibre/calibre/manual/regexp.rst:16
 msgid ""
 "This is, inevitably, going to be somewhat technical- after all, regular "
 "expressions are a technical tool for doing technical stuff. I'm going to "
@@ -58,11 +58,11 @@ msgid ""
 "step. So, take a step and follow me into the rabbit hole."
 msgstr "Questa guida sarà, per forza di cose, abbastanza tecnica - dopotutto, le espressioni regolari sono uno strumento tecnico che fa cose tecniche. Dovrò usare dei tecnicismi e dei concetti che potrebbero sembrare complicati o contorti. Farò del mio meglio per spiegare quei concetti il più chiaramente possibile, ma non posso proprio fare a meno di utilizzarli. Detto ciò, non essere scoraggiato da questo gergo, perché ho provato a spiegare tutto ciò che appare per la prima volta. E sebbene le espressioni regolari stesse possano sembrare una magia oscura e misteriosa (o, per essere più prosaici, segni e lettere astrusi messi a caso in una stringa senza senso), ti assicuro che non sono poi così complicati. Anche coloro che capiscono molto bene le espressioni regolari hanno problemi a leggere le più complesse tra di esse, ma scriverle non è così complicato - l'espressione è costruita passo passo. E allora, fai un passo avanti e seguimi nella tana del Bianconiglio"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:19
+#: ../../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
 msgstr "Dove è possibile utilizzare le espressioni regolari all'interno di calibre?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:21
+#: ../../../__w/calibre/calibre/manual/regexp.rst:21
 msgid ""
 "There are a few places calibre uses regular expressions. There's the "
 ":guilabel:`Search & replace` in conversion options, metadata detection from "
@@ -73,11 +73,11 @@ msgid ""
 "searching inside the calibre E-book viewer."
 msgstr "Ci sono vari luoghi in cui calibre utilizza le espressioni regolari. C'è :guilabel:`Cerca e sostituisci` nelle opzioni di conversione, l'estrazione dei metadati dai nomi dei file nelle impostazioni di importazione e il Cerca e sostituisci nella modifica di gruppo dei metadati dei libri. Anche l'editor di libri di calibre può usare le espressioni regolari nella sua funzione :guilabel:`Cerca e sostituisci`. Infine puoi usare le espressioni regolari quando cerchi nell'elenco dei libri di calibre e nel Lettore E-book di calibre."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:30
+#: ../../../__w/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
 msgstr "Cosa diamine *è* un'espressione regolare?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:32
+#: ../../../__w/calibre/calibre/manual/regexp.rst:32
 msgid ""
 "A regular expression is a way to describe sets of strings. A single regular "
 "expression can *match* a number of different strings. This is what makes "
@@ -85,7 +85,7 @@ msgid ""
 "potentially large number of variations."
 msgstr "Un'espressione regolare è un modo per descrivere insiemi di stringhe. Una singola espressione regolare può *associare* una serie di stringhe differenti. È questo che rende le espressioni regolari così potenti -- sono un modo conciso per descrivere un numero potenzialmente alto di variazioni."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:34
+#: ../../../__w/calibre/calibre/manual/regexp.rst:34
 msgid ""
 "I'm using string here in the sense it is used in programming languages: a "
 "string of one or more characters, characters including actual characters, "
@@ -100,11 +100,11 @@ msgid ""
 "people bother using them at all. More on that in a bit."
 msgstr "Qui uso stringa con il significato usato nei linguaggi di programmazione: una stringa di uno o più caratteri, che includono caratteri effettivi, numeri, punteggiatura e i cosiddetti \"whitespace\" (testo a capo, tabulazioni, ecc.). Ricorda che generalmente caratteri con maiuscole differenti non sono considerati uguali, ne deriva perciò che \"a\" è un carattere di verso da \"A\", e così via. In calibre, le espressioni regolari non fanno distinzione di maiuscole nella Barra di Ricerca, ma la fanno nelle opzioni di conversione. Esiste un modo per fare in modo che nessuna espressione regolare distingua le maiuscole, ma ne parleremo più avanti. Diventa complicato perché le espressioni regolari permettono varianti nelle stringhe che trovano, e quindi a un'espressione può corrispondere più di una stringa, che è poi la ragione per cui la gente si prende il disturbo di usarle. Più informazioni fra un attimo."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:37
+#: ../../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
 msgstr "Potresti spiegare meglio?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:39
+#: ../../../__w/calibre/calibre/manual/regexp.rst:39
 msgid ""
 "Well, that's why we're here. First, this is the most important concept in "
 "regular expressions: *A string by itself is a regular expression that "
@@ -116,11 +116,11 @@ msgid ""
 "variation."
 msgstr "Siamo qui per questo. Primo, e questo è il concetto più importante delle espressioni regolari: *Una stringa presa da sola è un'espressione regolare che trova se stessa*. Ovverosia, se volessi trovare la stringa ``\"Ciao, Mondo!\"`` usando un'espressione regolare, l'espressione regolare da usare sarebbe ``Ciao, Mondo!``. E sì, è proprio così semplice. Ti sarai accorto, tuttavia, che questa espressione trova *solo* la stringa esatta ``\"Ciao, Mondo!\"``, non p.es. ``\"Ciao, mOndo!\"`` o ``\"ciao, mondo!\"`` o altre varianti del genere."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:42
+#: ../../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
 msgstr "Non suona affatto male. E poi?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:44
+#: ../../../__w/calibre/calibre/manual/regexp.rst:44
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
 "regular expressions can match multiple strings? This is where it gets a "
@@ -142,11 +142,11 @@ msgid ""
 "expression would look like. Yes, go ahead. Write it down."
 msgstr "Poi inizia la parte davvero interessante. Ricordi quando ti ho detto che le espressioni regolari possono trovare più di una stringa? È qui che le cose si complicano. Poniamo, come esercizio un po' più concreto, che l'e-book che volevi convertire avesse un fastidioso piè di pagina con la conta delle pagine, come \"Pagina 5 di 423\". Ovviamente il numero di pagina salirebbe da 1 a 423, per cui dovresti trovare 423 stringhe differenti, giusto? Sbagliato in realtà: le espressioni regolari ti permettono di definire classi di caratteri da trovare: per definirne uno, metti tutti i caratteri che vuoi avere nella classe dentro parentesi quadre. Quindi, ad esempio, la classe ``[abc]`` troverebbe sia il carattere \"a\", sia \"b\" sia \"c\". *Le classi troveranno sempre solamente uno dei caratteri della classe.* Esse \"riconoscono\" gli intervalli, ovvero, se volessi trovare tutti i caratteri minuscoli dovresti usare la classe ``[a-z]``, per tutti i caratteri minuscoli e maiuscoli dovresti usare ``[a-zA-Z]``, e così via. Chiaro il concetto? Quindi, ovviamente, usando l'espressione ``Pagina [0-9] di 423`` saresti in grado di trovare le prime 9 pagine, riducendo quindi il numero di espressioni necessarie a tre: la seconda espressione ``Pagina [0-9][0-9] di 423`` troverebbe tutti i numeri di pagina di due cifre, e sono sicuro che tu possa immaginare l'aspetto della terza espressione. Esatto, vai pure. Scrivila."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:47
+#: ../../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
 msgstr "Ehi, ben fatto! Ora inizia ad avere un senso!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:49
+#: ../../../__w/calibre/calibre/manual/regexp.rst:49
 msgid ""
 "I was hoping you'd say that. But brace yourself, now it gets even better! We"
 " just saw that using sets, we could match one of several characters at once."
@@ -172,7 +172,7 @@ msgid ""
 " every page number in that book!"
 msgstr "Speravo proprio che lo dicessi. Ma aspetta, ora diventa ancora più bello! Abbiamo appena visto che usando le classi possiamo trovare un carattere tra molti inclusi. Ma puoi anche ripetere un carattere o una classe, e ridurre così il numero di espressioni necessarie per gestire l’esempio dei numeri di pagina di poco fa a uno. Esatto, UNO! Eccitato? Dovresti esserlo! Funziona così: Alcuni cosiddetti caratteri speciali, \"+\", \"?\" e \"*\", *ripetono l’elemento singolo che li precede*. Per elemento si intende un singolo carattere, una classe di caratteri, una sequenza di escape o un gruppo (Di questi ultimi due parleremo più avanti) – in breve ogni entità singola in un’espressione regolare. Questi caratteri sono chiamati wildcard o quantificatori. Per essere più precisi, \"?\" trova *0 o 1* dell’elemento che lo precede, \"*\" trova *0 o più* dell’elemento che lo precede e \"+\" trova *1 o più* dell’elemento che lo precede. Alcuni esempi: l’espressione ``a?`` troverebbe sia \"\" (che è la stringa vuota, non proprio utile nel nostro caso) sia \"a\", l’espressione ``a*`` troverebbe \"\", \"a\", \"aa\" o un qualsiasi numero di a messe in fila e, infine, l’espressione ``a+`` troverebbe \"a\", \"aa\" o un qualsiasi numero di a messe in fila (Nota: non troverebbe la stringa vuota!). Lo stesso vale per le classi: l’espressione ``[0-9]+`` troverebbe *ogni numero intero che c’è*! So cosa stai pensando, e hai ragione: se usassi questa espressione nel caso di prima dei numeri di pagina, non sarebbe questa l’espressione unica che trova tutti i numeri di pagina? Sì, l’espressione ``Pagina [0-9]+ di 423`` troverebbe tutti I numeri di pagina in quel libro!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:52
+#: ../../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
 "A note on these quantifiers: They generally try to match as much text as "
 "possible, so be careful when using them. This is called \"greedy "
@@ -192,13 +192,13 @@ msgid ""
 "write a regular expression."
 msgstr "Un appunto su questi quantificatori: di solito cercano di trovare la maggior quantità di testo possibile, quindi fai attenzione quando li usi. Questo è detto \"comportamento vorace\" - sono sicuro che capisci perché. Questo comportamento diventa problematico quando, poniamo, provi a trovare un tag. Considera per esempio la stringa ``\"<p class=\"calibre2\">Titolo qui</p>\"`` e poniamo che tu voglia trovare il tag di apertura (la parte inclusa nella prima coppia di parentesi angolari, maggiori informazioni sui tag più avanti). Ti verrebbe da pensare che l'espressione ``<p.*>`` trovi quel tag, ma in realtà trova l'intera stringa! (Il carattere \".\" è un altro carattere speciale. Trova ogni carattere tranne le interruzioni di riga quindi, in pratica, l'espressione ``.*`` troverebbe ogni singola linea immaginabile). Invece, prova a usare ``<p.*?>`` che rende il quantificatore ``\"*\"`` non vorace. Quell'espressione troverebbe solo il primo tag di apertura, come si voleva. C'è anche un altro modo per ottenere la stessa cosa, in realtà: l'espressione ``<p[^>]*>`` troverà lo stesso tag di apertura - capirai perché dopo la prossima sezione. Ricorda solo che c'è spesso più di un modo di scrivere un'espressione regolare."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:56
+#: ../../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
 msgstr "Bene, questi caratteri speciali sono tutti molto graziosi, ma se volessi trovare un punto, o un punto di domanda?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:58
+#: ../../../__w/calibre/calibre/manual/regexp.rst:58
 msgid ""
 "You can of course do that: Just put a backslash in front of any special "
 "character and it is interpreted as the literal character, without any "
@@ -213,11 +213,11 @@ msgid ""
 "needing to be escaped if you want the literal character."
 msgstr "Puoi farlo, naturalmente: Basta mettere una barra rovesciata prima di ogni carattere speciale e sarà interpretato come il carattere digitato, senza alcun significato speciale. Questa coppia di barra rovesciata seguita da un carattere singolo è chiamata sequenza di escape, e l'atto di mettere una barra rovesciata prima di un carattere speciale è detto (in inglese) \"escaping the character\". Una sequenza di escape è interpretata come un singolo elemento. Naturalmente ci sono sequenze di escape che fanno di più che rappresentare semplicemente i caratteri speciali, per esempio ``\"\\t\"`` indica una tabulazione. Parleremo di alcune di queste sequenze di escape più avanti. Ah e comunque, riguardo a quei caratteri speciali: Considera che ognuno dei caratteri di cui discutiamo in questa introduzione perché hanno una certa funzione sia speciale, e che quindi abbia bisogno della barra di escape se vuoi il carattere digitato."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:61
+#: ../../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
 msgstr "Quindi, quali sono le classi più utili?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:63
+#: ../../../__w/calibre/calibre/manual/regexp.rst:63
 msgid ""
 "Knew you'd ask. Some useful sets are ``[0-9]`` matching a single number, "
 "``[a-z]`` matching a single lowercase letter, ``[A-Z]`` matching a single "
@@ -226,38 +226,38 @@ msgid ""
 "shorthand:"
 msgstr "Sapevo che l'avresti chiesto. Alcune utili classi sono ``[0-9]`` che trova una singola cifra, ``[a-z]`` che trova una singola lettera minuscola, ``[A-Z]`` che trova una singola lettera maiuscola, ``[a-zA-Z]`` che trova una singola lettera e ``[a-zA-Z0-9]`` che trova una singola lettera o numero. Puoi anche usare una sequenza di escape per fare più in fretta:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:70
+#: ../../../__w/calibre/calibre/manual/regexp.rst:69
 msgid "``\\d``"
 msgstr "``\\d``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:70
+#: ../../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "is equivalent to ``[0-9]``"
 msgstr "è equivalente a ``[0-9]``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:74
+#: ../../../__w/calibre/calibre/manual/regexp.rst:72
 msgid "``\\w``"
 msgstr "``\\w``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:73
+#: ../../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "is equivalent to ``[a-zA-Z0-9_]``"
 msgstr "è equivalente a ``[a-zA-Z0-9_]``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../../__w/calibre/calibre/manual/regexp.rst:76
 msgid "``\\s``"
 msgstr "``\\s``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../../__w/calibre/calibre/manual/regexp.rst:77
 msgid "is equivalent to any whitespace"
 msgstr "è equivalente a un qualunque spazio"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:80
+#: ../../../__w/calibre/calibre/manual/regexp.rst:80
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
 msgstr "Con \"spazio\" si intende qualsiasi cosa non venga stampata. Questi caratteri includono il normale spazio, il rientro (tabulazione), testo a capo, interruzione di pagina, ritorno a inizio riga, spazio unificatore, ecc."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:83
+#: ../../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
 "The upper and lower case sets may match both upper and lowercase if the "
 "setting to make searches case insensitive is enabled. Such settings are "
@@ -266,7 +266,7 @@ msgid ""
 " :guilabel:`Edit book` tool."
 msgstr "Le classi di maiuscole e minuscole possono corrispondere a entrambe se è abilitata l'impostazione che non distingue tra maiuscole e minuscole. Tali impostazioni si trovano, ad esempio, in Preferenze->Ricerca in calibre stesso e nel pannello di ricerca del :guilabel:`Lettore e-book` di calibre, così come nello strumento :guilabel:`Modifica libro`."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:89
+#: ../../../__w/calibre/calibre/manual/regexp.rst:89
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -281,13 +281,13 @@ msgid ""
 "bracket."
 msgstr "Come nota conclusiva sulle classi, puoi anche definire una classe composta di tutti i caratteri *tranne* quelli nella classe. Puoi far ciò includendo il carattere ``\"^\"`` come *primo carattere della classe*. In questo modo, ``[^a]`` troverebbe ogni carattere eccetto \"a\". Questa operazione è detta \"integrare la classe\". Anche le sequenze di escape abbreviate che abbiamo visto in precedenza possono essere integrate: ``\"\\D\"`` significa qualunque carattere non numerico, essendo perciò equivalente a ``[^0-9]``. Le altre sequenze abbreviate possono essere integrate usando, hai indovinato, le rispettive lettere maiuscole invece di quelle minuscole. Quindi, tornando all'esempio ``<p[^>]*>`` della sezione precedente, ora puoi vedere che la classe di caratteri utilizzata prova a trovare un qualsiasi carattere eccetto una parentesi angolare di chiusura."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:94
+#: ../../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
 msgstr "Ma se avessi alcune stringhe diverse tra loro da trovare, diventerebbe complicato?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:96
+#: ../../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -303,7 +303,7 @@ msgid ""
 "the even pages). Well, wasn't that easy?"
 msgstr "Niente paura, non c'è niente di più semplice. Considera questo esempio: Il libro che stai convertendo ha scritto \"Titolo\" su tutte le pagine dispari e \"Autore\" su tutte le pagine pari. Molto carino su carta, vero? Ma in un e-book, è fastidioso. Puoi raggruppare intere espressioni tra normali parentesi tonde, e il carattere ``\"|\"`` ti farà trovare *o* l'espressione alla sua destra *o* quella alla sua sinistra. Combinale ed è fatta. Ho spiegato troppo in fretta? Va bene, per prima cosa raggruppiamo le espressioni per le pagine pari e dispari, ottenendo così le due espressioni che ci servono ``(Titolo)(Autore)``. Ora rendiamo le cose più semplici usando la barra verticale (``\"|\"`` è detto carattere di barra verticale): Se usi l'espressione ``(Titolo)|(Autore)`` troverai o un risultato per \"Titolo\" (nelle pagine dispari) o un risultato per \"Autore\" (nelle pagine pari). Abbastanza semplice, no?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:98
+#: ../../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -319,11 +319,11 @@ msgid ""
 "short: If in doubt, use grouping together with the vertical bar."
 msgstr "Naturalmente puoi usare la barra verticale anche senza le parentesi di raggruppamento. Ricordi quando ho detto che i quantificatori ripetono l'elemento che li precede? Ecco, la barra verticale funziona in un modo leggermente diverso: Anche l'espressione \"Titolo|Autore\" troverà o la stringa \"Titolo\" o la stringa \"Autore\", esattamente come l'esempio precedente con il raggruppamento. *La barra verticale sceglie tra l'intera espressione che la precede e quella che la segue*. Quindi, se volessi trovare le stringhe \"Calibre\" e \"calibre\" e volessi distinguere solo tra la \"c\" maiuscola e minuscola, dovresti usare l'espressione ``(c|C)alibre``, in cui il raggruppamento fa in modo che solo la \"c\" venga selezionata. Se invece avessi usato ``c|Calibre``, avresti ottenuto una corrispondenza con la stringa \"c\" o con la stringa \"Calibre\", che non è quello che volevamo. In breve: Nel dubbio, usa il raggruppamento insieme alla barra verticale."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:101
+#: ../../../__w/calibre/calibre/manual/regexp.rst:101
 msgid "You missed..."
 msgstr "Ti sei dimenticato..."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:103
+#: ../../../__w/calibre/calibre/manual/regexp.rst:103
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -334,13 +334,13 @@ msgid ""
 "match the whole string!"
 msgstr "... fermo fermo fermo, c'è un'ultima cosa molto uitle che puoi fare con i gruppi. Se hai catturato un gruppo in precedenza, puoi riferirti a quel gruppo più avanti nell'espressione stessa: I gruppi sono numerati a partire da 1, e puoi riferirti ad essi con il loro numero. Il quinto gruppo, per esempio, sarebbe richiamato da ``\\5``. Quindi, se cercassi ``([^ ]+) \\1`` nella stringa \"Test Test\", troveresti l'intera stringa!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:107
+#: ../../../__w/calibre/calibre/manual/regexp.rst:107
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
 msgstr "All'inizio hai detto che c'era un modo di creare un'espressione regolare che non distingue le maiuscole?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:109
+#: ../../../__w/calibre/calibre/manual/regexp.rst:109
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -351,7 +351,7 @@ msgid ""
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
 msgstr "Sì, l'ho fatto, grazie per aver prestato attenzione e avermelo ricordato. Puoi dire a calibre come vuoi che certe cose vengano gestite usando qualcosa chiamato flag. Puoi includere i flag nella tua espressione utilizzando il costrutto speciale ``(?i flag vanno qui)`` dove, ovviamente, sostituirai \"i flag vanno qui\" con i flag specifici che desideri. Per ignorare maiuscole e minuscole, il flag è ``i``, quindi includi ``(?i)`` nella tua espressione. In questo modo, ``(?i)test`` troverà una corrispondenza con \"Test\", \"tEst\", \"TEst\" e qualsiasi altra variazione di maiuscole e minuscole a cui potresti pensare."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:111
+#: ../../../__w/calibre/calibre/manual/regexp.rst:111
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
@@ -360,17 +360,17 @@ msgid ""
 "``(?si)`` would be equivalent to the above."
 msgstr "Un altro utile flag fa in modo che a un punto corrispondano tutti i caratteri *incluso* il carattere newline, il flag ``s``. Se vuoi usare più di un flag in un'espressione, inseriscile semplicemente nella stessa espressione: ``(?is)`` ignorerà maiuscole e minuscole e farà corrispondere il punto a tutti i caratteri. Non importa quale flag specifichi per prima, ``(?si)`` darà gli stessi risultati."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:114
+#: ../../../__w/calibre/calibre/manual/regexp.rst:114
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
 msgstr "Penso di stare iniziando a capire queste espressioni regolari... Come le posso usare in calibre?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:117
+#: ../../../__w/calibre/calibre/manual/regexp.rst:117
 msgid "Conversions"
 msgstr "Conversioni"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:119
+#: ../../../__w/calibre/calibre/manual/regexp.rst:119
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -386,7 +386,7 @@ msgid ""
 "convert. Be careful if your conversion source has tags like this example::"
 msgstr "Iniziamo dalle impostazioni di conversione, che hanno potenzialità interessanti. Nella scheda :guilabel:`Cerca & sostituisci`, puoi inserire una regex (abbreviazione di \"regular expression\") che descrive la stringa da sostituire durante la conversione. La parte davvero interessante è la procedura guidata. Clicca sulla bacchetta magica per mostrare un'anteprima di ciò che calibre \"vede\" durante il processo di conversione. Scorri verso il basso fino alla stringa che vuoi rimuovere, selezionala e copiala, poi incollala nel campo regex nella parte alta della finestra. Se ci sono parti variabili come numeri di pagina o altro, usa le classi e i quantificatori per catturarli, e già che ci sei, ricordati di usare la sequenza di escape per i caratteri speciali, se ce ne sono. Premi il pulsante :guilabel:`Prova` e calibre evidenzierà le parti che sostiruirebbe se usassi quella regex. Quando sei soddisfatto, premi OK per convertire. Fai attenzione se la sorgente per la conversione contiene tag come quelli di questo esempio::"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:129
+#: ../../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -413,11 +413,11 @@ msgid ""
 " removal."
 msgstr "(vergognosamente copiata da `questa discussione <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Ci sarebbero da rimuovere anche alcuni dei tag. In questo esempio, ti consiglio di iniziare dal tag ``<b class=\"calibre2\">``, dopodiché devi rimuovere il tag di chiusura corrispondente (i tag di apertura sono ``<tag>``, quelli di chiusura sono ``</tag>``), che in questo caso è semplicemente il ``</b>`` successivo (se questo punto non ti è chiaro, fai riferimento a un buon manuale di HTML o chiedi aiuto sul forum). Il tag di apertura può essere descritto da ``<b.*?>``, quello di chiusura da ``</b>``, perciò potremmo rimuovere tutto ciò che si trova tra i due tag con ``<b.*?>.*?</b>``. Usare questa espressione però non sarebbe una buona idea, perché rimuoverebbe qualunque testo racchiuso da tag <b> (che, come nota, applica il grassetto al testo racchiuso) ed è più che probabile che parti del libro verrebbero rimosse come conseguenza. Conviene invece includere anche la parte iniziale della stringa racchiusa, usando l'espressione regolare ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>`` `Invece di digitare esplicitamente gli spazi della stringa, viene usato `\\s`` con i quantificatori, per catturare ogni possibile variazione della stringa. Se provi una nuova espressione ricorda di controllare tutte le rimozioni che calibre applicherà, per essere sicuro di non rimuovere parti che vuoi conservare. Se ne controlli solamente una, potresti perderti una corrispondenza non voluta da un'altra parte nel testo. Ricorda anche che se dovessi rimuovere più (o meno) tag di quelli che volevi, calibre proverà a riparare il codice danneggiato dopo la rimozione."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:132
+#: ../../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
 msgstr "Aggiunta di libri"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:134
+#: ../../../__w/calibre/calibre/manual/regexp.rst:134
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -427,7 +427,7 @@ msgid ""
 "listed in the windows, together with another nice test field. An example: "
 "Say you want to import a whole bunch of files named like ``Classical Texts: "
 "The Divine Comedy by Dante Alighieri.mobi``. (Obviously, this is already in "
-"your library, since we all love classical italian poetry) or ``Science "
+"your library, since we all love classical Italian poetry) or ``Science "
 "Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. This is "
 "obviously a naming scheme that calibre won't extract any meaningful data out"
 " of - its standard expression for extracting metadata is ``(?P<title>.+) - "
@@ -438,19 +438,19 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr "Un altro caso in cui puoi usare le espressioni regolari è per l'estrazione di metadati dai nomi dei file. Puoi trovare questa funzionalità nella sezione \"Aggiunta libri\" delle impostazioni. Qui c'è una funzione speciale: puoiu usare i nomi dei campi per i campi dei metadati, per esempio ``(?P<title>)`` indica a calibre di usare questa parte della stringa come titolo del libro. I nomi di campo permessi sono elencati nella finestra, insieme a un altro comodo campo di prova. Un esempio: immagina di voler importare una gran quantità di libri con nomi del tipo ``Grandi Classici: La Divina Commedia di Dante Alighieri.mobi``. (naturalmente sarà già nella tua biblioteca, chi non ama la poesia classica italiana?) oppure ``Epopee della Fantascienza: Trilogia della Fondazione di Isaac Asimov.epub``. Questi ovviamente sono nomi di file da cui calibre non riuscirà a estrarre niente di utile - l'espressione predefinita usata per estrarre i metadati è  ``(?P<title>.+) - (?P<author>[^_]+)``. Un'espressione regolare che sarebbe utile in questo caso è ``[a-zA-Z]+: (?P<title>.+) di (?P<author>.+)``. Tieni presente che dentro al gruppo per il campo dei metadati devi usare espressioni che descrivano cosa trovare per quel campo. E ricorda anche che quando usi il campo di prova fornito da calibre devi aggiungere al nome del file di prova la sua estensione, altrimenti non otterrai alcuna corrispondenza, anche se usi un'espressione adatta."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:138
+#: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
 msgstr "Modifica di gruppo dei metadati"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:140
+#: ../../../__w/calibre/calibre/manual/regexp.rst:140
 msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
 "library and using bulk metadata edit. Be very careful when using this last "
-"feature, as it can do **Very Bad Things** to your library! Doublecheck that "
-"your expressions do what you want them to using the test fields, and only "
+"feature, as it can do **Very Bad Things** to your library! Double-check that"
+" your expressions do what you want them to using the test fields, and only "
 "mark the books you really want to change! In the regular expression search "
 "mode, you can search in one field, replace the text with something and even "
 "write the result into another field. A practical example: Say your library "
@@ -468,9 +468,9 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr "L'ultima parte è l'espressione regolare :guilabel:`Cerca e sostituisci` nei campi dei metadati. Puoi accedervi selezionando più libri nella libreria e utilizzando la modifica collettiva dei metadati. Fai molta attenzione quando usi quest'ultima funzionalità, poiché può causare **cose molto brutte** alla tua libreria! Controlla attentamente che le tue espressioni facciano ciò che desideri utilizzando i campi di test e contrassegna solo i libri che desideri veramente modificare! Nella modalità di ricerca delle espressioni regolari, puoi cercare in un campo, sostituire il testo con qualcosa e persino scrivere il risultato in un altro campo. Un esempio pratico: supponiamo che la tua biblioteca contenga i libri della serie Dune di Frank Herbert, dal nome della moda \"Dune 1 - Dune\", \"Dune 2 - Dune Messiah\" e così via. Ora vuoi inserire ``Dune`` nel campo della serie. Puoi farlo cercando ``(.*?) \\d - .*`` nel campo del titolo e sostituendolo con ``\\1`` nel campo della serie. Vedi cosa ho fatto lì? Questo è un riferimento al primo gruppo con cui stai sostituendo il campo della serie. Ora che hai impostato la serie, devi solo fare un'altra ricerca per ``.*? -`` nel campo del titolo e sostituiscilo con ``\"\"`` (una stringa vuota), sempre nel campo del titolo, e i tuoi metadati saranno tutti puliti e ordinati. Non è fantastico? A proposito, invece di sostituire l'intero campo, puoi anche aggiungere o anteporre al campo, quindi, se *volevi* che il titolo del libro fosse anteposto alle informazioni sulla serie, potresti farlo anche tu. Come avrai sicuramente notato, c'è una casella etichettata :guilabel:`Maiuscole e minuscole`, quindi non dovrai usare i flag per selezionare il comportamento qui."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:142
+#: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
@@ -479,7 +479,7 @@ msgid ""
 "<https://docs.python.org/library/re.html>`_."
 msgstr "Bene, con ciò abbiamo quasi finito questa breve introduzione alle espressioni regolari. Con un po' di fortuna ti avrò mostrato abbastanza per farti almeno partire e permetterti di continuare a imparare per conto tuo - un buon posto dove guardare sarebbe `Python documentation for regexps <https://docs.python.org/library/re.html>`_."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:144
+#: ../../../__w/calibre/calibre/manual/regexp.rst:144
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -489,47 +489,47 @@ msgid ""
 "learn from it."
 msgstr "Un ultimo avviso, però: nonostante le espressioni regolari siano molto potenti, è anche molto facile sbagliare nel crearle. calibre fornisce ottime funzioni di prova per controllare se le tue espressioni funzionano come ti aspetti. Usale. Cerca di evitare di spararti nel piede. (Cielo, quanto mi piace questa espressione...). Ma anche se dovessi, nonostante i preavvisi, ferirti al piede (o in altre parti anatomiche), prova ad imparare da quanto successo."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:148
+#: ../../../__w/calibre/calibre/manual/regexp.rst:148
 msgid "Quick reference"
 msgstr "Riferimenti rapidi"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:156
+#: ../../../__w/calibre/calibre/manual/regexp.rst:156
 msgid "Credits"
 msgstr "Riconoscimenti"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:158
+#: ../../../__w/calibre/calibre/manual/regexp.rst:158
 msgid "Thanks for helping with tips, corrections and such:"
 msgstr "Grazie per aver contribuito con consigli, correzioni e altro:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:160
+#: ../../../__w/calibre/calibre/manual/regexp.rst:160
 msgid "ldolse"
 msgstr "ldolse"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:161
+#: ../../../__w/calibre/calibre/manual/regexp.rst:161
 msgid "kovidgoyal"
 msgstr "kovidgoyal"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:162
+#: ../../../__w/calibre/calibre/manual/regexp.rst:162
 msgid "chaley"
 msgstr "chaley"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:163
+#: ../../../__w/calibre/calibre/manual/regexp.rst:163
 msgid "dwanthny"
 msgstr "dwanthny"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:164
+#: ../../../__w/calibre/calibre/manual/regexp.rst:164
 msgid "kacir"
 msgstr "kacir"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:165
+#: ../../../__w/calibre/calibre/manual/regexp.rst:165
 msgid "Starson17"
 msgstr "Starson17"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:166
+#: ../../../__w/calibre/calibre/manual/regexp.rst:166
 msgid "Orpheu"
 msgstr "Orpheu"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:168
+#: ../../../__w/calibre/calibre/manual/regexp.rst:168
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "
