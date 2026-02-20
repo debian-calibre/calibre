@@ -1617,7 +1617,7 @@ contain ``MMMM``. Using ``format_date_field()`` avoids this problem.
             elif format_string.startswith('from_number'):
                 val = datetime.fromtimestamp(float(val))
                 f = format_string[12:]
-                s = format_date(val, f if f else 'iso')
+                s = format_date(val, f or 'iso')
             else:
                 s = format_date(parse_date(val), format_string)
             return s
@@ -1660,7 +1660,7 @@ format_date_field('#date_read', 'MMM dd, yyyy')
             elif format_string.startswith('from_number'):
                 val = datetime.fromtimestamp(float(val))
                 f = format_string[12:]
-                s = format_date(val, f if f else 'iso')
+                s = format_date(val, f or 'iso')
             else:
                 s = format_date(val, format_string)
             return s
@@ -1802,7 +1802,7 @@ not marked. This function works only in the GUI.
 
     def evaluate(self, formatter, kwargs, mi, locals):
         c = self.get_database(mi, formatter=formatter).data.get_marked(mi.id)
-        return c if c else ''
+        return c or ''
 
 
 class BuiltinSeriesSort(BuiltinFormatterFunction):
@@ -2314,7 +2314,7 @@ Example: ``'1s3d-1m'`` will add 1 second, add 3 days, and subtract 1 minute from
                             'date_arithmetic', calc_spec))
                 d += self.calc_ops[mo[2]](int(mo[1]))
                 calc_spec = calc_spec[len(mo[0]):]
-            return format_date(d, fmt if fmt else 'iso')
+            return format_date(d, fmt or 'iso')
         except ValueError as e:
             raise e
         except Exception as e:
@@ -3723,6 +3723,46 @@ This function can be used only in the GUI.
         return ''
 
 
+class BuiltinWidthFromPages(BuiltinFormatterFunction):
+    name = 'width_from_pages'
+    arg_count = -1
+    category = GUI_FUNCTIONS
+    def __doc__getter__(self): return translate_ffml(
+r'''
+``width_from_pages(value [, num_of_pages_for_max_width, logarithmic_factor, default_width])`` -- return
+the width of the book spine as a fraction between ``'0'`` and ``'1'`` given a number of pages.
+This is used to calculate the width of the spine in the Bookshelf view, from a page count. The optional
+arguments control how the width is calculated.
+
+[LIST]
+[*] ``num_of_pages_for_max_width`` -- controls the widest books, any book with at least the specified number of pages is given width 1. Defaults to ``1500``.
+[*] ``logarithmic_factor`` --  controls how quickly width varies as pages range from 0 to the maximum. Defaults to ``2``.
+[*] ``default_width`` -- is the width for books with an invalid number of pages.
+[/LIST]
+''')
+
+    def evaluate(self, formatter, kwargs, mi, locals, val, *args):
+        from calibre.gui2.library.bookshelf_view import width_from_pages
+        num_of_pages_for_max_width = 1500
+        logarithmic_factor = 2
+        default_width = '0.3'
+        match len(args):
+            case 1:
+                if args[0]:
+                    num_of_pages_for_max_width = int(args[0])
+            case 2:
+                num_of_pages_for_max_width, logarithmic_factor = int(args[0]), float(args[1])
+            case 3:
+                num_of_pages_for_max_width, logarithmic_factor, default_width = int(args[0]), float(args[1]), args[2]
+        try:
+            pages = int(val)
+        except Exception:
+            return default_width
+        if pages < 0:
+            return default_width
+        return str(width_from_pages(pages, num_of_pages_for_max_width, logarithmic_factor))
+
+
 class BuiltinShowDialog(BuiltinFormatterFunction):
     name = 'show_dialog'
     arg_count = 1
@@ -3834,7 +3874,7 @@ _formatter_builtins = [
     BuiltinRe(), BuiltinReGroup(), BuiltinRound(), BuiltinSelect(),
     BuiltinSelectedBooks(), BuiltinSelectedColumn(), BuiltinSeriesSort(),
     BuiltinSetGlobals(), BuiltinShorten(), BuiltinShowDialog(), BuiltinSortBookIds(),
-    BuiltinStrcat(), BuiltinStrcatMax(),
+    BuiltinStrcat(), BuiltinStrcatMax(), BuiltinWidthFromPages(),
     BuiltinStrcmp(), BuiltinStrcmpcase(), BuiltinStrInList(), BuiltinStrlen(), BuiltinSubitems(),
     BuiltinSublist(),BuiltinSubstr(), BuiltinSubtract(), BuiltinSwapAroundArticles(),
     BuiltinSwapAroundComma(), BuiltinSwitch(), BuiltinSwitchIf(),

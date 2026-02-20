@@ -3,10 +3,10 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Daniel, 2025-2026
+# Karl Jonatan Nyberg, 2025-2026
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Daniel, 2016-2017,2021-2024
-# Daniel, 2018-2021
+# Karl Jonatan Nyberg, 2016-2017,2021-2024
+# Karl Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 04:11+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Daniel, 2025-2026\n"
+"Last-Translator: Karl Jonatan Nyberg, 2025-2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -430,7 +430,7 @@ msgid ""
 "listed in the windows, together with another nice test field. An example: "
 "Say you want to import a whole bunch of files named like ``Classical Texts: "
 "The Divine Comedy by Dante Alighieri.mobi``. (Obviously, this is already in "
-"your library, since we all love classical italian poetry) or ``Science "
+"your library, since we all love classical Italian poetry) or ``Science "
 "Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. This is "
 "obviously a naming scheme that calibre won't extract any meaningful data out"
 " of - its standard expression for extracting metadata is ``(?P<title>.+) - "
@@ -441,7 +441,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr "En annan sak du kan använda reguljära uttryck för är att utvinna metadata från filnamn. Du hittar den här funktionen \"Lägga till böcker\" i en del av inställningarna. Det finns en speciell funktion här: Du kan använda fältnamn för metadatafält, till exempel ``(?P<titel>)`` skulle indikera att calibre använder den här delen av strängen som boktitel. De tillåtna fältnamnen listas i fönstren, tillsammans med ett annat fint testfält. Ett exempel: Säg att du vill importera en hel massa filer som heter ``Klassiska texter: Den gudomliga komedin av Dante Alighieri.mobi``. (Uppenbarligen finns detta redan i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science fiction epos: Stiftelseserien av Isaac Asimov.epub``. Detta är naturligtvis ett namngivningssystem som calibre inte kommer att utvinna några meningsfulla uppgifter ur - dess standarduttryck för att utvinna metadata är ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här skulle vara ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att i gruppen för metadatafältet måste du använda uttryck för att beskriva vad fältet faktiskt matchar. Och observera också att vid användning av testfältet calibre tillhandahåller måste du lägga till filändelsen till ditt testfilnamn, annars får du inga matchningar alls, trots att du använder ett fungerande uttryck."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
@@ -452,8 +452,8 @@ msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
 "library and using bulk metadata edit. Be very careful when using this last "
-"feature, as it can do **Very Bad Things** to your library! Doublecheck that "
-"your expressions do what you want them to using the test fields, and only "
+"feature, as it can do **Very Bad Things** to your library! Double-check that"
+" your expressions do what you want them to using the test fields, and only "
 "mark the books you really want to change! In the regular expression search "
 "mode, you can search in one field, replace the text with something and even "
 "write the result into another field. A practical example: Say your library "
@@ -471,7 +471,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr "Den sista delen är reguljära uttryck :guilabel:`Sök och ersätt` i metadatafält. Du kan komma åt detta genom att välja flera böcker i biblioteket och genom att redigera metadata i grupp. Var mycket försiktig när du använder den här sista funktionen, eftersom det kan göra **mycket dåliga saker** till ditt bibliotek! Dubbelkontrollera att dina uttryck verkligen gör vad du vill att de ska göra med hjälp av testfälten, och välj bara de böcker du verkligen vill ändra! I det sökläget för reguljära uttryck kan du söka i ett annat fält, ersätta texten med något och till och med skriva in resultatet i ett annat fält. Ett praktiskt exempel: Säg att ditt bibliotek innehöll böckerna i Frank Herberts Dune-serie, uppkallad efter stilen ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` och så vidare. Nu vill du få ``Dune`` in i seriefältet. Du kan göra det genom att söka efter ``\\d+(*.?) -.*`` i titelfältet och ersätta det med ``\\1`` i seriefältet. Ser du vad jag gjorde där? Det är en referens till den första gruppen som du ersätter seriefältet med. Nu när du har serien klar behöver du bara göra en ny sökning efter ``.*? -`` i titelfältet och ersätta det med ``\"\"`` (en tom sträng), igen i titelfältet, och dina metadata är snygga och prydliga. Är inte det bra? Förresten, istället för att ersätta hela fältet kan du också lägga till eller låta föregå fältet, så om du *ville* att boktiteln ska infogas med serieinformation, kunde du göra det också. Som du vid det här laget utan tvekan har märkt, finns det en kryssruta markerad :guilabel:`Skiftlägeskänslig`, så att du inte behöver använda flaggor för att välja beteende här."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""

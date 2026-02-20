@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-17 08:29+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
 "Last-Translator: RERBIN MA, 2025\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -26,11 +26,11 @@ msgstr "编辑器中搜索和替换功能"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
-"The :guilabel:`Search & replace` tool in the editor support a *function "
+"The :guilabel:`Search & replace` tool in the editor supports a *function "
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr "编辑器中的“搜索和替换”工具支持*功能模式*。 在此模式下，您可以将正则表达式（请参阅“regexp”）与任意强大的 Python 函数结合起来，以执行各种高级文本处理。"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
@@ -67,10 +67,10 @@ msgstr "在这里，我们将利用编辑器中的内置函数之一自动将标
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
 "For the function, simply choose the :guilabel:`Title-case text (ignore "
-"tags)` builtin function. The will change titles that look like: ``<h1>some "
+"tags)` builtin function. This will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr "对于函数，只需选择 :guilabel:`Title-case text (ignore tags)` 内置函数即可。它会将类似 ``<h1>some titLE</h1>`` 的标题更改为 ``<h1>Some Title</h1>``。即使标题标签内包含其他 HTML 标签，该函数也能正常工作。"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
@@ -80,9 +80,9 @@ msgstr "您的第一个自定义函数 - 智能连字符"
 msgid ""
 "The real power of function mode comes from being able to create your own "
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
-" the editor leaves individual hyphens alone, so you can use the this "
-"function to replace them with em-dashes."
-msgstr "函数模式的真正强大之处在于能够创建自己的函数以任意方式处理文本。 编辑器中的 Smarten 标点符号工具会保留单个连字符，因此您可以使用此功能将它们替换为破折号。"
+" the editor leaves individual hyphens alone, so you can use this function to"
+" replace them with em-dashes."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
@@ -192,11 +192,11 @@ msgstr "自动创建目录"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:156
 msgid ""
-"Finally, lets try something a little more ambitious. Suppose your book has "
+"Finally, let's try something a little more ambitious. Suppose your book has "
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
 "Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
 "headings. Create the custom function below:"
-msgstr "最后，让我们尝试一些更雄心勃勃的事情。 假设您的书的“h1”和“h2”标签中的标题看起来像“<h1 id=\"someid\"> Some Text </h1>”。 我们将根据这些标题自动生成 HTML 目录。 创建以下自定义函数："
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
@@ -335,8 +335,8 @@ msgid ""
 "The ``functions`` argument gives you access to all other user defined "
 "functions. This is useful for code re-use. You can define utility functions "
 "in one place and re-use them in all your other functions. For example, "
-"suppose you create a function name ``My Function`` like this:"
-msgstr "``functions`` 参数使您可以访问所有其他用户定义的函数。 这对于代码重用很有用。 您可以在一处定义实用函数，然后在所有其他函数中重复使用它们。 例如，假设您创建一个函数名称“My Function”，如下所示："
+"suppose you create a function named ``My Function`` like this:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
@@ -372,10 +372,11 @@ msgstr "在多个 HTML 文件上运行时选择文件顺序"
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
 "When you run a :guilabel:`Replace all` on multiple HTML files, the order in "
-"which the files are processes depends on what files you have open for "
-"editing. You can force the search to process files in the order in which the"
-" appear by setting the ``file_order`` attribute on your function, like this:"
-msgstr "当您对多个 HTML 文件运行“全部替换”时，文件的处理顺序取决于您打开进行编辑的文件。 您可以通过在函数上设置“file_order”属性来强制搜索按文件出现的顺序处理文件，如下所示："
+"which the files are processed depends on what files you have open for "
+"editing. You can force the search to process files in the order in which "
+"they appear by setting the ``file_order`` attribute on your function, like "
+"this:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
@@ -404,10 +405,10 @@ msgstr "将函数的输出附加到标记的文本"
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:378
 msgid ""
 "When running search and replace on marked text, it is sometimes useful to "
-"append so text to the end of the marked text. You can do that by setting the"
-" ``append_final_output_to_marked`` attribute on your function (note that you"
-" also need to set ``call_after_last_match``), like this:"
-msgstr "在标记文本上运行搜索和替换时，有时将文本附加到标记文本的末尾很有用。 您可以通过在函数上设置“append_final_output_to_marked”属性来做到这一点（请注意，您还需要设置“call_after_last_match”），如下所示："
+"append some text to the end of the marked text. You can do that by setting "
+"the ``append_final_output_to_marked`` attribute on your function (note that "
+"you also need to set ``call_after_last_match``), like this:"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"

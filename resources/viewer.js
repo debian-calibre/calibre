@@ -4831,9 +4831,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 lines = ρσ_str.splitlines(err.stack);
                 final_lines = [];
                 found_sentinel = false;
-                var ρσ_Iter0 = ρσ_Iterable(enumerate(lines));
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter1 = ρσ_Iterable(enumerate(lines));
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    ρσ_unpack = ρσ_Iter1[ρσ_Index1];
                     i = ρσ_unpack[0];
                     line = ρσ_unpack[1];
                     sline = ρσ_str.strip(line);
@@ -5497,9 +5497,9 @@ return parser;
             var t, func;
             t = new Translations(translation_data);
             t.install();
-            var ρσ_Iter0 = ρσ_Iterable(register_callback.install_callbacks);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                func = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter2 = ρσ_Iterable(register_callback.install_callbacks);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                func = ρσ_Iter2[ρσ_Index2];
                 try {
                     func(t);
                 } catch (ρσ_Exception) {
@@ -5562,9 +5562,9 @@ return parser;
         Translations.prototype.gettext = function gettext(text) {
             var self = this;
             var m, t;
-            var ρσ_Iter1 = ρσ_Iterable(self.translations);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                t = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter3 = ρσ_Iterable(self.translations);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                t = ρσ_Iter3[ρσ_Index3];
                 m = t[0].entries;
                 if (has_prop(m, text)) {
                     return m[(typeof text === "number" && text < 0) ? m.length + text : text][0];
@@ -5579,9 +5579,9 @@ return parser;
         Translations.prototype.ngettext = function ngettext(text, plural, n) {
             var self = this;
             var m, idx, t;
-            var ρσ_Iter2 = ρσ_Iterable(self.translations);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                t = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter4 = ρσ_Iterable(self.translations);
+            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                t = ρσ_Iter4[ρσ_Index4];
                 m = t[0].entries;
                 if (has_prop(m, text)) {
                     idx = t[1](n);
@@ -5679,9 +5679,9 @@ return parser;
             keys = Object.keys(query).sort();
             ans = "";
             if (keys.length) {
-                var ρσ_Iter0 = ρσ_Iterable(keys);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    k = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter5 = ρσ_Iterable(keys);
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    k = ρσ_Iter5[ρσ_Index5];
                     val = query[(typeof k === "number" && k < 0) ? query.length + k : k];
                     if (val === undefined || val === null || val === "") {
                         continue;
@@ -6283,8 +6283,8 @@ return parser;
                 chars = new Buffer(string, "base64").toString("binary");
             }
             ans = new Uint8Array(chars.length);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ans.length; ρσ_Index0++) {
-                i = ρσ_Index0;
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ans.length; ρσ_Index6++) {
+                i = ρσ_Index6;
                 ans[(typeof i === "number" && i < 0) ? ans.length + i : i] = chars.charCodeAt(i);
             }
             return ans;
@@ -6489,8 +6489,8 @@ return parser;
                 var ρσ_anonfunc = function (num) {
                     var ans, i;
                     ans = new Uint8Array(num || 16);
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < ans.length; ρσ_Index0++) {
-                        i = ρσ_Index0;
+                    for (var ρσ_Index7 = 0; ρσ_Index7 < ans.length; ρσ_Index7++) {
+                        i = ρσ_Index7;
                         ans[(typeof i === "number" && i < 0) ? ans.length + i : i] = Math.floor(Math.random() * 256);
                     }
                     return ans;
@@ -7091,9 +7091,9 @@ return parser;
             return ρσ_d;
         }).call(this);
         defaults = Object.create(null);
-        var ρσ_Iter0 = ρσ_Iterable(Object.entries(all_settings));
-        for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-            x = ρσ_Iter0[ρσ_Index0];
+        var ρσ_Iter8 = ρσ_Iterable(Object.entries(all_settings));
+        for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+            x = ρσ_Iter8[ρσ_Index8];
             defaults[ρσ_bound_index(x[0], defaults)] = x[1].default;
         }
         function session_defaults() {
@@ -7291,9 +7291,9 @@ return parser;
         SessionData.prototype.set_bulk = function set_bulk(changes) {
             var self = this;
             var key;
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                key = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter9 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
+                key = ρσ_Iter9[ρσ_Index9];
                 self.set(key, changes[(typeof key === "number" && key < 0) ? changes.length + key : key]);
             }
         };
@@ -7354,8 +7354,8 @@ return parser;
                 if (a.length !== b.length) {
                     return false;
                 }
-                for (var ρσ_Index2 = 0; ρσ_Index2 < a.length; ρσ_Index2++) {
-                    i = ρσ_Index2;
+                for (var ρσ_Index10 = 0; ρσ_Index10 < a.length; ρσ_Index10++) {
+                    i = ρσ_Index10;
                     if (!deep_eq(a[(typeof i === "number" && i < 0) ? a.length + i : i], b[(typeof i === "number" && i < 0) ? b.length + i : i])) {
                         return false;
                     }
@@ -7372,9 +7372,9 @@ return parser;
             if (ka.length !== Object.keys(b).length) {
                 return false;
             }
-            var ρσ_Iter3 = ρσ_Iterable(ka);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                key = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter11 = ρσ_Iterable(ka);
+            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
+                key = ρσ_Iter11[ρσ_Index11];
                 if (!deep_eq(a[(typeof key === "number" && key < 0) ? a.length + key : key], b[(typeof key === "number" && key < 0) ? b.length + key : key])) {
                     return false;
                 }
@@ -7399,9 +7399,9 @@ return parser;
         function get_subset_of_settings(sd, filter_func) {
             var ans, curval, metadata, is_set, setting_name;
             ans = Object.create(null);
-            var ρσ_Iter4 = ρσ_Iterable(Object.keys(all_settings));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                setting_name = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter12 = ρσ_Iterable(Object.keys(all_settings));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                setting_name = ρσ_Iter12[ρσ_Index12];
                 curval = sd.get(setting_name, ans);
                 metadata = all_settings[(typeof setting_name === "number" && setting_name < 0) ? all_settings.length + setting_name : setting_name];
                 is_set = curval !== ans;
@@ -7419,9 +7419,9 @@ return parser;
         function apply_profile(sd, profile, filter_func) {
             var changes, metadata, curval, is_set, newval, setting_name;
             changes = Object.create(null);
-            var ρσ_Iter5 = ρσ_Iterable(Object.keys(all_settings));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                setting_name = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter13 = ρσ_Iterable(Object.keys(all_settings));
+            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
+                setting_name = ρσ_Iter13[ρσ_Index13];
                 metadata = all_settings[(typeof setting_name === "number" && setting_name < 0) ? all_settings.length + setting_name : setting_name];
                 curval = sd.get(setting_name, changes);
                 is_set = curval !== changes;
@@ -7472,18 +7472,18 @@ return parser;
                 var x, key;
                 if (margin_text_settings[(typeof setting_name === "number" && setting_name < 0) ? margin_text_settings.length + setting_name : setting_name]) {
                     curval = window.structuredClone(curval);
-                    var ρσ_Iter6 = ρσ_Iterable(['left', 'right', 'middle']);
-                    for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                        x = ρσ_Iter6[ρσ_Index6];
+                    var ρσ_Iter14 = ρσ_Iterable(['left', 'right', 'middle']);
+                    for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
+                        x = ρσ_Iter14[ρσ_Index14];
                         if (curval[(typeof x === "number" && x < 0) ? curval.length + x : x] === "empty") {
                             delete curval[x];
                         }
                     }
                 } else if (setting_name === "standalone_misc_settings") {
                     curval = window.structuredClone(curval);
-                    var ρσ_Iter7 = ρσ_Iterable(Object.keys(curval));
-                    for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                        key = ρσ_Iter7[ρσ_Index7];
+                    var ρσ_Iter15 = ρσ_Iterable(Object.keys(curval));
+                    for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
+                        key = ρσ_Iter15[ρσ_Index15];
                         if (curval[(typeof key === "number" && key < 0) ? curval.length + key : key] === standalone_reader_defaults[(typeof key === "number" && key < 0) ? standalone_reader_defaults.length + key : key]) {
                             delete curval[key];
                         }
@@ -7564,9 +7564,9 @@ return parser;
                     ρσ_d["is_default"] = true;
                     return ρσ_d;
                 }).call(this);
-                var ρσ_Iter8 = ρσ_Iterable(default_interface_data);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    k = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter16 = ρσ_Iterable(default_interface_data);
+                for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
+                    k = ρσ_Iter16[ρσ_Index16];
                     ans[(typeof k === "number" && k < 0) ? ans.length + k : k] = default_interface_data[(typeof k === "number" && k < 0) ? default_interface_data.length + k : k];
                 }
             }
@@ -7579,9 +7579,9 @@ return parser;
         function update_interface_data(new_data) {
             var data, nval, k;
             data = get_interface_data();
-            var ρσ_Iter9 = ρσ_Iterable(default_interface_data);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                k = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter17 = ρσ_Iterable(default_interface_data);
+            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
+                k = ρσ_Iter17[ρσ_Index17];
                 nval = new_data[(typeof k === "number" && k < 0) ? new_data.length + k : k];
                 if (k !== undefined) {
                     data[(typeof k === "number" && k < 0) ? data.length + k : k] = nval;
@@ -7649,9 +7649,9 @@ return parser;
             self.has_changes = false;
             self.push_timer_id = null;
             if (saved_data) {
-                var ρσ_Iter10 = ρσ_Iterable(saved_data);
-                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                    key = ρσ_Iter10[ρσ_Index10];
+                var ρσ_Iter18 = ρσ_Iterable(saved_data);
+                for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
+                    key = ρσ_Iter18[ρσ_Index18];
                     if (!is_setting_local(key)) {
                         self.set(key, saved_data[(typeof key === "number" && key < 0) ? saved_data.length + key : key]);
                     }
@@ -7858,9 +7858,9 @@ return this.__repr__();
             var attr, s, val, k;
             attr = (is_dark_theme) ? "dark" : "light";
             s = document.documentElement.style;
-            var ρσ_Iter0 = ρσ_Iterable(DEFAULT_COLORS);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                k = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter19 = ρσ_Iterable(DEFAULT_COLORS);
+            for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
+                k = ρσ_Iter19[ρσ_Index19];
                 val = (ρσ_expr_temp = DEFAULT_COLORS[(typeof k === "number" && k < 0) ? DEFAULT_COLORS.length + k : k])[(typeof attr === "number" && attr < 0) ? ρσ_expr_temp.length + attr : attr];
                 s.setProperty("--calibre-color-" + k, val);
             }
@@ -7893,9 +7893,9 @@ return this.__repr__();
             is_dark_theme = browser_in_dark_mode();
             attr = (is_dark_theme) ? "dark" : "light";
             ans = [];
-            var ρσ_Iter1 = ρσ_Iterable(DEFAULT_COLORS);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                k = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter20 = ρσ_Iterable(DEFAULT_COLORS);
+            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
+                k = ρσ_Iter20[ρσ_Index20];
                 val = (ρσ_expr_temp = DEFAULT_COLORS[(typeof k === "number" && k < 0) ? DEFAULT_COLORS.length + k : k])[(typeof attr === "number" && attr < 0) ? ρσ_expr_temp.length + attr : attr];
                 ans.push("--calibre-color-" + ρσ_str.format("{}", k) + ": " + ρσ_str.format("{}", val) + ";");
             }
@@ -8140,9 +8140,9 @@ return this.__repr__();
                 return copy_hash(ans);
             }
             pairs = q.replace(/\+/g, " ").split("&");
-            var ρσ_Iter0 = ρσ_Iterable(pairs);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                pair = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter21 = ρσ_Iterable(pairs);
+            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
+                pair = ρσ_Iter21[ρσ_Index21];
                 ρσ_unpack = ρσ_eslice(pair.partition("="), 2);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 key = ρσ_unpack[0];
@@ -8226,9 +8226,9 @@ return this.__repr__();
                 return num + "";
             }
             result = ρσ_list_decorate([]);
-            var ρσ_Iter1 = ρσ_Iterable(_roman);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                ρσ_unpack = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter22 = ρσ_Iterable(_roman);
+            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
+                ρσ_unpack = ρσ_Iter22[ρσ_Index22];
                 d = ρσ_unpack[0];
                 r = ρσ_unpack[1];
                 while (num >= d) {
@@ -8427,9 +8427,9 @@ return this.__repr__();
             var ans, seen, x;
             ans = [];
             seen = Object.create(null);
-            var ρσ_Iter2 = ρσ_Iterable(vals);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                x = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter23 = ρσ_Iterable(vals);
+            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
+                x = ρσ_Iter23[ρσ_Index23];
                 if (!seen[(typeof x === "number" && x < 0) ? seen.length + x : x]) {
                     seen[(typeof x === "number" && x < 0) ? seen.length + x : x] = true;
                     ans.push(x);
@@ -8721,9 +8721,9 @@ return this.__repr__();
                 library_data.field_names = Object.create(null);
             }
             library_data.for_library = current_library_id();
-            var ρσ_Iter0 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories fts_enabled fields_that_support_notes categories_using_hierarchy".split(" "));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter24 = ρσ_Iterable("search_result sortable_fields field_metadata metadata virtual_libraries book_display_fields bools_are_tristate book_details_vertical_categories fts_enabled fields_that_support_notes categories_using_hierarchy".split(" "));
+            for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
+                key = ρσ_Iter24[ρσ_Index24];
                 library_data[(typeof key === "number" && key < 0) ? library_data.length + key : key] = data[(typeof key === "number" && key < 0) ? data.length + key : key];
             }
             sr = library_data.search_result;
@@ -8742,9 +8742,9 @@ return this.__repr__();
 
         function add_more_books(data) {
             var key, sr;
-            var ρσ_Iter1 = ρσ_Iterable(data.metadata);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                key = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter25 = ρσ_Iterable(data.metadata);
+            for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
+                key = ρσ_Iter25[ρσ_Index25];
                 (ρσ_expr_temp = library_data.metadata)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = (ρσ_expr_temp = data.metadata)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key];
             }
             sr = library_data.search_result;
@@ -9042,9 +9042,9 @@ return this.__repr__();
                 q = url_books_query();
                 loaded = loaded_books_query();
                 matches = true;
-                var ρσ_Iter2 = ρσ_Iterable(q);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    key = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter26 = ρσ_Iterable(q);
+                for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
+                    key = ρσ_Iter26[ρσ_Index26];
                     if (!is_same(q[(typeof key === "number" && key < 0) ? q.length + key : key], loaded[(typeof key === "number" && key < 0) ? loaded.length + key : key])) {
                         matches = false;
                         break;
@@ -9127,9 +9127,9 @@ return this.__repr__();
             item.load_type = load_type;
             img = item.img;
             img.onload = img.onerror = img.onabort = null;
-            var ρσ_Iter3 = ρσ_Iterable(item.callbacks);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                callback = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter27 = ρσ_Iterable(item.callbacks);
+            for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
+                callback = ρσ_Iter27[ρσ_Index27];
                 callback(img, load_type);
             }
         };
@@ -9151,9 +9151,9 @@ return this.__repr__();
             url = "book-get-annotations/" + ρσ_str.format("{}", library_id) + "/";
             which = [];
             lrmap = Object.create(null);
-            var ρσ_Iter4 = ρσ_Iterable(to_sync);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter28 = ρσ_Iterable(to_sync);
+            for (var ρσ_Index28 = 0; ρσ_Index28 < ρσ_Iter28.length; ρσ_Index28++) {
+                ρσ_unpack = ρσ_Iter28[ρσ_Index28];
                 key = ρσ_unpack[0];
                 last_read = ρσ_unpack[1];
                 ρσ_unpack = key;
@@ -9622,9 +9622,9 @@ return this.__repr__();
             }
             s = elem.style;
             if (s) {
-                var ρσ_Iter0 = ρσ_Iterable(kw);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    prop = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter29 = ρσ_Iterable(kw);
+                for (var ρσ_Index29 = 0; ρσ_Index29 < ρσ_Iter29.length; ρσ_Index29++) {
+                    prop = ρσ_Iter29[ρσ_Index29];
                     ρσ_unpack = [str.replace(str.rstrip(prop, "_"), "_", "-"), kw[(typeof prop === "number" && prop < 0) ? kw.length + prop : prop]];
                     name = ρσ_unpack[0];
                     val = ρσ_unpack[1];
@@ -9635,9 +9635,9 @@ return this.__repr__();
                     }
                     prefixes = simple_vendor_prefixes[(typeof name === "number" && name < 0) ? simple_vendor_prefixes.length + name : name];
                     if (prefixes) {
-                        var ρσ_Iter1 = ρσ_Iterable(prefixes);
-                        for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                            prefix = ρσ_Iter1[ρσ_Index1];
+                        var ρσ_Iter30 = ρσ_Iterable(prefixes);
+                        for (var ρσ_Index30 = 0; ρσ_Index30 < ρσ_Iter30.length; ρσ_Index30++) {
+                            prefix = ρσ_Iter30[ρσ_Index30];
                             if (val === null || val === undefined) {
                                 s.removeProperty("-" + prefix + "-" + name);
                             } else {
@@ -9665,9 +9665,9 @@ return this.__repr__();
             }
             s = elem.style;
             if (s) {
-                var ρσ_Iter2 = ρσ_Iterable(kw);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    prop = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter31 = ρσ_Iterable(kw);
+                for (var ρσ_Index31 = 0; ρσ_Index31 < ρσ_Iter31.length; ρσ_Index31++) {
+                    prop = ρσ_Iter31[ρσ_Index31];
                     ρσ_unpack = [str.replace(str.rstrip(prop, "_"), "_", "-"), kw[(typeof prop === "number" && prop < 0) ? kw.length + prop : prop]];
                     name = ρσ_unpack[0];
                     val = ρσ_unpack[1];
@@ -9678,9 +9678,9 @@ return this.__repr__();
                     }
                     prefixes = simple_vendor_prefixes[(typeof name === "number" && name < 0) ? simple_vendor_prefixes.length + name : name];
                     if (prefixes) {
-                        var ρσ_Iter3 = ρσ_Iterable(prefixes);
-                        for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                            prefix = ρσ_Iter3[ρσ_Index3];
+                        var ρσ_Iter32 = ρσ_Iterable(prefixes);
+                        for (var ρσ_Index32 = 0; ρσ_Index32 < ρσ_Iter32.length; ρσ_Index32++) {
+                            prefix = ρσ_Iter32[ρσ_Index32];
                             if (val === null || val === undefined) {
                                 s.removeProperty("-" + prefix + "-" + name);
                             } else {
@@ -9704,18 +9704,18 @@ return this.__repr__();
             if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
             var ans, ρσ_unpack, name, val, prefixes, prefix, prop;
             ans = [selector + " { "];
-            var ρσ_Iter4 = ρσ_Iterable(kw);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                prop = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter33 = ρσ_Iterable(kw);
+            for (var ρσ_Index33 = 0; ρσ_Index33 < ρσ_Iter33.length; ρσ_Index33++) {
+                prop = ρσ_Iter33[ρσ_Index33];
                 ρσ_unpack = [str.replace(str.rstrip(prop, "_"), "_", "-"), kw[(typeof prop === "number" && prop < 0) ? kw.length + prop : prop]];
                 name = ρσ_unpack[0];
                 val = ρσ_unpack[1];
                 ans.push(name + ":" + val + ";");
                 prefixes = simple_vendor_prefixes[(typeof name === "number" && name < 0) ? simple_vendor_prefixes.length + name : name];
                 if (prefixes) {
-                    var ρσ_Iter5 = ρσ_Iterable(prefixes);
-                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                        prefix = ρσ_Iter5[ρσ_Index5];
+                    var ρσ_Iter34 = ρσ_Iterable(prefixes);
+                    for (var ρσ_Index34 = 0; ρσ_Index34 < ρσ_Iter34.length; ρσ_Index34++) {
+                        prefix = ρσ_Iter34[ρσ_Index34];
                         ans.push("-" + prefix + "-" + name + ":" + val + ";");
                     }
                 }
@@ -9761,13 +9761,13 @@ return this.__repr__();
             if (arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) frames.pop();
             var ans, frame, prefix;
             ans = [];
-            var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ "-webkit-", "-moz-", "-o-", "" ]));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                prefix = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter35 = ρσ_Iterable(ρσ_list_decorate([ "-webkit-", "-moz-", "-o-", "" ]));
+            for (var ρσ_Index35 = 0; ρσ_Index35 < ρσ_Iter35.length; ρσ_Index35++) {
+                prefix = ρσ_Iter35[ρσ_Index35];
                 ans.push("@" + prefix + "keyframes " + animation_name + " {");
-                var ρσ_Iter7 = ρσ_Iterable(frames);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    frame = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter36 = ρσ_Iterable(frames);
+                for (var ρσ_Index36 = 0; ρσ_Index36 < ρσ_Iter36.length; ρσ_Index36++) {
+                    frame = ρσ_Iter36[ρσ_Index36];
                     ans.push(frame);
                 }
                 ans.push("}");
@@ -9842,9 +9842,9 @@ return this.__repr__();
             if (arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) args.pop();
             var ans, x;
             ans = "#" + id_selector;
-            var ρσ_Iter8 = ρσ_Iterable(args);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                x = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter37 = ρσ_Iterable(args);
+            for (var ρσ_Index37 = 0; ρσ_Index37 < ρσ_Iter37.length; ρσ_Index37++) {
+                x = ρσ_Iter37[ρσ_Index37];
                 ans += " " + x;
             }
             return ans;
@@ -9900,9 +9900,9 @@ return this.__repr__();
         function get_widget_css() {
             var ans, func;
             ans = [];
-            var ρσ_Iter9 = ρσ_Iterable(extra_css);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                func = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter38 = ρσ_Iterable(extra_css);
+            for (var ρσ_Index38 = 0; ρσ_Index38 < ρσ_Iter38.length; ρσ_Index38++) {
+                func = ρσ_Iter38[ρσ_Index38];
                 ans.push(func());
             }
             return ans.join("\n");
@@ -9914,9 +9914,9 @@ return this.__repr__();
         function set_radio_group_value(parent, name, val) {
             var changed, inp;
             changed = false;
-            var ρσ_Iter10 = ρσ_Iterable(parent.querySelectorAll("input[name=" + ρσ_str.format("{}", name) + "]"));
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                inp = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter39 = ρσ_Iterable(parent.querySelectorAll("input[name=" + ρσ_str.format("{}", name) + "]"));
+            for (var ρσ_Index39 = 0; ρσ_Index39 < ρσ_Iter39.length; ρσ_Index39++) {
+                inp = ρσ_Iter39[ρσ_Index39];
                 inp.checked = inp.value === val;
                 changed = true;
             }
@@ -9979,18 +9979,18 @@ return this.__repr__();
 
         function click_in_popup(event) {
             var popup, w, widget, wid, popup_id;
-            var ρσ_Iter0 = ρσ_Iterable(shown_popups);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                popup_id = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter40 = ρσ_Iterable(shown_popups);
+            for (var ρσ_Index40 = 0; ρσ_Index40 < ρσ_Iter40.length; ρσ_Index40++) {
+                popup_id = ρσ_Iter40[ρσ_Index40];
                 popup = document.getElementById(popup_id);
                 if (popup && element_contains_click_event(popup, event)) {
                     return true;
                 }
                 w = associated_widgets[(typeof popup_id === "number" && popup_id < 0) ? associated_widgets.length + popup_id : popup_id];
                 if (w && w.length) {
-                    var ρσ_Iter1 = ρσ_Iterable(w);
-                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                        wid = ρσ_Iter1[ρσ_Index1];
+                    var ρσ_Iter41 = ρσ_Iterable(w);
+                    for (var ρσ_Index41 = 0; ρσ_Index41 < ρσ_Iter41.length; ρσ_Index41++) {
+                        wid = ρσ_Iter41[ρσ_Index41];
                         widget = document.getElementById(wid);
                         if (widget && element_contains_click_event(widget, event)) {
                             return true;
@@ -10009,9 +10009,9 @@ return this.__repr__();
             var popup_id;
             if (shown_popups.length) {
                 if (!click_in_popup(event)) {
-                    var ρσ_Iter2 = ρσ_Iterable(shown_popups);
-                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                        popup_id = ρσ_Iter2[ρσ_Index2];
+                    var ρσ_Iter42 = ρσ_Iterable(shown_popups);
+                    for (var ρσ_Index42 = 0; ρσ_Index42 < ρσ_Iter42.length; ρσ_Index42++) {
+                        popup_id = ρσ_Iter42[ρσ_Index42];
                         hide_popup(popup_id);
                     }
                     shown_popups.clear();
@@ -10357,9 +10357,9 @@ return this.__repr__();
             if (self.is_upwards) {
                 items = reversed(items);
             }
-            var ρσ_Iter3 = ρσ_Iterable(items);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                m = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter43 = ρσ_Iterable(items);
+            for (var ρσ_Index43 = 0; ρσ_Index43 < ρσ_Iter43.length; ρσ_Index43++) {
+                m = ρσ_Iter43[ρσ_Index43];
                 c.firstChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [m].concat([ρσ_desugar_kwargs({onmouseenter: self.onmouseenter, onclick: self.onclick})])));
             }
         };
@@ -10637,9 +10637,9 @@ return this.__repr__();
                 if (ρσ_exists.d(node.children).length) {
                     ul = E.div();
                     parent_container.appendChild(ul);
-                    var ρσ_Iter0 = ρσ_Iterable(node.children);
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                        child = ρσ_Iter0[ρσ_Index0];
+                    var ρσ_Iter44 = ρσ_Iterable(node.children);
+                    for (var ρσ_Index44 = 0; ρσ_Index44 < ρσ_Iter44.length; ρσ_Index44++) {
+                        child = ρσ_Iter44[ρσ_Index44];
                         icon = (ρσ_exists.d(child.children).length) ? "caret-right" : null;
                         li = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [bullet(icon), E.span(" "), ρσ_interpolate_kwargs.call(E, E.a, [ρσ_desugar_kwargs({href: "javascript: void(0)", class_: "simple-link tree-item-title", onclick: (function() {
                             var ρσ_anonfunc = function (event) {
@@ -10709,9 +10709,9 @@ return this.__repr__();
             before = ρσ_list_decorate([]);
             seen = false;
             ans = null;
-            var ρσ_Iter1 = ρσ_Iterable(container.querySelectorAll("a.tree-item-title"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                a = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter45 = ρσ_Iterable(container.querySelectorAll("a.tree-item-title"));
+            for (var ρσ_Index45 = 0; ρσ_Index45 < ρσ_Iter45.length; ρσ_Index45++) {
+                a = ρσ_Iter45[ρσ_Index45];
                 if (a === last_match) {
                     seen = true;
                 } else {
@@ -10968,9 +10968,9 @@ return this.__repr__();
                 self.clear_current_modal();
             } else {
                 doomed_modal = null;
-                var ρσ_Iter0 = ρσ_Iterable(enumerate(self.modals));
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter46 = ρσ_Iterable(enumerate(self.modals));
+                for (var ρσ_Index46 = 0; ρσ_Index46 < ρσ_Iter46.length; ρσ_Index46++) {
+                    ρσ_unpack = ρσ_Iter46[ρσ_Index46];
                     i = ρσ_unpack[0];
                     modal = ρσ_unpack[1];
                     if (modal.id === modal_id) {
@@ -11884,9 +11884,9 @@ return this.__repr__();
         function apply_mode() {
             var divid, div;
             divid = (is_reading_book()) ? read_book_container_id : book_list_container_id;
-            var ρσ_Iter0 = ρσ_Iterable(document.getElementById(divid).parentNode.childNodes);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                div = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter47 = ρσ_Iterable(document.getElementById(divid).parentNode.childNodes);
+            for (var ρσ_Index47 = 0; ρσ_Index47 < ρσ_Iter47.length; ρσ_Index47++) {
+                div = ρσ_Iter47[ρσ_Index47];
                 div.style.display = (div.id === divid) ? "block" : "none";
             }
         };
@@ -12225,9 +12225,9 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })());
             ua = new Uint8Array(binstr.length);
-            var ρσ_Iter0 = ρσ_Iterable(enumerate(binstr));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter48 = ρσ_Iterable(enumerate(binstr));
+            for (var ρσ_Index48 = 0; ρσ_Index48 < ρσ_Iter48.length; ρσ_Index48++) {
+                ρσ_unpack = ρσ_Iter48[ρσ_Index48];
                 i = ρσ_unpack[0];
                 ch = ρσ_unpack[1];
                 ua[(typeof i === "number" && i < 0) ? ua.length + i : i] = ch.charCodeAt(0);
@@ -13491,9 +13491,9 @@ return this.__repr__();
         register_callback((function() {
             var ρσ_anonfunc = function () {
                 var scheme, key;
-                var ρσ_Iter0 = ρσ_Iterable(default_color_schemes);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    key = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter49 = ρσ_Iterable(default_color_schemes);
+                for (var ρσ_Index49 = 0; ρσ_Index49 < ρσ_Iter49.length; ρσ_Index49++) {
+                    key = ρσ_Iter49[ρσ_Index49];
                     scheme = default_color_schemes[(typeof key === "number" && key < 0) ? default_color_schemes.length + key : key];
                     scheme.name = gt(scheme.name);
                 }
@@ -13543,9 +13543,9 @@ return this.__repr__();
         annot_id_uuid_map = Object.create(null);
         function clear_annot_id_uuid_map() {
             var key;
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(annot_id_uuid_map));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                key = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter50 = ρσ_Iterable(Object.keys(annot_id_uuid_map));
+            for (var ρσ_Index50 = 0; ρσ_Index50 < ρσ_Iter50.length; ρσ_Index50++) {
+                key = ρσ_Iter50[ρσ_Index50];
                 delete annot_id_uuid_map[key];
             }
         };
@@ -13661,9 +13661,9 @@ return this.__repr__();
             var self = this;
             var prefix, attr;
             prefix = ((mode === "flow") ? "flow" : "paged") + "_";
-            var ρσ_Iter0 = ρσ_Iterable(FUNCTIONS);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                attr = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter51 = ρσ_Iterable(FUNCTIONS);
+            for (var ρσ_Index51 = 0; ρσ_Index51 < ρσ_Iter51.length; ρσ_Index51++) {
+                attr = ρσ_Iter51[ρσ_Index51];
                 self[(typeof attr === "number" && attr < 0) ? self.length + attr : attr] = self[ρσ_bound_index(prefix + attr, self)];
             }
         };
@@ -14245,9 +14245,9 @@ return this.__repr__();
         } else {
             scroll_viewport = new ScrollViewport;
         }
-        var ρσ_Iter1 = ρσ_Iterable(FUNCTIONS);
-        for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-            attr = ρσ_Iter1[ρσ_Index1];
+        var ρσ_Iter52 = ρσ_Iterable(FUNCTIONS);
+        for (var ρσ_Index52 = 0; ρσ_Index52 < ρσ_Iter52.length; ρσ_Index52++) {
+            attr = ρσ_Iter52[ρσ_Index52];
             if (!scroll_viewport[ρσ_bound_index("paged_" + attr, scroll_viewport)]) {
                 scroll_viewport[ρσ_bound_index("paged_" + attr, scroll_viewport)] = scroll_viewport[(typeof attr === "number" && attr < 0) ? scroll_viewport.length + attr : attr];
             }
@@ -14569,9 +14569,9 @@ return this.__repr__();
         function unwrapped_nodes(range_wrapper) {
             var ans, child;
             ans = [];
-            var ρσ_Iter0 = ρσ_Iterable(range_wrapper.childNodes);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                child = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter53 = ρσ_Iterable(range_wrapper.childNodes);
+            for (var ρσ_Index53 = 0; ρσ_Index53 < ρσ_Iter53.length; ρσ_Index53++) {
+                child = ρσ_Iter53[ρσ_Index53];
                 if (child.nodeType === Node.ELEMENT_NODE && ρσ_exists.d(child.dataset).calibreRangeWrapper) {
                     ans = ans.concat(unwrapped_nodes(child));
                 } else {
@@ -14606,8 +14606,8 @@ return this.__repr__();
 
         function increment_index_for_children(children, index, sentinel) {
             var child, i;
-            for (var ρσ_Index1 = 0; ρσ_Index1 < children.length; ρσ_Index1++) {
-                i = ρσ_Index1;
+            for (var ρσ_Index54 = 0; ρσ_Index54 < children.length; ρσ_Index54++) {
+                i = ρσ_Index54;
                 child = children[(typeof i === "number" && i < 0) ? children.length + i : i];
                 index = increment_index_for_child(child, index, sentinel);
                 if (child === sentinel) {
@@ -14716,8 +14716,8 @@ return this.__repr__();
 
         function node_at_index(nodes, target, index, iter_text_nodes) {
             var node, is_element, ρσ_unpack, q, i;
-            for (var ρσ_Index2 = 0; ρσ_Index2 < nodes.length; ρσ_Index2++) {
-                i = ρσ_Index2;
+            for (var ρσ_Index55 = 0; ρσ_Index55 < nodes.length; ρσ_Index55++) {
+                i = ρσ_Index55;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 is_element = node.nodeType === Node.ELEMENT_NODE;
                 if (is_element && ρσ_exists.d(node.dataset).calibreRangeWrapper) {
@@ -14769,8 +14769,8 @@ return this.__repr__();
             var last_text_node, seen_first, node, l, ρσ_unpack, qn, ok, i;
             last_text_node = null;
             seen_first = false;
-            for (var ρσ_Index3 = 0; ρσ_Index3 < nodes.length; ρσ_Index3++) {
-                i = ρσ_Index3;
+            for (var ρσ_Index56 = 0; ρσ_Index56 < nodes.length; ρσ_Index56++) {
+                i = ρσ_Index56;
                 node = nodes[(typeof i === "number" && i < 0) ? nodes.length + i : i];
                 if (!seen_first) {
                     if (!first_node || node.isSameNode(first_node)) {
@@ -14973,9 +14973,9 @@ return this.__repr__();
                 if (!b) {
                     b = key_map[(typeof b_cfi === "number" && b_cfi < 0) ? key_map.length + b_cfi : b_cfi] = cfi_sort_key(b_cfi);
                 }
-                var ρσ_Iter4 = ρσ_Iterable(range(min(a.steps.length, b.steps.length)));
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    i = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter57 = ρσ_Iterable(range(min(a.steps.length, b.steps.length)));
+                for (var ρσ_Index57 = 0; ρσ_Index57 < ρσ_Iter57.length; ρσ_Index57++) {
+                    i = ρσ_Iter57[ρσ_Index57];
                     diff = (ρσ_expr_temp = a.steps)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] - (ρσ_expr_temp = b.steps)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i];
                     if (diff !== 0) {
                         return diff;
@@ -15253,9 +15253,9 @@ return this.__repr__();
                     var ρσ_anonfunc = function () {
                         var p, node, offset, ρσ_unpack, doc_x, doc_y;
                         p = span.parentNode;
-                        var ρσ_Iter5 = ρσ_Iterable(span.childNodes);
-                        for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                            node = ρσ_Iter5[ρσ_Index5];
+                        var ρσ_Iter58 = ρσ_Iterable(span.childNodes);
+                        for (var ρσ_Index58 = 0; ρσ_Index58 < ρσ_Iter58.length; ρσ_Index58++) {
+                            node = ρσ_Iter58[ρσ_Index58];
                             span.removeChild(node);
                             p.insertBefore(node, span);
                         }
@@ -15630,9 +15630,9 @@ return this.__repr__();
                 ρσ_d[no_cfi] = cfi_sort_key(no_cfi);
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter0 = ρσ_Iterable(annots);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                annot = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter59 = ρσ_Iterable(annots);
+            for (var ρσ_Index59 = 0; ρσ_Index59 < ρσ_Iter59.length; ρσ_Index59++) {
+                annot = ρσ_Iter59[ρσ_Index59];
                 cfi = get_cfi_func(annot);
                 if (cfi && !key_map[(typeof cfi === "number" && cfi < 0) ? key_map.length + cfi : cfi]) {
                     key_map[(typeof cfi === "number" && cfi < 0) ? key_map.length + cfi : cfi] = cfi_sort_key(cfi);
@@ -15671,25 +15671,25 @@ return this.__repr__();
             title_groups = Object.create(null);
             changed = false;
             all_annots = annots_a.concat(annots_b);
-            var ρσ_Iter1 = ρσ_Iterable(all_annots);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                a = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter60 = ρσ_Iterable(all_annots);
+            for (var ρσ_Index60 = 0; ρσ_Index60 < ρσ_Iter60.length; ρσ_Index60++) {
+                a = ρσ_Iter60[ρσ_Index60];
                 q = title_groups[ρσ_bound_index(a[(typeof field === "number" && field < 0) ? a.length + field : field], title_groups)];
                 if (!q) {
                     q = title_groups[ρσ_bound_index(a[(typeof field === "number" && field < 0) ? a.length + field : field], title_groups)] = [];
                 }
                 q.push(a);
             }
-            var ρσ_Iter2 = ρσ_Iterable(Object.values(title_groups));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                tg = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter61 = ρσ_Iterable(Object.values(title_groups));
+            for (var ρσ_Index61 = 0; ρσ_Index61 < ρσ_Iter61.length; ρσ_Index61++) {
+                tg = ρσ_Iter61[ρσ_Index61];
                 tg.sort(annots_descending_cmp);
             }
             seen = Object.create(null);
             ans = [];
-            var ρσ_Iter3 = ρσ_Iterable(all_annots);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                a = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter62 = ρσ_Iterable(all_annots);
+            for (var ρσ_Index62 = 0; ρσ_Index62 < ρσ_Iter62.length; ρσ_Index62++) {
+                a = ρσ_Iter62[ρσ_Index62];
                 title = a[(typeof field === "number" && field < 0) ? a.length + field : field];
                 if (!seen[(typeof title === "number" && title < 0) ? seen.length + title : title]) {
                     seen[(typeof title === "number" && title < 0) ? seen.length + title : title] = true;
@@ -15739,9 +15739,9 @@ return this.__repr__();
             var updated, ans, a_items, b_items, ρσ_unpack, changed, field;
             updated = false;
             ans = Object.create(null);
-            var ρσ_Iter4 = ρσ_Iterable(field_map);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                field = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter63 = ρσ_Iterable(field_map);
+            for (var ρσ_Index63 = 0; ρσ_Index63 < ρσ_Iter63.length; ρσ_Index63++) {
+                field = ρσ_Iter63[ρσ_Index63];
                 a_items = a[(typeof field === "number" && field < 0) ? a.length + field : field] || [];
                 b_items = b[(typeof field === "number" && field < 0) ? b.length + field : field] || [];
                 if (!a_items.length) {
@@ -15879,9 +15879,9 @@ return this.__repr__();
             var self = this;
             var changed, b;
             changed = false;
-            var ρσ_Iter5 = ρσ_Iterable(self.bookmarks);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                b = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter64 = ρσ_Iterable(self.bookmarks);
+            for (var ρσ_Index64 = 0; ρσ_Index64 < ρσ_Iter64.length; ρσ_Index64++) {
+                b = ρσ_Iter64[ρσ_Index64];
                 if (b.title === title) {
                     b.removed = true;
                     b.timestamp = (new Date).toISOString();
@@ -15901,9 +15901,9 @@ return this.__repr__();
             var self = this;
             var changed, b;
             changed = false;
-            var ρσ_Iter6 = ρσ_Iterable(self.bookmarks);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                b = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter65 = ρσ_Iterable(self.bookmarks);
+            for (var ρσ_Index65 = 0; ρσ_Index65 < ρσ_Iter65.length; ρσ_Index65++) {
+                b = ρσ_Iter65[ρσ_Index65];
                 if (b.title === title) {
                     b.title = new_title;
                     b.timestamp = (new Date).toISOString();
@@ -16146,9 +16146,9 @@ return this.__repr__();
             var self = this;
             var now, uuid, annot, toc_family_titles, x;
             now = (new Date).toISOString();
-            var ρσ_Iter7 = ρσ_Iterable(msg.removed_highlights);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                uuid = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter66 = ρσ_Iterable(msg.removed_highlights);
+            for (var ρσ_Index66 = 0; ρσ_Index66 < ρσ_Iter66.length; ρσ_Index66++) {
+                uuid = ρσ_Iter66[ρσ_Index66];
                 self.remove_highlight(uuid);
             }
             annot = (ρσ_expr_temp = self.highlights)[ρσ_bound_index(msg.uuid, ρσ_expr_temp)] = (function(){
@@ -16169,9 +16169,9 @@ return this.__repr__();
             }
             if ((typeof toc_family !== "undefined" && toc_family !== null ? toc_family : Object.create(null)).length) {
                 toc_family_titles = [];
-                var ρσ_Iter8 = ρσ_Iterable(toc_family);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    x = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter67 = ρσ_Iterable(toc_family);
+                for (var ρσ_Index67 = 0; ρσ_Index67 < ρσ_Iter67.length; ρσ_Index67++) {
+                    x = ρσ_Iter67[ρσ_Index67];
                     if (x.title) {
                         toc_family_titles.push(x.title);
                     }
@@ -16189,9 +16189,9 @@ return this.__repr__();
             var name, ans, h;
             name = self.view.currently_showing.name;
             ans = [];
-            var ρσ_Iter9 = ρσ_Iterable(Object.values(self.highlights));
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                h = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter68 = ρσ_Iterable(Object.values(self.highlights));
+            for (var ρσ_Index68 = 0; ρσ_Index68 < ρσ_Iter68.length; ρσ_Index68++) {
+                h = ρσ_Iter68[ρσ_Index68];
                 if (h.spine_name === name && !h.removed && h.start_cfi) {
                     ans.push(h);
                 }
@@ -16664,9 +16664,9 @@ return this.__repr__();
             book.stored_files = Object.create(null);
             book.is_complete = false;
             newest_epoch = newest_pos = null;
-            var ρσ_Iter0 = ρσ_Iterable(manifest.last_read_positions);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                pos = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter69 = ρσ_Iterable(manifest.last_read_positions);
+            for (var ρσ_Index69 = 0; ρσ_Index69 < ρσ_Iter69.length; ρσ_Index69++) {
+                pos = ρσ_Iter69[ρσ_Index69];
                 if (newest_epoch === null || pos.epoch > newest_epoch) {
                     newest_epoch = pos.epoch;
                     newest_pos = pos.cfi;
@@ -16876,9 +16876,9 @@ return this.__repr__();
             var self = this;
             var key;
             if (book.metadata) {
-                var ρσ_Iter1 = ρσ_Iterable(Object.keys(new_metadata));
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    key = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter70 = ρσ_Iterable(Object.keys(new_metadata));
+                for (var ρσ_Index70 = 0; ρσ_Index70 < ρσ_Iter70.length; ρσ_Index70++) {
+                    key = ρσ_Iter70[ρσ_Index70];
                     (ρσ_expr_temp = book.metadata)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = new_metadata[(typeof key === "number" && key < 0) ? new_metadata.length + key : key];
                 }
                 ρσ_interpolate_kwargs.call(self, self.do_op, [ρσ_list_decorate([ "books" ]), book, _("Failed to write to the books database"), (function() {
@@ -17938,9 +17938,9 @@ return this.__repr__();
             if (opts.color_scheme.link) {
                 des.setProperty("--calibre-viewer-link-color", opts.color_scheme.link);
             }
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                elem = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter71 = ρσ_Iterable(ρσ_list_decorate([ document.documentElement, document.body ]));
+            for (var ρσ_Index71 = 0; ρσ_Index71 < ρσ_Iter71.length; ρσ_Index71++) {
+                elem = ρσ_Iter71[ρσ_Index71];
                 elem.style.color = opts.color_scheme.foreground;
                 elem.style.backgroundColor = "transparent";
             }
@@ -18009,14 +18009,14 @@ return this.__repr__();
             if (style.selbg) {
                 style.selbg = make_selection_background_opaque(style.selbg);
             }
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(style));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                prop = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter72 = ρσ_Iterable(Object.keys(style));
+            for (var ρσ_Index72 = 0; ρσ_Index72 < ρσ_Iter72.length; ρσ_Index72++) {
+                prop = ρσ_Iter72[ρσ_Index72];
                 css_text += "" + ρσ_str.format("{}", prop) + ": " + ρσ_str.format("{}", style[(typeof prop === "number" && prop < 0) ? style.length + prop : prop]) + "; ";
             }
-            var ρσ_Iter2 = ρσ_Iterable(sheet.sheet.cssRules);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                rule = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter73 = ρσ_Iterable(sheet.sheet.cssRules);
+            for (var ρσ_Index73 = 0; ρσ_Index73 < ρσ_Iter73.length; ρσ_Index73++) {
+                rule = ρσ_Iter73[ρσ_Index73];
                 if (rule.type === rule.STYLE_RULE && rule.selectorText.indexOf("selection") > -1) {
                     rule.style.cssText = css_text;
                 }
@@ -18133,9 +18133,9 @@ return this.__repr__();
                 var name, k, data;
                 name = pending_resources.shift();
                 if (!name) {
-                    var ρσ_Iter0 = ρσ_Iterable(previous_resources);
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                        k = ρσ_Iter0[ρσ_Index0];
+                    var ρσ_Iter74 = ρσ_Iterable(previous_resources);
+                    for (var ρσ_Index74 = 0; ρσ_Index74 < ρσ_Iter74.length; ρσ_Index74++) {
+                        k = ρσ_Iter74[ρσ_Index74];
                         delete previous_resources[k];
                     }
                     if ((ρσ_expr_temp = book.manifest.files)[(typeof root_name === "number" && root_name < 0) ? ρσ_expr_temp.length + root_name : root_name].has_maths) {
@@ -18240,9 +18240,9 @@ return this.__repr__();
             link_pat = create_link_pat(book);
             mathjax = resource_data["..mathjax-files.."];
             delete resource_data["..mathjax-files.."];
-            var ρσ_Iter1 = ρσ_Iterable(resource_data);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                name = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter75 = ρσ_Iterable(resource_data);
+            for (var ρσ_Index75 = 0; ρσ_Index75 < ρσ_Iter75.length; ρσ_Index75++) {
+                name = ρσ_Iter75[ρσ_Index75];
                 ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 data = ρσ_unpack[0];
@@ -18251,9 +18251,9 @@ return this.__repr__();
                     blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name] = window.URL.createObjectURL(data);
                 }
             }
-            var ρσ_Iter2 = ρσ_Iterable(blob_url_map);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                name = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter76 = ρσ_Iterable(blob_url_map);
+            for (var ρσ_Index76 = 0; ρσ_Index76 < ρσ_Iter76.length; ρσ_Index76++) {
+                name = ρσ_Iter76[ρσ_Index76];
                 delete resource_data[name];
             }
             function add_virtualized_resource(name, text, mimetype) {
@@ -18296,9 +18296,9 @@ return this.__repr__();
                         unresolved_deps.add(dname);
                     }
                 }
-                var ρσ_Iter3 = ρσ_Iterable(reversed(replacements));
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    ρσ_unpack = ρσ_flatten(ρσ_Iter3[ρσ_Index3]);
+                var ρσ_Iter77 = ρσ_Iterable(reversed(replacements));
+                for (var ρσ_Index77 = 0; ρσ_Index77 < ρσ_Iter77.length; ρσ_Index77++) {
+                    ρσ_unpack = ρσ_flatten(ρσ_Iter77[ρσ_Index77]);
                     index = ρσ_unpack[0];
                     sz = ρσ_unpack[1];
                     repl = ρσ_unpack[2];
@@ -18318,9 +18318,9 @@ return this.__repr__();
                 if (!deps || !deps.length) {
                     return false;
                 }
-                var ρσ_Iter4 = ρσ_Iterable(deps);
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    x = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter78 = ρσ_Iterable(deps);
+                for (var ρσ_Index78 = 0; ρσ_Index78 < ρσ_Iter78.length; ρσ_Index78++) {
+                    x = ρσ_Iter78[ρσ_Index78];
                     if (!blob_url_map[(typeof x === "number" && x < 0) ? blob_url_map.length + x : x]) {
                         return true;
                     }
@@ -18335,9 +18335,9 @@ return this.__repr__();
             while (true) {
                 resolved = [];
                 num = 0;
-                var ρσ_Iter5 = ρσ_Iterable(resource_data);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    name = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter79 = ρσ_Iterable(resource_data);
+                for (var ρσ_Index79 = 0; ρσ_Index79 < ρσ_Iter79.length; ρσ_Index79++) {
+                    name = ρσ_Iter79[ρσ_Index79];
                     if (!blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name]) {
                         num += 1;
                         ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
@@ -18373,9 +18373,9 @@ return this.__repr__();
                         return ρσ_Result;
                     })();
                     print("ERROR: Could not resolve all dependencies of {} because of a cyclic dependency. Remaining deps: {}".format(root_name, unresolved));
-                    var ρσ_Iter6 = ρσ_Iterable(resource_data);
-                    for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                        name = ρσ_Iter6[ρσ_Index6];
+                    var ρσ_Iter80 = ρσ_Iterable(resource_data);
+                    for (var ρσ_Index80 = 0; ρσ_Index80 < ρσ_Iter80.length; ρσ_Index80++) {
+                        name = ρσ_Iter80[ρσ_Index80];
                         if (!blob_url_map[(typeof name === "number" && name < 0) ? blob_url_map.length + name : name]) {
                             ρσ_unpack = resource_data[(typeof name === "number" && name < 0) ? resource_data.length + name : name];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
@@ -18387,9 +18387,9 @@ return this.__repr__();
                     }
                     break;
                 }
-                var ρσ_Iter7 = ρσ_Iterable(resolved);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    name = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter81 = ρσ_Iterable(resolved);
+                for (var ρσ_Index81 = 0; ρσ_Index81 < ρσ_Iter81.length; ρσ_Index81++) {
+                    name = ρσ_Iter81[ρσ_Index81];
                     delete resource_data[name];
                 }
             }
@@ -18447,9 +18447,9 @@ return this.__repr__();
             if (!attributes) {
                 return;
             }
-            var ρσ_Iter8 = ρσ_Iterable(attributes);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                a = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter82 = ρσ_Iterable(attributes);
+            for (var ρσ_Index82 = 0; ρσ_Index82 < ρσ_Iter82.length; ρσ_Index82++) {
+                a = ρσ_Iter82[ρσ_Index82];
                 if (a[2]) {
                     ns = ns_map[ρσ_bound_index(a[2], ns_map)];
                     elem.setAttributeNS(ns, get_prefix(ns) + a[0], a[1]);
@@ -18469,13 +18469,13 @@ return this.__repr__();
 
         function is_loadable_link(attributes) {
             var x, a;
-            var ρσ_Iter9 = ρσ_Iterable(attributes);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                a = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter83 = ρσ_Iterable(attributes);
+            for (var ρσ_Index83 = 0; ρσ_Index83 < ρσ_Iter83.length; ρσ_Index83++) {
+                a = ρσ_Iter83[ρσ_Index83];
                 if (a[0].toLowerCase() === "rel" && a[1]) {
-                    var ρσ_Iter10 = ρσ_Iterable(a[1].split(" "));
-                    for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                        x = ρσ_Iter10[ρσ_Index10];
+                    var ρσ_Iter84 = ρσ_Iterable(a[1].split(" "));
+                    for (var ρσ_Index84 = 0; ρσ_Index84 < ρσ_Iter84.length; ρσ_Index84++) {
+                        x = ρσ_Iter84[ρσ_Index84];
                         if (x.toLowerCase() === "stylesheet") {
                             return true;
                         }
@@ -18522,9 +18522,9 @@ return this.__repr__();
                         attr = attr.replace("xlink:", "");
                     }
                     if (src.a) {
-                        var ρσ_Iter11 = ρσ_Iterable(src.a);
-                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                            a = ρσ_Iter11[ρσ_Index11];
+                        var ρσ_Iter85 = ρσ_Iterable(src.a);
+                        for (var ρσ_Index85 = 0; ρσ_Index85 < ρσ_Iter85.length; ρσ_Index85++) {
+                            a = ρσ_Iter85[ρσ_Index85];
                             if (a[0] === attr) {
                                 loadable = (src.n === "link") ? is_loadable_link(src.a) : true;
                                 break;
@@ -18634,9 +18634,9 @@ return this.__repr__();
 
             body_done = false;
             process_stack.tag_id = 1;
-            var ρσ_Iter12 = ρσ_Iterable(html.c);
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                child = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter86 = ρσ_Iterable(html.c);
+            for (var ρσ_Index86 = 0; ρσ_Index86 < ρσ_Iter86.length; ρσ_Index86++) {
+                child = ρσ_Iter86[ρσ_Index86];
                 if (child.n === "head") {
                     process_children(child, document.head);
                 } else if (child.n === "body") {
@@ -18779,9 +18779,9 @@ return this.__repr__();
                 stack = [[serialized_data.tree[2], false]];
             } else {
                 stack = [];
-                var ρσ_Iter13 = ρσ_Iterable(serialized_data.tree.c);
-                for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                    child = ρσ_Iter13[ρσ_Index13];
+                var ρσ_Iter87 = ρσ_Iterable(serialized_data.tree.c);
+                for (var ρσ_Index87 = 0; ρσ_Index87 < ρσ_Iter87.length; ρσ_Index87++) {
+                    child = ρσ_Iter87[ρσ_Index87];
                     if (child.n === "body") {
                         stack.push([child, false]);
                     }
@@ -18905,9 +18905,9 @@ return this.__repr__();
 
         function epub_type(elem) {
             var a;
-            var ρσ_Iter0 = ρσ_Iterable(elem.attributes);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                a = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter88 = ρσ_Iterable(elem.attributes);
+            for (var ρσ_Index88 = 0; ρσ_Index88 < ρσ_Iter88.length; ρσ_Index88++) {
+                a = ρσ_Iter88[ρσ_Index88];
                 if (ρσ_equals(a.nodeName.toLowerCase(), "epub:type") && a.nodeValue) {
                     return a.nodeValue;
                 }
@@ -19098,9 +19098,9 @@ return this.__repr__();
         }).call(this);
         function hide_children(node) {
             var child;
-            var ρσ_Iter1 = ρσ_Iterable(node.childNodes);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                child = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter89 = ρσ_Iterable(node.childNodes);
+            for (var ρσ_Index89 = 0; ρσ_Index89 < ρσ_Iter89.length; ρσ_Index89++) {
+                child = ρσ_Iter89[ρσ_Index89];
                 if (child.nodeType === Node.ELEMENT_NODE) {
                     if (child.do_not_hide) {
                         hide_children(child);
@@ -19119,9 +19119,9 @@ return this.__repr__();
         function unhide_tree(elem) {
             var c;
             elem.do_not_hide = true;
-            var ρσ_Iter2 = ρσ_Iterable(elem.getElementsByTagName("*"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                c = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter90 = ρσ_Iterable(elem.getElementsByTagName("*"));
+            for (var ρσ_Index90 = 0; ρσ_Index90 < ρσ_Iter90.length; ρσ_Index90++) {
+                c = ρσ_Iter90[ρσ_Index90];
                 c.do_not_hide = true;
             }
         };
@@ -19157,9 +19157,9 @@ return this.__repr__();
                 return;
             }
             start_elem = get_note_container(start_elem);
-            var ρσ_Iter3 = ρσ_Iterable(get_parents_and_self(start_elem));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                elem = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter91 = ρσ_Iterable(get_parents_and_self(start_elem));
+            for (var ρσ_Index91 = 0; ρσ_Index91 < ρσ_Iter91.length; ρσ_Index91++) {
+                elem = ρσ_Iter91[ρσ_Index91];
                 elem.do_not_hide = true;
                 style = window.getComputedStyle(elem);
                 if (style.display === "list-item" && ok_list_types[ρσ_bound_index(style.listStyleType, ok_list_types)] !== true) {
@@ -19170,9 +19170,9 @@ return this.__repr__();
                 unhide_tree(start_elem);
             } else {
                 found_note_start = false;
-                var ρσ_Iter4 = ρσ_Iterable(document.documentElement.getElementsByTagName("*"));
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    elem = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter92 = ρσ_Iterable(document.documentElement.getElementsByTagName("*"));
+                for (var ρσ_Index92 = 0; ρσ_Index92 < ρσ_Iter92.length; ρσ_Index92++) {
+                    elem = ρσ_Iter92[ρσ_Index92];
                     if (found_note_start) {
                         eid = elem.getAttribute("id");
                         if (eid !== target && known_anchors[(typeof eid === "number" && eid < 0) ? known_anchors.length + eid : eid] && is_new_footnote_start(elem, start_elem)) {
@@ -19306,9 +19306,9 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this));
             update_settings(data.settings);
-            var ρσ_Iter5 = ρσ_Iterable(self.blob_url_map);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                name = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter93 = ρσ_Iterable(self.blob_url_map);
+            for (var ρσ_Index93 = 0; ρσ_Index93 < ρσ_Iter93.length; ρσ_Index93++) {
+                name = ρσ_Iter93[ρσ_Index93];
                 window.URL.revokeObjectURL((ρσ_expr_temp = self.blob_url_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
             document.body.style.removeProperty("font-family");
@@ -19326,15 +19326,15 @@ return this.__repr__();
         PopupIframeBoss.prototype.connect_links = function connect_links() {
             var self = this;
             var a;
-            var ρσ_Iter6 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "]"));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                a = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter94 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "]"));
+            for (var ρσ_Index94 = 0; ρσ_Index94 < ρσ_Iter94.length; ρσ_Index94++) {
+                a = ρσ_Iter94[ρσ_Index94];
                 a.addEventListener("click", self.link_activated);
             }
             if (runtime.is_standalone_viewer) {
-                var ρσ_Iter7 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    a = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter95 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
+                for (var ρσ_Index95 = 0; ρσ_Index95 < ρσ_Iter95.length; ρσ_Index95++) {
+                    a = ρσ_Iter95[ρσ_Index95];
                     a.removeAttribute("target");
                 }
             }
@@ -19556,12 +19556,12 @@ return this.__repr__();
             height = window.innerHeight;
             xdelta = Math.floor(width / 10);
             ydelta = Math.floor(height / 10);
-            var ρσ_Iter0 = ρσ_Iterable(range(0, height, ydelta));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                y = ρσ_Iter0[ρσ_Index0];
-                var ρσ_Iter1 = ρσ_Iterable(range(0, width, xdelta));
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    x = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter96 = ρσ_Iterable(range(0, height, ydelta));
+            for (var ρσ_Index96 = 0; ρσ_Index96 < ρσ_Iter96.length; ρσ_Index96++) {
+                y = ρσ_Iter96[ρσ_Index96];
+                var ρσ_Iter97 = ρσ_Iterable(range(0, width, xdelta));
+                for (var ρσ_Index97 = 0; ρσ_Index97 < ρσ_Iter97.length; ρσ_Index97++) {
+                    x = ρσ_Iter97[ρσ_Index97];
                     r = word_at_point(x, y);
                     if ((typeof r !== "undefined" && r !== null)) {
                         return r;
@@ -19629,9 +19629,9 @@ return this.__repr__();
                 } else {
                     top.visited = true;
                     if (top.node.childNodes) {
-                        var ρσ_Iter2 = ρσ_Iterable((start) ? top.node.childNodes : reversed(top.node.childNodes));
-                        for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                            c = ρσ_Iter2[ρσ_Index2];
+                        var ρσ_Iter98 = ρσ_Iterable((start) ? top.node.childNodes : reversed(top.node.childNodes));
+                        for (var ρσ_Index98 = 0; ρσ_Index98 < ρσ_Iter98.length; ρσ_Index98++) {
+                            c = ρσ_Iter98[ρσ_Index98];
                             stack.push((function(){
                                 var ρσ_d = Object.create(null);
                                 ρσ_d["node"] = c;
@@ -20102,8 +20102,8 @@ return this.__repr__();
         function all_annots_in_selection(sel, annot_id_uuid_map) {
             var ans, i;
             ans = {};
-            for (var ρσ_Index0 = 0; ρσ_Index0 < sel.rangeCount; ρσ_Index0++) {
-                i = ρσ_Index0;
+            for (var ρσ_Index99 = 0; ρσ_Index99 < sel.rangeCount; ρσ_Index99++) {
+                i = ρσ_Index99;
                 all_annots_in_range(sel.getRangeAt(i), annot_id_uuid_map, ans);
             }
             return Object.keys(ans);
@@ -20151,9 +20151,9 @@ return this.__repr__();
 
         function unwrap_crw(crw) {
             var node;
-            var ρσ_Iter1 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper=\"" + ρσ_str.format("{}", crw) + "\"]"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                node = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter100 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper=\"" + ρσ_str.format("{}", crw) + "\"]"));
+            for (var ρσ_Index100 = 0; ρσ_Index100 < ρσ_Iter100.length; ρσ_Index100++) {
+                node = ρσ_Iter100[ρσ_Index100];
                 unwrap(node);
             }
         };
@@ -20164,9 +20164,9 @@ return this.__repr__();
 
         function unwrap_all_crw() {
             var node;
-            var ρσ_Iter2 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper]"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                node = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter101 = ρσ_Iterable(document.querySelectorAll("span[data-calibre-range-wrapper]"));
+            for (var ρσ_Index101 = 0; ρσ_Index101 < ρσ_Iter101.length; ρσ_Index101++) {
+                node = ρσ_Iter101[ρσ_Index101];
                 unwrap(node);
             }
         };
@@ -20497,9 +20497,9 @@ return this.__repr__();
                 ρσ_d["crw"] = null;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter0 = ρσ_Iterable(document.elementsFromPoint(x, y));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                elem = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter102 = ρσ_Iterable(document.elementsFromPoint(x, y));
+            for (var ρσ_Index102 = 0; ρσ_Index102 < ρσ_Iter102.length; ρσ_Index102++) {
+                elem = ρσ_Iter102[ρσ_Index102];
                 tl = elem.tagName.toLowerCase();
                 if (tl === "a" && elem.getAttribute("href") && !ans.link) {
                     ans.link = elem.getAttribute("href");
@@ -20597,8 +20597,8 @@ return this.__repr__();
                         in_ruby += 1;
                     }
                     children = node.childNodes;
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < children.length; ρσ_Index0++) {
-                        i = ρσ_Index0;
+                    for (var ρσ_Index103 = 0; ρσ_Index103 < children.length; ρσ_Index103++) {
+                        i = ρσ_Index103;
                         process_node(children[i]);
                     }
                     if (is_ruby_tag) {
@@ -20635,9 +20635,9 @@ return this.__repr__();
 
         function index_for_node(node, node_list) {
             var entry;
-            var ρσ_Iter1 = ρσ_Iterable(node_list);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                entry = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter104 = ρσ_Iterable(node_list);
+            for (var ρσ_Index104 = 0; ρσ_Index104 < ρσ_Iter104.length; ρσ_Index104++) {
+                entry = ρσ_Iter104[ρσ_Index104];
                 if (entry.node.isSameNode(node)) {
                     return entry.offset;
                 }
@@ -20944,9 +20944,9 @@ return this.__repr__();
                     return;
                 }
                 amt = 0;
-                var ρσ_Iter0 = ρσ_Iterable(small_scroll_events);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    x = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter105 = ρσ_Iterable(small_scroll_events);
+                for (var ρσ_Index105 = 0; ρσ_Index105 < ρσ_Iter105.length; ρσ_Index105++) {
+                    x = ρσ_Iter105[ρσ_Index105];
                     amt += x.amt;
                 }
                 clear_small_scrolls();
@@ -21617,9 +21617,9 @@ return this.__repr__();
             self.vertical = gesture.axis === "vertical";
             now = window.performance.now();
             points = times = null;
-            var ρσ_Iter1 = ρσ_Iterable(enumerate(gesture.times));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                ρσ_unpack = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter106 = ρσ_Iterable(enumerate(gesture.times));
+            for (var ρσ_Index106 = 0; ρσ_Index106 < ρσ_Iter106.length; ρσ_Index106++) {
+                ρσ_unpack = ρσ_Iter106[ρσ_Index106];
                 i = ρσ_unpack[0];
                 t = ρσ_unpack[1];
                 if (now - t < self.VELOCITY_HISTORY) {
@@ -22232,9 +22232,9 @@ return this.__repr__();
             if (!(typeof first !== "undefined" && first !== null)) {
                 return ans;
             }
-            var ρσ_Iter0 = ρσ_Iterable(points);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                p = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter107 = ρσ_Iterable(points);
+            for (var ρσ_Index107 = 0; ρσ_Index107 < ρσ_Iter107.length; ρσ_Index107++) {
+                p = ρσ_Iter107[ρσ_Index107];
                 delta = abs(p - first);
                 if (delta > ans) {
                     ans = delta;
@@ -22355,12 +22355,12 @@ return this.__repr__();
 
         function tap_on_link(gesture) {
             var x, y, link, delta_y, delta_x;
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                delta_x = ρσ_Iter1[ρσ_Index1];
-                var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    delta_y = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter108 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
+            for (var ρσ_Index108 = 0; ρσ_Index108 < ρσ_Iter108.length; ρσ_Index108++) {
+                delta_x = ρσ_Iter108[ρσ_Index108];
+                var ρσ_Iter109 = ρσ_Iterable(ρσ_list_decorate([ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ]));
+                for (var ρσ_Index109 = 0; ρσ_Index109 < ρσ_Iter109.length; ρσ_Index109++) {
+                    delta_y = ρσ_Iter109[ρσ_Index109];
                     x = gesture.viewport_x + delta_x;
                     y = gesture.viewport_y + delta_y;
                     link = find_link(x, y);
@@ -22400,9 +22400,9 @@ return this.__repr__();
                 "get": function has_active_touches() {
                     var self = this;
                     var t, tid;
-                    var ρσ_Iter3 = ρσ_Iterable(self.ongoing_touches);
-                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                        tid = ρσ_Iter3[ρσ_Index3];
+                    var ρσ_Iter110 = ρσ_Iterable(self.ongoing_touches);
+                    for (var ρσ_Index110 = 0; ρσ_Index110 < ρσ_Iter110.length; ρσ_Index110++) {
+                        tid = ρσ_Iter110[ρσ_Index110];
                         t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
                         if (t.active) {
                             return true;
@@ -22430,9 +22430,9 @@ return this.__repr__();
             var now, expired, t, tid;
             now = window.performance.now();
             expired = [];
-            var ρσ_Iter4 = ρσ_Iterable(self.ongoing_touches);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                tid = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter111 = ρσ_Iterable(self.ongoing_touches);
+            for (var ρσ_Index111 = 0; ρσ_Index111 < ρσ_Iter111.length; ρσ_Index111++) {
+                tid = ρσ_Iter111[ρσ_Index111];
                 t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
                 if (t.active) {
                     if (now - (ρσ_expr_temp = t.mtimes)[ρσ_expr_temp.length-1] > 3e3) {
@@ -22440,9 +22440,9 @@ return this.__repr__();
                     }
                 }
             }
-            var ρσ_Iter5 = ρσ_Iterable(expired);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                tid = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter112 = ρσ_Iterable(expired);
+            for (var ρσ_Index112 = 0; ρσ_Index112 < ρσ_Iter112.length; ρσ_Index112++) {
+                tid = ρσ_Iter112[ρσ_Index112];
                 delete self.ongoing_touches[tid];
             }
         };
@@ -22483,9 +22483,9 @@ return this.__repr__();
             if (len(self.ongoing_touches) > 0) {
                 now = window.performance.now();
                 found_hold = false;
-                var ρσ_Iter6 = ρσ_Iterable(self.ongoing_touches);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    touchid = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter113 = ρσ_Iterable(self.ongoing_touches);
+                for (var ρσ_Index113 = 0; ρσ_Index113 < ρσ_Iter113.length; ρσ_Index113++) {
+                    touchid = ρσ_Iter113[ρσ_Index113];
                     touch = (ρσ_expr_temp = self.ongoing_touches)[(typeof touchid === "number" && touchid < 0) ? ρσ_expr_temp.length + touchid : touchid];
                     if (touch.active && now - (ρσ_expr_temp = touch.mtimes)[ρσ_expr_temp.length-1] > HOLD_THRESHOLD) {
                         touch.is_held = true;
@@ -22509,9 +22509,9 @@ return this.__repr__();
             }
             ev.stopPropagation();
             self.prune_expired_touches();
-            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                touch = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter114 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index114 = 0; ρσ_Index114 < ρσ_Iter114.length; ρσ_Index114++) {
+                touch = ρσ_Iter114[ρσ_Index114];
                 (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)] = copy_touch(touch);
                 if (self.gesture_id === null) {
                     gesture_id += 1;
@@ -22534,9 +22534,9 @@ return this.__repr__();
                 ev.preventDefault();
             }
             ev.stopPropagation();
-            var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                touch = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter115 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index115 = 0; ρσ_Index115 < ρσ_Iter115.length; ρσ_Index115++) {
+                touch = ρσ_Iter115[ρσ_Index115];
                 t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
                 if (t) {
                     update_touch(t, touch);
@@ -22555,9 +22555,9 @@ return this.__repr__();
                 ev.preventDefault();
             }
             ev.stopPropagation();
-            var ρσ_Iter9 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                touch = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter116 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index116 = 0; ρσ_Index116 < ρσ_Iter116.length; ρσ_Index116++) {
+                touch = ρσ_Iter116[ρσ_Index116];
                 t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
                 if (t) {
                     t.active = false;
@@ -22581,9 +22581,9 @@ return this.__repr__();
                 ev.preventDefault();
             }
             ev.stopPropagation();
-            var ρσ_Iter10 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                touch = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter117 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index117 = 0; ρσ_Index117 < ρσ_Iter117.length; ρσ_Index117++) {
+                touch = ρσ_Iter117[ρσ_Index117];
                 tid = touch_id(touch);
                 delete self.ongoing_touches[tid];
             }
@@ -23324,9 +23324,9 @@ return this.__repr__();
                 button.addEventListener("click", trigger);
             }
             if (associated_widgets !== null) {
-                var ρσ_Iter0 = ρσ_Iterable(associated_widgets);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    w = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter118 = ρσ_Iterable(associated_widgets);
+                for (var ρσ_Index118 = 0; ρσ_Index118 < ρσ_Iter118.length; ρσ_Index118++) {
+                    w = ρσ_Iter118[ρσ_Index118];
                     ewc.add_associated_widget(w);
                 }
             }
@@ -23371,9 +23371,9 @@ return this.__repr__();
                 if (dl) {
                     clear(dl);
                     if ((typeof items !== "undefined" && items !== null ? items : Object.create(null)).length) {
-                        var ρσ_Iter1 = ρσ_Iterable(items);
-                        for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                            item = ρσ_Iter1[ρσ_Index1];
+                        var ρσ_Iter119 = ρσ_Iterable(items);
+                        for (var ρσ_Index119 = 0; ρσ_Index119 < ρσ_Iter119.length; ρσ_Index119++) {
+                            item = ρσ_Iter119[ρσ_Index119];
                             dl.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [ρσ_desugar_kwargs({value: item})]));
                         }
                     }
@@ -23579,9 +23579,9 @@ return this.__repr__();
         function all_builtin_styles() {
             var ans, col, which;
             ans = [];
-            var ρσ_Iter0 = ρσ_Iterable(builtin_colors_light);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                col = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter120 = ρσ_Iterable(builtin_colors_light);
+            for (var ρσ_Index120 = 0; ρσ_Index120 < ρσ_Iter120.length; ρσ_Index120++) {
+                col = ρσ_Iter120[ρσ_Index120];
                 ans.push((function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["type"] = "builtin";
@@ -23590,9 +23590,9 @@ return this.__repr__();
                     return ρσ_d;
                 }).call(this));
             }
-            var ρσ_Iter1 = ρσ_Iterable(builtin_decorations_light);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                which = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter121 = ρσ_Iterable(builtin_decorations_light);
+            for (var ρσ_Index121 = 0; ρσ_Index121 < ρσ_Iter121.length; ρσ_Index121++) {
+                which = ρσ_Iter121[ρσ_Index121];
                 ans.push((function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["type"] = "builtin";
@@ -23847,17 +23847,17 @@ return this.__repr__();
         function custom_styles_equal(a, b) {
             var seen, k;
             seen = Object.create(null);
-            var ρσ_Iter2 = ρσ_Iterable(a);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                k = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter122 = ρσ_Iterable(a);
+            for (var ρσ_Index122 = 0; ρσ_Index122 < ρσ_Iter122.length; ρσ_Index122++) {
+                k = ρσ_Iter122[ρσ_Index122];
                 seen[(typeof k === "number" && k < 0) ? seen.length + k : k] = true;
                 if (a[(typeof k === "number" && k < 0) ? a.length + k : k] !== b[(typeof k === "number" && k < 0) ? b.length + k : k]) {
                     return false;
                 }
             }
-            var ρσ_Iter3 = ρσ_Iterable(b);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                k = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter123 = ρσ_Iterable(b);
+            for (var ρσ_Index123 = 0; ρσ_Index123 < ρσ_Iter123.length; ρσ_Index123++) {
+                k = ρσ_Iter123[ρσ_Index123];
                 if (!seen[(typeof k === "number" && k < 0) ? seen.length + k : k]) {
                     if (a[(typeof k === "number" && k < 0) ? a.length + k : k] !== b[(typeof k === "number" && k < 0) ? b.length + k : k]) {
                         return false;
@@ -23875,14 +23875,14 @@ return this.__repr__();
             var ans, custom_highlight_styles, raw;
             ans = [];
             custom_highlight_styles = get_session_data().get("custom_highlight_styles");
-            var ρσ_Iter4 = ρσ_Iterable(custom_highlight_styles);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                raw = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter124 = ρσ_Iterable(custom_highlight_styles);
+            for (var ρσ_Index124 = 0; ρσ_Index124 < ρσ_Iter124.length; ρσ_Index124++) {
+                raw = ρσ_Iter124[ρσ_Index124];
                 ans.push(new HighlightStyle(raw));
             }
-            var ρσ_Iter5 = ρσ_Iterable(all_builtin_styles());
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                raw = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter125 = ρσ_Iterable(all_builtin_styles());
+            for (var ρσ_Index125 = 0; ρσ_Index125 < ρσ_Iter125.length; ρσ_Index125++) {
+                raw = ρσ_Iter125[ρσ_Index125];
                 ans.push(new HighlightStyle(raw));
             }
             return ans;
@@ -24154,14 +24154,14 @@ return this.__repr__();
             })(), self.hide_add_style);
             self.seen_colors = Object.create(null);
             custom_highlight_styles = get_session_data().get("custom_highlight_styles");
-            var ρσ_Iter6 = ρσ_Iterable(custom_highlight_styles);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                raw = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter126 = ρσ_Iterable(custom_highlight_styles);
+            for (var ρσ_Index126 = 0; ρσ_Index126 < ρσ_Iter126.length; ρσ_Index126++) {
+                raw = ρσ_Iter126[ρσ_Index126];
                 self.add_color(new HighlightStyle(raw)).classList.add("custom-style");
             }
-            var ρσ_Iter7 = ρσ_Iterable(all_builtin_styles());
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                raw = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter127 = ρσ_Iterable(all_builtin_styles());
+            for (var ρσ_Index127 = 0; ρσ_Index127 < ρσ_Iter127.length; ρσ_Index127++) {
+                raw = ρσ_Iter127[ρσ_Index127];
                 self.add_color(new HighlightStyle(raw));
             }
             if (!c.querySelector(".current-swatch")) {
@@ -24216,9 +24216,9 @@ return this.__repr__();
             hs = new HighlightStyle(new_style);
             item = self.add_color(hs, true);
             if (!item) {
-                var ρσ_Iter8 = ρσ_Iterable(self.container.getElementsByClassName("swatch"));
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    q = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter128 = ρσ_Iterable(self.container.getElementsByClassName("swatch"));
+                for (var ρσ_Index128 = 0; ρσ_Index128 < ρσ_Iter128.length; ρσ_Index128++) {
+                    q = ρσ_Iter128[ρσ_Index128];
                     if (q.dataset.key === hs.key) {
                         item = q;
                         break;
@@ -24235,9 +24235,9 @@ return this.__repr__();
                     ρσ_d[hs.key] = true;
                     return ρσ_d;
                 }).call(this);
-                var ρσ_Iter9 = ρσ_Iterable(sd.get("custom_highlight_styles"));
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    style = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter129 = ρσ_Iterable(sd.get("custom_highlight_styles"));
+                for (var ρσ_Index129 = 0; ρσ_Index129 < ρσ_Iter129.length; ρσ_Index129++) {
+                    style = ρσ_Iter129[ρσ_Index129];
                     hso = new HighlightStyle(style);
                     if (!seen[ρσ_bound_index(hso.key, seen)]) {
                         new_styles.push(style);
@@ -24320,9 +24320,9 @@ return this.__repr__();
             sd = get_session_data();
             custom_highlight_styles = sd.get("custom_highlight_styles");
             ans = [];
-            var ρσ_Iter10 = ρσ_Iterable(custom_highlight_styles);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                x = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter130 = ρσ_Iterable(custom_highlight_styles);
+            for (var ρσ_Index130 = 0; ρσ_Index130 < ρσ_Iter130.length; ρσ_Index130++) {
+                x = ρσ_Iter130[ρσ_Index130];
                 if (!custom_styles_equal(x, cct)) {
                     ans.push(x);
                 }
@@ -24344,9 +24344,9 @@ return this.__repr__();
         EditNotesAndColors.prototype.make_swatch_current = function make_swatch_current(item) {
             var self = this;
             var child;
-            var ρσ_Iter11 = ρσ_Iterable(item.parentNode.childNodes);
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                child = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter131 = ρσ_Iterable(item.parentNode.childNodes);
+            for (var ρσ_Index131 = 0; ρσ_Index131 < ρσ_Iter131.length; ρσ_Index131++) {
+                child = ρσ_Iter131[ρσ_Index131];
                 child.style.backgroundColor = "unset";
                 child.classList.remove("current-swatch");
             }
@@ -24496,9 +24496,9 @@ return this.__repr__();
                 titles = ρσ_list_decorate([ _("Unknown chapter") ]);
             }
             node = self;
-            var ρσ_Iter12 = ρσ_Iterable(titles);
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                title = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter132 = ρσ_Iterable(titles);
+            for (var ρσ_Index132 = 0; ρσ_Index132 < ρσ_Iter132.length; ρσ_Index132++) {
+                title = ρσ_Iter132[ρσ_Index132];
                 node = node.group_for_title(title);
             }
             node.annotations.push(a);
@@ -24529,14 +24529,14 @@ return this.__repr__();
                 lines.push("#".repeat(self.level) + " " + self.title);
                 lines.push("");
             }
-            var ρσ_Iter13 = ρσ_Iterable(self.annotations);
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                hl = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter133 = ρσ_Iterable(self.annotations);
+            for (var ρσ_Index133 = 0; ρσ_Index133 < ρσ_Iter133.length; ρσ_Index133++) {
+                hl = ρσ_Iter133[ρσ_Index133];
                 render_highlight_as_text(hl, lines, link_prefix, current_query, as_markdown);
             }
-            var ρσ_Iter14 = ρσ_Iterable(self.subgroups_in_order);
-            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                title = ρσ_Iter14[ρσ_Index14];
+            var ρσ_Iter134 = ρσ_Iterable(self.subgroups_in_order);
+            for (var ρσ_Index134 = 0; ρσ_Index134 < ρσ_Iter134.length; ρσ_Index134++) {
+                title = ρσ_Iter134[ρσ_Index134];
                 sg = (ρσ_expr_temp = self.subgroups)[(typeof title === "number" && title < 0) ? ρσ_expr_temp.length + title : title];
                 sg.render_as_text(lines, link_prefix, current_query, as_markdown);
             }
@@ -24605,9 +24605,9 @@ return this.__repr__();
                 as_markdown = fmt === "markdown";
                 lines = [];
                 root = new ChapterGroup;
-                var ρσ_Iter15 = ρσ_Iterable(all_highlights);
-                for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                    a = ρσ_Iter15[ρσ_Index15];
+                var ρσ_Iter135 = ρσ_Iterable(all_highlights);
+                for (var ρσ_Index135 = 0; ρσ_Index135 < ρσ_Iter135.length; ρσ_Index135++) {
+                    a = ρσ_Iter135[ρσ_Index135];
                     root.add_annot(a);
                 }
                 root.render_as_text(lines, link_prefix, current_query, as_markdown);
@@ -24732,9 +24732,9 @@ return this.__repr__();
                 all_highlights.reverse();
             }
             q = text.toLowerCase();
-            var ρσ_Iter16 = ρσ_Iterable(all_highlights);
-            for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                h = ρσ_Iter16[ρσ_Index16];
+            var ρσ_Iter136 = ρσ_Iterable(all_highlights);
+            for (var ρσ_Index136 = 0; ρσ_Index136 < ρσ_Iter136.length; ρσ_Index136++) {
+                h = ρσ_Iter136[ρσ_Index136];
                 if (h.dataset.title.toLowerCase().indexOf(q) > -1 || h.dataset.notes.toLowerCase().indexOf(q) > -1) {
                     set_current_highlight_entry(h);
                     h.scrollIntoView();
@@ -24858,9 +24858,9 @@ return this.__repr__();
                     return;
                 }
                 pos = 0;
-                var ρσ_Iter17 = ρσ_Iterable(urls);
-                for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                    ρσ_unpack = ρσ_Iter17[ρσ_Index17];
+                var ρσ_Iter137 = ρσ_Iterable(urls);
+                for (var ρσ_Index137 = 0; ρσ_Index137 < ρσ_Iter137.length; ρσ_Index137++) {
+                    ρσ_unpack = ρσ_Iter137[ρσ_Index137];
                     s = ρσ_unpack[0];
                     e = ρσ_unpack[1];
                     if (s > pos) {
@@ -24877,9 +24877,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter18 = ρσ_Iterable(notes.splitlines());
-            for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                line = ρσ_Iter18[ρσ_Index18];
+            var ρσ_Iter138 = ρσ_Iterable(notes.splitlines());
+            for (var ρσ_Index138 = 0; ρσ_Index138 < ρσ_Iter138.length; ρσ_Index138++) {
+                line = ρσ_Iter138[ρσ_Index138];
                 if (!line || !line.strip()) {
                     if (current_para.childNodes.length) {
                         add_para();
@@ -24909,9 +24909,9 @@ return this.__repr__();
         function set_current_highlight_entry(entry) {
             var c, h;
             c = get_container();
-            var ρσ_Iter19 = ρσ_Iterable(c.querySelectorAll(".highlight"));
-            for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                h = ρσ_Iter19[ρσ_Index19];
+            var ρσ_Iter139 = ρσ_Iterable(c.querySelectorAll(".highlight"));
+            for (var ρσ_Index139 = 0; ρσ_Index139 < ρσ_Iter139.length; ρσ_Index139++) {
+                h = ρσ_Iter139[ρσ_Index139];
                 h.classList.remove("current");
             }
             entry.classList.add("current");
@@ -24996,9 +24996,9 @@ return this.__repr__();
         function item_select_toggled() {
             var entries, e;
             entries = all_selected_entries();
-            var ρσ_Iter20 = ρσ_Iterable(document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button"));
-            for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
-                e = ρσ_Iter20[ρσ_Index20];
+            var ρσ_Iter140 = ρσ_Iterable(document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button"));
+            for (var ρσ_Index140 = 0; ρσ_Index140 < ρσ_Iter140.length; ρσ_Index140++) {
+                e = ρσ_Iter140[ρσ_Index140];
                 e.style.display = (entries.length) ? "block" : "none";
             }
         };
@@ -25008,9 +25008,9 @@ return this.__repr__();
 
         function clear_selection() {
             var e;
-            var ρσ_Iter21 = ρσ_Iterable(document.querySelectorAll(".highlight input:checked"));
-            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
-                e = ρσ_Iter21[ρσ_Index21];
+            var ρσ_Iter141 = ρσ_Iterable(document.querySelectorAll(".highlight input:checked"));
+            for (var ρσ_Index141 = 0; ρσ_Index141 < ρσ_Iter141.length; ρσ_Index141++) {
+                e = ρσ_Iter141[ρσ_Index141];
                 e.checked = false;
             }
             item_select_toggled();
@@ -25021,9 +25021,9 @@ return this.__repr__();
 
         function select_all() {
             var e;
-            var ρσ_Iter22 = ρσ_Iterable(document.querySelectorAll(".highlight input"));
-            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
-                e = ρσ_Iter22[ρσ_Index22];
+            var ρσ_Iter142 = ρσ_Iterable(document.querySelectorAll(".highlight input"));
+            for (var ρσ_Index142 = 0; ρσ_Index142 < ρσ_Iter142.length; ρσ_Index142++) {
+                e = ρσ_Iter142[ρσ_Index142];
                 e.checked = true;
             }
         };
@@ -25042,9 +25042,9 @@ return this.__repr__();
                 var ρσ_anonfunc = function (yes) {
                     var entry;
                     if (yes) {
-                        var ρσ_Iter23 = ρσ_Iterable(selected_highlight_items);
-                        for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
-                            entry = ρσ_Iter23[ρσ_Index23];
+                        var ρσ_Iter143 = ρσ_Iterable(selected_highlight_items);
+                        for (var ρσ_Index143 = 0; ρσ_Index143 < ρσ_Iter143.length; ρσ_Index143++) {
+                            entry = ρσ_Iter143[ρσ_Index143];
                             entry.style.display = "none";
                             view.highlight_action(entry.dataset.uuid, "delete");
                         }
@@ -25144,9 +25144,9 @@ return this.__repr__();
             container.appendChild(c);
             toc_groups = Object.create(null);
             toc_tt = Object.create(null);
-            var ρσ_Iter24 = ρσ_Iterable(annotations_manager.all_highlights());
-            for (var ρσ_Index24 = 0; ρσ_Index24 < ρσ_Iter24.length; ρσ_Index24++) {
-                h = ρσ_Iter24[ρσ_Index24];
+            var ρσ_Iter144 = ρσ_Iterable(annotations_manager.all_highlights());
+            for (var ρσ_Index144 = 0; ρσ_Index144 < ρσ_Iter144.length; ρσ_Index144++) {
+                h = ρσ_Iter144[ρσ_Index144];
                 toc = _("Unknown");
                 if (ρσ_exists.d(h.toc_family_titles).length) {
                     toc = (ρσ_expr_temp = h.toc_family_titles)[ρσ_expr_temp.length-1];
@@ -25155,9 +25155,9 @@ return this.__repr__();
                     toc_groups[(typeof toc === "number" && toc < 0) ? toc_groups.length + toc : toc] = [];
                     if (ρσ_exists.d(h.toc_family_titles).length) {
                         lines = [];
-                        var ρσ_Iter25 = ρσ_Iterable(enumerate(h.toc_family_titles));
-                        for (var ρσ_Index25 = 0; ρσ_Index25 < ρσ_Iter25.length; ρσ_Index25++) {
-                            ρσ_unpack = ρσ_Iter25[ρσ_Index25];
+                        var ρσ_Iter145 = ρσ_Iterable(enumerate(h.toc_family_titles));
+                        for (var ρσ_Index145 = 0; ρσ_Index145 < ρσ_Iter145.length; ρσ_Index145++) {
+                            ρσ_unpack = ρσ_Iter145[ρσ_Index145];
                             i = ρσ_unpack[0];
                             node = ρσ_unpack[1];
                             lines.push("  ".repeat(i) + "➤ " + node);
@@ -25180,9 +25180,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter26 = ρσ_Iterable(Object.keys(toc_groups));
-            for (var ρσ_Index26 = 0; ρσ_Index26 < ρσ_Iter26.length; ρσ_Index26++) {
-                group = ρσ_Iter26[ρσ_Index26];
+            var ρσ_Iter146 = ρσ_Iterable(Object.keys(toc_groups));
+            for (var ρσ_Index146 = 0; ρσ_Index146 < ρσ_Iter146.length; ρσ_Index146++) {
+                group = ρσ_Iter146[ρσ_Index146];
                 highlights = toc_groups[(typeof group === "number" && group < 0) ? toc_groups.length + group : group];
                 g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.h3, [tree_icon("caret-right"), tree_icon("caret-down"), E.div(" " + group)].concat([ρσ_desugar_kwargs({title: toc_tt[(typeof group === "number" && group < 0) ? toc_tt.length + group : group] || "", onclick: (function() {
                     var ρσ_anonfunc = function (ev) {
@@ -25204,9 +25204,9 @@ return this.__repr__();
                 })()})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})])].concat([ρσ_desugar_kwargs({class_: "toc-group expanded"})]));
                 c.appendChild(g);
                 ic = g.lastChild;
-                var ρσ_Iter27 = ρσ_Iterable(highlights);
-                for (var ρσ_Index27 = 0; ρσ_Index27 < ρσ_Iter27.length; ρσ_Index27++) {
-                    h = ρσ_Iter27[ρσ_Index27];
+                var ρσ_Iter147 = ρσ_Iterable(highlights);
+                for (var ρσ_Index147 = 0; ρσ_Index147 < ρσ_Iter147.length; ρσ_Index147++) {
+                    h = ρσ_Iter147[ρσ_Index147];
                     ic.appendChild(highlight_entry(h, onclick, annotations_manager.view, hide_panel));
                 }
             }
@@ -25291,9 +25291,9 @@ return this.__repr__();
                 ρσ_d["shiftKey"] = false;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter0 = ρσ_Iterable(parts.slice(0, -1));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                modifier = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter148 = ρσ_Iterable(parts.slice(0, -1));
+            for (var ρσ_Index148 = 0; ρσ_Index148 < ρσ_Iter148.length; ρσ_Index148++) {
+                modifier = ρσ_Iter148[ρσ_Index148];
                 q = modifier.toLowerCase();
                 if (q === "ctrl") {
                     ans.ctrlKey = true;
@@ -25318,9 +25318,9 @@ return this.__repr__();
                 sc = [sc];
             }
             pkey = [];
-            var ρσ_Iter1 = ρσ_Iterable(sc);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                x = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter149 = ρσ_Iterable(sc);
+            for (var ρσ_Index149 = 0; ρσ_Index149 < ρσ_Iter149.length; ρσ_Index149++) {
+                x = ρσ_Iter149[ρσ_Index149];
                 pkey.push(parse_key_repr(x));
             }
             return (function(){
@@ -25392,9 +25392,9 @@ return this.__repr__();
         function keyevent_to_index(evt) {
             var parts, mod;
             parts = [];
-            var ρσ_Iter2 = ρσ_Iterable(['altKey', 'ctrlKey', 'metaKey', 'shiftKey']);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                mod = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter150 = ρσ_Iterable(['altKey', 'ctrlKey', 'metaKey', 'shiftKey']);
+            for (var ρσ_Index150 = 0; ρσ_Index150 < ρσ_Iter150.length; ρσ_Index150++) {
+                mod = ρσ_Iter150[ρσ_Index150];
                 parts.push((evt[(typeof mod === "number" && mod < 0) ? evt.length + mod : mod]) ? "y" : "n");
             }
             return parts.join("") + get_key_text(evt);
@@ -25407,9 +25407,9 @@ return this.__repr__();
         function key_as_text(evt) {
             var mods, x, key;
             mods = [];
-            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ "alt", "ctrl", "meta", "shift" ]));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                x = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter151 = ρσ_Iterable(ρσ_list_decorate([ "alt", "ctrl", "meta", "shift" ]));
+            for (var ρσ_Index151 = 0; ρσ_Index151 < ρσ_Iter151.length; ρσ_Index151++) {
+                x = ρσ_Iter151[ρσ_Index151];
                 if (evt[ρσ_bound_index(x + "Key", evt)]) {
                     if (ρσ_in("macos", window.navigator.userAgent)) {
                         if (x === "alt") {
@@ -25556,17 +25556,17 @@ return this.__repr__();
             var ans, scd, entry, shortcuts, sc, sc_name;
             ans = Object.create(null);
             scd = shortcuts_definition();
-            var ρσ_Iter4 = ρσ_Iterable(Object.keys(scd));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                sc_name = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter152 = ρσ_Iterable(Object.keys(scd));
+            for (var ρσ_Index152 = 0; ρσ_Index152 < ρσ_Iter152.length; ρσ_Index152++) {
+                sc_name = ρσ_Iter152[ρσ_Index152];
                 entry = scd[(typeof sc_name === "number" && sc_name < 0) ? scd.length + sc_name : sc_name];
                 shortcuts = entry.shortcuts;
                 if (custom_shortcuts && custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name]) {
                     shortcuts = custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name];
                 }
-                var ρσ_Iter5 = ρσ_Iterable(shortcuts);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    sc = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter153 = ρσ_Iterable(shortcuts);
+                for (var ρσ_Index153 = 0; ρσ_Index153 < ρσ_Iter153.length; ρσ_Index153++) {
+                    sc = ρσ_Iter153[ρσ_Index153];
                     ans[ρσ_bound_index(keyevent_to_index(sc), ans)] = sc_name;
                 }
             }
@@ -25768,9 +25768,9 @@ return this.__repr__();
             var matches, q, k;
             matches = [];
             if (self.current_prefix) {
-                var ρσ_Iter0 = ρσ_Iterable(Object.keys(self.hints_map));
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    k = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter154 = ρσ_Iterable(Object.keys(self.hints_map));
+                for (var ρσ_Index154 = 0; ρσ_Index154 < ρσ_Iter154.length; ρσ_Index154++) {
+                    k = ρσ_Iter154[ρσ_Index154];
                     if (k === "_length") {
                         continue;
                     }
@@ -25866,9 +25866,9 @@ return this.__repr__();
             var i, hint_map, h, a;
             i = 0;
             hint_map = Object.create(null);
-            var ρσ_Iter1 = ρσ_Iterable(document.body.querySelectorAll("a[href]"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                a = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter155 = ρσ_Iterable(document.body.querySelectorAll("a[href]"));
+            for (var ρσ_Index155 = 0; ρσ_Index155 < ρσ_Iter155.length; ρσ_Index155++) {
+                a = ρσ_Iter155[ρσ_Index155];
                 if (is_visible(a)) {
                     i += 1;
                     h = i + "";
@@ -25892,9 +25892,9 @@ return this.__repr__();
 
         function unhint_links() {
             var a;
-            var ρσ_Iter2 = ρσ_Iterable(document.body.querySelectorAll("a[href]"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                a = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter156 = ρσ_Iterable(document.body.querySelectorAll("a[href]"));
+            for (var ρσ_Index156 = 0; ρσ_Index156 < ρσ_Iter156.length; ρσ_Index156++) {
+                a = ρσ_Iter156[ρσ_Index156];
                 a.classList.remove("calibre-hint-visible", "calibre-hint-enter");
                 delete a.dataset.calibreHintRender;
                 delete a.dataset.calibreHintValue;
@@ -25906,9 +25906,9 @@ return this.__repr__();
 
         function apply_prefix_to_hints(prefix) {
             var val, r, leftover, a;
-            var ρσ_Iter3 = ρσ_Iterable(document.body.querySelectorAll("[data-calibre-hint-value]"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                a = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter157 = ρσ_Iterable(document.body.querySelectorAll("[data-calibre-hint-value]"));
+            for (var ρσ_Index157 = 0; ρσ_Index157 < ρσ_Iter157.length; ρσ_Index157++) {
+                a = ρσ_Iter157[ρσ_Index157];
                 val = int(a.dataset.calibreHintValue);
                 r = encode(val);
                 a.classList.remove("calibre-hint-enter");
@@ -25961,9 +25961,9 @@ return this.__repr__();
 
         function postprocess(link_uid) {
             var href, a;
-            var ρσ_Iter0 = ρσ_Iterable(document.getElementsByTagName("a"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                a = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter158 = ρσ_Iterable(document.getElementsByTagName("a"));
+            for (var ρσ_Index158 = 0; ρσ_Index158 < ρσ_Iter158.length; ρσ_Index158++) {
+                a = ρσ_Iter158[ρσ_Index158];
                 href = a.getAttribute("href");
                 if (href && href.startswith("#")) {
                     a.setAttribute("href", "javascript: void(0)");
@@ -26035,14 +26035,14 @@ return this.__repr__();
                             var ρσ_anonfunc = function (styles, fonts, url) {
                                 var base, clone, font, key, font_name, full_name, src, name;
                                 base = url.partition("/")[2];
-                                var ρσ_Iter1 = ρσ_Iterable(fonts);
-                                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                                    name = ρσ_Iter1[ρσ_Index1];
+                                var ρσ_Iter159 = ρσ_Iterable(fonts);
+                                for (var ρσ_Index159 = 0; ρσ_Index159 < ρσ_Iter159.length; ρσ_Index159++) {
+                                    name = ρσ_Iter159[ρσ_Index159];
                                     clone = {};
                                     font = fonts[(typeof name === "number" && name < 0) ? fonts.length + name : name];
-                                    var ρσ_Iter2 = ρσ_Iterable(Object.keys(font));
-                                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                                        key = ρσ_Iter2[ρσ_Index2];
+                                    var ρσ_Iter160 = ρσ_Iterable(Object.keys(font));
+                                    for (var ρσ_Index160 = 0; ρσ_Index160 < ρσ_Iter160.length; ρσ_Index160++) {
+                                        key = ρσ_Iter160[ρσ_Index160];
                                         clone[(typeof key === "number" && key < 0) ? clone.length + key : key] = font[(typeof key === "number" && key < 0) ? font.length + key : key];
                                     }
                                     font_name = clone.src.partition("/")[2].partition("\"")[0];
@@ -26123,9 +26123,9 @@ return this.__repr__();
                 })();
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter3 = ρσ_Iterable(document.scripts);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                s = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter161 = ρσ_Iterable(document.scripts);
+            for (var ρσ_Index161 = 0; ρσ_Index161 < ρσ_Iter161.length; ρσ_Index161++) {
+                s = ρσ_Iter161[ρσ_Index161];
                 if (s.type === "text/x-mathjax-config") {
                     es = document.createElement("script");
                     es.text = s.text;
@@ -26194,9 +26194,9 @@ return this.__repr__();
 
         function has_start_text(elem) {
             var c;
-            var ρσ_Iter0 = ρσ_Iterable(elem.childNodes);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                c = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter162 = ρσ_Iterable(elem.childNodes);
+            for (var ρσ_Index162 = 0; ρσ_Index162 < ρσ_Iter162.length; ρσ_Index162++) {
+                c = ρσ_Iter162[ρσ_Index162];
                 if (c.nodeType !== Node.TEXT_NODE) {
                     break;
                 }
@@ -26287,14 +26287,14 @@ return this.__repr__();
             block_limited_images = [];
             img_tags = document.getElementsByTagName("img");
             bounding_rects = [];
-            var ρσ_Iter1 = ρσ_Iterable(img_tags);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                img_tag = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter163 = ρσ_Iterable(img_tags);
+            for (var ρσ_Index163 = 0; ρσ_Index163 < ρσ_Iter163.length; ρσ_Index163++) {
+                img_tag = ρσ_Iter163[ρσ_Index163];
                 bounding_rects.push(get_bounding_client_rect(img_tag));
             }
             maxb = screen_block;
-            for (var ρσ_Index2 = 0; ρσ_Index2 < img_tags.length; ρσ_Index2++) {
-                i = ρσ_Index2;
+            for (var ρσ_Index164 = 0; ρσ_Index164 < img_tags.length; ρσ_Index164++) {
+                i = ρσ_Index164;
                 img = img_tags[(typeof i === "number" && i < 0) ? img_tags.length + i : i];
                 br = bounding_rects[(typeof i === "number" && i < 0) ? bounding_rects.length + i : i];
                 previously_limited = get_elem_data(img, "inline-limited", false);
@@ -26328,9 +26328,9 @@ return this.__repr__();
                 }
                 ρσ_interpolate_kwargs.call(this, set_important_css, [img].concat([ρσ_desugar_kwargs({break_inside: "avoid"})]));
             }
-            var ρσ_Iter3 = ρσ_Iterable(inline_limited_images);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter165 = ρσ_Iterable(inline_limited_images);
+            for (var ρσ_Index165 = 0; ρσ_Index165 < ρσ_Iter165.length; ρσ_Index165++) {
+                ρσ_unpack = ρσ_Iter165[ρσ_Index165];
                 img_tag = ρσ_unpack[0];
                 max_inline_size = ρσ_unpack[1];
                 if (scroll_viewport.vertical_writing_mode) {
@@ -26340,9 +26340,9 @@ return this.__repr__();
                 }
                 set_elem_data(img_tag, "inline-limited", true);
             }
-            var ρσ_Iter4 = ρσ_Iterable(block_limited_images);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                img_tag = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter166 = ρσ_Iterable(block_limited_images);
+            for (var ρσ_Index166 = 0; ρσ_Index166 < ρσ_Iter166.length; ρσ_Index166++) {
+                img_tag = ρσ_Iter166[ρσ_Index166];
                 if (scroll_viewport.vertical_writing_mode) {
                     ρσ_interpolate_kwargs.call(this, set_important_css, [img_tag].concat([ρσ_desugar_kwargs({break_before: "always", max_width: "100vw"})]));
                 } else {
@@ -26966,8 +26966,8 @@ return this.__repr__();
             var ans, left, right, ρσ_unpack, top, bottom, midx, deltax, deltay, midy, yidx, yb, ya, ys, xidx, xb, xa, xs, cfi, curx, cury, cnum;
             ans = null;
             if (in_paged_mode()) {
-                for (var ρσ_Index5 = 0; ρσ_Index5 < cols_per_screen; ρσ_Index5++) {
-                    cnum = ρσ_Index5;
+                for (var ρσ_Index167 = 0; ρσ_Index167 < cols_per_screen; ρσ_Index167++) {
+                    cnum = ρσ_Index167;
                     left = cnum * (col_and_gap + gap);
                     right = left + col_size;
                     ρσ_unpack = [0, scroll_viewport.height()];
@@ -26987,9 +26987,9 @@ return this.__repr__();
                         }
                         yidx += 1;
                         ys = (ya === yb) ? [ya] : [yb, ya];
-                        var ρσ_Iter6 = ρσ_Iterable(ys);
-                        for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                            cury = ρσ_Iter6[ρσ_Index6];
+                        var ρσ_Iter168 = ρσ_Iterable(ys);
+                        for (var ρσ_Index168 = 0; ρσ_Index168 < ρσ_Iter168.length; ρσ_Index168++) {
+                            cury = ρσ_Iter168[ρσ_Index168];
                             xidx = 0;
                             while (true) {
                                 ρσ_unpack = [midx - xidx * deltax, midx + xidx * deltax];
@@ -27000,9 +27000,9 @@ return this.__repr__();
                                 }
                                 xidx += 1;
                                 xs = (xa === xb) ? [xa] : [xb, xa];
-                                var ρσ_Iter7 = ρσ_Iterable(xs);
-                                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                                    curx = ρσ_Iter7[ρσ_Index7];
+                                var ρσ_Iter169 = ρσ_Iterable(xs);
+                                for (var ρσ_Index169 = 0; ρσ_Index169 < ρσ_Iter169.length; ρσ_Index169++) {
+                                    curx = ρσ_Iter169[ρσ_Index169];
                                     cfi = cfi_at_point(curx, cury);
                                     if (cfi) {
                                         return cfi;
@@ -27737,9 +27737,9 @@ return this.__repr__();
         function start_reference_mode() {
             var si, ρσ_unpack, i, p;
             si = current_spine_item().index;
-            var ρσ_Iter0 = ρσ_Iterable(enumerate(document.getElementsByTagName("p")));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter170 = ρσ_Iterable(enumerate(document.getElementsByTagName("p")));
+            for (var ρσ_Index170 = 0; ρσ_Index170 < ρσ_Iter170.length; ρσ_Index170++) {
+                ρσ_unpack = ρσ_Iter170[ρσ_Index170];
                 i = ρσ_unpack[0];
                 p = ρσ_unpack[1];
                 p.dataset.calibreRefNum = "" + ρσ_str.format("{}", si) + "." + ρσ_str.format("{}", i + 1) + "";
@@ -27771,18 +27771,18 @@ return this.__repr__();
         function flatten_seq(seq, par_list) {
             var par, child;
             if (seq.par) {
-                var ρσ_Iter0 = ρσ_Iterable(seq.par);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    par = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter171 = ρσ_Iterable(seq.par);
+                for (var ρσ_Index171 = 0; ρσ_Index171 < ρσ_Iter171.length; ρσ_Index171++) {
+                    par = ρσ_Iter171[ρσ_Index171];
                     if (par.anchor) {
                         par_list.push(par);
                     }
                 }
             }
             if (seq.seq) {
-                var ρσ_Iter1 = ρσ_Iterable(seq.seq);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    child = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter172 = ρσ_Iterable(seq.seq);
+                for (var ρσ_Index172 = 0; ρσ_Index172 < ρσ_Iter172.length; ρσ_Index172++) {
+                    child = ρσ_Iter172[ρσ_Index172];
                     flatten_seq(child, par_list);
                 }
             }
@@ -27809,8 +27809,8 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            for (var ρσ_Index2 = 0; ρσ_Index2 < par_list.length; ρσ_Index2++) {
-                i = ρσ_Index2;
+            for (var ρσ_Index173 = 0; ρσ_Index173 < par_list.length; ρσ_Index173++) {
+                i = ρσ_Index173;
                 anchor_map[ρσ_bound_index(par_list[(typeof i === "number" && i < 0) ? par_list.length + i : i].anchor, anchor_map)] = i;
             }
             return [anchor_map, par_list];
@@ -27826,9 +27826,9 @@ return this.__repr__();
             function flatten(seq) {
                 var a, par, child;
                 if (seq.par) {
-                    var ρσ_Iter3 = ρσ_Iterable(seq.par);
-                    for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                        par = ρσ_Iter3[ρσ_Index3];
+                    var ρσ_Iter174 = ρσ_Iterable(seq.par);
+                    for (var ρσ_Index174 = 0; ρσ_Index174 < ρσ_Iter174.length; ρσ_Index174++) {
+                        par = ρσ_Iter174[ρσ_Index174];
                         if (par.audio) {
                             a = audio_map[ρσ_bound_index(par.audio, audio_map)];
                             if (!a) {
@@ -27839,9 +27839,9 @@ return this.__repr__();
                     }
                 }
                 if (seq.seq) {
-                    var ρσ_Iter4 = ρσ_Iterable(seq.seq);
-                    for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                        child = ρσ_Iter4[ρσ_Index4];
+                    var ρσ_Iter175 = ρσ_Iterable(seq.seq);
+                    for (var ρσ_Index175 = 0; ρσ_Index175 < ρσ_Iter175.length; ρσ_Index175++) {
+                        child = ρσ_Iter175[ρσ_Index175];
                         flatten(child);
                     }
                 }
@@ -27853,9 +27853,9 @@ return this.__repr__();
 
             if (smil_map) {
                 flatten(smil_map);
-                var ρσ_Iter5 = ρσ_Iterable(Object.values(audio_map));
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    v = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter176 = ρσ_Iterable(Object.values(audio_map));
+                for (var ρσ_Index176 = 0; ρσ_Index176 < ρσ_Iter176.length; ρσ_Index176++) {
+                    v = ρσ_Iter176[ρσ_Index176];
                     v.sort((function() {
                         var ρσ_anonfunc = function (a, b) {
                             return a.start - b.start;
@@ -27889,14 +27889,14 @@ return this.__repr__();
             if (prev_idx >= pars.length || prev_idx < 0) {
                 prev_idx = 0;
             }
-            for (var ρσ_Index6 = prev_idx; ρσ_Index6 < pars.length; ρσ_Index6++) {
-                i = ρσ_Index6;
+            for (var ρσ_Index177 = prev_idx; ρσ_Index177 < pars.length; ρσ_Index177++) {
+                i = ρσ_Index177;
                 if (pars[(typeof i === "number" && i < 0) ? pars.length + i : i].start <= timestamp && timestamp <= pars[(typeof i === "number" && i < 0) ? pars.length + i : i].end) {
                     return [pars[(typeof i === "number" && i < 0) ? pars.length + i : i].anchor, i];
                 }
             }
-            for (var ρσ_Index7 = 0; ρσ_Index7 < prev_idx; ρσ_Index7++) {
-                i = ρσ_Index7;
+            for (var ρσ_Index178 = 0; ρσ_Index178 < prev_idx; ρσ_Index178++) {
+                i = ρσ_Index178;
                 if (pars[(typeof i === "number" && i < 0) ? pars.length + i : i].start <= timestamp && timestamp <= pars[(typeof i === "number" && i < 0) ? pars.length + i : i].end) {
                     return [pars[(typeof i === "number" && i < 0) ? pars.length + i : i].anchor, i];
                 }
@@ -27927,9 +27927,9 @@ return this.__repr__();
         function first_par(smil_map) {
             var par_list, par;
             par_list = flatten_smil_map(smil_map)[1];
-            var ρσ_Iter8 = ρσ_Iterable(par_list);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                par = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter179 = ρσ_Iterable(par_list);
+            for (var ρσ_Index179 = 0; ρσ_Index179 < ρσ_Iter179.length; ρσ_Index179++) {
+                par = ρσ_Iter179[ρσ_Index179];
                 if (par.anchor) {
                     return par;
                 }
@@ -27945,8 +27945,8 @@ return this.__repr__();
             var spine, file_map, q, f, par, i;
             spine = book_manifest.spine;
             file_map = book_manifest.files;
-            for (var ρσ_Index9 = spine_idx + 1; ρσ_Index9 < spine.length; ρσ_Index9++) {
-                i = ρσ_Index9;
+            for (var ρσ_Index180 = spine_idx + 1; ρσ_Index180 < spine.length; ρσ_Index180++) {
+                i = ρσ_Index180;
                 q = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
                 f = file_map[(typeof q === "number" && q < 0) ? file_map.length + q : q];
                 if (f && f.smil_map) {
@@ -27971,9 +27971,9 @@ return this.__repr__();
                     return par_list[ρσ_bound_index(anchor_map[ρσ_bound_index(elem.id, anchor_map)], par_list)];
                 }
                 af = get_boss().anchor_funcs;
-                var ρσ_Iter10 = ρσ_Iterable(par_list);
-                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                    par = ρσ_Iter10[ρσ_Index10];
+                var ρσ_Iter181 = ρσ_Iterable(par_list);
+                for (var ρσ_Index181 = 0; ρσ_Index181 < ρσ_Iter181.length; ρσ_Index181++) {
+                    par = ρσ_Iter181[ρσ_Index181];
                     if (par.anchor && par.audio) {
                         elem = document.getElementById(par.anchor);
                         if (elem) {
@@ -27986,16 +27986,16 @@ return this.__repr__();
                 }
                 return null;
             } else {
-                var ρσ_Iter11 = ρσ_Iterable(par_list);
-                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                    par = ρσ_Iter11[ρσ_Index11];
+                var ρσ_Iter182 = ρσ_Iterable(par_list);
+                for (var ρσ_Index182 = 0; ρσ_Index182 < ρσ_Iter182.length; ρσ_Index182++) {
+                    par = ρσ_Iter182[ρσ_Index182];
                     if (par.anchor && par.audio && is_anchor_on_screen(par.anchor)) {
                         return par;
                     }
                 }
-                var ρσ_Iter12 = ρσ_Iterable(par_list);
-                for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                    par = ρσ_Iter12[ρσ_Index12];
+                var ρσ_Iter183 = ρσ_Iterable(par_list);
+                for (var ρσ_Index183 = 0; ρσ_Index183 < ρσ_Iter183.length; ρσ_Index183++) {
+                    par = ρσ_Iter183[ρσ_Index183];
                     if (par.audio) {
                         return par;
                     }
@@ -28074,9 +28074,9 @@ return this.__repr__();
         update_visible_toc_nodes.data = Object.create(null);
         function iter_toc_descendants(node, callback) {
             var child;
-            var ρσ_Iter0 = ρσ_Iterable(node.children);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                child = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter184 = ρσ_Iterable(node.children);
+            for (var ρσ_Index184 = 0; ρσ_Index184 < ρσ_Iter184.length; ρσ_Index184++) {
+                child = ρσ_Iter184[ρσ_Index184];
                 if (callback(child)) {
                     return;
                 }
@@ -28098,9 +28098,9 @@ return this.__repr__();
             spine_after = ρσ_unpack[1];
             which = spine_before;
             before = after = prev = null;
-            var ρσ_Iter1 = ρσ_Iterable(spine);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                name = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter185 = ρσ_Iterable(spine);
+            for (var ρσ_Index185 = 0; ρσ_Index185 < ρσ_Iter185.length; ρσ_Index185++) {
+                name = ρσ_Iter185[ρσ_Index185];
                 if (name === csi) {
                     which = spine_after;
                 } else {
@@ -28217,18 +28217,18 @@ return this.__repr__();
             spine_after = ρσ_unpack[1];
             which = spine_before;
             before = prev = null;
-            var ρσ_Iter2 = ρσ_Iterable(spine);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                name = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter186 = ρσ_Iterable(spine);
+            for (var ρσ_Index186 = 0; ρσ_Index186 < ρσ_Iter186.length; ρσ_Index186++) {
+                name = ρσ_Iter186[ρσ_Index186];
                 if (name === csi) {
                     which = spine_after;
                 } else {
                     which[(typeof name === "number" && name < 0) ? which.length + name : name] = true;
                 }
             }
-            var ρσ_Iter3 = ρσ_Iterable(page_list);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                item = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter187 = ρσ_Iterable(page_list);
+            for (var ρσ_Index187 = 0; ρσ_Index187 < ρσ_Iter187.length; ρσ_Index187++) {
+                item = ρσ_Iter187[ρσ_Index187];
                 if (item.dest) {
                     if (spine_before[ρσ_bound_index(item.dest, spine_before)]) {
                         prev = item;
@@ -28304,9 +28304,9 @@ return this.__repr__();
                 }
             }
             r = [];
-            var ρσ_Iter4 = ρσ_Iterable(Object.keys(ans));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                x = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter188 = ρσ_Iterable(Object.keys(ans));
+            for (var ρσ_Index188 = 0; ρσ_Index188 < ρσ_Iter188.length; ρσ_Index188++) {
+                x = ρσ_Iter188[ρσ_Index188];
                 fam = family_for_toc_node(x, parent_map, id_map);
                 if ((typeof fam !== "undefined" && fam !== null ? fam : Object.create(null)).length) {
                     r.push(fam);
@@ -28335,9 +28335,9 @@ return this.__repr__();
                 }
             }
             if (!skip_parents) {
-                var ρσ_Iter5 = ρσ_Iterable(Object.keys(ans));
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    node_id = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter189 = ρσ_Iterable(Object.keys(ans));
+                for (var ρσ_Index189 = 0; ρσ_Index189 < ρσ_Iter189.length; ρσ_Index189++) {
+                    node_id = ρσ_Iter189[ρσ_Index189];
                     p = parent_map[(typeof node_id === "number" && node_id < 0) ? parent_map.length + node_id : node_id];
                     while (p && p.title) {
                         ans[ρσ_bound_index(p.id, ans)] = true;
@@ -28364,9 +28364,9 @@ return this.__repr__();
                 var c;
                 id_map[ρσ_bound_index(node.id, id_map)] = node;
                 parent_map[ρσ_bound_index(node.id, parent_map)] = parent;
-                var ρσ_Iter6 = ρσ_Iterable(node.children);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    c = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter190 = ρσ_Iterable(node.children);
+                for (var ρσ_Index190 = 0; ρσ_Index190 < ρσ_Iter190.length; ρσ_Index190++) {
+                    c = ρσ_Iter190[ρσ_Index190];
                     process_node(c, node);
                 }
             };
@@ -28391,9 +28391,9 @@ return this.__repr__();
             parent_map = ρσ_unpack[0];
             id_map = ρσ_unpack[1];
             highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map, true);
-            var ρσ_Iter7 = ρσ_Iterable(Object.keys(highlighted_toc_nodes));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                node_id = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter191 = ρσ_Iterable(Object.keys(highlighted_toc_nodes));
+            for (var ρσ_Index191 = 0; ρσ_Index191 < ρσ_Iter191.length; ρσ_Index191++) {
+                node_id = ρσ_Iter191[ρσ_Index191];
                 node = id_map[(typeof node_id === "number" && node_id < 0) ? id_map.length + node_id : node_id];
                 if (node.title) {
                     return node.title;
@@ -28474,9 +28474,9 @@ return this.__repr__();
             search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [do_search.bind(toc_panel_id), "search-book-toc"].concat([ρσ_desugar_kwargs({button: search_button, placeholder: t})]));
             ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "1em"})]));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex; align-items: center"})])));
-            var ρσ_Iter8 = ρσ_Iterable(container.childNodes);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                child = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter192 = ρσ_Iterable(container.childNodes);
+            for (var ρσ_Index192 = 0; ρσ_Index192 < ρσ_Iter192.length; ρσ_Index192++) {
+                child = ρσ_Iter192[ρσ_Index192];
                 child.style.flexShrink = "0";
             }
             toc_panel.style.flexGrow = "100";
@@ -28494,9 +28494,9 @@ return this.__repr__();
             am = Object.create(null);
             anchors = [];
             pos_map = Object.create(null);
-            var ρσ_Iter9 = ρσ_Iterable(enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []));
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                ρσ_unpack = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter193 = ρσ_Iterable(enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []));
+            for (var ρσ_Index193 = 0; ρσ_Index193 < ρσ_Iter193.length; ρσ_Index193++) {
+                ρσ_unpack = ρσ_Iter193[ρσ_Index193];
                 i = ρσ_unpack[0];
                 anchor = ρσ_unpack[1];
                 am[ρσ_bound_index(anchor.id, am)] = position_for_anchor(anchor.frag);
@@ -28527,9 +28527,9 @@ return this.__repr__();
             anchors = [];
             pos_map = Object.create(null);
             if (plam) {
-                var ρσ_Iter10 = ρσ_Iterable(enumerate(plam[(typeof name === "number" && name < 0) ? plam.length + name : name] || []));
-                for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                    ρσ_unpack = ρσ_Iter10[ρσ_Index10];
+                var ρσ_Iter194 = ρσ_Iterable(enumerate(plam[(typeof name === "number" && name < 0) ? plam.length + name : name] || []));
+                for (var ρσ_Index194 = 0; ρσ_Index194 < ρσ_Iter194.length; ρσ_Index194++) {
+                    ρσ_unpack = ρσ_Iter194[ρσ_Index194];
                     i = ρσ_unpack[0];
                     anchor = ρσ_unpack[1];
                     am[ρσ_bound_index(anchor.id, am)] = position_for_anchor(anchor.frag, true);
@@ -28580,9 +28580,9 @@ return this.__repr__();
             before = after = null;
             visible_anchors = Object.create(null);
             has_visible = false;
-            var ρσ_Iter11 = ρσ_Iterable(tam.sorted_anchors);
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                anchor_id = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter195 = ρσ_Iterable(tam.sorted_anchors);
+            for (var ρσ_Index195 = 0; ρσ_Index195 < ρσ_Iter195.length; ρσ_Index195++) {
+                anchor_id = ρσ_Iter195[ρσ_Index195];
                 pos = (ρσ_expr_temp = tam.pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
                 visibility = anchor_funcs.visibility(pos);
                 if (visibility < 0) {
@@ -28607,9 +28607,9 @@ return this.__repr__();
             before = after = null;
             visible_anchors = Object.create(null);
             has_visible = false;
-            var ρσ_Iter12 = ρσ_Iterable(tam.page_list_sorted_anchors);
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                anchor_id = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter196 = ρσ_Iterable(tam.page_list_sorted_anchors);
+            for (var ρσ_Index196 = 0; ρσ_Index196 < ρσ_Iter196.length; ρσ_Index196++) {
+                anchor_id = ρσ_Iter196[ρσ_Index196];
                 pos = (ρσ_expr_temp = tam.page_list_pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
                 visibility = anchor_funcs.visibility(pos);
                 if (visibility < 0) {
@@ -28653,9 +28653,9 @@ return this.__repr__();
                     }
                     return ρσ_Result;
                 })();
-                var ρσ_Iter13 = ρσ_Iterable(tam.sorted_anchors);
-                for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                    anchor_id = ρσ_Iter13[ρσ_Index13];
+                var ρσ_Iter197 = ρσ_Iterable(tam.sorted_anchors);
+                for (var ρσ_Index197 = 0; ρσ_Index197 < ρσ_Iter197.length; ρσ_Index197++) {
+                    anchor_id = ρσ_Iter197[ρσ_Index197];
                     anchor = amap[(typeof anchor_id === "number" && anchor_id < 0) ? amap.length + anchor_id : anchor_id];
                     is_before = true;
                     if (anchor.frag) {
@@ -28866,7 +28866,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.2.1";
+        CALIBRE_VERSION = "9.3.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29330,9 +29330,9 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this));
             self.last_cfi = null;
-            var ρσ_Iter0 = ρσ_Iterable(self.blob_url_map);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                name = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter198 = ρσ_Iterable(self.blob_url_map);
+            for (var ρσ_Index198 = 0; ρσ_Index198 < ρσ_Iter198.length; ρσ_Index198++) {
+                name = ρσ_Iter198[ρσ_Index198];
                 window.URL.revokeObjectURL((ρσ_expr_temp = self.blob_url_map)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
             document.body.style.removeProperty("font-family");
@@ -29649,8 +29649,8 @@ return this.__repr__();
             spine_index = csi.index;
             self.length_before = 0;
             if (spine_index > -1) {
-                for (var ρσ_Index1 = 0; ρσ_Index1 < spine_index; ρσ_Index1++) {
-                    i = ρσ_Index1;
+                for (var ρσ_Index199 = 0; ρσ_Index199 < spine_index; ρσ_Index199++) {
+                    i = ρσ_Index199;
                     si = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
                     if (si) {
                         self.length_before += ρσ_exists.d(files[(typeof si === "number" && si < 0) ? files.length + si : si]).length || 0;
@@ -29988,15 +29988,15 @@ return this.__repr__();
         IframeBoss.prototype.connect_links = function connect_links() {
             var self = this;
             var a;
-            var ρσ_Iter2 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "],area[" + ρσ_str.format("{}", self.link_attr) + "]"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                a = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter200 = ρσ_Iterable(document.body.querySelectorAll("a[" + ρσ_str.format("{}", self.link_attr) + "],area[" + ρσ_str.format("{}", self.link_attr) + "]"));
+            for (var ρσ_Index200 = 0; ρσ_Index200 < ρσ_Iter200.length; ρσ_Index200++) {
+                a = ρσ_Iter200[ρσ_Index200];
                 a.addEventListener("click", self.link_activated);
             }
             if (runtime.is_standalone_viewer) {
-                var ρσ_Iter3 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    a = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter201 = ρσ_Iterable(document.body.querySelectorAll("a[target]"));
+                for (var ρσ_Index201 = 0; ρσ_Index201 < ρσ_Iter201.length; ρσ_Index201++) {
+                    a = ρσ_Iter201[ρσ_Index201];
                     a.removeAttribute("target");
                 }
             }
@@ -30007,9 +30007,9 @@ return this.__repr__();
         IframeBoss.prototype.listen_for_image_double_clicks = function listen_for_image_double_clicks() {
             var self = this;
             var img;
-            var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("img, image"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                img = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter202 = ρσ_Iterable(document.querySelectorAll("img, image"));
+            for (var ρσ_Index202 = 0; ρσ_Index202 < ρσ_Iter202.length; ρσ_Index202++) {
+                img = ρσ_Iter202[ρσ_Index202];
                 img.addEventListener("dblclick", self.image_double_clicked, (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["passive"] = true;
@@ -30285,9 +30285,9 @@ return this.__repr__();
                     intersecting_wrappers = [];
                 }
                 removed_highlights = Object.create(null);
-                var ρσ_Iter5 = ρσ_Iterable(intersecting_wrappers);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    crw = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter203 = ρσ_Iterable(intersecting_wrappers);
+                for (var ρσ_Index203 = 0; ρσ_Index203 < ρσ_Iter203.length; ρσ_Index203++) {
+                    crw = ρσ_Iter203[ρσ_Index203];
                     unwrap_crw(crw);
                     if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw]) {
                         if (annot_id_uuid_map[(typeof crw === "number" && crw < 0) ? annot_id_uuid_map.length + crw : crw] !== uuid) {
@@ -30352,9 +30352,9 @@ return this.__repr__();
                 self.scroll_to_extend_annotation(data.backwards);
             } else if (dtype === "edit-highlight") {
                 found_highlight_to_edit = false;
-                var ρσ_Iter6 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    ρσ_unpack = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter204 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
+                for (var ρσ_Index204 = 0; ρσ_Index204 < ρσ_Iter204.length; ρσ_Index204++) {
+                    ρσ_unpack = ρσ_Iter204[ρσ_Index204];
                     qcrw = ρσ_unpack[0];
                     quuid = ρσ_unpack[1];
                     if (quuid === data.uuid && select_crw(qcrw)) {
@@ -30378,9 +30378,9 @@ return this.__repr__();
                 }
             } else if (dtype === "notes-edited") {
                 cls = "crw-has-dot";
-                var ρσ_Iter7 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    ρσ_unpack = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter205 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
+                for (var ρσ_Index205 = 0; ρσ_Index205 < ρσ_Iter205.length; ρσ_Index205++) {
+                    ρσ_unpack = ρσ_Iter205[ρσ_Index205];
                     qcrw = ρσ_unpack[0];
                     quuid = ρσ_unpack[1];
                     if (quuid === data.uuid) {
@@ -30396,9 +30396,9 @@ return this.__repr__();
                 }
             } else if (dtype === "remove-highlight") {
                 found_highlight_to_remove = false;
-                var ρσ_Iter8 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    ρσ_unpack = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter206 = ρσ_Iterable(Object.entries(annot_id_uuid_map));
+                for (var ρσ_Index206 = 0; ρσ_Index206 < ρσ_Iter206.length; ρσ_Index206++) {
+                    ρσ_unpack = ρσ_Iter206[ρσ_Index206];
                     qcrw = ρσ_unpack[0];
                     quuid = ρσ_unpack[1];
                     if (quuid === data.uuid) {
@@ -30451,9 +30451,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            var ρσ_Iter9 = ρσ_Iterable(highlights);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                h = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter207 = ρσ_Iterable(highlights);
+            for (var ρσ_Index207 = 0; ρσ_Index207 < ρσ_Iter207.length; ρσ_Index207++) {
+                h = ρσ_Iter207[ρσ_Index207];
                 r = range_from_cfi(h.start_cfi, h.end_cfi);
                 if (!r) {
                     continue;
@@ -30466,9 +30466,9 @@ return this.__repr__();
                 intersecting_wrappers = ρσ_unpack[1];
                 if (annot_id !== null) {
                     annot_id_uuid_map[(typeof annot_id === "number" && annot_id < 0) ? annot_id_uuid_map.length + annot_id : annot_id] = h.uuid;
-                    var ρσ_Iter10 = ρσ_Iterable(intersecting_wrappers);
-                    for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                        crw = ρσ_Iter10[ρσ_Index10];
+                    var ρσ_Iter208 = ρσ_Iterable(intersecting_wrappers);
+                    for (var ρσ_Index208 = 0; ρσ_Index208 < ρσ_Iter208.length; ρσ_Index208++) {
+                        crw = ρσ_Iter208[ρσ_Index208];
                         unwrap_crw(crw);
                         delete annot_id_uuid_map[crw];
                     }
@@ -30527,8 +30527,8 @@ return this.__repr__();
             text = s.toString();
             if (text) {
                 container = document.createElement("div");
-                for (var ρσ_Index11 = 0; ρσ_Index11 < s.rangeCount; ρσ_Index11++) {
-                    i = ρσ_Index11;
+                for (var ρσ_Index209 = 0; ρσ_Index209 < s.rangeCount; ρσ_Index209++) {
+                    i = ρσ_Index209;
                     container.appendChild(s.getRangeAt(i).cloneContents());
                 }
                 ρσ_interpolate_kwargs.call(self, self.send_message, ["copy_text_to_clipboard"].concat([ρσ_desugar_kwargs({text: text, html: container.innerHTML})]));
@@ -30747,17 +30747,17 @@ return this.__repr__();
             ul = E.ul();
             c.appendChild(ul);
             has_icons = false;
-            var ρσ_Iter0 = ρσ_Iterable(items);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                item = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter210 = ρσ_Iterable(items);
+            for (var ρσ_Index210 = 0; ρσ_Index210 < ρσ_Iter210.length; ρσ_Index210++) {
+                item = ρσ_Iter210[ρσ_Index210];
                 if (item.icon) {
                     has_icons = true;
                     break;
                 }
             }
-            var ρσ_Iter1 = ρσ_Iterable(items);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                item = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter211 = ρσ_Iterable(items);
+            for (var ρσ_Index211 = 0; ρσ_Index211 < ρσ_Iter211.length; ρσ_Index211++) {
+                item = ρσ_Iter211[ρσ_Index211];
                 ic = "";
                 if (has_icons) {
                     if (item.icon) {
@@ -30782,9 +30782,9 @@ return this.__repr__();
                     s.alignItems = "center";
                     li.firstChild.style.flexGrow = "10";
                     li.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; align-items: center; margin-left: 0.5rem"})]));
-                    var ρσ_Iter2 = ρσ_Iterable(item.side_actions);
-                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                        x = ρσ_Iter2[ρσ_Index2];
+                    var ρσ_Iter212 = ρσ_Iterable(item.side_actions);
+                    for (var ρσ_Index212 = 0; ρσ_Index212 < ρσ_Iter212.length; ρσ_Index212++) {
+                        x = ρσ_Iter212[ρσ_Index212];
                         li.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [svgicon(x.icon)].concat([ρσ_desugar_kwargs({class_: "simple-link", style: "padding: 0.5rem", title: x.tooltip || "", onclick: side_action.bind(null, x.action)})])));
                     }
                 }
@@ -30938,9 +30938,9 @@ return this.__repr__();
                 items = ρσ_list_decorate([]);
                 c.appendChild(ρσ_interpolate_kwargs.call(E, E.h2, [_("Recently viewed books")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
                 c.appendChild(E.div());
-                var ρσ_Iter0 = ρσ_Iterable(rl);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    entry = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter213 = ρσ_Iterable(rl);
+                for (var ρσ_Index213 = 0; ρσ_Index213 < ρσ_Iter213.length; ρσ_Index213++) {
+                    entry = ρσ_Iter213[ρσ_Index213];
                     if (current_opened_book_path && current_opened_book_path === entry.pathtoebook) {
                         continue;
                     }
@@ -30990,9 +30990,9 @@ return this.__repr__();
             }).call(this);
             ans = [];
             ans.push(new_entry);
-            var ρσ_Iter1 = ρσ_Iterable(rl);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                entry = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter214 = ρσ_Iterable(rl);
+            for (var ρσ_Index214 = 0; ρσ_Index214 < ρσ_Iter214.length; ρσ_Index214++) {
+                entry = ρσ_Iter214[ρσ_Index214];
                 if (entry.key !== key) {
                     ans.push(entry);
                 }
@@ -31011,9 +31011,9 @@ return this.__repr__();
             rl = sd.get("standalone_recently_opened");
             newl = [];
             if (path) {
-                var ρσ_Iter2 = ρσ_Iterable(rl);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    entry = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter215 = ρσ_Iterable(rl);
+                for (var ρσ_Index215 = 0; ρσ_Index215 < ρσ_Iter215.length; ρσ_Index215++) {
+                    entry = ρσ_Iter215[ρσ_Index215];
                     if (entry.key !== path) {
                         newl.push(entry);
                     }
@@ -31063,9 +31063,9 @@ return this.__repr__();
                 rbutton = E.div(" ");
             }
             obutton = ρσ_interpolate_kwargs.call(this, create_button, [_("OK")].concat([ρσ_desugar_kwargs({action: apply_func})]));
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ rbutton, obutton, cbutton ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                b = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter216 = ρσ_Iterable(ρσ_list_decorate([ rbutton, obutton, cbutton ]));
+            for (var ρσ_Index216 = 0; ρσ_Index216 < ρσ_Iter216.length; ρσ_Index216++) {
+                b = ρσ_Iter216[ρσ_Index216];
                 b.style.marginTop = "1ex";
             }
             return ρσ_interpolate_kwargs.call(E, E.div, [rbutton, ρσ_interpolate_kwargs.call(E, E.div, [obutton, E.div(" "), cbutton].concat([ρσ_desugar_kwargs({style: "margin-left: 1rem; display: flex; align-items: flex-start; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; display: flex; justify-content: space-between; align-items: flex-start"})]));
@@ -31159,13 +31159,13 @@ return this.__repr__();
 
         function apply_setting(table, val) {
             var sel, opt, x, region;
-            var ρσ_Iter0 = ρσ_Iterable("left middle right".split(" "));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                region = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter217 = ρσ_Iterable("left middle right".split(" "));
+            for (var ρσ_Index217 = 0; ρσ_Index217 < ρσ_Iter217.length; ρσ_Index217++) {
+                region = ρσ_Iter217[ρσ_Index217];
                 sel = table.querySelector("select[data-region=" + ρσ_str.format("{}", region) + "]");
-                var ρσ_Iter1 = ρσ_Iterable(sel.selectedOptions);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    opt = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter218 = ρσ_Iterable(sel.selectedOptions);
+                for (var ρσ_Index218 = 0; ρσ_Index218 < ρσ_Iter218.length; ρσ_Index218++) {
+                    opt = ρσ_Iter218[ρσ_Index218];
                     opt.selected = false;
                 }
                 x = val[(typeof region === "number" && region < 0) ? val.length + region : region] || "empty";
@@ -31185,9 +31185,9 @@ return this.__repr__();
         function get_setting(table) {
             var ans, sel, region;
             ans = Object.create(null);
-            var ρσ_Iter2 = ρσ_Iterable("left middle right".split(" "));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                region = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter219 = ρσ_Iterable("left middle right".split(" "));
+            for (var ρσ_Index219 = 0; ρσ_Index219 < ρσ_Iter219.length; ρσ_Index219++) {
+                region = ρσ_Iter219[ρσ_Index219];
                 sel = table.querySelector("select[data-region=" + ρσ_str.format("{}", region) + "]");
                 if (sel.selectedIndex > -1) {
                     ans[(typeof region === "number" && region < 0) ? ans.length + region : region] = (ρσ_expr_temp = sel.options)[ρσ_bound_index(sel.selectedIndex, ρσ_expr_temp)].value;
@@ -31218,9 +31218,9 @@ return this.__repr__();
         function restore_defaults() {
             var container, table, which;
             container = document.getElementById(CONTAINER);
-            var ρσ_Iter3 = ρσ_Iterable(Object.keys(groups()));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                which = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter220 = ρσ_Iterable(Object.keys(groups()));
+            for (var ρσ_Index220 = 0; ρσ_Index220 < ρσ_Iter220.length; ρσ_Index220++) {
+                which = ρσ_Iter220[ρσ_Index220];
                 table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
                 apply_setting(table, (ρσ_expr_temp = session_defaults())[(typeof which === "number" && which < 0) ? ρσ_expr_temp.length + which : which] || Object.create(null));
             }
@@ -31234,9 +31234,9 @@ return this.__repr__();
             gr = groups();
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
             container = container.lastChild;
-            var ρσ_Iter4 = ρσ_Iterable(gr);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                key = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter221 = ρσ_Iterable(gr);
+            for (var ρσ_Index221 = 0; ρσ_Index221 < ρσ_Iter221.length; ρσ_Index221++) {
+                key = ρσ_Iter221[ρσ_Index221];
                 s = "margin: 1rem;";
                 if (container.childNodes.length > 0) {
                     s += "margin-top: 0;";
@@ -31247,9 +31247,9 @@ return this.__repr__();
             }
             container.removeChild(container.lastChild);
             sd = get_session_data();
-            var ρσ_Iter5 = ρσ_Iterable(Object.keys(gr));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                which = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter222 = ρσ_Iterable(Object.keys(gr));
+            for (var ρσ_Index222 = 0; ρσ_Index222 < ρσ_Iter222.length; ρσ_Index222++) {
+                which = ρσ_Iter222[ρσ_Index222];
                 table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
                 apply_setting(table, sd.get(which) || Object.create(null));
             }
@@ -31264,15 +31264,15 @@ return this.__repr__();
             var sd, changed, prev, table, current, region, which;
             sd = get_session_data();
             changed = false;
-            var ρσ_Iter6 = ρσ_Iterable(Object.keys(groups()));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                which = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter223 = ρσ_Iterable(Object.keys(groups()));
+            for (var ρσ_Index223 = 0; ρσ_Index223 < ρσ_Iter223.length; ρσ_Index223++) {
+                which = ρσ_Iter223[ρσ_Index223];
                 prev = sd.get(which) || Object.create(null);
                 table = container.querySelector("table[data-which=" + ρσ_str.format("{}", which) + "]");
                 current = get_setting(table);
-                var ρσ_Iter7 = ρσ_Iterable("left middle right".split(" "));
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    region = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter224 = ρσ_Iterable("left middle right".split(" "));
+                for (var ρσ_Index224 = 0; ρσ_Index224 < ρσ_Iter224.length; ρσ_Index224++) {
+                    region = ρσ_Iter224[ρσ_Index224];
                     if (prev[(typeof region === "number" && region < 0) ? prev.length + region : region] !== current[(typeof region === "number" && region < 0) ? current.length + region : region]) {
                         changed = true;
                     }
@@ -31504,9 +31504,9 @@ return this.__repr__();
             sel += " > a";
             ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "" + ρσ_str.format("{}", margin) + "" + ρσ_str.format("{}", margin_unit) + "", display: "flex", align_content: "flex-end", align_items: "center", justify_content: "space-around", max_width: THUMBNAIL_MAX_WIDTH + "px", max_height: THUMBNAIL_MAX_HEIGHT + "px", cursor: "pointer", min_width: THUMBNAIL_MIN_WIDTH + "px", min_height: THUMBNAIL_MIN_HEIGHT + "px"})]));
             mq = "@media all and (orientation: {orient}) {{ {sel} {{ width: 21{dim}; height: 28{dim} }} }}\n";
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ "vw", "vh" ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                dim = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter225 = ρσ_Iterable(ρσ_list_decorate([ "vw", "vh" ]));
+            for (var ρσ_Index225 = 0; ρσ_Index225 < ρσ_Iter225.length; ρσ_Index225++) {
+                dim = ρσ_Iter225[ρσ_Index225];
                 ans += ρσ_interpolate_kwargs.call(mq, mq.format, [ρσ_desugar_kwargs({sel: sel, dim: dim, orient: (dim === "vw") ? "portrait" : "landscape"})]);
             }
             ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":hover"].concat([ρσ_desugar_kwargs({transform: "scale(1.2)"})]));
@@ -31525,8 +31525,8 @@ return this.__repr__();
             var i;
             clear(container);
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: COVER_GRID_CLASS})]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < 12; ρσ_Index1++) {
-                i = ρσ_Index1;
+            for (var ρσ_Index226 = 0; ρσ_Index226 < 12; ρσ_Index226++) {
+                i = ρσ_Index226;
                 container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "cover-grid-filler"})]));
             }
         };
@@ -31638,8 +31638,8 @@ return this.__repr__();
         })());
         function create_markup(container) {
             var bar, i;
-            for (var ρσ_Index0 = 0; ρσ_Index0 < 2; ρσ_Index0++) {
-                i = ρσ_Index0;
+            for (var ρσ_Index227 = 0; ρσ_Index227 < 2; ρσ_Index227++) {
+                i = ρσ_Index227;
                 bar = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "white-space:nowrap; overflow:hidden; text-overflow: ellipsis; padding-left: 0.5em;"})]), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "white-space:nowrap; text-align:right; padding-right: 0.5em;"})])].concat([ρσ_desugar_kwargs({class_: CLASS_NAME})]));
                 if (i === 0) {
                     ρσ_interpolate_kwargs.call(this, set_css, [bar].concat([ρσ_desugar_kwargs({position: "fixed", left: "0", top: "0", z_index: "1"})]));
@@ -31701,9 +31701,9 @@ return this.__repr__();
                 }
             }
             interface_data = get_interface_data();
-            var ρσ_Iter1 = ρσ_Iterable(enumerate(bars));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                ρσ_unpack = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter228 = ρσ_Iterable(enumerate(bars));
+            for (var ρσ_Index228 = 0; ρσ_Index228 < ρσ_Iter228.length; ρσ_Index228++) {
+                ρσ_unpack = ρσ_Iter228[ρσ_Index228];
                 i = ρσ_unpack[0];
                 bar = ρσ_unpack[1];
                 left = bar.firstChild;
@@ -31759,9 +31759,9 @@ return this.__repr__();
         function set_title(container, text) {
             var bars, bar;
             bars = get_bars(container);
-            var ρσ_Iter2 = ρσ_Iterable(bars);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                bar = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter229 = ρσ_Iterable(bars);
+            for (var ρσ_Index229 = 0; ρσ_Index229 < ρσ_Iter229.length; ρσ_Index229++) {
+                bar = ρσ_Iter229[ρσ_Index229];
                 bar.firstChild.firstChild.nextSibling.textContent = text;
             }
         };
@@ -31773,9 +31773,9 @@ return this.__repr__();
         function set_title_tooltip(container, text) {
             var bars, bar;
             bars = get_bars(container);
-            var ρσ_Iter3 = ρσ_Iterable(bars);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                bar = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter230 = ρσ_Iterable(bars);
+            for (var ρσ_Index230 = 0; ρσ_Index230 < ρσ_Iter230.length; ρσ_Index230++) {
+                bar = ρσ_Iter230[ρσ_Index230];
                 bar.firstChild.firstChild.nextSibling.title = text;
             }
         };
@@ -31815,9 +31815,9 @@ return this.__repr__();
                 throw new ValueError("An icon must be specified");
             }
             bars = get_bars(container);
-            var ρσ_Iter4 = ρσ_Iterable(enumerate(bars));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter231 = ρσ_Iterable(enumerate(bars));
+            for (var ρσ_Index231 = 0; ρσ_Index231 < ρσ_Iter231.length; ρσ_Index231++) {
+                ρσ_unpack = ρσ_Iter231[ρσ_Index231];
                 i = ρσ_unpack[0];
                 bar = ρσ_unpack[1];
                 right = bar.firstChild.nextSibling;
@@ -31849,9 +31849,9 @@ return this.__repr__();
         function clear_buttons(container) {
             var bars, right, ρσ_unpack, i, bar;
             bars = get_bars(container);
-            var ρσ_Iter5 = ρσ_Iterable(enumerate(bars));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                ρσ_unpack = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter232 = ρσ_Iterable(enumerate(bars));
+            for (var ρσ_Index232 = 0; ρσ_Index232 < ρσ_Iter232.length; ρσ_Index232++) {
+                ρσ_unpack = ρσ_Iter232[ρσ_Index232];
                 i = ρσ_unpack[0];
                 bar = ρσ_unpack[1];
                 right = bar.firstChild.nextSibling;
@@ -31865,9 +31865,9 @@ return this.__repr__();
 
         function set_button_visibility(container, icon, visible) {
             var right, elem, bar;
-            var ρσ_Iter6 = ρσ_Iterable(get_bars(container));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                bar = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter233 = ρσ_Iterable(get_bars(container));
+            for (var ρσ_Index233 = 0; ρσ_Index233 < ρσ_Iter233.length; ρσ_Index233++) {
+                bar = ρσ_Iter233[ρσ_Index233];
                 right = bar.firstChild.nextSibling;
                 elem = right.querySelector("[data-button-icon=\"" + ρσ_str.format("{}", icon) + "\"]");
                 if (elem) {
@@ -32182,9 +32182,9 @@ return this.__repr__();
         function update_book_in_recently_read_by_user_on_home_page(library_id, book_id, book_format, cfi) {
             var item;
             if (recently_read_by_user.items) {
-                var ρσ_Iter0 = ρσ_Iterable(recently_read_by_user.items);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    item = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter234 = ρσ_Iterable(recently_read_by_user.items);
+                for (var ρσ_Index234 = 0; ρσ_Index234 < ρσ_Iter234.length; ρσ_Index234++) {
+                    item = ρσ_Iter234[ρσ_Index234];
                     if (item.library_id === library_id && item.book_id === book_id && item.format === book_format) {
                         item.cfi = cfi;
                     }
@@ -32244,9 +32244,9 @@ return this.__repr__();
             prev_epoch = prev_last_read.getTime();
             dev = get_device_uuid();
             newest_epoch = ans = null;
-            var ρσ_Iter1 = ρσ_Iterable(last_read_positions);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                data = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter235 = ρσ_Iterable(last_read_positions);
+            for (var ρσ_Index235 = 0; ρσ_Index235 < ρσ_Iter235.length; ρσ_Index235++) {
+                data = ρσ_Iter235[ρσ_Index235];
                 if (data.device !== dev && data.epoch > prev_epoch) {
                     if (ans === null || data.epoch > newest_epoch) {
                         newest_epoch = data.epoch;
@@ -32269,9 +32269,9 @@ return this.__repr__();
             }
             data = JSON.parse(xhr.responseText);
             db = get_db();
-            var ρσ_Iter2 = ρσ_Iterable(data);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                key = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter236 = ρσ_Iterable(data);
+            for (var ρσ_Index236 = 0; ρσ_Index236 < ρσ_Iter236.length; ρσ_Index236++) {
+                key = ρσ_Iter236[ρσ_Index236];
                 new_vals = data[(typeof key === "number" && key < 0) ? data.length + key : key];
                 entry = (function(){
                     var ρσ_d = Object.create(null);
@@ -32316,9 +32316,9 @@ return this.__repr__();
         function start_sync(to_sync) {
             var libraries, library_id, ρσ_unpack, key, last_read, lid;
             libraries = Object.create(null);
-            var ρσ_Iter3 = ρσ_Iterable(to_sync);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter237 = ρσ_Iterable(to_sync);
+            for (var ρσ_Index237 = 0; ρσ_Index237 < ρσ_Iter237.length; ρσ_Index237++) {
+                ρσ_unpack = ρσ_Iter237[ρσ_Index237];
                 key = ρσ_unpack[0];
                 last_read = ρσ_unpack[1];
                 library_id = key[0];
@@ -32327,9 +32327,9 @@ return this.__repr__();
                 }
                 libraries[(typeof library_id === "number" && library_id < 0) ? libraries.length + library_id : library_id].push([key, last_read]);
             }
-            var ρσ_Iter4 = ρσ_Iterable(libraries);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                lid = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter238 = ρσ_Iterable(libraries);
+            for (var ρσ_Index238 = 0; ρσ_Index238 < ρσ_Iter238.length; ρσ_Index238++) {
+                lid = ρσ_Iter238[ρσ_Index238];
                 sync_library_books(lid, libraries[(typeof lid === "number" && lid < 0) ? libraries.length + lid : lid], sync_data_received);
             }
         };
@@ -32366,9 +32366,9 @@ return this.__repr__();
             var container, images, q, rb, img, item;
             container = document.getElementById(container_id);
             images = prepare_recent_container(container);
-            var ρσ_Iter5 = ρσ_Iterable(recently_read_by_user.items.slice(0, 3));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                item = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter239 = ρσ_Iterable(recently_read_by_user.items.slice(0, 3));
+            for (var ρσ_Index239 = 0; ρσ_Index239 < ρσ_Iter239.length; ρσ_Index239++) {
+                item = ρσ_Iter239[ρσ_Index239];
                 q = Object.create(null);
                 if (item.cfi) {
                     q.bookpos = item.cfi;
@@ -32405,9 +32405,9 @@ return this.__repr__();
             db = get_db();
             to_sync = [];
             username = get_interface_data().username;
-            var ρσ_Iter6 = ρσ_Iterable(books);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                book = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter240 = ρσ_Iterable(books);
+            for (var ρσ_Index240 = 0; ρσ_Index240 < ρσ_Iter240.length; ρσ_Index240++) {
+                book = ρσ_Iter240[ρσ_Index240];
                 if (to_sync.length < 10) {
                     lr = (ρσ_expr_temp = book.last_read)[ρσ_bound_index(username_key(username), ρσ_expr_temp)] || new Date(0);
                     to_sync.push([book.key, lr]);
@@ -32473,9 +32473,9 @@ return this.__repr__();
             container.style.display = "block";
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:flex"})]));
             images = container.lastChild;
-            var ρσ_Iter7 = ρσ_Iterable(data.books);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                book_id = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter241 = ρσ_Iterable(data.books);
+            for (var ρσ_Index241 = 0; ρσ_Index241 < ρσ_Iter241.length; ρσ_Index241++) {
+                book_id = ρσ_Iter241[ρσ_Index241];
                 authors = (ρσ_expr_temp = data.authors)[(typeof book_id === "number" && book_id < 0) ? ρσ_expr_temp.length + book_id : book_id].join(" & ");
                 alt = _("{} by {}").format((ρσ_expr_temp = data.titles)[(typeof book_id === "number" && book_id < 0) ? ρσ_expr_temp.length + book_id : book_id], authors);
                 img = ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({alt: alt, src: absolute_path("get/cover/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", data.library_id) + "")})]);
@@ -32614,9 +32614,9 @@ return this.__repr__();
             container.appendChild(E.h2(_("Choose the calibre library to browse…")));
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap"})]));
             cl = container.lastChild;
-            var ρσ_Iter8 = ρσ_Iterable(all_libraries());
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                ρσ_unpack = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter242 = ρσ_Iterable(all_libraries());
+            for (var ρσ_Index242 = 0; ρσ_Index242 < ρσ_Iter242.length; ρσ_Index242++) {
+                ρσ_unpack = ρσ_Iter242[ρσ_Index242];
                 library_id = ρσ_unpack[0];
                 library_name = ρσ_unpack[1];
                 library_name = (ρσ_expr_temp = interface_data.library_map)[(typeof library_id === "number" && library_id < 0) ? ρσ_expr_temp.length + library_id : library_id];
@@ -32754,9 +32754,9 @@ return this.__repr__();
                 return ρσ_anonfunc;
             })()})]));
             items = ρσ_list_decorate([]);
-            var ρσ_Iter0 = ρσ_Iterable(bookmarks);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                bookmark = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter243 = ρσ_Iterable(bookmarks);
+            for (var ρσ_Index243 = 0; ρσ_Index243 < ρσ_Iter243.length; ρσ_Index243++) {
+                bookmark = ρσ_Iter243[ρσ_Index243];
                 if (!bookmark.removed) {
                     sa = create_side_action("trash", remove_bookmark.bind(null, annotations_manager, bookmark.title), _("Remove this bookmark"));
                     ea = create_side_action("edit", edit_bookmark.bind(null, annotations_manager, bookmark.title), _("Edit this bookmark"));
@@ -33319,9 +33319,9 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })())})])));
             }
-            var ρσ_Iter0 = ρσ_Iterable(landmarks);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                l = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter244 = ρσ_Iterable(landmarks);
+            for (var ρσ_Index244 = 0; ρσ_Index244 < ρσ_Iter244.length; ρσ_Index244++) {
+                l = ρσ_Iter244[ρσ_Index244];
                 items.push(ρσ_interpolate_kwargs.call(this, create_item, [l.title].concat([ρσ_desugar_kwargs({action: onclick.bind(null, l.dest, l.frag)})])));
             }
             build_list(ans, items);
@@ -33374,18 +33374,18 @@ return this.__repr__();
 
             function goto_matching_page(text) {
                 var x, q;
-                var ρσ_Iter1 = ρσ_Iterable(page_list);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    x = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter245 = ρσ_Iterable(page_list);
+                for (var ρσ_Index245 = 0; ρσ_Index245 < ρσ_Iter245.length; ρσ_Index245++) {
+                    x = ρσ_Iter245[ρσ_Index245];
                     if (x.pagenum === text) {
                         goto(x);
                         return;
                     }
                 }
                 q = text.toLowerCase();
-                var ρσ_Iter2 = ρσ_Iterable(page_list);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    x = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter246 = ρσ_Iterable(page_list);
+                for (var ρσ_Index246 = 0; ρσ_Index246 < ρσ_Iter246.length; ρσ_Index246++) {
+                    x = ρσ_Iter246[ρσ_Index246];
                     if (x.pagenum.toLowerCase() === q) {
                         goto(x);
                         return;
@@ -33426,9 +33426,9 @@ return this.__repr__();
             container.appendChild(list_container);
             page_list = book.manifest.page_list || [];
             items = [];
-            var ρσ_Iter3 = ρσ_Iterable(page_list);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                x = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter247 = ρσ_Iterable(page_list);
+            for (var ρσ_Index247 = 0; ρσ_Index247 < ρσ_Iter247.length; ρσ_Index247++) {
+                x = ρσ_Iter247[ρσ_Index247];
                 items.push(ρσ_interpolate_kwargs.call(this, create_item, [x.pagenum].concat([ρσ_desugar_kwargs({action: goto.bind(null, x)})])));
             }
             build_list(list_container, items);
@@ -33771,9 +33771,9 @@ return this.__repr__();
         }).call(this);
         function cancel_in_progress() {
             var xhr;
-            var ρσ_Iter0 = ρσ_Iterable(state.transfers);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                xhr = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter248 = ρσ_Iterable(state.transfers);
+            for (var ρσ_Index248 = 0; ρσ_Index248 < ρσ_Iter248.length; ρσ_Index248++) {
+                xhr = ρσ_Iter248[ρσ_Index248];
                 xhr.abort();
             }
             state.transfers = [];
@@ -33875,9 +33875,9 @@ return this.__repr__();
             function list_duplicates() {
                 var ans, item;
                 ans = ρσ_interpolate_kwargs.call(E, E.ol, [ρσ_desugar_kwargs({style: "margin-left: 2rem"})]);
-                var ρσ_Iter1 = ρσ_Iterable(data.duplicates);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    item = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter249 = ρσ_Iterable(data.duplicates);
+                for (var ρσ_Index249 = 0; ρσ_Index249 < ρσ_Iter249.length; ρσ_Index249++) {
+                    item = ρσ_Iter249[ρσ_Index249];
                     ans.appendChild(E.li(_("{0} by {1}").format(item.title, " & ".join(item.authors))));
                 }
                 return ans;
@@ -33978,9 +33978,9 @@ return this.__repr__();
                 return;
             }
             state.number = 0;
-            var ρσ_Iter2 = ρσ_Iterable(files);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                file = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter250 = ρσ_Iterable(files);
+            for (var ρσ_Index250 = 0; ρσ_Index250 < ρσ_Iter250.length; ρσ_Index250++) {
+                file = ρσ_Iter250[ρσ_Index250];
                 state.counter += 1;
                 state.number += 1;
                 job_id = state.counter;
@@ -34341,9 +34341,9 @@ return this.__repr__();
             interface_data = get_interface_data();
             if (metadata.rating) {
                 stars = ρσ_interpolate_kwargs.call(E, E.span, [ρσ_desugar_kwargs({style: "white-space:nowrap"})]);
-                var ρσ_Iter0 = ρσ_Iterable(range(Math.floor(int(metadata.rating) / 2)));
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    i = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter251 = ρσ_Iterable(range(Math.floor(int(metadata.rating) / 2)));
+                for (var ρσ_Index251 = 0; ρσ_Index251 < ρσ_Iter251.length; ρσ_Index251++) {
+                    i = ρσ_Iter251[ρσ_Index251];
                     stars.appendChild(svgicon("star"));
                 }
                 [extra_data.appendChild(stars), extra_data.appendChild(E.br())];
@@ -34558,8 +34558,8 @@ return this.__repr__();
                 stars = E.span();
                 val = int(val || 0);
                 if (val > 0) {
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < Math.floor(val / 2); ρσ_Index0++) {
-                        i = ρσ_Index0;
+                    for (var ρσ_Index252 = 0; ρσ_Index252 < Math.floor(val / 2); ρσ_Index252++) {
+                        i = ρσ_Index252;
                         stars.appendChild(svgicon("star"));
                     }
                     if (fm.display.allow_half_stars && val % 2) {
@@ -34579,9 +34579,9 @@ return this.__repr__();
                     keys = Object.keys(val);
                     if (keys.length) {
                         ans = [];
-                        var ρσ_Iter1 = ρσ_Iterable(keys);
-                        for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                            key = ρσ_Iter1[ρσ_Index1];
+                        var ρσ_Iter253 = ρσ_Iterable(keys);
+                        for (var ρσ_Index253 = 0; ρσ_Index253 < ρσ_Iter253.length; ρσ_Index253++) {
+                            key = ρσ_Iter253[ρσ_Index253];
                             ans.push(key + ":" + val[(typeof key === "number" && key < 0) ? val.length + key : key]);
                         }
                         return ρσ_interpolate_kwargs.call(this, add_val, [ans].concat([ρσ_desugar_kwargs({join: ", "})]));
@@ -34754,9 +34754,9 @@ return this.__repr__();
                     break;
                 }
                 rendered = E.span();
-                var ρσ_Iter2 = ρσ_Iterable(n.nodeValue.split(/({#?[_a-z0-9]+})/));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    field = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter254 = ρσ_Iterable(n.nodeValue.split(/({#?[_a-z0-9]+})/));
+                for (var ρσ_Index254 = 0; ρσ_Index254 < ρσ_Iter254.length; ρσ_Index254++) {
+                    field = ρσ_Iter254[ρσ_Index254];
                     if (field[0] === "{" && field[field.length-1] === "}") {
                         count += 1;
                         val = render_field(field.slice(1, -1), metadata, book_id);
@@ -34773,9 +34773,9 @@ return this.__repr__();
                 }
                 replacements.push([rendered, n]);
             }
-            var ρσ_Iter3 = ρσ_Iterable(replacements);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter255 = ρσ_Iterable(replacements);
+            for (var ρσ_Index255 = 0; ρσ_Index255 < ρσ_Iter255.length; ρσ_Index255++) {
+                ρσ_unpack = ρσ_Iter255[ρσ_Index255];
                 new_child = ρσ_unpack[0];
                 old_child = ρσ_unpack[1];
                 old_child.parentNode.replaceChild(new_child, old_child);
@@ -34794,9 +34794,9 @@ return this.__repr__();
             var parts, part, p, ans;
             parts = [];
             line = line || " ";
-            var ρσ_Iter4 = ρσ_Iterable(line.split(/\|\|\|/));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                p = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter256 = ρσ_Iterable(line.split(/\|\|\|/));
+            for (var ρσ_Index256 = 0; ρσ_Index256 < ρσ_Iter256.length; ρσ_Index256++) {
+                p = ρσ_Iter256[ρσ_Index256];
                 part = render_part(p, template, book_id, metadata);
                 if (part) {
                     parts.push(part);
@@ -34806,9 +34806,9 @@ return this.__repr__();
                 return;
             }
             ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({class_: "custom-line"})]);
-            var ρσ_Iter5 = ρσ_Iterable(parts);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                p = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter257 = ρσ_Iterable(parts);
+            for (var ρσ_Index257 = 0; ρσ_Index257 < ρσ_Iter257.length; ρσ_Index257++) {
+                p = ρσ_Iter257[ρσ_Index257];
                 ans.appendChild(p);
             }
             if (parts.length > 1) {
@@ -34824,9 +34824,9 @@ return this.__repr__();
         function render_template_text(template, book_id, metadata) {
             var ans, ldiv, line, html, val, f, comments;
             ans = E.div();
-            var ρσ_Iter6 = ρσ_Iterable(template.lines);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                line = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter258 = ρσ_Iterable(template.lines);
+            for (var ρσ_Index258 = 0; ρσ_Index258 < ρσ_Iter258.length; ρσ_Index258++) {
+                line = ρσ_Iter258[ρσ_Index258];
                 ldiv = render_line(line, template, book_id, metadata);
                 if (ldiv) {
                     ans.appendChild(ldiv);
@@ -34834,9 +34834,9 @@ return this.__repr__();
             }
             if (template.comments_fields.length) {
                 html = "";
-                var ρσ_Iter7 = ρσ_Iterable(template.comments_fields);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    f = ρσ_Iter7[ρσ_Index7];
+                var ρσ_Iter259 = ρσ_Iterable(template.comments_fields);
+                for (var ρσ_Index259 = 0; ρσ_Index259 < ρσ_Iter259.length; ρσ_Index259++) {
+                    f = ρσ_Iter259[ρσ_Index259];
                     val = metadata[(typeof f === "number" && f < 0) ? metadata.length + f : f];
                     if (val) {
                         html += "<div style=\"margin-bottom:1.5ex\">" + ρσ_str.format("{}", val) + "</div>";
@@ -35102,9 +35102,9 @@ return this.__repr__();
             div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.span, [item_data.text + ": "].concat([ρσ_desugar_kwargs({style: "white-space:pre"})])), ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({required: "1"})])].concat([ρσ_desugar_kwargs({id: self.widget_id})]));
             container.appendChild(div);
             select = div.lastChild;
-            var ρσ_Iter0 = ρσ_Iterable(item_data.choices);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter260 = ρσ_Iterable(item_data.choices);
+            for (var ρσ_Index260 = 0; ρσ_Index260 < ρσ_Iter260.length; ρσ_Index260++) {
+                ρσ_unpack = ρσ_Iter260[ρσ_Index260];
                 choice = ρσ_unpack[0];
                 text = ρσ_unpack[1];
                 select.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [text].concat([ρσ_desugar_kwargs({value: choice})])));
@@ -35223,9 +35223,9 @@ return this.__repr__();
             div = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.span, [item_data.text + ": "].concat([ρσ_desugar_kwargs({style: "white-space:pre"})])), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", step: "any", min: "1", max: "100"})])].concat([ρσ_desugar_kwargs({id: self.widget_id})]));
             container.appendChild(div);
             control = div.lastChild;
-            var ρσ_Iter1 = ρσ_Iterable("min max step".split(" "));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                attr = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter261 = ρσ_Iterable("min max step".split(" "));
+            for (var ρσ_Index261 = 0; ρσ_Index261 < ρσ_Iter261.length; ρσ_Index261++) {
+                attr = ρσ_Iter261[ρσ_Index261];
                 val = item_data[(typeof attr === "number" && attr < 0) ? item_data.length + attr : attr];
                 if (val !== undefined && val !== null) {
                     control.setAttribute(attr, "" + val);
@@ -35340,9 +35340,9 @@ return this.__repr__();
             state.container_id = ensure_id(container);
             state.widgets = ρσ_list_decorate([]);
             clear(container);
-            var ρσ_Iter2 = ρσ_Iterable(prefs_data);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                item = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter262 = ρσ_Iterable(prefs_data);
+            for (var ρσ_Index262 = 0; ρσ_Index262 < ρσ_Iter262.length; ρσ_Index262++) {
+                item = ρσ_Iter262[ρσ_Index262];
                 div = ρσ_interpolate_kwargs.call(E, E.div, [E.div(), ρσ_interpolate_kwargs.call(E, E.div, [item.tooltip || ""].concat([ρσ_desugar_kwargs({style: "font-size:0.8rem; font-style: italic; margin-top:1ex; display:none"})]))].concat([ρσ_desugar_kwargs({style: "margin-bottom:1ex; padding: 1ex 1em; border-bottom: solid 1px currentColor", title: item.tooltip, data_name: item.name})]));
                 container.appendChild(div);
                 val = get_session_data().get(item.name);
@@ -35371,9 +35371,9 @@ return this.__repr__();
 
         function reset_to_defaults() {
             var w;
-            var ρσ_Iter3 = ρσ_Iterable(state.widgets);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                w = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter263 = ρσ_Iterable(state.widgets);
+            for (var ρσ_Index263 = 0; ρσ_Index263 < ρσ_Iter263.length; ρσ_Index263++) {
+                w = ρσ_Iter263[ρσ_Index263];
                 w.reset_to_default();
             }
         };
@@ -35584,9 +35584,9 @@ return this.__repr__();
             var ans, child_index;
             path = path || state.tag_path;
             ans = state.tag_browser_data;
-            var ρσ_Iter0 = ρσ_Iterable(path);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                child_index = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter264 = ρσ_Iterable(path);
+            for (var ρσ_Index264 = 0; ρσ_Index264 < ρσ_Iter264.length; ρσ_Index264++) {
+                child_index = ρσ_Iter264[ρσ_Index264];
                 ans = (ρσ_expr_temp = ans.children)[(typeof child_index === "number" && child_index < 0) ? ρσ_expr_temp.length + child_index : child_index];
             }
             return ans;
@@ -35679,9 +35679,9 @@ return this.__repr__();
                 category = item.category;
                 if (item.is_first_letter) {
                     letters_seen = Object.create(null);
-                    var ρσ_Iter1 = ρσ_Iterable(node.children);
-                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                        child = ρσ_Iter1[ρσ_Index1];
+                    var ρσ_Iter265 = ρσ_Iterable(node.children);
+                    for (var ρσ_Index265 = 0; ρσ_Index265 < ρσ_Iter265.length; ρσ_Index265++) {
+                        child = ρσ_Iter265[ρσ_Index265];
                         if (child.data.sort) {
                             letters_seen[ρσ_bound_index(child.data.sort[0], letters_seen)] = true;
                         }
@@ -35784,9 +35784,9 @@ return this.__repr__();
             container = document.getElementById(state.container_id);
             sic = component(container, "search_expression");
             clear(sic);
-            var ρσ_Iter2 = ρσ_Iterable(Object.keys(state.active_nodes));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                node_id = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter266 = ρσ_Iterable(Object.keys(state.active_nodes));
+            for (var ρσ_Index266 = 0; ρσ_Index266 < ρσ_Iter266.length; ρσ_Index266++) {
+                node_id = ρσ_Iter266[ρσ_Index266];
                 ρσ_unpack = (ρσ_expr_temp = state.active_nodes)[(typeof node_id === "number" && node_id < 0) ? ρσ_expr_temp.length + node_id : node_id];
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 search_type = ρσ_unpack[0];
@@ -35858,9 +35858,9 @@ return this.__repr__();
                     "minusminus"] ]));
                 }
                 interface_data = get_interface_data();
-                var ρσ_Iter3 = ρσ_Iterable(items);
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter267 = ρσ_Iterable(items);
+                for (var ρσ_Index267 = 0; ρσ_Index267 < ρσ_Iter267.length; ρσ_Index267++) {
+                    ρσ_unpack = ρσ_Iter267[ρσ_Index267];
                     text = ρσ_unpack[0];
                     search_type = ρσ_unpack[1];
                     li = ρσ_interpolate_kwargs.call(E, E.li, [ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: absolute_path("{}/{}.png".format(interface_data.icon_path, search_type)), style: "max-height: 2.5ex; margin-right:0.5rem"})]), E.span(text)].concat([ρσ_desugar_kwargs({style: "display:flex; align-items: center; margin-bottom:0.5ex; padding: 0.5ex; cursor:pointer"})]));
@@ -35921,9 +35921,9 @@ return this.__repr__();
 
         function render_children(container, children) {
             var data, tooltip, ρσ_unpack, icon, fallback, div, i, node;
-            var ρσ_Iter4 = ρσ_Iterable(enumerate(children));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter268 = ρσ_Iterable(enumerate(children));
+            for (var ρσ_Index268 = 0; ρσ_Index268 < ρσ_Iter268.length; ρσ_Index268++) {
+                ρσ_unpack = ρσ_Iter268[ρσ_Index268];
                 i = ρσ_unpack[0];
                 node = ρσ_unpack[1];
                 data = node.data;
@@ -36007,9 +36007,9 @@ return this.__repr__();
 
             create_breadcrumb();
             parent = state.tag_browser_data;
-            var ρσ_Iter5 = ρσ_Iterable(enumerate(state.tag_path));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                ρσ_unpack = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter269 = ρσ_Iterable(enumerate(state.tag_path));
+            for (var ρσ_Index269 = 0; ρσ_Index269 < ρσ_Iter269.length; ρσ_Index269++) {
+                ρσ_unpack = ρσ_Iter269[ρσ_Index269];
                 i = ρσ_unpack[0];
                 index = ρσ_unpack[1];
                 parent = (ρσ_expr_temp = parent.children)[(typeof index === "number" && index < 0) ? ρσ_expr_temp.length + index : index];
@@ -36071,9 +36071,9 @@ return this.__repr__();
                 var child;
                 (ρσ_expr_temp = state.node_id_map)[ρσ_bound_index(node.id, ρσ_expr_temp)] = node;
                 node.data = item_map[ρσ_bound_index(node.id, item_map)];
-                var ρσ_Iter6 = ρσ_Iterable(node.children);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    child = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter270 = ρσ_Iterable(node.children);
+                for (var ρσ_Index270 = 0; ρσ_Index270 < ρσ_Iter270.length; ρσ_Index270++) {
+                    child = ρσ_Iter270[ρσ_Index270];
                     child.parent = node;
                     process_node(child, item_map);
                 }
@@ -36128,9 +36128,9 @@ return this.__repr__();
                 ρσ_d["vl"] = current_virtual_library();
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter7 = ρσ_Iterable("sort_tags_by partition_method collapse_at dont_collapse hide_empty_categories".split(" "));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                k = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter271 = ρσ_Iterable("sort_tags_by partition_method collapse_at dont_collapse hide_empty_categories".split(" "));
+            for (var ρσ_Index271 = 0; ρσ_Index271 < ρσ_Iter271.length; ρσ_Index271++) {
+                k = ρσ_Iter271[ρσ_Index271];
                 query[(typeof k === "number" && k < 0) ? query.length + k : k] = sd.get(k) + "";
             }
             xhr = ρσ_interpolate_kwargs.call(this, ajax, ["interface-data/tag-browser", on_data_fetched].concat([ρσ_desugar_kwargs({query: query, bypass_cache: false})]));
@@ -36475,10 +36475,10 @@ return this.__repr__();
                 ρσ_unpack = [container.offsetLeft, container.offsetTop];
                 left = ρσ_unpack[0];
                 top = ρσ_unpack[1];
-                for (var ρσ_Index0 = 5; ρσ_Index0 < 100; ρσ_Index0+=5) {
-                    y = ρσ_Index0;
-                    for (var ρσ_Index1 = 25; ρσ_Index1 < 125; ρσ_Index1+=5) {
-                        x = ρσ_Index1;
+                for (var ρσ_Index272 = 5; ρσ_Index272 < 100; ρσ_Index272+=5) {
+                    y = ρσ_Index272;
+                    for (var ρσ_Index273 = 25; ρσ_Index273 < 125; ρσ_Index273+=5) {
+                        x = ρσ_Index273;
                         elem = document.elementFromPoint(left + x, top + y);
                         p = has_parent_with_class(elem, ITEM_CLASS_NAME);
                         if (p) {
@@ -36564,9 +36564,9 @@ return this.__repr__();
             book_ids = book_ids || current_book_ids();
             div = component("book_list");
             if (div) {
-                var ρσ_Iter2 = ρσ_Iterable(book_ids);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    book_id = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter274 = ρσ_Iterable(book_ids);
+                for (var ρσ_Index274 = 0; ρσ_Index274 < ρσ_Iter274.length; ρσ_Index274++) {
+                    book_id = ρσ_Iter274[ρσ_Index274];
                     child = render_id(book_id);
                     if (child) {
                         book_list_data.append_item(div, child);
@@ -36712,9 +36712,9 @@ return this.__repr__();
                 ρσ_d["offset"] = book_list_data.shown_book_ids.length;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter3 = ρσ_Iterable(ρσ_list_decorate([ "query", "sort", "sort_order", "vl" ]));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                key = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter275 = ρσ_Iterable(ρσ_list_decorate([ "query", "sort", "sort_order", "vl" ]));
+            for (var ρσ_Index275 = 0; ρσ_Index275 < ρσ_Iter275.length; ρσ_Index275++) {
+                key = ρσ_Iter275[ρσ_Index275];
                 data[(typeof key === "number" && key < 0) ? data.length + key : key] = (ρσ_expr_temp = library_data.search_result)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key];
             }
             book_list_data.fetching_more_books = ρσ_interpolate_kwargs.call(this, ajax_send, ["interface-data/more-books", data, got_more_books].concat([ρσ_desugar_kwargs({query: (function(){
@@ -36968,9 +36968,9 @@ return this.__repr__();
             if (csf === "date") {
                 csf = "timestamp";
             }
-            var ρσ_Iter4 = ρσ_Iterable(library_data.sortable_fields);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter276 = ρσ_Iterable(library_data.sortable_fields);
+            for (var ρσ_Index276 = 0; ρσ_Index276 < ρσ_Iter276.length; ρσ_Index276++) {
+                ρσ_unpack = ρσ_Iter276[ρσ_Index276];
                 field = ρσ_unpack[0];
                 name = ρσ_unpack[1];
                 subtitle = icon_name = null;
@@ -37054,9 +37054,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })());
-            var ρσ_Iter5 = ρσ_Iterable(vl_names);
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                name = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter277 = ρσ_Iterable(vl_names);
+            for (var ρσ_Index277 = 0; ρσ_Index277 < ρσ_Iter277.length; ρσ_Index277++) {
+                name = ρσ_Iter277[ρσ_Index277];
                 items.push(ρσ_interpolate_kwargs.call(this, create_item, [name].concat([ρσ_desugar_kwargs({subtitle: vls[(typeof name === "number" && name < 0) ? vls.length + name : name], action: show_vl.bind(null, name, true)})])));
             }
             container.appendChild(E.div());
@@ -37359,9 +37359,9 @@ return this.__repr__();
             if (formats.length && formats.indexOf(fmt) === -1) {
                 found = false;
                 formats = ρσ_interpolate_kwargs.call(this, sorted, [formats].concat([ρσ_desugar_kwargs({key: sort_formats_key})]));
-                var ρσ_Iter0 = ρσ_Iterable(formats);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    q = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter278 = ρσ_Iterable(formats);
+                for (var ρσ_Index278 = 0; ρσ_Index278 < ρσ_Iter278.length; ρσ_Index278++) {
+                    q = ρσ_Iter278[ρσ_Index278];
                     if (input_formats[(typeof q === "number" && q < 0) ? input_formats.length + q : q]) {
                         fmt = q;
                         found = true;
@@ -37499,9 +37499,9 @@ return this.__repr__();
         function setup_iframe(iframe) {
             var de, a, key;
             de = adjust_iframe_height(iframe);
-            var ρσ_Iter1 = ρσ_Iterable(de.querySelectorAll("a[href]"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                a = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter279 = ρσ_Iterable(de.querySelectorAll("a[href]"));
+            for (var ρσ_Index279 = 0; ρσ_Index279 < ρσ_Iter279.length; ρσ_Index279++) {
+                a = ρσ_Iter279[ρσ_Index279];
                 a.setAttribute("target", "_parent");
             }
             function forward_touch_events(ev) {
@@ -37517,9 +37517,9 @@ return this.__repr__();
                 __module__ : {value: "book_list.book_details"}
             });
 
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ "start", "move", "end", "cancel" ]));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                key = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter280 = ρσ_Iterable(ρσ_list_decorate([ "start", "move", "end", "cancel" ]));
+            for (var ρσ_Index280 = 0; ρσ_Index280 < ρσ_Iter280.length; ρσ_Index280++) {
+                key = ρσ_Iter280[ρσ_Index280];
                 iframe.contentWindow.addEventListener("touch" + ρσ_str.format("{}", key) + "", forward_touch_events);
             }
         };
@@ -37530,9 +37530,9 @@ return this.__repr__();
 
         function adjust_all_iframes(ev) {
             var ww, iframe;
-            var ρσ_Iter3 = ρσ_Iterable(document.querySelectorAll("." + ρσ_str.format("{}", CLASS_NAME) + " iframe"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                iframe = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter281 = ρσ_Iterable(document.querySelectorAll("." + ρσ_str.format("{}", CLASS_NAME) + " iframe"));
+            for (var ρσ_Index281 = 0; ρσ_Index281 < ρσ_Iter281.length; ρσ_Index281++) {
+                iframe = ρσ_Iter281[ρσ_Index281];
                 ww = parseInt(iframe.dataset.last_window_width);
                 if (ww !== window.innerWidth) {
                     adjust_iframe_height(iframe);
@@ -37546,8 +37546,8 @@ return this.__repr__();
 
         function add_stars_to(stars, val, allow_half_stars) {
             var i;
-            for (var ρσ_Index4 = 0; ρσ_Index4 < Math.floor(val / 2); ρσ_Index4++) {
-                i = ρσ_Index4;
+            for (var ρσ_Index282 = 0; ρσ_Index282 < Math.floor(val / 2); ρσ_Index282++) {
+                i = ρσ_Index282;
                 stars.appendChild(svgicon("star"));
             }
             if (allow_half_stars && val % 2) {
@@ -37873,9 +37873,9 @@ return this.__repr__();
                     if (!join) {
                         add_val(val);
                     } else {
-                        var ρσ_Iter5 = ρσ_Iterable(val);
-                        for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                            v = ρσ_Iter5[ρσ_Index5];
+                        var ρσ_Iter283 = ρσ_Iterable(val);
+                        for (var ρσ_Index283 = 0; ρσ_Index283 < ρσ_Iter283.length; ρσ_Index283++) {
+                            v = ρσ_Iter283[ρσ_Index283];
                             add_val(v);
                             if (v !== val[val.length-1]) {
                                 if (is_vertical) {
@@ -37935,9 +37935,9 @@ return this.__repr__();
                 if (val.length && (typeof book_id !== "undefined" && book_id !== null)) {
                     table.appendChild(E.tr(E.td(name), E.td()));
                     td = table.lastChild.lastChild;
-                    var ρσ_Iter6 = ρσ_Iterable(val);
-                    for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                        fmt = ρσ_Iter6[ρσ_Index6];
+                    var ρσ_Iter284 = ρσ_Iterable(val);
+                    for (var ρσ_Index284 = 0; ρσ_Index284 < ρσ_Iter284.length; ρσ_Index284++) {
+                        fmt = ρσ_Iter284[ρσ_Index284];
                         fmt = fmt.toUpperCase();
                         td.appendChild(ρσ_interpolate_kwargs.call(E, E.a, [fmt].concat([ρσ_desugar_kwargs({class_: "blue-link", href: "javascript:void(0)", title: _("Read or download this book in the {} format").format(fmt), onclick: on_fmt_click.bind([mi.title, mi.format_sizes[fmt] || 0]), data_format: fmt, data_book_id: "" + book_id})])));
                         if (fmt !== val[val.length-1]) {
@@ -37977,9 +37977,9 @@ return this.__repr__();
 
                 if (val && mi.urls_from_identifiers && mi.urls_from_identifiers.length > 0) {
                     td = E.td();
-                    var ρσ_Iter7 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [mi.urls_from_identifiers || []].concat([ρσ_desugar_kwargs({key: ids_sorter})])));
-                    for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                        ρσ_unpack = ρσ_flatten(ρσ_Iter7[ρσ_Index7]);
+                    var ρσ_Iter285 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [mi.urls_from_identifiers || []].concat([ρσ_desugar_kwargs({key: ids_sorter})])));
+                    for (var ρσ_Index285 = 0; ρσ_Index285 < ρσ_Iter285.length; ρσ_Index285++) {
+                        ρσ_unpack = ρσ_flatten(ρσ_Iter285[ρσ_Index285]);
                         text = ρσ_unpack[0];
                         k = ρσ_unpack[1];
                         idval = ρσ_unpack[2];
@@ -38021,9 +38021,9 @@ return this.__repr__();
                 if (val && val.length) {
                     table.appendChild(E.tr(E.td(name), E.td()));
                     td = table.lastChild.lastChild;
-                    var ρσ_Iter8 = ρσ_Iterable(val);
-                    for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                        k = ρσ_Iter8[ρσ_Index8];
+                    var ρσ_Iter286 = ρσ_Iterable(val);
+                    for (var ρσ_Index286 = 0; ρσ_Index286 < ρσ_Iter286.length; ρσ_Index286++) {
+                        k = ρσ_Iter286[ρσ_Index286];
                         if (mi.lang_names) {
                             lang = (ρσ_expr_temp = mi.lang_names)[(typeof k === "number" && k < 0) ? ρσ_expr_temp.length + k : k] || k;
                         } else {
@@ -38195,9 +38195,9 @@ return this.__repr__();
                 __module__ : {value: "book_list.book_details"}
             });
 
-            var ρσ_Iter9 = ρσ_Iterable(fields);
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                field = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter287 = ρσ_Iterable(fields);
+            for (var ρσ_Index287 = 0; ρσ_Index287 < ρσ_Iter287.length; ρσ_Index287++) {
+                field = ρσ_Iter287[ρσ_Index287];
                 fm = field_metadata[(typeof field === "number" && field < 0) ? field_metadata.length + field : field];
                 if (!fm) {
                     continue;
@@ -38215,9 +38215,9 @@ return this.__repr__();
                 }
             }
             all_html = "";
-            var ρσ_Iter10 = ρσ_Iterable(comments);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                ρσ_unpack = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter288 = ρσ_Iterable(comments);
+            for (var ρσ_Index288 = 0; ρσ_Index288 < ρσ_Iter288.length; ρσ_Index288++) {
+                ρσ_unpack = ρσ_Iter288[ρσ_Index288];
                 field = ρσ_unpack[0];
                 comment = ρσ_unpack[1];
                 if (comment) {
@@ -38528,9 +38528,9 @@ return this.__repr__();
             container_id = container.id;
             function has_active_touches() {
                 var t, tid;
-                var ρσ_Iter11 = ρσ_Iterable(ongoing_touches);
-                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                    tid = ρσ_Iter11[ρσ_Index11];
+                var ρσ_Iter289 = ρσ_Iterable(ongoing_touches);
+                for (var ρσ_Index289 = 0; ρσ_Index289 < ρσ_Iter289.length; ρσ_Index289++) {
+                    tid = ρσ_Iter289[ρσ_Index289];
                     t = ongoing_touches[(typeof tid === "number" && tid < 0) ? ongoing_touches.length + tid : tid];
                     if (t.active) {
                         return true;
@@ -38549,31 +38549,31 @@ return this.__repr__();
                     return;
                 }
                 if (ev.type === "touchstart") {
-                    var ρσ_Iter12 = ρσ_Iterable(ev.changedTouches);
-                    for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                        touch = ρσ_Iter12[ρσ_Index12];
+                    var ρσ_Iter290 = ρσ_Iterable(ev.changedTouches);
+                    for (var ρσ_Index290 = 0; ρσ_Index290 < ρσ_Iter290.length; ρσ_Index290++) {
+                        touch = ρσ_Iter290[ρσ_Index290];
                         ongoing_touches[ρσ_bound_index(touch_id(touch), ongoing_touches)] = copy_touch(touch);
                         gesture_id += 1;
                     }
                 } else if (ev.type === "touchmove") {
-                    var ρσ_Iter13 = ρσ_Iterable(ev.changedTouches);
-                    for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                        touch = ρσ_Iter13[ρσ_Index13];
+                    var ρσ_Iter291 = ρσ_Iterable(ev.changedTouches);
+                    for (var ρσ_Index291 = 0; ρσ_Index291 < ρσ_Iter291.length; ρσ_Index291++) {
+                        touch = ρσ_Iter291[ρσ_Index291];
                         t = ongoing_touches[ρσ_bound_index(touch_id(touch), ongoing_touches)];
                         if (t) {
                             update_touch(t, touch);
                         }
                     }
                 } else if (ev.type === "touchcancel") {
-                    var ρσ_Iter14 = ρσ_Iterable(ev.changedTouches);
-                    for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                        touch = ρσ_Iter14[ρσ_Index14];
+                    var ρσ_Iter292 = ρσ_Iterable(ev.changedTouches);
+                    for (var ρσ_Index292 = 0; ρσ_Index292 < ρσ_Iter292.length; ρσ_Index292++) {
+                        touch = ρσ_Iter292[ρσ_Index292];
                         delete ongoing_touches[touch_id(touch)];
                     }
                 } else if (ev.type === "touchend") {
-                    var ρσ_Iter15 = ρσ_Iterable(ev.changedTouches);
-                    for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                        touch = ρσ_Iter15[ρσ_Index15];
+                    var ρσ_Iter293 = ρσ_Iterable(ev.changedTouches);
+                    for (var ρσ_Index293 = 0; ρσ_Index293 < ρσ_Iter293.length; ρσ_Index293++) {
+                        touch = ρσ_Iter293[ρσ_Index293];
                         t = ongoing_touches[ρσ_bound_index(touch_id(touch), ongoing_touches)];
                         if (t) {
                             t.active = false;
@@ -38972,9 +38972,9 @@ return this.__repr__();
             added = [];
             function exists(fname) {
                 var q, relpath;
-                var ρσ_Iter16 = ρσ_Iterable(mi.data_files);
-                for (var ρσ_Index16 = 0; ρσ_Index16 < ρσ_Iter16.length; ρσ_Index16++) {
-                    relpath = ρσ_Iter16[ρσ_Index16];
+                var ρσ_Iter294 = ρσ_Iterable(mi.data_files);
+                for (var ρσ_Index294 = 0; ρσ_Index294 < ρσ_Iter294.length; ρσ_Index294++) {
+                    relpath = ρσ_Iter294[ρσ_Index294];
                     q = relpath.partition("/")[2];
                     if (q === fname) {
                         return true;
@@ -39016,9 +39016,9 @@ return this.__repr__();
                     })());
                 }
             }
-            var ρσ_Iter17 = ρσ_Iterable(files);
-            for (var ρσ_Index17 = 0; ρσ_Index17 < ρσ_Iter17.length; ρσ_Index17++) {
-                file = ρσ_Iter17[ρσ_Index17];
+            var ρσ_Iter295 = ρσ_Iterable(files);
+            for (var ρσ_Index295 = 0; ρσ_Index295 < ρσ_Iter295.length; ρσ_Index295++) {
+                file = ρσ_Iter295[ρσ_Index295];
                 data = (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["name"] = file.name;
@@ -39033,9 +39033,9 @@ return this.__repr__();
                     var ρσ_anonfunc = function (evt) {
                         var entry;
                         data.data_url = evt.target.result;
-                        var ρσ_Iter18 = ρσ_Iterable(added);
-                        for (var ρσ_Index18 = 0; ρσ_Index18 < ρσ_Iter18.length; ρσ_Index18++) {
-                            entry = ρσ_Iter18[ρσ_Index18];
+                        var ρσ_Iter296 = ρσ_Iterable(added);
+                        for (var ρσ_Index296 = 0; ρσ_Index296 < ρσ_Iter296.length; ρσ_Index296++) {
+                            entry = ρσ_Iter296[ρσ_Index296];
                             if (!entry.data_url) {
                                 return;
                             }
@@ -39140,9 +39140,9 @@ return this.__repr__();
                     });
                     return ρσ_anonfunc;
                 })()})]));
-                var ρσ_Iter19 = ρσ_Iterable(df);
-                for (var ρσ_Index19 = 0; ρσ_Index19 < ρσ_Iter19.length; ρσ_Index19++) {
-                    relpath = ρσ_Iter19[ρσ_Index19];
+                var ρσ_Iter297 = ρσ_Iterable(df);
+                for (var ρσ_Index297 = 0; ρσ_Index297 < ρσ_Iter297.length; ρσ_Index297++) {
+                    relpath = ρσ_Iter297[ρσ_Index297];
                     fname = fname_map[(typeof relpath === "number" && relpath < 0) ? fname_map.length + relpath : relpath];
                     being_deleted = relpath === relpath_being_deleted;
                     subtitle = null;
@@ -39242,26 +39242,26 @@ return this.__repr__();
             author_links = E.ul();
             book_links = E.ul();
             if (interface_data.search_the_net_urls) {
-                var ρσ_Iter20 = ρσ_Iterable(interface_data.search_the_net_urls);
-                for (var ρσ_Index20 = 0; ρσ_Index20 < ρσ_Iter20.length; ρσ_Index20++) {
-                    entry = ρσ_Iter20[ρσ_Index20];
+                var ρσ_Iter298 = ρσ_Iterable(interface_data.search_the_net_urls);
+                for (var ρσ_Index298 = 0; ρσ_Index298 < ρσ_Iter298.length; ρσ_Index298++) {
+                    entry = ρσ_Iter298[ρσ_Index298];
                     links = (entry.type === "book") ? book_links : author_links;
                     links.appendChild(E.li(link_for(entry.name, entry.url)));
                 }
             }
-            var ρσ_Iter21 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
+            var ρσ_Iter299 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/book/author/{author}"], [_("Wikipedia"), 
             "https://en.wikipedia.org/w/index.php?search={author}"], [_("Google Books"), "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22"] ]));
-            for (var ρσ_Index21 = 0; ρσ_Index21 < ρσ_Iter21.length; ρσ_Index21++) {
-                ρσ_unpack = ρσ_Iter21[ρσ_Index21];
+            for (var ρσ_Index299 = 0; ρσ_Index299 < ρσ_Iter299.length; ρσ_Index299++) {
+                ρσ_unpack = ρσ_Iter299[ρσ_Index299];
                 name = ρσ_unpack[0];
                 url = ρσ_unpack[1];
                 author_links.appendChild(E.li(link_for(name, url)));
             }
-            var ρσ_Iter22 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google Books"), 
+            var ρσ_Iter300 = ρσ_Iterable(ρσ_list_decorate([ [_("Goodreads"), "https://www.goodreads.com/search?q={author}+{title}&search%5Bsource%5D=goodreads&search_type=books&tab=books"], [_("Google Books"), 
             "https://www.google.com/search?tbm=bks&q=inauthor:%22{author}%22+intitle:%22{title}%22"], [_("Amazon"), 
             "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords={author}+{title}"] ]));
-            for (var ρσ_Index22 = 0; ρσ_Index22 < ρσ_Iter22.length; ρσ_Index22++) {
-                ρσ_unpack = ρσ_Iter22[ρσ_Index22];
+            for (var ρσ_Index300 = 0; ρσ_Index300 < ρσ_Iter300.length; ρσ_Index300++) {
+                ρσ_unpack = ρσ_Iter300[ρσ_Index300];
                 name = ρσ_unpack[0];
                 url = ρσ_unpack[1];
                 book_links.appendChild(E.li(link_for(name, url)));
@@ -39399,9 +39399,9 @@ return this.__repr__();
             }
             container.appendChild(E.h2(_("Choose the library to copy to below")));
             items = ρσ_list_decorate([]);
-            var ρσ_Iter23 = ρσ_Iterable(libraries);
-            for (var ρσ_Index23 = 0; ρσ_Index23 < ρσ_Iter23.length; ρσ_Index23++) {
-                ρσ_unpack = ρσ_Iter23[ρσ_Index23];
+            var ρσ_Iter301 = ρσ_Iterable(libraries);
+            for (var ρσ_Index301 = 0; ρσ_Index301 < ρσ_Iter301.length; ρσ_Index301++) {
+                ρσ_unpack = ρσ_Iter301[ρσ_Index301];
                 library_id = ρσ_unpack[0];
                 library_name = ρσ_unpack[1];
                 if (library_id === current_library_id()) {
@@ -39627,9 +39627,9 @@ return this.__repr__();
             pl.appendChild(E.div(_("Load settings from one of the previously saved profiles below…")));
             pl.appendChild(E.div());
             items = ρσ_list_decorate([]);
-            var ρσ_Iter0 = ρσ_Iterable(names);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                name = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter302 = ρσ_Iterable(names);
+            for (var ρσ_Index302 = 0; ρσ_Index302 < ρσ_Iter302.length; ρσ_Index302++) {
+                name = ρσ_Iter302[ρσ_Index302];
                 display_name = name;
                 if (name === "__default__") {
                     display_name = _("Restore settings to default values");
@@ -39827,18 +39827,18 @@ return this.__repr__();
             sz += "";
             c = document.getElementById(CONTAINER);
             c.dataset.cfs = sz;
-            var ρσ_Iter0 = ρσ_Iterable(c.querySelectorAll("option"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                option = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter303 = ρσ_Iterable(c.querySelectorAll("option"));
+            for (var ρσ_Index303 = 0; ρσ_Index303 < ρσ_Iter303.length; ρσ_Index303++) {
+                option = ρσ_Iter303[ρσ_Index303];
                 if (option.value === sz) {
                     option.classList.add("current");
                 } else {
                     option.classList.remove("current");
                 }
             }
-            var ρσ_Iter1 = ρσ_Iterable(c.querySelectorAll("input"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                input = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter304 = ρσ_Iterable(c.querySelectorAll("input"));
+            for (var ρσ_Index304 = 0; ρσ_Index304 < ρσ_Iter304.length; ρσ_Index304++) {
+                input = ρσ_Iter304[ρσ_Index304];
                 input.value = sz;
             }
             c.querySelector(".cfs_preview").style.fontSize = "" + ρσ_str.format("{}", sz) + "px";
@@ -39867,9 +39867,9 @@ return this.__repr__();
             container.dataset.cfs = cfs + "";
             quick = ρσ_interpolate_kwargs.call(E, E.datalist, [ρσ_desugar_kwargs({style: "display:flex; justify-content:space-around; flex-wrap: wrap; align-items: baseline;"})]);
             container.appendChild(quick);
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ 10, 12, 14, 16, 18, 20, 22 ]));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                sz = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter305 = ρσ_Iterable(ρσ_list_decorate([ 10, 12, 14, 16, 18, 20, 22 ]));
+            for (var ρσ_Index305 = 0; ρσ_Index305 < ρσ_Iter305.length; ρσ_Index305++) {
+                sz = ρσ_Iter305[ρσ_Index305];
                 quick.appendChild(ρσ_interpolate_kwargs.call(E, E.option, ["Aa"].concat([ρσ_desugar_kwargs({title: "{} px".format(sz), class_: (cfs === sz) ? "current" : "", value: sz + "", style: "display: inline-block; font-size:" + ρσ_str.format("{}", sz) + "px; padding: 5px; cursor: pointer; border-radius: 4px; margin: 0 0.5rem", onclick: (function() {
                     var ρσ_anonfunc = function (ev) {
                         set_quick_size(ev);
@@ -40020,9 +40020,9 @@ return this.__repr__();
             } else if (ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs] && ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs].foreground && ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs].background) {
                 ans = ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs];
             } else {
-                var ρσ_Iter0 = ρσ_Iterable(default_color_schemes);
-                for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                    sn = ρσ_Iter0[ρσ_Index0];
+                var ρσ_Iter306 = ρσ_Iterable(default_color_schemes);
+                for (var ρσ_Index306 = 0; ρσ_Index306 < ρσ_Iter306.length; ρσ_Index306++) {
+                    sn = ρσ_Iter306[ρσ_Index306];
                     ans = default_color_schemes[(typeof sn === "number" && sn < 0) ? default_color_schemes.length + sn : sn];
                     break;
                 }
@@ -40039,9 +40039,9 @@ return this.__repr__();
         function change_current_color(ev) {
             var ul, li;
             ul = ev.currentTarget.parentNode;
-            var ρσ_Iter1 = ρσ_Iterable(ul.childNodes);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                li = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter307 = ρσ_Iterable(ul.childNodes);
+            for (var ρσ_Index307 = 0; ρσ_Index307 < ρσ_Iter307.length; ρσ_Index307++) {
+                li = ρσ_Iter307[ρσ_Index307];
                 li.setAttribute("class", (li === ev.currentTarget) ? "current-color" : "");
             }
             set_action_button_visibility(ul.parentNode);
@@ -40055,9 +40055,9 @@ return this.__repr__();
             var container, inp;
             container = document.getElementById(EDIT_SCHEME);
             container.style.display = "block";
-            var ρσ_Iter2 = ρσ_Iterable(container.querySelectorAll("input"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                inp = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter308 = ρσ_Iterable(container.querySelectorAll("input"));
+            for (var ρσ_Index308 = 0; ρσ_Index308 < ρσ_Iter308.length; ρσ_Index308++) {
+                inp = ρσ_Iter308[ρσ_Index308];
                 if (inp.name.endswith("_color_type")) {
                     inp.checked = inp.value === "default";
                 } else if (inp.name.startswith("margin_")) {
@@ -40095,9 +40095,9 @@ return this.__repr__();
                 if (scheme.link) {
                     container.querySelector("input[name=link]").value = scheme.link;
                 }
-                var ρσ_Iter3 = ρσ_Iterable(MARGINS);
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    which = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter309 = ρσ_Iterable(MARGINS);
+                for (var ρσ_Index309 = 0; ρσ_Index309 < ρσ_Iter309.length; ρσ_Index309++) {
+                    which = ρσ_Iter309[ρσ_Index309];
                     attr = "margin_" + ρσ_str.format("{}", which) + "";
                     val = scheme[(typeof attr === "number" && attr < 0) ? scheme.length + attr : attr];
                     set_radio_group_value(container, "" + ρσ_str.format("{}", attr) + "_color_type", (val) ? "custom" : "default");
@@ -40155,9 +40155,9 @@ return this.__repr__();
             var ul, done, li;
             ul = document.getElementById(COLOR_LIST);
             done = false;
-            var ρσ_Iter4 = ρσ_Iterable(ul.childNodes);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                li = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter310 = ρσ_Iterable(ul.childNodes);
+            for (var ρσ_Index310 = 0; ρσ_Index310 < ρσ_Iter310.length; ρσ_Index310++) {
+                li = ρσ_Iter310[ρσ_Index310];
                 li.classList.remove("current-color");
                 if (li.getAttribute("data-name") === value) {
                     li.classList.add("current-color");
@@ -40165,9 +40165,9 @@ return this.__repr__();
                 }
             }
             if (!done) {
-                var ρσ_Iter5 = ρσ_Iterable(ul.childNodes);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    li = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter311 = ρσ_Iterable(ul.childNodes);
+                for (var ρσ_Index311 = 0; ρσ_Index311 < ρσ_Iter311.length; ρσ_Index311++) {
+                    li = ρσ_Iter311[ρσ_Index311];
                     li.classList.add("current-color");
                     break;
                 }
@@ -40202,19 +40202,19 @@ return this.__repr__();
                     error_dialog(_("Name not specified"), _("You must specify a name for the color scheme"));
                     return;
                 }
-                var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ "bg", "fg", "link" ]));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    col = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter312 = ρσ_Iterable(ρσ_list_decorate([ "bg", "fg", "link" ]));
+                for (var ρσ_Index312 = 0; ρσ_Index312 < ρσ_Iter312.length; ρσ_Index312++) {
+                    col = ρσ_Iter312[ρσ_Index312];
                     if (!check_color(col)) {
                         return;
                     }
                 }
-                var ρσ_Iter7 = ρσ_Iterable(MARGINS);
-                for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                    margin = ρσ_Iter7[ρσ_Index7];
-                    var ρσ_Iter8 = ρσ_Iterable(ρσ_list_decorate([ "fg", "bg" ]));
-                    for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                        which = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter313 = ρσ_Iterable(MARGINS);
+                for (var ρσ_Index313 = 0; ρσ_Index313 < ρσ_Iter313.length; ρσ_Index313++) {
+                    margin = ρσ_Iter313[ρσ_Index313];
+                    var ρσ_Iter314 = ρσ_Iterable(ρσ_list_decorate([ "fg", "bg" ]));
+                    for (var ρσ_Index314 = 0; ρσ_Index314 < ρσ_Iter314.length; ρσ_Index314++) {
+                        which = ρσ_Iter314[ρσ_Index314];
                         if (!check_color("margin_" + ρσ_str.format("{}", margin) + "_" + ρσ_str.format("{}", which) + "")) {
                             return;
                         }
@@ -40233,9 +40233,9 @@ return this.__repr__();
                 if (div.querySelector("input[name=link_color_type]:checked").value === "custom") {
                     ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key].link = colors.link;
                 }
-                var ρσ_Iter9 = ρσ_Iterable(MARGINS);
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    margin = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter315 = ρσ_Iterable(MARGINS);
+                for (var ρσ_Index315 = 0; ρσ_Index315 < ρσ_Iter315.length; ρσ_Index315++) {
+                    margin = ρσ_Iter315[ρσ_Index315];
                     if (div.querySelector("input[name=margin_" + ρσ_str.format("{}", margin) + "_color_type]:checked").value === "custom") {
                         (ρσ_expr_temp = ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key])[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "", ρσ_expr_temp)] = colors[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "_bg", colors)] + ":" + colors[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "_fg", colors)];
                     }
@@ -40254,16 +40254,16 @@ return this.__repr__();
         function all_color_schemes() {
             var all_schemes, k, sd, ucs;
             all_schemes = Object.create(null);
-            var ρσ_Iter10 = ρσ_Iterable(default_color_schemes);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                k = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter316 = ρσ_Iterable(default_color_schemes);
+            for (var ρσ_Index316 = 0; ρσ_Index316 < ρσ_Iter316.length; ρσ_Index316++) {
+                k = ρσ_Iter316[ρσ_Index316];
                 all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k] = default_color_schemes[(typeof k === "number" && k < 0) ? default_color_schemes.length + k : k];
             }
             sd = get_session_data();
             ucs = sd.get("user_color_schemes");
-            var ρσ_Iter11 = ρσ_Iterable(ucs);
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                k = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter317 = ρσ_Iterable(ucs);
+            for (var ρσ_Index317 = 0; ρσ_Index317 < ρσ_Iter317.length; ρσ_Index317++) {
+                k = ρσ_Iter317[ρσ_Index317];
                 all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k] = ucs[(typeof k === "number" && k < 0) ? ucs.length + k : k];
             }
             return all_schemes;
@@ -40282,7 +40282,7 @@ return this.__repr__();
             if (!all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs]) {
                 ccs = session_defaults().current_color_scheme;
             }
-            var ρσ_Iter12 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [all_schemes].concat([ρσ_desugar_kwargs({key: (function() {
+            var ρσ_Iter318 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [all_schemes].concat([ρσ_desugar_kwargs({key: (function() {
                 var ρσ_anonfunc = function (k) {
                     return all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k].name.toLowerCase();
                 };
@@ -40292,8 +40292,8 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})])));
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                name = ρσ_Iter12[ρσ_Index12];
+            for (var ρσ_Index318 = 0; ρσ_Index318 < ρσ_Iter318.length; ρσ_Index318++) {
+                name = ρσ_Iter318[ρσ_Index318];
                 scheme = all_schemes[(typeof name === "number" && name < 0) ? all_schemes.length + name : name];
                 is_current = name === ccs;
                 item = ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.li, [svgicon("check"), " " + scheme.name].concat([ρσ_desugar_kwargs({data_name: name, onclick: change_current_color, class_: (is_current) ? "current-color" : ""})]))].concat([ρσ_desugar_kwargs({color: scheme.foreground, background_color: scheme.background})]));
@@ -40310,9 +40310,9 @@ return this.__repr__();
             ccs = current_color_scheme(container);
             is_custom = ccs.startswith("*");
             is_first = true;
-            var ρσ_Iter13 = ρσ_Iterable(container.querySelectorAll("#" + ACTION_BUTTONS + " > span"));
-            for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                button = ρσ_Iter13[ρσ_Index13];
+            var ρσ_Iter319 = ρσ_Iterable(container.querySelectorAll("#" + ACTION_BUTTONS + " > span"));
+            for (var ρσ_Index319 = 0; ρσ_Index319 < ρσ_Iter319.length; ρσ_Index319++) {
+                button = ρσ_Iter319[ρσ_Index319];
                 if (is_first) {
                     is_first = false;
                 } else {
@@ -40476,9 +40476,9 @@ return this.__repr__();
             if (!current_val) {
                 ans.lastChild.setAttribute("selected", "selected");
             }
-            var ρσ_Iter0 = ρσ_Iterable(runtime.all_font_families);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                family = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter320 = ρσ_Iterable(runtime.all_font_families);
+            for (var ρσ_Index320 = 0; ρσ_Index320 < ρσ_Iter320.length; ρσ_Index320++) {
+                family = ρσ_Iter320[ρσ_Index320];
                 if (family) {
                     ans.appendChild(E.option(family));
                     if (family === current_val) {
@@ -40541,9 +40541,9 @@ return this.__repr__();
         function restore_defaults() {
             var container, q;
             container = get_container();
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ "serif_family", "sans_family", "mono_family" ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                q = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter321 = ρσ_Iterable(ρσ_list_decorate([ "serif_family", "sans_family", "mono_family" ]));
+            for (var ρσ_Index321 = 0; ρσ_Index321 < ρσ_Iter321.length; ρσ_Index321++) {
+                q = ρσ_Iter321[ρσ_Index321];
                 container.querySelector("[name=" + ρσ_str.format("{}", q) + "]").value = "";
             }
             container.querySelector("[name=zoom_step_size]").value = DEFAULT_ZOOM_STEP_SIZE + "";
@@ -40604,9 +40604,9 @@ return this.__repr__();
             if (sf !== DEFAULT_STANDARD_FONT) {
                 vals.standard_font = sf;
             }
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ "serif_family", "sans_family", "mono_family" ]));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                q = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter322 = ρσ_Iterable(ρσ_list_decorate([ "serif_family", "sans_family", "mono_family" ]));
+            for (var ρσ_Index322 = 0; ρσ_Index322 < ρσ_Iter322.length; ρσ_Index322++) {
+                q = ρσ_Iter322[ρσ_Index322];
                 val = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]").value;
                 if (val) {
                     vals[(typeof q === "number" && q < 0) ? vals.length + q : q] = val;
@@ -40672,9 +40672,9 @@ return this.__repr__();
         function restore_defaults(close_func) {
             var q, item;
             get_container().dataset.changed = "true";
-            var ρσ_Iter0 = ρσ_Iterable(get_container().querySelectorAll("[data-user-data]"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                item = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter323 = ρσ_Iterable(get_container().querySelectorAll("[data-user-data]"));
+            for (var ρσ_Index323 = 0; ρσ_Index323 < ρσ_Iter323.length; ρσ_Index323++) {
+                item = ρσ_Iter323[ρσ_Index323];
                 q = JSON.parse(item.dataset.userData);
                 q.shortcuts = (ρσ_expr_temp = shortcuts_definition())[ρσ_bound_index(q.name, ρσ_expr_temp)].shortcuts;
                 item.dataset.userData = JSON.stringify(q);
@@ -40689,9 +40689,9 @@ return this.__repr__();
         function as_groups(shortcuts) {
             var ans, sc, sc_name;
             ans = Object.create(null);
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(shortcuts));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                sc_name = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter324 = ρσ_Iterable(Object.keys(shortcuts));
+            for (var ρσ_Index324 = 0; ρσ_Index324 < ρσ_Iter324.length; ρσ_Index324++) {
+                sc_name = ρσ_Iter324[ρσ_Index324];
                 sc = shortcuts[(typeof sc_name === "number" && sc_name < 0) ? shortcuts.length + sc_name : sc_name];
                 if (!ans[ρσ_bound_index(sc.group, ans)]) {
                     ans[ρσ_bound_index(sc.group, ans)] = Object.create(null);
@@ -40756,9 +40756,9 @@ return this.__repr__();
             container.firstChild.nextSibling.style.display = "block";
             container.lastChild.style.display = "none";
             if (close_customize_shortcut.shortcut_being_customized) {
-                var ρσ_Iter2 = ρσ_Iterable(container.firstChild.querySelectorAll("[data-user-data]"));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    item = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter325 = ρσ_Iterable(container.firstChild.querySelectorAll("[data-user-data]"));
+                for (var ρσ_Index325 = 0; ρσ_Index325 < ρσ_Iter325.length; ρσ_Index325++) {
+                    item = ρσ_Iter325[ρσ_Index325];
                     q = JSON.parse(item.dataset.userData);
                     if (q.name === close_customize_shortcut.shortcut_being_customized) {
                         item.scrollIntoView();
@@ -40768,16 +40768,16 @@ return this.__repr__();
             }
             if (apply_changes) {
                 shortcuts = [];
-                var ρσ_Iter3 = ρσ_Iterable(container.lastChild.querySelectorAll("[data-shortcut]"));
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    x = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter326 = ρσ_Iterable(container.lastChild.querySelectorAll("[data-shortcut]"));
+                for (var ρσ_Index326 = 0; ρσ_Index326 < ρσ_Iter326.length; ρσ_Index326++) {
+                    x = ρσ_Iter326[ρσ_Index326];
                     sc = JSON.parse(x.dataset.shortcut);
                     shortcuts.push(sc);
                 }
                 sc_name = container.lastChild.dataset.scName;
-                var ρσ_Iter4 = ρσ_Iterable(container.querySelectorAll("[data-user-data]"));
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    item = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter327 = ρσ_Iterable(container.querySelectorAll("[data-user-data]"));
+                for (var ρσ_Index327 = 0; ρσ_Index327 < ρσ_Iter327.length; ρσ_Index327++) {
+                    item = ρσ_Iter327[ρσ_Index327];
                     q = JSON.parse(item.dataset.userData);
                     if (q.name === sc_name) {
                         q.shortcuts = shortcuts;
@@ -40842,9 +40842,9 @@ return this.__repr__();
             container.lastChild.style.display = "block";
             close_customize_shortcut.shortcut_being_customized = sc_name;
             shortcuts = [];
-            var ρσ_Iter5 = ρσ_Iterable(container.querySelectorAll("[data-user-data]"));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                item = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter328 = ρσ_Iterable(container.querySelectorAll("[data-user-data]"));
+            for (var ρσ_Index328 = 0; ρσ_Index328 < ρσ_Iter328.length; ρσ_Index328++) {
+                item = ρσ_Iter328[ρσ_Index328];
                 q = JSON.parse(item.dataset.userData);
                 if (q.name === sc_name) {
                     shortcuts = q.shortcuts;
@@ -40861,9 +40861,9 @@ return this.__repr__();
             }
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Existing shortcuts:")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
             key_con = container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({class_: "key-container"})]));
-            var ρσ_Iter6 = ρσ_Iterable(shortcuts);
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                key = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter329 = ρσ_Iterable(shortcuts);
+            for (var ρσ_Index329 = 0; ρσ_Index329 < ρσ_Iter329.length; ρσ_Index329++) {
+                key = ρσ_Iter329[ρσ_Index329];
                 key_con.appendChild(key_widget(key));
             }
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [add_key_widget()].concat([ρσ_desugar_kwargs({style: "margin-top:1ex;"})])));
@@ -40879,9 +40879,9 @@ return this.__repr__();
             container = get_container();
             query = container.querySelector("[name=search-for-sc]").value || "";
             query = query.toLowerCase();
-            var ρσ_Iter7 = ρσ_Iterable(get_container().querySelectorAll("[data-user-data]"));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                item = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter330 = ρσ_Iterable(get_container().querySelectorAll("[data-user-data]"));
+            for (var ρσ_Index330 = 0; ρσ_Index330 < ρσ_Iter330.length; ρσ_Index330++) {
+                item = ρσ_Iter330[ρσ_Index330];
                 q = item.textContent.toLowerCase();
                 matches = !query || q.indexOf(query) > -1;
                 item.style.display = (matches) ? "list-item" : "none";
@@ -40908,15 +40908,15 @@ return this.__repr__();
             sd = get_session_data();
             custom_shortcuts = sd.get("keyboard_shortcuts");
             groups = as_groups(shortcuts_definition());
-            var ρσ_Iter8 = ρσ_Iterable(Object.keys(groups));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                group_name = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter331 = ρσ_Iterable(Object.keys(groups));
+            for (var ρσ_Index331 = 0; ρσ_Index331 < ρσ_Iter331.length; ρσ_Index331++) {
+                group_name = ρσ_Iter331[ρσ_Index331];
                 container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [(ρσ_expr_temp = shortcuts_group_desc())[(typeof group_name === "number" && group_name < 0) ? ρσ_expr_temp.length + group_name : group_name]].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})])));
                 group = groups[(typeof group_name === "number" && group_name < 0) ? groups.length + group_name : group_name];
                 items = ρσ_list_decorate([]);
-                var ρσ_Iter9 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [Object.keys(group)].concat([ρσ_desugar_kwargs({key: sort_group_key.bind(null, group)})])));
-                for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                    sc_name = ρσ_Iter9[ρσ_Index9];
+                var ρσ_Iter332 = ρσ_Iterable(ρσ_interpolate_kwargs.call(this, sorted, [Object.keys(group)].concat([ρσ_desugar_kwargs({key: sort_group_key.bind(null, group)})])));
+                for (var ρσ_Index332 = 0; ρσ_Index332 < ρσ_Iter332.length; ρσ_Index332++) {
+                    sc_name = ρσ_Iter332[ρσ_Index332];
                     sc = group[(typeof sc_name === "number" && sc_name < 0) ? group.length + sc_name : sc_name];
                     items.push(sc_as_item(sc_name, sc, custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name]));
                 }
@@ -40936,9 +40936,9 @@ return this.__repr__();
             if (a.length !== b.length) {
                 return true;
             }
-            var ρσ_Iter10 = ρσ_Iterable(zip(a, b));
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                ρσ_unpack = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter333 = ρσ_Iterable(zip(a, b));
+            for (var ρσ_Index333 = 0; ρσ_Index333 < ρσ_Iter333.length; ρσ_Index333++) {
+                ρσ_unpack = ρσ_Iter333[ρσ_Index333];
                 x = ρσ_unpack[0];
                 y = ρσ_unpack[1];
                 if (shortcut_differs(x, y)) {
@@ -40956,9 +40956,9 @@ return this.__repr__();
             var sd, vals, q, item;
             sd = get_session_data();
             vals = Object.create(null);
-            var ρσ_Iter11 = ρσ_Iterable(get_container().querySelectorAll("[data-user-data]"));
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                item = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter334 = ρσ_Iterable(get_container().querySelectorAll("[data-user-data]"));
+            for (var ρσ_Index334 = 0; ρσ_Index334 < ρσ_Iter334.length; ρσ_Index334++) {
+                item = ρσ_Iter334[ρσ_Index334];
                 q = JSON.parse(item.dataset.userData);
                 if (shortcuts_differ(q.shortcuts, (ρσ_expr_temp = shortcuts_definition())[ρσ_bound_index(q.name, ρσ_expr_temp)].shortcuts)) {
                     vals[ρσ_bound_index(q.name, vals)] = q.shortcuts;
@@ -41039,27 +41039,27 @@ return this.__repr__();
             var defaults, container, which, name;
             defaults = session_defaults();
             container = document.getElementById(CONTAINER);
-            var ρσ_Iter0 = ρσ_Iterable("top bottom left right".split(" "));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                which = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter335 = ρσ_Iterable("top bottom left right".split(" "));
+            for (var ρσ_Index335 = 0; ρσ_Index335 < ρσ_Iter335.length; ρσ_Index335++) {
+                which = ρσ_Iter335[ρσ_Index335];
                 container.querySelector("input[name={}]".format(which)).value = str(defaults[ρσ_bound_index("margin_" + which, defaults)]);
             }
-            var ρσ_Iter1 = ρσ_Iterable("paged flow".split(" "));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                name = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter336 = ρσ_Iterable("paged flow".split(" "));
+            for (var ρσ_Index336 = 0; ρσ_Index336 < ρσ_Iter336.length; ρσ_Index336++) {
+                name = ρσ_Iter336[ρσ_Index336];
                 container.querySelector("#" + ρσ_str.format("{}", READ_MODE) + " input[data-name=" + ρσ_str.format("{}", name) + "]").checked = defaults.read_mode === name;
             }
             if (!runtime.is_standalone_viewer) {
                 container.querySelector("#" + ρσ_str.format("{}", FS_MODE) + " input[value=" + ρσ_str.format("{}", defaults.fullscreen_when_opening) + "]").checked = true;
             }
-            var ρσ_Iter2 = ρσ_Iterable("portrait landscape".split(" "));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                name = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter337 = ρσ_Iterable("portrait landscape".split(" "));
+            for (var ρσ_Index337 = 0; ρσ_Index337 < ρσ_Iter337.length; ρσ_Index337++) {
+                name = ρσ_Iter337[ρσ_Index337];
                 container.querySelector("input[name={}]".format(name)).value = str((ρσ_expr_temp = defaults.columns_per_screen)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
             }
-            var ρσ_Iter3 = ρσ_Iterable("width height".split(" "));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                which = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter338 = ρσ_Iterable("width height".split(" "));
+            for (var ρσ_Index338 = 0; ρσ_Index338 < ρσ_Iter338.length; ρσ_Index338++) {
+                which = ρσ_Iter338[ρσ_Index338];
                 container.querySelector("input[name={}]".format(which)).value = str(defaults[ρσ_bound_index("max_text_" + which, defaults)]);
             }
             container.querySelector("input[name=cover_preserve_aspect_ratio]").checked = defaults.cover_preserve_aspect_ratio;
@@ -41152,9 +41152,9 @@ return this.__repr__();
             var was_changed, sd, i, val, which, rm, crm, fs, cfs, cps, inp, cover_preserve_aspect_ratio;
             was_changed = false;
             sd = get_session_data();
-            var ρσ_Iter4 = ρσ_Iterable("top bottom left right".split(" "));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                which = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter339 = ρσ_Iterable("top bottom left right".split(" "));
+            for (var ρσ_Index339 = 0; ρσ_Index339 < ρσ_Iter339.length; ρσ_Index339++) {
+                which = ρσ_Iter339[ρσ_Index339];
                 i = element(MARGINS, "[name={}]".format(which));
                 try {
                     val = int(i.value);
@@ -41191,9 +41191,9 @@ return this.__repr__();
                 ρσ_d["landscape"] = cps.landscape;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter5 = ρσ_Iterable(ρσ_list_decorate([ "portrait", "landscape" ]));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                which = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter340 = ρσ_Iterable(ρσ_list_decorate([ "portrait", "landscape" ]));
+            for (var ρσ_Index340 = 0; ρσ_Index340 < ρσ_Iter340.length; ρσ_Index340++) {
+                which = ρσ_Iter340[ρσ_Index340];
                 inp = element(COLS, "input[name={}]".format(which));
                 try {
                     val = int(inp.value);
@@ -41209,9 +41209,9 @@ return this.__repr__();
                     was_changed = true;
                 }
             }
-            var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ "width", "height" ]));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                which = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter341 = ρσ_Iterable(ρσ_list_decorate([ "width", "height" ]));
+            for (var ρσ_Index341 = 0; ρσ_Index341 < ρσ_Iter341.length; ρσ_Index341++) {
+                which = ρσ_Iter341[ρσ_Index341];
                 try {
                     val = int(element(TEXT_AREA, "input[name={}]".format(which)).value);
                 } catch (ρσ_Exception) {
@@ -41275,9 +41275,9 @@ return this.__repr__();
         function restore_defaults() {
             var container, control, q;
             container = get_container();
-            var ρσ_Iter0 = ρσ_Iterable(Object.keys(DEFAULTS));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                q = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter342 = ρσ_Iterable(Object.keys(DEFAULTS));
+            for (var ρσ_Index342 = 0; ρσ_Index342 < ρσ_Iter342.length; ρσ_Index342++) {
+                q = ρσ_Iter342[ρσ_Index342];
                 control = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]");
                 if (typeof DEFAULTS[(typeof q === "number" && q < 0) ? DEFAULTS.length + q : q] === "boolean") {
                     control.checked = DEFAULTS[(typeof q === "number" && q < 0) ? DEFAULTS.length + q : q];
@@ -41344,9 +41344,9 @@ return this.__repr__();
             sd = get_session_data();
             container = get_container();
             vals = Object.create(null);
-            var ρσ_Iter1 = ρσ_Iterable(Object.keys(DEFAULTS));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                q = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter343 = ρσ_Iterable(Object.keys(DEFAULTS));
+            for (var ρσ_Index343 = 0; ρσ_Index343 < ρσ_Iter343.length; ρσ_Index343++) {
+                q = ρσ_Iter343[ρσ_Index343];
                 control = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]");
                 if (typeof DEFAULTS[(typeof q === "number" && q < 0) ? DEFAULTS.length + q : q] === "boolean") {
                     val = control.checked;
@@ -41402,9 +41402,9 @@ return this.__repr__();
         function restore_defaults() {
             var container, val, control;
             container = get_container();
-            var ρσ_Iter0 = ρσ_Iterable(container.querySelectorAll("input[name]"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                control = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter344 = ρσ_Iterable(container.querySelectorAll("input[name]"));
+            for (var ρσ_Index344 = 0; ρσ_Index344 < ρσ_Iter344.length; ρσ_Index344++) {
+                control = ρσ_Iter344[ρσ_Index344];
                 val = (ρσ_expr_temp = session_defaults())[ρσ_bound_index(control.getAttribute("name"), ρσ_expr_temp)];
                 if (control.type === "checkbox") {
                     control.checked = val;
@@ -41464,9 +41464,9 @@ return this.__repr__();
                 if (kwargs === null || typeof kwargs !== "object" || kwargs [ρσ_kwargs_symbol] !== true) kwargs = {};
                 var ans, ρσ_unpack, key, val;
                 ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: name, id: name})]);
-                var ρσ_Iter1 = ρσ_Iterable(Object.entries(kwargs));
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    ρσ_unpack = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter345 = ρσ_Iterable(Object.entries(kwargs));
+                for (var ρσ_Index345 = 0; ρσ_Index345 < ρσ_Iter345.length; ρσ_Index345++) {
+                    ρσ_unpack = ρσ_Iter345[ρσ_Index345];
                     key = ρσ_unpack[0];
                     val = ρσ_unpack[1];
                     ans[(typeof key === "number" && key < 0) ? ans.length + key : key] = val;
@@ -41510,9 +41510,9 @@ return this.__repr__();
             sd = get_session_data();
             container = get_container();
             changed = false;
-            var ρσ_Iter2 = ρσ_Iterable(container.querySelectorAll("input[name]"));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                control = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter346 = ρσ_Iterable(container.querySelectorAll("input[name]"));
+            for (var ρσ_Index346 = 0; ρσ_Index346 < ρσ_Iter346.length; ρσ_Index346++) {
+                control = ρσ_Iter346[ρσ_Index346];
                 name = control.getAttribute("name");
                 val = (control.type === "checkbox") ? control.checked : control.valueAsNumber;
                 if (val !== sd.get(name) && control.validity.valid) {
@@ -42231,9 +42231,9 @@ return this.__repr__();
             start_handle.id = self.start_handle_id;
             end_handle = selection_handle();
             end_handle.id = self.end_handle_id;
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ start_handle, end_handle ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                h = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter347 = ρσ_Iterable(ρσ_list_decorate([ start_handle, end_handle ]));
+            for (var ρσ_Index347 = 0; ρσ_Index347 < ρσ_Iter347.length; ρσ_Index347++) {
+                h = ρσ_Iter347[ρσ_Index347];
                 h.addEventListener("mousedown", self.mousedown_on_handle, (function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["passive"] = false;
@@ -42280,9 +42280,9 @@ return this.__repr__();
             var handle_fill, fg, h;
             handle_fill = get_color("window-background");
             fg = self.view.current_color_scheme.foreground;
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                h = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter348 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
+            for (var ρσ_Index348 = 0; ρσ_Index348 < ρσ_Iter348.length; ρσ_Index348++) {
+                h = ρσ_Iter348[ρσ_Index348];
                 set_handle_color(h, handle_fill, fg);
             }
         };
@@ -42312,9 +42312,9 @@ return this.__repr__();
                 ρσ_d["passive"] = false;
                 return ρσ_d;
             }).call(this));
-            var ρσ_Iter2 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                x = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter349 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [notes_container].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px;"})])) ]));
+            for (var ρσ_Index349 = 0; ρσ_Index349 < ρσ_Iter349.length; ρσ_Index349++) {
+                x = ρσ_Iter349[ρσ_Index349];
                 bar_container.appendChild(x);
             }
             bar = bar_container.firstChild;
@@ -42345,9 +42345,9 @@ return this.__repr__();
 
             actions = all_actions();
             sd = get_session_data();
-            var ρσ_Iter3 = ρσ_Iterable(sd.get("selection_bar_actions"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                acname = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter350 = ρσ_Iterable(sd.get("selection_bar_actions"));
+            for (var ρσ_Index350 = 0; ρσ_Index350 < ρσ_Iter350.length; ρσ_Index350++) {
+                acname = ρσ_Iter350[ρσ_Index350];
                 ac = actions[(typeof acname === "number" && acname < 0) ? actions.length + acname : acname];
                 if (ac && (!ac.needs_highlight || !!annot_id)) {
                     bar.appendChild(cb(ac, self[ρσ_bound_index(ac.function_name, self)]));
@@ -42403,9 +42403,9 @@ return this.__repr__();
             self.quick_highlight_styles = actions;
             bar.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "background: currentColor; width: 1px; height: " + ρσ_str.format("{}", ICON_SIZE) + "; margin-left: " + ρσ_str.format("{}", BUTTON_MARGIN) + "; margin-right: " + ρσ_str.format("{}", BUTTON_MARGIN) + ""})]));
             dark = self.view.current_color_scheme.is_dark_theme;
-            var ρσ_Iter4 = ρσ_Iterable(enumerate(actions));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                ρσ_unpack = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter351 = ρσ_Iterable(enumerate(actions));
+            for (var ρσ_Index351 = 0; ρσ_Index351 < ρσ_Iter351.length; ρσ_Index351++) {
+                ρσ_unpack = ρσ_Iter351[ρσ_Index351];
                 i = ρσ_unpack[0];
                 key = ρσ_unpack[1];
                 hs = all[(typeof key === "number" && key < 0) ? all.length + key : key];
@@ -42459,9 +42459,9 @@ return this.__repr__();
             var touch;
             [ev.stopPropagation(), ev.preventDefault()];
             if (self.state === WAITING) {
-                var ρσ_Iter5 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    touch = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter352 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index352 = 0; ρσ_Index352 < ρσ_Iter352.length; ρσ_Index352++) {
+                    touch = ρσ_Iter352[ρσ_Index352];
                     self.active_touch = touch.identifier;
                     self.start_handle_drag(touch, ev.currentTarget);
                     break;
@@ -42525,9 +42525,9 @@ return this.__repr__();
                     self.send_message("extend-to-paragraph");
                     return;
                 }
-                var ρσ_Iter6 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    x = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter353 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
+                for (var ρσ_Index353 = 0; ρσ_Index353 < ρσ_Iter353.length; ρσ_Index353++) {
+                    x = ρσ_Iter353[ρσ_Index353];
                     if (near_element(x, ev.clientX, ev.clientY)) {
                         return;
                     }
@@ -42558,9 +42558,9 @@ return this.__repr__();
                 return;
             }
             [ev.stopPropagation(), ev.preventDefault()];
-            var ρσ_Iter7 = ρσ_Iterable(ev.changedTouches);
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                touch = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter354 = ρσ_Iterable(ev.changedTouches);
+            for (var ρσ_Index354 = 0; ρσ_Index354 < ρσ_Iter354.length; ρσ_Index354++) {
+                touch = ρσ_Iter354[ρσ_Index354];
                 if (touch.identifier === self.active_touch) {
                     self.move_handle(touch);
                     return;
@@ -42632,9 +42632,9 @@ return this.__repr__();
             var touch;
             if (self.state === DRAGGING) {
                 [ev.preventDefault(), ev.stopPropagation()];
-                var ρσ_Iter8 = ρσ_Iterable(ev.changedTouches);
-                for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                    touch = ρσ_Iter8[ρσ_Index8];
+                var ρσ_Iter355 = ρσ_Iterable(ev.changedTouches);
+                for (var ρσ_Index355 = 0; ρσ_Index355 < ρσ_Iter355.length; ρσ_Index355++) {
+                    touch = ρσ_Iter355[ρσ_Index355];
                     if (touch.identifier === self.active_touch) {
                         self.active_touch = null;
                         self.end_handle_drag();
@@ -42930,9 +42930,9 @@ return this.__repr__();
             self.rtl = cs.rtl;
             self.ltr = !self.rtl;
             self.vertical = cs.vertical;
-            var ρσ_Iter9 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                h = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter356 = ρσ_Iterable(ρσ_list_decorate([ self.start_handle, self.end_handle ]));
+            for (var ρσ_Index356 = 0; ρσ_Index356 < ρσ_Iter356.length; ρσ_Index356++) {
+                h = ρσ_Iter356[ρσ_Index356];
                 if (h.vertical !== self.vertical) {
                     h.vertical = self.vertical;
                     change_icon_image(h, (h.vertical) ? "selection-handle-vertical" : "selection-handle");
@@ -43139,9 +43139,9 @@ return this.__repr__();
         SelectionBar.prototype.show_editor = function show_editor(highlight_style, notes) {
             var self = this;
             var x, container, cs;
-            var ρσ_Iter10 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                x = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter357 = ρσ_Iterable(ρσ_list_decorate([ self.bar, self.start_handle, self.end_handle ]));
+            for (var ρσ_Index357 = 0; ρσ_Index357 < ρσ_Iter357.length; ρσ_Index357++) {
+                x = ρσ_Iter357[ρσ_Index357];
                 x.style.display = "none";
             }
             container = self.editor;
@@ -43529,9 +43529,9 @@ return this.__repr__();
                         url = get_current_link_prefix() + "?open_at=" + cfi;
                     } else {
                         url = get_current_link_prefix() + ("bookpos=" + ρσ_str.format("{}", cfi) + "");
-                        var ρσ_Iter11 = ρσ_Iterable(Object.entries(parse_url_params()));
-                        for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                            ρσ_unpack = ρσ_Iter11[ρσ_Index11];
+                        var ρσ_Iter358 = ρσ_Iterable(Object.entries(parse_url_params()));
+                        for (var ρσ_Index358 = 0; ρσ_Index358 < ρσ_Iter358.length; ρσ_Index358++) {
+                            ρσ_unpack = ρσ_Iter358[ρσ_Index358];
                             key = ρσ_unpack[0];
                             value = ρσ_unpack[1];
                             if ((key !== "bookpos" && (typeof key !== "object" || ρσ_not_equals(key, "bookpos")))) {
@@ -43684,9 +43684,9 @@ return this.__repr__();
             var container, sd, val, control, ta;
             container = get_container();
             sd = session_defaults();
-            var ρσ_Iter0 = ρσ_Iterable(container.querySelectorAll("input[name]"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                control = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter359 = ρσ_Iterable(container.querySelectorAll("input[name]"));
+            for (var ρσ_Index359 = 0; ρσ_Index359 < ρσ_Iter359.length; ρσ_Index359++) {
+                control = ρσ_Iter359[ρσ_Index359];
                 val = sd[ρσ_bound_index(control.getAttribute("name"), sd)];
                 if (control.type === "checkbox") {
                     control.checked = val;
@@ -43696,9 +43696,9 @@ return this.__repr__();
                     control.value = val;
                 }
             }
-            var ρσ_Iter1 = ρσ_Iterable(container.querySelectorAll("textarea[name]"));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                ta = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter360 = ρσ_Iterable(container.querySelectorAll("textarea[name]"));
+            for (var ρσ_Index360 = 0; ρσ_Index360 < ρσ_Iter360.length; ρσ_Index360++) {
+                ta = ρσ_Iter360[ρσ_Index360];
                 val = sd[ρσ_bound_index(ta.getAttribute("name"), sd)];
                 ta.value = val;
             }
@@ -43781,9 +43781,9 @@ return this.__repr__();
             adef = all_actions();
             table = ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({style: "margin-left: 2rem"})]);
             container.appendChild(table);
-            var ρσ_Iter2 = ρσ_Iterable(JSON.parse(container.dataset.actions));
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                action_name = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter361 = ρσ_Iterable(JSON.parse(container.dataset.actions));
+            for (var ρσ_Index361 = 0; ρσ_Index361 < ρσ_Iter361.length; ρσ_Index361++) {
+                action_name = ρσ_Iter361[ρσ_Index361];
                 ac = adef[(typeof action_name === "number" && action_name < 0) ? adef.length + action_name : action_name];
                 if (is_current) {
                     buttons = E.td(ρσ_interpolate_kwargs.call(E, E.span, [_("Remove")].concat([ρσ_desugar_kwargs({class_: "simple-link", onclick: remove_action.bind(null, action_name)})])), ρσ_interpolate_kwargs.call(E, E.span, [" "].concat([ρσ_desugar_kwargs({style: "min-width: 2rem; display: inline-block"})])), ρσ_interpolate_kwargs.call(E, E.span, [_("Up")].concat([ρσ_desugar_kwargs({class_: "simple-link", onclick: move_action.bind(null, action_name, true)})])), ρσ_interpolate_kwargs.call(E, E.span, [" "].concat([ρσ_desugar_kwargs({style: "min-width: 2rem; display: inline-block"})])), ρσ_interpolate_kwargs.call(E, E.span, [_("Down")].concat([ρσ_desugar_kwargs({class_: "simple-link", onclick: move_action.bind(null, action_name, false)})])));
@@ -43841,9 +43841,9 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })()})]);
-            var ρσ_Iter3 = ρσ_Iterable(actions);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                hs = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter362 = ρσ_Iterable(actions);
+            for (var ρσ_Index362 = 0; ρσ_Index362 < ρσ_Iter362.length; ρσ_Index362++) {
+                hs = ρσ_Iter362[ρσ_Index362];
                 c.appendChild(ρσ_interpolate_kwargs.call(E, E.label, [hs.make_swatch(E.span(), is_dark_theme()), " ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", value: hs.key, checked: current[ρσ_bound_index(hs.key, current)]})]), " ", hs.friendly_name].concat([ρσ_desugar_kwargs({style: "margin: 1ex; display: flex; align-contents: center"})])));
             }
         };
@@ -43855,9 +43855,9 @@ return this.__repr__();
             var ans, c, inp;
             ans = [];
             c = get_container().querySelector(".quick-actions");
-            var ρσ_Iter4 = ρσ_Iterable(c.querySelectorAll("input:checked"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                inp = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter363 = ρσ_Iterable(c.querySelectorAll("input:checked"));
+            for (var ρσ_Index363 = 0; ρσ_Index363 < ρσ_Iter363.length; ρσ_Index363++) {
+                inp = ρσ_Iter363[ρσ_Index363];
                 if (inp.value) {
                     ans.push(inp.value);
                 }
@@ -43935,14 +43935,14 @@ return this.__repr__();
             container = get_container();
             changed = false;
             save_ev = new Event("save_history");
-            var ρσ_Iter5 = ρσ_Iterable(container.querySelectorAll("[data-calibre-history-input]"));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                x = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter364 = ρσ_Iterable(container.querySelectorAll("[data-calibre-history-input]"));
+            for (var ρσ_Index364 = 0; ρσ_Index364 < ρσ_Iter364.length; ρσ_Index364++) {
+                x = ρσ_Iter364[ρσ_Index364];
                 x.dispatchEvent(save_ev);
             }
-            var ρσ_Iter6 = ρσ_Iterable(container.querySelectorAll("input[name]"));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                control = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter365 = ρσ_Iterable(container.querySelectorAll("input[name]"));
+            for (var ρσ_Index365 = 0; ρσ_Index365 < ρσ_Iter365.length; ρσ_Index365++) {
+                control = ρσ_Iter365[ρσ_Index365];
                 name = control.getAttribute("name");
                 if (control.type === "checkbox") {
                     val = control.checked;
@@ -43966,9 +43966,9 @@ return this.__repr__();
                 changed = true;
                 sd.set("selection_bar_quick_highlights", quick_highlights);
             }
-            var ρσ_Iter7 = ρσ_Iterable(container.querySelectorAll("textarea[name]"));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                ta = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter366 = ρσ_Iterable(container.querySelectorAll("textarea[name]"));
+            for (var ρσ_Index366 = 0; ρσ_Index366 < ρσ_Iter366.length; ρσ_Index366++) {
+                ta = ρσ_Iter366[ρσ_Index366];
                 name = ta.getAttribute("name");
                 val = (ta.value || "").strip() || (ρσ_expr_temp = session_defaults())[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
                 old = sd.get(name);
@@ -44045,18 +44045,18 @@ return this.__repr__();
         function apply_settings_to_ui(overrides) {
             var group_name, in_flow_mode, allowed_actions, option, gesture_type, current_action, select, group;
             overrides = overrides || Object.create(null);
-            var ρσ_Iter0 = ρσ_Iterable(get_container().querySelectorAll("[data-group]"));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                group = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter367 = ρσ_Iterable(get_container().querySelectorAll("[data-group]"));
+            for (var ρσ_Index367 = 0; ρσ_Index367 < ρσ_Iter367.length; ρσ_Index367++) {
+                group = ρσ_Iter367[ρσ_Index367];
                 group_name = group.dataset.group;
                 in_flow_mode = group_name.indexOf("flow") >= 0;
-                var ρσ_Iter1 = ρσ_Iterable(group.querySelectorAll("select"));
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    select = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter368 = ρσ_Iterable(group.querySelectorAll("select"));
+                for (var ρσ_Index368 = 0; ρσ_Index368 < ρσ_Iter368.length; ρσ_Index368++) {
+                    select = ρσ_Iter368[ρσ_Index368];
                     allowed_actions = [];
-                    var ρσ_Iter2 = ρσ_Iterable(select.querySelectorAll("option"));
-                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                        option = ρσ_Iter2[ρσ_Index2];
+                    var ρσ_Iter369 = ρσ_Iterable(select.querySelectorAll("option"));
+                    for (var ρσ_Index369 = 0; ρσ_Index369 < ρσ_Iter369.length; ρσ_Index369++) {
+                        option = ρσ_Iter369[ρσ_Index369];
                         allowed_actions.push(option.value);
                     }
                     gesture_type = select.name;
@@ -44085,9 +44085,9 @@ return this.__repr__();
         function get_overrides_from_ui() {
             var ans, group_name, in_flow_mode, attr, val, defval, select, group, which;
             ans = Object.create(null);
-            var ρσ_Iter3 = ρσ_Iterable(get_container().querySelectorAll("[data-group]"));
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                group = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter370 = ρσ_Iterable(get_container().querySelectorAll("[data-group]"));
+            for (var ρσ_Index370 = 0; ρσ_Index370 < ρσ_Iter370.length; ρσ_Index370++) {
+                group = ρσ_Iter370[ρσ_Index370];
                 group_name = group.dataset.group;
                 in_flow_mode = group_name.indexOf("flow") >= 0;
                 if (group_name === "paged_swipe") {
@@ -44100,9 +44100,9 @@ return this.__repr__();
                 if (!ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr]) {
                     ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr] = Object.create(null);
                 }
-                var ρσ_Iter4 = ρσ_Iterable(group.querySelectorAll("select"));
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    select = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter371 = ρσ_Iterable(group.querySelectorAll("select"));
+                for (var ρσ_Index371 = 0; ρσ_Index371 < ρσ_Iter371.length; ρσ_Index371++) {
+                    select = ρσ_Iter371[ρσ_Index371];
                     val = select.value;
                     defval = current_action_for_gesture_type(Object.create(null), select.name, in_flow_mode);
                     if (val !== defval) {
@@ -44110,9 +44110,9 @@ return this.__repr__();
                     }
                 }
             }
-            var ρσ_Iter5 = ρσ_Iterable(Object.keys(ans));
-            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                which = ρσ_Iter5[ρσ_Index5];
+            var ρσ_Iter372 = ρσ_Iterable(Object.keys(ans));
+            for (var ρσ_Index372 = 0; ρσ_Index372 < ρσ_Iter372.length; ρσ_Index372++) {
+                which = ρσ_Iter372[ρσ_Index372];
                 if (Object.keys(ans[(typeof which === "number" && which < 0) ? ans.length + which : which]).length === 0) {
                     delete ans[which];
                 }
@@ -44150,9 +44150,9 @@ return this.__repr__();
                 sid = unique_id(gesture_type);
                 ans.appendChild(E.h4(ρσ_interpolate_kwargs.call(E, E.label, [title].concat([ρσ_desugar_kwargs({"for": sid})]))));
                 select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: gesture_type, id: sid})]);
-                var ρσ_Iter6 = ρσ_Iterable(allowed_actions);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    action = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter373 = ρσ_Iterable(allowed_actions);
+                for (var ρσ_Index373 = 0; ρσ_Index373 < ρσ_Iter373.length; ρσ_Index373++) {
+                    action = ρσ_Iter373[ρσ_Index373];
                     ad = action_descriptions[(typeof action === "number" && action < 0) ? action_descriptions.length + action : action];
                     select.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [ad.short].concat([ρσ_desugar_kwargs({value: action})])));
                 }
@@ -44991,9 +44991,9 @@ return this.__repr__();
             items = ρσ_list_decorate([ create_item(_("Cancel (no removals)"), toggle_custom_container.bind(null, container_id, false)) ]);
             sd = get_session_data();
             actions = sd.get("word_actions", []);
-            var ρσ_Iter0 = ρσ_Iterable(enumerate(actions));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                ρσ_unpack = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter374 = ρσ_Iterable(enumerate(actions));
+            for (var ρσ_Index374 = 0; ρσ_Index374 < ρσ_Iter374.length; ρσ_Index374++) {
+                ρσ_unpack = ρσ_Iter374[ρσ_Index374];
                 i = ρσ_unpack[0];
                 item = ρσ_unpack[1];
                 items.push(create_item(item.title, remove.bind(null, container_id, i)));
@@ -45021,9 +45021,9 @@ return this.__repr__();
             custom_actions = get_session_data().get("word_actions", []);
             has_custom = custom_actions && custom_actions.length;
             if (has_custom) {
-                var ρσ_Iter1 = ρσ_Iterable(custom_actions);
-                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                    entry = ρσ_Iter1[ρσ_Index1];
+                var ρσ_Iter375 = ρσ_Iterable(custom_actions);
+                for (var ρσ_Index375 = 0; ρσ_Index375 < ρσ_Iter375.length; ρσ_Index375++) {
+                    entry = ρσ_Iter375[ρσ_Index375];
                     if (entry.title && entry.url) {
                         a(entry.title, entry.url);
                     }
@@ -45436,9 +45436,9 @@ return this.__repr__();
             epoch = 0;
             ans = null;
             new_annotations_map = null;
-            var ρσ_Iter0 = ρσ_Iterable(data);
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter376 = ρσ_Iterable(data);
+            for (var ρσ_Index376 = 0; ρσ_Index376 < ρσ_Iter376.length; ρσ_Index376++) {
+                key = ρσ_Iter376[ρσ_Index376];
                 ρσ_unpack = ρσ_eslice(key.partition(":"), 2);
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 book_id = ρσ_unpack[0];
@@ -45447,9 +45447,9 @@ return this.__repr__();
                     new_vals = data[(typeof key === "number" && key < 0) ? data.length + key : key];
                     last_read_positions = new_vals.last_read_positions;
                     new_annotations_map = new_vals.annotations_map;
-                    var ρσ_Iter1 = ρσ_Iterable(last_read_positions);
-                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                        d = ρσ_Iter1[ρσ_Index1];
+                    var ρσ_Iter377 = ρσ_Iterable(last_read_positions);
+                    for (var ρσ_Index377 = 0; ρσ_Index377 < ρσ_Iter377.length; ρσ_Index377++) {
+                        d = ρσ_Iter377[ρσ_Index377];
                         if (d.device !== dev && d.epoch > epoch) {
                             epoch = d.epoch;
                             ans = d;
@@ -45602,7 +45602,7 @@ return this.__repr__();
             nav_actions = E.ul(back_action, forward_action);
             if (runtime.is_standalone_viewer) {
                 reload_actions = E.ul(ac(_("Open book"), _("Open a book"), self.overlay.open_book, "book"), reload_action);
-                editable_formats = ["KEPUB", "AZW3", "EPUB"];
+                editable_formats = ["EPUB", "AZW3", "KEPUB"];
                 fmt = ρσ_exists.d(ρσ_exists.d(self.overlay.view).book).manifest.book_format || "";
                 if (ρσ_in(fmt.toUpperCase(), editable_formats)) {
                     reload_actions.appendChild(ac(_("Edit book"), _("Edit this book"), self.overlay.view.edit_book, "edit"));
@@ -46692,9 +46692,9 @@ return this.__repr__();
                 }
                 container.lastChild.appendChild(table);
                 render_metadata(mi, table, null, "html { font-size: " + ρσ_str.format("{}", document.documentElement.style.fontSize) + " }");
-                var ρσ_Iter2 = ρσ_Iterable(table.querySelectorAll("a[href]"));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    a = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter378 = ρσ_Iterable(table.querySelectorAll("a[href]"));
+                for (var ρσ_Index378 = 0; ρσ_Index378 < ρσ_Iter378.length; ρσ_Index378++) {
+                    a = ρσ_Iter378[ρσ_Index378];
                     a.removeAttribute("href");
                     a.removeAttribute("title");
                     a.classList.remove("blue-link");
@@ -47112,9 +47112,9 @@ return this.__repr__();
             container = self.container;
             container.style.alignItems = (is_flow_mode()) ? "flex-end" : "flex-start";
             container.style.justifyContent = "flex-end";
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px; font-size: smaller"})])) ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                x = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter379 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "height: 4ex; display: flex; align-items: center; padding: 5px; justify-content: center"})]), ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "border-top: solid 1px; margin: 0; padding: 0; display: none"})]), ρσ_interpolate_kwargs.call(E, E.div, [E.div()].concat([ρσ_desugar_kwargs({style: "display: none; padding: 5px; font-size: smaller"})])) ]));
+            for (var ρσ_Index379 = 0; ρσ_Index379 < ρσ_Iter379.length; ρσ_Index379++) {
+                x = ρσ_Iter379[ρσ_Index379];
                 bar_container.appendChild(x);
             }
             self.create_buttons(bar_container.firstChild);
@@ -47565,9 +47565,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.read_audio_ebook"}
             });
 
-            var ρσ_Iter0 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [create_button("toggle", "pause", _("Pause audio"))].concat([ρσ_desugar_kwargs({style: "height: 3ex; display: flex; align-items: center; justify-content: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.text("")].concat([ρσ_desugar_kwargs({data_component: "time_display"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:block; width: 0%; background-color:" + ρσ_str.format("{}", get_color("window-foreground")) + "; height:100%"})])].concat([ρσ_desugar_kwargs({data_component: "progress_bar", style: "height:1.5em; border-radius: 0.75em; overflow: hidden; flex-grow: 100; display:block; background-color:" + ρσ_str.format("{}", get_color("window-background2")) + "; margin:1em; cursor: pointer"})])), ρσ_interpolate_kwargs.call(E, E.div, [create_button("slower", "slower", _("Slow down audio")), create_button("faster", "faster", _("Speed up audio")), create_button("hide", "off", _("Close Read aloud"))].concat([ρσ_desugar_kwargs({style: "height: 3ex; display: flex; align-items: center; justify-content: center"})])) ]));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                x = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter380 = ρσ_Iterable(ρσ_list_decorate([ ρσ_interpolate_kwargs.call(E, E.div, [create_button("toggle", "pause", _("Pause audio"))].concat([ρσ_desugar_kwargs({style: "height: 3ex; display: flex; align-items: center; justify-content: center"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.text("")].concat([ρσ_desugar_kwargs({data_component: "time_display"})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:block; width: 0%; background-color:" + ρσ_str.format("{}", get_color("window-foreground")) + "; height:100%"})])].concat([ρσ_desugar_kwargs({data_component: "progress_bar", style: "height:1.5em; border-radius: 0.75em; overflow: hidden; flex-grow: 100; display:block; background-color:" + ρσ_str.format("{}", get_color("window-background2")) + "; margin:1em; cursor: pointer"})])), ρσ_interpolate_kwargs.call(E, E.div, [create_button("slower", "slower", _("Slow down audio")), create_button("faster", "faster", _("Speed up audio")), create_button("hide", "off", _("Close Read aloud"))].concat([ρσ_desugar_kwargs({style: "height: 3ex; display: flex; align-items: center; justify-content: center"})])) ]));
+            for (var ρσ_Index380 = 0; ρσ_Index380 < ρσ_Iter380.length; ρσ_Index380++) {
+                x = ρσ_Iter380[ρσ_Index380];
                 bar_container.appendChild(x);
             }
             bar_container.addEventListener("click", self.on_bar_clicked, (function(){
@@ -48351,23 +48351,23 @@ return this.__repr__();
             has_leading = text.lstrip() !== text;
             has_trailing = text.rstrip() !== text;
             ans = (has_leading) ? ["\s+"] : [];
-            var ρσ_Iter0 = ρσ_Iterable(split_string(spat, text.strip()));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                wpart = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter381 = ρσ_Iterable(split_string(spat, text.strip()));
+            for (var ρσ_Index381 = 0; ρσ_Index381 < ρσ_Iter381.length; ρσ_Index381++) {
+                wpart = ρσ_Iter381[ρσ_Index381];
                 if (!wpart.strip()) {
                     ans.push("\\s+");
                 } else {
-                    var ρσ_Iter1 = ρσ_Iterable(split_string(qpat, wpart));
-                    for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                        part = ρσ_Iter1[ρσ_Index1];
+                    var ρσ_Iter382 = ρσ_Iterable(split_string(qpat, wpart));
+                    for (var ρσ_Index382 = 0; ρσ_Index382 < ρσ_Iter382.length; ρσ_Index382++) {
+                        part = ρσ_Iter382[ρσ_Index382];
                         r = quote_map[(typeof part === "number" && part < 0) ? quote_map.length + part : part];
                         if (r) {
                             ans.push("[" + r + "]");
                         } else {
                             chars = [];
-                            var ρσ_Iter2 = ρσ_Iterable(part);
-                            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                                ch = ρσ_Iter2[ρσ_Index2];
+                            var ρσ_Iter383 = ρσ_Iterable(part);
+                            for (var ρσ_Index383 = 0; ρσ_Index383 < ρσ_Iter383.length; ρσ_Index383++) {
+                                ch = ρσ_Iter383[ρσ_Index383];
                                 chars.push(escape(ch));
                             }
                             chars.join(invisible_chars);
@@ -48411,9 +48411,9 @@ return this.__repr__();
             var self = this;
             var matches, q, node, ans, ancestors, parent;
             matches = [];
-            var ρσ_Iter3 = ρσ_Iterable(self.toc_nodes);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                node = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter384 = ρσ_Iterable(self.toc_nodes);
+            for (var ρσ_Index384 = 0; ρσ_Index384 < ρσ_Iter384.length; ρσ_Index384++) {
+                node = ρσ_Iter384[ρσ_Index384];
                 q = (ρσ_expr_temp = self.offset_map)[ρσ_bound_index(node.id, ρσ_expr_temp)];
                 if ((typeof q !== "undefined" && q !== null)) {
                     if (q > offset) {
@@ -48469,9 +48469,9 @@ return this.__repr__();
                 return (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
             }
             offset_map = Object.create(null);
-            var ρσ_Iter4 = ρσ_Iterable(toc_nodes);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                node = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter385 = ρσ_Iterable(toc_nodes);
+            for (var ρσ_Index385 = 0; ρσ_Index385 < ρσ_Iter385.length; ρσ_Index385++) {
+                node = ρσ_Iter385[ρσ_Index385];
                 node_id = node.id;
                 if ((typeof node_id !== "undefined" && node_id !== null)) {
                     aid = node.frag;
@@ -48693,9 +48693,9 @@ return this.__repr__();
             if (query.mode !== "regex") {
                 if (query.mode === "word") {
                     words = [];
-                    var ρσ_Iter5 = ρσ_Iterable(expr.split(" "));
-                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                        part = ρσ_Iter5[ρσ_Index5];
+                    var ρσ_Iter386 = ρσ_Iterable(expr.split(" "));
+                    for (var ρσ_Index386 = 0; ρσ_Index386 < ρσ_Iter386.length; ρσ_Index386++) {
+                        part = ρσ_Iter386[ρσ_Index386];
                         words.push("\\b" + text_to_regex(part) + "\\b");
                     }
                     expr = words.join("\\s+");
@@ -48958,9 +48958,9 @@ return this.__repr__();
                 }
                 children = node.children;
                 if (children) {
-                    var ρσ_Iter0 = ρσ_Iterable(children);
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                        child = ρσ_Iter0[ρσ_Index0];
+                    var ρσ_Iter387 = ρσ_Iterable(children);
+                    for (var ρσ_Index387 = 0; ρσ_Index387 < ρσ_Iter387.length; ρσ_Index387++) {
+                        child = ρσ_Iter387[ρσ_Index387];
                         parent_map[ρσ_bound_index(child.id, parent_map)] = node;
                         process_node(child);
                     }
@@ -49161,9 +49161,9 @@ return this.__repr__();
             })()})])), E.div("  "), ρσ_interpolate_kwargs.call(this, create_button, [_("Return"), "chevron-left"].concat([ρσ_desugar_kwargs({action: self.return_to_original_position, tooltip: _("Go back to where you were before searching")})]))].concat([ρσ_desugar_kwargs({style: "display: flex; padding: 1rem; padding-top: 0.5rem; padding-bottom: 0; align-items: center; overflow: hidden"})])));
             c.appendChild(E.hr());
             c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.div(create_spinner("4em", "4em")), ρσ_interpolate_kwargs.call(E, E.div, [_("Searching, please wait…")].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})]))].concat([ρσ_desugar_kwargs({style: "text-align: center"})])), E.div()].concat([ρσ_desugar_kwargs({style: "display: none; overflow: auto", tabindex: "0"})])));
-            var ρσ_Iter1 = ρσ_Iterable(c.childNodes);
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                child = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter388 = ρσ_Iterable(c.childNodes);
+            for (var ρσ_Index388 = 0; ρσ_Index388 < ρσ_Iter388.length; ρσ_Index388++) {
+                child = ρσ_Iter388[ρσ_Index388];
                 if (child !== c.lastChild) {
                     child.style.flexShrink = "0";
                 }
@@ -49366,9 +49366,9 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })()})])), E.ul()].concat([ρσ_desugar_kwargs({data_toc_node_id: toc_node_id + "", data_spine_index: result.spine_idx + ""})]));
                 appended = false;
-                var ρσ_Iter2 = ρσ_Iterable(c.querySelectorAll("[data-spine-index]"));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    child = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter389 = ρσ_Iterable(c.querySelectorAll("[data-spine-index]"));
+                for (var ρσ_Index389 = 0; ρσ_Index389 < ρσ_Iter389.length; ρσ_Index389++) {
+                    child = ρσ_Iter389[ρσ_Index389];
                     csi = parseInt(child.dataset.spineIndex);
                     if (csi > result.spine_idx) {
                         appended = true;
@@ -49384,9 +49384,9 @@ return this.__repr__();
             tt = "";
             if (result.toc_nodes.length) {
                 lines = [];
-                var ρσ_Iter3 = ρσ_Iterable(enumerate(result.toc_nodes));
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    ρσ_unpack = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter390 = ρσ_Iterable(enumerate(result.toc_nodes));
+                for (var ρσ_Index390 = 0; ρσ_Index390 < ρσ_Iter390.length; ρσ_Index390++) {
+                    ρσ_unpack = ρσ_Iter390[ρσ_Index390];
                     i = ρσ_unpack[0];
                     node_id = ρσ_unpack[1];
                     lines.push("  ".repeat(i) + "➤ " + (ρσ_exists.d((ρσ_expr_temp = self.toc_data.toc_id_map)[(typeof node_id === "number" && node_id < 0) ? ρσ_expr_temp.length + node_id : node_id]).title || _("Unknown")));
@@ -49413,9 +49413,9 @@ return this.__repr__();
             var self = this;
             var q, li;
             q = result_num + "";
-            var ρσ_Iter4 = ρσ_Iterable(self.container.querySelectorAll("[data-result-num]"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                li = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter391 = ρσ_Iterable(self.container.querySelectorAll("[data-result-num]"));
+            for (var ρσ_Index391 = 0; ρσ_Index391 < ρσ_Iter391.length; ρσ_Index391++) {
+                li = ρσ_Iter391[ρσ_Index391];
                 if (li.dataset.resultNum === q) {
                     li.classList.add("current");
                     li.scrollIntoView();
@@ -50205,9 +50205,9 @@ return this.__repr__();
                 "get": function overlay_prevents_navigation() {
                     var self = this;
                     var x;
-                    var ρσ_Iter0 = ρσ_Iterable(self.modal_overlays);
-                    for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                        x = ρσ_Iter0[ρσ_Index0];
+                    var ρσ_Iter392 = ρσ_Iterable(self.modal_overlays);
+                    for (var ρσ_Index392 = 0; ρσ_Index392 < ρσ_Iter392.length; ρσ_Index392++) {
+                        x = ρσ_Iter392[ρσ_Index392];
                         if (x.is_visible && x.prevent_navigation) {
                             return true;
                         }
@@ -50592,9 +50592,9 @@ return this.__repr__();
                 ρσ_d["location"] = location;
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter1 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
-            for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
-                attr = ρσ_Iter1[ρσ_Index1];
+            var ρσ_Iter393 = ρσ_Iterable(ρσ_list_decorate([ "deltaX", "deltaY", "deltaMode", "altKey", "ctrlKey", "shiftKey", "metaKey" ]));
+            for (var ρσ_Index393 = 0; ρσ_Index393 < ρσ_Iter393.length; ρσ_Index393++) {
+                attr = ρσ_Iter393[ρσ_Index393];
                 evt[(typeof attr === "number" && attr < 0) ? evt.length + attr : attr] = event[(typeof attr === "number" && attr < 0) ? event.length + attr : attr];
             }
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["fake_wheel_event"].concat([ρσ_desugar_kwargs({evt: evt})]));
@@ -50700,9 +50700,9 @@ return this.__repr__();
                 ui_operations.overlay_visibility_changed(visible);
             }
             if (visible) {
-                var ρσ_Iter2 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    x = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter394 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index394 = 0; ρσ_Index394 < ρσ_Iter394.length; ρσ_Index394++) {
+                    x = ρσ_Iter394[ρσ_Index394];
                     x.hide();
                 }
             } else {
@@ -51025,9 +51025,9 @@ return this.__repr__();
         View.prototype.focus_iframe = function focus_iframe() {
             var self = this;
             var x;
-            var ρσ_Iter3 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                x = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter395 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index395 = 0; ρσ_Index395 < ρσ_Iter395.length; ρσ_Index395++) {
+                x = ρσ_Iter395[ρσ_Index395];
                 if (x.is_visible) {
                     x.focus();
                     return;
@@ -51042,18 +51042,18 @@ return this.__repr__();
             var self = this;
             var x;
             if (self.book.manifest.has_smil) {
-                var ρσ_Iter4 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                    x = ρσ_Iter4[ρσ_Index4];
+                var ρσ_Iter396 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index396 = 0; ρσ_Index396 < ρσ_Iter396.length; ρσ_Index396++) {
+                    x = ρσ_Iter396[ρσ_Index396];
                     if (x !== self.read_audio_ebook) {
                         x.hide();
                     }
                 }
                 self.read_audio_ebook.show();
             } else {
-                var ρσ_Iter5 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                    x = ρσ_Iter5[ρσ_Index5];
+                var ρσ_Iter397 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index397 = 0; ρσ_Index397 < ρσ_Iter397.length; ρσ_Index397++) {
+                    x = ρσ_Iter397[ρσ_Index397];
                     if (x !== self.read_aloud) {
                         x.hide();
                     }
@@ -51087,9 +51087,9 @@ return this.__repr__();
             if (self.hints.is_visible) {
                 self.hints.hide();
             } else {
-                var ρσ_Iter6 = ρσ_Iterable(self.modal_overlays);
-                for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                    x = ρσ_Iter6[ρσ_Index6];
+                var ρσ_Iter398 = ρσ_Iterable(self.modal_overlays);
+                for (var ρσ_Index398 = 0; ρσ_Index398 < ρσ_Iter398.length; ρσ_Index398++) {
+                    x = ρσ_Iter398[ρσ_Index398];
                     if (x !== self.hints) {
                         x.hide();
                     }
@@ -51297,9 +51297,9 @@ return this.__repr__();
                 iframe.style.colorScheme = (self.current_color_scheme.is_dark_theme) ? "dark" : "light";
             }
             is_dark_theme(self.current_color_scheme.is_dark_theme);
-            var ρσ_Iter7 = ρσ_Iterable("left top right bottom".split(" "));
-            for (var ρσ_Index7 = 0; ρσ_Index7 < ρσ_Iter7.length; ρσ_Index7++) {
-                which = ρσ_Iter7[ρσ_Index7];
+            var ρσ_Iter399 = ρσ_Iterable("left top right bottom".split(" "));
+            for (var ρσ_Index399 = 0; ρσ_Index399 < ρσ_Iter399.length; ρσ_Index399++) {
+                which = ρσ_Iter399[ρσ_Index399];
                 m = document.getElementById("book-{}-margin".format(which));
                 s = m.style;
                 mc = ans[ρσ_bound_index("margin_" + ρσ_str.format("{}", which) + "", ans)];
@@ -51314,9 +51314,9 @@ return this.__repr__();
                 }
             }
             sd = get_session_data();
-            var ρσ_Iter8 = ρσ_Iterable(ρσ_list_decorate([ iframe, iframe.parentNode ]));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                node = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter400 = ρσ_Iterable(ρσ_list_decorate([ iframe, iframe.parentNode ]));
+            for (var ρσ_Index400 = 0; ρσ_Index400 < ρσ_Iter400.length; ρσ_Index400++) {
+                node = ρσ_Iter400[ρσ_Index400];
                 node.style.backgroundColor = "transparent";
                 node.style.backgroundImage = "none";
             }
@@ -51329,9 +51329,9 @@ return this.__repr__();
                     rgba = cached_color_to_rgba(ans.background);
                     bg_image_fade = "rgba(" + ρσ_str.format("{}", rgba[0]) + ", " + ρσ_str.format("{}", rgba[1]) + ", " + ρσ_str.format("{}", rgba[2]) + ", " + ρσ_str.format("{}", fade / 100) + ")";
                     iframe.parentNode.style.backgroundColor = bg_image_fade;
-                    var ρσ_Iter9 = ρσ_Iterable("left right".split(" "));
-                    for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                        which = ρσ_Iter9[ρσ_Index9];
+                    var ρσ_Iter401 = ρσ_Iterable("left right".split(" "));
+                    for (var ρσ_Index401 = 0; ρσ_Index401 < ρσ_Iter401.length; ρσ_Index401++) {
+                        which = ρσ_Iter401[ρσ_Index401];
                         ms = document.getElementById("book-" + ρσ_str.format("{}", which) + "-margin").style;
                         if (ms.backgroundColor === "transparent") {
                             ms.backgroundColor = bg_image_fade;
@@ -51743,9 +51743,9 @@ return this.__repr__();
             page = total_length * frac;
             chapter_frac = 0;
             chapter_name = null;
-            var ρσ_Iter10 = ρσ_Iterable(self.book.manifest.spine);
-            for (var ρσ_Index10 = 0; ρσ_Index10 < ρσ_Iter10.length; ρσ_Index10++) {
-                name = ρσ_Iter10[ρσ_Index10];
+            var ρσ_Iter402 = ρσ_Iterable(self.book.manifest.spine);
+            for (var ρσ_Index402 = 0; ρσ_Index402 < ρσ_Iter402.length; ρσ_Index402++) {
+                name = ρσ_Iter402[ρσ_Index402];
                 chapter_length = ρσ_exists.d((ρσ_expr_temp = self.book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
                 chapter_end_page = chapter_start_page + chapter_length;
                 if (chapter_start_page <= page && page <= chapter_end_page) {
@@ -51952,9 +51952,9 @@ return this.__repr__();
                     found = true;
                     return;
                 }
-                var ρσ_Iter11 = ρσ_Iterable(x.children);
-                for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                    c = ρσ_Iter11[ρσ_Index11];
+                var ρσ_Iter403 = ρσ_Iterable(x.children);
+                for (var ρσ_Index403 = 0; ρσ_Index403 < ρσ_Iter403.length; ρσ_Index403++) {
+                    c = ρσ_Iter403[ρσ_Index403];
                     process_node(c);
                 }
             };
@@ -52253,9 +52253,9 @@ return this.__repr__();
                 __module__ : {value: "read_book.view"}
             });
 
-            var ρσ_Iter12 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                edge = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter404 = ρσ_Iterable(ρσ_list_decorate([ "left", "right", "top", "bottom" ]));
+            for (var ρσ_Index404 = 0; ρσ_Index404 < ρσ_Iter404.length; ρσ_Index404++) {
+                edge = ρσ_Iter404[ρσ_Index404];
                 div = document.getElementById("book-" + ρσ_str.format("{}", edge) + "-margin");
                 if (div) {
                     tname = (ρσ_expr_temp = (function(){
@@ -52298,9 +52298,9 @@ return this.__repr__();
             }
             if (runtime.is_standalone_viewer) {
                 r = [];
-                var ρσ_Iter13 = ρσ_Iterable(self.current_toc_families);
-                for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                    fam = ρσ_Iter13[ρσ_Index13];
+                var ρσ_Iter405 = ρσ_Iterable(self.current_toc_families);
+                for (var ρσ_Index405 = 0; ρσ_Index405 < ρσ_Iter405.length; ρσ_Index405++) {
+                    fam = ρσ_Iter405[ρσ_Index405];
                     if (fam.length) {
                         r.push(fam[fam.length-1].id);
                     }
@@ -52347,9 +52347,9 @@ return this.__repr__();
         View.prototype.on_content_loaded = function on_content_loaded(data) {
             var self = this;
             var x;
-            var ρσ_Iter14 = ρσ_Iterable(self.modal_overlays);
-            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                x = ρσ_Iter14[ρσ_Index14];
+            var ρσ_Iter406 = ρσ_Iterable(self.modal_overlays);
+            for (var ρσ_Index406 = 0; ρσ_Index406 < ρσ_Iter406.length; ρσ_Index406++) {
+                x = ρσ_Iter406[ρσ_Index406];
                 if (!x.dont_hide_on_content_loaded) {
                     x.hide();
                 }
@@ -52372,9 +52372,9 @@ return this.__repr__();
             if (self.read_aloud.is_visible) {
                 self.read_aloud.play();
             }
-            var ρσ_Iter15 = ρσ_Iterable(self.currently_showing.on_load);
-            for (var ρσ_Index15 = 0; ρσ_Index15 < ρσ_Iter15.length; ρσ_Index15++) {
-                x = ρσ_Iter15[ρσ_Index15];
+            var ρσ_Iter407 = ρσ_Iterable(self.currently_showing.on_load);
+            for (var ρσ_Index407 = 0; ρσ_Index407 < ρσ_Iter407.length; ρσ_Index407++) {
+                x = ρσ_Iter407[ρσ_Index407];
                 x();
             }
             self.currently_showing.on_load = [];
@@ -52937,9 +52937,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter408 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index408 = 0; ρσ_Index408 < ρσ_Iter408.length; ρσ_Index408++) {
+                key = ρσ_Iter408[ρσ_Index408];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);

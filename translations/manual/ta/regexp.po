@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-28 06:05+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Language: ta\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:4
+#: ../../../__w/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
 msgstr "காலிபரில் வழக்கமான வெளிப்பாடுகளைப் பயன்படுத்துவது பற்றி"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:6
+#: ../../../__w/calibre/calibre/manual/regexp.rst:6
 msgid ""
 "Regular expressions are features used in many places in calibre to perform "
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
@@ -29,15 +29,15 @@ msgid ""
 "in calibre."
 msgstr "வழக்கமான வெளிப்பாடுகள் மின்-புத்தக உள்ளடக்கம் மற்றும் மெட்டாடேட்டாவின் அதிநவீன கையாளுதலைச் செய்ய பல இடங்களில் காலிபரில் பயன்படுத்தப்படும் நற்பொருத்தங்கள். இந்த பயிற்சி என்பது வழக்கமான வெளிப்பாடுகளைப் பயன்படுத்துவதைத் தொடங்குவதற்கான ஒரு மென்மையான அறிமுகமாகும்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:11
+#: ../../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
 msgstr "உள்ளடக்கங்கள்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:14
+#: ../../../__w/calibre/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
 msgstr "முதலில், எச்சரிக்கை வார்த்தையும் தைரியமான வார்த்தையும்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:16
+#: ../../../__w/calibre/calibre/manual/regexp.rst:16
 msgid ""
 "This is, inevitably, going to be somewhat technical- after all, regular "
 "expressions are a technical tool for doing technical stuff. I'm going to "
@@ -53,11 +53,11 @@ msgid ""
 "step. So, take a step and follow me into the rabbit hole."
 msgstr "இது தவிர்க்க முடியாமல், ஓரளவு தொழில்நுட்பமாக இருக்கப் போகிறது- எல்லாவற்றிற்கும் மேலாக, வழக்கமான வெளிப்பாடுகள் தொழில்நுட்ப விசயங்களைச் செய்வதற்கான தொழில்நுட்ப கருவியாகும். சிக்கலான அல்லது சுருண்டதாகத் தோன்றக்கூடிய சில வாசகங்களையும் கருத்துகளையும் நான் பயன்படுத்த வேண்டியிருக்கும். அந்த கருத்துக்களை என்னால் முடிந்தவரை தெளிவாக விளக்க முயற்சிக்கப் போகிறேன், ஆனால் அவற்றைப் பயன்படுத்தாமல் செய்ய முடியாது. சொல்லப்பட்டால், எந்தவொரு வாசகங்களாலும் சோர்வடைய வேண்டாம், ஏனெனில் நான் எல்லாவற்றையும் புதிதாக விளக்க முயற்சித்தேன். வழக்கமான வெளிப்பாடுகள் தங்களை ஒரு கமுக்கமான, சூனியம் (அல்லது, மேலும் நேர்மறையானதாக இருக்க வேண்டும், மம்போ-சம்போ கடிதங்கள் மற்றும் அறிகுறிகளின் சீரற்ற சரம்) போலத் தோன்றினாலும், அவை அனைத்தும் சிக்கலானவை அல்ல என்று நான் உறுதியளிக்கிறேன். வழக்கமான வெளிப்பாடுகளைப் புரிந்துகொள்வவர்கள் கூட மிகவும் சிக்கலானவற்றைப் படிப்பதில் சிக்கல் உள்ளது, ஆனால் அவற்றை எழுதுவது கடினம் அல்ல- நீங்கள் வெளிப்பாட்டை படிப்படியாக உருவாக்குகிறீர்கள். எனவே, ஒரு படி எடுத்து முயல் துளைக்குள் என்னைப் பின்தொடரவும்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:19
+#: ../../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
 msgstr "வழக்கமான வெளிப்பாடுகளை நீங்கள் எங்கு பயன்படுத்தலாம்?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:21
+#: ../../../__w/calibre/calibre/manual/regexp.rst:21
 msgid ""
 "There are a few places calibre uses regular expressions. There's the "
 ":guilabel:`Search & replace` in conversion options, metadata detection from "
@@ -68,11 +68,11 @@ msgid ""
 "searching inside the calibre E-book viewer."
 msgstr "காலிபர் வழக்கமான வெளிப்பாடுகளைப் பயன்படுத்தும் சில இடங்கள் உள்ளன. உள்ளது: கிலாபெல்: மாற்று விருப்பங்களில் `தேடல் மற்றும் மாற்றவும்`, இறக்குமதி அமைப்புகளில் உள்ள கோப்பு பெயர்களிடமிருந்து மேனிலை தரவு கண்டறிதல் மற்றும் புத்தகங்களின் மெட்டாடேட்டாவை மொத்தமாக திருத்தும்போது தேடல் மற்றும் மாற்றவும். காலிபர் புத்தக ஆசிரியர் அதன் வழக்கமான வெளிப்பாடுகளையும் அதன்: கிலாபெல்: `தேடல் மற்றும் மாற்றுதல்` அம்சத்திலும் பயன்படுத்தலாம். இறுதியாக, காலிபர் புத்தக பட்டியலைத் தேடும்போது மற்றும் காலிபர் மின் புத்தக பார்வையாளருக்குள் தேடும்போது வழக்கமான வெளிப்பாடுகளைப் பயன்படுத்தலாம்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:30
+#: ../../../__w/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
 msgstr "பூமியில் என்ன * * ஒரு வழக்கமான வெளிப்பாடு?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:32
+#: ../../../__w/calibre/calibre/manual/regexp.rst:32
 msgid ""
 "A regular expression is a way to describe sets of strings. A single regular "
 "expression can *match* a number of different strings. This is what makes "
@@ -80,7 +80,7 @@ msgid ""
 "potentially large number of variations."
 msgstr "வழக்கமான வெளிப்பாடு என்பது சரங்களின் தொகுப்புகளை விவரிக்க ஒரு வழியாகும். ஒரு வழக்கமான வெளிப்பாடு * வெவ்வேறு சரங்களுடன் * பொருந்தலாம். இதுதான் வழக்கமான வெளிப்பாட்டை மிகவும் சக்திவாய்ந்ததாக ஆக்குகிறது - அவை அதிக எண்ணிக்கையிலான மாறுபாடுகளை விவரிக்கும் ஒரு சுருக்கமான வழியாகும்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:34
+#: ../../../__w/calibre/calibre/manual/regexp.rst:34
 msgid ""
 "I'm using string here in the sense it is used in programming languages: a "
 "string of one or more characters, characters including actual characters, "
@@ -95,11 +95,11 @@ msgid ""
 "people bother using them at all. More on that in a bit."
 msgstr "நிரலாக்க மொழிகளில் பயன்படுத்தப்படும் அர்த்தத்தில் நான் இங்கே சரம் பயன்படுத்துகிறேன்: ஒன்று அல்லது அதற்கு மேற்பட்ட எழுத்துக்களின் சரம், உண்மையான எழுத்துக்கள், எண்கள், நிறுத்தற்குறி மற்றும் வைட்ச்பேச் (லைன் பிரேக்குகள், டேபுலேட்டர்கள் போன்றவை) உள்ளிட்ட எழுத்துக்கள். பொதுவாக, பெரிய எழுத்துக்கள் மற்றும் சிறிய எழுத்துக்கள் ஒரே மாதிரியாக கருதப்படுவதில்லை என்பதை நினைவில் கொள்க, இதனால் \"a\" மற்றும் பலவற்றிலிருந்து வேறுபட்ட பாத்திரம் \"ஒரு\". காலிபரில், வழக்கமான வெளிப்பாடுகள் தேடல் பட்டியில் உணர்வற்றவை, ஆனால் மாற்று விருப்பங்களில் அல்ல. ஒவ்வொரு வழக்கமான வெளிப்பாடு வழக்கையும் உணர்வற்றதாக மாற்ற ஒரு வழி உள்ளது, ஆனால் பின்னர் அதைப் பற்றி விவாதிப்போம். இது சிக்கலானதாகிறது, ஏனெனில் வழக்கமான வெளிப்பாடுகள் அது பொருந்தக்கூடிய சரங்களில் மாறுபாடுகளை அனுமதிக்கின்றன, எனவே ஒரு வெளிப்பாடு பல சரங்களுடன் பொருந்தக்கூடும், அதனால்தான் மக்கள் அவற்றைப் பயன்படுத்துவதைத் தொந்தரவு செய்கிறார்கள். கொஞ்சம் கூட."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:37
+#: ../../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
 msgstr "விளக்க கவனமா?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:39
+#: ../../../__w/calibre/calibre/manual/regexp.rst:39
 msgid ""
 "Well, that's why we're here. First, this is the most important concept in "
 "regular expressions: *A string by itself is a regular expression that "
@@ -111,11 +111,11 @@ msgid ""
 "variation."
 msgstr "சரி, அதனால்தான் நாங்கள் இங்கே இருக்கிறோம். முதலாவதாக, வழக்கமான வெளிப்பாடுகளில் இது மிக முக்கியமான கருத்தாகும்: *ஒரு சரம் தானே தன்னுடன் பொருந்தக்கூடிய ஒரு வழக்கமான வெளிப்பாடாகும் *. அதாவது, நான் `` \"அலோ, உலகம்!\" என்ற சரத்தை பொருத்த விரும்பினால், வழக்கமான வெளிப்பாட்டைப் பயன்படுத்தி, பயன்படுத்த வழக்கமான வெளிப்பாடு `` அலோ, உலகம்! ``. ஆம், அது உண்மையில் எளிது. இருப்பினும், இது * சரியான சரத்துடன் `` \"அலோ, உலகம்!\" ``, எ.கா. `` \"அலோ, உலகம்!\" `` அல்லது `` \"அலோ, உலகம்!\""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:42
+#: ../../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
 msgstr "அது மிகவும் மோசமாக இல்லை. அடுத்தது என்ன?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:44
+#: ../../../__w/calibre/calibre/manual/regexp.rst:44
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
 "regular expressions can match multiple strings? This is where it gets a "
@@ -137,11 +137,11 @@ msgid ""
 "expression would look like. Yes, go ahead. Write it down."
 msgstr "அடுத்தது நல்ல விசயங்களின் துவக்கம். வழக்கமான வெளிப்பாடுகள் பல சரங்களுடன் பொருந்தக்கூடும் என்று நான் சொன்னது நினைவிருக்கிறதா? இது இன்னும் கொஞ்சம் சிக்கலானது. சற்றே நடைமுறை பயிற்சியாக, நீங்கள் மாற்ற விரும்பிய மின் நூல் \"423 இன் பக்கம் 5\" போன்ற பக்கங்களை எண்ணும் ஒரு மோசமான அடிக்குறிப்பைக் கொண்டிருந்தது. பக்க எண் 1 முதல் 423 வரை உயரும், இதனால் நீங்கள் 423 வெவ்வேறு சரங்களை பொருத்த வேண்டும், இல்லையா? தவறு, உண்மையில்: வழக்கமான வெளிப்பாடுகள் பொருந்தக்கூடிய எழுத்துக்களின் தொகுப்புகளை வரையறுக்க உங்களை அனுமதிக்கின்றன: ஒரு தொகுப்பை வரையறுக்க, நீங்கள் விரும்பும் அனைத்து எழுத்துக்களையும் தொகுப்பில் சதுர அடைப்புக்குறிக்குள் வைக்கவும். எனவே, எடுத்துக்காட்டாக, `` [ஏபிசி] `` என்ற தொகுப்பு \"ஏ\", \"பி\" அல்லது \"சி\" என்ற எழுத்துடன் பொருந்தும். *செட் எப்போதும் தொகுப்பில் உள்ள எழுத்துக்களில் ஒன்றை மட்டுமே பொருத்தும்*. அவை எழுத்து வரம்புகளை \"புரிந்துகொள்கின்றன\", அதாவது, நீங்கள் அனைத்து சிறிய எழுத்துக்களையும் பொருத்த விரும்பினால், நீங்கள் `` [a-z] `` என்ற தொகுப்பை நீங்கள் பயன்படுத்துவீர்கள் `` [a-za -z] `` மற்றும் பல. சிந்தனை கிடைத்ததா? எனவே, வெளிப்படையாக, 423`` இன் `` பக்கம் [0-9] என்ற வெளிப்பாட்டைப் பயன்படுத்தி நீங்கள் முதல் 9 பக்கங்களுடன் பொருந்த முடியும், இதனால் தேவையான வெளிப்பாடுகளை மூன்றாகக் குறைக்கிறீர்கள்: இரண்டாவது வெளிப்பாடு `` பக்கம் [0-9] [0-9] இன் 423`` அனைத்து இரண்டு இலக்க பக்க எண்களுக்கும் பொருந்தும், மேலும் மூன்றாவது வெளிப்பாடு எப்படி இருக்கும் என்று நீங்கள் யூகிக்க முடியும் என்று நான் நம்புகிறேன். ஆம், மேலே செல்லுங்கள். அதை எழுதி வை."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:47
+#: ../../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
 msgstr "ஏய், சுத்தமாக! இது அர்த்தமுள்ளதாகத் தொடங்குகிறது!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:49
+#: ../../../__w/calibre/calibre/manual/regexp.rst:49
 msgid ""
 "I was hoping you'd say that. But brace yourself, now it gets even better! We"
 " just saw that using sets, we could match one of several characters at once."
@@ -167,7 +167,7 @@ msgid ""
 " every page number in that book!"
 msgstr "நீங்கள் அதைச் சொல்வீர்கள் என்று நான் நம்புகிறேன். ஆனால் உங்களை நீங்களே இணைத்துக் கொள்ளுங்கள், இப்போது அது இன்னும் சிறப்பாகிறது! தொகுப்புகளைப் பயன்படுத்தி, ஒரே நேரத்தில் பல கதாபாத்திரங்களில் ஒன்றை பொருத்த முடியும் என்பதை நாங்கள் பார்த்தோம். ஆனால் நீங்கள் ஒரு பாத்திரத்தை அல்லது அமைக்கப்பட்டிருக்கலாம், மேலே உள்ள பக்க எண் உதாரணத்தை ஒன்றைக் கையாள தேவையான வெளிப்பாடுகளின் எண்ணிக்கையை குறைக்கலாம். ஆம், ஒன்று! உற்சாகமா? நீங்கள் இருக்க வேண்டும்! இது இப்படி வேலை செய்கிறது: சில சிறப்பு எழுத்துக்கள் என்று அழைக்கப்படுபவை, \"+\", \"?\" மற்றும் \"*\",*அவர்களுக்கு முந்தைய ஒற்றை உறுப்பை மீண்டும் செய்யவும்*. . இந்த எழுத்துக்கள் வைல்டு கார்டுகள் அல்லது அளவுகோல்கள் என்று அழைக்கப்படுகின்றன. இன்னும் துல்லியமாக இருக்க, \"?\" முந்தைய உறுப்பின்*0 அல்லது 1*உடன் பொருந்துகிறது, \"*\" முந்தைய உறுப்பின்*0 அல்லது அதற்கு மேற்பட்டவை*பொருந்துகிறது மற்றும் \"+\" முந்தைய உறுப்பின்*1 அல்லது அதற்கு மேற்பட்ட*பொருந்துகிறது. சில எடுத்துக்காட்டுகள்: `` அ? ஒரு \",\" aa \"அல்லது ஒரு வரிசையில் உள்ள a இன் எத்தனை, மற்றும், இறுதியாக, வெளிப்பாடு` `a+` `` \"a\", \"aa\" அல்லது ஒரு வரிசையில் உள்ள எந்தவொரு a களும் பொருந்தும் (குறிப்பு: அது இருக்காது வெற்று சரத்தை பொருத்துங்கள்!). தொகுப்புகளுக்கான அதே ஒப்பந்தம்: `` [0-9]+`` என்ற வெளிப்பாடு *இருக்கும் ஒவ்வொரு முழு எண் எண்ணும் *! நீங்கள் என்ன நினைக்கிறீர்கள் என்று எனக்குத் தெரியும், நீங்கள் சொல்வது சரிதான்: பக்க எண்களைப் பொருத்துவதற்கு மேலே உள்ள விசயத்தில் நீங்கள் அதைப் பயன்படுத்தினால், எல்லா பக்க எண்களையும் பொருத்த ஒற்றை ஒரு வெளிப்பாடாக இருக்காது? ஆம், 423`` இன் `` பக்கம் [0-9] என்ற வெளிப்பாடு அந்த புத்தகத்தில் உள்ள ஒவ்வொரு பக்க எண்ணிற்கும் பொருந்தும்!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:52
+#: ../../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
 "A note on these quantifiers: They generally try to match as much text as "
 "possible, so be careful when using them. This is called \"greedy "
@@ -187,13 +187,13 @@ msgid ""
 "write a regular expression."
 msgstr "இந்த அளவுகோல்களைப் பற்றிய ஒரு குறிப்பு: அவை பொதுவாக முடிந்தவரை உரையை பொருத்த முயற்சிக்கின்றன, எனவே அவற்றைப் பயன்படுத்தும் போது கவனமாக இருங்கள். இது \"பேராசை நடத்தை\" என்று அழைக்கப்படுகிறது- ஏன் என்று நீங்கள் நம்புகிறேன். நீங்கள் ஒரு குறிச்சொல்லுடன் பொருந்த முயற்சிக்கும்போது இது சிக்கலாகிறது. எடுத்துக்காட்டாக, சரம் `` \"<p class =\" calibre2 \"> தலைப்பு இங்கே </p>\" `` மற்றும் நீங்கள் திறப்பு குறிச்சொல்லுடன் பொருந்த விரும்புகிறீர்கள் என்று சொல்லலாம் (முதல் இணை கோண அடைப்புக்குறிக்கு இடையிலான பகுதி, குறிச்சொற்களில் இன்னும் கொஞ்சம்). `` <p.*> `` அந்த குறிச்சொல்லுடன் பொருந்தும் என்று நீங்கள் நினைப்பீர்கள், ஆனால் உண்மையில், இது முழு சரத்திற்கும் பொருந்துகிறது! . அதற்கு பதிலாக, `` <ப.*? அந்த வெளிப்பாடு நோக்கம் கொண்ட முதல் தொடக்க குறிச்சொல்லுடன் மட்டுமே பொருந்தும். இதைச் செய்ய உண்மையில் மற்றொரு வழி உள்ளது: `` <p [^>]*> `` என்ற வெளிப்பாடு அதே திறப்பு குறிச்சொல்லுடன் பொருந்தும்- அடுத்த பகுதிக்குப் பிறகு ஏன் என்று பார்ப்பீர்கள். வழக்கமான வெளிப்பாட்டை எழுத ஒன்றுக்கு மேற்பட்ட வழிகள் உள்ளன என்பதை நினைவில் கொள்க."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:56
+#: ../../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
 msgstr "சரி, இந்த சிறப்பு கதாபாத்திரங்கள் மிகவும் சுத்தமாகவும் அனைத்தும், ஆனால் நான் ஒரு புள்ளி அல்லது கேள்விக்குறியை பொருத்த விரும்பினால் என்ன செய்வது?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:58
+#: ../../../__w/calibre/calibre/manual/regexp.rst:58
 msgid ""
 "You can of course do that: Just put a backslash in front of any special "
 "character and it is interpreted as the literal character, without any "
@@ -208,11 +208,11 @@ msgid ""
 "needing to be escaped if you want the literal character."
 msgstr "நீங்கள் நிச்சயமாக அதைச் செய்யலாம்: எந்தவொரு சிறப்பு கதாபாத்திரத்திற்கும் முன்னால் ஒரு பின்சாய்வுக்கோடுகளை வைக்கவும், அது எந்தவொரு சிறப்பு அர்த்தமும் இல்லாமல், நேரடி பாத்திரமாக விளக்கப்படுகிறது. ஒரு பின்னடைவின் இந்த இணை ஒரு கதாபாத்திரத்தைத் தொடர்ந்து ஒரு தப்பிக்கும் வரிசை என்று அழைக்கப்படுகிறது, மேலும் ஒரு சிறப்பு கதாபாத்திரத்திற்கு முன்னால் ஒரு பின்சாய்வுக்கோடுகளை வைக்கும் செயல் அந்த பாத்திரத்திலிருந்து தப்பிப்பது என்று அழைக்கப்படுகிறது. ஒரு தப்பிக்கும் வரிசை ஒரு ஒற்றை உறுப்பு என்று விளக்கப்படுகிறது. சிறப்பு எழுத்துக்களில் இருந்து தப்பிப்பதை விட அதிகமாகச் செய்யும் எச்கேப் காட்சிகள் உள்ளன, எடுத்துக்காட்டாக `` \"\\ t\" `` என்பது ஒரு தாவல். தப்பிக்கும் சில காட்சிகளை பின்னர் பெறுவோம். ஓ, மற்றும் அந்த சிறப்பு கதாபாத்திரங்களைப் பற்றி: இந்த அறிமுகத்தில் நாம் விவாதிக்கும் எந்தவொரு கதாபாத்திரமும் சில செயல்பாடுகளை சிறப்பு வாய்ந்ததாகக் கொண்டிருப்பதாகவும், இதனால் நீங்கள் நேரடி தன்மையை விரும்பினால் தப்பிக்க வேண்டும் என்றும் கருதுங்கள்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:61
+#: ../../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
 msgstr "எனவே, மிகவும் பயனுள்ள தொகுப்புகள் யாவை?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:63
+#: ../../../__w/calibre/calibre/manual/regexp.rst:63
 msgid ""
 "Knew you'd ask. Some useful sets are ``[0-9]`` matching a single number, "
 "``[a-z]`` matching a single lowercase letter, ``[A-Z]`` matching a single "
@@ -221,38 +221,38 @@ msgid ""
 "shorthand:"
 msgstr "நீங்கள் கேட்பீர்கள் என்று தெரியும். சில பயனுள்ள தொகுப்புகள் `` [0-9] `` ஒரு எண்ணுடன் பொருந்துகின்றன, `` [a-z] `` ஒரு சிறிய கடிதத்தை பொருத்துதல், `` [a-z] `` ஒரு பெரிய எழுத்துக் கடிதத்துடன் பொருந்துகிறது, `` [a-zaa -z] `` ஒரு கடிதத்தையும் `` [a-za-z0-9] `` ஒரு கடிதம் அல்லது எண்ணுடன் பொருந்தும். நீங்கள் ஒரு தப்பிக்கும் வரிசையை சுருக்கெழுத்து எனப் பயன்படுத்தலாம்:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:69
+#: ../../../__w/calibre/calibre/manual/regexp.rst:69
 msgid "``\\d``"
 msgstr "`` \\ d``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:70
+#: ../../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "is equivalent to ``[0-9]``"
 msgstr "`` [0-9] `` க்கு சமம்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:72
+#: ../../../__w/calibre/calibre/manual/regexp.rst:72
 msgid "``\\w``"
 msgstr "`` \\ w``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:73
+#: ../../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "is equivalent to ``[a-zA-Z0-9_]``"
 msgstr "`` [a-za-z0-9_] `` க்கு சமம்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:76
+#: ../../../__w/calibre/calibre/manual/regexp.rst:76
 msgid "``\\s``"
 msgstr "`` \\ s``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../../__w/calibre/calibre/manual/regexp.rst:77
 msgid "is equivalent to any whitespace"
 msgstr "எந்த இடைவெளிக்கும் சமம்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:80
+#: ../../../__w/calibre/calibre/manual/regexp.rst:80
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
 msgstr "\"வைட்ச்பேச்\" என்பது அச்சிடப்படாத எதற்கும் ஒரு சொல். இந்த எழுத்துக்களில் இடம், தாவல், வரி தீவனம், படிவ ஊட்டம், வண்டி திரும்ப, உடைக்கும் இடங்கள் போன்றவை அடங்கும்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:83
+#: ../../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
 "The upper and lower case sets may match both upper and lowercase if the "
 "setting to make searches case insensitive is enabled. Such settings are "
@@ -261,7 +261,7 @@ msgid ""
 " :guilabel:`Edit book` tool."
 msgstr "தேடல் வழக்கை உணர்வற்றதாக மாற்றுவதற்கான அமைப்பு இயக்கப்பட்டிருந்தால், மேல் மற்றும் கீழ் வழக்கு தொகுப்புகள் மேல் மற்றும் சிறிய எழுத்துக்களுடன் பொருந்தக்கூடும். இத்தகைய அமைப்புகள் காணப்படுகின்றன, உதாரணமாக விருப்பத்தேர்வுகள்-> காலிபர் மற்றும் காலிபரில் உள்ள தேடல் குழுவில் தேடுவது: கிலாபெல்: `மின் புத்தக பார்வையாளர்` மற்றும் திறமை: கிலாபெல்:` புத்தகத்தை திருத்து புத்தக` கருவி."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:89
+#: ../../../__w/calibre/calibre/manual/regexp.rst:89
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -276,13 +276,13 @@ msgid ""
 "bracket."
 msgstr "செட்களின் கடைசி குறிப்பாக, நீங்கள் ஒரு தொகுப்பை எந்த கதாபாத்திரமாகவும் வரையறுக்கலாம் * ஆனால் * தொகுப்பில் உள்ளவர்கள். `` \"^\" `` என்ற கதாபாத்திரத்தை தொகுப்பின் முதல் எழுத்தாக *சேர்ப்பதன் மூலம் நீங்கள் அதைச் செய்கிறீர்கள் *. எனவே, `` [^a] `` \"a\" ஐத் தவிர வேறு எந்த பாத்திரத்தையும் பொருத்தும். அது தொகுப்பை நிறைவு செய்வது என்று அழைக்கப்படுகிறது. நாம் முன்னர் பார்த்த அந்த தப்பிக்கும் வரிசை சுருக்கெழுத்து ஆகியவற்றை நிறைவு செய்யலாம்: `` \"\\ d\" `` `என்பது எந்தவொரு எண் அல்லாத தன்மையையும் குறிக்கிறது, இதனால்` `[^0-9]` `க்கு சமம். மற்ற சுருக்கெழுத்து ஆகியவற்றால் நிறைவு செய்யப்படலாம், நீங்கள் அதை யூகித்தீர்கள், சிறிய எழுத்துக்கு பதிலாக அந்தந்த பெரிய எழுத்துக்களைப் பயன்படுத்தி. எனவே, முந்தைய பிரிவில் இருந்து `` <p [^>]*> `` எடுத்துக்காட்டுக்குச் செல்வது, ஒரு இறுதி கோண அடைப்புக்குறியைத் தவிர வேறு எந்த கதாபாத்திரத்தையும் பொருத்த முயற்சிகளைப் பயன்படுத்தும் எழுத்து அமைக்கப்பட்டிருப்பதை இப்போது நீங்கள் காணலாம்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:94
+#: ../../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
 msgstr "ஆனால் நான் பொருந்த விரும்பிய சில மாறுபட்ட சரங்களை என்னிடம் வைத்திருந்தால், விசயங்கள் சிக்கலானதா?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:96
+#: ../../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -298,7 +298,7 @@ msgid ""
 "the even pages). Well, wasn't that easy?"
 msgstr "பயப்பட வேண்டாம், வாழ்க்கை இன்னும் நல்லது மற்றும் எளிதானது. இந்த எடுத்துக்காட்டைக் கவனியுங்கள்: நீங்கள் மாற்றும் புத்தகத்தில் ஒவ்வொரு ஒற்றைப்படை பக்கத்திலும் எழுதப்பட்ட \"தலைப்பு\" மற்றும் ஒவ்வொரு பக்கத்திலும் \"ஆசிரியர்\" எழுதப்பட்டுள்ளது. அச்சில் அழகாக இருக்கிறது, இல்லையா? ஆனால் மின் புத்தகங்களில், இது எரிச்சலூட்டும். நீங்கள் முழு வெளிப்பாடுகளையும் சாதாரண அடைப்புக்குறிக்குள் தொகுக்கலாம், மேலும் `` \"| அவற்றை இணைக்கவும், நீங்கள் முடித்துவிட்டீர்கள். உங்களுக்கு மிக வேகமாக? சரி, முதலில், நாங்கள் ஒற்றைப்படை மற்றும் பக்கங்களுக்கான வெளிப்பாடுகளை தொகுக்கிறோம், இதனால் `` (தலைப்பு) (ஆசிரியர்) `` எங்கள் இரண்டு தேவையான வெளிப்பாடுகளாகப் பெறுகிறோம். இப்போது செங்குத்து பட்டியைப் பயன்படுத்துவதன் மூலம் விசயங்களை எளிமையாக்குகிறோம் (`` \"| \"(ஒற்றைப்படை பக்கங்களில்) அல்லது நீங்கள்\" எழுத்தாளர் \"(கூட பக்கங்களில்) பொருந்துவீர்கள். சரி, அது எளிதானதல்லவா?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:98
+#: ../../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -314,11 +314,11 @@ msgid ""
 "short: If in doubt, use grouping together with the vertical bar."
 msgstr "குழுவில் அடைப்புக்குறிப்புகளைப் பயன்படுத்தாமல் செங்குத்து பட்டியைப் பயன்படுத்தலாம். அளவுகோல்கள் அவர்களுக்கு முந்தைய உறுப்பை மீண்டும் என்று நான் சொன்னபோது நினைவிருக்கிறதா? சரி, செங்குத்து பட்டி சற்று வித்தியாசமாக செயல்படுகிறது: \"தலைப்பு | ஆசிரியர்\" என்ற வெளிப்பாடு \"தலைப்பு\" என்ற சரம் அல்லது \"ஆசிரியர்\" என்ற சரம் பொருந்தும், மேலே உள்ள எடுத்துக்காட்டு குழுமத்தைப் பயன்படுத்துகிறது. *செங்குத்துப் பட்டி அதற்கு முந்தைய மற்றும் பின்பற்றும் முழு வெளிப்பாட்டிற்கும் இடையில் தேர்வு செய்கிறது*. எனவே, நீங்கள் \"காலிபர்\" மற்றும் \"காலிபர்\" சரங்களை பொருத்த விரும்பினால், மேல் மற்றும் சிறிய \"சி\" க்கு இடையில் மட்டுமே தேர்ந்தெடுக்க விரும்பினால், நீங்கள் `` (சி | சி) அலிப்ரே`` என்ற வெளிப்பாட்டைப் பயன்படுத்த வேண்டும் \"சி\" மட்டுமே தேர்ந்தெடுக்கப்படும் என்பதை குழுமம் உறுதி செய்கிறது. நீங்கள் `` சி | காலிபிரே`` ஐப் பயன்படுத்தினால், நீங்கள் \"சி\" என்ற சரத்தில் அல்லது \"காலிபர்\" என்ற சரத்தில் ஒரு பொருத்தத்தைப் பெறுவீர்கள், இது நாங்கள் விரும்பியதல்ல. சுருக்கமாக: ஐயம் இருந்தால், செங்குத்து பட்டியுடன் குழுவை பயன்படுத்தவும்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:101
+#: ../../../__w/calibre/calibre/manual/regexp.rst:101
 msgid "You missed..."
 msgstr "நீ தவற விட்டாய்..."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:103
+#: ../../../__w/calibre/calibre/manual/regexp.rst:103
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -329,13 +329,13 @@ msgid ""
 "match the whole string!"
 msgstr "... ஒரு மணித்துளி காத்திருங்கள், நீங்கள் குழுக்களுடன் செய்யக்கூடிய கடைசி, மிகவும் சுத்தமாக ஒன்று இருக்கிறது. நீங்கள் முன்பு பொருந்திய ஒரு குழு உங்களிடம் இருந்தால், அந்தக் குழுவைப் பற்றிய குறிப்புகளை பின்னர் வெளிப்பாட்டில் பயன்படுத்தலாம்: குழுக்கள் 1 உடன் தொடங்கி எண்ணப்படுகின்றன, மேலும் நீங்கள் குறிப்பிட விரும்பும் குழுவின் எண்ணிக்கையிலிருந்து தப்பிப்பதன் மூலம் அவற்றைக் குறிப்பிடுகிறீர்கள், இதனால், ஐந்தாவது குழு `` \\ 5`` என குறிப்பிடப்படும். எனவே, நீங்கள் \"சோதனை சோதனை\" என்ற சரத்தில் `` ([^]+) \\ 1`` தேடியால், நீங்கள் முழு சரத்தையும் பொருத்துவீர்கள்!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:107
+#: ../../../__w/calibre/calibre/manual/regexp.rst:107
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
 msgstr "ஆரம்பத்தில், ஒரு வழக்கமான வெளிப்பாடு வழக்கை உணர்ச்சியற்றதாக மாற்ற ஒரு வழி இருப்பதாக நீங்கள் சொன்னீர்கள்?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:109
+#: ../../../__w/calibre/calibre/manual/regexp.rst:109
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -346,7 +346,7 @@ msgid ""
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
 msgstr "ஆமாம், நான் செய்தேன், கவனம் செலுத்தி எனக்கு நினைவூட்டியதற்கு நன்றி. கொடிகள் என்று அழைக்கப்படும் ஒன்றைப் பயன்படுத்துவதன் மூலம் சில விசயங்களை எவ்வாறு கையாள விரும்புகிறீர்கள் என்பதை நீங்கள் காலிபருக்குச் சொல்லலாம். சிறப்பு கட்டமைப்பைப் பயன்படுத்துவதன் மூலம் உங்கள் வெளிப்பாட்டில் கொடிகளைச் சேர்க்கிறீர்கள் `` (? கொடிகள் இங்கே செல்கின்றன) `` எங்கே, வெளிப்படையாக, நீங்கள் விரும்பும் குறிப்பிட்ட கொடிகளுடன் \"கொடிகள் இங்கே செல்கின்றன\". வழக்கைப் புறக்கணிக்க, கொடி `` நான்``, இதனால் உங்கள் வெளிப்பாட்டில் `` (? i) `` சேர்க்கவும். எனவே, `` (? நான்) சோதனை`` \"சோதனை\", \"சோதனை\", \"சோதனை\" மற்றும் நீங்கள் நினைக்கும் எந்த வழக்கு மாறுபாட்டையும் பொருத்துகிறது."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:111
+#: ../../../__w/calibre/calibre/manual/regexp.rst:111
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
@@ -355,17 +355,17 @@ msgid ""
 "``(?si)`` would be equivalent to the above."
 msgstr "மற்றொரு பயனுள்ள கொடி dot எந்தவொரு கதாபாத்திரத்தையும் பொருத்த அனுமதிக்கிறது, * புதிய வரி, கொடி `` s`` உட்பட. நீங்கள் ஒரு வெளிப்பாட்டில் பல கொடிகளைப் பயன்படுத்த விரும்பினால், அவற்றை ஒரே அறிக்கையில் வைக்கவும்: `` (? is) `` வழக்கை புறக்கணித்து, புள்ளி அனைத்தையும் பொருத்தமாக்கும். நீங்கள் முதலில் எந்தக் கொடியைக் கூறினாலும் பரவாயில்லை, `` (? எச்) `` மேற்கூறியவற்றுக்கு சமமாக இருக்கும்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:114
+#: ../../../__w/calibre/calibre/manual/regexp.rst:114
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
 msgstr "இந்த வழக்கமான வெளிப்பாடுகளை நான் இப்போது புரிந்து கொள்ளத் தொடங்கினேன் என்று நினைக்கிறேன் ... அவற்றை காலிபரில் எவ்வாறு பயன்படுத்துவது?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:117
+#: ../../../__w/calibre/calibre/manual/regexp.rst:117
 msgid "Conversions"
 msgstr "மாற்றங்கள்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:119
+#: ../../../__w/calibre/calibre/manual/regexp.rst:119
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -381,7 +381,7 @@ msgid ""
 "convert. Be careful if your conversion source has tags like this example::"
 msgstr "மாற்று அமைப்புகளுடன் ஆரம்பிக்கலாம், இது மிகவும் சுத்தமாக இருக்கிறது. இல்: கிலாபெல்: `தேடல் மற்றும் மாற்றுதல்` பகுதியை, மாற்றத்தின் போது மாற்றப்படும் சரத்தை விவரிக்கும் ஒரு regexp (வழக்கமான வெளிப்பாட்டிற்கு குறுகிய) உள்ளிடலாம். சுத்தமாக பகுதி வழிகாட்டி. வழிகாட்டி ஊழியர்களைக் சொடுக்கு செய்து, மாற்று செயல்பாட்டின் போது காலிபர் \"பார்க்கும்\" என்ன முன்னோட்டத்தைப் பெறுவீர்கள். நீங்கள் அகற்ற விரும்பும் சரத்திற்கு கீழே உருட்டவும், தேர்ந்தெடுத்து நகலெடுக்கவும், சாளரத்தின் மேல் உள்ள regexp புலத்தில் ஒட்டவும். பக்க எண்கள் அல்லது அதற்கு மேற்பட்ட மாறி பாகங்கள் இருந்தால், அவற்றை மறைக்க செட் மற்றும் அளவுகோல்களைப் பயன்படுத்தவும், நீங்கள் அதில் இருக்கும்போது, சில இருந்தால் சிறப்பு எழுத்துக்களில் இருந்து தப்பிக்க நினைவில் கொள்ளுங்கள். பெயரிடப்பட்ட பொத்தானை அழுத்தவும்: கிலாபெல்: `டெச்ட்` மற்றும் காலிபர் நீங்கள் regexp ஐப் பயன்படுத்தினால் அது மாற்றக்கூடிய பகுதிகளை எடுத்துக்காட்டுகிறது. நீங்கள் நிறைவு அடைந்ததும், சரி, மாற்றவும். உங்கள் மாற்று மூலத்தில் இந்த எடுத்துக்காட்டு போன்ற குறிச்சொற்கள் இருந்தால் கவனமாக இருங்கள் ::"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:129
+#: ../../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -408,11 +408,11 @@ msgid ""
 " removal."
 msgstr ". . /குறிச்சொல்> ``), இது வெறுமனே அடுத்த `` </b> `` `இந்த விசயத்தில். (ஒரு நல்ல html கையேட்டைப் பார்க்கவும் அல்லது இந்த கட்டத்தில் நீங்கள் தெளிவாக தெரியாவிட்டால் மன்றத்தில் கேளுங்கள்). திறப்பு குறிச்சொல் இருக்கலாம் `` <b.*? ``. ஆனால் இந்த வெளிப்பாட்டைப் பயன்படுத்துவது ஒரு மோசமான யோசனையாக இருக்கும், ஏனென்றால் இது <b>- குறிச்சொற்களால் இணைக்கப்பட்ட அனைத்தையும் நீக்குகிறது (இது, மூடப்பட்ட உரையை தைரியமான அச்சில் வழங்குகிறது), மேலும் இது ஒரு நியாயமான பந்தயம், நாங்கள் அகற்றுவோம் புத்தகத்தின் பகுதிகள் இந்த வழியில். அதற்கு பதிலாக, மூடப்பட்ட சரத்தின் தொடக்கத்தையும் சேர்க்கவும், வழக்கமான வெளிப்பாட்டை `` <b.*? +லிட்.*? நீங்கள் ஒரு புதிய வெளிப்பாட்டை சோதித்தால் நீங்கள் வைத்திருக்க விரும்பும் எந்த பகுதிகளையும் அகற்றவில்லை என்பதை உறுதிப்படுத்த என்ன காலிபர் நீக்கப்படும் என்பதைச் சரிபார்க்க நினைவில் கொள்ளுங்கள். நீங்கள் ஒரு நிகழ்வை மட்டுமே சரிபார்த்தால், உரையில் வேறு எங்காவது பொருந்தாத தன்மையை நீங்கள் இழக்க நேரிடும். நீங்கள் உண்மையில் விரும்பியதை விட அதிகமாக அல்லது குறைவான குறிச்சொற்களை தற்செயலாக அகற்றினால், காலிபர் அகற்றப்பட்ட பிறகு சேதமடைந்த குறியீட்டை சரிசெய்ய முயற்சிக்கிறார்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:132
+#: ../../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
 msgstr "புத்தகங்களைச் சேர்ப்பது"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:134
+#: ../../../__w/calibre/calibre/manual/regexp.rst:134
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -422,7 +422,7 @@ msgid ""
 "listed in the windows, together with another nice test field. An example: "
 "Say you want to import a whole bunch of files named like ``Classical Texts: "
 "The Divine Comedy by Dante Alighieri.mobi``. (Obviously, this is already in "
-"your library, since we all love classical italian poetry) or ``Science "
+"your library, since we all love classical Italian poetry) or ``Science "
 "Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. This is "
 "obviously a naming scheme that calibre won't extract any meaningful data out"
 " of - its standard expression for extracting metadata is ``(?P<title>.+) - "
@@ -433,19 +433,19 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr "நீங்கள் வழக்கமான வெளிப்பாடுகளைப் பயன்படுத்தக்கூடிய மற்றொரு சேதி, கோப்பு பெயர்களிலிருந்து மெட்டாடேட்டாவை பிரித்தெடுப்பது. அமைப்புகளின் \"புத்தகங்களைச் சேர்ப்பது\" பகுதியில் இந்த அம்சத்தை நீங்கள் காணலாம். இங்கே ஒரு சிறப்பு நற்பொருத்தம் உள்ளது: நீங்கள் மேனிலை தரவு புலங்களுக்கான புலப் பெயர்களைப் பயன்படுத்தலாம், எடுத்துக்காட்டாக `` (? பி <தலைப்பு>) `` காலிபர் சரத்தின் இந்த பகுதியை புத்தக தலைப்பாக பயன்படுத்துவதைக் குறிக்கும். அனுமதிக்கப்பட்ட புலப் பெயர்கள் சன்னல்களில் பட்டியலிடப்பட்டுள்ளன, மற்றொரு நல்ல சோதனை புலத்துடன். ஒரு எடுத்துக்காட்டு: `` பாரம்பரிய நூல்கள்: டான்டே அலிகீரி.மொபி` எழுதிய தெய்வீக நகைச்சுவை போன்ற பெயர்களையும் இறக்குமதி செய்ய விரும்புகிறீர்கள் என்று சொல்லுங்கள். . இது வெளிப்படையாக பெயரிடும் திட்டமாகும், இது காலிபர் எந்த அர்த்தமுள்ள தரவையும் பிரித்தெடுக்காது - மெட்டாடேட்டாவைப் பிரித்தெடுப்பதற்கான அதன் நிலையான வெளிப்பாடு `` (? பி <தலைப்பு>.+) - (? பி <ஆசிரியர்> [^_]+) ` `. இங்கே செயல்படும் ஒரு வழக்கமான வெளிப்பாடு `` [a-za-z]+: (? p <tithe>. மேனிலை தரவு புலத்திற்கான குழுவிற்குள், புலம் உண்மையில் பொருந்தக்கூடியதை விவரிக்க வெளிப்பாடுகளைப் பயன்படுத்த வேண்டும் என்பதை நினைவில் கொள்க. மேலும், காலிபர் வழங்கும் சோதனை புலத்தைப் பயன்படுத்தும் போது, உங்கள் சோதனை கோப்பு பெயரில் கோப்பு நீட்டிப்பை நீங்கள் சேர்க்க வேண்டும், இல்லையெனில், வேலை வெளிப்பாட்டைப் பயன்படுத்தினாலும், நீங்கள் எந்த போட்டிகளையும் பெற மாட்டீர்கள்."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:138
+#: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
 msgstr "மொத்த திருத்துதல் மேனிலை தரவு"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:140
+#: ../../../__w/calibre/calibre/manual/regexp.rst:140
 msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
 "library and using bulk metadata edit. Be very careful when using this last "
-"feature, as it can do **Very Bad Things** to your library! Doublecheck that "
-"your expressions do what you want them to using the test fields, and only "
+"feature, as it can do **Very Bad Things** to your library! Double-check that"
+" your expressions do what you want them to using the test fields, and only "
 "mark the books you really want to change! In the regular expression search "
 "mode, you can search in one field, replace the text with something and even "
 "write the result into another field. A practical example: Say your library "
@@ -463,9 +463,9 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr "கடைசி பகுதி வழக்கமான வெளிப்பாடு: கிலாபெல்: மேனிலை தரவு புலங்களில் `தேடுங்கள் மற்றும் மாற்றவும். நூலகத்தில் பல புத்தகங்களைத் தேர்ந்தெடுத்து மொத்த மேனிலை தரவு திருத்தத்தைப் பயன்படுத்துவதன் மூலம் இதை அணுகலாம். இந்த கடைசி அம்சத்தைப் பயன்படுத்தும் போது மிகவும் கவனமாக இருங்கள், ஏனெனில் இது உங்கள் நூலகத்திற்கு ** மிக மோசமான விசயங்களை ** செய்ய முடியும்! சோதனை புலங்களைப் பயன்படுத்துவதை நீங்கள் விரும்புவதை உங்கள் வெளிப்பாடுகள் செய்கின்றன என்பதை இரட்டிப்பாக்கவும், நீங்கள் உண்மையில் மாற்ற விரும்பும் புத்தகங்களை மட்டுமே குறிக்கவும்! வழக்கமான வெளிப்பாடு தேடல் பயன்முறையில், நீங்கள் ஒரு துறையில் தேடலாம், உரையை எதையாவது மாற்றலாம் மற்றும் முடிவை மற்றொரு துறையில் எழுதலாம். ஒரு நடைமுறை எடுத்துக்காட்டு: உங்கள் நூலகத்தில் ஃபிராங்க் எர்பெர்ட்டின் டூன் தொடரின் புத்தகங்கள் இருந்தன, இது ஃபேசன் `` டூன் 1 - டூன்``, `` டூன் 2 - டூன் மேசியா`` மற்றும் பலவற்றின் பெயரிடப்பட்டது. இப்போது நீங்கள் தொடர் துறையில் `` டூன்`` ஐப் பெற விரும்புகிறீர்கள். தலைப்பு புலத்தில் `` (.*?) \\ d+ -.*`` என்பதைத் தேடுவதன் மூலமும், தொடர் துறையில் `` \\ 1`` ஐ மாற்றுவதன் மூலமும் நீங்கள் அதைச் செய்யலாம். நான் அங்கு என்ன செய்தேன் என்று பாருங்கள்? நீங்கள் தொடர் புலத்தை மாற்றும் முதல் குழுவின் குறிப்பு இது. இப்போது நீங்கள் தொடர் அனைத்து அமைப்பையும் வைத்திருக்கிறீர்கள், நீங்கள் ``.*க்கு மற்றொரு தேடலை மட்டுமே செய்ய வேண்டும்? -`` தலைப்பு புலத்தில் மற்றும் அதை `` \"\" `` `(ஒரு வெற்று சரம்) உடன் மாற்றவும், மீண்டும் தலைப்பு புலத்தில், உங்கள் மேனிலை தரவு அனைத்தும் சுத்தமாகவும் நேர்த்தியாகவும் இருக்கும். அது பெரியதல்லவா? மூலம், முழு புலத்தையும் மாற்றுவதற்குப் பதிலாக, நீங்கள் களத்தில் சேர்க்கலாம் அல்லது தயாராகலாம், எனவே, நீங்கள் * தேவைப்பட்டால் * புத்தக தலைப்பு தொடர் தகவலுடன் தயாரிக்கப்பட வேண்டும், நீங்கள் அதைச் செய்யலாம். நீங்கள் இப்போது சந்தேகத்திற்கு இடமின்றி கவனித்தபடி, பெயரிடப்பட்ட ஒரு தேர்வுப்பெட்டி உள்ளது: கிலாபெல்: `வழக்கு உணர்திறன்`, எனவே இங்கே நடத்தை தேர்ந்தெடுக்க நீங்கள் கொடிகளைப் பயன்படுத்த வேண்டியதில்லை."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:142
+#: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
@@ -474,7 +474,7 @@ msgid ""
 "<https://docs.python.org/library/re.html>`_."
 msgstr "சரி, இது வழக்கமான வெளிப்பாடுகளுக்கு மிகக் குறுகிய அறிமுகத்தை முடிக்கிறது. குறைந்தபட்சம் உங்களைத் தொடங்குவதற்கும், நீங்களே கற்றுக்கொள்வதற்கும் உங்களுக்கு உதவ நான் உங்களுக்கு போதுமான அளவு காண்பித்திருப்பேன் என்று நம்புகிறேன்- ஒரு நல்ல தொடக்கப் புள்ளி `` பைதான் ஆவணங்கள் regexps <https://docs.python.org/library/re .html> `_."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:144
+#: ../../../__w/calibre/calibre/manual/regexp.rst:144
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -484,47 +484,47 @@ msgid ""
 "learn from it."
 msgstr "ஒரு கடைசி எச்சரிக்கை சொல், இருப்பினும்: ரீசெக்ச்ப்கள் சக்திவாய்ந்தவை, ஆனால் தவறாகப் புரிந்துகொள்வது மிகவும் எளிதானது. உங்கள் வெளிப்பாடுகள் நீங்கள் எதிர்பார்ப்பது போல நடந்து கொண்டதா என்பதைப் பார்க்க காலிபர் மிகச் சிறந்த சோதனை சாத்தியங்களை வழங்குகிறது. அவற்றை பயன்படுத்த. உங்களை காலில் சுட முயற்சி செய்யுங்கள். (கடவுளே, நான் அந்த வெளிப்பாட்டை விரும்புகிறேன் ...). ஆனால் நீங்கள், எச்சரிக்கை இருந்தபோதிலும், உங்கள் பாதத்தை (அல்லது வேறு ஏதேனும் உடல் பாகங்கள்) காயப்படுத்தினால், அதிலிருந்து கற்றுக்கொள்ள முயற்சி செய்யுங்கள்."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:148
+#: ../../../__w/calibre/calibre/manual/regexp.rst:148
 msgid "Quick reference"
 msgstr "விரைவான குறிப்பு"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:156
+#: ../../../__w/calibre/calibre/manual/regexp.rst:156
 msgid "Credits"
 msgstr "வரவு"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:158
+#: ../../../__w/calibre/calibre/manual/regexp.rst:158
 msgid "Thanks for helping with tips, corrections and such:"
 msgstr "உதவிக்குறிப்புகள், திருத்தங்கள் மற்றும் பலவற்றிற்கு உதவியதற்கு நன்றி:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:160
+#: ../../../__w/calibre/calibre/manual/regexp.rst:160
 msgid "ldolse"
 msgstr "ldolse"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:161
+#: ../../../__w/calibre/calibre/manual/regexp.rst:161
 msgid "kovidgoyal"
 msgstr "கோவிட்கோயல்"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:162
+#: ../../../__w/calibre/calibre/manual/regexp.rst:162
 msgid "chaley"
 msgstr "சேலி"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:163
+#: ../../../__w/calibre/calibre/manual/regexp.rst:163
 msgid "dwanthny"
 msgstr "டுவந்தி"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:164
+#: ../../../__w/calibre/calibre/manual/regexp.rst:164
 msgid "kacir"
 msgstr "kacir"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:165
+#: ../../../__w/calibre/calibre/manual/regexp.rst:165
 msgid "Starson17"
 msgstr "ச்டார்சன் 17"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:166
+#: ../../../__w/calibre/calibre/manual/regexp.rst:166
 msgid "Orpheu"
 msgstr "ஆர்ஃபியூ"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:168
+#: ../../../__w/calibre/calibre/manual/regexp.rst:168
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "

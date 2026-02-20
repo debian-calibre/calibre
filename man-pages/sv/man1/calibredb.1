@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "februari 06, 2026" "9.2.1" "calibre"
+.TH "CALIBREDB" "1" "februari 20, 2026" "9.3.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -148,7 +148,7 @@ Sökväg till calibre\-biblioteket. Standardinställningen är att använda sök
 .INDENT 0.0
 .TP
 .B \-\-password
-Lösenord för anslutning till en calibre\-innehållsserver. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (dvs. <f: följt av hela sökvägen till filen och en efterföljande>). Vinkelparenteserna ovan är nödvändiga, kom ihåg att koda dem eller använd citattecken för ditt skal.
+Lösenord för anslutning till en calibre\-innehållsserver. För att läsa lösenordet från standardinmatning, använd specialvärdet: <stdin>. För att läsa lösenordet från en fil, använd: <f:/path/to/file> (dvs. <f: följt av hela sökvägen till filen och en efterföljande >). Vinkelparenteserna ovan är nödvändiga, kom ihåg att koda dem eller använd citattecken för ditt skal.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -504,7 +504,7 @@ Exportera alla böcker till en enda mapp
 .INDENT 0.0
 .TP
 .B \-\-template
-Mallen för att anpassa filnamn och mappstruktur för de sparade filerna. Standard är \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+Mallen för att anpassa filnamn och mappstruktur för de sparade filerna. Standard är \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP vilket sparar böcker i en undermapp per författare med filnamn bestående av titel och författare. Tillgängliga kontroller är: {author_sort, authors, id, isbn, languages, last_modified, pages, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -632,7 +632,7 @@ Anger utmatningsprofilen. I vissa fall krävs en utmatningsprofil för att optim
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är  (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP

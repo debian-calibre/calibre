@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 02:30+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Marcello Oliveira <marcello.mco@gmail.com>, 2025\n"
 "Language-Team: Portuguese (Brazil) (http://app.transifex.com/calibre/calibre/language/pt_BR/)\n"
@@ -32,11 +32,11 @@ msgstr ""
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:4
+#: ../../../__w/calibre/calibre/manual/conversion.rst:4
 msgid "E-book conversion"
 msgstr "Conversão de E-book"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:6
+#: ../../../__w/calibre/calibre/manual/conversion.rst:6
 msgid ""
 "calibre has a conversion system that is designed to be very easy to use. "
 "Normally, you just add a book to calibre, click convert and calibre will try"
@@ -52,7 +52,7 @@ msgid ""
 "for conversion into other formats in calibre."
 msgstr "O calibre tem um sistema de conversão que é projetado para ser muito fácil de usar. Normalmente, você só adiciona um livro ao calibre, clica em converter e o calibre tentará criar um resultado o mais próximo possível da origem. Contudo, o calibre aceita um número muito grande de formatos de origem e uns não são tão adequados quanto outros para conversão em ebooks. No caso de tais formatos de origem, ou se você quer apenas um controle maior sobre o sistema de conversão, o calibre tem uma gama de opções para ajustar o processo de conversão. Note, contudo, que o sistema de conversão do calibre não é um substituto de um editor de ebooks completo. Para editar ebooks eu recomendo que primeiro se converta para EPUB ou AZW3, usando o calibre e, então, usar a função 'Editar Livro' para o ajustá-lo. Você poderá, então, utilizar o ebook já editado e converter o mesmo em outros formatos dentro do calibre."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:18
+#: ../../../__w/calibre/calibre/manual/conversion.rst:18
 msgid ""
 "This document will refer mainly to the conversion settings as found in the "
 "conversion dialog, pictured below. All these settings are also available via"
@@ -62,30 +62,30 @@ msgid ""
 "describing the setting."
 msgstr "Esse documento fará referência principalmente às configurações de conversão, da maneira como são encontradas na caixa de diálogo de conversão, mostrada na figura abaixo. Todas essas configurações também estão disponíveis por meio da interface de linha de comando para conversão, esclarecida em :doc:`generated/pt_BR/ebook-convert`. Dentro do calibre, você pode obter ajuda sobre qualquer configuração individual, mantendo seu mouse sobre ela. Uma dica irá aparecer, descrevendo a configuração."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:24
+#: ../../../__w/calibre/calibre/manual/conversion.rst:24
 msgid "E-book conversion dialog"
 msgstr "Caixa de conversão de E-book"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:31
-#: ../../__w/calibre/calibre/manual/conversion.rst:95
+#: ../../../__w/calibre/calibre/manual/conversion.rst:31
+#: ../../../__w/calibre/calibre/manual/conversion.rst:95
 msgid "Contents"
 msgstr "Conteúdo"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:36
+#: ../../../__w/calibre/calibre/manual/conversion.rst:36
 msgid "Introduction"
 msgstr "Introdução"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:42
+#: ../../../__w/calibre/calibre/manual/conversion.rst:42
 msgid ""
 "The first thing to understand about the conversion system is that it is "
 "designed as a pipeline. Schematically, it looks like this:"
 msgstr "A primeira coisa a entender sobre o sistema de conversão é que ele é projetado como um pipeline e pode ser esquematizado da seguinte forma:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:45
+#: ../../../__w/calibre/calibre/manual/conversion.rst:45
 msgid "The conversion pipeline"
 msgstr "O pipeline de conversão"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:49
+#: ../../../__w/calibre/calibre/manual/conversion.rst:49
 msgid ""
 "The input format is first converted to XHTML by the appropriate *Input "
 "plugin*. This HTML is then *transformed*. In the last step, the processed "
@@ -96,7 +96,7 @@ msgid ""
 "formats>`."
 msgstr "Primeiramente, o formato de entrada é convertido em XHTML pelo *plugin de entrada* adequado. Então o HTML é *transformado*. Por fim, o XHTML processado é convertido no formato de saída pelo *plugin de saída* apropriado. Os resultados da conversão podem variar muito, de acordo com o formado de entrada, alguns são mais bem convertidos do que outros. Uma lista dos melhores formatos de origem para conversão está disponível :ref:`aqui <best-source-formats>`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:56
+#: ../../../__w/calibre/calibre/manual/conversion.rst:56
 msgid ""
 "The transforms that act on the XHTML output are where all the work happens. "
 "There are various transforms, for example, to insert book metadata as a page"
@@ -110,7 +110,7 @@ msgid ""
 " all metadata, Table of Contents, et cetera."
 msgstr "As transformações sobre XHTML de saída são onde todo o trabalho acontece. Há diversas transformações, como a inserção dos metadados do livro como página no início do livro, a criação do Sumário com base nos títulos dos capítulos e o ajuste proporcional do tamanho das fontes. Importante lembrar que todas as transformações no XHTML de saída se devem ao *plugin de entrada*, e não ao arquivo de entrada propriamente. Assim, para ser convertido de RTF em EPUB, o arquivo é antes convertido internamente em XHTML, que recebe as várias transformações e só então o *plugin de saída* cria o arquivo EPUB, gerando automaticamente todos os metadados, o Sumário etc."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:65
+#: ../../../__w/calibre/calibre/manual/conversion.rst:65
 msgid ""
 "You can see this process in action by using the debug option |dbgi|. Just "
 "specify the path to a folder for the debug output. During conversion, "
@@ -118,63 +118,63 @@ msgid ""
 "conversion pipeline in different sub-folders. The four sub-folders are:"
 msgstr "Você pode ver esse processo em ação usando a opção de depuração |dbgi|. Basta especificar o caminho para uma pasta para a saída de depuração. Durante a conversão, o calibre colocará o XHTML gerado pelos vários estágios do pipeline de conversão em diferentes subpastas. As quatro subpastas são:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:38
+#: ../../../__w/calibre/calibre/manual/conversion.rst:38
 msgid "Debug icon"
 msgstr "Ícone de depuração"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:70
+#: ../../../__w/calibre/calibre/manual/conversion.rst:70
 msgid "Stages of the conversion pipeline"
 msgstr "Etapas do processo de conversão"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:73
+#: ../../../__w/calibre/calibre/manual/conversion.rst:73
 msgid "Folder"
 msgstr "Pasta"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:73
+#: ../../../__w/calibre/calibre/manual/conversion.rst:73
 msgid "Description"
 msgstr "Descrição"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:75
+#: ../../../__w/calibre/calibre/manual/conversion.rst:75
 msgid "input"
 msgstr "entrada"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:75
+#: ../../../__w/calibre/calibre/manual/conversion.rst:75
 msgid ""
 "This contains the HTML output by the Input plugin. Use this to debug the "
 "Input plugin."
 msgstr "Contém o HTML de saída gerado pelo plugin de entrada. Use-o para depurar o plugin de entrada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:76
+#: ../../../__w/calibre/calibre/manual/conversion.rst:76
 msgid "parsed"
 msgstr "analisado"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:76
+#: ../../../__w/calibre/calibre/manual/conversion.rst:76
 msgid ""
 "The result of pre-processing and converting to XHTML the output from the "
 "Input plugin. Use to debug structure detection."
 msgstr "É o resultada do pré-processamento da saída e conversão em XHTML pelo plugin de entrada. Use-o para depurar a detecção da estrutura."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:77
+#: ../../../__w/calibre/calibre/manual/conversion.rst:77
 msgid "structure"
 msgstr "estrutura"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:77
+#: ../../../__w/calibre/calibre/manual/conversion.rst:77
 msgid ""
 "Post structure detection, but before CSS flattening and font size "
 "conversion. Use to debug font size conversion and CSS transforms."
 msgstr "Pós detecção de estrutira, mas antes do achatamento de CSS e conversão de tamanho de fonte. Utilizado para depurar a conversão de fonte e transformação de CSS."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:78
+#: ../../../__w/calibre/calibre/manual/conversion.rst:78
 msgid "processed"
 msgstr "processado"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:78
+#: ../../../__w/calibre/calibre/manual/conversion.rst:78
 msgid ""
 "Just before the e-book is passed to the Output plugin. Use to debug the "
 "Output plugin."
 msgstr "Logo antes de o e-book passar para o plugin de saída. Use-o para depurar o plugin de saída."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:81
+#: ../../../__w/calibre/calibre/manual/conversion.rst:81
 msgid ""
 "If you want to edit the input document a little before having calibre "
 "convert it, the best thing to do is edit the files in the :file:`input` sub-"
@@ -184,37 +184,37 @@ msgid ""
 "left corner of the conversion dialog, select ZIP as the input format."
 msgstr "Se você quiser editar o documento de entrada um pouco antes de convertê-lo, a melhor coisa a fazer é editar os arquivos na subpasta :file:'input', compactá-lo e usar o arquivo ZIP como formato de entrada para conversões subsequentes. Para fazer isso, use a caixa de diálogo :guilabel:'Editar meta informações' para adicionar o arquivo ZIP como um formato para o livro e, em seguida, no canto superior esquerdo da caixa de diálogo de conversão, selecione ZIP como o formato de entrada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:87
+#: ../../../__w/calibre/calibre/manual/conversion.rst:87
 msgid ""
 "This document will deal mainly with the various transforms that operate on "
 "the intermediate XHTML and how to control them. At the end are some tips "
 "specific to each input/output format."
 msgstr "Aqui são tratadas várias transformações que atuam no XHTML intermediário e como controlá-las. Ao final, são apresentadas dicas específicas para cada tipo de formato de entrada/saída."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:91
+#: ../../../__w/calibre/calibre/manual/conversion.rst:91
 msgid "Look & feel"
 msgstr "Aparência"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:97
+#: ../../../__w/calibre/calibre/manual/conversion.rst:97
 msgid ""
 "This group of options controls various aspects of the look and feel of the "
 "converted e-book."
 msgstr "Esse conjunto de opções controla vários aspectos da aparência do e-book convertido."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:102
+#: ../../../__w/calibre/calibre/manual/conversion.rst:102
 msgid "Fonts"
 msgstr "Fontes"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:104
+#: ../../../__w/calibre/calibre/manual/conversion.rst:104
 msgid ""
 "One of the nicest features of the e-reading experience is the ability to "
 "easily adjust font sizes to suit individual needs and lighting conditions. "
 "calibre has sophisticated algorithms to ensure that all the books it outputs"
-" have a consistent font sizes, no matter what font sizes are specified in "
-"the input document."
-msgstr "Uma das características mais agradáveis da experiência e-reading, é a capacidade de ajustar facilmente o tamanho das fontes para atender as necessidades individuais e condições de iluminação. calibre tem algoritmos sofisticados para garantir que todos os livros que produz tem um tamanho de fonte consistente, não importa o tamanho de fonte especificado no documento de entrada."
+" have consistent font sizes, no matter what font sizes are specified in the "
+"input document."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:109
+#: ../../../__w/calibre/calibre/manual/conversion.rst:109
 msgid ""
 "The base font size of a document is the most common font size in that "
 "document, i.e., the size of the bulk of text in that document. When you "
@@ -226,14 +226,14 @@ msgid ""
 "best results, you should also set the font size key."
 msgstr "O tamanho básico da fonte de um documento é o tamanho mais comum no referido documento, isto é, o tamanho do volume de texto no documento. Quando você especificar :guilabel:'Base font size', calibre automaticamente redimensionará todos os tamanhos de fonte no documento proporcionalmente, de modo que o tamanho de fonte mais comum torna-se o tamanho básico de fonte especificado e os outros tamanhos de fonte são redimensionados adequadamente. Ao escolher um tamanho básico de fonte maior, você pode tornar as fontes do documento maior ou vice-versa Quando você define o tamanho básico da fonte, para melhores resultados, você deve também definir o tamanho da fonte chave."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:117
+#: ../../../__w/calibre/calibre/manual/conversion.rst:117
 msgid ""
 "Normally, calibre will automatically choose a base font size appropriate to "
 "the output profile you have chosen (see :ref:`page-setup`). However, you can"
 " override this here in case the default is not suitable for you."
 msgstr "Via de regra, o calibre escolhe automaticamente um tamanho-padrão de fonte adequado para o perfil de saída que você escolheu (leia :ref:`page-setup`). No entanto, você pode alterá-lo aqui, caso o padrão não esteja adequado."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:121
+#: ../../../__w/calibre/calibre/manual/conversion.rst:121
 msgid ""
 "The :guilabel:`Font size key` option lets you control how non-base font "
 "sizes are rescaled. The font rescaling algorithm works using a font size "
@@ -247,7 +247,7 @@ msgid ""
 "separate \"bins\" corresponding to the different logical font sizes."
 msgstr "A opção :guilabel:'Font size key' permite controlar como tamanho não-básico de fonte é redimensionado. O algoritmo de redimensionamento de fonte trabalha utilizando um tamanho de fonte chave, que é simplesmente uma lista de tamanhos de fonte separados por vírgula. O tamanho da fonte chave diz ao calibre quantos \"passos\" maior ou menor um determinado tamanho de fonte deve ser comparado com o tamanho básico da fonte. A ideia é deve ter um número limitado de tamanhos de fonte no documento. Por exemplo, um tamanho para o texto do corpo, alguns tamanhos de diferentes níveis de título e alguns super/sub scripts e notas de rodapé. O tamanho da fonte chave permite ao calibre compartamentalizar o tamanho das fontes nos documentos de entrada em \"caixotes\" separados correspondendo aos diferentes tamanhos de fonte lógicos."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:130
+#: ../../../__w/calibre/calibre/manual/conversion.rst:130
 msgid ""
 "Let's illustrate with an example. Suppose the source document we are "
 "converting was produced by someone with excellent eyesight and has a base "
@@ -256,7 +256,7 @@ msgid ""
 "somewhat smaller at 6pt. Now if we use the following settings::"
 msgstr "Vamos ilustrar com um exemplo. Suponha que o documento de origem que estamos convertendo foi produzido por alguém com uma visão excelente e tem uma tamanho básico de fonte de 8pt. Isso significa que a maior parte do texto no documento está dimensionado em 8pts, enquanto os títulos são um pouco maior (digamos 10 e 12 pt) e as notas de rodapé um pouco menor em 6pt. Agora se nós usamos as seguintes configurações::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:139
+#: ../../../__w/calibre/calibre/manual/conversion.rst:139
 msgid ""
 "The output document will have a base font size of 12pt, headings of 14 and "
 "16pt and footnotes of 8pt. Now suppose we want to make the largest heading "
@@ -264,7 +264,7 @@ msgid ""
 "achieve this, the font key should be changed to::"
 msgstr "O documento de saída terá um tamanho básico de fonte de 12pt, títulos de 14 e 16pt e notas de rodapé de 8pt. Agora, suponha que queremos que o título de maior tamanho se destaque e as notas de rodapé um pouco maior também. Para conseguir isso, o tamanho de fonte chave deve ser alterado para :"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:145
+#: ../../../__w/calibre/calibre/manual/conversion.rst:145
 msgid ""
 "The largest headings will now become 18pt, while the footnotes will become "
 "9pt. You can play with these settings to try and figure out what would be "
@@ -272,13 +272,13 @@ msgid ""
 " clicking the little button next to the :guilabel:`Font size key` setting."
 msgstr "O título maior agora será de 18pt, enquanto as notas de rodapé serão de 9pt. Você pode jogar com estas configurações para tentar descobrir qual seria a melhor configuração usando o assistente de redimensionamento, que pode ser acessado clicando no pequeno botão ao lado da definição de :guilabel:'Font size key'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:150
+#: ../../../__w/calibre/calibre/manual/conversion.rst:150
 msgid ""
 "All the font size rescaling in the conversion can also be disabled here, if "
 "you would like to preserve the font sizes in the input document."
 msgstr "Todo o redimensionamento do tamanho da fonte feita na conversão pode ser desativada aqui, se você quiser preservar o tamanho das fontes do documento de entrada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:153
+#: ../../../__w/calibre/calibre/manual/conversion.rst:153
 msgid ""
 "A related setting is :guilabel:`Line height`. Line height controls the "
 "vertical height of lines. By default, (a line height of 0), no manipulation "
@@ -289,18 +289,18 @@ msgid ""
 "input, it's better to use the :ref:`Extra CSS <extra-css>`."
 msgstr "Uma configuração relacionada é a :guilabel:`Altura da linha`, que controla o tamanho vertical das linhas de texto. Por padrão (altura da linha 0), não há manipulação da altura das linhas. Se você especificar um valor diferente, a altura vai ser aplicada a todos os locais que não tiverem seu próprio valor. No entanto, trata-se de um recurso arriscado e deve ser usado com cautela. Para ajustar a altura de linha de uma seção do arquivo de entrada, prefira :ref:`Extra CSS <extra-css>`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:160
+#: ../../../__w/calibre/calibre/manual/conversion.rst:160
 msgid ""
 "In this section you can also tell calibre to embed any referenced fonts into"
 " the book. This will allow the fonts to work on reader devices even if they "
 "are not available on the device."
 msgstr "Nessa seção, você ainda pode configurar o calibre para embutir as fontes citadas no livro, o que permite que as fontes operem no dispositivo de leitura, mesmo que não estejam disponíveis nele."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:165
+#: ../../../__w/calibre/calibre/manual/conversion.rst:165
 msgid "Text"
 msgstr "Texto"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:167
+#: ../../../__w/calibre/calibre/manual/conversion.rst:167
 msgid ""
 "Text can be either justified or not. Justified text has extra spaces between"
 " words to give a smooth right margin. Some people prefer justified text, "
@@ -309,7 +309,7 @@ msgid ""
 ":guilabel:`Text justification` option in this section."
 msgstr "O texto pode ou não ser justificado. Um texto justificado apresenta mais espaço entre as palavras para uniformizar a margem direita. Nem todo mundo gosta de texto justificado. Normalmente, o calibre retém a justificação no documento original. Para alterar o padrão, use a opção :guilabel:`Texto justificado` nessa seção."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:173
+#: ../../../__w/calibre/calibre/manual/conversion.rst:173
 msgid ""
 "You can also tell calibre to :guilabel:`Smarten punctuation` which will "
 "replace plain quotes, dashes and ellipses with their typographically correct"
@@ -318,7 +318,7 @@ msgid ""
 "punctuation` is also available."
 msgstr "Você pode ainda configurar o calibre para :guilabel:`Pontuação inteligente`, que substitui aspas, traços e reticências sem formatação pelas alternativas tipográficas corretas. O algoritmo, no entanto, não é perfeito, e o resultado precisa ser revisto. Também está disponível um algorítimo contrário, a :guilabel:`Pontuação não inteligente`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:178
+#: ../../../__w/calibre/calibre/manual/conversion.rst:178
 msgid ""
 "Finally, there is :guilabel:`Input character encoding`.  Older documents "
 "sometimes don't specify their character encoding. When converted, this can "
@@ -330,11 +330,11 @@ msgid ""
 "also read :ref:`char-encoding-faq` for more on encoding issues."
 msgstr "Finalmente, existe: guilabel: `Codificação de caracteres de entrada`. Documentos antigos às vezes não especificam a codificação de caracteres. Quando convertido, isso pode resultar em caracteres não ingleses ou caracteres especiais, como aspas inteligentes, sendo corrompidos. O calibre tenta detectar automaticamente a codificação de caracteres do documento de origem, mas nem sempre é bem-sucedido. Você pode forçá-lo a assumir uma codificação de caracteres específica usando essa configuração. `cp1252` é uma codificação comum para documentos produzidos usando o software Windows. Você também deve ler: ref: `char-encoding-faq` para mais informações sobre problemas de codificação."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:188
+#: ../../../__w/calibre/calibre/manual/conversion.rst:188
 msgid "Layout"
 msgstr "Layout"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:190
+#: ../../../__w/calibre/calibre/manual/conversion.rst:190
 msgid ""
 "Normally, paragraphs in XHTML are rendered with a blank line between them "
 "and no leading text indent. calibre has a couple of options to control this."
@@ -350,14 +350,14 @@ msgid ""
 "hard line breaks to implement inter-paragraph spacing."
 msgstr "Normalmente, os parágrafos em XHTML são renderizados com uma linha em branco entre eles e sem recuo de texto inicial. O calibre tem algumas opções para controlar isso. : guilabel: `Remova o espaçamento entre parágrafos 'forçosamente, assegure que todos os parágrafos não tenham espaçamento entre parágrafos. Também define o recuo do texto como 1,5em (pode ser alterado) para marcar o início de cada parágrafo. : guilabel: `Inserir linha em branco` faz o oposto, garantindo que exista exatamente uma linha em branco entre cada par de parágrafos. Ambas as opções são muito abrangentes, removendo o espaçamento ou inserindo-o em * todos * parágrafos (tecnicamente e tags). Isso é para que você possa definir a opção e garantir que ela funcione conforme anunciado, independentemente de como o arquivo de entrada esteja confuso. A única exceção é quando o arquivo de entrada usa quebras de linha rígida para implementar o espaçamento entre parágrafos."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:201
+#: ../../../__w/calibre/calibre/manual/conversion.rst:201
 msgid ""
 "If you want to remove the spacing between all paragraphs, except a select "
 "few, don't use these options. Instead add the following CSS code to "
 ":ref:`Extra CSS <extra-css>`::"
 msgstr "Se você deseja remover o espaçamento entre todos os parágrafos, exceto alguns selecionados, não use essas opções. Em vez disso, adicione o seguinte código CSS a: ref: `CSS extra"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:207
+#: ../../../__w/calibre/calibre/manual/conversion.rst:207
 msgid ""
 "Then, in your source document, mark the paragraphs that need spacing with "
 "`class=\"spacious\"`. If your input document is not in HTML, use the Debug "
@@ -365,22 +365,22 @@ msgid ""
 "sub-folder)."
 msgstr "Em seguida, no documento de origem, marque os parágrafos que precisam de espaçamento com 'class=\"spacious\"'. Se o documento de entrada não estiver em HTML, use a opção Depurar, descrita na Introdução para obter HTML (use a subpasta :file:'input')."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:211
+#: ../../../__w/calibre/calibre/manual/conversion.rst:211
 msgid ""
-"Another useful options is :guilabel:`Linearize tables`.  Some badly designed"
-" documents use tables to control the layout of text on the page.  When "
+"Another useful option is :guilabel:`Linearize tables`.  Some badly designed "
+"documents use tables to control the layout of text on the page.  When "
 "converted these documents often have text that runs off the page and other "
 "artifacts. This option will extract the content from the tables and present "
 "it in a linear fashion.  Note that this option linearizes *all* tables, so "
 "only use it if you are sure the input document does not use tables for "
 "legitimate purposes, like presenting tabular information."
-msgstr "Outra opção útil é: guilabel: `Linearizar tabelas`. Alguns documentos mal projetados usam tabelas para controlar o layout do texto na página. Quando convertidos, esses documentos geralmente possuem texto que sai da página e outros artefatos. Esta opção extrai o conteúdo das tabelas e o apresenta de forma linear. Observe que essa opção lineariza * todas * as tabelas, portanto, use-a somente se tiver certeza de que o documento de entrada não usa tabelas para fins legítimos, como apresentar informações tabulares."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:220
+#: ../../../__w/calibre/calibre/manual/conversion.rst:220
 msgid "Styling"
 msgstr "Estilização"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:224
+#: ../../../__w/calibre/calibre/manual/conversion.rst:224
 msgid ""
 "The :guilabel:`Extra CSS` option allows you to specify arbitrary CSS that "
 "will be applied to all HTML files in the input. This CSS is applied with "
@@ -390,11 +390,11 @@ msgid ""
 "paragraphs of class `endnote` to be right aligned, just add::"
 msgstr "A opção: guilabel: `CSS extra` permite especificar CSS arbitrário que será aplicado a todos os arquivos HTML na entrada. Esse CSS é aplicado com prioridade muito alta e, portanto, deve substituir a maioria dos CSS presentes no próprio ** documento de entrada **. Você pode usar esta configuração para ajustar a apresentação / layout do seu documento. Por exemplo, se você quiser que todos os parágrafos da classe `endnote` estejam alinhados à direita, basta adicionar:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:233
+#: ../../../__w/calibre/calibre/manual/conversion.rst:233
 msgid "or if you want to change the indentation of all paragraphs::"
 msgstr "ou se você quiser trocar para a o entalhe de todos os parágrafos::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:237
+#: ../../../__w/calibre/calibre/manual/conversion.rst:237
 msgid ""
 ":guilabel:`Extra CSS` is a very powerful option, but you do need an "
 "understanding of how CSS works to use it to its full potential. You can use "
@@ -402,18 +402,18 @@ msgid ""
 " input document."
 msgstr ":guilabel:'Extra CSS' é uma opção muito poderosa, mas você precisa enter como funciona o CSS para usar todo seu potencial. Você pode usar a opção de debug pipeline descrita acima para ver como o CSS está presente em seu documento de entrada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:241
+#: ../../../__w/calibre/calibre/manual/conversion.rst:241
 msgid ""
 "A simpler option is to use :guilabel:`Filter style information`. This allows"
 " you to remove all CSS properties of the specified types from the document. "
 "For example, you can use it to remove all colors or fonts."
 msgstr "Uma opção mais simples é usar: guilabel: `Filtrar informações de estilo`. Isso permite remover todas as propriedades CSS dos tipos especificados do documento. Por exemplo, você pode usá-lo para remover todas as cores ou fontes."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:246
+#: ../../../__w/calibre/calibre/manual/conversion.rst:246
 msgid "Transform styles"
 msgstr "Transformar estilos"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:248
+#: ../../../__w/calibre/calibre/manual/conversion.rst:248
 msgid ""
 "This is the most powerful styling related facility. You can use it to define"
 " rules that change styles based on various conditions. For example you can "
@@ -421,22 +421,22 @@ msgid ""
 "the text or color all headings a certain color, etc."
 msgstr "Esta é a instalação mais poderosa relacionada ao estilo. Você pode usá-lo para definir regras que mudam de estilo com base em várias condições. Por exemplo, você pode usá-lo para alterar todas as cores verdes para azuis ou remover todo o estilo em negrito do texto ou colorir todos os títulos de uma determinada cor, etc."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:254
+#: ../../../__w/calibre/calibre/manual/conversion.rst:254
 msgid "Transform HTML"
 msgstr "Transformar HTML"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:256
+#: ../../../__w/calibre/calibre/manual/conversion.rst:256
 msgid ""
 "Similar to transform styles, but allows you to make changes to the HTML "
 "content of the book. You can replace one tag with another, add classes or "
 "other attributes to tags based on their content, etc."
 msgstr "Similar a transformar estilos, mas permite fazer alterações no conteúdo HTML do livro. Você pode substituir uma tapa por outra, adicionar classes ou outros atribuir às tags com base em seu conteúdo, etc."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:265
+#: ../../../__w/calibre/calibre/manual/conversion.rst:265
 msgid "Page setup"
 msgstr "Configurar Página"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:267
+#: ../../../__w/calibre/calibre/manual/conversion.rst:267
 msgid ""
 "The :guilabel:`Page setup` options are for controlling screen layout, like "
 "margins and screen sizes. There are options to setup page margins, which "
@@ -447,7 +447,7 @@ msgid ""
 "rescaling keys."
 msgstr "As opções: guilabel: `Page setup` são para controlar o layout da tela, como margens e tamanhos de tela. Existem opções para configurar as margens da página, que serão usadas pelo plug-in de saída, se o formato de saída selecionado suportar as margens da página. Além disso, você deve escolher um perfil de entrada e um perfil de saída. Ambos os conjuntos de perfis lidam basicamente com como interpretar medições nos documentos de entrada / saída, tamanhos de tela e teclas de redimensionamento de fonte padrão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:274
+#: ../../../__w/calibre/calibre/manual/conversion.rst:274
 msgid ""
 "If you know that the file you are converting was intended to be used on a "
 "particular device/software platform, choose the corresponding input profile,"
@@ -460,7 +460,7 @@ msgid ""
 "HD` output profile."
 msgstr "Se você sabe que o arquivo que está convertendo se destina a ser usado em um determinado dispositivo/plataforma de software, escolha o perfil de entrada correspondente, caso contrário, basta escolher o perfil de entrada padrão. Se você sabe que os arquivos que está produzindo são destinados a um tipo de dispositivo, escolha o perfil de saída correspondente. Caso contrário, escolhe um dos perfis de saída Genéricos. Se você está estiver convertendo para MOBI ou AZW3, então você quase sempre vai querer escolher um dos perfis de saída para Kindle. Fora isso, sua melhor aposta para dispositivos modernos de leitura de Ebook é escolher o perfil de saída: :guilabel:`Generic e-ink HD`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:283
+#: ../../../__w/calibre/calibre/manual/conversion.rst:283
 msgid ""
 "The output profile also controls the screen size. This will cause, for "
 "example, images to be auto-resized to be fit to the screen in some output "
@@ -468,11 +468,11 @@ msgid ""
 "your device."
 msgstr "O perfil de saída também controla o tamanho da tela. Isso fará com que, por exemplo, as imagens sejam redimensionadas automaticamente para caberem na tela em alguns formatos de saída. Portanto, escolha o perfil de um dispositivo com tamanho de tela semelhante ao seu."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:291
+#: ../../../__w/calibre/calibre/manual/conversion.rst:291
 msgid "Heuristic processing"
 msgstr "Processamento heurístico"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:293
+#: ../../../__w/calibre/calibre/manual/conversion.rst:293
 msgid ""
 "Heuristic processing provides a variety of functions which can be used to "
 "try and detect and correct common problems in poorly formatted input "
@@ -483,22 +483,22 @@ msgid ""
 "entities, or may include false positive matches relating to the function."
 msgstr "O processamento heurístico fornece uma variedade de funções que podem ser usadas para tentar detectar e corrigir problemas comuns em documentos de entrada mal formatados. Use essas funções se o documento de entrada sofrer uma formatação ruim. Como essas funções dependem de padrões comuns, saiba que, em alguns casos, uma opção pode levar a piores resultados, portanto, use com cuidado. Como exemplo, várias dessas opções removerão todas as entidades sem espaço de quebra ou podem incluir correspondências falsas positivas relacionadas à função."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:299
+#: ../../../__w/calibre/calibre/manual/conversion.rst:299
 msgid ":guilabel:`Enable heuristic processing`"
 msgstr ":guilabe:'Habilitar processamento heurístico'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:300
+#: ../../../__w/calibre/calibre/manual/conversion.rst:300
 msgid ""
 "This option activates calibre's :guilabel:`Heuristic processing` stage of "
 "the conversion pipeline. This must be enabled in order for various sub-"
 "functions to be applied"
 msgstr "Esta opção ativa o estágio calibre's: guilabel: `Heuristic processing` do pipeline de conversão. Isso deve estar ativado para que várias sub-funções sejam aplicadas"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:303
+#: ../../../__w/calibre/calibre/manual/conversion.rst:303
 msgid ":guilabel:`Unwrap lines`"
 msgstr ":guilabel:'Eliminar quebra de linhas'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:304
+#: ../../../__w/calibre/calibre/manual/conversion.rst:304
 msgid ""
 "Enabling this option will cause calibre to attempt to detect and correct "
 "hard line breaks that exist within a document using punctuation clues and "
@@ -508,11 +508,11 @@ msgid ""
 "to unwrap lines."
 msgstr "A ativação dessa opção fará com que o calibre tente detectar e corrigir quebras de linha rígida existentes em um documento usando pistas de pontuação e comprimento de linha. O calibre primeiro tentará detectar se existem quebras de linha rígida; se elas não parecem existir, o calibre não tentará desembrulhar as linhas. O fator de desembrulhar da linha pode ser reduzido se você quiser 'forçar' o calibre a desembrulhar as linhas."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:309
+#: ../../../__w/calibre/calibre/manual/conversion.rst:309
 msgid ":guilabel:`Line-unwrap factor`"
 msgstr ":guilabel:'Fator de eliminação de quebras de linha'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:310
+#: ../../../__w/calibre/calibre/manual/conversion.rst:310
 msgid ""
 "This option controls the algorithm calibre uses to remove hard line breaks. "
 "For example, if the value of this option is 0.4, that means calibre will "
@@ -522,12 +522,12 @@ msgid ""
 "somewhere between 0.1 and 0.2."
 msgstr "Essa opção controla o calibre do algoritmo usado para remover quebras de linha rígidas. Por exemplo, se o valor dessa opção for 0,4, isso significa que o calibre removerá quebras de linha rígidas do final de linhas cujos comprimentos são menores que o comprimento de 40% de todas as linhas no documento. Se o documento tiver apenas algumas quebras de linha que precisam de correção, esse valor deve ser reduzido para algo entre 0,1 e 0,2."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:315
+#: ../../../__w/calibre/calibre/manual/conversion.rst:315
 msgid ""
 ":guilabel:`Detect and markup unformatted chapter headings and sub headings`"
 msgstr ":guilabel:'Detectar e formatar capítulos não formatados e subtítulos'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:316
+#: ../../../__w/calibre/calibre/manual/conversion.rst:316
 msgid ""
 "If your document does not have chapter headings and titles formatted "
 "differently from the rest of the text, calibre can use this option to "
@@ -536,7 +536,7 @@ msgid ""
 "detected."
 msgstr "Se o documento não tiver títulos de capítulo e títulos formatados de forma diferente do restante do texto, o calibre poderá usar essa opção para tentar detectá-los e cercá-los com tags de cabeçalho. <h2> são usadas para títulos de capítulos; <h3> são usadas para todos os títulos detectados."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:320
+#: ../../../__w/calibre/calibre/manual/conversion.rst:320
 msgid ""
 "This function will not create a TOC, but in many cases it will cause "
 "calibre's default chapter detection settings to correctly detect chapters "
@@ -546,18 +546,18 @@ msgid ""
 "to create a TOC for the document."
 msgstr "Esta função não criará um sumário, mas em muitos casos fará com que as configurações padrão de detecção de capítulo do calibre detectem corretamente capítulos e construam um sumário. Ajuste o XPath em Detecção de estrutura se um sumário não for criado automaticamente. Se não houver outros títulos usados no documento, a configuração \"// h: h2\" em Detecção de estrutura seria a maneira mais fácil de criar um sumário para o documento."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:325
+#: ../../../__w/calibre/calibre/manual/conversion.rst:325
 msgid ""
 "The inserted headings are not formatted, to apply formatting use the "
 ":guilabel:`Extra CSS` option under the Look and Feel conversion settings.  "
 "For example, to center heading tags, use the following::"
 msgstr "Os cabeçalhos inseridos não são formatados, para aplicar a formatação, use a opção: guilabel: `CSS extra` nas configurações de conversão Aparência. Por exemplo, para centralizar tags de cabeçalho, use o seguinte"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:330
+#: ../../../__w/calibre/calibre/manual/conversion.rst:330
 msgid ":guilabel:`Renumber sequences of <h1> or <h2> tags`"
 msgstr ":guilabel:`Renumerar as sequências de etiquetas <h1> ou <h2>`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:331
+#: ../../../__w/calibre/calibre/manual/conversion.rst:331
 msgid ""
 "Some publishers format chapter headings using multiple <h1> or <h2> tags "
 "sequentially. calibre's default conversion settings will cause such titles "
@@ -565,11 +565,11 @@ msgid ""
 " prevent splitting."
 msgstr "Alguns editores formatam os cabeçalhos dos capítulos usando várias ou tags sequencialmente. as configurações de conversão padrão do calibre farão com que esses títulos sejam divididos em duas partes. Esta opção renumerará as tags de cabeçalho para evitar a divisão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:335
+#: ../../../__w/calibre/calibre/manual/conversion.rst:335
 msgid ":guilabel:`Delete blank lines between paragraphs`"
 msgstr ":guilabel:'Apagar linhas em branco entre parágrafos'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:336
+#: ../../../__w/calibre/calibre/manual/conversion.rst:336
 msgid ""
 "This option will cause calibre to analyze blank lines included within the "
 "document.  If every paragraph is interleaved with a blank line, then calibre"
@@ -582,11 +582,11 @@ msgid ""
 "blank line` option."
 msgstr "Essa opção fará com que o calibre analise as linhas em branco incluídas no documento. Se cada parágrafo for intercalado com uma linha em branco, o calibre removerá todos esses parágrafos em branco. Sequências de várias linhas em branco serão consideradas quebras de cena e mantidas como um único parágrafo. Essa opção difere da opção :guilabel:'Remove paragraph espaçamento' em :guilabel:'Look and Feel' porque ela realmente modifica o conteúdo HTML, enquanto a outra opção modifica os estilos do documento. Essa opção também pode remover parágrafos que foram inseridos usando a opção :guilabel:'Inserir linha em branco' do calibre."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:346
+#: ../../../__w/calibre/calibre/manual/conversion.rst:346
 msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
 msgstr ":guilabel:'Assegura que as quebras de cena estejam formatadas consistentemente'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:347
+#: ../../../__w/calibre/calibre/manual/conversion.rst:347
 msgid ""
 "With this option calibre will attempt to detect common scene-break markers "
 "and ensure that they are center aligned. 'Soft' scene break markers, i.e. "
@@ -594,18 +594,18 @@ msgid ""
 "they will not be displayed in conjunction with page breaks."
 msgstr "Com esta opção, o calibre tentará detectar marcadores comuns de quebra de cena e garantir que eles estejam alinhados ao centro. Os marcadores de quebra de cena 'suaves', ou seja, quebras de cena definidas apenas por espaço em branco extra, são estilizados para garantir que eles não sejam exibidos em conjunto com as quebras de página."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:351
+#: ../../../__w/calibre/calibre/manual/conversion.rst:351
 msgid ":guilabel:`Replace scene breaks`"
 msgstr ":guilabel:'Substituir quebras de cena'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:352
+#: ../../../__w/calibre/calibre/manual/conversion.rst:352
 msgid ""
 "If this option is configured then calibre will replace scene break markers "
 "it finds with the replacement text specified by the user.  Please note that "
 "some ornamental characters may not be supported across all reading devices."
 msgstr "Se esta opção estiver configurada então o calibre irá substituir os marcadores de quebra de cena que encontrar com o texto de substituição especificado pelo usuário. Por favor, note que alguns caracteres ornamentais podem não ser suportados em todos os dispositivos de leitura."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:355
+#: ../../../__w/calibre/calibre/manual/conversion.rst:355
 msgid ""
 "In general you should avoid using HTML tags, calibre will discard any tags "
 "and use pre-defined markup.  <hr /> tags, i.e. horizontal rules, and <img> "
@@ -616,31 +616,31 @@ msgid ""
 "conversion, this must be done after the fact using the 'Edit book' feature."
 msgstr "Em geral, você deve evitar o uso de tags HTML, o calibre descartará todas as tags e usará a marcação predefinida. tags, ou seja, regras horizontais, e tags são exceções. As regras horizontais podem opcionalmente ser especificadas com estilos; se você optar por adicionar seu próprio estilo, inclua a configuração 'width', caso contrário, as informações de estilo serão descartadas. As tags de imagem podem ser usadas, mas o calibre não fornece a capacidade de adicionar a imagem durante a conversão. Isso deve ser feito após o fato, usando o recurso 'Editar livro'."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:361
+#: ../../../__w/calibre/calibre/manual/conversion.rst:361
 msgid ""
 "Example image tag (place the image within an 'Images' folder inside the EPUB"
 " after conversion):"
 msgstr "Exemplo de tag de imagem (coloque a imagem em uma pasta 'Imagens' dentro do EPUB após a conversão):"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:362
+#: ../../../__w/calibre/calibre/manual/conversion.rst:362
 msgid "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
 msgstr "<img style=\"width:10%\" src=\"../Images/scenebreak.png\" />"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:364
+#: ../../../__w/calibre/calibre/manual/conversion.rst:364
 msgid "Example horizontal rule with styles:"
 msgstr "Exemplo de régua horizontal com estilos:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:365
+#: ../../../__w/calibre/calibre/manual/conversion.rst:365
 msgid ""
 "<hr style=\"width:20%;padding-top: 1px;border-top: 2px ridge black;border-"
 "bottom: 2px groove black;\"/>"
 msgstr "1"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:367
+#: ../../../__w/calibre/calibre/manual/conversion.rst:367
 msgid ":guilabel:`Remove unnecessary hyphens`"
 msgstr ":guilabel:' Remover hífens desnecessários'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:368
+#: ../../../__w/calibre/calibre/manual/conversion.rst:368
 msgid ""
 "calibre will analyze all hyphenated content in the document when this option"
 " is enabled.  The document itself is used as a dictionary for analysis.  "
@@ -654,11 +654,11 @@ msgid ""
 "elsewhere in the document without a match."
 msgstr "calibre vai analisar todo o conteúdo hifenizado no documento quando essa opção for ativada. O documento propriamente dito é utilizado como um dicionário para análise. Isto permite ao calibre remover com precisão hífens de qualquer palavra no documento em qualquer idioma, juntamente com palavras científicas obscuras e inventadas. A principal desvantagem são palavras que aparecem apenas uma única vez n o documento que não será alterado. A análise acontece em dois passos, o primeiro passo analisa finais de linha. Linhas só são descobertas, se a palavra existir com ou sem um hífen no documento. O segundo passo analisa todas as palavras com hífen em todo o documento, hifens são removidos se a palavra existe em outras partes do documento sem uma combinação."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:375
+#: ../../../__w/calibre/calibre/manual/conversion.rst:375
 msgid ":guilabel:`Italicize common words and patterns`"
 msgstr ":guilabel:'Colocar em itálico palavras e padrões comuns'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:376
+#: ../../../__w/calibre/calibre/manual/conversion.rst:376
 msgid ""
 "When enabled, calibre will look for common words and patterns that denote "
 "italics and italicize them.  Examples are common text conventions such as "
@@ -666,36 +666,36 @@ msgid ""
 "like 'etc.' or 'et cetera'."
 msgstr "Quando ativado, o calibre procurará palavras e padrões comuns que denotam itálico e itálico. Exemplos são convenções de texto comuns, como ~ palavras ~ ou frases que geralmente devem estar em itálico, por exemplo frases latinas como 'etc.' ou 'et cetera'."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:379
+#: ../../../__w/calibre/calibre/manual/conversion.rst:379
 msgid ":guilabel:`Replace entity indents with CSS indents`"
 msgstr ":guilabel:'Substituir a identação de entidade por CSS'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:380
+#: ../../../__w/calibre/calibre/manual/conversion.rst:380
 msgid ""
 "Some documents use a convention of defining text indents using non-breaking "
 "space entities.  When this option is enabled calibre will attempt to detect "
 "this sort of formatting and convert them to a 3% text indent using CSS."
 msgstr "Alguns documentos usam uma convenção de definição de recuos de texto usando entidades de espaço sem quebra. Quando essa opção está ativada, o calibre tentará detectar esse tipo de formatação e convertê-los em um recuo de texto de 3% usando CSS."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:386
+#: ../../../__w/calibre/calibre/manual/conversion.rst:386
 msgid "Search & replace"
 msgstr "Buscar & Substituir"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:388
+#: ../../../__w/calibre/calibre/manual/conversion.rst:388
 msgid ""
 "These options are useful primarily for conversion of PDF documents or OCR "
 "conversions, though they can also be used to fix many document specific "
-"problems. As an example, some conversions can leaves behind page headers and"
-" footers in the text. These options use regular expressions to try and "
-"detect headers, footers, or other arbitrary text and remove or replace them."
-" Remember that they operate on the intermediate XHTML produced by the "
+"problems. As an example, some conversions can leave behind page headers and "
+"footers in the text. These options use regular expressions to try and detect"
+" headers, footers, or other arbitrary text and remove or replace them. "
+"Remember that they operate on the intermediate XHTML produced by the "
 "conversion pipeline. There is a wizard to help you customize the regular "
 "expressions for your document.  Click the magic wand beside the expression "
 "box, and click the 'Test' button after composing your search expression.  "
 "Successful matches will be highlighted in Yellow."
-msgstr "Essas opções são úteis principalmente para a conversão de documentos PDF ou conversões de OCR, embora também possam ser usadas para corrigir muitos problemas específicos de documentos. Como exemplo, algumas conversões podem deixar para trás cabeçalhos e rodapés da página no texto. Essas opções usam expressões regulares para tentar detectar cabeçalhos, rodapés ou outro texto arbitrário e removê-los ou substituí-los. Lembre-se de que eles operam no XHTML intermediário produzido pelo pipeline de conversão. Existe um assistente para ajudá-lo a personalizar as expressões regulares do seu documento. Clique na varinha mágica ao lado da caixa de expressão e clique no botão 'Teste' depois de compor sua expressão de pesquisa. As partidas bem-sucedidas serão destacadas em amarelo."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:396
+#: ../../../__w/calibre/calibre/manual/conversion.rst:396
 msgid ""
 "The search works by using a Python regular expression. All matched text is "
 "simply removed from the document or replaced using the replacement pattern. "
@@ -704,11 +704,11 @@ msgid ""
 "regular expressions and their syntax at :ref:`regexptutorial`."
 msgstr "A pesquisa funciona usando uma expressão regular do Python. Todo o texto correspondente é simplesmente removido do documento ou substituído usando o padrão de substituição. O padrão de substituição é opcional, se deixado em branco, o texto correspondente ao padrão de pesquisa será excluído do documento. Você pode aprender mais sobre expressões regulares e sua sintaxe em: ref: `regexptutorial`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:404
+#: ../../../__w/calibre/calibre/manual/conversion.rst:404
 msgid "Structure detection"
 msgstr "Detecção da Estrutura"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:406
+#: ../../../__w/calibre/calibre/manual/conversion.rst:406
 msgid ""
 "Structure detection involves calibre trying its best to detect structural "
 "elements in the input document, when they are not properly specified. For "
@@ -719,22 +719,22 @@ msgid ""
 "effort."
 msgstr "Detecção de estrutura envolve a tentativa do calibre dar o seu melhor para detectar elementos estruturais no documento de entrada, quando eles não estão devidamente especificados. Por exemplo, capítulos, quebras de página, cabeçalhos, rodapés, etc. Como você pode imaginar, este processo varia muito de livro para livro. Felizmente, o calibre tem opções muito poderosas para controlar isso. Com o poder vem a complexidade, mas se uma vez que você leva um tempo para aprender a complexidade, você bem que vai achar que vale o esforço."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:412
+#: ../../../__w/calibre/calibre/manual/conversion.rst:412
 msgid "Chapters and page breaks"
 msgstr "Capítulos e quebras de página"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:414
+#: ../../../__w/calibre/calibre/manual/conversion.rst:414
 msgid ""
 "calibre has two sets of options for :guilabel:`chapter detection` and "
 ":guilabel:`inserting page breaks`. This can sometimes be slightly confusing,"
 " as by default, calibre will insert page breaks before detected chapters as "
 "well as the locations detected by the page breaks option. The reason for "
-"this is that there are often location where page breaks should be inserted "
+"this is that there are often locations where page breaks should be inserted "
 "that are not chapter boundaries. Also, detected chapters can be optionally "
 "inserted into the auto generated Table of Contents."
-msgstr "O calibre possui dois conjuntos de opções para: guilabel: `detecção de capítulo` e: guilabel:` inserção de quebras de página`. Às vezes, isso pode ser um pouco confuso, pois, por padrão, o calibre insere quebras de página antes dos capítulos detectados, bem como os locais detectados pela opção de quebras de página. A razão para isso é que geralmente há um local onde as quebras de página devem ser inseridas que não são limites de capítulos. Além disso, os capítulos detectados podem ser opcionalmente inseridos no Sumário gerado automaticamente."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:419
+#: ../../../__w/calibre/calibre/manual/conversion.rst:419
 msgid ""
 "calibre uses *XPath*, a powerful language to allow the user to specify "
 "chapter boundaries/page breaks. XPath can seem a little daunting to use at "
@@ -746,12 +746,12 @@ msgid ""
 "generation of simple XPath expressions."
 msgstr "O calibre usa * XPath *, uma linguagem poderosa para permitir ao usuário especificar limites de capítulos / quebras de página. O XPath pode parecer um pouco assustador de se usar no começo, felizmente, existe: ref: `XPath tutorial` no Manual do Usuário. Lembre-se de que a detecção de estrutura opera no XHTML intermediário produzido pelo pipeline de conversão. Use a opção de depuração descrita em: ref: `conversion-Introduction` para descobrir as configurações apropriadas para o seu livro. Há também um botão para um assistente XPath para ajudar na geração de expressões XPath simples."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:425
+#: ../../../__w/calibre/calibre/manual/conversion.rst:425
 msgid ""
 "By default, calibre uses the following expression for detecting chapters::"
 msgstr "Por padrão, o Calibre usa a seguinte expressão para detectar capítulos::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:429
+#: ../../../__w/calibre/calibre/manual/conversion.rst:429
 msgid ""
 "This expression is rather complex, because it tries to handle a number of "
 "common cases simultaneously. What it means is that calibre will assume "
@@ -760,7 +760,7 @@ msgid ""
 "`class=\"chapter\"` attribute."
 msgstr "Essa expressão é bastante complexa, porque tenta lidar com vários casos comuns simultaneamente. O que isso significa é que o calibre assumirá que os capítulos começam com `` ou `` tags com qualquer uma das palavras `(capítulo, livro, seção ou parte)` nelas ou que tenham o atributo `class =\" chapter \"`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:433
+#: ../../../__w/calibre/calibre/manual/conversion.rst:433
 msgid ""
 "A related option is :guilabel:`Chapter mark`, which allows you to control "
 "what calibre does when it detects a chapter. By default, it will insert a "
@@ -768,35 +768,35 @@ msgid ""
 "of, or in addition to the page break. You can also have it do nothing."
 msgstr "Uma opção relacionada é: guilabel: `Marca do capítulo`, que permite controlar o calibre quando detecta um capítulo. Por padrão, ele inserirá uma quebra de página antes do capítulo. Você pode inserir uma linha ordenada em vez de ou além da quebra de página. Você também pode fazer com que não faça nada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:437
+#: ../../../__w/calibre/calibre/manual/conversion.rst:437
 msgid "The default setting for detecting page breaks is::"
 msgstr "A configuração padrão para a detecção de quebra de página é::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:441
+#: ../../../__w/calibre/calibre/manual/conversion.rst:441
 msgid ""
 "which means that calibre will insert page breaks before every `<h1>` and "
 "`<h2>` tag by default."
 msgstr "o que significa que o calibre irá inserir a quebras de página antes de cada tag `<h1>` e `<h2>` por padrão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:445
+#: ../../../__w/calibre/calibre/manual/conversion.rst:445
 msgid ""
 "The default expressions may change depending on the input format you are "
 "converting."
 msgstr "A expressão padrão pode depender do formato de entrada que você está convertendo."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:448
+#: ../../../__w/calibre/calibre/manual/conversion.rst:448
 msgid "Miscellaneous"
 msgstr "Extras"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:450
+#: ../../../__w/calibre/calibre/manual/conversion.rst:450
 msgid "There are a few more options in this section."
 msgstr "Existem algumas outras opções para esta seção."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:452
+#: ../../../__w/calibre/calibre/manual/conversion.rst:452
 msgid ":guilabel:`Insert metadata as page at start of book`"
 msgstr ":guilabel:'Inserir os metadados como uma página no início do livro'"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:453
+#: ../../../__w/calibre/calibre/manual/conversion.rst:453
 msgid ""
 "One of the great things about calibre is that it allows you to maintain very"
 " complete metadata about all of your books, for example, a rating, tags, "
@@ -805,11 +805,11 @@ msgid ""
 "Think of it as a way to create your own customised book jacket."
 msgstr "Uma das grandes vantagens do calibre é que ele permite que você mantenha metadados muito completos sobre todos os seus livros, por exemplo, uma classificação, tags, comentários etc. Essa opção criará uma única página com todos esses metadados e inseri-los em o e-book convertido, normalmente logo após a capa. Pense nisso como uma maneira de criar sua própria capa de livro personalizada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:458
+#: ../../../__w/calibre/calibre/manual/conversion.rst:458
 msgid ":guilabel:`Remove first image`"
 msgstr ": guilabel: `Remover primeira imagem`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:459
+#: ../../../__w/calibre/calibre/manual/conversion.rst:459
 msgid ""
 "Sometimes, the source document you are converting includes the cover as part"
 " of the book, instead of as a separate cover. If you also specify a cover in"
@@ -818,11 +818,11 @@ msgid ""
 "that the converted book has only one cover, the one specified in calibre."
 msgstr "Às vezes, o documento de origem que você está convertendo inclui a capa como parte do livro, em vez de como uma capa separada. Se você também especificar uma capa no calibre, o livro convertido terá duas capas. Essa opção simplesmente remove a primeira imagem do documento de origem, garantindo assim que o livro convertido tenha apenas uma capa, a especificada no calibre."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:466
+#: ../../../__w/calibre/calibre/manual/conversion.rst:466
 msgid "Table of Contents"
 msgstr "Índice"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:468
+#: ../../../__w/calibre/calibre/manual/conversion.rst:468
 msgid ""
 "When the input document has a Table of Contents in its metadata, calibre "
 "will just use that. However, a number of older formats either do not support"
@@ -832,7 +832,7 @@ msgid ""
 "content in the input document."
 msgstr "Quando o documento de entrada tem um índice em seus metadados, o calibre apenas o usa. No entanto, vários formatos mais antigos não suportam um índice baseado em metadados ou documentos individuais não o possuem. Nesses casos, as opções nesta seção podem ajudá-lo a gerar automaticamente um Sumário no e-book convertido, com base no conteúdo real no documento de entrada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:473
+#: ../../../__w/calibre/calibre/manual/conversion.rst:473
 msgid ""
 "Using these options can be a little challenging to get exactly right. If you"
 " prefer creating/editing the Table of Contents by hand, convert to the EPUB "
@@ -847,7 +847,7 @@ msgid ""
 "you want to edit and click the :guilabel:`ToC Editor` button."
 msgstr "O uso dessas opções pode ser um pouco desafiador para ser exatamente correto. Se você preferir criar / editar o Índice manualmente, converta para os formatos EPUB ou AZW3 e marque a caixa de seleção na parte inferior da seção Índice da caixa de diálogo de conversão que diz: guilabel: `Ajuste manualmente o Índice de Conteúdo após a conversão ». Isso iniciará a ferramenta ToC Editor após a conversão. Ele permite que você crie entradas no Sumário simplesmente clicando no local do livro em que deseja que a entrada aponte. Você também pode usar o ToC Editor por si só, sem fazer uma conversão. Vá para: guilabel: `Preferências-> Interface-> Barras de Ferramentas` e adicione o: guilabel:` ToC Editor` à barra de ferramentas principal. Depois, basta selecionar o livro que deseja editar e clicar no botão: guilabel: `ToC Editor`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:485
+#: ../../../__w/calibre/calibre/manual/conversion.rst:485
 msgid ""
 "The first option is :guilabel:`Force use of auto-generated Table of "
 "Contents`. By checking this option you can have calibre override any Table "
@@ -855,7 +855,7 @@ msgid ""
 "generated one."
 msgstr "A primeira opção é: guilabel: `Força o uso do índice gerado automaticamente '. Ao marcar esta opção, você pode substituir o calibre de qualquer Índice encontrado nos metadados do documento de entrada pelo gerado automaticamente."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:489
+#: ../../../__w/calibre/calibre/manual/conversion.rst:489
 msgid ""
 "The default way that the creation of the auto generated Table of Contents "
 "works is that, calibre will first try to add any detected chapters to the "
@@ -865,7 +865,7 @@ msgid ""
 "the :guilabel:`Do not add detected chapters` option."
 msgstr "A maneira padrão pela qual a criação do Índice gerado automaticamente funciona é que, o calibre tentará primeiro adicionar os capítulos detectados ao índice gerado. Você pode aprender como personalizar a detecção de capítulos na seção: ref: `structure-detection` acima. Se você não deseja incluir capítulos detectados no índice gerado, marque a opção: guilabel: `Não adicione capítulos detectados`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:494
+#: ../../../__w/calibre/calibre/manual/conversion.rst:494
 msgid ""
 "If less than the :guilabel:`Chapter threshold` number of chapters were "
 "detected, calibre will then add any hyperlinks it finds in the input "
@@ -876,7 +876,7 @@ msgid ""
 "most that number of links is added."
 msgstr "Se for detectado um número inferior ao número de capítulos :guilabel:'Chapter threshold', o calibre adicionará quaisquer hiperlinks encontrados no documento de entrada ao Índice. Isso geralmente funciona bem: muitos documentos de entrada incluem um Sumário com hiperlink logo no início. A opção :guilabel:'Número de links' pode ser usada para controlar esse comportamento. Se definido como zero, nenhum link será adicionado. Se definido como um número maior que zero, no máximo esse número de links será adicionado."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:500
+#: ../../../__w/calibre/calibre/manual/conversion.rst:500
 msgid ""
 "calibre will automatically filter duplicates from the generated Table of "
 "Contents. However, if there are some additional undesirable entries, you can"
@@ -886,7 +886,7 @@ msgid ""
 "remove all entries titles \"Next\" or \"Previous\" use::"
 msgstr "calibre will automatically filter duplicates from the generated Table of Contents. However, if there are some additional undesirable entries, you can filter them using the :guilabel:`TOC Filter` option. This is a regular expression that will match the title of entries in the generated table of contents. Whenever a match is found, it will be removed. For example, to remove all entries titles \"Next\" or \"Previous\" use::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:507
+#: ../../../__w/calibre/calibre/manual/conversion.rst:507
 msgid ""
 "The :guilabel:`Level 1,2,3 TOC` options allow you to create a sophisticated "
 "multi-level Table of Contents. They are XPath expressions that match tags in"
@@ -898,59 +898,59 @@ msgid ""
 "illustrates how to use these options."
 msgstr "As opções: guilabel: `Nível 1,2,3 TOC` permitem criar um sofisticado Índice multinível. São expressões XPath que correspondem a tags no XHTML intermediário produzido pelo pipeline de conversão. Veja o: ref: `conversion-Introduction` para obter acesso a este XHTML. Leia também o: ref: `xpath-tutorial`, para aprender como construir expressões XPath. Ao lado de cada opção há um botão que inicia um assistente para ajudar na criação de expressões XPath básicas. O exemplo simples a seguir ilustra como usar essas opções."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:513
+#: ../../../__w/calibre/calibre/manual/conversion.rst:513
 msgid ""
-"Suppose you have an input document that results in XHTML that look like "
+"Suppose you have an input document that results in XHTML that looks like "
 "this:"
-msgstr "Supostamente você tem um documento de entrada que resulta em um XHTML parecido com isto:"
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:535
+#: ../../../__w/calibre/calibre/manual/conversion.rst:535
 msgid "Then, we set the options as::"
 msgstr "Então, nós colocamos a opção como::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:540
+#: ../../../__w/calibre/calibre/manual/conversion.rst:540
 msgid ""
 "This will result in an automatically generated two level Table of Contents "
 "that looks like::"
 msgstr "Isto vai resultar em um sumário automaticamente gerado que se parece como::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:551
+#: ../../../__w/calibre/calibre/manual/conversion.rst:551
 msgid ""
 "Not all output formats support a multi level Table of Contents. You should "
 "first try with EPUB output. If that works, then try your format of choice."
 msgstr "Nem todos os formatos de saída suportam um índice multinível. Você deve primeiro tentar com a saída EPUB. Se isso funcionar, tente o seu formato de escolha."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:555
+#: ../../../__w/calibre/calibre/manual/conversion.rst:555
 msgid "Using images as chapter titles when converting HTML input documents"
 msgstr "Usando imagens como títulos de capítulos ao converter documentos de entrada HTML"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:557
+#: ../../../__w/calibre/calibre/manual/conversion.rst:557
 msgid ""
 "Suppose you want to use an image as your chapter title, but still want "
 "calibre to be able to automatically generate a Table of Contents for you "
 "from the chapter titles. Use the following HTML markup to achieve this:"
 msgstr "Suponha que você queira usar uma imagem como título do capítulo, mas ainda queira que o calibre seja capaz de gerar automaticamente um Índice para você a partir dos títulos dos capítulos. Use a seguinte marcação HTML para conseguir isso:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:571
+#: ../../../__w/calibre/calibre/manual/conversion.rst:571
 msgid ""
 "Set the :guilabel:`Level 1 TOC` setting to ``//h:h2``. Then, for chapter "
 "two, calibre will take the title from the value of the ``title`` attribute "
 "on the ``<h2>`` tag, since the tag has no text."
 msgstr "Defina a configuração: guilabel: `Nível 1 TOC` como` `// h: h2``. Então, para o capítulo dois, o calibre assumirá o título do valor do atributo `` title`` na tag `` ``, pois a tag não possui texto."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:574
+#: ../../../__w/calibre/calibre/manual/conversion.rst:574
 msgid ""
 "Using tag attributes to supply the text for entries in the Table of Contents"
 msgstr "Usando atributos de tag para fornecer o texto para entradas no Sumário"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:576
+#: ../../../__w/calibre/calibre/manual/conversion.rst:576
 msgid ""
 "If you have particularly long chapter titles and want shortened versions in "
 "the Table of Contents, you can use the title attribute to achieve this, for "
 "example:"
 msgstr "Se você possui títulos de capítulo particularmente longos e deseja versões reduzidas no Sumário, pode usar o atributo title para conseguir isso, por exemplo:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:591
+#: ../../../__w/calibre/calibre/manual/conversion.rst:591
 msgid ""
 "Set the :guilabel:`Level 1 TOC` setting to ``//h:h2/@title``. Then calibre "
 "will take the title from the value of the ``title`` attribute on the "
@@ -959,11 +959,11 @@ msgid ""
 "to get the text from any attribute you like."
 msgstr "Defina a configuração: guilabel: `Nível 1 TOC` como` `// h: h2 / @ title``. Em seguida, o calibre assumirá o título do valor do atributo `` title`` nas tags `` ``, em vez de usar o texto dentro da tag. Observe o `` / @ title`` à direita na expressão XPath, você pode usar este formulário para dizer ao calibre para obter o texto de qualquer atributo que você desejar."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:598
+#: ../../../__w/calibre/calibre/manual/conversion.rst:598
 msgid "How options are set/saved for conversion"
 msgstr "Modo como as opções são definidas/guardadas para a conversão"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:600
+#: ../../../__w/calibre/calibre/manual/conversion.rst:600
 msgid ""
 "There are two places where conversion options can be set in calibre. The "
 "first is in Preferences->Conversion. These settings are the defaults for the"
@@ -971,7 +971,7 @@ msgid ""
 "set here will be used by default."
 msgstr "Existem dois locais onde as opções de conversão podem ser definidas no calibre. O primeiro está em Preferências-> Conversão. Essas configurações são os padrões para as opções de conversão. Sempre que você tentar converter um novo livro, as configurações definidas aqui serão usadas por padrão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:605
+#: ../../../__w/calibre/calibre/manual/conversion.rst:605
 msgid ""
 "You can also change settings in the conversion dialog for each book "
 "conversion. When you convert a book, calibre remembers the settings you used"
@@ -985,28 +985,28 @@ msgid ""
 "dialog is an option to remove stored conversion settings."
 msgstr "Você também pode alterar as configurações na caixa de diálogo de conversão para cada conversão de livro. Quando você converte um livro, o calibre lembra as configurações usadas para esse livro, de modo que, se você o converter novamente, as configurações salvas para o livro individual terão precedência sobre os padrões definidos em: guilabel: `Preferências`. Você pode restaurar as configurações individuais aos padrões usando o botão: guilabel: `Restaurar padrões` na caixa de diálogo de conversão de livros individual. Você pode remover as configurações salvas de um grupo de livros selecionando todos os livros e clicando no botão: guilabel: `Editar metadados` para abrir a caixa de diálogo de edição em massa de metadados. Na parte inferior da caixa de diálogo, há uma opção para remover a conversão armazenada. definições."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:616
+#: ../../../__w/calibre/calibre/manual/conversion.rst:616
 msgid ""
 "When you bulk convert a set of books, settings are taken in the following "
 "order (last one wins):"
 msgstr "Quando você converte em massa um conjunto de livros, as configurações são feitas na seguinte ordem (a última vence):"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:618
+#: ../../../__w/calibre/calibre/manual/conversion.rst:618
 msgid "From the defaults set in Preferences->Conversion"
 msgstr "Dos padrões definidos em Preferências-> Conversão"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:620
+#: ../../../__w/calibre/calibre/manual/conversion.rst:620
 msgid ""
 "From the saved conversion settings for each book being converted (if any). "
 "This can be turned off by the option in the top left corner of the Bulk "
 "conversion dialog."
 msgstr "Nas configurações de conversão salvas para cada livro que está sendo convertido (se houver). Isso pode ser desativado pela opção no canto superior esquerdo da caixa de diálogo de conversão em massa."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:624
+#: ../../../__w/calibre/calibre/manual/conversion.rst:624
 msgid "From the settings set in the Bulk conversion dialog"
 msgstr "Nas configurações definidas na caixa de diálogo Conversão em massa"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:626
+#: ../../../__w/calibre/calibre/manual/conversion.rst:626
 msgid ""
 "Note that the final settings for each book in a Bulk conversion will be "
 "saved and re-used if the book is converted again. Since the highest priority"
@@ -1018,7 +1018,7 @@ msgid ""
 "from book specific settings (if any) or the defaults."
 msgstr "Observe que as configurações finais de cada livro em uma conversão em massa serão salvas e reutilizadas se o livro for convertido novamente. Como a prioridade mais alta na conversão em massa é dada às configurações na caixa de diálogo Conversão em massa, elas substituem as configurações específicas de cada livro. Portanto, você deve converter em massa apenas livros que precisam de configurações semelhantes. As exceções são metadados e configurações específicas do formato de entrada. Como a caixa de diálogo de conversão em massa não possui configurações para essas duas categorias, elas serão retiradas das configurações específicas do livro (se houver) ou dos padrões."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:637
+#: ../../../__w/calibre/calibre/manual/conversion.rst:637
 msgid ""
 "You can see the actual settings used during any conversion by clicking the "
 "rotating icon in the lower right corner and then double clicking the "
@@ -1026,11 +1026,11 @@ msgid ""
 "contain the actual settings used, near the top."
 msgstr "Você pode ver as configurações reais usadas durante qualquer conversão clicando no ícone rotativo no canto inferior direito e clicando duas vezes no trabalho de conversão individual. Isso exibirá um log de conversão que conterá as configurações reais usadas, na parte superior."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:642
+#: ../../../__w/calibre/calibre/manual/conversion.rst:642
 msgid "Format specific tips"
 msgstr "Formatar dicas específicas"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:644
+#: ../../../__w/calibre/calibre/manual/conversion.rst:644
 msgid ""
 "Here you will find tips specific to the conversion of particular formats. "
 "Options specific to particular format, whether input or output are available"
@@ -1038,24 +1038,24 @@ msgid ""
 "or `EPUB output`."
 msgstr "Aqui você encontrará dicas específicas para a conversão de formatos específicos. Opções específicas para um formato específico, se entrada ou saída, estão disponíveis na caixa de diálogo de conversão em sua própria seção, por exemplo, `TXT input` ou` EPUB output`."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:649
+#: ../../../__w/calibre/calibre/manual/conversion.rst:649
 msgid "Convert Microsoft Word documents"
 msgstr "Converter documentos do Microsoft Word"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:651
+#: ../../../__w/calibre/calibre/manual/conversion.rst:651
 msgid ""
 "calibre can automatically convert ``.docx`` files created by Microsoft Word "
 "2007 and newer. Just add the file to calibre and click convert."
 msgstr "O calibre pode converter automaticamente arquivos `` .docx`` criados pelo Microsoft Word 2007 e mais recentes. Basta adicionar o arquivo ao calibre e clicar em converter."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:655
+#: ../../../__w/calibre/calibre/manual/conversion.rst:655
 msgid ""
 "There is a :download_file:`demo .docx file <demos/demo.docx>` that "
 "demonstrates the capabilities of the calibre conversion engine. Just "
 "download it and convert it to EPUB or AZW3 to see what calibre can do."
 msgstr "Existe um :download_arquivo:`demo .docx arquivo <demos/demo.docx>` que demonstra as capacidades do mecanismo de conversão do Calibre. Basta baixá-lo e convertê-lo para EPUB ou AZW3 para ver o que o Calibre pode fazer."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:659
+#: ../../../__w/calibre/calibre/manual/conversion.rst:659
 msgid ""
 "calibre will automatically generate a Table of Contents based on headings if"
 " you mark your headings with the ``Heading 1``, ``Heading 2``, etc. styles "
@@ -1064,11 +1064,11 @@ msgid ""
 "of Contents."
 msgstr "O calibre gerará automaticamente um Sumário com base nos títulos, se você os marcar com os estilos `` Título 1 '', `` Título 2 '' etc. no Microsoft Word. Abra o e-book de saída no visualizador de e-books de calibre e clique no botão: guilabel: `Table of Contents` para visualizar o Table of Contents gerado."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:665
+#: ../../../__w/calibre/calibre/manual/conversion.rst:665
 msgid "Older .doc files"
 msgstr "Arquivos .doc mais antigos"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:667
+#: ../../../__w/calibre/calibre/manual/conversion.rst:667
 msgid ""
 "For older .doc files, you can save the document as HTML with Microsoft Word "
 "and then convert the resulting HTML file with calibre. When saving as HTML, "
@@ -1078,18 +1078,18 @@ msgid ""
 " newer version of Word available, you can directly save it as .docx as well."
 msgstr "Para arquivos ``.doc`` mais antigos, é possível salvar o documento como HTML com o *Microsoft Word* e, em seguida, converter o arquivo HTML resultante com o -*Calibre``. Ao salvar como HTML, use a opção \"Salvar como página da Web filtrada\", pois isso produzirá HTML limpo e com boa conversão. Observe que o Word produz um HTML muito confuso, convertê-lo pode demorar muito tempo, portanto, seja paciente. Se você tiver uma versão mais recente do Word disponível, poderá salvá-la diretamente como ``.docx``."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:674
+#: ../../../__w/calibre/calibre/manual/conversion.rst:674
 msgid ""
 "Another alternative is to use the free LibreOffice. Open your .doc file in "
 "LibreOffice and save it as .docx, which can be directly converted in "
 "calibre."
 msgstr "Outra alternativa é usar o  LibreOffice gratuito. Abra seu arquivo .doc no LibreOffice e salve-o como .docx, que pode ser convertido diretamente no Calibre."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:678
+#: ../../../__w/calibre/calibre/manual/conversion.rst:678
 msgid "Convert TXT documents"
 msgstr "converter documentos em TXT"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:680
+#: ../../../__w/calibre/calibre/manual/conversion.rst:680
 msgid ""
 "TXT documents have no well defined way to specify formatting like bold, "
 "italics, etc, or document structure like paragraphs, headings, sections and "
@@ -1098,86 +1098,86 @@ msgid ""
 "based on those conventions."
 msgstr "Os documentos TXT não têm uma maneira bem definida de especificar a formatação, como negrito, itálico, etc., ou a estrutura do documento, como parágrafos, títulos, seções e assim por diante, mas há uma variedade de convenções comumente usadas. Por padrão, o calibre tenta a detecção automática da formatação e marcação corretas com base nessas convenções."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:685
+#: ../../../__w/calibre/calibre/manual/conversion.rst:685
 msgid ""
 "TXT input supports a number of options to differentiate how paragraphs are "
 "detected."
 msgstr "A entrada TXT suporta várias opções para diferenciar como os parágrafos são detectados."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:687
+#: ../../../__w/calibre/calibre/manual/conversion.rst:687
 msgid ":guilabel:`Paragraph style: Auto`"
 msgstr ": guilabel: `Estilo de parágrafo: Automático`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:688
+#: ../../../__w/calibre/calibre/manual/conversion.rst:688
 msgid ""
 "Analyzes the text file and attempts to automatically determine how "
 "paragraphs are defined.  This option will generally work fine, if you "
 "achieve undesirable results try one of the manual options."
 msgstr "Analisa o arquivo de texto e tenta determinar automaticamente como os parágrafos são definidos. Essa opção geralmente funciona bem, se você obtiver resultados indesejáveis, tente uma das opções manuais"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:691
+#: ../../../__w/calibre/calibre/manual/conversion.rst:691
 msgid ":guilabel:`Paragraph style: Block`"
 msgstr ": guilabel: `Estilo de parágrafo: Bloco`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:692
+#: ../../../__w/calibre/calibre/manual/conversion.rst:692
 msgid "Assumes one or more blank lines are a paragraph boundary::"
 msgstr "Assume que uma ou mais linhas em branco são um limite de parágrafo:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:699
+#: ../../../__w/calibre/calibre/manual/conversion.rst:699
 msgid ":guilabel:`Paragraph style: Single`"
 msgstr ": guilabel: `Estilo de parágrafo: Único`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:700
+#: ../../../__w/calibre/calibre/manual/conversion.rst:700
 msgid "Assumes that every line is a paragraph::"
 msgstr "Assume que toda linha é um parágrafo ::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:706
+#: ../../../__w/calibre/calibre/manual/conversion.rst:706
 msgid ":guilabel:`Paragraph style: Print`"
 msgstr ": guilabel: `Estilo do parágrafo: Imprimir`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:707
+#: ../../../__w/calibre/calibre/manual/conversion.rst:707
 msgid ""
 "Assumes that every paragraph starts with an indent (either a tab or 2+ "
 "spaces). Paragraphs end when the next line that starts with an indent is "
 "reached::"
 msgstr "Supõe que todo parágrafo comece com um recuo (uma guia ou mais de 2 espaços). Os parágrafos terminam quando a próxima linha que começa com um recuo é atingida"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:717
+#: ../../../__w/calibre/calibre/manual/conversion.rst:717
 msgid ":guilabel:`Paragraph style: Unformatted`"
 msgstr " guilabel: `Estilo de parágrafo: não formatado`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:718
+#: ../../../__w/calibre/calibre/manual/conversion.rst:718
 msgid ""
 "Assumes that the document has no formatting, but does use hard line breaks."
 "  Punctuation and median line length are used to attempt to re-create "
 "paragraphs."
 msgstr "Supõe que o documento não tenha formatação, mas usa quebras de linha rígida. A pontuação e o comprimento médio da linha são usados para tentar recriar parágrafos."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:721
+#: ../../../__w/calibre/calibre/manual/conversion.rst:721
 msgid ":guilabel:`Formatting style: Auto`"
 msgstr ": guilabel: `Estilo de formatação: Automático`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:722
+#: ../../../__w/calibre/calibre/manual/conversion.rst:722
 msgid ""
 "Attempts to detect the type of formatting markup being used.  If no markup "
 "is used then heuristic formatting will be applied."
 msgstr "Tenta detectar o tipo de marcação de formatação que está sendo usada. Se nenhuma marcação for usada, a formatação heurística será aplicada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:725
+#: ../../../__w/calibre/calibre/manual/conversion.rst:725
 msgid ":guilabel:`Formatting style: Heuristic`"
 msgstr ": guilabel: `Estilo de formatação: Heurístico`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:726
+#: ../../../__w/calibre/calibre/manual/conversion.rst:726
 msgid ""
 "Analyzes the document for common chapter headings, scene breaks, and "
 "italicized words and applies the appropriate HTML markup during conversion."
 msgstr "Analisa o documento em busca de títulos de capítulos comuns, quebras de cena e palavras em itálico e aplica a marcação HTML apropriada durante a conversão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:729
+#: ../../../__w/calibre/calibre/manual/conversion.rst:729
 msgid ":guilabel:`Formatting style: Markdown`"
 msgstr ": guilabel: `Estilo de formatação: Markdown`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:730
+#: ../../../__w/calibre/calibre/manual/conversion.rst:730
 msgid ""
 "calibre also supports running TXT input though a transformation preprocessor"
 " known as Markdown. Markdown allows for basic formatting to be added to TXT "
@@ -1189,21 +1189,21 @@ msgid ""
 "<https://daringfireball.net/projects/markdown/syntax>`_."
 msgstr "O calibre também suporta a entrada TXT em execução através de um pré-processador de transformação conhecido como Markdown. O Markdown permite que a formatação básica seja adicionada aos documentos TXT, como negrito, itálico, títulos de seção, tabelas, listas, um Sumário etc. Marcando os títulos dos capítulos com um número inicial e definindo a expressão de detecção XPath do capítulo como \"// h: h1 \"é a maneira mais fácil de obter um índice adequado gerado a partir de um documento TXT. Você pode aprender mais sobre a sintaxe do Markdown em `daringfireball <https://daringfireball.net/projects/markdown/syntax>` _."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:736
+#: ../../../__w/calibre/calibre/manual/conversion.rst:736
 msgid ":guilabel:`Formatting style: None`"
 msgstr ": guilabel: `Estilo de formatação: Nenhum`"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:737
+#: ../../../__w/calibre/calibre/manual/conversion.rst:737
 msgid ""
 "Applies no special formatting to the text, the document is converted to HTML"
 " with no other changes."
 msgstr "Não aplica formatação especial ao texto, o documento é convertido em HTML sem outras alterações."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:742
+#: ../../../__w/calibre/calibre/manual/conversion.rst:742
 msgid "Convert PDF documents"
 msgstr "Converter documentos PDF"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:744
+#: ../../../__w/calibre/calibre/manual/conversion.rst:744
 msgid ""
 "PDF documents are one of the worst formats to convert from. They are a fixed"
 " page size and text placement format. Meaning, it is very difficult to "
@@ -1216,7 +1216,7 @@ msgid ""
 "conversion settings under :guilabel:`PDF Input`."
 msgstr "Documentos PDF são um dos piores formatos para converter. Eles são um tamanho de página fixo e formato de posicionamento de texto. Ou seja, é muito difícil determinar onde termina um parágrafo e começa outro. O calibre tentará desembrulhar parágrafos usando um fator configurável, :guilabel:'Line un-wrapping factor'. Esta é uma escala usada para determinar o comprimento no qual uma linha deve ser desembrulhada. Os valores válidos são decimais entre 0 e 1. O padrão é 0,45, logo abaixo do comprimento médio da linha. Diminua esse valor para incluir mais texto na desquebragem. Aumentar para incluir menos. Você pode ajustar esse valor nas configurações de conversão em :guilabel:'PDF Input'."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:751
+#: ../../../__w/calibre/calibre/manual/conversion.rst:751
 msgid ""
 "Also, they often have headers and footers as part of the document that will "
 "become included with the text. Use the :guilabel:`Search and replace` panel "
@@ -1226,62 +1226,62 @@ msgid ""
 ":ref:`regexptutorial`."
 msgstr "Além disso, eles geralmente têm cabeçalhos e rodapés como parte do documento que será incluído com o texto. Use o painel :guilabel:'Pesquisar e substituir' para remover cabeçalhos e rodapés para atenuar esse problema. Se os cabeçalhos e rodapés não forem removidos do texto, ele poderá descartar a desquebra do parágrafo. Para saber como usar as opções de remoção de cabeçalho e rodapé, leia :ref:'regexptutorial'."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:756
+#: ../../../__w/calibre/calibre/manual/conversion.rst:756
 msgid "Some limitations of PDF input are:"
 msgstr "Algumas limitações do processamento de PDF são:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:758
+#: ../../../__w/calibre/calibre/manual/conversion.rst:758
 msgid "Complex, multi-column, and image based documents are not supported."
 msgstr "Documentos complexos, multi colunares e baseados em imagens não são suportados."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:759
+#: ../../../__w/calibre/calibre/manual/conversion.rst:759
 msgid ""
 "Extraction of vector images and tables from within the document is also not "
 "supported."
 msgstr "Extração de imagens vetorizadas e tabelas de dentro do documento também não são suportadas."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:760
+#: ../../../__w/calibre/calibre/manual/conversion.rst:760
 msgid ""
 "Some PDFs use special glyphs to represent ll or ff or fi, etc. Conversion of"
 " these may or may not work depending on just how they are represented "
 "internally in the PDF."
 msgstr "Alguns PDFs usam glifos especiais para representar ll ou ff ou fi, etc. A conversão destes pode ou não funcionar, dependendo de como eles são representados internamente no PDF."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:761
+#: ../../../__w/calibre/calibre/manual/conversion.rst:761
 msgid "Links and Tables of Contents are not supported"
 msgstr "Links e Índices não são suportados"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:762
+#: ../../../__w/calibre/calibre/manual/conversion.rst:762
 msgid ""
 "PDFs that use embedded non-Unicode fonts to represent non-English characters"
 " will result in garbled output for those characters"
 msgstr "PDFs que usam fontes não-Unicode incorporadas para representar caracteres que não estejam em inglês resultarão em saída distorcida para esses caracteres"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:763
+#: ../../../__w/calibre/calibre/manual/conversion.rst:763
 msgid ""
 "Some PDFs are made up of photographs of the page with OCRed text behind "
 "them. In such cases calibre uses the OCRed text, which can be very different"
 " from what you see when you view the PDF file"
 msgstr "Alguns PDFs são compostos de fotografias da página com texto OCR por trás deles. Nesses casos, o calibre usa o texto OCR, que pode ser muito diferente do que você vê ao exibir o arquivo PDF"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:764
+#: ../../../__w/calibre/calibre/manual/conversion.rst:764
 msgid ""
 "PDFs that are used to display complex text, like right to left languages and"
 " math typesetting will not convert correctly"
 msgstr "PDFs usados para exibir texto complexo, como idiomas da direita para a esquerda e tipografia matemática, não serão convertidos corretamente"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:766
+#: ../../../__w/calibre/calibre/manual/conversion.rst:766
 msgid ""
 "To re-iterate **PDF is a really, really bad** format to use as input. If you"
 " absolutely must use PDF, then be prepared for an output ranging anywhere "
 "from decent to unusable, depending on the input PDF."
 msgstr "Reiterar ** PDF é um formato muito, muito ruim ** para ser usado como entrada. Se você precisar absolutamente usar o PDF, esteja preparado para uma saída que varia de decente a inutilizável, dependendo do PDF de entrada."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:770
+#: ../../../__w/calibre/calibre/manual/conversion.rst:770
 msgid "Comic book collections"
 msgstr "Coleções de quadrinhos"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:772
+#: ../../../__w/calibre/calibre/manual/conversion.rst:772
 msgid ""
 "A comic book collection is a .cbc file. A .cbc file is a ZIP file that "
 "contains other CBZ/CBR files. In addition the .cbc file must contain a "
@@ -1290,21 +1290,21 @@ msgid ""
 "filename:title, as shown below::"
 msgstr "Uma coleção de quadrinhos é um arquivo .cbc. Um arquivo .cbc é um arquivo ZIP que contém outros arquivos CBZ / CBR. Além disso, o arquivo .cbc deve conter um arquivo de texto simples chamado comics.txt, codificado em UTF-8. O arquivo comics.txt deve conter uma lista dos arquivos de quadrinhos dentro do arquivo .cbc, no formato filename: title, como mostrado abaixo:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:780
+#: ../../../__w/calibre/calibre/manual/conversion.rst:780
 msgid "The .cbc file will then contain::"
 msgstr "O arquivo .cbc conterá:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:787
+#: ../../../__w/calibre/calibre/manual/conversion.rst:787
 msgid ""
-"calibre will automatically convert this .cbc file into a e-book with a Table"
-" of Contents pointing to each entry in comics.txt."
-msgstr "O calibre converterá automaticamente esse arquivo .cbc em um e-book com um Índice apontando para cada entrada em comics.txt."
+"calibre will automatically convert this .cbc file into an e-book with a "
+"Table of Contents pointing to each entry in comics.txt."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:791
+#: ../../../__w/calibre/calibre/manual/conversion.rst:791
 msgid "EPUB advanced formatting demo"
 msgstr "Exemplo de formatação avançada de um EPUB"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:793
+#: ../../../__w/calibre/calibre/manual/conversion.rst:793
 msgid ""
 "Various advanced formatting for EPUB files is demonstrated in this "
 ":download_file:`demo file <demos/demo.epub>`. The file was created from hand"
@@ -1312,25 +1312,25 @@ msgid ""
 " EPUB creation efforts."
 msgstr "Várias formatações avançadas para arquivos EPUB são demonstradas neste :d ownload_file:'demo file <demos/demo.epub>'. O arquivo foi criado a partir de HTML codificado à mão usando calibre e destina-se a ser usado como um modelo para seus próprios esforços de criação de EPUB."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:796
+#: ../../../__w/calibre/calibre/manual/conversion.rst:796
 msgid ""
 "The source HTML it was created from is available :download_file:`demo.zip "
 "<demos/demo.zip>`. The settings used to create the EPUB from the ZIP file "
 "are::"
 msgstr "O HTML de origem a partir do qual ele foi criado está disponível :d ownload_file:'demo.zip <demos/demo.zip>'. As configurações usadas para criar o EPUB a partir do arquivo ZIP são::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:801
+#: ../../../__w/calibre/calibre/manual/conversion.rst:801
 msgid ""
 "Note that because this file explores the potential of EPUB, most of the "
 "advanced formatting is not going to work on readers less capable than "
 "calibre's built-in EPUB viewer."
 msgstr "Observe que, como esse arquivo explora o potencial do EPUB, a maior parte da formatação avançada não funciona em leitores menos capazes que o visualizador EPUB integrado do calibre."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:805
+#: ../../../__w/calibre/calibre/manual/conversion.rst:805
 msgid "Convert ODT documents"
 msgstr "Converter documentos ODT"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:807
+#: ../../../__w/calibre/calibre/manual/conversion.rst:807
 msgid ""
 "calibre can directly convert ODT (OpenDocument Text) files. You should use "
 "styles to format your document and minimize the use of direct formatting. "
@@ -1339,7 +1339,7 @@ msgid ""
 "conversion."
 msgstr "O calibre pode converter diretamente arquivos ODT (OpenDocument Text). Você deve usar estilos para formatar seu documento e minimizar o uso da formatação direta. Ao inserir imagens no documento, você precisa ancorá-las ao parágrafo, as imagens ancoradas em uma página acabam na frente da conversão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:810
+#: ../../../__w/calibre/calibre/manual/conversion.rst:810
 msgid ""
 "To enable automatic detection of chapters, you need to mark them with the "
 "built-in styles called :guilabel:`Heading 1`, :guilabel:`Heading 2`, ..., "
@@ -1349,13 +1349,13 @@ msgid ""
 "chapters at` box. Example:"
 msgstr "Para permitir a detecção automática de capítulos, você precisa marcá-los com os estilos internos chamados :guilabel:'Heading 1', :guilabel:'Heading 2', ..., :guilabel:'Heading 6' (:guilabel:'Heading 1' equivale à tag HTML ''<h1>'', :guilabel:'Posições 2' a ''<h2>'', etc). Quando você converte em calibre, você pode inserir qual estilo você usou na caixa :guilabel:'Detectar capítulos em'. Exemplo:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:816
+#: ../../../__w/calibre/calibre/manual/conversion.rst:816
 msgid ""
 "If you mark Chapters with style :guilabel:`Heading 2`, you have to set the "
 "'Detect chapters at' box to ``//h:h2``"
 msgstr "If you mark Chapters with style :guilabel:`Heading 2`, you have to set the 'Detect chapters at' box to ``//h:h2``"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:817
+#: ../../../__w/calibre/calibre/manual/conversion.rst:817
 msgid ""
 "For a nested TOC with Sections marked with :guilabel:`Heading 2` and the "
 "Chapters marked with :guilabel:`Heading 3` you need to enter "
@@ -1363,14 +1363,14 @@ msgid ""
 " box to ``//h:h2`` and the :guilabel:`Level 2 TOC` box to ``//h:h3``."
 msgstr "Para um sumário aninhado com Seções marcadas com :guilabel:'Título 2' e os Capítulos marcados com :guilabel:'Título 3', você precisa digitar ''//h:h2|//h:h3''. Na página Converter - sumário, defina a caixa :guilabel:'Level 1 TOC' como ''//h:h2'' e a caixa :guilabel:'Level 2 TOC' como ''//h:h3''."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:819
+#: ../../../__w/calibre/calibre/manual/conversion.rst:819
 msgid ""
 "Well-known document properties (Title, Keywords, Description, Creator) are "
-"recognized and calibre will use the first image (not to small, and with good"
-" aspect-ratio) as the cover image."
-msgstr "As propriedades conhecidas do documento (Título, Palavras-chave, Descrição, Criador) são reconhecidas e o calibre usará a primeira imagem (não pequena, e com boa proporção) como imagem de capa."
+"recognized and calibre will use the first image (not too small, and with "
+"good aspect-ratio) as the cover image."
+msgstr ""
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:821
+#: ../../../__w/calibre/calibre/manual/conversion.rst:821
 msgid ""
 "There is also an advanced property conversion mode, which is activated by "
 "setting the custom property ``opf.metadata`` ('Yes or No' type) to Yes in "
@@ -1379,7 +1379,7 @@ msgid ""
 "(``opf.authors`` overrides document creator)::"
 msgstr "Há também um modo avançado de conversão de propriedades, que é ativado ao definir a propriedade personalizada `` opf.metadata`` (tipo 'Sim ou Não') como Sim no seu documento ODT (Arquivo-> Propriedades-> Propriedades Personalizadas). Se essa propriedade for detectada pelo calibre, as seguintes propriedades personalizadas serão reconhecidas (`` opf.authors`` substitui o criador do documento) ::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:834
+#: ../../../__w/calibre/calibre/manual/conversion.rst:834
 msgid ""
 "In addition to this, you can specify the picture to use as the cover by "
 "naming it ``opf.cover`` (right click, Picture->Options->Name) in the ODT. If"
@@ -1389,17 +1389,17 @@ msgid ""
 "from the document. But this works only with the named picture!"
 msgstr "Além disso, você pode especificar a imagem a ser usada como capa, nomeando-a como `` opf.cover`` (clique com o botão direito do mouse em Imagem-> Opções-> Nome) na ODT. Se nenhuma imagem com esse nome for encontrada, o método 'inteligente' será usado. Como a detecção de capa pode resultar em capas duplas em determinados formatos de saída, o processo removerá o parágrafo (somente se o único conteúdo for a capa!) Do documento. Mas isso funciona apenas com a imagem nomeada!"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:841
+#: ../../../__w/calibre/calibre/manual/conversion.rst:841
 msgid ""
 "To disable cover detection you can set the custom property ``opf.nocover`` "
 "('Yes or No' type) to Yes in advanced mode."
 msgstr "Para desativar a detecção de capa, você pode definir a propriedade personalizada `` of.no cover`` (tipo 'Yes or No') para Yes no modo avançado."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:844
+#: ../../../__w/calibre/calibre/manual/conversion.rst:844
 msgid "Converting to PDF"
 msgstr "Convertendo para PDF"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:846
+#: ../../../__w/calibre/calibre/manual/conversion.rst:846
 msgid ""
 "The first, most important, setting to decide on when converting to PDF is "
 "the page size. By default, calibre uses a page size of \"U.S. Letter\". You "
@@ -1411,11 +1411,11 @@ msgid ""
 "size suitable for viewing on the small Kindle screen."
 msgstr "A primeira configuração, mais importante, para decidir ao converter para PDF é o tamanho da página. Por padrão, o calibre usa um tamanho de página de \"U.S. Letter\". Você pode alterar isso para outro tamanho de página padrão ou um tamanho completamente personalizado na seção :guilabel:'PDF Output' da caixa de diálogo de conversão. Se você estiver gerando um PDF para ser usado em um dispositivo específico, poderá ativar a opção para usar o tamanho da página a partir do perfil :guilabel:'output profile'. Portanto, se o seu perfil de saída estiver definido como Kindle, o calibre criará um PDF com tamanho de página adequado para visualização na pequena tela do Kindle."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:856
+#: ../../../__w/calibre/calibre/manual/conversion.rst:856
 msgid "Headers and Footers"
 msgstr "Cabeçalhos e Rodapés"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:857
+#: ../../../__w/calibre/calibre/manual/conversion.rst:857
 msgid ""
 "You can insert arbitrary headers and footers on each page of the PDF by "
 "specifying header and footer templates. Templates are just snippets of HTML "
@@ -1424,7 +1424,7 @@ msgid ""
 " following footer template::"
 msgstr "Você pode inserir cabeçalhos e rodapés arbitrários em cada página do PDF especificando modelos de cabeçalho e rodapé. Modelos são apenas trechos de código HTML que são renderizados nos locais de cabeçalho e rodapé. Por exemplo, para exibir os números de página centralizados na parte inferior de cada página, em verde, use o seguinte modelo de rodapé:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:865
+#: ../../../__w/calibre/calibre/manual/conversion.rst:865
 msgid ""
 "calibre will automatically replace :code:`_PAGENUM_` with the current page "
 "number. You can even put different content on even and odd pages, for "
@@ -1432,7 +1432,7 @@ msgid ""
 "the author on even pages::"
 msgstr "O calibre substituirá automaticamente: code: `_PAGENUM_` pelo número da página atual. Você pode até colocar conteúdo diferente em páginas pares e ímpares, por exemplo, o seguinte modelo de cabeçalho mostrará o título em páginas ímpares e o autor em páginas pares ::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:874
+#: ../../../__w/calibre/calibre/manual/conversion.rst:874
 msgid ""
 "calibre will automatically replace :code:`_TITLE_` and :code:`_AUTHOR_` with"
 " the title and author of the document being converted. Setting "
@@ -1440,23 +1440,23 @@ msgid ""
 "aligned."
 msgstr "O calibre substituirá automaticamente: code: `_TITLE_` e: code:` _AUTHOR_` pelo título e autor do documento que está sendo convertido. A configuração: code: `justify-content` to: code:` flex-end` fará com que o texto fique alinhado à direita."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:879
+#: ../../../__w/calibre/calibre/manual/conversion.rst:879
 msgid ""
 "You can also display text at the left and right edges and change the font "
 "size, as demonstrated with this header template::"
 msgstr "Você também pode exibir o texto nas bordas esquerda e direita e alterar o tamanho da fonte, conforme demonstrado neste modelo de cabeçalho:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:887
+#: ../../../__w/calibre/calibre/manual/conversion.rst:887
 msgid ""
 "This will display the title at the left and the author at the right, in a "
 "font size smaller than the main text."
 msgstr "Isso exibirá o título à esquerda e o autor à direita, em um tamanho de fonte menor que o texto principal."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:890
+#: ../../../__w/calibre/calibre/manual/conversion.rst:890
 msgid "You can also use the current section in templates, as shown below::"
 msgstr "Você também pode usar a seção atual nos modelos, como mostrado abaixo:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:894
+#: ../../../__w/calibre/calibre/manual/conversion.rst:894
 msgid ""
 ":code:`_SECTION_` is replaced by whatever the name of the current section "
 "is. These names are taken from the metadata Table of Contents in the "
@@ -1467,57 +1467,57 @@ msgid ""
 "current top-level section."
 msgstr ": code: `_SECTION_` é substituído por qualquer que seja o nome da seção atual. Esses nomes são retirados do índice de metadados do documento (o resumo em PDF). Se o documento não tiver um índice, ele será substituído pelo texto vazio. Se uma única página PDF tiver várias seções, a primeira seção da página será usada. Da mesma forma, existe uma variável chamada: code: `_TOP_LEVEL_SECTION_` que pode ser usada para obter o nome da seção atual de nível superior."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:901
+#: ../../../__w/calibre/calibre/manual/conversion.rst:901
 msgid ""
 "You can even use JavaScript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
 msgstr "Você pode até usar JavaScript dentro dos modelos de cabeçalho e rodapé, por exemplo, o modelo a seguir fará com que os números de página sejam iniciados em 4 em vez de 1 ::"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:911
+#: ../../../__w/calibre/calibre/manual/conversion.rst:911
 msgid ""
 "In addition there are some more variables you can use in the headers and "
 "footers, documented below:"
 msgstr "Além disso, existem mais algumas variáveis que é possível usar nos cabeçalhos e rodapés, documentadas abaixo:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:914
+#: ../../../__w/calibre/calibre/manual/conversion.rst:914
 msgid ""
 "``_TOTAL_PAGES_`` - total number of pages in the PDF file, useful for "
 "implementing a progress counter, for example."
 msgstr "``_TOTAL_PAGES_`` - número total de páginas no arquivo PDF, útil para implementar um contador de progresso, por exemplo."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:916
+#: ../../../__w/calibre/calibre/manual/conversion.rst:916
 msgid ""
 "``_TOP_LEVEL_SECTION_PAGES_`` - total number of pages in the current top "
 "level section"
 msgstr "``_TOP_LEVEL_SECTION_PAGES_`` - número total de páginas na seção de nível superior atual"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:918
+#: ../../../__w/calibre/calibre/manual/conversion.rst:918
 msgid ""
 "``_TOP_LEVEL_SECTION_PAGENUM_`` - the page number of the current page within"
 " the current top level section"
 msgstr "``_TOP_LEVEL_SECTION_PAGENUM_`` - o número da página atual dentro da seção de nível superior atual"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:920
+#: ../../../__w/calibre/calibre/manual/conversion.rst:920
 msgid "``_WIDTH_PIXELS_`` - the width of the header/footer area in pixels"
 msgstr "``_WIDTH_PIXELS_`` - a largura da área de cabeçalho/rodapé em pixels"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:921
+#: ../../../__w/calibre/calibre/manual/conversion.rst:921
 msgid "``_HEIGHT_PIXELS_`` - the height of the header/footer area in pixels"
 msgstr "``_HEIGHT_PIXELS_`` - a altura da área de cabeçalho/rodapé em pixels"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:923
+#: ../../../__w/calibre/calibre/manual/conversion.rst:923
 msgid ""
 "When adding headers and footers make sure you set the page top and bottom "
 "margins to large enough values, under the :guilabel:`PDF Output` section of "
 "the conversion dialog."
 msgstr "Ao adicionar cabeçalhos e rodapés, defina as margens superior e inferior da página com valores suficientemente grandes, na seção: guilabel: `PDF Output` da caixa de diálogo de conversão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:928
+#: ../../../__w/calibre/calibre/manual/conversion.rst:928
 msgid "Printable Table of Contents"
 msgstr "Índice imprimível"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:930
+#: ../../../__w/calibre/calibre/manual/conversion.rst:930
 msgid ""
 "You can also insert a printable Table of Contents at the end of the PDF that"
 " lists the page numbers for every section. This is very useful if you intend"
@@ -1526,7 +1526,7 @@ msgid ""
 " default."
 msgstr "Você também pode inserir um Índice imprimível no final do PDF que lista os números de página para cada seção. Isso é muito útil se você pretende imprimir o PDF em papel. Se você deseja usar o PDF em um dispositivo eletrônico, o Esboço do PDF fornece essa funcionalidade e é gerado por padrão."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:935
+#: ../../../__w/calibre/calibre/manual/conversion.rst:935
 msgid ""
 "You can customize the look of the generated Table of contents by using the "
 "Extra CSS conversion setting under the Look & feel part of the conversion "
@@ -1534,11 +1534,11 @@ msgid ""
 "whatever changes you like."
 msgstr "É possível personalizar a aparência do Sumário gerado usando a configuração de conversão CSS extra na parte Aparência da caixa de diálogo de conversão. O CSS padrão usado está listado abaixo, basta copiá-lo e fazer as alterações desejadas."
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:955
+#: ../../../__w/calibre/calibre/manual/conversion.rst:955
 msgid "Custom page margins for individual HTML files"
 msgstr "Margens de página personalizadas para arquivos HTML individuais"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:957
+#: ../../../__w/calibre/calibre/manual/conversion.rst:957
 msgid ""
 "If you are converting an EPUB or AZW3 file with multiple individual HTML "
 "files inside it and you want to change the page margins for a particular "
@@ -1546,7 +1546,7 @@ msgid ""
 "calibre E-book editor:"
 msgstr "Se você estiver convertendo um arquivo EPUB ou AZW3 com vários arquivos HTML individuais dentro dele e quiser alterar as margens da página para um arquivo HTML específico, é possível adicionar o seguinte bloco de estilo ao arquivo HTML usando o editor de E-book do calibre:"
 
-#: ../../__w/calibre/calibre/manual/conversion.rst:974
+#: ../../../__w/calibre/calibre/manual/conversion.rst:974
 msgid ""
 "Then, in the PDF output section of the conversion dialog, turn on the option"
 " to :guilabel:`Use page margins from the document being converted`. Now all "

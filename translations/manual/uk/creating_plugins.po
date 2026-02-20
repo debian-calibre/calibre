@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Zoriana Zaiats, 2014
-# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2017,2019-2023
+# Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2017,2019-2023,2026
 # Zoriana Zaiats, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-07 04:08+0000\n"
+"POT-Creation-Date: 2026-02-17 16:44+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2017,2019-2023\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2016-2017,2019-2023,2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,11 +20,11 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
 msgstr "Створення власних додатків для розширення функціональних можливостей calibre"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -34,32 +34,32 @@ msgid ""
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
 msgstr "У calibre дуже багато модулів. Майже усі функціональні можливості calibre реалізовано у формі додатків. Додатки використовуються для перетворення даних, для отримання новин (у формі так званих рецептів), для різноманітних компонентів інтерфейсу користувача, для встановлення з’єднання з різними пристроями, для обробки файлів під час додавання їх до бібліотеки calibre тощо. Із повним списком вбудованих додатків calibre можна ознайомитися на сторінці :guilabel:`Налаштування -> Додатково -> Додатки`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
 msgstr "У цьому розділи ми навчимо вас створювати власні додатки для додавання нових можливостей до calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
 msgstr "Зміст"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:15
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
 msgstr "Наведені тут дані стосуються Calibre версії 0.8.60 та новіших версій"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
 msgstr "Анатомія додатка до calibre"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
 msgstr "Додаток calibre є дуже простим: це файл ZIP, який містить певний код мовою Python та усі інші ресурси, зокрема файли зображень, які використовуються у додатку. Не будемо тягти кота за хвіст, і перейдемо до базового прикладу."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
 "Suppose you have an installation of calibre that you are using to self "
 "publish various e-documents in EPUB and MOBI formats. You would like all "
@@ -69,38 +69,38 @@ msgid ""
 "enter the following Python code into it:"
 msgstr "Припустімо у вашій системі встановлено програму calibre, якою ви користуєтеся для створення різноманітних документів у форматах EPUB і MOBI для себе. Вам потрібно, щоб в усіх файлах, які створено calibre, було зазначено видавця «Hello world». Розберемо, як це робиться. Створіть файл із назвою :file:`__init__.py` (це спеціальна назва, нею слід завжди користуватися для основних файлів ваших додатків) і введіть до нього такий код мовою Python:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
 msgstr "Ось і усе. Щоб додати цей код до calibre як додаток, просто віддайте вказані команди у теці, у якій ви створили :file:`__init__.py`::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
 msgstr "У macOS засоби керування за допомогою командного рядка є частиною пакунка calibre. Наприклад, якщо calibre встановлено до :file:`/Applications`, засоби керування за допомогою командного рядка зберігатимуться у каталозі :file:`/Applications/calibre.app/Contents/MacOS/`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:42
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from "
 ":download_file:`helloworld_plugin.zip`."
 msgstr "Ви можете отримати додаток Hello World :download_file:`тут <helloworld_plugin.zip>`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
 "Every time you use calibre to convert a book, the plugin's :meth:`run` "
 "method will be called and the converted book will have its publisher set to "
-"\"Hello World\". This is a trivial plugin, lets move on to a more complex "
+"\"Hello World\". This is a trivial plugin, let's move on to a more complex "
 "example that actually adds a component to the user interface."
 msgstr "Кожного разу, коли ви користуватиметеся calibre для перетворення книги, програма викликатиме метод :meth:`run` додатка, який встановлюватиме значення поля видавця «Hello World». Цей додаток є тривіальним. Перейдемо до розгляду складнішого прикладу, за допомогою якого можна додати компонент до інтерфейсу користувача програми."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
 msgstr "Додаток із інтерфейсом користувача"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
@@ -109,23 +109,23 @@ msgid ""
 " calibre."
 msgstr "Код цього додатка складатиметься із декількох файлів (так зроблено для кращого структурування коду). За його допомогою ви зможете ознайомитися з тим, як отримувати ресурси (зображення або файли даних) з файла ZIP додатка, як надати змогу користувачам налаштовувати ваш додаток, як створювати елементи інтерфейсу користувача calibre та як отримувати доступ до бази даних книг calibre і надсилати запити до цієї бази даних."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from :download_file:`interface_demo_plugin.zip`"
 msgstr "Ви можете отримати цей додаток :download_file:`тут <interface_demo_plugin.zip>`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
 msgstr "Першим, що слід зауважити, є те, що цей архів ZIP містить набагато більше файлів. Їхнє призначення описано нижче. Зверніть особливу увагу на файл ``plugin-import-name-interface_demo.txt``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:64
 msgid "**plugin-import-name-interface_demo.txt**"
 msgstr "**plugin-import-name-interface_demo.txt**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:65
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
@@ -135,10 +135,10 @@ msgid ""
 "like::"
 msgstr "Порожній текстовий файл використовується для вмикання багатофайлової структури додатка. Цей файл має бути в усіх додатках, які складаються з декількох файлів .py. Він має бути порожнім, а його назва повинна мати таку формат: «plugin-import-name-**якась_назва**.txt» Наявність цього файла надає вам змогу імпортувати код з файлів .py у файлі ZIP за допомогою ось такої інструкції::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
-"from the filename of the empty text file. ``some_module`` refers to  "
+"from the filename of the empty text file. ``some_module`` refers to "
 ":file:`some_module.py` file inside the ZIP file. Note that this importing is"
 " just as powerful as regular Python imports. You can create packages and "
 "subpackages of .py modules inside the ZIP file, just like you would normally"
@@ -146,76 +146,76 @@ msgid ""
 "work\"."
 msgstr "Префікс ``calibre_plugins`` має бути завжди. ``some_name`` береться з назви порожнього текстового файла. ``some_module`` посилається на файл :file:`some_module.py` у файлі ZIP. Зауважте, що це імпортування настільки ж потужне, наскільки є потужними імпортування у звичайному Python. Ви можете створювати пакунки і підпакунки модулів .py у файлі ZIP у звичайний спосіб (визначенням __init__.py у кожній підтеці), і все має просто працювати."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
 msgstr "Назва, яку ви використали замість ``some_name``, входить до загального простору назв, який є спільним для усіх додатків, **тому вона має бути якомога неповторнішою**. Втім, не слід забувати, що ця назва має бути коректним ідентифікатором Python (складатися лише з літер латинської абетки, цифр та символів підкреслювання)."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:79
 msgid "**__init__.py**"
 msgstr "**__init__.py**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
 msgstr "Як і раніше, це файл, який визначає клас додатка"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:82
 msgid "**main.py**"
 msgstr "**main.py**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
 msgstr "У цьому файлі міститься код, який виконує якусь корисну дію"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:85
 msgid "**ui.py**"
 msgstr "**ui.py**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
 msgstr "Цей файл визначає частину додатка, яка відповідає за інтерфейс"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:88
 msgid "**images/icon.png**"
 msgstr "**images/icon.png**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
 msgstr "Піктограма для додатка"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:91
 msgid "**about.txt**"
 msgstr "**about.txt**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
 msgstr "Текстовий файл з інформацією щодо додатка"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:94
 msgid "**translations**"
 msgstr "**translations**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:95
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
 msgstr "Тека, у якій містяться файли .mo з перекладами інтерфейсу користувача вашого додатка різними мовами. Докладніший опис наведено нижче."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
 msgstr "Тепер зазирнемо до коду."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
 msgstr "__init__.py"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
 msgstr "Спочатку, обов’язковий ``__init__.py`` для визначення метаданих додатка:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
 "The only noteworthy feature is the field :attr:`actual_plugin`. Since "
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
@@ -225,52 +225,52 @@ msgid ""
 "context."
 msgstr "Єдиною вартою уваги особливістю є поле :attr:`actual_plugin`. Оскільки у calibre є одразу два інтерфейси, командний рядок і графічний інтерфейс, додатки з графічним інтерфейсом, як цей, не повинні завантажувати жодних бібліотек графічного інтерфейсу а __init__.py. За вас це робить поле actual_plugin, повідомляючи calibre, що сам код додатка можна знайти у іншому файлі у вашому архіві ZIP. Цей код буде завантажено лише у контексті графічного інтерфейсу."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
 msgstr "Не забудьте, що для того, щоб це спрацювало, вам слід додати до вашого архіву ZIP додатка файл plugin-import-name-some_name.txt, про який ми писали вище."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
 msgstr "Крім того, існує декілька методів для уможливлення налаштовування додатка користувачем. Їх опис наведено нижче."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
 msgstr "ui.py"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:122
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
 msgstr "Тепер погляньмо на ui.py, де визначається сам код додатка з графічним інтерфейсом. Початковий код містить повний набір коментарів, отже вам буде доволі просто у ньому розібратися, якщо ви знаєте англійську:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:220
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:128
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:220
 msgid "main.py"
 msgstr "main.py"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
 msgstr "Програмна логіка для реалізації діалогового вікна Interface Plugin Demo."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
 msgstr "Отримання ресурсів з файла ZIP додатка"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
 msgstr "Система завантаження додатків calibre визначає декілька вбудованих функцій, за допомогою яких зручно отримувати файли з архіву ZIP."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:140
 msgid "**get_resources(name_or_list_of_names)**"
 msgstr "**get_resources(назва_або_список_назв)**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:141
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
 "file. For example to access the file :file:`icon.png` in the folder images "
@@ -282,11 +282,11 @@ msgid ""
 " it will not be present in the returned dictionary."
 msgstr "Цій функції слід передати список шляхів до файлів у архіві ZIP. Наприклад, щоб отримати доступ до файла :file:`icon.png` у теці images архіву ZIP, вам слід скористатися таким шляхом: ``images/icon.png``. Завжди використовуйте звичайну (не зворотну) похилу риску як роздільник шляхів, навіть у Windows. Якщо ви передасте функції одну назву, вона поверне необроблений байтовий вміст файла або None, якщо у архіві ZIP не буде знайдено відповідного файла. Якщо ви передасте декілька назв, функція поверне словник із прив’язкою назв до байтового вмісту. Якщо файла знайдено не буде, його не буде і у повернутому словнику."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:157
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:150
 msgid "**get_icons(name_or_list_of_names, plugin_name='')**"
 msgstr "**get_icons(назва_або_список_назв, назва_додатка='')**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:151
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:151
 msgid ""
 "A wrapper for get_resources() that creates QIcon objects from the raw bytes "
 "returned by get_resources. If a name is not found in the ZIP file the "
@@ -296,64 +296,64 @@ msgid ""
 "preferentially."
 msgstr "Обгортка до get_resources(), яка створює об'єкти QIcon з послідовності байтів, яку повернуто get_resources. Якщо у файлі ZIP не буде знайдено даних із відповідною назвою, відповідний об'єкт QIcon буде порожнім. З метою підтримки тем піктограм, передайте зручну для читання назву вашого додатка як параметр ``назва_додатка``. Якщо користувач використовує тему піктограм для вашого додатка, ці піктограми матиму пріоритет при завантаженні."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:160
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:160
 msgid "Enabling user configuration of your plugin"
 msgstr "Уможливлення налаштовування вашого додатка користувачем"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:162
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:162
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
 msgstr "Щоб надати користувачам змогу налаштовувати ваш додаток, вам слід визначити три методи у вашому основному класі додатка: **is_customizable**, **config_widget** і **save_settings**, ось так:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:173
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:173
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
 msgstr "У calibre передбачено багато різних способів зберігання файлів налаштувань (спадок довгої історії програми). Рекомендованим способом є використання класу **JSONConfig**, який зберігає дані налаштувань у файлі .json."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:175
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:175
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
 msgstr "Програмний код для керування даними налаштувань у демонстраційному додатку зберігається у config.py:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:180
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:180
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
 msgstr "Доступ до об’єкта ``prefs`` у коді додатка тепер можна здійснити простим::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:185
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:185
 msgid "You can see the ``prefs`` object being used in main.py:"
 msgstr "Ось як об’єкт ``prefs`` додається у main.py:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:192
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:192
 msgid "Edit book plugins"
 msgstr "Додатки редагування книг"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
 ":download_file:`editor_demo_plugin.zip`."
 msgstr "Тепер, давайте трохи змінимо тему і поглянемо на те, як створити додаток для додавання інструментів до редактора книг calibre. Сам код додатка можна знайти :download_file: `тут <editor_demo_plugin.zip>`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:198
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:198
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
 msgstr "Першим кроком, як і для всіх інших додатків, є створення порожнього текстового файла із імпортованою назвою, як це описано :ref:`вище <import_name_txt>`. Назвемо цей файл ``plugin-import-name-editor_plugin_demo.txt``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:202
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:202
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
 msgstr "Тепер створимо обов’язковий файл ``__init__.py``, який міститиме метадані додатка — його назву, автора, дані щодо версії тощо."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:208
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:208
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
@@ -361,7 +361,7 @@ msgid ""
 "actions."
 msgstr "Один додаток редактора може містити декілька інструментів. Кожному інструменту відповідає одна кнопка на панелі інструментів і один запис у меню :guilabel:`Додатки` редактора. Ці пункти можуть мати підменю, якщо із інструментом пов’язано декілька дій."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:212
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -371,7 +371,7 @@ msgid ""
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
 msgstr "Усі інструменти має бути визначено у файлі ``main.py`` вашого додатка. Кожен інструмент є класом, який успадковує властивості від класу :class:`calibre.gui2.tweak_book.plugin.Tool`. Погляньмо на ``main.py`` з демонстраційного додатка. У коді багато коментарів, тому його призначення буде зрозумілим кожному, хто володіє англійською мовою. Докладніші відомості можна знайти у документації з програмного інтерфейсу, а саме класу :class:`calibre.gui2.tweak_book.plugin.Tool`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
@@ -379,20 +379,20 @@ msgid ""
 "plugins, so you should read the (heavily commented) source code carefully."
 msgstr "Тут ми бачимо визначення одного інструмента, який змінює розміри усіх шрифтів у книзі на коефіцієнт, вказаний користувачем. Цей інструмент демонструє різноманітні важливі концепції, які знадобляться вам для розробки власних додатків. Отже, вам варто уважно ознайомитися із початковим кодом (рясно перемежованим коментарями)."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:230
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:230
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
 msgstr "Давайте розберемо ``main.py``. Як бачимо, тут визначено один інструмент із назвою *Magnify fonts* (*Збільшити шрифт*). Цей інструмент попросить користувача ввести число і помножить розміри усіх шрифтів у книзі на це число."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:234
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:234
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
 msgstr "Першою важливою річчю є назва інструмента, яка має бути відносно унікальним рядком, яким можна скористатися як ключем до цього інструмента."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -403,7 +403,7 @@ msgid ""
 "runs the magnification code."
 msgstr "Іншою важливою вхідною точкою є метод :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Цей метод створює об’єкти QAction, які з’являються на панелі інструментів додатків і у меню додатків. Він також, необов’язково, призначає клавіатурну комбінацію, яку зможе змінити користувач. Увімкнений сигнал від дії QAction з’єднується із методом ask_user(), який просить користувача ввести коефіцієнт збільшення шрифту, також запускає код збільшення."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:245
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:245
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
@@ -412,7 +412,7 @@ msgid ""
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
 msgstr "Код збільшення добре прокоментовано, він є доволі простим. Основним, що слід зауважити, є те, що ви отримуєте посилання на вікно редактора як ``self.gui`` і *Boss* редактора як ``self.boss``. *Boss* — об’єкт, який контролює інтерфейс користувача редактора. У коді міститься багато корисних методів, які документовано у класі :class:`calibre.gui2.tweak_book.boss.Boss`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:251
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:251
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -423,23 +423,23 @@ msgid ""
 "plugin code are documented in :ref:`polish_api`."
 msgstr "Нарешті, у коді бачимо ``self.current_container``, який є посиланням на книгу, яка редагується, як об’єкт :class:`calibre.ebooks.oeb.polish.container.Container`. Він представляє книгу як збірку його складових файлів HTML, CSS, зображень та містить зручні методи для виконання багатьох корисних речей. Об’єкт контейнера та різні корисні допоміжні функції, якими ви можете скористатися у коді вашого власного додатка, документовано у розділі :ref:`polish_api`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:259
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:259
 msgid "Adding translations to your plugin"
 msgstr "Додавання перекладів вашого додатка"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
 msgstr "Ви можете зробити усі рядки у інтерфейсі вашого додатка придатними для перекладу з можливістю показу будь-якою мовою, якою перекладено основний інтерфейс користувача calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
 msgstr "Спочатку слід пройтися програмним кодом вашого додатка і позначити усі видимі для користувача рядки як придатні для перекладу за допомогою обгортання їх конструкцією _(). Приклад::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:269
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
@@ -447,17 +447,17 @@ msgid ""
 "`Poedit <https://poedit.net/>`_ program for this."
 msgstr "Далі, скористайтеся якоюсь програмою для створення файлів .po на основі початкового коду вашого додатка. Для кожної мови, якою ви перекладатимете програму, має бути окремий файл .po. Приклади: de.po для німецької, fr.po для французької тощо. Для виконання цієї дії ви можете скористатися програмою `poedit <https://poedit.net/>`_."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:274
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
 msgstr "Надішліть ці файли .po вашим перекладачам. Отримавши від них переклади, зберіть з них файли .mo. Для цього ви знову можете скористатися poedit або віддати команду::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
 msgstr "Розташуйте файли .mo у теці «translations» дерева коду вашого додатка."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
@@ -466,7 +466,7 @@ msgid ""
 "``ui.py`` but not ``__init__.py``."
 msgstr "Останнім кроком буде простий виклик функції `load_translations()` у початковій частині файлів .py вашого додатка. З міркувань швидкодії вам варто викликати цю функцію лише у тих файлах .py, які насправді містять рядки для перекладу. Отже, у типовому додатку з інтерфейсом для користувача вам слід викликати цю функцію на початку ``ui.py``, а не на початку ``__init__.py``."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:287
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
@@ -474,22 +474,22 @@ msgid ""
 "variable set. For example::"
 msgstr "Ви можете перевірити переклад ваших додатків, змінивши мову інтерфейсу користувача у calibre за допомогою сторінки :guilabel:`Налаштування -> Інтерфейс -> Зовнішній вигляд` або запустивши calibre зі встановленою змінною середовища ``CALIBRE_OVERRIDE_LANG`` . Приклад::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:293
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
 msgstr "Замініть «de» на код мови, яку ви хочете тестувати."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:295
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:295
 msgid ""
 "For translations with plurals, use the ``ngettext()`` function instead of "
 "``_()``. For example::"
 msgstr "Для перекладу із формами множини скористайтеся функцією ``ngettext()`` замість ``_()``. Приклад:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
 msgstr "Програмний інтерфейс для роботи з додатками"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:303
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
@@ -497,36 +497,36 @@ msgid ""
 ":ref:`plugins`."
 msgstr "Як ви вже могли помітити раніше, додаток у calibre є класом. У calibre різним класам відповідають різні типи додатків. Подробиці щодо усіх класів, зокрема назви базових класів усіх додатків, наведено у розділі :ref:`plugins`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:306
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
 msgstr "Ваш додаток, майже напевне, використовуватиме код з calibre. Щоб навчитися шукати потрібні вам частини у програмному коді calibre, ознайомтеся із розділом :ref:`code_layout`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:311
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
 msgstr "Діагностування проблем у додатках"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
 msgstr "Першим, найважливішим кроком є запуск calibre у режимі діагностики. Зробити це можна за допомогою такої команди, відданої з командного рядка::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:317
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
 msgstr "Або з вікна calibre: натиснути стрілку праворуч від кнопки :guilabel:`Налаштування` або скористатися комбінацією клавіш :kbd:`Ctrl+Shift+R`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:319
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
 msgstr "Якщо додаток запущено з командного рядка, діагностичні повідомлення виводитимуться до консолі. Якщо ж запуск виконувався з calibre, виведені дані буде записано до текстового файла."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
@@ -534,33 +534,33 @@ msgid ""
 "using just this debugging technique."
 msgstr "Ви можете вставити інструкції виведення даних (print) будь-де у вашому коді додатка. Ці інструкції виводитимуть дані у режимі діагностики. Не забувайте, це Python, отже для діагностики вам не потрібно нічого окрім інструкцій print ;) Усі додатки, створені автором calibre, було написано з використанням саме цієї методики діагностики."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:323
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
 msgstr "Ви можете швидко виконати тестування змін у вашому додатку за допомогою такої команди::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
 msgstr "Ця команда завершить роботу запущеної програми calibre, зачекає на завершення роботи, далі оновить ваш додаток у calibre і перезапустить calibre."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:331
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
 msgstr "Інші приклади додатків"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:333
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 msgstr "Список багатьох складних додатків до calibre можна знайти `тут <https://www.mobileread.com/forums/showthread.php?t=118764>`_."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
 msgstr "Оприлюднення ваших додатків для використання іншими користувачами"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
