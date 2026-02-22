@@ -4712,9 +4712,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         function fix_fullscreen_svg_images() {
             var child_names, name, node, names, svg;
             child_names = [];
-            var ρσ_Iter2 = ρσ_Iterable(document.body.childNodes);
-            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                node = ρσ_Iter2[ρσ_Index2];
+            var ρσ_Iter0 = ρσ_Iterable(document.body.childNodes);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                node = ρσ_Iter0[ρσ_Index0];
                 if (node.tagName) {
                     name = node.tagName.toLowerCase();
                     if (name !== "style" && name !== "script") {
@@ -4728,9 +4728,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (child_names.length === 1 && (child_names[0] === "div" || child_names[0] === "svg")) {
                 names = [];
                 svg = null;
-                var ρσ_Iter3 = ρσ_Iterable(document.body.querySelectorAll("*"));
-                for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                    node = ρσ_Iter3[ρσ_Index3];
+                var ρσ_Iter1 = ρσ_Iterable(document.body.querySelectorAll("*"));
+                for (var ρσ_Index1 = 0; ρσ_Index1 < ρσ_Iter1.length; ρσ_Index1++) {
+                    node = ρσ_Iter1[ρσ_Index1];
                     if (node.tagName) {
                         name = node.tagName.toLowerCase();
                         if (name !== "style" && name !== "script") {
@@ -4864,9 +4864,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var sourceline, tags, elem;
             sourceline = parseInt(node.dataset.lnum);
             tags = [];
-            var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                elem = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                elem = ρσ_Iter0[ρσ_Index0];
                 tags.push(elem.tagName.toLowerCase());
                 if (elem === node) {
                     break;
@@ -4973,8 +4973,8 @@ var str = ρσ_str, repr = ρσ_repr;;
         function process_rules(node, rules, address, sheet, sheet_index, all_properties, node_style, is_ancestor, ans) {
             var offset, rule, rule_address, st, type, href, parts, q, properties, data, rule_index;
             offset = 0;
-            for (var ρσ_Index5 = 0; ρσ_Index5 < rules.length; ρσ_Index5++) {
-                rule_index = ρσ_Index5;
+            for (var ρσ_Index1 = 0; ρσ_Index1 < rules.length; ρσ_Index1++) {
+                rule_index = ρσ_Index1;
                 rule = rules[(typeof rule_index === "number" && rule_index < 0) ? rules.length + rule_index : rule_index];
                 rule_address = address.concat([rule_index - offset]);
                 if (rule.type === CSSRule.MEDIA_RULE) {
@@ -4999,9 +4999,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }
                 parts = st.split(",");
                 if (parts.length > 1) {
-                    var ρσ_Iter6 = ρσ_Iterable(parts);
-                    for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                        q = ρσ_Iter6[ρσ_Index6];
+                    var ρσ_Iter2 = ρσ_Iterable(parts);
+                    for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                        q = ρσ_Iter2[ρσ_Index2];
                         if (selector_matches(node, q)) {
                             st = q;
                             break;
@@ -5034,8 +5034,8 @@ var str = ρσ_str, repr = ρσ_repr;;
             ans = [];
             node_style = window.getComputedStyle(node);
             sheets = document.styleSheets;
-            for (var ρσ_Index7 = 0; ρσ_Index7 < sheets.length; ρσ_Index7++) {
-                sheet_index = ρσ_Index7;
+            for (var ρσ_Index3 = 0; ρσ_Index3 < sheets.length; ρσ_Index3++) {
+                sheet_index = ρσ_Index3;
                 sheet = sheets[(typeof sheet_index === "number" && sheet_index < 0) ? sheets.length + sheet_index : sheet_index];
                 process_rules(node, get_sheet_rules(sheet), [], sheet, sheet_index, all_properties, node_style, is_ancestor, ans);
             }
@@ -5159,9 +5159,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         ToPython.prototype._register_signals = function _register_signals(signals) {
             var self = this;
             var signal_name;
-            var ρσ_Iter8 = ρσ_Iterable(signals);
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                signal_name = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter0 = ρσ_Iterable(signals);
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                signal_name = ρσ_Iter0[ρσ_Index0];
                 self[(typeof signal_name === "number" && signal_name < 0) ? self.length + signal_name : signal_name] = signal.bind(signal_name);
             }
         };
@@ -5342,9 +5342,9 @@ var str = ρσ_str, repr = ρσ_repr;;
         }).call(this);
         function go_to_line(lnum, sync_context) {
             var node;
-            var ρσ_Iter9 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
-            for (var ρσ_Index9 = 0; ρσ_Index9 < ρσ_Iter9.length; ρσ_Index9++) {
-                node = ρσ_Iter9[ρσ_Index9];
+            var ρσ_Iter0 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", lnum) + "\"]"));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                node = ρσ_Iter0[ρσ_Index0];
                 if (is_hidden(node)) {
                     continue;
                 }
@@ -5362,8 +5362,8 @@ var str = ρσ_str, repr = ρσ_repr;;
             var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags, sync_context) {
                 var nodes, node, index;
                 nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                for (var ρσ_Index10 = 0; ρσ_Index10 < nodes.length; ρσ_Index10++) {
-                    index = ρσ_Index10;
+                for (var ρσ_Index1 = 0; ρσ_Index1 < nodes.length; ρσ_Index1++) {
+                    index = ρσ_Index1;
                     node = nodes[(typeof index === "number" && index < 0) ? nodes.length + index : index];
                     if (index >= tags.length || node.tagName.toLowerCase() !== tags[(typeof index === "number" && index < 0) ? tags.length + index : index]) {
                         break;
@@ -5385,9 +5385,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             var found_body, ans, node;
             found_body = false;
             ans = [];
-            var ρσ_Iter11 = ρσ_Iterable(document.getElementsByTagName("*"));
-            for (var ρσ_Index11 = 0; ρσ_Index11 < ρσ_Iter11.length; ρσ_Index11++) {
-                node = ρσ_Iter11[ρσ_Index11];
+            var ρσ_Iter2 = ρσ_Iterable(document.getElementsByTagName("*"));
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                node = ρσ_Iter2[ρσ_Index2];
                 if (!found_body && node.tagName.toLowerCase() === "body") {
                     found_body = true;
                 }
@@ -5406,9 +5406,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (state.blocks_found) {
                 return;
             }
-            var ρσ_Iter12 = ρσ_Iterable(document.body.getElementsByTagName("*"));
-            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
-                elem = ρσ_Iter12[ρσ_Index12];
+            var ρσ_Iter3 = ρσ_Iterable(document.body.getElementsByTagName("*"));
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                elem = ρσ_Iter3[ρσ_Index3];
                 if (is_block(elem) && !in_table(elem)) {
                     elem.setAttribute("data-is-block", "1");
                 }
@@ -5524,9 +5524,9 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }).call(this);
                 target = null;
                 i = 0;
-                var ρσ_Iter13 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
-                for (var ρσ_Index13 = 0; ρσ_Index13 < ρσ_Iter13.length; ρσ_Index13++) {
-                    node = ρσ_Iter13[ρσ_Index13];
+                var ρσ_Iter4 = ρσ_Iterable(document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]"));
+                for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                    node = ρσ_Iter4[ρσ_Index4];
                     tn = (node.tagName) ? node.tagName.toLowerCase() : "";
                     if (tn !== tags[(typeof i === "number" && i < 0) ? tags.length + i : i]) {
                         if (to_python.live_css_data) {
@@ -5573,9 +5573,9 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (document.body.getElementsByTagNameNS("http://www.w3.org/1998/Math/MathML", "math").length > 0) {
                 return true;
             }
-            var ρσ_Iter14 = ρσ_Iterable(document.scripts);
-            for (var ρσ_Index14 = 0; ρσ_Index14 < ρσ_Iter14.length; ρσ_Index14++) {
-                s = ρσ_Iter14[ρσ_Index14];
+            var ρσ_Iter5 = ρσ_Iterable(document.scripts);
+            for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                s = ρσ_Iter5[ρσ_Index5];
                 if (s.type === "text/x-mathjax-config") {
                     return true;
                 }
