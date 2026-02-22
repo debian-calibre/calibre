@@ -9,9 +9,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.2.1\n"
+"Project-Id-Version: calibre 9.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-02-21 03:43+0000\n"
 "PO-Revision-Date: 2017-12-15 03:02+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2026\n"
 "Language-Team: Ukrainian (https://app.transifex.com/calibre/teams/19337/uk/)\n"
@@ -54,12 +54,14 @@ msgid "Examples:"
 msgstr "Приклади:"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:241
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
 msgid "**Representation**"
 msgstr "**Представлення**"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
 msgid "**Class**"
 msgstr "**Клас**"
 
@@ -81,11 +83,11 @@ msgstr "``[a-z0-9]``"
 msgid "Lowercase letters from a to z or numbers from 0 to 9"
 msgstr "Літери нижнього регістру від a до z або цифри від 0 до 9."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:30
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:29
 msgid "``[A-Za-z-]``"
 msgstr "``[A-Za-z-]``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:30
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:29
 msgid ""
 "Uppercase or lowercase letters, or a dash. To include the dash in a class, "
 "you must put it at the beginning or at the end so as not to confuse it with "
@@ -139,15 +141,145 @@ msgstr "Приклад::"
 msgid "Shorthand character classes"
 msgstr "Скорочення для класів символів"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:78
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "``\\d``"
+msgstr "``\\d``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
+msgid "A digit (same as ``[0-9]``)"
+msgstr "Цифра (те саме, що і ``[0-9]``)"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:57
+msgid "``\\D``"
+msgstr "``\\D``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:57
+msgid "Any non-numeric character (same as ``[^0-9]``)"
+msgstr "Будь-який нечисловий символ (те саме, що і ``[^0-9]``)"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:59
+msgid "``\\w``"
+msgstr "``\\w``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:59
+msgid ""
+"An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
+" mark and ligatures"
+msgstr ""
+"Буквенно-цифровий символ (``[a-zA-Z0-9]``), включно із символами із "
+"акцентами та лігатурами."
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:62
+msgid "``\\W``"
+msgstr "``\\W``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:62
+msgid "Any “non-word” character"
+msgstr "Будь-який символ, який не є частиною слів."
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "``\\s``"
+msgstr "``\\s``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
+msgid "Space, non-breaking space, tab, carriage return"
+msgstr "Пробіл, нерозривний пробіл, табуляція або символ повернення каретки."
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:66
+msgid "``\\S``"
+msgstr "``\\S``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:66
+msgid "Any “non-whitespace” character"
+msgstr "Будь-який символ, який не є пробілом"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:68
+msgid "``.``"
+msgstr "``.``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:68
+msgid ""
+"Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
+"regexp modifier to include the newline character."
+msgstr ""
+"Будь-який символ, окрім символу розриву рядка. Скористайтеся пунктом «крапка"
+" — усі» або модифікатором формального виразу ``(?s)``, щоб включити до класу"
+" символ розриву рядка."
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
 msgid "The quantifiers"
 msgstr "Лічильники"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:109
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:76
+msgid "**Quantifier**"
+msgstr "**Лічильник**"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:76
+msgid "**Number of occurrences of the expression preceding the quantifier**"
+msgstr "**Кількість входжень підвиразу, який передує лічильнику, до виразу**"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:79
+msgid "``?``"
+msgstr "``?``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:79
+msgid "0 or 1 occurrence of the expression. Same as ``{0,1}``"
+msgstr "0 або 1 входження до виразу. Те саме, що ``{0,1}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "``+``"
+msgstr "``+``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:81
+msgid "1 or more occurrences of the expression. Same as ``{1,}``"
+msgstr "1 або більше входжень підвиразу. Те саме, що ``{1,}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:83
+msgid "``*``"
+msgstr "``*``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:83
+msgid "0, 1 or more occurrences of the expression. Same as ``{0,}``"
+msgstr "0, 1 або більше входжень підвиразу. Те саме, що ``{0,}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:85
+msgid "``{n}``"
+msgstr "``{n}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:85
+msgid "Exactly n occurrences of the expression"
+msgstr "Точно n входжень підвиразу"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "``{min,max}``"
+msgstr "``{min,max}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
+msgid "Number of occurrences between the minimum and maximum values included"
+msgstr "Кількість входжень між мінімальним і максимальним значенням."
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:89
+msgid "``{min,}``"
+msgstr "``{min,}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:89
+msgid "Number of occurrences between the minimum value included and infinity"
+msgstr ""
+"Кількість входжень, від мінімального значення включно до нескінченності"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:91
+msgid "``{,max}``"
+msgstr "``{,max}``"
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:91
+msgid "Number of occurrences between 0 and the maximum value included"
+msgstr "Кількість входжень між 0 і максимальним значенням, включно."
+
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:97
 msgid "Greed"
 msgstr "Жадібність"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:111
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:99
 msgid ""
 "By default, with quantifiers, the regular expression engine is greedy: it "
 "extends the selection as much as possible. This often causes surprises, at "
@@ -161,7 +293,7 @@ msgstr ""
 "«лінивого» лічильника у виразі, оскільки результати використання декількох "
 "можуть бути доволі несподіваними."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:116
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:104
 msgid ""
 "Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
 "exponentially increases processing time."
@@ -170,11 +302,11 @@ msgstr ""
 "наприклад вживання взірців, подібних до ``(a*)*``, оскільки це експоненційно"
 " збільшує час обробки."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:120
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:108
 msgid "Alternation"
 msgstr "Альтернативи"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:122
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:110
 msgid ""
 "The ``|`` character in a regular expression is a logical ``OR``. It means "
 "that either the preceding or the following expression can match."
@@ -183,28 +315,28 @@ msgstr ""
 "відповідність може бути встановлено за частиною, яка йому передує, або за "
 "частиною, яка за ним слідує."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:126
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:114
 msgid "Exclusion"
 msgstr "Виключення"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:128
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:116
 msgid "Method 1"
 msgstr "Метод 1"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:130
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:118
 msgid "``pattern_to_exclude(*SKIP)(*FAIL)|pattern_to_select``"
 msgstr "``взірець_для_виключення(*SKIP)(*FAIL)|взірець_для_відповідності``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:132
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:120
 msgid "Example:"
 msgstr "Приклад:"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:134
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:122
 msgid "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
 msgstr "``\"Blabla\"(*SKIP)(*FAIL)|Blabla``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:136
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:144
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:124
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:132
 msgid ""
 "selects Blabla, in the strings Blabla or \"Blabla or Blabla\", but not in "
 "\"Blabla\"."
@@ -212,23 +344,23 @@ msgstr ""
 "встановлює відповідність за виразом Blabla, у рядку Blabla або \"Blabla or "
 "Blabla\", але не у рядку \"Blabla\"."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:138
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:126
 msgid "Method 2"
 msgstr "Метод 2"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:140
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:128
 msgid "``pattern_to_exclude\\K|(pattern_to_select)``"
 msgstr "``взірець_для_виключення\\K|(взірець_для_відповідності)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:142
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:130
 msgid "``\"Blabla\"\\K|(Blabla)``"
 msgstr "``\"Blabla\"\\K|(Blabla)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:147
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:135
 msgid "Anchors"
 msgstr "Прив'язки"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:149
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:137
 msgid ""
 "An anchor is a way to match a logical location in a string, rather than a "
 "character. The most useful anchors for text processing are:"
@@ -237,11 +369,11 @@ msgstr ""
 "не для пошуку якогось символу. Найкориснішими прив'язками для обробки "
 "текстових даних є такі:"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:152
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:140
 msgid "``\\b``"
 msgstr "``\\b``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:153
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:141
 msgid ""
 "Designates a word boundary, i.e. a transition from space to non-space "
 "character. For example, you can use ``\\bsurd`` to match ``the surd`` but "
@@ -251,27 +383,27 @@ msgstr ""
 "і навпаки. Наприклад, ви можете скористатися виразом ``\\bsurd``, щоб знайти"
 " ``the surd``, але при цьому пропустити слово ``absurd``."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:157
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:145
 msgid "``^``"
 msgstr "``^``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:158
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:146
 msgid "Matches the start of a line (in multi-line mode, which is the default)"
 msgstr "Відповідає початку рядка (у багаторядковому режимі, який є типовим)."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:161
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:149
 msgid "``$``"
 msgstr "``$``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:150
 msgid "Matches the end of a line (in multi-line mode, which is the default)"
 msgstr "Відповідає кінцю рядка (у багаторядковому режимі, який є типовим)."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:164
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:152
 msgid "``\\K``"
 msgstr "``\\K``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:165
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:153
 msgid ""
 "Resets the start position of the selection to its position in the pattern. "
 "Some regexp engines (but not calibre) do not allow lookbehind of variable "
@@ -285,15 +417,15 @@ msgstr ""
 " ``\\K`` для таких рушіїв. Це також дозволить обійти обмеження написанням "
 "еквівалентного додатного перегляду назад змінної довжини."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:172
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:160
 msgid "Groups"
 msgstr "Групи"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:174
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
 msgid "``(expression)``"
 msgstr "``(вираз)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:175
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:163
 msgid ""
 "Capturing group, which stores the selection and can be recalled later in the"
 " *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
@@ -303,19 +435,19 @@ msgstr ""
 "використовувати у взірцях *пошуку* або *заміни* за допомогою виразу ``\\n``,"
 " де ``n`` є номером групи (нумерація починається з 1 у напрямку читання)."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:179
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:167
 msgid "``(?:expression)``"
 msgstr "``(?:вираз)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:168
 msgid "Group that does not capture the selection"
 msgstr "Група, яка не містить відповідник."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:182
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:170
 msgid "``(?>expression)``"
 msgstr "``(?>вираз)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:183
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:171
 msgid ""
 "Atomic Group: As soon as the expression is satisfied, the regexp engine "
 "passes, and if the rest of the pattern fails, it will not backtrack to try "
@@ -327,11 +459,11 @@ msgstr ""
 "повертатиметься до атомарної групи, щоб спробувати інші комбінації з "
 "виразом. Атомарні групи не можна захоплювати."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:188
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:176
 msgid "``(?|expression)``"
 msgstr "``(?|вираз)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:189
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:177
 msgid ""
 "Branch reset group: the branches of the alternations included in the "
 "expression share the same group numbers"
@@ -339,11 +471,11 @@ msgstr ""
 "Розгалуження групи: гілки альтернативних варіантів буде включено до виразу "
 "із однаковими номерами груп."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:192
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
 msgid "``(?<name>expression)``"
 msgstr "``(?<назва>вираз)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:181
 msgid ""
 "Group named “name”. The selection can be recalled later in the *search* "
 "pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
@@ -353,52 +485,52 @@ msgstr ""
 "*пошуку* так: ``(?P=назва)``, у *заміні* так: ``\\g<назва>``. Дві різні "
 "групи можуть використовувати одну назву."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:187
 msgid "Lookarounds"
 msgstr "Перегляди вперед і назад"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:190
 msgid "**Lookaround**"
 msgstr "**Перегляд**"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:253
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:190
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:241
 msgid "**Meaning**"
 msgstr "**Значення**"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
 msgid "``?=``"
 msgstr "``?=``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:205
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
 msgid "Positive lookahead (to be placed after the selection)"
 msgstr "Додатний перегляд вперед (слід розташовувати після відповідника)"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:208
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:196
 msgid "``?!``"
 msgstr "``?!``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:208
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:196
 msgid "Negative lookahead (to be placed after the selection)"
 msgstr "Від'ємний перегляд назад (слід розташовувати після відповідника)"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
 msgid "``?<=``"
 msgstr "``?<=``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
 msgid "Positive lookbehind (to be placed before the selection)"
 msgstr "Додатний перегляд назад (слід розташовувати перед відповідником)"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:214
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
 msgid "``?<!``"
 msgstr "``?<!``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:214
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
 msgid "Negative lookbehind (to be placed before the selection)"
 msgstr "Від'ємний перегляд назад (слід розташовувати перед відповідником)"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:218
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:206
 msgid ""
 "Lookaheads and lookbehinds do not consume characters, they are zero length "
 "and do not capture. They are atomic groups: as soon as the assertion is "
@@ -411,7 +543,7 @@ msgstr ""
 "обробку виразу, якщо встановити відповідність за рештою виразу не вдасться, "
 "рушій уже не повертатиметься до перегляду, щоб спробувати іншу комбінацію."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:223
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
 msgid ""
 "When looking for multiple matches in a string, at the starting position of "
 "each match attempt, a lookbehind can inspect the characters before the "
@@ -435,7 +567,7 @@ msgstr ""
 "назад працює так само, і встановлює відповідність лише підрядка 2, на "
 "відміну від теорії."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:233
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:221
 msgid ""
 "Groups can be placed inside lookarounds, but capture is rarely useful. "
 "Nevertheless, if it is useful, it will be necessary to be very careful in "
@@ -452,15 +584,15 @@ msgstr ""
 "``\\K`` замість додатного перегляду назад, якщо у вас є лічильник (або, ще "
 "гірше, декілька) у групі захоплення додатного перегляду назад."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:240
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:228
 msgid "Example of negative lookahead:"
 msgstr "Приклад від'ємного перегляду вперед:"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:242
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:230
 msgid "``(?![^<>{}]*[>}])``"
 msgstr "``(?![^<>{}]*[>}])``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:244
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:232
 msgid ""
 "Placed at the end of the pattern prevents selecting within a tag or a style "
 "embedded in the file."
@@ -468,7 +600,7 @@ msgstr ""
 "Якщо розташувати цей вираз наприкінці взірця, він запобігатиме встановленню "
 "відповідності усередині теґу або стилю, вбудованого до файла."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:246
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:234
 msgid ""
 "Whenever possible, it is always better to \"anchor\" the lookarounds, to "
 "reduce the number of steps necessary to obtain the result."
@@ -476,29 +608,29 @@ msgstr ""
 "Якщо це можливо, завжди варто «прив'язувати» перегляди, щоб зменшити "
 "кількість кроків, які потрібні для досягнення результату."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:250
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:238
 msgid "Recursion"
 msgstr "Рекурсія"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:244
 msgid "``(?R)``"
 msgstr "``(?R)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:256
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:244
 msgid "Recursion of the entire pattern"
 msgstr "Рекурсія за цілим взірцем"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:247
 msgid "``(?1)``"
 msgstr "``(?1)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:247
 msgid ""
 "Recursion of the only pattern of the numbered capturing group, here group 1"
 msgstr ""
 "Рекурсія єдиного взірця нумерованої групи, у нашому прикладі, групи 1."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:263
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:251
 msgid ""
 "Recursion is calling oneself. This is useful for balanced queries, such as "
 "quoted strings, which can contain embedded quoted strings. Thus, if during "
@@ -512,7 +644,7 @@ msgstr ""
 "подвійних лапках нам трапиться початок підрядка у подвійних лапках, ми "
 "просто викличемо для обробки рекурсію. Взірець можна скласти так::"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
 msgid ""
 "To select a string between double quotation marks without stopping on an "
 "embedded string::"
@@ -520,7 +652,7 @@ msgstr ""
 "Для встановлення відповідності рядка між символами подвійних лапок, не "
 "зупиняючись на вбудованому рядку::"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:275
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:263
 msgid ""
 "This template can also be used to modify pairs of tags that can be embedded,"
 " such as ``<div>`` tags."
@@ -528,51 +660,51 @@ msgstr ""
 "Цим шаблоном можна також скористатися для внесення змін до пар теґів, які "
 "можна вбудовувати, зокрема теґів ``<div>``."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:268
 msgid "Special characters"
 msgstr "Спеціальні символи"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
 msgid "**Character**"
 msgstr "**Символ**"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:274
 msgid "``\\t``"
 msgstr "``\\t``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:286
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:274
 msgid "tabulation"
 msgstr "табуляція"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:277
 msgid "``\\n``"
 msgstr "``\\n``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:289
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:277
 msgid "line break"
 msgstr "розрив рядка"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:292
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
 msgid "``\\x20``"
 msgstr "``\\x20``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:292
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
 msgid "(breakable) space"
 msgstr "(розривний) пробіл"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:295
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
 msgid "``\\xa0``"
 msgstr "``\\xa0``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:295
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
 msgid "no-break space"
 msgstr "нерозривний пробіл"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:300
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:288
 msgid "Meta-characters"
 msgstr "Метасимволи"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:302
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:290
 msgid ""
 "Meta-characters are those that have a special meaning for the regexp engine."
 " Of these, twelve must be preceded by an escape character, the backslash "
@@ -584,7 +716,7 @@ msgstr ""
 "зворотної похилої риски (``\\``), щоб вони втратили своє особливе значення і"
 " стали звичайними символами у взірці::"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:308
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:296
 msgid ""
 "Seven other meta-characters do not need to be preceded by a backslash (but "
 "can be without any other consequence)::"
@@ -592,7 +724,7 @@ msgstr ""
 "Сім інших метасимволів не потребують екранування символом зворотної похилої "
 "риски (втім, їх може бути екрановано без будь-яких наслідків)::"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:314
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:302
 msgid ""
 "Special characters lose their status if they are used inside a class "
 "(between brackets ``[]``). The closing bracket and the dash have a special "
@@ -604,7 +736,7 @@ msgstr ""
 " межах визначення класу. Поза визначенням класу дефіс є звичайним дефісом, а"
 " кінцева квадратна дужка лишається метасимволом."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:319
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:307
 msgid ""
 "The slash (/) and the number sign (or hash character) (#) are not meta-"
 "characters, they don’t need to be escaped."
@@ -612,7 +744,7 @@ msgstr ""
 "Символ похилої риски (/) і символ номера (або символ-хеш) (#) не є "
 "метасимволами. Потреби у їхньому екрануванні немає."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:322
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:310
 msgid ""
 "In some tools, like regex101.com with the Python engine, double quotes have "
 "the special status of separator, and must be escaped, or the options "
@@ -623,25 +755,25 @@ msgstr ""
 "екранувати або вдаватися до зміни параметрів роботи рушія. У редакторі "
 "calibre подвійні лапки не мають особливого значення."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:327
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:315
 msgid "Modes"
 msgstr "Режими"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:329
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:317
 msgid "``(?s)``"
 msgstr "``(?s)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:330
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:318
 msgid "Causes the dot (``.``) to match newline characters as well"
 msgstr ""
 "Робить так, що крапка (``.``) вважатиметься відповідником будь-якого "
 "символу, зокрема і символу розриву рядка."
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:332
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:320
 msgid "``(?m)``"
 msgstr "``(?m)``"
 
-#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:333
+#: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:321
 msgid ""
 "Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
 "of the start and end of the entire string."
