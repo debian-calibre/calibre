@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "februari 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "februari 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,41 +40,44 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP är kommandoradsgränssnittet till calibre\-databasen. Det har
+\fBcalibredb\fP är kommandoradsgränssnittet till calibre\-databasen. Den har
 flera underkommandon, dokumenterade nedan.
 .sp
 \fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
-anges per sökväg eller en calibre\-innehållsserver körs antingen på
-den lokala maskinen eller över internet. Du kan starta en
-calibre\-Innehållsserver med antingen \fBcalibre\-server\fP
-programmet eller klicka på i calibre\-huvudprogrammet Anslut/dela  → 
-Starta innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i ditt
-calibre\-bibliotek måste du först ställa in autentisering på servern. Det
-finns två sätt att göra det:
+specificerad med sökväg eller en calibre Content server som körs antingen på
+den lokala maskinen eller över internet. Du kan starta en calibre
+innehållsserver med antingen \fBcalibre\-server\fP\-programmet
+eller i calibres huvudprogram klicka på Connect/share  → 
+Starta Content server\&. Eftersom \fBcalibredb\fP kan göra ändringar i dina
+calibre\-bibliotek måste du först konfigurera autentisering på servern. Det finns
+två sätt att göra det:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Om du planerar att bara ansluta till en server som körs på samma dator,
-kan du helt enkelt använda flaggan \fB\-\-enable\-local\-write\fP av
-innehållsservern, så att alla program, inklusive calibredb, körs på
-den lokala datorn för att göra ändringar i dina calibre\-data. När du kör
-servern från calibre\-huvudprogrammet är det här alternativet i
-Inställningar → Dela via nätet → Avancerat\&.
+Om du planerar att bara ansluta till en server som körs på samma dator
+kan du helt enkelt använda alternativet \fB\-\-enable\-local\-write\fP på
+innehållsservern för att tillåta alla program, inklusive calibredb, som körs
+på den lokala datorn att göra ändringar i dina calibre\-data. När du kör
+servern från huvudprogrammet calibre finns detta alternativ i
+Inställningar → Dela över nätet → Avancerat\&. Var dock försiktig,
+eftersom vissa webbläsare, främst Firefox, tillåter godtyckliga webbplatser att också
+komma åt lokala servrar. Om du använder Firefox är det bättre att konfigurera användarnamn
+och lösenord, enligt beskrivningen nedan.
 .IP \(bu 2
-Om du vill aktivera åtkomst via internet bör du ställa in
-användarkonton på servern och använda \fB\-\-username\fP eller \fB\-\-password\fP
-flaggorna för \fBcalibredb\fP för att ge den åtkomst. Du kan ställa in
-användarautentisering för \fBcalibre server\fP genom att använda \fB\-\-enable\-auth\fP
-flaggan och använda \fB\-\-manage\-users\fP för att skapa användarkonton.
-Om du kör servern från calibre\-huvudprogrammet använder du
-Inställningar → Dela via nätet → Kräv användarnamn/lösenord\&.
+Om du vill aktivera åtkomst via internet bör du konfigurera
+användarkonton på servern och använda alternativen \fB\-\-username\fP och \fB\-\-password\fP
+till \fBcalibredb\fP för att ge den åtkomst. Du kan konfigurera
+användarautentisering för \fBcalibre\-server\fP genom att använda alternativet \fB\-\-enable\-auth\fP
+och använda \fB\-\-manage\-users\fP för att skapa användarkontona.
+Om du kör servern från Calibres huvudprogram, använd
+Inställningar → Dela över nätet → Kräv användarnamn/lösenord\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-För att ansluta till en körande innehållsserver, skicka server\-URL:en med
-flaggan \fB\-\-with\-library\fP, se dokumentationen för den flaggan för
+För att ansluta till en aktiv innehållsserver, skicka serverns URL till alternativet
+\fB\-\-with\-library\fP\&. Se dokumentationen för det alternativet för
 detaljer och exempel.
 .INDENT 0.0
 .IP \(bu 2

@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-02-21 03:45+UTC\n"
+"POT-Creation-Date: 2026-02-25 10:23+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: malnaim <malnaim@safedecision.com.sa>, 2025\n"
 "Language-Team: Arabic (http://app.transifex.com/calibre/calibre/language/ar/)\n"
@@ -76,7 +76,10 @@ msgid ""
 "      Content server, to allow any program, including calibredb, running on\n"
 "      the local computer to make changes to your calibre data. When running\n"
 "      the server from the main calibre program, this option is in\n"
-"      :guilabel:`Preferences->Sharing over the net->Advanced`.\n"
+"      :guilabel:`Preferences->Sharing over the net->Advanced`. Be careful though,\n"
+"      because some browsers, primarily Firefox, allow arbitrary websites to also\n"
+"      access local servers. If you use Firefox, it is better to setup username\n"
+"      and password, as described below.\n"
 "\n"
 "    * If you want to enable access over the internet, then you should setup\n"
 "      user accounts on the server and use the :option:`--username` and :option:`--password`\n"
@@ -90,9 +93,9 @@ msgid ""
 ":option:`--with-library` option, see the documentation of that option for\n"
 "details and examples.\n"
 "    "
-msgstr "`calibredb` هو واجهة سطر الأوامر لقاعدة بيانات calibre. يحتوي على عدة أوامر فرعية، موثقة أدناه.\n\nيمكن استخدام `calibredb` للتعامل مع قاعدة بيانات calibre محددة بالمسار أو خادم محتوى calibre يعمل إما على الجهاز المحلي أو عبر الإنترنت. يمكنك بدء خادم محتوى calibre باستخدام برنامج `calibre-server` أو في برنامج calibre الرئيسي انقر على `اتصال/مشاركة -> بدء خادم المحتوى`. نظرًا لأن `calibredb` يمكنه إجراء تغييرات على مكتبات calibre الخاصة بك، يجب عليك إعداد المصادقة على الخادم أولاً. هناك طريقتان للقيام بذلك:\n\n    * إذا كنت تخطط للاتصال فقط بخادم يعمل على نفس الكمبيوتر، يمكنك ببساطة استخدام خيار `--enable-local-write` الخاص بخادم المحتوى، للسماح لأي برنامج، بما في ذلك calibredb، الذي يعمل على الكمبيوتر المحلي بإجراء تغييرات على بيانات calibre الخاصة بك. عند تشغيل الخادم من برنامج calibre الرئيسي، يوجد هذا الخيار في `التفضيلات->المشاركة عبر الشبكة->متقدم`.\n\n    * إذا كنت ترغب في تمكين الوصول عبر الإنترنت، فيجب عليك إعداد حسابات مستخدمين على الخادم واستخدام خياري `--username` و `--password` مع `calibredb` لمنحه الوصول. يمكنك إعداد مصادقة المستخدم لـ `calibre-server` باستخدام خيار `--enable-auth` واستخدام `--manage-users` لإنشاء حسابات المستخدمين. إذا كنت تقوم بتشغيل الخادم من برنامج calibre الرئيسي، استخدم `التفضيلات->المشاركة عبر الشبكة->تطلب اسم مستخدم/كلمة مرور`.\n\nللاتصال بخادم محتوى قيد التشغيل، مرر عنوان URL للخادم إلى خيار `--with-library`، راجع وثائق هذا الخيار للحصول على التفاصيل والأمثلة.\n    "
+msgstr ""
 
-#: /__w/calibre/calibre/manual/custom.py:280
+#: /__w/calibre/calibre/manual/custom.py:283
 msgid "[options]"
 msgstr "[خيارات]"
 
@@ -485,11 +488,11 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:63
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:328
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1203
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1200
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:307
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:132
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:144
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:137
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:149
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:155
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view.py:29
 msgid "Automatic"
 msgstr "تلقائي"
@@ -974,8 +977,8 @@ msgstr "لا يفعل شيئًا إطلاقًا"
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/image_writer.py:21
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/render/links.py:143
 #: /__w/calibre/calibre/src/calibre/ebooks/txt/processor.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:923
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:931
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:930
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:938
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:345
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:887
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
@@ -7881,7 +7884,7 @@ msgstr "إذا كانت الخاصية {property} {match_type} {query}\n{action}
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:753
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:907
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:849
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:974
 msgid "Notes"
 msgstr "ملاحظات"
 
@@ -7896,7 +7899,7 @@ msgstr "ملاحظات"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:282
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:635
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:817
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:836
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:961
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:82
 msgid "Table of Contents"
@@ -7909,7 +7912,7 @@ msgstr "جدول المحتويات"
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:559
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1292
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/models.py:43
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:842
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:967
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:189
 msgid "Cover"
 msgstr "الغلاف"
@@ -8148,7 +8151,7 @@ msgstr "أي وسم"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/completion/basic.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:78
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:278
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:851
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:976
 msgid "Text"
 msgstr "نص"
 
@@ -8504,8 +8507,8 @@ msgstr "التعليقات"
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:602
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:992
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:1241
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3994
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:4008
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3993
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:4007
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:135
 #: /__w/calibre/calibre/src/calibre/srv/tests/ajax.py:72
 #: /__w/calibre/calibre/src/calibre/srv/tests/ajax.py:74
@@ -9032,7 +9035,7 @@ msgid "The maximum number of covers to process from the Google search result"
 msgstr "العدد الأقصى من الأغلفة لمعالجته من نتائج بحث غوغل"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/sources/google_images.py:72
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:140
 msgid "Cover size"
 msgstr "حجم الغلاف"
 
@@ -9111,32 +9114,32 @@ msgid "No details available"
 msgstr "لا توجد تفاصيل متاحة"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1395
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:835
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:960
 msgid "Title page"
 msgstr "صفحة العنوان"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1397
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:837
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:962
 msgid "Index"
 msgstr "فهرس"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1398
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:838
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:963
 msgid "Glossary"
 msgstr "المسرد"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1399
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:839
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:964
 msgid "Acknowledgements"
 msgstr "شكر وتقدير"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1400
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:840
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:965
 msgid "Bibliography"
 msgstr "ببليوغرافيا"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1401
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:841
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:966
 msgid "Colophon"
 msgstr "بيانات الطبع"
 
@@ -9145,32 +9148,32 @@ msgid "Copyright"
 msgstr "حقوق المؤلف"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1403
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:844
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:969
 msgid "Dedication"
 msgstr "الإهداء"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1404
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:845
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:970
 msgid "Epigraph"
 msgstr "كتابة منقوشة"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1405
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:846
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:971
 msgid "Foreword"
 msgstr "افتتاحية"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1406
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:847
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:972
 msgid "List of illustrations"
 msgstr "قائمة الرسوم التوضيحية"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1407
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:848
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:973
 msgid "List of tables"
 msgstr "قائمة الجداول"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:850
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:975
 msgid "Preface"
 msgstr "افتتاحية"
 
@@ -10568,163 +10571,163 @@ msgstr "جدول المحتويات:"
 msgid "[Image: {}]"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:173
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:670
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:44
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:133
 msgid "Default icons"
 msgstr "الأيقونات الافتراضية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:308
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:309
 msgid "Show more buttons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:568
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:575
 msgid "Send file to storage card instead of main memory by default"
 msgstr "إرسال الملف إلى بطاقة التخزين بدلاً من الذاكرة الرئيسية بشكل افتراضي"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:577
 msgid "Confirm before deleting"
 msgstr "تأكيد قبل الحذف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:572
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:579
 msgid "Main window geometry"
 msgstr "هندسة النافذة الرئيسية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:581
 msgid "Notify when a new version is available"
 msgstr "الإعلام عند توفر إصدار جديد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:576
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:583
 msgid "Use Roman numerals for series number"
 msgstr "استخدم الأرقام الرومانية لرقم السلسلة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:578
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:585
 msgid "Sort tags list by name, popularity, or rating"
 msgstr "فرز قائمة العلامات حسب الاسم أو الشعبية أو التقييم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:580
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:587
 msgid "Match tags by any or all."
 msgstr "مطابقة العلامات بأي أو الكل."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:582
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:589
 msgid "Number of covers to show in the cover browsing mode"
 msgstr "عدد الأغلفة المراد عرضها في وضع تصفح الأغلفة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:584
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:591
 msgid "Defaults for conversion to LRF"
 msgstr "الإعدادات الافتراضية للتحويل إلى LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:586
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:593
 msgid "Options for the LRF e-book viewer"
 msgstr "خيارات عارض الكتب الإلكترونية LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:597
 msgid "Formats that are viewed using the internal viewer"
 msgstr "التنسيقات التي يتم عرضها باستخدام العارض الداخلي"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
 msgid "Columns to be displayed in the book list"
 msgstr "الأعمدة التي سيتم عرضها في قائمة الكتب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:593
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:600
 msgid "Automatically launch Content server on application startup"
 msgstr "تشغيل خادم المحتوى تلقائيًا عند بدء تشغيل التطبيق"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:594
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
 msgid "Oldest news kept in database"
 msgstr "أقدم الأخبار المحفوظة في قاعدة البيانات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:595
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:602
 msgid "Show system tray icon"
 msgstr "إظهار أيقونة علبة النظام"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:604
 msgid "Upload downloaded news to device"
 msgstr "رفع الأخبار التي تم تنزيلها إلى الجهاز"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:606
 msgid "Delete news books from library after uploading to device"
 msgstr "حذف الكتب الإخبارية من المكتبة بعد الرفع إلى الجهاز"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:608
 msgid ""
 "Show the cover flow in a separate window instead of in the main calibre "
 "window"
 msgstr "إظهار تدفق الغلاف في نافذة منفصلة بدلاً من نافذة كاليبر الرئيسية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:610
 msgid "Disable notifications from the system tray icon"
 msgstr "تعطيل الإشعارات من أيقونة علبة النظام"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:612
 msgid "Default action to perform when the \"Send to device\" button is clicked"
 msgstr "الإجراء الافتراضي الذي يتم تنفيذه عند النقر فوق الزر \"إرسال إلى الجهاز\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:610
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:617
 msgid ""
 "Start searching as you type. If this is disabled then search will only take "
 "place when the Enter key is pressed."
 msgstr "ابدأ البحث أثناء الكتابة. إذا تم تعطيل هذا، فسيتم البحث فقط عند الضغط على مفتاح الإدخال."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:620
 msgid ""
 "When searching, show all books with search results highlighted instead of "
 "showing only the matches. You can use the N or F3 keys to go to the next "
 "match."
 msgstr "عند البحث، اعرض جميع الكتب مع تمييز نتائج البحث بدلاً من عرض التطابقات فقط. يمكنك استخدام المفتاحين N أو F3 للانتقال إلى التطابق التالي."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:640
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:647
 msgid ""
 "Maximum number of simultaneous conversion/news download jobs. This number is"
 " twice the actual value for historical reasons."
 msgstr "الحد الأقصى لعدد وظائف التحويل/تنزيل الأخبار المتزامنة. هذا الرقم هو ضعف القيمة الفعلية لأسباب تاريخية."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:643
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:650
 msgid "Download social metadata (tags/rating/etc.)"
 msgstr "تنزيل البيانات الوصفية الاجتماعية (العلامات/التقييم/إلخ.)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:652
 msgid "Overwrite author and title with new metadata"
 msgstr "استبدال المؤلف والعنوان بالبيانات الوصفية الجديدة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:647
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:654
 msgid "Automatically download the cover, if available"
 msgstr "تنزيل الغلاف تلقائيًا، إذا كان متاحًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:649
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:656
 msgid "Limit max simultaneous jobs to number of CPUs"
 msgstr "تقييد الحد الأقصى للوظائف المتزامنة بعدد وحدات المعالجة المركزية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:651
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:658
 msgid ""
 "The layout of the user interface. Wide has the Book details panel on the "
 "right and narrow has it at the bottom."
 msgstr "تخطيط واجهة المستخدم. يحتوي العريض على لوحة تفاصيل الكتاب على اليمين ويحتوي الضيق عليها في الأسفل."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:655
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:662
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_display_ui.py:145
 msgid "Show the average rating per item indication in the Tag browser"
 msgstr "إظهار متوسط تقييم كل عنصر في متصفح العلامات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:657
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:664
 msgid "Disable UI animations"
 msgstr "تعطيل تأثيرات واجهة المستخدم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:669
 msgid "Tag browser categories not to display"
 msgstr "فئات متصفح العلامات التي لا يتم عرضها"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:726
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:733
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:88
 msgid "WARNING:"
 msgstr "تحذير:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:737
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:744
 msgid "ERROR:"
 msgstr "خطأ:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:754
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:761
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:427
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:507
@@ -10732,17 +10735,17 @@ msgstr "خطأ:"
 msgid "Show this confirmation again"
 msgstr "أظهر هذا التأكيد مرة أخرى"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:812
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:819
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1436
 msgid "Restart needed"
 msgstr "إعادة التشغيل مطلوبة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:814
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:821
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:523
 msgid "&Restart calibre now"
 msgstr "أ&عد تشغيل كاليبر الآن"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1034
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1041
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:266
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:163
@@ -10751,33 +10754,33 @@ msgstr "أ&عد تشغيل كاليبر الآن"
 msgid "All files"
 msgstr "كل الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1152
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1159
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "فصل من الوحدة الطرفية المتحكمة، إن وجدت (Linux فقط)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1157
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1164
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:150
 msgid "Click \"Show details\" for more information."
 msgstr "انقر فوق \"إظهار التفاصيل\" لمزيد من المعلومات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1159
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1166
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "تم تعيين متغير البيئة %s. حاول إلغاء تعيينه."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1160
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1167
 msgid "Could not create temporary folder"
 msgstr "تعذر إنشاء مجلد مؤقت"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1161
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1168
 msgid "Could not create temporary folder, calibre cannot start."
 msgstr "تعذر إنشاء مجلد مؤقت، لا يمكن بدء تشغيل كاليبر."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1315
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1322
 msgid "Windows XP not supported"
 msgstr "Windows XP غير مدعوم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1316
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1323
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -10789,7 +10792,7 @@ msgstr "إصدارات كاليبر الأحدث من 2.0 لا تعمل على W
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:33
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1043
 #: /__w/calibre/calibre/src/calibre/gui2/trash.py:310
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:341
 msgid "Books"
 msgstr "الكتب"
 
@@ -10952,9 +10955,9 @@ msgstr "لم يتم نسخ أي ملفات إلى الحافظة"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:321
 #: /__w/calibre/calibre/src/calibre/gui2/search_box.py:393
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:480
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:821
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:831
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1978
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:817
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:827
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1974
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1481
 #: /__w/calibre/calibre/src/calibre/gui2/wizard/send_email.py:320
 msgid "Are you sure?"
@@ -11229,9 +11232,9 @@ msgid "Fetch annotations (experimental)"
 msgstr "جلب الحواشي (تجريبي)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:109
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:795
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1045
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1094
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:791
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1041
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1090
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1426
 msgid "Not supported"
 msgstr "غير مدعوم"
@@ -11595,6 +11598,8 @@ msgstr "تحذير: هذا يعني أن أي عناوين URL من نوع calib
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:899
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:333
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:196
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:213
 msgid "Already exists"
 msgstr "موجود بالفعل"
 
@@ -11614,8 +11619,8 @@ msgstr "طويل جدًا"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:599
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:74
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1254
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1490
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1250
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1486
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:321
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1454
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:196
@@ -13414,7 +13419,7 @@ msgstr "يجب عليك تحديد إجراء واحد على الأقل قبل 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/multisort.py:146
 #: /__w/calibre/calibre/src/calibre/gui2/toc/main.py:106
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1283
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1279
 msgid "Choose name"
 msgstr "اختر اسمًا"
 
@@ -13509,7 +13514,7 @@ msgstr[4] "تم حفظ الملفات الأصلية كـ %s."
 msgstr[5] "تم حفظ الملفات الأصلية كـ %s."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:393
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:362
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:358
 msgid " and "
 msgstr " و "
 
@@ -14114,7 +14119,7 @@ msgstr "&معاينة الكتاب"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:141
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:639
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1342
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/printing.py:199
 msgid "&Cancel"
 msgstr "إل‍&‍غ‍اء"
@@ -15003,7 +15008,7 @@ msgstr "النص المحدد"
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:72
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/char_select.py:797
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:512
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:475
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:600
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:73
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:85
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:351
@@ -15410,7 +15415,7 @@ msgstr "حذف القاعدة"
 
 #: /__w/calibre/calibre/src/calibre/gui2/catalog/catalog_epub_mobi.py:1169
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:624
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:4199
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:4198
 msgid "False"
 msgstr "خطأ"
 
@@ -16018,7 +16023,7 @@ msgstr "&ملف"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:80
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1098
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1377
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:117
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:242
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:277
 msgid "Images"
 msgstr "الصور"
@@ -16030,9 +16035,9 @@ msgstr "الصور"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1195
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1238
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1286
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:235
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:247
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:256
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:360
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:372
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:381
 msgid "Choose file"
 msgstr "اختيار ملف"
 
@@ -16126,13 +16131,13 @@ msgid "Remove this image"
 msgstr "إزالة هذه الصورة"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1175
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:489
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:488
 msgid "Open link"
 msgstr "فتح الرابط"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1183
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:81
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:118
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:243
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:371
 msgid "Fonts"
 msgstr "الخطوط"
@@ -16726,7 +16731,7 @@ msgstr "&تعطيل إعادة تحجيم الخط"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:260
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:281
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1059
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1184
 msgid "&Fonts"
 msgstr "الخطوط"
 
@@ -16789,7 +16794,7 @@ msgstr "قائمة الجداول"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:276
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:357
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:163
 msgid "&Layout"
 msgstr "المخ&طط"
 
@@ -16799,12 +16804,12 @@ msgstr "CSS إ&ضافي"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:278
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:456
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1046
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1171
 msgid "Filter style information"
 msgstr "رشّح معلومات الطراز"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:279
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1055
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1180
 msgid "Select what style information you want completely removed:"
 msgstr "حدد معلومات النمط التي تريد إزالتها بالكامل:"
 
@@ -16819,7 +16824,7 @@ msgid ""
 msgstr "يزيل خصائص CSS للهوامش. لاحظ أن هوامش الصفحة لا تتأثر بهذا الإعداد."
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:283
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1059
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1184
 msgid "&Margins"
 msgstr "&الهوامش"
 
@@ -16828,7 +16833,7 @@ msgid "Removes the padding CSS properties"
 msgstr "يزيل خصائص CSS للحاشية"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:285
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1059
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1184
 msgid "&Padding"
 msgstr "&الحاشية"
 
@@ -16847,7 +16852,7 @@ msgstr "أزل ألوان المقدمة والخلفية"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel_ui.py:289
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:151
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:366
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1059
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1184
 msgid "&Colors"
 msgstr "&الألوان"
 
@@ -17206,7 +17211,7 @@ msgstr "تلقائياً"
 #: /__w/calibre/calibre/src/calibre/gui2/convert/pdf_output_ui.py:190
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:308
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:349
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:153
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:159
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface_ui.py:175
 msgid " px"
@@ -17529,6 +17534,7 @@ msgstr "أضف التعبير الحالي إلى قائمة التعبيرات 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
 #: /__w/calibre/calibre/src/calibre/gui2/llm.py:637
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:135
 msgid "&Add"
 msgstr "&إضافة"
 
@@ -17544,6 +17550,7 @@ msgstr "إزالة التعبير المحدد حاليًا"
 #: /__w/calibre/calibre/src/calibre/gui2/llm.py:639
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1219
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:405
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:138
 msgid "&Remove"
 msgstr "&إزالة"
@@ -17571,7 +17578,7 @@ msgstr "احفظ قائمة التعبيرات هذه بحيث يمكنك إعا
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:420
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/search_ui.py:264
 #: /__w/calibre/calibre/src/calibre/gui2/tag_mapper.py:548
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1342
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/reports.py:1471
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:401
 msgid "&Save"
@@ -17670,7 +17677,7 @@ msgstr "XPath غير صالح"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/structure_detection.py:42
 #: /__w/calibre/calibre/src/calibre/gui2/convert/toc.py:41
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:197
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:322
 #, python-format
 msgid "The XPath expression %s is invalid."
 msgstr "تعبير XPath %s غير صالح."
@@ -20376,7 +20383,7 @@ msgstr "موجود بالفعل في كاليبر:"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:679
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/main.py:158
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:557
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1270
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1266
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/view.py:276
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:942
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toc.py:195
@@ -22156,7 +22163,7 @@ msgid "Export current colors as a file"
 msgstr "تصدير الألوان الحالية كملف"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/palette.py:276
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1384
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1389
 msgid "Choose file to import from"
 msgstr "حدد ملفاً لتستورد منه"
 
@@ -22166,7 +22173,7 @@ msgid "calibre Palette"
 msgstr "لوحة ألوان calibre"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/palette.py:286
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1369
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1374
 msgid "Choose file to export to"
 msgstr "حدد ملفاً لتصدّر إليه"
 
@@ -23378,6 +23385,7 @@ msgstr "اختر الأنساق"
 #: /__w/calibre/calibre/src/calibre/gui2/llm.py:638
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:852
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:618
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:139
 msgid "&Edit"
 msgstr "ت‍&حرير"
 
@@ -25916,8 +25924,8 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:272
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:579
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:390
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1085
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1119
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1081
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1115
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:736
 msgid "No matches"
 msgstr "لا تطابقات"
@@ -26017,17 +26025,17 @@ msgstr "تمييز"
 msgid "<h2>Shutting down</h2><div>"
 msgstr "<h2>يجري الإغلاق</h2><div>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:864
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:910
 #, python-format
 msgid "Book %(sidx)s of <span class=\"series_name\">%(series)s</span>"
 msgstr "كتاب %(sidx)s من سلسلة <span class=\"series_name\">%(series)s</span>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:869
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:915
 #, python-format
 msgid "This book is on the device in %s"
 msgstr "هذا الكتاب موجود على الجهاز في %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:877
+#: /__w/calibre/calibre/src/calibre/gui2/library/alternate_views.py:923
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1091
 msgid "tooltip template error"
 msgstr ""
@@ -26612,14 +26620,14 @@ msgid "Center"
 msgstr "الوسط"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:606
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:39
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/edit_metadata.py:46
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:345
 msgid "Left"
 msgstr "يسار"
 
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:606
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:39
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/edit_metadata.py:47
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:345
 msgid "Right"
@@ -29227,27 +29235,33 @@ msgstr "افتح مجلد الأيقونات"
 msgid "Import rules from a file"
 msgstr "استورد قواعد من ملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1179
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1180
 msgid ""
 "Click the \"Add rule\" button below to get started.<p>You can <b>change an "
 "existing rule</b> by double clicking it."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1186
-msgid "Show &emblems next to the covers"
-msgstr "أظهِر ال&شارات بجانب الأغلفة"
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1185
+msgid "Emblem &style:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1187
+msgid "No emblems"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1188
+msgid "Show next to cover"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1189
-msgid ""
-"If checked, you can tell calibre to display icons of your choosing next to "
-"the covers shown in the Cover grid, controlled by the metadata of the book."
-msgstr "إذا تم تحديد هذا الخيار، يمكنك إخبار كاليبر بعرض أيقونات من اختيارك بجانب الأغلفة المعروضة في شبكة الأغلفة، والتي تتحكم بها البيانات الوصفية للكتاب."
+msgid "Show on top of cover"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1196
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1193
 msgid "&Position of the emblem:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1198
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1195
 msgid ""
 "<p>Display an icon of your choosing on the book spine in Bookshelf view. "
 "<p>\"Automatic\" will place the icon either above or below the spine. "
@@ -29256,55 +29270,55 @@ msgid ""
 "space available for text."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1204
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1201
 msgid "Above the spine"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1205
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1202
 msgid "Below the spine"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1206
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1203
 msgid "Top of the spine"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1207
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1204
 msgid "Bottom of the spine"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1228
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1248
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1232
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1252
 msgid "Select one rule"
 msgstr "حدد قاعدة واحدة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1229
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1249
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1233
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1253
 msgid "You must select only one rule."
 msgstr "يجب عليك تحديد قاعدة واحدة فقط."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1320
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1324
 msgid "No rule selected"
 msgstr "لا قاعدة محدَّدة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1320
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1324
 #, python-format
 msgid "No rule selected for %s."
 msgstr "لا قاعدة محدَّدة لـ %s."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1325
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1329
 msgid "removal"
 msgstr "إزالة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1370
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1385
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1375
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1390
 msgid "Rules"
 msgstr "القواعد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1397
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1402
 msgid "No valid rules found"
 msgstr "لم يُعثَر على قواعد صحيحة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1398
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/coloring.py:1403
 #, python-brace-format
 msgid "No valid rules were found in {}."
 msgstr "لم يُعثَر على قواعد صحيحة في {}."
@@ -30867,125 +30881,137 @@ msgid "&Dark mode"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:367
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:158
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:164
 msgid "&Emblems"
 msgstr "ال&شارات"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/bookshelf_view_ui.py:368
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:159
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:165
 msgid "&Performance"
 msgstr "الأ&داء"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:39
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:493
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:346
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/widgets/widgets/qscrollbar.cpp:371
 msgid "Bottom"
 msgstr "أسفل"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:39
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:40
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:492
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preferences.py:346
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/widgets/widgets/qscrollbar.cpp:370
 msgid "Top"
 msgstr "أعلى"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:74
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid.py:75
 #, python-format
 msgid "Current aspect ratio (width/height): %.2g"
 msgstr "نسبة العرض إلى الارتفاع الحالية (العرض/الارتفاع): %.2g"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:128
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:132
 msgid ""
 "Control the Cover grid view. You can enable this view by clicking the "
 "\"Layout\" button in the bottom right corner of the main calibre window."
 msgstr "تحكّم بمعاينة شبكة الأغلفة. يمكنك تمكين هذه المعاينة بالنقر على زر \"المخطط\" في الزاوية السفلى اليمنى من نافذة كاليبر الرئيسية."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:129
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:133
+msgid "Show a &field (such as title) under the covers"
+msgstr "أظهر &حقلًا (مثل العنوان) تحت الأغلفة"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:134
 msgid "Field to show &under the covers:"
 msgstr "الحقل المراد عرضه &تحت الأغلفة:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:130
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:135
 msgid "Spac&ing between covers:"
 msgstr "التباعد &بين الأغلفة:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:131
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:136
 msgid ""
 "The spacing between covers. A value of zero means calculate automatically "
 "based on cover size."
 msgstr "المسافة بين الأغلفة. قيمة صفر تعني الحساب التلقائي بناءً على حجم الغلاف."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:133
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:145
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:151
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:138
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:150
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:156
 msgid " cm"
 msgstr " سم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:134
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:139
 msgid "Background for the Cover grid"
 msgstr "خلفية لشبكة الأغلفة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:136
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:141
 msgid "Make the covers larger, maintaining current aspect ratio."
 msgstr "اجعل الأغلفة أكبر، مع الحفاظ على نسبة العرض إلى الارتفاع الحالية."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:137
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:142
 msgid "&Larger covers"
 msgstr "أ&غلفة أكبر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:138
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:143
 msgid "Make the covers smaller, maintaining current aspect ratio."
 msgstr "اجعل الأغلفة أصغر، مع الحفاظ على نسبة العرض إلى الارتفاع الحالية."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:139
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:144
 msgid "&Smaller covers"
 msgstr "أ&غلفة أصغر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:140
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:145
 msgid "Cover &height: "
 msgstr "ا&رتفاع الغلاف: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:141
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:146
 msgid "Cover &width: "
 msgstr "عرض ال&غلاف: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:142
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:147
 msgid ""
 "The height of displayed covers.\n"
 "A value of zero means calculate automatically."
 msgstr "ارتفاع الأغلفة المعروضة.\nقيمة صفر تعني الحساب التلقائي."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:151
 msgid "Reset size to automatic"
 msgstr "إعادة تعيين الحجم إلى تلقائي"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:147
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:152
 msgid "&Reset size"
 msgstr "إعادة تعيين ال&حجم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:148
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:153
 msgid ""
 "The width of displayed covers.\n"
 "A value of zero means calculate automatically."
 msgstr "عرض الأغلفة المعروضة.\nقيمة صفر تعني الحساب التلقائي."
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:152
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:157
 msgid ""
 "By default, calibre chooses a cover size based on your computer's screen "
 "size. You can change the cover size here:"
 msgstr "بشكل افتراضي، يختار كاليبر حجم الغلاف بناءً على حجم شاشة جهاز الكمبيوتر الخاص بك. يمكنك تغيير حجم الغلاف هنا:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:154
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:158
 msgid "Size of the emblems (if any) shown &next to the covers: "
 msgstr "حجم الشعارات (إن وجدت) المعروضة &بجانب الأغلفة: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:155
-msgid "Show a &field (such as title) under the covers"
-msgstr "أظهر &حقلًا (مثل العنوان) تحت الأغلفة"
-
-#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:156
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:160
 msgid "&Location of the emblems shown next to the covers:"
 msgstr "موقع ال&شعارات المعروضة بجانب الأغلفة:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:161
+msgid ""
+"<p>By default, the text is drawn at the bottom of the cell, leaving a gap "
+"between text and cover when the cover is small or has a wide aspect ratio. "
+"This option instead causes the text to be drawn flush with the bottom of the"
+" cover."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_grid_ui.py:162
+msgid "Draw text flush with the &bottom of the rendered cover"
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view.py:30
 msgid "On top"
@@ -32068,7 +32094,7 @@ msgid ""
 msgstr "إذا أزلت تأشير أية حقول، فلن تُحمَّل البيانات الوصفية لتلك الحقول"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources_ui.py:166
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:595
 msgid "&Select all"
 msgstr "&حدد الكل"
 
@@ -34033,7 +34059,7 @@ msgid "Edit publisher mapping rules"
 msgstr "عدّل قواعد ربط الناشرين"
 
 #: /__w/calibre/calibre/src/calibre/gui2/qt_file_dialogs.py:36
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:573
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:569
 msgid "Choose files"
 msgstr "اختر ملفات"
 
@@ -36665,109 +36691,105 @@ msgstr "يمكن لمحرك \"speechd\" عادةً تتبع الكلمة الم�
 msgid "&Unmark marked text"
 msgstr "&إلغاء تحديد النص المحدد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:214
-msgid "The Qt WebEngine Render process crashed and has been restarted"
-msgstr "تعطلت عملية عرض Qt WebEngine وتمت إعادة تشغيلها"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:280
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1997
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1993
 msgid "Unsaved changes"
 msgstr "تغييرات غير محفوظة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:277
 msgid ""
 "The current book has unsaved changes. If you open a new book, they will be "
 "lost. Are you sure you want to proceed?"
 msgstr "الكتاب الحالي يحتوي على تغييرات غير محفوظة. إذا فتحت كتابًا جديدًا، فستفقد هذه التغييرات. هل أنت متأكد أنك تريد المتابعة؟"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:281
 msgid "Cannot open"
 msgstr "لا يمكن الفتح"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:282
 msgid ""
 "The current book is being saved, you cannot open a new book until the saving"
 " is completed"
 msgstr "يتم حفظ الكتاب الحالي، لا يمكنك فتح كتاب جديد حتى يكتمل الحفظ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:296
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1333
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:292
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1329
 msgid "Choose file location"
 msgstr "اختر موقع الملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:317
 msgid "Importing book, please wait..."
 msgstr "استيراد الكتاب، لطفا انتظر..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:336
 msgid "Choose book folder"
 msgstr "اختر مجلد الكتاب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:344
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:964
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:960
 msgid "Choose book"
 msgstr "اختر كتابًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:352
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:348
 msgid "File not found"
 msgstr "لم يتم العثور على الملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:353
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:349
 #, python-format
 msgid "The file %s does not exist."
 msgstr "الملف %s غير موجود."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:360
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:356
 msgid "Unsupported format"
 msgstr "صيغة غير مدعومة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:361
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:357
 #, python-format
 msgid ""
 "Tweaking is only supported for books in the %s formats. Convert your book to"
 " one of these formats first."
 msgstr "التعديل مدعوم فقط للكتب بصيغ %s. قم بتحويل كتابك إلى أحد هذه الصيغ أولاً."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:367
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:363
 msgid "Read-only file"
 msgstr "ملف للقراءة فقط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:368
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:364
 #, python-brace-format
 msgid ""
 "The file {} is read-only. Saving changes to it will either fail or cause its"
 " permissions to be reset."
 msgstr "الملف {} للقراءة فقط. حفظ التغييرات عليه إما سيفشل أو سيتسبب في إعادة تعيين أذوناته."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:385
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:381
 msgid "Opening book, please wait..."
 msgstr "فتح الكتاب، لطفا انتظر..."
 
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:395
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:399
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:403
 msgid "Failed to open book"
 msgstr "فشل في فتح الكتاب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:400
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:396
 msgid ""
 "Failed to open book, it has obfuscated fonts, but the obfuscation key is "
 "missing from the OPF. Do an EPUB to EPUB conversion before trying to edit "
 "this book."
 msgstr "فشل فتح الكتاب، يحتوي على خطوط مشوشة، ولكن مفتاح التشويش مفقود من OPF. قم بتحويل EPUB إلى EPUB قبل محاولة تحرير هذا الكتاب."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:404
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:400
 msgid "Failed to open book, click \"Show details\" for more information."
 msgstr "فشل فتح الكتاب، انقر على \"إظهار التفاصيل\" للمزيد من المعلومات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:447
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:443
 msgid "Start of editing session"
 msgstr "بدء جلسة التحرير"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:484
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:480
 msgid "Before: Delete files"
 msgstr "قبل: احذف ملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:510
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:506
 #, python-brace-format
 msgid "One file deleted"
 msgid_plural "{} files deleted"
@@ -36778,166 +36800,166 @@ msgstr[3] "تم حذف ملفات {}"
 msgstr[4] "تم حذف ملفات {}"
 msgstr[5] "تم حذف ملفات {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:521
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:517
 msgid "Before: Re-order text"
 msgstr "قبل: أعد ترتيب النص"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:531
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:527
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:566
 msgid ""
 "You must first open a book to edit, before trying to create new files in it."
 msgstr "يجب عليك أولاً فتح كتاب للتحرير، قبل محاولة إنشاء ملفات جديدة فيه."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:543
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:539
 #, python-format
 msgid "Before: Add file %s"
 msgstr "قبل: أضِف الملف %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:578
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:574
 msgid "Before: Add files"
 msgstr "قبل: أضف ملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:614
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:610
 msgid "Before: Add cover"
 msgstr "قبل: أضِف غلافًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:618
 msgid "No book is currently open. You must first open a book."
 msgstr "لا يوجد كتاب مفتوح حاليًا. يجب عليك أولاً فتح كتاب."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:624
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:620
 msgid "No book open"
 msgstr "لا يوجد كتاب مفتوح"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:629
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:625
 msgid "You must open a book before trying to edit the Table of Contents."
 msgstr "يجب عليك فتح كتاب قبل محاولة تحرير جدول المحتويات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:631
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:627
 msgid "Before: Edit Table of Contents"
 msgstr "قبل: عدّل قائمة المحتويات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:652
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:648
 msgid "Before: Insert inline Table of Contents"
 msgstr "قبل: أدرِج قائمة محتويات سطرية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:652
 msgid "No Table of Contents"
 msgstr "لا يوجد جدول محتويات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:657
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:653
 msgid ""
 "Cannot create an inline Table of Contents as this book has no existing Table"
 " of Contents. You must first create a Table of Contents using the Edit Table"
 " of Contents tool."
 msgstr "لا يمكن إنشاء جدول محتويات مضمن لأن هذا الكتاب لا يحتوي على جدول محتويات موجود. يجب عليك أولاً إنشاء جدول محتويات باستخدام أداة تحرير جدول المحتويات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:667
 #, python-format
 msgid "Before: %s"
 msgstr "قبل: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:686
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:730
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:757
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:726
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:753
 msgid "You must first open a book in order to transform styles."
 msgstr "يجب عليك أولاً فتح كتاب لتحويل الأنماط."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:704
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:700
 msgid "No HTML file"
 msgstr "لا يوجد ملف HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:704
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:700
 msgid "Not currently editing an HTML file"
 msgstr "لا يتم تحرير ملف HTML حاليًا"
 
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:705
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:709
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:713
 msgid "No HTML files"
 msgstr "لا توجد ملفات HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:709
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:705
 msgid "Not currently editing any HTML files"
 msgstr "لا يتم تحرير أي ملفات HTML حاليًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:713
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:709
 msgid "No HTML files are currently selected in the File browser"
 msgstr "لا توجد ملفات HTML محددة حاليًا في متصفح الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:715
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:711
 msgid "Before HTML transformation"
 msgstr "قبل تحويل HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:725
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:721
 msgid "No HTML was changed."
 msgstr "لم يُغيَّر HTML."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:725
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:751
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:721
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:747
 msgid "No changes"
 msgstr "لا تغييرات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:741
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:737
 msgid "Before style transformation"
 msgstr "قبل تحويل النمط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:752
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:748
 msgid "No styles were changed."
 msgstr "لم تُغيَّر الطُرُز."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:761
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:757
 msgid "Before: Get external resources"
 msgstr "قبل: احصل على موارد خارجية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:776
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:772
 msgid "No book is currently open. You must first open a book to manage fonts."
 msgstr "لا كتاب مفتوح حاليًا. يجب أن تفتح كتابًا أولاً لتدير الخطوط."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:782
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:778
 msgid "Embed all fonts"
 msgstr "ضمِّن كل الخطوط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:786
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:782
 msgid "Subset all fonts"
 msgstr "قلّص كل الخطوط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:796
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:792
 #, python-format
 msgid ""
 "The %s format does not support file and folder names internally, therefore "
 "arranging files into folders is not allowed."
 msgstr "الصيغة %s لا تدعم أسماء الملفات والمجلدات داخلياً، لذلك لن يكون ترتيب الملفات في داخل المجلدا مسموحاً."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:805
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:801
 msgid "The files in this book are already arranged into folders"
 msgstr "الملفات في هذا الكتاب مرتّبة مسبقًا في مجلدات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:806
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:802
 msgid "Nothing to do"
 msgstr "لا شيء للقيام به"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:807
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:803
 msgid "Show this message &again"
 msgstr "أظهر هذه الرسالة &مرة أخرى"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:809
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:805
 msgid "Before: Arrange into folders"
 msgstr "قبل: نظِّم في مجلدات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:811
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:836
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:842
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:807
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:832
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:838
 msgid "Renaming and updating links..."
 msgstr "إعادة تسمية وتحديث الروابط..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:819
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:815
 #, python-brace-format
 msgid ""
 "You are changing the file type of {0}<b>{1}</b> to {2}<b>{3}</b>. Doing so "
 "can cause problems, are you sure?"
 msgstr "أنت تغير نوع الملف لـ {0}<b>{1}</b> إلى {2}<b>{3}</b>. القيام بذلك يمكن أن يسبب مشاكل، هل أنت متأكد؟"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:826
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:822
 #, python-brace-format
 msgid ""
 "The name you have chosen {0} contains special characters, internally it will"
@@ -36946,226 +36968,226 @@ msgid ""
 "for  different e-book viewers. Are you sure you want to proceed?"
 msgstr "الاسم الذي اخترته {0} يحتوي على أحرف خاصة، داخليًا سيبدو كـ: {1} حاول استخدام الأبجدية الإنجليزية فقط [a-z]، الأرقام [0-9]، الواصلات والشرطات السفلية لأسماء الملفات. قد تسبب الأحرف الأخرى مشاكل لمشاهدي الكتب الإلكترونية المختلفة. هل أنت متأكد أنك تريد المتابعة؟"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:833
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:829
 #, python-format
 msgid "Before: Rename %s"
 msgstr "قبل: أعِد تسمية %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:840
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:836
 msgid "Before: Bulk rename"
 msgstr "قبل: إعادة تسمية جماعية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:848
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:844
 msgid "Failed to rename files"
 msgstr "فشل في إعادة تسمية الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:849
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:845
 msgid "Failed to rename files, click \"Show details\" for more information."
 msgstr "فشل في إعادة تسمية الملفات، انقر على \"إظهار التفاصيل\" للمزيد من المعلومات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:882
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:878
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/undo.py:214
 msgid "&Revert to"
 msgstr "&العودة إلى"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:902
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:898
 msgid "&Revert changes"
 msgstr "&التراجع عن التغييرات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:945
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:941
 msgid "Show this popup again"
 msgstr "أظهر هذه النافذة المنبثقة مرة أخرى"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:953
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:949
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/download.py:241
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/polish.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1516
 msgid "See what &changed"
 msgstr "شاهد ما &تغير"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:965
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:961
 #, python-format
 msgid "%s books"
 msgstr "%s كتاب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:971
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:967
 msgid "Current book"
 msgstr "الكتاب الحالي"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:971
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:967
 msgid "Other book"
 msgstr "كتاب آخر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1010
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1006
 msgid "Before: Fix HTML"
 msgstr "قبل: أصلِح HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1014
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1010
 msgid "All HTML files fixed"
 msgstr "أُصلحَت كل ملفات HTML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1014
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1010
 msgid "Fixing done"
 msgstr "تم الإصلاح"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1022
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1018
 msgid "Before: Beautify files"
 msgstr "قبل: جمّل الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1027
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1023
 msgid "All files beautified"
 msgstr "تم تجميل جميع الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1027
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1023
 msgid "Beautified"
 msgstr "جمّل"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1046
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1042
 msgid "Inserting images is only supported for HTML and CSS files."
 msgstr "إدراج الصور مدعوم فقط لملفات HTML و CSS."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1074
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1070
 msgid "New class name"
 msgstr "اسم فئة جديد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1075
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1071
 #, python-brace-format
 msgid "Rename the class {} to?"
 msgstr "أعد تسمية الفئة {} إلى؟"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1077
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1073
 #, python-brace-format
 msgid "Before: Rename {}"
 msgstr "قبل: أعِد تسمية {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1082
 #, python-brace-format
 msgid "No class {} found to change"
 msgstr "لم يُعثر على فئة {} لتغييرها"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1095
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1091
 msgid "Semantics are not supported for the AZW3 format."
 msgstr "الدلاليات غير مدومة لنسَق AZW3."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1098
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1094
 msgid "Before: Set Semantics"
 msgstr "قبل: أعدّ الدلاليات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1111
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1107
 msgid "Before: Filter style information"
 msgstr "قبل: رشّح معلومات الطراز"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1120
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1116
 msgid "No matching style rules were found"
 msgstr "لم يُعثَر على قواعد طُرُز مطابِقة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1255
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1251
 #, python-format
 msgid "No file with the name %s was found in the book"
 msgstr "لم يتم العثور على ملف بالاسم %s في الكتاب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1270
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1266
 #, python-brace-format
 msgid "No style rules that match the class {} were found"
 msgstr "لم يُعثَر على قواعد طُرُز تُطابِق الفئة {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1284
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1280
 msgid ""
 "Choose a name for the checkpoint.\n"
 "You can later restore the book to this checkpoint via the\n"
 "\"Revert to...\" entries in the Edit menu."
 msgstr "اختر إسمًا لنقطة التحقق.\nيمكنك لاحقا استعادة الكتاب إلى نقطة التحقق هذه عبر مُدخَلات \"أرجع إلى...\" في قائمة التحرير."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1327
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1323
 msgid "Path does not exist"
 msgstr "المسار غير موجود"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1328
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1324
 #, python-format
 msgid ""
 "The file you are editing (%s) no longer exists. You have to choose a new "
 "save location."
 msgstr "الملف الذي تقوم بتحريره (%s) لم يعد موجودًا. يجب عليك اختيار موقع حفظ جديد."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1344
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1340
 msgid "File is read-only"
 msgstr "الملف للقراءة فقط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1345
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1341
 #, python-brace-format
 msgid ""
 "The file at {} is read-only. The editor will try to reset its permissions "
 "before saving. Proceed with saving?"
 msgstr "الملف في {} للقراءة فقط. سيحاول المحرر إعادة تعيين أذوناته قبل الحفظ. هل تريد المتابعة بالحفظ؟"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1357
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1353
 msgid "Cannot save a copy"
 msgstr "لا يمكن حفظ نسخة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1358
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1354
 msgid "Saving a copy of a folder based book is not supported"
 msgstr "ليس مدعوماً حفظ نسخة من كتاب يعتمد على مجلد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1361
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1357
 msgid "Choose path"
 msgstr "اختر المسار"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1363
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1359
 #, python-format
 msgid "Book (%s)"
 msgstr "كتاب (%s)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1379
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1375
 msgid "Saving copy, please wait..."
 msgstr "حفظ نسخة، لطفا انتظر..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1386
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1382
 msgid "Failed to save copy"
 msgstr "فشل في حفظ النسخة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1387
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1383
 msgid "Failed to save copy, click \"Show details\" for more information."
 msgstr "فشل في حفظ النسخة، انقر على \"إظهار التفاصيل\" للمزيد من المعلومات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1388
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1384
 #, python-format
 msgid "Copy saved to %s"
 msgstr "تم حفظ النسخة إلى %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1390
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1386
 msgid "Copy saved"
 msgstr "تم حفظ النسخة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1392
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1388
 #, python-format
 msgid "Editing saved copy at: %s"
 msgstr "تحرير النسخة المحفوظة في: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1414
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1410
 msgid "Could not save"
 msgstr "تعذر الحفظ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1415
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1411
 msgid ""
 "Saving of the book failed. Click \"Show details\" for more information. You "
 "can try to save a copy to a different location, via File->Save a copy"
 msgstr "فشل حفظ الكتاب. انقر على \"إظهار التفاصيل\" للمزيد من المعلومات. يمكنك محاولة حفظ نسخة إلى موقع مختلف، عبر ملف -> حفظ نسخة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1423
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1419
 msgid "Enter line number"
 msgstr "أدخل رقم السطر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1433
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1452
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1429
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1448
 #, python-format
 msgid "Before: Split %s"
 msgstr "قبل: إقسم %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1468
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1464
 msgid "Does not exist"
 msgstr "غير موجود"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1469
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1465
 #, python-format
 msgid ""
 "The file %s does not exist. If you were trying to click an item in the Table"
@@ -37173,154 +37195,154 @@ msgid ""
 "\"Refresh\"."
 msgstr "الملف %s غير موجود. إذا كنت تحاول النقر على عنصر في جدول المحتويات، فقد تحتاج إلى تحديثه بالنقر بزر الفأرة الأيمن واختيار \"تحديث\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1476
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1840
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1472
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1836
 msgid "Unsupported file format"
 msgstr "صيغة ملف غير مدعومة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1477
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1841
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1473
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1837
 #, python-format
 msgid "Editing files of type %s is not supported"
 msgstr "تحرير الملفات من نوع %s غير مدعوم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1491
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1487
 #, python-format
 msgid "The anchor %s was not found in this file"
 msgstr "لم يتم العثور على المرجع %s في هذا الملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1505
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1501
 msgid "File deleted"
 msgstr "تم حذف الملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1506
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1502
 #, python-brace-format
 msgid ""
 "The file {} has already been deleted, re-run Check Book to update the "
 "results."
 msgstr "سبق أن حُذِف الملف {}، أعِد تشغيل فحص الكتاب لتحدّث النتائج."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1528
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1524
 msgid "Before: Spell Check"
 msgstr "قبل: التدقيق الإملائي"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1533
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1529
 msgid "Before: Auto-fix errors"
 msgstr "قبل: تصحيح تلقائي للأخطاء"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1546
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1542
 #, python-format
 msgid "Before: Merge files into %s"
 msgstr "قبل: ادمج الملفات إلى %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1556
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1552
 #, python-brace-format
 msgid "{} files merged"
 msgstr "تم دمج {} ملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1560
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1556
 msgid "Before: Link stylesheets"
 msgstr "قبل: ألواح طُرُز الرابط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1589
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1585
 msgid "File opened"
 msgstr "تم فتح الملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1590
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1586
 #, python-brace-format
 msgid ""
 "When you are done editing {0} click \"Import\" to update the file in the "
 "book or \"Discard\" to lose any changes."
 msgstr "عند الانتهاء من تحرير {0}، انقر على \"استيراد\" لتحديث الملف في الكتاب أو \"تجاهل\" لفقدان أي تغييرات."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1592
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1588
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:759
 msgid "Discard"
 msgstr "نبذ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1592
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1588
 msgid "Import"
 msgstr "استيراد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1594
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1644
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1590
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1640
 #, python-format
 msgid "Before: Replace %s"
 msgstr "قبل: استبدل %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1654
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1650
 msgid "You must first open a book in order to see the report."
 msgstr "يجب عليك أولاً فتح كتاب لرؤية التقرير."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1669
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1665
 msgid "You must first open a book in order to check links."
 msgstr "يجب أولاً أن تفتح كتابًا من أجل فحص الروابط."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1674
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1670
 msgid "You must first open a book in order to add Text-to-speech narration."
 msgstr "يجب عليك أولاً فتح كتاب لإضافة سرد تحويل النص إلى كلام."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1678
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1674
 msgid "Before: adding narration"
 msgstr "قبل: إضافة السرد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1687
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1683
 msgid "You must first open a book in order to compress images."
 msgstr "يجب عليك أولاً فتح كتاب لضغط الصور."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1693
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1689
 msgid "Before: compress images"
 msgstr "قبل: اضغط الصور"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1701
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1697
 msgid "Unexpected error"
 msgstr "خطأ غير متوقع"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1702
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1698
 msgid "Failed to compress images, click \"Show details\" for more information"
 msgstr "فشل في ضغط الصور، انقر على \"إظهار التفاصيل\" للمزيد من المعلومات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1816
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1812
 msgid "Cannot decode"
 msgstr "لا يمكن فك التشفير"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1817
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1813
 #, python-format
 msgid "Cannot edit %s as it appears to be in an unknown character encoding"
 msgstr "لا يمكن تحرير %s لأنه يبدو أنه بتشفير أحرف غير معروف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1848
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1844
 msgid "No book is currently open. You must first open a book to edit."
 msgstr "لا يوجد كتاب مفتوح حاليًا. يجب عليك أولاً فتح كتاب للتحرير."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1979
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1975
 msgid ""
 "The current book is being saved in the background. Quitting now will "
 "<b>abort the save process</b>! Finish saving first?"
 msgstr "يتم حفظ الكتاب الحالي في الخلفية. الخروج الآن سيؤدي إلى <b>إلغاء عملية الحفظ</b>! هل تريد إنهاء الحفظ أولاً؟"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1981
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1977
 msgid "&Quit immediately"
 msgstr "&اخرج فورًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1981
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1977
 msgid "Finish &saving first"
 msgstr "أنهِ ال&حفظ أولاً"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2002
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1998
 msgid ""
 "There are unsaved changes, if you quit without saving, you will lose them."
 msgstr "توجد تغييرات غير محفوظة، إذا غادرت بدون حفظ، فستفقدها."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2014
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2010
 msgid "&Save and Quit"
 msgstr "&احفظ واخرج"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2017
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2013
 msgid "&Quit without saving"
 msgstr "&اخرج بدون حفظ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2031
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:2027
 msgid "Saving, please wait..."
 msgstr "يحفظ، لطفا انتظر..."
 
@@ -38951,7 +38973,7 @@ msgid "File actions tool bar"
 msgstr "شريط أدوات إجراءات الملف"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:268
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:357
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:341
 msgid "Edit actions tool bar"
 msgstr "شريط أدوات إجراءات التحرير"
 
@@ -39053,7 +39075,7 @@ msgid ""
 msgstr "أدخل الصورة بحيث تشغل صفحة كاملة عند عرضها في قارئ"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:290
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1184
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1309
 msgid "Preserve aspect ratio"
 msgstr "حافظ على نسبة العرض إلى الارتفاع"
 
@@ -39662,7 +39684,7 @@ msgid "Insert &hyperlink"
 msgstr "أدرِج رابطًا ت&شعبيًا"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:103
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:662
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:787
 msgid "Insert hyperlink"
 msgstr "إدراج ارتباط تشعبي"
 
@@ -39758,66 +39780,54 @@ msgid "Change paragraph to heading"
 msgstr "غيّر القطعة إلى ترويس"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:266
-msgid "Add a tag to this menu"
-msgstr "أضف وسمًا إلى هذه القائمة"
+msgid "Manage the entries in this menu"
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:268
-msgid "Remove from this menu"
-msgstr "إزالة من هذه القائمة"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:284
-msgid "Name of tag to add"
-msgstr "اسم الوسم المراد إضافته"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:285
-msgid "Enter the name of the tag"
-msgstr "أدخل اسم الوسم"
-
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:359
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:343
 msgid "Editor tools"
 msgstr "أدوات المحرر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:363
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:347
 msgid "Format text"
 msgstr "تنسيق النص"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:492
 msgid "No text"
 msgstr "لا يوجد نص"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:509
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:493
 msgid "There is no suitable text in the clipboard to paste."
 msgstr "لا يوجد نص مناسب في الحافظة للصقه."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:570
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:554
 msgid "Ignore this word"
 msgstr "تجاهل هذه الكلمة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:558
 #, python-brace-format
 msgid "Add this word to the dictionary: {0}"
 msgstr "أضف هذه الكلمة إلى القاموس: {0}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:577
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:561
 msgid "Add this word to the dictionary"
 msgstr "أضف هذه الكلمة إلى القاموس"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:586
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:570
 #, python-format
 msgid "Open %s"
 msgstr "افتح %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:576
 #, python-brace-format
 msgid "Rename the class {}"
 msgstr "إعادة تسمية الفئة {}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:583
 #, python-format
 msgid "Show help for: %s"
 msgstr "أظهر المساعدة لـ: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:616
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/widget.py:600
 msgid "C&hange case"
 msgstr "غ&يّر حالة الأحرف"
 
@@ -40944,18 +40954,18 @@ msgstr[5] "تمت استعادة {} مطالبات تأكيد معطلة"
 msgid "Disabled confirmations restored"
 msgstr "استُعيدت التأكيدات المبدئية"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:435
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:636
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:434
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:635
 msgid "Render process crashed"
 msgstr "تعطلت عملية العرض"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:436
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:435
 msgid ""
 "The Qt WebEngine Render process has crashed so Preview/Live CSS will not "
 "work. You should try restarting the editor."
 msgstr "تعطلت عملية عرض محرك Qt WebEngine، لذا لن تعمل معاينة/CSS المباشر. يجب أن تحاول إعادة تشغيل المحرر."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:459
 msgid ""
 "\n"
 "            <h3>Live preview</h3>\n"
@@ -40969,70 +40979,70 @@ msgid ""
 "            "
 msgstr "\n            <h3>معاينة حية</h3>\n\n            <p>سترى هنا معاينة حية لملف HTML الذي تحرره حاليا.\n            ستتحدث المعاينة تلقائيا كلما أجريت تغييرات.\n\n            <p style=\"font-size:x-small; color: gray\">لاحِظ أنّ هذه معاينة سريعة\n            فقط، ليس المقصود منها أن تحاكي قاريء الكتب الالكترونية الحقيقي. بعض\n            لن تعمل نواحي كتابك الالكتروني، كفواصل الصفحات وهوامش الصفحة.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:487
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:486
 msgid "Inspect element"
 msgstr "افحص العنصر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:502
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:501
 #, python-format
 msgid "Edit %s"
 msgstr "تحرير %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:541
 msgid "Loading preview, please wait..."
 msgstr "يحمّل المعاينة، لطفا انتظر..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:596
 msgid "Search in preview"
 msgstr "ابحث في المعاينة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:645
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:642
 msgid "Invalid location"
 msgstr "موقع غير صالح"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:646
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:643
 msgid "Cannot split on the body tag"
 msgstr "لا يمكن التقسيم عند وسم الجسم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:673
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:670
 msgid "Failed to launch worker"
 msgstr "فشل إطلاق العامل"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:671
 msgid "Failed to launch the worker process used for rendering the preview"
 msgstr "فشل إطلاق عملية العامل المستخدمة لعرض المعاينة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:733
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:730
 msgid "Cannot disable"
 msgstr "لا يمكن التعطيل"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:731
 msgid ""
 "Auto reloading of the preview panel cannot be disabled while the Live CSS "
 "panel is open."
 msgstr "لا يمكن تعطيل إعادة التحميل التلقائية للوحة المعاينة بينما لوحة طُرُز CSS الحية مفتوحة."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:737
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:734
 msgid "Auto reload preview when text changes in editor"
 msgstr "إعادة تحميل المعاينة تلقائيًا عند تغيير النص في المحرر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:738
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
 msgid "Disable auto reload of preview"
 msgstr "عطّل إعادة التحميل التلقائي للمعاينة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:742
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
 msgid "Disable syncing of preview position to editor position"
 msgstr "عطّل مزامنة موضع المعاينة مع موضع المحرر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:743
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
 msgid "Enable syncing of preview position to editor position"
 msgstr "تمكين مزامنة موضع المعاينة مع موضع المحرر"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:751
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:748
 msgid "Abort file split"
 msgstr "إلغاء تقسيم الملف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:752
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:749
 msgid ""
 "Split this file at a specified location.<p>After clicking this button, click"
 " inside the preview panel above at the location you want the file to be "
@@ -42625,7 +42635,7 @@ msgid "Set &semantics"
 msgstr "أعدّ الدلاليا&ت"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:454
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:825
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:950
 msgid "Set semantics"
 msgstr "أعدّ الدلاليات"
 
@@ -43110,128 +43120,155 @@ msgstr "لا يمكن المقارنة"
 msgid "There is no point comparing the current state to itself"
 msgstr "لا فائدة من مقارنة الحالة الحالية بنفسها"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:81
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:87
 msgid "Choose tag name"
 msgstr "اختر اسم الوسم"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:88
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:94
 msgid "Specify the name of the &tag to insert:"
 msgstr "حدد اسم ال&وسم المراد إدراجه:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:115
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:124
+msgid "Manage tag list"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:189
+msgid "Add tag"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:190
+msgid ""
+"Enter the tag to add (may include attributes, for example: div "
+"class=\"chapter\"):"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:197
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:214
+msgid "The entry {!r} already exists in the list."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:207
+msgid "Edit tag"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:207
+msgid "Edit the tag:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:240
 msgid "Text (HTML) files"
 msgstr "ملفات نصية (HTML)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:116
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:241
 msgid "Style (CSS) files"
 msgstr "ملفات نمط (CSS)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:119
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:244
 msgid "Audio"
 msgstr "الصوتيات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:120
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:245
 msgid "Video"
 msgstr "ڤديو"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:121
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:246
 msgid "OPF file (metadata)"
 msgstr "ملف OPF (بيانات وصفية)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:122
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:247
 msgid "Table of contents file (NCX)"
 msgstr "ملف جدول المحتويات (NCX)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:126
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:251
 msgid "Arrange in folders"
 msgstr "ترتيب في مجلدات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:133
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:258
 msgid ""
 "Arrange the files in this book into sub-folders based on their types. If you"
 " leave a folder blank, the files will be placed in the root."
 msgstr "رتّب الملفات في هذا الكتاب داخل مجلدات فرعية استناداً إلى أنواعها. إذا تركت مجلداً ما فارغاً، فستوضع الملفات في الرئيسي."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:152
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:277
 msgid ""
 "Note that this will only arrange files inside the book, it will not affect "
 "how they are displayed in the File browser"
 msgstr "لاحظ أن هذا سيقوم بترتيب الملفات داخل الكتاب فقط، ولن يؤثر على كيفية عرضها في متصفح الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:175
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:300
 msgid "Specify locations to split at"
 msgstr "حدد المواقع للتقسيم عندها"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:308
 msgid ""
 "Specify the locations to split at, using an XPath expression (click the "
 "wizard button for help with generating XPath expressions)."
 msgstr "حدد المواقع للتقسيم عندها، باستخدام تعبير XPath (انقر زر المعالج للمساعدة في إنشاء تعبيرات XPath)."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:189
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:314
 msgid "&XPath expression:"
 msgstr "&تعبير XPath:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:196
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:321
 msgid "Invalid XPath expression"
 msgstr "تعبير XPath غير صالح"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:210
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:335
 msgid "Choose file to import"
 msgstr "اختر ملفًا للاستيراد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:348
 msgid ""
 "You can import an HTML or DOCX file directly as an EPUB and edit it. The "
 "EPUB will be generated with minimal changes from the source, unlike doing a "
 "full conversion in calibre."
 msgstr "يمكنك استيراد ملف HTML أو DOCX مباشرة كـ EPUB وتحريره. سيتم إنشاء EPUB بأقل تغييرات من المصدر، على عكس إجراء تحويل كامل في كاليبر."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:231
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:356
 msgid "Choose the file to import"
 msgstr "اختر الملف المراد استيراده"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:237
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:362
 msgid "Source file:"
 msgstr "ملف المصدر:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:243
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:368
 msgid "Choose the location for the newly created EPUB"
 msgstr "اختر موقع EPUB الذي تم إنشاؤه حديثًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:249
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:374
 msgid "Destination file:"
 msgstr "ملف الوجهة:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:257
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:382
 msgid "Importable files"
 msgstr "ملفات قابلة للاستيراد"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:266
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:391
 msgid "Choose destination"
 msgstr "اختر الوجهة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:267
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:392
 msgid "EPUB files"
 msgstr "ملفات EPUB"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:275
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:400
 msgid "Need document"
 msgstr "بحاجة إلى مستند"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:276
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:401
 msgid "You must specify the source file that will be imported."
 msgstr "يجب عليك تحديد ملف المصدر الذي سيتم استيراده."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:429
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:554
 msgid "No results found"
 msgstr "لم يتم العثور على نتائج"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:448
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:573
 msgid "Choose file to edit"
 msgstr "اختر ملفًا للتحرير"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:461
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:586
 #, python-brace-format
 msgid ""
 "<p>Quickly choose a file by typing in just a few characters from the file name into the field above.\n"
@@ -43242,55 +43279,55 @@ msgid ""
 "        and press Enter."
 msgstr "<p>اختر ملفًا بسرعة عن طريق كتابة بضعة أحرف فقط من اسم الملف في الحقل أعلاه.\n        على سبيل المثال، إذا أردت اختيار الملف:\n        {example}\n        ما عليك سوى كتابة الأحرف:\n        {chars}\n        ثم اضغط Enter."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:767
 #, python-brace-format
 msgid ""
 "Anchor: {0}\n"
 "Leading text: {1}"
 msgstr "المرساة: {0}\nالنص البادئ: {1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:676
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:889
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:801
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1014
 msgid "Filter files"
 msgstr "تصفية الملفات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:805
 msgid "Choose a &file to link to:"
 msgstr "ا&ختر ملفًا لتربط إليه:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:685
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:898
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:810
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1023
 msgid "Filter locations"
 msgstr "تصفية المواقع"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:691
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:903
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:816
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1028
 msgid "Choose a &location (anchor) in the file:"
 msgstr "اختر موضعًا (anchor) في الملف:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:699
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:877
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:824
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1002
 msgid "The destination (href) for the link"
 msgstr "وِجهة (href) الرابط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:700
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:878
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:825
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1003
 msgid "&Target:"
 msgstr "ال&هدف:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:705
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:830
 msgid "Te&xt:"
 msgstr "الن&ص:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:707
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:832
 msgid "The (optional) text for the link"
 msgstr "النص (الاختياري) للرابط"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:712
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:837
 msgid "Tem&plate:"
 msgstr "القا&ل‍ب:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:715
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:840
 #, python-brace-format
 msgid ""
 "\n"
@@ -43301,39 +43338,39 @@ msgid ""
 "        "
 msgstr "\nيدعم {0} استخدام قواميس LibreOffice للتدقيق الإملائي. اختر القالب الذي تريد استخدامه لإنشاء الرابط. بالإضافة إلى {0} و{1}، يمكنك أيضًا استخدام المتغيرات {2} و{3} و{4} في القالب، وسيتم استبدالها باسم الملف المصدر، واسم الملف الوجهة، ورابط الربط، على التوالي.\nاختر اللغة التي تريدها أدناه، وانقر على \"موافق\" لتنزيل القاموس من مستودع قواميس LibreOffice."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:968
 msgid "Copyright page"
 msgstr "صفحة حقوق الطبع"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:855
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:980
 msgid "Page with title, author, publisher, etc."
 msgstr "الصفحة ذات العنوان، المؤلف، الناشر، وغيرها."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:856
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:981
 msgid "The book cover, typically a single HTML file with a cover image inside"
 msgstr "غلاف الكتاب في المعتاد ملف HTML واحد بداخله صورة غلاف"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:857
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:982
 msgid "Back-of-book style index"
 msgstr "فهرس بطراز خلفية الكتاب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:858
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:983
 msgid "First \"real\" page of content"
 msgstr "أوّل صفحة \"حقيقية\" من المحتوى"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:874
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:999
 msgid "Type of &semantics:"
 msgstr "نوع الدلاليا&ت:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:893
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1018
 msgid "Choose a &file:"
 msgstr "ا&ختر ملفًا:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:916
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1041
 msgid "About semantics"
 msgstr "عن الدلاليات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:917
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1042
 msgid ""
 "Semantics refer to additional information about specific locations in the book. For example, you can specify that a particular location is the dedication or the preface or the Table of Contents and so on.\n"
 "\n"
@@ -43342,37 +43379,37 @@ msgid ""
 "The semantic information will be written in the <guide> section of the OPF file."
 msgstr "تشير الدلاليات إلى معلومات إضافية حول مواقع محددة في الكتاب. على سبيل المثال، يمكنك تحديد أن موقعًا معينًا هو الإهداء أو المقدمة أو جدول المحتويات وما إلى ذلك.\n\nاختر أولاً نوع المعلومات الدلالية، ثم اختر ملفًا وموقعًا اختياريًا داخل الملف للإشارة إليه.\n\nسيتم كتابة المعلومات الدلالية في قسم <guide> من ملف OPF."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1015
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1140
 #, python-brace-format
 msgid "Cannot set {} type semantics in EPUB 2 or AZW3 books"
 msgstr "لا يمكن تعيين دلاليات من نوع {} في كتب EPUB 2 أو AZW3"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1059
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1184
 msgid "Flo&ats"
 msgstr "ال&عوامات"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1068
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1193
 msgid "&Other CSS properties:"
 msgstr "&خصائص CSS أخرى:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1072
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1197
 #, python-format
 msgid "Only filter CSS in the current file (%s)"
 msgstr "تصفية CSS في الملف الحالي فقط (%s)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1156
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1281
 msgid "Add a cover"
 msgstr "أضِف غلافًا"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1168
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1293
 msgid "&Images in book"
 msgstr "&صور في الكتاب"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1172
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1297
 msgid "Filter the list of images"
 msgstr "تصفية قائمة الصور"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1185
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1310
 msgid ""
 "If enabled the cover image you select will be embedded into the book in such"
 " a way that when viewed, its aspect ratio (ratio of width to height) will be"
@@ -43380,11 +43417,11 @@ msgid ""
 "book is being viewed on has an aspect ratio different to the image."
 msgstr "إذا تم تمكينه، سيتم تضمين صورة الغلاف التي تحددها في الكتاب بطريقة تحافظ على نسبة العرض إلى الارتفاع عند عرضها. وهذا يعني وجود مسافات فارغة حول الصورة إذا كانت الشاشة التي يتم عرض الكتاب عليها لها نسبة عرض إلى ارتفاع مختلفة عن الصورة."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1203
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1328
 msgid "Import &image"
 msgstr "استيراد &صورة"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1230
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1355
 msgid "Choose a cover image"
 msgstr "اختر صورة غلاف"
 
@@ -44544,13 +44581,13 @@ msgid ""
 "First convert the book to one of these formats."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:637
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:636
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr "تعطلت عملية عرض محرك Qt WebEngine. يجب أن تحاول إعادة تشغيل العارض."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:779
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:778
 msgid "Choose background image"
 msgstr "اختر صورة خلفية"
 
@@ -45479,95 +45516,95 @@ msgstr "HTML الأنواع"
 msgid "Titles HTML"
 msgstr "HTML العناوين"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2674
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2676
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2678
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2673
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2675
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2677
 msgid "by "
 msgstr "بواسطة "
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2821
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2820
 msgid "Descriptions HTML"
 msgstr "HTML الأوصاف"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2824
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2823
 msgid "Description HTML"
 msgstr "HTML الوصف"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2952
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:2951
 msgid "NCX header"
 msgstr "رأس NCX"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3033
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3032
 msgid "NCX for descriptions"
 msgstr "NCX للأوصاف"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3097
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3096
 msgid "NCX for Series"
 msgstr "NCX للسلسلة"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3151
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3150
 #, python-format
 msgid "Series beginning with %s"
 msgstr "سلسلة تبدأ بـ %s"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3153
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3152
 #, python-format
 msgid "Series beginning with '%s'"
 msgstr "سلسلة تبدأ بـ '%s'"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3178
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3177
 msgid "NCX for Titles"
 msgstr "NCX للعناوين"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3234
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3233
 #, python-format
 msgid "Titles beginning with %s"
 msgstr "عناوين تبدأ بـ %s"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3236
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3235
 #, python-format
 msgid "Titles beginning with '%s'"
 msgstr "عناوين تبدأ بـ '%s'"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3261
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3260
 msgid "NCX for Authors"
 msgstr "NCX للمؤلفين"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3310
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3309
 #, python-format
 msgid "Authors beginning with %s"
 msgstr "مؤلفون يبدأون بـ %s"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3312
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3311
 #, python-format
 msgid "Authors beginning with '%s'"
 msgstr "مؤلفون يبدأون بـ '%s'"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3337
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3336
 msgid "NCX for Recently Added"
 msgstr "NCX للمضاف حديثا"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3454
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3453
 msgid "NCX for Recently Read"
 msgstr "NCX للمقروء مؤخرا"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3540
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3539
 msgid "NCX for genres"
 msgstr "NCX للأنواع"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3596
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3595
 msgid "Generating OPF"
 msgstr "إنشاء OPF"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3901
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3900
 msgid "Thumbnails"
 msgstr "الصور المصغرة"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3906
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:3905
 msgid "Thumbnail"
 msgstr "صورة مصغرة"
 
-#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:4333
+#: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:4332
 msgid "Saving NCX"
 msgstr "حفظ NCX"
 
@@ -46455,16 +46492,17 @@ msgid ""
 "want to run the server without authentication but still use calibredb to "
 "make changes to your calibre libraries. Note that turning on this option "
 "means any program running on the computer can make changes to your calibre "
-"libraries."
-msgstr "عادةً، إذا لم تقم بتشغيل المصادقة، يعمل الخادم في وضع القراءة فقط، وذلك لمنع المستخدمين المجهولين من إجراء تغييرات على مكتبات calibre الخاصة بك. يسمح هذا الخيار لأي شخص يتصل من نفس الكمبيوتر الذي يعمل عليه الخادم بإجراء تغييرات. هذا مفيد إذا كنت ترغب في تشغيل الخادم بدون مصادقة ولكن لا تزال تستخدم calibredb لإجراء تغييرات على مكتبات calibre الخاصة بك. لاحظ أن تشغيل هذا الخيار يعني أن أي برنامج يعمل على الكمبيوتر يمكنه إجراء تغييرات على مكتبات calibre الخاصة بك."
+"libraries. In particular, the Firefox web browser allows arbitrary websites "
+"to do so as well."
+msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:156
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:157
 msgid ""
 "Allow un-authenticated connections from specific IP addresses to make "
 "changes"
 msgstr "السماح بالاتصالات غير المصادق عليها من عناوين IP محددة لإجراء تغييرات"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:158
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:159
 msgid ""
 "Normally, if you do not turn on authentication, the server operates in read-"
 "only mode, so as to not allow anonymous users to make changes to your "
@@ -46476,21 +46514,21 @@ msgid ""
 " specified IP addresses can make changes to your calibre libraries."
 msgstr "عادةً، إذا لم تقم بتشغيل المصادقة، يعمل الخادم في وضع القراءة فقط، وذلك لمنع المستخدمين المجهولين من إجراء تغييرات على مكتبات calibre الخاصة بك. يسمح هذا الخيار لأي شخص يتصل من عناوين IP المحددة بإجراء تغييرات. يجب أن تكون قائمة مفصولة بفاصلات من مواصفات العنوان أو الشبكة. هذا مفيد إذا كنت ترغب في تشغيل الخادم بدون مصادقة ولكن لا تزال تستخدم calibredb لإجراء تغييرات على مكتبات calibre الخاصة بك. لاحظ أن تشغيل هذا الخيار يعني أن أي شخص يتصل من عناوين IP المحددة يمكنه إجراء تغييرات على مكتبات calibre الخاصة بك."
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:167
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:168
 msgid "Path to user database"
 msgstr "مسار قاعدة بيانات المستخدم"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:169
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:170
 msgid ""
 "Path to a file in which to store the user and password information. Normally"
 " a file in the calibre configuration folder is used."
 msgstr "مسار ملف لتخزين معلومات المستخدم وكلمة المرور فيه. عادةً ما يتم استخدام ملف في مجلد تكوين calibre."
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:172
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:173
 msgid "Choose the type of authentication used"
 msgstr "اختر نوع المصادقة المستخدم"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:173
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:174
 msgid ""
 "Set the HTTP authentication mode used by the server. Set to \"basic\" if you"
 " are putting this server behind an SSL proxy. Otherwise, leave it as "
@@ -46498,30 +46536,30 @@ msgid ""
 "use \"digest\"."
 msgstr "حدد وضع مصادقة HTTP الذي يستخدمه الخادم. اضبطه على \"basic\" إذا كنت تضع هذا الخادم خلف وكيل SSL. وإلا، اتركه \"auto\"، والذي سيستخدم \"basic\" إذا تم تكوين SSL وإلا فسيستخدم \"digest\"."
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:177
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:178
 msgid "Ban IP addresses that have repeated login failures"
 msgstr "حظر عناوين IP التي لديها محاولات تسجيل دخول فاشلة متكررة"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:178
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:179
 msgid ""
 "Temporarily bans access for IP addresses that have repeated login failures "
 "for the specified number of minutes. Useful to prevent attempts at guessing "
 "passwords. If set to zero, no banning is done."
 msgstr "يحظر الوصول مؤقتًا لعناوين IP التي لديها محاولات تسجيل دخول فاشلة متكررة لعدد الدقائق المحدد. مفيد لمنع محاولات تخمين كلمات المرور. إذا تم تعيينه على صفر، فلن يتم أي حظر."
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:182
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:183
 msgid "Number of login failures for ban"
 msgstr "عدد محاولات تسجيل الدخول الفاشلة للحظر"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:183
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:184
 msgid "The number of login failures after which an IP address is banned"
 msgstr "عدد محاولات تسجيل الدخول الفاشلة التي يتم بعدها حظر عنوان IP"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:185
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:186
 msgid "Ignored user-defined metadata fields"
 msgstr "حقول البيانات الوصفية المعرفة من قبل المستخدم التي تم تجاهلها"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:187
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:188
 #, python-brace-format
 msgid ""
 "Comma separated list of user-defined metadata fields that will not be "
@@ -46529,11 +46567,11 @@ msgid ""
 " {}"
 msgstr "قائمة مفصولة بفاصلات من حقول البيانات الوصفية المعرفة من قبل المستخدم والتي لن يتم عرضها بواسطة خادم المحتوى في عرضي /opds و /mobile. على سبيل المثال: {}"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:191
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:192
 msgid "Restrict displayed user-defined fields"
 msgstr "تقييد حقول المستخدم المعرفة المعروضة"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:193
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:194
 #, python-brace-format
 msgid ""
 "Comma separated list of user-defined metadata fields that will be displayed "
@@ -46541,22 +46579,22 @@ msgid ""
 "option, any fields not in this list will not be displayed. For example: {}"
 msgstr "قائمة مفصولة بفاصلات من حقول البيانات الوصفية المعرفة من قبل المستخدم والتي سيتم عرضها بواسطة خادم المحتوى في عرضي /opds و /mobile. إذا حددت هذا الخيار، فلن يتم عرض أي حقول غير موجودة في هذه القائمة. على سبيل المثال: {}"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:198
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:199
 msgid "Choose the default book list mode"
 msgstr "اختر وضع قائمة الكتب الافتراضي"
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:200
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:201
 msgid ""
 "Set the default book list mode that will be used for new users. Individual "
 "users can override the default in their own settings. The default is to use "
 "a cover grid."
 msgstr "حدد وضع قائمة الكتب الافتراضي الذي سيتم استخدامه للمستخدمين الجدد. يمكن للمستخدمين الفرديين تجاوز الإعداد الافتراضي في إعداداتهم الخاصة. الافتراضي هو استخدام شبكة أغلفة."
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:249
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:250
 msgid "By default, this option is disabled."
 msgstr "افتراضيًا، هذا الخيار معطل."
 
-#: /__w/calibre/calibre/src/calibre/srv/opts.py:249
+#: /__w/calibre/calibre/src/calibre/srv/opts.py:250
 msgid "By default, this option is enabled."
 msgstr "افتراضيًا، هذا الخيار ممكّن."
 

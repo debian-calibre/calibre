@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "2月 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "2月 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -121,7 +121,7 @@ calibre\-server\(ga传递参数时，用引号括起这些参数。例如: \(dq/
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-允許未經身份驗證的本地連接進行變更.  通常，如果您不開啟身份驗證，則伺服器以唯讀模式執行，從而不允許匿名使用者變更您的 calibre 書庫。此選項允許任何人從伺服器上執行的同一台電腦連接來進行變更。如果您想在沒有身份驗證的情況下執行伺服器，但仍然使用 calibredb 對您的 calibre 書庫進行變更，那麼這選項是非常有用。請注意，開啟這個選項後意味著在電腦上執行的任何程式都可以對您的 calibre 書庫進行變更。 預設情況下，此選項是停用的。
+允許未經身份驗證的本地連接進行變更.  Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. 預設情況下，此選項是停用的。
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "2월 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "2월 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,75 +40,45 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-:command:
-.nf
-\(ga
-.fi
-calibredb\(ga는 캘리버 데이터베이스에 대한 명령줄 인터페이스입니다.
-아래에 설명된 여러 하위 명령이 있습니다.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-\fBcalibredb\(ga는 경로로 지정된 캘리버 데이터베이스나 로컬 머신이나
-인터넷에서 실행되는 캘리버 :guilabel:\(ga콘텐츠 서버\(ga를 조작하는 데 사용할 수 있습니다.
-:command:\(gacalibre\-server\fP 프로그램을 사용하거나 기본 프로그램에서
-연결/공유  →  콘텐츠 서버 시작\(ga을 클릭하여, :guilabel:\(ga콘텐츠 서버 캘리버를
-시작할 수 있습니다. :command:
-.nf
-\(ga
-.fi
-calibredb\(ga는 캘리버 서재를 변경할 수 있으므로
-먼저 서버에서 인증을 설정해야 합니다. 이를 위한 두 가지 방법이 있습니다.
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-같은 컴퓨터에서 실행되는 서버에만 연결하려는 경우 콘텐츠 서버의
-.UNINDENT
-.sp
-\fB\-\-enable\-local\-write\fP 옵션을 사용하여 calibredb를 포함한 모든 프로그램이
-로컬에서 실행되도록 허용할 수 있습니다. 캘리버 데이터를 변경하려면
-컴퓨터를 사용하십시오. 주요 프로그램에서 서버를 실행할 때 이 옵션은
-.UNINDENT
-.UNINDENT
-.sp
-:guilabel:
-.nf
-\(ga
-.fi
-환경설정\->넷을 통한 공유\->고급\(ga에 있습니다.
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&. Be careful though,
+because some browsers, primarily Firefox, allow arbitrary websites to also
+access local servers. If you use Firefox, it is better to setup username
+and password, as described below.
 .IP \(bu 2
-인터넷을 통한 액세스를 활성화하려면 서버에서 사용자 계정을 설정하고
-.UNINDENT
-.sp
-\fB\-\-username\fP 및 \fB\-\-password\fP 옵션을 \fBcalibredb\(ga에
-사용하여 액세스합니다. \(ga\fP\-\-enable\-auth\(ga\(ga 옵션을 사용하고 
-.nf
-\(ga\(ga
-.fi
-\-\-manage\-users\(ga\(ga를
-사용하여 사용자 계정을 생성하여 :command:
-.nf
-\(ga
-.fi
-calibre\-server\(ga에 대한
-사용자 인증을 설정할 수 있습니다.
-주요 프로그램에서 서버를 실행하는 경우 :guilabel:
-.nf
-\(ga
-.fi
-환경설정\->넷을 통한 공유
-\->사용자이름/비밀번호\(ga를 사용하십시오.
-.UNINDENT
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-실행 중인 콘텐츠 서버에 연결하려면 서버의 URL을 \fB\-\-with\-library\fP 옵션으로
-전달하십시오. 자세한 내용과 예시는 해당 옵션 설명서를 참조하십시오.
+To connect to a running Content server, pass the URL of the server to the
+\fB\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 GLOBAL OPTIONS

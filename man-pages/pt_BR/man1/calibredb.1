@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "fevereiro 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "fevereiro 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,42 +40,35 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP é a interface de linha de comando para a base de dados do calibre. Ele tem
-vários sub\-comandos, documentados abaixo.
+O comando \fIcalibredb\fP é a interface de linha de comando para o banco de dados Calibre. Ele possui vários subcomandos, documentados abaixo.
 .sp
-\fBcalibredb\fP pode ser usado para manipular uma base de dados do calibre
-especificada pelo caminho ou um Servidor de conteúdo rodando na
-máquina local ou na internet. Você pode iniciar um
-Servidor de conteúdo usando o programa command:\fIcalibre\-server\fP
-ou na interface principal do calibre, clicando em Conectar/compartilhar  → 
-Iniciar o Servidor de conteúdo\&. Uma vez que o \fBcalibredb\fP pode fazer alterações nas suas
-bibliotecas do calibre, você deve configurar a autenticação no servidor primeiro. Há
-duas maneiras de se fazer isso:
-.INDENT 0.0
-.INDENT 3.5
+O comando \fIcalibredb\fP pode ser usado para manipular um banco de dados Calibre especificado por caminho ou um servidor de conteúdo Calibre em execução na máquina local ou pela internet. Você pode iniciar um servidor de conteúdo Calibre usando o programa \fIcalibre\-server\fP ou, no programa principal do Calibre, clicando em \fIConectar/Compartilhar \-> Iniciar servidor de conteúdo\fP\&. Como o comando \fIcalibredb\fP pode fazer alterações em suas bibliotecas Calibre, você deve configurar a autenticação no servidor primeiro. Existem duas maneiras de fazer isso:
 .INDENT 0.0
 .IP \(bu 2
-Se você planeja se conectar somente a um servidor rodando no mesmo computador,
+Se você planeja se conectar apenas a um servidor em execução no mesmo computador,
+.UNINDENT
+.sp
 você pode simplesmente usar a opção \fB\-\-enable\-local\-write\fP do
-Servidor de conteúdo, para permitir que qualquer programa, incluindo o calibredb, rodando no
-computador local, faça alterações aos seus dados do calibre. Ao iniciar,
-o servidor através da interface principal do calibre, esta opção está em
-Preferências → Compartilhar pela rede → Avançado\&.
+servidor de conteúdo, para permitir que qualquer programa, incluindo o calibredb, em execução no
+computador local faça alterações nos seus dados do Calibre. Ao executar o
+servidor a partir do programa principal do Calibre, essa opção está em
+Preferências → Compartilhamento pela rede → Avançado\&. Tenha cuidado,
+pois alguns navegadores, principalmente o Firefox, permitem que sites arbitrários também
+acessem servidores locais. Se você usa o Firefox, é melhor configurar um nome de usuário
+e senha, conforme descrito abaixo.
+.INDENT 0.0
 .IP \(bu 2
 Se você deseja habilitar o acesso pela internet, então você deve configurar
-contas de usuários no servidor e utilizar as opções \fB\-\-username\fP e \fB\-\-password\fP
-para o \fBcalibredb\fP conceder acesso. Você pode configurar
-a autenticação do usuário no \fBcalibre\-server\fP utilizando a opção \fB\-\-enable\-auth\fP
-e usando \fB\-\-manage\-users\fP para criar contas de usuários.
-Se você estiver rodando o servidor a partir da interface principal do calibre, use
-Preferências → Compartilhar pela rede → Exigir usuário e senha para acessar o servidor de conteúdo\&.
-.UNINDENT
-.UNINDENT
 .UNINDENT
 .sp
-Para se conectar a um Servidor de conteúdo rodando, passe a URL do servidor para a opção
-\fB\-\-with\-library\fP\&. Veja a documentação dessa opção para
-detalhes e exemplos.
+contas de usuário no servidor e usar as opções \fB\-\-username\fP e \fB\-\-password\fP
+no \fBcalibredb\fP para conceder acesso. Você pode configurar a autenticação de usuário para o comando \fIcalibre\-server\fP usando a opção \fI\-\-enable\-auth\fP
+e a opção \fI\-\-manage\-users\fP para criar as contas de usuário.
+.sp
+Se você estiver executando o servidor a partir do programa principal do Calibre, use:
+\fIPreferências \-> Compartilhamento pela rede \-> Exigir nome de usuário/senha\fP\&.
+.sp
+Para se conectar a um servidor de conteúdo em execução, passe a URL do servidor para a opção \fI\-\-with\-library\fP\&. Consulte a documentação dessa opção para obter detalhes e exemplos.
 .INDENT 0.0
 .IP \(bu 2
 OPÇÕES GLOBAIS

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "Februar 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "Februar 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -119,7 +119,7 @@ Rückgriff auf autom. erkannte Schnittstelle.        Falls es dem Server aus irg
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Erlauben Sie nicht authentifizierten lokalen Verbindungen, Änderungen vorzunehmen.  Wenn Sie die Authentifizierung nicht einschalten, arbeitet der Server normalerweise im Nur\-Lese\-Modus, damit anonyme Benutzer keine Änderungen an Ihren Calibre\-Bibliotheken vornehmen können. Mit dieser Option kann jeder, der sich von demselben Computer aus verbindet, auf dem der Server läuft, Änderungen vornehmen. Dies ist nützlich, wenn Sie den Server ohne Authentifizierung betreiben möchten, aber dennoch calibredb verwenden möchten, um Änderungen an Ihren Calibre\-Bibliotheken vorzunehmen. Beachten Sie, dass die Aktivierung dieser Option bedeutet, dass jedes Programm, das auf dem Computer läuft, Änderungen an Ihren Calibre\-Bibliotheken vornehmen kann. Standardmäßig ist diese Option deaktiviert.
+Erlauben Sie nicht authentifizierten lokalen Verbindungen, Änderungen vorzunehmen.  Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. Standardmäßig ist diese Option deaktiviert.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "fevereiro 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "fevereiro 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -117,7 +117,7 @@ Substituir pela interface detetada automaticamente.         Se. por algum motivo
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Permitir que ligações locais não autenticadas realizem alterações.  Normalmente, se não ativar a autenticação o servidor operará no modo de apenas leitura, para não permitir que utilizadores anónimos façam alterações nas suas bibliotecas Calibre. Essa opção permite que qualquer pessoa que se ligue no mesmo computador em que o servidor está a ser executado possa fazer alterações. Isto é útil se deseja executar o servidor sem autenticação, mas ainda usar o calibredb para fazer alterações nas suas bibliotecas Calibre. Note que ativar esta opção significa que qualquer programa em execução no computador também pode fazer alterações nas suas bibliotecas Calibre. Por predefinição, a opção esta desativada.
+Permitir que ligações locais não autenticadas realizem alterações.  Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. Por predefinição, a opção esta desativada.
 .UNINDENT
 .INDENT 0.0
 .TP

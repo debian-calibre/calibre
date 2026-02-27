@@ -61,7 +61,7 @@ from qt.core import (
 
 from calibre import human_readable, prepare_string_for_xml
 from calibre.constants import DEBUG, config_dir, islinux
-from calibre.ebooks.metadata import fmt_sidx, rating_to_stars
+from calibre.ebooks.metadata import authors_to_string, fmt_sidx, rating_to_stars
 from calibre.gui2 import clip_border_radius, config, empty_index, gprefs, rating_font, resolve_grid_color
 from calibre.gui2.dnd import path_from_qurl
 from calibre.gui2.gestures import GestureManager
@@ -616,10 +616,11 @@ class CoverDelegate(QStyledItemDelegate):
         width = self.original_width = gprefs['cover_grid_width']
         height = self.original_height = gprefs['cover_grid_height']
         self.original_show_title = show_title = gprefs['cover_grid_show_title']
-        self.original_show_emblems = gprefs['show_emblems']
+        self.original_flush_bottom = self.flush_bottom = gprefs['cover_grid_text_flush_bottom']
+        self.original_emblem_style = gprefs['emblem_style']
         self.orginal_emblem_size = gprefs['emblem_size']
         self.orginal_emblem_position = gprefs['emblem_position']
-        self.emblem_size = gprefs['emblem_size'] if self.original_show_emblems else 0
+        self.emblem_size = gprefs['emblem_size'] if self.original_emblem_style != 'none' else 0
         try:
             self.gutter_position = getattr(self, self.orginal_emblem_position.upper())
         except Exception:
@@ -643,7 +644,7 @@ class CoverDelegate(QStyledItemDelegate):
                 sz = f.pointSize() * self.parent().logicalDpiY() / 72.0
             self.title_height = int(max(25, sz + 10))
         self.item_size = self.cover_size + QSize(2 * self.MARGIN, (2 * self.MARGIN) + self.title_height)
-        if self.emblem_size > 0:
+        if self.emblem_size > 0 and self.original_emblem_style == 'gutter':
             extra = self.emblem_size + self.MARGIN
             self.item_size += QSize(extra, 0) if self.gutter_position in (self.LEFT, self.RIGHT) else QSize(0, extra)
         self.calculate_spacing()
@@ -734,7 +735,7 @@ class CoverDelegate(QStyledItemDelegate):
         try:
             rect = option.rect
             rect.adjust(self.MARGIN, self.MARGIN, -self.MARGIN, -self.MARGIN)
-            if self.emblem_size > 0:
+            if self.emblem_size > 0 and self.original_emblem_style == 'gutter':
                 self.paint_emblems(painter, rect, emblems)
             orect = QRect(rect)
             trect = QRect(rect)
@@ -743,7 +744,7 @@ class CoverDelegate(QStyledItemDelegate):
                 trect.setTop(trect.bottom() - self.title_height + 5)
             if cover.isNull():
                 title = db.field_for('title', book_id, default_value='')
-                authors = ' & '.join(db.field_for('authors', book_id, default_value=()))
+                authors = authors_to_string(db.field_for('authors', book_id, default_value=()))
                 painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
                 painter.drawText(rect, Qt.AlignmentFlag.AlignCenter|Qt.TextFlag.TextWordWrap, f'{title}\n\n{authors}')
                 if self.title_height != 0:
@@ -760,7 +761,12 @@ class CoverDelegate(QStyledItemDelegate):
                 rect.adjust(dx, dy, -dx, -dy)
                 self.paint_cover(painter, rect, cover)
                 if self.title_height != 0:
-                    self.paint_title(painter, trect, db, book_id)
+                    if self.flush_bottom:
+                        trect.setTop(rect.bottom() + 5)
+                    self.paint_title(painter, trect, db, book_id, align_top=self.flush_bottom)
+            if self.original_emblem_style == 'emboss' and emblems:
+                self.paint_emblems_on_cover(painter, rect, emblems)
+                return
             if self.emblem_size > 0:
                 # We don't draw embossed emblems as the ondevice/marked emblems are drawn in the gutter
                 return
@@ -784,15 +790,20 @@ class CoverDelegate(QStyledItemDelegate):
         with clip_border_radius(painter, rect):
             painter.drawPixmap(rect, pixmap)
 
-    def paint_title(self, painter, rect, db, book_id):
+    def paint_title(self, painter, rect, db, book_id, align_top: bool = False):
         painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
         title, is_stars = self.render_field(db, book_id)
         if is_stars:
             painter.setFont(self.rating_font)
         metrics = painter.fontMetrics()
         painter.setPen(self.highlight_color)
-        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter|Qt.TextFlag.TextSingleLine,
-                            metrics.elidedText(title, Qt.TextElideMode.ElideRight, rect.width()))
+        text = metrics.elidedText(title, Qt.TextElideMode.ElideRight, rect.width())
+        align = Qt.TextFlag.TextSingleLine
+        if align_top:
+            align |= Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter
+        else:
+            align |= Qt.AlignmentFlag.AlignCenter
+        painter.drawText(rect, align, text)
 
     def paint_emblems(self, painter, rect, emblems):
         gutter = self.emblem_size + self.MARGIN
@@ -820,6 +831,41 @@ class CoverDelegate(QStyledItemDelegate):
                 rect = QRect(grect)
                 rect.setWidth(int(emblem.width() / emblem.devicePixelRatio())), rect.setHeight(int(emblem.height() / emblem.devicePixelRatio()))
                 painter.drawPixmap(rect, emblem)
+        finally:
+            painter.restore()
+
+    def paint_emblems_on_cover(self, painter, rect, emblems):
+        if not (esz := self.emblem_size):
+            return
+        r = gprefs['cover_corner_radius']
+        if r > 0:
+            if gprefs['cover_corner_radius_unit'] == '%':
+                corner_inset = int(r / 100 * min(rect.width(), rect.height()))
+            else:
+                corner_inset = int(r)
+        else:
+            corner_inset = 0
+        margin = self.MARGIN
+        rect = rect.adjusted(corner_inset, corner_inset, -corner_inset, -corner_inset - margin)
+        available_height = rect.height()
+        sz_with_margin = esz + margin
+        max_per_edge = max(1, available_height // sz_with_margin)
+        painter.save()
+        try:
+            painter.setClipRect(rect)
+            for i, emblem in enumerate(emblems):
+                if i < max_per_edge:
+                    x = rect.left()
+                    y = rect.top() + i * sz_with_margin
+                else:
+                    j = i - max_per_edge
+                    if j >= max_per_edge:
+                        break
+                    x = rect.right() - esz
+                    y = rect.top() + j * sz_with_margin
+                ew = int(emblem.width() / emblem.devicePixelRatio())
+                eh = int(emblem.height() / emblem.devicePixelRatio())
+                painter.drawPixmap(QRect(x, y, ew, eh), emblem)
         finally:
             painter.restore()
 
@@ -1022,9 +1068,10 @@ class GridView(MomentumScrollMixin, QListView):
         )
         if (size_changed or gprefs[
             'cover_grid_show_title'] != self.delegate.original_show_title or gprefs[
-                'show_emblems'] != self.delegate.original_show_emblems or gprefs[
+                'emblem_style'] != self.delegate.original_emblem_style or gprefs[
                     'emblem_size'] != self.delegate.orginal_emblem_size or gprefs[
-                        'emblem_position'] != self.delegate.orginal_emblem_position):
+                        'emblem_position'] != self.delegate.orginal_emblem_position or gprefs[
+                            'cover_grid_text_flush_bottom'] != self.delegate.original_flush_bottom):
             self.delegate.set_dimensions()
             self.setSpacing(self.delegate.spacing)
         if gprefs['cover_grid_spacing'] != self.delegate.original_spacing:

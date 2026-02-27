@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "február 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "február 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,53 +40,45 @@ calibredb parancs [kapcsolók] [argumentumok]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP a Calibre adatbázis parancssori felülete. Számos
-al\-parancsa van, amelyeket alább dokumentálunk.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-\fBcalibredb\fP a :command:\(ga az elérési útvonal által megadott Calibre
-adatbázis, vagy a helyi gépen vagy az interneten futó Content
-server Calibre manipulálására használható. A Calibre Content
-server programot vagy a \fBcalibre\-server\fP programmal indíthatja el,
-vagy a Calibre főprogramban a Connect/share  →  Start Content
-server gombra kattintva. Mivel a \fBcalibredb\fP módosíthatja a
-Calibre könyvtárakat, először be kell állítania a hitelesítést a szerveren.
-Ennek két módja van:
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Ha csak egy ugyanazon a számítógépen futó kiszolgálóhoz kíván
-csatlakozni, egyszerűen használja a tartalomkiszolgáló \fB\-\-enable\-local\-write\fP
-opcióját, hogy engedélyezze a helyi számítógépen futó programokat,
-beleértve a calibredb\-t is. hogy módosítsa a Calibre adatokat. Amikor a
-szervert a fő Calibre programból futtatja, ez az opció a :guilabel:
-.nf
-\(ga
-.fi
-Beállítások\-
->Hálózati megosztás\->Speciális menüpontban található.
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&. Be careful though,
+because some browsers, primarily Firefox, allow arbitrary websites to also
+access local servers. If you use Firefox, it is better to setup username
+and password, as described below.
 .IP \(bu 2
-Ha engedélyezni szeretné az interneten keresztüli hozzáférést, akkor állítson be
-felhasználói fiókokat a szerveren, és használja az \fB\-\-username\fP és \fB\-\-password\fP opciókat
-a \fBcalibredb\fP hozzáférésének beállításához. Beállíthatja a felhasználói hitelesítést a
-\fBcalibre\-server\fP számára az \fB\-\-enable\-auth\(ga\(gaopció használatával és a \(ga\(ga\-\-manage\-users\fP
-használatával a felhasználói fiókok létrehozásához. Ha a szervert a fő Calibre programból
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
-.UNINDENT
-.INDENT 0.0
-.TP
-.B futtatja, használja a :guilabel:
-.nf
-\(ga
-.fi
-Beállítások\->Hálózati megosztás\->A Tartalomszolgáltató eléréséhez
-felhasználói név és jelszó szükséges\(ga parancsot.
 .UNINDENT
 .sp
-Egy futó tartalomkiszolgálóhoz való csatlakozáshoz adja meg a kiszolgáló
-URL címét az \fB\-\-with\-library\fP opciónak. A részletekért és példákért
-tekintse meg az opció dokumentációját.
+To connect to a running Content server, pass the URL of the server to the
+\fB\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 GLOBÁLIS BEÁLLÍTÁSOK

@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# akihiko tanae (tanaeakihiko), 2025
+# akihiko tanae (tanaeakihiko), 2025-2026
 # EbXpJ6bp <ebxpj6bp@outlook.jp>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-02-25 10:21+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025\n"
+"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +88,7 @@ msgid ""
 "replace. The checkpointing functionality is in addition to the normal "
 "undo/redo mechanism when editing individual files. Checkpoints are needed "
 "for when changes are spread over multiple files in the book."
-msgstr ""
+msgstr "便利な機能の一つに :guilabel:`チェックポイント` があります。大規模な編集作業に着手する前に、チェックポイントを作成することができます。チェックポイントは本の現在の状態を保存し、後日変更内容が気に入らなくなった場合は、チェックポイントを作成した時点の状態に戻すことができます。チェックポイントを作成するには、 :guilabel:`編集 -> チェックポイントの作成` を使用します。また、グローバル検索や置換などの自動化ツールを実行すると、チェックポイントが自動的に作成されます。チェックポイント機能は、個々のファイルを編集する際の通常の元に戻す/やり直し機能に加えて使用できます。チェックポイントは、複数のファイルに本の変更が分散している場合に必要です。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:55
 msgid ""
@@ -247,7 +247,7 @@ msgid ""
 "the user ever converts the EPUB file in calibre to another format. This is "
 "because when converting, calibre assumes that the marked title page contains"
 " only the cover and no other content."
-msgstr ""
+msgstr "さらに、EPUBファイルには *タイトルページ* という概念があります。タイトルページとは、本のタイトルページ/表紙として機能するHTMLファイルです。EPUB編集時に、HTMLファイルを右クリックすることで、タイトルページとしてマークすることができます。マークしたファイルには表紙情報のみが含まれていることに注意してください。最初の章など、他のコンテンツが含まれている場合、ユーザーがcalibreでEPUBファイルを別の形式に変換すると、そのコンテンツは失われます。これは、calibreが変換時にマークされたタイトルページには表紙のみが含まれており、他のコンテンツは含まれていないと想定するためです。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:163
 msgid "Deleting files"
@@ -428,7 +428,7 @@ msgid ""
 "<i>word</i>.`` you can search for ``on a word`` and it will be found even "
 "though there is an ``<i>`` tag in the middle. Use this tool via the "
 ":guilabel:`Search->Search ignoring HTML markup` menu item."
-msgstr ""
+msgstr "テキスト間のHTMLタグを無視して検索するための専用ツールもあります。例えば、本に ``<i>単語</i>を強調`` というHTMLがある場合、``単語`` で検索すると、途中に ``<i>``タグがあっても検索されます。このツールは、:guilabel:`検索 -> HTMLマークアップを無視して検索` メニュー項目から使用できます。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:287
 msgid "Automated tools"
@@ -816,7 +816,7 @@ msgid ""
 " cause the cursor in the editor to be positioned over the element you "
 "clicked. If you click a link pointing to another file in the book, that file"
 " will be opened in the edit and the preview panel, automatically."
-msgstr ""
+msgstr "ライブプレビューパネルでは、変更内容がリアルタイムで表示されます（1～2秒の遅延あり）。HTMLまたはCSSファイルを編集すると、プレビューパネルが自動的に更新され、変更内容が反映されます。エディター内でカーソルを動かすと、プレビューパネルはその位置を追跡し、本の対応する位置を表示します。プレビューパネル内をクリックすると、エディター内のカーソルがクリックした要素上に移動します。本の別のファイルへのリンクをクリックすると、そのファイルが自動的にエディターとプレビューパネルで開きます。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:550
 msgid ""
@@ -837,7 +837,7 @@ msgid ""
 "embedded fonts that use font name aliasing. Use the preview panel while you "
 "are working on the book, but once you are done, review it in an actual "
 "reader device or software emulator."
-msgstr ""
+msgstr "プレビューパネルでは、テキストがどのように表示されるかを確認できます。ただし、プレビューパネルは実際のリーダーデバイスで実際に本をテストする代わりにはなりません。実際のリーダーよりも優れている点と劣る点があります。ほとんどのリーダーデバイスよりも、エラーや不正確なマークアップをはるかに許容します。また、ページ余白、改ページ、フォント名エイリアシングを使用する埋め込みフォントは表示されません。本の作業中はプレビューパネルを使用してください。作業が完了したら、実際のリーダーデバイスまたはソフトウェアエミュレータで確認してください。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:564
 msgid ""
@@ -1151,7 +1151,7 @@ msgid ""
 "can double click entries in the :guilabel:`Source` column to jump to where "
 "the link is defined and entries in the :guilabel:`Target` column to jump to "
 "where the link points."
-msgstr ""
+msgstr "エディターには便利な *レポート* ツール（ :guilabel:`ツール -> レポート` ）が搭載されており、本で使用されているファイル、画像、リンク、単語、文字、スタイルの概要を表示します。レポートの各行はホットリンクされています。行をダブルクリックすると、その項目が使用されている箇所、または定義されている箇所（該当する場合）にジャンプします。例えば、 :guilabel:`リンク` ビューでは、 :guilabel:`ソース` 列のエントリをダブルクリックするとリンクが定義されている箇所にジャンプし、 :guilabel:`ターゲット` 列のエントリをダブルクリックするとリンク先に移動できます。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:798
 msgid "The Reports tool with information and statistics about the book"

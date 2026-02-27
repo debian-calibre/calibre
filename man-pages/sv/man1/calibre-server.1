@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "februari 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "februari 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -121,7 +121,7 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt, om du inte aktiverar autentisering, fungerar servern i skrivskyddat läge för att inte tillåta anonyma användare att göra ändringar i dina calibre\-bibliotek. Med det här alternativet kan alla som ansluter från samma dator som servern körs göra ändringar. Detta är användbart om du vill köra servern utan autentisering men ändå använder calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet betyder det att alla program som körs på datorn kan göra ändringar i dina calibre\-bibliotek. Som standard är det här alternativet inaktiverat.
+Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt sett, om du inte aktiverar autentisering, körs servern i skrivskyddat läge, så att anonyma användare inte kan göra ändringar i dina calibre\-bibliotek. Det här alternativet tillåter vem som helst som ansluter från samma dator som servern körs på att göra ändringar. Detta är användbart om du vill köra servern utan autentisering men ändå använda calibredb för att göra ändringar i dina calibre\-bibliotek. Observera att om du aktiverar det här alternativet kan alla program som körs på datorn göra ändringar i dina calibre\-bibliotek. I synnerhet tillåter webbläsaren Firefox även godtyckliga webbplatser att göra det. Som standard är det här alternativet inaktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP

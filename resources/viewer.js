@@ -28866,7 +28866,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.3.1";
+        CALIBRE_VERSION = "9.4.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -45154,6 +45154,7 @@ return this.__repr__();
         var create_font_size_panel = ρσ_modules["read_book.prefs.font_size"].create_font_size_panel;
 
         var time_formatter = ρσ_modules["read_book.prefs.head_foot"].time_formatter;
+        var format_time_left = ρσ_modules["read_book.prefs.head_foot"].format_time_left;
 
         var create_prefs_panel = ρσ_modules["read_book.prefs.main"].create_prefs_panel;
 
@@ -45576,7 +45577,7 @@ return this.__repr__();
         MainOverlay.__handles_kwarg_interpolation__ = MainOverlay.prototype.__init__.__handles_kwarg_interpolation__;
         MainOverlay.prototype.show = function show(container) {
             var self = this;
-            var icon_size, sd, sync_action, delete_action, reload_action, back_action, forward_action, nav_actions, reload_actions, editable_formats, fmt, bookmarks_action, highlights_action, toc_actions, actions_div, home_action, library_action, book_action, full_screen_actions, text, asa, no_selection_bar, copy_actions, renderer, c, b;
+            var icon_size, sd, sync_action, delete_action, reload_action, back_action, forward_action, nav_actions, reload_actions, editable_formats, fmt, bookmarks_action, highlights_action, reading_stats_action, toc_actions, actions_div, home_action, library_action, book_action, full_screen_actions, text, asa, no_selection_bar, copy_actions, renderer, c, b;
             self.container_id = container.getAttribute("id");
             icon_size = "3.5ex";
             sd = get_session_data();
@@ -45602,7 +45603,7 @@ return this.__repr__();
             nav_actions = E.ul(back_action, forward_action);
             if (runtime.is_standalone_viewer) {
                 reload_actions = E.ul(ac(_("Open book"), _("Open a book"), self.overlay.open_book, "book"), reload_action);
-                editable_formats = ["EPUB", "AZW3", "KEPUB"];
+                editable_formats = ["KEPUB", "AZW3", "EPUB"];
                 fmt = ρσ_exists.d(ρσ_exists.d(self.overlay.view).book).manifest.book_format || "";
                 if (ρσ_in(fmt.toUpperCase(), editable_formats)) {
                     reload_actions.appendChild(ac(_("Edit book"), _("Edit this book"), self.overlay.view.edit_book, "edit"));
@@ -45620,9 +45621,18 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })(), "image");
+            reading_stats_action = ac(_("Reading stats"), _("Show reading statistics for this book"), (function() {
+                var ρσ_anonfunc = function () {
+                    self.overlay.show_reading_stats();
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.overlay"}
+                });
+                return ρσ_anonfunc;
+            })(), "hourglass");
             toc_actions = E.ul(ac(_("Table of Contents"), _("Browse the Table of Contents"), self.overlay.show_toc, "toc"));
             toc_actions.appendChild(ac(_("Reference mode"), _("Toggle the Reference mode"), self.overlay.toggle_reference_mode, "reference-mode"));
-            actions_div = ρσ_interpolate_kwargs.call(E, E.div, [nav_actions, E.ul(ac(_("Search"), _("Search for text in this book"), self.overlay.show_search, "search"), ac(_("Go to"), _("Go to a specific location in the book"), self.overlay.show_goto, "chevron-right")), reload_actions, toc_actions, E.ul(highlights_action, bookmarks_action), E.ul(ac(_("Font size"), _("Change text size"), self.overlay.show_font_size_chooser, "Aa", true), ac(_("Preferences"), _("Configure the E-book viewer"), self.overlay.show_prefs, "cogs"))].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_ACTIONS_CLASS})]));
+            actions_div = ρσ_interpolate_kwargs.call(E, E.div, [nav_actions, E.ul(ac(_("Search"), _("Search for text in this book"), self.overlay.show_search, "search"), ac(_("Go to"), _("Go to a specific location in the book"), self.overlay.show_goto, "chevron-right")), reload_actions, toc_actions, E.ul(highlights_action, bookmarks_action, reading_stats_action), E.ul(ac(_("Font size"), _("Change text size"), self.overlay.show_font_size_chooser, "Aa", true), ac(_("Preferences"), _("Configure the E-book viewer"), self.overlay.show_prefs, "cogs"))].concat([ρσ_desugar_kwargs({class_: MAIN_OVERLAY_ACTIONS_CLASS})]));
             if (!runtime.is_standalone_viewer) {
                 home_action = ac(_("Home"), _("Return to the home page"), (function() {
                     var ρσ_anonfunc = function () {
@@ -46286,6 +46296,201 @@ return this.__repr__();
         };
         Object.defineProperty(OpenBook.prototype, "__bases__", {value: []});
 
+        function ReadingStatsOverlay() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            ReadingStatsOverlay.prototype.__bind_methods__.call(this);
+            ReadingStatsOverlay.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(ReadingStatsOverlay.prototype, "__bind_methods__", {value: function () {
+            this.on_container_click = ReadingStatsOverlay.prototype.on_container_click.bind(this);
+            this.show = ReadingStatsOverlay.prototype.show.bind(this);
+        }});
+        ReadingStatsOverlay.prototype.__init__ = function __init__(overlay) {
+            var self = this;
+            self.overlay = overlay;
+        };
+        if (!ReadingStatsOverlay.prototype.__init__.__argnames__) Object.defineProperties(ReadingStatsOverlay.prototype.__init__, {
+            __argnames__ : {value: ["overlay"]},
+            __module__ : {value: "read_book.overlay"}
+        });
+        ReadingStatsOverlay.__argnames__ = ReadingStatsOverlay.prototype.__init__.__argnames__;
+        ReadingStatsOverlay.__handles_kwarg_interpolation__ = ReadingStatsOverlay.prototype.__init__.__handles_kwarg_interpolation__;
+        ReadingStatsOverlay.prototype.on_container_click = function on_container_click(evt) {
+            var self = this;
+        };
+        if (!ReadingStatsOverlay.prototype.on_container_click.__argnames__) Object.defineProperties(ReadingStatsOverlay.prototype.on_container_click, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.overlay"}
+        });
+        ReadingStatsOverlay.prototype.show = function show(container) {
+            var self = this;
+            var view, book, spine, current_name, current_idx, file_progress, chapter_length, remaining_chars, chapter_remaining_time, chapter_done_pct, total_chapters, next_idx, next_name, next_chapter_time, next_length, book_remaining_chars, spine_idx, book_remaining_time, content, chapter_times, bar_data, max_time, name, length, is_current, actual_t, rem, t, is_actual, i, BAR_H, BAR_W, BAR_GAP, COLOR_ACTUAL, COLOR_CURRENT, COLOR_ESTIMATED, COLOR_PAST_EST, graph_section, bars_row, bd, h, color, outline, label, tip, bar, scroll_offset, legend;
+            simple_overlay_title(_("Reading statistics"), self.overlay, container);
+            view = self.overlay.view;
+            book = view.book;
+            if (!book || !book.manifest) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("No book open")].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1em"})])));
+                return;
+            }
+            spine = book.manifest.spine;
+            current_name = view.currently_showing.name;
+            current_idx = spine.indexOf(current_name);
+            file_progress = view.current_file_progress_frac;
+            chapter_length = ρσ_exists.d((ρσ_expr_temp = book.manifest.files)[(typeof current_name === "number" && current_name < 0) ? ρσ_expr_temp.length + current_name : current_name]).length || 0;
+            remaining_chars = chapter_length * max(0, 1 - file_progress);
+            chapter_remaining_time = view.timers.time_for(remaining_chars);
+            chapter_done_pct = Math.round(file_progress * 100);
+            total_chapters = spine.length;
+            next_idx = current_idx + 1;
+            next_name = (next_idx < spine.length) ? spine[(typeof next_idx === "number" && next_idx < 0) ? spine.length + next_idx : next_idx] : null;
+            next_chapter_time = null;
+            if (next_name) {
+                next_length = ρσ_exists.d((ρσ_expr_temp = book.manifest.files)[(typeof next_name === "number" && next_name < 0) ? ρσ_expr_temp.length + next_name : next_name]).length || 0;
+                next_chapter_time = view.timers.time_for(next_length);
+            }
+            book_remaining_chars = remaining_chars;
+            for (var ρσ_Index2 = next_idx; ρσ_Index2 < spine.length; ρσ_Index2++) {
+                spine_idx = ρσ_Index2;
+                book_remaining_chars += ρσ_exists.d((ρσ_expr_temp = book.manifest.files)[ρσ_bound_index(spine[(typeof spine_idx === "number" && spine_idx < 0) ? spine.length + spine_idx : spine_idx], ρσ_expr_temp)]).length || 0;
+            }
+            book_remaining_time = view.timers.time_for(book_remaining_chars);
+            content = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 1ex 1em"})]);
+            if (current_idx >= 0) {
+                content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [(ρσ_expr_temp = _("Chapter {current} of {total}: {pct}% complete"), ρσ_interpolate_kwargs.call(ρσ_expr_temp, ρσ_expr_temp.format, [ρσ_desugar_kwargs({current: current_idx + 1, total: total_chapters, pct: chapter_done_pct})]))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0; font-weight: bold"})])));
+            }
+            if (chapter_remaining_time !== null) {
+                content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Time remaining in chapter: {}").format(format_time_left(chapter_remaining_time))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+            } else {
+                content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Time remaining in chapter: {}").format(_("Calculating…"))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+            }
+            if (book_remaining_time !== null) {
+                content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Time remaining in book: {}").format(format_time_left(book_remaining_time))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+            } else {
+                content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Time remaining in book: {}").format(_("Calculating…"))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+            }
+            if (next_name) {
+                if (next_chapter_time !== null) {
+                    content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Time to read next chapter: {}").format(format_time_left(next_chapter_time))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+                } else {
+                    content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Time to read next chapter: {}").format(_("Calculating…"))].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+                }
+            } else {
+                content.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("This is the last chapter")].concat([ρσ_desugar_kwargs({style: "margin: 0.5ex 0"})])));
+            }
+            container.appendChild(content);
+            chapter_times = view.timers.chapter_times;
+            bar_data = [];
+            max_time = 0;
+            for (var ρσ_Index3 = 0; ρσ_Index3 < spine.length; ρσ_Index3++) {
+                i = ρσ_Index3;
+                name = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
+                length = ρσ_exists.d((ρσ_expr_temp = book.manifest.files)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]).length || 0;
+                is_current = (i === current_idx || typeof i === "object" && ρσ_equals(i, current_idx));
+                if (is_current) {
+                    actual_t = chapter_times[(typeof name === "number" && name < 0) ? chapter_times.length + name : name] || 0;
+                    rem = view.timers.time_for(remaining_chars);
+                    t = (rem !== null) ? actual_t + rem : view.timers.time_for(length);
+                    is_actual = actual_t > 0;
+                } else if (i < current_idx) {
+                    actual_t = chapter_times[(typeof name === "number" && name < 0) ? chapter_times.length + name : name];
+                    if (actual_t && actual_t > 0) {
+                        t = actual_t;
+                        is_actual = true;
+                    } else {
+                        t = view.timers.time_for(length);
+                        is_actual = false;
+                    }
+                } else {
+                    t = view.timers.time_for(length);
+                    is_actual = false;
+                }
+                if (t !== null && t > 0) {
+                    max_time = Math.max(max_time, t);
+                }
+                bar_data.push((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["t"] = t;
+                    ρσ_d["is_actual"] = is_actual;
+                    ρσ_d["is_current"] = is_current;
+                    ρσ_d["past"] = i < current_idx;
+                    return ρσ_d;
+                }).call(this));
+            }
+            BAR_H = 120;
+            BAR_W = 22;
+            BAR_GAP = 3;
+            COLOR_ACTUAL = "#27ae60";
+            COLOR_CURRENT = "#e67e22";
+            COLOR_ESTIMATED = "#7fb3d3";
+            COLOR_PAST_EST = "#95a5a6";
+            graph_section = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 0 1em 1em 1em"})]);
+            graph_section.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Chapter reading times")].concat([ρσ_desugar_kwargs({style: "font-size: smaller; font-weight: bold; margin-bottom: 0.5ex"})])));
+            if (max_time > 0) {
+                bars_row = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display: flex; align-items: flex-end; overflow-x: auto; " + ("border-bottom: 1px solid currentColor; min-height: " + ρσ_str.format("{}", BAR_H + 4) + "px; padding-top: 4px")})]);
+                for (var ρσ_Index4 = 0; ρσ_Index4 < bar_data.length; ρσ_Index4++) {
+                    i = ρσ_Index4;
+                    bd = bar_data[(typeof i === "number" && i < 0) ? bar_data.length + i : i];
+                    t = bd.t;
+                    if (t !== null && t > 0) {
+                        h = max(2, Math.round(t / max_time * BAR_H));
+                    } else {
+                        h = 2;
+                    }
+                    if (bd.is_current) {
+                        color = COLOR_CURRENT;
+                    } else if (bd.is_actual) {
+                        color = COLOR_ACTUAL;
+                    } else if (bd.past) {
+                        color = COLOR_PAST_EST;
+                    } else {
+                        color = COLOR_ESTIMATED;
+                    }
+                    outline = (bd.is_current) ? "outline: 2px solid currentColor; outline-offset: 1px; " : "";
+                    label = str(i + 1);
+                    tip = _("Chapter {}").format(i + 1);
+                    if (t && t > 0) {
+                        tip += ": " + format_time_left(t);
+                    } else if (bd.is_current || bd.past) {
+                        tip += " (" + _("no data") + ")";
+                    } else {
+                        tip += " (" + _("Calculating…") + ")";
+                    }
+                    bar = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "width: " + ρσ_str.format("{}", BAR_W) + "px; height: " + ρσ_str.format("{}", h) + "px; background-color: " + ρσ_str.format("{}", color) + "; " + ρσ_str.format("{}", outline) + ""})]), ρσ_interpolate_kwargs.call(E, E.div, [label].concat([ρσ_desugar_kwargs({style: "font-size: 9px; text-align: center; width: " + ρσ_str.format("{}", BAR_W) + "px; margin-top: 2px; overflow: hidden"})]))].concat([ρσ_desugar_kwargs({style: "display: inline-flex; flex-direction: column; align-items: center; " + ("width: " + ρσ_str.format("{}", BAR_W) + "px; flex-shrink: 0; margin-right: " + ρσ_str.format("{}", BAR_GAP) + "px; cursor: default"), title: tip})]));
+                    bars_row.appendChild(bar);
+                }
+                graph_section.appendChild(bars_row);
+                if (current_idx >= 0) {
+                    scroll_offset = max(0, current_idx * (BAR_W + BAR_GAP) - 80);
+                    window.setTimeout((function() {
+                        var ρσ_anonfunc = function () {
+                            bars_row.scrollLeft = scroll_offset;
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.overlay"}
+                        });
+                        return ρσ_anonfunc;
+                    })(), 0);
+                }
+            } else {
+                graph_section.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Start reading to see chapter time statistics")].concat([ρσ_desugar_kwargs({style: "color: {}; font-style: italic".format(get_color("faded-text"))})])));
+            }
+            legend = ρσ_interpolate_kwargs.call(E, E.div, [E.span(ρσ_interpolate_kwargs.call(E, E.span, ["■ "].concat([ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", COLOR_ACTUAL) + ""})])), _("Actual time")), E.span(ρσ_interpolate_kwargs.call(E, E.span, ["■ "].concat([ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", COLOR_CURRENT) + ""})])), _("Current chapter")), E.span(ρσ_interpolate_kwargs.call(E, E.span, ["■ "].concat([ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", COLOR_ESTIMATED) + ""})])), _("Estimated")), E.span(ρσ_interpolate_kwargs.call(E, E.span, ["■ "].concat([ρσ_desugar_kwargs({style: "color: " + ρσ_str.format("{}", COLOR_PAST_EST) + ""})])), _("Previous (estimated)"))].concat([ρσ_desugar_kwargs({style: "display: flex; gap: 1em; margin-top: 0.5ex; font-size: smaller; flex-wrap: wrap"})]));
+            graph_section.appendChild(legend);
+            container.appendChild(graph_section);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("For reading stats, a \"chapter\" is a single internal file inside the larger book. If you see very few \"chapters\" above, then try converting your book to EPUB in calibre, that will often automatically split up the book into per chapter files.")].concat([ρσ_desugar_kwargs({style: "padding: 0 1em 1em 1em; font-size: smaller"})])));
+        };
+        if (!ReadingStatsOverlay.prototype.show.__argnames__) Object.defineProperties(ReadingStatsOverlay.prototype.show, {
+            __argnames__ : {value: ["container"]},
+            __module__ : {value: "read_book.overlay"}
+        });
+        ReadingStatsOverlay.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        ReadingStatsOverlay.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(ReadingStatsOverlay.prototype, "__bases__", {value: []});
+
         function Overlay() {
             if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
             Overlay.prototype.__bind_methods__.call(this);
@@ -46317,6 +46522,7 @@ return this.__repr__();
             this.show_ask_for_location = Overlay.prototype.show_ask_for_location.bind(this);
             this.show_page_list = Overlay.prototype.show_page_list.bind(this);
             this.show_search = Overlay.prototype.show_search.bind(this);
+            this.show_reading_stats = Overlay.prototype.show_reading_stats.bind(this);
             this.show_prefs = Overlay.prototype.show_prefs.bind(this);
             this.show_library = Overlay.prototype.show_library.bind(this);
             this.show_book_page = Overlay.prototype.show_book_page.bind(this);
@@ -46692,9 +46898,9 @@ return this.__repr__();
                 }
                 container.lastChild.appendChild(table);
                 render_metadata(mi, table, null, "html { font-size: " + ρσ_str.format("{}", document.documentElement.style.fontSize) + " }");
-                var ρσ_Iter2 = ρσ_Iterable(table.querySelectorAll("a[href]"));
-                for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                    a = ρσ_Iter2[ρσ_Index2];
+                var ρσ_Iter5 = ρσ_Iterable(table.querySelectorAll("a[href]"));
+                for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
+                    a = ρσ_Iter5[ρσ_Index5];
                     a.removeAttribute("href");
                     a.removeAttribute("title");
                     a.classList.remove("blue-link");
@@ -46758,6 +46964,15 @@ return this.__repr__();
             self.view.show_search();
         };
         if (!Overlay.prototype.show_search.__module__) Object.defineProperties(Overlay.prototype.show_search, {
+            __module__ : {value: "read_book.overlay"}
+        });
+        Overlay.prototype.show_reading_stats = function show_reading_stats() {
+            var self = this;
+            self.hide_current_panel();
+            self.panels.push(new ReadingStatsOverlay(self));
+            self.show_current_panel();
+        };
+        if (!Overlay.prototype.show_reading_stats.__module__) Object.defineProperties(Overlay.prototype.show_reading_stats, {
             __module__ : {value: "read_book.overlay"}
         });
         Overlay.prototype.show_prefs = function show_prefs() {
@@ -46838,6 +47053,7 @@ return this.__repr__();
         ρσ_modules["read_book.overlay"].ProfilesOverlay = ProfilesOverlay;
         ρσ_modules["read_book.overlay"].FontSizeOverlay = FontSizeOverlay;
         ρσ_modules["read_book.overlay"].OpenBook = OpenBook;
+        ρσ_modules["read_book.overlay"].ReadingStatsOverlay = ReadingStatsOverlay;
         ρσ_modules["read_book.overlay"].Overlay = Overlay;
     })();
 
@@ -49660,6 +49876,7 @@ return this.__repr__();
         }
         Object.defineProperty(Timers.prototype, "__bind_methods__", {value: function () {
             this.start_book = Timers.prototype.start_book.bind(this);
+            this.set_chapter = Timers.prototype.set_chapter.bind(this);
             this.reset_read_timer = Timers.prototype.reset_read_timer.bind(this);
             this.calculate = Timers.prototype.calculate.bind(this);
             this.on_human_scroll = Timers.prototype.on_human_scroll.bind(this);
@@ -49670,6 +49887,8 @@ return this.__repr__();
             self.reset_read_timer();
             self.rates = [];
             self.average = self.stddev = 0;
+            self.chapter_times = {};
+            self.current_chapter = null;
         };
         if (!Timers.prototype.__init__.__module__) Object.defineProperties(Timers.prototype.__init__, {
             __module__ : {value: "read_book.timers"}
@@ -49680,13 +49899,26 @@ return this.__repr__();
             var self = this;
             self.reset_read_timer();
             self.rates = [];
+            self.chapter_times = {};
+            self.current_chapter = null;
             if (ρσ_exists.d((typeof book !== "undefined" && book !== null ? book : Object.create(null)).saved_reading_rates).rates) {
                 self.rates = book.saved_reading_rates.rates.slice(0);
                 self.calculate();
             }
+            if (ρσ_exists.d((typeof book !== "undefined" && book !== null ? book : Object.create(null)).saved_reading_rates).chapter_times) {
+                self.chapter_times = Object.assign({}, book.saved_reading_rates.chapter_times);
+            }
         };
         if (!Timers.prototype.start_book.__argnames__) Object.defineProperties(Timers.prototype.start_book, {
             __argnames__ : {value: ["book"]},
+            __module__ : {value: "read_book.timers"}
+        });
+        Timers.prototype.set_chapter = function set_chapter(name) {
+            var self = this;
+            self.current_chapter = name;
+        };
+        if (!Timers.prototype.set_chapter.__argnames__) Object.defineProperties(Timers.prototype.set_chapter, {
+            __argnames__ : {value: ["name"]},
             __module__ : {value: "read_book.timers"}
         });
         Timers.prototype.reset_read_timer = function reset_read_timer() {
@@ -49733,6 +49965,9 @@ return this.__repr__();
             if (time_since_last_scroll <= 0 || time_since_last_scroll >= 300) {
                 return;
             }
+            if (self.current_chapter) {
+                (ρσ_expr_temp = self.chapter_times)[ρσ_bound_index(self.current_chapter, ρσ_expr_temp)] = ((ρσ_expr_temp = self.chapter_times)[ρσ_bound_index(self.current_chapter, ρσ_expr_temp)] || 0) + time_since_last_scroll;
+            }
             if (time_since_last_scroll < 2) {
                 return;
             }
@@ -49749,6 +49984,7 @@ return this.__repr__();
                 ui_operations.update_reading_rates((function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["rates"] = self.rates.slice(0);
+                    ρσ_d["chapter_times"] = Object.assign({}, self.chapter_times);
                     return ρσ_d;
                 }).call(this));
             }
@@ -51685,6 +51921,7 @@ return this.__repr__();
                 ρσ_d["on_load"] = [];
                 return ρσ_d;
             }).call(this);
+            self.timers.set_chapter(name);
             self.show_loading();
             set_current_spine_item(name);
             if (idx > -1) {
@@ -52937,9 +53174,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter6 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
+                key = ρσ_Iter6[ρσ_Index6];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);

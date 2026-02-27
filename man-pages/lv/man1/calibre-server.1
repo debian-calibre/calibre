@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "februāris 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "februāris 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -120,7 +120,7 @@ Atkāpties no automātiski noteiktās saskarnes.       Ja kāda iemesla dēļ se
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Atļaujiet vietnei, kas nav apstiprinājusi autentifikāciju, veikt izmaiņas.  Parasti, ja neieslēdzat autentifikāciju, serveris darbojas tikai lasīšanas režīmā, lai neļautu anonīmiem lietotājiem veikt izmaiņas jūsu calibre bibliotēkās. Šī opcija ļauj ikvienam, kas pieslēdzas no tā paša datora, kad darbojas serveris, lai veiktu izmaiņas. Tas ir noderīgi, ja vēlaties palaist serveri bez autentifikācijas, bet joprojām izmantojiet calibre datu bāzi, lai veiktu izmaiņas savās calibre bibliotēkās. Ņemiet vērā, ka ieslēdzot šo opciju, ka jebkura programma, kas darbojas datorā, var veikt izmaiņas calibre bibliotēkās. Pēc noklusējuma šī opcija ir atspējota.
+Atļaujiet vietnei, kas nav apstiprinājusi autentifikāciju, veikt izmaiņas.  Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. Pēc noklusējuma šī opcija ir atspējota.
 .UNINDENT
 .INDENT 0.0
 .TP

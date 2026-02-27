@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# akihiko tanae (tanaeakihiko), 2025
+# akihiko tanae (tanaeakihiko), 2025-2026
 # toshi oota <ppp15479@gmail.com>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-02-25 10:21+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025\n"
+"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -160,7 +160,7 @@ msgid ""
 "handle authentication. You can sometimes workaround this by including the "
 "username and password in the URL, for example: "
 "``http://username:password@192.168.1.2:8080``."
-msgstr ""
+msgstr "ユーザー名とパスワードを設定している場合は、まずそれらを設定せずに試してみて、問題が発生していないか確認してください。一部のEインクデバイスでは、認証に対応していないブラウザが搭載されています。URLにユーザー名とパスワードを含めることで、この問題を回避できる場合があります。例： ``http://username:password@192.168.1.2:8080``"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:103
 msgid ""
@@ -230,7 +230,7 @@ msgid ""
 "HTTPS certificate to use in the advanced configuration options for the "
 "server, or you can set up a reverse proxy as described below, to use an "
 "existing HTTPS setup."
-msgstr ""
+msgstr "セキュリティを最大限に高めるには、コンテンツサーバーでもHTTPSを有効にする必要があります。サーバーの詳細設定オプションで使用するHTTPS証明書へのパスを指定してサーバー側で直接設定するか、以下の説明に従ってリバースプロキシを設定し、既存のHTTPS設定を利用することもできます。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:151
 msgid "The server interface"
@@ -243,7 +243,7 @@ msgid ""
 "are currently reading as well as allowing you to choose a calibre library "
 "you want to browse. The server in calibre gives you access to all your "
 "libraries, not just a single one, as before."
-msgstr ""
+msgstr "サーバーインターフェースは、タッチスクリーンでの使用に最適化され、メインのcalibreインターフェースを簡素化したものです。ホーム画面には、現在読んでいる本が表示されるほか、閲覧したいcalibreライブラリを選択することもできます。calibreのサーバーでは、従来のように1つのライブラリだけでなく、すべてのライブラリにアクセスできます。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:160
 msgid "The book list"
@@ -343,7 +343,7 @@ msgid ""
 " keep the browser tab open. In addition, in Firefox on Android, you will "
 "need to type ``about:config`` and create a preference called "
 "``browser.tabs.useCache`` and set it to ``true``."
-msgstr ""
+msgstr "ブラウザメーカーは、プレーンHTTP接続ではブラウザの高度な機能を無効化することで、ユーザーにSSLの使用を強制しようとしてきました。その犠牲の一つがApplicationCacheです。これはcalibreでオフラインサポートに使用されていたものです。その結果、残念ながら、オフラインモードはブラウザのタブを開いている間しか機能しなくなりました。さらに、Android版Firefoxでは、 ``about:config`` と入力して ``browser.tabs.useCache`` という設定を作成し、 ``true`` に設定する必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:225
 msgid "Managing user accounts from the command-line only"
@@ -369,7 +369,7 @@ msgstr "スタンドアロンの ``calibre-server`` プログラムのオプシ�
 msgid ""
 "Just follow the prompts to create user accounts, set their permissions, etc."
 " Once you are done, you can run the server as::"
-msgstr ""
+msgstr "指示に従ってユーザー アカウントを作成し、権限を設定するだけです。完了したら、次のようにサーバーを実行できます:::"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:244
 msgid "It will use the user accounts you created in the previous step."
@@ -386,7 +386,7 @@ msgid ""
 "serve the calibre library as part of a larger site. The basic technique is "
 "to run the calibre server and set up a reverse proxy to it from the main "
 "server."
-msgstr ""
+msgstr "ここでは、calibreコンテンツサーバーを別のサーバーに統合する方法を説明します。最も一般的な理由は、SSLを利用するため、またはcalibreライブラリを大規模なサイトの一部として提供するためです。基本的な手法は、calibreサーバーを実行し、メインサーバーからcalibreサーバーへのリバースプロキシを設定することです。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:255
 msgid ""
@@ -475,7 +475,7 @@ msgid ""
 "server to use basic authentication instead of digest authentication, as it "
 "is faster. To do so, pass the ``--auth-mode=basic`` option to ``calibre-"
 "server``."
-msgstr ""
+msgstr "メインサーバーにSSLを設定している場合は、より高速なダイジェスト認証ではなくベーシック認証を使用するようにcalibreサーバーに指示する必要があります。そのためには、 ``calibre-server`` に ``--auth-mode=basic`` オプションを渡します。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:358
 msgid "Creating a service for the calibre server on a modern Linux system"
