@@ -1,0 +1,23 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 27 Feb 2026 14:16:39 +0900
+Subject: Drop libpostproc
+
+FFmpeg 8 drops "libpostproc" and move it to source-plugins.
+* https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/fd31df43067fe21cc1e4fabd07ee9d6a26cb7264
+---
+ setup/build_environment.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup/build_environment.py b/setup/build_environment.py
+index f5ca099..9523672 100644
+--- a/setup/build_environment.py
++++ b/setup/build_environment.py
+@@ -224,7 +224,7 @@ else:
+             'libonnxruntime', '', '/usr/include/onnxruntime')
+     piper_lib_dirs = pkgconfig_lib_dirs('espeak-ng', '', '/usr/lib') + pkgconfig_lib_dirs('libonnxruntime', '', '/usr/lib')
+     piper_libs = pkgconfig_libs('espeak-ng', '', 'espeak-ng') + pkgconfig_libs('libonnxruntime', '', 'onnxruntime')
+-    for x in ('libavcodec', 'libavformat', 'libavdevice', 'libavfilter', 'libavutil', 'libpostproc', 'libswresample', 'libswscale'):
++    for x in ('libavcodec', 'libavformat', 'libavdevice', 'libavfilter', 'libavutil', 'libswresample', 'libswscale'):
+         for inc in pkgconfig_include_dirs(x, '', '/usr/include'):
+             if inc and inc not in ffmpeg_inc_dirs:
+                 ffmpeg_inc_dirs.append(inc)
