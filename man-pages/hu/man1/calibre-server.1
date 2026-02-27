@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "február 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "február 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -119,7 +119,7 @@ Visszatérés az automatikusan észlelt interfészhez.  Ha a szerver valamilyen 
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Engedélyezze a nem hitelesített helyi kapcsolatoknak a módosításokat.       Normális esetben, ha nem kapcsolja be a hitelesítést, a szerver csak olvasható módban működik, így nem teszi lehetővé a névtelen felhasználók számára, hogy módosítsák a Calibre könyvtárakat. Ezzel az opcióval bárki, aki ugyanarról a számítógépről csatlakozik, amelyen a kiszolgáló fut, változtatásokat hajthat végre. Ez akkor hasznos, ha hitelesítés nélkül szeretné futtatni a kiszolgálót, de továbbra is használja a calibredb\-t a Calibre könyvtárak módosításához. Vegye figyelembe, hogy ennek az opciónak a bekapcsolása azt jelenti, hogy a számítógépen futó bármely program módosíthatja a Calibre könyvtárakat. Alapértelmezésben ez a lehetőség nem engedélyezett.
+Engedélyezze a nem hitelesített helyi kapcsolatoknak a módosításokat.       Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. Alapértelmezésben ez a lehetőség nem engedélyezett.
 .UNINDENT
 .INDENT 0.0
 .TP

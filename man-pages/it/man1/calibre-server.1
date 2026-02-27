@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "febbraio 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "febbraio 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -121,7 +121,7 @@ Ripiega su interfaccia rilevata automaticamente.    Se per qualche ragione il se
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Consenti alle connessioni locali non autenticate di apportare modifiche.    Di norma, se non abiliti l\fB\(aq\fPautenticazione, il server opera in modalità di sola lettura, in modo da non permettere ad utenti anonimi di effettuare cambiamenti alle tue biblioteche di calibre. Questa opzione permette a tutti coloro che si connettono dallo stesso computer in cui si trova il server di effettuare modifiche. Utile se vuoi far operare il server senza autenticazione ma vuoi anche usare calibredb per effettuare cambiamenti alle tue biblioteche di calibre. Tieni presente che abilitando questa opzione tutti i programmi in esecuzione sul computer possono effettuare modifiche alle tue biblioteche di calibre. Per impostazione predefinita, questa opzione è disabilitata.
+Consenti alle connessioni locali non autenticate di apportare modifiche.    Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. Per impostazione predefinita, questa opzione è disabilitata.
 .UNINDENT
 .INDENT 0.0
 .TP

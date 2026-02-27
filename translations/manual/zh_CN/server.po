@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# RERBIN MA, 2026
 # tony shen <anthanny@hotmail.com>, 2023-2024
 # 贵宏 张, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-02-25 10:21+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: tony shen <anthanny@hotmail.com>, 2023-2024\n"
+"Last-Translator: RERBIN MA, 2026\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -160,7 +161,7 @@ msgid ""
 "handle authentication. You can sometimes workaround this by including the "
 "username and password in the URL, for example: "
 "``http://username:password@192.168.1.2:8080``."
-msgstr ""
+msgstr "如果您设置了用户名和密码，请先尝试取消设置，以确认其是否为导致问题的原因。某些电子墨水设备的浏览器无法处理身份验证。您有时可以通过在 URL 中包含用户名和密码来绕过此限制，例如：``http://username:password@192.168.1.2:8080``。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:103
 msgid ""
@@ -230,7 +231,7 @@ msgid ""
 "HTTPS certificate to use in the advanced configuration options for the "
 "server, or you can set up a reverse proxy as described below, to use an "
 "existing HTTPS setup."
-msgstr ""
+msgstr "为了获得最大程度的安全性，您还应在内容服务器上启用 HTTPS。您可以直接在服务器的高级配置选项中提供 HTTPS 证书路径；或者按照下文所述设置反向代理，以沿用现有的 HTTPS 配置。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:151
 msgid "The server interface"
@@ -243,7 +244,7 @@ msgid ""
 "are currently reading as well as allowing you to choose a calibre library "
 "you want to browse. The server in calibre gives you access to all your "
 "libraries, not just a single one, as before."
-msgstr ""
+msgstr "内容服务器界面是主程序界面的简化版，专为触摸屏操作而优化。主屏幕会显示您当前正在阅读的书籍，并允许您选择想要浏览的书库。现在的服务器允许您访问所有的 Calibre 书库，不像以前那样只能访问单个书库。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:160
 msgid "The book list"
@@ -343,7 +344,7 @@ msgid ""
 " keep the browser tab open. In addition, in Firefox on Android, you will "
 "need to type ``about:config`` and create a preference called "
 "``browser.tabs.useCache`` and set it to ``true``."
-msgstr ""
+msgstr "浏览器厂商一直试图通过禁用普通 HTTP 连接中的高级功能，来强制用户使用 SSL。其中受害最深的就是 ApplicationCache（应用缓存），这是 Calibre 原本用于实现离线支持的核心技术。因此，目前遗憾的是，离线模式仅能在不关闭浏览器标签页的情况下工作。此外，在安卓版 Firefox 浏览器上，您还需要访问 about:config 并新建一个名为 browser.tabs.useCache 的首选项，并将其设置为 true。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:225
 msgid "Managing user accounts from the command-line only"
@@ -369,7 +370,7 @@ msgstr "您可以使用独立的Calibre服务器程序的“--管理用户”选
 msgid ""
 "Just follow the prompts to create user accounts, set their permissions, etc."
 " Once you are done, you can run the server as::"
-msgstr ""
+msgstr "只需按照提示创建用户账户、设置权限等。完成后，您可以使用以下方式运行服务器::"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:244
 msgid "It will use the user accounts you created in the previous step."
@@ -386,7 +387,7 @@ msgid ""
 "serve the calibre library as part of a larger site. The basic technique is "
 "to run the calibre server and set up a reverse proxy to it from the main "
 "server."
-msgstr ""
+msgstr "在这里，我们将为您展示如何将 Calibre 内容服务器集成到另一台服务器中。最常见的原因是利用 SSL 加密，或将 Calibre 书库作为大型网站的一个子模块来提供服务。其基本技术是：先运行 Calibre 服务器，然后从主服务器设置一个反向代理指向它。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:255
 msgid ""
@@ -475,7 +476,7 @@ msgid ""
 "server to use basic authentication instead of digest authentication, as it "
 "is faster. To do so, pass the ``--auth-mode=basic`` option to ``calibre-"
 "server``."
-msgstr ""
+msgstr "如果您已经为主服务器设置了SSL，您应该告诉calibre服务器使用基本身份验证，而不是摘要身份验证，因为前者的速度更快。为此，请在运行 calibre-server 时添加 --auth-mode=basic 参数。"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:358
 msgid "Creating a service for the calibre server on a modern Linux system"

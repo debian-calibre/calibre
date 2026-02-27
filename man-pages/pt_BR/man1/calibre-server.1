@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "fevereiro 21, 2026" "9.3.1" "calibre"
+.TH "CALIBRE-SERVER" "1" "fevereiro 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -120,7 +120,7 @@ Fallback para a interface auto detectada.   Se o servidor não conseguir associa
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Permitir que conexões locais não autenticadas façam alterações.     Normalmente, se você não ativar a autenticação, o servidor operará no modo somente leitura, para não permitir que usuários anônimos façam alterações em suas bibliotecas de calibre. Essa opção permite que qualquer pessoa conecte\-se no mesmo computador em que o servidor está sendo executado para fazer alterações. Isso é útil se você deseja executar o servidor sem autenticação, mas ainda usar o calibredb para fazer alterações em suas bibliotecas de calibre. Observe que ativar essa opção significa que qualquer programa em execução no computador pode fazer alterações em suas bibliotecas de calibre. Por padrão, esta opção está desabilitada
+Permitir que conexões locais não autenticadas façam alterações.     Normalmente, se você não ativar a autenticação, o servidor opera em modo somente leitura, para impedir que usuários anônimos façam alterações em suas bibliotecas do calibre. Esta opção permite que qualquer pessoa conectada do mesmo computador em que o servidor está sendo executado faça alterações. Isso é útil se você quiser executar o servidor sem autenticação, mas ainda usar o calibredb para fazer alterações em suas bibliotecas do calibre. Observe que ativar esta opção significa que qualquer programa em execução no computador pode fazer alterações em suas bibliotecas do calibre. Em particular, o navegador Firefox permite que sites arbitrários façam isso também. Por padrão, esta opção está desabilitada
 .UNINDENT
 .INDENT 0.0
 .TP

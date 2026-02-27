@@ -71,6 +71,7 @@ from calibre.constants import (
     islinux,
     ismacos,
     iswindows,
+    isworker,
     isxp,
     numeric_version,
     plugins_loc,
@@ -441,6 +442,7 @@ def create_defs():
     defs['cover_grid_cache_size_multiple'] = 5
     defs['cover_grid_disk_cache_size'] = 2500
     defs['cover_grid_show_title'] = False
+    defs['cover_grid_text_flush_bottom'] = False
     defs['cover_corner_radius'] = 0
     defs['cover_corner_radius_unit'] = 'px'
     defs['show_vl_tabs'] = False
@@ -450,9 +452,9 @@ def create_defs():
     defs['cb_preserve_aspect_ratio'] = False
     defs['cb_double_click_to_activate'] = False
     defs['gpm_template_editor_font_size'] = 10
-    defs['show_emblems'] = False
     defs['emblem_size'] = 32
     defs['emblem_position'] = 'left'
+    defs['emblem_style'] = 'none'
     defs['metadata_diff_mark_rejected'] = False
     defs['tag_browser_show_counts'] = True
     defs['tag_browser_show_tooltips'] = True
@@ -529,26 +531,31 @@ def create_defs():
         'light': {}, 'dark': {},
     }
 
-    # Migrate beta bookshelf_thumbnail
-    if isinstance(btv := gprefs.get('bookshelf_thumbnail'), bool):
-        gprefs['bookshelf_thumbnail'] = 'full' if btv else 'none'
+    with gprefs:
+        # Migrate beta bookshelf_thumbnail
+        if isinstance(btv := gprefs.get('bookshelf_thumbnail'), bool):
+            gprefs['bookshelf_thumbnail'] = 'full' if btv else 'none'
 
-    def migrate_tweak(tweak_name, pref_name):
-        # If the tweak has been changed then leave the tweak in the file so
-        # that the user can bounce between versions with and without the
-        # migration. For versions before the migration the tweak wins. For
-        # versions after the migration any changes win.
-        v = tweaks.get(tweak_name, None)
-        migrated_tweak_name = pref_name + '_tweak_migrated'
-        m = gprefs.get(migrated_tweak_name, None)
-        if m is None and v is not None:
-            gprefs[pref_name] = v
-            gprefs[migrated_tweak_name] = True
-    migrate_tweak('metadata_edit_elide_labels', 'edit_metadata_elide_labels')
-    migrate_tweak('metadata_edit_elision_point', 'edit_metadata_elision_point')
-    migrate_tweak('metadata_edit_bulk_cc_label_length', 'edit_metadata_bulk_cc_label_length')
-    migrate_tweak('metadata_edit_single_cc_label_length', 'edit_metadata_single_cc_label_length')
-    migrate_tweak('metadata_single_use_2_cols_for_custom_fields', 'edit_metadata_single_use_2_cols_for_custom_fields')
+        def migrate_tweak(tweak_name, pref_name):
+            # If the tweak has been changed then leave the tweak in the file so
+            # that the user can bounce between versions with and without the
+            # migration. For versions before the migration the tweak wins. For
+            # versions after the migration any changes win.
+            v = tweaks.get(tweak_name, None)
+            migrated_tweak_name = pref_name + '_tweak_migrated'
+            m = gprefs.get(migrated_tweak_name, None)
+            if m is None and v is not None:
+                gprefs[pref_name] = v
+                gprefs[migrated_tweak_name] = True
+        migrate_tweak('metadata_edit_elide_labels', 'edit_metadata_elide_labels')
+        migrate_tweak('metadata_edit_elision_point', 'edit_metadata_elision_point')
+        migrate_tweak('metadata_edit_bulk_cc_label_length', 'edit_metadata_bulk_cc_label_length')
+        migrate_tweak('metadata_edit_single_cc_label_length', 'edit_metadata_single_cc_label_length')
+        migrate_tweak('metadata_single_use_2_cols_for_custom_fields', 'edit_metadata_single_use_2_cols_for_custom_fields')
+
+        if gprefs.get('show_emblems'):
+            gprefs['emblem_style'] = 'gutter'
+            gprefs.pop('show_emblems', None)
 
 
 create_defs()
@@ -1701,7 +1708,7 @@ def elided_text(text, font=None, width=300, pos='middle'):
     return str(text)
 
 
-if is_running_from_develop:
+if is_running_from_develop and not isworker:
     from calibre.build_forms import build_forms
     build_forms(os.path.abspath(os.environ['CALIBRE_DEVELOP_FROM']), check_for_migration=True)
 

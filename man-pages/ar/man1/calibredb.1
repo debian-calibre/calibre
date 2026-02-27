@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "فبراير 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "فبراير 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,15 +40,45 @@ calibredb أمر [خيارات] [وسائط]
 .UNINDENT
 .UNINDENT
 .sp
-\fIcalibredb\fP هو واجهة سطر الأوامر لقاعدة بيانات calibre. يحتوي على عدة أوامر فرعية، موثقة أدناه.
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
 .sp
-يمكن استخدام \fIcalibredb\fP للتعامل مع قاعدة بيانات calibre محددة بالمسار أو خادم محتوى calibre يعمل إما على الجهاز المحلي أو عبر الإنترنت. يمكنك بدء خادم محتوى calibre باستخدام برنامج \fIcalibre\-server\fP أو في برنامج calibre الرئيسي انقر على \fIاتصال/مشاركة \-> بدء خادم المحتوى\fP\&. نظرًا لأن \fIcalibredb\fP يمكنه إجراء تغييرات على مكتبات calibre الخاصة بك، يجب عليك إعداد المصادقة على الخادم أولاً. هناك طريقتان للقيام بذلك:
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&. Be careful though,
+because some browsers, primarily Firefox, allow arbitrary websites to also
+access local servers. If you use Firefox, it is better to setup username
+and password, as described below.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .sp
-\  \  * إذا كنت تخطط للاتصال فقط بخادم يعمل على نفس الكمبيوتر، يمكنك ببساطة استخدام خيار \fI\-\-enable\-local\-write\fP الخاص بخادم المحتوى، للسماح لأي برنامج، بما في ذلك calibredb، الذي يعمل على الكمبيوتر المحلي بإجراء تغييرات على بيانات calibre الخاصة بك. عند تشغيل الخادم من برنامج calibre الرئيسي، يوجد هذا الخيار في \fIالتفضيلات\->المشاركة عبر الشبكة\->متقدم\fP\&.
-.sp
-\  \  * إذا كنت ترغب في تمكين الوصول عبر الإنترنت، فيجب عليك إعداد حسابات مستخدمين على الخادم واستخدام خياري \fI\-\-username\fP و \fI\-\-password\fP مع \fIcalibredb\fP لمنحه الوصول. يمكنك إعداد مصادقة المستخدم لـ \fIcalibre\-server\fP باستخدام خيار \fI\-\-enable\-auth\fP واستخدام \fI\-\-manage\-users\fP لإنشاء حسابات المستخدمين. إذا كنت تقوم بتشغيل الخادم من برنامج calibre الرئيسي، استخدم \fIالتفضيلات\->المشاركة عبر الشبكة\->تطلب اسم مستخدم/كلمة مرور\fP\&.
-.sp
-للاتصال بخادم محتوى قيد التشغيل، مرر عنوان URL للخادم إلى خيار \fI\-\-with\-library\fP، راجع وثائق هذا الخيار للحصول على التفاصيل والأمثلة.
+To connect to a running Content server, pass the URL of the server to the
+\fB\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 الخيارات العالمية

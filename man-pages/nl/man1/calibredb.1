@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "februari 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "februari 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,69 +40,17 @@ calibredb \- calibredb
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is de opdrachtregelinterface voor de Calibre\-database. Het heeft
-.sp
-verschillende subopdrachten, die hieronder worden beschreven.
-.sp
-\fBcalibredb\fP kan worden gebruikt om een Calibre\-database te bewerken
-.sp
-die is opgegeven door een pad of een Calibre Content server die draait op
-.sp
-de lokale machine of via internet. U kunt een Calibre
-.sp
-Content server starten met behulp van het programma \fBcalibre\-server\fP
-.sp
-of in het hoofdprogramma van Calibre door te klikken op :guilabel:
-.nf
-\(ga
-.fi
-Verbinden/delen \->
-.sp
-Content server starten\(ga. Aangezien \fBcalibredb\fP wijzigingen kan aanbrengen in uw
-.sp
-Calibre\-bibliotheken, moet u eerst authenticatie op de server instellen. Er
-.sp
-zijn twee manieren om dat te doen:
+\fBcalibredb\fP is de opdrachtregelinterface voor de Calibre\-database. Het heeft verschillende subopdrachten, die hieronder worden beschreven. \fBcalibredb\fP kan worden gebruikt om een Calibre\-database te bewerken die is opgegeven door een pad, of een Calibre Content server die op de lokale computer of via internet draait. U kunt een Calibre Content server starten met behulp van het programma \fBcalibre\-server\fP of door in het hoofdprogramma van Calibre op Connect/share  →  Start Content server te klikken. Aangezien \fBcalibredb\fP wijzigingen kan aanbrengen in uw Calibre\-bibliotheken, moet u eerst authenticatie op de server instellen. Er zijn twee manieren om dat te doen:
+.INDENT 0.0
+.INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Als u alleen verbinding wilt maken met een server die op dezelfde computer draait,
+Als u alleen verbinding wilt maken met een server die op dezelfde computer draait, kunt u gewoon de optie \fB\-\-enable\-local\-write\fP van de inhoudsserver gebruiken, zodat elk programma, inclusief calibredb, dat op de lokale computer draait, wijzigingen kan aanbrengen in uw Calibre\-gegevens. Wanneer u de server vanuit het hoofdprogramma van Calibre uitvoert, vindt u deze optie in Voorkeuren → Delen via het netwerk → Geavanceerd\&. Wees echter voorzichtig, want sommige browsers, met name Firefox, staan willekeurige websites ook toegang tot lokale servers toe. Als u Firefox gebruikt, kunt u beter een gebruikersnaam en wachtwoord instellen, zoals hieronder beschreven. * Als u toegang via internet wilt inschakelen, moet u
+gebruikersaccounts op de server instellen en de opties \fB\-\-username\fP en \fB\-\-password\fP gebruiken voor \fBcalibredb\fP om toegang te verlenen. U kunt gebruikersauthenticatie instellen voor \fBcalibre\-server\fP door de optie \fB\-\-enable\-auth\fP te gebruiken en \fB\-\-manage\-users\fP te gebruiken om de gebruikersaccounts aan te maken.
+Als u de server vanuit het hoofdprogramma van Calibre uitvoert, gebruikt u Voorkeuren → Delen via het netwerk → Gebruikersnaam/wachtwoord vereist\&. Om verbinding te maken met een actieve inhoudsserver, geeft u de URL van de server door aan de optie \fB\-\-with\-library\fP\&. Raadpleeg de documentatie van die optie voor meer informatie en voorbeelden.
 .UNINDENT
-.sp
-kunt u gewoon de optie \fB\-\-enable\-local\-write\fP van de
-.sp
-inhoudsserver gebruiken, zodat elk programma, inclusief calibredb, dat op
-.sp
-de lokale computer draait, wijzigingen kan aanbrengen in uw Calibre\-gegevens. Wanneer u
-.sp
-de server vanuit het hoofdprogramma van Calibre draait, vindt u deze optie in
-.sp
-Voorkeuren → Delen via het netwerk → Geavanceerd\&.
-.INDENT 0.0
-.IP \(bu 2
-Als u toegang via internet wilt inschakelen, moet u
 .UNINDENT
-.sp
-gebruikersaccounts op de server instellen en de opties \fB\-\-username\fP en \fB\-\-password\fP
-.sp
-gebruiken voor \fBcalibredb\fP om toegang te verlenen. U kunt
-.sp
-gebruikersauthenticatie voor \fBcalibre\-server\fP instellen met de optie \fB\-\-enable\-auth\fP
-.sp
-en \fB\-\-manage\-users\fP om de gebruikersaccounts aan te maken.
-.sp
-Als u de server vanuit het hoofdprogramma van Calibre uitvoert, gebruikt u
-.sp
-Voorkeuren → Delen via het netwerk → Gebruikersnaam/wachtwoord vereist\&.
-.sp
-Om verbinding te maken met een actieve Content server, geeft u de URL van de server door aan de
-.sp
-
-.nf
-:optie:\(ga\-\-with\-library\(ga
-.fi
-\&. Raadpleeg de documentatie van die optie voor
-.sp
-meer informatie en voorbeelden.
+.UNINDENT
 .INDENT 0.0
 .IP \(bu 2
 ALGEMENE OPTIES
@@ -170,7 +118,7 @@ toon dit helpbericht en stop
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:nl/\:generated/\:nl/\:calibredb\:.html>\&.
+Pad naar de Calibre\-bibliotheek. Standaard wordt het pad gebruikt dat is opgeslagen in de instellingen. U kunt ook verbinding maken met een Calibre Content Server om acties uit te voeren op externe bibliotheken. Gebruik hiervoor een URL in de vorm: \%<http://\:hostname:port/#\:library_id> bijvoorbeeld \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is de bibliotheek\-id van de bibliotheek waarmee u verbinding wilt maken op de Content Server. U kunt de speciale library_id\-waarde \- gebruiken om een lijst met bibliotheek\-id\fB\(aq\fPs te krijgen die beschikbaar zijn op de server. Zie \%<https://\:manual\:.calibre-ebook\:.com/\:nl/\:generated/\:nl/\:calibredb\:.html> voor meer informatie over het instellen van toegang via een inhoudsserver.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -248,7 +196,7 @@ De string gebruikt om velden van elkaar te scheiden. Standaard is dit een spatie
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Het veld waarop de resultaten moeten worden gesorteerd. U kunt meerdere velden opgeven door ze met komma\fB\(aq\fPs te scheiden. Beschikbare velden: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standaard: id. Naast de bovenstaande ingebouwde velden zijn er ook aangepaste velden beschikbaar als *veldnaam. Gebruik bijvoorbeeld voor een aangepast veld #rating de naam: *rating
 .UNINDENT
 .INDENT 0.0
 .TP

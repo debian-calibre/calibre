@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "February 21, 2026" "9.3.1" "calibre"
+.TH "CALIBREDB" "1" "February 27, 2026" "9.4.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -60,7 +60,10 @@ you can simply use the \fB\-\-enable\-local\-write\fP option of the
 Content server, to allow any program, including calibredb, running on
 the local computer to make changes to your calibre data. When running
 the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&.
+Preferences → Sharing over the net → Advanced\&. Be careful though,
+because some browsers, primarily Firefox, allow arbitrary websites to also
+access local servers. If you use Firefox, it is better to setup username
+and password, as described below.
 .IP \(bu 2
 If you want to enable access over the internet, then you should setup
 user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP

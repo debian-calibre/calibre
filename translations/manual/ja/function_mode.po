@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# akihiko tanae (tanaeakihiko), 2025
+# akihiko tanae (tanaeakihiko), 2025-2026
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-02-25 10:21+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025\n"
+"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +28,7 @@ msgid ""
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr ""
+msgstr "エディタの :guilabel:`検索と置換` ツールは *関数モード* をサポートしています。このモードでは、正規表現（ :doc:`regexp` を参照）と任意の強力な Python 関数を組み合わせて、あらゆる種類の高度なテキスト処理を行うことができます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
@@ -68,7 +68,7 @@ msgid ""
 "tags)` builtin function. This will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr ""
+msgstr "関数を使用するには、組み込み関数 :guilabel:`タイトルケーステキスト (タグを無視)` を選択してください。これにより、 ``<h1>some title</h1>`` のようなタイトルが ``<h1>Some Title</h1>`` に変更されます。見出しタグ内に他のHTMLタグが含まれていても機能します。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
@@ -80,7 +80,7 @@ msgid ""
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
 " the editor leaves individual hyphens alone, so you can use this function to"
 " replace them with em-dashes."
-msgstr ""
+msgstr "関数モードの真の強みは、独自の関数を作成してテキストを任意の方法で処理できることです。エディターのスマート句読点ツールは個々のハイフンをそのまま残すので、この機能を使ってハイフンをemダッシュに置き換えることができます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
@@ -194,7 +194,7 @@ msgid ""
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
 "Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
 "headings. Create the custom function below:"
-msgstr ""
+msgstr "最後に、もう少し大胆なことを試してみましょう。例えば、本の ``h1`` タグと ``h2`` タグに ``<h1 id=\"someid\">Some Text</h1>`` のような見出しが含まれているとします。これらの見出しに基づいて、HTMLの目次を自動生成します。以下のカスタム関数を作成してください:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
@@ -334,7 +334,7 @@ msgid ""
 "functions. This is useful for code re-use. You can define utility functions "
 "in one place and re-use them in all your other functions. For example, "
 "suppose you create a function named ``My Function`` like this:"
-msgstr ""
+msgstr "``functions`` 引数は、他のすべてのユーザー定義関数へのアクセスを可能にします。これはコードの再利用に便利です。ユーティリティ関数を1か所で定義しておけば、他のすべての関数で再利用できます。例えば、次のように ``My Function`` という名前の関数を作成したとします:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
@@ -374,7 +374,7 @@ msgid ""
 "editing. You can force the search to process files in the order in which "
 "they appear by setting the ``file_order`` attribute on your function, like "
 "this:"
-msgstr ""
+msgstr "複数のHTMLファイルに対して :guilabel:`すべて置換` を実行する場合、ファイルの処理順序は編集用に開いているファイルによって異なります。関数に ``file_order`` 属性を設定することで、ファイルの出現順に検索を強制的に実行できます。例として:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
@@ -406,7 +406,7 @@ msgid ""
 "append some text to the end of the marked text. You can do that by setting "
 "the ``append_final_output_to_marked`` attribute on your function (note that "
 "you also need to set ``call_after_last_match``), like this:"
-msgstr ""
+msgstr "マークされたテキストに対して検索と置換を実行する際、マークされたテキストの末尾にテキストを追加すると便利な場合があります。これは、関数に ``append_final_output_to_marked`` 属性を設定することで実現できます（ ``call_after_last_match`` 属性も設定する必要があることに注意してください）。例:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"

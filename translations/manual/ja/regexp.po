@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# akihiko tanae (tanaeakihiko), 2025
+# akihiko tanae (tanaeakihiko), 2025-2026
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-02-22 09:00+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025\n"
+"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -434,7 +434,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "正規表現を使う別の用途は、ファイル名からメタデータを抽出することです。この機能は環境設定の *本の追加* タブにあります。ここには特別な機能があります: メタデータフィールドにフィールド名を使用できるのです。例えば、 ``(?P<title>)`` と指定すると、calibreはこの文字列の部分を本のタイトルとして扱います。使用可能なフィールド名は、便利なテストフィールドと共にウィンドウに表示されます。例えば、 ``Classical Texts: The Divine Comedy by Dante Alighieri.mobi`` といった名前のファイルを大量にインポートするとします。（もちろん、イタリア古典詩が好きな人は皆そうでしょうから、これは既にライブラリに入っています。）あるいは ``Science Fiction epics: The Foundation Trilogy by Isaac Asimov.epub`` といった名前のファイルをインポートするとします。メタデータ抽出の標準表現は ``(?P2.+) - (?P3[^_]+)`` ですので、このままでは明らかに、calibreが意味のあるデータを抽出できません。そのため、ここで有効な正規表現は ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)`` となります。メタデータフィールドのグループ内では、フィールドが実際に何に一致するかを表す正規表現を使用する必要があることに注意してください。また、Calibreが提供するテストフィールドを使用する場合は、テストファイル名にファイル拡張子を追加する必要があります。そうしないと、有効な正規表現を使用しても、一致する結果が全く得られません。"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
@@ -464,7 +464,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "最後の部分は、メタデータフィールドでの正規表現による :guilabel:`検索と置換` です。ライブラリで複数の本を選択し、メタデータの一括編集を使用することで、この機能にアクセスできます。この機能は、ライブラリに **非常に悪い影響** を与える可能性があるため、使用する際は十分に注意してください。テストフィールドを使用して、式が意図したとおりに機能することを再確認し、本当に変更したい本のみにマークを付けてください。正規表現検索モードでは、1つのフィールドで検索し、テキストを何かに置き換え、結果を別のフィールドに書き込むことができます。実用的な例: ライブラリに、Frank Herbert の Dune シリーズの書籍があり、シリーズの流儀で「Dune 1 - Dune」、「Dune 2 - Dune Messiah」などと名付けられているとします。ここで、シリーズフィールドに「Dune」を挿入します。タイトルフィールドで ``(.*?) \\d+ - .*`` を検索し、シリーズフィールドで ``\\1`` に置き換えることで実行できます。何をしたかお分かりですか?これは、シリーズフィールドを置き換える最初のグループへの参照です。これでシリーズの設定がすべて完了したので、タイトルフィールドでもう一度 ``.*? -`` を検索し、 ``\"\"`` （空の文字列）に置き換えるだけで、メタデータがすべて整頓されます。素晴らしいと思いませんか？ちなみに、フィールド全体を置き換える代わりに、フィールドの先頭または末尾に追加することもできます。つまり、本のタイトルの先頭にシリーズ情報を *追加したい* 場合は、それも可能です。もうお気づきだと思いますが、 :guilabel:`大文字と小文字を区別する` というチェックボックスがあるので、ここでフラグを使って動作を選択する必要はありません。"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""
