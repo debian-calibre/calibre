@@ -1,3 +1,23 @@
+calibre (6.13.0+repack-2+deb12u6) bookworm; urgency=medium
+
+  This version includes CVE-2026-25731 fix. From this version, HTML
+  template engine is changed from "templite" to "pystache".
+  This change makes some impact to some uses.
+
+  Who is impacted:
+   * Users who download and use third-party HTML export templates
+   * Users who use templates shared on forums, GitHub, or other sources
+   * Systems running Calibre in automated pipelines with user-supplied
+     templates
+
+  If you are impacted user, you needs to port your template file to
+  pystache.
+
+  See upstream document for more info:
+  https://github.com/kovidgoyal/calibre/security/advisories/GHSA-xrh9-w7qx-3gcc
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Sun, 01 Mar 2026 16:00:08 +0900
+
 calibre (4.99.3+dfsg-2) unstable; urgency=medium
 
   This is the first version of Calibre using Python3 uploaded to sid.
