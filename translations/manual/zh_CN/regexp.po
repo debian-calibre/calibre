@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# RERBIN MA, 2026
 # tony shen <anthanny@hotmail.com>, 2024
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-03-12 02:31+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: tony shen <anthanny@hotmail.com>, 2024\n"
+"Last-Translator: RERBIN MA, 2026\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -434,7 +435,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "您可以使用正则表达式的另一件事是从文件名中提取元数据。 您可以在设置的“添加图书”部分找到此功能。 这里有一个特殊功能：您可以使用元数据字段的字段名称，例如“(?P<title>)”将表明 calibre 使用这部分字符串作为书名。 窗口中列出了允许的字段名称，以及另一个不错的测试字段。举个例子：假设您要导入一大堆名为“古典文本：但丁·阿利吉耶里的神曲.mobi”的文件。 （显然，这已经在您的书库中，因为我们都喜欢古典意大利诗歌）或“科幻史诗：艾萨克·阿西莫夫的基础三部曲.epub”。 这显然是一个 calibre 不会从中提取任何有意义的数据的命名方案 - 它提取元数据的标准表达式是``(?P<title>.+) - (?P<author>[^_]+)``。此处适用的正则表达式为“[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)”。 请注意，在元数据字段的组内，您需要使用表达式来描述字段实际匹配的内容。 另请注意，在使用 calibre 提供的测试字段时，您需要将文件扩展名添加到测试文件名中，否则即使使用工作表达式，您也根本不会获得任何匹配项。"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
@@ -464,7 +465,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "最后一部分是元数据字段中的正则表达式“搜索和替换”。 您可以通过选择书库中的多本书并使用批量元数据编辑来访问此内容。 使用最后一个功能时要非常小心，因为它可能会对您的书库造成**非常糟糕的事情**！ 使用测试字段仔细检查您的表达式是否符合您的要求，并且仅标记您真正想要更改的书籍！ 在正则表达式搜索模式下，您可以在一个字段中搜索，用某些内容替换文本，甚至可以将结果写入另一字段。一个实际的例子：假设您的书库包含弗兰克·赫伯特的《沙丘》系列书籍，以时尚“沙丘 1 - 沙丘”、“沙丘 2 - 沙丘弥赛亚”等命名。 现在你想让《沙丘》进入系列领域。 您可以通过在标题字段中搜索``(.*?) \\d+ - .*`` 并在系列字段中将其替换为``\\1`` 来做到这一点。看看我在那里做了什么？ 这是对您要替换系列字段的第一组的引用。 现在您已经完成了该系列的准备，您只需再次搜索``.*？ -`` 在标题字段中，并再次在标题字段中将其替换为 ``\"\"`` （空字符串），这样您的元数据就干净整洁了。是不是很棒？ 顺便说一句，您也可以附加或添加到该字段，而不是替换整个字段，因此，如果您“希望”在书名前面添加系列信息，您也可以这样做。 您现在无疑已经注意到，有一个标记为“区分大小写”的复选框，因此您不必在此处使用标志来选择行为。"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""

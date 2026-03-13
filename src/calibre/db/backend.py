@@ -22,7 +22,7 @@ from functools import partial
 import apsw
 
 from calibre import as_unicode, force_unicode, isbytestring, prints
-from calibre.constants import filesystem_encoding, iswindows, plugins, preferred_encoding
+from calibre.constants import builtin_colors_light, builtin_decorations, filesystem_encoding, iswindows, plugins, preferred_encoding
 from calibre.db import SPOOL_SIZE, FTSQueryError
 from calibre.db.annotations import annot_db_data, unicode_normalize
 from calibre.db.constants import (
@@ -362,6 +362,18 @@ def save_annotations_list_to_cursor(cursor, alist, sync_annots_user, book_id, bo
     if sync_annots_user:
         alist = tuple(annotations_as_copied_list(other_amap))
         save_annotations_for_book(cursor, book_id, book_fmt, alist, user_type='web', user=sync_annots_user)
+
+
+def save_last_read_position_to_cursor(cursor, book_id, fmt, user='_', device='_', cfi=None, epoch=None, pos_frac=0):
+    if cfi:
+        cursor.execute(
+            'INSERT OR REPLACE INTO last_read_positions'
+            '(book,format,user,device,cfi,epoch,pos_frac) VALUES (?,?,?,?,?,?,?)',
+            (book_id, fmt.upper(), user, device, cfi, epoch or time.time(), pos_frac))
+    else:
+        cursor.execute(
+            'DELETE FROM last_read_positions WHERE book=? AND format=? AND user=? AND device=?',
+            (book_id, fmt.upper(), user, device))
 
 # }}}
 
@@ -2548,7 +2560,7 @@ class DB:
                     self.execute('UPDATE annotations SET annot_data=?, timestamp=?, annot_type=?, searchable_text=?, annot_id=? WHERE id=?',
                         (json.dumps(annot), timestamp, atype, text, aid, annot_id))
 
-    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False, restrict_to_book_ids=None):
+    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, annotation_style=None, ignore_removed=False, restrict_to_book_ids=None):
         ls = json.loads
         q = 'SELECT id, book, format, user_type, user, annot_data FROM annotations'
         data = []
@@ -2563,6 +2575,8 @@ class DB:
             q += ' WHERE ' + ' AND '.join(restrict_clauses)
         q += ' ORDER BY timestamp DESC '
         count = 0
+        query_style = None if annotation_style is None else tuple(annotation_style.items())
+        sentinel = object()
         for (rowid, book_id, fmt, user_type, user, annot_data) in self.execute(q, tuple(data)):
             if restrict_to_book_ids is not None and book_id not in restrict_to_book_ids:
                 continue
@@ -2577,6 +2591,9 @@ class DB:
             if atype == 'bookmark':
                 text = annot['title']
             elif atype == 'highlight':
+                if query_style is not None and ((s := annot.get('style')) is None
+                        or not all(s.get(k, sentinel) == v for k, v in query_style)):
+                    continue
                 text = annot.get('highlighted_text') or ''
             yield {
                 'id': rowid,
@@ -2597,6 +2614,14 @@ class DB:
     def all_annotation_types(self):
         for x in self.execute('SELECT DISTINCT annot_type FROM annotations'):
             yield x[0]
+
+    def all_annotation_styles(self):
+        all_styles = [{'kind': 'color', 'which': style} for style in builtin_colors_light.keys()] + \
+            [{'kind': 'decoration', 'which': style} for style in builtin_decorations.keys()]
+        # In the future, we could merge in custom styles from the DB.
+        # Under the current schema, this would require scanning all annotations,
+        # so it's excluded for performance at this time.
+        return {style['which']: style for style in all_styles}
 
     def set_annotations_for_book(self, book_id, fmt, annots_list, user_type='local', user='viewer'):
         try:
@@ -2632,6 +2657,9 @@ class DB:
             INSERT INTO {0}({0}) VALUES('rebuild');
             INSERT INTO {1}({1}) VALUES('rebuild');
         '''.format('annotations_fts', 'annotations_fts_stemmed'))
+
+    def set_last_read_position(self, book_id, fmt, user='_', device='_', cfi=None, epoch=None, pos_frac=0):
+        save_last_read_position_to_cursor(self.conn.cursor(), book_id, fmt, user, device, cfi, epoch, pos_frac)
 
     def conversion_options(self, book_id, fmt):
         for (data,) in self.conn.get('SELECT data FROM conversion_options WHERE book=? AND format=?', (book_id, fmt.upper())):

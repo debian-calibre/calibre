@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.3 manpage writer.
+.\" by the Docutils 0.22.4 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "2月 27, 2026" "9.4.0" "calibre"
+.TH "CALIBREDB" "1" "3月 13, 2026" "9.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,45 +40,25 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP は calibre データベースへのコマンドラインインターフェースです。
+以下に説明するいくつかのサブコマンドがあります。
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBcalibredb\fP は、パスで指定された calibre データベース、またはローカルマシン上またはインターネット経由で稼働している calibre コンテンツサーバ のいずれかを操作するために使用できます。calibre コンテンツサーバ は、\fBcalibre\-server\fP プログラムを使用するか、calibre メインプログラムで 接続/共有  →  コンテンツサーバを開始 をクリックすることで起動できます。\fBcalibredb\fP は calibre ライブラリに変更を加えることができるため、まずサーバーで認証を設定する必要があります。これを行うには2つの方法があります。
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&. Be careful though,
-because some browsers, primarily Firefox, allow arbitrary websites to also
-access local servers. If you use Firefox, it is better to setup username
-and password, as described below.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+同じコンピュータ上で実行されているサーバーにのみ接続する場合は、コンテンツサーバーの \fB\-\-enable\-local\-write\fP オプションを使用するだけで、ローカルコンピュータ上で実行されているすべてのプログラム（calibredbを含む）がcalibreデータに変更を加えることを許可できます。
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+メインのcalibreプログラムからサーバーを実行している場合、このオプションは 環境設定  →  ネット共有  →  上級者用 にあります。ただし、一部のブラウザ（主にFirefox）では、任意のWebサイトがローカルサーバーにもアクセスできるため、注意してください。
+Firefoxを使用する場合は、以下に示すようにユーザー名とパスワードを設定することをお勧めします。
+.INDENT 0.0
+.IP \(bu 2
+インターネット経由のアクセスを有効にする場合は、サーバーにユーザーアカウントを設定し、\fBcalibredb\fP に \fB\-\-username\fP オプションと \fB\-\-password\fP オプションを使用してアクセスを許可する必要があります。 \fBcalibre\-server\fP のユーザー認証を設定するには、\fB\-\-enable\-auth\fP オプションを使用し、 \fB\-\-manage\-users\fP を使用してユーザーアカウントを作成します。
+.UNINDENT
+.sp
+calibre メインプログラムからサーバーを実行している場合は、環境設定  →  ネット共有  →  概略  →  コンテンツサーバへのアクセスにユーザー名/パスワードを要求する を使用してください。
+.sp
+実行中のコンテンツサーバーに接続するには、サーバーの URL を \fB\-\-with\-library\fP オプションに渡します。詳細と例については、そのオプションのドキュメントを参照してください。
 .INDENT 0.0
 .IP \(bu 2
 グローバルオプション
@@ -146,7 +126,7 @@ fts_search
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:ja/\:generated/\:ja/\:calibredb\:.html>\&.
+calibreライブラリへのパス。デフォルトでは、設定に保存されているパスが使用されます。calibreコンテンツサーバーに接続して、リモートライブラリに対してアクションを実行することもできます。これを行うには、\%<http://\:hostname:port/#\:library_id> 形式のURLを使用します（例： \%<http://\:localhost:8080/#\:mylibrary> ）。library_idは、コンテンツサーバー上の接続先ライブラリのライブラリIDです。library_idの特殊値として\-を使用すると、サーバー上で利用可能なライブラリIDのリストを取得できます。コンテンツサーバー経由のアクセスの設定方法の詳細については、 \%<https://\:manual\:.calibre-ebook\:.com/\:ja/\:generated/\:ja/\:calibredb\:.html> を参照してください。
 .UNINDENT
 .INDENT 0.0
 .TP

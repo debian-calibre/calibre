@@ -31,6 +31,7 @@ from qt.core import (
     QLabel,
     QLineEdit,
     QListView,
+    QMenu,
     QModelIndex,
     QPainter,
     QPalette,
@@ -121,7 +122,16 @@ class ManageTagList(Dialog):  # {{{
 
     def __init__(self, parent=None):
         self._entries = list(tprefs['insert_tag_mru'])
+        self._collapsed_tags = set(tprefs.get('manage_tag_list_collapsed_tags', []))
         Dialog.__init__(self, _('Manage tag list'), 'manage-insert-tag-listx', parent=parent)
+
+    def open_menu(self, position):
+        menu = QMenu(self)
+        expand_action = menu.addAction('Expand All')
+        expand_action.triggered.connect(self.tree.expandAll)
+        collapse_action = menu.addAction('Collapse All')
+        collapse_action.triggered.connect(self.tree.collapseAll)
+        menu.exec(self.tree.viewport().mapToGlobal(position))
 
     def sizeHint(self):
         return QSize(400, 500)
@@ -130,6 +140,8 @@ class ManageTagList(Dialog):  # {{{
         self.l = l = QVBoxLayout(self)
 
         self.tree = t = QTreeWidget(self)
+        t.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        t.customContextMenuRequested.connect(self.open_menu)
         t.setHeaderHidden(True)
         t.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         l.addWidget(t)
@@ -160,6 +172,7 @@ class ManageTagList(Dialog):  # {{{
         return m.group() if m else entry
 
     def _populate_tree(self):
+        self._save_expanded_state()
         self.tree.clear()
         groups = {}
         for entry in self._entries:
@@ -173,7 +186,7 @@ class ManageTagList(Dialog):  # {{{
                 child.setData(0, Qt.ItemDataRole.UserRole, entry)
                 parent_item.addChild(child)
             self.tree.addTopLevelItem(parent_item)
-            parent_item.setExpanded(True)
+            parent_item.setExpanded(tag_name not in self._collapsed_tags)
         self._update_button_states()
 
     def _current_entry(self):
@@ -230,9 +243,24 @@ class ManageTagList(Dialog):  # {{{
             pass
         self._populate_tree()
 
+    def _save_expanded_state(self):
+        root = self.tree.invisibleRootItem()
+        for i in range(root.childCount()):
+            item = root.child(i)
+            if item.isExpanded():
+                self._collapsed_tags.discard(item.text(0))
+            else:
+                self._collapsed_tags.add(item.text(0))
+        tprefs['manage_tag_list_collapsed_tags'] = list(self._collapsed_tags)
+
     def accept(self):
+        self._save_expanded_state()
         tprefs['insert_tag_mru'] = self._entries
         super().accept()
+
+    def reject(self):
+        self._save_expanded_state()
+        super().reject()
 
 # }}}
 
