@@ -8,15 +8,16 @@
 # Karl Jonatan Nyberg, 2016-2017,2021-2025
 # Karl Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
+# Karl Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2017
 # Sebastian Rasmussen <sebras@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-03-12 02:31+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2025-2026\n"
+"Last-Translator: Karl Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,50 +57,50 @@ msgid ""
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE används helt enkelt som ett sätt att läsa och skriva från metadata.db robust. All logik för läsning/sortering/sökning/cachning av tabeller är återimplementerad. Detta var nödvändigt för maximal prestanda och flexibilitet."
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
 msgstr "När en ny bokpost skapas i databasen, med bokidentitet som enda argument"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
 msgid "When a book format is edited, with arguments: (book_id, fmt)"
 msgstr "När ett bokformat redigeras, med argument: (book_id, fmt)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.books_removed:1
 msgid ""
 "When books are removed from the database with the list of book ids as the "
 "only argument"
 msgstr "När böcker tas bort från databasen med listan över bok-ID som enda argument"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
 msgstr "När ett format läggs till i en bok, med argument: (bok_id, format)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
 msgstr "När format tas bort från en bok, med argument: (kartläggning av bok-id till uppsättning format borttagna från boken)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
 msgid "When the indexing progress changes"
 msgstr "När indexeringsförloppet ändras"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_removed:1
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
 "(field_name, affected book ids, ids of removed items)"
 msgstr "När objekt som taggar eller författare tas bort från vissa böcker. Argument: (field_name, berörda bok-id, id för borttagna poster)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_renamed:1
 msgid ""
 "When items such as tags or authors are renamed in some or all books. "
@@ -107,21 +108,21 @@ msgid ""
 "id)"
 msgstr "När objekt som taggar eller författare byter namn i vissa eller alla böcker. Argument: (fältnamn, påverkade bok-id:er, kartläggning av gammalt post-id till nytt post-id)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.links_changed:1
 msgid ""
 "When the links associated with items(s) are changed, with arguments: "
 "(field_name, item_ids)"
 msgstr "När länkarna associerade med poster ändras, med argument: (field_name, objekt-id)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
 msgid ""
 "When some metadata is changed for some books, with arguments: (name of "
 "changed field, set of affected book ids)"
 msgstr "När vissa metadata ändras för vissa böcker, med argument: (namn på ändrat fält, uppsättning påverkade bok-id)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.notes_changed:1
 msgid ""
 "When the notes associated with item(s) are changed, with arguments: "
@@ -202,6 +203,11 @@ msgid ""
 "Add the specified resource so it can be referenced by notes and return its "
 "content hash"
 msgstr "Lägg till den angivna resursen så att den kan refereras av anteckningar och returnera dess innehållshash"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_styles:1
+msgid "Return a tuple of all built-in annotation styles."
+msgstr "Returnerar en tupel av alla inbyggda noteringsstilar."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_types:1

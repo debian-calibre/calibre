@@ -46,7 +46,7 @@ from calibre.gui2.main_window import MainWindow
 from calibre.gui2.viewer import get_boss, get_current_book_data, performance_monitor
 from calibre.gui2.viewer.annotations import AnnotationsSaveWorker, annotations_dir, parse_annotations
 from calibre.gui2.viewer.bookmarks import BookmarkManager
-from calibre.gui2.viewer.config import get_session_pref, load_reading_rates, save_reading_rates, vprefs
+from calibre.gui2.viewer.config import delete_all_reading_rates, get_session_pref, load_reading_rates, save_reading_rates, vprefs
 from calibre.gui2.viewer.convert_book import prepare_book
 from calibre.gui2.viewer.highlights import HighlightsPanel, style_definition_for_name
 from calibre.gui2.viewer.integration import get_book_library_details, load_annotations_map_from_library
@@ -104,6 +104,7 @@ class EbookViewer(MainWindow):
         get_boss(self)
 
         self.annotations_saver = None
+        self.last_read_pos_saver = None
         self.calibre_book_data_for_first_book = calibre_book_data
         self.shutting_down = self.close_forced = self.shutdown_done = False
         self.force_reload = force_reload
@@ -112,7 +113,7 @@ class EbookViewer(MainWindow):
         self.maximized_at_last_fullscreen = False
         self.save_pos_timer = t = QTimer(self)
         t.setSingleShot(True), t.setInterval(3000), t.setTimerType(Qt.TimerType.VeryCoarseTimer)
-        connect_lambda(t.timeout, self, lambda self: self.save_annotations(in_book_file=False))
+        t.timeout.connect(self._on_save_pos_timer)
         self.pending_open_at = open_at
         self.pending_search = None
         self.base_window_title = _('E-book viewer')
@@ -181,6 +182,7 @@ class EbookViewer(MainWindow):
 
         self.web_view = WebView(self)
         self.web_view.cfi_changed.connect(self.cfi_changed)
+        self.web_view.update_last_read_position.connect(self._on_last_read_pos_data)
         self.web_view.reload_book.connect(self.reload_book)
         self.web_view.toggle_toc.connect(self.toggle_toc)
         self.web_view.show_search.connect(self.show_search)
@@ -211,6 +213,7 @@ class EbookViewer(MainWindow):
         self.web_view.close_prep_finished.connect(self.close_prep_finished)
         self.web_view.highlights_changed.connect(self.highlights_changed)
         self.web_view.update_reading_rates.connect(self.update_reading_rates)
+        self.web_view.reset_reading_rates.connect(self.reset_reading_rates)
         self.web_view.edit_book.connect(self.edit_book)
         self.web_view.content_file_changed.connect(self.content_file_changed)
 
@@ -732,6 +735,15 @@ class EbookViewer(MainWindow):
             return
         self.current_book_data['annotations_map']['last-read'] = [{'pos': cfi, 'pos_type': 'epubcfi', 'timestamp': utcnow().isoformat()}]
         self.save_pos_timer.start()
+
+    def _on_save_pos_timer(self):
+        self.save_annotations(in_book_file=False)
+
+    def _on_last_read_pos_data(self, cfi, pos_frac):
+        if not self.current_book_data:
+            return
+        self.current_book_data['pos_frac'] = pos_frac or 0.0
+        self.save_pos_timer.start()
     # }}}
 
     # State serialization {{{
@@ -752,6 +764,11 @@ class EbookViewer(MainWindow):
             return
         self.current_book_data['reading_rates'] = rates
         self.save_reading_rates()
+
+    def reset_reading_rates(self):
+        if self.current_book_data:
+            self.current_book_data.pop('reading_rates', None)
+        delete_all_reading_rates()
 
     def save_reading_rates(self):
         if not self.current_book_data:
@@ -843,6 +860,9 @@ class EbookViewer(MainWindow):
             if self.annotations_saver is not None:
                 self.annotations_saver.shutdown()
                 self.annotations_saver = None
+            if self.last_read_pos_saver is not None:
+                self.last_read_pos_saver.shutdown()
+                self.last_read_pos_saver = None
         except Exception:
             import traceback
             traceback.print_exc()

@@ -3300,28 +3300,25 @@ class Cache:
                 report_progress(i+1, len(book_ids), mi)
 
     @read_api
-    def get_last_read_positions(self, book_id, fmt, user):
-        fmt = fmt.upper()
-        ans = []
-        for device, cfi, epoch, pos_frac in self.backend.execute(
-                'SELECT device,cfi,epoch,pos_frac FROM last_read_positions WHERE book=? AND format=? AND user=?',
-                (book_id, fmt, user)):
-            ans.append({'device':device, 'cfi': cfi, 'epoch':epoch, 'pos_frac':pos_frac})
-        return ans
+    def get_last_read_positions(self, book_id, fmt='', user='', order_by='', limit=0):
+        q = 'SELECT device,cfi,epoch,pos_frac,format,user FROM last_read_positions WHERE book=?'
+        bindings = [book_id]
+        if fmt:
+            q += ' AND format=?'
+            bindings.append(fmt.upper())
+        if user:
+            q += ' AND user=?'
+            bindings.append(user)
+        if order_by in ('pos_frac', 'epoch'):
+            q += f' ORDER BY {order_by} DESC'
+        if limit:
+            q += f' LIMIT {int(limit)}'
+        return tuple({'device':device, 'cfi': cfi, 'epoch':epoch, 'pos_frac':pos_frac, 'format': format, 'user': user}
+            for device, cfi, epoch, pos_frac, format, user in self.backend.execute(q, tuple(bindings)))
 
     @write_api
     def set_last_read_position(self, book_id, fmt, user='_', device='_', cfi=None, epoch=None, pos_frac=0):
-        fmt = fmt.upper()
-        device = device or '_'
-        user = user or '_'
-        if not cfi:
-            self.backend.execute(
-                'DELETE FROM last_read_positions WHERE book=? AND format=? AND user=? AND device=?',
-                (book_id, fmt, user, device))
-        else:
-            self.backend.execute(
-                'INSERT OR REPLACE INTO last_read_positions(book,format,user,device,cfi,epoch,pos_frac) VALUES (?,?,?,?,?,?,?)',
-                (book_id, fmt, user, device, cfi, epoch or time(), pos_frac))
+        self.backend.set_last_read_position(book_id, fmt, user, device, cfi, epoch, pos_frac)
 
     @write_api  # doesn't need write access but sqlite does require only a single thread to access the db during backup
     def export_library(self, library_key, exporter, progress=None, abort=None):
@@ -3448,13 +3445,23 @@ class Cache:
         return tuple(self.backend.all_annotation_types())
 
     @read_api
-    def all_annotations(self, restrict_to_user=None, limit=None, annotation_type=None, ignore_removed=False, restrict_to_book_ids=None):
+    def all_annotations(
+        self, restrict_to_user=None, limit=None, annotation_type=None, annotation_style=None,
+        ignore_removed=False, restrict_to_book_ids=None,
+    ):
         '''
         Return a tuple of all annotations matching the specified criteria.
-        `ignore_removed` controls whether removed (deleted) annotations are also returned. Removed annotations are just a skeleton
-        used for merging of annotations.
+        `ignore_removed` controls whether removed (deleted) annotations are also returned.
+        Removed annotations are just a skeleton used for merging of annotations.
         '''
-        return tuple(self.backend.all_annotations(restrict_to_user, limit, annotation_type, ignore_removed, restrict_to_book_ids))
+        return tuple(self.backend.all_annotations(restrict_to_user, limit, annotation_type, annotation_style, ignore_removed, restrict_to_book_ids))
+
+    @read_api
+    def all_annotation_styles(self):
+        '''
+        Return a tuple of all built-in annotation styles.
+        '''
+        return self.backend.all_annotation_styles()
 
     @read_api
     def search_annotations(

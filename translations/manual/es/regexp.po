@@ -7,14 +7,14 @@
 # Darío Hereñú, 2022
 # Jellby <jellby@yahoo.com>, 2014-2018,2020-2022,2024
 # Luis gomez quintana <luis.lgq@gmail.com>, 2014
-# Walter Paterno <walter.paterno@gmail.com>, 2024
+# Walter Paterno <walter.paterno@gmail.com>, 2024,2026
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-03-12 02:31+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Jellby <jellby@yahoo.com>, 2014-2018,2020-2022,2024\n"
+"Last-Translator: Walter Paterno <walter.paterno@gmail.com>, 2024,2026\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -438,7 +438,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "Otra función para la que puedes usar expresiones regulares es extraer metadatos de nombres de archivo. Puedes encontrar esta función en la sección \"Añadir libros\" de la configuración. Hay una función especial: puedes usar nombres de campo para los campos de metadatos; por ejemplo, \"(?P<title>)\" indicaría que calibre usa esta parte de la cadena como título del libro. Los nombres de campo permitidos se muestran en las ventanas, junto con otro campo de prueba. Por ejemplo, supongamos que quieres importar varios archivos con nombres como \"Textos clásicos: La Divina Comedia de Dante Alighieri.mobi\" (obviamente, ya está en tu biblioteca, ya que a todos nos encanta la poesía clásica italiana) o \"Epopeyas de ciencia ficción: La Trilogía de la Fundación de Isaac Asimov.epub\". Este es un esquema de nombres del que calibre no extraerá datos significativos; su expresión estándar para extraer metadatos es \"(?P<title>.+) - (?P<author>[^_]+)\". Una expresión regular que funciona en este caso sería ``[a-zA-Z]+: (?P<title>.+) por (?P<author>.+)``. Tenga en cuenta que, dentro del grupo del campo de metadatos, debe usar expresiones para describir la coincidencia real del campo. Además, tenga en cuenta que, al usar el campo de prueba proporcionado por calibre, debe agregar la extensión del archivo al nombre del archivo de prueba; de lo contrario, no obtendrá ninguna coincidencia, a pesar de usar una expresión funcional."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
@@ -468,7 +468,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "La última parte es la expresión regular :guilabel:`Buscar y reemplazar` en los campos de metadatos. Puedes acceder a ella seleccionando varios libros en la biblioteca y usando la edición masiva de metadatos. ¡Ten mucho cuidado al usar esta última función, ya que puede tener **Cosas Muy Malas** en tu biblioteca! Comprueba que tus expresiones hagan lo que quieres usando los campos de prueba y marca solo los libros que realmente quieres cambiar. En el modo de búsqueda de expresiones regulares, puedes buscar en un campo, reemplazar el texto con algo e incluso escribir el resultado en otro campo. Un ejemplo práctico: digamos que tu biblioteca contiene los libros de la serie Dune de Frank Herbert, llamada así por la moda ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah``, etc. Ahora quieres incluir ``Dune`` en el campo de serie. Puedes hacerlo buscando ``(.*?) \\d+ - .*`` en el campo de título y reemplazándolo con ``\\1`` en el campo de serie. ¿Ves lo que hice allí? Esa es una referencia al primer grupo con el que estás reemplazando el campo de serie. Ahora que tienes la serie configurada, solo necesitas buscar ``.*? -`` en el campo de título y reemplazarlo por ``\"\"`` (una cadena vacía), también en el campo de título, y tus metadatos estarán impecables. ¿No es genial? Por cierto, en lugar de reemplazar todo el campo, también puedes añadir o anteponer información al campo; por lo tanto, si *quieres* que el título del libro se anteponga con información de la serie, también puedes hacerlo. Como seguramente ya habrás notado, hay una casilla de verificación etiquetada como :guilabel:`Case sensitive`, así que no tendrás que usar indicadores para seleccionar el comportamiento."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""

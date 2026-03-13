@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.3 manpage writer.
+.\" by the Docutils 0.22.4 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "二月 27, 2026" "9.4.0" "calibre"
+.TH "CALIBREDB" "1" "三月 13, 2026" "9.5.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,45 +40,17 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+calibredb 是 Calibre 数据库的命令行接口。它包含多个子命令（详见下文说明）。
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+calibredb 可用于操作指定的本地库路径，也可操作运行在本机或互联网上的 Calibre“内容服务器”。您可以使用 calibre\-server 程序启动服务器，或者在 Calibre 主界面点击“连接/共享 \-> 启动内容服务器”。由于 calibredb 具有修改书库的权限，您必须先在服务器上配置身份验证。有两种实现方式：
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&. Be careful though,
-because some browsers, primarily Firefox, allow arbitrary websites to also
-access local servers. If you use Firefox, it is better to setup username
-and password, as described below.
+如果您仅计划连接到运行在同一台电脑上的服务器，只需开启内容服务器的 \-\-enable\-local\-write 选项，即可允许包括 calibredb 在内的任何本机程序修改数据。在主程序中，该选项位于“首选项 \-> 通过网络共享 \-> 高级选项”中。但请务必小心，因为某些浏览器（主要是 Firefox）允许任意网站访问本地服务器。如果您使用 Firefox，建议按照下文所述设置用户名和密码。
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+如果您希望开启互联网访问，则应在服务器上设置用户账户，并在使用 calibredb 时配合 \-\-username 和 \-\-password 选项进行授权。对于 calibre\-server，可以使用 \-\-enable\-auth 开启验证，并使用 \-\-manage\-users 创建账户。若是在主程序中，请前往“首选项 \-> 通过网络共享 \-> 要求使用用户名和密码”。
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+若要连接到正在运行的内容服务器，请将服务器的 URL 传递给 \-\-with\-library 选项，具体细节和示例请参阅该选项的说明文档。
 .INDENT 0.0
 .IP \(bu 2
 全局选项

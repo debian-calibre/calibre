@@ -29,6 +29,7 @@ from qt.core import (
     QPlainTextEdit,
     QSize,
     QSplitter,
+    QStandardItem,
     Qt,
     QTextBrowser,
     QTimer,
@@ -203,8 +204,8 @@ def friendly_username(user_type, user):
 
 def annotation_title(atype, singular=False):
     if singular:
-        return {'bookmark': _('Bookmark'), 'highlight': pgettext('type of annotation', 'Highlight')}.get(atype, atype)
-    return {'bookmark': _('Bookmarks'), 'highlight': _('Highlights')}.get(atype, atype)
+        return {'bookmark': _('Bookmark'), 'highlight': pgettext('type of annotation', 'Highlight')}.get(atype, atype.title())
+    return {'bookmark': _('Bookmarks'), 'highlight': _('Highlights')}.get(atype, atype.title())
 
 
 class AnnotsResultsDelegate(ResultsDelegate):
@@ -554,6 +555,7 @@ class Restrictions(QWidget):
 
     def __init__(self, parent):
         self.restrict_to_book_ids = frozenset()
+        self.icon_size = 12
         QWidget.__init__(self, parent)
         v = QVBoxLayout(self)
         v.setContentsMargins(0, 0, 0, 0)
@@ -570,6 +572,8 @@ class Restrictions(QWidget):
         connect_lambda(tb.currentIndexChanged, tb, lambda tb: gprefs.set('browse_annots_restrict_to_type', tb.currentData()))
         la.setBuddy(tb)
         tb.setToolTip(_('Show only annotations of the specified type'))
+        tb.setMinimumContentsLength(16)
+        tb.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToContents)
         h.addWidget(tb)
         la = QLabel(_('User:'))
         h.addWidget(la)
@@ -623,13 +627,34 @@ class Restrictions(QWidget):
             before = gprefs['browse_annots_restrict_to_type']
         tb.blockSignals(True)
         tb.clear()
-        tb.addItem(' ', ' ')
-        for atype in db.all_annotation_types():
-            tb.addItem(annotation_title(atype), atype)
+        tb.addItem(' ', {})
+        annotation_types = db.all_annotation_types()
+        for atype in annotation_types:
+            tb.addItem(annotation_title(atype), {'type': atype})
         if before:
             row = tb.findData(before)
             if row > -1:
                 tb.setCurrentIndex(row)
+
+        # Append highlight colors after the 'highlight' entry, if it exists
+        highlight_row = tb.findData({'type': 'highlight'})
+        if highlight_row > -1:
+            from calibre.gui2.viewer.highlights import decoration_for_style
+            dpr = self.devicePixelRatioF()
+            is_dark = is_dark_theme()
+            model = tb.model()
+            highlight_color_row = 1
+            all_styles = db.all_annotation_styles()
+            translate = _
+            for style_name, style in all_styles.items():
+                item = QStandardItem(translate(annotation_title(style_name)))
+                item.setData({'type': 'highlight', 'style': style}, Qt.ItemDataRole.UserRole)
+                dec = decoration_for_style(self.palette(), style, self.icon_size, dpr, is_dark)
+                if dec:
+                    item.setData(dec, Qt.ItemDataRole.DecorationRole)
+                model.insertRow(highlight_row + highlight_color_row, item)
+                highlight_color_row += 1
+
         tb.blockSignals(False)
         tb_is_visible = tb.count() > 2
         tb.setVisible(tb_is_visible), tb.la.setVisible(tb_is_visible)
@@ -728,10 +753,15 @@ class BrowsePanel(QWidget):
     @property
     def effective_query(self):
         text = self.search_box.lineEdit().text().strip()
-        atype = self.restrictions.types_box.currentData()
+        data = self.restrictions.types_box.currentData()
+        atype, style = '', None
+        if isinstance(data, dict):
+            atype = data.get('type') or ''
+            style = data.get('style')
         return {
             'fts_engine_query': text,
-            'annotation_type': (atype or '').strip(),
+            'annotation_type': atype.strip(),
+            'annotation_style': style,
             'restrict_to_user': self.restrict_to_user,
             'use_stemming': bool(self.use_stemmer.isChecked()),
             'restrict_to_book_ids': self.restrictions.effective_restrict_to_book_ids,
@@ -752,6 +782,7 @@ class BrowsePanel(QWidget):
                 if not q['fts_engine_query']:
                     results = db.all_annotations(
                         restrict_to_user=q['restrict_to_user'], limit=4096, annotation_type=q['annotation_type'],
+                        annotation_style=q['annotation_style'],
                         ignore_removed=True, restrict_to_book_ids=q['restrict_to_book_ids'] or None
                     )
                 else:

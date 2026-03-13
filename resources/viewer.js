@@ -13538,6 +13538,7 @@ return this.__repr__();
             ρσ_d["focus_iframe"] = null;
             ρσ_d["toggle_toc"] = null;
             ρσ_d["toggle_full_screen"] = null;
+            ρσ_d["reset_reading_rates"] = null;
             return ρσ_d;
         }).call(this);
         annot_id_uuid_map = Object.create(null);
@@ -28866,7 +28867,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.4.0";
+        CALIBRE_VERSION = "9.5.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -31110,6 +31111,8 @@ return this.__repr__();
 
         var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
 
+        var current_book = ρσ_modules["read_book.globals"].current_book;
+
         var get_interface_data = ρσ_modules.session.get_interface_data;
         var session_defaults = ρσ_modules.session.session_defaults;
 
@@ -31134,7 +31137,7 @@ return this.__repr__();
                 __module__ : {value: "read_book.prefs.head_foot"}
             });
 
-            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), opt(_("View mode"), "view-mode"), opt(_("View mode as icon"), "view-mode-icon"), sep(), opt(_("Clock"), "clock"), opt(_("Controls button on hover"), "menu-icon-on-hover"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress"), opt(_("Pages from paper edition"), "page-list")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
+            return ρσ_interpolate_kwargs.call(E, E.tr, [ρσ_interpolate_kwargs.call(E, E.td, [label + ":"].concat([ρσ_desugar_kwargs({style: "padding: 1ex 1rem"})])), E.td(ρσ_interpolate_kwargs.call(E, E.select, [opt(_("Empty"), "empty", true), sep(), opt(_("Book title"), "title"), opt(_("Authors"), "authors"), opt(_("Series"), "series"), sep(), opt(_("Top level section"), "top-section"), opt(_("Current section"), "section"), opt(_("View mode"), "view-mode"), opt(_("View mode as icon"), "view-mode-icon"), sep(), opt(_("Clock"), "clock"), opt(_("Controls button on hover"), "menu-icon-on-hover"), sep(), opt(_("Progress"), "progress"), opt(_("Time to read book"), "time-book"), opt(_("Time to read chapter"), "time-chapter"), opt(_("Time to read chapter and book"), "time-chapter-book"), opt(_("Position in book"), "pos-book"), opt(_("Position in chapter"), "pos-chapter"), opt(_("Pages in chapter"), "pages-progress"), opt(_("Pages from paper edition"), "page-list"), opt(_("Pages from paper edition with total"), "page-list-with-total")].concat([ρσ_desugar_kwargs({data_region: region})])))].concat([ρσ_desugar_kwargs({style: style || ""})]));
         };
         if (!create_item.__argnames__) Object.defineProperties(create_item, {
             __argnames__ : {value: ["region", "label", "style"]},
@@ -31361,7 +31364,7 @@ return this.__repr__();
         });
 
         function render_head_foot(div, which, region, metadata, current_toc_node, current_toc_toplevel_node, page_list, book_time, chapter_time, pos, override, view_mode) {
-            var template, field, interface_data, text, has_clock, force_display_even_if_overflowed, percent, ival;
+            var template, field, interface_data, text, has_clock, force_display_even_if_overflowed, percent, ival, full_page_list;
             template = get_session_data().get(which) || Object.create(null);
             field = template[(typeof region === "number" && region < 0) ? template.length + region : region] || "empty";
             interface_data = get_interface_data();
@@ -31434,6 +31437,18 @@ return this.__repr__();
                         text = page_list[0].pagenum;
                     } else {
                         text = "" + ρσ_str.format("{}", page_list[0].pagenum) + " - " + ρσ_str.format("{}", page_list[page_list.length-1].pagenum) + "";
+                    }
+                }
+            } else if (field === "page-list-with-total") {
+                if (page_list && page_list.length > 0) {
+                    if (page_list.length === 1) {
+                        text = page_list[0].pagenum;
+                    } else {
+                        text = "" + ρσ_str.format("{}", page_list[0].pagenum) + " - " + ρσ_str.format("{}", page_list[page_list.length-1].pagenum) + "";
+                    }
+                    full_page_list = current_book().manifest.page_list;
+                    if (full_page_list) {
+                        text = "" + ρσ_str.format("{}", text) + " / " + ρσ_str.format("{}", full_page_list[full_page_list.length-1].pagenum) + "";
                     }
                 }
             }
@@ -45621,7 +45636,7 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })(), "image");
-            reading_stats_action = ac(_("Reading stats"), _("Show reading statistics for this book"), (function() {
+            reading_stats_action = ac(_("Reading statistics"), _("Show reading statistics for this book"), (function() {
                 var ρσ_anonfunc = function () {
                     self.overlay.show_reading_stats();
                 };
@@ -46303,6 +46318,8 @@ return this.__repr__();
         }
         Object.defineProperty(ReadingStatsOverlay.prototype, "__bind_methods__", {value: function () {
             this.on_container_click = ReadingStatsOverlay.prototype.on_container_click.bind(this);
+            this.reset_stats = ReadingStatsOverlay.prototype.reset_stats.bind(this);
+            this.do_reset = ReadingStatsOverlay.prototype.do_reset.bind(this);
             this.show = ReadingStatsOverlay.prototype.show.bind(this);
         }});
         ReadingStatsOverlay.prototype.__init__ = function __init__(overlay) {
@@ -46320,6 +46337,41 @@ return this.__repr__();
         };
         if (!ReadingStatsOverlay.prototype.on_container_click.__argnames__) Object.defineProperties(ReadingStatsOverlay.prototype.on_container_click, {
             __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.overlay"}
+        });
+        ReadingStatsOverlay.prototype.reset_stats = function reset_stats() {
+            var self = this;
+            question_dialog(_("Reset reading statistics"), _("Are you sure you want to delete all reading statistics? This will remove all saved reading rate data."), (function() {
+                var ρσ_anonfunc = function (yes) {
+                    if (yes) {
+                        self.do_reset();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["yes"]},
+                    __module__ : {value: "read_book.overlay"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!ReadingStatsOverlay.prototype.reset_stats.__module__) Object.defineProperties(ReadingStatsOverlay.prototype.reset_stats, {
+            __module__ : {value: "read_book.overlay"}
+        });
+        ReadingStatsOverlay.prototype.do_reset = function do_reset() {
+            var self = this;
+            var view;
+            view = self.overlay.view;
+            if (view.timers) {
+                view.timers.rates = [];
+                view.timers.chapter_times = {};
+                view.timers.average = view.timers.stddev = 0;
+            }
+            if (ui_operations.reset_reading_rates) {
+                ui_operations.reset_reading_rates();
+            }
+            self.overlay.hide_current_panel();
+        };
+        if (!ReadingStatsOverlay.prototype.do_reset.__module__) Object.defineProperties(ReadingStatsOverlay.prototype.do_reset, {
             __module__ : {value: "read_book.overlay"}
         });
         ReadingStatsOverlay.prototype.show = function show(container) {
@@ -46478,6 +46530,7 @@ return this.__repr__();
             graph_section.appendChild(legend);
             container.appendChild(graph_section);
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("For reading stats, a \"chapter\" is a single internal file inside the larger book. If you see very few \"chapters\" above, then try converting your book to EPUB in calibre, that will often automatically split up the book into per chapter files.")].concat([ρσ_desugar_kwargs({style: "padding: 0 1em 1em 1em; font-size: smaller"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Reset statistics"), "trash"].concat([ρσ_desugar_kwargs({action: self.reset_stats})]))].concat([ρσ_desugar_kwargs({style: "padding: 0 1em 1em 1em; display: flex; justify-content: flex-end"})])));
         };
         if (!ReadingStatsOverlay.prototype.show.__argnames__) Object.defineProperties(ReadingStatsOverlay.prototype.show, {
             __argnames__ : {value: ["container"]},
@@ -52321,6 +52374,9 @@ return this.__repr__();
         View.prototype.update_cfi_data = function update_cfi_data(data) {
             var self = this;
             var username, unkey;
+            if (ui_operations.update_last_read_position) {
+                ui_operations.update_last_read_position(data.cfi, data.progress_frac);
+            }
             username = get_interface_data().username;
             if (self.book) {
                 self.currently_showing.bookpos = data.cfi;
@@ -53174,9 +53230,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter6 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index6 = 0; ρσ_Index6 < ρσ_Iter6.length; ρσ_Index6++) {
-                key = ρσ_Iter6[ρσ_Index6];
+            var ρσ_Iter8 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
+                key = ρσ_Iter8[ρσ_Index8];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);
@@ -53781,6 +53837,16 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })();
+            ui_operations.update_last_read_position = (function() {
+                var ρσ_anonfunc = function (cfi, pos_frac) {
+                    to_python.update_last_read_position(cfi, pos_frac);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["cfi", "pos_frac"]},
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
             ui_operations.show_search = (function() {
                 var ρσ_anonfunc = function (text, trigger) {
                     to_python.show_search(text, !!trigger);
@@ -54151,6 +54217,15 @@ return this.__repr__();
                 };
                 if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
                     __argnames__ : {value: ["rates"]},
+                    __module__ : {value: null}
+                });
+                return ρσ_anonfunc;
+            })();
+            ui_operations.reset_reading_rates = (function() {
+                var ρσ_anonfunc = function () {
+                    to_python.reset_reading_rates();
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
                     __module__ : {value: null}
                 });
                 return ρσ_anonfunc;
