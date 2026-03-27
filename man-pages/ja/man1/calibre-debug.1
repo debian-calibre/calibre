@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "3月 13, 2026" "9.5.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "3月 27, 2026" "9.6.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -40,23 +40,25 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+calibreのデバッグに役立つさまざまなコマンドラインインターフェース。オプションを指定しない場合、このコマンドは組み込みのPythonインタープリタを起動します。メインのcalibre GUI、calibre電子書籍ビューア、calibreエディタをデバッグモードで実行することもできます。
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
-.sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+また、フォントのサブセット化、Eブックのdiffツールなど、専用のコマンドラインツールがないcalibreのさまざまな部分へのインターフェースも含まれています。
+:command:
+.nf
+\(ga
+.fi
+calibre\-debug\(gaを使用してスタンドアロンスクリプトを実行することもできます。そのためには、次のように使用します。
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+以降のすべてがスクリプトに渡されます。:command:
+.nf
+\(ga
+.fi
+calibre\-debug\(gaをスクリプトのshebangとして使用することもできます。例:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
@@ -93,7 +95,7 @@ Windows の既定のプログラムに登録/登録解除 \fB\-\-default\-progra
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+calibreの \fB\(dq\fP本の編集\fB\(dq\fP ツールをデバッグモードで起動します。\-gオプションと同様に、コマンドライン引数を渡すには\-\-オプションを使用します。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -108,12 +110,12 @@ Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fB\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+calibreのすべてのデータ（本、設定、プラグイン）をエクスポートします。通常、エクスポート先のフォルダとライブラリを指定するよう求められます。コマンドライン引数として指定することで、これらの質問をスキップすることもできます。エクスポート先のフォルダとライブラリには絶対パスを使用してください。特別なキーワード \fB\(dq\fPall\fB\(dq\fP を使用すると、すべてのライブラリをエクスポートできます。例：  calibre\-debug \fB\-\-export\-all\-calibre\-data\fP # 対話型で使用 calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2 calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /export/folder all # 既知のすべてのライブラリをエクスポート
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
+デバッグを有効にしてGUIを実行します。デバッグ出力は標準出力と標準エラー出力に表示されます。コマンドライン引数を渡すには、\-\- の後に引数を指定します。例: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -197,7 +199,7 @@ DEBUGフラグを設定して実行しないでください
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+電子書籍ビューアをデバッグモードで実行します。\-g と同様に、\-\- を使用してコマンドライン引数を渡します。
 .UNINDENT
 .SH Author
 Kovid Goyal

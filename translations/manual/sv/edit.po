@@ -9,15 +9,16 @@
 # Karl Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
+# Karl Jonatan Nyberg, 2026
 # Kristoffer Grundström <lovaren@gmail.com>, 2016
 # Merarom <merarom@yahoo.es>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-03-25 23:20+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2025-2026\n"
+"Last-Translator: Karl Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -94,7 +95,7 @@ msgid ""
 "replace. The checkpointing functionality is in addition to the normal "
 "undo/redo mechanism when editing individual files. Checkpoints are needed "
 "for when changes are spread over multiple files in the book."
-msgstr ""
+msgstr "En användbar funktion är :guilabel:`Kontrollpunkter`. Innan du ger dig in i en ambitiös uppsättning redigeringar kan du skapa en kontrollpunkt. Kontrollpunkten bevarar bokens nuvarande tillstånd, och om du i framtiden bestämmer dig för att du inte gillar de ändringar du har gjort kan du gå tillbaka till tillståndet när du skapade kontrollpunkten. För att skapa en kontrollpunkt, använd :guilabel:`Redigera->Skapa kontrollpunkt`. Kontrollpunkter skapas också automatiskt åt dig när du kör ett automatiserat verktyg som global sökning och ersättning. Kontrollpunktsfunktionen är ett komplement till den vanliga ångra/gör om-mekanismen när du redigerar enskilda filer. Kontrollpunkter behövs när ändringar är spridda över flera filer i boken."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:55
 msgid ""
@@ -253,7 +254,7 @@ msgid ""
 "the user ever converts the EPUB file in calibre to another format. This is "
 "because when converting, calibre assumes that the marked title page contains"
 " only the cover and no other content."
-msgstr ""
+msgstr "Dessutom har EPUB-filer konceptet *titelsida*. En titelsida är en HTML-fil som fungerar som titelsida/omslag för boken. Du kan markera en HTML-fil som titelsida när du redigerar EPUB-filer genom att högerklicka. Var noga med att filen du markerar bara innehåller omslagsinformationen. Om den innehåller annat innehåll, till exempel det första kapitlet, kommer det innehållet att gå förlorat om användaren någonsin konverterar EPUB-filen i calibre till ett annat format. Detta beror på att calibre vid konvertering antar att den markerade titelsidan bara innehåller omslaget och inget annat innehåll."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:163
 msgid "Deleting files"
@@ -434,7 +435,7 @@ msgid ""
 "<i>word</i>.`` you can search for ``on a word`` and it will be found even "
 "though there is an ``<i>`` tag in the middle. Use this tool via the "
 ":guilabel:`Search->Search ignoring HTML markup` menu item."
-msgstr ""
+msgstr "Det finns också ett dedikerat verktyg för att söka efter text, utan att ignorera HTML-taggar däremellan. Om boken till exempel har HTML-koden \"Betoning på ett ord\" kan du söka efter \"på ett ord\" och den kommer att hittas även om det finns en \"```-tagg i mitten. Använd det här verktyget via menyalternativet :guilabel:`Sök->Sök utan att ignorera HTML-kod`."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:287
 msgid "Automated tools"
@@ -822,7 +823,7 @@ msgid ""
 " cause the cursor in the editor to be positioned over the element you "
 "clicked. If you click a link pointing to another file in the book, that file"
 " will be opened in the edit and the preview panel, automatically."
-msgstr ""
+msgstr "Förhandsgranskningspanelen i realtid visar de ändringar du gör live (med en eller två sekunders fördröjning). När du redigerar HTML- eller CSS-filer uppdateras förhandsgranskningspanelen automatiskt för att återspegla dina ändringar. När du flyttar markören i redigeraren kommer förhandsgranskningspanelen att spåra dess plats och visa motsvarande plats i boken. Om du klickar i förhandsgranskningspanelen placeras markören i redigeraren över det element du klickade på. Om du klickar på en länk som pekar till en annan fil i boken öppnas den filen automatiskt i redigerings- och förhandsgranskningspanelen."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:550
 msgid ""
@@ -843,7 +844,7 @@ msgid ""
 "embedded fonts that use font name aliasing. Use the preview panel while you "
 "are working on the book, but once you are done, review it in an actual "
 "reader device or software emulator."
-msgstr ""
+msgstr "Förhandsgranskningspanelen visar hur texten kommer att se ut när den visas. Förhandsgranskningspanelen ersätter dock inte att testa din bok på en riktig läsare. Den är både mer och mindre kapabel än en riktig läsare. Den tolererar fel och slarvig markering mycket bättre än de flesta läsare. Den visar inte heller sidmarginaler, sidbrytningar och inbäddade teckensnitt som använder teckensnittsaliasering. Använd förhandsgranskningspanelen medan du arbetar med boken, men när du är klar kan du granska den i en riktig läsare eller programemulator."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:564
 msgid ""
@@ -1157,7 +1158,7 @@ msgid ""
 "can double click entries in the :guilabel:`Source` column to jump to where "
 "the link is defined and entries in the :guilabel:`Target` column to jump to "
 "where the link points."
-msgstr ""
+msgstr "Redigeraren innehåller ett praktiskt *Rapporter*-verktyg (via :guilabel:`Verktyg->Rapporter`) som visar sammanfattningar av filer, bilder, länkar, ord, tecken och stilar som används i boken. Varje rad i rapporten är länkad via en hotlink. Om du dubbelklickar på en rad hoppar du till den plats i boken där objektet används eller definieras (beroende på vad som är lämpligt). Till exempel, i vyn :guilabel:`Länkar` kan du dubbelklicka på poster i kolumnen :guilabel:`Källa` för att hoppa till var länken är definierad och på poster i kolumnen :guilabel:`Mål` för att hoppa till var länken pekar."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:798
 msgid "The Reports tool with information and statistics about the book"
