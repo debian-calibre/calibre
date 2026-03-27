@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 18:49+0000\n"
+"POT-Creation-Date: 2026-03-25 23:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: RERBIN MA, 2024-2026\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -53,50 +53,50 @@ msgid ""
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE 只是用作从metadata.db 稳健地读取和写入的一种方式。 所有表读取/排序/搜索/缓存逻辑都被重新实现。 这是获得最大性能和灵活性所必需的。"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
 msgstr "当数据库中创建新的图书记录时，图书 id 作为唯一参数"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
 msgid "When a book format is edited, with arguments: (book_id, fmt)"
 msgstr "编辑书籍格式时, 使用参数: (book_id, fmt)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.books_removed:1
 msgid ""
 "When books are removed from the database with the list of book ids as the "
 "only argument"
 msgstr "当书籍从数据库中删除时，书籍 ID 列表作为唯一参数"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
 msgstr "当为书籍添加一种格式时, 使用参数: (book_id, fmt)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
 msgstr "当从书中删除格式时，带有参数：（将图书 ID 映射到从书中删除的格式集）"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
 msgid "When the indexing progress changes"
 msgstr "当索引进度发生变化时"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_removed:1
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
 "(field_name, affected book ids, ids of removed items)"
 msgstr "当标签或作者等项目从某些书籍中删除时。 参数：（字段名称、受影响的图书 ID、已删除项目的 ID）"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_renamed:1
 msgid ""
 "When items such as tags or authors are renamed in some or all books. "
@@ -104,21 +104,21 @@ msgid ""
 "id)"
 msgstr "当某些或所有书籍中的标签或作者等项目被重命名时。 参数：（字段名称、受影响的图书 ID、旧项目 ID 到新项目 ID 的映射）"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.links_changed:1
 msgid ""
 "When the links associated with items(s) are changed, with arguments: "
 "(field_name, item_ids)"
 msgstr "当与项目关联的链接发生更改时，使用的参数为：（field_name，item_ids）"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
 msgid ""
 "When some metadata is changed for some books, with arguments: (name of "
 "changed field, set of affected book ids)"
 msgstr "当某些书籍的某些元数据发生更改时，带有参数：（更改字段的名称，受影响的书籍 ID 集）"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.notes_changed:1
 msgid ""
 "When the notes associated with item(s) are changed, with arguments: "
@@ -199,6 +199,11 @@ msgid ""
 "Add the specified resource so it can be referenced by notes and return its "
 "content hash"
 msgstr "添加指定的资源，以便它可以被注释引用并返回其内容哈希"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_styles:1
+msgid "Return a tuple of all built-in annotation styles."
+msgstr "以元组 (Tuple) 形式返回所有内置标注样式"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_types:1

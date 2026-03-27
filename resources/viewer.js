@@ -13539,6 +13539,8 @@ return this.__repr__();
             ρσ_d["toggle_toc"] = null;
             ρσ_d["toggle_full_screen"] = null;
             ρσ_d["reset_reading_rates"] = null;
+            ρσ_d["has_unsynced_changes"] = null;
+            ρσ_d["upload_pending_annotations"] = null;
             return ρσ_d;
         }).call(this);
         annot_id_uuid_map = Object.create(null);
@@ -16354,6 +16356,9 @@ return this.__repr__();
             this.initialize_stage2 = DB.prototype.initialize_stage2.bind(this);
             this.display_error = DB.prototype.display_error.bind(this);
             this.do_op = DB.prototype.do_op.bind(this);
+            this.set_pending_annot_upload = DB.prototype.set_pending_annot_upload.bind(this);
+            this.get_all_pending_annot_uploads = DB.prototype.get_all_pending_annot_uploads.bind(this);
+            this.clear_pending_annot_upload = DB.prototype.clear_pending_annot_upload.bind(this);
             this.get_book = DB.prototype.get_book.bind(this);
             this.get_mathjax_info = DB.prototype.get_mathjax_info.bind(this);
             this.save_manifest = DB.prototype.save_manifest.bind(this);
@@ -16535,6 +16540,50 @@ return this.__repr__();
                 });
                 return ρσ_anonfunc;
             })();
+            function try_persist(lock) {
+                if (!lock) {
+                    return;
+                }
+                return window.navigator.storage.persisted().then((function() {
+                    var ρσ_anonfunc = function (already_persistent) {
+                        if (!already_persistent) {
+                            return window.navigator.storage.persist();
+                        }
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["already_persistent"]},
+                        __module__ : {value: "read_book.db"}
+                    });
+                    return ρσ_anonfunc;
+                })());
+            };
+            if (!try_persist.__argnames__) Object.defineProperties(try_persist, {
+                __argnames__ : {value: ["lock"]},
+                __module__ : {value: "read_book.db"}
+            });
+
+            if (ρσ_exists.d(window.navigator.storage).persist) {
+                if (window.navigator.locks) {
+                    window.navigator.locks.request("calibre-storage-persist", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["ifAvailable"] = true;
+                        return ρσ_d;
+                    }).call(this), try_persist);
+                } else {
+                    window.navigator.storage.persisted().then((function() {
+                        var ρσ_anonfunc = function (already_persistent) {
+                            if (!already_persistent) {
+                                window.navigator.storage.persist();
+                            }
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["already_persistent"]},
+                            __module__ : {value: "read_book.db"}
+                        });
+                        return ρσ_anonfunc;
+                    })());
+                }
+            }
             self.callback();
         };
         if (!DB.prototype.initialize_stage2.__argnames__) Object.defineProperties(DB.prototype.initialize_stage2, {
@@ -16593,6 +16642,12 @@ return this.__repr__();
                 if (proceed) {
                     req.onsuccess = proceed;
                 }
+            } else if (op === "delete") {
+                transaction = self.idb.transaction(stores, "readwrite");
+                req = transaction.objectStore(store).delete(data);
+                if (proceed) {
+                    req.onsuccess = proceed;
+                }
             }
             req.onerror = (function() {
                 var ρσ_anonfunc = function (event) {
@@ -16609,6 +16664,92 @@ return this.__repr__();
             __defaults__ : {value: {op:"get", store:null}},
             __handles_kwarg_interpolation__ : {value: true},
             __argnames__ : {value: ["stores", "data", "error_msg", "proceed", "op", "store"]},
+            __module__ : {value: "read_book.db"}
+        });
+        DB.prototype.set_pending_annot_upload = function set_pending_annot_upload(library_id, book_id, fmt, amap) {
+            var self = this;
+            var key, entry;
+            key = "pending-annot-upload:" + ρσ_str.format("{}", library_id) + "/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", fmt) + "";
+            entry = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["key"] = key;
+                ρσ_d["library_id"] = library_id;
+                ρσ_d["book_id"] = book_id;
+                ρσ_d["fmt"] = fmt;
+                ρσ_d["amap"] = amap;
+                return ρσ_d;
+            }).call(this);
+            ρσ_interpolate_kwargs.call(self, self.do_op, [ρσ_list_decorate([ "objects" ]), entry, _("Failed to save pending annotation upload"), (function() {
+                var ρσ_anonfunc = function () {
+                    null;
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.db"}
+                });
+                return ρσ_anonfunc;
+            })()].concat([ρσ_desugar_kwargs({op: "put"})]));
+        };
+        if (!DB.prototype.set_pending_annot_upload.__argnames__) Object.defineProperties(DB.prototype.set_pending_annot_upload, {
+            __argnames__ : {value: ["library_id", "book_id", "fmt", "amap"]},
+            __module__ : {value: "read_book.db"}
+        });
+        DB.prototype.get_all_pending_annot_uploads = function get_all_pending_annot_uploads(proceed) {
+            var self = this;
+            var transaction, store, key_range, entries, req;
+            transaction = self.idb.transaction(ρσ_list_decorate([ "objects" ]));
+            store = transaction.objectStore("objects");
+            key_range = IDBKeyRange.bound("pending-annot-upload:", "pending-annot-upload:\uffff");
+            entries = [];
+            req = store.openCursor(key_range);
+            req.onsuccess = (function() {
+                var ρσ_anonfunc = function (event) {
+                    var cursor;
+                    cursor = event.target.result;
+                    if (cursor) {
+                        entries.push(cursor.value);
+                        cursor.continue();
+                    } else {
+                        proceed(entries);
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]},
+                    __module__ : {value: "read_book.db"}
+                });
+                return ρσ_anonfunc;
+            })();
+            req.onerror = (function() {
+                var ρσ_anonfunc = function (event) {
+                    self.display_error(_("Failed to read pending annotation uploads"), event);
+                    proceed([]);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["event"]},
+                    __module__ : {value: "read_book.db"}
+                });
+                return ρσ_anonfunc;
+            })();
+        };
+        if (!DB.prototype.get_all_pending_annot_uploads.__argnames__) Object.defineProperties(DB.prototype.get_all_pending_annot_uploads, {
+            __argnames__ : {value: ["proceed"]},
+            __module__ : {value: "read_book.db"}
+        });
+        DB.prototype.clear_pending_annot_upload = function clear_pending_annot_upload(library_id, book_id, fmt, proceed) {
+            var self = this;
+            var key;
+            key = "pending-annot-upload:" + ρσ_str.format("{}", library_id) + "/" + ρσ_str.format("{}", book_id) + "/" + ρσ_str.format("{}", fmt) + "";
+            ρσ_interpolate_kwargs.call(self, self.do_op, [ρσ_list_decorate([ "objects" ]), key, _("Failed to clear pending annotation upload"), proceed || (function() {
+                var ρσ_anonfunc = function () {
+                    null;
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.db"}
+                });
+                return ρσ_anonfunc;
+            })()].concat([ρσ_desugar_kwargs({op: "delete"})]));
+        };
+        if (!DB.prototype.clear_pending_annot_upload.__argnames__) Object.defineProperties(DB.prototype.clear_pending_annot_upload, {
+            __argnames__ : {value: ["library_id", "book_id", "fmt", "proceed"]},
             __module__ : {value: "read_book.db"}
         });
         DB.prototype.get_book = function get_book(library_id, book_id, fmt, metadata, proceed) {
@@ -28867,7 +29008,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.5.0";
+        CALIBRE_VERSION = "9.6.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -45153,6 +45294,7 @@ return this.__repr__();
 
         var create_bookmarks_panel = ρσ_modules["read_book.bookmarks"].create_bookmarks_panel;
 
+        var is_dark_theme = ρσ_modules["read_book.globals"].is_dark_theme;
         var runtime = ρσ_modules["read_book.globals"].runtime;
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
 
@@ -45160,6 +45302,7 @@ return this.__repr__();
         var create_location_overlay = ρσ_modules["read_book.goto"].create_location_overlay;
         var create_page_list_overlay = ρσ_modules["read_book.goto"].create_page_list_overlay;
 
+        var builtin_color = ρσ_modules["read_book.highlights"].builtin_color;
         var create_highlights_panel = ρσ_modules["read_book.highlights"].create_highlights_panel;
 
         var create_profiles_panel = ρσ_modules["read_book.profiles"].create_profiles_panel;
@@ -45403,13 +45546,40 @@ return this.__repr__();
         SyncBook.__handles_kwarg_interpolation__ = SyncBook.prototype.__init__.__handles_kwarg_interpolation__;
         SyncBook.prototype.show = function show(container) {
             var self = this;
-            var book, to_sync;
+            var book, to_sync, view;
             self.container_id = container.getAttribute("id");
             ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({background_color: get_color("window-background")})]));
             book = self.overlay.view.book;
             to_sync = [[book.key, new Date(0)]];
-            self.overlay.view.annotations_manager.sync_annots_to_server();
-            sync_library_books(book.key[0], to_sync, self.sync_data_received);
+            view = self.overlay.view;
+            function start_download() {
+                sync_library_books(book.key[0], to_sync, self.sync_data_received);
+            };
+            if (!start_download.__module__) Object.defineProperties(start_download, {
+                __module__ : {value: "read_book.overlay"}
+            });
+
+            function after_position_upload(success) {
+                start_download();
+            };
+            if (!after_position_upload.__argnames__) Object.defineProperties(after_position_upload, {
+                __argnames__ : {value: ["success"]},
+                __module__ : {value: "read_book.overlay"}
+            });
+
+            function after_annot_upload(success) {
+                view.upload_current_position(after_position_upload);
+            };
+            if (!after_annot_upload.__argnames__) Object.defineProperties(after_annot_upload, {
+                __argnames__ : {value: ["success"]},
+                __module__ : {value: "read_book.overlay"}
+            });
+
+            if (ui_operations.upload_pending_annotations) {
+                ui_operations.upload_pending_annotations(after_annot_upload);
+            } else {
+                after_annot_upload(true);
+            }
             container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.h2(_("Syncing last read position and annotations")), E.p(_("Downloading data from server, please wait...")), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: self.cancel})]))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content:flex-end"})]))].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; max-width: 80vw"})]))].concat([ρσ_desugar_kwargs({style: "display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%"})])));
         };
         if (!SyncBook.prototype.show.__argnames__) Object.defineProperties(SyncBook.prototype.show, {
@@ -45611,6 +45781,9 @@ return this.__repr__();
             });
 
             sync_action = ac(_("Sync"), _("Get last read position and annotations from the server"), self.overlay.sync_book, "cloud-download");
+            if (ui_operations.has_unsynced_changes && ui_operations.has_unsynced_changes()) {
+                sync_action.firstChild.style.color = builtin_color("yellow", is_dark_theme());
+            }
             delete_action = ac(_("Delete"), _("Delete this book from local storage"), self.overlay.delete_book, "trash");
             reload_action = ac(_("Reload"), _("Reload this book from the {}").format((runtime.is_standalone_viewer) ? _("computer") : _("server")), self.overlay.reload_book, "refresh");
             back_action = ac(_("Back"), _("Go back"), self.back, "arrow-left");
@@ -50461,6 +50634,8 @@ return this.__repr__();
             this.on_update_progress_frac = View.prototype.on_update_progress_frac.bind(this);
             this.on_update_cfi = View.prototype.on_update_cfi.bind(this);
             this.show_status_message = View.prototype.show_status_message.bind(this);
+            this.upload_current_position = View.prototype.upload_current_position.bind(this);
+            this.show_unsynced_indicator = View.prototype.show_unsynced_indicator.bind(this);
             this.create_template_renderer = View.prototype.create_template_renderer.bind(this);
             this.update_header_footer = View.prototype.update_header_footer.bind(this);
             this.on_update_toc_position = View.prototype.on_update_toc_position.bind(this);
@@ -50547,6 +50722,8 @@ return this.__repr__();
                 return ρσ_d;
             }).call(this);
             self.current_status_message = "";
+            self.unsynced_message = "";
+            self.last_position_data = null;
             self.current_toc_node = self.current_toc_toplevel_node = null;
             self.current_toc_families = [];
             self.report_cfi_callbacks = Object.create(null);
@@ -52446,6 +52623,7 @@ return this.__repr__();
                     ρσ_d["pos_frac"] = data.progress_frac;
                     return ρσ_d;
                 }).call(this);
+                self.last_position_data = lrd;
                 ajax_send(ρσ_interpolate_kwargs.call("book-set-last-read-position/{library_id}/{book_id}/{fmt}", "book-set-last-read-position/{library_id}/{book_id}/{fmt}".format, [ρσ_desugar_kwargs({library_id: key[0], book_id: key[1], fmt: key[2]})]), lrd, (function() {
                     var ρσ_anonfunc = function (end_type, xhr, ev) {
                         if (end_type !== "load") {
@@ -52486,6 +52664,38 @@ return this.__repr__();
         };
         if (!View.prototype.show_status_message.__argnames__) Object.defineProperties(View.prototype.show_status_message, {
             __argnames__ : {value: ["msg", "timeout"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.upload_current_position = function upload_current_position(callback) {
+            var self = this;
+            var key;
+            if (!self.last_position_data || !self.book) {
+                callback(true);
+                return;
+            }
+            key = self.book.key;
+            ajax_send(ρσ_interpolate_kwargs.call("book-set-last-read-position/{library_id}/{book_id}/{fmt}", "book-set-last-read-position/{library_id}/{book_id}/{fmt}".format, [ρσ_desugar_kwargs({library_id: key[0], book_id: key[1], fmt: key[2]})]), self.last_position_data, (function() {
+                var ρσ_anonfunc = function (end_type, xhr, ev) {
+                    callback(end_type === "load");
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["end_type", "xhr", "ev"]},
+                    __module__ : {value: "read_book.view"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!View.prototype.upload_current_position.__argnames__) Object.defineProperties(View.prototype.upload_current_position, {
+            __argnames__ : {value: ["callback"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.show_unsynced_indicator = function show_unsynced_indicator(visible) {
+            var self = this;
+            self.unsynced_message = (visible) ? _("Unsynced changes") : "";
+            self.update_header_footer();
+        };
+        if (!View.prototype.show_unsynced_indicator.__argnames__) Object.defineProperties(View.prototype.show_unsynced_indicator, {
+            __argnames__ : {value: ["visible"]},
             __module__ : {value: "read_book.view"}
         });
         View.prototype.create_template_renderer = function create_template_renderer() {
@@ -52530,7 +52740,7 @@ return this.__repr__();
                 b = c.previousSibling;
                 a = b.previousSibling;
                 if (sd.get("margin_" + ρσ_str.format("{}", edge) + "", 20) > 5) {
-                    override = (edge === "bottom") ? self.current_status_message : "";
+                    override = (edge === "bottom") ? self.current_status_message || self.unsynced_message : "";
                     hca = renderer(a, name, "left", override);
                     hcb = renderer(b, name, "middle", "");
                     hcc = renderer(c, name, "right", "");
@@ -53230,9 +53440,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter8 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index8 = 0; ρσ_Index8 < ρσ_Iter8.length; ρσ_Index8++) {
-                key = ρσ_Iter8[ρσ_Index8];
+            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
+                key = ρσ_Iter0[ρσ_Index0];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);
