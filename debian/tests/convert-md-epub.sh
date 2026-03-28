@@ -54,6 +54,6 @@ echo "#### ebook-polish ${epub} ${epub_polished}"
 ebook-polish --add-soft-hyphens --compress-images --remove-unused-css ${epub} ${epub_polished}
 
 echo "#### epubcheck ${epub_polished}"
-java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub_polished}
+java -Xss10m -jar /usr/share/java/epubcheck.jar ${epub_polished}
 
 echo ":::: end"
