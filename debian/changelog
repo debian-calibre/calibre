@@ -1,3 +1,14 @@
+calibre (9.6.0+ds+~0.10.5-3) UNRELEASED; urgency=medium
+
+  * Revert "Add more stack to help epubcheck"
+    This reverts commit 4eabd0d536597ceaa931af3145bcb5f010f9837b.
+    This fix doesn't help i386.
+  * Drop i386 from convert-md-epub.sh test to avoid Debian bug 1132127.
+    This bug comes from epubcheck, not calibre.
+    So disable this test for i386.
+
+ -- YOKOTA Hiroshi <yokota.hgml@gmail.com>  Mon, 30 Mar 2026 00:19:15 +0900
+
 calibre (9.6.0+ds+~0.10.5-2) unstable; urgency=medium
 
   * Add more stack to help epubcheck (Closes: #1132127)
