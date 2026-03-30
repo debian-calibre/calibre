@@ -22,7 +22,7 @@ echo "#### ebook-convert ${mdown} ${epub}"
 ebook-convert ${mdown} ${epub}
 
 echo "#### epubcheck ${epub}"
-java -Xss1024k -jar /usr/share/java/epubcheck.jar ${epub}
+java -Xss20m -jar /usr/share/java/epubcheck.jar ${epub}
 
 echo ":::: end"
 
