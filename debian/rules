@@ -67,7 +67,6 @@ override_dh_auto_build: blhc-note
 	env PODOFO_INC_DIR=$(TOPDIR)/podofo/src/podofo PODOFO_LIB_DIR=$(TOPDIR)/podofo/src/podofo $(SETUP) build
 	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation
 	$(SETUP) gui
-	$(SETUP) kakasi
 
 # Invoke "calibre_auto_test" target with automatic "HOME" and "XDG_*" variables.
 override_dh_auto_test:
@@ -110,7 +109,6 @@ override_dh_auto_clean:
 	$(SETUP) liberation_fonts --clean
 	py3clean src/calibre/gui2
 	$(SETUP) gui --clean
-	$(SETUP) kakasi --clean
 	py3clean setup src
 
 override_dh_gencontrol:
