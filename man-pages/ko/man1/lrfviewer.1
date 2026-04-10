@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "LRFVIEWER" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "LRFVIEWER" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 lrfviewer \- lrfviewer
 .INDENT 0.0
@@ -42,12 +42,16 @@ lrfviewer [options] book.lrf
 .sp
 Read the LRF e\-book book.lrf
 .sp
-Whenever you pass arguments to \fBlrfviewer\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+lrfviewer\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-disable\-hyphenation
-Disable hyphenation. Should significantly speed up rendering.
+하이픈 분리를 비활성화합니다. 렌더링 속도가 크게 빨라질 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -57,12 +61,12 @@ Disable hyphenation. Should significantly speed up rendering.
 .INDENT 0.0
 .TP
 .B \-\-profile
-Profile the LRF renderer
+LRF 렌더러 성능 분석
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Print more information about the rendering process
+렌더링 과정에 대한 정보를 더 출력
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -72,12 +76,12 @@ Print more information about the rendering process
 .INDENT 0.0
 .TP
 .B \-\-visual\-debug
-Turn on visual aids to debugging the rendering engine
+렌더링 엔진 디버깅용 시각 보조 기능 켜기
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-white\-background
-By default the background is off white as I find this easier on the eyes. Use this option to make the background pure white.
+문자 모드에서는 입력한 검색 텍스트를 지정한 필드에서 찾습니다. 찾은 모든 위치의 텍스트를 지정한 바꿀 텍스트로 치환합니다. 치환이 끝난 뒤에는 텍스트를 대문자, 소문자 또는 제목 형식으로 바꿀 수 있습니다. 대소문자 구분 상자를 선택하면 검색 텍스트가 정확히 일치해야 합니다. 선택하지 않으면 검색 텍스트는 대문자와 소문자를 모두 일치시킵니다
 .UNINDENT
 .SH Author
 Kovid Goyal

@@ -4,62 +4,69 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Kovid Goyal <kovid@kovidgoyal.net>, 2020
+# Junghee Lee <daemul72@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 5.8.1\n"
+"Project-Id-Version: calibre 9.6.100\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 13:34+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2020-11-12 05:43+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>, 2020\n"
-"Language-Team: Korean (https://www.transifex.com/calibre/teams/19337/ko/)\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2026\n"
+"Language-Team: Korean (https://app.transifex.com/calibre/teams/19337/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:2
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:2
 msgid "The calibre:// URL scheme"
-msgstr ""
+msgstr "calibre:// URL 스키마"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:4
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:4
 msgid ""
 "calibre registers itself as the handler program for calibre:// URLs. So you "
 "can use these to perform actions like opening books, searching for books, "
 "etc from other programs/documents or via the command line. For example, "
 "running the following at the command line::"
 msgstr ""
+"캘리버는 calibre:// URL의 처리 프로그램으로 스스로를 등록합니다. 따라서 다른 프로그램/문서에서 또는 명령줄을 통해 책 열기,"
+" 책 검색 등의 작업을 수행하는 데 사용할 수 있습니다. 예를 들어 명령줄에서 다음을 실행하면::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:11
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:11
 msgid ""
 "Will open calibre with the library named ``Some Library``. Library names are"
 " the folder name of the library folder with spaces replaced by underscores. "
 "The special value ``_`` means the current library. The various types of URLs"
 " are documented below."
 msgstr ""
+"``Some Library``라는 이름의 라이브러리로 캘리버를 엽니다. 라이브러리 이름은 라이브러리 폴더의 폴더 이름에서 공백이 밑줄로 "
+"바뀐 것입니다. 특수 값 ``_``는 현재 라이브러리를 의미합니다. 다양한 유형의 URL은 아래에 문서화되어 있습니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:16
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:16
 msgid ""
 "You can even place these links inside HTML files or Word documents or "
 "similar and the operating system will automatically run calibre to perform "
 "the specified action."
 msgstr ""
+"HTML 파일이나 Word 문서 등에 이러한 링크를 넣을 수도 있으며, 운영 체제가 자동으로 캘리버를 실행하여 지정된 작업을 수행합니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:26
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:26
 msgid "Switch to a specific library"
-msgstr ""
+msgstr "특정 라이브러리로 전환"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:28
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:47
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:63
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:77
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:28
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:47
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:77
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:91
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:122
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:133
 msgid "The URL syntax is::"
-msgstr ""
+msgstr "URL 구문은 다음과 같습니다::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:32
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:32
 msgid ""
 "Library names are the folder name of the library with spaces replaced by "
 "underscores. The special value ``_`` means the current library. You can also"
@@ -67,37 +74,74 @@ msgid ""
 " library names have special characters that would otherwise require URL "
 "encoding. Hex encoded library names look like::"
 msgstr ""
+"라이브러리 이름은 라이브러리의 폴더 이름에서 공백이 밑줄로 바뀐 것입니다. 특수 값 ``_``는 현재 라이브러리를 의미합니다. 라이브러리"
+" 이름에 :ref:`16진수 인코딩 <hex_encoding>`을 사용할 수도 있는데, 라이브러리 이름에 URL 인코딩이 필요한 특수 "
+"문자가 있는 경우 유용합니다. 16진수로 인코딩된 라이브러리 이름은 다음과 같습니다::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:40
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:40
 msgid ""
 "Where the part after the ``_hex_-`` prefix is the library name encoded as "
 "UTF-8 and every byte represented by two hexadecimal characters."
 msgstr ""
+"여기서 ``_hex_-`` 접두사 뒤의 부분은 UTF-8로 인코딩된 라이브러리 이름이며 각 바이트는 두 개의 16진수 문자로 표현됩니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:45
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:45
 msgid "Show a specific book in calibre"
-msgstr ""
+msgstr "캘리버에서 특정 책 표시"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:51
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:51
 msgid ""
 "This will show the book with ``book_id`` (a number) in calibre. The ids for "
 "books can be seen in the calibre interface by hovering over the "
 ":guilabel:`Click to open` link in the :guilabel:`Book details` panel, it is "
 "the number in brackets at the end of the path to the book folder."
 msgstr ""
+"이렇게 하면 캘리버에서 ``book_id``(숫자)에 해당하는 책이 표시됩니다. 책의 ID는 캘리버 인터페이스에서 :guilabel:`책"
+" 세부정보` 패널의 :guilabel:`클릭하여 열기` 링크 위에 마우스를 올리면 볼 수 있으며, 책 폴더 경로 끝의 괄호 안에 있는 "
+"숫자입니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:56
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:56
 msgid ""
 "You can copy a link to the current book displayed in calibre by right "
 "clicking the :guilabel:`Book details` panel and choosing :guilabel:`Copy "
 "link to book`."
 msgstr ""
+":guilabel:`책 세부정보` 패널을 마우스 오른쪽 버튼으로 클릭하고 :guilabel:`책 링크 복사`를 선택하여 캘리버에 표시된 "
+"현재 책의 링크를 복사할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:61
-msgid "Open a specific book in the E-book viewer at a specific position"
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:59
+msgid ""
+"If a search is active and the book is not matched by the search then the "
+"search is cleared."
+msgstr "검색이 활성 상태이고 해당 책이 검색과 일치하지 않으면 검색이 지워집니다."
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:61
+msgid ""
+"If a Virtual library is selected, calibre will use it when showing the book."
+" If the book isn't found in that virtual library then the virtual library is"
+" cleared."
 msgstr ""
+"가상 라이브러리가 선택되어 있으면 캘리버는 책을 표시할 때 이를 사용합니다. 해당 가상 라이브러리에서 책을 찾을 수 없으면 가상 "
+"라이브러리가 지워집니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:67
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:64
+msgid ""
+"If you want to switch to a particular Virtual library when showing the book,"
+" use::"
+msgstr "책을 표시할 때 특정 가상 라이브러리로 전환하려면 다음을 사용하세요::"
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:70
+msgid ""
+"replacing spaces in the Virtual library name by ``%20``. If the book isn't "
+"found in that virtual library then the virtual library is ignored."
+msgstr ""
+"가상 라이브러리 이름의 공백을 ``%20``으로 바꾸세요. 해당 가상 라이브러리에서 책을 찾을 수 없으면 가상 라이브러리가 무시됩니다."
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:75
+msgid "Open a specific book in the E-book viewer at a specific position"
+msgstr "전자책 뷰어에서 특정 위치의 특정 책 열기"
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:81
 msgid ""
 "Here, ``book_format`` is the format of the book, for example, ``EPUB`` or "
 "``MOBI`` and the ``location`` is an optional location inside the book. The "
@@ -105,49 +149,103 @@ msgid ""
 "viewer controls select :guilabel:`Go to->Location` and there such a link "
 "will be given that you can copy/paste elsewhere."
 msgstr ""
+"여기서 ``book_format``은 책의 형식(예: ``EPUB`` 또는 ``MOBI``)이고 ``location``은 책 내부의 "
+"선택적 위치입니다. 이러한 링크를 얻는 가장 쉬운 방법은 뷰어에서 책을 연 다음 뷰어 컨트롤에서 :guilabel:`이동->위치`를 "
+"선택하면 다른 곳에 복사/붙여넣기할 수 있는 링크가 제공됩니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:75
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:89
 msgid "Searching for books"
-msgstr "책에 대한 검색"
+msgstr "책 검색"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:82
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:96
 msgid ""
 "Here query is any valid :ref:`search expression <search_interface>`. If the "
 "search expression is complicated, :ref:`encode it as a hex string "
 "<hex_encoding>` and use ``eq`` instead. Leaving out the query will cause the"
 " current search to be cleared."
 msgstr ""
+"여기서 쿼리는 유효한 :ref:`검색 표현식 <search_interface>`입니다. 검색 표현식이 복잡하면 :ref:`16진수 "
+"문자열로 인코딩 <hex_encoding>`하고 대신 ``eq``를 사용하세요. 쿼리를 생략하면 현재 검색이 지워집니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:87
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:101
 msgid ""
 "By default, if a Virtual library is selected, calibre will clear it before "
 "doing the search to ensure all books are found. If you want to preserve the "
 "Virtual library, use::"
 msgstr ""
+"기본적으로 가상 라이브러리가 선택되어 있으면 캘리버는 검색을 수행하기 전에 이를 지워 모든 책이 검색되도록 합니다. 가상 라이브러리를 "
+"유지하려면 다음을 사용하세요::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:93
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:107
 msgid "If you want to switch to a particular Virtual library, use::"
-msgstr ""
+msgstr "특정 가상 라이브러리로 전환하려면 다음을 사용하세요::"
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:99
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:113
 msgid "replacing spaces in the Virtual library name by ``%20``."
-msgstr ""
+msgstr "가상 라이브러리 이름의 공백을 ``%20``으로 바꾸세요."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:101
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:115
 msgid ""
 "If you perform a search in calibre and want to generate a link for it you "
 "can do so by right clicking the search bar and choosing :guilabel:`Copy "
 "search as URL`."
 msgstr ""
+"캘리버에서 검색을 수행하고 링크를 생성하려면 검색 표시줄을 마우스 오른쪽 버튼으로 클릭하고 :guilabel:`검색을 URL로 복사`를 "
+"선택하면 됩니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:109
-msgid "Hex encoding of URL parameters"
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:120
+msgid "Open a book details window on a book in some library"
+msgstr "특정 라이브러리의 책에 대한 책 세부정보 창 열기"
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:126
+msgid ""
+"This opens a book details window on the specified book from the specified "
+"library without changing the current library or the selected book."
+msgstr "현재 라이브러리나 선택한 책을 변경하지 않고 지정된 라이브러리의 지정된 책에 대한 책 세부정보 창을 엽니다."
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:131
+msgid "Open the notes associated with an author/series/etc."
+msgstr "저자/시리즈 등과 연결된 메모 열기"
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:137
+msgid ""
+"This opens a window showing the notes of the specified item. The easiest way"
+" to create such URLs is to show the notes you want in calibre and click the "
+":guilabel:`Copy URL` button to copy the URL to the clipboard and paste it "
+"wherever you need."
 msgstr ""
+"이렇게 하면 지정된 항목의 메모를 보여주는 창이 열립니다. 이러한 URL을 만드는 가장 쉬운 방법은 캘리버에서 원하는 메모를 표시하고 "
+":guilabel:`URL 복사` 버튼을 클릭하여 URL을 클립보드에 복사한 다음 필요한 곳에 붙여넣는 것입니다."
 
-#: ../../__w/calibre/calibre/manual/url_scheme.rst:111
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:142
+msgid ""
+"Here ``Field_Name`` is the name of the columns such as ``authors`` or "
+"``tags``. For user created columns, replace the leading ``#`` in the field "
+"name with an underscore, so ``#mytags`` becomes ``_mytags``."
+msgstr ""
+"여기서 ``Field_Name``은 ``authors``나 ``tags`` 같은 열의 이름입니다. 사용자가 만든 열의 경우 필드 이름의 "
+"앞에 오는 ``#``을 밑줄로 바꾸세요. 예를 들어 ``#mytags``는 ``_mytags``가 됩니다."
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:146
+msgid ""
+"In addition to specifying items by id using ``Item_Id`` you can also specify"
+" them by name using either ``val_Item_Name`` or "
+"``hex_Hex_Encoded_Item_Name``. For example::"
+msgstr ""
+"``Item_Id``를 사용하여 ID로 항목을 지정하는 것 외에도 ``val_Item_Name`` 또는 "
+"``hex_Hex_Encoded_Item_Name``을 사용하여 이름으로 지정할 수도 있습니다. 예를 들어::"
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:156
+msgid "Hex encoding of URL parameters"
+msgstr "URL 매개변수의 16진수 인코딩"
+
+#: ../../../__w/calibre/calibre/manual/url_scheme.rst:158
 msgid ""
 "Hex encoding of URL parameters is done by first encoding the parameter as "
 "UTF-8 bytes, and then replacing each byte by two hexadecimal characters "
 "representing the byte. For example, the string ``abc`` is the bytes ``0x61 "
 "0x62 and 0x63`` in UTF-8, so the encoded version is the string: ``616263``."
 msgstr ""
+"URL 매개변수의 16진수 인코딩은 먼저 매개변수를 UTF-8 바이트로 인코딩한 다음 각 바이트를 해당 바이트를 나타내는 두 개의 "
+"16진수 문자로 바꾸는 방식으로 수행됩니다. 예를 들어 문자열 ``abc``는 UTF-8에서 바이트 ``0x61 0x62 "
+"0x63``이므로 인코딩된 버전은 문자열 ``616263``입니다."

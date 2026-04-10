@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -40,102 +40,110 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+calibre 콘텐츠 서버를 시작합니다. calibre 콘텐츠 서버는
+calibre 라이브러리를 인터넷을 통해 제공합니다. 라이브러리
+폴더 경로를 :command:
+.nf
+\(ga
+.fi
+calibre\-server\(ga의 인수로 지정할 수 있습니다. 경로를 지정하지 않으면
+기본 calibre 프로그램이 알고 있는 모든 라이브러리가 사용됩니다.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+calibre\-server\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+접근 로그 파일 경로입니다. 이 로그에는 서버에 접속하여 요청을 수행한 클라이언트 정보가 기록됩니다. 기본적으로 접근 로그는 기록하지 않습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+쿼리 전송 후 서버 응답을 기다리는 시간(초).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
+사용할 인증 방식 선택.       서버에서 사용할 HTTP 인증 모드를 설정합니다. 이 서버를 SSL 프록시 뒤에 둘 경우 \fB\(dq\fPbasic\fB\(dq\fP으로 설정하십시오. 그렇지 않으면 \fB\(dq\fPauto\fB\(dq\fP로 두면 되며, SSL이 구성된 경우 \fB\(dq\fPbasic\fB\(dq\fP을, 그렇지 않으면 \fB\(dq\fPdigest\fB\(dq\fP를 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+소스 코드가 바뀌면 서버를 자동으로 다시 불러옵니다. 개발 시 유용합니다. 종료 대기 시간에도 작은 값을 지정하는 것이 좋습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+차단을 위한 로그인 실패 횟수.   IP 주소를 차단할 로그인 실패 횟수입니다
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+로그인 실패가 반복된 IP 주소 차단.       로그인 실패가 반복된 IP 주소의 접근을 지정한 분 수 동안 임시 차단합니다. 비밀번호 추측 시도를 막는 데 유용합니다. 0으로 설정하면 차단하지 않습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+기본 책 목록 모드 선택.      새 사용자에게 적용할 기본 책 목록 모드를 설정합니다. 개별 사용자는 자기 설정에서 이 기본값을 덮어쓸 수 있습니다. 기본값은 표지 격자입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+응답에 데이터 압축을 사용할 최소 크기(바이트).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Path to a JSON file containing a template for the custom book list mode. The easiest way to create such a template file is to go to Preferences\-> Sharing over the net\-> Book list template in calibre, create the template and export it.
+사용자 정의 책 목록 모드용 템플릿이 들어 있는 JSON 파일의 경로입니다. 이런 템플릿 파일을 만드는 가장 쉬운 방법은 calibre의 환경설정\-> 네트워크 공유\-> 책 목록 템플릿으로 가서 템플릿을 만든 뒤 내보내는 것입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+프로세스를 백그라운드에서 데몬으로 실행(Linux 전용).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+표시할 사용자 정의 필드 제한.   콘텐츠 서버의 /opds 및 /mobile 보기에서 표시할 사용자 정의 메타데이터 필드의 쉼표 구분 목록입니다. 이 옵션을 지정하면 이 목록에 없는 필드는 표시되지 않습니다. 예: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+예를 들어 systemd 소켓 활성화와 같은 소켓 사전 할당. 기본적으로 이 옵션은 활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+서버 접근용 비밀번호 기반 인증.  기본적으로 서버는 제한 없이 누구나 접근할 수 있습니다. 이 옵션으로 미리 정의한 사용자로 접근을 제한할 수 있습니다. 기본적으로 이 옵션은 비활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+자동 감지된 인터페이스로 대체.   어떤 이유로든 서버가 listen_on 옵션에 지정된 인터페이스에 바인딩할 수 없으면, 외부 네트워크와 연결되는 인터페이스를 감지해 그쪽에 바인딩을 시도합니다. 기본적으로 이 옵션은 활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. By default, this option is disabled.
+인증되지 않은 로컬 연결의 변경 허용.       기본적으로 인증을 켜지 않으면 서버는 읽기 전용 모드로 동작하여 익명 사용자가 calibre 라이브러리를 변경하지 못하게 합니다. 이 옵션을 사용하면 서버가 실행 중인 같은 컴퓨터에서 연결하는 누구나 변경할 수 있습니다. 인증 없이 서버를 실행하면서도 calibredb로 calibre 라이브러리를 변경하려는 경우 유용합니다. 이 옵션을 켜면 컴퓨터에서 실행 중인 어떤 프로그램이든 calibre 라이브러리를 변경할 수 있다는 점에 유의하십시오. 특히 Firefox 웹 브라우저는 임의의 웹사이트에도 이를 허용합니다. 기본적으로 이 옵션은 비활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+HTTP 404(찾을 수 없음) 요청 기록.    기본적으로 서버는 찾을 수 없는 리소스에 대한 모든 HTTP 요청을 기록합니다. 서버가 봇의 대상이 되면 로그가 과도하게 쌓일 수 있습니다. 이 옵션으로 끌 수 있습니다. 기본적으로 이 옵션은 활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Bonjour를 통해 OPDS 피드 광고.     Bonjour 서비스를 통해 OPDS 피드를 알리므로, OPDS 기반 읽기 앱이 서버를 자동으로 감지하고 연결할 수 있습니다. 기본적으로 이 옵션은 활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+성능 향상을 위한 제로 카피 파일 전송.      네트워크로 파일을 보낼 때 커널 내 제로 카피 전송을 사용해 성능을 높입니다. 하지만 일부 문제가 있는 파일 시스템에서는 전송 파일이 손상될 수 있습니다. 파일 전송 손상이 발생하면 이 옵션을 끄십시오. 기본적으로 이 옵션은 활성화되어 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,67 +153,67 @@ Zero copy file transfers for increased performance.         This will use zero\-
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+무시할 사용자 정의 메타데이터 필드.        콘텐츠 서버의 /opds 및 /mobile 보기에서 표시하지 않을 사용자 정의 메타데이터 필드의 쉼표 구분 목록입니다. 예: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for IPv4 connections from the local machine, or to \fB\(dq\fP0.0.0.0\fB\(dq\fP to listen to all incoming IPv4 connections.
+연결을 수신할 인터페이스.      기본값은 사용 가능한 모든 IPv6 및 IPv4 인터페이스에서 수신하는 것입니다. 예를 들어 로컬 시스템의 IPv4 연결만 수신하려면 \fB\(dq\fP127.0.0.1\fB\(dq\fP로, 모든 들어오는 IPv4 연결을 수신하려면 \fB\(dq\fP0.0.0.0\fB\(dq\fP으로 바꿀 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+서버 로그용 로그 파일 경로입니다. 이 로그에는 서버 정보와 오류가 기록되며, 접근 로그는 포함되지 않습니다. 기본값은 stdout에 기록하는 것입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fB\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fB\-\-userdb\fP option.
+이 서버에 연결할 수 있는 사용자 데이터베이스를 관리합니다. \-\-를 추가하여 자동화 모드로 사용할 수 있습니다. 자세한 내용은 calibre\-server \fB\-\-manage\-users\fP \fB\-\-\fP help을 참고하십시오. \fB\-\-userdb\fP 옵션도 함께 보십시오.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+단일 HTTP 헤더의 최대 크기(KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+작업자 프로세스 최대 실행 시간.  작업자 프로세스가 실행될 수 있는 최대 시간(분)입니다. 0으로 설정하면 제한이 없습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+작업자 프로세스 최대 수.      작업자 프로세스는 필요할 때 시작되며 책 보기 준비, 책 추가, 변환 같은 큰 작업에 사용됩니다. 일반적으로 이러한 프로세스의 최대 수는 CPU 코어 수를 기준으로 결정됩니다. 이 설정으로 제어할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+로그 파일 최대 크기(MB).    서버가 생성하는 로그 파일의 최대 크기입니다. 로그가 이 크기를 넘으면 자동으로 순환됩니다. 0으로 설정하면 로그 순환이 비활성화됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+OPDS 피드의 최대 책 수.    서버가 단일 OPDS 수집 피드에서 반환할 최대 책 수입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+OPDS 피드에서 그룹화되지 않은 항목의 최대 수.        저자/태그 같은 범주의 항목 수가 이 값보다 많으면 첫 글자 기준으로 그룹화합니다. 0으로 설정하면 비활성화됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+서버에 업로드할 수 있는 파일의 최대 크기(MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+한 페이지에 표시할 책 수.     브라우저에서 한 페이지에 표시할 책 수입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-pidfile
-Write process PID to the specified file
+프로세스 PID를 지정한 파일에 기록
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -215,42 +223,46 @@ Write process PID to the specified file
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Path to a JSON file containing URLs for the \fB\(dq\fPSearch the internet\fB\(dq\fP feature. The easiest way to create such a file is to go to Preferences\-> Sharing over the net\->Search the internet in calibre, create the URLs and export them.
+\fB\(dq\fP인터넷 검색\fB\(dq\fP 기능용 URL이 들어 있는 JSON 파일 경로입니다. 이런 파일을 만드는 가장 쉬운 방법은 calibre의 환경설정\-> 네트워크 공유\-> 인터넷 검색으로 가서 URL을 만든 뒤 내보내는 것입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+정상 종료를 기다리는 총 시간(초).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+SSL 인증서 파일 경로.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+SSL 개인 키 파일 경로.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+유휴 연결을 닫기까지의 시간(초).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+특정 IP 주소의 인증되지 않은 연결에 변경 허용.        기본적으로 인증을 켜지 않으면 서버는 읽기 전용 모드로 동작하여 익명 사용자가 calibre 라이브러리를 변경하지 못하게 합니다. 이 옵션을 사용하면 지정한 IP 주소에서 연결하는 누구나 변경할 수 있습니다. 주소 또는 네트워크 규격의 쉼표로 구분된 목록이어야 합니다. 인증 없이 서버를 실행하면서도 calibredb로 calibre 라이브러리를 변경하려는 경우 유용합니다. 이 옵션을 켜면 지정한 IP 주소에서 연결하는 누구나 calibre 라이브러리를 변경할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+모든 URL 앞에 붙일 접두어.   이 서버를 리버스 프록시 뒤에서 실행하려는 경우 유용합니다. 예를 들어 URL 접두어로 /calibre를 사용하십시오.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fB\-\-manage\-users\fP\&. You can read more about managing users at: \%<https://\:manual\:.calibre-ebook\:.com/\:server\:.html#\:managing-user-accounts-from-the-command-line-only>
+인증에 사용할 사용자 데이터베이스 파일 경로입니다. 데이터베이스는 SQLite 파일입니다. 만들려면 :option:
+.nf
+\(ga
+.fi
+\-\-manage\-users\(ga을 사용하십시오. 사용자 관리에 대한 자세한 내용: \%<https://\:manual\:.calibre-ebook\:.com/\:ko/\:server\:.html#\:managing-user-accounts-from-the-command-line-only>
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -260,7 +272,7 @@ Path to the user database to use for authentication. The database is a SQLite fi
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+요청 처리에 사용할 작업자 스레드 수.
 .UNINDENT
 .SH Author
 Kovid Goyal

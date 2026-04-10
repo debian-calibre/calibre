@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-EDIT" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "EBOOK-EDIT" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 ebook-edit \- ebook-edit
 .INDENT 0.0
@@ -40,15 +40,20 @@ ebook\-edit [opts] [path_to_ebook] [name_of_file_inside_book ...]
 .UNINDENT
 .UNINDENT
 .sp
-Launch the calibre Edit book tool. You can optionally also specify the names of
-files inside the book which will be opened for editing automatically.
+calibre 책 편집 도구를 실행합니다.
+선택 사항으로 책 내부 파일 이름을 지정하면
+해당 파일들을 자동으로 열어 편집할 수 있습니다.
 .sp
-Whenever you pass arguments to \fBebook\-edit\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+ebook\-edit\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+제어 터미널이 있으면 분리합니다 (Linux 전용)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -58,7 +63,7 @@ Detach from the controlling terminal, if any (Linux only)
 .INDENT 0.0
 .TP
 .B \-\-select\-text
-The text to select in the book when it is opened for editing
+편집을 위해 책을 열었을 때 선택할 텍스트
 .UNINDENT
 .INDENT 0.0
 .TP

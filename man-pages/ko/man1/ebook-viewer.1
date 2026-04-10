@@ -28,41 +28,45 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-VIEWER" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-viewer [options] file
+ebook\-viewer [옵션] 파일
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-View an e\-book.
+전자책을 봅니다.
 .sp
-Whenever you pass arguments to \fBebook\-viewer\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+ebook\-viewer\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-continue
-Continue reading the last opened book
+마지막으로 연 책 계속 읽기
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+제어 터미널이 있으면 분리합니다 (Linux 전용)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-force\-reload
-Force reload of all opened books
+열려 있는 모든 책 강제로 다시 불러오기
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-full\-screen, \-\-fullscreen, \-f
-If specified, the E\-book viewer window will try to open full screen when started.
+지정하면 전자책 뷰어 창이 시작될 때 전체 화면으로 열리도록 시도합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -72,17 +76,17 @@ If specified, the E\-book viewer window will try to open full screen when starte
 .INDENT 0.0
 .TP
 .B \-\-new\-instance
-Open a new viewer window even when the option to use only a single viewer window is set
+하나의 뷰어 창만 사용하도록 설정되어 있어도 새 뷰어 창 열기
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location or position you can get by using the Go to\->Location action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB\(dq\fPsomething\fB\(dq\fP\&. The form toc\-href:something will match the href (internal link destination) of toc nodes. The matching is exact. If you want to match a substring, use the form toc\-href\-contains:something. The form ref:something will use Reference mode references. The form search:something will search for something after opening the book. The form regex:something will search for the regular expression something after opening the book.
+지정한 책을 열 위치입니다. 위치는 뷰어 제어의 이동\->위치 동작을 사용해 얻을 수 있는 위치 또는 위치 정보입니다. 또는 toc:something 형식을 사용하면 \fB\(dq\fPsomething\fB\(dq\fP 문자열을 포함하는 첫 번째 목차 항목 위치에서 엽니다. toc\-href:something 형식은 toc 노드의 href(내부 링크 대상)와 정확히 일치시킵니다. 부분 문자열 일치를 원하면 toc\-href\-contains:something 형식을 사용하십시오. ref:something 형식은 참조 모드의 참조를 사용합니다. search:something 형식은 책을 연 뒤 something을 검색합니다. regex:something 형식은 책을 연 뒤 정규식 something을 검색합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-raise\-window
-If specified, the E\-book viewer window will try to come to the front when started.
+지정하면 전자책 뷰어 창이 시작될 때 앞으로 나오도록 시도합니다.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022,2026
 # Junghee Lee <daemul72@gmail.com>, 2022
 # Junghee Lee <daemul72@gmail.com>, 2022
 # 조하니tv <1987.seoul@gmail.com>, 2021
@@ -11,21 +11,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-01 01:59+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
-"Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022,2026\n"
+"Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:4
+#: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
 msgstr "XPath 튜토리얼"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:6
+#: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -34,37 +34,37 @@ msgid ""
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for e-book related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr ""
+msgstr "이 튜토리얼에서는 calibre에서 `HTML <https://en.wikipedia.org/wiki/HTML>`_ 문서의 임의 부분을 선택하는 데 사용할 수 있는 쿼리 언어인 `XPath <https://en.wikipedia.org/wiki/XPath>`_에 대해 쉽게 소개합니다. XPath는 널리 사용되는 표준이며, 검색하면 많은 정보를 얻을 수 있습니다. 그러나 이 튜토리얼은 비정형 HTML 문서에서 장 머리글을 찾는 것과 같은 전자책 관련 작업에 XPath를 사용하는 데 초점을 맞춥니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:16
+#: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
 msgstr "목차"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:19
+#: ../../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
 msgstr "태그 이름으로 선택"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:21
+#: ../../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr ""
+msgstr "가장 간단한 선택 형태는 이름으로 태그를 선택하는 것입니다. 예를 들어, 문서의 모든 ``<h2>`` 태그를 선택하고 싶다고 가정합니다. 이에 대한 XPath 쿼리는 간단합니다::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:27
+#: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr ""
+msgstr "접두사 `//`는 *문서의 모든 수준에서 검색*을 의미합니다. 이제 ``<a>`` 태그 안에 있는 ``<span>`` 태그를 검색하고 싶다고 가정합니다. 다음과 같이 할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:33
+#: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr "문서에서 특정 수준의 태그를 검색하려면 다음 접두사를 변경합니다::"
+msgstr "문서의 특정 수준에서 태그를 검색하려면 접두사를 변경하세요::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:39
+#: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -72,18 +72,18 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr ""
+msgstr "이것은 :ref:`sample_ebook`에서 ``<p>A very short e-book to demonstrate the use of XPath.</p>``와만 일치하며 다른 ``<p>`` 태그와는 일치하지 않습니다. 위 예시의 ``h:`` 접두사는 XHTML 태그와 일치시키기 위해 필요합니다.这是因为 내부적으로 calibre는 모든 콘텐츠를 XHTML로 표현하기 때문입니다. XHTML에서 태그는 *네임스페이스*를 가지며, ``h:``는 HTML 태그의 네임스페이스 접두사입니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:45
+#: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
-"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
-" test that is used to select tags. Tests can be arbitrarily powerful and as "
-"this tutorial progresses, you will see more powerful examples. A predicate "
+"we need an XPath construct called *predicate*. A :dfn:`predicate` is simply "
+"a test that is used to select tags. Tests can be arbitrarily powerful and as"
+" this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "이제 ``<h1>``과 ``<h2>`` 태그를 모두 선택하고 싶다고 가정합니다. 그렇게 하려면 *술어(predicate)*라는 XPath 구문이 필요합니다. :dfn:`술어`는 태그를 선택하는 데 사용되는 간단한 테스트입니다. 테스트는 임의로 강력할 수 있으며 이 튜토리얼이 진행됨에 따라 더 강력한 예시를 보게 될 것입니다. 술어는 테스트 표현식을 대괄호로 감싸서 만듭니다::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:53
+#: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -93,75 +93,75 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr ""
+msgstr "이 XPath 표현식에는 여러 가지 새로운 기능이 있습니다. 첫 번째는 와일드카드 ``*``의 사용입니다. *모든 태그와 일치*를 의미합니다. 이제 테스트 표현식 ``name()='h1' or name()='h2'``를 살펴보세요. :term:`name()`은 *내장 함수*의 예시입니다. 태그의 이름으로 평가됩니다. 따라서 이를 사용하여 이름이 `h1`이거나 `h2`인 태그를 선택할 수 있습니다. :term:`name()` 함수는 네임스페이스를 무시하므로 ``h:`` 접두사가 필요하지 않습니다. XPath에는 여러 유용한 내장 함수가 있습니다. 이 튜토리얼에서 몇 가지를 더 소개하겠습니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:62
+#: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
 msgstr "속성으로 선택"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:64
+#: ../../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr ""
+msgstr "태그의 속성을 기반으로 태그를 선택하려면 술어를 사용해야 합니다::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:70
+#: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr ""
+msgstr "여기서 ``@`` 연산자는 태그의 속성을 참조합니다. `XPath 내장 함수`_ 중 일부를 사용하여 속성 값에 대해 더 정교한 일치를 수행할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
 msgstr "태그 내용으로 선택"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:78
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr ""
+msgstr "XPath를 사용하면 태그가 포함하고 있는 텍스트를 기반으로 태그를 선택할 수도 있습니다. 가장 좋은 방법은 내장 함수 :term:`re:test()`를 통해 *정규 표현식*의 강력함을 활용하는 것입니다::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr "여기에서 ``.'' 연산자는 태그의 내용을 참조하는 것처럼 ``@'' 연산자는 태그의 속성을 참조합니다."
+msgstr "여기서 ``.`` 연산자는 태그의 내용을 참조하며, ``@`` 연산자가 태그의 속성을 참조하는 것과 같습니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
-msgstr ""
+msgstr "샘플 전자책"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
-msgstr ""
+msgstr "XPath 내장 함수"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
-msgstr ""
+msgstr "name()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:101
 msgid "The name of the current tag."
-msgstr ""
+msgstr "현재 태그의 이름입니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:102
 msgid "contains()"
-msgstr ""
+msgstr "contains()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:104
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
-msgstr ""
+msgstr "``contains(s1, s2)``는 s1이 s2를 포함하면 `true`를 반환합니다."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:105
 msgid "re:test()"
-msgstr ""
+msgstr "re:test()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:107
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr ""
+msgstr "``re:test(src, pattern, flags)``는 문자열 `src`가 정규 표현식 `pattern`과 일치하면 `true`를 반환합니다. 특히 유용한 플래그는 ``i``이며, 대소문자를 구분하지 않고 일치시킵니다. 정규 표현식 구문에 대한 좋은 입문 자료는 `regexp 구문 <https://docs.python.org/library/re.html>`_에서 확인할 수 있습니다."

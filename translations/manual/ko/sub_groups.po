@@ -3,25 +3,26 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Junghee Lee <daemul72@gmail.com>, 2026
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 12:56+0000\n"
-"PO-Revision-Date: 2021-11-14 03:27+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
+"PO-Revision-Date: 2014-06-17 08:37+0000\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2026\n"
+"Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:4
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:4
 msgid "Managing subgroups of books, for example \"genre\""
-msgstr ""
+msgstr "책의 하위 그룹 관리, 예를 들어 \"장르\""
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:6
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:6
 msgid ""
 "Some people wish to organize the books in their library into subgroups, "
 "similar to subfolders. The most commonly provided reason is to create genre "
@@ -29,61 +30,60 @@ msgid ""
 " textbooks by subject and course number. Another wanted to keep track of "
 "gifts by subject and recipient. This tutorial will use the genre example for"
 " the rest of this post."
-msgstr ""
+msgstr "일부 사용자는 하위 폴더와 유사하게 라이브러리의 책을 하위 그룹으로 구성하고 싶어합니다. 가장 흔히 제시되는 이유는 장르 계층 구조를 만드는 것이지만, 다른 이유도 많습니다. 한 사용자는 교과서를 과목과 강좌 번호로 정리하는 방법을 요청했습니다. 다른 사용자는 선물을 주제와 수신자별로 추적하고 싶어했습니다. 이 튜토리얼에서는 이 글의 나머지 부분에서 장르 예시를 사용합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:8
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:8
 msgid ""
 "Before going on, please note that we are not talking about folders on the "
 "hard disk. Subgroups are not file folders. Books will not be copied "
 "anywhere. calibre's library file structure is not affected. Instead, we are "
 "presenting a way to organize and display subgroups of books within a calibre"
 " library."
-msgstr ""
+msgstr "계속하기 전에, 하드 디스크의 폴더에 대해 이야기하는 것이 아님을 유의하세요. 하위 그룹은 파일 폴더가 아닙니다. 책이 어디로 복사되는 것은 아닙니다. 캘리버의 라이브러리 파일 구조에 영향을 주지 않습니다. 대신, 캘리버 라이브러리 내에서 책의 하위 그룹을 구성하고 표시하는 방법을 제시합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:14
-msgid "sgtree"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:18
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:18
 msgid "The commonly-provided requirements for subgroups such as genres are:"
-msgstr ""
+msgstr "장르와 같은 하위 그룹에 대해 일반적으로 제시되는 요구 사항은 다음과 같습니다:"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:20
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:20
 msgid ""
 "A subgroup (e.g., a genre) must contain (point to) books, not categories of "
 "books. This is what distinguishes subgroups from calibre user categories."
-msgstr ""
+msgstr "하위 그룹(예: 장르)은 책의 범주가 아닌 책을 포함(가리켜야) 해야 합니다. 이는 하위 그룹을 캘리버 사용자 범주와 구별하는 것입니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:21
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:21
 msgid ""
 "A book can be in multiple subgroups (genres). This distinguishes subgroups "
 "from physical file folders."
-msgstr ""
+msgstr "하나의 책이 여러 하위 그룹(장르)에 속할 수 있습니다. 이는 하위 그룹을 물리적 파일 폴더와 구별하는 것입니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:22
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:22
 msgid ""
 "Subgroups (genres) must form a hierarchy; subgroups can contain subgroups."
-msgstr ""
+msgstr "하위 그룹(장르)은 계층 구조를 형성해야 합니다. 하위 그룹은 하위 그룹을 포함할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:24
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:24
 msgid ""
 "Tags give you the first two. If you tag a book with the genre then you can "
 "use the Tag browser (or search) to find the books with that genre, giving "
 "you the first. Many books can have the same tag(s), giving you the second. "
 "The problem is that tags don't satisfy the third requirement. They don't "
 "provide a hierarchy."
-msgstr ""
+msgstr "태그는 처음 두 가지를 제공합니다. 책에 장르를 태그하면 태그 브라우저(또는 검색)를 사용하여 해당 장르의 책을 찾을 수 있으므로 첫 번째를 충족합니다. 많은 책이 같은 태그를 가질 수 있으므로 두 번째를 충족합니다. 문제는 태그가 세 번째 요구 사항을 충족하지 못한다는 것입니다. 계층 구조를 제공하지 않습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:26
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:26
 msgid ""
 "|sgtree| The calibre hierarchy feature gives you the third -- the ability to"
 " see the genres in a 'tree' and the ability to easily search for books in "
 "genre or sub-genre. For example, assume that your genre structure is similar"
 " to the following::"
-msgstr ""
+msgstr "|sgtree| 캘리버의 계층 기능은 세 번째를 제공합니다 -- 장르를 '트리'로 볼 수 있는 능력과 장르 또는 하위 장르에서 책을 쉽게 검색할 수 있는 능력입니다. 예를 들어, 장르 구조가 다음과 유사하다고 가정해 보겠습니다::"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:45
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:14
+msgid "sgtree"
+msgstr "sgtree"
+
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:45
 msgid ""
 "By using the hierarchy feature, you can see these genres in the Tag browser "
 "in tree form, as shown in the screen image. In this example the outermost "
@@ -91,9 +91,9 @@ msgid ""
 " sub-genres appear with a small triangle next to them. Clicking on that "
 "triangle will open the item and show the sub-genres, as you can see with "
 "History and Science Fiction."
-msgstr ""
+msgstr "계층 기능을 사용하면 스크린샷과 같이 태그 브라우저에서 이러한 장르를 트리 형태로 볼 수 있습니다. 이 예에서 가장 바깥쪽 수준(장르)은 장르를 포함하는 사용자 정의 열입니다. 하위 장르를 포함하는 장르 옆에는 작은 삼각형이 나타납니다. 해당 삼각형을 클릭하면 항목이 열리고 역사와 공상 과학에서 볼 수 있듯이 하위 장르가 표시됩니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:47
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:47
 msgid ""
 "Clicking on a genre can search for all books with that genre or children of "
 "that genre. For example, clicking on Science Fiction can give all three of "
@@ -102,9 +102,9 @@ msgid ""
 "and Space Opera. Of course, a book can have multiple genres. If a book has "
 "both Space Opera and Military genres, then you will see that book if you "
 "click on either genre. Searching is discussed in more detail below."
-msgstr ""
+msgstr "장르를 클릭하면 해당 장르 또는 해당 장르의 하위 항목이 있는 모든 책을 검색할 수 있습니다. 예를 들어, 공상 과학을 클릭하면 대체 역사, 군사, 스페이스 오페라 세 가지 하위 장르를 모두 표시합니다. 대체 역사를 클릭하면 군사와 스페이스 오페라에 있는 책은 무시하고 해당 장르의 책만 표시합니다. 물론 하나의 책이 여러 장르를 가질 수 있습니다. 책에 스페이스 오페라와 군사 장르가 모두 있으면 두 장르 중 어느 것을 클릭하든 해당 책이 표시됩니다. 검색에 대해서는 아래에서 자세히 설명합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:49
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:49
 msgid ""
 "Another thing you can see from the image is that the genre Military appears "
 "twice, once under History and once under Science Fiction. Because the genres"
@@ -114,54 +114,53 @@ msgid ""
 "\"History.Military\". David Weber's Honor Harrington books could be in "
 "\"Science Fiction.Military\", and for that matter also in \"Science "
 "Fiction.Space Opera.\""
-msgstr ""
+msgstr "이미지에서 볼 수 있는 또 다른 것은 군사 장르가 역사 아래 한 번, 공상 과학 아래 한 번, 두 번 나타난다는 것입니다. 장르가 계층 구조에 있으므로 이들은 서로 다른 두 개의 별도 장르입니다. 책은 하나 또는 다른 하나에 속하거나 (이 경우에는 의심스럽지만) 둘 다 속할 수 있습니다. 예를 들어, 윈스턴 처칠의 \"제2차 세계 대전\" 책은 \"역사.군사\"에 있을 수 있습니다. 데이비드 위버의 해링턴 시리즈는 \"공상 과학.군사\"에 있을 수 있고, 마찬가지로 \"공상 과학.스페이스 오페라\"에도 있을 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:51
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:51
 msgid ""
 "Once a genre exists, that is at least one book has that genre, you can "
 "easily apply it to other books by dragging the books from the library view "
 "onto the genre you want the books to have. You can also apply genres in the "
 "metadata editors; more on this below."
-msgstr ""
+msgstr "장르가 존재하면, 즉 최소 한 권의 책이 해당 장르를 가지고 있으면, 라이브러리 보기에서 책을 원하는 장르로 끌어다 놓아 쉽게 다른 책에 적용할 수 있습니다. 메타데이터 편집기에서도 장르를 적용할 수 있습니다. 이에 대해서는 아래에서 자세히 설명합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:54
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:54
 msgid "Setup"
 msgstr "설정"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:56
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:56
 msgid ""
-"By now, your question might be \"How was all of this setup?\" There are "
+"By now, your question might be \"How was all of this set up?\" There are "
 "three steps: 1) create the custom column, 2) tell calibre that the new "
 "column is to be treated as a hierarchy, and 3) add genres."
-msgstr ""
+msgstr "이제 \"이 모든 것이 어떻게 설정되었나요?\"라는 질문이 있을 수 있습니다. 세 단계가 있습니다: 1) 사용자 정의 열 만들기, 2) 새 열을 계층으로 취급하도록 캘리버에 알리기, 3) 장르 추가하기."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:58
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:58
 msgid ""
 "You create the custom column in the usual way, using Preferences -> Add your"
 " own columns. This example uses \"#genre\" as the lookup name and \"Genre\" "
-"as the column heading. The column type is \"Comma-separated text, like tags,"
-" shown in the Tag browser.\""
-msgstr ""
+"as the column heading. It is important that the column type is set to "
+":guilabel:`Comma-separated text, like tags, shown in the Tag browser`."
+msgstr "환경설정 -> 사용자 정의 열 추가를 사용하여 일반적인 방법으로 사용자 정의 열을 만듭니다. 이 예에서는 조회 이름으로 \"#genre\"를 사용하고 열 머리글로 \"장르\"를 사용합니다. 열 유형이 :guilabel:`태그와 같은 쉼표로 구분된 텍스트, 태그 브라우저에 표시`로 설정되어 있어야 합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:63
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:63
 msgid ""
 "Then after restarting calibre, you must tell calibre that the column is to "
 "be treated as a hierarchy. Go to :guilabel:`Preferences -> Look & feel -> "
-"Tag browser` and enter the lookup name \"#genre\" into the \"Categories with"
-" hierarchical items\" box. Press :guilabel:`Apply`, and you are done with "
-"setting up."
-msgstr ""
+"Tag browser -> Hierarchy and searching` and choose the new Genre column as "
+"having hierarchical items."
+msgstr "그런 다음 캘리버를 다시 시작한 후 해당 열을 계층으로 취급하도록 캘리버에 알려야 합니다. :guilabel:`환경설정 -> 모양 및 느낌 -> 태그 브라우저 -> 계층 및 검색`으로 이동하여 새 장르 열이 계층적 항목을 포함하도록 선택하세요."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:68
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:67
 msgid ""
-"At the point there are no genres in the column. We are left with the last "
+"At this point there are no genres in the column. We are left with the last "
 "step: how to apply a genre to a book. A genre does not exist in calibre "
 "until it appears on at least one book. To learn how to apply a genre for the"
 " first time, we must go into some detail about what a genre looks like in "
 "the metadata for a book."
-msgstr ""
+msgstr "이 시점에서는 열에 장르가 없습니다. 마지막 단계가 남아 있습니다: 책에 장르를 적용하는 방법. 장르는 최소 한 권의 책에 나타날 때까지 캘리버에 존재하지 않습니다. 처음으로 장르를 적용하는 방법을 배우려면 책의 메타데이터에서 장르가 어떻게 보이는지 자세히 알아봐야 합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:70
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:69
 msgid ""
 "A hierarchy of 'things' is built by creating an item consisting of phrases "
 "separated by periods. Continuing the genre example, these items would "
@@ -173,31 +172,31 @@ msgid ""
 "metadata' for that (comic) book, choose the Custom metadata tab, and then "
 "enter \"Comics.Superheroes\" as shown in the following (ignore the other "
 "custom columns):"
-msgstr ""
+msgstr "'항목'의 계층 구조는 마침표로 구분된 구문으로 구성된 항목을 만들어 구성합니다. 장르 예시를 계속하면, 이러한 항목은 \"역사.군사\", \"미스터리.뱀파이어\", \"공상 과학.스페이스 오페라\" 등이 됩니다. 따라서 새 장르를 만들려면 해당 장르를 가져야 하는 책을 선택하고 메타데이터를 편집한 다음 만든 열에 새 장르를 입력합니다. 예시를 계속하여, 책에 새 장르 \"만화\"와 하위 장르 \"슈퍼히어로\"를 할당하려면 해당 (만화) 책의 '메타데이터 편집'을 선택하고 사용자 정의 메타데이터 탭을 선택한 다음 다음 그림과 같이 \"만화.슈퍼히어로\"를 입력하세요(다른 사용자 정의 열은 무시하세요):"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:75
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:74
 msgid "After doing the above, you see in the Tag browser:"
-msgstr ""
+msgstr "위를 수행한 후 태그 브라우저에서 다음을 볼 수 있습니다:"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:80
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:79
 msgid ""
 "From here on, to apply this new genre to a book (a comic book, presumably), "
 "you can either drag the book onto the genre, or add it to the book using "
 "edit metadata in exactly the same way as done above."
-msgstr ""
+msgstr "이제부터 이 새 장르를 책(아마도 만화책)에 적용하려면, 책을 해당 장르로 끌어다 놓거나 위와 동일한 방법으로 메타데이터 편집을 사용하여 책에 추가할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:84
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:83
 msgid ""
 "Hierarchical display only works if the Tag browser is set to sort items by "
 "name. This is the default and can be checked by clicking the "
 ":guilabel:`Configure` button at the bottom of the Tag browser."
-msgstr ""
+msgstr "계층적 표시는 태그 브라우저가 이름순으로 항목을 정렬하도록 설정된 경우에만 작동합니다. 이것이 기본값이며 태그 브라우저 하단의 :guilabel:`구성` 버튼을 클릭하여 확인할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:89
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:88
 msgid "Searching"
 msgstr "검색"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:94
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:93
 msgid ""
 "The easiest way to search for genres is using the Tag browser, clicking on "
 "the genre you wish to see. Clicking on a genre with children will show you "
@@ -206,9 +205,9 @@ msgid ""
 "genre in its own right. For example, a book can have the genre \"History\" "
 "but not \"History.Military\". How do you search for books with only "
 "\"History\"?"
-msgstr ""
+msgstr "장르를 검색하는 가장 쉬운 방법은 태그 브라우저를 사용하여 보고 싶은 장르를 클릭하는 것입니다. 하위 항목이 있는 장르를 클릭하면 해당 장르와 모든 하위 장르가 있는 책이 표시됩니다. 그러나 여기서 질문이 생길 수 있습니다. 장르에 하위 항목이 있다고 해서 자체적으로 장르가 아닌 것은 아닙니다. 예를 들어, 책이 \"역사\" 장르를 가질 수 있지만 \"역사.군사\"는 아닐 수 있습니다. \"역사\"만 있는 책을 어떻게 검색하나요?"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:96
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:95
 msgid ""
 "The Tag browser search mechanism knows if an item has children. If it does, "
 "clicking on the item cycles through 5 searches instead of the normal three. "
@@ -219,13 +218,13 @@ msgid ""
 "without that exact genre. The fourth is a doubled minus, which shows you "
 "books without that genre or sub-genres. The fifth is back to the beginning, "
 "no mark, meaning no search."
-msgstr ""
+msgstr "태그 브라우저 검색 메커니즘은 항목에 하위 항목이 있는지 알고 있습니다. 하위 항목이 있으면 항목을 클릭하면 일반적인 세 가지 대신 다섯 가지 검색을 순환합니다. 첫 번째는 일반적인 녹색 더하기로, 해당 장르만 있는 책을 표시합니다(예: 역사). 두 번째는 이중 더하기(위에 표시됨)로, 해당 장르와 모든 하위 장르가 있는 책을 표시합니다(예: 역사 및 역사.군사). 세 번째는 일반적인 빨간색 빼기로, 해당 정확한 장르가 없는 책을 표시합니다. 네 번째는 이중 빼기로, 해당 장르나 하위 장르가 없는 책을 표시합니다. 다섯 번째는 처음으로 돌아가며, 표시가 없음을 의미합니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:99
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:98
 msgid "Restrictions"
-msgstr ""
+msgstr "제한"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:101
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:100
 msgid ""
 "If you search for a genre then create a saved search for it, you can use the"
 " 'restrict to' box to create a Virtual library of books with that genre. "
@@ -236,35 +235,35 @@ msgid ""
 "entering History.Japanese into the saved search field, then pushing the "
 "\"Save search\" button (the green box with the white plus, on the right-hand"
 " side)."
-msgstr ""
+msgstr "장르를 검색한 다음 저장된 검색을 만들면 '제한' 상자를 사용하여 해당 장르의 책으로 구성된 가상 라이브러리를 만들 수 있습니다. 이는 해당 장르 내에서 다른 검색을 수행하거나 해당 장르의 책에 대한 메타데이터를 관리/업데이트하려는 경우 유용합니다. 예시를 계속하여, 먼저 태그 브라우저에서 일본 장르를 클릭하여 검색 필드에 검색을 입력하고, 저장된 검색 필드에 역사를 입력한 다음, \"검색 저장\" 버튼(오른쪽에 있는 흰색 더하기가 있는 녹색 상자)을 눌러 '역사.일본'이라는 저장된 검색을 만들 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:106
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:105
 msgid "After creating the saved search, you can use it as a restriction."
-msgstr ""
+msgstr "저장된 검색을 만든 후 제한으로 사용할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:112
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:111
 msgid "Useful template functions"
-msgstr ""
+msgstr "유용한 템플릿 함수"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:114
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:113
 msgid ""
 "You might want to use the genre information in a template, such as with save"
 " to disk or send to device. The question might then be \"How do I get the "
 "outermost genre name or names?\" A calibre template function, subitems, is "
 "provided to make doing this easier."
-msgstr ""
+msgstr "디스크에 저장하거나 기기로 보내기와 같은 템플릿에서 장르 정보를 사용하고 싶을 수 있습니다. 그러면 \"가장 바깥쪽 장르 이름을 어떻게 가져오나요?\"라는 질문이 있을 수 있습니다. 이를 더 쉽게 수행하기 위해 캘리버 템플릿 함수인 subitems가 제공됩니다."
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:116
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:115
 msgid ""
 "For example, assume you want to add the outermost genre level to the save-"
 "to-disk template to make genre folders, as in \"History/The Gathering Storm "
 "- Churchill, Winston\". To do this, you must extract the first level of the "
 "hierarchy and add it to the front along with a slash to indicate that it "
 "should make a folder. The template below accomplishes this::"
-msgstr ""
+msgstr "예를 들어, 디스크에 저장하기 템플릿에 가장 바깥쪽 장르 수준을 추가하여 \"역사/The Gathering Storm - Churchill, Winston\"과 같이 장르 폴더를 만들고 싶다고 가정해 보겠습니다. 이렇게 하려면 계층의 첫 번째 수준을 추출하고 폴더를 만들어야 함을 나타내는 슬래시와 함께 앞에 추가해야 합니다. 아래 템플릿이 이를 수행합니다::"
 
-#: ../../__w/calibre/calibre/manual/sub_groups.rst:120
+#: ../../../__w/calibre/calibre/manual/sub_groups.rst:119
 msgid ""
 "See :ref:`The template language <templatelangcalibre>` for more information "
 "about templates and the :func:`subitems` function."
-msgstr ""
+msgstr "템플릿과 :func:`subitems` 함수에 대한 자세한 내용은 :ref:`템플릿 언어 <templatelangcalibre>`를 참조하세요."

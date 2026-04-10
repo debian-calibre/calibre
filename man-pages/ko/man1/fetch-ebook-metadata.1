@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "FETCH-EBOOK-METADATA" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .INDENT 0.0
@@ -43,12 +43,16 @@ fetch\-ebook\-metadata [options]
 온라인 출처로부터 메타데이터를 가져옵니다. 반드시 적어도 제목, 저자
 또는 ISBN 중 하나를 지정하여야 합니다.
 .sp
-Whenever you pass arguments to \fBfetch\-ebook\-metadata\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+fetch\-ebook\-metadata\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library
+사용할 메타데이터 다운로드 플러그인 이름을 지정합니다. 기본적으로는 모든 메타데이터 플러그인이 사용됩니다. 여러 플러그인을 지정하려면 이 옵션을 여러 번 사용할 수 있습니다. 모든 플러그인 이름: Google, Google Images, Amazon.com, Edelweiss, Open Library
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -68,7 +72,7 @@ Specify the name of a metadata download plugin to use. By default, all metadata 
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identifiers such as ASIN/Goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fB\-\-identifier\fP asin:B0082BAJA0
+ASIN/Goodreads ID 등의 식별자입니다. 여러 식별자를 지정하려면 여러 번 지정할 수 있습니다. 예: \fB\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP

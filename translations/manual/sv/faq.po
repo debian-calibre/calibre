@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Karl Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -187,7 +187,7 @@ msgid ""
 "resulting MOBI file may not function correctly on a Kindle, since the "
 "Kindle's use the metadata ToC for many things, including the Page Flip "
 "feature."
-msgstr ""
+msgstr "Vid konvertering till MOBI detekterar calibre *metadata ToC* i indatadokumentet och genererar en ToC för filslut i MOBI-utdatafilen. Du kan stänga av detta med ett alternativ i MOBI-utdatainställningarna. Du kan också ange för calibre om den ska placeras i början eller slutet av boken via ett alternativ i MOBI-utdatainställningarna. Kom ihåg att denna ToC semantiskt är en *metadata ToC*, i alla andra format än MOBI *kan den inte vara en del av texten*. Att den är en del av texten i MOBI är en olyckshändelse orsakad av MOBI:s begränsningar. Om du vill ha en ToC på en viss plats i din dokumenttext, skapa en för hand. Så vi rekommenderar starkt att du lämnar standardvärdet som det är, dvs. med metadata ToC i slutet av boken. Observera också att om du inaktiverar genereringen av ToC för filslut kanske den resulterande MOBI-filen inte fungerar korrekt på en Kindle, eftersom Kindles använder metadata ToC för många saker, inklusive funktionen för sidvändning."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:66
 msgid ""
@@ -264,7 +264,7 @@ msgid ""
 " you have to make sure that the EPUB is valid yourself, calibre will not do "
 "it for you -- in other words you must feed calibre valid XHTML + CSS as the "
 "input documents."
-msgstr ""
+msgstr "calibre garanterar inte att en EPUB som produceras av den är giltig. Den enda garantin den ger är att om du matar den med giltig XHTML 1.1 + CSS 2.1 kommer den att mata ut en giltig EPUB. calibre försöker hårt säkerställa att EPUB:erna som den producerar faktiskt fungerar som avsett på en mängd olika enheter, ett mål som är oförenligt med att producera giltiga EPUB:er, och ett som är mycket viktigare för den stora majoriteten av dess användare. Om du behöver ett verktyg som alltid producerar giltiga EPUB:er är calibre inte för dig. Det betyder att om du vill skicka en calibre-producerad EPUB till en onlinebutik som använder en EPUB-giltighetskontroll, måste du själv se till att EPUB:n är giltig, calibre kommer inte att göra det åt dig -- med andra ord måste du mata calibre med giltig XHTML + CSS som indatadokument."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:126
 msgid "How do I use some of the advanced features of the conversion tools?"
@@ -501,7 +501,7 @@ msgid ""
 "`OPDS <https://opds.io/>`__ support. In such apps you can go to the online "
 "catalog screen and add the IP address of the calibre server to browse and "
 "download books from your calibre library within the app."
-msgstr ""
+msgstr "Många läsappar stöder direkt bläddring i calibre-biblioteket via dess `OPDS <https://opds.io/>`__-stöd. I sådana appar kan du gå till onlinekatalogskärmen och lägga till IP-adressen för calibre-servern för att bläddra bland och hämta böcker från ditt calibre-bibliotek i appen."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:256
 msgid "How do I use calibre with my Android phone/tablet or Kindle Fire?"
@@ -551,7 +551,7 @@ msgid ""
 "point in order for your device to be recognized.  Finally, you might get a "
 "popup on the device every time calibre or the operating system actually "
 "tries to connect to it, asking for permission, tap OK."
-msgstr ""
+msgstr "Med nyare Android-enheter kan du behöva gå igenom några hinder för att få anslutningen att fungera, eftersom Google verkligen inte vill att du ska vara oberoende av deras moln. Först, lås upp skärmen innan du ansluter USB-kabeln. När du ansluter USB-kabeln får du ett popup-meddelande. Se till att det står något i stil med \"Överför mediefiler\" eller \"MTP (Media Transfer mode)\". Om det inte gör det, tryck på meddelandet och ändra läget till Media Transfer (MTP). Du kan behöva starta om Caliber nu för att din enhet ska kännas igen. Slutligen kan du få ett popup-meddelande på varje gång Caliber eller operativsystemet kan få tillgång till den, där du ber om tillåtelse, tryck på OK."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:292
 msgid ""
@@ -854,7 +854,7 @@ msgstr "Observera att den här lösningen endast fungerar för böcker som över
 msgid ""
 "If the workaround is not working for you make sure your Kindle firmware is "
 "at least version 5.12.5, released in April 2020."
-msgstr ""
+msgstr "Om lösningen inte fungerar för dig, se till att din Kindle-firmware är minst version 5.12.5, släppt i april 2020."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:464
 msgid ""
@@ -1331,7 +1331,7 @@ msgstr "För att förstå varför det hände, måste du förstå vad calibre-bib
 #: ../../../__w/calibre/calibre/manual/faq.rst:695
 msgid ""
 "There can be two reasons why calibre is showing an empty list of books:"
-msgstr ""
+msgstr "Det kan finnas två anledningar till att calibre visar en tom lista med böcker:"
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:697
 msgid ""
@@ -1389,7 +1389,7 @@ msgid ""
 "time. calibre libraries should never be shared between users and you should "
 "never open a calibre library you get from an untrusted source, as that is a "
 "security risk."
-msgstr ""
+msgstr "Om du måste dela själva biblioteket, använd ett filsynkroniseringsverktyg som DropBox eller rsync istället för en nätverksansluten enhet. Om du använder ett filsynkroniseringsverktyg är det **viktigt** att du ser till att både calibre och filsynkroniseringsverktyget inte försöker komma åt calibre-biblioteket samtidigt. Med andra ord, **kör inte** filsynkroniseringsverktyget och calibre samtidigt. calibre-bibliotek bör aldrig delas mellan användare och du bör aldrig öppna ett calibre-bibliotek som du får från en opålitlig källa, eftersom det är en säkerhetsrisk."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:737
 msgid ""
@@ -1583,7 +1583,7 @@ msgid ""
 "upgrading calibre, first uninstall calibre, then delete the folders (if they"
 " exist) :file:`C:\\\\Program Files\\\\Calibre` and :file:`C:\\\\Program "
 "Files\\\\Calibre2`. Now re-install and you should be fine."
-msgstr ""
+msgstr "Om du får ett felmeddelande om att en Python-funktion avslutas oväntat efter uppgradering av calibre, avinstallera först calibre och ta sedan bort mapparna (om de finns) :file:`C:\\\\Program Files\\\\Calibre` och :file:`C:\\\\Program Files\\\\Calibre2`. Installera nu om programmet så borde det gå bra."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:833
 msgid ""
@@ -1709,7 +1709,7 @@ msgid ""
 "then right click on the :file:`Temp` folder, select :guilabel:`Properties` "
 "and go to the :guilabel:`Security` tab. Make sure that your user account has"
 " full control for this folder."
-msgstr ""
+msgstr "Något på din dator hindrar calibre från att komma åt sina egna temporära filer. Troligtvis är behörigheterna för din :file:`Temp`-mapp felaktiga. Gå till mappen :file:`C:\\\\Användare\\\\ANVÄNDARNAMN\\\\AppData\\\\Lokal` i Utforskaren och högerklicka sedan på mappen :file:`Temp`, välj :guilabel:`Egenskaper` och gå till fliken :guilabel:`Säkerhet`. Se till att ditt användarkonto har fullständig kontroll över den här mappen."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:910
 msgid ""
@@ -2094,16 +2094,23 @@ msgstr "Det finns automatiska tredjepartsuppdaterare för calibre gjorda av cali
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:1078
 msgid ""
+"There is a third party plugin called :guilabel:`calibre Auto-update` that "
+"you can install via :guilabel:`Preferences->Plugins->Get new plugins` for a "
+"more streamlined update experience."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/faq.rst:1082
+msgid ""
 "Additionally, some third-party updaters such as Norton or Avast may update "
 "software behind the user's back. If you find calibre has updated "
 "unexpectedly, check for the presence of one."
 msgstr "Dessutom kan vissa tredjepartsuppdateringar som Norton eller Avast uppdatera programvara bakom användarens rygg. Om du upptäcker att calibre har uppdaterats oväntat, kontrollera om det finns någon."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1083
+#: ../../../__w/calibre/calibre/manual/faq.rst:1087
 msgid "How is calibre licensed?"
 msgstr "Hur är calibre licensierad?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1084
+#: ../../../__w/calibre/calibre/manual/faq.rst:1088
 msgid ""
 "calibre is licensed under the GNU General Public License v3 (an open source "
 "license). This means that you are free to redistribute calibre as long as "
@@ -2116,30 +2123,30 @@ msgid ""
 "`The GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 msgstr "calibre licensieras under GNU General Public License v3 (en öppen källkodslicens). Det innebär att du är fri att omdistributera calibre så länge du gör källkoden tillgänglig. Så om du vill lägga calibre på en CD med din produkt måste du också lägga till calibres källkod på CD:en. Källkoden är tillgänglig `för hämtning <https://download.calibre-ebook.com>`_. Du är fri att använda resultaten av konverteringar från calibre hur du vill. Du kan inte använda endera kod eller bibliotek från calibre i ditt program utan att också öppna källkoden för din mjukvara. För mer information, se `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1087
+#: ../../../__w/calibre/calibre/manual/faq.rst:1091
 msgid "How do I run calibre from my USB stick?"
 msgstr "Hur kör jag calibre från mitt USB-minne?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1089
+#: ../../../__w/calibre/calibre/manual/faq.rst:1093
 msgid ""
 "A portable version of calibre is available :website:`here "
 "<download_portable>`."
 msgstr "En bärbar version av calibre är tillgänglig :website:`här <download_portable>`."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1092
+#: ../../../__w/calibre/calibre/manual/faq.rst:1096
 msgid ""
 "How do I run parts of calibre like news download and the Content server on "
 "my own Linux server?"
 msgstr "Hur kör jag delar av calibre som nyhetshämtning och innehållsserver på min egen Linux-server?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1094
+#: ../../../__w/calibre/calibre/manual/faq.rst:1098
 msgid ""
 "First, you must install calibre onto your Linux server. If your server is "
 "using a modern Linux distribution, you should have no problems installing "
 "calibre onto it."
 msgstr "Först måste du installera calibre på din Linux-server. Om din server använder en modern Linux-distribution, borde du inte ha några problem med att installera calibre på den."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1098
+#: ../../../__w/calibre/calibre/manual/faq.rst:1102
 msgid ""
 "calibre needs GLIBC >= 2.31 and libstdc++ >= 6.0.28. If you have an older "
 "server, you will either need to compile these from source, or use calibre "
@@ -2153,34 +2160,34 @@ msgid ""
 "cursor0``, ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 msgstr "calibre behöver GLIBC >= 2.31 och libstdc++ >= 6.0.28. Om du har en äldre server behöver du antingen kompilera dessa från källkod, eller använd calibre 3.48 som kräver GLIBC >= 2.17 eller 2.85.1 som kräver GLIBC >= 2.13 eller calibre 1.48 som endast kräver GLIBC >= 2.10. Dessutom, även om kommandoradsverktygen för calibre inte behöver ha en körande X-server, kräver vissa av dem att X-serverbiblioteken är installerade på ditt system. Detta beror på Qt, som används för bildbehandlingsuppgifter, och länkar mot dessa bibliotek. Om du får ett importfel om några Qt-moduler, är det sannolikt att du saknar vissa X-bibliotek. Typiska kandidater är: ``libxcb-cursor0``, ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1109
+#: ../../../__w/calibre/calibre/manual/faq.rst:1113
 msgid "You can run the calibre server via the command::"
 msgstr "Du kan köra calibre-servern med kommandot::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1113
+#: ../../../__w/calibre/calibre/manual/faq.rst:1117
 msgid "You can download news and convert it into an e-book with the command::"
 msgstr "Du kan hämtar nyheter och konvertera dem till en e-bok med kommandot::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1117
+#: ../../../__w/calibre/calibre/manual/faq.rst:1121
 msgid ""
 "If you want to generate MOBI, use :file:`outputfile.mobi` instead and use "
 "``--output-profile kindle``."
 msgstr "Om du vill skapa MOBI, använd istället :file:`outputfile.mobi` och använd ``--output-profile kindle``."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1119
+#: ../../../__w/calibre/calibre/manual/faq.rst:1123
 msgid "You can email downloaded news with the command::"
 msgstr "Du kan skicka e-post med hämtade nyheter med kommandot::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1123
+#: ../../../__w/calibre/calibre/manual/faq.rst:1127
 msgid ""
 "I leave figuring out the exact command line as an exercise for the reader."
 msgstr "Jag lämnar att lista ut exakt kommandorad som en övning för läsenheten."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1125
+#: ../../../__w/calibre/calibre/manual/faq.rst:1129
 msgid "Finally, you can add downloaded news to the calibre library with::"
 msgstr "Slutligen, du kan lägga till hämtade nyheter i calibre-biblioteket med::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1129
+#: ../../../__w/calibre/calibre/manual/faq.rst:1133
 msgid ""
 "Remember to read the :ref:`cli` section of the calibre User Manual to learn "
 "more about these, and other commands."

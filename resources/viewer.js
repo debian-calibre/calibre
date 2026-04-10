@@ -16562,7 +16562,7 @@ return this.__repr__();
                 __module__ : {value: "read_book.db"}
             });
 
-            if (ρσ_exists.d(window.navigator.storage).persist) {
+            if (ρσ_exists.d(ρσ_exists.d((typeof window !== "undefined" && window !== null ? window : Object.create(null)).navigator).storage).persist) {
                 if (window.navigator.locks) {
                     window.navigator.locks.request("calibre-storage-persist", (function(){
                         var ρσ_d = Object.create(null);
@@ -29008,7 +29008,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.6.0";
+        CALIBRE_VERSION = "9.7.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29150,6 +29150,7 @@ return this.__repr__();
             this.handle_gesture = IframeBoss.prototype.handle_gesture.bind(this);
             this.handle_long_tap = IframeBoss.prototype.handle_long_tap.bind(this);
             this.gesture_from_margin = IframeBoss.prototype.gesture_from_margin.bind(this);
+            this.native_gesture = IframeBoss.prototype.native_gesture.bind(this);
             this.fake_wheel_event = IframeBoss.prototype.fake_wheel_event.bind(this);
             this.report_human_scroll = IframeBoss.prototype.report_human_scroll.bind(this);
             this.on_scroll_to_anchor = IframeBoss.prototype.on_scroll_to_anchor.bind(this);
@@ -29233,6 +29234,7 @@ return this.__repr__();
                 ρσ_d["change_scroll_speed"] = self.change_scroll_speed;
                 ρσ_d["display"] = self.display;
                 ρσ_d["gesture_from_margin"] = self.gesture_from_margin;
+                ρσ_d["native_gesture"] = self.native_gesture;
                 ρσ_d["get_current_cfi"] = self.get_current_cfi;
                 ρσ_d["initialize"] = self.initialize;
                 ρσ_d["modify_selection"] = self.modify_selection;
@@ -29552,6 +29554,14 @@ return this.__repr__();
             self.handle_gesture(data.gesture);
         };
         if (!IframeBoss.prototype.gesture_from_margin.__argnames__) Object.defineProperties(IframeBoss.prototype.gesture_from_margin, {
+            __argnames__ : {value: ["data"]},
+            __module__ : {value: "read_book.iframe"}
+        });
+        IframeBoss.prototype.native_gesture = function native_gesture(data) {
+            var self = this;
+            self.handle_gesture(data.gesture);
+        };
+        if (!IframeBoss.prototype.native_gesture.__argnames__) Object.defineProperties(IframeBoss.prototype.native_gesture, {
             __argnames__ : {value: ["data"]},
             __module__ : {value: "read_book.iframe"}
         });
@@ -32750,7 +32760,7 @@ return this.__repr__();
         });
 
         function init(container_id) {
-            var container, interface_data, recent, recent_container_id, cl, library_name, ρσ_unpack, library_id, newly, newly_container_id;
+            var container, interface_data, recent, recent_container_id, cl, library_name, ρσ_unpack, library_id, newly, newly_container_id, offline_mode, nav;
             update_window_title();
             container = document.getElementById(container_id);
             container.classList.add(CLASS_NAME);
@@ -32807,6 +32817,28 @@ return this.__repr__();
             newly_container_id = ensure_id(newly);
             container.appendChild(newly);
             ajax("interface-data/newly-added", newly_added_received.bind(null, newly_container_id)).send();
+            offline_mode = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "border-top: solid 1px currentColor; padding: 1rem; font-size:smaller", class_: "recently-read"})]);
+            offline_mode.textContent = _("Offline mode is not supported");
+            container.appendChild(offline_mode);
+            if (ρσ_exists.d(window.performance).getEntriesByType) {
+                nav = window.performance.getEntriesByType("navigation");
+                if (nav && nav.length > 0) {
+                    nav = nav[0];
+                    if (nav.workerStart > 0) {
+                        if (nav.transferSize === 0 && nav.decodedBodySize > 0) {
+                            offline_mode.textContent = _("Loaded from cache in offline mode");
+                        } else {
+                            offline_mode.textContent = _("Offline mode is available");
+                        }
+                    } else {
+                        if (window.isSecureContext) {
+                            offline_mode.textContent = _("Offline mode is possible, reload the page to enable it");
+                        } else {
+                            offline_mode.textContent = _("Offline mode is not available, you need to setup HTTPS support in the calibre Content server");
+                        }
+                    }
+                }
+            }
         };
         if (!init.__argnames__) Object.defineProperties(init, {
             __argnames__ : {value: ["container_id"]},
@@ -45791,7 +45823,7 @@ return this.__repr__();
             nav_actions = E.ul(back_action, forward_action);
             if (runtime.is_standalone_viewer) {
                 reload_actions = E.ul(ac(_("Open book"), _("Open a book"), self.overlay.open_book, "book"), reload_action);
-                editable_formats = ["KEPUB", "AZW3", "EPUB"];
+                editable_formats = ["AZW3", "EPUB", "KEPUB"];
                 fmt = ρσ_exists.d(ρσ_exists.d(self.overlay.view).book).manifest.book_format || "";
                 if (ρσ_in(fmt.toUpperCase(), editable_formats)) {
                     reload_actions.appendChild(ac(_("Edit book"), _("Edit this book"), self.overlay.view.edit_book, "edit"));
@@ -48747,7 +48779,7 @@ return this.__repr__();
 
     (function(){
         var __name__ = "read_book.search_worker";
-        var GET_SPINE_FAILED, CONNECT_FAILED, UNHANDLED_ERROR, DB_ERROR, _RE_ESCAPE, quote_map, qpat, spat, invisible_chars, wc;
+        var GET_SPINE_FAILED, CONNECT_FAILED, UNHANDLED_ERROR, DB_ERROR, _RE_ESCAPE, quote_map, qpat, spat, invisible_chars, _ESCAPED_ATOM, wc;
         var DB = ρσ_modules["read_book.db"].DB;
 
         var text_from_serialized_html = ρσ_modules["read_book.resources"].text_from_serialized_html;
@@ -48758,7 +48790,7 @@ return this.__repr__();
         CONNECT_FAILED = 2;
         UNHANDLED_ERROR = 3;
         DB_ERROR = 4;
-        _RE_ESCAPE = /[-\/\\^$*+?.()|[\]{}]/g;
+        _RE_ESCAPE = /[\/\\^$*+?.()|[\]{}]/g;
         quote_map = (function(){
             var ρσ_d = Object.create(null);
             ρσ_d["\""] = "\"“”";
@@ -48768,6 +48800,7 @@ return this.__repr__();
         qpat = /(['"])/g;
         spat = /(\s+)/g;
         invisible_chars = "(?:[\u00ad\u200c\u200d]{0,1})";
+        _ESCAPED_ATOM = /\\[\s\S]|[\s\S]/gu;
         function escape(string) {
             return string.replace(_RE_ESCAPE, "\\$&");
         };
@@ -48786,13 +48819,16 @@ return this.__repr__();
         });
 
         function text_to_regex(text) {
-            var has_leading, has_trailing, ans, r, chars, ch, part, wpart;
+            var has_leading, has_trailing, ans, r, atoms, part, wpart;
             if (text && !text.strip()) {
                 return "\\s+";
             }
             has_leading = text.lstrip() !== text;
             has_trailing = text.rstrip() !== text;
-            ans = (has_leading) ? ["\s+"] : [];
+            ans = [];
+            if (has_leading) {
+                ans.push("\\s+");
+            }
             var ρσ_Iter0 = ρσ_Iterable(split_string(spat, text.strip()));
             for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
                 wpart = ρσ_Iter0[ρσ_Index0];
@@ -48805,15 +48841,11 @@ return this.__repr__();
                         r = quote_map[(typeof part === "number" && part < 0) ? quote_map.length + part : part];
                         if (r) {
                             ans.push("[" + r + "]");
-                        } else {
-                            chars = [];
-                            var ρσ_Iter2 = ρσ_Iterable(part);
-                            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
-                                ch = ρσ_Iter2[ρσ_Index2];
-                                chars.push(escape(ch));
+                        } else if (part) {
+                            atoms = escape(part).match(_ESCAPED_ATOM);
+                            if (atoms) {
+                                ans.push(atoms.join(invisible_chars));
                             }
-                            chars.join(invisible_chars);
-                            ans.push(part);
                         }
                     }
                 }
@@ -48853,9 +48885,9 @@ return this.__repr__();
             var self = this;
             var matches, q, node, ans, ancestors, parent;
             matches = [];
-            var ρσ_Iter3 = ρσ_Iterable(self.toc_nodes);
-            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
-                node = ρσ_Iter3[ρσ_Index3];
+            var ρσ_Iter2 = ρσ_Iterable(self.toc_nodes);
+            for (var ρσ_Index2 = 0; ρσ_Index2 < ρσ_Iter2.length; ρσ_Index2++) {
+                node = ρσ_Iter2[ρσ_Index2];
                 q = (ρσ_expr_temp = self.offset_map)[ρσ_bound_index(node.id, ρσ_expr_temp)];
                 if ((typeof q !== "undefined" && q !== null)) {
                     if (q > offset) {
@@ -48911,9 +48943,9 @@ return this.__repr__();
                 return (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
             }
             offset_map = Object.create(null);
-            var ρσ_Iter4 = ρσ_Iterable(toc_nodes);
-            for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
-                node = ρσ_Iter4[ρσ_Index4];
+            var ρσ_Iter3 = ρσ_Iterable(toc_nodes);
+            for (var ρσ_Index3 = 0; ρσ_Index3 < ρσ_Iter3.length; ρσ_Index3++) {
+                node = ρσ_Iter3[ρσ_Index3];
                 node_id = node.id;
                 if ((typeof node_id !== "undefined" && node_id !== null)) {
                     aid = node.frag;
@@ -49102,13 +49134,18 @@ return this.__repr__();
         });
 
         function got_spine_item(query_id, spine_idx, result) {
-            var name;
+            var name, data;
             if (query_id !== wc.current_query_id) {
                 return;
             }
             if (result.ok) {
                 name = (ρσ_expr_temp = wc.current_book.spine)[(typeof spine_idx === "number" && spine_idx < 0) ? ρσ_expr_temp.length + spine_idx : spine_idx];
-                (ρσ_expr_temp = wc.text_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = text_from_serialized_html(result.result, true);
+                data = result.result;
+                if (data instanceof Blob) {
+                    queue_next_spine_item(spine_idx + 1);
+                    return;
+                }
+                (ρσ_expr_temp = wc.text_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = text_from_serialized_html(data, true);
                 search_in_text_of(name);
                 setTimeout(queue_next_spine_item.bind(null, spine_idx + 1), 0);
             } else {
@@ -49135,9 +49172,9 @@ return this.__repr__();
             if (query.mode !== "regex") {
                 if (query.mode === "word") {
                     words = [];
-                    var ρσ_Iter5 = ρσ_Iterable(expr.split(" "));
-                    for (var ρσ_Index5 = 0; ρσ_Index5 < ρσ_Iter5.length; ρσ_Index5++) {
-                        part = ρσ_Iter5[ρσ_Index5];
+                    var ρσ_Iter4 = ρσ_Iterable(expr.split(" "));
+                    for (var ρσ_Index4 = 0; ρσ_Index4 < ρσ_Iter4.length; ρσ_Index4++) {
+                        part = ρσ_Iter4[ρσ_Index4];
                         words.push("\\b" + text_to_regex(part) + "\\b");
                     }
                     expr = words.join("\\s+");
@@ -49166,6 +49203,7 @@ return this.__repr__();
             if (idx < 0) {
                 idx = 0;
             }
+            wc.current_query.current_name = (ρσ_expr_temp = wc.current_book.spine)[(typeof idx === "number" && idx < 0) ? ρσ_expr_temp.length + idx : idx];
             queue_next_spine_item(idx, true);
         };
         if (!perform_search.__argnames__) Object.defineProperties(perform_search, {
@@ -49268,6 +49306,7 @@ return this.__repr__();
         ρσ_modules["read_book.search_worker"].qpat = qpat;
         ρσ_modules["read_book.search_worker"].spat = spat;
         ρσ_modules["read_book.search_worker"].invisible_chars = invisible_chars;
+        ρσ_modules["read_book.search_worker"]._ESCAPED_ATOM = _ESCAPED_ATOM;
         ρσ_modules["read_book.search_worker"].wc = wc;
         ρσ_modules["read_book.search_worker"].escape = escape;
         ρσ_modules["read_book.search_worker"].split_string = split_string;
@@ -49685,7 +49724,16 @@ return this.__repr__();
 ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
                 emsg = ρσ_unpack[0];
                 details = ρσ_unpack[1];
-                error_dialog(_("Could not search"), emsg, details);
+                self.view.hide_loading();
+                window.setTimeout((function() {
+                    var ρσ_anonfunc = function () {
+                        error_dialog(_("Could not search"), emsg, details);
+                    };
+                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                        __module__ : {value: "read_book.search"}
+                    });
+                    return ρσ_anonfunc;
+                })(), 1e3);
                 self.result_handler = null;
                 self.initial_search_result_counter = 0;
             } else if (msg.id === self.search_in_flight.id) {
@@ -50561,6 +50609,7 @@ return this.__repr__();
             this.on_margin_wheel = View.prototype.on_margin_wheel.bind(this);
             this.send_wheel_event_to_iframe = View.prototype.send_wheel_event_to_iframe.bind(this);
             this.forward_gesture = View.prototype.forward_gesture.bind(this);
+            this.native_gesture = View.prototype.native_gesture.bind(this);
             this.iframe_size = View.prototype.iframe_size.bind(this);
             this.on_request_size = View.prototype.on_request_size.bind(this);
             this.on_print = View.prototype.on_print.bind(this);
@@ -51074,6 +51123,14 @@ return this.__repr__();
             ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["gesture_from_margin"].concat([ρσ_desugar_kwargs({gesture: gesture})]));
         };
         if (!View.prototype.forward_gesture.__argnames__) Object.defineProperties(View.prototype.forward_gesture, {
+            __argnames__ : {value: ["gesture"]},
+            __module__ : {value: "read_book.view"}
+        });
+        View.prototype.native_gesture = function native_gesture(gesture) {
+            var self = this;
+            ρσ_interpolate_kwargs.call(self.iframe_wrapper, self.iframe_wrapper.send_message, ["native_gesture"].concat([ρσ_desugar_kwargs({gesture: gesture})]));
+        };
+        if (!View.prototype.native_gesture.__argnames__) Object.defineProperties(View.prototype.native_gesture, {
             __argnames__ : {value: ["gesture"]},
             __module__ : {value: "read_book.view"}
         });
@@ -53849,6 +53906,20 @@ return this.__repr__();
                 }
             };
             if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: null}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        var native_gesture = from_python((function() {
+            var ρσ_anonfunc = function native_gesture(gesture) {
+                if (view) {
+                    view.native_gesture(gesture);
+                }
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["gesture"]},
                 __module__ : {value: null}
             });
             return ρσ_anonfunc;

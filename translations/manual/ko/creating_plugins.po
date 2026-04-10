@@ -3,27 +3,27 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022,2026
 # Junghee Lee <daemul72@gmail.com>, 2021-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-21 08:24+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
-"Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022,2026\n"
+"Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:4
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:4
 msgid "Writing your own plugins to extend calibre's functionality"
-msgstr ""
+msgstr "직접 플러그인을 작성하여 calibre 기능 확장하기"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:6
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:6
 msgid ""
 "calibre has a very modular design. Almost all functionality in calibre comes"
 " in the form of plugins. Plugins are used for conversion, for downloading "
@@ -31,34 +31,34 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr ""
+msgstr "calibre는 매우 모듈화된 설계를 가지고 있습니다. calibre의 거의 모든 기능이 플러그인 형태로 제공됩니다. 플러그인은 변환, 뉴스 다운로드(이것은 레시피라고 합니다), 사용자 인터페이스의 다양한 구성 요소, 다양한 장치 연결, calibre에 파일 추가 시 파일 처리 등에 사용됩니다. :guilabel:`환경설정->고급->플러그인`으로 이동하여 calibre의 모든 내장 플러그인의 전체 목록을 확인할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:8
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
 "Here, we will teach you how to create your own plugins to add new features "
 "to calibre."
-msgstr ""
+msgstr "여기에서는 calibre에 새 기능을 추가하기 위해 직접 플러그인을 만드는 방법을 설명합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:13
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:13
 msgid "Contents"
 msgstr "목차"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:15
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:15
 msgid "This only applies to calibre releases >= 0.8.60"
-msgstr ""
+msgstr "이것은 calibre 릴리스 >= 0.8.60에만 적용됩니다"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:18
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:18
 msgid "Anatomy of a calibre plugin"
-msgstr "캘리버 플러그인의 구조"
+msgstr "calibre 플러그인의 구조"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:20
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:20
 msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr ""
+msgstr "calibre 플러그인은 매우 간단합니다. 일부 Python 코드와 플러그인에 필요한 이미지 파일과 같은 기타 리소스가 포함된 ZIP 파일일 뿐입니다. 바로 기본 예시를 살펴보겠습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:24
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
 "Suppose you have an installation of calibre that you are using to self "
 "publish various e-documents in EPUB and MOBI formats. You would like all "
@@ -66,65 +66,65 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr ""
+msgstr "EPUB 및 MOBI 형식의 다양한 전자 문서를 자체 발행하는 데 사용하는 calibre 설치가 있다고 가정합니다. calibre에서 생성된 모든 파일의 발행자를 \"Hello world\"로 설정하고 싶다면 다음 방법을 따르세요. :file:`__init__.py`라는 파일을 만드세요(이것은 특별한 이름이며 플러그인의 메인 파일에 항상 사용해야 합니다). 그리고 다음 Python 코드를 입력하세요:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:32
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
 "That's all. To add this code to calibre as a plugin, simply run the "
 "following in the folder in which you created :file:`__init__.py`::"
-msgstr ""
+msgstr "이것이 전부입니다. 이 코드를 플러그인으로 calibre에 추가하려면 :file:`__init__.py`를 만든 폴더에서 다음을 실행하세요::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:38
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:38
 msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
-msgstr ""
+msgstr "macOS에서는 명령줄 도구가 calibre 번들 안에 있습니다. 예를 들어, calibre를 :file:`/Applications`에 설치한 경우 명령줄 도구는 :file:`/Applications/calibre.app/Contents/MacOS/`에 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:42
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
 "You can download the Hello World plugin from "
 ":download_file:`helloworld_plugin.zip`."
-msgstr ""
+msgstr ":download_file:`helloworld_plugin.zip`에서 Hello World 플러그인을 다운로드할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:45
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:45
 msgid ""
 "Every time you use calibre to convert a book, the plugin's :meth:`run` "
 "method will be called and the converted book will have its publisher set to "
-"\"Hello World\". This is a trivial plugin, lets move on to a more complex "
+"\"Hello World\". This is a trivial plugin, let's move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr ""
+msgstr "calibre를 사용하여 책을 변환할 때마다 플러그인의 :meth:`run` 메서드가 호출되고 변환된 책의 발행자가 \"Hello World\"로 설정됩니다. 이것은 간단한 플러그인이며, 이제 실제로 사용자 인터페이스에 구성 요소를 추가하는 더 복잡한 예시로 넘어가겠습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:50
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
 msgstr "사용자 인터페이스 플러그인"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:52
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:52
 msgid ""
 "This plugin will be spread over a few files (to keep the code clean). It "
 "will show you how to get resources (images or data files) from the plugin "
 "ZIP file, allow users to configure your plugin, how to create elements in "
 "the calibre user interface and how to access and query the books database in"
 " calibre."
-msgstr ""
+msgstr "이 플러그인은 여러 파일에 걸쳐 있습니다(코드를 깔끔하게 유지하기 위해). 플러그인 ZIP 파일에서 리소스(이미지 또는 데이터 파일)를 가져오는 방법, 사용자가 플러그인을 구성할 수 있게 하는 방법, calibre 사용자 인터페이스에 요소를 만드는 방법, calibre의 책 데이터베이스에 접근하고 쿼리하는 방법을 보여줍니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:57
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:57
 msgid ""
 "You can download this plugin from :download_file:`interface_demo_plugin.zip`"
-msgstr ""
+msgstr ":download_file:`interface_demo_plugin.zip`에서 이 플러그인을 다운로드할 수 있습니다"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:61
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:61
 msgid ""
 "The first thing to note is that this ZIP file has a lot more files in it, "
 "explained below, pay particular attention to ``plugin-import-name-"
 "interface_demo.txt``."
-msgstr ""
+msgstr "먼저 이 ZIP 파일에는 아래 설명된 것처럼 더 많은 파일이 포함되어 있습니다. ``plugin-import-name-interface_demo.txt``에 특히 주의하세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:77
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:64
 msgid "**plugin-import-name-interface_demo.txt**"
-msgstr ""
+msgstr "**plugin-import-name-interface_demo.txt**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:65
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:65
 msgid ""
 "An empty text file used to enable the multi-file plugin magic. This file "
 "must be present in all plugins that use more than one .py file. It should be"
@@ -132,89 +132,89 @@ msgid ""
 "name-**some_name**.txt``. The presence of this file allows you to import "
 "code from the .py files present inside the ZIP file, using a statement "
 "like::"
-msgstr ""
+msgstr "다중 파일 플러그인 기능을 활성화하는 데 사용되는 빈 텍스트 파일입니다. 이 파일은 하나 이상의 .py 파일을 사용하는 모든 플러그인에 있어야 합니다. 비어 있어야 하며 파일명은 ``plugin-import-name-**some_name**.txt`` 형식이어야 합니다. 이 파일이 있으면 다음과 같은 문을 사용하여 ZIP 파일 안에 있는 .py 파일에서 코드를 가져올 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:71
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:71
 msgid ""
 "The prefix ``calibre_plugins`` must always be present. ``some_name`` comes "
-"from the filename of the empty text file. ``some_module`` refers to  "
+"from the filename of the empty text file. ``some_module`` refers to "
 ":file:`some_module.py` file inside the ZIP file. Note that this importing is"
 " just as powerful as regular Python imports. You can create packages and "
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr ""
+msgstr "접두사 ``calibre_plugins``는 항상 있어야 합니다. ``some_name``은 빈 텍스트 파일의 파일명에서 옵니다. ``some_module``은 ZIP 파일 안의 :file:`some_module.py` 파일을 가리킵니다. 이 가져오기는 일반 Python 가져오기만큼 강력합니다. ZIP 파일 안에 .py 모듈의 패키지와 하위 패키지를 평소처럼(각 하위 폴더에 __init__.py를 정의하여) 만들 수 있으며, 모든 것이 \"그냥 작동\"해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:76
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr ""
+msgstr "``some_name``에 사용하는 이름은 모든 플러그인이 공유하는 전역 네임스페이스에 들어갑니다. **따라서 가능한 한 고유하게 만드세요**. 유효한 Python 식별자(알파벳, 숫자, 밑줄만 가능)여야 한다는 점을 기억하세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:79
 msgid "**__init__.py**"
-msgstr ""
+msgstr "**__init__.py**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:80
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:80
 msgid "As before, the file that defines the plugin class"
 msgstr "이전과 같이, 플러그인 클래스를 정의하는 파일"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:82
 msgid "**main.py**"
-msgstr ""
+msgstr "**main.py**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:83
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:83
 msgid "This file contains the actual code that does something useful"
-msgstr ""
+msgstr "이 파일에는 유용한 작업을 수행하는 실제 코드가 포함되어 있습니다"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:85
 msgid "**ui.py**"
-msgstr ""
+msgstr "**ui.py**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:86
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:86
 msgid "This file defines the interface part of the plugin"
 msgstr "이 파일은 플러그인의 인터페이스 부분을 정의합니다"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:88
 msgid "**images/icon.png**"
-msgstr ""
+msgstr "**images/icon.png**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:89
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:89
 msgid "The icon for this plugin"
 msgstr "이 플러그인의 아이콘"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:91
 msgid "**about.txt**"
-msgstr ""
+msgstr "**about.txt**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:92
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:92
 msgid "A text file with information about the plugin"
 msgstr "플러그인에 대한 정보가 포함된 텍스트 파일"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:97
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:94
 msgid "**translations**"
 msgstr "**번역**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:95
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:95
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr ""
+msgstr "플러그인의 사용자 인터페이스를 다양한 언어로 번역한 .mo 파일이 포함된 폴더입니다. 자세한 내용은 아래를 참조하세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:99
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
-msgstr ""
+msgstr "이제 코드를 살펴보겠습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:102
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:102
 msgid "__init__.py"
-msgstr ""
+msgstr "__init__.py"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:104
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
-msgstr ""
+msgstr "먼저, 플러그인 메타데이터를 정의하는 필수 ``__init__.py``입니다:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:109
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
 "The only noteworthy feature is the field :attr:`actual_plugin`. Since "
 "calibre has both command line and GUI interfaces, GUI plugins like this one "
@@ -222,142 +222,145 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr ""
+msgstr "유일하게 주목할 만한 기능은 :attr:`actual_plugin` 필드입니다. calibre에는 명령줄과 GUI 인터페이스가 모두 있으므로, 이와 같은 GUI 플러그인은 __init__.py에서 GUI 라이브러리를 로드하면 안 됩니다. actual_plugin 필드는 실제 플러그인이 ZIP 아카이브 안의 다른 파일에 있으며 GUI 컨텍스트에서만 로드된다는 것을 calibre에 알려줌으로써 이를 대신 처리합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:114
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
 "Remember that for this to work, you must have a plugin-import-name-"
 "some_name.txt file in your plugin ZIP file, as discussed above."
-msgstr ""
+msgstr "이것이 작동하려면 위에서 설명한 것처럼 플러그인 ZIP 파일에 plugin-import-name-some_name.txt 파일이 있어야 합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:117
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:117
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
 msgstr "또한 플러그인의 사용자 구성을 활성화하는 몇 가지 방법이 있습니다. 이러한 내용은 아래에서 설명합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:120
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
-msgstr ""
+msgstr "ui.py"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:122
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:122
 msgid ""
 "Now let's look at ui.py which defines the actual GUI plugin. The source code"
 " is heavily commented and should be self explanatory:"
-msgstr ""
+msgstr "이제 실제 GUI 플러그인을 정의하는 ui.py를 살펴보겠습니다. 소스 코드에 주석이 많이 달려 있어 자체적으로 설명이 될 것입니다:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:128
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:212
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:128
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:220
 msgid "main.py"
-msgstr ""
+msgstr "main.py"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:130
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:130
 msgid "The actual logic to implement the Interface Plugin Demo dialog."
-msgstr ""
+msgstr "인터페이스 플러그인 데모 대화상자를 구현하는 실제 로직입니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:136
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:136
 msgid "Getting resources from the plugin ZIP file"
 msgstr "플러그인 ZIP 파일에서 리소스 가져오기"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:138
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:138
 msgid ""
 "calibre's plugin loading system defines a couple of built-in functions that "
 "allow you to conveniently get files from the plugin ZIP file."
-msgstr ""
+msgstr "calibre의 플러그인 로딩 시스템은 플러그인 ZIP 파일에서 파일을 편리하게 가져올 수 있는 몇 가지 내장 함수를 정의합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:145
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:140
 msgid "**get_resources(name_or_list_of_names)**"
-msgstr ""
+msgstr "**get_resources(name_or_list_of_names)**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:141
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:141
 msgid ""
 "This function should be called with a list of paths to files inside the ZIP "
-"file. For example to access the file icon.png in the folder images in the "
-"ZIP file, you would use: ``images/icon.png``. Always use a forward slash as "
-"the path separator, even on Windows. When you pass in a single name, the "
-"function will return the raw bytes of that file or None if the name was not "
-"found in the ZIP file. If you pass in more than one name then it returns a "
-"dict mapping the names to bytes. If a name is not found, it will not be "
-"present in the returned dict."
-msgstr ""
+"file. For example to access the file :file:`icon.png` in the folder images "
+"in the ZIP file, you would use: ``images/icon.png``. Always use a forward "
+"slash as the path separator, even on Windows. When you pass in a single "
+"name, the function will return the raw bytes of that file or None if the "
+"name was not found in the ZIP file. If you pass in more than one name then "
+"it returns a dictionary mapping the names to bytes.  If a name is not found,"
+" it will not be present in the returned dictionary."
+msgstr "이 함수는 ZIP 파일 안의 파일 경로 목록과 함께 호출해야 합니다. 예를 들어 ZIP 파일의 images 폴더에 있는 :file:`icon.png` 파일에 접근하려면 ``images/icon.png``를 사용하세요. Windows에서도 항상 정방향 슬래시를 경로 구분자로 사용하세요. 단일 이름을 전달하면 해당 파일의 원시 바이트를 반환하고, ZIP 파일에서 이름을 찾을 수 없으면 None을 반환합니다. 둘 이상의 이름을 전달하면 이름을 바이트에 매핑하는 딕셔너리를 반환합니다. 이름을 찾을 수 없으면 반환된 딕셔너리에 포함되지 않습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:149
-msgid "**get_icons(name_or_list_of_names)**"
-msgstr ""
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:150
+msgid "**get_icons(name_or_list_of_names, plugin_name='')**"
+msgstr "**get_icons(name_or_list_of_names, plugin_name='')**"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:148
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:151
 msgid ""
-"A convenience wrapper for get_resources() that creates QIcon objects from "
-"the raw bytes returned by get_resources. If a name is not found in the ZIP "
-"file the corresponding QIcon will be null."
-msgstr ""
+"A wrapper for get_resources() that creates QIcon objects from the raw bytes "
+"returned by get_resources. If a name is not found in the ZIP file the "
+"corresponding QIcon will be null. In order to support icon theme-ing, pass "
+"in the human friendly name of your plugin as ``plugin_name``. If the user is"
+" using an icon theme with icons for your plugin, they will be loaded "
+"preferentially."
+msgstr "get_resources()의 래퍼로, get_resources가 반환한 원시 바이트에서 QIcon 객체를 생성합니다. ZIP 파일에서 이름을 찾을 수 없으면 해당 QIcon은 null이 됩니다. 아이콘 테마를 지원하려면 플러그인의 사용자 친화적인 이름을 ``plugin_name``으로 전달하세요. 사용자가 플러그인용 아이콘이 포함된 아이콘 테마를 사용 중이면 해당 아이콘이 우선적으로 로드됩니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:152
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:160
 msgid "Enabling user configuration of your plugin"
-msgstr "플러그인의 사용자 구성 사용"
+msgstr "플러그인의 사용자 구성 활성화"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:154
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:162
 msgid ""
 "To allow users to configure your plugin, you must define three methods in "
 "your base plugin class, **is_customizable**, **config_widget** and "
 "**save_settings** as shown below:"
-msgstr ""
+msgstr "사용자가 플러그인을 구성할 수 있도록 하려면 기본 플러그인 클래스에 **is_customizable**, **config_widget**, **save_settings** 세 가지 메서드를 정의해야 합니다. 아래와 같습니다:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:165
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:173
 msgid ""
 "calibre has many different ways to store configuration data (a legacy of its"
 " long history). The recommended way is to use the **JSONConfig** class, "
 "which stores your configuration information in a .json file."
-msgstr "캘리버에는 구성 데이터를 저장하는 다양한 방법이 있습니다(오랜 역사의 유산). 권장되는 방법은 구성 정보를 .json 파일에 저장하는 **JSONConfig** 클래스를 사용하는 것입니다."
+msgstr "calibre에는 구성 데이터를 저장하는 다양한 방법이 있습니다(오랜 역사의 유산). 권장되는 방법은 구성 정보를 .json 파일에 저장하는 **JSONConfig** 클래스를 사용하는 것입니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:167
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:175
 msgid ""
 "The code to manage configuration data in the demo plugin is in config.py:"
 msgstr "데모 플러그인에서 구성 데이터를 관리하는 코드는 config.py에 있습니다:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:172
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:180
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
-msgstr ""
+msgstr "이제 ``prefs`` 객체는 간단한 구문을 통해 플러그인 코드 전체에서 사용할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:177
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:185
 msgid "You can see the ``prefs`` object being used in main.py:"
-msgstr ""
+msgstr "main.py에서 ``prefs`` 객체가 사용되는 것을 확인할 수 있습니다:"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:184
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:192
 msgid "Edit book plugins"
-msgstr ""
+msgstr "책 편집 플러그인"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:186
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
 ":download_file:`editor_demo_plugin.zip`."
-msgstr ""
+msgstr "이제 방향을 바꾸어 calibre 책 편집기에 도구를 추가하는 플러그인을 만드는 방법을 살펴보겠습니다. 플러그인은 여기서 다운로드할 수 있습니다: :download_file:`editor_demo_plugin.zip`."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:190
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:198
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
-msgstr ""
+msgstr "모든 플러그인과 마찬가지로 첫 번째 단계는 :ref:`위 <import_name_txt>`에서 설명한 대로 가져오기 이름 빈 txt 파일을 만드는 것입니다. 파일명은 ``plugin-import-name-editor_plugin_demo.txt``로 하겠습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:194
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:202
 msgid ""
 "Now we create the mandatory ``__init__.py`` file that contains metadata "
 "about the plugin -- its name, author, version, etc."
-msgstr ""
+msgstr "이제 플러그인에 대한 메타데이터(이름, 저자, 버전 등)가 포함된 필수 ``__init__.py`` 파일을 만듭니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:200
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:208
 msgid ""
 "A single editor plugin can provide multiple tools each tool corresponds to a"
 " single button in the toolbar and entry in the :guilabel:`Plugins` menu in "
 "the editor. These can have sub-menus in case the tool has multiple related "
 "actions."
-msgstr ""
+msgstr "하나의 에디터 플러그인은 여러 도구를 제공할 수 있으며, 각 도구는 툴바의 버튼 하나와 에디터의 `플러그인` 메뉴 항목 하나에 해당합니다. 도구에 여러 관련 작업이 있는 경우 하위 메뉴를 포함할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:204
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:212
 msgid ""
 "The tools must all be defined in the file ``main.py`` in your plugin. Every "
 "tool is a class that inherits from the "
@@ -365,30 +368,30 @@ msgid ""
 "``main.py`` from the demo plugin, the source code is heavily commented and "
 "should be self-explanatory. Read the API documents of the "
 ":class:`calibre.gui2.tweak_book.plugin.Tool` class for more details."
-msgstr ""
+msgstr "모든 도구는 플러그인의 ``main.py`` 파일에 정의되어야 합니다. 모든 도구는 :class:`calibre.gui2.tweak_book.plugin.Tool` 클래스를 상속하는 클래스입니다. 데모 플러그인의 ``main.py``를 살펴보겠습니다. 소스 코드에 주석이 많이 달려 있어 자체적으로 설명이 될 것입니다. 자세한 내용은 :class:`calibre.gui2.tweak_book.plugin.Tool` 클래스의 API 문서를 참조하세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:214
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:222
 msgid ""
 "Here we will see the definition of a single tool that will multiply all font"
 " sizes in the book by a number provided by the user. This tool demonstrates "
 "various important concepts that you will need in developing your own "
 "plugins, so you should read the (heavily commented) source code carefully."
-msgstr ""
+msgstr "여기에서는 사용자가 제공한 숫자로 책의 모든 글꼴 크기를 곱하는 단일 도구의 정의를 볼 수 있습니다. 이 도구는 직접 플러그인을 개발하는 데 필요한 다양한 중요한 개념을 보여주므로 (주석이 많이 달린) 소스 코드를 주의 깊게 읽어야 합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:222
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:230
 msgid ""
 "Let's break down ``main.py``. We see that it defines a single tool, named "
 "*Magnify fonts*. This tool will ask the user for a number and multiply all "
 "font sizes in the book by that number."
-msgstr ""
+msgstr "``main.py``를 분석해 보겠습니다. *글꼴 확대*라는 단일 도구를 정의하는 것을 볼 수 있습니다. 이 도구는 사용자에게 숫자를 요청하고 책의 모든 글꼴 크기를 해당 숫자로 곱합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:226
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:234
 msgid ""
 "The first important thing is the tool name which you must set to some "
 "relatively unique string as it will be used as the key for this tool."
-msgstr ""
+msgstr "첫 번째 중요한 것은 도구 이름입니다. 이 도구의 키로 사용되므로 비교적 고유한 문자열로 설정해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:229
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:237
 msgid ""
 "The next important entry point is the "
 ":meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. This method "
@@ -397,18 +400,18 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr ""
+msgstr "다음 중요한 진입점은 :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`입니다. 이 메서드는 플러그인 도구 모음과 플러그인 메뉴에 나타나는 QAction 객체를 생성합니다. 또한 선택적으로 사용자가 맞춤 설정할 수 있는 키보드 단축키를 할당합니다. QAction의 triggered 시그널은 사용자에게 글꼴 크기 배수를 요청한 다음 확대 코드를 실행하는 ask_user() 메서드에 연결됩니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:237
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:245
 msgid ""
 "The magnification code is well commented and fairly simple. The main things "
 "to note are that you get a reference to the editor window as ``self.gui`` "
 "and the editor *Boss* as ``self.boss``. The *Boss* is the object that "
 "controls the editor user interface. It has many useful methods, that are "
 "documented in the :class:`calibre.gui2.tweak_book.boss.Boss` class."
-msgstr ""
+msgstr "확대 코드는 주석이 잘 달려 있고 꽤 간단합니다. 주목할 점은 편집기 창의 참조를 ``self.gui``로, 편집기 *Boss*를 ``self.boss``로 얻는 것입니다. *Boss*는 편집기 사용자 인터페이스를 제어하는 객체입니다. :class:`calibre.gui2.tweak_book.boss.Boss` 클래스에 문서화된 많은 유용한 메서드를 가지고 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:243
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:251
 msgid ""
 "Finally, there is ``self.current_container`` which is a reference to the "
 "book being edited as a "
@@ -417,170 +420,148 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr ""
+msgstr "마지막으로, 편집 중인 책에 대한 참조인 ``self.current_container``가 있습니다. :class:`calibre.ebooks.oeb.polish.container.Container` 객체입니다. 이것은 책을 구성하는 HTML/CSS/이미지 파일의 모음으로 표현하며, 많은 유용한 작업을 수행하는 편의 메서드를 가지고 있습니다. 컨테이너 객체와 플러그인 코드에서 재사용할 수 있는 다양한 유용한 유틸리티 함수는 :ref:`polish_api`에 문서화되어 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:252
-msgid "Running User Interface plugins in a separate process"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:254
-msgid ""
-"If you are writing a user interface plugin that needs to make use of Qt "
-"WebEngine, it cannot be run in the main calibre process as it is not "
-"possible to use WebEngine there. Instead you can copy the data your plugin "
-"needs to a temporary folder and run the plugin with that data in a separate "
-"process. A simple example plugin follows that shows how to do this."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:261
-msgid ""
-"You can download the plugin from :download_file:`webengine_demo_plugin.zip`."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:264
-msgid "The important part of the plugin is in two functions:"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:273
-msgid ""
-"The ``show_demo()`` function asks the user for a URL and then runs the "
-"``main()`` function passing it that URL. The ``main()`` function displays "
-"the URL in a ``QWebEngineView``."
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:279
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:259
 msgid "Adding translations to your plugin"
-msgstr "사용자 플러그인에 번역 추가"
+msgstr "플러그인에 번역 추가"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:281
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:261
 msgid ""
 "You can have all the user interface strings in your plugin translated and "
 "displayed in whatever language is set for the main calibre user interface."
-msgstr ""
+msgstr "플러그인의 모든 사용자 인터페이스 문자열을 Calibre 메인 사용자 인터페이스에 설정된 언어로 번역하여 표시할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:284
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:264
 msgid ""
 "The first step is to go through your plugin's source code and mark all user "
 "visible strings as translatable, by surrounding them in _(). For example::"
-msgstr ""
+msgstr "첫 번째 단계는 플러그인의 소스 코드를 살펴보고 사용자에게 보이는 모든 문자열을 _()로 감싸 번역 가능하도록 표시하는 것입니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:289
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:269
 msgid ""
 "Then use some program to generate .po files from your plugin source code. "
 "There should be one .po file for every language you want to translate into. "
 "For example: de.po for German, fr.po for French and so on. You can use the "
 "`Poedit <https://poedit.net/>`_ program for this."
-msgstr ""
+msgstr "그런 다음 프로그램을 사용하여 플러그인 소스 코드에서 .po 파일을 생성하세요. 번역하려는 각 언어마다 하나의 .po 파일이 있어야 합니다. 예: 독일어의 경우 de.po, 프랑스어의 경우 fr.po 등. 이를 위해 `Poedit <https://poedit.net/>`_ 프로그램을 사용할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:294
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:274
 msgid ""
 "Send these .po files to your translators. Once you get them back, compile "
 "them into .mo files. You can again use Poedit for that, or just do::"
-msgstr ""
+msgstr "이 .po 파일을 번역자에게 보내세요. 번역이 완료되면 .mo 파일로 컴파일하세요. Poedit를 다시 사용하거나 다음을 실행하세요::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:299
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:279
 msgid "Put the .mo files into the ``translations`` folder in your plugin."
-msgstr ""
+msgstr ".mo 파일을 플러그인의 ``translations`` 폴더에 넣으세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:301
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:281
 msgid ""
 "The last step is to simply call the function `load_translations()` at the "
 "top of your plugin's .py files. For performance reasons you should only call"
 " this function in those .py files that actually have translatable strings. "
 "So in a typical User Interface plugin you would call it at the top of "
 "``ui.py`` but not ``__init__.py``."
-msgstr ""
+msgstr "마지막 단계는 플러그인의 .py 파일 상단에서 `load_translations()` 함수를 호출하는 것입니다. 성능상의 이유로 실제로 번역 가능한 문자열이 있는 .py 파일에서만 이 함수를 호출해야 합니다. 따라서 일반적인 사용자 인터페이스 플러그인에서는 ``ui.py`` 상단에서 호출하되 ``__init__.py``에서는 호출하지 않습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:307
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
 "You can test the translations of your plugins by changing the user interface"
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
-"or by running calibre like this::"
-msgstr ""
+"or by running calibre with the ``CALIBRE_OVERRIDE_LANG`` environment "
+"variable set. For example::"
+msgstr "calibre의 :guilabel:`환경설정->인터페이스->모양과 느낌`에서 사용자 인터페이스 언어를 변경하거나 ``CALIBRE_OVERRIDE_LANG`` 환경 변수를 설정하여 calibre를 실행하여 플러그인의 번역을 테스트할 수 있습니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:313
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
-msgstr ""
+msgstr "``de``를 테스트하려는 언어의 언어 코드로 바꾸세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:316
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:295
+msgid ""
+"For translations with plurals, use the ``ngettext()`` function instead of "
+"``_()``. For example::"
+msgstr "복수형이 있는 번역의 경우 ``_()`` 대신 ``ngettext()`` 함수를 사용하세요. 예::"
+
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
 msgstr "플러그인 API"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:318
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:303
 msgid ""
 "As you may have noticed above, a plugin in calibre is a class. There are "
 "different classes for the different types of plugins in calibre. Details on "
 "each class, including the base class of all plugins can be found in "
 ":ref:`plugins`."
-msgstr ""
+msgstr "위에서 눈치채셨겠지만, calibre의 플러그인은 클래스입니다. calibre에는 다양한 유형의 플러그인에 대한 서로 다른 클래스가 있습니다. 모든 플러그인의 기본 클래스를 포함한 각 클래스에 대한 세부 정보는 :ref:`plugins`에서 확인할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:321
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
 "Your plugin is almost certainly going to use code from calibre. To learn how"
 " to find various bits of functionality in the calibre code base, read the "
 "section on the calibre :ref:`code_layout`."
-msgstr ""
+msgstr "플러그인은 거의 확실히 calibre의 코드를 사용하게 됩니다. calibre 코드베이스에서 다양한 기능을 찾는 방법을 알아보려면 calibre :ref:`code_layout` 섹션을 읽어보세요."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:326
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
-msgstr "디버깅 플러그인"
+msgstr "플러그인 디버깅"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:328
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""
 "The first, most important step is to run calibre in debug mode. You can do "
 "this from the command line with::"
-msgstr ""
+msgstr "첫 번째이자 가장 중요한 단계는 디버그 모드에서 calibre를 실행하는 것입니다. 명령줄에서 다음을 실행할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:332
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:317
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
-msgstr ""
+msgstr "You can have all the user interface strings in your plugin translated and displayed in whatever language is set for the main calibre user interface."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:334
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""
 "When running from the command line, debug output will be printed to the "
 "console, when running from within calibre the output will go to a txt file."
-msgstr ""
+msgstr "명령줄에서 실행할 경우 디버그 출력은 콘솔에 표시되고, Calibre 내에서 실행할 경우 출력은 텍스트 파일에 저장됩니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:336
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:321
 msgid ""
 "You can insert print statements anywhere in your plugin code, they will be "
 "output in debug mode. Remember, this is Python, you really shouldn't need "
 "anything more than print statements to debug ;) I developed all of calibre "
 "using just this debugging technique."
-msgstr ""
+msgstr "플러그인 코드 어디에나 print 문을 삽입할 수 있으며, 디버그 모드에서 출력됩니다. 기억하세요, 이것은 Python이므로 디버깅에 print 문 이상의 것이 필요하지 않습니다 ;) 저는 이 디버깅 기법만으로 calibre 전체를 개발했습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:338
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:323
 msgid ""
 "You can quickly test changes to your plugin by using the following command "
 "line::"
-msgstr ""
+msgstr "다음 명령줄을 사용하면 플러그인 변경 사항을 빠르게 테스트할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:343
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:328
 msgid ""
 "This will shutdown a running calibre, wait for the shutdown to complete, "
 "then update your plugin in calibre and relaunch calibre."
-msgstr ""
+msgstr "실행 중인 calibre를 종료하고, 종료가 완료될 때까지 기다린 다음, calibre에서 플러그인을 업데이트하고 calibre를 다시 시작합니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:346
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:331
 msgid "More plugin examples"
 msgstr "더 많은 플러그인 예시"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:348
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:333
 msgid ""
 "You can find a list of many sophisticated calibre plugins `here "
 "<https://www.mobileread.com/forums/showthread.php?t=118764>`_."
-msgstr ""
+msgstr "많은 정교한 calibre 플러그인 목록은 `여기 <https://www.mobileread.com/forums/showthread.php?t=118764>`_에서 확인할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:351
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:336
 msgid "Sharing your plugins with others"
-msgstr ""
+msgstr "다른 사람과 플러그인 공유"
 
-#: ../../__w/calibre/calibre/manual/creating_plugins.rst:353
+#: ../../../__w/calibre/calibre/manual/creating_plugins.rst:338
 msgid ""
 "If you would like to share the plugins you have created with other users of "
 "calibre, post your plugin in a new thread in the `calibre plugins forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=237>`_."
-msgstr ""
+msgstr "만든 플러그인을 calibre의 다른 사용자와 공유하고 싶다면 `calibre 플러그인 포럼 <https://www.mobileread.com/forums/forumdisplay.php?f=237>`_에 새 스레드로 플러그인을 게시하세요."

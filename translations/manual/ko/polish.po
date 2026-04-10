@@ -3,26 +3,27 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Jung Hee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 02:30+0000\n"
-"PO-Revision-Date: 2022-01-22 15:13+0000\n"
-"Last-Translator: Jung Hee Lee <daemul72@gmail.com>\n"
-"Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
+"PO-Revision-Date: 2014-07-05 16:50+0000\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
+"Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:4
+#: ../../../__w/calibre/calibre/manual/polish.rst:4
 msgid "API documentation for the e-book editing tools"
-msgstr ""
+msgstr "전자책 편집 도구용 API 문서"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:6
+#: ../../../__w/calibre/calibre/manual/polish.rst:6
 msgid ""
 "The e-book editing tools consist of a "
 ":class:`calibre.ebooks.oeb.polish.container.Container` object that "
@@ -30,46 +31,46 @@ msgid ""
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr ""
+msgstr "전자책 편집 도구는 책을 HTML + 리소스 파일 모음으로 나타내는 :class:`calibre.ebooks.oeb.polish.container.Container` 객체와, 그 컨테이너에서 여러 작업을 수행하는 데 사용할 수 있는 다양한 도구로 이루어져 있습니다. 모든 도구는 여러 ``calibre.ebooks.oeb.polish.*`` 모듈에 있는 모듈 수준 함수 형태로 제공됩니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:15
+#: ../../../__w/calibre/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
-msgstr ""
+msgstr "다음과 같이 경로에 있는 책의 컨테이너 객체를 얻을 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:20
+#: ../../../__w/calibre/calibre/manual/polish.rst:20
 msgid ""
 "If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
-msgstr ""
+msgstr "전자책 편집기용 플러그인을 작성하는 경우, 현재 편집 중인 책의 컨테이너는 다음과 같이 얻습니다::"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:30
+#: ../../../__w/calibre/calibre/manual/polish.rst:30
 msgid "The Container object"
-msgstr ""
+msgstr "Container 객체"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
 msgid ""
 "A container represents an open e-book as a folder full of files and an OPF "
 "file. There are two important concepts:"
-msgstr ""
+msgstr "컨테이너는 파일이 가득한 폴더와 OPF 파일로 구성된 열린 전자책을 나타냅니다. 여기에는 두 가지 중요한 개념이 있습니다:"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
 "inside this folder or in its sub-folders."
-msgstr ""
+msgstr "루트 폴더. 전자책의 기준 위치입니다. 전자책의 모든 파일은 이 폴더 또는 그 하위 폴더 안에 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
 msgid ""
 "Names: These are paths to the books' files relative to the root folder. They"
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr ""
+msgstr "이름(Name): 루트 폴더를 기준으로 한 책 파일의 경로입니다. 항상 POSIX 구분자를 사용하며 따옴표로 이스케이프되지 않습니다. 책 안의 파일을 식별하는 정규 식별자로 생각하면 됩니다. 컨테이너 객체의 대부분 메서드는 이름을 사용합니다. 이름은 항상 NFC 유니코드 정규화 형식입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
 msgid ""
 "Clones: the container object supports efficient on-disk cloning, which is "
@@ -77,133 +78,98 @@ msgid ""
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr ""
+msgstr "복제(Clone): 컨테이너 객체는 디스크 상에서 효율적인 복제를 지원하며, 전자책 편집기의 체크포인트 구현에 사용됩니다. 이를 제대로 동작하게 하려면 파일 시스템의 파일에 직접 접근하면 안 됩니다. 대신 :meth:`raw_data` 또는 :meth:`open`을 사용해 책 안의 구성 파일을 읽고 쓰십시오."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
 msgid ""
 "When converting between hrefs and names use the methods provided by this "
 "class, they assume all hrefs are quoted."
-msgstr ""
+msgstr "href와 이름 사이를 변환할 때는 이 클래스에서 제공하는 메서드를 사용하십시오. 이 메서드들은 모든 href가 따옴표로 이스케이프된 것으로 가정합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
 msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
-msgstr ""
+msgstr ":attr:`root`를 기준으로 한 정규 이름으로 절대 경로를 변환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
-#: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
-#: of calibre.ebooks.oeb.polish.container.Container.commit:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
-#: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.replace_links:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.rename_files:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.split:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.multisplit:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.merge:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.set_cover:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.create_inline_toc:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.open_book:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+#: ../../../__w/calibre/calibre/manual/polish.rst:0
 msgid "Parameters"
-msgstr "매개 변수"
+msgstr "매개변수"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base folder. By default the root for this container object is used."
-msgstr ""
+msgstr "기준 폴더입니다. 기본값으로 이 컨테이너 객체의 루트가 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr ""
+msgstr "이 컨테이너에 파일을 추가합니다. 파일에 대한 항목이 OPF manifest와 spine에 자동으로 생성됩니다(파일이 텍스트 문서인 경우)."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr ""
+msgstr "지정한 이름의 파일에 대해 manifest 항목을 추가합니다. manifest id를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
 msgid "Add the specified properties to the manifest item identified by name."
-msgstr ""
+msgstr "이름으로 식별된 manifest 항목에 지정한 속성을 추가합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
 msgid ""
 "Ensure that the specified properties are set on only the manifest item "
 "identified by name. You can pass None as the name to remove the property "
 "from all items."
-msgstr ""
+msgstr "지정한 속성이 이름으로 식별된 manifest 항목에만 설정되도록 합니다. 이름에 None을 전달하면 모든 항목에서 해당 속성을 제거합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.ebooks.oeb.polish.container.Container.book_type:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.book_type:1
 msgid "The type of book (epub for EPUB files and azw3 for AZW3 files)"
-msgstr ""
+msgstr "책의 형식입니다(EPUB 파일은 epub, AZW3 파일은 azw3)."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:1
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the e-book"
 " file at outpath."
-msgstr ""
+msgstr "변경된 모든 파싱 객체를 파일 시스템에 기록하고, outpath에 전자책 파일을 출력합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
 msgid ""
 "The path to write the saved e-book file to. If None, the path of the "
 "original book file is used."
-msgstr ""
+msgstr "저장된 전자책 파일을 기록할 경로입니다. None이면 원본 책 파일의 경로를 사용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
 msgid ""
 "If True the parsed representations of committed items are kept in the cache."
-msgstr ""
+msgstr "True이면 커밋된 항목의 파싱된 표현이 캐시에 유지됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
 msgid ""
 "Commit a parsed object to disk (it is serialized and written to the "
 "underlying file). If ``keep_parsed`` is True the parsed representation is "
 "retained in the cache. See also: :meth:`parsed`"
-msgstr ""
+msgstr "파싱된 객체를 디스크에 커밋합니다(직렬화되어 실제 파일에 기록됩니다). ``keep_parsed``가 True이면 파싱된 표현이 캐시에 유지됩니다. 참고: :meth:`parsed`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.dirty:1
 msgid ""
 "Mark the parsed object corresponding to name as dirty. See also: "
 ":meth:`parsed`."
-msgstr ""
+msgstr "name에 해당하는 파싱 객체를 dirty 상태로 표시합니다. 참고: :meth:`parsed`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.exists:1
 msgid ""
 "True iff a file/folder corresponding to the canonical name exists. Note that"
@@ -211,62 +177,62 @@ msgid ""
 " in particular case (in)sensitivity. So on a case insensitive filesystem "
 "this will return True even if the case of name is different from the case of"
 " the underlying filesystem file. See also :meth:`has_name`"
-msgstr ""
+msgstr "정규 이름에 해당하는 파일/폴더가 존재할 때만 True를 반환합니다. 이 함수는 기반 OS 파일 시스템의 한계, 특히 대소문자 구분 여부의 영향을 받습니다. 따라서 대소문자를 구분하지 않는 파일 시스템에서는 name의 대소문자가 실제 파일과 달라도 True를 반환할 수 있습니다. 참고: :meth:`has_name`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.filesize:1
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr ""
+msgstr "지정한 정규 이름이 나타내는 파일의 바이트 단위 크기를 반환합니다. dirty 상태의 파싱 객체도 자동으로 처리합니다. 참고: :meth:`parsed`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
 msgid ""
 "Add an item to the manifest with href derived from the given name. Ensures "
 "uniqueness of href and id automatically. Returns generated item."
-msgstr ""
+msgstr "지정한 이름으로부터 href를 파생하여 manifest에 항목을 추가합니다. href와 id의 고유성이 자동으로 보장됩니다. 생성된 항목을 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.get_file_path_for_processing:1
 msgid ""
 "Similar to open() except that it returns a file path, instead of an open "
 "file object."
-msgstr ""
+msgstr "open()과 비슷하지만, 열린 파일 객체 대신 파일 경로를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
 msgid "Mapping of guide type to canonical name"
-msgstr ""
+msgstr "guide 유형에서 정규 이름으로의 매핑"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.has_name:1
 msgid ""
 "Return True iff a file with the same canonical name as that specified "
 "exists. Unlike :meth:`exists` this method is always case-sensitive."
-msgstr ""
+msgstr "지정한 것과 동일한 정규 이름을 가진 파일이 존재할 때만 True를 반환합니다. :meth:`exists`와 달리 이 메서드는 항상 대소문자를 구분합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.href_to_name:1
 msgid ""
 "Convert an href (relative to base) to a name. base must be a name or None, "
 "in which case self.root is used."
-msgstr ""
+msgstr "href(기준은 base)를 이름으로 변환합니다. base는 이름이어야 하며, None이면 self.root를 사용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.insert_into_xml:1
 msgid ""
 "Insert item into parent (or append if index is None), fixing indentation. "
 "Only works with self closing items."
-msgstr ""
+msgstr "항목을 parent에 삽입합니다(index가 None이면 끝에 추가). 들여쓰기는 자동으로 맞춥니다. 자기 닫힘 항목에서만 동작합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.ebooks.oeb.polish.container.Container.is_dir:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.is_dir:1
 msgid "If this container represents an unzipped book (a directory)"
-msgstr ""
+msgstr "이 컨테이너가 압축 해제된 책(디렉터리)을 나타내는 경우"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.iterlinks:1
 msgid ""
 "Iterate over all links in name. If get_line_numbers is True the yields "
@@ -274,128 +240,128 @@ msgid ""
 "line_number at which the link occurs and offset is the number of characters "
 "from the start of the line. Note that offset could actually encompass "
 "several lines if not zero."
-msgstr ""
+msgstr "name 안의 모든 링크를 반복합니다. get_line_numbers가 True이면 `(link, line_number, offset)` 형태의 결과를 반환합니다. 여기서 line_number는 링크가 나타나는 줄 번호이고, offset은 해당 줄 시작부터의 문자 수입니다. offset이 0이 아니면 실제로는 여러 줄에 걸칠 수도 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.make_name_unique:1
 msgid ""
 "Ensure that `name` does not already exist in this book. If it does, return a"
 " modified version that does not exist."
-msgstr ""
+msgstr "`name`이 이 책에 이미 존재하지 않도록 합니다. 이미 존재하면 충돌하지 않는 수정된 이름을 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
 msgid "Return True if the manifest has an entry corresponding to name"
-msgstr ""
+msgstr "manifest에 name에 해당하는 항목이 있으면 True를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
 msgid "Mapping of manifest id to canonical names"
-msgstr ""
+msgstr "manifest id에서 정규 이름으로의 매핑"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1
 msgid ""
 "The names of all manifest items whose media-type matches predicate. "
 "`predicate` can be a set, a list, a string or a function taking a single "
 "argument, which will be called with the media-type."
-msgstr ""
+msgstr "media-type이 predicate와 일치하는 모든 manifest 항목의 이름입니다. `predicate`는 집합, 리스트, 문자열 또는 단일 인수를 받는 함수가 될 수 있으며, 함수인 경우 media-type을 인수로 호출됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.manifest_items_with_property:1
 msgid "All manifest items that have the specified property"
-msgstr ""
+msgstr "지정한 속성을 가진 모든 manifest 항목"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_type_map:1
 msgid ""
 "Mapping of manifest media-type to list of canonical names of that media-type"
-msgstr ""
+msgstr "manifest media-type에서 해당 media-type의 정규 이름 목록으로의 매핑"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.mi:1
 msgid ""
 "The metadata of this book as a Metadata object. Note that this object is "
 "constructed on the fly every time this property is requested, so use it "
 "sparingly."
-msgstr ""
+msgstr "이 책의 메타데이터를 담은 Metadata 객체입니다. 이 객체는 이 속성을 요청할 때마다 즉시 생성되므로 꼭 필요할 때만 사용하십시오."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_abspath:1
 msgid "Convert a canonical name to an absolute OS dependent path"
-msgstr ""
+msgstr "정규 이름을 OS 종속 절대 경로로 변환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_href:1
 msgid ""
 "Convert a name to a href relative to base, which must be a name or None in "
 "which case self.root is used as the base"
-msgstr ""
+msgstr "이름을 base 기준 href로 변환합니다. base는 이름이어야 하며, None이면 self.root가 기준으로 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
 "Set of names that must never be renamed. Depends on the e-book file format."
-msgstr ""
+msgstr "절대 이름을 바꿔서는 안 되는 이름 집합입니다. 전자책 파일 형식에 따라 달라집니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_removed:1
 msgid ""
 "Set of names that must never be deleted from the container. Depends on the "
 "e-book file format."
-msgstr ""
+msgstr "컨테이너에서 절대 삭제하면 안 되는 이름 집합입니다. 전자책 파일 형식에 따라 달라집니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_need_not_be_manifested:1
 msgid ""
 "Set of names that are allowed to be missing from the manifest. Depends on "
 "the e-book file format."
-msgstr ""
+msgstr "manifest에서 누락되어도 허용되는 이름 집합입니다. 전자책 파일 형식에 따라 달라집니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.open:1
 msgid ""
 "Open the file pointed to by name for direct read/write. Note that this will "
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr ""
+msgstr "name이 가리키는 파일을 직접 읽기/쓰기로 엽니다. 파일이 dirty 상태이면 커밋되고 파스 캐시에서 제거된다는 점에 유의하십시오. 다시 파싱된 버전에 접근하기 전에 반드시 이 파일 처리를 끝내야 합니다. 그렇지 않으면 문제가 생길 수 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
 msgid "The parsed OPF file"
-msgstr ""
+msgstr "파싱된 OPF 파일"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_get_or_create:1
 msgid ""
 "Convenience method to either return the first XML element with the specified"
 " name or create it under the opf:package element and then return it, if it "
 "does not already exist."
-msgstr ""
+msgstr "지정한 이름의 첫 번째 XML 요소를 반환하거나, 없으면 `opf:package` 요소 아래에 생성한 뒤 반환하는 편의 메서드입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
 msgid "The version set on the OPF's <package> element"
-msgstr ""
+msgstr "OPF의 `<package>` 요소에 설정된 버전"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version_parsed:1
 msgid "The version set on the OPF's <package> element as a tuple of integers"
-msgstr ""
+msgstr "OPF의 `<package>` 요소에 설정된 버전을 정수 튜플로 나타낸 값"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_xpath:1
 msgid ""
 "Convenience method to evaluate an XPath expression on the OPF file, has the "
 "opf: and dc: namespace prefixes pre-defined."
-msgstr ""
+msgstr "OPF 파일에서 XPath 식을 평가하는 편의 메서드입니다. `opf:`와 `dc:` 네임스페이스 접두사가 미리 정의되어 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.parsed:1
 msgid ""
 "Return a parsed representation of the file specified by name. For HTML and "
@@ -403,76 +369,76 @@ msgid ""
 " returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr ""
+msgstr "name으로 지정한 파일의 파싱된 표현을 반환합니다. HTML/XML 파일은 lxml 트리를, CSS 파일은 css_parser 스타일시트를 반환합니다. 성능을 위해 파싱 객체는 캐시된다는 점에 유의하십시오. 파싱 객체를 변경한 경우 컨테이너가 캐시를 갱신할 수 있도록 반드시 :meth:`dirty`를 호출해야 합니다. 참고: :meth:`replace`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
 msgid "Return the raw data corresponding to the file specified by name"
-msgstr ""
+msgstr "지정한 이름의 파일에 해당하는 원시 데이터를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:3
 msgid ""
 "If True and the file has a text based MIME type, decode it and return a "
 "unicode object instead of raw bytes."
-msgstr ""
+msgstr "True이고 파일의 MIME 유형이 텍스트 기반이면, 원시 바이트 대신 디코딩된 유니코드 객체를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:4
 msgid ""
 "If True the returned unicode object is normalized to the NFC normal form as "
 "is required for the EPUB and AZW3 file formats."
-msgstr ""
+msgstr "True이면 반환된 유니코드 객체가 EPUB 및 AZW3 파일 형식에서 요구되는 NFC 정규화 형식으로 정규화됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.relpath:1
 msgid ""
 "Convert an absolute path (with os separators) to a path relative to base "
 "(defaults to self.root). The relative path is *not* a name. Use "
 ":meth:`abspath_to_name` for that."
-msgstr ""
+msgstr "절대 경로(os 구분자 사용)를 base 기준 상대 경로로 변환합니다(base 기본값은 self.root). 이 상대 경로는 *이름*이 아닙니다. 이름으로 변환하려면 :meth:`abspath_to_name`을 사용하십시오."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_spine:1
 msgid ""
 "Remove the specified items (by canonical name) from the spine. If "
 "``remove_if_no_longer_in_spine`` is True, the items are also deleted from "
 "the book, not just from the spine."
-msgstr ""
+msgstr "지정한 항목(정규 이름 기준)을 spine에서 제거합니다. ``remove_if_no_longer_in_spine``가 True이면 항목을 spine에서만 빼는 것이 아니라 책에서도 삭제합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_xml:1
 msgid ""
 "Removes item from parent, fixing indentation (works only with self closing "
 "items)"
-msgstr ""
+msgstr "parent에서 항목을 제거하고 들여쓰기를 맞춥니다(자기 닫힘 항목에서만 동작)."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_item:1
 msgid ""
 "Remove the item identified by name from this container. This removes all "
 "references to the item in the OPF manifest, guide and spine as well as from "
 "any internal caches."
-msgstr ""
+msgstr "이름으로 식별된 항목을 이 컨테이너에서 제거합니다. 이 작업은 OPF manifest, guide, spine에 있는 모든 참조와 내부 캐시의 항목도 함께 제거합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.rename:1
 msgid ""
 "Renames a file from current_name to new_name. It automatically rebases all "
 "links inside the file if the folder the file is in changes. Note however, "
 "that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr ""
+msgstr "파일 이름을 current_name에서 new_name으로 바꿉니다. 파일이 들어 있는 폴더가 바뀌면 파일 내부의 모든 링크 기준을 자동으로 다시 맞춥니다. 단, 이 파일을 참조할 수 있는 다른 파일 안의 링크는 갱신되지 않습니다. 성능 때문이며, 이런 갱신은 한 번에 일괄 처리해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
 msgid ""
 "Replace the parsed object corresponding to name with obj, which must be a "
 "similar object, i.e. an lxml tree for HTML/XML or a css_parser stylesheet "
 "for a CSS file."
-msgstr ""
+msgstr "name에 해당하는 파싱 객체를 obj로 교체합니다. obj는 동일한 종류의 객체여야 합니다. 즉, HTML/XML이면 lxml 트리, CSS 파일이면 css_parser 스타일시트여야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace_links:1
 msgid ""
 "Replace all links in name using replace_func, which must be a callable that "
@@ -480,252 +446,252 @@ msgid ""
 "attribute that is set to True if any actual replacement is done. Convenient "
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
-msgstr ""
+msgstr "replace_func를 사용해 name 안의 모든 링크를 교체합니다. replace_func는 URL을 받아 치환된 URL을 반환하는 호출 가능 객체여야 합니다. 또한 실제 치환이 일어나면 True로 설정되는 'replaced' 속성을 가져야 합니다. 이런 호출 객체는 :class:`LinkReplacer`와 :class:`LinkRebaser` 클래스를 사용하면 편리하게 만들 수 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1
 msgid ""
 "Convert a parsed object (identified by canonical name) into a bytestring. "
 "See :meth:`parsed`."
-msgstr ""
+msgstr "파싱된 객체(정규 이름으로 식별됨)를 바이트 문자열로 변환합니다. 참고: :meth:`parsed`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.set_spine:1
 msgid ""
 "Set the spine to be spine_items where spine_items is an iterable of the form"
 " (name, linear). Will raise an error if one of the names is not present in "
 "the manifest."
-msgstr ""
+msgstr "spine을 spine_items로 설정합니다. spine_items는 `(name, linear)` 형태의 반복 가능 객체여야 합니다. 이름 중 하나라도 manifest에 없으면 오류가 발생합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_items:1
 msgid ""
 "An iterator yielding the path for every item in the books' spine. See also: "
 ":attr:`spine_iter` and :attr:`spine_items`."
-msgstr ""
+msgstr "책의 spine에 있는 각 항목의 경로를 반환하는 반복자입니다. 참고: :attr:`spine_iter`, :attr:`spine_items`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_iter:1
 msgid ""
 "An iterator that yields item, name is_linear for every item in the books' "
 "spine. item is the lxml element, name is the canonical file name and "
 "is_linear is True if the item is linear. See also: :attr:`spine_names` and "
 ":attr:`spine_items`."
-msgstr ""
+msgstr "책의 spine에 있는 각 항목에 대해 item, name, is_linear를 반환하는 반복자입니다. item은 lxml 요소, name은 정규 파일 이름이며, 항목이 linear이면 is_linear는 True입니다. 참고: :attr:`spine_names`, :attr:`spine_items`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_names:1
 msgid ""
 "An iterator yielding name and is_linear for every item in the books' spine. "
 "See also: :attr:`spine_iter` and :attr:`spine_items`."
-msgstr ""
+msgstr "책의 spine에 있는 각 항목에 대해 name과 is_linear를 반환하는 반복자입니다. 참고: :attr:`spine_iter`, :attr:`spine_items`"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:36
+#: ../../../__w/calibre/calibre/manual/polish.rst:36
 msgid "Managing component files in a container"
-msgstr ""
+msgstr "컨테이너 안의 구성 파일 관리"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:1
 msgid ""
 "Replace links to files in the container. Will iterate over all files in the "
 "container and change the specified links in them."
-msgstr ""
+msgstr "컨테이너 안의 파일을 가리키는 링크를 교체합니다. 컨테이너의 모든 파일을 순회하면서 지정한 링크를 변경합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:3
 msgid ""
 "A mapping of old canonical name to new canonical name. For example: "
 ":code:`{'images/old.png': 'images/new.png'}`"
-msgstr ""
+msgstr "이전 정규 이름에서 새 정규 이름으로의 매핑입니다. 예: :code:`{'images/old.png': 'images/new.png'}`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:4
 msgid ""
 "A callable that takes two arguments ``(name, anchor)`` and returns a new "
 "anchor. This is useful if you need to change the anchors in HTML files. By "
 "default, it does nothing."
-msgstr ""
+msgstr "``(name, anchor)`` 두 인수를 받아 새 anchor를 반환하는 호출 가능 객체입니다. HTML 파일의 anchor를 바꿔야 할 때 유용합니다. 기본값은 아무 작업도 하지 않습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:7
 msgid "If False, links are not replaced in the OPF file."
-msgstr ""
+msgstr "False이면 OPF 파일의 링크는 교체하지 않습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:1
 msgid ""
 "Rename files in the container, automatically updating all links to them."
-msgstr ""
+msgstr "컨테이너 안의 파일 이름을 바꾸고, 해당 파일을 가리키는 모든 링크를 자동으로 갱신합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:3
 msgid ""
 "A mapping of old canonical name to new canonical name, for example: "
 ":code:`{'text/chapter1.html': 'chapter1.html'}`."
-msgstr ""
+msgstr "이전 정규 이름에서 새 정규 이름으로의 매핑입니다. 예: :code:`{'text/chapter1.html': 'chapter1.html'}`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.get_recommended_folders:1
 msgid ""
 "Return the folders that are recommended for the given filenames. The "
 "recommendation is based on where the majority of files of the same type are "
 "located in the container. If no files of a particular type are present, the "
 "recommended folder is assumed to be the folder containing the OPF file."
-msgstr ""
+msgstr "지정한 파일 이름에 대해 권장되는 폴더를 반환합니다. 권장값은 컨테이너 안에서 같은 유형의 파일이 가장 많이 위치한 폴더를 기준으로 합니다. 특정 유형의 파일이 하나도 없으면 OPF 파일이 들어 있는 폴더를 권장 폴더로 간주합니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:47
+#: ../../../__w/calibre/calibre/manual/polish.rst:47
 msgid "Pretty printing and auto fixing parse errors"
-msgstr ""
+msgstr "예쁘게 정리하기 및 파싱 오류 자동 수정"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_html:1
 msgid ""
 "Fix any parsing errors in the HTML represented as a string in raw. Fixing is"
 " done using the HTML5 parsing algorithm."
-msgstr ""
+msgstr "raw 문자열로 표현된 HTML의 파싱 오류를 수정합니다. 수정은 HTML5 파싱 알고리즘을 사용해 수행됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_all_html:1
 msgid ""
 "Fix any parsing errors in all HTML files in the container. Fixing is done "
 "using the HTML5 parsing algorithm."
-msgstr ""
+msgstr "컨테이너 안의 모든 HTML 파일의 파싱 오류를 수정합니다. 수정은 HTML5 파싱 알고리즘을 사용해 수행됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_html:1
 msgid "Pretty print the HTML represented as a string in raw"
-msgstr ""
+msgstr "raw 문자열로 표현된 HTML을 보기 좋게 정리합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_css:1
 msgid "Pretty print the CSS represented as a string in raw"
-msgstr ""
+msgstr "raw 문자열로 표현된 CSS를 보기 좋게 정리합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_xml:1
 msgid ""
 "Pretty print the XML represented as a string in raw. If ``name`` is the name"
 " of the OPF, extra OPF-specific prettying is performed."
-msgstr ""
+msgstr "raw 문자열로 표현된 XML을 보기 좋게 정리합니다. ``name``이 OPF 이름이면 OPF 전용 추가 정리도 수행됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_all:1
 msgid "Pretty print all HTML/CSS/XML files in the container"
-msgstr ""
+msgstr "컨테이너 안의 모든 HTML/CSS/XML 파일을 보기 좋게 정리합니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:65
+#: ../../../__w/calibre/calibre/manual/polish.rst:65
 msgid "Managing book jackets"
-msgstr "책 커버 관리"
+msgstr "책 재킷 관리"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.remove_jacket:1
 msgid ""
 "Remove an existing jacket, if any. Returns False if no existing jacket was "
 "found."
-msgstr ""
+msgstr "기존 재킷이 있으면 제거합니다. 기존 재킷이 없으면 False를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.add_or_replace_jacket:1
 msgid ""
 "Either create a new jacket from the book's metadata or replace an existing "
 "jacket. Returns True if an existing jacket was replaced."
-msgstr ""
+msgstr "책의 메타데이터로 새 재킷을 만들거나 기존 재킷을 교체합니다. 기존 재킷이 교체된 경우 True를 반환합니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:74
+#: ../../../__w/calibre/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
-msgstr ""
+msgstr "파일 분할 및 병합"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:1
 msgid ""
 "Split the file specified by name at the position specified by loc_or_xpath. "
 "Splitting automatically migrates all links and references to the affected "
 "files."
-msgstr ""
+msgstr "name으로 지정한 파일을 loc_or_xpath로 지정한 위치에서 분할합니다. 분할 시 영향받는 파일에 대한 모든 링크와 참조가 자동으로 옮겨집니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:5
 msgid ""
 "Should be an XPath expression such as //h:div[@id=\"split_here\"]. Can also "
 "be a *loc* which is used internally to implement splitting in the preview "
 "panel."
-msgstr ""
+msgstr "`//h:div[@id=\"split_here\"]` 같은 XPath 식이어야 합니다. 미리보기 패널에서 분할 기능을 구현하기 위해 내부적으로 사용하는 *loc* 값도 사용할 수 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:8
 msgid ""
 "If True the split occurs before the identified element otherwise after it."
-msgstr ""
+msgstr "True이면 식별된 요소 앞에서 분할하고, 그렇지 않으면 뒤에서 분할합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:9
 msgid "Used internally"
-msgstr ""
+msgstr "내부적으로 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:1
 msgid ""
 "Split the specified file at multiple locations (all tags that match the "
 "specified XPath expression). See also: :func:`split`. Splitting "
 "automatically migrates all links and references to the affected files."
-msgstr ""
+msgstr "지정한 파일을 여러 위치(지정한 XPath 식과 일치하는 모든 태그)에서 분할합니다. 참고: :func:`split`. 분할 시 영향받는 파일에 대한 모든 링크와 참조가 자동으로 옮겨집니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:5
 msgid ""
 "If True the splits occur before the identified element otherwise after it."
-msgstr ""
+msgstr "True이면 식별된 요소 앞에서 분할이 일어나고, 그렇지 않으면 뒤에서 분할됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:1
 msgid ""
 "Merge the specified files into a single file, automatically migrating all "
 "links and references to the affected files. The file must all either be HTML"
 " or CSS files."
-msgstr ""
+msgstr "지정한 파일들을 하나의 파일로 병합하고, 영향받는 파일에 대한 모든 링크와 참조를 자동으로 옮깁니다. 파일은 모두 HTML 파일이거나 모두 CSS 파일이어야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:4
 msgid "Must be either ``'text'`` for HTML files or ``'styles'`` for CSS files"
-msgstr ""
+msgstr "HTML 파일이면 ``'text'``, CSS 파일이면 ``'styles'`` 이어야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:5
 msgid "The list of files to be merged"
-msgstr ""
+msgstr "병합할 파일 목록"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:6
 msgid ""
 "Which of the merged files is the *master* file, that is, the file that will "
 "remain after merging."
-msgstr ""
+msgstr "병합된 파일 가운데 *마스터* 파일이 될 파일입니다. 즉, 병합 후에도 남아 있을 파일입니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:85
+#: ../../../__w/calibre/calibre/manual/polish.rst:85
 msgid "Managing covers"
-msgstr ""
+msgstr "표지 관리"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:1
 msgid "Set the cover of the book to the image pointed to by cover_path."
-msgstr ""
+msgstr "책의 표지를 cover_path가 가리키는 이미지로 설정합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:3
 msgid ""
 "Either the absolute path to an image file or the canonical name of an image "
 "in the book. When using an image in the book, you must also set options, see"
 " below."
-msgstr ""
+msgstr "이미지 파일의 절대 경로이거나 책 안에 있는 이미지의 정규 이름입니다. 책 안의 이미지를 사용할 때는 아래 설명처럼 options도 설정해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:6
 msgid ""
 "An optional callable that takes a single argument. It will be called with "
 "information about the tasks being processed."
-msgstr ""
+msgstr "단일 인수를 받는 선택적 호출 가능 객체입니다. 처리 중인 작업에 대한 정보가 이 객체로 전달됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:8
 msgid ""
 "None or a dictionary that controls how the cover is set. The dictionary can "
@@ -733,398 +699,393 @@ msgid ""
 "covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
 "EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
 "existing image in the book)"
-msgstr ""
+msgstr "표지 설정 방식을 제어하는 None 또는 사전입니다. 사전에는 다음 항목이 들어갈 수 있습니다. **keep_aspect**: True 또는 False (EPUB에서 표지의 종횡비 유지) **no_svg**: True 또는 False (EPUB 제목 페이지에서 SVG 표지 래퍼 사용) **existing**: True 또는 False (``cover_path``가 책 안의 기존 이미지를 가리킴)"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
 msgid "Mark the specified image as the cover image."
-msgstr "지정된 이미지를 표지 이미지로 표시합니다."
+msgstr "지정한 이미지를 표지 이미지로 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:1
 msgid "Mark the specified HTML file as the titlepage of the EPUB."
-msgstr ""
+msgstr "지정한 HTML 파일을 EPUB의 제목 페이지로 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:3
 msgid "If True the HTML file is moved to the start of the spine"
-msgstr ""
+msgstr "True이면 해당 HTML 파일을 spine의 시작 위치로 이동합니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:96
+#: ../../../__w/calibre/calibre/manual/polish.rst:96
 msgid "Working with CSS"
-msgstr ""
+msgstr "CSS 다루기"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/fonts.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/fonts.pydocstring
 #: of calibre.ebooks.oeb.polish.fonts.change_font:1
 msgid ""
 "Change a font family from old_name to new_name. Changes all occurrences of "
 "the font family in stylesheets, style tags and style attributes. If the "
 "old_name refers to an embedded font, it is removed. You can set new_name to "
 "None to remove the font family instead of changing it."
-msgstr ""
+msgstr "글꼴 패밀리를 old_name에서 new_name으로 바꿉니다. 스타일시트, style 태그, style 속성에 있는 해당 글꼴 패밀리의 모든 항목이 변경됩니다. old_name이 내장 글꼴을 가리키면 그 글꼴은 제거됩니다. 글꼴 패밀리를 변경하는 대신 제거하려면 new_name에 None을 지정하면 됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:1
 msgid ""
 "Remove all unused CSS rules from the book. An unused CSS rule is one that "
 "does not match any actual content."
-msgstr ""
+msgstr "책에서 사용되지 않는 CSS 규칙을 모두 제거합니다. 사용되지 않는 CSS 규칙은 실제 콘텐츠와 일치하지 않는 규칙입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:3
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:3
 msgid ""
 "An optional callable that takes a single argument. It is called with "
 "information about the operations being performed."
-msgstr ""
+msgstr "단일 인수를 받는 선택적 호출 가능 객체입니다. 수행 중인 작업에 관한 정보가 이 객체로 전달됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:4
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:4
 msgid ""
 "If True, class attributes in the HTML that do not match any CSS rules are "
 "also removed."
-msgstr ""
+msgstr "True이면 어떤 CSS 규칙과도 일치하지 않는 HTML의 class 속성도 제거합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:5
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:5
 msgid "If True, rules with identical selectors are merged."
-msgstr ""
+msgstr "True이면 동일한 선택자를 가진 규칙을 병합합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:6
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:6
 msgid "If True, rules with identical properties are merged."
-msgstr ""
+msgstr "True이면 동일한 속성을 가진 규칙을 병합합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:7
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:7
 msgid ""
 "If True, stylesheets that are not referenced by any content are removed"
-msgstr ""
+msgstr "True이면 어떤 콘텐츠에서도 참조되지 않는 스타일시트를 제거합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:1
 msgid "Remove the specified CSS properties from all CSS rules in the book."
-msgstr ""
+msgstr "책의 모든 CSS 규칙에서 지정한 CSS 속성을 제거합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:3
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:3
 msgid ""
 "Set of properties to remove. For example: :code:`{'font-family', 'color'}`."
-msgstr ""
+msgstr "제거할 속성 집합입니다. 예: :code:`{'font-family', 'color'}`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:4
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:4
 msgid ""
 "The files from which to remove the properties. Defaults to all HTML and CSS "
 "files in the book."
-msgstr ""
+msgstr "속성을 제거할 파일입니다. 기본값은 책 안의 모든 HTML 및 CSS 파일입니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:108
+#: ../../../__w/calibre/calibre/manual/polish.rst:108
 msgid "Working with the Table of Contents"
-msgstr ""
+msgstr "목차 다루기"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.from_xpaths:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.from_xpaths:1
 msgid ""
 "Generate a Table of Contents from a list of XPath expressions. Each "
 "expression in the list corresponds to a level of the generate ToC. For "
 "example: :code:`['//h:h1', '//h:h2', '//h:h3']` will generate a three level "
 "Table of Contents from the ``<h1>``, ``<h2>`` and ``<h3>`` tags."
-msgstr ""
+msgstr "XPath 식 목록에서 목차를 생성합니다. 목록의 각 식은 생성되는 목차의 한 수준에 해당합니다. 예를 들어 :code:`['//h:h1', '//h:h2', '//h:h3']` 는 ``<h1>``, ``<h2>``, ``<h3>`` 태그로 3단계 목차를 생성합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.from_links:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.from_links:1
 msgid "Generate a Table of Contents from links in the book."
-msgstr ""
+msgstr "책 안의 링크에서 목차를 생성합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.from_files:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.from_files:1
 msgid "Generate a Table of Contents from files in the book."
-msgstr ""
+msgstr "책 안의 파일에서 목차를 생성합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.create_inline_toc:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.create_inline_toc:1
 msgid ""
 "Create an inline (HTML) Table of Contents from an existing NCX Table of "
 "Contents."
-msgstr ""
+msgstr "기존 NCX 목차로부터 인라인(HTML) 목차를 생성합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.create_inline_toc:3
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.create_inline_toc:3
 msgid "The title for this table of contents."
-msgstr ""
+msgstr "이 목차의 제목입니다."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:122
+#: ../../../__w/calibre/calibre/manual/polish.rst:122
 msgid "Edit book tool"
-msgstr "책 도구 편집"
+msgstr "책 편집 도구"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:1
-msgid "Bases: :py:class:`object`"
-msgstr ""
-
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:1
 msgid ""
 "The base class for individual tools in an Edit Book plugin. Useful members "
 "include:"
-msgstr ""
+msgstr "Edit Book 플러그인에서 개별 도구의 기본 클래스입니다. 유용한 멤버는 다음과 같습니다:"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:3
 msgid ""
 "``self.plugin``: A reference to the :class:`calibre.customize.Plugin` object"
 " to which this tool belongs."
-msgstr ""
+msgstr "``self.plugin``: 이 도구가 속한 :class:`calibre.customize.Plugin` 객체에 대한 참조입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:4
 msgid "self. :attr:`boss`"
-msgstr ""
+msgstr "self. :attr:`boss`"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:5
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:5
 msgid "self. :attr:`gui`"
-msgstr ""
+msgstr "self. :attr:`gui`"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:7
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:7
 msgid "Methods that must be overridden in sub classes:"
-msgstr ""
+msgstr "하위 클래스에서 반드시 재정의해야 하는 메서드:"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:9
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:9
 msgid ":meth:`create_action`"
-msgstr ""
+msgstr ":meth:`create_action`"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:10
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:10
 msgid ":meth:`register_shortcut`"
-msgstr ""
+msgstr ":meth:`register_shortcut`"
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.name:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.name:1
 msgid "Set this to a unique name it will be used as a key"
-msgstr ""
+msgstr "고유한 이름으로 설정하십시오. 키로 사용됩니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
 msgid "If True the user can choose to place this tool in the plugins toolbar"
-msgstr ""
+msgstr "True이면 사용자가 이 도구를 플러그인 도구 모음에 배치할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
 msgid "If True the user can choose to place this tool in the plugins menu"
-msgstr ""
+msgstr "True이면 사용자가 이 도구를 플러그인 메뉴에 배치할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
 msgid ""
 "The popup mode for the menu (if any) of the toolbar button. Possible values "
 "are 'delayed', 'instant', 'button'"
-msgstr ""
+msgstr "도구 모음 버튼 메뉴(있는 경우)의 팝업 모드입니다. 가능한 값은 'delayed', 'instant', 'button'입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.boss:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.boss:1
 msgid ""
 "The :class:`calibre.gui2.tweak_book.boss.Boss` object. Used to control the "
 "user interface."
-msgstr ""
+msgstr "사용자 인터페이스를 제어하는 :class:`calibre.gui2.tweak_book.boss.Boss` 객체입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.gui:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.gui:1
 msgid "The main window of the user interface"
-msgstr ""
+msgstr "사용자 인터페이스의 메인 창"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.current_container:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.current_container:1
 msgid ""
 "Return the current :class:`calibre.ebooks.oeb.polish.container.Container` "
 "object that represents the book being edited."
-msgstr ""
+msgstr "현재 편집 중인 책을 나타내는 :class:`calibre.ebooks.oeb.polish.container.Container` 객체를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:1
 msgid ""
 "Register a keyboard shortcut that will trigger the specified ``qaction``. "
 "This keyboard shortcut will become automatically customizable by the user in"
 " the Keyboard shortcuts section of the editor preferences."
-msgstr ""
+msgstr "지정한 ``qaction``을 실행할 키보드 단축키를 등록합니다. 이 단축키는 편집기 환경설정의 키보드 단축키 섹션에서 사용자가 자동으로 사용자 지정할 수 있게 됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
 msgid ""
 "A QAction object, it will be triggered when the configured key combination "
 "is pressed by the user."
-msgstr ""
+msgstr "QAction 객체입니다. 사용자가 설정된 키 조합을 누르면 이 객체가 실행됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:6
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:6
 msgid ""
 "A unique name for this shortcut/action. It will be used internally, it must "
 "not be shared by any other actions in this plugin."
-msgstr ""
+msgstr "이 단축키/동작의 고유 이름입니다. 내부적으로 사용되며, 이 플러그인의 다른 어떤 동작과도 중복되면 안 됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
 msgid ""
 "A list of the default keyboard shortcuts. If not specified no default "
 "shortcuts will be set. If the shortcuts specified here conflict with either "
 "builtin shortcuts or shortcuts from user configuration/other plugins, they "
 "will be ignored. In that case, users will have to configure the shortcuts "
 "manually via Preferences. For example: ``default_keys=('Ctrl+J', 'F9')``."
-msgstr ""
+msgstr "기본 키보드 단축키 목록입니다. 지정하지 않으면 기본 단축키는 설정되지 않습니다. 여기 지정한 단축키가 내장 단축키 또는 사용자 설정/다른 플러그인의 단축키와 충돌하면 무시됩니다. 그런 경우 사용자는 환경설정에서 직접 단축키를 설정해야 합니다. 예: ``default_keys=('Ctrl+J', 'F9')``."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
 msgid ""
 "An optional short description of this action. If not specified the text from"
 " the QAction will be used."
-msgstr ""
+msgstr "이 동작의 선택적 짧은 설명입니다. 지정하지 않으면 QAction의 텍스트가 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:17
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:17
 msgid ""
 "An optional longer description of this action, it will be used in the "
 "preferences entry for this shortcut."
-msgstr ""
+msgstr "이 동작의 선택적 긴 설명입니다. 이 단축키의 환경설정 항목에 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.create_action:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.create_action:1
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr ""
+msgstr "``for_toolbar`` 값에 따라 플러그인 도구 모음 또는 플러그인 메뉴에 추가될 QAction을 생성합니다. 예::"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.create_action:19
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.create_action:19
 msgid "Method :meth:`register_shortcut`."
-msgstr ""
+msgstr "메서드 :meth:`register_shortcut`."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:131
+#: ../../../__w/calibre/calibre/manual/polish.rst:131
 msgid "Controlling the editor's user interface"
-msgstr ""
+msgstr "편집기 사용자 인터페이스 제어"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:133
+#: ../../../__w/calibre/calibre/manual/polish.rst:133
 msgid ""
 "The e-book editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
-msgstr ""
+msgstr "전자책 편집기의 사용자 인터페이스는 전역 *Boss* 객체 하나로 제어됩니다. 이 객체에는 플러그인 코드에서 일반 작업을 수행할 때 사용할 수 있는 유용한 메서드가 많이 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
 msgid "Create a restore checkpoint with the name specified as ``msg``"
-msgstr ""
+msgstr "``msg``로 지정한 이름의 복원 체크포인트를 생성합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:1
 msgid ""
 "Update all the components of the user interface to reflect the latest data "
 "in the current book container."
-msgstr ""
+msgstr "현재 책 컨테이너의 최신 데이터가 반영되도록 사용자 인터페이스의 모든 구성 요소를 갱신합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:3
 msgid ""
 "If True, the book will be marked as modified, so the user will be prompted "
 "to save it when quitting."
-msgstr ""
+msgstr "True이면 책이 수정된 것으로 표시되어, 종료할 때 사용자에게 저장할지 묻습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.close_editor:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.close_editor:1
 msgid "Close the editor that is editing the file specified by ``name``"
-msgstr ""
+msgstr "``name``으로 지정한 파일을 편집 중인 편집기를 닫습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.commit_all_editors_to_container:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.commit_all_editors_to_container:1
 msgid ""
 "Commit any changes that the user has made to files open in editors to the "
 "container. You should call this method before performing any actions on the "
 "current container"
-msgstr ""
+msgstr "편집기에서 열려 있는 파일에 사용자가 가한 변경 사항을 컨테이너에 커밋합니다. 현재 컨테이너에 대해 작업을 수행하기 전에 이 메서드를 호출해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.currently_editing:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.currently_editing:1
 msgid ""
 "Return the name of the file being edited currently or None if no file is "
 "being edited"
-msgstr ""
+msgstr "현재 편집 중인 파일의 이름을 반환합니다. 편집 중인 파일이 없으면 None을 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:1
 msgid "Open the file specified by name in an editor"
-msgstr ""
+msgstr "name으로 지정한 파일을 편집기에서 엽니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:3
 msgid ""
 "The media type of the file, for example, ``'text/html'``. If not specified "
 "it is guessed from the file extension."
-msgstr ""
+msgstr "파일의 미디어 형식입니다. 예: ``'text/html'``. 지정하지 않으면 파일 확장자로 추정합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:4
 msgid "A template to initialize the opened editor with"
-msgstr ""
+msgstr "열린 편집기를 초기화하는 데 사용할 템플릿입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.open_book:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.open_book:1
 msgid ""
 "Open the e-book at ``path`` for editing. Will show an error if the e-book is"
 " not in a supported format or the current book has unsaved changes."
-msgstr ""
+msgstr "``path``에 있는 전자책을 편집용으로 엽니다. 전자책 형식이 지원되지 않거나 현재 책에 저장되지 않은 변경 사항이 있으면 오류를 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.open_book:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.open_book:3
 msgid ""
 "The name of a file inside the newly opened book to start editing. Can also "
 "be a list of names."
-msgstr ""
+msgstr "새로 연 책 안에서 처음 편집을 시작할 파일 이름입니다. 이름 목록을 지정할 수도 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.rewind_savepoint:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.rewind_savepoint:1
 msgid ""
 "Undo the previous creation of a restore checkpoint, useful if you create a "
 "checkpoint, then abort the operation with no changes"
-msgstr ""
+msgstr "이전에 만든 복원 체크포인트를 취소합니다. 체크포인트를 만든 뒤 아무 변경 없이 작업을 중단할 때 유용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.save_book:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.save_book:1
 msgid "Save the book. Saving is performed in the background"
-msgstr ""
+msgstr "책을 저장합니다. 저장은 백그라운드에서 수행됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.set_modified:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.set_modified:1
 msgid "Mark the book as having been modified"
-msgstr ""
+msgstr "책이 수정된 것으로 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:1
 msgid "Show the changes to the book from its last checkpointed state"
-msgstr ""
+msgstr "마지막 체크포인트 상태와 비교한 책의 변경 내용을 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:3
 msgid ""
 "If True the diff dialog will have a button to allow the user to revert all "
 "changes"
-msgstr ""
+msgstr "True이면 diff 대화 상자에 모든 변경 내용을 되돌릴 수 있는 버튼이 표시됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:4
 msgid ""
 "A container object to compare the current container to. If None, the "
 "previously checkpointed container is used"
-msgstr ""
+msgstr "현재 컨테이너와 비교할 컨테이너 객체입니다. None이면 이전에 체크포인트된 컨테이너를 사용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_editor:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_editor:1
 msgid "Show the editor that is editing the file specified by ``name``"
-msgstr ""
+msgstr "``name``으로 지정한 파일을 편집 중인 편집기를 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.sync_preview_to_editor:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.sync_preview_to_editor:1
 msgid ""
 "Sync the position of the preview panel to the current cursor position in the"
 " current editor"
-msgstr ""
+msgstr "미리보기 패널의 위치를 현재 편집기의 현재 커서 위치와 동기화합니다."
