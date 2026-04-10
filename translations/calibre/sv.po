@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-03-25 23:26+UTC\n"
+"POT-Creation-Date: 2026-04-08 13:53+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: Karl Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -79,7 +79,8 @@ msgid ""
 "      :guilabel:`Preferences->Sharing over the net->Advanced`. Be careful though,\n"
 "      because some browsers, primarily Firefox, allow arbitrary websites to also\n"
 "      access local servers. If you use Firefox, it is better to setup username\n"
-"      and password, as described below.\n"
+"      and password, as described below. Local Network Access restriction has \n"
+"      still not been implemented as of Firefox v149.\n"
 "\n"
 "    * If you want to enable access over the internet, then you should setup\n"
 "      user accounts on the server and use the :option:`--username` and :option:`--password`\n"
@@ -93,9 +94,9 @@ msgid ""
 ":option:`--with-library` option, see the documentation of that option for\n"
 "details and examples.\n"
 "    "
-msgstr ":command:`calibredb` är kommandoradsgränssnittet till calibre-databasen. Den har\nflera underkommandon, dokumenterade nedan.\n\n:command:`calibredb` kan användas för att manipulera antingen en calibre-databas\nspecificerad med sökväg eller en calibre :guilabel:`Content server` som körs antingen på\nden lokala maskinen eller över internet. Du kan starta en calibre\n:guilabel:`innehållsserver` med antingen :command:`calibre-server`-programmet\neller i calibres huvudprogram klicka på :guilabel:`Connect/share ->\nStarta Content server`. Eftersom :command:`calibredb` kan göra ändringar i dina\ncalibre-bibliotek måste du först konfigurera autentisering på servern. Det finns\ntvå sätt att göra det:\n\n    * Om du planerar att bara ansluta till en server som körs på samma dator\n      kan du helt enkelt använda alternativet ``--enable-local-write`` på\n      innehållsservern för att tillåta alla program, inklusive calibredb, som körs\n      på den lokala datorn att göra ändringar i dina calibre-data. När du kör\n      servern från huvudprogrammet calibre finns detta alternativ i\n      :guilabel:`Inställningar->Dela över nätet->Avancerat`. Var dock försiktig,\n      eftersom vissa webbläsare, främst Firefox, tillåter godtyckliga webbplatser att också\n      komma åt lokala servrar. Om du använder Firefox är det bättre att konfigurera användarnamn\n      och lösenord, enligt beskrivningen nedan.\n\n    * Om du vill aktivera åtkomst via internet bör du konfigurera\n      användarkonton på servern och använda alternativen :option:`--username` och :option:`--password`\n      till :command:`calibredb` för att ge den åtkomst. Du kan konfigurera\n      användarautentisering för :command:`calibre-server` genom att använda alternativet ``--enable-auth``\n      och använda ``--manage-users`` för att skapa användarkontona.\n      Om du kör servern från Calibres huvudprogram, använd\n      :guilabel:`Inställningar->Dela över nätet->Kräv användarnamn/lösenord`.\n\nFör att ansluta till en aktiv innehållsserver, skicka serverns URL till alternativet\n:option:`--with-library`. Se dokumentationen för det alternativet för\ndetaljer och exempel."
+msgstr ""
 
-#: /__w/calibre/calibre/manual/custom.py:283
+#: /__w/calibre/calibre/manual/custom.py:284
 msgid "[options]"
 msgstr "[alternativ]"
 
@@ -191,7 +192,7 @@ msgstr "Inga AI-leverantörer"
 msgid "AI services from GitHub, with access to many different AI models"
 msgstr "AI-tjänster från GitHub, med tillgång till många olika AI-modeller"
 
-#: /__w/calibre/calibre/src/calibre/ai/github/backend.py:176
+#: /__w/calibre/calibre/src/calibre/ai/github/backend.py:256
 #: /__w/calibre/calibre/src/calibre/ai/ollama/backend.py:127
 #: /__w/calibre/calibre/src/calibre/ai/openai/backend.py:172
 #, python-brace-format
@@ -482,7 +483,7 @@ msgstr "AI-tjänster från OpenRouter.ai. Möjliggör val mellan hundratals olik
 msgid "No free models were found for text to text generation"
 msgstr "Inga gratis modeller hittades för text-till-text-generering"
 
-#: /__w/calibre/calibre/src/calibre/ai/open_router/backend.py:274
+#: /__w/calibre/calibre/src/calibre/ai/open_router/backend.py:276
 msgid "credits"
 msgstr "krediter"
 
@@ -827,9 +828,9 @@ msgstr "Gör absolut ingenting"
 
 #: /__w/calibre/calibre/src/calibre/customize/__init__.py:79
 #: /__w/calibre/calibre/src/calibre/db/__init__.py:115
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1549
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1574
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2349
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1553
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1578
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2353
 #: /__w/calibre/calibre/src/calibre/db/cache.py:363
 #: /__w/calibre/calibre/src/calibre/db/cache.py:366
 #: /__w/calibre/calibre/src/calibre/db/cache.py:376
@@ -842,7 +843,7 @@ msgstr "Gör absolut ingenting"
 #: /__w/calibre/calibre/src/calibre/db/cache.py:2139
 #: /__w/calibre/calibre/src/calibre/db/cache.py:2342
 #: /__w/calibre/calibre/src/calibre/db/cache.py:2344
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3658
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3659
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_add.py:128
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:296
 #: /__w/calibre/calibre/src/calibre/db/lazy.py:297
@@ -977,13 +978,13 @@ msgstr "Gör absolut ingenting"
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/image_writer.py:21
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/render/links.py:143
 #: /__w/calibre/calibre/src/calibre/ebooks/txt/processor.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:953
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:961
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:954
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:962
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:887
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:413
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:469
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:475
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:1615
 #: /__w/calibre/calibre/src/calibre/gui2/convert/__init__.py:67
 #: /__w/calibre/calibre/src/calibre/gui2/convert/metadata.py:150
@@ -1003,9 +1004,11 @@ msgstr "Gör absolut ingenting"
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:417
 #: /__w/calibre/calibre/src/calibre/gui2/email.py:431
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:624
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:809
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:821
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:520
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:551
 #: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:767
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:960
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:971
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:743
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1580
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1811
@@ -1392,7 +1395,7 @@ msgid "Choose a random book from your calibre library"
 msgstr "Välj en slumpad bok från ditt calibre-bibliotek"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1108
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:62
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:65
 msgid "Sort the list of books"
 msgstr "Sortera listan över böcker"
 
@@ -1465,7 +1468,7 @@ msgid "Change the way calibre behaves"
 msgstr "Ändra sättet calibre beter sig på"
 
 #: /__w/calibre/calibre/src/calibre/customize/builtins.py:1235
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:675
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:677
 msgid "Add your own columns"
 msgstr "Lägg till dina egna kolumner"
 
@@ -2065,29 +2068,29 @@ msgstr "återställde inställning "
 msgid "creating custom column "
 msgstr "skapar anpassad kolumn "
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1266
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1269
 #: /__w/calibre/calibre/src/calibre/library/custom_columns.py:673
 msgid "No label was provided"
 msgstr "Ingen etikett angavs"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1268
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1271
 #: /__w/calibre/calibre/src/calibre/library/custom_columns.py:675
 msgid ""
 "The label must contain only lower case letters, digits and underscores, and "
 "start with a letter"
 msgstr "Etiketten får endast innehålla små bokstäver, siffror och understreck och börja med en bokstav"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1456
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1460
 msgid "Dumping database to SQL"
 msgstr "Dumpar databas till SQL"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:1465
+#: /__w/calibre/calibre/src/calibre/db/backend.py:1469
 msgid "Restoring database from SQL"
 msgstr "Återställer databas från SQL"
 
-#: /__w/calibre/calibre/src/calibre/db/backend.py:2759
+#: /__w/calibre/calibre/src/calibre/db/backend.py:2768
 #: /__w/calibre/calibre/src/calibre/db/cache.py:3406
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3821
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3822
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:224
 #: /__w/calibre/calibre/src/calibre/utils/exim.py:510
 msgid "Completed"
@@ -2142,17 +2145,17 @@ msgid ""
 "programs:"
 msgstr "Det gick inte att öppna filen \"{}\". Den är redan öppen i följande program:"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3806
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3807
 #, python-format
 msgid "Cover for %s"
 msgstr "Omslag för %s"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3810
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3811
 #, python-brace-format
 msgid "{0} format for {1}"
 msgstr "{0}-format för {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/cache.py:3814
+#: /__w/calibre/calibre/src/calibre/db/cache.py:3815
 #, python-brace-format
 msgid "Extra file {0} for book {1}"
 msgstr "Extra fil {0} för bok {1}"
@@ -3088,6 +3091,7 @@ msgstr "Fältnamn"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:906
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:81
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/match_books.py:85
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:953
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:226
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1585
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:153
@@ -3262,29 +3266,29 @@ msgstr "Det tog för lång tid att extrahera text från filen {0} med storleken 
 msgid "Invalid field: %s"
 msgstr "Ogiltigt fält: %s"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:504
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:523
 #, python-brace-format
 msgid "Failed to read from document for {path} with error: {error}"
 msgstr "Det gick inte att läsa från dokumentet för {path} med fel: {error}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:515
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:534
 #, python-brace-format
 msgid "Failed to parse document for: {0} with error: {1}"
 msgstr "Det gick inte att analysera dokument för: {0} med fel: {1}"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:521
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:540
 #, python-brace-format
 msgid ""
 "The item {old_item_val} does not exist in the {field} column in the restored"
 " database, could not restore its notes"
 msgstr "Posten {old_item_val} finns inte i kolumnen {field} i den återställda databasen, kunde inte återställa dess anteckningar"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:529
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:548
 #, python-brace-format
 msgid "Some resources for {} were missing"
 msgstr "Några resurser för {} saknades"
 
-#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:534
+#: /__w/calibre/calibre/src/calibre/db/notes/connect.py:553
 #, python-brace-format
 msgid "Failed to set note for {path} with error: {error}"
 msgstr "Det gick inte att läsa från dokumentet för {path} med fel: {error}"
@@ -4191,7 +4195,7 @@ msgid ""
 msgstr "Din Kobo kör en uppdaterad programvaru-/databasversion. Eftersom calibre inte känner till den här uppdaterade programvaran är databasredigering inaktiverad för att förhindra korruption. Du kan fortfarande överföra böcker till din Kobo med calibre men borttagning av böcker och hantering av samlingar är inaktiverat. Om du är villig att experimentera och vet hur du återställer din Kobo till fabriksinställningarna kan du åsidosätta den här kontrollen genom att högerklicka på enhetsikonen i calibre och välja \"Anpassa den här enheten\" och sedan alternativet \"Försök att stöda nyare programvara\". Om du gör det kan du behöva utföra en fabriksåterställning av din Kobo."
 
 #: /__w/calibre/calibre/src/calibre/devices/kobo/driver.py:767
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:672
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:684
 msgid "Not Implemented"
 msgstr "Inte implementerat"
 
@@ -6986,7 +6990,7 @@ msgid ""
 msgstr "Aktivera tillägg för Markdown-syntax. Tillägg är formatering som inte ingår i Markdown-standardformatet. Tilläggen som är aktiverade som standard: %default.\nOm du vill veta mer om Markdown-tillägg, se {}\nDetta bör vara en kommaseparerad lista med tillägg att aktivera:\n"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plugins/txt_output.py:23
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:304
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:307
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:447
 msgid "Plain text"
 msgstr "Oformaterad text"
@@ -7241,7 +7245,7 @@ msgid ""
 " reading. Some e-book reading programs (most prominently the Kindle) use "
 "this location as the position at which to open the book. See the XPath "
 "tutorial in the calibre User Manual for further help using this feature."
-msgstr "Ett XPath-uttryck för att identifiera platsen i dokumentet där du ska börja läsa. Vissa e-bokläsningsprogram (framförallt Kindle) använder denna plats som position för att öppna boken. Se XPath-handledningen i användarmanualen för calibre för ytterligare hjälp med att använda den här funktionen."
+msgstr "Ett XPath-uttryck för att identifiera platsen i dokumentet där läsningen ska börja. Vissa program för e-böcker (framför allt Kindle) använder den här platsen som positionen där boken ska öppnas. Se XPath-handledningen i calibre användarmanual för ytterligare hjälp med att använda den här funktionen."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/conversion/plumber.py:362
 msgid ""
@@ -7867,7 +7871,7 @@ msgstr "Om egenskapen {property} {match_type} {query}\n{action}"
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:753
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:938
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1232
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1005
 msgid "Notes"
 msgstr "Anteckningar"
@@ -10446,7 +10450,7 @@ msgstr "Betyg"
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/jacket.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/delete_matching_from_device.py:82
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/search.py:303
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:968
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1262
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:230
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:1587
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:74
@@ -10540,152 +10544,152 @@ msgstr "Standardikoner"
 msgid "Show more buttons"
 msgstr "Visa fler knappar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:598
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
 msgid "Send file to storage card instead of main memory by default"
 msgstr "Överför filen till minneskortet istället för huvudminnet som standard"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:600
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
 msgid "Confirm before deleting"
 msgstr "Bekräfta före borttagning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:602
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
 msgid "Main window geometry"
 msgstr "Huvudfönstrets geometri"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
 msgid "Notify when a new version is available"
 msgstr "Meddela när en ny version finns tillgänglig"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:606
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:607
 msgid "Use Roman numerals for series number"
 msgstr "Använd romerska siffror för serienummer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:608
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
 msgid "Sort tags list by name, popularity, or rating"
 msgstr "Sortera tagglista efter namn, popularitet eller betyg"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:610
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
 msgid "Match tags by any or all."
 msgstr "Matcha taggar med någon eller alla."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:612
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
 msgid "Number of covers to show in the cover browsing mode"
 msgstr "Antal omslag att visa i omslagsbläddraren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:614
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:615
 msgid "Defaults for conversion to LRF"
 msgstr "Standardvärden för konvertering till LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:616
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:617
 msgid "Options for the LRF e-book viewer"
 msgstr "Alternativ för LRF e-bokvisaren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:620
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:621
 msgid "Formats that are viewed using the internal viewer"
 msgstr "Format som visas med den interna visaren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:622
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:623
 msgid "Columns to be displayed in the book list"
 msgstr "Kolumner som ska visas i boklistan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
 msgid "Automatically launch Content server on application startup"
 msgstr "Starta automatiskt innehållsservern när programmet startas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:625
 msgid "Oldest news kept in database"
 msgstr "Äldsta nyheter lagrade i databasen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:625
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:626
 msgid "Show system tray icon"
 msgstr "Visa ikon i systemfältet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:627
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:628
 msgid "Upload downloaded news to device"
 msgstr "Överför hämtade nyheter till enhet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:629
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:630
 msgid "Delete news books from library after uploading to device"
 msgstr "Ta bort nyhetsböcker från biblioteket efter överföring till enhet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:631
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
 msgid ""
 "Show the cover flow in a separate window instead of in the main calibre "
 "window"
 msgstr "Visa omslagsbläddraren i ett separat fönster istället för i calibre-huvudfönstret"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:633
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:634
 msgid "Disable notifications from the system tray icon"
 msgstr "Inaktivera aviseringar från ikonen i systemfältet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:635
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:636
 msgid "Default action to perform when the \"Send to device\" button is clicked"
 msgstr "Standardåtgärd att utföra när knappen \"Överför till enhet\" klickas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:640
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:641
 msgid ""
 "Start searching as you type. If this is disabled then search will only take "
 "place when the Enter key is pressed."
 msgstr "Börja söka medan du skriver. Om detta är inaktiverad kommer sökningen endast att ske när entertangenten trycks ner."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:643
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:644
 msgid ""
 "When searching, show all books with search results highlighted instead of "
 "showing only the matches. You can use the N or F3 keys to go to the next "
 "match."
 msgstr "När du söker, visa alla böcker med sökresultat markerade istället för att bara visa träffarna. Du kan använda N- eller F3-tangenterna för att gå till nästa träff."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:671
 msgid ""
 "Maximum number of simultaneous conversion/news download jobs. This number is"
 " twice the actual value for historical reasons."
 msgstr "Högst antal samtidiga hämtningsjobb för konvertering/nyheter. Detta antal är dubbelt det faktiska värdet av historiska skäl."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:673
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
 msgid "Download social metadata (tags/rating/etc.)"
 msgstr "Hämta sociala metadata (taggar/betyg/etc.)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:675
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
 msgid "Overwrite author and title with new metadata"
 msgstr "Skriv över författare och titel med nya metadata"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:677
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:678
 msgid "Automatically download the cover, if available"
 msgstr "Hämta automatiskt omslaget, om tillgängligt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:679
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:680
 msgid "Limit max simultaneous jobs to number of CPUs"
 msgstr "Begränsa maximalt samtidiga jobb till antalet processorer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:682
 msgid ""
 "The layout of the user interface. Wide has the Book details panel on the "
 "right and narrow has it at the bottom."
 msgstr "Användargränssnittets layout. Bred har bokdetaljpanelen till höger och smal har den längst ner."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:685
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:686
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_display_ui.py:145
 msgid "Show the average rating per item indication in the Tag browser"
 msgstr "Visa medelbetyget per postindikering i taggbläddraren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:688
 msgid "Disable UI animations"
 msgstr "Inaktivera användargränssnittsanimationer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:692
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:693
 msgid "Tag browser categories not to display"
 msgstr "Taggbläddrarkategorier som inte ska visas"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:756
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:757
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:88
 msgid "WARNING:"
 msgstr "VARNING:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:767
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:768
 msgid "ERROR:"
 msgstr "FEL:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:784
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:785
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:427
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:507
@@ -10693,17 +10697,17 @@ msgstr "FEL:"
 msgid "Show this confirmation again"
 msgstr "Visa denna bekräftelse igen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:842
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:843
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1444
 msgid "Restart needed"
 msgstr "Omstart krävs"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:844
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:845
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:523
 msgid "&Restart calibre now"
 msgstr "&Starta om calibre nu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1064
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1065
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:266
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:163
@@ -10712,33 +10716,33 @@ msgstr "&Starta om calibre nu"
 msgid "All files"
 msgstr "Alla filer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1182
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1183
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "Koppla från kontrollterminalen, om någon (endast Linux)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1187
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:150
 msgid "Click \"Show details\" for more information."
 msgstr "Klicka på \"Visa detaljer\" för mer information."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1189
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1190
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "%s-miljövariabeln är inställd. Försök att deaktivera den."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1190
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1191
 msgid "Could not create temporary folder"
 msgstr "Kunde inte skapa tillfällig mapp"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1191
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1192
 msgid "Could not create temporary folder, calibre cannot start."
 msgstr "Kunde inte skapa temporär mapp, calibre kan inte starta."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1345
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1346
 msgid "Windows XP not supported"
 msgstr "Windows XP stöds inte"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1347
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -10783,8 +10787,8 @@ msgid "Comics"
 msgstr "Serietidningar"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:41
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:276
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:285
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:288
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:297
 msgid "Archives"
 msgstr "Arkiv"
 
@@ -10845,12 +10849,12 @@ msgid "Control the adding of books"
 msgstr "Anpassa tilläggning av böcker"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:96
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:207
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:219
 #: /__w/calibre/calibre/src/calibre/gui2/actions/annotate.py:122
 #: /__w/calibre/calibre/src/calibre/gui2/actions/catalog.py:42
 #: /__w/calibre/calibre/src/calibre/gui2/actions/column_tooltips.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:132
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:422
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:423
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:167
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:193
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:236
@@ -10869,7 +10873,7 @@ msgid "No books selected"
 msgstr "Inga böcker har valts"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:97
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:208
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:220
 msgid "Cannot add files as no books are selected"
 msgstr "Det går inte att lägga till filer eftersom inga böcker har valts"
 
@@ -10884,8 +10888,8 @@ msgstr "Inga filer har kopierats till urklipp"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:126
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:167
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:187
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:214
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:249
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:226
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:261
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:181
 #: /__w/calibre/calibre/src/calibre/gui2/actions/layout_actions.py:226
 #: /__w/calibre/calibre/src/calibre/gui2/actions/polish.py:479
@@ -10948,141 +10952,141 @@ msgid_plural "The {0} formats will be replaced in the book {1}. Are you sure?"
 msgstr[0] "{0}-formatet kommer ersättas i boken {1}. Är du säker?"
 msgstr[1] "{0}-formaten kommer ersättas i boken {1}. Är du säker?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:215
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:227
 #, python-format
 msgid ""
 "Are you sure you want to add the same empty file to all %d books? If the "
 "format already exists for a book, it will be replaced."
 msgstr "Är du säker du vill lägga till samma tomma fil i alla %d böcker? Om formatet redan finns för en bok, kommer den att bli ersatt."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:226
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:238
 msgid "Choose format of empty file"
 msgstr "Välj format för tom fil"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:247
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:259
 #, python-brace-format
 msgid "The {0} format will be replaced in the book: {1}. Are you sure?"
 msgstr "Formatet {0} kommer att ersättas i boken: {1}. Är du säker?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:275
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:284
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:287
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:296
 msgid "Choose archive file"
 msgstr "Välj arkivfil"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:293
 msgid "Type of archive"
 msgstr "Typ av arkiv"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:282
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:294
 msgid "Will the archive have a single book per internal folder?"
 msgstr "Kommer arkivet att ha en enda bok per intern mapp?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:291
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:303
 msgid "Select root folder"
 msgstr "Välj rotmapp"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:308
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/data_files_manager.py:426
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:322
 msgid "Cannot add"
 msgstr "Det går inte att lägga till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:297
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:309
 #, python-format
 msgid ""
 "Cannot add books from the folder: %s as it contains the currently opened "
 "calibre library"
 msgstr "Det går inte att lägga till böcker från mappen: %s eftersom den innehåller det för närvarande öppnade calibre-biblioteket"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:320
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:332
 msgid "Multi-file books?"
 msgstr "Böcker med flera filer?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:333
 msgid ""
 "Assume all e-book files in a single folder are multiple formats of the same "
 "book?"
 msgstr "Antag att alla e-boksfiler i en enda mapp är flera format av samma bok?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:410
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:422
 msgid "Duplicates found"
 msgstr "Dubbletter funna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:411
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:423
 msgid ""
 "Books with some of the specified ISBNs already exist in the calibre library."
 " Click \"Show details\" for the full list. Do you want to add them anyway?"
 msgstr "Böcker med några av de angivna ISBN-numren finns redan i calibre-biblioteket. Klicka på \"Visa detaljer\" för hela listan. Vill du lägga till dem ändå?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:427
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:439
 msgid "Adding"
 msgstr "Lägger till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:428
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:440
 msgid "Creating book records from ISBNs"
 msgstr "Skapa bokposter från ISBN"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:515
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:527
 #, python-format
 msgid ""
 "You have dropped some files onto the book <b>%s</b>. This will add or "
 "replace the files for this book. Do you want to proceed?"
 msgstr "Du har släppt några filer på boken <b>%s</b>. Detta kommer att lägga till eller ersätta filer för denna bok. Vill du fortsätta?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:518
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:530
 msgid "Add as..."
 msgstr "Lägg till som..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:519
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:531
 msgid "Add as new book"
 msgid_plural "Add as new books"
 msgstr[0] "Lägg till som ny bok"
 msgstr[1] "Lägg till som nya böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:520
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:532
 msgid "Add as data file"
 msgid_plural "Add as data files"
 msgstr[0] "Lägg till som datafil"
 msgstr[1] "Lägg till som datafiler"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:553
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:619
 msgid "Uploading books to device."
 msgstr "Överför böcker till enhet."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:572
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:584
 msgid "Supported books"
 msgstr "Böcker som stöds"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:575
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:587
 msgid "Select books"
 msgstr "Välj böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:635
 #, python-brace-format
 msgid "The following duplicate book was found."
 msgid_plural "The following {} duplicate books were found."
 msgstr[0] "Följande duplikat bok hittades."
 msgstr[1] "Följande {} duplikat böcker hittades."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:638
 msgid "Merged some books"
 msgstr "Slog samman några böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:627
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:639
 msgid ""
 "Incoming book formats were processed and merged into your calibre database "
 "according to your auto-merge settings. Click \"Show details\" to see the "
 "list of merged books."
 msgstr "Inkommande bokformat bearbetades och slogs samman med din calibre-databas enligt dina inställningar för automatisk sammanslagning. Klicka på \"Visa detaljer\" för att se listan över sammanslagna böcker."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:651
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:656
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:663
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:668
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:688
 msgid "Add to library"
 msgstr "Lägg till i biblioteket"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:656
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:668
 #: /__w/calibre/calibre/src/calibre/gui2/actions/delete.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/actions/llm_book.py:41
 #: /__w/calibre/calibre/src/calibre/gui2/actions/store.py:84
@@ -11095,32 +11099,32 @@ msgstr "Lägg till i biblioteket"
 msgid "No book selected"
 msgstr "Ingen bok vald"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:682
 msgid ""
 "The following books are virtual and cannot be added to the calibre library:"
 msgstr "Följande böcker är virtuella och kan inte läggas till i calibre-biblioteket:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:688
 msgid "No book files found"
 msgstr "Inga bokfiler hittades"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:694
 msgid "Downloading books"
 msgstr "Hämtar böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:683
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:695
 msgid "Downloading books from device"
 msgstr "Hämtar böcker från enhet"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:702
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:714
 msgid "Could not download files from the device"
 msgstr "Kan inte hämta filer från enheten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:705
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:717
 msgid "Could not download some files from the device"
 msgstr "Kan inte hämta några filer från enheten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:709
+#: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:721
 msgid "Could not download files"
 msgstr "Det gick inte att hämta filer"
 
@@ -11656,7 +11660,7 @@ msgid ""
 msgstr "Hittade inga fel i din biblioteksdatabas för calibre. Vill du att calibre ska kontrollera om filerna i ditt bibliotek överensstämmer med informationen som finns i databasen?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:712
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:503
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:504
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1121
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:150
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/metadata_bulk.py:1430
@@ -11698,9 +11702,9 @@ msgstr "Slutförd"
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:817
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:822
 #: /__w/calibre/calibre/src/calibre/gui2/actions/choose_library.py:828
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:551
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:552
 #: /__w/calibre/calibre/src/calibre/gui2/actions/save_to_disk.py:93
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1714
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1716
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/image.py:212
 msgid "Not allowed"
 msgstr "Inte tillåtet"
@@ -11969,96 +11973,106 @@ msgid "Copy selected books to the specified library"
 msgstr "Kopiera valda böcker till angivet bibliotek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:380
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:391
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:392
 msgid "Choose library..."
 msgstr "Välj bibliotek..."
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:386
+#, python-brace-format
+msgid "Copy to: {}"
+msgstr "Kopiera till: {}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:387
 msgid "(delete after copy)"
 msgstr "(ta bort efter kopiering)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:409
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:421
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:389
+#, python-brace-format
+msgid "Move to: {}"
+msgstr "Flytta till: {}"
+
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:410
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:422
 msgid "Cannot copy"
 msgstr "Det går inte att kopiera"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:410
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:411
 msgid "Cannot copy to current library."
 msgstr "Det går inte att kopiera till aktuellt bibliotek."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:426
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:427
 msgid "No library"
 msgstr "Inget bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:427
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:428
 #, python-format
 msgid "No library found at %s"
 msgstr "Inget bibliotek finns på %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:473
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:474
 msgid "Copying to"
 msgstr "Kopierar till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:473
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:474
 msgid "Moving to"
 msgstr "Flyttar till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:477
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:478
 msgid ""
 "Aborting this operation means that only some books will be copied and "
 "resuming a partial copy is not supported. Are you sure you want to abort?"
 msgstr "Att avbryta den här åtgärden innebär att endast vissa böcker kommer att kopieras och att återuppta en delkopia stöds inte. Är du säker på att du vill avbryta?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:494
 #, python-brace-format
 msgid "The copying process was interrupted. {} books were copied."
 msgstr "Kopieringen avbröts. {} böcker kopierades."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:495
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:496
 msgid "No books were deleted from this library."
 msgstr "Inga böcker togs bort från detta bibliotek."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:496
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:497
 msgid ""
 "The best way to resume this operation is to re-copy all the books with the "
 "option to \"Check for duplicates when copying to library\" in "
 "Preferences->Import/export->Adding books turned on."
 msgstr "Det bästa sättet att återuppta denna operation är att kopiera om alla böcker med alternativet \"Sök efter dubbletter vid kopiering till bibliotek\" i Inställningar->Importera/exportera->Lägga till böcker är påslaget."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:498
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:499
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/create_custom_column.py:1134
 msgid "Canceled"
 msgstr "Avbruten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:503
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:504
 msgid "Could not copy books: "
 msgstr "Det gick inte att kopiera böcker: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:509
 #, python-brace-format
 msgid "Moved the book to {loc}"
 msgstr "Flyttade boken till {loc}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:509
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:510
 #, python-brace-format
 msgid "Moved {num} books to {loc}"
 msgstr "Flyttade {num} böcker till {loc}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:511
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:512
 #, python-brace-format
 msgid "Copied the book to {loc}"
 msgstr "Kopierade boken till {loc}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:512
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:513
 #, python-brace-format
 msgid "Copied {num} books to {loc}"
 msgstr "Kopierade {num} böcker till {loc}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:517
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:518
 msgid "Auto merged"
 msgstr "Automatisk sammanslagning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:518
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:519
 msgid ""
 "Some books were automatically merged into existing records in the target "
 "library. Click \"Show details\" to see which ones. This behavior is "
@@ -12066,37 +12080,37 @@ msgid ""
 "books->Adding actions."
 msgstr "Några böcker slogs samman automatiskt med befintliga poster i målbiblioteket. Klicka på \"Visa detaljer\" för att se vilka. Detta beteende bestäms av automatiskt sammanslagning i Inställningar->Importera/exportera->Lägga till böcker->Tilläggningsåtgärder."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:539
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:540
 #, python-brace-format
 msgid ""
 "Copying: {0} failed, with error:\n"
 "{1}"
 msgstr "Kopiering: {0} misslyckades, med fel:\n{1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:540
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:541
 msgid "Could not copy some books, click \"Show details\" for more information."
 msgstr "Det gick inte att kopiera några böcker. Klicka på \"Visa detaljer\" för mer information."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:540
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:541
 msgid "Failed to copy some books"
 msgstr "Det gick inte att kopiera några böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:542
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:543
 #, python-brace-format
 msgid "Failed to copy a book, see below for details"
 msgid_plural "Failed to copy {} books, see below for details"
 msgstr[0] "Det gick inte att kopiera en bok, se nedan för detaljer"
 msgstr[1] "Det gick inte att kopiera {} böcker, se nedan för detaljer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:547
 msgid "Could not copy any books, click \"Show details\" for more information."
 msgstr "Det gick inte att kopiera några böcker. Klicka på \"Visa detaljer\" för mer information."
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:547
 msgid "Failed to copy books"
 msgstr "Det gick inte att kopiera böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:553
 msgid ""
 "You cannot use other libraries while using the environment variable "
 "CALIBRE_OVERRIDE_DATABASE_PATH."
@@ -13682,38 +13696,38 @@ msgstr "Böcker med samma taggar"
 msgid "Ask AI for what to read next"
 msgstr "Fråga AI vad den ska läsa härnäst"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:62
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:80
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:65
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:83
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:824
 msgid "Sort by"
 msgstr "Sortera efter"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:81
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:84
 msgid "Show the Sort by menu"
 msgstr "Visa menyn Sortera efter"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:92
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:95
 msgid "Reverse current sort"
 msgstr "Vänd om aktuell sortering"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:93
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:96
 msgid "Reverse the current sort order"
 msgstr "Vänd om den aktuella sorteringsordningen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:94
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:97
 msgid "Re-apply current sort"
 msgstr "Tillämpa aktuell sortering igen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:95
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:98
 msgid "Re-apply the current sort"
 msgstr "Tillämpa den aktuella sorteringen igen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:184
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:157
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:187
 msgid "Select sortable columns"
 msgstr "Välj sorterbara kolumner"
 
-#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:155
+#: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:158
 msgid "Sort on multiple columns"
 msgstr "Sortera på flera kolumner"
 
@@ -14190,8 +14204,8 @@ msgid "%s has no available formats."
 msgstr "%s har inga tillgängliga format."
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:389
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:394
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:401
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:406
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:378
 #: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
@@ -14303,8 +14317,8 @@ msgstr[1] "Det gick inte att läsa metadata från filerna:"
 
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:353
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:410
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:462
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:468
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:499
 msgid "With error:"
 msgstr "Med fel:"
 
@@ -14312,30 +14326,30 @@ msgstr "Med fel:"
 msgid "Failed to merge the book: "
 msgstr "Det gick inte att slå samman boken: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:466
 msgid "Failed to add the book: "
 msgstr "Det gick inte att lägga till boken: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:492
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:498
 #, python-brace-format
 msgid "Failed to add the file {0} to the book: {1}"
 msgstr "Det gick inte att lägga till filen {0} i boken: {1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:505
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:511
 msgid "Adding duplicates"
 msgstr "Lägger till dubbletter"
 
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:529
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:535
 msgid ""
 "There were problems adding some files, click \"Show details\" for more "
 "information"
 msgstr "Det uppstod problem vid tilläggning av vissa filer, klicka \"Visa detaljer\" för mer information"
 
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:530
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:536
 msgid "Failed to add any books, click \"Show details\" for more information"
 msgstr "Det gick inte att lägga till böcker, klicka \"Visa detaljer\" för mer information"
 
-#: /__w/calibre/calibre/src/calibre/gui2/add.py:531
+#: /__w/calibre/calibre/src/calibre/gui2/add.py:537
 msgid "Errors while adding"
 msgstr "Fel vid tilläggning"
 
@@ -14584,8 +14598,8 @@ msgstr "Lade till en bok automatiskt från {src}"
 msgid "Added {num} books automatically from {src}"
 msgstr "Lade till {num} böcker automatiskt från {src}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/bars.py:459
-#: /__w/calibre/calibre/src/calibre/gui2/bars.py:572
+#: /__w/calibre/calibre/src/calibre/gui2/bars.py:460
+#: /__w/calibre/calibre/src/calibre/gui2/bars.py:573
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:369
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:395
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:42
@@ -14594,16 +14608,16 @@ msgstr "Lade till {num} böcker automatiskt från {src}"
 msgid "Donate"
 msgstr "Donera"
 
-#: /__w/calibre/calibre/src/calibre/gui2/bars.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/bars.py:480
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:462
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:461
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:495
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:938
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1232
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:388
 msgid "Edit"
 msgstr "Redigera"
 
-#: /__w/calibre/calibre/src/calibre/gui2/bars.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/bars.py:482
 #: /__w/calibre/calibre/src/calibre/gui2/book_details.py:705
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:403
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:452
@@ -14614,7 +14628,7 @@ msgstr "Redigera"
 msgid "Copy"
 msgstr "Kopiera"
 
-#: /__w/calibre/calibre/src/calibre/gui2/bars.py:482
+#: /__w/calibre/calibre/src/calibre/gui2/bars.py:483
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:404
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:454
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:451
@@ -14622,7 +14636,7 @@ msgstr "Kopiera"
 msgid "Paste"
 msgstr "Klistra in"
 
-#: /__w/calibre/calibre/src/calibre/gui2/bars.py:483
+#: /__w/calibre/calibre/src/calibre/gui2/bars.py:484
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:409
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:137
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/metadata_sources.py:372
@@ -15561,15 +15575,15 @@ msgid "Tab template for catalog.ui"
 msgstr "Flikmall för catalog.ui"
 
 #: /__w/calibre/calibre/src/calibre/gui2/central.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:255
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:342
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:267
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:354
 msgid "Toggle"
 msgstr "Växla"
 
 #: /__w/calibre/calibre/src/calibre/gui2/central.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/central.py:427
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:266
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:345
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:278
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:251
 msgid "Main window layout"
 msgstr "Huvudfönsterlayout"
@@ -17661,7 +17675,7 @@ msgid "Remove &indents at the beginning of lines"
 msgstr "Ta bort &indrag i början av rader"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_input_ui.py:101
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:305
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:308
 msgid "Markdown"
 msgstr "Markdown"
 
@@ -18016,7 +18030,7 @@ msgid "My Color Scheme"
 msgstr "Mitt färgschema"
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:438
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1105
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1399
 #: /__w/calibre/calibre/src/calibre/gui2/llm.py:681
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1030
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
@@ -18845,7 +18859,7 @@ msgstr "Sidnumrering (APNX)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:512
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:238
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:315
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1050
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:471
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/view.py:194
@@ -20855,7 +20869,7 @@ msgid "Active jobs"
 msgstr "Aktiva jobb"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:711
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:998
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:340
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:679
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:288
@@ -22534,7 +22548,7 @@ msgstr "<p>Välj att förhindra snabbvisning från att ändras när\nurval i bib
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:92
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:306
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1066
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1360
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check_links.py:97
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:273
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:301
@@ -24790,7 +24804,7 @@ msgid ""
 msgstr "Markera den här boken i calibre-biblioteket.\nDu kan söka efter markerade böcker med hjälp av söktermen: {0}"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/cards.py:172
-#: /__w/calibre/calibre/src/calibre/srv/code.py:135
+#: /__w/calibre/calibre/src/calibre/srv/code.py:141
 #, python-brace-format
 msgid "{series_index} of <i>{series}</i>"
 msgstr "{series_index} av <i>{series}</i>"
@@ -24811,6 +24825,8 @@ msgstr "Okänd bok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/cards.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:179
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:437
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:553
 msgid "Unknown author"
 msgstr "Okänd författare"
 
@@ -24981,7 +24997,7 @@ msgstr "Visa denna bok"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:535
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:721
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:426
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:615
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:140
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:262
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:364
@@ -24991,7 +25007,7 @@ msgstr "Expandera alla"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:536
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:722
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:427
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:616
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:141
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:263
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:779
@@ -25027,7 +25043,7 @@ msgid "Switch to a detailed view of the results, with covers"
 msgstr "Växla till en detaljerad vy av resultaten, med omslag"
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:639
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:703
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:990
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:332
 msgid "Enter words to search for"
 msgstr "Ange ord att söka efter"
@@ -25044,7 +25060,7 @@ msgid ""
 msgstr "Begränsa sökresultaten till endast de böcker som för närvarande visas på huvudbiblioteksskärmen. Detta innebär att alla virtuella bibliotek eller sökresultat tillämpas."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:649
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1024
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1318
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:461
 msgid "&Match on related words"
 msgstr "&Matcha relaterade ord"
@@ -25470,29 +25486,29 @@ msgstr "Välj en fil att spara till"
 msgid "Image: {name} {resolution}"
 msgstr "Bild: {name} {resolution}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:146
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:158
 msgid "See what's new in this calibre release"
 msgstr "Se vad som är nytt i den här utgåvan av calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:198
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:210
 msgid "Connected "
 msgstr "Ansluten "
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:230
 #, python-format
 msgid " %(created)s %(name)s"
 msgstr " %(created)s %(name)s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:218
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:230
 msgid "created by"
 msgstr "skapad av"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:221
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:233
 #, python-format
 msgid "%(num)d of %(total)d books"
 msgstr "%(num)d av %(total)d böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:223
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:235
 #: /__w/calibre/calibre/src/calibre/srv/opds.py:157
 #, python-brace-format
 msgid "one book"
@@ -25500,106 +25516,106 @@ msgid_plural "{} books"
 msgstr[0] "en bok"
 msgstr[1] "{} böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:225
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:237
 #, python-format
 msgid "%(num)s, %(sel)d selected"
 msgid_plural "%(num)s, %(sel)d selected"
 msgstr[0] "%(num)s, %(sel)d vald"
 msgstr[1] "%(num)s, %(sel)d valda"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:227
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:239
 #, python-brace-format
 msgid "{0}, {1} total"
 msgstr "{0}, {1} totalt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:312
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:324
 msgid "Cover grid"
 msgstr "Omslagsrutnät"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:327
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:339
 msgid "Bookshelf view"
 msgstr "Bokhyllevy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:352
 msgid "Search bar"
 msgstr "Sökfält"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:388
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:400
 msgid "Next Virtual library"
 msgstr "Nästa virtuella bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:390
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:402
 msgid "Switch to the next Virtual library in the Virtual library tab bar"
 msgstr "Växla till nästa virtuella bibliotek i flikraden för virtuella bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:393
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:405
 msgid "Previous Virtual library"
 msgstr "Föregående virtuella bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:395
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:407
 msgid "Switch to the previous Virtual library in the Virtual library tab bar"
 msgstr "Växla till det föregående virtuella biblioteket i flikraden för virtuellt bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:490
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:502
 #: /__w/calibre/calibre/src/calibre/srv/ajax.py:285
 #: /__w/calibre/calibre/src/calibre/srv/tests/ajax.py:72
 msgid "All books"
 msgstr "Alla böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:505
 msgid "Search expression for this Virtual library:"
 msgstr "Sökuttryck för detta virtuella bibliotek:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:518
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:530
 msgid "Sort tabs alphabetically"
 msgstr "Sortera flikar alfabetiskt"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:521
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:533
 msgid "Restore hidden tabs"
 msgstr "Återställ dolda flikar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:524
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:536
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:443
 msgid "Hide Virtual library tabs"
 msgstr "Dölj flikar för virtuella bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:526
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:538
 msgid "Lock Virtual library tabs"
 msgstr "Lås flikar för virtuella bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:528
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:540
 msgid "Unlock Virtual library tabs"
 msgstr "Lås upp flikar för virtuella bibliotek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:535
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:547
 #, python-format
 msgid "Edit \"%s\""
 msgstr "Redigera \"%s\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:536
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:548
 #, python-format
 msgid "Delete \"%s\""
 msgstr "Ta bort \"%s\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:663
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:675
 msgid "Layout"
 msgstr "Layout"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:665
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:677
 msgid "Show and hide various parts of the calibre main window"
 msgstr "Visa och dölj olika delar av calibre-huvudfönstret"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:807
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:819
 #, python-format
 msgid "No %s format"
 msgstr "Inget %s-format"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:808
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:820
 #, python-brace-format
 msgid "The book {0} does not have the {1} format"
 msgstr "Boken {0} har inte formatet {1}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/init.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/init.py:855
 #, python-format
 msgid "Restore %s"
 msgstr "Återställ %s"
@@ -25902,132 +25918,165 @@ msgstr "Denna bok finns på enheten i %s"
 msgid "tooltip template error"
 msgstr "mallfel för verktygstips"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:111
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:114
 msgid "Unknown chapter"
 msgstr "Okänt kapitel"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:202
 msgid "Anonymous Content server user"
 msgstr "Anonym serveranvändare"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:201
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:204
 msgid "Local E-book viewer user"
 msgstr "Lokal användare av e-bokvisaren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:207
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:210
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/bookmarks.py:367
 msgid "Bookmark"
 msgstr "Bokmärke"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:207
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:210
 msgctxt "type of annotation"
 msgid "Highlight"
 msgstr "Markering"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:208
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:211
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/toolbars.py:74
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:84
 msgid "Bookmarks"
 msgstr "Bokmärken"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:208
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:211
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:87
 msgid "Highlights"
 msgstr "Markeringar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:293
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:296
 #, python-brace-format
 msgid "Export {} annotations"
 msgstr "Exportera {} noteringar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:299
 msgid "calibre annotation collection"
 msgstr "calibre-noteringssamling"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:299
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:302
 msgid "annotations"
 msgstr "noteringar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:311
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:314
 msgid "Format to export in:"
 msgstr "Format att exportera i:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:318
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:321
 msgid "Save to file"
 msgstr "Spara till fil"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:332
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:335
 msgid "File for exports"
 msgstr "Fil för export"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:415
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:970
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:393
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1262
+msgid "User"
+msgstr "Användare"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:394
+msgid "Annotation date"
+msgstr "Noteringsdatum"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:458
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:483
+msgid "Unknown date"
+msgstr "Okänt datum"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:464
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:489
+msgid "Unknown year"
+msgstr "Okänt år"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:498
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:768
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:997
+msgid "Unrated"
+msgstr "Inte betygsatt"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:604
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1264
 msgid "Open in viewer"
 msgstr "Visa i visaren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:416
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:970
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1264
 msgid "Show in calibre"
 msgstr "Visa i calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:418
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:607
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:603
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/highlights.py:636
 msgid "Edit notes"
 msgstr "Redigera anteckningar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:422
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:611
 #, python-brace-format
 msgid "Export selected item"
 msgid_plural "Export {} selected items"
 msgstr[0] "Exportera vald post"
 msgstr[1] "Exportera {} valda poster"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:424
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:613
 #, python-brace-format
 msgid "Delete selected item"
 msgid_plural "Delete {} selected items"
 msgstr[0] "Ta bort vald post"
 msgstr[1] "Ta bort {} valda poster"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:565
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:786
 msgid "Restrict to"
 msgstr "Begränsa till"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:567
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:788
 msgid "Type:"
 msgstr "Typ:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:574
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:795
 msgid "Show only annotations of the specified type"
 msgstr "Visa endast noteringar av den angivna typen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:578
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:799
 msgid "User:"
 msgstr "Användare:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:585
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:806
 msgid "Show only annotations created by the specified user"
 msgstr "Visa endast noteringar skapade av den angivna användaren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:591
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:812
 msgid ""
 "Only show annotations from books that have been selected in the calibre "
 "library"
 msgstr "Visa bara noteringar från böcker som har valts i calibre-biblioteket"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:822
 msgid "&Show results from only selected books"
 msgstr "&Visa resultat från endast valda böcker"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:602
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:825
 #, python-brace-format
 msgid "&Show results from only the selected book"
 msgid_plural "&Show results from only the {} selected books"
 msgstr[0] "&Visa endast resultat från den valda boken"
 msgstr[1] "&Visa endast resultat från de {} valda böckerna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:718
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:918
+msgid "&Group by:"
+msgstr "&Gruppera efter:"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:924
+msgid "Display annotations grouped by this value"
+msgstr "Visa noteringar grupperade efter detta värde"
+
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1005
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:347
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/diff/main.py:294
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/text_search.py:121
@@ -26037,14 +26086,14 @@ msgstr[1] "&Visa endast resultat från de {} valda böckerna"
 msgid "Find previous match"
 msgstr "Hitta föregående träff"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:798
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1092
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:540
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:167
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/search.py:175
 msgid "Invalid search expression"
 msgstr "Ogiltigt sökuttryck"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:799
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1093
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:541
 #, python-brace-format
 msgid ""
@@ -26052,39 +26101,35 @@ msgid ""
 "Full text Search Query syntax, <a href=\"{1}\">described here</a>."
 msgstr "Sökuttrycket: {0} är ogiltigt. Söksyntaxen som används är SQLite-sökfrågesyntaxen för heltextsökning, <a href=\"{1}\">beskriven här</a>."
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:938
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1232
 msgid "Edit the notes of this highlight"
 msgstr "Redigera anteckningarna för denna markering"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:942
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1236
 msgid "Add notes"
 msgstr "Lägg till anteckningar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:942
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1236
 msgid "Add notes to this highlight"
 msgstr "Lägg till anteckningar till denna markering"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:968
-msgid "User"
-msgstr "Användare"
-
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:971
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1265
 msgid "View the book at this annotation in the calibre E-book viewer"
 msgstr "Visa boken vid denna notering i calibre e-bokvisare"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:972
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1266
 msgid "Show this book in the main calibre book list"
 msgstr "Visa den här boken i huvudboklistan av calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:982
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1276
 msgid "Edit notes for highlight"
 msgstr "Redigera anteckningar för markering"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1006
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1300
 msgid "Annotations browser"
 msgstr "Noteringsbläddraren"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1027
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1321
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:464
 msgid ""
 "With this option searching for words will also match on any related words "
@@ -26092,43 +26137,43 @@ msgid ""
 "<i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well"
 msgstr "Med det här alternativet matchar sökningen efter ord även alla relaterade ord (stöds på flera språk). Till exempel på engelska: <i>correction</i> matchar <i>correcting</i> och också <i>corrected</i>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1056
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1350
 msgid "&Delete all selected"
 msgstr "&Ta bort alla valda"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1057
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1351
 msgid "Delete the selected annotations"
 msgstr "Ta bort de valda noteringarna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1060
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1354
 msgid "&Export all selected"
 msgstr "&Exportera alla valda"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1061
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1355
 msgid "Export the selected annotations"
 msgstr "Exportera de valda noteringarna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1069
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1363
 msgid "Rebuild search index"
 msgstr "Återskapa sökindex"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1071
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1365
 msgid ""
 "Refresh annotations in case they have been changed since this window was "
 "opened"
 msgstr "Uppdatera noteringar om de har ändrats sedan det här fönstret öppnades"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1079
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1086
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1373
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1380
 msgid "No selected annotations"
 msgstr "Inga valda noteringar"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1080
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1087
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1374
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1381
 msgid "No annotations have been selected"
 msgstr "Inga noteringar har valts"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1092
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1386
 #, python-brace-format
 msgid "Are you sure you want to <b>permanently</b> delete this annotation?"
 msgid_plural ""
@@ -26136,7 +26181,7 @@ msgid_plural ""
 msgstr[0] "Är du säker på att du vill ta bort denna notering <b>permanent</b>?"
 msgstr[1] "Är du säker på att du vill ta bort dessa {} noteringar <b>permanent</b>?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1106
+#: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1400
 msgid "Editing is only supported for the notes associated with highlights"
 msgstr "Redigering stöds endast för anteckningarna som är associerade med markeringar"
 
@@ -26156,16 +26201,11 @@ msgstr "Ingen utgivare"
 msgid "Unpublished"
 msgstr "Opublicerad"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:768
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:986
-msgid "Unrated"
-msgstr "Inte betygsatt"
-
 #: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:769
 msgid "No language"
 msgstr "Inget språk"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:2386
+#: /__w/calibre/calibre/src/calibre/gui2/library/bookshelf_view.py:2397
 msgid "Ungrouped"
 msgstr "Ogrupperad"
 
@@ -26536,47 +26576,47 @@ msgstr "Dölj kolumnen %s"
 msgid "Show column"
 msgstr "Visa kolumn"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:669
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:671
 msgid "Remember On Device column width"
 msgstr "Kom ihåg kolumnbredden för På enheten"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:673
 msgid "Reset On Device column width to default"
 msgstr "Återställ kolumnbredden för På enheten till standard"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:673
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:675
 msgid "Restore default layout"
 msgstr "Återställ standardutformning"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:687
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:689
 msgid "Hide row numbers"
 msgstr "Dölj radnummer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:689
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:691
 msgid "Show row numbers"
 msgstr "Visa radnummer"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:695
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:697
 msgid "Toggle mark for book"
 msgstr "Växla markering för bok"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:699
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:701
 msgid "Mark book with text label"
 msgstr "Markera bok med textetikett"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:735
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:737
 msgid "Un-split the book list"
 msgstr "Dela inte boklistan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:737
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:739
 msgid "Split the book list"
 msgstr "Dela boklistan"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:741
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:743
 msgid "Allow moving columns with the mouse"
 msgstr "Tillåt att kolumner flyttas med musen"
 
-#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1715
+#: /__w/calibre/calibre/src/calibre/gui2/library/views.py:1717
 msgid ""
 "Dropping onto a device is not supported. First add the book to the calibre "
 "library."
@@ -40765,7 +40805,7 @@ msgid "Disabled confirmations restored"
 msgstr "Inaktiverade bekräftelser återställda"
 
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:434
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:633
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:643
 msgid "Render process crashed"
 msgstr "Renderingsprocessen kraschade"
 
@@ -44383,13 +44423,13 @@ msgid ""
 "First convert the book to one of these formats."
 msgstr "Boken måste vara i formaten {} för att redigeras.\n\nKonvertera först boken till ett av dessa format."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:634
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:644
 msgid ""
 "The Qt WebEngine Render process has crashed. You should try restarting the "
 "viewer."
 msgstr "Qt WebEngine Render processen har kraschat. Du bör försöka starta om visaren."
 
-#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:776
+#: /__w/calibre/calibre/src/calibre/gui2/viewer/web_view.py:792
 msgid "Choose background image"
 msgstr "Välj bakgrundsbild"
 
@@ -45734,22 +45774,22 @@ msgstr "Ändra språk"
 msgid "templates are not allowed in search expressions"
 msgstr "mallar är inte tillåtna i sökuttryck"
 
-#: /__w/calibre/calibre/src/calibre/srv/code.py:134
+#: /__w/calibre/calibre/src/calibre/srv/code.py:140
 #, python-brace-format
 msgid "<b>{title}</b> by {authors}"
 msgstr "<b>{title}</b> av {authors}"
 
-#: /__w/calibre/calibre/src/calibre/srv/code.py:137
+#: /__w/calibre/calibre/src/calibre/srv/code.py:143
 #, python-brace-format
 msgid "Date: {timestamp}"
 msgstr "Datum: {timestamp}"
 
-#: /__w/calibre/calibre/src/calibre/srv/code.py:137
+#: /__w/calibre/calibre/src/calibre/srv/code.py:143
 #, python-brace-format
 msgid "Published: {pubdate}"
 msgstr "Publicerad: {pubdate}"
 
-#: /__w/calibre/calibre/src/calibre/srv/code.py:137
+#: /__w/calibre/calibre/src/calibre/srv/code.py:143
 #, python-brace-format
 msgid "Publisher: {publisher}"
 msgstr "Utgivare: {publisher}"
@@ -48475,14 +48515,19 @@ msgid ""
 "Asimov and Quasimodo, whereas the default behavior would match only Asimov.\n"
 "There is also a 'word-prefix' mode that matches only at the start of words,\n"
 "so typing 'asi' will match Asimov and \"Isaac Asimov\" but not Quasimodo.\n"
-"Similarly, typing 'cat' will match cathedral and \"tabby cat\" but not education."
-msgstr "Som standard, när du fyller i objekt, visar calibre alla kandidater\nsom börjar med den text du redan har skrivit. Du kan istället visa\nalla kandidater som innehåller den text du redan har skrivit. För att göra detta, ställ in\ncompletion_mode till 'contains'. Om du till exempel skriver asi kommer det att matcha både\nAsimov och Quasimodo, medan standardbeteendet bara skulle matcha Asimov. Det finns också ett 'ordprefix'-läge som bara matchar i början av ord,\nså att skriva 'asi' kommer att matcha Asimov och \"Isaac Asimov\" men inte Quasimodo.\nPå samma sätt kommer att skriva 'cat' att matcha cathedral och \"tabby cat\" men inte education."
+"Similarly, typing 'cat' will match cathedral and \"tabby cat\" but not education.\n"
+"\n"
+"If completion_mode is 'word-prefix', you can specify additional word break chars\n"
+"with the extra_word_break_chars setting.\n"
+"For example, for extra_word_break_chars = '-' typing 'fic' will match\n"
+"both \"Science Fiction\" and \"Science-Fiction\", instead of only the first one."
+msgstr "Som standard, när du fyller i objekt, visar calibre alla kandidater\nsom börjar med den text du redan har skrivit. Du kan istället visa\nalla kandidater som innehåller den text du redan har skrivit. För att göra detta, ställ in\ncompletion_mode till 'contains'. Om du till exempel skriver asi kommer det att matcha både\nAsimov och Quasimodo, medan standardbeteendet bara skulle matcha Asimov.\nDet finns också ett 'word-prefix'-läge som bara matchar i början av ord,\nså att skriva 'asi' matchar Asimov och \"Isaac Asimov\" men inte Quasimodo.\nPå samma sätt kommer skriva 'cat' att matcha cathedral och \"tabby cat\" men inte education.\n\nOm completion_mode är 'word-prefix' kan du ange ytterligare ordbrytningstecken\nmed inställningen extra_word_break_chars.\nTill exempel, för extra_word_break_chars = '-' kommer skriva 'fic' att matcha\nbåde \"Science Fiction\" och \"Science-Fiction\", istället för bara det första."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:508
+#: /__w/calibre/calibre/resources/default_tweaks.py:514
 msgid "Sort the list of libraries alphabetically"
 msgstr "Sortera listan över bibliotek alfabetiskt"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:509
+#: /__w/calibre/calibre/resources/default_tweaks.py:515
 msgid ""
 "The list of libraries in the Copy to library and Quick switch menus are\n"
 "normally sorted by most used. However, if there are more than a certain\n"
@@ -48490,11 +48535,11 @@ msgid ""
 "number here. The default is ten libraries."
 msgstr "Listan över biblioteken i Kopiera till bibliotek och Snabbväxlingsmenyer är\nnormalt sorterade efter de användbaraste. Men om det finns mer än ett visst\nantalet sådana bibliotek sker sorteringen i bokstavsordning. Du kan ställa in att\nantalet här. Standardinställningen är tio bibliotek."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:515
+#: /__w/calibre/calibre/resources/default_tweaks.py:521
 msgid "Choose available output formats for conversion"
 msgstr "Välj tillgängliga utmatningsformat för konvertering"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:516
+#: /__w/calibre/calibre/resources/default_tweaks.py:522
 msgid ""
 "Restrict the list of available output formats in the conversion dialogs.\n"
 "For example, if you only want to convert to EPUB and AZW3, change this to\n"
@@ -48502,11 +48547,11 @@ msgid ""
 "all available output formats to be present."
 msgstr "Begränsa listan med tillgängliga utmatningsformat i omräkningsdialogrutor.\nTill exempel om du bara vill konvertera till EPUB och AZW3, ändra detta till\nrestrict_output_formats = ['EPUB', 'AZW3']. Standardvärdet för None resulterar i att\nalla tillgängliga utmatningsformat att vara närvarande."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:522
+#: /__w/calibre/calibre/resources/default_tweaks.py:528
 msgid "Set the thumbnail image quality used by the Content server"
 msgstr "Ange miniatyrbildkvaliteten som ska användas av innehållsservern"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:523
+#: /__w/calibre/calibre/resources/default_tweaks.py:529
 msgid ""
 "The quality of a thumbnail is largely controlled by the compression quality\n"
 "used when creating it. Set this to a larger number to improve the quality.\n"
@@ -48515,13 +48560,13 @@ msgid ""
 "The value can be between 50 and 99"
 msgstr "Kvaliteten på en omslagsminiatyrbild styrs till stor del av komprimeringskvaliteten\nsom används den skapas. Ställ in den till en större tal för att förbättra kvaliteten.\nObservera att omslagsminiatyrbilder blir mycket större med större tal komprimeringskvalitet.\nVärdet kan vara mellan 50 och 99"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:530
+#: /__w/calibre/calibre/resources/default_tweaks.py:536
 msgid ""
 "Image file types to treat as e-books when dropping onto the \"Book details\""
 " panel"
 msgstr "Bildfiltyper att behandla som e-böcker när du släpper till panelen \"Bokdetaljer\""
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:531
+#: /__w/calibre/calibre/resources/default_tweaks.py:537
 msgid ""
 "Normally, if you drop any image file in a format known to calibre onto the\n"
 "\"Book details\" panel, it will be used to set the cover. If you want to store\n"
@@ -48530,11 +48575,11 @@ msgid ""
 "cover_drop_exclude = {'tiff', 'webp'}"
 msgstr "Normalt, om du släpper en bildfil i ett format som är känt för calibre\npå panelen \"Bokdetaljer\", kommer den att användas för att ställa in omslaget. Om du istället vill lagra\nvissa bildtyper som e-böcker kan du ställa in denna justering.\nExempel:\ncover_drop_exclude = {'tiff', 'webp'}"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:538
+#: /__w/calibre/calibre/resources/default_tweaks.py:544
 msgid "Exclude fields when copy/pasting metadata"
 msgstr "Exkludera fält när du kopierar/klistrar in metadata"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:539
+#: /__w/calibre/calibre/resources/default_tweaks.py:545
 msgid ""
 "You can ask calibre to not paste some metadata fields when using the\n"
 "Edit metadata->Copy metadata/Paste metadata actions. For example,\n"
@@ -48544,32 +48589,32 @@ msgid ""
 "to paste metadata ignoring this tweak."
 msgstr "Du kan be calibre om att inte klistra in några metadatafält när du använder\nRedigera metadata->Kopiera metadata/Klistra in metadataåtgärder. Till exempel\nexclude_fields_on_paste = ['cover', 'timestamp', '#minkolumn'] för att förhindra\natt det läggs i omslaget, datum och den anpassad kolumnen minkolumn.\nDu kan också lägga till en genväg i Inställningar->Genvägar->Redigera metadata\nför att klistra in metadata och ignorera denna justering."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:547
+#: /__w/calibre/calibre/resources/default_tweaks.py:553
 msgid "Skip internet connected check"
 msgstr "Hoppa över internetanslutningskontroll"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:548
+#: /__w/calibre/calibre/resources/default_tweaks.py:554
 msgid ""
 "Skip checking whether the internet is available before downloading news.\n"
 "Useful if for some reason your operating systems network checking\n"
 "facilities are not reliable (for example NetworkManager on Linux)."
 msgstr "Hoppa över att kontrollera om internet är tillgängligt innan du hämtar nyheter.\nAnvändbart om ditt operativsystems nätverkskontroll av någon anledning\ninte är tillförlitliga (till exempel NetworkManager på Linux)."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:553
+#: /__w/calibre/calibre/resources/default_tweaks.py:559
 msgid "Tab stop width in the template editor"
 msgstr "Tabbstoppbredd i mallredigeraren"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:554
+#: /__w/calibre/calibre/resources/default_tweaks.py:560
 msgid ""
 "Sets the width of the tab stop in the template editor in \"average characters\".\n"
 "For example, a value of 1 results in a space with the width of one average character."
 msgstr "Ställer in bredden på tabbstoppet i mallredigeraren i \"genomsnittliga tecken\".\nTill exempel resulterar ett värde på 1 i ett blanksteg med bredden av ett genomsnittligt tecken."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:558
+#: /__w/calibre/calibre/resources/default_tweaks.py:564
 msgid "Value for undefined numbers when sorting"
 msgstr "Värde för odefinierade nummer vid sortering"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:559
+#: /__w/calibre/calibre/resources/default_tweaks.py:565
 msgid ""
 "Sets the value to use for undefined numbers when sorting.\n"
 "For example, the value -10 sorts undefined numbers as if they were set to -10.\n"
@@ -48583,11 +48628,11 @@ msgid ""
 "value_for_undefined_numbers_when_sorting = 'maximum'"
 msgstr "Ställer in värdet som ska användas för odefinierade nummer vid sortering.\nTill exempel, värdet -10 sorterar odefinierade tal som om de var inställda till -10.\nAnvänd 'maximum' för största möjliga antal. Använd 'minimum' för minsta möjliga antal. Citattecken är valfria om du anger ett nummer.\nExempel:\nvalue_for_undefined_numbers_when_sorting = -100\nvalue_for_undefined_numbers_when_sorting = '2'\nvalue_for_undefined_numbers_when_sorting = -0.01\nvalue_for_undefined_numbers_when_sorting = 'minimum'\nvalue_for_undefined_numbers_when_sorting = 'maximum'"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:571
+#: /__w/calibre/calibre/resources/default_tweaks.py:577
 msgid "Allow template database functions in composite columns"
 msgstr "Tillåt malldatabasfunktioner i sammansatta kolumner"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:572
+#: /__w/calibre/calibre/resources/default_tweaks.py:578
 msgid ""
 "If True then the template database functions book_values() and book_count()\n"
 "can be used in composite custom columns. Note: setting this tweak to True and\n"
@@ -48595,11 +48640,11 @@ msgid ""
 "Default: False"
 msgstr "Om True kan malldatabasens funktioner book_values() och book_count()\nanvändas i sammansatta anpassade kolumner. Obs: att ställa in denna justering till True och\nanvända dessa funktioner i kompositer kan vara mycket långsam.\nStandard: False"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:579
+#: /__w/calibre/calibre/resources/default_tweaks.py:585
 msgid "Change the programs that are run when opening files/URLs"
 msgstr "Ändra de program som körs när du öppnar filer/URL:er"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:580
+#: /__w/calibre/calibre/resources/default_tweaks.py:586
 msgid ""
 "By default, calibre passes URLs to the operating system to open using\n"
 "whatever default programs are configured there. Here you can override\n"
@@ -48610,21 +48655,21 @@ msgid ""
 "takes a glob pattern allowing a single entry to match multiple URL types."
 msgstr "Som standard skickar calibre URL:er till operativsystemet för att\nöppnas med de standardprogram som är konfigurerade där. Här kan du åsidosätta\ndetta genom att ange vilket program som ska användas, per URL-typ. För lokala filer\när typen \"file\" and för webblänkar är den \"http*\". Till exempel:\nopeners_by_scheme = { \"http*\": \"firefox %u\" } får calibre att köra Firefox\nför https://vilka URL:er som helst. %u ersätts av URL:en som ska öppnas. Schemat\ntar ett glob-mönster som tillåter en enda post att matcha flera URL-typer."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:589
+#: /__w/calibre/calibre/resources/default_tweaks.py:595
 msgid "Set the first day of the week for calendar popups"
 msgstr "Ställ in den första dagen i veckan för kalenderpopup"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:590
+#: /__w/calibre/calibre/resources/default_tweaks.py:596
 msgid ""
 "It must be one of the values Default, Sunday, Monday, Tuesday, Wednesday,\n"
 "Thursday, Friday, or Saturday, all in English, spelled exactly as shown."
 msgstr "Det måste vara ett av värdena Default, Sunday, Monday, Tuesday, Wednesday,\nThursday, Friday, or Saturday, allt på engelska, stavat exakt som visas."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:594
+#: /__w/calibre/calibre/resources/default_tweaks.py:600
 msgid "East Asian language to use for transliteration"
 msgstr "Östasiatiskt språk att använda för translitteration"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:595
+#: /__w/calibre/calibre/resources/default_tweaks.py:601
 msgid ""
 "Setting this tweak will make calibre use the specified language as the \"base\"\n"
 "language when transliterating East Asian languages to English. This might be\n"
@@ -48640,11 +48685,11 @@ msgid ""
 "Example: east_asian_base_language = 'ja'"
 msgstr "Om du ställer in den här justeringen kommer calibre att använda det angivna språket som \"basspråk\"\nvid translitterering av östasiatiska språk till engelska. Detta kan vara\nanvändbart om du kör calibre på engelska men vill ha text translittererad till\njapanska istället för kinesiska. De giltiga värdena är:\n'ja' för japanska\n'kr' för koreanska\n'vn' för vietnamesiska\n'zh' för kinesiska\nAlla andra värden kommer att använda språket som ställts in i calibre-inställningarna som basspråk.\nEtt annat basspråk än de i listan ovan orsakar translitterering\nmed ett basspråk kinesiska.\nExempel: east_asian_base_language = 'ja'"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:609
+#: /__w/calibre/calibre/resources/default_tweaks.py:615
 msgid "Hide AI features"
 msgstr "Dölj AI-funktioner"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:610
+#: /__w/calibre/calibre/resources/default_tweaks.py:616
 msgid ""
 "Hide AI features throughout the calibre user interface. Note that AI is\n"
 "already opt-in and no AI related code is even loaded until the user configures some\n"
@@ -48652,11 +48697,11 @@ msgid ""
 "that mention AI."
 msgstr "Dölj AI-funktioner i hela calibers användargränssnitt. Observera att AI\nredan är aktiverat och ingen AI-relaterad kod laddas ens förrän användaren konfigurerar någon\nAI-backend. Denna justering finns helt enkelt för att dölja några menyposter och liknande\nsom nämner AI."
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:616
+#: /__w/calibre/calibre/resources/default_tweaks.py:622
 msgid "Control GPU usage in Qt WebEngine"
 msgstr "Styr GPU-användning i Qt WebEngine"
 
-#: /__w/calibre/calibre/resources/default_tweaks.py:617
+#: /__w/calibre/calibre/resources/default_tweaks.py:623
 msgid ""
 "Qt WebEngine is the library that is used to render content in the calibre\n"
 "viewer and editor. It can optionally use the GPU for enhanced performance,\n"

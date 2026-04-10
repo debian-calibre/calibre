@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-31 01:31+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022,2025\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
@@ -22,15 +22,15 @@ msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:2
 msgid "Function mode for Search & replace in the Editor"
-msgstr ""
+msgstr "편집기에서의 찾아 바꾸기 함수 모드"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:4
 msgid ""
-"The :guilabel:`Search & replace` tool in the editor support a *function "
+"The :guilabel:`Search & replace` tool in the editor supports a *function "
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr ""
+msgstr "편집기의 :guilabel:`찾아 바꾸기` 도구는 *함수 모드*를 지원합니다. 이 모드에서는 정규 표현식(:doc:`regexp` 참조)을 임의로 강력한 Python 함수와 결합하여 다양한 고급 텍스트 처리를 수행할 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
@@ -40,55 +40,55 @@ msgid ""
 "template, you specify an arbitrary function, in the `Python programming "
 "language <https://docs.python.org>`_. This allows you to do lots of things "
 "that are not possible with simple templates."
-msgstr ""
+msgstr "표준 *regexp* 모드에서는 검색할 정규 표현식과 발견된 모든 일치 항목을 대체하는 데 사용할 템플릿을 모두 지정합니다. 함수 모드에서는 고정 템플릿 대신 `Python 프로그래밍 언어 <https://docs.python.org>`_로 임의의 함수를 지정합니다. 이를 통해 단순한 템플릿으로는 불가능한 많은 작업을 수행할 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:16
 msgid ""
 "Techniques for using function mode and the syntax will be described by means"
 " of examples, showing you how to create functions to perform progressively "
 "more complex tasks."
-msgstr ""
+msgstr "함수 모드를 사용하는 기술과 구문은 점점 더 복잡한 작업을 수행하는 함수를 만드는 방법을 보여주는 예제를 통해 설명됩니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:21
 msgid "The Function mode"
-msgstr ""
+msgstr "함수 모드"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:26
 msgid "Automatically fixing the case of headings in the document"
-msgstr ""
+msgstr "문서의 머리글 대소문자 자동 수정"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:28
 msgid ""
 "Here, we will leverage one of the builtin functions in the editor to "
 "automatically change the case of all text inside heading tags to title "
 "case::"
-msgstr "여기에서는 편집기에 내장된 기능 중 하나를 활용하여 머리글 태그 내의 모든 텍스트의 대소문자를 제목 대소문자로 자동 변경합니다::"
+msgstr "여기에서는 편집기의 내장 함수 중 하나를 활용하여 머리글 태그 안의 모든 텍스트 대소문자를 제목 대소문자로 자동 변경합니다::"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:33
 msgid ""
 "For the function, simply choose the :guilabel:`Title-case text (ignore "
-"tags)` builtin function. The will change titles that look like: ``<h1>some "
+"tags)` builtin function. This will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr ""
+msgstr "함수로 :guilabel:`제목 대소문자 텍스트 (태그 무시)` 내장 함수를 선택하기만 하면 됩니다. 이렇게 하면 ``<h1>some titLE</h1>``과 같은 제목이 ``<h1>Some Title</h1>``로 변경됩니다. 머리글 태그 안에 다른 HTML 태그가 있어도 작동합니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
-msgstr "첫 번째 사용자 지정 기능 - 하이픈 스마트화"
+msgstr "첫 번째 사용자 지정 함수 - 하이픈 스마트 변환"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:42
 msgid ""
 "The real power of function mode comes from being able to create your own "
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
-" the editor leaves individual hyphens alone, so you can use the this "
-"function to replace them with em-dashes."
-msgstr ""
+" the editor leaves individual hyphens alone, so you can use this function to"
+" replace them with em-dashes."
+msgstr "함수 모드의 진정한 힘은 임의의 방식으로 텍스트를 처리하는 자신만의 함수를 만들 수 있다는 것입니다. 편집기의 스마트 문장 부호 도구는 개별 하이픈을 그대로 두므로, 이 함수를 사용하여 하이픈을 엄선으로 대체할 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
 "To create a new function, simply click the :guilabel:`Create/edit` button to"
 " create a new function and copy the Python code from below."
-msgstr "새 기능을 생성하려면 :guilabel:`만들기/편집하기` 버튼을 클릭하여 새 기능을 생성하고 아래에서 Python 코드를 복사합니다."
+msgstr "새 함수를 만들려면 :guilabel:`만들기/편집하기` 버튼을 클릭하여 새 함수를 만들고 아래의 Python 코드를 복사하세요."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:55
 msgid ""
@@ -102,34 +102,34 @@ msgid ""
 " simply returns all the matched text and all we do is replace hyphens in "
 "that text with em-dashes, first replacing double hyphens and then single "
 "hyphens."
-msgstr ""
+msgstr "모든 :guilabel:`찾아 바꾸기` 사용자 지정 함수는 고유한 이름을 가져야 하며, 위에 표시된 모든 인수를 받는 replace라는 이름의 Python 함수로 구성되어야 합니다. 지금은 ``replace()`` 함수의 다양한 인수에 대해 걱정하지 않겠습니다. ``match`` 인수에만 집중하세요. 찾아 바꾸기를 실행할 때 일치 항목을 나타냅니다. 전체 문서는 `여기 <https://docs.python.org/library/re.html#match-objects>`_에서 확인할 수 있습니다. ``match.group()``은 일치한 모든 텍스트를 반환하며, 해당 텍스트의 하이픈을 엄선으로 대체합니다. 먼저 이중 하이픈을 대체한 다음 단일 하이픈을 대체합니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
-msgstr ""
+msgstr "이 함수를 다음 찾기 정규 표현식과 함께 사용하세요::"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:69
 msgid ""
 "And it will replace all hyphens with em-dashes, but only in actual text and "
 "not inside HTML tag definitions."
-msgstr ""
+msgstr "그러면 모든 하이픈이 엄선으로 대체되지만, 실제 텍스트에서만 대체되고 HTML 태그 정의 안에서는 대체되지 않습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:74
 msgid ""
 "The power of function mode - using a spelling dictionary to fix mis-"
 "hyphenated words"
-msgstr "기능 모드의 장점 - 철자 사전을 사용하여 하이픈이 잘못된 단어 수정"
+msgstr "함수 모드의 강력함 - 철자 사전을 사용하여 하이픈이 잘못된 단어 수정"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:76
 msgid ""
 "Often, e-books created from scans of printed books contain mis-hyphenated "
 "words -- words that were split at the end of the line on the printed page. "
 "We will write a simple function to automatically find and fix such words."
-msgstr ""
+msgstr "종이책 스캔으로 만든 전자책에는 종종 하이픈이 잘못된 단어, 즉 인쇄된 페이지의 줄 끝에서 분할된 단어가 포함되어 있습니다. 이러한 단어를 자동으로 찾아 수정하는 간단한 함수를 작성하겠습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:101
 msgid "Use this function with the same find expression as before, namely::"
-msgstr ""
+msgstr "이 함수를 이전과 동일한 찾기 표현식과 함께 사용하세요::"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:105
 msgid ""
@@ -140,18 +140,18 @@ msgid ""
 " for words separated by a hyphen, remove the hyphen and check if the "
 "dictionary recognizes the composite word, if it does, the original words are"
 " replaced by the hyphen free composite word."
-msgstr "그리고 그것은 책의 텍스트에서 하이픈이 잘못된 모든 단어를 마술처럼 고칠 것입니다. 주요 트릭은 대체 기능인 ``사전``에 유용한 추가 인수 중 하나를 사용하는 것입니다. 이것은 편집기 자체가 책에서 텍스트의 철자를 검사하기 위해 사용하는 사전을 말합니다. 이 함수는 하이픈으로 구분된 단어를 찾아 하이픈을 제거하고 사전이 합성어를 인식하는지 확인하고, 인식하면 원래 단어는 하이픈이 없는 자유로운 합성어로 대체됩니다."
+msgstr "그러면 책 텍스트의 하이픈이 잘못된 모든 단어가神奇하게 수정됩니다. 핵심은 대체 함수의 유용한 추가 인수 중 하나인 ``dictionaries``를 사용하는 것입니다. 이는 편집기 자체가 책의 텍스트 철자 검사에 사용하는 사전을 나타냅니다. 이 함수는 하이픈으로 분리된 단어를 찾아 하이픈을 제거하고 사전이 합성어를 인식하는지 확인합니다. 인식하면 원래 단어가 하이픈 없는 합성어로 대체됩니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:113
 msgid ""
 "Note that one limitation of this technique is it will only work for mono-"
 "lingual books, because, by default, ``dictionaries.recognized()`` uses the "
 "main language of the book."
-msgstr ""
+msgstr "이 기술의 한 가지 제한 사항은 기본적으로 ``dictionaries.recognized()``가 책의 주 언어를 사용하므로 단일 언어 책에서만 작동한다는 점입니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:119
 msgid "Auto numbering sections"
-msgstr ""
+msgstr "섹션 자동 번호 매기기"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:121
 msgid ""
@@ -160,23 +160,23 @@ msgid ""
 ":code:`<h2>Some text</h2>`. You can create a custom function that will "
 "automatically number these headings with consecutive section numbers, so "
 "that they look like :code:`<h2>1. Some text</h2>`."
-msgstr ""
+msgstr "이제 약간 다른 것을 살펴보겠습니다. HTML 파일에 여러 섹션이 있고 각 섹션에 :code:`<h2>Some text</h2>`와 같은 :code:`<h2>` 태그의 머리글이 있다고 가정합니다. 이러한 머리글에 연속적인 섹션 번호를 자동으로 매기는 사용자 지정 함수를 만들어 :code:`<h2>1. Some text</h2>`처럼 보이게 할 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:137
 msgid "Use it with the find expression::"
-msgstr ""
+msgstr "다음 찾기 표현식과 함께 사용하세요::"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:141
 msgid ""
 "Place the cursor at the top of the file and click :guilabel:`Replace all`."
-msgstr ""
+msgstr "커서를 파일 상단에 놓고 :guilabel:`모두 바꾸기`를 클릭하세요."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:143
 msgid ""
 "This function uses another of the useful extra arguments to ``replace()``: "
 "the ``number`` argument. When doing a :guilabel:`Replace All` number is "
 "automatically incremented for every successive match."
-msgstr ""
+msgstr "이 함수는 ``replace()``의 또 다른 유용한 추가 인수인 ``number`` 인수를 사용합니다. :guilabel:`모두 바꾸기`를 수행할 때 number는 각 연속 일치 항목에 대해 자동으로 증가합니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:147
 msgid ""
@@ -184,30 +184,30 @@ msgid ""
 "``'spine'`` means that if this search is run on multiple HTML files, the "
 "files are processed in the order in which they appear in the book. See "
 ":ref:`file_order_replace_all` for details."
-msgstr ""
+msgstr "또 다른 새로운 기능은 ``replace.file_order``의 사용입니다. 이를 ``'spine'``으로 설정하면 여러 HTML 파일에서 이 검색이 실행될 때 파일이 책에 나타나는 순서대로 처리됩니다. 자세한 내용은 :ref:`file_order_replace_all`을 참조하세요."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:154
 msgid "Auto create a Table of Contents"
-msgstr ""
+msgstr "목차 자동 생성"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:156
 msgid ""
-"Finally, lets try something a little more ambitious. Suppose your book has "
+"Finally, let's try something a little more ambitious. Suppose your book has "
 "headings in ``h1`` and ``h2`` tags that look like ``<h1 id=\"someid\">Some "
 "Text</h1>``. We will auto-generate an HTML Table of Contents based on these "
 "headings. Create the custom function below:"
-msgstr ""
+msgstr "마지막으로 좀 더 도전적인 것을 시도해 보겠습니다. 책에 ``<h1 id=\"someid\">Some Text</h1>``처럼 보이는 ``h1`` 및 ``h2`` 태그의 머리글이 있다고 가정합니다. 이러한 머리글을 기반으로 HTML 목차를 자동 생성하겠습니다. 아래의 사용자 지정 함수를 만드세요:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:199
 msgid "And use it with the find expression::"
-msgstr ""
+msgstr "다음 찾기 표현식과 함께 사용하세요::"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:203
 msgid ""
 "Run the search on :guilabel:`All text files` and at the end of the search, a"
 " window will popup with \"Debug output from your function\" which will have "
 "the HTML Table of Contents, ready to be pasted into :file:`toc.html`."
-msgstr ""
+msgstr ":guilabel:`모든 텍스트 파일`에서 검색을 실행하면 검색이 끝날 때 \"함수의 디버그 출력\" 창이 팝업되며, 여기에 :file:`toc.html`에 붙여넣을 준비가 된 HTML 목차가 포함됩니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:207
 msgid ""
@@ -216,7 +216,7 @@ msgid ""
 "``replace()`` function, the ``data`` object. The ``data`` object is a Python"
 " *dictionary* that persists between all successive invocations of "
 "``replace()`` during a single :guilabel:`Replace All` operation."
-msgstr ""
+msgstr "위 함수는 주석이 많이 달려 있어 따라하기 쉬울 것입니다. 핵심적인 새로운 기능은 ``replace()`` 함수의 또 다른 유용한 추가 인수인 ``data`` 객체의 사용입니다. ``data`` 객체는 단일 :guilabel:`모두 바꾸기` 작업 동안 ``replace()``의 모든 연속 호출 사이에 지속되는 Python *딕셔너리*입니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:213
 msgid ""
@@ -224,7 +224,7 @@ msgid ""
 "to ``True`` on the ``replace()`` function means that the editor will call "
 "``replace()`` one extra time after all matches have been found. For this "
 "extra call, the match object will be ``None``."
-msgstr ""
+msgstr "또 다른 새로운 기능은 ``call_after_last_match``의 사용입니다. ``replace()`` 함수에서 이를 ``True``로 설정하면 편집기가 모든 일치 항목을 찾은 후 ``replace()``를 한 번 더 호출합니다. 이 추가 호출에서 match 객체는 ``None``이 됩니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:218
 msgid ""
@@ -232,17 +232,17 @@ msgid ""
 " really needed to generate a Table of Contents from headings in your book, "
 "you would be better off using the dedicated Table of Contents tool in "
 ":guilabel:`Tools->Table of Contents`."
-msgstr ""
+msgstr "이것은 함수 모드의 강력함을 보여주기 위한 데모일 뿐입니다. 실제로 책의 머리글에서 목차를 생성해야 한다면 :guilabel:`도구->목차`의 전용 목차 도구를 사용하는 것이 더 좋습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:224
 msgid "The API for the function mode"
-msgstr ""
+msgstr "함수 모드의 API"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:226
 msgid ""
 "All function mode functions must be Python functions named replace, with the"
 " following signature::"
-msgstr "모든 함수 모드 함수는 다음 서명과 함께 replace라는 이름의 Python 함수여야 합니다::"
+msgstr "모든 함수 모드 함수는 다음 서명을 가진 replace라는 이름의 Python 함수여야 합니다::"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:232
 msgid ""
@@ -251,11 +251,11 @@ msgid ""
 "match. If no replacements are to be done, it should return ``match.group()``"
 " which is the original string. The various arguments to the ``replace()`` "
 "function are documented below."
-msgstr ""
+msgstr "찾아 바꾸기가 실행되면, 발견된 각 일치 항목에 대해 ``replace()`` 함수가 호출되며, 해당 일치 항목에 대한 대체 문자열을 반환해야 합니다. 대체를 수행하지 않아야 하는 경우 원본 문자열인 ``match.group()``을 반환해야 합니다. ``replace()`` 함수의 다양한 인수는 아래에 설명되어 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:239
 msgid "The ``match`` argument"
-msgstr ""
+msgstr "``match`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:241
 msgid ""
@@ -264,22 +264,22 @@ msgid ""
 " most useful method is ``group()`` which can be used to get the matched text"
 " corresponding to individual capture groups in the search regular "
 "expression."
-msgstr ""
+msgstr "``match`` 인수는 현재 발견된 일치 항목을 나타냅니다. `Python Match 객체 <https://docs.python.org/library/re.html#match-objects>`_입니다. 가장 유용한 메서드는 ``group()``으로, 검색 정규 표현식의 개별 캡처 그룹에 해당하는 일치 텍스트를 가져오는 데 사용할 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
-msgstr ""
+msgstr "``number`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:250
 msgid ""
 "The ``number`` argument is the number of the current match. When you run "
 ":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
 "be called with an increasing number. The first match has number 1."
-msgstr ""
+msgstr "``number`` 인수는 현재 일치 항목의 번호입니다. :guilabel:`모두 바꾸기`를 실행하면 각 연속 일치 항목에 대해 ``replace()``가 증가하는 번호로 호출됩니다. 첫 번째 일치 항목은 번호 1입니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
-msgstr ""
+msgstr "``file_name`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:257
 msgid ""
@@ -287,11 +287,11 @@ msgid ""
 "searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
 "is in canonical form, a path relative to the root of the book, using ``/`` "
 "as the path separator."
-msgstr ""
+msgstr "이것은 현재 일치 항목이 발견된 파일의 파일명입니다. 표시된 텍스트 내에서 검색할 때 ``file_name``은 비어 있습니다. ``file_name``은 정규 형식으로, ``/``를 경로 구분자로 사용하여 책의 루트에 상대적인 경로입니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
-msgstr ""
+msgstr "``metadata`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:265
 msgid ""
@@ -300,11 +300,11 @@ msgid ""
 ":class:`calibre.ebooks.metadata.book.base.Metadata`. Useful attributes "
 "include, ``title``, ``authors`` (a list of authors) and ``language`` (the "
 "language code)."
-msgstr ""
+msgstr "이것은 제목, 저자, 언어 등과 같은 현재 책의 메타데이터를 나타냅니다. :class:`calibre.ebooks.metadata.book.base.Metadata` 클래스의 객체입니다. 유용한 속성으로는 ``title``, ``authors`(저자 목록), ``language``(언어 코드)가 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:271
 msgid "The ``dictionaries`` argument"
-msgstr ""
+msgstr "``dictionaries`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:273
 msgid ""
@@ -312,11 +312,11 @@ msgid ""
 "current book. Its most useful method is ``dictionaries.recognized(word)`` "
 "which will return ``True`` if the passed in word is recognized by the "
 "dictionary for the current book's language."
-msgstr ""
+msgstr "이것은 현재 책의 철자 검사에 사용되는 사전 모음을 나타냅니다. 가장 유용한 메서드는 ``dictionaries.recognized(word)``로, 전달된 단어가 현재 책의 언어에 대한 사전에서 인식되면 ``True``를 반환합니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
-msgstr ""
+msgstr "``data`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:281
 msgid ""
@@ -324,25 +324,25 @@ msgid ""
 "every successive match will cause ``replace()`` to be called with the same "
 "``dictionary`` as data. You can thus use it to store arbitrary data between "
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
-msgstr ""
+msgstr "이것은 간단한 Python ``dictionary``입니다. :guilabel:`모두 바꾸기`를 실행하면 각 연속 일치 항목에 대해 동일한 ``dictionary``가 data로 ``replace()``가 호출됩니다. 따라서 :guilabel:`모두 바꾸기` 작업 동안 ``replace()`` 호출 사이에 임의의 데이터를 저장하는 데 사용할 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"
-msgstr ""
+msgstr "``functions`` 인수"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:290
 msgid ""
 "The ``functions`` argument gives you access to all other user defined "
 "functions. This is useful for code re-use. You can define utility functions "
 "in one place and re-use them in all your other functions. For example, "
-"suppose you create a function name ``My Function`` like this:"
-msgstr ""
+"suppose you create a function named ``My Function`` like this:"
+msgstr "``functions`` 인수는 다른 모든 사용자 정의 함수에 대한 접근을 제공합니다. 이는 코드 재사용에 유용합니다. 한 곳에서 유틸리티 함수를 정의하고 다른 모든 함수에서 재사용할 수 있습니다. 예를 들어, ``My Function``이라는 함수를 다음과 같이 만든다고 가정합니다:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:303
 msgid ""
 "Then, in another function, you can access the ``utility()`` function like "
 "this:"
-msgstr ""
+msgstr "그러면 다른 함수에서 ``utility()`` 함수에 다음과 같이 접근할 수 있습니다:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:311
 msgid ""
@@ -351,11 +351,11 @@ msgid ""
 "when run with :guilabel:`Replace All` collects some data and another "
 "function that uses it when it is run afterwards. Consider the following two "
 "functions:"
-msgstr ""
+msgstr "함수 객체를 사용하여 영속적인 데이터를 저장하고 다른 함수에서 재사용할 수도 있습니다. 예를 들어, :guilabel:`모두 바꾸기`와 함께 실행될 때 일부 데이터를 수집하는 하나의 함수와 나중에 실행될 때 해당 데이터를 사용하는 another 함수를 만들 수 있습니다. 다음 두 함수를 고려하세요:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:331
 msgid "Debugging your functions"
-msgstr "사용자 기능 문제해결"
+msgstr "함수 디버깅"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:333
 msgid ""
@@ -363,31 +363,32 @@ msgid ""
 "function from Python. The output of print will be displayed in a popup "
 "window after the Find/replace has completed. You saw an example of using "
 "``print()`` to output an entire table of contents above."
-msgstr ""
+msgstr "Python의 표준 ``print()`` 함수를 사용하여 만든 함수를 디버그할 수 있습니다. print의 출력은 찾아 바꾸기가 완료된 후 팝업 창에 표시됩니다. 위에서 ``print()``를 사용하여 전체 목차를 출력하는 예시를 보았습니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
-msgstr ""
+msgstr "여러 HTML 파일에서 실행할 때 파일 순서 선택"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:343
 msgid ""
 "When you run a :guilabel:`Replace all` on multiple HTML files, the order in "
-"which the files are processes depends on what files you have open for "
-"editing. You can force the search to process files in the order in which the"
-" appear by setting the ``file_order`` attribute on your function, like this:"
-msgstr ""
+"which the files are processed depends on what files you have open for "
+"editing. You can force the search to process files in the order in which "
+"they appear by setting the ``file_order`` attribute on your function, like "
+"this:"
+msgstr "여러 HTML 파일에서 :guilabel:`모두 바꾸기`를 실행하면 파일이 처리되는 순서는 편집을 위해 열어둔 파일에 따라 달라집니다. 함수에서 ``file_order`` 속성을 설정하여 파일이 나타나는 순서대로 검색이 처리되도록 강제할 수 있습니다:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:355
 msgid ""
 "``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
 "cause the search to process multiple files in the order they appear in the "
 "book, either forwards or backwards, respectively."
-msgstr ""
+msgstr "``file_order``는 ``spine``과 ``spine-reverse`` 두 값을 받으며, 각각 책에 나타나는 순서대로 또는 역순으로 여러 파일을 처리하도록 합니다."
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:360
 msgid ""
 "Having your function called an extra time after the last match is found"
-msgstr ""
+msgstr "마지막 일치 항목을 찾은 후 함수를 한 번 더 호출하기"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:362
 msgid ""
@@ -395,38 +396,38 @@ msgid ""
 "useful to have your function called an extra time after the last match is "
 "found. You can do this by setting the ``call_after_last_match`` attribute on"
 " your function, like this:"
-msgstr ""
+msgstr "때때로 위의 목차 자동 생성 예시처럼 마지막 일치 항목을 찾은 후 함수를 한 번 더 호출하는 것이 유용합니다. 함수에서 ``call_after_last_match`` 속성을 설정하여 이를 수행할 수 있습니다:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:376
 msgid "Appending the output from the function to marked text"
-msgstr ""
+msgstr "함수의 출력을 표시된 텍스트에 추가"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:378
 msgid ""
 "When running search and replace on marked text, it is sometimes useful to "
-"append so text to the end of the marked text. You can do that by setting the"
-" ``append_final_output_to_marked`` attribute on your function (note that you"
-" also need to set ``call_after_last_match``), like this:"
-msgstr ""
+"append some text to the end of the marked text. You can do that by setting "
+"the ``append_final_output_to_marked`` attribute on your function (note that "
+"you also need to set ``call_after_last_match``), like this:"
+msgstr "표시된 텍스트에서 찾아 바꾸기를 실행할 때 표시된 텍스트 끝에 일부 텍스트를 추가하는 것이 유용할 수 있습니다. 함수에서 ``append_final_output_to_marked`` 속성을 설정하여 이를 수행할 수 있습니다(``call_after_last_match``도 설정해야 합니다):"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:393
 msgid "Suppressing the result dialog when performing searches on marked text"
-msgstr ""
+msgstr "표시된 텍스트에서 검색 수행 시 결과 대화상자 표시 안 함"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:395
 msgid ""
 "You can also suppress the result dialog (which can slow down the repeated "
 "application of a search/replace on many blocks of text) by setting the "
 "``suppress_result_dialog`` attribute on your function, like this:"
-msgstr ""
+msgstr "함수에서 ``suppress_result_dialog`` 속성을 설정하여 결과 대화상자(여러 텍스트 블록에 대한 찾아 바꾸기의 반복 적용을 느리게 할 수 있음)를 표시하지 않도록 할 수도 있습니다:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"
-msgstr ""
+msgstr "더 많은 예시"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:410
 msgid ""
 "More useful examples, contributed by calibre users, can be found in the "
 "`calibre E-book editor forum "
 "<https://www.mobileread.com/forums/showthread.php?t=237181>`_."
-msgstr ""
+msgstr "calibre 사용자가 기여한 더 유용한 예시는 `calibre 전자책 편집기 포럼 <https://www.mobileread.com/forums/showthread.php?t=237181>`_에서 확인할 수 있습니다."

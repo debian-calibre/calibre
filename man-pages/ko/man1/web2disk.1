@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "WEB2DISK" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "WEB2DISK" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .INDENT 0.0
@@ -40,19 +40,23 @@ web2disk URL
 .UNINDENT
 .UNINDENT
 .sp
-Where URL is for example: \%<https://\:google\:.com>
+여기서 URL의 예시는 다음과 같습니다: \%<https://\:google\:.com>
 .sp
-Whenever you pass arguments to \fBweb2disk\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+web2disk\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-base\-dir, \-d
-Base folder into which URL is saved. Default is .
+URL을 저장할 기본 폴더입니다. 기본값은 .입니다
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-delay
-Minimum interval in seconds between consecutive fetches. Default is 0 s
+연속 가져오기 사이의 최소 간격(초)입니다. 기본값은 0초입니다
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -67,7 +71,7 @@ CSS 스타일시트를 다운로드하지 않음.
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-Any link that matches this regular expression will be ignored. This option can be specified multiple times, in which case as long as any regexp matches a link, it will be ignored. By default, no links are ignored. If both filter regexp and match regexp are specified, then filter regexp is applied first.
+이 정규식과 일치하는 링크는 모두 무시합니다. 이 옵션은 여러 번 지정할 수 있으며, 링크가 정규식 중 어느 하나와라도 일치하면 무시됩니다. 기본적으로는 무시되는 링크가 없습니다. filter 정규식과 match 정규식이 모두 지정되면 filter 정규식이 먼저 적용됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -77,7 +81,7 @@ Any link that matches this regular expression will be ignored. This option can b
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-Only links that match this regular expression will be followed. This option can be specified multiple times, in which case as long as a link matches any one regexp, it will be followed. By default all links are followed.
+이 정규식과 일치하는 링크만 따라갑니다. 이 옵션은 여러 번 지정할 수 있으며, 링크가 지정한 정규식 중 하나와라도 일치하면 따라갑니다. 기본적으로는 모든 링크를 따라갑니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -87,7 +91,7 @@ Only links that match this regular expression will be followed. This option can 
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-Maximum number of levels to recurse i.e. depth of links to follow. Default 1
+재귀할 최대 단계 수, 즉 따라갈 링크 깊이입니다. 기본값은 1입니다.
 .UNINDENT
 .INDENT 0.0
 .TP

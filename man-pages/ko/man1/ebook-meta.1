@@ -28,29 +28,31 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-META" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "EBOOK-META" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-meta ebook_file [options]
+ebook\-meta 전자책_파일 [옵션]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+전자책 파일에서 메타데이터를 읽고 씁니다.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+메타데이터 읽기를 지원하는 형식: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+메타데이터 쓰기를 지원하는 형식: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+파일 형식마다 지원하는 메타데이터 종류가 다릅니다. 지원하지 않는 메타데이터를 어떤 파일 형식에 설정하려고 하면 그 메타데이터는 조용히 무시됩니다.
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+ebook\-meta\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
@@ -70,7 +72,7 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-category
-책 범주를 지정합니다.
+책 분류를 지정합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -90,12 +92,12 @@ Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclo
 .INDENT 0.0
 .TP
 .B \-\-disallow\-rendered\-cover
-For formats like EPUB that use a \fB\(dq\fPdefault cover\fB\(dq\fP of the first page rendered, disallow such default covers
+렌더링된 첫 페이지를 \fB\(dq\fP기본 표지\fB\(dq\fP로 사용하는 EPUB 같은 형식에서 그런 기본 표지를 허용하지 않음
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-지정한 OPF 파일에서 책정보를 읽어서 전자책의 책정보로 지정합니다. 커맨드 라인에서 지정한 책정보는 OPF 파일에서 읽은 책정보를 무시합니다
+지정한 OPF 파일에서 메타데이터를 읽어 전자책에 설정합니다. 명령줄에서 지정한 메타데이터가 OPF 파일에서 읽은 메타데이터를 덮어씁니다.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -40,23 +40,35 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+SMTP 프로토콜을 사용해 메일을 보냅니다. :command:
+.nf
+\(ga
+.fi
+calibre\-smtp\(ga에는 두 가지 동작 모드가 있습니다. 작성 모드에서는 from, to, text를 지정하며, 이것들로 이메일 메시지를 만들어 보냅니다. 필터 모드에서는 :command:
+.nf
+\(ga
+.fi
+calibre\-smtp\(ga가 STDIN에서 완전한 이메일 메시지를 읽어 전송합니다.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+text는 이메일 메시지 본문입니다.
+text를 지정하지 않으면 STDIN에서 완전한 이메일 메시지를 읽습니다.
+from은 발신자 이메일 주소이고 to는 수신자 이메일 주소입니다.
+STDIN에서 완전한 이메일을 읽을 때는 from과 to는 SMTP 협상에만 사용되며 메시지 헤더는 수정되지 않습니다.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+calibre\-smtp\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fB\-\-outbox\fP to handle delivery failures.
+포크하여 백그라운드에서 메시지를 전달합니다. 이 옵션을 사용할 경우 전달 실패 처리를 위해 :option:
+.nf
+\(ga
+.fi
+\-\-outbox\(ga도 함께 사용하는 것이 좋습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -66,12 +78,12 @@ Fork and deliver message in background. If you use this option, you should also 
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+localhost의 호스트 이름입니다. SMTP 서버에 연결할 때 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+실패한 이메일 메시지를 저장할 maildir 폴더 경로입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -81,7 +93,7 @@ Path to maildir folder to store failed email messages in.
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Be more verbose
+더 자세히 출력
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -90,7 +102,7 @@ Be more verbose
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+이메일 작성 옵션입니다. 텍스트를 지정하지 않으면 무시됩니다
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
@@ -99,45 +111,45 @@ Options to compose an email. Ignored if text is not specified
 .INDENT 0.0
 .TP
 .B \-\-subject, \-s
-Subject of the email
+이메일 제목
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+메일 전송에 SMTP 릴레이 서버를 사용하는 옵션입니다. \-\-relay가 지정되지 않으면 calibre는 이메일을 직접 전송하려고 시도합니다.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+TLS 사용 시 서버 인증서를 검증하는 데 사용할 PEM 형식 CA 인증서 연결 파일의 경로입니다. 기본적으로는 시스템 CA 인증서를 사용합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+TLS로 연결할 때 서버 인증서를 검증하지 않습니다. calibre 3.27 이전 버전에서는 이것이 기본 동작이었습니다. 자체 서명되었거나 그 밖에 유효하지 않은 인증서를 사용하는 릴레이를 쓴다면 이 옵션으로 3.27 이전 동작을 복원할 수 있습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+릴레이에 연결할 때 사용할 암호화 방식입니다. 선택지는 TLS, SSL, NONE이며 기본값은 TLS입니다. 경고: NONE을 선택하면 매우 안전하지 않습니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+릴레이 비밀번호
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+릴레이 서버에 연결할 포트입니다. 기본값은 암호화 방식이 SSL이면 465, 그렇지 않으면 25입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+메일 전송에 사용할 SMTP 릴레이 서버입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+릴레이 사용자 이름
 .UNINDENT
 .SH Author
 Kovid Goyal

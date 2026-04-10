@@ -28,42 +28,46 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-debug [options]
+calibre\-debug [옵션]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+calibre 디버깅에 유용한 다양한 명령줄 인터페이스입니다. 옵션 없이 실행하면
+내장된 Python 인터프리터를 시작합니다. 또한 calibre 기본 GUI, calibre
+전자책 뷰어, calibre 편집기를 디버그 모드로 실행할 수도 있습니다.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+이 명령에는 전용 명령줄 도구가 없는 calibre 기능들, 예를 들면 글꼴 서브셋 생성,
+전자책 비교 도구 같은 기능에 대한 인터페이스도 포함되어 있습니다.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+또한 \fBcalibre\-debug\fP 를 사용해 독립 실행형 스크립트를 실행할 수도 있습니다. 사용 방법은
+다음과 같습니다:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+\-\- 뒤의 모든 내용은 스크립트로 전달됩니다. 스크립트에서 \fBcalibre\-debug\fP 를
+shebang 으로 사용할 수도 있습니다. 예를 들면 다음과 같습니다:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+calibre\-debug\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
@@ -93,7 +97,7 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+캘리버 \fB\(dq\fP책 편집\fB\(dq\fP 도구를 디버그 모드로 실행합니다. \-g와 마찬가지로 명령줄 인수를 전달하려면 \-\-를 사용하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -108,17 +112,17 @@ Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fB\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+모든 calibre 데이터(책/설정/플러그인)를 내보냅니다. 보통은 내보내기 폴더와 내보낼 라이브러리를 묻습니다. 질문을 건너뛰려면 명령줄 인수로 직접 지정할 수도 있습니다. 내보내기 폴더와 라이브러리에는 절대 경로를 사용하십시오. 특수 키워드 \fB\(dq\fPall\fB\(dq\fP 을 사용하면 모든 라이브러리를 내보낼 수 있습니다. 예:    calibre\-debug \fB\-\-export\-all\-calibre\-data\fP  # 대화형 사용   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /export/folder all  # 알려진 모든 라이브러리 내보내기
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
+디버깅을 활성화한 상태로 GUI를 실행합니다. 디버그 출력은 stdout과 stderr로 표시됩니다. 명령줄 인수를 전달하려면 \fB\-\-\fP 뒤에 인수를 붙여 사용하십시오. 예: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-지정되 경로에 로그를 남기며, GUI를 디버그 콘솔과 함께 실행합니다. 내부 용도 한정으로, 디버그 모드로 GUI를 띄우려면 \-g 옵션을 사용하세요.
+지정한 경로에 로그를 기록하면서 GUI를 디버그 콘솔과 함께 실행합니다. 내부 용도 전용이며, GUI를 디버그 모드로 실행하려면 \-g 옵션을 사용하십시오.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,7 +132,7 @@ Run the GUI with debugging enabled. Debug output is printed to stdout and stderr
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fB\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+이전에 분해한 책을 다시 합칩니다. 사용법: \-i output_dir file.epub 이전의 \fB\-\-explode\-book\fP 호출로 생성된 output_dir 의 파일들로부터 책을 가져옵니다. 분해할 때 사용한 것과 같은 파일 형식을 지정해야 합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -143,7 +147,7 @@ Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the 
 .INDENT 0.0
 .TP
 .B \-\-kepubify
-Convert the specified EPUB file to KEPUB without doing a full conversion. This is what the Kobo driver does when sending files to the device.
+전체 변환을 수행하지 않고 지정한 EPUB 파일을 KEPUB로 변환합니다. Kobo 드라이버가 파일을 장치로 보낼 때 수행하는 방식입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -153,17 +157,17 @@ Convert the specified EPUB file to KEPUB without doing a full conversion. This i
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+명령줄 인터페이스를 제공하는 플러그인을 실행합니다. 예: calibre\-debug \-r \fB\(dq\fP플러그인 이름\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP \fB\-\-\fP 뒤의 모든 내용은 인수로 플러그인에 전달됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+디버깅을 활성화한 상태로 GUI를 실행합니다. 디버그 출력은 stdout과 stderr에 기록됩니다. 명령줄 인수를 전달하려면 \fB\-\-\fP 뒤에 인수를 붙이십시오. 예: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-without\-debug
-Don\fB\(aq\fPt run with the DEBUG flag set
+DEBUG 플래그를 설정한 채 실행하지 마세요
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -183,7 +187,7 @@ Don\fB\(aq\fPt run with the DEBUG flag set
 .INDENT 0.0
 .TP
 .B \-\-un\-kepubify
-Convert the specified KEPUB file to EPUB without doing a full conversion. This is what the Kobo driver does when importing files from the device.
+전체 변환을 수행하지 않고 지정한 KEPUB 파일을 EPUB로 변환합니다. Kobo 드라이버가 장치에서 파일을 가져올 때 수행하는 방식입니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -193,7 +197,7 @@ Convert the specified KEPUB file to EPUB without doing a full conversion. This i
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+전자책 뷰어를 디버그 모드로 실행합니다. \-g와 마찬가지로 명령줄 인수를 전달하려면 \-\-를 사용하세요.
 .UNINDENT
 .SH Author
 Kovid Goyal

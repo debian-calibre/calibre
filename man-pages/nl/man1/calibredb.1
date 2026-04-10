@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "maart 27, 2026" "9.6.0" "calibre"
+.TH "CALIBREDB" "1" "april 10, 2026" "9.7.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,17 +40,46 @@ calibredb \- calibredb
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is de opdrachtregelinterface voor de Calibre\-database. Het heeft verschillende subopdrachten, die hieronder worden beschreven. \fBcalibredb\fP kan worden gebruikt om een Calibre\-database te bewerken die is opgegeven door een pad, of een Calibre Content server die op de lokale computer of via internet draait. U kunt een Calibre Content server starten met behulp van het programma \fBcalibre\-server\fP of door in het hoofdprogramma van Calibre op Connect/share  →  Start Content server te klikken. Aangezien \fBcalibredb\fP wijzigingen kan aanbrengen in uw Calibre\-bibliotheken, moet u eerst authenticatie op de server instellen. Er zijn twee manieren om dat te doen:
+\fBcalibredb\fP is the command line interface to the calibre database. It has
+several sub\-commands, documented below.
+.sp
+\fBcalibredb\fP can be used to manipulate either a calibre database
+specified by path or a calibre Content server running either on
+the local machine or over the internet. You can start a calibre
+Content server using either the \fBcalibre\-server\fP
+program or in the main calibre program click Connect/share  → 
+Start Content server\&. Since \fBcalibredb\fP can make changes to your
+calibre libraries, you must setup authentication on the server first. There
+are two ways to do that:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Als u alleen verbinding wilt maken met een server die op dezelfde computer draait, kunt u gewoon de optie \fB\-\-enable\-local\-write\fP van de inhoudsserver gebruiken, zodat elk programma, inclusief calibredb, dat op de lokale computer draait, wijzigingen kan aanbrengen in uw Calibre\-gegevens. Wanneer u de server vanuit het hoofdprogramma van Calibre uitvoert, vindt u deze optie in Voorkeuren → Delen via het netwerk → Geavanceerd\&. Wees echter voorzichtig, want sommige browsers, met name Firefox, staan willekeurige websites ook toegang tot lokale servers toe. Als u Firefox gebruikt, kunt u beter een gebruikersnaam en wachtwoord instellen, zoals hieronder beschreven. * Als u toegang via internet wilt inschakelen, moet u
-gebruikersaccounts op de server instellen en de opties \fB\-\-username\fP en \fB\-\-password\fP gebruiken voor \fBcalibredb\fP om toegang te verlenen. U kunt gebruikersauthenticatie instellen voor \fBcalibre\-server\fP door de optie \fB\-\-enable\-auth\fP te gebruiken en \fB\-\-manage\-users\fP te gebruiken om de gebruikersaccounts aan te maken.
-Als u de server vanuit het hoofdprogramma van Calibre uitvoert, gebruikt u Voorkeuren → Delen via het netwerk → Gebruikersnaam/wachtwoord vereist\&. Om verbinding te maken met een actieve inhoudsserver, geeft u de URL van de server door aan de optie \fB\-\-with\-library\fP\&. Raadpleeg de documentatie van die optie voor meer informatie en voorbeelden.
+If you plan to connect only to a server running on the same computer,
+you can simply use the \fB\-\-enable\-local\-write\fP option of the
+Content server, to allow any program, including calibredb, running on
+the local computer to make changes to your calibre data. When running
+the server from the main calibre program, this option is in
+Preferences → Sharing over the net → Advanced\&. Be careful though,
+because some browsers, primarily Firefox, allow arbitrary websites to also
+access local servers. If you use Firefox, it is better to setup username
+and password, as described below. Local Network Access restriction has
+still not been implemented as of Firefox v149.
+.IP \(bu 2
+If you want to enable access over the internet, then you should setup
+user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
+options to \fBcalibredb\fP to give it access. You can setup
+user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
+option and using \fB\-\-manage\-users\fP to create the user accounts.
+If you are running the server from the main calibre program, use
+Preferences → Sharing over the net → Require username/password\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
+.sp
+To connect to a running Content server, pass the URL of the server to the
+\fB\-\-with\-library\fP option, see the documentation of that option for
+details and examples.
 .INDENT 0.0
 .IP \(bu 2
 ALGEMENE OPTIES

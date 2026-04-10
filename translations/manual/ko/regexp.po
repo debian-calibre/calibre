@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Junghee Lee <daemul72@gmail.com>, 2022-2023
+# Junghee Lee <daemul72@gmail.com>, 2022-2023,2026
 # Junghee Lee <daemul72@gmail.com>, 2021-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 08:11+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2026\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,27 +19,27 @@ msgstr ""
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:4
+#: ../../../__w/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
-msgstr ""
+msgstr "calibre에서 정규 표현식 사용하기"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:6
+#: ../../../__w/calibre/calibre/manual/regexp.rst:6
 msgid ""
 "Regular expressions are features used in many places in calibre to perform "
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
 "a gentle introduction to getting you started with using regular expressions "
 "in calibre."
-msgstr "정규식은 전자책 콘텐츠 및 메타데이터의 정교한 조작을 수행하기 위해 캘리버의 여러 곳에서 사용되는 특정 기능들입니다. 이 튜토리얼은 캘리버에서 정규식을 사용하는 방법을 소개합니다."
+msgstr "정규 표현식은 전자책 콘텐츠 및 메타데이터의 정교한 조작을 수행하기 위해 calibre의 여러 곳에서 사용되는 기능입니다. 이 튜토리얼은 calibre에서 정규 표현식을 사용하는 방법을 쉽게 소개합니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:11
+#: ../../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
 msgstr "목차"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:14
+#: ../../../__w/calibre/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
-msgstr ""
+msgstr "먼저, 경고와 용기의 말씀"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:16
+#: ../../../__w/calibre/calibre/manual/regexp.rst:16
 msgid ""
 "This is, inevitably, going to be somewhat technical- after all, regular "
 "expressions are a technical tool for doing technical stuff. I'm going to "
@@ -53,13 +53,13 @@ msgid ""
 "regular expressions really well have trouble reading the more complex ones, "
 "but writing them isn't as difficult- you construct the expression step by "
 "step. So, take a step and follow me into the rabbit hole."
-msgstr ""
+msgstr "이것은 어쩔 수 없이 약간 기술적일 것입니다. 어쨌든 정규 표현식은 기술적인 작업을 수행하는 기술적 도구이니까요. 복잡하거나 난해해 보일 수 있는 몇 가지 전문 용어와 개념을 사용해야 합니다. 가능한 한 명확하게 설명하려고 노력하겠지만, 전혀 사용하지 않을 수는 없습니다. 그렇다고 해도 새로운 것은 모두 설명하려고 했으므로 전문 용어에 좌절하지 마세요. 정규 표현식 자체는 신비롭고 마법 같은 것(또는 좀 더 평범하게 말하면 무작위의 난해한 문자와 기호의 나열)처럼 보일 수 있지만, 그렇게 복잡하지 않다고 약속합니다. 정규 표현식을 정말 잘 이해하는 사람들도 더 복잡한 것을 읽는 데 어려움을 겪지만, 작성하는 것은 그렇게 어렵지 않습니다. 표현식을 단계별로 구성하면 됩니다. 그럼 한 걸음 내딛고 토끼 굴 속으로 따라오세요."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:19
+#: ../../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
-msgstr ""
+msgstr "calibre 어디에서 정규 표현식을 사용할 수 있나요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:21
+#: ../../../__w/calibre/calibre/manual/regexp.rst:21
 msgid ""
 "There are a few places calibre uses regular expressions. There's the "
 ":guilabel:`Search & replace` in conversion options, metadata detection from "
@@ -68,21 +68,21 @@ msgid ""
 "expressions in its :guilabel:`Search and replace` feature. Finally, you can "
 "use regular expressions when searching the calibre book list and when "
 "searching inside the calibre E-book viewer."
-msgstr ""
+msgstr "calibre에서 정규 표현식을 사용하는 곳이 몇 군데 있습니다. 변환 옵션의 :guilabel:`찾아 바꾸기`, 가져오기 설정의 파일명에서 메타데이터 감지, 그리고 여러 책의 메타데이터를 일괄 편집할 때의 찾아 바꾸기가 있습니다. calibre 책 편집기에서도 :guilabel:`찾아 바꾸기` 기능에서 정규 표현식을 사용할 수 있습니다. 마지막으로 calibre 책 목록을 검색하거나 calibre 전자책 뷰어 안에서 검색할 때 정규 표현식을 사용할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:30
+#: ../../../__w/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
-msgstr ""
+msgstr "정규 표현식이 *도대체* 무엇인가요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:32
+#: ../../../__w/calibre/calibre/manual/regexp.rst:32
 msgid ""
 "A regular expression is a way to describe sets of strings. A single regular "
 "expression can *match* a number of different strings. This is what makes "
 "regular expression so powerful -- they are a concise way of describing a "
 "potentially large number of variations."
-msgstr ""
+msgstr "정규 표현식은 문자열의 집합을 설명하는 방법입니다. 하나의 정규 표현식으로 여러 가지 다른 문자열과 *일치*시킬 수 있습니다. 이것이 정규 표현식이 강력한 이유입니다. 잠재적으로 많은 수의 변형을 간결하게 설명할 수 있는 방법이기 때문입니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:34
+#: ../../../__w/calibre/calibre/manual/regexp.rst:34
 msgid ""
 "I'm using string here in the sense it is used in programming languages: a "
 "string of one or more characters, characters including actual characters, "
@@ -95,13 +95,13 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr ""
+msgstr "여기서 문자열은 프로그래밍 언어에서 사용되는 의미로 사용합니다. 즉, 하나 이상의 문자로 이루어진 문자열이며, 문자에는 실제 문자, 숫자, 구두점, 그리고 공백 문자(줄바꿈, 탭 등)가 포함됩니다. 일반적으로 대문자와 소문자는 같지 않은 것으로 간주됩니다. 따라서 \"a\"는 \"A\"와 다른 문자입니다. calibre에서 정규 표현식은 검색 표시줄에서는 대소문자를 구분하지 않지만, 변환 옵션에서는 대소문자를 구분합니다. 모든 정규 표현식의 대소문자 구분을 없애는 방법이 있지만, 나중에 설명하겠습니다. 정규 표현식이 일치하는 문자열의 변형을 허용하므로 하나의 표현식이 여러 문자열과 일치할 수 있어 복잡해집니다. 이것이 사람들이 정규 표현식을 사용하는 이유입니다. 이에 대해서는 조금 더 설명하겠습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:37
+#: ../../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
-msgstr ""
+msgstr "설명해 주시겠어요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:39
+#: ../../../__w/calibre/calibre/manual/regexp.rst:39
 msgid ""
 "Well, that's why we're here. First, this is the most important concept in "
 "regular expressions: *A string by itself is a regular expression that "
@@ -111,13 +111,13 @@ msgid ""
 "though, that this *only* matches the exact string ``\"Hello, World!\"``, not"
 " e.g. ``\"Hello, wOrld!\"`` or ``\"hello, world!\"`` or any other such "
 "variation."
-msgstr ""
+msgstr "글쎄요, 그래서 우리가 여기 있는 거죠. 먼저, 정규 표현식에서 가장 중요한 개념입니다: *문자열 자체가 자기 자신과 일치하는 정규 표현식입니다*. 즉, 정규 표현식을 사용하여 문자열 ``\"Hello, World!\"``과 일치시키고 싶다면 사용할 정규 표현식은 ``Hello, World!``입니다. 네, 정말 그렇게 간단합니다. 하지만 이것은 정확한 문자열 ``\"Hello, World!\"``와 *만* 일치하며, 예를 들어 ``\"Hello, wOrld!\"``나 ``\"hello, world!\"`` 또는 그 밖의 변형과는 일치하지 않는다는 점을 알 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:42
+#: ../../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
-msgstr ""
+msgstr "그리 나쁘지 않네요. 다음은요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:44
+#: ../../../__w/calibre/calibre/manual/regexp.rst:44
 msgid ""
 "Next is the beginning of the really good stuff. Remember where I said that "
 "regular expressions can match multiple strings? This is where it gets a "
@@ -137,13 +137,13 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr ""
+msgstr "다음은 정말 좋은 것들의 시작입니다. 정규 표현식이 여러 문자열과 일치할 수 있다고 했던 것을 기억하시죠? 여기서부터 조금 더 복잡해집니다. 좀 더 실용적인 연습으로, 변환하려는 전자책에 \"Page 5 of 423\"과 같이 페이지를 세는 성가신 꼬리말이 있다고 가정합니다. 당연히 페이지 번호는 1부터 423까지 올라가므로 423개의 다른 문자열과 일치시켜야 할 것 같죠? 아닙니다. 정규 표현식은 일치시킬 문자의 집합을 정의할 수 있게 해줍니다. 집합을 정의하려면 집합에 포함하려는 모든 문자를 대괄호 안에 넣습니다. 예를 들어, 집합 ``[abc]``는 문자 \"a\", \"b\" 또는 \"c\" 중 하나와 일치합니다. *집합은 항상 집합 안의 문자 중 하나와만 일치합니다*. 문자 범위를 \"이해\"합니다. 즉, 모든 소문자와 일치시키려면 집합 ``[a-z]``를 사용하고, 대소문자 모두와 일치시키려면 ``[a-zA-Z]``를 사용하는 식입니다. 이해가 되시나요? 따라서 ``Page [0-9] of 423`` 표현식을 사용하면 처음 9페이지와 일치시킬 수 있으므로 필요한 표현식을 세 개로 줄일 수 있습니다. 두 번째 표현식 ``Page [0-9][0-9] of 423``은 모든 두 자리 페이지 번호와 일치하며, 세 번째 표현식이 어떻게 생겼을지 짐작이 되실 겁니다. 네, 적어보세요."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:47
+#: ../../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
-msgstr ""
+msgstr "오, 깔끔하네요! 이해가 되기 시작합니다!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:49
+#: ../../../__w/calibre/calibre/manual/regexp.rst:49
 msgid ""
 "I was hoping you'd say that. But brace yourself, now it gets even better! We"
 " just saw that using sets, we could match one of several characters at once."
@@ -167,9 +167,9 @@ msgid ""
 " matching page numbers, wouldn't that be the single one expression to match "
 "all the page numbers? Yes, the expression ``Page [0-9]+ of 423`` would match"
 " every page number in that book!"
-msgstr ""
+msgstr "그렇게 말해 주시길 바랐습니다. 하지만 마음의 준비를 하세요, 이제 더 좋아집니다! 방금 집합을 사용하면 여러 문자 중 하나와 일치시킬 수 있다는 것을 보았습니다. 하지만 문자나 집합을 반복할 수도 있어서, 위의 페이지 번호 예시를 처리하는 데 필요한 표현식 수를 하나로 줄일 수 있습니다. 네, 하나요! 흥분되시나요? 되어야 합니다! 이렇게 작동합니다. 일부 특수 문자인 \"+\", \"?\", \"*\"는 *앞에 오는 단일 요소를 반복합니다*. (요소는 단일 문자, 문자 집합, 이스케이프 시퀀스 또는 그룹(나중에 배울 것입니다)을 의미합니다. 즉, 정규 표현식의 단일 엔티티). 이 문자를 와일드카드 또는 한정자라고 합니다. 더 정확하게 말하면, \"?\"는 앞 요소의 *0개 또는 1개*와 일치하고, \"*\"는 앞 요소의 *0개 이상*과 일치하며, \"+\"는 앞 요소의 *1개 이상*과 일치합니다. 몇 가지 예시: ``a?`` 표현식은 \"\"(빈 문자열, 이 경우 엄밀히 말하면 유용하지 않음) 또는 \"a\"와 일치하고, ``a*`` 표현식은 \"\", \"a\", \"aa\" 또는 연속된 임의의 수의 a와 일치하며, 마지막으로 ``a+`` 표현식은 \"a\", \"aa\" 또는 연속된 임의의 수의 a와 일치합니다(참고: 빈 문자열과는 일치하지 않습니다!). 집합도 마찬가지입니다. ``[0-9]+`` 표현식은 *존재하는 모든 정수*와 일치합니다! 무슨 생각을 하고 계신지 알겠고, 맞습니다. 위의 페이지 번호 일치 사례에서 사용하면 모든 페이지 번호와 일치하는 단 하나의 표현식이 되지 않을까요? 네, ``Page [0-9]+ of 423`` 표현식은 그 책의 모든 페이지 번호와 일치합니다!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:52
+#: ../../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
 "A note on these quantifiers: They generally try to match as much text as "
 "possible, so be careful when using them. This is called \"greedy "
@@ -187,15 +187,15 @@ msgid ""
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
 " section. Just note that there quite frequently is more than one way to "
 "write a regular expression."
-msgstr ""
+msgstr "이 한정자들에 대한 참고 사항: 일반적으로 가능한 한 많은 텍스트와 일치하려고 시도하므로 사용할 때 주의하세요. 이를 \"탐욕스러운 동작\"이라고 합니다. 왜 그런지 이해가 되시죠? 예를 들어 태그와 일치시키려고 할 때 문제가 됩니다. 예를 들어, 문자열 ``\"<p class=\"calibre2\">Title here</p>\"``를 생각해 보세요. 여는 태그(첫 번째 꺾쇠괄호 쌍 사이의 부분, 태그에 대해서는 나중에 자세히 설명)와 일치시키고 싶다고 가정합니다. ``<p.*>`` 표현식이 해당 태그와 일치할 것이라고 생각할 수 있지만, 실제로는 전체 문자열과 일치합니다! (문자 \".\"는 또 다른 특수 문자입니다. 줄바꿈을 *제외한* 모든 것과 일치하므로, 기본적으로 ``.*`` 표현식은 생각할 수 있는 모든 단일 줄과 일치합니다). 대신 ``<p.*?>``를 사용해 보세요. 이는 한정자 ``\"*\"``를 비탐욕적으로 만듭니다. 해당 표현식은 의도한 대로 첫 번째 여는 태그와만 일치합니다. 사실 이를 달성하는 또 다른 방법이 있습니다. ``<p[^>]*>`` 표현식은 동일한 여는 태그와 일치합니다. 다음 섹션 후에 이유를 알게 될 것입니다. 정규 표현식을 작성하는 방법이 종종 하나 이상이라는 점만 알아두세요."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:56
+#: ../../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
-msgstr ""
+msgstr "이 특수 문자들이 아주 깔끔하지만, 점이나 물음표와 일치시키고 싶으면 어떻게 하나요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:58
+#: ../../../__w/calibre/calibre/manual/regexp.rst:58
 msgid ""
 "You can of course do that: Just put a backslash in front of any special "
 "character and it is interpreted as the literal character, without any "
@@ -208,62 +208,62 @@ msgid ""
 "the way, concerning those special characters: Consider any character we "
 "discuss in this introduction as having some function to be special and thus "
 "needing to be escaped if you want the literal character."
-msgstr ""
+msgstr "물론 그렇게 할 수 있습니다. 특수 문자 앞에 백슬래시를 넣기만 하면 특별한 의미 없이 문자 그대로의 문자로 해석됩니다. 백슬래시 뒤에 단일 문자가 오는 이 쌍을 이스케이프 시퀀스라고 하며, 특수 문자 앞에 백슬래시를 넣는 행위를 해당 문자 이스케이프라고 합니다. 이스케이프 시퀀스는 단일 요소로 해석됩니다. 특수 문자 이스케이프 외에 더 많은 작업을 수행하는 이스케이프 시퀀스도 있습니다. 예를 들어 ``\"\\t\"``는 탭을 의미합니다. 일부 이스케이프 시퀀스는 나중에 다루겠습니다. 그리고 참고로, 이 특수 문자들에 관하여: 이 소개에서 논의하는 모든 문자를 특수한 기능을 가진 것으로 간주하여 문자 그대로의 문자를 원한다면 이스케이프해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:61
+#: ../../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
-msgstr ""
+msgstr "그럼 가장 유용한 집합은 무엇인가요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:63
+#: ../../../__w/calibre/calibre/manual/regexp.rst:63
 msgid ""
 "Knew you'd ask. Some useful sets are ``[0-9]`` matching a single number, "
 "``[a-z]`` matching a single lowercase letter, ``[A-Z]`` matching a single "
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand:"
-msgstr ""
+msgstr "물론 물어보실 줄 알았습니다. 유용한 집합으로는 단일 숫자와 일치하는 ``[0-9]``, 단일 소문자와 일치하는 ``[a-z]``, 단일 대문자와 일치하는 ``[A-Z]``, 단일 문자와 일치하는 ``[a-zA-Z]``, 단일 문자 또는 숫자와 일치하는 ``[a-zA-Z0-9]``가 있습니다. 이스케이프 시퀀스를 단축형으로 사용할 수도 있습니다:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:70
+#: ../../../__w/calibre/calibre/manual/regexp.rst:69
 msgid "``\\d``"
-msgstr ""
+msgstr "``\\d``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:70
+#: ../../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "is equivalent to ``[0-9]``"
-msgstr ""
+msgstr "``[0-9]``와 동일합니다"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:74
+#: ../../../__w/calibre/calibre/manual/regexp.rst:72
 msgid "``\\w``"
-msgstr ""
+msgstr "``\\w``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:73
+#: ../../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "is equivalent to ``[a-zA-Z0-9_]``"
-msgstr ""
+msgstr "``[a-zA-Z0-9_]``와 동일합니다"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../../__w/calibre/calibre/manual/regexp.rst:76
 msgid "``\\s``"
-msgstr ""
+msgstr "``\\s``"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:77
+#: ../../../__w/calibre/calibre/manual/regexp.rst:77
 msgid "is equivalent to any whitespace"
-msgstr ""
+msgstr "모든 공백 문자와 동일합니다"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:80
+#: ../../../__w/calibre/calibre/manual/regexp.rst:80
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
-msgstr ""
+msgstr "\"공백 문자\"는 인쇄되지 않는 모든 것을 가리키는 용어입니다. 이러한 문자에는 스페이스, 탭, 줄 바꿈, 폼 피드, 캐리지 리턴, 줄바꿈 없는 공백 등이 포함됩니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:83
+#: ../../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
 "The upper and lower case sets may match both upper and lowercase if the "
 "setting to make searches case insensitive is enabled. Such settings are "
 "found, for instance in Preferences->Searching in calibre itself and on the "
 "Search panel in the calibre :guilabel:`E-book viewer` as well as the calibre"
 " :guilabel:`Edit book` tool."
-msgstr ""
+msgstr "대문자 및 소문자 집합은 검색의 대소문자 구분을 하지 않는 설정이 활성화된 경우 대문자와 소문자 모두와 일치할 수 있습니다. 이러한 설정은 예를 들어 calibre 자체의 환경설정->검색과 calibre :guilabel:`전자책 뷰어`의 검색 패널, 그리고 calibre :guilabel:`책 편집` 도구에서 찾을 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:89
+#: ../../../__w/calibre/calibre/manual/regexp.rst:89
 msgid ""
 "As a last note on sets, you can also define a set as any character *but* "
 "those in the set. You do that by including the character ``\"^\"`` as the "
@@ -276,15 +276,15 @@ msgid ""
 " ``<p[^>]*>`` from the previous section, now you can see that the character "
 "set it's using tries to match any character except for a closing angle "
 "bracket."
-msgstr ""
+msgstr "집합에 대한 마지막 참고 사항으로, 집합에 있는 문자 *를 제외한* 모든 문자로 집합을 정의할 수도 있습니다. ``\"^\"`` 문자를 *집합의 가장 첫 번째 문자*로 포함하여 그렇게 합니다. 따라서 ``[^a]``는 \"a\"를 제외한 모든 문자와 일치합니다. 이를 집합의 여집합이라고 합니다. 이전에 본 이스케이프 시퀀스 단축형도 여집합을 만들 수 있습니다. ``\"\\D\"``는 숫자가 아닌 모든 문자를 의미하므로 ``[^0-9]``와 동일합니다. 짐작하셨겠지만, 다른 단축형도 해당 소문자 대신 대문자를 사용하여 여집합을 만들 수 있습니다. 따라서 이전 섹션의 ``<p[^>]*>`` 예시로 돌아가면, 사용하고 있는 문자 집합이 닫는 꺾쇠괄호를 제외한 모든 문자와 일치하려고 한다는 것을 알 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:94
+#: ../../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
-msgstr ""
+msgstr "하지만 일치시키고 싶은 몇 가지 변형된 문자열이 있으면 복잡해지나요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:96
+#: ../../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
 "Fear not, life still is good and easy. Consider this example: The book "
 "you're converting has \"Title\" written on every odd page and \"Author\" "
@@ -298,9 +298,9 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr ""
+msgstr "걱정하지 마세요, 여전히 쉽고 좋습니다. 이 예시를 생각해 보세요. 변환하려는 책에 홀수 페이지마다 \"Title\"이, 짝수 페이지마다 \"Author\"가 쓰여 있습니다. 인쇄본에서는 멋져 보이죠? 하지만 전자책에서는 성가십니다. 일반 괄호로 전체 표현식을 그룹화할 수 있으며, 문자 ``\"|\"``를 사용하면 오른쪽 표현식 *또는* 왼쪽 표현식과 일치시킬 수 있습니다. 이것들을 결합하면 됩니다. 너무 빠른가요? 먼저, 홀수 및 짝수 페이지에 대한 표현식을 그룹화하여 ``(Title)(Author)``라는 두 개의 필요한 표현식을 얻습니다. 이제 세로 막대(``\"|\"``는 세로 막대 문자라고 합니다)를 사용하여 더 간단하게 만듭니다. ``(Title|Author)`` 표현식을 사용하면 \"Title\"(홀수 페이지에서) 또는 \"Author\"(짝수 페이지에서)와 일치합니다. 쉽지 않나요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:98
+#: ../../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
 "You can, of course, use the vertical bar without using grouping parentheses,"
 " as well. Remember when I said that quantifiers repeat the element preceding"
@@ -314,13 +314,13 @@ msgid ""
 "will be selected. If you were to use ``c|Calibre``, you'd get a match on the"
 " string \"c\" or on the string \"Calibre\", which isn't what we wanted. In "
 "short: If in doubt, use grouping together with the vertical bar."
-msgstr ""
+msgstr "물론 그룹화 괄호 없이 세로 막대를 사용할 수도 있습니다. 한정자가 앞에 오는 요소를 반복한다고 했던 것을 기억하시죠? 세로 막대는 약간 다르게 작동합니다. \"Title|Author\" 표현식은 위의 그룹화 예시처럼 문자열 \"Title\" 또는 문자열 \"Author\"와도 일치합니다. *세로 막대는 앞뒤의 전체 표현식 사이에서 선택합니다*. 따라서 \"Calibre\"와 \"calibre\" 문자열과 일치시키고 싶은데 대문자 \"C\"와 소문자 \"c\" 사이에서만 선택하고 싶다면 ``(c|C)alibre`` 표현식을 사용해야 합니다. 여기서 그룹화가 \"c\"만 선택되도록 보장합니다. ``c|Calibre``를 사용하면 문자열 \"c\" 또는 문자열 \"Calibre\"와 일치하게 되어 우리가 원하는 것이 아닙니다. 요약하면: 의심스러우면 세로 막대와 함께 그룹화를 사용하세요."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:101
+#: ../../../__w/calibre/calibre/manual/regexp.rst:101
 msgid "You missed..."
-msgstr ""
+msgstr "놓친 것이 있는데..."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:103
+#: ../../../__w/calibre/calibre/manual/regexp.rst:103
 msgid ""
 "... wait just a minute, there's one last, really neat thing you can do with "
 "groups. If you have a group that you previously matched, you can use "
@@ -329,15 +329,15 @@ msgid ""
 "you want to reference, thus, the fifth group would be referenced as ``\\5``."
 " So, if you searched for ``([^ ]+) \\1`` in the string \"Test Test\", you'd "
 "match the whole string!"
-msgstr ""
+msgstr "... 잠깐만요, 그룹으로 할 수 있는 마지막으로 정말 깔끔한 것이 있습니다. 이전에 일치시킨 그룹이 있으면 나중에 표현식에서 해당 그룹에 대한 참조를 사용할 수 있습니다. 그룹은 1부터 번호가 매겨지며, 참조하려는 그룹의 번호를 이스케이프하여 참조합니다. 따라서 다섯 번째 그룹은 ``\\5``로 참조됩니다. 문자열 \"Test Test\"에서 ``([^ ]+) \\1``을 검색하면 전체 문자열과 일치합니다!"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:107
+#: ../../../__w/calibre/calibre/manual/regexp.rst:107
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
-msgstr ""
+msgstr "처음에 정규 표현식의 대소문자 구분을 없애는 방법이 있다고 하셨죠?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:109
+#: ../../../__w/calibre/calibre/manual/regexp.rst:109
 msgid ""
 "Yes, I did, thanks for paying attention and reminding me. You can tell "
 "calibre how you want certain things handled by using something called flags."
@@ -346,28 +346,28 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``(?i)test`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr ""
+msgstr "네, 맞습니다. 주의 깊게 들어주시고 상기시켜 주셔서 감사합니다. 플래그라는 것을 사용하여 calibre에 특정 처리 방법을 지시할 수 있습니다. 표현식에 플래그를 포함하려면 ``(?플래그는 여기에)``라는 특수 구문을 사용합니다. 여기서 \"플래그는 여기에\"를 원하는 특정 플래그로 바꾸면 됩니다. 대소문자를 무시하려면 플래그가 ``i``이므로 표현식에 ``(?i)``를 포함합니다. 따라서 ``(?i)test``는 \"Test\", \"tEst\", \"TEst\" 그리고 생각할 수 있는 모든 대소문자 변형과 일치합니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:111
+#: ../../../__w/calibre/calibre/manual/regexp.rst:111
 msgid ""
 "Another useful flag lets the dot match any character at all, *including* the"
 " newline, the flag ``s``. If you want to use multiple flags in an "
 "expression, just put them in the same statement: ``(?is)`` would ignore case"
 " and make the dot match all. It doesn't matter which flag you state first, "
 "``(?si)`` would be equivalent to the above."
-msgstr ""
+msgstr "또 다른 유용한 플래그는 점이 줄바꿈을 *포함한* 모든 문자와 일치하도록 하는 ``s`` 플래그입니다. 표현식에서 여러 플래그를 사용하려면 동일한 구문에 넣으면 됩니다. ``(?is)``는 대소문자를 무시하고 점이 모든 것과 일치하도록 합니다. 어떤 플래그를 먼저 표시하는지는 중요하지 않으며, ``(?si)``는 위와 동일합니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:114
+#: ../../../__w/calibre/calibre/manual/regexp.rst:114
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
-msgstr ""
+msgstr "이제 정규 표현식을 이해하기 시작한 것 같은데... calibre에서 어떻게 사용하나요?"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:117
+#: ../../../__w/calibre/calibre/manual/regexp.rst:117
 msgid "Conversions"
-msgstr ""
+msgstr "변환"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:119
+#: ../../../__w/calibre/calibre/manual/regexp.rst:119
 msgid ""
 "Let's begin with the conversion settings, which is really neat. In the "
 ":guilabel:`Search & replace` part, you can input a regexp (short for regular"
@@ -381,9 +381,9 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr ""
+msgstr "변환 설정부터 시작하겠습니다. 정말 깔끔합니다. :guilabel:`찾아 바꾸기` 부분에서 변환 중에 대체될 문자열을 설명하는 regexp(정규 표현식의 약어)를 입력할 수 있습니다. 깔끔한 부분은 마법사입니다. 마법사 지팡이를 클릭하면 변환 과정에서 calibre가 \"보는\" 것의 미리보기를 얻을 수 있습니다. 제거하려는 문자열까지 스크롤하여 선택하고 복사한 다음 창 상단의 regexp 필드에 붙여넣으세요. 페이지 번호 등 가변적인 부분이 있으면 집합과 한정자를 사용하여 커버하고, 특수 문자가 있으면 이스케이프하는 것을 잊지 마세요. :guilabel:`테스트` 버튼을 누르면 calibre가 regexp를 사용할 경우 대체할 부분을 강조 표시합니다. 만족하면 확인을 누르고 변환하세요. 변환 소스에 이 예시와 같은 태그가 있으면 주의하세요::"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:129
+#: ../../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
 "(shamelessly ripped out of `this thread "
 "<https://www.mobileread.com/forums/showthread.php?t=75594\">`_). You'd have "
@@ -408,13 +408,13 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "(`이 스레드 <https://www.mobileread.com/forums/showthread.php?t=75594>`_에서 당당히 가져옴). 일부 태그도 제거해야 합니다. 이 예시에서는 ``<b class=\"calibre2\">`` 태그로 시작하는 것을 권장합니다. 이제 해당 닫는 태그(여는 태그는 ``<tag>``, 닫는 태그는 ``</tag>``)로 끝나야 합니다. 이 경우 단순히 다음 ``</b>``입니다. (이 점이 명확하지 않으면 좋은 HTML 매뉴얼을 참조하거나 포럼에서 질문하세요). 여는 태그는 ``<b.*?>``로, 닫는 태그는 ``</b>``로 설명할 수 있으므로 ``<b.*?>.*?</b>``를 사용하여 해당 태그 사이의 모든 것을 제거할 수 있습니다. 그러나 이 표현식을 사용하면 <b> 태그(참고로 포함된 텍스트를 굵게 표시합니다)로 둘러싸인 모든 것이 제거되므로 이 방식으로 책의 일부를 제거할 가능성이 높습니다. 대신 포함된 문자열의 시작 부분도 포함하여 정규 표현식을 ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``로 만드세요. 여기서 ``\\s``와 한정자는 문자열에 나타나는 공백을 명시적으로 사용하는 대신 발생할 수 있는 문자열의 변형을 포착하기 위해 포함됩니다. 새 표현식을 테스트할 때 calibre가 제거할 내용을 확인하여 유지하려는 부분을 제거하지 않도록 하세요. 한 번의 일치만 확인하면 텍스트의 다른 곳에서 불일치를 놓칠 수 있습니다. 또한 실수로 원하는 것보다 많거나 적은 태그를 제거한 경우 calibre가 제거 후 손상된 코드를 복구하려고 시도한다는 점도 알아두세요."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:132
+#: ../../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
 msgstr "책 추가"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:134
+#: ../../../__w/calibre/calibre/manual/regexp.rst:134
 msgid ""
 "Another thing you can use regular expressions for is to extract metadata "
 "from filenames. You can find this feature in the \"Adding books\" part of "
@@ -424,7 +424,7 @@ msgid ""
 "listed in the windows, together with another nice test field. An example: "
 "Say you want to import a whole bunch of files named like ``Classical Texts: "
 "The Divine Comedy by Dante Alighieri.mobi``. (Obviously, this is already in "
-"your library, since we all love classical italian poetry) or ``Science "
+"your library, since we all love classical Italian poetry) or ``Science "
 "Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. This is "
 "obviously a naming scheme that calibre won't extract any meaningful data out"
 " of - its standard expression for extracting metadata is ``(?P<title>.+) - "
@@ -435,19 +435,19 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "정규 표현식을 사용할 수 있는 또 다른 방법은 파일명에서 메타데이터를 추출하는 것입니다. 이 기능은 설정의 \"책 추가\" 부분에서 찾을 수 있습니다. 여기에 특별한 기능이 있습니다. 메타데이터 필드에 필드 이름을 사용할 수 있습니다. 예를 들어 ``(?P<title>)``은 calibre가 문자열의 이 부분을 책 제목으로 사용한다는 것을 나타냅니다. 허용된 필드 이름은 창에 나열되어 있으며, 또 다른 좋은 테스트 필드와 함께 제공됩니다. 예시: ``Classical Texts: The Divine Comedy by Dante Alighieri.mobi``와 같이 이름이 지정된 파일 묶음을 가져오려고 합니다(분명히 모두 고전 이탈리아 시를 좋아하므로 이미 라이브러리에 있습니다). 또는 ``Science Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``입니다. 이것은 분명히 calibre가 의미 있는 데이터를 추출할 수 없는 명명 체계입니다. 메타데이터 추출을 위한 표준 표현식은 ``(?P<title>.+) - (?P<author>[^_]+)``입니다. 여기서 작동하는 정규 표현식은 ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``입니다. 메타데이터 필드의 그룹 안에서는 필드가 실제로 일치하는 것을 설명하는 표현식을 사용해야 합니다. 또한 calibre가 제공하는 테스트 필드를 사용할 때 테스트 파일명에 파일 확장자를 추가해야 합니다. 그렇지 않으면 작동하는 표현식을 사용하더라도 일치하는 항목을 전혀 얻을 수 없습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:138
+#: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
-msgstr "일괄 편집중인 메타데이터"
+msgstr "메타데이터 일괄 편집"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:140
+#: ../../../__w/calibre/calibre/manual/regexp.rst:140
 msgid ""
 "The last part is regular expression :guilabel:`Search and replace` in "
 "metadata fields. You can access this by selecting multiple books in the "
 "library and using bulk metadata edit. Be very careful when using this last "
-"feature, as it can do **Very Bad Things** to your library! Doublecheck that "
-"your expressions do what you want them to using the test fields, and only "
+"feature, as it can do **Very Bad Things** to your library! Double-check that"
+" your expressions do what you want them to using the test fields, and only "
 "mark the books you really want to change! In the regular expression search "
 "mode, you can search in one field, replace the text with something and even "
 "write the result into another field. A practical example: Say your library "
@@ -465,18 +465,18 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "마지막 부분은 메타데이터 필드의 정규 표현식 :guilabel:`찾아 바꾸기`입니다. 라이브러리에서 여러 책을 선택하고 일괄 메타데이터 편집을 사용하여 접근할 수 있습니다. 이 마지막 기능을 사용할 때는 매우 주의하세요. 라이브러리에 **매우 나쁜 일**을 할 수 있습니다! 테스트 필드를 사용하여 표현식이 원하는 대로 작동하는지 다시 확인하고, 정말로 변경하려는 책만 표시하세요! 정규 표현식 검색 모드에서는 한 필드에서 검색하고, 텍스트를 다른 것으로 대체하고, 결과를 다른 필드에 쓸 수도 있습니다. 실용적인 예시: 라이브러리에 Frank Herbert의 Dune 시리즈 책이 있고 ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` 등의 형식으로 이름이 지정되어 있다고 가정합니다. 이제 ``Dune``을 시리즈 필드에 넣고 싶습니다. 제목 필드에서 ``(.*?) \\d+ - .*``을 검색하고 시리즈 필드에서 ``\\1``로 대체하면 됩니다. 제가 한 것을 보셨나요? 그것은 시리즈 필드로 대체하는 첫 번째 그룹에 대한 참조입니다. 이제 시리즈가 모두 설정되었으므로, 제목 필드에서 ``.*? -``을 다시 검색하고 제목 필드에서 ``\"\"``(빈 문자열)로 대체하면 메타데이터가 깔끔하게 정리됩니다. 굉장하지 않나요? 참고로, 전체 필드를 대체하는 대신 필드에 추가하거나 앞에 붙일 수도 있습니다. 따라서 *원한다면* 책 제목 앞에 시리즈 정보를 붙일 수도 있습니다. 이제 의심할 여지 없이 눈치채셨겠지만, :guilabel:`대소문자 구분`이라는 확인란이 있으므로 여기서 동작을 선택하기 위해 플래그를 사용할 필요가 없습니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:142
+#: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""
 "Well, that just about concludes the very short introduction to regular "
 "expressions. Hopefully I'll have shown you enough to at least get you "
 "started and to enable you to continue learning by yourself- a good starting "
 "point would be the `Python documentation for regexps "
 "<https://docs.python.org/library/re.html>`_."
-msgstr ""
+msgstr "정규 표현식에 대한 아주 짧은 소개가 이것으로 끝납니다. 최소한 시작하고 스스로 계속 배울 수 있을 만큼 충분히 보여드렸기를 바랍니다. 좋은 시작점은 `Python 정규 표현식 문서 <https://docs.python.org/library/re.html>`_입니다."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:144
+#: ../../../__w/calibre/calibre/manual/regexp.rst:144
 msgid ""
 "One last word of warning, though: Regexps are powerful, but also really easy"
 " to get wrong. calibre provides really great testing possibilities to see if"
@@ -484,53 +484,53 @@ msgid ""
 "yourself in the foot. (God, I love that expression...). But should you, "
 "despite the warning, injure your foot (or any other body parts), try to "
 "learn from it."
-msgstr ""
+msgstr "마지막 경고의 말씀: 정규 표현식은 강력하지만 정말로 잘못되기도 쉽습니다. calibre는 표현식이 예상대로 작동하는지 확인할 수 있는 정말 훌륭한 테스트 가능성을 제공합니다. 사용하세요. 자살골을 넣지 않도록 노력하세요. (이 표현 정말 좋아합니다...). 하지만 경고에도 불구하고 발(또는 다른 신체 부위)을 다치게 되면, 그것에서 배우도록 하세요."
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:148
+#: ../../../__w/calibre/calibre/manual/regexp.rst:148
 msgid "Quick reference"
-msgstr ""
+msgstr "빠른 참조"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:156
+#: ../../../__w/calibre/calibre/manual/regexp.rst:156
 msgid "Credits"
 msgstr "크레딧"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:158
+#: ../../../__w/calibre/calibre/manual/regexp.rst:158
 msgid "Thanks for helping with tips, corrections and such:"
-msgstr ""
+msgstr "팁, 수정 등에 도움을 주셔서 감사합니다:"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:160
+#: ../../../__w/calibre/calibre/manual/regexp.rst:160
 msgid "ldolse"
-msgstr ""
+msgstr "ldolse"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:161
+#: ../../../__w/calibre/calibre/manual/regexp.rst:161
 msgid "kovidgoyal"
-msgstr ""
+msgstr "kovidgoyal"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:162
+#: ../../../__w/calibre/calibre/manual/regexp.rst:162
 msgid "chaley"
-msgstr ""
+msgstr "chaley"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:163
+#: ../../../__w/calibre/calibre/manual/regexp.rst:163
 msgid "dwanthny"
-msgstr ""
+msgstr "dwanthny"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:164
+#: ../../../__w/calibre/calibre/manual/regexp.rst:164
 msgid "kacir"
-msgstr ""
+msgstr "kacir"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:165
+#: ../../../__w/calibre/calibre/manual/regexp.rst:165
 msgid "Starson17"
-msgstr ""
+msgstr "Starson17"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:166
+#: ../../../__w/calibre/calibre/manual/regexp.rst:166
 msgid "Orpheu"
-msgstr ""
+msgstr "Orpheu"
 
-#: ../../__w/calibre/calibre/manual/regexp.rst:168
+#: ../../../__w/calibre/calibre/manual/regexp.rst:168
 msgid ""
 "For more about regexps see `The Python User Manual "
 "<https://docs.python.org/library/re.html>`_. The actual regular expression "
 "library used by calibre is: `regex <https://bitbucket.org/mrabarnett/mrab-"
 "regex/src/hg/>`_ which supports several useful enhancements over the Python "
 "standard library one."
-msgstr ""
+msgstr "정규 표현식에 대한 자세한 내용은 `Python 사용자 매뉴얼 <https://docs.python.org/library/re.html>`_을 참조하세요. calibre에서 실제로 사용하는 정규 표현식 라이브러리는 Python 표준 라이브러리보다 여러 유용한 개선 사항을 지원하는 `regex <https://bitbucket.org/mrabarnett/mrab-regex/src/hg/>`_입니다."

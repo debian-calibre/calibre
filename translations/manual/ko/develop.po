@@ -1,30 +1,30 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) Kovid Goyal
 # This file is distributed under the same license as the calibre package.
-# 
+#
 # Translators:
-# JungHee Lee <daemul72@gmail.com>, 2022
-# JungHee Lee <daemul72@gmail.com>, 2021-2022
-# JungHee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2021-2022
+# Junghee Lee <daemul72@gmail.com>, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 10:34+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2022\n"
-"Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
+"Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:4
+#: ../../../__w/calibre/calibre/manual/develop.rst:4
 msgid "Setting up a calibre development environment"
-msgstr "캘리버 개발환경 "
+msgstr "캘리버 개발 환경 설정"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:6
+#: ../../../__w/calibre/calibre/manual/develop.rst:6
 msgid ""
 "calibre is completely open source, licensed under the `GNU GPL v3 "
 "<https://www.gnu.org/licenses/gpl.html>`_. This means that you are free to "
@@ -34,16 +34,21 @@ msgid ""
 "<https://www.python.org>`_ with some C/C++ code for speed and system "
 "interfacing. Note that calibre requires at least Python 3.8."
 msgstr ""
+"캘리버는 `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_에 따라 완전히 오픈 소스로 "
+"라이선스되어 있습니다. 이는 프로그램을 자유롭게 다운로드하고 원하는 대로 수정할 수 있다는 의미입니다. 이 섹션에서는 선택한 운영 체제에"
+" 캘리버 개발 환경을 설정하는 방법을 배웁니다. 캘리버는 주로 `Python <https://www.python.org>`_으로 "
+"작성되었으며, 속도와 시스템 인터페이스를 위해 일부 C/C++ 코드가 포함되어 있습니다. 캘리버에는 최소 Python 3.8이 "
+"필요합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:14
+#: ../../../__w/calibre/calibre/manual/develop.rst:14
 msgid "Contents"
 msgstr "목차"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:17
+#: ../../../__w/calibre/calibre/manual/develop.rst:17
 msgid "Design philosophy"
-msgstr ""
+msgstr "설계 철학"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:19
+#: ../../../__w/calibre/calibre/manual/develop.rst:19
 msgid ""
 "calibre has its roots in the Unix world, which means that its design is "
 "highly modular. The modules interact with each other via well defined "
@@ -52,12 +57,16 @@ msgid ""
 "calibre has a comprehensive command line interface for all its functions, "
 "documented in :doc:`generated/en/cli-index`."
 msgstr ""
+"캘리버는 Unix 세계에 뿌리를 두고 있어 설계가 매우 모듈화되어 있습니다. 모듈들은 잘 정의된 인터페이스를 통해 서로 상호작용합니다. "
+"이로 인해 캘리버에 새로운 기능을 추가하고 버그를 수정하기가 매우 쉬워 빠른 개발 속도를 유지할 수 있습니다. 이러한 뿌리 덕분에 "
+"캘리버는 모든 기능에 대한 포괄적인 명령줄 인터페이스를 갖추고 있으며, 이는 :doc:`generated/ko/cli-index`에 "
+"문서화되어 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:24
+#: ../../../__w/calibre/calibre/manual/develop.rst:24
 msgid ""
 "The modular design of calibre is expressed via ``Plugins``. There is a "
 ":ref:`tutorial <customize>` on writing calibre plugins. For example, adding "
-"support for a new device to calibre typically involves writing less than a "
+"support for a new device to calibre typically involves writing fewer than "
 "100 lines of code in the form of a device driver plugin. You can browse the "
 "`built-in drivers "
 "<https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_. "
@@ -67,32 +76,44 @@ msgid ""
 "designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
 msgstr ""
+"캘리버의 모듈식 설계는 ``플러그인``을 통해 표현됩니다. 캘리버 플러그인 작성에 대한 :ref:`튜토리얼 <customize>`이 "
+"있습니다. 예를 들어, 캘리버에 새로운 장치 지원을 추가하는 것은 일반적으로 장치 드라이버 플러그인 형태로 100줄 미만의 코드를 "
+"작성하는 것과 관련됩니다. `내장 드라이버 "
+"<https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_를 "
+"둘러볼 수 있습니다. 마찬가지로, 새로운 변환 형식 지원을 추가하는 것은 입출력 형식 플러그인을 작성하는 것을 포함합니다. 모듈식 설계의"
+" 또 다른 예는 뉴스를 가져오기 위한 :ref:`레시피 시스템 <news>`입니다. 캘리버에 기능을 추가하기 위해 설계된 플러그인의 더 "
+"많은 예는 `플러그인 색인 "
+"<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_을 "
+"참조하십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:34
+#: ../../../__w/calibre/calibre/manual/develop.rst:34
 msgid "Code layout"
-msgstr ""
+msgstr "코드 구성"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:36
+#: ../../../__w/calibre/calibre/manual/develop.rst:36
 msgid ""
 "All the calibre Python code is in the ``calibre`` package. This package "
 "contains the following main sub-packages"
 msgstr ""
+"모든 캘리버 Python 코드는 ``calibre`` 패키지에 있습니다. 이 패키지는 다음과 같은 주요 하위 패키지를 포함합니다"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:38
+#: ../../../__w/calibre/calibre/manual/develop.rst:38
 msgid ""
 "devices - All the device drivers. Just look through some of the built-in "
 "drivers to get an idea for how they work."
-msgstr ""
+msgstr "devices - 모든 장치 드라이버. 일부 내장 드라이버를 살펴보면 작동 방식을 이해할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:40
+#: ../../../__w/calibre/calibre/manual/develop.rst:40
 msgid ""
 "For details, see: ``devices.interface`` which defines the interface "
 "supported by device drivers and ``devices.usbms`` which defines a generic "
 "driver that connects to a USBMS device. All USBMS based drivers in calibre "
 "inherit from it."
 msgstr ""
+"자세한 내용은: 장치 드라이버가 지원하는 인터페이스를 정의하는 ``devices.interface``와 USBMS 장치에 연결하는 일반 "
+"드라이버를 정의하는 ``devices.usbms``를 참조하십시오. 캘리버의 모든 USBMS 기반 드라이버는 이것을 상속합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:43
+#: ../../../__w/calibre/calibre/manual/develop.rst:43
 msgid ""
 "e-books  - All the e-book conversion/metadata code. A good starting point is"
 " ``calibre.ebooks.conversion.cli`` which is the module powering the "
@@ -100,13 +121,17 @@ msgid ""
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
 msgstr ""
+"e-books - 모든 전자책 변환/메타데이터 코드. 좋은 출발점은 :command:`ebook-convert` 명령을 구동하는 모듈인 "
+"``calibre.ebooks.conversion.cli``입니다. 변환 과정은 ``conversion.plumber``를 통해 "
+"제어됩니다. 형식 독립적 코드는 모두 ``ebooks.oeb``에 있고, 형식 종속적 코드는 ``ebooks.format_name``에 "
+"있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:47
+#: ../../../__w/calibre/calibre/manual/develop.rst:47
 msgid ""
 "Metadata reading, writing, and downloading is all in ``ebooks.metadata``"
-msgstr ""
+msgstr "메타데이터 읽기, 쓰기, 다운로드는 모두 ``ebooks.metadata``에 있습니다"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:48
+#: ../../../__w/calibre/calibre/manual/develop.rst:48
 msgid ""
 "Conversion happens in a pipeline, for the structure of the pipeline, see "
 ":ref:`conversion-introduction`. The pipeline consists of an input plugin, "
@@ -119,103 +144,130 @@ msgid ""
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
 msgstr ""
+"변환은 파이프라인에서 이루어지며, 파이프라인의 구조는 :ref:`conversion-introduction`을 참조하십시오. 파이프라인은"
+" 입력 플러그인, 다양한 변환, 출력 플러그인으로 구성됩니다. 파이프라인을 구성하고 구동하는 코드는 :file:`plumber.py`에 "
+"있습니다. 파이프라인은 압축 해제된 epub과 类似的 전자책 표현에서 작동하며, 매니페스트, 스파인, 목차, 가이드, html 콘텐츠 "
+"등이 포함됩니다. 이 표현을 관리하는 클래스는 ``ebooks.oeb.base``의 OEBBook입니다. 변환 중 책에 적용되는 다양한 "
+"변환은 :file:`oeb/transforms/*.py`에 있습니다. 그리고 입력 및 출력 플러그인은 "
+":file:`conversion/plugins/*.py`에 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:58
+#: ../../../__w/calibre/calibre/manual/develop.rst:58
 msgid ""
 "E-book editing happens using a different container object. It is documented "
 "in :ref:`polish_api`."
-msgstr ""
+msgstr "전자책 편집은 다른 컨테이너 객체를 사용하여 이루어집니다. 이는 :ref:`polish_api`에 문서화되어 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:61
+#: ../../../__w/calibre/calibre/manual/develop.rst:61
 msgid ""
 "db - The database back-end. See :ref:`db_api` for the interface to the "
 "calibre library."
-msgstr ""
+msgstr "db - 데이터베이스 백엔드. 캘리버 라이브러리에 대한 인터페이스는 :ref:`db_api`를 참조하십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:63
+#: ../../../__w/calibre/calibre/manual/develop.rst:63
 msgid "Content server: ``srv`` is the calibre Content server."
-msgstr ""
+msgstr "콘텐츠 서버: ``srv``는 캘리버 콘텐츠 서버입니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:65
+#: ../../../__w/calibre/calibre/manual/develop.rst:65
 msgid ""
 "gui2 - The Graphical User Interface. GUI initialization happens in "
 "``gui2.main`` and ``gui2.ui``. The e-book-viewer is in ``gui2.viewer``. The "
 "e-book editor is in ``gui2.tweak_book``."
 msgstr ""
+"gui2 - 그래픽 사용자 인터페이스. GUI 초기화는 ``gui2.main``과 ``gui2.ui``에서 이루어집니다. 전자책 뷰어는 "
+"``gui2.viewer``에 있습니다. 전자책 편집기는 ``gui2.tweak_book``에 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:67
+#: ../../../__w/calibre/calibre/manual/develop.rst:67
 msgid ""
 "If you want to locate the entry points for all the various calibre "
 "executables, look at the ``entry_points`` structure in `linux.py "
 "<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_."
-msgstr "모든 다양한 캘리버 실행 파일의 진입점을 찾으려면 `linux.py <https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_에서 ``entry_points`` 구조를 확인하십시오."
+msgstr ""
+"모든 다양한 캘리버 실행 파일의 진입점을 찾으려면 `linux.py "
+"<https://github.com/kovidgoyal/calibre/blob/master/src/calibre/linux.py>`_에서"
+" ``entry_points`` 구조를 확인하십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:71
+#: ../../../__w/calibre/calibre/manual/develop.rst:71
 msgid ""
 "If you need help understanding the code, post in the `development forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_ and you will "
 "most likely get help from one of calibre's many developers."
 msgstr ""
+"코드 이해에 도움이 필요하다면 `개발 포럼 "
+"<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_에 게시하면 캘리버의 많은 "
+"개발자 중 한 명에게 도움을 받을 수 있을 것입니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:75
+#: ../../../__w/calibre/calibre/manual/develop.rst:75
 msgid "Getting the code"
 msgstr "코드 가져오기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:77
+#: ../../../__w/calibre/calibre/manual/develop.rst:77
 msgid ""
 "You can get the calibre source code in two ways, using a version control "
 "system or directly downloading a :website_base:`tarball <dist/src>`."
 msgstr ""
+"캘리버 소스 코드를 두 가지 방법으로 얻을 수 있습니다: 버전 제어 시스템을 사용하거나 :website_base:`tarball "
+"<dist/src>`을 직접 다운로드하는 것입니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:80
+#: ../../../__w/calibre/calibre/manual/develop.rst:80
 msgid ""
 "calibre uses `Git <https://www.git-scm.com/>`_, a distributed version "
 "control system. Git is available on all the platforms calibre supports.  "
 "After installing Git, you can get the calibre source code with the command::"
 msgstr ""
+"캘리버는 분산 버전 제어 시스템인 `Git <https://www.git-scm.com/>`_을 사용합니다. Git은 캘리버가 지원하는 "
+"모든 플랫폼에서 사용할 수 있습니다. Git을 설치한 후 다음 명령으로 캘리버 소스 코드를 얻을 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:86
+#: ../../../__w/calibre/calibre/manual/develop.rst:86
 msgid ""
 "On Windows you will need the complete path name, that will be something like"
 " :file:`C:\\\\Program Files\\\\Git\\\\git.exe`."
 msgstr ""
+"Windows에서는 전체 경로 이름이 필요하며, :file:`C:\\\\Program Files\\\\Git\\\\git.exe`와 같은"
+" 형태가 됩니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:88
+#: ../../../__w/calibre/calibre/manual/develop.rst:88
 msgid ""
 "calibre is a very large project with a very long source control history, so "
 "the above can take a while (10 mins to an hour depending on your internet "
 "speed)."
 msgstr ""
+"캘리버는 매우 긴 소스 제어 기록을 가진 매우 큰 프로젝트이므로, 위 명령은 시간이 걸릴 수 있습니다 (인터넷 속도에 따라 10분에서 "
+"1시간)."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:91
+#: ../../../__w/calibre/calibre/manual/develop.rst:91
 msgid ""
 "If you want to get the code faster, the source code for the latest release "
 "is always available as an :website_base:`archive <dist/src>`."
 msgstr ""
+"코드를 더 빠르게 얻고 싶다면, 최신 릴리스의 소스 코드는 항상 :website_base:`아카이브 <dist/src>`로 사용할 수 "
+"있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:94
+#: ../../../__w/calibre/calibre/manual/develop.rst:94
 msgid "To update a branch to the latest code, use the command::"
-msgstr ""
+msgstr "브랜치를 최신 코드로 업데이트하려면 다음 명령을 사용하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:98
+#: ../../../__w/calibre/calibre/manual/develop.rst:98
 msgid ""
 "You can also browse the code at `GitHub "
 "<https://github.com/kovidgoyal/calibre>`_."
-msgstr ""
+msgstr "`GitHub <https://github.com/kovidgoyal/calibre>`_에서도 코드를 둘러볼 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:101
+#: ../../../__w/calibre/calibre/manual/develop.rst:101
 msgid "Submitting your changes to be included"
-msgstr ""
+msgstr "변경 사항 제출하여 포함시키기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:103
+#: ../../../__w/calibre/calibre/manual/develop.rst:103
 msgid ""
 "If you only plan to make a few small changes, you can make your changes and "
 "create a \"merge directive\" which you can then attach to a ticket in the "
 "calibre `bug tracker <https://bugs.launchpad.net/calibre>`_. To do this, "
 "make your changes, then run::"
 msgstr ""
+"작은 변경 사항만 만들 계획이라면, 변경 사항을 만들고 \"병합 지시문\"을 생성한 후 캘리버 `버그 트래커 "
+"<https://bugs.launchpad.net/calibre>`_의 티켓에 첨부할 수 있습니다. 이렇게 하려면 변경 사항을 만든 후 "
+"다음을 실행하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:111
+#: ../../../__w/calibre/calibre/manual/develop.rst:111
 msgid ""
 "This will create a :file:`my-changes` file in the current folder, simply "
 "attach that to a ticket on the calibre `bug tracker "
@@ -223,104 +275,121 @@ msgid ""
 "the commits you have made. If you only want to send some commits, you have "
 "to change ``origin/master`` above. To send only the last commit, use::"
 msgstr ""
+"이렇게 하면 현재 폴더에 :file:`my-changes` 파일이 생성되며, 캘리버 `버그 트래커 "
+"<https://bugs.launchpad.net/calibre>`_의 티켓에 첨부하기만 하면 됩니다. 여기에는 수행한 *모든* 커밋이 "
+"포함됩니다. 일부 커밋만 보내려면 위의 ``origin/master``를 변경해야 합니다. 마지막 커밋만 보내려면 다음을 사용하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:119
+#: ../../../__w/calibre/calibre/manual/develop.rst:119
 msgid ""
 "To send the last *n* commits, replace *1* with *n*, for example, for the "
 "last 3 commits::"
-msgstr ""
+msgstr "마지막 *n*개의 커밋을 보내려면 *1*을 *n*으로 바꾸십시오. 예를 들어, 마지막 3개 커밋의 경우::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:124
+#: ../../../__w/calibre/calibre/manual/develop.rst:124
 msgid "Be careful to not include merges when using ``HEAD~n``."
 msgstr "``HEAD~n``을 사용할 때 병합을 포함하지 않도록 주의하십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:126
+#: ../../../__w/calibre/calibre/manual/develop.rst:126
 msgid ""
 "If you plan to do a lot of development on calibre, then the best method is "
 "to create a `GitHub <https://github.com>`__ account. Below is a basic guide "
 "to setting up your own fork of calibre in a way that will allow you to "
 "submit pull requests for inclusion into the main calibre repository:"
 msgstr ""
+"캘리버에 많은 개발을 할 계획이라면 `GitHub <https://github.com>`__ 계정을 만드는 것이 가장 좋은 방법입니다. "
+"아래는 기본 캘리버 저장소에 포함되도록 풀 요청을 제출할 수 있는 방식으로 캘리버의 자체 포크를 설정하는 기본 안내입니다:"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:131
+#: ../../../__w/calibre/calibre/manual/develop.rst:131
 msgid ""
 "Setup git on your machine as described in this article: `Setup Git "
 "<https://help.github.com/articles/set-up-git>`_"
-msgstr "이 문서의 설명에 따라 컴퓨터에서 git 설정: \"Git 설정 <https://help.github.com/articles/set-up-git>`_"
+msgstr ""
+"이 문서의 설명에 따라 컴퓨터에서 git 설정: `Git 설정 <https://help.github.com/articles/set-up-"
+"git>`_"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:132
+#: ../../../__w/calibre/calibre/manual/develop.rst:132
 msgid ""
 "Setup ssh keys for authentication to GitHub, as described here: `Generating "
 "SSH keys <https://help.github.com/articles/generating-ssh-keys>`_"
-msgstr "여기에 설명된 대로 GitHub 인증을 위한 ssh 키 설정: `SSH 키 생성 <https://help.github.com/articles/generating-ssh-keys>`_"
+msgstr ""
+"여기에 설명된 대로 GitHub 인증을 위한 ssh 키 설정: `SSH 키 생성 "
+"<https://help.github.com/articles/generating-ssh-keys>`_"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:133
+#: ../../../__w/calibre/calibre/manual/develop.rst:133
 msgid ""
 "Go to https://github.com/kovidgoyal/calibre and click the :guilabel:`Fork` "
 "button."
 msgstr ""
+"https://github.com/kovidgoyal/calibre로 이동하여 :guilabel:`포크` 버튼을 클릭하십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:134
+#: ../../../__w/calibre/calibre/manual/develop.rst:134
 msgid "In a Terminal do::"
 msgstr "터미널에서 다음을 수행::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:139
+#: ../../../__w/calibre/calibre/manual/develop.rst:139
 msgid ""
 "Replace <username> above with your GitHub username. That will get your fork "
 "checked out locally."
-msgstr ""
+msgstr "위의 <username>을 GitHub 사용자 이름으로 바꾸십시오. 이렇게 하면 포크가 로컬에 체크아웃됩니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:140
+#: ../../../__w/calibre/calibre/manual/develop.rst:140
 msgid ""
 "You can make changes and commit them whenever you like. When you are ready "
 "to have your work merged, do a::"
 msgstr "원할 때마다 변경하고 커밋할 수 있습니다. 작업을 병합할 준비가 되면 다음을 수행합니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:144
+#: ../../../__w/calibre/calibre/manual/develop.rst:144
 msgid ""
 "and go to ``https://github.com/<username>/calibre`` and click the "
 ":guilabel:`Pull Request` button to generate a pull request that can be "
 "merged."
 msgstr ""
+"그리고 ``https://github.com/<username>/calibre``로 이동하여 :guilabel:`풀 요청` 버튼을 "
+"클릭하면 병합 가능한 풀 요청이 생성됩니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:145
+#: ../../../__w/calibre/calibre/manual/develop.rst:145
 msgid ""
 "You can update your local copy with code from the main repo at any time by "
 "doing::"
-msgstr ""
+msgstr "다음을 수행하여 언제든지 기본 저장소의 코드로 로컬 복사본을 업데이트할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:150
+#: ../../../__w/calibre/calibre/manual/develop.rst:150
 msgid ""
 "You should also keep an eye on the calibre `development forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=240>`_. Before making "
 "major changes, you should discuss them in the forum or contact Kovid "
 "directly (his email address is all over the source code)."
 msgstr ""
+"캘리버 `개발 포럼 <https://www.mobileread.com/forums/forumdisplay.php?f=240>`_도 "
+"주시해야 합니다. 주요 변경을 하기 전에 포럼에서 논의하거나 Kovid에게 직접 연락해야 합니다 (그의 이메일 주소는 소스 코드 전체에 "
+"있습니다)."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:156
+#: ../../../__w/calibre/calibre/manual/develop.rst:156
 msgid "Windows development environment"
-msgstr ""
+msgstr "Windows 개발 환경"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:158
-#: ../../__w/calibre/calibre/manual/develop.rst:192
-#: ../../__w/calibre/calibre/manual/develop.rst:229
+#: ../../../__w/calibre/calibre/manual/develop.rst:158
+#: ../../../__w/calibre/calibre/manual/develop.rst:192
+#: ../../../__w/calibre/calibre/manual/develop.rst:229
 msgid ""
 "You must also get the calibre source code separately as described above."
-msgstr ""
+msgstr "위에서 설명한 대로 캘리버 소스 코드도 별도로 가져와야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:160
+#: ../../../__w/calibre/calibre/manual/develop.rst:160
 msgid ""
 "Install calibre normally, using the `Windows installer <https://calibre-"
 "ebook.com/download_windows>`__. Then open a Command Prompt and change to the"
 " previously checked out calibre code folder. For example::"
 msgstr ""
+"`Windows 설치 프로그램 <https://calibre-ebook.com/download_windows>`__을 사용하여 캘리버를 "
+"정상적으로 설치하십시오. 그런 다음 명령 프롬프트를 열고 이전에 체크아웃한 캘리버 코드 폴더로 이동하십시오. 예를 들어::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:165
-#: ../../__w/calibre/calibre/manual/develop.rst:241
+#: ../../../__w/calibre/calibre/manual/develop.rst:165
+#: ../../../__w/calibre/calibre/manual/develop.rst:241
 msgid "calibre is the folder that contains the src and resources sub-folders."
-msgstr ""
+msgstr "calibre는 src 및 resources 하위 폴더를 포함하는 폴더입니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:167
+#: ../../../__w/calibre/calibre/manual/develop.rst:167
 msgid ""
 "The next step is to set the environment variable ``CALIBRE_DEVELOP_FROM`` to"
 " the absolute path of the src folder. So, following the example above, it "
@@ -328,53 +397,65 @@ msgid ""
 "<https://docs.python.org/using/windows.html#excursus-setting-environment-"
 "variables>`_ to setting environment variables on Windows."
 msgstr ""
+"다음 단계는 환경 변수 ``CALIBRE_DEVELOP_FROM``을 src 폴더의 절대 경로로 설정하는 것입니다. 따라서 위 예시를 "
+"따르면 ``C:\\Users\\kovid\\work\\calibre\\src``가 됩니다. Windows에서 환경 변수를 설정하는 방법에"
+" 대한 `간단한 안내 <https://docs.python.org/using/windows.html#excursus-setting-"
+"environment-variables>`_가 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:172
+#: ../../../__w/calibre/calibre/manual/develop.rst:172
 msgid ""
 "Once you have set the environment variable, open a new command prompt and "
 "check that it was correctly set by using the command::"
-msgstr ""
+msgstr "환경 변수를 설정한 후 새 명령 프롬프트를 열고 다음 명령을 사용하여 올바르게 설정되었는지 확인하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:177
-#: ../../__w/calibre/calibre/manual/develop.rst:257
+#: ../../../__w/calibre/calibre/manual/develop.rst:177
+#: ../../../__w/calibre/calibre/manual/develop.rst:260
 msgid ""
 "Setting this environment variable means that calibre will now load all its "
 "Python code from the specified location."
 msgstr "이 환경 변수를 설정하면 캘리버가 이제 지정된 위치에서 모든 Python 코드를 불러옵니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:179
+#: ../../../__w/calibre/calibre/manual/develop.rst:179
 msgid ""
 "That's it! You are now ready to start hacking on the calibre code. For "
 "example, open the file :file:`src\\\\calibre\\\\__init__.py` in your "
 "favorite editor and add the line::"
 msgstr ""
+"이제 됐습니다! 이제 캘리버 코드 수정을 시작할 준비가 되었습니다. 예를 들어, 즐겨 사용하는 편집기에서 "
+":file:`src\\\\calibre\\\\__init__.py` 파일을 열고 다음 줄을 추가하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:184
-#: ../../__w/calibre/calibre/manual/develop.rst:264
+#: ../../../__w/calibre/calibre/manual/develop.rst:184
+#: ../../../__w/calibre/calibre/manual/develop.rst:267
 msgid ""
 "near the top of the file. Now run the command :command:`calibredb`. The very"
 " first line of output should be ``Hello, world!``."
 msgstr ""
+"파일 상단 근처에. 이제 :command:`calibredb` 명령을 실행하십시오. 출력의 첫 번째 줄이 ``Hello, "
+"world!``여야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:186
+#: ../../../__w/calibre/calibre/manual/develop.rst:186
 msgid ""
 "You can also setup a calibre development environment inside the free "
 "Microsoft Visual Studio, if you like, following the instructions `here "
 "<https://www.mobileread.com/forums/showthread.php?t=251201>`_."
 msgstr ""
+"원한다면 무료 Microsoft Visual Studio 안에서도 캘리버 개발 환경을 설정할 수 있습니다. `여기 "
+"<https://www.mobileread.com/forums/showthread.php?t=251201>`_의 안내를 따르십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:190
+#: ../../../__w/calibre/calibre/manual/develop.rst:190
 msgid "macOS development environment"
-msgstr ""
+msgstr "macOS 개발 환경"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:194
+#: ../../../__w/calibre/calibre/manual/develop.rst:194
 msgid ""
 "Install calibre normally using the `provided .dmg <https://calibre-"
 "ebook.com/download_osx>`__. Then open a Terminal and change to the "
 "previously checked out calibre code folder, for example::"
 msgstr ""
+"제공된 `.dmg <https://calibre-ebook.com/download_osx>`__를 사용하여 캘리버를 정상적으로 "
+"설치하십시오. 그런 다음 터미널을 열고 이전에 체크아웃한 캘리버 코드 폴더로 이동하십시오. 예를 들어::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:199
+#: ../../../__w/calibre/calibre/manual/develop.rst:199
 msgid ""
 "calibre is the folder that contains the src and resources sub-folders. The "
 "calibre command line tools are found inside the calibre app bundle, in "
@@ -382,40 +463,48 @@ msgid ""
 "to your PATH environment variable, if you want to run the command line tools"
 " easily."
 msgstr ""
+"calibre는 src 및 resources 하위 폴더를 포함하는 폴더입니다. 캘리버 명령줄 도구는 캘리버 앱 번들 안에 있으며, "
+":file:`/Applications/calibre.app/Contents/MacOS`에 있습니다. 명령줄 도구를 쉽게 실행하려면 이 "
+"폴더를 PATH 환경 변수에 추가해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:205
+#: ../../../__w/calibre/calibre/manual/develop.rst:205
 msgid ""
 "The next step is to create a bash script that will set the environment "
 "variable ``CALIBRE_DEVELOP_FROM`` to the absolute path of the src folder "
 "when running calibre in debug mode."
 msgstr ""
+"다음 단계는 디버그 모드에서 캘리버를 실행할 때 환경 변수 ``CALIBRE_DEVELOP_FROM``을 src 폴더의 절대 경로로 "
+"설정하는 bash 스크립트를 만드는 것입니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:208
+#: ../../../__w/calibre/calibre/manual/develop.rst:208
 msgid "Create a plain text file::"
 msgstr "일반 텍스트 파일 만들기::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:214
+#: ../../../__w/calibre/calibre/manual/develop.rst:214
 msgid ""
 "Save this file as :file:`/usr/local/bin/calibre-develop`, then set its "
 "permissions so that it can be executed::"
 msgstr ""
+"이 파일을 :file:`/usr/local/bin/calibre-develop`로 저장한 다음 실행할 수 있도록 권한을 설정하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:218
+#: ../../../__w/calibre/calibre/manual/develop.rst:218
 msgid "Once you have done this, run::"
 msgstr "이 작업을 완료한 후, 실행::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:222
+#: ../../../__w/calibre/calibre/manual/develop.rst:222
 msgid ""
 "You should see some diagnostic information in the Terminal window as calibre"
 " starts up, and you should see an asterisk after the version number in the "
 "GUI window, indicating that you are running from source."
 msgstr ""
+"캘리버가 시작될 때 터미널 창에 일부 진단 정보가 표시되어야 하며, GUI 창에서 버전 번호 뒤에 별표가 표시되어 소스에서 실행 중임을 "
+"나타내야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:227
+#: ../../../__w/calibre/calibre/manual/develop.rst:227
 msgid "Linux development environment"
-msgstr ""
+msgstr "Linux 개발 환경"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:231
+#: ../../../__w/calibre/calibre/manual/develop.rst:231
 msgid ""
 "calibre is primarily developed on Linux. You have two choices in setting up "
 "the development environment. You can install the calibre binary as normal "
@@ -425,49 +514,67 @@ msgid ""
 "from source are in the INSTALL file in the source tree. Here we will address"
 " using the binary as a runtime, which is the recommended method."
 msgstr ""
+"캘리버는 주로 Linux에서 개발됩니다. 개발 환경을 설정하는 데 두 가지 선택지가 있습니다. 캘리버 바이너리를 정상적으로 설치하고 "
+"런타임 환경으로 사용하여 개발할 수 있습니다. 이 접근 방식은 Windows와 macOS에서 사용하는 것과 유사합니다. 또는 소스에서 "
+"캘리버를 설치할 수도 있습니다. 소스에서 개발 환경을 설정하는 방법은 소스 트리의 INSTALL 파일에 있습니다. 여기서는 권장 방법으로"
+" 바이너리를 런타임으로 사용하는 방법을 다루겠습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:237
+#: ../../../__w/calibre/calibre/manual/develop.rst:237
 msgid ""
 "Install calibre using the `binary installer <https://calibre-"
 "ebook.com/download_linux>`_. Then open a terminal and change to the "
 "previously checked out calibre code folder, for example::"
 msgstr ""
+"`바이너리 설치 프로그램 <https://calibre-ebook.com/download_linux>`_을 사용하여 캘리버를 "
+"설치하십시오. 그런 다음 터미널을 열고 이전에 체크아웃한 캘리버 코드 폴더로 이동하십시오. 예를 들어::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:243
+#: ../../../__w/calibre/calibre/manual/develop.rst:243
 msgid ""
 "The next step is to set the environment variable ``CALIBRE_DEVELOP_FROM`` to"
 " the absolute path of the src folder. So, following the example above, it "
 "would be ``/home/kovid/work/calibre/src``. How to set environment variables "
 "depends on your Linux distribution and what shell you are using."
 msgstr ""
+"다음 단계는 환경 변수 ``CALIBRE_DEVELOP_FROM``을 src 폴더의 절대 경로로 설정하는 것입니다. 따라서 위 예시를 "
+"따르면 ``/home/kovid/work/calibre/src``가 됩니다. 환경 변수를 설정하는 방법은 Linux 배포판과 사용 중인 "
+"셸에 따라 다릅니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:248
+#: ../../../__w/calibre/calibre/manual/develop.rst:248
 msgid ""
 "It is recommended to use the binary installer provided from upstream. Should"
 " you insist on using a package provided by your distribution, use the "
-"``CALIBRE_PYTHON_PATH`` and ``CALIBRE_RESOURCES_PATH`` variables instead."
+"``CALIBRE_PYTHON_PATH`` and ``CALIBRE_RESOURCES_PATH`` variables instead. "
+"You can get these by running ``calibre-debug --paths``. But note that "
+"distribution calibre packages are often terminally broken and are completely"
+" unsupported."
 msgstr ""
+"상류에서 제공하는 바이너리 설치 프로그램을 사용하는 것이 좋습니다. 배포판에서 제공하는 패키지를 사용하려는 경우, 대신 "
+"``CALIBRE_PYTHON_PATH`` 및 ``CALIBRE_RESOURCES_PATH`` 변수를 사용하십시오. ``calibre-"
+"debug --paths``를 실행하여 이를 얻을 수 있습니다. 하지만 배포판 캘리버 패키지는 종종 완전히 깨져 있으며 완전히 지원되지 "
+"않는다는 점에 유의하십시오."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:252
+#: ../../../__w/calibre/calibre/manual/develop.rst:255
 msgid ""
 "Once you have set the environment variable, open a new terminal and check "
 "that it was correctly set by using the command::"
-msgstr ""
+msgstr "환경 변수를 설정한 후 새 터미널을 열고 다음 명령을 사용하여 올바르게 설정되었는지 확인하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:259
+#: ../../../__w/calibre/calibre/manual/develop.rst:262
 msgid ""
 "That's it! You are now ready to start hacking on the calibre code. For "
 "example, open the file :file:`src/calibre/__init__.py` in your favorite "
 "editor and add the line::"
 msgstr ""
+"이제 됐습니다! 이제 캘리버 코드 수정을 시작할 준비가 되었습니다. 예를 들어, 즐겨 사용하는 편집기에서 "
+":file:`src/calibre/__init__.py` 파일을 열고 다음 줄을 추가하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:267
+#: ../../../__w/calibre/calibre/manual/develop.rst:270
 msgid ""
 "Having separate \"normal\" and \"development\" calibre installs on the same "
 "computer"
-msgstr ""
+msgstr "동일한 컴퓨터에 별도의 \"일반\" 및 \"개발\" 캘리버 설치 갖기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:269
+#: ../../../__w/calibre/calibre/manual/develop.rst:272
 msgid ""
 "The calibre source tree is very stable and rarely breaks, but if you feel "
 "the need to run from source on a separate test library and run the released "
@@ -476,60 +583,68 @@ msgid ""
 " how to do this on Windows using .bat files (the instructions for other "
 "platforms are the same, just use a shell script instead of a .bat file)"
 msgstr ""
+"캘리버 소스 트리는 매우 안정적이며 거의 깨지지 않지만, 별도의 테스트 라이브러리에서 소스로 실행하고 일상 라이브러리에서는 릴리스된 "
+"캘리버 버전을 실행해야 한다고 느끼면, .bat 파일이나 셸 스크립트를 사용하여 캘리버를 시작하면 쉽게 이를 달성할 수 있습니다. 아래 "
+"예시는 .bat 파일을 사용하여 Windows에서 이 작업을 수행하는 방법을 보여줍니다 (다른 플랫폼에 대한 안내는 동일하며, .bat "
+"파일 대신 셸 스크립트를 사용하십시오)"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:274
+#: ../../../__w/calibre/calibre/manual/develop.rst:277
 msgid "To launch the release version of calibre with your everyday library:"
-msgstr ""
+msgstr "일상 라이브러리로 캘리버 릴리스 버전을 시작하려면:"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:276
+#: ../../../__w/calibre/calibre/manual/develop.rst:279
 msgid "calibre-normal.bat::"
 msgstr "calibre-normal.bat::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:280
+#: ../../../__w/calibre/calibre/manual/develop.rst:283
 msgid "calibre-dev.bat::"
 msgstr "calibre-dev.bat::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:287
+#: ../../../__w/calibre/calibre/manual/develop.rst:290
 msgid "Debugging tips"
 msgstr "디버깅 팁"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:289
+#: ../../../__w/calibre/calibre/manual/develop.rst:292
 msgid ""
 "Python is a dynamically typed language with excellent facilities for "
 "introspection. Kovid wrote the core calibre code without once using a "
 "debugger. There are many strategies to debug calibre code:"
 msgstr ""
+"Python은 훌륭한 내성(introspection) 기능을 가진 동적 타입 언어입니다. Kovid는 디버거를 한 번도 사용하지 않고 "
+"캘리버 핵심 코드를 작성했습니다. 캘리버 코드를 디버깅하는 여러 전략이 있습니다:"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:294
+#: ../../../__w/calibre/calibre/manual/develop.rst:297
 msgid "Using print statements"
-msgstr ""
+msgstr "print 문 사용하기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:296
+#: ../../../__w/calibre/calibre/manual/develop.rst:299
 msgid ""
 "This is Kovid's favorite way to debug. Simply insert print statements at "
 "points of interest and run your program in the terminal. For example, you "
 "can start the GUI from the terminal as::"
 msgstr ""
+"이것은 Kovid가 가장 좋아하는 디버깅 방법입니다. 관심 지점에 print 문을 삽입하고 터미널에서 프로그램을 실행하기만 하면 됩니다."
+" 예를 들어, 터미널에서 GUI를 시작할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:301
+#: ../../../__w/calibre/calibre/manual/develop.rst:304
 msgid "Similarly, you can start the E-book viewer as::"
-msgstr ""
+msgstr "마찬가지로, 전자책 뷰어를 시작할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:305
-msgid "The e-book-editor can be started as::"
-msgstr ""
+#: ../../../__w/calibre/calibre/manual/develop.rst:308
+msgid "The e-book editor can be started as::"
+msgstr "전자책 편집기는 다음과 같이 시작할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:310
+#: ../../../__w/calibre/calibre/manual/develop.rst:313
 msgid "Using an interactive Python interpreter"
-msgstr ""
+msgstr "대화형 Python 인터프리터 사용하기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:312
+#: ../../../__w/calibre/calibre/manual/develop.rst:315
 msgid ""
 "You can insert the following two lines of code to start an interactive "
 "Python session at that point::"
 msgstr "다음 두 줄의 코드를 삽입하여 해당 지점에서 대화형 Python 세션을 시작할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:317
+#: ../../../__w/calibre/calibre/manual/develop.rst:320
 msgid ""
 "When running from the command line, this will start an interactive Python "
 "interpreter with access to all locally defined variables (variables in the "
@@ -537,57 +652,71 @@ msgid ""
 "object properties and you can use the various Python facilities for "
 "introspection, such as :func:`dir`, :func:`type`, :func:`repr`, etc."
 msgstr ""
+"명령줄에서 실행하면 로컬로 정의된 변수(로컬 범위의 변수)에 접근할 수 있는 대화형 Python 인터프리터가 시작됩니다. 대화형 "
+"프롬프트는 객체 속성에 대한 :kbd:`Tab` 완성 기능도 갖추고 있으며, :func:`dir`, :func:`type`, "
+":func:`repr` 등과 같은 다양한 Python 내성 기능을 사용할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:323
+#: ../../../__w/calibre/calibre/manual/develop.rst:326
 msgid "Using the Python debugger as a remote debugger"
-msgstr ""
+msgstr "Python 디버거를 원격 디버거로 사용하기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:325
+#: ../../../__w/calibre/calibre/manual/develop.rst:328
 msgid ""
 "You can use the builtin Python debugger (pdb) as a remote debugger from the "
 "command line. First, start the remote debugger at the point in the calibre "
 "code you are interested in, like this::"
 msgstr ""
+"내장 Python 디버거(pdb)를 명령줄에서 원격 디버거로 사용할 수 있습니다. 먼저 관심 있는 캘리버 코드 지점에서 원격 디버거를 "
+"시작하십시오. 예를 들어::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:332
+#: ../../../__w/calibre/calibre/manual/develop.rst:335
 msgid ""
 "Then run calibre, either as normal, or using one of the calibre-debug "
 "commands described in the previous section. Once the above point in the code"
 " is reached, calibre will freeze, waiting for the debugger to connect."
 msgstr ""
+"그런 다음 캘리버를 정상적으로 실행하거나 이전 섹션에서 설명한 calibre-debug 명령 중 하나를 사용하여 실행하십시오. 코드의 위"
+" 지점에 도달하면 캘리버가 중단되어 디버거가 연결되기를 기다립니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:336
+#: ../../../__w/calibre/calibre/manual/develop.rst:339
 msgid ""
 "Now open a terminal or command prompt and use the following command to start"
 " the debugging session::"
-msgstr ""
+msgstr "이제 터미널이나 명령 프롬프트를 열고 다음 명령을 사용하여 디버깅 세션을 시작하십시오::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:341
+#: ../../../__w/calibre/calibre/manual/develop.rst:344
 msgid ""
 "You can read about how to use the Python debugger in the `Python stdlib docs"
 " for the pdb module <https://docs.python.org/library/pdb.html#debugger-"
 "commands>`_."
 msgstr ""
+"`Python 표준 라이브러리 문서의 pdb 모듈 "
+"<https://docs.python.org/library/pdb.html#debugger-commands>`_에서 Python 디버거 "
+"사용 방법에 대해 읽을 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:345
+#: ../../../__w/calibre/calibre/manual/develop.rst:348
 msgid ""
 "By default, the remote debugger will try to connect on port 4444. You can "
 "change it, by passing the port parameter to both the set_trace() and the "
 "cli() functions above, like this: ``set_trace(port=1234)`` and "
 "``cli(port=1234)``."
 msgstr ""
+"기본적으로 원격 디버거는 포트 4444에 연결을 시도합니다. 위의 set_trace()와 cli() 함수 모두에 port 매개변수를 "
+"전달하여 이를 변경할 수 있습니다: ``set_trace(port=1234)`` 및 ``cli(port=1234)``."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:351
+#: ../../../__w/calibre/calibre/manual/develop.rst:354
 msgid ""
 "The Python debugger cannot handle multiple threads, so you have to call "
 "set_trace once per thread, each time with a different port number."
 msgstr ""
+"Python 디버거는 여러 스레드를 처리할 수 없으므로, 각 스레드마다 한 번씩 set_trace를 호출해야 하며, 매번 다른 포트 "
+"번호를 사용해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:355
+#: ../../../__w/calibre/calibre/manual/develop.rst:358
 msgid "Using the debugger in your favorite Python IDE"
-msgstr ""
+msgstr "즐겨 사용하는 Python IDE에서 디버거 사용하기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:357
+#: ../../../__w/calibre/calibre/manual/develop.rst:360
 msgid ""
 "It is possible to use the builtin debugger in your favorite Python IDE, if "
 "it supports remote debugging. The first step is to add the calibre src "
@@ -595,8 +724,11 @@ msgid ""
 "set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the ``PYTHONPATH`` of"
 " your IDE."
 msgstr ""
+"즐겨 사용하는 Python IDE에서 내장 디버거를 사용할 수 있습니다 (원격 디버깅을 지원하는 경우). 첫 번째 단계는 캘리버 src "
+"체크아웃을 IDE의 ``PYTHONPATH``에 추가하는 것입니다. 즉, 위에서 ``CALIBRE_DEVELOP_FROM``으로 설정한 "
+"폴더가 IDE의 ``PYTHONPATH``에도 있어야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:362
+#: ../../../__w/calibre/calibre/manual/develop.rst:365
 msgid ""
 "Then place the IDE's remote debugger module into the :file:`src` sub-folder "
 "of the calibre source code checkout. Add whatever code is needed to launch "
@@ -604,72 +736,84 @@ msgid ""
 "main function. Then run calibre as normal. Your IDE should now be able to "
 "connect to the remote debugger running inside calibre."
 msgstr ""
+"그런 다음 IDE의 원격 디버거 모듈을 캘리버 소스 코드 체크아웃의 :file:`src` 하위 폴더에 넣으십시오. 관심 지점에서 (예: "
+"기본 함수에서) 캘리버에 원격 디버거를 시작하는 데 필요한 코드를 추가하십시오. 그런 다음 캘리버를 정상적으로 실행하십시오. 이제 "
+"IDE가 캘리버 내부에서 실행 중인 원격 디버거에 연결할 수 있어야 합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:369
+#: ../../../__w/calibre/calibre/manual/develop.rst:372
 msgid "Executing arbitrary scripts in the calibre Python environment"
-msgstr ""
+msgstr "캘리버 Python 환경에서 임의 스크립트 실행하기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:371
+#: ../../../__w/calibre/calibre/manual/develop.rst:374
 msgid ""
 "The :command:`calibre-debug` command provides a couple of handy switches to "
 "execute your own code, with access to the calibre modules::"
 msgstr ""
+":command:`calibre-debug` 명령은 캘리버 모듈에 접근할 수 있는 자체 코드를 실행하기 위한 몇 가지 편리한 스위치를 "
+"제공합니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:376
+#: ../../../__w/calibre/calibre/manual/develop.rst:379
 msgid ""
 "is great for testing a little snippet of code on the command line. It works "
 "in the same way as the -c switch to the Python interpreter::"
-msgstr "명령줄에서 약간의 코드 조각을 테스트하는 데 유용합니다. Python 인터프리터에 대한 -c 스위치와 동일한 방식으로 작동합니다::"
+msgstr ""
+"명령줄에서 약간의 코드 조각을 테스트하는 데 유용합니다. Python 인터프리터에 대한 -c 스위치와 동일한 방식으로 작동합니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:380
+#: ../../../__w/calibre/calibre/manual/develop.rst:383
 msgid ""
 "can be used to execute your own Python script. It works in the same way as "
 "passing the script to the Python interpreter, except that the calibre "
 "environment is fully initialized, so you can use all the calibre code in "
 "your script. To use command line arguments with your script, use the form::"
-msgstr "자신의 Python 스크립트를 실행하는 데 사용할 수 있습니다. 캘리버 환경이 완전히 초기화되어 스크립트의 모든 캘리버 코드를 사용할 수 있다는 점을 제외하고는 Python 인터프리터에 스크립트를 전달하는 것과 같은 방식으로 작동합니다. 스크립트와 함께 명령줄 인수를 사용하려면 다음 형식을 사용합니다::"
+msgstr ""
+"자신의 Python 스크립트를 실행하는 데 사용할 수 있습니다. 캘리버 환경이 완전히 초기화되어 스크립트의 모든 캘리버 코드를 사용할 수"
+" 있다는 점을 제외하고는 Python 인터프리터에 스크립트를 전달하는 것과 같은 방식으로 작동합니다. 스크립트와 함께 명령줄 인수를 "
+"사용하려면 다음 형식을 사용합니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:385
+#: ../../../__w/calibre/calibre/manual/develop.rst:388
 msgid ""
 "The ``--`` causes all subsequent arguments to be passed to your script."
-msgstr ""
+msgstr "``--``는 이후의 모든 인수를 스크립트에 전달합니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:389
+#: ../../../__w/calibre/calibre/manual/develop.rst:392
 msgid "Using calibre in your projects"
-msgstr ""
+msgstr "프로젝트에서 캘리버 사용하기"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:391
+#: ../../../__w/calibre/calibre/manual/develop.rst:394
 msgid ""
 "It is possible to directly use calibre functions/code in your Python "
 "project. Two ways exist to do this:"
-msgstr ""
+msgstr "Python 프로젝트에서 직접 캘리버 함수/코드를 사용할 수 있습니다. 두 가지 방법이 있습니다:"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:394
+#: ../../../__w/calibre/calibre/manual/develop.rst:397
 msgid "Binary install of calibre"
-msgstr ""
+msgstr "캘리버 바이너리 설치"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:396
+#: ../../../__w/calibre/calibre/manual/develop.rst:399
 msgid ""
 "If you have a binary install of calibre, you can use the Python interpreter "
 "bundled with calibre, like this::"
-msgstr "캘리버의 바이너리 설치가 있는 경우, 다음과 같이 캘리버와 함께 번들로 제공되는 Python 인터프리터를 사용할 수 있습니다::"
-
-#: ../../__w/calibre/calibre/manual/develop.rst:401
-msgid "Source install on Linux"
 msgstr ""
+"캘리버의 바이너리 설치가 있는 경우, 다음과 같이 캘리버와 함께 번들로 제공되는 Python 인터프리터를 사용할 수 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:403
+#: ../../../__w/calibre/calibre/manual/develop.rst:404
+msgid "Source install on Linux"
+msgstr "Linux에서 소스 설치"
+
+#: ../../../__w/calibre/calibre/manual/develop.rst:406
 msgid ""
 "In addition to using the above technique, if you do a source install on "
 "Linux, you can also directly import calibre, as follows::"
-msgstr ""
+msgstr "위의 기술을 사용하는 것 외에도, Linux에서 소스 설치를 수행하면 다음과 같이 직접 캘리버를 가져올 수도 있습니다::"
 
-#: ../../__w/calibre/calibre/manual/develop.rst:411
+#: ../../../__w/calibre/calibre/manual/develop.rst:414
 msgid ""
 "It is essential that you import the init_calibre module before any other "
 "calibre modules/packages as it sets up the interpreter to run calibre code."
 msgstr ""
+"다른 캘리버 모듈/패키지보다 먼저 init_calibre 모듈을 가져오는 것이 필수적입니다. 이 모듈이 인터프리터를 캘리버 코드를 "
+"실행하도록 설정하기 때문입니다."
 
-#: ../../__w/calibre/calibre/manual/develop.rst:415
+#: ../../../__w/calibre/calibre/manual/develop.rst:418
 msgid "API documentation for various parts of calibre"
-msgstr ""
+msgstr "캘리버 다양한 부분의 API 문서"

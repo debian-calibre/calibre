@@ -10,49 +10,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-01 01:59+0000\n"
+"POT-Creation-Date: 2026-04-08 13:52+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
-"Language-Team: Korean (http://www.transifex.com/calibre/calibre/language/ko/)\n"
+"Last-Translator: Seo, HyunTae <acrab001@gmail.com>, 2014\n"
+"Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../__w/calibre/calibre/manual/news_recipe.rst:4
+#: ../../../__w/calibre/calibre/manual/news_recipe.rst:4
 msgid "API documentation for recipes"
-msgstr ""
+msgstr "레시피 API 문서"
 
-#: ../../__w/calibre/calibre/manual/news_recipe.rst:9
+#: ../../../__w/calibre/calibre/manual/news_recipe.rst:9
 msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
 msgstr "레시피 작성을 위한 API는 :class:`BasicNewsRecipe`에 의해 정의됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe:1
 msgid ""
 "Base class that contains logic needed in all recipes. By overriding "
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr "모든 레시피에 필요한 논리를 포함하는 기본 클래스입니다. 이 클래스의 기능들을 하나하나 수정하여 덮어써나감으로써 점점 더 사용자에게 알맞으면서도 강력한 레시피로 만들어 갈 수 있습니다. 레시피 작성에 대한 튜토리얼 소개는 :doc:`뉴스`를 참조하십시오."
+msgstr "모든 레시피에 필요한 논리를 포함하는 기본 클래스입니다. 이 클래스의 기능들을 하나하나 수정하여 덮어써나감으로써 점점 더 사용자에게 알맞으면서도 강력한 레시피로 만들어 갈 수 있습니다. 레시피 작성에 대한 튜토리얼 소개는 :doc:`news`를 참조하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
+msgid ""
+"If your recipe when converted to EPUB has problems with images when viewed "
+"in Adobe Digital Editions, call this method from within "
+":meth:`postprocess_html`."
+msgstr "레시피가 생성한 EPUB를 Adobe Digital Editions로 보았을 때 이미지 표시에 문제가 있다면 :meth:`postprocess_html` 메서드 안에서 이 메서드를 호출하세요."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
+msgid ""
+"Perform some processing on image urls (perhaps removing size restrictions "
+"for dynamically generated images, etc.) and return the processed URL. Return"
+" None or an empty string to skip fetching the image."
+msgstr "이미지 URL에 대해 일부 처리를 수행합니다(예: 동적으로 생성된 이미지의 크기 제한 제거 등). 처리된 URL을 반환합니다. 이미지 가져오기를 건너뛰려면 None이나 빈 문자열을 반환하세요."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
+msgid ""
+"Take a `url` pointing to the webpage with article content and return the "
+":term:`URL` pointing to the print version of the article. By default does "
+"nothing. For example::"
+msgstr "기사 콘텐츠가 있는 웹페이지를 가리키는 `url`을 받아, 기사의 인쇄 버전을 가리키는 :term:`URL`을 반환합니다. 기본적으로 아무 작업도 수행하지 않습니다. 예::"
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
+msgid ""
+"Convenience method to take a `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
+"extract the text from it recursively, including any CDATA sections and alt "
+"tag attributes. Return a possibly empty Unicode string."
+msgstr "`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`를 받아 CDATA 섹션과 alt 태그 속성을 포함하여 텍스트를 재귀적으로 추출하는 편의 메서드입니다. 비어 있을 수도 있는 유니코드 문자열을 반환합니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
+msgid ""
+"`use_alt`: If `True` try to use the alt attribute for tags that don't have "
+"any textual content"
+msgstr "`use_alt`: `True`이면 텍스트 콘텐츠가 없는 태그에 대해 alt 속성을 사용하려고 시도합니다"
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
+msgid ""
+"`tag`: `BeautifulSoup "
+"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+msgstr "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
 msgid ""
 "Call this method inside any of the preprocess methods to abort the download "
 "for the current article. Useful to skip articles that contain inappropriate "
 "content, such as pure video articles."
-msgstr ""
+msgstr "전처리 메서드 중 하나 안에서 이 메서드를 호출하여 현재 기사의 다운로드를 중단하세요. 순수 동영상 기사와 같이 부적절한 콘텐츠가 포함된 기사를 건너뛰는 데 유용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
 msgid ""
 "Causes the recipe download system to abort the download of this recipe, "
 "displaying a simple feedback message to the user."
-msgstr "이 메소드는 레시피 다운로드 시스템이 이 레시피를 다운로드하는 것을 중단시킬 수 있습니다. 사용자에게 간단한 피드백 메시지를 표시합니다."
+msgstr "레시피 다운로드 시스템이 이 레시피의 다운로드를 중단하도록 하며, 사용자에게 간단한 피드백 메시지를 표시합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
 msgid ""
 "Call this from populate_article_metadata with the src attribute of an <img> "
@@ -61,17 +108,9 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr "기사 안에 있는 <img> 태그 중 목차에서 기사를 나타내는 썸네일 이미지로서 사용하기 적합한 것을 src attribute로 하여 이 메소드를 populate_article_metadata 내부에서 호출하십시오. 썸네일 이미지가 실제로 이용될지 여부는 장치마다 다릅니다(현재 킨들에서만 사용됨). 참조되는 이미지는 성공적으로 다운로드되어진 것이어야 한다는 점을 유의하세요. 그렇지 않으면 무시됩니다."
+msgstr "기사 안에 있는 <img> 태그 중 목차에서 기사를 나타내는 썸네일 이미지로서 사용하기 적합한 것을 src 속성으로 하여 이 메서드를 populate_article_metadata 내부에서 호출하세요. 썸네일 이미지가 실제로 사용될지 여부는 장치마다 다릅니다(현재 Kindle에서만 사용). 참조되는 이미지는 성공적으로 다운로드된 것이어야 합니다. 그렇지 않으면 무시됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
-msgid ""
-"If your recipe when converted to EPUB has problems with images when viewed "
-"in Adobe Digital Editions, call this method from within "
-":meth:`postprocess_html`."
-msgstr "만일 레시피가 생성한 EPUB를 Adobe Digital Edition으로 보았을 때 이미지 표시에 문제가 있다면 :meth:`postprocess_html` 메소드 안에서 이 메소드를 호출하세요."
-
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
 msgid ""
 "Return a set of canonical representations of ``url``.  The default "
@@ -79,74 +118,65 @@ msgid ""
 "any query parameters, fragments, etc. The canonical representations must be "
 "unique across all URLs for this news source. If they are not, then internal "
 "links may be resolved incorrectly."
-msgstr ""
+msgstr "``url``의 정규 표현 집합을 반환합니다. 기본 구현은 쿼리 매개 변수, 프래그먼트 등을 무시하고 URL의 서버 호스트명과 경로만 사용합니다. 정규 표현은 이 뉴스 소스의 모든 URL에서 고유해야 합니다. 고유하지 않으면 내부 링크가 잘못 해석될 수 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:0
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:0
+#: ../../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Parameters"
 msgstr "매개 변수"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:7
 msgid ""
 "Is True if the URL is coming from an internal link in an HTML file. False if"
 " the URL is the URL used to download an article."
-msgstr ""
+msgstr "URL이 HTML 파일의 내부 링크에서 오는 경우 True입니다. URL이 기사를 다운로드하는 데 사용된 URL인 경우 False입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cleanup:1
 msgid ""
 "Called after all articles have been download. Use it to do any cleanup like "
 "logging out of subscription sites, etc."
-msgstr "모든 기사가 다운로드된 후에 호출됩니다. 인증 사이트에서 로그아웃하기 등과 같은, cleanup 작업을 하는데 사용하세요."
+msgstr "모든 기사가 다운로드된 후에 호출됩니다. 구독 사이트에서 로그아웃하기 등과 같은 정리 작업을 수행하는 데 사용하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
 msgid ""
 "Clone the browser br. Cloned browsers are used for multi-threaded downloads,"
 " since mechanize is not thread safe. The default cloning routines should "
 "capture most browser customization, but if you do something exotic in your "
 "recipe, you should override this method in your recipe and clone manually."
-msgstr "브라우저 br을 복제합니다. 복제된 브라우저는 멀티 쓰레드 다운로드에 사용됩니다(mechanize가 thread safe하지 않기 때문). 기본 복제 루틴이 대부분의 사용자 맞춤 설정을 잡아내야 합니다만, 만일 사용자가 레시피 안에서 특이한 방식을 사용하고 있다면 레시피 안에서 이 메소드를 덮어쓰고 수동으로 복제하여야 합니다."
+msgstr "브라우저 br을 복제합니다. 복제된 브라우저는 멀티스레드 다운로드에 사용됩니다(mechanize가 thread-safe하지 않기 때문). 기본 복제 루틴이 대부분의 사용자 맞춤 설정을 잡아내야 합니다만, 레시피 안에서 특이한 방식을 사용하고 있다면 이 메서드를 레시피 안에서 덮어쓰고 수동으로 복제하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
 msgid ""
 "Cloned browser instances use the same, thread-safe CookieJar by default, "
 "unless you have customized cookie handling."
-msgstr "복제된 브라우저 인스턴스는, 사용자가 쿠키 처리를 별도로 손대지 않았다면, 기본값으로 똑같은 thread-safe Cookie.jar를 사용합니다."
+msgstr "복제된 브라우저 인스턴스는 쿠키 처리를 별도로 맞춤 설정하지 않았다면 기본값으로 동일한 thread-safe CookieJar를 사용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.default_cover:1
 msgid "Create a generic cover for recipes that don't have a cover"
 msgstr "표지가 없는 레시피에 대한 일반 표지 만들기"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.download:1
 msgid ""
 "Download and pre-process all articles from the feeds in this recipe. This "
 "method should be called only once on a particular Recipe instance. Calling "
 "it more than once will lead to undefined behavior. :return: Path to "
 "index.html"
-msgstr "이 레시피의 피드들에 해당하는 모든 기사를 다운로드하고 전처리를 합니다. 이 메소드는 특정 레시피 인스턴스에서 단 한번만 호출되어야 합니다. 한번 이상 호출할 시, 정의되지 않은 작동 방식을 일으킬 수 있습니다. index.html에 대한 경로를 리턴합니다."
+msgstr "이 레시피의 피드에 해당하는 모든 기사를 다운로드하고 전처리합니다. 이 메서드는 특정 레시피 인스턴스에서 단 한 번만 호출되어야 합니다. 한 번 이상 호출하면 정의되지 않은 동작이 발생할 수 있습니다. :return: index.html 경로"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extract_readable_article:1
 msgid ""
 "Extracts main article content from 'html', cleans up and returns as a "
 "(article_html, extracted_title) tuple. Based on the original readability "
 "algorithm by Arc90."
-msgstr "'html'에서 주요 기사 콘텐츠를 추출하고 정리하고 (article_html, extracted_title) 튜플로 반환합니다. Arc90의 원래 가독성 알고리즘을 기반으로 합니다."
+msgstr "'html'에서 주요 기사 콘텐츠를 추출하고 정리한 후 (article_html, extracted_title) 튜플로 반환합니다. Arc90의 원래 가독성 알고리즘을 기반으로 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
 msgid ""
 "Override in a subclass to customize extraction of the :term:`URL` that "
@@ -156,26 +186,23 @@ msgid ""
 "for the original link (for feeds syndicated via a service like FeedBurner or"
 " Pheedo) and if found, returns that or else returns `article.link "
 "<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
-msgstr ""
+msgstr "서브클래스에서 덮어써서 각 기사의 콘텐츠를 가리키는 :term:`URL`의 추출을 맞춤 설정하세요. 기사 URL을 반환합니다. 피드에서 파싱된 기사를 나타내는 객체인 `article`과 함께 호출됩니다. `feedparser <https://pythonhosted.org/feedparser/>`_를 참조하세요. 기본적으로 원본 링크를 찾습니다(FeedBurner나 Pheedo와 같은 서비스를 통해 신디케이트된 피드의 경우). 찾으면 해당 링크를 반환하고, 그렇지 않으면 `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
 msgid ""
 "Return a browser instance used to fetch documents from the web. By default "
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
-"refreshes and has a mozilla firefox user agent."
-msgstr ""
+"refreshes and has a random common user agent."
+msgstr "웹에서 문서를 가져오는 데 사용되는 브라우저 인스턴스를 반환합니다. 기본적으로 쿠키를 지원하고, robots.txt를 무시하고, 새로고침을 처리하며, 임의의 일반 사용자 에이전트를 가진 `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ 브라우저 인스턴스를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
-msgid ""
-"If your recipe requires that you login first, override this method in your "
-"subclass. For example, the following code is used in the New York Times "
-"recipe to login for full access::"
-msgstr ""
+msgid "To customize the browser override this method in your sub-class as::"
+msgstr "브라우저를 맞춤 설정하려면 서브클래스에서 이 메서드를 다음과 같이 덮어쓰세요::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
 msgid ""
 "Return a :term:`URL` to the cover image for this issue or `None`. By default"
@@ -183,16 +210,16 @@ msgid ""
 "`None`. If you want your recipe to download a cover for the e-book override "
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
-msgstr ""
+msgstr "이 호의 표지 이미지에 대한 :term:`URL`을 반환하거나 `None`을 반환합니다. 기본적으로 보통 `None`인 `self.cover_url` 멤버의 값을 반환합니다. 레시피가 전자책의 표지를 다운로드하도록 하려면 서브클래스에서 이 메서드를 덮어쓰거나, 이 메서드가 호출되기 전에 멤버 변수 `self.cover_url`을 설정하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
 msgid ""
 "By default returns `self.extra_css`. Override if you want to "
 "programmatically generate the extra_css."
-msgstr ""
+msgstr "기본적으로 `self.extra_css`를 반환합니다. 프로그래밍 방식으로 extra_css를 생성하려면 덮어쓰세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_feeds:1
 msgid ""
 "Return a list of :term:`RSS` feeds to fetch for this profile. Each element "
@@ -200,14 +227,14 @@ msgid ""
 "None or an empty string, the title from the feed is used. This method is "
 "useful if your recipe needs to do some processing to figure out the list of "
 "feeds to download. If so, override in your subclass."
-msgstr ""
+msgstr "이 프로필에 대해 가져올 :term:`RSS` 피드 목록을 반환합니다. 목록의 각 요소는 (제목, url) 형식의 2요소 튜플이어야 합니다. 제목이 None이거나 빈 문자열이면 피드의 제목이 사용됩니다. 이 메서드는 레시피가 다운로드할 피드 목록을 파악하기 위해 일부 처리를 수행해야 하는 경우에 유용합니다. 그렇다면 서브클래스에서 덮어쓰세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
 msgid "Override in subclass to use something other than the recipe title"
-msgstr ""
+msgstr "서브클래스에서 덮어써서 레시피 제목 대신 다른 것을 사용하세요"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_url:1
 msgid ""
 "Return a :term:`URL` to the masthead image for this issue or `None`. By "
@@ -216,70 +243,85 @@ msgid ""
 "e-book override this method in your subclass, or set the member variable "
 "`self.masthead_url` before this method is called. Masthead images are used "
 "in Kindle MOBI files."
-msgstr ""
+msgstr "이 호의 마스트헤드 이미지에 대한 :term:`URL`을 반환하거나 `None`을 반환합니다. 기본적으로 보통 `None`인 `self.masthead_url` 멤버의 값을 반환합니다. 레시피가 전자책의 마스트헤드를 다운로드하도록 하려면 서브클래스에서 이 메서드를 덮어쓰거나, 이 메서드가 호출되기 전에 멤버 변수 `self.masthead_url`을 설정하세요. 마스트헤드 이미지는 Kindle MOBI 파일에서 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:1
 msgid ""
 "If you set `articles_are_obfuscated` this method is called with every "
 "article URL. It should return the path to a file on the filesystem that "
 "contains the article HTML. That file is processed by the recursive HTML "
-"fetching engine, so it can contain links to pages/images on the web."
-msgstr ""
+"fetching engine, so it can contain links to pages/images on the web. "
+"Alternately, you can return a dictionary of the form: {'data': <HTML data>, "
+"'url': <the resolved URL of the article>}. This avoids needing to create "
+"temporary files. The `url` key in the dictionary is useful if the effective "
+"URL of the article is different from the URL passed into this method, for "
+"example, because of redirects. It can be omitted if the URL is unchanged."
+msgstr "`articles_are_obfuscated`를 설정하면 이 메서드가 모든 기사 URL에 대해 호출됩니다. 기사 HTML이 포함된 파일 시스템의 파일 경로를 반환해야 합니다. 해당 파일은 재귀적 HTML 가져오기 엔진에 의해 처리되므로 웹의 페이지/이미지에 대한 링크를 포함할 수 있습니다. 또는 {'data': <HTML 데이터>, 'url': <기사의 해석된 URL>} 형식의 딕셔너리를 반환할 수도 있습니다. 이렇게 하면 임시 파일을 생성할 필요가 없습니다. 예를 들어 리디렉션으로 인해 기사의 실제 URL이 이 메서드에 전달된 URL과 다른 경우 딕셔너리의 `url` 키가 유용합니다. URL이 변경되지 않은 경우 생략할 수 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:6
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
 msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
-msgstr ""
+msgstr "이 메서드는 기사 콘텐츠에 자동으로 접근하기 어렵게 만드는 사이트에서 일반적으로 유용합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.image_url_processor:1
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
 msgid ""
-"Perform some processing on image urls (perhaps removing size restrictions "
-"for dynamically generated images, etc.) and return the precessed URL. Return"
-" None or an empty string to skip fetching the image."
-msgstr ""
+"Return the delay in seconds before downloading this URL. If you want to "
+"programmatically determine the delay for the specified URL, override this "
+"method in your subclass, returning self.delay by default for URLs you do not"
+" want to affect."
+msgstr "이 URL을 다운로드하기 전의 지연 시간(초)을 반환합니다. 지정된 URL에 대한 지연 시간을 프로그래밍 방식으로 결정하려면 서브클래스에서 이 메서드를 덮어쓰고, 영향을 주지 않으려는 URL에 대해서는 기본적으로 self.delay를 반환하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/manual/news_recipe.rst:0
+msgid "Returns"
+msgstr "반환값"
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:5
+msgid "A floating point number, the delay in seconds."
+msgstr "부동소수점 숫자, 지연 시간(초)."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:1
 msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ of"
 " it."
-msgstr ""
+msgstr "인덱스 페이지의 URL을 받아 그에 대한 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__을 반환하는 편의 메서드입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
 msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
-msgstr ""
+msgstr "`url_or_raw`: URL이거나 문자열로 된 다운로드된 인덱스 페이지"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
 msgid ""
 "Return True if the link should be followed or False otherwise. By default, "
 "raises NotImplementedError which causes the downloader to ignore it."
-msgstr ""
+msgstr "링크를 따라가야 하면 True를, 그렇지 않으면 False를 반환합니다. 기본적으로 NotImplementedError를 발생시켜 다운로더가 무시하도록 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
 msgid "The URL to be followed"
-msgstr ""
+msgstr "따라갈 URL"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
 msgid "The tag from which the URL was derived"
-msgstr ""
+msgstr "URL이 파생된 태그"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
 msgid ""
 "Create a list of articles from the list of feeds returned by "
 ":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
-msgstr ""
+msgstr "BasicNewsRecipe.get_feeds가 반환한 피드 목록에서 기사 목록을 생성합니다. Feed 객체 목록을 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
 msgid ""
 "This method should be implemented in recipes that parse a website instead of"
@@ -287,158 +329,150 @@ msgid ""
 "that have a \"Print Edition\" webpage that lists all the articles in the "
 "current print edition. If this function is implemented, it will be used in "
 "preference to :meth:`BasicNewsRecipe.parse_feeds`."
-msgstr ""
+msgstr "이 메서드는 피드 대신 웹사이트를 파싱하여 기사 목록을 생성하는 레시피에서 구현해야 합니다. 일반적으로 현재 인쇄판의 모든 기사를 나열하는 \"인쇄판\" 웹페이지가 있는 뉴스 소스에 사용됩니다. 이 함수가 구현되면 :meth:`BasicNewsRecipe.parse_feeds`보다 우선하여 사용됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
 msgid ""
 "It must return a list. Each element of the list must be a 2-element tuple of"
 " the form ``('feed title', list of articles)``."
-msgstr ""
+msgstr "목록을 반환해야 합니다. 목록의 각 요소는 ``('피드 제목', 기사 목록)`` 형식의 2요소 튜플이어야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
 msgid "Each list of articles must contain dictionaries of the form::"
-msgstr ""
+msgstr "각 기사 목록은 다음 형식의 딕셔너리를 포함해야 합니다::"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:23
 msgid ""
 "For an example, see the recipe for downloading `The Atlantic`. In addition, "
 "you can add 'author' for the author of the article."
-msgstr ""
+msgstr "예시는 `The Atlantic`을 다운로드하는 레시피를 참조하세요. 또한 기사의 저자에 대해 'author'를 추가할 수 있습니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
 msgid ""
 "If you want to abort processing for some reason and have calibre show the "
 "user a simple message instead of an error, call "
 ":meth:`abort_recipe_processing`."
-msgstr ""
+msgstr "어떤 이유로 처리를 중단하고 calibre가 오류 대신 사용자에게 간단한 메시지를 표시하도록 하려면 :meth:`abort_recipe_processing`을 호출하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
 msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
 "HTML (soup)."
-msgstr ""
+msgstr "기사에 속하는 각 HTML 페이지가 다운로드될 때 호출됩니다. 파싱된 HTML(soup)에서 저자/요약 등의 기사 메타데이터를 가져오는 데 사용하기 위한 것입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
 msgid ""
 "A object of class :class:`calibre.web.feeds.Article`. If you change the "
 "summary, remember to also change the text_summary"
-msgstr ""
+msgstr ":class:`calibre.web.feeds.Article` 클래스의 객체입니다. 요약을 변경했다면 text_summary도 함께 변경해야 합니다"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
 msgid "Parsed HTML belonging to this article"
-msgstr ""
+msgstr "이 기사에 속하는 파싱된 HTML"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
 msgid "True iff the parsed HTML is the first page of the article."
-msgstr ""
+msgstr "파싱된 HTML이 기사의 첫 페이지인 경우에만 True입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
 msgid "Run any needed post processing on the parsed downloaded e-book."
-msgstr ""
+msgstr "파싱된 다운로드된 전자책에 대해 필요한 사후 처리를 수행합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
 msgid "An OEBBook object"
-msgstr ""
+msgstr "OEBBook 객체"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:4
 msgid "Conversion options"
-msgstr ""
+msgstr "변환 옵션"
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:1
 msgid ""
 "This method is called with the source of each downloaded :term:`HTML` file, "
 "after it is parsed for links and images. It can be used to do arbitrarily "
 "powerful post-processing on the :term:`HTML`. It should return `soup` after "
 "processing it."
-msgstr ""
+msgstr "이 메서드는 다운로드된 각 :term:`HTML` 파일의 소스가 링크와 이미지를 위해 파싱된 후에 호출됩니다. :term:`HTML`에 대해 임의로 강력한 사후 처리를 수행하는 데 사용할 수 있습니다. 처리 후 `soup`를 반환해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
 msgid ""
 "A `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__"
 "  instance containing the downloaded :term:`HTML`."
-msgstr ""
+msgstr "다운로드된 :term:`HTML`을 포함하는 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ 인스턴스."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
 msgid "True if this is the first page of an article."
-msgstr ""
+msgstr "기사의 첫 페이지이면 True입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:1
 msgid ""
 "This method is called with the source of each downloaded :term:`HTML` file, "
 "before it is parsed for links and images. It is called after the cleanup as "
 "specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
 "processing on the :term:`HTML`. It should return `soup` after processing it."
-msgstr ""
+msgstr "이 메서드는 다운로드된 각 :term:`HTML` 파일의 소스가 링크와 이미지를 위해 파싱되기 전에 호출됩니다. remove_tags 등으로 지정된 정리 후에 호출됩니다. :term:`HTML`에 대해 임의로 강력한 전처리를 수행하는 데 사용할 수 있습니다. 처리 후 `soup`를 반환해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:8
 msgid ""
 "`soup`: A `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instance "
 "containing the downloaded :term:`HTML`."
-msgstr ""
+msgstr "`soup`: 다운로드된 :term:`HTML`을 포함하는 `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ 인스턴스."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
 msgid ""
 "Perform some processing on downloaded image data. This is called on the raw "
 "data before any resizing is done. Must return the processed raw data. Return"
 " None to skip the image."
-msgstr ""
+msgstr "다운로드된 이미지 데이터에 대해 일부 처리를 수행합니다. 크기 조정이 수행되기 전에 원시 데이터에 대해 호출됩니다. 처리된 원시 데이터를 반환해야 합니다. 이미지를 건너뛰려면 None을 반환하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
 msgid ""
 "This method is called with the source of each downloaded :term:`HTML` file, "
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr ""
+msgstr "이 메서드는 다운로드된 각 :term:`HTML` 파일의 소스가 객체 트리로 파싱되기 전에 호출됩니다. raw_html은 웹에서 다운로드된 원시 HTML을 나타내는 유니코드 문자열입니다. url은 HTML이 다운로드된 URL입니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
 msgid "Note that this method acts *before* preprocess_regexps."
-msgstr ""
+msgstr "이 메서드는 preprocess_regexps *전에* 작동합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:8
 msgid "This method must return the processed raw_html as a unicode object."
-msgstr ""
+msgstr "이 메서드는 처리된 raw_html을 유니코드 객체로 반환해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
-msgid ""
-"Take a `url` pointing to the webpage with article content and return the "
-":term:`URL` pointing to the print version of the article. By default does "
-"nothing. For example::"
-msgstr ""
-
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.publication_date:1
 msgid ""
 "Use this method to set the date when this issue was published. Defaults to "
 "the moment of download. Must return a :class:`datetime.datetime` object."
-msgstr ""
+msgstr "이 호가 발행된 날짜를 설정하려면 이 메서드를 사용합니다. 기본값은 다운로드 시점입니다. datetime.datetime 객체를 반환해야 합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.skip_ad_pages:1
 msgid ""
 "This method is called with the source of each downloaded :term:`HTML` file, "
@@ -446,90 +480,79 @@ msgid ""
 "applied. Note that preprocess_regexps will have already been applied. It is "
 "meant to allow the recipe to skip ad pages. If the soup represents an ad "
 "page, return the HTML of the real page. Otherwise return None."
-msgstr ""
+msgstr "이 메서드는 다운로드된 각 :term:`HTML` 파일의 소스에 remove_tags, keep_only_tags와 같은 정리 속성이 적용되기 전에 호출됩니다. preprocess_regexps는 이미 적용되었을 것입니다. 레시피가 광고 페이지를 건너뛸 수 있도록 하기 위한 것입니다. soup가 광고 페이지를 나타내면 실제 페이지의 HTML을 반환하세요. 그렇지 않으면 None을 반환하세요."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
 msgid ""
 "Convenience method to sort the titles in `index` according to `weights`. "
 "`index` is sorted in place. Returns `index`."
-msgstr ""
+msgstr "`weights`에 따라 `index`의 제목을 정렬하는 편의 메서드입니다. `index`가 제자리에서 정렬됩니다. `index`를 반환합니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
 msgid "`index`: A list of titles."
-msgstr ""
+msgstr "`index`: 제목 목록."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:6
 msgid ""
 "`weights`: A dictionary that maps weights to titles. If any titles in index "
 "are not in weights, they are assumed to have a weight of 0."
-msgstr ""
+msgstr "`weights`: 가중치를 제목에 매핑하는 딕셔너리입니다. index의 제목 중 weights에 없는 것이 있으면 가중치가 0으로 간주됩니다."
 
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
-msgid ""
-"Convenience method to take a `BeautifulSoup "
-"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
-"extract the text from it recursively, including any CDATA sections and alt "
-"tag attributes. Return a possibly empty Unicode string."
-msgstr ""
-
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
-msgid ""
-"`use_alt`: If `True` try to use the alt attribute for tags that don't have "
-"any textual content"
-msgstr ""
-
-#: ../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
-#: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
-msgid ""
-"`tag`: `BeautifulSoup "
-"<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
-msgstr ""
-
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
 msgid ""
 "Set to True and implement :meth:`get_obfuscated_article` to handle websites "
 "that try to make it difficult to scrape content."
-msgstr ""
+msgstr "True로 설정하고 :meth:`get_obfuscated_article`을 구현하여 콘텐츠 스크래핑을 어렵게 만드는 웹사이트를 처리하세요."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup:1
 msgid ""
 "Automatically extract all the text from downloaded article pages. Uses the "
 "algorithms from the readability project. Setting this to True, means that "
 "you do not have to worry about cleaning up the downloaded HTML manually "
 "(though manual cleanup will always be superior)."
-msgstr ""
+msgstr "다운로드된 기사 페이지에서 모든 텍스트를 자동으로 추출합니다. readability 프로젝트의 알고리즘을 사용합니다. True로 설정하면 다운로드된 HTML을 수동으로 정리할 필요가 없습니다(수동 정리가 항상 더 우수하지만)."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
 msgid ""
 "Specify elements that the auto cleanup algorithm should never remove. The "
 "syntax is a XPath expression. For example::"
-msgstr ""
+msgstr "자동 정리 알고리즘이 절대 제거하지 않아야 할 요소를 지정하세요. 구문은 XPath 표현식입니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:1
+msgid ""
+"The simulated browser engine to use when downloading from servers. The "
+"default is to use the Python mechanize browser engine, which supports "
+"logging in. However, if you don't need logging in, consider changing this to"
+" either 'webengine' which uses an actual Chromium browser to do the network "
+"requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and "
+"'qt' support HTTP/2, which mechanize does not and are thus harder to "
+"fingerprint for bot protection services."
+msgstr "서버에서 다운로드할 때 사용할 시뮬레이션된 브라우저 엔진입니다. 기본값은 로그인을 지원하는 Python mechanize 브라우저 엔진입니다. 그러나 로그인이 필요하지 않다면, 실제 Chromium 브라우저를 사용하여 네트워크 요청을 수행하는 'webengine'이나 Qt Networking 백엔드를 사용하는 'qt'로 변경하는 것을 고려하세요. 'webengine'과 'qt' 모두 mechanize가 지원하지 않는 HTTP/2를 지원하므로 봇 보호 서비스의 핑거프린팅이 더 어렵습니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
-msgstr ""
+msgstr "True이면 탐색 모음이 가운데 정렬되고, 그렇지 않으면 왼쪽 정렬됩니다"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
 msgid ""
 "Set this to False to ignore all scaling and compression parameters and pass "
 "images through unmodified. If True and the other compression parameters are "
-"left at their default values, JPEG images will be scaled to fit in the "
-"screen dimensions set by the output profile and compressed to size at most "
-"(w * h)/16 where w x h are the scaled image dimensions."
-msgstr ""
+"left at their default values, images will be scaled to fit in the screen "
+"dimensions set by the output profile and compressed to size at most (w * "
+"h)/16 where w x h are the scaled image dimensions."
+msgstr "False로 설정하면 모든 크기 조정 및 압축 매개 변수를 무시하고 이미지를 수정 없이 통과시킵니다. True이고 다른 압축 매개 변수가 기본값으로 남겨져 있으면, 이미지가 출력 프로필로 설정된 화면 크기에 맞게 조정되고 최대 (w * h)/16 크기로 압축됩니다(w x h는 조정된 이미지 크기)."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
 msgid ""
 "The factor used when auto compressing JPEG images. If set to None, auto "
@@ -543,26 +566,26 @@ msgid ""
 "will first be scaled and then its quality lowered until its size is less "
 "than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
 "other words, this compression happens after scaling."
-msgstr ""
+msgstr "JPEG 이미지를 자동 압축할 때 사용하는 계수입니다. None으로 설정하면 자동 압축이 비활성화됩니다. 그렇지 않으면, w x h가 픽셀 단위의 이미지 크기일 때 품질 수준을 낮춰 가능한 한 (w * h)/compress_news_images_auto_size 바이트로 크기를 줄입니다. 최소 JPEG 품질은 5/100이므로 이 제약 조건이 충족되지 않을 수 있습니다. 이 매개 변수는 이미지에 고정 최대 크기를 제공하는 compress_news_images_max_size 매개 변수로 재정의할 수 있습니다. scale_news_images_to_device를 활성화하면 이미지가 먼저 조정된 후 크기가 (w * h)/factor 미만이 될 때까지 품질이 낮아집니다(w와 h는 이제 *조정된* 이미지 크기). 즉, 이 압축은 크기 조정 후에 발생합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
 msgid ""
 "Set JPEG quality so images do not exceed the size given (in KBytes). If set,"
 " this parameter overrides auto compression via "
 "compress_news_images_auto_size. The minimum JPEG quality will be 5/100 so it"
 " is possible this constraint will not be met."
-msgstr ""
+msgstr "JPEG 품질을 설정하여 이미지가 주어진 크기(KBytes)를 초과하지 않도록 합니다. 설정하면 이 매개 변수가 compress_news_images_auto_size를 통한 자동 압축을 재정의합니다. 최소 JPEG 품질은 5/100이므로 이 제약 조건이 충족되지 않을 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.conversion_options:1
 msgid ""
 "Recipe specific options to control the conversion of the downloaded content "
 "into an e-book. These will override any user or plugin specified values, so "
 "only use if absolutely necessary. For example::"
-msgstr ""
+msgstr "다운로드된 콘텐츠를 전자책으로 변환하는 것을 제어하는 레시피별 옵션입니다. 사용자나 플러그인 지정 값을 재정의하므로 절대적으로 필요한 경우에만 사용하세요. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
 msgid ""
 "By default, the cover image returned by get_cover_url() will be used as the "
@@ -573,23 +596,24 @@ msgid ""
 "15px on the top and bottom. Color names are defined `here "
 "<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
 " white does not always work in Windows. Use #ffffff instead"
-msgstr ""
+msgstr "기본적으로 get_cover_url()이 반환하는 표지 이미지가 정기간행물의 표지로 사용됩니다. 레시피에서 이 메서드를 덮어쓰면 calibre가 다운로드된 표지를 다운로드된 표지의 너비와 높이의 백분율로 표현되는 프레임에 렌더링하도록 지시합니다. cover_margins = (10, 15, '#ffffff')는 표지에 왼쪽과 오른쪽에 10px, 위쪽과 아래쪽에 15px의 흰색 여백을 추가합니다. 색상 이름은 `여기 <https://www.imagemagick.org/script/color.php>`_에 정의되어 있습니다. 어떤 이유에서인지 Windows에서 white가 항상 작동하지 않는 점에 유의하세요. 대신 #ffffff를 사용하세요"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
 msgid ""
-"Delay between consecutive downloads in seconds. The argument may be a "
-"floating point number to indicate a more precise time."
-msgstr ""
+"The default delay between consecutive downloads in seconds. The argument may"
+" be a floating point number to indicate a more precise time. See "
+":meth:`get_url_specific_delay` to implement per URL delays."
+msgstr "연속 다운로드 사이의 기본 지연 시간(초)입니다. 인수는 더 정확한 시간을 나타내기 위해 부동소수점 숫자일 수 있습니다. URL별 지연 시간을 구현하려면 :meth:`get_url_specific_delay`를 참조하세요."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
 msgid ""
 "A couple of lines that describe the content this recipe downloads. This will"
 " be used primarily in a GUI that presents a list of recipes."
-msgstr ""
+msgstr "이 레시피가 다운로드하는 콘텐츠를 설명하는 몇 줄입니다. 주로 레시피 목록을 표시하는 GUI에서 사용됩니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.encoding:1
 msgid ""
 "Specify an override encoding for sites that have an incorrect charset "
@@ -597,9 +621,9 @@ msgid ""
 "``cp1252``. If None, try to detect the encoding. If it is a callable, the "
 "callable is called with two arguments: The recipe object and the source to "
 "be decoded. It must return the decoded source."
-msgstr ""
+msgstr "잘못된 문자 집합 명세를 가진 사이트에 대한 인코딩 재정의를 지정하세요. 가장 일반적인 것은 ``latin1``을 지정하고 ``cp1252``를 사용하는 것입니다. None이면 인코딩을 감지하려고 시도합니다. 호출 가능 객체이면 레시피 객체와 디코딩할 소스의 두 인수로 호출됩니다. 디코딩된 소스를 반환해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
 msgid ""
 "Specify any extra :term:`CSS` that should be added to downloaded "
@@ -608,134 +632,134 @@ msgid ""
 "is declared using the style attribute on individual :term:`HTML` tags. Note "
 "that if you want to programmatically generate the extra_css override the "
 ":meth:`get_extra_css()` method instead. For example::"
-msgstr ""
+msgstr "다운로드된 :term:`HTML` 파일에 추가해야 할 추가 :term:`CSS`를 지정하세요. 닫는 `</head>` 태그 바로 앞의 `<style>` 태그에 삽입되어 개별 :term:`HTML` 태그의 style 속성을 사용하여 선언된 것을 제외한 모든 :term:`CSS`를 재정의합니다. 프로그래밍 방식으로 extra_css를 생성하려면 대신 :meth:`get_extra_css()` 메서드를 덮어쓰세요. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
 msgid ""
 "List of feeds to download. Can be either ``[url1, url2, ...]`` or "
 "``[('title1', url1), ('title2', url2),...]``"
-msgstr ""
+msgstr "다운로드할 피드 목록입니다. ``[url1, url2, ...]`` 또는 ``[('제목1', url1), ('제목2', url2),...]``일 수 있습니다"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
 msgid ""
 "List of regular expressions that determines which links to ignore. If empty "
 "it is ignored. Used only if is_link_wanted is not implemented. For example::"
-msgstr ""
+msgstr "무시할 링크를 결정하는 정규 표현식 목록입니다. 비어 있으면 무시됩니다. is_link_wanted가 구현되지 않은 경우에만 사용됩니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
 msgid "will remove all URLs that have `ads.doubleclick.net` in them."
-msgstr ""
+msgstr "`ads.doubleclick.net`이 포함된 모든 URL을 제거합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:9
 msgid ""
 "Only one of :attr:`BasicNewsRecipe.match_regexps` or "
 ":attr:`BasicNewsRecipe.filter_regexps` should be defined."
-msgstr ""
+msgstr ":attr:`BasicNewsRecipe.match_regexps` 또는 :attr:`BasicNewsRecipe.filter_regexps` 중 하나만 정의해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.handle_gzip:1
 msgid ""
-"Set to False if you dont want to use gzipped transfers. Note that some old "
-"servers flake out with gzip"
-msgstr ""
+"Set to False if you do not want to use gzipped transfers with the mechanize "
+"browser. Note that some old servers flake out with gzip."
+msgstr "mechanize 브라우저에서 gzipped 전송을 사용하지 않으려면 False로 설정하세요. 일부 오래된 서버는 gzip에서 문제가 발생할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
 msgid ""
 "Ignore duplicates of articles that are present in more than one section. A "
 "duplicate article is an article that has the same title and/or URL. To "
 "ignore articles with the same title, set this to::"
-msgstr ""
+msgstr "둘 이상의 섹션에 존재하는 기사의 중복을 무시합니다. 중복 기사는 동일한 제목 및/또는 URL을 가진 기사입니다. 동일한 제목의 기사를 무시하려면 다음으로 설정하세요::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
-msgstr ""
+msgstr "대신 URL을 사용하려면 다음으로 설정하세요::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
 msgid "To match on title or URL, set it to::"
-msgstr ""
+msgstr "제목 또는 URL로 일치시키려면 다음으로 설정하세요::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:1
 msgid ""
 "Keep only the specified tags and their children. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. If this list is "
 "not empty, then the `<body>` tag will be emptied and re-filled with the tags"
 " that match the entries in this list. For example::"
-msgstr ""
+msgstr "지정된 태그와 그 자식만 유지합니다. 태그 지정 형식은 :attr:`BasicNewsRecipe.remove_tags`를 참조하세요. 이 목록이 비어 있지 않으면 `<body>` 태그가 비워지고 이 목록의 항목과 일치하는 태그로 다시 채워집니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
 msgid ""
 "will keep only tags that have an `id` attribute of `\"content\"` or "
 "`\"heading\"`."
-msgstr ""
+msgstr "`id` 속성이 `\"content\"` 또는 `\"heading\"`인 태그만 유지합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.language:1
 msgid ""
 "The language that the news is in. Must be an ISO-639 code either two or "
 "three characters long"
-msgstr ""
+msgstr "뉴스의 언어입니다. 두 글자 또는 세 글자 길이의 ISO-639 코드여야 합니다"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.masthead_url:1
 msgid ""
 "By default, calibre will use a default image for the masthead (Kindle only)."
-" Override this in your recipe to provide a url to use as a masthead."
-msgstr ""
+" Override this in your recipe to provide a URL to use as a masthead."
+msgstr "기본적으로 calibre는 마스트헤드에 기본 이미지를 사용합니다(Kindle 전용). 마스트헤드로 사용할 URL을 제공하려면 레시피에서 이 값을 재정의하세요."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:1
 msgid ""
 "List of regular expressions that determines which links to follow. If empty,"
 " it is ignored. Used only if is_link_wanted is not implemented. For "
 "example::"
-msgstr ""
+msgstr "따라갈 링크를 결정하는 정규 표현식 목록입니다. 비어 있으면 무시됩니다. is_link_wanted가 구현되지 않은 경우에만 사용됩니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
 msgid "will match all URLs that have `page=some number` in them."
-msgstr ""
+msgstr "`page=숫자`가 포함된 모든 URL과 일치합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.max_articles_per_feed:1
 msgid ""
 "Maximum number of articles to download from each feed. This is primarily "
 "useful for feeds that don't have article dates. For most feeds, you should "
 "use :attr:`BasicNewsRecipe.oldest_article`"
-msgstr ""
+msgstr "각 피드에서 다운로드할 최대 기사 수입니다. 주로 기사 날짜가 없는 피드에 유용합니다. 대부분의 피드에서는 :attr:`BasicNewsRecipe.oldest_article`을 사용하세요"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
 msgid ""
 "If True the GUI will ask the user for a username and password to use while "
 "downloading. If set to \"optional\" the use of a username and password "
 "becomes optional"
-msgstr ""
+msgstr "True이면 GUI가 다운로드 중 사용할 사용자 이름과 비밀번호를 사용자에게 묻습니다. \"optional\"로 설정하면 사용자 이름과 비밀번호 사용이 선택 사항이 됩니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
 msgid ""
 "Convenient flag to disable loading of stylesheets for websites that have "
 "overly complex stylesheets unsuitable for conversion to e-book formats. If "
 "True stylesheets are not downloaded and processed"
-msgstr ""
+msgstr "전자책 형식으로 변환하기에 부적합할 정도로 스타일시트가 지나치게 복잡한 웹사이트에서 스타일시트 로드를 비활성화하는 편의 플래그입니다. True이면 스타일시트를 다운로드하거나 처리하지 않습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
 msgid "Oldest article to download from this news source. In days."
-msgstr ""
+msgstr "이 뉴스 소스에서 다운로드할 가장 오래된 기사. 일 단위."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
 msgid ""
 "List of :term:`regexp` substitution rules to run on the downloaded "
@@ -743,104 +767,123 @@ msgid ""
 "first element of the tuple should be a compiled regular expression and the "
 "second a callable that takes a single match object and returns a string to "
 "replace the match. For example::"
-msgstr ""
+msgstr "다운로드된 :term:`HTML`에 대해 실행할 :term:`regexp` 치환 규칙 목록입니다. 목록의 각 요소는 2요소 튜플이어야 합니다. 튜플의 첫 번째 요소는 컴파일된 정규 표현식이고, 두 번째 요소는 단일 일치 객체를 받아 일치를 대체할 문자열을 반환하는 호출 가능 객체입니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
 msgid "will remove everything from `<!--Article ends here-->` to `</body>`."
-msgstr ""
+msgstr "`<!--Article ends here-->`부터 `</body>`까지 모든 것을 제거합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.publication_type:1
 msgid ""
 "Publication type Set to newspaper, magazine or blog. If set to None, no "
 "publication type metadata will be written to the opf file."
-msgstr ""
+msgstr "발행물 유형입니다. newspaper, magazine 또는 blog로 설정합니다. None으로 설정하면 발행물 유형 메타데이터가 opf 파일에 기록되지 않습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
 msgid ""
 "Set to a non empty string to disable this recipe. The string will be used as"
 " the disabled message"
-msgstr ""
+msgstr "비어 있지 않은 문자열로 설정하면 이 레시피가 비활성화됩니다. 해당 문자열이 비활성화 메시지로 사용됩니다"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:1
+msgid ""
+"Specify options specific to this recipe. These will be available for the "
+"user to customize in the Advanced tab of the Fetch News dialog or at the "
+"ebook-convert command line. The options are specified as a dictionary "
+"mapping option name to metadata about the option. For example::"
+msgstr "이 레시피에 특화된 옵션을 지정하세요. 뉴스 가져오기 대화상자의 고급 탭이나 ebook-convert 명령줄에서 사용자가 맞춤 설정할 수 있습니다. 옵션은 옵션 이름을 옵션에 대한 메타데이터에 매핑하는 딕셔너리로 지정됩니다. 예::"
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
+msgid ""
+"When the recipe is run, self.recipe_specific_options will be a dict mapping "
+"option name to the option value specified by the user. When the option is "
+"unspecified by the user, it will have the value specified by 'default'. If "
+"no default is specified, the option will not be in the dict at all, when "
+"unspecified by the user."
+msgstr "레시피가 실행되면 self.recipe_specific_options는 옵션 이름을 사용자가 지정한 옵션 값에 매핑하는 dict가 됩니다. 사용자가 옵션을 지정하지 않으면 'default'에 지정된 값을 갖습니다. 기본값이 지정되지 않은 경우 사용자가 해당 옵션을 지정하지 않으면 그 옵션은 dict에 아예 포함되지 않습니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
 msgid "Number of levels of links to follow on article webpages"
-msgstr ""
+msgstr "기사 웹페이지에서 따라갈 링크의 단계 수입니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_attributes:1
 msgid "List of attributes to remove from all tags. For example::"
-msgstr ""
+msgstr "모든 태그에서 제거할 속성 목록입니다. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_empty_feeds:1
 msgid ""
 "If True empty feeds are removed from the output. This option has no effect "
 "if parse_index is overridden in the sub class. It is meant only for recipes "
 "that return a list of feeds using `feeds` or :meth:`get_feeds`. It is also "
 "used if you use the ignore_duplicate_articles option."
-msgstr ""
+msgstr "True이면 비어 있는 피드를 출력에서 제거합니다. 이 옵션은 하위 클래스에서 parse_index를 재정의한 경우에는 효과가 없습니다. feeds 또는 get_feeds를 사용해 피드 목록을 반환하는 레시피에서만 사용됩니다. ignore_duplicate_articles 옵션을 사용할 때도 함께 사용됩니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
 msgid "Convenient flag to strip all JavaScript tags from the downloaded HTML"
-msgstr ""
+msgstr "다운로드된 HTML에서 모든 JavaScript 태그를 제거하는 편리한 플래그"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
 msgid ""
 "List of tags to be removed. Specified tags are removed from downloaded HTML."
 " A tag is specified as a dictionary of the form::"
-msgstr ""
+msgstr "제거할 태그 목록입니다. 지정된 태그가 다운로드된 HTML에서 제거됩니다. 태그는 다음 형식의 딕셔너리로 지정됩니다::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:9
 msgid ""
 "All keys are optional. For a full explanation of the search criteria, see "
 "`Beautiful Soup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-"
 "tree>`__ A common example::"
-msgstr ""
+msgstr "모든 키는 선택 사항입니다. 검색 기준에 대한 전체 설명은 `Beautiful Soup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/#searching-the-tree>`__을 참조하세요. 일반적인 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:15
 msgid ""
 "This will remove all `<div class=\"advert\">` tags and all their children "
 "from the downloaded :term:`HTML`."
-msgstr ""
+msgstr "다운로드된 :term:`HTML`에서 모든 `<div class=\"advert\">` 태그와 그 자식을 제거합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
 msgid ""
 "Remove all tags that occur after the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
-msgstr ""
+msgstr "지정된 태그 이후에 오는 모든 태그를 제거합니다. 태그 지정 형식은 :attr:`BasicNewsRecipe.remove_tags`를 참조하세요. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:7
 msgid "will remove all tags after the first element with `id=\"content\"`."
-msgstr ""
+msgstr "`id=\"content\"`인 첫 번째 요소 이후의 모든 태그를 제거합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:1
 msgid ""
 "Remove all tags that occur before the specified tag. For the format for "
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. For example::"
-msgstr ""
+msgstr "지정된 태그 이전에 오는 모든 태그를 제거합니다. 태그 지정 형식은 :attr:`BasicNewsRecipe.remove_tags`를 참조하세요. 예::"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_before:7
 msgid "will remove all tags before the first element with `id=\"content\"`."
-msgstr ""
+msgstr "`id=\"content\"`인 첫 번째 요소 이전의 모든 태그를 제거합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.requires_version:1
 msgid "Minimum calibre version needed to use this recipe"
-msgstr ""
+msgstr "이 레시피를 사용하는 데 필요한 최소 calibre 버전"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.resolve_internal_links:1
 msgid ""
 "If set to True then links in downloaded articles that point to other "
@@ -848,71 +891,71 @@ msgid ""
 "article rather than its original web URL. If you set this to True, you might"
 " also need to implement :meth:`canonicalize_internal_url` to work with the "
 "URL scheme of your particular website."
-msgstr ""
+msgstr "True로 설정하면 다운로드된 기사 안에서 다른 다운로드된 기사를 가리키는 링크가 원래 웹 URL이 아니라 다운로드된 기사 사본을 가리키도록 변경됩니다. 이를 True로 설정하면 사용 중인 웹사이트의 URL 체계에 맞게 canonicalize_internal_url도 구현해야 할 수 있습니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
 msgid "Reverse the order of articles in each feed"
-msgstr ""
+msgstr "각 피드에서 기사 순서를 반대로 합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images:1
 msgid ""
 "Maximum dimensions (w,h) to scale images to. If scale_news_images_to_device "
 "is True this is set to the device screen dimensions set by the output "
 "profile unless there is no profile set, in which case it is left at whatever"
 " value it has been assigned (default None)."
-msgstr ""
+msgstr "이미지를 조정할 최대 크기(w,h)입니다. scale_news_images_to_device가 True이면 출력 프로필로 설정된 장치 화면 크기로 설정됩니다. 프로필이 설정되지 않은 경우 할당된 값(기본값 None)으로 유지됩니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
 msgid ""
 "Rescale images to fit in the device screen dimensions set by the output "
 "profile. Ignored if no output profile is set."
-msgstr ""
+msgstr "출력 프로필로 설정된 장치 화면 크기에 맞게 이미지 크기를 다시 조정합니다. 출력 프로필이 설정되지 않은 경우 무시됩니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.simultaneous_downloads:1
 msgid ""
 "Number of simultaneous downloads. Set to 1 if the server is picky. "
 "Automatically reduced to 1 if :attr:`BasicNewsRecipe.delay` > 0"
-msgstr ""
+msgstr "동시 다운로드 수입니다. 서버가 까다로우면 1로 설정하세요. :attr:`BasicNewsRecipe.delay` > 0이면 자동으로 1로 줄어듭니다"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.summary_length:1
 msgid "Max number of characters in the short description"
-msgstr ""
+msgstr "짧은 설명에 사용할 최대 문자 수입니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.template_css:1
 msgid ""
 "The CSS that is used to style the templates, i.e., the navigation bars and "
 "the Tables of Contents. Rather than overriding this variable, you should use"
 " `extra_css` in your recipe to customize look and feel."
-msgstr ""
+msgstr "템플릿, 즉 내비게이션 바와 목차의 스타일을 지정하는 데 사용되는 CSS입니다. 이 변수를 재정의하기보다는 레시피에서 extra_css를 사용해 모양과 느낌을 사용자 지정해야 합니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1
 msgid ""
 "The format string for the date shown on the first page. By default: "
 "Day_Name, Day_Number Month_Name Year"
-msgstr ""
+msgstr "첫 페이지에 표시되는 날짜의 형식 문자열입니다. 기본값: 요일_이름, 일_번호 월_이름 연도"
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timeout:1
 msgid "Timeout for fetching files from server in seconds"
-msgstr ""
+msgstr "서버에서 파일을 가져올 때의 제한 시간(초)입니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.title:1
 msgid "The title to use for the e-book"
-msgstr ""
+msgstr "전자책에 사용할 제목입니다."
 
-#: ../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.use_embedded_content:1
 msgid ""
 "Normally we try to guess if a feed has full articles embedded in it based on"
 " the length of the embedded content. If `None`, then the default guessing is"
 " used. If `True` then the we always assume the feeds has embedded content "
 "and if `False` we always assume the feed does not have embedded content."
-msgstr ""
+msgstr "보통은 포함된 콘텐츠의 길이를 기준으로 피드 안에 전체 기사가 내장되어 있는지 추정합니다. None이면 기본 추정 방식을 사용합니다. True이면 피드에 내장 콘텐츠가 항상 있다고 가정하고, False이면 피드에 내장 콘텐츠가 없다고 항상 가정합니다."

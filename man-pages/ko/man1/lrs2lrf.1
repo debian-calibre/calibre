@@ -28,21 +28,23 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "LRS2LRF" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "LRS2LRF" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 lrs2lrf \- lrs2lrf
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-lrs2lrf [options] file.lrs
+lrs2lrf [options] file.lrs\enLRS 파일을 컴파일하여 LRF 파일로 만듭니다.
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Compile an LRS file into an LRF file.
-.sp
-Whenever you pass arguments to \fBlrs2lrf\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+lrs2lrf\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
@@ -62,7 +64,7 @@ LRS를 LRS로 변환합니다. 디버깅에 유용합니다.
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Verbose processing
+자세한 처리
 .UNINDENT
 .INDENT 0.0
 .TP

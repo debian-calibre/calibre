@@ -28,14 +28,14 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "3월 27, 2026" "9.6.0" "calibre"
+.TH "EBOOK-POLISH" "1" "4월 10, 2026" "9.7.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-polish [options] input_file [output_file]
+ebook\-polish [옵션] 입력_파일 [출력_파일]
 .EE
 .UNINDENT
 .UNINDENT
@@ -49,7 +49,11 @@ ebook\-polish [options] input_file [output_file]
 .sp
 책 손질하기 기능은 AZW3 또는 EPUB 또는 KEPUB 형식의 파일에만 유효하다는 점을 유의하세요.
 .sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+:command:
+.nf
+\(ga
+.fi
+ebook\-polish\(ga에 공백이 포함된 인수를 전달할 때는 항상 인수를 따옴표로 묶으십시오. 예: \(dq/some path/with spaces\(dq
 .SH [옵션]
 .INDENT 0.0
 .TP
@@ -64,7 +68,7 @@ Add soft hyphens to all words in the book. This allows the book to be rendered b
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+유효하지 않은 이미지는 보통 손상되어 로드할 수 없는 이미지를 말합니다. 정상적인 이미지로 교체하거나 제거해야 합니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -89,7 +93,7 @@ Download external resources such as images, stylesheets, etc. that point to URLs
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Path to an OPF file. The metadata in the book is updated from the OPF file.
+OPF 파일 경로입니다. 책의 메타데이터는 OPF 파일의 내용으로 업데이트됩니다.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -119,7 +123,7 @@ Remove all unused CSS rules from stylesheets and <style> tags. Some books create
 .INDENT 0.0
 .TP
 .B \-\-upgrade\-book, \-U
-Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
+가능하다면 책의 내부 구조를 업그레이드합니다. 예를 들어 EPUB 2 책을 EPUB 3 책으로 업그레이드합니다.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -24,7 +24,6 @@ from qt.core import (
     QUrl,
     QWidget,
     pyqtSignal,
-    sip,
 )
 from qt.webengine import (
     QWebEnginePage,
@@ -304,6 +303,7 @@ class ViewerBridge(Bridge):
     highlight_action = to_js()
     generic_action = to_js()
     show_search_result = to_js()
+    native_gesture = to_js()
     prepare_for_close = to_js()
     repair_after_fullscreen_switch = to_js()
     viewer_font_size_changed = to_js()
@@ -581,6 +581,22 @@ class WebView(QWebEngineView):
         if parent is not None:
             self.inspector = Inspector(parent.inspector_dock.toggleViewAction(), self)
             parent.inspector_dock.setWidget(self.inspector)
+        self.focusProxy().installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        match event.type():
+            case QEvent.Type.NativeGesture:
+                match event.gestureType():
+                    case Qt.NativeGestureType.BeginNativeGesture:
+                        self.pinch_accumulated_value = 0
+                    case Qt.NativeGestureType.ZoomNativeGesture:
+                        self.pinch_accumulated_value += event.value()
+                        return True
+                    case Qt.NativeGestureType.EndNativeGesture:
+                        if abs(self.pinch_accumulated_value) > 0.05:
+                            out = self.pinch_accumulated_value > 0
+                            self.execute_when_ready('native_gesture', {'type': 'pinch_out' if out else 'pinch_in'})
+        return super().eventFilter(obj, event)
 
     def profile_op(self, which, profile_name, settings):
         if which == 'all-profiles':
@@ -620,12 +636,6 @@ class WebView(QWebEngineView):
                     self.current_cfi = cfi
                     self.cfi_changed.emit(cfi)
 
-    @property
-    def host_widget(self):
-        ans = self._host_widget
-        if ans is not None and not sip.isdeleted(ans):
-            return ans
-
     def render_process_died(self):
         if self.dead_renderer_error_shown:
             return
@@ -633,14 +643,6 @@ class WebView(QWebEngineView):
         error_dialog(self, _('Render process crashed'), _(
             'The Qt WebEngine Render process has crashed.'
             ' You should try restarting the viewer.'), show=True)
-
-    def event(self, event):
-        if event.type() == QEvent.Type.ChildPolished:
-            child = event.child()
-            if 'HostView' in child.metaObject().className():
-                self._host_widget = child
-                self._host_widget.setFocus(Qt.FocusReason.OtherFocusReason)
-        return QWebEngineView.event(self, event)
 
     def sizeHint(self):
         return self._size_hint
@@ -707,6 +709,20 @@ class WebView(QWebEngineView):
 
     def notify_full_screen_state_change(self, in_fullscreen_mode):
         self.execute_when_ready('full_screen_state_changed', in_fullscreen_mode)
+
+    def adjust_font_size_by_fraction(self, frac):
+        sd = vprefs['session_data']
+        fs = sd.get('standalone_font_settings', {})
+        if (mfs := fs.get('minimum_font_size')) is None:
+            mfs = 8
+        bfs = sd.get('base_font_size')
+        nbfs = max(mfs, min(round(frac * bfs), 72))
+        if nbfs != bfs:
+            sd['base_font_size'] = nbfs
+            vprefs['session_data'] = sd
+            apply_font_settings(self)
+            return True
+        return False
 
     def set_session_data(self, key, val):
         fonts_changed = paged_mode_changed = standalone_misc_settings_changed = update_vprefs = False
