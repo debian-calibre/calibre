@@ -1,6 +1,6 @@
 # Translation template file..
 # Copyright (C) 2026 Kovid Goyal
-#
+# 
 # Translators:
 # Seo, HyunTae <acrab001@gmail.com>, 2014
 # Seo, HyunTae <acrab001@gmail.com>, 2014
@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-04-08 13:53+UTC\n"
+"POT-Creation-Date: 2026-04-29 04:39+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
-"Last-Translator: icedrocket, 2025\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2025-2026\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -237,6 +237,7 @@ msgstr "찾아보기"
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:434
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:100
 msgid "Model for &text tasks:"
 msgstr "텍스트 작업용 모델(&T):"
 
@@ -293,6 +294,7 @@ msgstr "Google AI를 사용하려면 API 키가 필요합니다"
 #: /__w/calibre/calibre/src/calibre/ai/google/config.py:39
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:395
 #: /__w/calibre/calibre/src/calibre/ai/openai/config.py:39
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:56
 msgid "API &key:"
 msgstr "API 키(&K):"
 
@@ -341,6 +343,7 @@ msgstr "LM Studio URL(&U):"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:38
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:68
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:109
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
@@ -349,6 +352,7 @@ msgstr " 초"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:40
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:70
 msgid "&Timeout:"
 msgstr "시간 제한(&T):"
 
@@ -357,10 +361,12 @@ msgid "Controls randomness. 0 is deterministic, higher is more creative."
 msgstr "무작위성을 조절합니다. 0은 결정적이며 값이 높을수록 더 창의적입니다."
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:47
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:77
 msgid "T&emperature:"
 msgstr "온도(&E):"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:71
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:96
 msgid "&Refresh models"
 msgstr "모델 새로고침(&R)"
 
@@ -369,11 +375,13 @@ msgid "&Model:"
 msgstr "모델(&M):"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:113
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:125
 #, python-brace-format
 msgid "Found {} models. e.g.: {}"
 msgstr "{}개 모델을 찾았습니다. 예: {}"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:115
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:127
 msgid " (and more)"
 msgstr " (외 더 있음)"
 
@@ -388,6 +396,7 @@ msgstr "연결 실패: {}"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:151
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:190
 msgid "No model specified"
 msgstr "모델이 지정되지 않았습니다"
 
@@ -761,6 +770,67 @@ msgid ""
 "information for queries, where possible"
 msgstr "활성화하면 OpenAI가 가능한 경우 웹 검색을 사용해 질의에 대해 정확하고 최신의 정보를 반환합니다"
 
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/__init__.py:11
+msgid ""
+"Generic OpenAI compatible AI services. Use this to connect calibre to self-"
+"hosted or third-party services that implement the OpenAI chat completions "
+"API."
+msgstr "범용 OpenAI 호환 AI 서비스. 이 옵션을 사용하면 calibre를 OpenAI의 채팅 완성(Chat Completions) API를 지원하는 자체 호스트 서버 또는 제3자 서비스와 연결할 수 있습니다."
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:40
+msgid ""
+"Connect calibre to any self-hosted or third-party service that implements "
+"the OpenAI compatible <code>/v1/chat/completions</code> API. This is useful "
+"for gateways, local servers and other services that are not listed as "
+"dedicated providers."
+msgstr "OpenAI 호환 <code>/v1/chat/completions</code> API를 지원하는 자체 호스트 서버 또는 제3자 서비스에 calibre를 연결합니다. 이는 게이트웨이, 로컬 서버 및 전용 제공업체 목록에 없는 기타 서비스를 연동할 때 유용합니다."
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:49
+#, python-brace-format
+msgid "For example: {}"
+msgstr "예시: {}"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:50
+msgid "API &URL:"
+msgstr "API URL(&U):"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:55
+msgid "Optional. Sent as Authorization: Bearer <key>"
+msgstr "선택 사항. 다음을 승인 정보로 전송: Bearer <key>"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:61
+msgid "Optional HTTP headers, one per line, in the format: Header-Name: Value"
+msgstr "선택적 HTTP 헤더를 한 줄에 하나씩 다음 형식으로 입력: 헤더명: 값"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:62
+msgid "HTTP &headers:"
+msgstr "HTTP 헤더(&H):"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:76
+msgid "Controls randomness. Lower values are more deterministic."
+msgstr "응답의 무작위성을 제어합니다. 낮은 값일수록 정해진 규칙에 따라 일관된 답변을 생성합니다."
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:131
+msgid "The server responded, but returned no models."
+msgstr "서버가 응답했지만, 모델은 반환되지 않았습니다."
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:134
+#, python-brace-format
+msgid "Failed to refresh models: {}"
+msgstr "모델 목록 새로고침 실패: {}"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:187
+msgid "No API URL"
+msgstr "API URL 없음"
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:187
+msgid "You must specify the URL of the OpenAI compatible API endpoint."
+msgstr "OpenAI 호환 API 엔드포인트의 URL을 지정해야 합니다."
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:190
+msgid "You must specify a model ID to use for text based tasks."
+msgstr "텍스트 기반 작업을 수행하려면 모델 ID를 지정해야 합니다."
+
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:329
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:344
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:89
@@ -953,7 +1023,7 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:486
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:287
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:989
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1003
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:309
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:312
@@ -974,8 +1044,8 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/image_writer.py:21
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/render/links.py:143
 #: /__w/calibre/calibre/src/calibre/ebooks/txt/processor.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:954
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:962
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:950
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:958
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:887
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
@@ -1038,14 +1108,14 @@ msgstr "아무것도 반응하지 않음"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:719
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:934
 #: /__w/calibre/calibre/src/calibre/library/database.py:928
-#: /__w/calibre/calibre/src/calibre/library/database2.py:622
-#: /__w/calibre/calibre/src/calibre/library/database2.py:630
-#: /__w/calibre/calibre/src/calibre/library/database2.py:640
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2319
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2472
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2925
+#: /__w/calibre/calibre/src/calibre/library/database2.py:620
+#: /__w/calibre/calibre/src/calibre/library/database2.py:628
+#: /__w/calibre/calibre/src/calibre/library/database2.py:638
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2317
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2470
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2923
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3554
 #: /__w/calibre/calibre/src/calibre/library/database2.py:3556
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3558
 #: /__w/calibre/calibre/src/calibre/srv/content.py:179
 #: /__w/calibre/calibre/src/calibre/srv/content.py:180
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:97
@@ -1128,440 +1198,440 @@ msgstr "라이브러리가 닫혔습니다"
 msgid "AI provider"
 msgstr "AI 제공자"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:25
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:26
 msgid ""
 "Create a PMLZ archive containing the PML file and all images in the folder "
 "pmlname_img or images. This plugin is run every time you add a PML file to "
 "the library."
 msgstr "PML 파일과 pmlname_img 또는 images 폴더의 모든 이미지를 포함하는 PMLZ 아카이브를 만듭니다. 이 플러그인은 PML 파일을 라이브러리에 추가할 때마다 실행됩니다."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:56
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:57
 msgid ""
 "Create a TXTZ archive when a TXT file is imported containing Markdown or "
 "Textile references to images. The referenced images as well as the TXT file "
 "are added to the archive."
 msgstr "이미지에 대한 Markdown이나 Textile 참조가 포함된 TXT 파일을 가져올 때 TXTZ 압축파일을 만듭니다. 참조된 이미지와 TXT 파일이 압축파일에 추가됩니다."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:111
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:112
 msgid "Extract cover from comic files"
 msgstr "만화 파일에서 표지 추출"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:165
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:189
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:200
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:211
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:223
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:235
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:246
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:257
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:268
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:279
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:290
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:301
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:312
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:324
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:337
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:360
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:372
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:383
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:395
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:406
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:418
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:166
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:190
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:201
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:212
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:224
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:236
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:258
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:269
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:280
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:291
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:302
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:325
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:338
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:361
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:373
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:384
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:396
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:407
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:419
 #, python-format
 msgid "Read metadata from %s files"
 msgstr "%s 파일에서 메타데이터 읽기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:176
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:177
 msgid "Read metadata from EPUB and KEPUB files"
 msgstr "EPUB 및 KEPUB 파일에서 메타데이터 읽기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:349
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:350
 msgid "Read metadata from e-books in RAR archives"
 msgstr "RAR 압축 파일 안의 전자책에서 메타데이터 읽기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:430
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:431
 msgid "Read metadata from e-books in ZIP archives"
 msgstr "ZIP 압축 파일 안의 전자책에서 메타데이터 읽기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:449
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:450
 msgid "Set metadata in EPUB and KEPUB files"
 msgstr "EPUB 및 KEPUB 파일에 메타데이터 설정"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:461
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:462
 #, python-brace-format
 msgid ""
 "Enter {0} below to have the EPUB metadata writer plugin not add cover images"
 " to EPUB files that have no existing cover image."
 msgstr "EPUB 메타데이터 작성기 플러그인이 기존 표지 이미지가 없는 EPUB 파일에 커버 이미지를 추가하지 않도록 하려면 아래에 {0}을(를) 입력하세요."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:469
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:492
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:503
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:527
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:539
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:550
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:470
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:493
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:504
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:528
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:540
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:551
 #, python-format
 msgid "Set metadata in %s files"
 msgstr "%s 파일에 메타데이터 설정"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:480
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:515
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:562
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:574
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:585
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:481
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:516
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:563
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:575
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:586
 #, python-format
 msgid "Set metadata from %s files"
 msgstr "%s 파일에서 메타데이터 지정하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:864
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:865
 msgid "Add books to calibre or the connected device"
 msgstr "캘리버 또는 연결된 장치에 책 추가하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:870
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:871
 msgid "Fetch annotations from a connected Kindle (experimental)"
 msgstr "연결된 Kindle에서 주석 가져오기(실험 기능)"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:876
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:877
 msgid "Generate a catalog of the books in your calibre library"
 msgstr "calibre 라이브러리의 책 카탈로그 만들기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:882
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:883
 msgid "Convert books to various e-book formats"
 msgstr "책을 다양한 전자책 형식으로 변환하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:888
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:889
 msgid "Fine tune your e-books"
 msgstr "사용자의 전자책을 세련되게 다듬습니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:894
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:895
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:15
 msgid "Browse highlights and bookmarks from all books in the library"
 msgstr "라이브러리의 모든 책에서 강조표시 및 책갈피 찾아보기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:900
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:901
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_notes.py:12
 msgid "Browse notes for authors, tags, etc. in the library"
 msgstr "라이브러리의 저자, 태그 등의 노트 탐색"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:906
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:907
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fts.py:12
 msgid "Search the full text of all books in the calibre library"
 msgstr "calibre 라이브러리의 모든 책 본문 전체를 검색합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:912
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:913
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:73
 msgid "Edit the Table of Contents in your books"
 msgstr "사용자의 책에서 목차 편집"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:918
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:919
 msgid "Delete books from your calibre library or connected device"
 msgstr "calibre 라이브러리 또는 연결된 장치에서 책 삭제"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:924
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:925
 msgid ""
 "Embed updated metadata into the actual book files in your calibre library"
 msgstr "업데이트된 메타데이터를 calibre 라이브러리의 실제 책 파일에 포함"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:930
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:931
 msgid "Edit the metadata of books in your calibre library"
 msgstr "calibre 라이브러리 책의 메타데이터 편집"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:936
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:937
 msgid "Read books in your calibre library"
 msgstr "calibre 라이브러리의 책 읽기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:942
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:943
 msgid "Discuss books in your calibre library with AI"
 msgstr "AI와 함께 calibre 라이브러리의 책에 대해 대화하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:948
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:949
 msgid "Download news from the internet in e-book form"
 msgstr "인터넷에서 뉴스를 전자책 형식으로 다운로드합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:954
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:955
 msgid "Show a list of related books quickly"
 msgstr "관련 책 목록을 빠르게 표시하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:960
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:961
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tag_mapper.py:14
 msgid "Filter/transform the tags for books in the library"
 msgstr "라이브러리에 있는 책들의 태그를 필터링하거나 변환합니다."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:966
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:967
 #: /__w/calibre/calibre/src/calibre/gui2/actions/author_mapper.py:15
 msgid "Transform the authors for books in the library"
 msgstr "라이브러리에 있는 책의 저자 변환"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:972
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:973
 msgid "Show an editor for testing templates"
 msgstr "템플릿을 테스트하기 위한 편집기를 표시합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:978
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:979
 msgid ""
 "Show a dialog for creating and managing template functions and stored "
 "templates"
 msgstr "템플릿 함수와 저장된 템플릿을 생성하고 관리하기 위한 대화상자 표시하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:984
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:985
 msgid "Export books from your calibre library to the hard disk"
 msgstr "calibre 라이브러리의 책을 하드 디스크로 내보내기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:990
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:991
 msgid "Show Book details in a separate popup"
 msgstr "세부 정보를 별개의 팝업창으로 표시합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:996
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:997
 #: /__w/calibre/calibre/src/calibre/gui2/actions/restart.py:15
 msgid "Restart calibre"
 msgstr "캘리버 재시작"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1002
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1003
 msgid "Open the folder that contains the book files in your calibre library"
 msgstr "calibre 라이브러리의 책 파일이 들어 있는 폴더 열기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1009
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1010
 msgid "Auto scroll through the list of books"
 msgstr "책 목록 자동 스크롤"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1015
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1016
 msgid "Send books to the connected device"
 msgstr "연결된 장치로 책 보내기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1021
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1022
 msgid ""
 "Send books via email or the web. Also connect to folders on your computer as"
 " if they are devices"
 msgstr "책을 이메일이나 웹으로 보냅니다. 또한 컴퓨터의 폴더에 장치인 것처럼 연결하세요"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1028
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1029
 #: /__w/calibre/calibre/src/calibre/gui2/actions/help.py:18
 msgid "Browse the calibre User Manual"
 msgstr "캘리버 사용자 설명서 찾아보기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1034
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1035
 msgid "Customize calibre"
 msgstr "캘리버 사용자 정의하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1040
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1041
 msgid "Easily find books similar to the currently selected one"
 msgstr "현재 선택한 책과 유사한 책 쉽게 찾기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1046
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1047
 msgid ""
 "Switch between different calibre libraries and perform maintenance on them"
 msgstr "서로 다른 캘리버 라이브러리 간 전환 및 유지 관리 수행하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1053
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1054
 msgid "Copy books from the device to your calibre library"
 msgstr "장치의 책을 calibre 라이브러리로 복사"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1059
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1060
 msgid "Edit the collections in which books are placed on your device"
 msgstr "사용자의 장치 안의 책들이 들어있는 모음집 편집하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1065
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1066
 msgid "Match book on the devices to books in the library"
 msgstr "장치의 책을 라이브러리의 책들과 일치시키기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1071
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1072
 #: /__w/calibre/calibre/src/calibre/gui2/actions/match_books.py:46
 msgid "Show the book in the calibre library that matches this book"
 msgstr "캘리버 라이브러리에서 이 책과 일치하는 책 표시하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1077
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1078
 msgid "Copy a book from one calibre library to another"
 msgstr "한 캘리버 라이브러리에서 다른 캘리버 라이브러리로 책 복사하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1083
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid "Edit e-books in the EPUB or AZW3 formats"
 msgstr "EPUB 또는 AZW3 형식의 전자책 편집"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1089
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1090
 msgid "Make small changes to EPUB or HTMLZ files in your calibre library"
 msgstr "calibre 라이브러리의 EPUB 또는 HTMLZ 파일 간단히 수정"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1095
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1096
 msgid ""
 "Find the next or previous match when searching in your calibre library in "
 "highlight mode"
 msgstr "강조 표시 모드로 calibre 라이브러리를 검색할 때 이전/다음 일치 항목 찾기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1102
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1103
 msgid "Choose a random book from your calibre library"
 msgstr "calibre 라이브러리에서 임의의 책 고르기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1108
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1109
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:65
 msgid "Sort the list of books"
 msgstr "책 목록 정렬하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1114
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1115
 msgid "Temporarily mark books"
 msgstr "책에 임시로 표시하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1121
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1122
 msgid "Manage tag browser categories"
 msgstr "태그 브라우저 범주 관리"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1128
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1129
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:29
 msgid "Show a menu of saved searches"
 msgstr "저장된 검색 메뉴를 표시합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1135
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1136
 msgid "Show a menu of actions to change calibre's layout"
 msgstr "calibre 레이아웃 변경 메뉴 표시"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1142
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1143
 msgid "Open the context menu for the column"
 msgstr "해당 열의 컨텍스트 메뉴 열기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1149
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1150
 msgid "Open a menu showing all installed GUI actions"
 msgstr "설치된 모든 GUI 동작 메뉴 열기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1155
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1156
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
 msgid "Change the current Virtual library"
 msgstr "현재 가상 라이브러리를 변경합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1162
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1163
 msgid "Search for books from different book sellers"
 msgstr "다른 서적 판매자의 책 검색하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1179
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1180
 msgid "Open a template dialog to define and edit column tooltips"
 msgstr "열 툴팁을 정의하고 편집하는 템플릿 대화상자 열기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1185
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1186
 msgid "Get new calibre plugins or update your existing ones"
 msgstr "새 calibre 플러그인 가져오기 또는 기존 플러그인 업데이트"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1210
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1211
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel.py:20
 msgid "Look & feel"
 msgstr "모양과 스타일"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1212
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1225
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1237
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1249
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1262
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1213
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1226
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1238
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1250
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1263
 msgid "Interface"
 msgstr "인터페이스"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1216
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1217
 msgid "Adjust the look and feel of the calibre interface to suit your tastes"
 msgstr "취향에 맞게 캘리버 인터페이스의 모양새 조정하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1223
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1224
 msgid "Behavior"
 msgstr "작동 방식"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1229
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1230
 msgid "Change the way calibre behaves"
 msgstr "캘리버 작동 방식 변경하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1235
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1236
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:677
 msgid "Add your own columns"
 msgstr "나만의 열 추가하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1241
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1242
 msgid "Add/remove your own columns to the calibre book list"
 msgstr "캘리버 책 목록에 나만의 열 추가하기/제거하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1248
 msgid "Toolbars & menus"
 msgstr "도구모음 및 메뉴"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1253
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1254
 msgid ""
 "Customize the toolbars and context menus, changing which actions are "
 "available in each"
 msgstr "도구모음 및 우클릭 메뉴를 사용자 정의하여 각 작업에서 사용할 수 있는 작업을 변경합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1260
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1261
 msgid "Searching"
 msgstr "검색 중"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1266
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1267
 msgid "Customize the way searching for books works in calibre"
 msgstr "캘리버에서 책을 검색하는 방법 사용자 정의하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1272
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1273
 msgid "Input options"
 msgstr "입력 옵션"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1274
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1291
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1303
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1275
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1292
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1304
 msgid "Conversion"
 msgstr "변환"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1278
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1279
 msgid "Set conversion options specific to each input format"
 msgstr "입력 형식마다 구체적인 변환 옵션을 지정합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1289
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1290
 msgid "Common options"
 msgstr "공통 옵션"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1295
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1296
 msgid "Set conversion options common to all formats"
 msgstr "모든 형식에 공통적인 변환 옵션을 지정합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1301
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1302
 msgid "Output options"
 msgstr "출력 옵션"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1307
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1308
 msgid "Set conversion options specific to each output format"
 msgstr "출력 형식마다 구체적인 변환 옵션을 지정합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1314
 msgid "Adding books"
 msgstr "책 추가하는 중"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1315
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1328
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1341
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1354
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1316
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1329
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1342
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1355
 msgid "Import/export"
 msgstr "가져오기/내보내기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1319
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1320
 msgid "Control how calibre reads metadata from files when adding books"
 msgstr "캘리버에 책을 추가할때 파일에서 메타데이터를 읽어오는 방법을 제어합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1326
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1327
 msgid "Saving books to disk"
 msgstr "디스크에 책 저장"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1332
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1333
 msgid ""
 "Control how calibre exports files from its database to disk when using Save "
 "to disk"
 msgstr "디스크로 저장시, 캘리버의 데이타베이스에서 디스크로 파일을 내보내는 방식을 제어합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1339
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1340
 msgid "Sending books to devices"
 msgstr "장치로 책 보내는 중"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1345
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1346
 msgid "Control how calibre transfers files to your e-book reader"
 msgstr "캘리버가 전자책 리더로 파일을 전달하는 방식을 제어합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1352
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1353
 msgid "Metadata plugboards"
 msgstr "메타데이터 플러그보드"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1358
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1359
 msgid "Change metadata fields before saving/sending"
 msgstr "저장/보내기 전에 메타데이터 필드 변경하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1364
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1365
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_stored_templates.py:11
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:296
@@ -1577,99 +1647,99 @@ msgstr "저장/보내기 전에 메타데이터 필드 변경하기"
 msgid "Template functions"
 msgstr "템플릿 함수"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1366
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1430
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1443
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1455
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1467
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1367
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1431
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1444
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1456
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1468
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1200
 msgid "Advanced"
 msgstr "고급"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1370
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1371
 msgid "Create your own template functions"
 msgstr "나만의 템플릿 함수 만들기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1376
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1377
 msgid "Sharing books by email"
 msgstr "이메일로 책 공유하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1378
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1391
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1405
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1417
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1379
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1392
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1406
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1418
 msgid "Sharing"
 msgstr "공유하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1382
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
 msgid ""
 "Setup sharing of books via email. Can be used for automatic sending of "
 "downloaded news to your devices"
 msgstr "이메일을 통해 책 공유를 설정합니다. 다운로드한 뉴스를 장치로 자동 전송하는 데 사용할 수 있습니다."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1389
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1390
 msgid "Sharing over the net"
 msgstr "네트워크로 공유하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1395
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1396
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
 msgstr "인터넷을 통해 어디서나 어떤 장치에서든 calibre 라이브러리에 접근할 수 있게 해 주는 calibre 콘텐츠 서버를 설정합니다."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1403
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1404
 msgid "Metadata download"
 msgstr "메타데이터 다운로드"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1409
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1410
 msgid "Control how calibre downloads e-book metadata from the net"
 msgstr "캘리버가 네트워크에서 전자책 메타데이터를 다운로드하는 방식을 설정합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1415
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1416
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:491
 msgid "Ignored devices"
 msgstr "무시된 장치"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1421
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1422
 msgid ""
 "Control which devices calibre will ignore when they are connected to the "
 "computer."
 msgstr "컴퓨터에 연결되었을 때 캘리버가 무시할 장치를 제어합니다."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1428
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1429
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:169
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.py:85
 msgid "Plugins"
 msgstr "플러그인"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1434
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1435
 msgid "Add/remove/customize various bits of calibre functionality"
 msgstr "캘리버 기능의 다양한 부분을 추가/제거/사용자 정의하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1441
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1442
 msgid "Tweaks"
 msgstr "트윅"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1447
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1448
 msgid "Fine tune how calibre behaves in various contexts"
 msgstr "다양한 상황에서 캘리버가 어떻게 동작할 지를 세밀하게 조정합니다"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1453
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1454
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:600
 msgid "Shortcuts"
 msgstr "단축키"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1459
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1460
 msgid "Customize the keyboard shortcuts used by calibre"
 msgstr "캘리버에서 사용하는 키보드 단축키 사용자 정의하기"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1465
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1466
 #: /__w/calibre/calibre/src/calibre/devices/usbms/device.py:165
 msgid "Miscellaneous"
 msgstr "기타"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1471
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1472
 msgid "Miscellaneous advanced configuration"
 msgstr "기타 고급 구성"
 
@@ -2007,8 +2077,8 @@ msgstr "주어진 이름의 플러그인을 사용하지 않습니다"
 #: /__w/calibre/calibre/src/calibre/db/adding.py:287
 #: /__w/calibre/calibre/src/calibre/db/adding.py:288
 #: /__w/calibre/calibre/src/calibre/db/tests/legacy.py:411
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3370
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3388
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3368
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3386
 msgid "Catalog"
 msgstr "범주"
 
@@ -2031,9 +2101,9 @@ msgstr "범주"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:702
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1924
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1926
-#: /__w/calibre/calibre/src/calibre/library/database2.py:384
-#: /__w/calibre/calibre/src/calibre/library/database2.py:397
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3413
+#: /__w/calibre/calibre/src/calibre/library/database2.py:382
+#: /__w/calibre/calibre/src/calibre/library/database2.py:395
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3411
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:121
 msgid "News"
 msgstr "뉴스"
@@ -2054,12 +2124,12 @@ msgid "Path to library too long. It must be less than %d characters."
 msgstr "라이브러리 경로가 너무 깁니다. %d자보다 짧아야 합니다."
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:603
-#: /__w/calibre/calibre/src/calibre/library/database2.py:210
+#: /__w/calibre/calibre/src/calibre/library/database2.py:208
 msgid "restored preference "
 msgstr "환경설정 복원됨"
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:609
-#: /__w/calibre/calibre/src/calibre/library/database2.py:215
+#: /__w/calibre/calibre/src/calibre/library/database2.py:213
 #: /__w/calibre/calibre/src/calibre/library/restore.py:234
 msgid "creating custom column "
 msgstr "사용자 지정 열 만드는  중"
@@ -2098,7 +2168,7 @@ msgstr "완료됨"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1239
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1287
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:848
-#: /__w/calibre/calibre/src/calibre/library/database2.py:512
+#: /__w/calibre/calibre/src/calibre/library/database2.py:510
 msgid "Saved searches"
 msgstr "저장된 검색"
 
@@ -2117,7 +2187,7 @@ msgstr "저장된 검색"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:280
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:391
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1098
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1096
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1770
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1836
 msgid "Yes"
@@ -2951,7 +3021,7 @@ msgid ""
 msgstr "%prog saved_searches [옵션] (list|add|remove)\n\n이 데이터베이스에 저장된 저장된 검색을 관리합니다.\n이미 존재하는 이름으로 쿼리를 추가하려고 하면 대체됩니다.\n\n추가할때 구문:\n\n%prog saved_searches add search_name search_expression\n\n제거할때 구문:\n\n\n%prog saved_searches remove search_name\n    "
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:58
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:108
 msgid "Name:"
@@ -3236,19 +3306,19 @@ msgid "On Device"
 msgstr "장치 내"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:452
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1254
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1252
 msgid "Main"
 msgstr "주"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:454
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:96
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1256
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1254
 msgid "Card A"
 msgstr "카드 A"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:456
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:98
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1258
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1256
 msgid "Card B"
 msgstr "카드 B"
 
@@ -3946,14 +4016,7 @@ msgid ""
 " and wait for the covers to be deleted by Amazon</li><li>Reconnect the "
 "Kindle and calibre will restore the covers.</li></ol> After this the covers "
 "for those books should stay put. <a href=\"{}\">Click here</a> for details."
-msgstr ""
-"Amazon has <b>broken display of covers</b> for books sent to the Kindle by "
-"USB cable. To workaround it, you have to either keep your Kindle in Airplane"
-" mode, or:<ol><li>Send the books to the Kindle</li><li>Disconnect the Kindle"
-" and wait for the covers to be deleted by Amazon</li><li>Reconnect the "
-"Kindle and calibre will restore the covers.</li></ol> After this the covers "
-"for those books should stay put. <a href=\"{}\">Click here</a> for details."
-
+msgstr "Amazon has <b>broken display of covers</b> for books sent to the Kindle by USB cable. To workaround it, you have to either keep your Kindle in Airplane mode, or:<ol><li>Send the books to the Kindle</li><li>Disconnect the Kindle and wait for the covers to be deleted by Amazon</li><li>Reconnect the Kindle and calibre will restore the covers.</li></ol> After this the covers for those books should stay put. <a href=\"{}\">Click here</a> for details."
 
 #: /__w/calibre/calibre/src/calibre/devices/kindle/driver.py:268
 #, python-format
@@ -7867,7 +7930,7 @@ msgid ""
 msgstr "속성인 경우: {property} {match_type} {query}\n{action}"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:71
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1422
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:753
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1232
@@ -7878,7 +7941,7 @@ msgstr "노트"
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:410
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/links.py:170
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/toc.py:12
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1396
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:666
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:13
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/html_writer.py:795
@@ -7894,7 +7957,7 @@ msgstr "목차"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/images.py:243
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/opf2.py:1754
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1394
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.py:415
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:559
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1292
@@ -8412,7 +8475,7 @@ msgstr "DRM"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:758
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:963
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:955
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:350
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:356
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
@@ -8708,12 +8771,7 @@ msgid ""
 "example: --identifier uri:{} --identifier isbn:12345 To remove an "
 "identifier, specify no value, --identifier isbn: Note that for EPUB files, "
 "an identifier marked as the package identifier cannot be removed."
-msgstr ""
-"Set the identifiers for the book, can be specified multiple times. For "
-"example: --identifier uri:{} --identifier isbn:12345 To remove an "
-"identifier, specify no value, --identifier isbn: Note that for EPUB files, "
-"an identifier marked as the package identifier cannot be removed."
-
+msgstr "Set the identifiers for the book, can be specified multiple times. For example: --identifier uri:{} --identifier isbn:12345 To remove an identifier, specify no value, --identifier isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed."
 
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/cli.py:79
 msgid "Set the published date."
@@ -9085,71 +9143,71 @@ msgstr "이 MOBI 파일은 KF8과 오래된 Mobi6 데이터를 모두 가지고 
 msgid "No details available"
 msgstr "상세정보 불가"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1395
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:991
 msgid "Title page"
 msgstr "제목 페이지"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1397
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1411
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:993
 msgid "Index"
 msgstr "색인"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1398
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1412
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:994
 msgid "Glossary"
 msgstr "용어집"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1399
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1413
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:995
 msgid "Acknowledgements"
 msgstr "감사의 글"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1400
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1414
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:996
 msgid "Bibliography"
 msgstr "참고 문헌"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1401
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1415
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:997
 msgid "Colophon"
 msgstr "출판 정보"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1402
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1416
 msgid "Copyright"
 msgstr "저작권"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1403
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1417
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1000
 msgid "Dedication"
 msgstr "바치는 글"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1404
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1418
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1001
 msgid "Epigraph"
 msgstr "제명"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1405
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1419
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1002
 msgid "Foreword"
 msgstr "서문"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1406
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1420
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1003
 msgid "List of illustrations"
 msgstr "삽화 목록"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1407
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1421
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1004
 msgid "List of tables"
 msgstr "표 차례"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1423
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1006
 msgid "Preface"
 msgstr "서문"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1424
 msgid "Main text"
 msgstr "본문"
 
@@ -10132,12 +10190,7 @@ msgid ""
 "created from production templates can have a large number of extra CSS rules\n"
 "that don't match any actual content. These extra rules can slow down readers\n"
 "that need to parse them all.</p>\n"
-msgstr ""
-"<p>Remove all unused CSS rules from stylesheets and &lt;style&gt; tags. Some books\n"
-"created from production templates can have a large number of extra CSS rules\n"
-"that don't match any actual content. These extra rules can slow down readers\n"
-"that need to parse them all.</p>\n"
-
+msgstr "<p>Remove all unused CSS rules from stylesheets and &lt;style&gt; tags. Some books\ncreated from production templates can have a large number of extra CSS rules\nthat don't match any actual content. These extra rules can slow down readers\nthat need to parse them all.</p>\n"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:121
 msgid ""
@@ -10155,10 +10208,7 @@ msgstr "<p>가능하다면 책의 내부 구조를 업그레이드합니다. 예
 msgid ""
 "<p>Add soft hyphens to all words in the book. This allows the book to be rendered\n"
 "better when the text is justified, in readers that do not support hyphenation.</p>\n"
-msgstr ""
-"<p>Add soft hyphens to all words in the book. This allows the book to be rendered\n"
-"better when the text is justified, in readers that do not support hyphenation.</p>\n"
-
+msgstr "<p>Add soft hyphens to all words in the book. This allows the book to be rendered\nbetter when the text is justified, in readers that do not support hyphenation.</p>\n"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:136
 msgid "<p>Remove soft hyphens from all text in the book.</p>\n"
@@ -10169,10 +10219,7 @@ msgid ""
 "<p>Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book.\n"
 "All such resources will be downloaded and added to the book so that the book no longer references any external resources.\n"
 "</p>\n"
-msgstr ""
-"<p>Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book.\n"
-"All such resources will be downloaded and added to the book so that the book no longer references any external resources.\n"
-"</p>\n"
+msgstr "<p>Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book.\nAll such resources will be downloaded and added to the book so that the book no longer references any external resources.\n</p>\n"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:178
 #, python-brace-format
@@ -10538,163 +10585,163 @@ msgstr "목차:"
 msgid "[Image: {}]"
 msgstr "[이미지: {}]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:171
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:670
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:44
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:133
 msgid "Default icons"
 msgstr "기본 아이콘"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:326
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:314
 msgid "Show more buttons"
 msgstr "버튼 더 보기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:587
 msgid "Send file to storage card instead of main memory by default"
 msgstr "기본값으로 주 메모리 대신에 저장 카드에 파일을 전송합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:589
 msgid "Confirm before deleting"
 msgstr "삭제하기 전에 확인"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:591
 msgid "Main window geometry"
 msgstr "기본 창 기하학적 구조"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:593
 msgid "Notify when a new version is available"
 msgstr "새로운 버전이 사용가능하게 되면 알려줍니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:595
 msgid "Use Roman numerals for series number"
 msgstr "시리즈 번호에 대해 로마식 숫자를 사용"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:597
 msgid "Sort tags list by name, popularity, or rating"
 msgstr "이름, 인기도 또는 평점별로 태그 목록 정렬"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
 msgid "Match tags by any or all."
 msgstr "태그를 일부 일치 또는 모두 일치로 매칭합니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
 msgid "Number of covers to show in the cover browsing mode"
 msgstr "표지 탐색기 모드에서 보여줄 표지의 개수입니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
 msgid "Defaults for conversion to LRF"
 msgstr "LRF 변환 기본값"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
 msgid "Options for the LRF e-book viewer"
 msgstr "LRF 전자책 뷰어에 대한 옵션"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
 msgid "Formats that are viewed using the internal viewer"
 msgstr "내부 뷰어를 사용해서 볼 형식"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
 msgid "Columns to be displayed in the book list"
 msgstr "책 목록에서 표시할 열"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:612
 msgid "Automatically launch Content server on application startup"
 msgstr "프로그램 시작 시 콘텐츠 서버를 자동으로 실행합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:625
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
 msgid "Oldest news kept in database"
 msgstr "데이터베이스의 오래된 뉴스를 유지함"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:614
 msgid "Show system tray icon"
 msgstr "시스템 트레이 아이콘을 표시합니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:616
 msgid "Upload downloaded news to device"
 msgstr "다운로드한 뉴스를 장치에 업로드"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:618
 msgid "Delete news books from library after uploading to device"
 msgstr "장치에 업로드한 후 라이브러리에서 뉴스 책 삭제"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:620
 msgid ""
 "Show the cover flow in a separate window instead of in the main calibre "
 "window"
 msgstr "캘리버 메인 창 대신에 독립된 창에 표지를 표시합니다\n기본 캘리버 창이 아닌 별도의 창에 표지 순환 표시"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:634
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:622
 msgid "Disable notifications from the system tray icon"
 msgstr "시스템 트레이 아이콘에서 알림 비활성화"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:636
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
 msgid "Default action to perform when the \"Send to device\" button is clicked"
 msgstr "\"장치로 보내기\" 단추를 클릭할 때 수행할 기본 작업"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:641
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:629
 msgid ""
 "Start searching as you type. If this is disabled then search will only take "
 "place when the Enter key is pressed."
 msgstr "입력하는 대로 검색을 시작합니다. 이 옵션을 비활성화하면 Enter 키를 누를 때만 검색이 수행됩니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:644
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
 msgid ""
 "When searching, show all books with search results highlighted instead of "
 "showing only the matches. You can use the N or F3 keys to go to the next "
 "match."
 msgstr "검색 시, 일치되는 결과만 표시하는 대신, 모든 책들을 표시하고 검색결과를 하이라이트 처리합니다. 다음 일치되는 결과로 이동하려면 N 또는 F3 키를 사용하면 됩니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:659
 msgid ""
 "Maximum number of simultaneous conversion/news download jobs. This number is"
 " twice the actual value for historical reasons."
 msgstr "동시 수행 가능한 변환/뉴스 다운로드 작업 수. 이전의 특정 사유로 인해 이 숫자는 실제 값의 두배입니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:662
 msgid "Download social metadata (tags/rating/etc.)"
 msgstr "소셜 메타데이터(태그/평점/기타) 다운로드"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:664
 msgid "Overwrite author and title with new metadata"
 msgstr "제목과 저자를 새로운 메타데이터로 덮어쓰기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:678
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:666
 msgid "Automatically download the cover, if available"
 msgstr "가능하다면 표지를 자동으로 다운로드합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:668
 msgid "Limit max simultaneous jobs to number of CPUs"
 msgstr "동시에 작업하는 최대 개수를 CPU의 개수로 제한합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:670
 msgid ""
 "The layout of the user interface. Wide has the Book details panel on the "
 "right and narrow has it at the bottom."
 msgstr "사용자 인터페이스의 배치 방식입니다. '넓게'는 책 상세정보 패널이 오른쪽에 나타나며 '좁게'는 아래쪽에 나타납니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_display_ui.py:145
 msgid "Show the average rating per item indication in the Tag browser"
 msgstr "태그 브라우저에 항목별 평균 평점 표시기 보기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
 msgid "Disable UI animations"
 msgstr "UI 애니메이션을 사용하지 않음"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:693
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:681
 msgid "Tag browser categories not to display"
 msgstr "표시하지 않을 태그 브라우저 분류"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:757
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:745
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:88
 msgid "WARNING:"
 msgstr "경고:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:768
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:756
 msgid "ERROR:"
 msgstr "에러:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:785
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:773
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:427
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:507
@@ -10702,17 +10749,17 @@ msgstr "에러:"
 msgid "Show this confirmation again"
 msgstr "이 확인 다시 표시"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:831
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1444
 msgid "Restart needed"
 msgstr "재시작 필요"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:845
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:833
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:523
 msgid "&Restart calibre now"
 msgstr "지금 캘리버 다시 시작하기(&R)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1065
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1061
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:266
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:163
@@ -10721,33 +10768,33 @@ msgstr "지금 캘리버 다시 시작하기(&R)"
 msgid "All files"
 msgstr "모든 파일"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1183
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1179
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "제어 터미널이 있으면 분리합니다 (Linux 전용)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1184
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:150
 msgid "Click \"Show details\" for more information."
 msgstr "자세한 내용은 \"세부 정보 표시\"를 클릭하십시오."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1190
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1186
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "%s 환경 변수가 설정되어 있습니다. 해제한 뒤 다시 시도하십시오."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1191
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1187
 msgid "Could not create temporary folder"
 msgstr "임시 폴더를 만들 수 없습니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1192
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
 msgid "Could not create temporary folder, calibre cannot start."
 msgstr "임시 폴더를 만들 수 없어 calibre를 시작할 수 없습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1337
 msgid "Windows XP not supported"
 msgstr "Windows XP는 지원되지 않음"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1347
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1338
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -11805,7 +11852,7 @@ msgstr "calibre 라이브러리의 책 카탈로그 생성"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:131
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1091
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1092
 msgid "Cannot convert"
 msgstr "변환할 수 없음"
 
@@ -11891,7 +11938,7 @@ msgstr "라이브러리 탐색"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:255
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:159
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:495
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:200
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:358
 msgid "&Copy"
@@ -11949,8 +11996,8 @@ msgstr "없음 선택하기(&N)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/duplicates.py:56
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:134
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:408
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/jobs.py:473
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:265
@@ -13848,10 +13895,7 @@ msgstr "목차 편집은 %s 형식의 책에서만 지원됩니다. 편집 전�
 msgid ""
 "You have chosen to edit the Table of Contents of {} books at once. Doing so "
 "will likely slow your computer to a crawl. Are you sure?"
-msgstr ""
-"You have chosen to edit the Table of Contents of {} books at once. Doing so "
-"will likely slow your computer to a crawl. Are you sure?"
-
+msgstr "You have chosen to edit the Table of Contents of {} books at once. Doing so will likely slow your computer to a crawl. Are you sure?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:169
 msgid "Failed to start editor"
@@ -13990,6 +14034,7 @@ msgstr "책 미리보기(&P)"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:639
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1342
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1253
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/printing.py:199
 msgid "&Cancel"
 msgstr "취소(&C)"
@@ -14194,7 +14239,7 @@ msgstr "%s 는(은) 이용할 수 없는 형식입니다."
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:406
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:378
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:311
 msgid "Virtual library"
 msgstr "가상 라이브러리"
 
@@ -14870,7 +14915,7 @@ msgstr "선택한 텍스트"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/widgets.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:854
 #: /__w/calibre/calibre/src/calibre/linux.py:1335
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:96
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:97
 msgid "Search"
 msgstr "검색"
 
@@ -15596,17 +15641,17 @@ msgstr "표지 탐색기"
 msgid "Toggle layout between wide and narrow"
 msgstr "레이아웃을 넓게/좁게 전환"
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:144
 msgid "Send query to AI"
 msgstr "AI에 질의 보내기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:172
 msgid ""
 "AI generated answers can be inaccurate, please verify any answers before "
 "acting on them."
 msgstr "AI가 생성한 답변은 부정확할 수 있으므로 실행하기 전에 내용을 확인하세요."
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:227
 msgid "Details:"
 msgstr "세부 정보:"
 
@@ -15986,7 +16031,7 @@ msgid "Remove this image"
 msgstr "이 이미지 제거"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1175
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:493
 msgid "Open link"
 msgstr "링크 열기"
 
@@ -17388,7 +17433,7 @@ msgstr "적용할 표현식 목록에 현재 표현식 추가하기"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:637
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:652
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:150
 msgid "&Add"
 msgstr "추가하기(&A)"
@@ -17402,7 +17447,7 @@ msgid "Remove the currently selected expression"
 msgstr "현재 선택한 표현식을 제거합니다"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:148
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:639
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:654
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1219
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:405
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:158
@@ -17667,10 +17712,7 @@ msgstr "마크다운"
 msgid ""
 "<p>Markdown is a simple markup language for text files, that allows for "
 "advanced formatting. To learn more visit <a href=\"{}\">Markdown</a>."
-msgstr ""
-"<p>Markdown is a simple markup language for text files, that allows for "
-"advanced formatting. To learn more visit <a href=\"{}\">Markdown</a>."
-
+msgstr "<p>Markdown is a simple markup language for text files, that allows for advanced formatting. To learn more visit <a href=\"{}\">Markdown</a>."
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_input_ui.py:103
 msgid ""
@@ -17692,10 +17734,7 @@ msgid ""
 "Note that for images to be preserved, the formatting option above must be "
 "markdown or textile and also enable the setting to not remove image "
 "references."
-msgstr ""
-"Note that for images to be preserved, the formatting option above must be "
-"markdown or textile and also enable the setting to not remove image "
-"references."
+msgstr "Note that for images to be preserved, the formatting option above must be markdown or textile and also enable the setting to not remove image references."
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/txt_output_ui.py:93
 msgid "General"
@@ -18020,7 +18059,7 @@ msgstr "내 색상표"
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:438
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1399
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:696
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1030
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
 msgid "Cannot edit"
@@ -18031,7 +18070,7 @@ msgid "Cannot edit a builtin color scheme. Create a new color scheme instead."
 msgstr "내장된 색상표를 편집할 수 없습니다. 대신 새 색상표를 만듭니다."
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:456
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:696
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
 msgid "Cannot remove"
@@ -18553,9 +18592,7 @@ msgstr "책이 이미 장치에 있음"
 msgid ""
 "The book {} is already present on the device. Resending it might cause any "
 "annotations/bookmarks on the device for this book to be lost. Are you sure?"
-msgstr ""
-"The book {} is already present on the device. Resending it might cause any "
-"annotations/bookmarks on the device for this book to be lost. Are you sure?"
+msgstr "The book {} is already present on the device. Resending it might cause any annotations/bookmarks on the device for this book to be lost. Are you sure?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:1089
 msgid "Some books already on device"
@@ -18848,7 +18885,7 @@ msgid "Page numbering (APNX)"
 msgstr "페이지 번호 매기기 (APNX)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:512
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:239
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1050
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:471
@@ -20851,12 +20888,12 @@ msgstr "텍스트 복사하기(&C)"
 msgid "&FFML documentation"
 msgstr "FML 문서(&F)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1235
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1249
 msgid "Active jobs"
 msgstr "활동 중인 작업이 있음"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:998
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:340
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:679
@@ -20869,7 +20906,7 @@ msgstr "활동 중인 작업이 있음"
 msgid "Find next match"
 msgstr "다음 검색결과 찾기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:66
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:31
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:189
@@ -20878,29 +20915,40 @@ msgstr "다음 검색결과 찾기"
 msgid "&Search"
 msgstr "검색(&S)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:72
 msgid "&Stop selected jobs"
 msgstr "선택한 작업 정지(&S)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:73
 msgid "&Hide selected jobs"
 msgstr "선택한 작업 숨김(&H)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:74
 msgid "Show job &details"
 msgstr "작업 상세정보 보기(&D)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:75
 msgid "Show &all jobs"
 msgstr "모든 작업 보기(&a)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:71
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:76
 msgid "Stop &all non device jobs"
 msgstr "장치와 관련 없는 모든 작업 정지(&A)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:72
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:77
 msgid "&Hide all jobs"
 msgstr "모든 작업 숨김(&H)"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:78
+msgid "&Automatically close calibre after all jobs are finished"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:79
+msgid ""
+"Once all currently running jobs are completed, calibre will automatically "
+"quit. Before quitting, a popup will be shown for thirty seconds allowing you"
+" to cancel the automatic quit."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:53
@@ -20935,7 +20983,7 @@ msgid ""
 msgstr "{}권의 책 목차를 한 번에 편집하도록 선택했습니다. 이 작업은 컴퓨터를 매우 느리게 만들 가능성이 높습니다. 계속하시겠습니까?"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:200
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:743
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:758
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:68
 msgid "AI Settings"
 msgstr "AI 설정"
@@ -21017,42 +21065,60 @@ msgid ""
 "the device icon and select <i>Update cached metadata</i>)</p>"
 msgstr "<p>작업이 끝나면 장치의 메타데이터를 업데이트하는 것을 잊지 마십시오(장치 아이콘을 마우스 오른쪽 버튼으로 클릭한 다음 <i>캐시된 메타데이터 업데이트</i>를 선택하십시오).</p>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:139
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:458
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:148
 msgid "Show &details"
 msgstr "상세정보 보기(&D)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:139
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:415
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:140
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:459
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:149
 msgid "Hide &details"
 msgstr "세부사항 숨김(&D)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:143
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:419
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:463
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:153
 msgid "Show detailed information about this error"
 msgstr "이 오류에 대한 자세한 정보 표시"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:198
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:496
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:197
 msgid "Copied"
 msgstr "사본"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:305
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:361
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:306
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:362
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1114
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1225
 msgid "&View log"
 msgstr "로그 보기(&V)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:411
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:387
+msgid "calibre is about to quit"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:388
+msgid "calibre is about to quit. Proceed or abort?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:394
+#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:749
+msgid "Abort"
+msgstr "취소"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:421
+#, python-brace-format
+msgid "Close now ({}s)"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:455
 msgid "&Retry"
 msgstr "재시도(&R)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:484
 #, python-brace-format
 msgid "Hide the remaining error message"
 msgid_plural "Hide the {} remaining error messages"
@@ -22509,9 +22575,7 @@ msgstr "Quickview: 열을 선택할 수 없습니다"
 msgid ""
 "The column you double-clicked, '{}', is not shown in the library view. The "
 "book/column cannot be selected by Quickview."
-msgstr ""
-"The column you double-clicked, '{}', is not shown in the library view. The "
-"book/column cannot be selected by Quickview."
+msgstr "The column you double-clicked, '{}', is not shown in the library view. The book/column cannot be selected by Quickview."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:86
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/quickview_ui.py:61
@@ -22557,7 +22621,7 @@ msgid "&Dock"
 msgstr "독(&D)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:95
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:239
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:75
 msgid "&Close"
@@ -23222,7 +23286,7 @@ msgid "Choose formats"
 msgstr "형식 선택하기"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:90
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:638
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:653
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:852
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:621
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:154
@@ -23310,12 +23374,12 @@ msgid "The port must be a number between 8000 and 65535."
 msgstr "포트는 8000에서 65535 사이의 숫자여야 합니다."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:137
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
 msgid "Problem starting the wireless device"
 msgstr "무선 장치를 시작하는 중 문제 발생"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:495
 #, python-format
 msgid "The wireless device driver had problems starting. It said \"%s\""
 msgstr "무선 장치 드라이버를 시작하는 중 문제가 발생했습니다. 메시지: \"%s\""
@@ -24863,11 +24927,7 @@ msgid ""
 "The calibre library {} is on a FAT drive. These drives have a limit on the "
 "maximum file size. Therefore indexing of more than a few hundred books will "
 "fail. You should move your calibre library to an NTFS or exFAT drive."
-msgstr ""
-"The calibre library {} is on a FAT drive. These drives have a limit on the "
-"maximum file size. Therefore indexing of more than a few hundred books will "
-"fail. You should move your calibre library to an NTFS or exFAT drive."
-
+msgstr "The calibre library {} is on a FAT drive. These drives have a limit on the maximum file size. Therefore indexing of more than a few hundred books will fail. You should move your calibre library to an NTFS or exFAT drive."
 
 #: /__w/calibre/calibre/src/calibre/gui2/fts/dialog.py:99
 msgid "Indexing is almost complete"
@@ -25141,25 +25201,7 @@ msgid ""
 "<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n"
 "\n"
 "<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Complete syntax reference</a></div></div>"
-msgstr ""
-"\n"
-"<div class=\"h\">Search for single words</div>\n"
-"<p>Simply type the word:</p>\n"
-"<div class=\"bq\">awesome<br>calibre</div>\n"
-"\n"
-"<div class=\"h\">Search for phrases</div>\n"
-"<p>Enclose the phrase in quotes:</p>\n"
-"<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n"
-"\n"
-"<div class=\"h\">Boolean searches</div>\n"
-"<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n"
-"\n"
-"<div class=\"h\">Phrases near each other</div>\n"
-"<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n"
-"<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n"
-"\n"
-"<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Complete syntax reference</a></div></div>"
-
+msgstr "\n<div class=\"h\">Search for single words</div>\n<p>Simply type the word:</p>\n<div class=\"bq\">awesome<br>calibre</div>\n\n<div class=\"h\">Search for phrases</div>\n<p>Enclose the phrase in quotes:</p>\n<div class=\"bq\">\"early run\"<br>\"song of love\"</div>\n\n<div class=\"h\">Boolean searches</div>\n<div class=\"bq\">(calibre AND ebook) NOT gun<br>simple NOT (\"high bar\" OR hard)</div>\n\n<div class=\"h\">Phrases near each other</div>\n<div class=\"bq\">NEAR(\"people\" \"in Asia\" \"try\")<br>NEAR(\"Kovid\" \"calibre\", 30)</div>\n<p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>\n\n<div style=\"margin-top: 1em\"><a href=\"{fts_url}\">Complete syntax reference</a></div></div>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/html_transform_rules.py:52
 msgid "Remove this action"
@@ -26625,171 +26667,217 @@ msgstr "장치에 끌어다놓기는 지원되지 않습니다. 먼저 책을 �
 msgid "File name"
 msgstr "파일 이름"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:77
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:79
 msgid "Reasoning used by AI"
 msgstr "AI가 사용한 추론"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:163
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:165
 msgid "AI Assistant Note"
 msgstr "AI 도우미 메모"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:174
 #: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:66
 msgid "You"
 msgstr "나"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:184
 msgid "Conversation record"
 msgstr "대화 기록"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:212
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:218
 msgid "Type a question to the AI"
 msgstr "AI에게 질문을 입력하세요"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:230
 msgid "Se&ttings"
 msgstr "설정(&T)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:268
 msgid "Quick actions"
 msgstr "빠른 동작"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:287
 msgid "First, configure an AI provider"
 msgstr "먼저 AI 공급자를 설정하세요"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:290
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:789
 msgid "Assistant"
 msgstr "도우미"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:316
 msgid "Copy this specific response to the clipboard"
 msgstr "이 응답만 클립보드에 복사"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:314
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:320
 msgid "Show the reasoning behind this response from the AI"
 msgstr "AI가 이 응답을 생성할 때 사용한 추론 보기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:327
 msgid "answering"
 msgstr "답변 중"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:327
 msgid "thinking"
 msgstr "생각 중"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:331
 #, python-brace-format
 msgid "{assistant} {activity}"
 msgstr "{assistant} {activity}"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:346
 msgid "AI provider not configured."
 msgstr "AI 공급자가 설정되지 않았습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:347
 msgid "Configure AI provider"
 msgstr "AI 공급자 설정"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:378
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:389
 msgid "Talking to AI failed with error:"
 msgstr "AI와 대화하는 중 오류가 발생했습니다:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:423
 msgid "free"
 msgstr "무료"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:412
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:426
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:428
 msgid "Queries:"
 msgstr "질의 수:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:493
 msgid "&New chat"
 msgstr "새 대화(&N)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:493
 msgid "Start a new conversation"
 msgstr "새 대화 시작"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:495
 msgid "Copy this conversation to the clipboard"
 msgstr "이 대화를 클립보드에 복사"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:498
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:512
 msgid "Select text in the book to begin."
 msgstr "시작하려면 책에서 텍스트를 선택하세요."
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:561
 msgid "Add Quick action"
 msgstr "빠른 동작 추가"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:561
 msgid "Edit Quick action"
 msgstr "빠른 동작 편집"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:553
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:568
 msgid "Prompt:"
 msgstr "프롬프트:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:605
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:373
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1224
 msgid "No name specified"
 msgstr "이름이 지정되지 않음"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:605
 msgid "You must specify a name for the Quick action"
 msgstr "빠른 동작 이름을 지정해야 합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:607
 msgid "No prompt specified"
 msgstr "프롬프트가 지정되지 않았습니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:607
 msgid "You must specify a prompt for the Quick action"
 msgstr "빠른 동작 프롬프트를 지정해야 합니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:614
 msgid "Ask the AI to respond in the current language"
 msgstr "AI가 현재 언어로 응답하도록 요청"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:616
 msgid ""
 "Ask the AI to respond in the current calibre user interface language. Note "
 "that how well this works depends on the individual model being used. "
 "Different models support different languages."
 msgstr "AI가 현재 calibre 사용자 인터페이스 언어로 응답하도록 요청합니다. 이 기능의 품질은 사용하는 모델에 따라 달라집니다. 모델마다 지원하는 언어가 다릅니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:645
 msgid "&Quick actions:"
 msgstr "빠른 동작(&Q):"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:697
 msgid ""
 "Cannot edit builtin actions. Instead uncheck this action and create a new "
 "action with the same name."
 msgstr "내장 동작은 편집할 수 없습니다. 대신 이 동작의 선택을 해제한 뒤 같은 이름의 새 동작을 만드십시오."
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:697
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:712
 msgid ""
 "Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
 "showing up as a button."
 msgstr "내장 동작은 제거할 수 없습니다. 대신 선택을 해제하여 버튼으로 표시되지 않게 하십시오."
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:699
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:714
 #, python-brace-format
 msgid "Remove the {} action?"
 msgstr "{} 동작을 제거하시겠습니까?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:700
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:715
 msgid "&Show this confirmation again"
 msgstr "이 확인 다시 표시(&S)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:753
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:768
 msgid "AI &Provider"
 msgstr "AI 공급자(&P)"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:815
+#, python-brace-format
+msgid "Full document renders: {}"
+msgstr "전체 문서 렌더링: {}"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:871
+msgid "AI streaming render demo"
+msgstr "AI 스트리밍 렌더링 데모"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:880
+msgid "Immediate full re-render"
+msgstr "즉시 전체 다시 렌더링"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:881
+#, python-brace-format
+msgid "{} ms batched re-render"
+msgstr "{}ms 일괄 재렌더링 완료"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:886
+msgid "Restart demo"
+msgstr "데모 재시작"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:890
+#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:755
+msgid "Close"
+msgstr "닫기"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:912
+msgid "Demonstrate a streaming markdown response."
+msgstr "스트리밍 마크다운 응답을 보여줍니다."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:916
+#, python-brace-format
+msgid ""
+"Injecting {chunks} chunks at {interval} ms per chunk into two widgets with "
+"identical content."
+msgstr "동일한 내용을 가진 두 위젯에, 각 청크당 {interval} 밀리초 간격으로 {chunks}개의 청크를 주입합니다."
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:930
+#, python-brace-format
+msgid ""
+"Immediate widget: {immediate} full renders. Batched widget: {throttled} full"
+" renders."
+msgstr "즉시 위젯: {immediate} 전체 렌더링. 일괄 처리 위젯: {throttled} 전체 렌더링."
 
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/config_ui.py:47
 msgid "Configure viewer"
@@ -26821,10 +26909,7 @@ msgid ""
 "%prog [options] book.lrf\n"
 "\n"
 "Read the LRF e-book book.lrf\n"
-msgstr ""
-"%prog [options] book.lrf\n"
-"\n"
-"Read the LRF e-book book.lrf\n"
+msgstr "%prog [options] book.lrf\n\nRead the LRF e-book book.lrf\n"
 
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/main.py:276
 msgid "Print more information about the rendering process"
@@ -26996,7 +27081,7 @@ msgid ""
 msgstr "{0} 시작 중 오류가 발생했습니다. {0}의 일부 기능이 동작하지 않을 수 있습니다. 자세한 내용은 \"상세 정보 표시\"를 클릭하십시오."
 
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:327
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:976
 msgid "Corrupted database"
 msgstr "망가진 데이터베이스"
 
@@ -29918,12 +30003,7 @@ msgid ""
 "Preferences->Advanced->Plugins. Remember to also enter the folders where you"
 " want the books to be put. You must restart calibre for your changes to take"
 " effect.\n"
-msgstr ""
-"Copy these values to the clipboard, paste them into an editor, then enter "
-"them into the USER_DEVICE by customizing the device plugin in "
-"Preferences->Advanced->Plugins. Remember to also enter the folders where you"
-" want the books to be put. You must restart calibre for your changes to take"
-" effect.\n"
+msgstr "Copy these values to the clipboard, paste them into an editor, then enter them into the USER_DEVICE by customizing the device plugin in Preferences->Advanced->Plugins. Remember to also enter the folders where you want the books to be put. You must restart calibre for your changes to take effect.\n"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/email_ui.py:79
 msgid ""
@@ -31362,10 +31442,7 @@ msgid ""
 "<p>Check this box to make Quickview show books only in the\n"
 "current Virtual library. If unchecked, Quickview ignores Virtual libraries. If\n"
 "unchecked then only row changes are taken into account.</p>"
-msgstr ""
-"<p>Check this box to make Quickview show books only in the\n"
-"current Virtual library. If unchecked, Quickview ignores Virtual libraries. If\n"
-"unchecked then only row changes are taken into account.</p>"
+msgstr "<p>Check this box to make Quickview show books only in the\ncurrent Virtual library. If unchecked, Quickview ignores Virtual libraries. If\nunchecked then only row changes are taken into account.</p>"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/quickview_ui.py:62
 msgid ""
@@ -33238,8 +33315,8 @@ msgid "&Search the internet"
 msgstr "인터넷 검색(&S)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1310
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:543
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:629
 msgid "Failed to start Content server"
 msgstr "콘텐츠 서버를 시작하지 못했습니다"
 
@@ -40822,70 +40899,74 @@ msgid ""
 "            "
 msgstr "\n            <h3>실시간 미리보기</h3>\n\n            <p>사용자가 현재 편집중인 HTML 파일의 실시간 미리보기를 이곳에서 보게 됩니다.\n            이 미리보기는 사용자가 변경을 가할 때마다 자동으로 업데이트됩니다.\n\n            <p style=\"font-size:x-small; color: gray\">이 기능은 간단한 미리보기일 뿐이며,\n            실제 전자책 리더기를 시뮬레이트하기 위한 것은 아니라는 점을 유의하십시오.\n            사용자의 전자책의 페이지 나눔이나 페이지 여백과 같은 몇가지 점은 제대로 기능하지 않을 수도 있습니다.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:486
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:490
+msgid "Reset zoom to 100%"
+msgstr "확대/축소 비율을 100%로 재설정"
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:491
 msgid "Inspect element"
 msgstr "구성 요소 들여다보기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:501
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:506
 #, python-format
 msgid "Edit %s"
 msgstr "%s 편집"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:546
 msgid "Loading preview, please wait..."
 msgstr "미리보기 로드 중, 기다려 주세요..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:596
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:601
 msgid "Search in preview"
 msgstr "미리 보기에서 검색"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:647
 msgid "Invalid location"
 msgstr "잘못된 위치"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:643
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:648
 msgid "Cannot split on the body tag"
 msgstr "body 태그에서는 분할할 수 없습니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:675
 msgid "Failed to launch worker"
 msgstr "작업자 실행 실패"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:676
 msgid "Failed to launch the worker process used for rendering the preview"
 msgstr "미리보기 렌더링에 사용하는 작업자 프로세스를 시작하지 못했습니다"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
 msgid "Cannot disable"
 msgstr "비활성화 불가능"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:736
 msgid ""
 "Auto reloading of the preview panel cannot be disabled while the Live CSS "
 "panel is open."
 msgstr "Live CSS 패널이 열린 상태에서는 미리 보기 패널의 자동 갱신을 비활성화할 수 없습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
 msgid "Auto reload preview when text changes in editor"
 msgstr "편집기에서 텍스트를 변경할 때 미리 보기 화면 갱신"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
 msgid "Disable auto reload of preview"
 msgstr "미리 보기 자동 갱신 끄기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:744
 msgid "Disable syncing of preview position to editor position"
 msgstr "미리 보기 위치와 편집기 위치 동기화 끄기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:745
 msgid "Enable syncing of preview position to editor position"
 msgstr "미리 보기 위치와 편집기 위치 동기화 켜기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:748
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:753
 msgid "Abort file split"
 msgstr "파일 분할 중단"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:754
 msgid ""
 "Split this file at a specified location.<p>After clicking this button, click"
 " inside the preview panel above at the location you want the file to be "
@@ -43292,43 +43373,43 @@ msgstr "빠른 시작 길잡이"
 msgid "&Donate to support calibre"
 msgstr "캘리버를 지원하려면 기부하세요(&D)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:274
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:275
 msgid "&Eject connected device"
 msgstr "연결된 장치 꺼내기(&E)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:280
 msgid "Quit calibre"
 msgstr "캘리버 나가기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:287
 msgid "Minimize the calibre window"
 msgstr "calibre 창 최소화"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:295
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:296
 msgid "Clear the current search"
 msgstr "지금 검색결과 비우기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:302
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:303
 msgid "Focus the book list"
 msgstr "책 목록으로 포커스 이동"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
 msgid "Clear the Virtual library"
 msgstr "가상 라이브러리 지우기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:317
 msgid "Clear the additional restriction"
 msgstr "\"그외 사용 가능한 검색 제한\" 지우기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:323
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:324
 msgid "Open the template documentation editor"
 msgstr "템플릿 문서 편집기 열기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:451
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:452
 msgid "Debug mode"
 msgstr "디버그 모드"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:453
 #, python-format
 msgid ""
 "You have started calibre in debug mode. After you quit calibre, the debug "
@@ -43336,11 +43417,11 @@ msgid ""
 "automatically."
 msgstr "calibre를 디버그 모드로 시작했습니다. calibre를 종료하면 디버그 로그를 다음 파일에서 확인할 수 있습니다: %s<p>로그는 자동으로 표시됩니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:507
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
 msgid "Content server changed!"
 msgstr "콘텐츠 서버가 변경되었습니다!"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:509
 msgid ""
 "calibre 3 comes with a completely re-written Content server. As such any "
 "custom configuration you have for the content server no longer applies. You "
@@ -43348,7 +43429,7 @@ msgid ""
 " the net"
 msgstr "calibre 3에는 완전히 새로 작성된 콘텐츠 서버가 포함되어 있습니다. 따라서 콘텐츠 서버에 대해 설정했던 사용자 지정 구성은 더 이상 적용되지 않습니다. 환경설정 -> 공유 -> 인터넷을 통한 공유에서 설정을 확인하고 새로 적용해야 합니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:545
 #, python-format
 msgid ""
 "Could not start the Content server. Error:\n"
@@ -43356,25 +43437,25 @@ msgid ""
 "%s"
 msgstr "콘텐츠 서버를 시작할 수 없습니다. 오류:\n\n%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:598
 msgid "Hide main window"
 msgstr "기본 창 숨김"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:598
 msgid "Show main window"
 msgstr "기본 창 표시"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:894
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:895
 msgid "Failed to update annotations"
 msgstr "주석 업데이트 실패"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:895
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:896
 msgid ""
 "Failed to update annotations in the database for the book being currently "
 "viewed."
 msgstr "현재 보고 있는 책의 데이터베이스 주석을 업데이트하지 못했습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:976
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:977
 #, python-format
 msgid ""
 "The library database at %s appears to be corrupted. Do you want calibre to "
@@ -43382,17 +43463,17 @@ msgid ""
 "successful."
 msgstr "%s의 라이브러리 데이터베이스가 손상된 것으로 보입니다. calibre가 자동으로 다시 구성하도록 하시겠습니까? 다시 구성해도 완전히 성공하지 못할 수 있습니다."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1079
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1080
 msgid "Conversion error"
 msgstr "변환 오류"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1100
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1125
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1101
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1126
 #, python-format
 msgid "<p><b>Failed to convert: %s"
 msgstr "<p><b>변환하지 못했습니다: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1101
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1102
 msgid ""
 "\n"
 "                Many older e-book reader devices are incapable of displaying\n"
@@ -43409,51 +43490,59 @@ msgid ""
 "                        "
 msgstr "\n                오래된 전자책 리더 장치 중 상당수는\n                일정 크기를 넘는 내부 구성 요소를 가진 EPUB 파일을 표시하지 못합니다.\n                따라서 EPUB으로 변환할 때 calibre는 자동으로\n                EPUB을 더 작은 조각으로 분할하려고 시도합니다. 하지만\n                큰 텍스트 덩어리로만 이루어진 일부 파일에서는\n                이 분할이 실패합니다.\n                <p>이 문제는 변환 대화상자의 <i>EPUB 출력</i>에서\n                최대 분할 크기를 늘리거나,\n                같은 변환 대화상자에서 휴리스틱 처리를 켜는 방식으로 <b>우회할 수 있습니다</b>.\n                단, 최대 분할 크기를 너무 크게 하면\n                전자책 리더가 EPUB을 제대로 처리하지 못할 수 있습니다.\n                        "
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1115
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1129
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1116
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1130
 msgid "Conversion failed"
 msgstr "변환 실패"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1127
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1128
 msgid "here"
 msgstr "여기"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1140
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1141
 msgid "Recipe Disabled"
 msgstr "레시피 사용 안함"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1173
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1174
 msgid "<b>Failed</b>"
 msgstr "<b>실패</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1228
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1242
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "활동 중인 작업이 있습니다. 종료하는게 확실합니까?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1231
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1245
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr "가 장치와 통신 중입니다!<br>\n지금 종료하면 장치에 손상을 가져올 수도 있습니다.<br>\n종료하기를 원하십니까?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1239
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1250
+msgid "Quit after jobs &finish"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1252
+msgid "Quit anyway"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1267
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr "대기 중인 라이브러리 업데이트가 있습니다. 정말 종료하시겠습니까?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1240
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1268
 msgid "Library updates waiting"
 msgstr "라이브러리 업데이트 대기 중"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1271
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1299
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr "데이터베이스 종료 플러그인을 실행하는 중입니다. 몇 초 걸릴 수 있습니다..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1328
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1356
 msgid "Shutting down the Content server. This could take a while..."
 msgstr "콘텐츠 서버를 종료하는 중입니다. 시간이 다소 걸릴 수 있습니다..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1384
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1412
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -45493,13 +45582,13 @@ msgstr "예외 발생 폴더"
 msgid "INVALID CONDITION"
 msgstr "잘못된 조건"
 
-#: /__w/calibre/calibre/src/calibre/library/database2.py:119
-#: /__w/calibre/calibre/src/calibre/library/database2.py:128
+#: /__w/calibre/calibre/src/calibre/library/database2.py:117
+#: /__w/calibre/calibre/src/calibre/library/database2.py:126
 #, python-format
 msgid "Path to library too long. Must be less than %d characters."
 msgstr "라이브러리로의 경로가 너무 깁니다. %d 문자보다 적어야 합니다."
 
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1259
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1257
 #, python-format
 msgid " (%s books)"
 msgstr " (%s 책)"
@@ -45781,27 +45870,27 @@ msgstr "출판일: {pubdate}"
 msgid "Publisher: {publisher}"
 msgstr "출판사: {publisher}"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:58
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:59
 msgid "Show "
 msgstr "표시"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:73
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:74
 msgid " sorted by "
 msgstr " 정렬 순서 "
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:130
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:131
 msgid "Change library"
 msgstr "라이브러리 변경"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:130
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:131
 msgid "Change library to: "
 msgstr "라이브러리 변경:"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:200
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:216
 msgid "Switch to the full interface (non-mobile interface)"
 msgstr "전체 인터페이스(모바일이 아닌 인터페이스)로 전환"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:203
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:219
 msgid ""
 "The full interface gives you many more features, but it may not work well on"
 " a small screen"
@@ -47768,17 +47857,9 @@ msgstr "아니요(&N)"
 msgid "N&o to All"
 msgstr "모두 아니오 (&O)"
 
-#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:749
-msgid "Abort"
-msgstr "취소"
-
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:751
 msgid "Retry"
 msgstr "다시 시도"
-
-#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:755
-msgid "Close"
-msgstr "닫기"
 
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:763
 msgid "Apply"

@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Junghee Lee <daemul72@gmail.com>, 2022
+# Junghee Lee <daemul72@gmail.com>, 2022,2026
 # Junghee Lee <daemul72@gmail.com>, 2021-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 13:52+0000\n"
+"POT-Creation-Date: 2026-04-29 04:37+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022,2026\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -214,7 +214,7 @@ msgid ""
 msgstr "마지막으로 calibre 콘텐츠 서버의 브라우저 내장 뷰어를 사용한다면, 뷰어 환경설정의 :guilabel:`환경설정->기타`로 가서 동기화할 콘텐츠 서버 뷰어의 사용자 이름을 입력하면 주석을 브라우저 뷰어와 동기화할 수 있습니다. 익명 사용자와 동기화하려면 특수 값 ``*``를 사용하십시오."
 
 #: ../../../__w/calibre/calibre/manual/viewer.rst:133
-#: ../../../__w/calibre/calibre/manual/viewer.rst:307
+#: ../../../__w/calibre/calibre/manual/viewer.rst:323
 msgid "Read aloud"
 msgstr "소리내어 읽기"
 
@@ -365,11 +365,34 @@ msgid ""
 "button that looks like a library."
 msgstr "현재 책에서 단어의 뜻을 찾으려면 조회할 단어를 두 번 클릭하거나 길게 탭한 다음, 라이브러리 모양의 조회 버튼을 클릭하십시오."
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:235
+#: ../../../__w/calibre/calibre/manual/viewer.rst:234
+msgid "Custom lookup sources"
+msgstr "사용자 지정 조회 소스"
+
+#: ../../../__w/calibre/calibre/manual/viewer.rst:236
+msgid ""
+"In addition to the built-in sources (such as Google dictionary and Wordnik),"
+" you can add your own. In the :guilabel:`Lookup` panel, click :guilabel:`Add"
+" sources`, then :guilabel:`Add`, and enter a name and a URL template. The "
+"placeholder :code:`{word}` in the URL is replaced with the selected word at "
+"lookup time. You can also restrict a source to specific book languages so "
+"that it is only used when the book matches."
+msgstr "기본으로 제공되는 소스(Google 사전 및 Wordnik 등) 외에도 직접 소스를 추가할 수 있습니다. :guilabel:조회 패널에서 :guilabel:소스 추가를 클릭한 다음 :guilabel:추가를 누르고 이름과 URL 템플릿을 입력하세요. URL의 :code:{word} 자리표시자는 조회 시 선택한 단어로 바뀝니다. 또한 특정 도서 언어에 대해서만 소스를 제한하여 해당 언어와 일치할 때만 사용되도록 설정할 수도 있습니다."
+
+#: ../../../__w/calibre/calibre/manual/viewer.rst:243
+msgid ""
+"This can be used to point the viewer at any web dictionary that exposes a "
+"per-word URL, or at a local HTTP server running on your machine. For "
+"example, a URL template like :code:`http://127.0.0.1:8000/{word}` will query"
+" a dictionary server running locally, which is useful for offline reading or"
+" for using dictionaries that are not available online."
+msgstr "이 기능은 단어별 URL을 제공하는 모든 웹 사전이나, 사용자의 컴퓨터에서 실행 중인 로컬 HTTP 서버를 가리키도록 설정하는 데 사용할 수 있습니다. 예를 들어, :code:http://127.0.0.1:8000/{word}와 같은 URL 템플릿은 로컬에서 실행 중인 사전 서버에 질의를 보냅니다. 이는 오프라인 상태에서 책을 읽거나 온라인에서 사용할 수 없는 사전을 활용할 때 유용합니다."
+
+#: ../../../__w/calibre/calibre/manual/viewer.rst:251
 msgid "Copying text and images"
 msgstr "텍스트 및 이미지 복사중"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:237
+#: ../../../__w/calibre/calibre/manual/viewer.rst:253
 msgid ""
 "You can select text and images by dragging the content with your mouse and "
 "then right clicking and selecting :guilabel:`Copy` to copy to the clipboard."
@@ -377,22 +400,22 @@ msgid ""
 "and images."
 msgstr "마우스로 내용을 끌어 텍스트와 이미지를 선택한 뒤 마우스 오른쪽 버튼을 눌러 :guilabel:`복사`를 선택하면 클립보드로 복사할 수 있습니다. 복사한 자료는 다른 응용 프로그램에 일반 텍스트와 이미지로 붙여 넣을 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:243
+#: ../../../__w/calibre/calibre/manual/viewer.rst:259
 msgid "Zooming in on images"
 msgstr "이미지 확대"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:245
+#: ../../../__w/calibre/calibre/manual/viewer.rst:261
 msgid ""
 "You can zoom in to show an image at full size in a separate window by either"
 " double clicking or long tapping on it. You can also right click on it and "
 "choose :guilabel:`View image`."
 msgstr "이미지를 두 번 클릭하거나 길게 탭하면 별도 창에서 원래 크기로 확대해 볼 수 있습니다. 이미지를 마우스 오른쪽 버튼으로 클릭한 다음 :guilabel:`이미지 보기`를 선택해도 됩니다."
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:251
+#: ../../../__w/calibre/calibre/manual/viewer.rst:267
 msgid "Syncing with a paper edition of the current book"
 msgstr "현재 책의 종이책 판본과 동기화"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:253
+#: ../../../__w/calibre/calibre/manual/viewer.rst:269
 msgid ""
 "Some e-books, that have corresponding print editions, include metadata that "
 "marks the start of each paper page. For such e-books, the viewer allows you "
@@ -403,529 +426,529 @@ msgid ""
 "either the header or the footer."
 msgstr "인쇄판이 함께 있는 일부 전자책에는 종이책 각 페이지의 시작 위치를 표시하는 메타데이터가 포함되어 있습니다. 이런 전자책의 경우 뷰어 제어창의 :guilabel:`이동` 버튼을 사용해 특정 종이책 페이지로 이동할 수 있습니다. 또한 뷰어 설정에서 머리글이나 바닥글에 :guilabel:`종이책 페이지`를 추가하면, 현재 위치에 해당하는 종이책 페이지를 책의 머리글이나 바닥글에 표시할 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:264
+#: ../../../__w/calibre/calibre/manual/viewer.rst:280
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:266
+#: ../../../__w/calibre/calibre/manual/viewer.rst:282
 msgid ""
 "The viewer has extensive keyboard shortcuts, like the rest of calibre. They "
 "can be customised in the viewer :guilabel:`Preferences`. The default "
 "shortcuts are listed below:"
 msgstr "뷰어에는 calibre의 다른 부분과 마찬가지로 다양한 키보드 단축키가 있습니다. 이 단축키는 뷰어 :guilabel:`환경설정`에서 사용자 지정할 수 있습니다. 기본 단축키는 아래와 같습니다:"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:270
+#: ../../../__w/calibre/calibre/manual/viewer.rst:286
 msgid "Keyboard shortcuts for the calibre E-book viewer"
 msgstr "calibre 전자책 뷰어용 키보드 단축키"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:274
+#: ../../../__w/calibre/calibre/manual/viewer.rst:290
 msgid "Keyboard shortcut"
 msgstr "키보드 단축키"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:275
+#: ../../../__w/calibre/calibre/manual/viewer.rst:291
 msgid "Action"
 msgstr "동작"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:276
+#: ../../../__w/calibre/calibre/manual/viewer.rst:292
 msgid ":kbd:`Home, Ctrl+ArrowUp, Ctrl+ArrowLeft`"
 msgstr ":kbd:`Home, Ctrl+ArrowUp, Ctrl+ArrowLeft`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:277
+#: ../../../__w/calibre/calibre/manual/viewer.rst:293
 msgid "Scroll to the start of the current file in a multi-file book"
 msgstr "여러 파일로 이루어진 책에서 현재 파일의 시작 부분으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:278
+#: ../../../__w/calibre/calibre/manual/viewer.rst:294
 msgid ":kbd:`Ctrl+Home`"
 msgstr ":kbd:`Ctrl+Home`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:279
+#: ../../../__w/calibre/calibre/manual/viewer.rst:295
 msgid "Scroll to the beginning of the book"
 msgstr "이 책의 처음으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:280
+#: ../../../__w/calibre/calibre/manual/viewer.rst:296
 msgid ":kbd:`Ctrl+End`"
 msgstr ":kbd:`Ctrl+End`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:281
+#: ../../../__w/calibre/calibre/manual/viewer.rst:297
 msgid "Scroll to the end of the book"
 msgstr "이 책의 마지막으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:282
+#: ../../../__w/calibre/calibre/manual/viewer.rst:298
 msgid ":kbd:`End, Ctrl+ArrowDown, Ctrl+ArrowRight`"
 msgstr ":kbd:`End, Ctrl+ArrowDown, Ctrl+ArrowRight`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:283
+#: ../../../__w/calibre/calibre/manual/viewer.rst:299
 msgid "Scroll to the end of the current file in a multi-file book"
 msgstr "여러 파일로 이루어진 책에서 현재 파일의 끝으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:284
+#: ../../../__w/calibre/calibre/manual/viewer.rst:300
 msgid ":kbd:`ArrowUp`"
 msgstr ":kbd:`ArrowUp`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:285
+#: ../../../__w/calibre/calibre/manual/viewer.rst:301
 msgid ""
 "Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"
 msgstr "흐름 모드에서는 부드럽게 뒤로 스크롤하고, 페이지 모드에서는 한 화면씩 뒤로 이동"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:286
+#: ../../../__w/calibre/calibre/manual/viewer.rst:302
 msgid ":kbd:`ArrowDown`"
 msgstr ":kbd:`ArrowDown`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:287
+#: ../../../__w/calibre/calibre/manual/viewer.rst:303
 msgid ""
 "Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"
 msgstr "앞으로 스크롤 (연속 보기 모드에서는 부드럽게, 페이지 단위로 보기 모드에서는 화면 단위로)"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:288
+#: ../../../__w/calibre/calibre/manual/viewer.rst:304
 msgid ":kbd:`ArrowLeft`"
 msgstr ":kbd:`ArrowLeft`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:289
+#: ../../../__w/calibre/calibre/manual/viewer.rst:305
 msgid "Scroll leftwards by a little in flow mode and by a page in paged mode"
 msgstr "흐름 모드에서는 왼쪽으로 조금 스크롤하고, 페이지 모드에서는 한 페이지 왼쪽으로 이동"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:290
+#: ../../../__w/calibre/calibre/manual/viewer.rst:306
 msgid ":kbd:`ArrowRight`"
 msgstr ":kbd:`ArrowRight`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:291
+#: ../../../__w/calibre/calibre/manual/viewer.rst:307
 msgid "Scroll rightwards by a little in flow mode and by a page in paged mode"
 msgstr "흐름 모드에서는 오른쪽으로 조금 스크롤하고, 페이지 모드에서는 한 페이지 오른쪽으로 이동"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:292
+#: ../../../__w/calibre/calibre/manual/viewer.rst:308
 msgid ":kbd:`PageUp, Shift+Spacebar`"
 msgstr ":kbd:`PageUp, Shift+Spacebar`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:293
+#: ../../../__w/calibre/calibre/manual/viewer.rst:309
 msgid "Scroll backwards by screen-fulls"
 msgstr "화면 단위로 뒤로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:294
+#: ../../../__w/calibre/calibre/manual/viewer.rst:310
 msgid ":kbd:`PageDown, Spacebar`"
 msgstr ":kbd:`PageDown, Spacebar`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:295
+#: ../../../__w/calibre/calibre/manual/viewer.rst:311
 msgid "Scroll forwards by screen-fulls"
 msgstr "화면 단위로 앞으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:296
+#: ../../../__w/calibre/calibre/manual/viewer.rst:312
 msgid ":kbd:`Ctrl+PageUp`"
 msgstr ":kbd:`Ctrl+PageUp`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:297
+#: ../../../__w/calibre/calibre/manual/viewer.rst:313
 msgid "Scroll to the previous section"
 msgstr "이전 구간으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:298
+#: ../../../__w/calibre/calibre/manual/viewer.rst:314
 msgid ":kbd:`Ctrl+PageDown`"
 msgstr ":kbd:`Ctrl+PageDown`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:299
+#: ../../../__w/calibre/calibre/manual/viewer.rst:315
 msgid "Scroll to the next section"
 msgstr "다음 구간으로 스크롤"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:300
+#: ../../../__w/calibre/calibre/manual/viewer.rst:316
 msgid ":kbd:`Alt+ArrowLeft`"
 msgstr ":kbd:`Alt+ArrowLeft`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:301
+#: ../../../__w/calibre/calibre/manual/viewer.rst:317
 msgid "Back"
 msgstr "뒤로 가기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:302
+#: ../../../__w/calibre/calibre/manual/viewer.rst:318
 msgid ":kbd:`Alt+ArrowRight`"
 msgstr ":kbd:`Alt+ArrowRight`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:303
+#: ../../../__w/calibre/calibre/manual/viewer.rst:319
 msgid "Forward"
 msgstr "앞으로 가기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:304
+#: ../../../__w/calibre/calibre/manual/viewer.rst:320
 msgid ":kbd:`Ctrl+T`"
 msgstr ":kbd:`Ctrl+T`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:305
+#: ../../../__w/calibre/calibre/manual/viewer.rst:321
 msgid "Toggle Table of Contents"
 msgstr "목차 표시 전환"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:306
+#: ../../../__w/calibre/calibre/manual/viewer.rst:322
 msgid ":kbd:`Ctrl+S`"
 msgstr ":kbd:`Ctrl+S`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:308
+#: ../../../__w/calibre/calibre/manual/viewer.rst:324
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:309
+#: ../../../__w/calibre/calibre/manual/viewer.rst:325
 msgid ""
 "Change settings quickly by creating and switching to :guilabel:`profiles`"
 msgstr ":guilabel:`프로필`을 만들어 전환하면서 설정을 빠르게 변경"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:310
+#: ../../../__w/calibre/calibre/manual/viewer.rst:326
 msgid ":kbd:`Alt+f`"
 msgstr ":kbd:`Alt+f`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:311
+#: ../../../__w/calibre/calibre/manual/viewer.rst:327
 msgid "Follow links with the keyboard"
 msgstr "키보드로 링크 따라가기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:312
+#: ../../../__w/calibre/calibre/manual/viewer.rst:328
 msgid ":kbd:`Ctrl+C`"
 msgstr ":kbd:`Ctrl+C`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:313
+#: ../../../__w/calibre/calibre/manual/viewer.rst:329
 msgid "Copy to clipboard"
 msgstr "클립보드로 복사"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:314
+#: ../../../__w/calibre/calibre/manual/viewer.rst:330
 msgid ":kbd:`Alt+C`"
 msgstr ":kbd:`Alt+C`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:315
+#: ../../../__w/calibre/calibre/manual/viewer.rst:331
 msgid "Copy current location to clipboard"
 msgstr "클립보드에 현재 위치 복사"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:316
+#: ../../../__w/calibre/calibre/manual/viewer.rst:332
 msgid ":kbd:`Ctrl+Shift+C`"
 msgstr ":kbd:`Ctrl+Shift+C`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:317
+#: ../../../__w/calibre/calibre/manual/viewer.rst:333
 msgid "Copy current location as calibre:// URL to clipboard"
 msgstr "현재 위치를 클립보드에 calibre:// URL로 복사"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:318
+#: ../../../__w/calibre/calibre/manual/viewer.rst:334
 msgid ":kbd:`/, Ctrl+f, Cmd+f`"
 msgstr ":kbd:`/, Ctrl+f, Cmd+f`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:319
+#: ../../../__w/calibre/calibre/manual/viewer.rst:335
 msgid "Start search"
 msgstr "검색 시작"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:320
+#: ../../../__w/calibre/calibre/manual/viewer.rst:336
 msgid ":kbd:`F3, Enter`"
 msgstr ":kbd:`F3, Enter`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:321
+#: ../../../__w/calibre/calibre/manual/viewer.rst:337
 msgid "Find next"
 msgstr "다음 찾기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:322
+#: ../../../__w/calibre/calibre/manual/viewer.rst:338
 msgid ":kbd:`Shift+F3, Shift+Enter`"
 msgstr ":kbd:`Shift+F3, Shift+Enter`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:323
+#: ../../../__w/calibre/calibre/manual/viewer.rst:339
 msgid "Find previous"
 msgstr "이전 찾기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:324
+#: ../../../__w/calibre/calibre/manual/viewer.rst:340
 msgid ":kbd:`Ctrl+Plus, Meta+Plus`"
 msgstr ":kbd:`Ctrl+Plus, Meta+Plus`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:325
+#: ../../../__w/calibre/calibre/manual/viewer.rst:341
 msgid "Increase font size"
 msgstr "글꼴 크기 증가"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:326
+#: ../../../__w/calibre/calibre/manual/viewer.rst:342
 msgid ":kbd:`Ctrl+Minus, Meta+Minus`"
 msgstr ":kbd:`Ctrl+Minus, Meta+Minus`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:327
+#: ../../../__w/calibre/calibre/manual/viewer.rst:343
 msgid "Decrease font size"
 msgstr "글꼴 크기 감소"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:328
+#: ../../../__w/calibre/calibre/manual/viewer.rst:344
 msgid ":kbd:`Ctrl+0`"
 msgstr ":kbd:`Ctrl+0`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:329
+#: ../../../__w/calibre/calibre/manual/viewer.rst:345
 msgid "Restore default font size"
 msgstr "기본 글꼴 크기 복원"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:330
+#: ../../../__w/calibre/calibre/manual/viewer.rst:346
 msgid ":kbd:`Ctrl+]`"
 msgstr ":kbd:`Ctrl+]`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:331
+#: ../../../__w/calibre/calibre/manual/viewer.rst:347
 msgid "Increase number of pages per screen"
 msgstr "화면당 페이지 수 늘이기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:332
+#: ../../../__w/calibre/calibre/manual/viewer.rst:348
 msgid ":kbd:`Ctrl+[`"
 msgstr ":kbd:`Ctrl+[`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:333
+#: ../../../__w/calibre/calibre/manual/viewer.rst:349
 msgid "Decrease number of pages per screen"
 msgstr "화면당 페이지 수 줄이기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:334
+#: ../../../__w/calibre/calibre/manual/viewer.rst:350
 msgid ":kbd:`Ctrl+Alt+C`"
 msgstr ":kbd:`Ctrl+Alt+C`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:335
+#: ../../../__w/calibre/calibre/manual/viewer.rst:351
 msgid "Make number of pages per screen automatic"
 msgstr "화면당 페이지 수를 자동으로 계산하기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:336
+#: ../../../__w/calibre/calibre/manual/viewer.rst:352
 msgid ":kbd:`F11, Ctrl+Shift+F`"
 msgstr ":kbd:`F11, Ctrl+Shift+F`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:337
+#: ../../../__w/calibre/calibre/manual/viewer.rst:353
 msgid "Toggle full screen"
 msgstr "전체화면 모드 전환"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:338
+#: ../../../__w/calibre/calibre/manual/viewer.rst:354
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:339
+#: ../../../__w/calibre/calibre/manual/viewer.rst:355
 msgid "Toggle between Paged mode and Flow mode for text layout"
 msgstr "연속 보기 모드/페이지 단위로 보기 모드 전환"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:340
+#: ../../../__w/calibre/calibre/manual/viewer.rst:356
 msgid ":kbd:`Ctrl+W`"
 msgstr ":kbd:`Ctrl+W`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:341
+#: ../../../__w/calibre/calibre/manual/viewer.rst:357
 msgid "Toggle the scrollbar"
 msgstr "스크롤바 전환"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:342
+#: ../../../__w/calibre/calibre/manual/viewer.rst:358
 msgid ":kbd:`Ctrl+X`"
 msgstr ":kbd:`Ctrl+X`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:343
+#: ../../../__w/calibre/calibre/manual/viewer.rst:359
 msgid "Toggle the Reference mode"
 msgstr "참조 모드 켜고 끄기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:344
+#: ../../../__w/calibre/calibre/manual/viewer.rst:360
 msgid ":kbd:`Ctrl+B`"
 msgstr ":kbd:`Ctrl+B`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:345
+#: ../../../__w/calibre/calibre/manual/viewer.rst:361
 msgid "Show/hide bookmarks"
 msgstr "책갈피 패널 표시/숨김"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:346
+#: ../../../__w/calibre/calibre/manual/viewer.rst:362
 msgid ":kbd:`Ctrl+Alt+B`"
 msgstr ":kbd:`Ctrl+Alt+B`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:347
+#: ../../../__w/calibre/calibre/manual/viewer.rst:363
 msgid "New bookmark"
 msgstr "책갈피 추가하기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:348
+#: ../../../__w/calibre/calibre/manual/viewer.rst:364
 msgid ":kbd:`Ctrl+N, Ctrl+E`"
 msgstr ":kbd:`Ctrl+N, Ctrl+E`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:349
+#: ../../../__w/calibre/calibre/manual/viewer.rst:365
 msgid "Show the book metadata"
 msgstr "메타데이터 표시"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:350
+#: ../../../__w/calibre/calibre/manual/viewer.rst:366
 msgid ":kbd:`Ctrl+Alt+F5, Ctrl+Alt+R`"
 msgstr ":kbd:`Ctrl+Alt+F5, Ctrl+Alt+R`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:351
+#: ../../../__w/calibre/calibre/manual/viewer.rst:367
 msgid "Reload book"
 msgstr "책 다시 읽어오기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:352
+#: ../../../__w/calibre/calibre/manual/viewer.rst:368
 msgid ":kbd:`Ctrl+Shift+ArrowRight`"
 msgstr ":kbd:`Ctrl+Shift+ArrowRight`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:353
+#: ../../../__w/calibre/calibre/manual/viewer.rst:369
 msgid "Alter the current selection forward by a word"
 msgstr "현재 선택 범위를 한 단어 앞으로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:354
+#: ../../../__w/calibre/calibre/manual/viewer.rst:370
 msgid ":kbd:`Ctrl+Shift+ArrowLeft`"
 msgstr ":kbd:`Ctrl+Shift+ArrowLeft`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:355
+#: ../../../__w/calibre/calibre/manual/viewer.rst:371
 msgid "Alter the current selection backwards by a word"
 msgstr "현재 선택 범위를 한 단어 뒤로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:356
+#: ../../../__w/calibre/calibre/manual/viewer.rst:372
 msgid ":kbd:`Shift+ArrowRight`"
 msgstr ":kbd:`Shift+ArrowRight`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:357
+#: ../../../__w/calibre/calibre/manual/viewer.rst:373
 msgid "Alter the current selection forward by a character"
 msgstr "현재 선택 범위를 한 글자 앞으로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:358
+#: ../../../__w/calibre/calibre/manual/viewer.rst:374
 msgid ":kbd:`Shift+ArrowLeft`"
 msgstr ":kbd:`Shift+ArrowLeft`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:359
+#: ../../../__w/calibre/calibre/manual/viewer.rst:375
 msgid "Alter the current selection backwards by a character"
 msgstr "현재 선택 범위를 한 글자 뒤로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:360
+#: ../../../__w/calibre/calibre/manual/viewer.rst:376
 msgid ":kbd:`Shift+ArrowDown`"
 msgstr ":kbd:`Shift+ArrowDown`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:361
+#: ../../../__w/calibre/calibre/manual/viewer.rst:377
 msgid "Alter the current selection forward by a line"
 msgstr "현재 선택 범위를 한 줄 앞으로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:362
+#: ../../../__w/calibre/calibre/manual/viewer.rst:378
 msgid ":kbd:`Shift+Home`"
 msgstr ":kbd:`Shift+Home`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:363
+#: ../../../__w/calibre/calibre/manual/viewer.rst:379
 msgid "Extend the current selection to the start of the line"
 msgstr "현재 선택 범위를 줄의 시작까지 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:364
+#: ../../../__w/calibre/calibre/manual/viewer.rst:380
 msgid ":kbd:`Shift+End`"
 msgstr ":kbd:`Shift+End`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:365
+#: ../../../__w/calibre/calibre/manual/viewer.rst:381
 msgid "Extend the current selection to the end of the line"
 msgstr "현재 선택 범위를 줄의 끝까지 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:366
+#: ../../../__w/calibre/calibre/manual/viewer.rst:382
 msgid ":kbd:`Ctrl+A`"
 msgstr ":kbd:`Ctrl+A`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:367
+#: ../../../__w/calibre/calibre/manual/viewer.rst:383
 msgid "Select all"
 msgstr "모두 선택하기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:368
+#: ../../../__w/calibre/calibre/manual/viewer.rst:384
 msgid ":kbd:`Shift+ArrowUp`"
 msgstr ":kbd:`Shift+ArrowUp`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:369
+#: ../../../__w/calibre/calibre/manual/viewer.rst:385
 msgid "Alter the current selection backwards by a line"
 msgstr "현재 선택 범위를 한 줄 뒤로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:370
+#: ../../../__w/calibre/calibre/manual/viewer.rst:386
 msgid ":kbd:`Ctrl+Shift+ArrowDown`"
 msgstr ":kbd:`Ctrl+Shift+ArrowDown`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:371
+#: ../../../__w/calibre/calibre/manual/viewer.rst:387
 msgid "Alter the current selection forward by a paragraph"
 msgstr "현재 선택 범위를 한 문단 앞으로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:372
+#: ../../../__w/calibre/calibre/manual/viewer.rst:388
 msgid ":kbd:`Ctrl+Shift+ArrowUp`"
 msgstr ":kbd:`Ctrl+Shift+ArrowUp`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:373
+#: ../../../__w/calibre/calibre/manual/viewer.rst:389
 msgid "Alter the current selection backwards by a paragraph"
 msgstr "현재 선택 범위를 한 문단 뒤로 확장"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:374
+#: ../../../__w/calibre/calibre/manual/viewer.rst:390
 msgid ":kbd:`Esc, MenuKey`"
 msgstr ":kbd:`Esc, MenuKey`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:375
+#: ../../../__w/calibre/calibre/manual/viewer.rst:391
 msgid "Show the E-book viewer controls"
 msgstr "전자책 뷰어 제어창 표시"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:376
+#: ../../../__w/calibre/calibre/manual/viewer.rst:392
 msgid ":kbd:`Ctrl+Comma, Ctrl+Esc, Meta+Esc, Meta+Comma`"
 msgstr ":kbd:`Ctrl+Comma, Ctrl+Esc, Meta+Esc, Meta+Comma`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:377
+#: ../../../__w/calibre/calibre/manual/viewer.rst:393
 msgid "Show E-book viewer preferences"
 msgstr "전자책 뷰어 환경설정 표시"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:378
+#: ../../../__w/calibre/calibre/manual/viewer.rst:394
 msgid ":kbd:`Ctrl+G, ;, :`"
 msgstr ":kbd:`Ctrl+G, ;, :`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:379
+#: ../../../__w/calibre/calibre/manual/viewer.rst:395
 msgid "Go to a specified book location or position"
 msgstr "지정한 책 위치 또는 지점으로 이동"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:380
+#: ../../../__w/calibre/calibre/manual/viewer.rst:396
 msgid ":kbd:`Ctrl+Spacebar`"
 msgstr ":kbd:`Ctrl+Spacebar`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:381
+#: ../../../__w/calibre/calibre/manual/viewer.rst:397
 msgid "Toggle auto-scroll"
 msgstr "자동 스크롤 켜고 끄기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:382
+#: ../../../__w/calibre/calibre/manual/viewer.rst:398
 msgid ":kbd:`Alt+ArrowUp`"
 msgstr ":kbd:`Alt+ArrowUp`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:383
+#: ../../../__w/calibre/calibre/manual/viewer.rst:399
 msgid "Auto scroll faster"
 msgstr "자동 스크롤 빠르게"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:384
+#: ../../../__w/calibre/calibre/manual/viewer.rst:400
 msgid ":kbd:`Alt+ArrowDown`"
 msgstr ":kbd:`Alt+ArrowDown`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:385
+#: ../../../__w/calibre/calibre/manual/viewer.rst:401
 msgid "Auto scroll slower"
 msgstr "자동 스크롤 속도 줄이기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:386
+#: ../../../__w/calibre/calibre/manual/viewer.rst:402
 msgid ":kbd:`Ctrl+I`"
 msgstr ":kbd:`Ctrl+I`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:387
+#: ../../../__w/calibre/calibre/manual/viewer.rst:403
 msgid "Show/hide Inspector"
 msgstr "들여다보기 도구 표시/숨김"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:388
+#: ../../../__w/calibre/calibre/manual/viewer.rst:404
 msgid ":kbd:`Ctrl+L`"
 msgstr ":kbd:`Ctrl+L`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:389
+#: ../../../__w/calibre/calibre/manual/viewer.rst:405
 msgid "Show/hide the word lookup panel"
 msgstr "단어 찾아보기 패널 표시/숨김"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:390
+#: ../../../__w/calibre/calibre/manual/viewer.rst:406
 msgid ":kbd:`Ctrl+Q (Cmd+Q on macOS)`"
 msgstr ":kbd:`Ctrl+Q` (macOS에서는 :kbd:`Cmd+Q`)"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:391
+#: ../../../__w/calibre/calibre/manual/viewer.rst:407
 msgid "Quit"
 msgstr "종료"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:392
+#: ../../../__w/calibre/calibre/manual/viewer.rst:408
 msgid ":kbd:`Ctrl+P`"
 msgstr ":kbd:`Ctrl+P`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:393
+#: ../../../__w/calibre/calibre/manual/viewer.rst:409
 msgid "Print book to PDF"
 msgstr "PDF 파일로 책 인쇄"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:394
+#: ../../../__w/calibre/calibre/manual/viewer.rst:410
 msgid ":kbd:`Ctrl+F11`"
 msgstr ":kbd:`Ctrl+F11`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:395
+#: ../../../__w/calibre/calibre/manual/viewer.rst:411
 msgid "Toggle the toolbar"
 msgstr "도구모음 전환"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:396
+#: ../../../__w/calibre/calibre/manual/viewer.rst:412
 msgid ":kbd:`Ctrl+H`"
 msgstr ":kbd:`Ctrl+H`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:397
+#: ../../../__w/calibre/calibre/manual/viewer.rst:413
 msgid "Toggle the highlights panel"
 msgstr "하이라이트 패널 켜고 끄기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:398
+#: ../../../__w/calibre/calibre/manual/viewer.rst:414
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:399
+#: ../../../__w/calibre/calibre/manual/viewer.rst:415
 msgid "Edit this book"
 msgstr "책 편집하기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:402
+#: ../../../__w/calibre/calibre/manual/viewer.rst:418
 msgid "Non re-flowable content"
 msgstr "재흐름이 불가능한 콘텐츠"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:404
+#: ../../../__w/calibre/calibre/manual/viewer.rst:420
 msgid ""
 "Some books have very wide content that cannot be broken up at page "
 "boundaries. For example tables or :code:`<pre>` tags. In such cases, you "
@@ -935,11 +958,11 @@ msgid ""
 "break up lines of text in :code:`<pre>` tags::"
 msgstr "일부 책에는 페이지 경계에서 나눌 수 없는 매우 넓은 콘텐츠가 있습니다. 예를 들어 표나 :code:`<pre>` 태그가 그렇습니다. 이런 경우에는 :kbd:`Ctrl+M`을 눌러 뷰어를 *흐름 모드*로 전환한 뒤 이 콘텐츠를 읽어야 합니다. 또는 뷰어 환경설정의 :guilabel:`스타일` 섹션에 다음 CSS를 추가해 :code:`<pre>` 태그 안의 텍스트 줄을 강제로 줄바꿈하게 할 수도 있습니다::"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:415
+#: ../../../__w/calibre/calibre/manual/viewer.rst:431
 msgid "Designing your book to work well with the calibre E-book viewer"
 msgstr "calibre 전자책 뷰어에서 잘 작동하도록 책 설계하기"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:417
+#: ../../../__w/calibre/calibre/manual/viewer.rst:433
 msgid ""
 "The calibre E-book viewer will set the ``is-calibre-viewer`` class on the "
 "root element. So you can write CSS rules that apply only for it. "
@@ -947,47 +970,47 @@ msgid ""
 "element:"
 msgstr "calibre 전자책 뷰어는 루트 요소에 ``is-calibre-viewer`` 클래스를 설정합니다. 따라서 이 뷰어에만 적용되는 CSS 규칙을 작성할 수 있습니다. 또한 뷰어는 ``body`` 요소에 다음 클래스를 설정합니다:"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:421
+#: ../../../__w/calibre/calibre/manual/viewer.rst:437
 msgid "``body.calibre-viewer-dark-colors``"
 msgstr "``body.calibre-viewer-dark-colors``"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:422
+#: ../../../__w/calibre/calibre/manual/viewer.rst:438
 msgid "Set when using a dark color scheme"
 msgstr "어두운 색상표를 사용할 때 지정"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:424
+#: ../../../__w/calibre/calibre/manual/viewer.rst:440
 msgid "``body.calibre-viewer-light-colors``"
 msgstr "``body.calibre-viewer-light-colors``"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:425
+#: ../../../__w/calibre/calibre/manual/viewer.rst:441
 msgid "Set when using a light color scheme"
 msgstr "밝은 색상표를 사용할 때 지정"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:427
+#: ../../../__w/calibre/calibre/manual/viewer.rst:443
 msgid "``body.calibre-viewer-paginated``"
 msgstr "``body.calibre-viewer-paginated``"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:428
+#: ../../../__w/calibre/calibre/manual/viewer.rst:444
 msgid "Set when in paged mode"
 msgstr "페이지 모드일 때 설정됨"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:430
+#: ../../../__w/calibre/calibre/manual/viewer.rst:446
 msgid "``body.calibre-viewer-scrolling``"
 msgstr "``body.calibre-viewer-scrolling``"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:431
+#: ../../../__w/calibre/calibre/manual/viewer.rst:447
 msgid "Set when in flow (non-paginated) mode"
 msgstr "흐름 모드(비페이지 모드)일 때 설정됨"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:433
+#: ../../../__w/calibre/calibre/manual/viewer.rst:449
 msgid "``body.calibre-footnote-container``"
 msgstr "``body.calibre-footnote-container``"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:434
+#: ../../../__w/calibre/calibre/manual/viewer.rst:450
 msgid "Set when displaying a popup footnote"
 msgstr "팝업 각주를 표시할 때 설정됨"
 
-#: ../../../__w/calibre/calibre/manual/viewer.rst:436
+#: ../../../__w/calibre/calibre/manual/viewer.rst:452
 msgid ""
 "Finally, you can use the calibre color scheme colors via `CSS variables "
 "<https://developer.mozilla.org/en-"

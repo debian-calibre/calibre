@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "апреля 10, 2026" "9.7.0" "calibre"
+.TH "CALIBREDB" "1" "мая 01, 2026" "9.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,46 +40,45 @@ calibredb команда [опции] [аргументы]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBactivatedb\fP — это интерфейс командной строки для доступа к базе данных calibre. Содержит несколько подкоманд, описанных ниже.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
-.INDENT 0.0
-.INDENT 3.5
+\fBliberdb\fP может использоваться для управления базой данных calibre.
+указанный путем или calibre Контент\-сервер, работающий либо на
+локальном компьютере или через Интернет. Вы можете запустить calibre
+Сервер контента с помощью \fBcalibre\-server\fP
+или в основной программе calibre нажмите Подключиться/поделиться \-
+Запустить контент\-сервер\&. Поскольку \fBпрограмме\fP может вносить изменения в ваш
+библиотеки, сначала необходимо настроить аутентификацию на сервере.
+Есть два способа сделать это:
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&. Be careful though,
-because some browsers, primarily Firefox, allow arbitrary websites to also
-access local servers. If you use Firefox, it is better to setup username
-and password, as described below. Local Network Access restriction has
-still not been implemented as of Firefox v149.
-.IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
-.UNINDENT
-.UNINDENT
+Если вы планируете подключаться только к серверу, работающему на том же компьютере,
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+вы можете просто использовать опцию \fB\-\-enable\-local\-write\fP в
+Контент\-сервер, позволяющий любой программе, включая calibre, работать на
+локальном компьютере, чтобы внести изменения в данные. При запуске
+сервера из основной программы calibre, эта опция есть в
+Настройки\-Общий доступ в сети\-Дополнительно\&. Однако будьте осторожны,
+потому что некоторые браузеры, в первую очередь Firefox, позволяют произвольным веб\-сайтам также
+доступ к локальным серверам. Если вы используете Firefox, лучше настроить имя пользователя
+и пароль, как описано ниже. Ограничение доступа к локальной сети
+начиная с Firefox v149, до сих пор не реализовано.
+.INDENT 0.0
+.IP \(bu 2
+Если вы хотите включить доступ через Интернет, вам следует настроить
+.UNINDENT
+.sp
+учётные записи пользователей на сервере и используйте \fB\-\-username\fP и \fB\-\-password\fP
+параметры \fBcalibre\fP, чтобы предоставить ему доступ. Вы можете настроить
+аутентификацию пользователя для \fBcalibre\-server\fP с помощью \fB\-\-enable\-auth\fP
+опцию и используя \fB\-\-manage\-users\fP для создания учётных записей пользователей.
+Если вы запускаете сервер из основной программы calibre, используйте
+Настройки\-Общий доступ в сети\-Требуется имя пользователя/пароль\&.
+.sp
+Чтобы подключиться к работающему контент\-серверу, передайте URL\-адрес сервера в
+\fB\-\-with\-library\fP, см. документацию по этому параметру
+Подробности и примеры.
 .INDENT 0.0
 .IP \(bu 2
 ГЛОБАЛЬНЫЕ НАСТРОЙКИ
@@ -147,7 +146,7 @@ fts_search
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:ru/\:generated/\:ru/\:calibredb\:.html>\&.
+Путь к библиотеке calibre. По умолчанию используется путь, сохраненный в настройках. Вы также можете подключиться к контент\-серверу calibre для выполнения действий с удаленными библиотеками. Для этого используйте URL\-адрес вида: \%<http://\:hostname:port/#\:library_id>, например \%<http://\:localhost:8080/#\:mylibrary>\&. Library_id — это идентификатор библиотеки, к которой вы хотите подключиться на сервере контента. Вы можете использовать специальное значение Library_id — чтобы получить список идентификаторов библиотек, доступных на сервере. Подробную информацию о том, как настроить доступ через контент\-сервер, см. в разделе \%<https://\:manual\:.calibre-ebook\:.com/\:ru/\:generated/\:ru/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP

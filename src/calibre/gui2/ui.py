@@ -19,7 +19,7 @@ from io import BytesIO
 from queue import Empty, Queue
 
 import apsw
-from qt.core import QAction, QApplication, QDialog, QEvent, QFont, QIcon, QMenu, QSystemTrayIcon, Qt, QTimer, QUrl, pyqtSignal
+from qt.core import QAction, QApplication, QDialog, QDialogButtonBox, QEvent, QFont, QIcon, QMenu, QSystemTrayIcon, Qt, QTimer, QUrl, pyqtSignal
 
 from calibre import detect_ncpus, force_unicode, prints, timed_print
 from calibre.constants import DEBUG, __appname__, config_dir, filesystem_encoding, ismacos, iswindows
@@ -238,6 +238,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
         self.jobs_dialog = JobsDialog(self, self.job_manager)
         self.jobs_button = JobsButton(parent=self)
         self.jobs_button.initialize(self.jobs_dialog, self.job_manager)
+        self.job_manager.job_done.connect(self._jobs_auto_close)
         # }}}
 
         LayoutMixin.init_layout_mixin(self)
@@ -1219,6 +1220,19 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             self.system_tray_icon.setVisible(False)
         QApplication.instance().exit()
 
+    def _jobs_auto_close(self, nnum):
+        if nnum == 0 and self.jobs_dialog.auto_close_calibre.isChecked():
+            self.jobs_dialog.auto_close_calibre.setChecked(False)
+            if self.system_tray_icon is not None and self.system_tray_icon.isVisible():
+                self.show_windows()
+            from calibre.gui2.dialogs.message_box import AutoCloseNotification
+            app = QApplication.instance()
+            parent = app.focusWidget() or self
+            parent.raise_()
+            parent.activateWindow()
+            if AutoCloseNotification(parent=parent).exec() == QDialog.DialogCode.Accepted:
+                self.quit(confirm_quit=False)
+
     def donate(self, *args):
         from calibre.utils.localization import localize_website_link
         open_url(QUrl(localize_website_link('https://calibre-ebook.com/donate')))
@@ -1232,7 +1246,21 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
                       Quitting may cause corruption on the device.<br>
                       Are you sure you want to quit?''')+'</p>'
 
-            if not question_dialog(self, _('Active jobs'), msg):
+            d = warning_dialog(self, _('Active jobs'), msg, show_copy_button=False)
+            b = d.bb.addButton(_('Quit after jobs &finish'), QDialogButtonBox.ButtonRole.RejectRole)
+            b.setIcon(QIcon.ic('jobs.png'))
+            d.bb.button(QDialogButtonBox.StandardButton.Ok).setText(_('Quit anyway'))
+            d.bb.addButton(_('&Cancel'), QDialogButtonBox.ButtonRole.RejectRole)
+            d.after_jobs_finish = False
+            def jf():
+                d.after_jobs_finish = True
+            b.clicked.connect(jf)
+            d.bb.button(QDialogButtonBox.StandardButton.Ok).setAutoDefault(False)
+            d.bb.button(QDialogButtonBox.StandardButton.Ok).setIcon(QIcon.ic('dialog_warning.png'))
+            b.setDefault(True)
+            if d.exec() != QDialog.DialogCode.Accepted:
+                if d.after_jobs_finish:
+                    self.jobs_dialog.auto_close_calibre.setChecked(True)
                 return False
 
         if self.proceed_question.questions:

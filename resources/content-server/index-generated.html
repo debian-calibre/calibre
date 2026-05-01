@@ -31118,7 +31118,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.7.0";
+        CALIBRE_VERSION = "9.8.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -31815,6 +31815,7 @@ return this.__repr__();
             var self = this;
             if (data.color_scheme && data.color_scheme.foreground && data.color_scheme.background) {
                 opts.color_scheme = data.color_scheme;
+                opts.is_dark_theme = !!data.color_scheme.is_dark_theme;
                 apply_colors();
                 set_color_scheme_class();
             }

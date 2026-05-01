@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-04-08 13:53+UTC\n"
+"POT-Creation-Date: 2026-04-29 04:39+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: asd asd, 2024\n"
 "Language-Team: Bulgarian (http://app.transifex.com/calibre/calibre/language/bg/)\n"
@@ -245,6 +245,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:434
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:100
 msgid "Model for &text tasks:"
 msgstr ""
 
@@ -301,6 +302,7 @@ msgstr ""
 #: /__w/calibre/calibre/src/calibre/ai/google/config.py:39
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:395
 #: /__w/calibre/calibre/src/calibre/ai/openai/config.py:39
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:56
 msgid "API &key:"
 msgstr ""
 
@@ -349,6 +351,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:38
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:68
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:109
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
@@ -357,6 +360,7 @@ msgstr " секунди"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:40
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:70
 msgid "&Timeout:"
 msgstr ""
 
@@ -365,10 +369,12 @@ msgid "Controls randomness. 0 is deterministic, higher is more creative."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:47
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:77
 msgid "T&emperature:"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:71
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:96
 msgid "&Refresh models"
 msgstr ""
 
@@ -377,11 +383,13 @@ msgid "&Model:"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:113
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:125
 #, python-brace-format
 msgid "Found {} models. e.g.: {}"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:115
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:127
 msgid " (and more)"
 msgstr ""
 
@@ -396,6 +404,7 @@ msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:151
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:190
 msgid "No model specified"
 msgstr ""
 
@@ -769,6 +778,67 @@ msgid ""
 "information for queries, where possible"
 msgstr ""
 
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/__init__.py:11
+msgid ""
+"Generic OpenAI compatible AI services. Use this to connect calibre to self-"
+"hosted or third-party services that implement the OpenAI chat completions "
+"API."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:40
+msgid ""
+"Connect calibre to any self-hosted or third-party service that implements "
+"the OpenAI compatible <code>/v1/chat/completions</code> API. This is useful "
+"for gateways, local servers and other services that are not listed as "
+"dedicated providers."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:49
+#, python-brace-format
+msgid "For example: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:50
+msgid "API &URL:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:55
+msgid "Optional. Sent as Authorization: Bearer <key>"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:61
+msgid "Optional HTTP headers, one per line, in the format: Header-Name: Value"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:62
+msgid "HTTP &headers:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:76
+msgid "Controls randomness. Lower values are more deterministic."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:131
+msgid "The server responded, but returned no models."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:134
+#, python-brace-format
+msgid "Failed to refresh models: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:187
+msgid "No API URL"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:187
+msgid "You must specify the URL of the OpenAI compatible API endpoint."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:190
+msgid "You must specify a model ID to use for text based tasks."
+msgstr ""
+
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:329
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:344
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:89
@@ -961,7 +1031,7 @@ msgstr "Не прави абсолютно нищо"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:486
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:287
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:989
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1003
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:309
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:312
@@ -982,8 +1052,8 @@ msgstr "Не прави абсолютно нищо"
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/image_writer.py:21
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/render/links.py:143
 #: /__w/calibre/calibre/src/calibre/ebooks/txt/processor.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:954
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:962
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:950
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:958
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:887
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
@@ -1046,14 +1116,14 @@ msgstr "Не прави абсолютно нищо"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:719
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:934
 #: /__w/calibre/calibre/src/calibre/library/database.py:928
-#: /__w/calibre/calibre/src/calibre/library/database2.py:622
-#: /__w/calibre/calibre/src/calibre/library/database2.py:630
-#: /__w/calibre/calibre/src/calibre/library/database2.py:640
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2319
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2472
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2925
+#: /__w/calibre/calibre/src/calibre/library/database2.py:620
+#: /__w/calibre/calibre/src/calibre/library/database2.py:628
+#: /__w/calibre/calibre/src/calibre/library/database2.py:638
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2317
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2470
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2923
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3554
 #: /__w/calibre/calibre/src/calibre/library/database2.py:3556
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3558
 #: /__w/calibre/calibre/src/calibre/srv/content.py:179
 #: /__w/calibre/calibre/src/calibre/srv/content.py:180
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:97
@@ -1136,440 +1206,440 @@ msgstr "Библиотеката затворена"
 msgid "AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:25
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:26
 msgid ""
 "Create a PMLZ archive containing the PML file and all images in the folder "
 "pmlname_img or images. This plugin is run every time you add a PML file to "
 "the library."
 msgstr "Създаване на PMLZ архив, съдържащ PML файла и всички изображения в папката pmlname_img или изображения. Този плъгин се изпълнява всеки път, когато добавите PML файл към библиотеката."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:56
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:57
 msgid ""
 "Create a TXTZ archive when a TXT file is imported containing Markdown or "
 "Textile references to images. The referenced images as well as the TXT file "
 "are added to the archive."
 msgstr "Създаване на TXTZ архив когато TXT файл е внесъл съдържащи Markdown или Textile справки към снимки. Съответните изображения както и TXT файлове се добавят към архива."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:111
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:112
 msgid "Extract cover from comic files"
 msgstr "Извлича корица от comic файлове"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:165
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:189
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:200
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:211
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:223
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:235
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:246
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:257
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:268
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:279
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:290
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:301
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:312
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:324
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:337
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:360
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:372
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:383
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:395
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:406
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:418
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:166
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:190
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:201
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:212
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:224
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:236
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:258
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:269
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:280
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:291
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:302
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:325
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:338
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:361
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:373
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:384
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:396
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:407
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:419
 #, python-format
 msgid "Read metadata from %s files"
 msgstr "Чете  метаданни от %s файлове"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:176
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:177
 msgid "Read metadata from EPUB and KEPUB files"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:349
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:350
 msgid "Read metadata from e-books in RAR archives"
 msgstr "Чете метаданни от е-книги в RAR архиви"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:430
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:431
 msgid "Read metadata from e-books in ZIP archives"
 msgstr "Чете метаданни от е-книги в ZIP архиви"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:449
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:450
 msgid "Set metadata in EPUB and KEPUB files"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:461
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:462
 #, python-brace-format
 msgid ""
 "Enter {0} below to have the EPUB metadata writer plugin not add cover images"
 " to EPUB files that have no existing cover image."
 msgstr "Натиснете {0} долу за да накарате плъгина за писане на EPUB метаданни да не добавя корици към EPUB файловете, които нямат съществуваща корица"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:469
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:492
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:503
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:527
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:539
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:550
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:470
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:493
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:504
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:528
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:540
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:551
 #, python-format
 msgid "Set metadata in %s files"
 msgstr "Влага метаданни в %s файлове"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:480
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:515
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:562
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:574
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:585
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:481
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:516
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:563
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:575
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:586
 #, python-format
 msgid "Set metadata from %s files"
 msgstr "Влага метаданни от %s файлове"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:864
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:865
 msgid "Add books to calibre or the connected device"
 msgstr "Добави книги в calibre или към свързано устройство"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:870
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:871
 msgid "Fetch annotations from a connected Kindle (experimental)"
 msgstr "Извлечи анотации от свързано Kindle устройство (експериментално)"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:876
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:877
 msgid "Generate a catalog of the books in your calibre library"
 msgstr "Генерирай каталог от книгите в calibre библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:882
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:883
 msgid "Convert books to various e-book formats"
 msgstr "Конвертирай книги в различни формати"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:888
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:889
 msgid "Fine tune your e-books"
 msgstr "Финна настройка на е-книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:894
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:895
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:15
 msgid "Browse highlights and bookmarks from all books in the library"
 msgstr "Разгледайте акценти и отметки от всички книги в библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:900
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:901
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_notes.py:12
 msgid "Browse notes for authors, tags, etc. in the library"
 msgstr "Преглеждайте бележки за автори, тагове и т.н. в библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:906
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:907
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fts.py:12
 msgid "Search the full text of all books in the calibre library"
 msgstr "Търсене в пълния текст на всички книги в библиотеката на calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:912
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:913
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:73
 msgid "Edit the Table of Contents in your books"
 msgstr "Редактирай съдържанието на книгите"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:918
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:919
 msgid "Delete books from your calibre library or connected device"
 msgstr "Изтрийте книги от calibre библиотеката или от свързано устройство"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:924
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:925
 msgid ""
 "Embed updated metadata into the actual book files in your calibre library"
 msgstr "Поставете обновените мета данни в съществуващи книги във вашата calibre библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:930
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:931
 msgid "Edit the metadata of books in your calibre library"
 msgstr "Редактира мета данните на книгите във вашата calibre библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:936
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:937
 msgid "Read books in your calibre library"
 msgstr "Четете книги от вашата calibre библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:942
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:943
 msgid "Discuss books in your calibre library with AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:948
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:949
 msgid "Download news from the internet in e-book form"
 msgstr "Заредете новини от Интернет като електронна книга"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:954
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:955
 msgid "Show a list of related books quickly"
 msgstr "Покажи списък на сродните книги бързо"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:960
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:961
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tag_mapper.py:14
 msgid "Filter/transform the tags for books in the library"
 msgstr "Филтриране/трансформиране на таговете на книги в библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:966
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:967
 #: /__w/calibre/calibre/src/calibre/gui2/actions/author_mapper.py:15
 msgid "Transform the authors for books in the library"
 msgstr "Трансформиране на авторите за книги в библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:972
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:973
 msgid "Show an editor for testing templates"
 msgstr "Покажи редактор за тестови шаблони"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:978
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:979
 msgid ""
 "Show a dialog for creating and managing template functions and stored "
 "templates"
 msgstr "Показване на диалог за създаване и управление на функции на шаблони и съхранени шаблони"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:984
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:985
 msgid "Export books from your calibre library to the hard disk"
 msgstr "Експортира книги от вашата calibre библиотека на твърдия диск"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:990
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:991
 msgid "Show Book details in a separate popup"
 msgstr "Покажи детайли за книгата в отделен изскачащ прозорец"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:996
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:997
 #: /__w/calibre/calibre/src/calibre/gui2/actions/restart.py:15
 msgid "Restart calibre"
 msgstr "Рестарт на calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1002
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1003
 msgid "Open the folder that contains the book files in your calibre library"
 msgstr "Отвори папката, съдържаща файловете на книгите във calibre библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1009
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1010
 msgid "Auto scroll through the list of books"
 msgstr "Автопревъртане през списъка с книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1015
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1016
 msgid "Send books to the connected device"
 msgstr "Изпрати книги към свързаното устройство"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1021
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1022
 msgid ""
 "Send books via email or the web. Also connect to folders on your computer as"
 " if they are devices"
 msgstr "Изпращане на книги по имейл или веб. Също така се свържете с папки на компютъра като - ако са устройства"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1028
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1029
 #: /__w/calibre/calibre/src/calibre/gui2/actions/help.py:18
 msgid "Browse the calibre User Manual"
 msgstr "Преглед на ръководството за потребителя"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1034
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1035
 msgid "Customize calibre"
 msgstr "Персонализирай calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1040
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1041
 msgid "Easily find books similar to the currently selected one"
 msgstr "Намерете лесно книги, подобни на по настоящем избраната"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1046
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1047
 msgid ""
 "Switch between different calibre libraries and perform maintenance on them"
 msgstr "Премини между различите calibre библиотеки и извършете поддръжка"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1053
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1054
 msgid "Copy books from the device to your calibre library"
 msgstr "Копиране на книги от устройството във Вашата calibre библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1059
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1060
 msgid "Edit the collections in which books are placed on your device"
 msgstr "Редактирайте колекциите, в които са включени книгите от вашето устройство"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1065
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1066
 msgid "Match book on the devices to books in the library"
 msgstr "Сравняване на книги на устройствата с книги в библиотеката"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1071
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1072
 #: /__w/calibre/calibre/src/calibre/gui2/actions/match_books.py:46
 msgid "Show the book in the calibre library that matches this book"
 msgstr "Показване на книгата в calibre библиотеката, която съвпада на тази книга"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1077
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1078
 msgid "Copy a book from one calibre library to another"
 msgstr "Копирайте книга от една calibre библиотека в друга"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1083
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid "Edit e-books in the EPUB or AZW3 formats"
 msgstr "Редактиране на книги в EPUB или AZW3 формат"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1089
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1090
 msgid "Make small changes to EPUB or HTMLZ files in your calibre library"
 msgstr "Направи малки промени в EPUB или HTMLZ файлове във вашата calibre библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1095
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1096
 msgid ""
 "Find the next or previous match when searching in your calibre library in "
 "highlight mode"
 msgstr "Намерете следващото или предишното съвпадение при търсене във вашата calibre библиотека в режим на подчертаване"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1102
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1103
 msgid "Choose a random book from your calibre library"
 msgstr "Избира произволна книга от вашата calibre библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1108
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1109
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:65
 msgid "Sort the list of books"
 msgstr "Подреждане на списъка с книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1114
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1115
 msgid "Temporarily mark books"
 msgstr "Временно избиране на книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1121
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1122
 msgid "Manage tag browser categories"
 msgstr "Управление на категории на браузър-етикети"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1128
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1129
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:29
 msgid "Show a menu of saved searches"
 msgstr "Покажи меню със запазени търсения"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1135
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1136
 msgid "Show a menu of actions to change calibre's layout"
 msgstr "Показване на меню за промяна на оформлението"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1142
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1143
 msgid "Open the context menu for the column"
 msgstr "Отваряне на контекстното меню за колоната"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1149
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1150
 msgid "Open a menu showing all installed GUI actions"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1155
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1156
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
 msgid "Change the current Virtual library"
 msgstr "Промяна на текущата Виртуална библиотека"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1162
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1163
 msgid "Search for books from different book sellers"
 msgstr "Търсете книги от различни търговци"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1179
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1180
 msgid "Open a template dialog to define and edit column tooltips"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1185
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1186
 msgid "Get new calibre plugins or update your existing ones"
 msgstr "Свалете нови плъгини за calibre или обновете съществуващите"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1210
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1211
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel.py:20
 msgid "Look & feel"
 msgstr "Външен вид"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1212
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1225
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1237
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1249
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1262
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1213
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1226
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1238
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1250
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1263
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1216
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1217
 msgid "Adjust the look and feel of the calibre interface to suit your tastes"
 msgstr "Настройте външния вид на calibre според вашите предпочитания"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1223
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1224
 msgid "Behavior"
 msgstr "Поведение"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1229
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1230
 msgid "Change the way calibre behaves"
 msgstr "Настройте начина по който се държи calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1235
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1236
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:677
 msgid "Add your own columns"
 msgstr "Добавяне на собствени колони"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1241
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1242
 msgid "Add/remove your own columns to the calibre book list"
 msgstr "Добавете/премахнете свои собствени колони в списъка с книги на calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1248
 msgid "Toolbars & menus"
 msgstr "Ленти-инструменти и менюта"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1253
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1254
 msgid ""
 "Customize the toolbars and context menus, changing which actions are "
 "available in each"
 msgstr "Персонализирайте лентите с инструменти и контекстните менюта, избирайки кои действия да бъдат на разположение в тях"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1260
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1261
 msgid "Searching"
 msgstr "Търсене..."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1266
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1267
 msgid "Customize the way searching for books works in calibre"
 msgstr "Персонализиране на начина, по който търсенето за книги работи в calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1272
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1273
 msgid "Input options"
 msgstr "Настройки за въвеждане"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1274
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1291
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1303
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1275
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1292
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1304
 msgid "Conversion"
 msgstr "Конвертиране"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1278
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1279
 msgid "Set conversion options specific to each input format"
 msgstr "Задайте опции за конвертиране, специфични за всеки входен формат"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1289
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1290
 msgid "Common options"
 msgstr "Общи настройки"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1295
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1296
 msgid "Set conversion options common to all formats"
 msgstr "Задайте опции за конвертиране, общи за всички формати"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1301
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1302
 msgid "Output options"
 msgstr "Настройки за изходни формати"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1307
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1308
 msgid "Set conversion options specific to each output format"
 msgstr "Избор на специфични настройки за конвертиране за всеки файлов формат за експортиране"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1314
 msgid "Adding books"
 msgstr "Добавяне на книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1315
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1328
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1341
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1354
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1316
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1329
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1342
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1355
 msgid "Import/export"
 msgstr "Импорт/експорт"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1319
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1320
 msgid "Control how calibre reads metadata from files when adding books"
 msgstr "Управление на това как calibre чете метаданни от файлове при добавяне на книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1326
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1327
 msgid "Saving books to disk"
 msgstr "Записване книги на диск"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1332
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1333
 msgid ""
 "Control how calibre exports files from its database to disk when using Save "
 "to disk"
 msgstr "Определя как calibre експортира файлове от неговата база данни към диск, когато използвате Запиши на диск"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1339
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1340
 msgid "Sending books to devices"
 msgstr "Качване на книги към устройства"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1345
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1346
 msgid "Control how calibre transfers files to your e-book reader"
 msgstr "Управлявай как calibre прехвърля файлове във вашия четец на е-книги"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1352
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1353
 msgid "Metadata plugboards"
 msgstr "Полета за поставяне на метаданни"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1358
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1359
 msgid "Change metadata fields before saving/sending"
 msgstr "С промяна на полетата с метаданни преди запис/изпращане"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1364
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1365
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_stored_templates.py:11
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:296
@@ -1585,99 +1655,99 @@ msgstr "С промяна на полетата с метаданни преди
 msgid "Template functions"
 msgstr "Шаблонни функции"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1366
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1430
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1443
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1455
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1467
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1367
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1431
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1444
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1456
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1468
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1200
 msgid "Advanced"
 msgstr "Разширени"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1370
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1371
 msgid "Create your own template functions"
 msgstr "Създаване на потребителски шаблонни функции"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1376
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1377
 msgid "Sharing books by email"
 msgstr "Споделяне на книги по е-поща"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1378
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1391
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1405
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1417
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1379
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1392
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1406
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1418
 msgid "Sharing"
 msgstr "Споделяне"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1382
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
 msgid ""
 "Setup sharing of books via email. Can be used for automatic sending of "
 "downloaded news to your devices"
 msgstr "Избор на настройки за споделяне на книги по е-поща. Може да бъде използвано за автоматично изпращане на изтеглени новини към Вашите устройства."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1389
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1390
 msgid "Sharing over the net"
 msgstr "Споделяне през интернет"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1395
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1396
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
 msgstr "Настройки за сървър със съдържание за calibre, който ще ви даде достъп до вашата библиотека от calibre навсякъде на всяко устройство, с достъп до Интернет."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1403
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1404
 msgid "Metadata download"
 msgstr "Сваляне на метаданни"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1409
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1410
 msgid "Control how calibre downloads e-book metadata from the net"
 msgstr "Управление как calibre изтегля метаданни за е-книги от Интернет"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1415
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1416
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:491
 msgid "Ignored devices"
 msgstr "Игнорирани устройства"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1421
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1422
 msgid ""
 "Control which devices calibre will ignore when they are connected to the "
 "computer."
 msgstr "Контролирай кои устройства calibre ще игнорира, когато са свързани към компютъра"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1428
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1429
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:169
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.py:85
 msgid "Plugins"
 msgstr "Плъгини"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1434
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1435
 msgid "Add/remove/customize various bits of calibre functionality"
 msgstr "Добавяне/премахване/настройване на различни части от функциите на Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1441
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1442
 msgid "Tweaks"
 msgstr "Подобрения"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1447
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1448
 msgid "Fine tune how calibre behaves in various contexts"
 msgstr "Финна настройка как calibre действа в различни контексти"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1453
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1454
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:600
 msgid "Shortcuts"
 msgstr "Бързи клавиши"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1459
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1460
 msgid "Customize the keyboard shortcuts used by calibre"
 msgstr "Персонализирайте клавишните комбинации за бърз достъп, използвани от calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1465
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1466
 #: /__w/calibre/calibre/src/calibre/devices/usbms/device.py:165
 msgid "Miscellaneous"
 msgstr "Разни"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1471
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1472
 msgid "Miscellaneous advanced configuration"
 msgstr "Разнообразни разширени настройки за конфигурация"
 
@@ -2015,8 +2085,8 @@ msgstr "Деактивиране на избрания плъгин"
 #: /__w/calibre/calibre/src/calibre/db/adding.py:287
 #: /__w/calibre/calibre/src/calibre/db/adding.py:288
 #: /__w/calibre/calibre/src/calibre/db/tests/legacy.py:411
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3370
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3388
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3368
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3386
 msgid "Catalog"
 msgstr "Каталог"
 
@@ -2039,9 +2109,9 @@ msgstr "Каталог"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:702
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1924
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1926
-#: /__w/calibre/calibre/src/calibre/library/database2.py:384
-#: /__w/calibre/calibre/src/calibre/library/database2.py:397
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3413
+#: /__w/calibre/calibre/src/calibre/library/database2.py:382
+#: /__w/calibre/calibre/src/calibre/library/database2.py:395
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3411
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:121
 msgid "News"
 msgstr "Новини"
@@ -2062,12 +2132,12 @@ msgid "Path to library too long. It must be less than %d characters."
 msgstr "Път до библиотеката е твърде дълъг. Той трябва да е по-малък от %d знака."
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:603
-#: /__w/calibre/calibre/src/calibre/library/database2.py:210
+#: /__w/calibre/calibre/src/calibre/library/database2.py:208
 msgid "restored preference "
 msgstr "възстановено предпочитание "
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:609
-#: /__w/calibre/calibre/src/calibre/library/database2.py:215
+#: /__w/calibre/calibre/src/calibre/library/database2.py:213
 #: /__w/calibre/calibre/src/calibre/library/restore.py:234
 msgid "creating custom column "
 msgstr "създаване на потребителска колона "
@@ -2106,7 +2176,7 @@ msgstr "Завършено"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1239
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1287
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:848
-#: /__w/calibre/calibre/src/calibre/library/database2.py:512
+#: /__w/calibre/calibre/src/calibre/library/database2.py:510
 msgid "Saved searches"
 msgstr "Запазени търсения"
 
@@ -2125,7 +2195,7 @@ msgstr "Запазени търсения"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:280
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:391
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1098
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1096
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1770
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1836
 msgid "Yes"
@@ -2959,7 +3029,7 @@ msgid ""
 msgstr "%prog saved_searches [options] (list|add|remove)\n\nУправление на записаните търсения, съхранени в тази база данни.\nАко се опитате да добавите заявка с име, което вече съществува, тя ще бъде\nзаменена.\n\nСинтаксис за добавяне:\n\n%prog saved_searches add search_name search_expression\n\nСинтаксис за премахване:\n\n%prog saved_searches remove search_name\n    "
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:58
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:108
 msgid "Name:"
@@ -3244,19 +3314,19 @@ msgid "On Device"
 msgstr "На устройството"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:452
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1254
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1252
 msgid "Main"
 msgstr "Основно"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:454
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:96
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1256
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1254
 msgid "Card A"
 msgstr "Карта А"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:456
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:98
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1258
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1256
 msgid "Card B"
 msgstr "Карта Б"
 
@@ -7872,7 +7942,7 @@ msgid ""
 msgstr "Ако свойството {property} {match_type} {query}\n{action}"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:71
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1422
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:753
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1232
@@ -7883,7 +7953,7 @@ msgstr "Бележки"
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:410
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/links.py:170
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/toc.py:12
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1396
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:666
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:13
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/html_writer.py:795
@@ -7899,7 +7969,7 @@ msgstr "Съдържание"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/images.py:243
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/opf2.py:1754
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1394
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.py:415
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:559
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1292
@@ -8417,7 +8487,7 @@ msgstr "DRM"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:758
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:963
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:955
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:350
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:356
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
@@ -9087,71 +9157,71 @@ msgstr "Този MOBI файл съдържа както KF8, така и по-�
 msgid "No details available"
 msgstr "Не е налична детайлна информация"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1395
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:991
 msgid "Title page"
 msgstr "Заглавна страница"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1397
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1411
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:993
 msgid "Index"
 msgstr "Индекс"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1398
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1412
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:994
 msgid "Glossary"
 msgstr "Речник"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1399
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1413
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:995
 msgid "Acknowledgements"
 msgstr "Благодарности"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1400
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1414
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:996
 msgid "Bibliography"
 msgstr "Библиография"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1401
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1415
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:997
 msgid "Colophon"
 msgstr "Послеслов"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1402
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1416
 msgid "Copyright"
 msgstr "Авторски права"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1403
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1417
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1000
 msgid "Dedication"
 msgstr "Посвещение"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1404
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1418
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1001
 msgid "Epigraph"
 msgstr "Епиграф"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1405
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1419
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1002
 msgid "Foreword"
 msgstr "Предисловие"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1406
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1420
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1003
 msgid "List of illustrations"
 msgstr "Списък на илюстрации"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1407
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1421
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1004
 msgid "List of tables"
 msgstr "Списък на таблици"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1423
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1006
 msgid "Preface"
 msgstr "Предговор"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1424
 msgid "Main text"
 msgstr "Основен текст"
 
@@ -10537,163 +10607,163 @@ msgstr "Съдържание:"
 msgid "[Image: {}]"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:171
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:670
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:44
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:133
 msgid "Default icons"
 msgstr "Персонални икони"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:326
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:314
 msgid "Show more buttons"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:587
 msgid "Send file to storage card instead of main memory by default"
 msgstr "Изпращане на файл в картата за съхранение вместо основната памет по подразб."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:589
 msgid "Confirm before deleting"
 msgstr "Потвърждение преди изтриване"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:591
 msgid "Main window geometry"
 msgstr "Геометрия на главния прозорец"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:593
 msgid "Notify when a new version is available"
 msgstr "Известяване, когато е налична нова версия"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:595
 msgid "Use Roman numerals for series number"
 msgstr "Използване на римски цифри за номер на серия"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:597
 msgid "Sort tags list by name, popularity, or rating"
 msgstr "Сортиране на етикети-списък по име, популярност или рейтинг"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
 msgid "Match tags by any or all."
 msgstr "Съвпадение на етикети с всеки или всички."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
 msgid "Number of covers to show in the cover browsing mode"
 msgstr "Брой корици за показване в режим сърфиране на корици"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
 msgid "Defaults for conversion to LRF"
 msgstr "По подразбиране за конвертиране в LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
 msgid "Options for the LRF e-book viewer"
 msgstr "Опции за LRF четеца на е-книги"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
 msgid "Formats that are viewed using the internal viewer"
 msgstr "Формати, които се разглеждат с помощта на вътрешния четец"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
 msgid "Columns to be displayed in the book list"
 msgstr "Колони, които трябва да се показват в списъка с книги"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:612
 msgid "Automatically launch Content server on application startup"
 msgstr "Автостартиране на сървър за съдържание при старт на приложение"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:625
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
 msgid "Oldest news kept in database"
 msgstr "Най-старите новини, съхранявани в базата данни"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:614
 msgid "Show system tray icon"
 msgstr "Показване на икона в системния панел"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:616
 msgid "Upload downloaded news to device"
 msgstr "Качване на изтеглени нови на устройство"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:618
 msgid "Delete news books from library after uploading to device"
 msgstr "Изтриване на нови книги от библиотека след качване на устройство"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:620
 msgid ""
 "Show the cover flow in a separate window instead of in the main calibre "
 "window"
 msgstr "Показване на корицата в отделен прозорец, вместо в основния calibre прозорец"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:634
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:622
 msgid "Disable notifications from the system tray icon"
 msgstr "Забрани известията от иконата в трея"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:636
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
 msgid "Default action to perform when the \"Send to device\" button is clicked"
 msgstr "Действие по подразб., при кликнат бутон \"Изпрати към устройство\""
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:641
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:629
 msgid ""
 "Start searching as you type. If this is disabled then search will only take "
 "place when the Enter key is pressed."
 msgstr "Започнете да търсите, докато въвеждате. Ако това е забранено, тогава търсенето ще отнеме само място, когато Enter ключ е натиснат."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:644
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
 msgid ""
 "When searching, show all books with search results highlighted instead of "
 "showing only the matches. You can use the N or F3 keys to go to the next "
 "match."
 msgstr "Когато търсите, покажете всички книги с осветени резултати от търсенето, вместо показване само на съвпаденията. Може да използвате клавишите N или F3, за преминаване към следващо съвпадение."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:659
 msgid ""
 "Maximum number of simultaneous conversion/news download jobs. This number is"
 " twice the actual value for historical reasons."
 msgstr "Максимален брой задания за едновременно изтегляне на конверсии/новини. Този брой е два пъти действителната стойност по исторически причини."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:662
 msgid "Download social metadata (tags/rating/etc.)"
 msgstr "Изтегляне на социални метаданни (етикети/рейтинг/и т.н.)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:664
 msgid "Overwrite author and title with new metadata"
 msgstr "Презапиши автор и заглавие с нови метаданни"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:678
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:666
 msgid "Automatically download the cover, if available"
 msgstr "Автоизтегляне на корицата, ако е налична"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:668
 msgid "Limit max simultaneous jobs to number of CPUs"
 msgstr "Ограничи макс. едновременните задания до броя на CPU"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:670
 msgid ""
 "The layout of the user interface. Wide has the Book details panel on the "
 "right and narrow has it at the bottom."
 msgstr "Оформлението на ПИ. Широко - има десен панел с детайли за книга, Тясно - има панел отдолу."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_display_ui.py:145
 msgid "Show the average rating per item indication in the Tag browser"
 msgstr "Показване на средната оценка за индикация на елемент в Браузър етикети"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
 msgid "Disable UI animations"
 msgstr "Забрани анимации на ПИ"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:693
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:681
 msgid "Tag browser categories not to display"
 msgstr "Категории на Браузър етикети, които да не се показват"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:757
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:745
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:88
 msgid "WARNING:"
 msgstr "ВНИМАНИЕ:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:768
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:756
 msgid "ERROR:"
 msgstr "Грешка: "
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:785
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:773
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:427
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:507
@@ -10701,17 +10771,17 @@ msgstr "Грешка: "
 msgid "Show this confirmation again"
 msgstr "Покажи това потвърждение отново"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:831
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1444
 msgid "Restart needed"
 msgstr "Необходим е рестарт"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:845
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:833
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:523
 msgid "&Restart calibre now"
 msgstr "&Рестартирай calibe сега"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1065
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1061
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:266
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:163
@@ -10720,33 +10790,33 @@ msgstr "&Рестартирай calibe сега"
 msgid "All files"
 msgstr "Всички файлове"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1183
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1179
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "Отдели от контролния терминал, ако има (само за Linux)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1184
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:150
 msgid "Click \"Show details\" for more information."
 msgstr "Кликни \"Покажи детайли\" за повече информация."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1190
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1186
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "Променливата на средата %s е зададена. Опитайте да я разстроите."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1191
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1187
 msgid "Could not create temporary folder"
 msgstr "Не може да се създаде временна папка"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1192
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
 msgid "Could not create temporary folder, calibre cannot start."
 msgstr "Не може да се създаде временна папка, calibre не може да се стартира."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1337
 msgid "Windows XP not supported"
 msgstr "Windows XP не се поддържа"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1347
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1338
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -11812,7 +11882,7 @@ msgstr "Създай каталог на книгите във вашата cali
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:131
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1091
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1092
 msgid "Cannot convert"
 msgstr "Не може да се конвертира"
 
@@ -11899,7 +11969,7 @@ msgstr "Обзор за библиотека"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:255
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:159
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:495
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:200
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:358
 msgid "&Copy"
@@ -11957,8 +12027,8 @@ msgstr "&Няма избрани"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/duplicates.py:56
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:134
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:408
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/jobs.py:473
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:265
@@ -14008,6 +14078,7 @@ msgstr "&Преглед на книга"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:639
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1342
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1253
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/printing.py:199
 msgid "&Cancel"
 msgstr "&Отказ"
@@ -14212,7 +14283,7 @@ msgstr "%s няма налични формати."
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:406
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:378
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:311
 msgid "Virtual library"
 msgstr "Виртуална библиотека"
 
@@ -14891,7 +14962,7 @@ msgstr "Избран текст"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/widgets.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:854
 #: /__w/calibre/calibre/src/calibre/linux.py:1335
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:96
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:97
 msgid "Search"
 msgstr "Търсене"
 
@@ -15617,17 +15688,17 @@ msgstr "Браузър за корица"
 msgid "Toggle layout between wide and narrow"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:144
 msgid "Send query to AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:172
 msgid ""
 "AI generated answers can be inaccurate, please verify any answers before "
 "acting on them."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:227
 msgid "Details:"
 msgstr ""
 
@@ -16007,7 +16078,7 @@ msgid "Remove this image"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1175
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:493
 msgid "Open link"
 msgstr "Отвори връзка"
 
@@ -17409,7 +17480,7 @@ msgstr "Добавяне на текущия израз към списъка с
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:637
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:652
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:150
 msgid "&Add"
 msgstr "&Добави"
@@ -17423,7 +17494,7 @@ msgid "Remove the currently selected expression"
 msgstr "Премахване на текущо избрания израз"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:148
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:639
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:654
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1219
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:405
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:158
@@ -18035,7 +18106,7 @@ msgstr "Моя цветова схема"
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:438
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1399
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:696
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1030
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
 msgid "Cannot edit"
@@ -18046,7 +18117,7 @@ msgid "Cannot edit a builtin color scheme. Create a new color scheme instead."
 msgstr "Не може да се редактира, вградена цветова схема. Създайте вместо това нова цветова схема."
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:456
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:696
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
 msgid "Cannot remove"
@@ -18862,7 +18933,7 @@ msgid "Page numbering (APNX)"
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:512
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:239
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1050
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:471
@@ -20867,12 +20938,12 @@ msgstr ""
 msgid "&FFML documentation"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1235
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1249
 msgid "Active jobs"
 msgstr "Активна задача"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:998
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:340
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:679
@@ -20885,7 +20956,7 @@ msgstr "Активна задача"
 msgid "Find next match"
 msgstr "Намери следващо съвпадение"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:66
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:31
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:189
@@ -20894,29 +20965,40 @@ msgstr "Намери следващо съвпадение"
 msgid "&Search"
 msgstr "&Търсене"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:72
 msgid "&Stop selected jobs"
 msgstr "&Спри избраните задания"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:73
 msgid "&Hide selected jobs"
 msgstr "&Скрий избраните задания"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:74
 msgid "Show job &details"
 msgstr "Покажи &детайли на задача"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:75
 msgid "Show &all jobs"
 msgstr "Покажи &всички задания"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:71
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:76
 msgid "Stop &all non device jobs"
 msgstr "Спри &всички задания без устройство"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:72
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:77
 msgid "&Hide all jobs"
 msgstr "&Скрий всички задания"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:78
+msgid "&Automatically close calibre after all jobs are finished"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:79
+msgid ""
+"Once all currently running jobs are completed, calibre will automatically "
+"quit. Before quitting, a popup will be shown for thirty seconds allowing you"
+" to cancel the automatic quit."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:53
@@ -20951,7 +21033,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:200
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:743
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:758
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:68
 msgid "AI Settings"
 msgstr ""
@@ -21033,42 +21115,60 @@ msgid ""
 "the device icon and select <i>Update cached metadata</i>)</p>"
 msgstr "<p>Не забравяйте да актуализирате метаданните на устройството, когато сте готови (Десен клик върху иконата на устройството и изберете <i>Обнови кеширани метаданни</i>)</p>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:139
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:458
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:148
 msgid "Show &details"
 msgstr "Покажи &детайли"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:139
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:415
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:140
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:459
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:149
 msgid "Hide &details"
 msgstr "Скрий &детайли"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:143
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:419
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:463
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:153
 msgid "Show detailed information about this error"
 msgstr "Показване на подробна информация за тази грешка"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:198
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:496
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:197
 msgid "Copied"
 msgstr "Копирано"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:305
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:361
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:306
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:362
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1114
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1225
 msgid "&View log"
 msgstr "Преглед на дне&вник"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:411
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:387
+msgid "calibre is about to quit"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:388
+msgid "calibre is about to quit. Proceed or abort?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:394
+#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:749
+msgid "Abort"
+msgstr "Прекъсни"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:421
+#, python-brace-format
+msgid "Close now ({}s)"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:455
 msgid "&Retry"
 msgstr "&Повторен опит"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:484
 #, python-brace-format
 msgid "Hide the remaining error message"
 msgid_plural "Hide the {} remaining error messages"
@@ -22573,7 +22673,7 @@ msgid "&Dock"
 msgstr "&Док"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:95
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:239
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:75
 msgid "&Close"
@@ -23238,7 +23338,7 @@ msgid "Choose formats"
 msgstr "Избор на формати"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:90
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:638
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:653
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:852
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:621
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:154
@@ -23326,12 +23426,12 @@ msgid "The port must be a number between 8000 and 65535."
 msgstr "Портът трябва да е число между 8000 и 65535."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:137
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
 msgid "Problem starting the wireless device"
 msgstr "Проблем при старт на безжичното устройство"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:495
 #, python-format
 msgid "The wireless device driver had problems starting. It said \"%s\""
 msgstr "Драйверът на безжичното устройство имаше проблеми при старт. То изписа \"%s\""
@@ -26630,170 +26730,216 @@ msgstr "Пускане върху устройство не се поддърж�
 msgid "File name"
 msgstr "Име на файл"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:77
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:79
 msgid "Reasoning used by AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:163
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:165
 msgid "AI Assistant Note"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:174
 #: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:66
 msgid "You"
 msgstr "Вие"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:184
 msgid "Conversation record"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:212
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:218
 msgid "Type a question to the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:230
 msgid "Se&ttings"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:268
 msgid "Quick actions"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:287
 msgid "First, configure an AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:290
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:789
 msgid "Assistant"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:316
 msgid "Copy this specific response to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:314
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:320
 msgid "Show the reasoning behind this response from the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:327
 msgid "answering"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:327
 msgid "thinking"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:331
 #, python-brace-format
 msgid "{assistant} {activity}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:346
 msgid "AI provider not configured."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:347
 msgid "Configure AI provider"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:378
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:389
 msgid "Talking to AI failed with error:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:423
 msgid "free"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:412
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:426
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:428
 msgid "Queries:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:493
 msgid "&New chat"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:493
 msgid "Start a new conversation"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:495
 msgid "Copy this conversation to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:498
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:512
 msgid "Select text in the book to begin."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:561
 msgid "Add Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:561
 msgid "Edit Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:553
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:568
 msgid "Prompt:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:605
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:373
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1224
 msgid "No name specified"
 msgstr "Не е указано име"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:605
 msgid "You must specify a name for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:607
 msgid "No prompt specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:607
 msgid "You must specify a prompt for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:614
 msgid "Ask the AI to respond in the current language"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:616
 msgid ""
 "Ask the AI to respond in the current calibre user interface language. Note "
 "that how well this works depends on the individual model being used. "
 "Different models support different languages."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:645
 msgid "&Quick actions:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:697
 msgid ""
 "Cannot edit builtin actions. Instead uncheck this action and create a new "
 "action with the same name."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:697
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:712
 msgid ""
 "Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
 "showing up as a button."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:699
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:714
 #, python-brace-format
 msgid "Remove the {} action?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:700
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:715
 msgid "&Show this confirmation again"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:753
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:768
 msgid "AI &Provider"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:815
+#, python-brace-format
+msgid "Full document renders: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:871
+msgid "AI streaming render demo"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:880
+msgid "Immediate full re-render"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:881
+#, python-brace-format
+msgid "{} ms batched re-render"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:886
+msgid "Restart demo"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:890
+#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:755
+msgid "Close"
+msgstr "Затвори"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:912
+msgid "Demonstrate a streaming markdown response."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:916
+#, python-brace-format
+msgid ""
+"Injecting {chunks} chunks at {interval} ms per chunk into two widgets with "
+"identical content."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:930
+#, python-brace-format
+msgid ""
+"Immediate widget: {immediate} full renders. Batched widget: {throttled} full"
+" renders."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/config_ui.py:47
@@ -26998,7 +27144,7 @@ msgid ""
 msgstr "Имаше грешка при старт на {0}. Части от {0} може да не функционират. Кликнете \"Покажи детайли\", за да научите повече."
 
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:327
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:976
 msgid "Corrupted database"
 msgstr "Повредена база данни"
 
@@ -33240,8 +33386,8 @@ msgid "&Search the internet"
 msgstr "  &Търсене в интернет   "
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1310
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:543
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:629
 msgid "Failed to start Content server"
 msgstr "Неуспешно стартиране на сървър за съдържание"
 
@@ -40833,70 +40979,74 @@ msgid ""
 "            "
 msgstr "\n            <h3>Преглед на живо</h3>\n\n            <p>Тук ще видите преглед на живо на HTML файла, който редактирате в момента.\n            Визуализацията ще се актуализира автоматично, докато правите промени.\n\n            <p style=\"font-size:x-small; color: gray\">Имайте предвид, че това е само\n            бърз преглед, той няма за цел да симулира действителен четец на е-книги. Някои\n            аспекти на ваша е-книга няма да работят, като например прекъсвания на страници и полета на страници.\n            "
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:486
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:490
+msgid "Reset zoom to 100%"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:491
 msgid "Inspect element"
 msgstr "Инспектиране на елемент"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:501
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:506
 #, python-format
 msgid "Edit %s"
 msgstr "Редактирай %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:546
 msgid "Loading preview, please wait..."
 msgstr "Зареждане на визуализация, моля изчакайте..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:596
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:601
 msgid "Search in preview"
 msgstr "Търсене във визуализация"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:647
 msgid "Invalid location"
 msgstr "Невалидна локация"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:643
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:648
 msgid "Cannot split on the body tag"
 msgstr "Не може да се раздели основния етикет"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:675
 msgid "Failed to launch worker"
 msgstr "Неуспешно стартиране на манипулатор"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:676
 msgid "Failed to launch the worker process used for rendering the preview"
 msgstr "Неуспешно стартиране на работен процес, използван за рендиране на визуализацията"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
 msgid "Cannot disable"
 msgstr "Не може да се забрани"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:736
 msgid ""
 "Auto reloading of the preview panel cannot be disabled while the Live CSS "
 "panel is open."
 msgstr "Автоматично презареждане на панела за визуализация не може да бъде деактивирано, докато Live CSS панелът е отворен."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
 msgid "Auto reload preview when text changes in editor"
 msgstr "Автопрезареждане на визуализация, когато текст се промени в редактор"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
 msgid "Disable auto reload of preview"
 msgstr "Забрани автопрезареждане на визуализация"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:744
 msgid "Disable syncing of preview position to editor position"
 msgstr "Забрани синхронизиране на позиция за визуализация към позиция на редактора"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:745
 msgid "Enable syncing of preview position to editor position"
 msgstr "Разреши синхронизиране на позиция за визуализация към позиция на редактора"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:748
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:753
 msgid "Abort file split"
 msgstr "Прекрати разделяне на файл"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:754
 msgid ""
 "Split this file at a specified location.<p>After clicking this button, click"
 " inside the preview panel above at the location you want the file to be "
@@ -43303,43 +43453,43 @@ msgstr "Упътване бърз старт"
 msgid "&Donate to support calibre"
 msgstr "&Дари в подкрепа на calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:274
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:275
 msgid "&Eject connected device"
 msgstr "&Извади свързано устр.-во"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:280
 msgid "Quit calibre"
 msgstr "Напусни calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:287
 msgid "Minimize the calibre window"
 msgstr "Минимизирай прозореца на calibre "
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:295
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:296
 msgid "Clear the current search"
 msgstr "Изчистване на текущото търсене"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:302
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:303
 msgid "Focus the book list"
 msgstr "Фокус на списъка с книги"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
 msgid "Clear the Virtual library"
 msgstr "Изчистване на виртуалната библиотека"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:317
 msgid "Clear the additional restriction"
 msgstr "Изчистване на допълнителното ограничение"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:323
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:324
 msgid "Open the template documentation editor"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:451
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:452
 msgid "Debug mode"
 msgstr "Режим дебъг"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:453
 #, python-format
 msgid ""
 "You have started calibre in debug mode. After you quit calibre, the debug "
@@ -43347,11 +43497,11 @@ msgid ""
 "automatically."
 msgstr "Вие сте стартирали calibre в режим дебъг. След като напуснете calibre, дебъг лога ще бъде наличен във файла: %s<p> Лог файла ще се покаже автоматично."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:507
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
 msgid "Content server changed!"
 msgstr "Сървърът за съдържание е променен!"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:509
 msgid ""
 "calibre 3 comes with a completely re-written Content server. As such any "
 "custom configuration you have for the content server no longer applies. You "
@@ -43359,7 +43509,7 @@ msgid ""
 " the net"
 msgstr "calibre 3 идва с напълно пренаписан сървър за съдържание. По този начин всяка персонализираната конфигурация, която имате за сървъра за съдържание, вече не се прилага. Вие трябва да проверите и обновите вашите настройки в Предпочитания->Споделяне->Споделяне над мрежата"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:545
 #, python-format
 msgid ""
 "Could not start the Content server. Error:\n"
@@ -43367,25 +43517,25 @@ msgid ""
 "%s"
 msgstr "Сървърът за съдържание не може да бъде стартиран. Грешка:\n\n%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:598
 msgid "Hide main window"
 msgstr "Скрий главния прозорец"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:598
 msgid "Show main window"
 msgstr "Покажи главния прозорец"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:894
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:895
 msgid "Failed to update annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:895
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:896
 msgid ""
 "Failed to update annotations in the database for the book being currently "
 "viewed."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:976
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:977
 #, python-format
 msgid ""
 "The library database at %s appears to be corrupted. Do you want calibre to "
@@ -43393,17 +43543,17 @@ msgid ""
 "successful."
 msgstr "Базата данни на библиотеката в %s изглежда повредена. Искате ли calibre да опита автореизграждане? Реизграждането може да не е напълно успешно."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1079
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1080
 msgid "Conversion error"
 msgstr "Грешка при конвертиране"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1100
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1125
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1101
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1126
 #, python-format
 msgid "<p><b>Failed to convert: %s"
 msgstr "<p><b>Неуспешно конвертиране: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1101
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1102
 msgid ""
 "\n"
 "                Many older e-book reader devices are incapable of displaying\n"
@@ -43420,51 +43570,59 @@ msgid ""
 "                        "
 msgstr "\n                Много по-стари четци на е-книги са неспособни да показват\n                EPUB файлове, които имат вътрешни компоненти над определен размер.\n                Следователно, когато конвертирате в EPUB, calibre автоматично се опитва\n                да раздели EPUB на по-малки оразмерени парчета.  За някои\n                файлове, които са големи недиференцирани блокове текст, това\n                разделяне е неуспешно.\n                <p>Може да <b>работите около проблема</b> като или увеличите\n                максималния размер на разделяне под <i>EPUB изход</i> в диалога за конвертиране,\n                или чрез включване на евристична обработка, също и в диалога\n                за конвертиране. Забележете, че ако направите максималния размер на разделянето твърде голям,\n                вашият четец на е-книги може да има проблеми с EPUB.\n                        "
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1115
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1129
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1116
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1130
 msgid "Conversion failed"
 msgstr "Неуспешно конвертиране"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1127
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1128
 msgid "here"
 msgstr "тук"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1140
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1141
 msgid "Recipe Disabled"
 msgstr "Рецептата е деактивирана"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1173
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1174
 msgid "<b>Failed</b>"
 msgstr "<b>Неуспешно</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1228
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1242
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "Има активни задания. Наистина ли искате да напуснете?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1231
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1245
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr " комуникира с устройството!<br>\n                      Напускането може да причини повреда на устройството.<br>\n                      Наистина ли искате да напуснете?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1239
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1250
+msgid "Quit after jobs &finish"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1252
+msgid "Quit anyway"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1267
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr "Актуализации на библиотека в очакване. Наистина ли искате да напуснете?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1240
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1268
 msgid "Library updates waiting"
 msgstr "Чакащи, актуализации на библиотека"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1271
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1299
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr "Изпълнявани плъгини за изключване на база данни. Това може да отнеме няколко секунди..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1328
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1356
 msgid "Shutting down the Content server. This could take a while..."
 msgstr "Изключване на сървъра за съдържание. Това може да отнеме известно време..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1384
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1412
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -45510,13 +45668,13 @@ msgstr "Папки, повишаващи изключение"
 msgid "INVALID CONDITION"
 msgstr "НЕВАЛИДНО СЪСТОЯНИЕ"
 
-#: /__w/calibre/calibre/src/calibre/library/database2.py:119
-#: /__w/calibre/calibre/src/calibre/library/database2.py:128
+#: /__w/calibre/calibre/src/calibre/library/database2.py:117
+#: /__w/calibre/calibre/src/calibre/library/database2.py:126
 #, python-format
 msgid "Path to library too long. Must be less than %d characters."
 msgstr "Пътят към библиотеката е прекалено дълъг. Трябва да съдържа по-малко от %d символа."
 
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1259
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1257
 #, python-format
 msgid " (%s books)"
 msgstr " (%s книги)"
@@ -45798,27 +45956,27 @@ msgstr "Публикуване: {pubdate}"
 msgid "Publisher: {publisher}"
 msgstr "Издател: {publisher}"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:58
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:59
 msgid "Show "
 msgstr "Покажи "
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:73
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:74
 msgid " sorted by "
 msgstr " сорт по"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:130
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:131
 msgid "Change library"
 msgstr "Промяна на библиотека"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:130
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:131
 msgid "Change library to: "
 msgstr "Промяна на библиотека в: "
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:200
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:216
 msgid "Switch to the full interface (non-mobile interface)"
 msgstr "Превключване към пълния интерфейс (не-мобилен интерфейс)"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:203
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:219
 msgid ""
 "The full interface gives you many more features, but it may not work well on"
 " a small screen"
@@ -47787,17 +47945,9 @@ msgstr "&Не"
 msgid "N&o to All"
 msgstr "Н&е за всички"
 
-#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:749
-msgid "Abort"
-msgstr "Прекъсни"
-
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:751
 msgid "Retry"
 msgstr "Повтори"
-
-#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:755
-msgid "Close"
-msgstr "Затвори"
 
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:763
 msgid "Apply"

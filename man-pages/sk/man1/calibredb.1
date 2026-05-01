@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "apríla 10, 2026" "9.7.0" "calibre"
+.TH "CALIBREDB" "1" "mája 01, 2026" "9.8.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,46 +40,50 @@ calibredb príkaz [možnosti] [parametre]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP je rozhranie príkazového riadku pre databázu Calibre. Obsahuje
+niekoľko podpríkazov, ktoré sú popísané nižšie..
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP možno použiť na prácu s databázou Calibre
+určenou cestou alebo s Obsahovým serverom Calibre bežiacom buď na
+miestnom počítači, alebo cez internet. Môžete spustiť
+Obsahový server Calibre pomocou programu  \fBcalibre\-server\fP
+alebo v programe Calibre kliknutím na Pripojiť/zdieľať  → 
+Spustiť Obsahový server\&. Keďže \fBcalibredb\fP môže vykonávať zmeny vo vašich
+knižniciach Calibre, musíte najprv na serveri nastaviť autentifikáciu. Existujú
+dva spôsoby, ako to urobiť:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&. Be careful though,
-because some browsers, primarily Firefox, allow arbitrary websites to also
-access local servers. If you use Firefox, it is better to setup username
-and password, as described below. Local Network Access restriction has
-still not been implemented as of Firefox v149.
+Ak sa plánujete pripojiť len k serveru bežiacemu na tom istom počítači,
+môžete jednoducho použiť voľbu \fB\-\-enable\-local\-write\fP
+Obsahového servera, pre povolenie akémukoľvek programu, vrátane calibredb, bežiacemu na
+lokálnom počítači, vykonávať zmeny vo vašich údajoch Calibre. Pri spúšťaní
+serveru z programu Calibre sa táto voľba nachádza v
+Nastavenia → Zdieľanie cez sieť → Pokročilé\&. Buďte však opatrní,
+pretože niektoré prehliadače, predovšetkým Firefox, umožňujú aj ľubovoľným webovým stránkam
+prístup k lokálnym serverom. Ak používate Firefox, je lepšie nastaviť
+používateľské meno a heslo, ako je popísané nižšie. Obmedzenie prístupu v lokálnej sieti
+ešte nebolo implementované vo verzii Firefoxu v149.
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+Ak chcete povoliť prístup cez internet, mali by ste na serveri
 .UNINDENT
 .UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B nastaviť
+používateľské účty a použiť voľby \fB\-\-username\fP a \fB\-\-password\fP
+pre príkaz \fBcalibredb\fP aby ste mu udelili prístup. Môžete nastaviť
+overovanie používateľov pre \fBcalibre\-server\fP pomocou voľby \fB\-\-enable\-auth\fP
+a pomocou voľby \fB\-\-manage\-users\fP na vytvorenie používateľských účtov.
+Ak spúšťate server z hlavného programu Calibre, použite
+Nastavenia → Zdieľanie cez sieť → Vyžadovať používateľské meno/heslo\&.
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+Ak sa chcete pripojiť k bežiacemu Obsahovému serveru, zadajte URL adresu servera do
+\fB\-\-with\-library\fP, pozrite si dokumentáciu k tejto voľbe pre
+podrobnosti a príklady.
 .INDENT 0.0
 .IP \(bu 2
 GLOBÁLNE VOĹBY
