@@ -29008,7 +29008,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.7.0";
+        CALIBRE_VERSION = "9.8.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -29705,6 +29705,7 @@ return this.__repr__();
             var self = this;
             if (data.color_scheme && data.color_scheme.foreground && data.color_scheme.background) {
                 opts.color_scheme = data.color_scheme;
+                opts.is_dark_theme = !!data.color_scheme.is_dark_theme;
                 apply_colors();
                 set_color_scheme_class();
             }
@@ -53497,9 +53498,9 @@ return this.__repr__();
             var self = this;
             var defaults, val, key;
             defaults = session_defaults();
-            var ρσ_Iter0 = ρσ_Iterable(Object.keys(changes));
-            for (var ρσ_Index0 = 0; ρσ_Index0 < ρσ_Iter0.length; ρσ_Index0++) {
-                key = ρσ_Iter0[ρσ_Index0];
+            var ρσ_Iter12 = ρσ_Iterable(Object.keys(changes));
+            for (var ρσ_Index12 = 0; ρσ_Index12 < ρσ_Iter12.length; ρσ_Index12++) {
+                key = ρσ_Iter12[ρσ_Index12];
                 val = changes[(typeof key === "number" && key < 0) ? changes.length + key : key];
                 if (val === null) {
                     (ρσ_expr_temp = self.data)[(typeof key === "number" && key < 0) ? ρσ_expr_temp.length + key : key] = clone(defaults[(typeof key === "number" && key < 0) ? defaults.length + key : key]);

@@ -73,7 +73,6 @@ from calibre.constants import (
     iswindows,
     isworker,
     isxp,
-    numeric_version,
     plugins_loc,
     sanitize_env_vars,
 )
@@ -93,18 +92,7 @@ from calibre.utils.localization import get_lang, install_qt_translator
 from calibre.utils.resources import get_image_path as I
 from calibre.utils.resources import get_path as P
 from calibre.utils.resources import user_dir
-from calibre_extensions.progress_indicator import icon_from_name, set_icon_theme
-
-try:
-    from calibre_extensions.progress_indicator import icon_from_paths
-except ImportError:  # people running from source
-    def icon_from_paths(either, light, dark):
-        order = (dark, either, light) if is_dark_theme() else (light, either, dark)
-        for x in order:
-            ans = QIcon(x)
-            if ans.is_ok():
-                return ans
-        return QIcon()
+from calibre_extensions.progress_indicator import icon_from_name, icon_from_paths, set_icon_theme
 
 del pqc, geometry_for_restore_as_dict
 timed_print  # for plugin compat
@@ -901,6 +889,10 @@ class FunctionDispatcher(QObject):
 
         QObject.__init__(self, parent)
         self.func = func
+        try:
+            self.func_name = func.__name__
+        except Exception:
+            self.func_name = 'unnamed_function'
         typ = Qt.ConnectionType.QueuedConnection
         if not queued:
             typ = Qt.ConnectionType.AutoConnection if queued is None else Qt.ConnectionType.DirectConnection
@@ -917,10 +909,14 @@ class FunctionDispatcher(QObject):
         return res
 
     def dispatch(self, q, args, kwargs):
-        try:
-            res = self.func(*args, **kwargs)
-        except Exception:
-            res = None
+        res = None
+        if (f := self.func) is not None:
+            try:
+                res = f(*args, **kwargs)
+            except Exception:
+                print(f'Failed dispatching call to function: {self.func_name}', file=sys.stderr)
+                import traceback
+                traceback.print_exc()
         q.put(res)
 
 
@@ -1221,16 +1217,11 @@ def setup_unix_signals(self):
 def setup_to_run_webengine():
     # Allow import of webengine after construction of QApplication on new enough PyQt
     QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
-    try:
-        # this import is needed to have Qt call qt_registerDefaultPlatformBackingStoreOpenGLSupport
-        from qt.core import QOpenGLWidget
-        del QOpenGLWidget
-        from qt.core import QQuickWindow, QSGRendererInterface
-        QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
-    except ImportError:
-        # for people running from source
-        if numeric_version >= (6, 3):
-            raise
+    # this import is needed to have Qt call qt_registerDefaultPlatformBackingStoreOpenGLSupport
+    from qt.core import QOpenGLWidget
+    del QOpenGLWidget
+    from qt.core import QQuickWindow, QSGRendererInterface
+    QQuickWindow.setGraphicsApi(QSGRendererInterface.GraphicsApi.OpenGL)
 
 
 class Application(QApplication):

@@ -1,14 +1,17 @@
 # Translation template file..
 # Copyright (C) 2026 Kovid Goyal
-#
+# 
 # Translators:
 # David Jares <david.jares@me.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008
 # ikanakova, 2023
 # ikanakova, 2023
+# ikanakova, 2023
+# J Nezbeda, 2026
 # J Nezbeda, 2026
 # Kazarp <prazak.dennis@gmail.com>, 2022
 # Patrik Špaňo <pa4k.xyon@gmail.com>, 2022
+# Pavel Sem, 2026
 # Pavel Sem, 2026
 # Kazarp <prazak.dennis@gmail.com>, 2022
 # ScheRas <simon@scheras.eu>, 2017
@@ -18,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/calibre\n"
-"POT-Creation-Date: 2026-04-08 13:53+UTC\n"
+"POT-Creation-Date: 2026-04-29 04:39+UTC\n"
 "PO-Revision-Date: 2014-05-26 04:04+0000\n"
 "Last-Translator: J Nezbeda, 2026\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
@@ -173,7 +176,7 @@ msgstr "Konfigurace poskytovatele AI: {}"
 msgid ""
 "No AI providers found that have the capabilities: {}. Make sure you have not"
 " disabled some AI provider plugins"
-msgstr "Nebyli nalezeni žádní poskytovatelé AI, kteří by měli následující schopnosti: {}. Ujistěte se, že jste nezakázali některé moduly poskytovatelů AI"
+msgstr "Nebyli nalezeni žádní poskytovatelé AI, kteří by měli následující možnosti: {}. Ujistěte se, že jste nezakázali některé moduly poskytovatelů AI"
 
 #: /__w/calibre/calibre/src/calibre/ai/config.py:58
 msgid "No AI providers"
@@ -232,6 +235,7 @@ msgstr "Procházet"
 #: /__w/calibre/calibre/src/calibre/ai/github/config.py:57
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:48
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:434
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:100
 msgid "Model for &text tasks:"
 msgstr "Model pro &textové úlohy:"
 
@@ -288,6 +292,7 @@ msgstr "K použití Google AI je vyžadován klíč API"
 #: /__w/calibre/calibre/src/calibre/ai/google/config.py:39
 #: /__w/calibre/calibre/src/calibre/ai/open_router/config.py:395
 #: /__w/calibre/calibre/src/calibre/ai/openai/config.py:39
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:56
 msgid "API &key:"
 msgstr "&Klíč API:"
 
@@ -336,6 +341,7 @@ msgstr "&URL adresa LM Studio:"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:38
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:39
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:68
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/behavior_ui.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/cover_view_ui.py:109
 #: /__w/calibre/calibre/src/calibre/gui2/tts/config.py:92
@@ -344,6 +350,7 @@ msgstr " sekund"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:40
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:41
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:70
 msgid "&Timeout:"
 msgstr "Časový &limit:"
 
@@ -352,10 +359,12 @@ msgid "Controls randomness. 0 is deterministic, higher is more creative."
 msgstr "Ovládá náhodnost. 0 je deterministické, vyšší hodnoty jsou kreativnější."
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:47
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:77
 msgid "T&emperature:"
 msgstr "T&eplota:"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:71
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:96
 msgid "&Refresh models"
 msgstr "&Obnovit modely"
 
@@ -364,11 +373,13 @@ msgid "&Model:"
 msgstr "&Model:"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:113
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:125
 #, python-brace-format
 msgid "Found {} models. e.g.: {}"
 msgstr "Nalezeno {} modelů. Např.: {}"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:115
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:127
 msgid " (and more)"
 msgstr "(a další)"
 
@@ -383,6 +394,7 @@ msgstr "Připojení selhalo:{}"
 
 #: /__w/calibre/calibre/src/calibre/ai/lm_studio/config.py:151
 #: /__w/calibre/calibre/src/calibre/ai/ollama/config.py:110
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:190
 msgid "No model specified"
 msgstr "Není zadán žádný model"
 
@@ -756,6 +768,67 @@ msgid ""
 "information for queries, where possible"
 msgstr "Pokud je povoleno, OpenAI pro dotazy použije webové vyhledávání k poskytování přesných a aktuálních informací, kde je to možné."
 
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/__init__.py:11
+msgid ""
+"Generic OpenAI compatible AI services. Use this to connect calibre to self-"
+"hosted or third-party services that implement the OpenAI chat completions "
+"API."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:40
+msgid ""
+"Connect calibre to any self-hosted or third-party service that implements "
+"the OpenAI compatible <code>/v1/chat/completions</code> API. This is useful "
+"for gateways, local servers and other services that are not listed as "
+"dedicated providers."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:49
+#, python-brace-format
+msgid "For example: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:50
+msgid "API &URL:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:55
+msgid "Optional. Sent as Authorization: Bearer <key>"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:61
+msgid "Optional HTTP headers, one per line, in the format: Header-Name: Value"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:62
+msgid "HTTP &headers:"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:76
+msgid "Controls randomness. Lower values are more deterministic."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:131
+msgid "The server responded, but returned no models."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:134
+#, python-brace-format
+msgid "Failed to refresh models: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:187
+msgid "No API URL"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:187
+msgid "You must specify the URL of the OpenAI compatible API endpoint."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/ai/openai_compatible/config.py:190
+msgid "You must specify a model ID to use for text based tasks."
+msgstr ""
+
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:329
 #: /__w/calibre/calibre/src/calibre/ai/utils.py:344
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:89
@@ -948,7 +1021,7 @@ msgstr "Nedělá vůbec nic"
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/main.py:486
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:285
 #: /__w/calibre/calibre/src/calibre/ebooks/odt/input.py:287
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:989
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1003
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/iterator/spine.py:92
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:309
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/parse_utils.py:312
@@ -969,8 +1042,8 @@ msgstr "Nedělá vůbec nic"
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/image_writer.py:21
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/render/links.py:143
 #: /__w/calibre/calibre/src/calibre/ebooks/txt/processor.py:146
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:954
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:962
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:950
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:958
 #: /__w/calibre/calibre/src/calibre/gui2/actions/add.py:357
 #: /__w/calibre/calibre/src/calibre/gui2/actions/edit_metadata.py:887
 #: /__w/calibre/calibre/src/calibre/gui2/add.py:354
@@ -1033,14 +1106,14 @@ msgstr "Nedělá vůbec nic"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/ui.py:719
 #: /__w/calibre/calibre/src/calibre/library/catalogs/epub_mobi_builder.py:934
 #: /__w/calibre/calibre/src/calibre/library/database.py:928
-#: /__w/calibre/calibre/src/calibre/library/database2.py:622
-#: /__w/calibre/calibre/src/calibre/library/database2.py:630
-#: /__w/calibre/calibre/src/calibre/library/database2.py:640
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2319
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2472
-#: /__w/calibre/calibre/src/calibre/library/database2.py:2925
+#: /__w/calibre/calibre/src/calibre/library/database2.py:620
+#: /__w/calibre/calibre/src/calibre/library/database2.py:628
+#: /__w/calibre/calibre/src/calibre/library/database2.py:638
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2317
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2470
+#: /__w/calibre/calibre/src/calibre/library/database2.py:2923
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3554
 #: /__w/calibre/calibre/src/calibre/library/database2.py:3556
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3558
 #: /__w/calibre/calibre/src/calibre/srv/content.py:179
 #: /__w/calibre/calibre/src/calibre/srv/content.py:180
 #: /__w/calibre/calibre/src/calibre/srv/tests/http.py:97
@@ -1123,440 +1196,440 @@ msgstr "Knihovna zavřena"
 msgid "AI provider"
 msgstr "Poskytovatel AI"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:25
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:26
 msgid ""
 "Create a PMLZ archive containing the PML file and all images in the folder "
 "pmlname_img or images. This plugin is run every time you add a PML file to "
 "the library."
 msgstr "Vytvořit archiv PMLZ obsahující soubor PML a všechny obrázky ze složky pmlname_img nebo images. Tento modul je spuštěn pokaždé, když přidáte soubor PML do knihovny."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:56
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:57
 msgid ""
 "Create a TXTZ archive when a TXT file is imported containing Markdown or "
 "Textile references to images. The referenced images as well as the TXT file "
 "are added to the archive."
 msgstr "Vytvořit archiv TXTZ, když importovaný soubor TXT obsahuje Markdown nebo Textile odkazy na obrázky. Odkazované obrázky i soubor TXT jsou přidány do archivu."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:111
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:112
 msgid "Extract cover from comic files"
 msgstr "Vytáhnout obálky ze souborů s komiksy"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:165
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:189
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:200
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:211
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:223
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:235
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:246
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:257
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:268
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:279
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:290
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:301
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:312
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:324
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:337
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:360
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:372
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:383
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:395
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:406
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:418
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:166
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:190
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:201
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:212
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:224
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:236
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:258
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:269
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:280
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:291
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:302
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:325
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:338
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:361
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:373
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:384
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:396
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:407
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:419
 #, python-format
 msgid "Read metadata from %s files"
 msgstr "Načíst metadata ze souborů %s"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:176
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:177
 msgid "Read metadata from EPUB and KEPUB files"
 msgstr "Číst metadata ze souborů EPUB a KEPUB"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:349
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:350
 msgid "Read metadata from e-books in RAR archives"
 msgstr "Načíst metadata z e-knih v archivech RAR"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:430
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:431
 msgid "Read metadata from e-books in ZIP archives"
 msgstr "Načíst metadata z e-knih v archivech ZIP"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:449
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:450
 msgid "Set metadata in EPUB and KEPUB files"
 msgstr "Nastavit metadata v souborech EPUB a KEPUB"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:461
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:462
 #, python-brace-format
 msgid ""
 "Enter {0} below to have the EPUB metadata writer plugin not add cover images"
 " to EPUB files that have no existing cover image."
 msgstr "Níže zadejte {0}, aby modul zápisu metedat EPUB nepřidával obrázky obálek do souborů EPUB, které nemají žádný obrázek obálky."
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:469
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:492
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:503
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:527
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:539
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:550
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:470
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:493
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:504
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:528
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:540
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:551
 #, python-format
 msgid "Set metadata in %s files"
 msgstr "Nastavit metadata v souborech %s"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:480
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:515
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:562
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:574
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:585
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:481
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:516
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:563
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:575
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:586
 #, python-format
 msgid "Set metadata from %s files"
 msgstr "Nastavit metadata ze souborů %s"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:864
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:865
 msgid "Add books to calibre or the connected device"
 msgstr "Přidat knihy do Calibre nebo připojeného zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:870
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:871
 msgid "Fetch annotations from a connected Kindle (experimental)"
 msgstr "Načíst anotace z připojeného Kindle (experimentální)"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:876
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:877
 msgid "Generate a catalog of the books in your calibre library"
 msgstr "Vytvořit katalog knih v knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:882
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:883
 msgid "Convert books to various e-book formats"
 msgstr "Převést knihy do různých formátů e-knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:888
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:889
 msgid "Fine tune your e-books"
 msgstr "Vyladit vaše e-knihy"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:894
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:895
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_annots.py:15
 msgid "Browse highlights and bookmarks from all books in the library"
 msgstr "Procházet zvýraznění a záložky ze všech knih v knihovně"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:900
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:901
 #: /__w/calibre/calibre/src/calibre/gui2/actions/browse_notes.py:12
 msgid "Browse notes for authors, tags, etc. in the library"
-msgstr "Procházek poznámky pro autory, štítky atd. v knihovně"
+msgstr "Procházet poznámky pro autory, štítky atd. v knihovně"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:906
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:907
 #: /__w/calibre/calibre/src/calibre/gui2/actions/fts.py:12
 msgid "Search the full text of all books in the calibre library"
 msgstr "Vyhledávat v plném textu všech knih v knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:912
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:913
 #: /__w/calibre/calibre/src/calibre/gui2/actions/toc_edit.py:73
 msgid "Edit the Table of Contents in your books"
 msgstr "Upravit obsah v knihách"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:918
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:919
 msgid "Delete books from your calibre library or connected device"
 msgstr "Odstranit knihy z knihovny Calibre nebo připojeného zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:924
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:925
 msgid ""
 "Embed updated metadata into the actual book files in your calibre library"
 msgstr "Vložit aktualizovaná metadata do skutečných soubrů knih ve vaší knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:930
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:931
 msgid "Edit the metadata of books in your calibre library"
 msgstr "Upravit metadata knih v knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:936
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:937
 msgid "Read books in your calibre library"
 msgstr "Číst knihy v knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:942
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:943
 msgid "Discuss books in your calibre library with AI"
 msgstr "Diskutujte o knihách ve své knihovně Calibre s AI"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:948
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:949
 msgid "Download news from the internet in e-book form"
 msgstr "Stáhnout zprávy z internetu ve formě e-knihy"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:954
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:955
 msgid "Show a list of related books quickly"
 msgstr "Rychle zobrazit seznam souvisejících knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:960
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:961
 #: /__w/calibre/calibre/src/calibre/gui2/actions/tag_mapper.py:14
 msgid "Filter/transform the tags for books in the library"
 msgstr "Filtrovat nebo převést štítky pro knihy v knihovně"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:966
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:967
 #: /__w/calibre/calibre/src/calibre/gui2/actions/author_mapper.py:15
 msgid "Transform the authors for books in the library"
 msgstr "Převést autory pro knihy v knihovně"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:972
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:973
 msgid "Show an editor for testing templates"
 msgstr "Zobrazit editor pro testování šablon"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:978
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:979
 msgid ""
 "Show a dialog for creating and managing template functions and stored "
 "templates"
 msgstr "Zobrazit dialogové okno pro vytváření a správu funkcí šablony a uložených šablon"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:984
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:985
 msgid "Export books from your calibre library to the hard disk"
 msgstr "Exportovat knihy z knihovny Calibre na pevný disk"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:990
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:991
 msgid "Show Book details in a separate popup"
 msgstr "Zobrazit Podrobnosti o knize v samostatném okně"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:996
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:997
 #: /__w/calibre/calibre/src/calibre/gui2/actions/restart.py:15
 msgid "Restart calibre"
 msgstr "Restartovat Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1002
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1003
 msgid "Open the folder that contains the book files in your calibre library"
 msgstr "Otevřít složku obsahující soubory knih v knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1009
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1010
 msgid "Auto scroll through the list of books"
 msgstr "Automaticky posouvat seznamem knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1015
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1016
 msgid "Send books to the connected device"
 msgstr "Odeslat knihy do připojeného zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1021
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1022
 msgid ""
 "Send books via email or the web. Also connect to folders on your computer as"
 " if they are devices"
 msgstr "Odeslat knihy prostřednictvím e-mailu nebo webu. Také připojit ke složkám ve vašem počítači, jako by byly zařízeními"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1028
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1029
 #: /__w/calibre/calibre/src/calibre/gui2/actions/help.py:18
 msgid "Browse the calibre User Manual"
 msgstr "Procházet uživatelskou příručku Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1034
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1035
 msgid "Customize calibre"
 msgstr "Přizpůsobit Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1040
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1041
 msgid "Easily find books similar to the currently selected one"
 msgstr "Snadno najít knihy podobné právě vybrané knize"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1046
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1047
 msgid ""
 "Switch between different calibre libraries and perform maintenance on them"
 msgstr "Přepnout mezi různými knihovnami Calibre a provést na nich údržbu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1053
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1054
 msgid "Copy books from the device to your calibre library"
 msgstr "Kopírovat knihy ze zařízení do knihovny Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1059
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1060
 msgid "Edit the collections in which books are placed on your device"
 msgstr "Upravit kolekce, ve kterých jsou knihy umístěny ve vašem zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1065
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1066
 msgid "Match book on the devices to books in the library"
 msgstr "Porovnat knihu v zařízeních s knihami v knihovně"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1071
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1072
 #: /__w/calibre/calibre/src/calibre/gui2/actions/match_books.py:46
 msgid "Show the book in the calibre library that matches this book"
 msgstr "Zobrazit knihu v knihovně Calibre, která odpovídá této knize"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1077
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1078
 msgid "Copy a book from one calibre library to another"
 msgstr "Kopírovat knihu z jedné knihovny Calibre do jiné"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1083
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1084
 msgid "Edit e-books in the EPUB or AZW3 formats"
 msgstr "Upravit e-knihy ve formátech EPUB nebo AZW3"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1089
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1090
 msgid "Make small changes to EPUB or HTMLZ files in your calibre library"
 msgstr "Udělat malé změny v souborech EPUB nebo HTMLZ v knihovně Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1095
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1096
 msgid ""
 "Find the next or previous match when searching in your calibre library in "
 "highlight mode"
 msgstr "Najít další nebo předchozí shodu při vyhledávání v knihovně Calibre v režimu zvýraznění"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1102
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1103
 msgid "Choose a random book from your calibre library"
 msgstr "Vybrat náhodnou knihu z knihovny Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1108
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1109
 #: /__w/calibre/calibre/src/calibre/gui2/actions/sort.py:65
 msgid "Sort the list of books"
 msgstr "Seřadit seznam knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1114
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1115
 msgid "Temporarily mark books"
 msgstr "Dočasně označit knihy"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1121
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1122
 msgid "Manage tag browser categories"
 msgstr "Spravovat kategorie prohlížeče štítků"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1128
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1129
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:14
 #: /__w/calibre/calibre/src/calibre/gui2/actions/saved_searches.py:29
 msgid "Show a menu of saved searches"
 msgstr "Zobrazit nabídku uložených hledání"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1135
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1136
 msgid "Show a menu of actions to change calibre's layout"
 msgstr "Zobrazit nabídku akcí pro změnu rozložení Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1142
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1143
 msgid "Open the context menu for the column"
 msgstr "Otevřít místní nabídku pro sloupec"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1149
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1150
 msgid "Open a menu showing all installed GUI actions"
 msgstr "Otevřít nabídku zobrazující všechny nainstalované akce grafického rozhraní"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1155
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1156
 #: /__w/calibre/calibre/src/calibre/gui2/actions/virtual_library.py:13
 msgid "Change the current Virtual library"
 msgstr "Změnit aktuální Virtuální knihovnu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1162
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1163
 msgid "Search for books from different book sellers"
 msgstr "Hledat knihy od různých knihkupců"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1179
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1180
 msgid "Open a template dialog to define and edit column tooltips"
 msgstr "Otevřít dialogové okno šablony pro definování a úpravu popisů sloupců"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1185
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1186
 msgid "Get new calibre plugins or update your existing ones"
 msgstr "Získat nové moduly Calibre nebo aktualizovat stávající"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1210
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1211
 #: /__w/calibre/calibre/src/calibre/gui2/convert/look_and_feel.py:20
 msgid "Look & feel"
 msgstr "Vzhled a chování"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1212
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1225
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1237
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1249
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1262
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1213
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1226
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1238
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1250
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1263
 msgid "Interface"
 msgstr "Rozhraní"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1216
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1217
 msgid "Adjust the look and feel of the calibre interface to suit your tastes"
 msgstr "Upravit vzhled a chování rozhraní Calibre, aby vyhovovalo vašemu vkusu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1223
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1224
 msgid "Behavior"
 msgstr "Chování"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1229
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1230
 msgid "Change the way calibre behaves"
 msgstr "Změnit způsob chování Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1235
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1236
 #: /__w/calibre/calibre/src/calibre/gui2/library/views.py:677
 msgid "Add your own columns"
 msgstr "Přidat své vlastní sloupce"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1241
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1242
 msgid "Add/remove your own columns to the calibre book list"
 msgstr "Přidat nebo odebrat své vlastní sloupce v seznamu knih Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1247
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1248
 msgid "Toolbars & menus"
 msgstr "Panely nástrojů a nabídky"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1253
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1254
 msgid ""
 "Customize the toolbars and context menus, changing which actions are "
 "available in each"
 msgstr "Přizpůsobit panely nástrojů a místní nabídky, změnit dostupnost akcí"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1260
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1261
 msgid "Searching"
 msgstr "Vyhledávání"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1266
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1267
 msgid "Customize the way searching for books works in calibre"
 msgstr "Přizpůsobit způsob vyhledávání knih v Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1272
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1273
 msgid "Input options"
 msgstr "Volby vstupu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1274
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1291
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1303
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1275
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1292
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1304
 msgid "Conversion"
 msgstr "Převod"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1278
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1279
 msgid "Set conversion options specific to each input format"
 msgstr "Nastavit volby převodu konkrétní pro jednotlivé vstupní formáty"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1289
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1290
 msgid "Common options"
 msgstr "Běžné volby"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1295
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1296
 msgid "Set conversion options common to all formats"
 msgstr "Nastavit volby převodu společné pro všechny formáty"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1301
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1302
 msgid "Output options"
 msgstr "Volby výstupu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1307
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1308
 msgid "Set conversion options specific to each output format"
 msgstr "Nastavit volby převodu konkrétní pro jednotlivé výstupní formáty"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1313
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1314
 msgid "Adding books"
 msgstr "Přidávání knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1315
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1328
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1341
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1354
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1316
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1329
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1342
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1355
 msgid "Import/export"
 msgstr "Import a export"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1319
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1320
 msgid "Control how calibre reads metadata from files when adding books"
 msgstr "Určit, jak Calibre čte metadata ze souborů při přidávání knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1326
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1327
 msgid "Saving books to disk"
 msgstr "Ukládání knih na disk"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1332
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1333
 msgid ""
 "Control how calibre exports files from its database to disk when using Save "
 "to disk"
 msgstr "Určit, jak Calibre exportuje soubory ze své databáze na disk při použití Uložit na disk"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1339
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1340
 msgid "Sending books to devices"
 msgstr "Odesílání knih do zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1345
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1346
 msgid "Control how calibre transfers files to your e-book reader"
 msgstr "Určit, jak Calibre přenáší soubory do vaší čtečky e-knih"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1352
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1353
 msgid "Metadata plugboards"
 msgstr "Zásuvné panely metadat"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1358
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1359
 msgid "Change metadata fields before saving/sending"
 msgstr "Změnit pole metadat před uložením nebo odesláním"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1364
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1365
 #: /__w/calibre/calibre/src/calibre/gui2/actions/show_stored_templates.py:11
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:174
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/template_functions.py:296
@@ -1572,99 +1645,99 @@ msgstr "Změnit pole metadat před uložením nebo odesláním"
 msgid "Template functions"
 msgstr "Funkce šablony"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1366
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1430
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1443
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1455
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1467
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1367
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1431
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1444
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1456
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1468
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1200
 msgid "Advanced"
 msgstr "Rozšířené"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1370
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1371
 msgid "Create your own template functions"
 msgstr "Vytvořit vlastní funkce šablony"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1376
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1377
 msgid "Sharing books by email"
 msgstr "Sdílení knih e-mailem"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1378
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1391
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1405
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1417
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1379
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1392
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1406
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1418
 msgid "Sharing"
 msgstr "Sdílení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1382
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1383
 msgid ""
 "Setup sharing of books via email. Can be used for automatic sending of "
 "downloaded news to your devices"
 msgstr "Natavit sdílení knih e-mailem. Může být použito pro automatické odesílání stažených zpráv do vašich zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1389
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1390
 msgid "Sharing over the net"
 msgstr "Sdílení po síti"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1395
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1396
 msgid ""
 "Setup the calibre Content server which will give you access to your calibre "
 "library from anywhere, on any device, over the internet"
 msgstr "Nastavit Server s obsahem Calibre, který vám poskytne přístup k vaší knihovně Calibre odkudkoliv, v jakémkoliv zařízení, přes internet"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1403
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1404
 msgid "Metadata download"
 msgstr "Stahování metadat"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1409
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1410
 msgid "Control how calibre downloads e-book metadata from the net"
 msgstr "Určit, jak Calibre stahuje metadata e-knih z internetu"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1415
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1416
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:491
 msgid "Ignored devices"
 msgstr "Ignorovaná zařízení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1421
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1422
 msgid ""
 "Control which devices calibre will ignore when they are connected to the "
 "computer."
 msgstr "Nastavit, která zařízení bude Calibre ignorovat, když budou připojena k počítači"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1428
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1429
 #: /__w/calibre/calibre/src/calibre/gui2/actions/all_actions.py:169
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.py:85
 msgid "Plugins"
 msgstr "Moduly"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1434
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1435
 msgid "Add/remove/customize various bits of calibre functionality"
 msgstr "Přidat, odebrat nebo přizpůsobit různé funkce Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1441
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1442
 msgid "Tweaks"
 msgstr "Vylepšení"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1447
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1448
 msgid "Fine tune how calibre behaves in various contexts"
 msgstr "Vyladit chování Calibre v různých situacích"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1453
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1454
 #: /__w/calibre/calibre/src/calibre/gui2/keyboard.py:600
 msgid "Shortcuts"
 msgstr "Klávesové zkratky"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1459
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1460
 msgid "Customize the keyboard shortcuts used by calibre"
 msgstr "Přizpůsobit klávesové zkratky používané v Calibre"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1465
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1466
 #: /__w/calibre/calibre/src/calibre/devices/usbms/device.py:165
 msgid "Miscellaneous"
 msgstr "Různé"
 
-#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1471
+#: /__w/calibre/calibre/src/calibre/customize/builtins.py:1472
 msgid "Miscellaneous advanced configuration"
 msgstr "Různá rozšířená nastavení"
 
@@ -2002,8 +2075,8 @@ msgstr "Zakázat uvedený modul"
 #: /__w/calibre/calibre/src/calibre/db/adding.py:287
 #: /__w/calibre/calibre/src/calibre/db/adding.py:288
 #: /__w/calibre/calibre/src/calibre/db/tests/legacy.py:411
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3370
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3388
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3368
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3386
 msgid "Catalog"
 msgstr "Katalog"
 
@@ -2026,9 +2099,9 @@ msgstr "Katalog"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/scheduler.py:702
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1924
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/model.py:1926
-#: /__w/calibre/calibre/src/calibre/library/database2.py:384
-#: /__w/calibre/calibre/src/calibre/library/database2.py:397
-#: /__w/calibre/calibre/src/calibre/library/database2.py:3413
+#: /__w/calibre/calibre/src/calibre/library/database2.py:382
+#: /__w/calibre/calibre/src/calibre/library/database2.py:395
+#: /__w/calibre/calibre/src/calibre/library/database2.py:3411
 #: /__w/calibre/calibre/src/calibre/library/field_metadata.py:121
 msgid "News"
 msgstr "Zprávy"
@@ -2049,12 +2122,12 @@ msgid "Path to library too long. It must be less than %d characters."
 msgstr "Cesta ke knihovně je příliš dlouhá. Musí to být méně než %d znaků."
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:603
-#: /__w/calibre/calibre/src/calibre/library/database2.py:210
+#: /__w/calibre/calibre/src/calibre/library/database2.py:208
 msgid "restored preference "
 msgstr "obnovené předvolby"
 
 #: /__w/calibre/calibre/src/calibre/db/backend.py:609
-#: /__w/calibre/calibre/src/calibre/library/database2.py:215
+#: /__w/calibre/calibre/src/calibre/library/database2.py:213
 #: /__w/calibre/calibre/src/calibre/library/restore.py:234
 msgid "creating custom column "
 msgstr "vytváření vlastních sloupců "
@@ -2093,7 +2166,7 @@ msgstr "Dokončeno"
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1239
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1287
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:848
-#: /__w/calibre/calibre/src/calibre/library/database2.py:512
+#: /__w/calibre/calibre/src/calibre/library/database2.py:510
 msgid "Saved searches"
 msgstr "Uložená hledání"
 
@@ -2112,7 +2185,7 @@ msgstr "Uložená hledání"
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:280
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_icon_rules.py:391
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1098
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1096
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1770
 #: /__w/calibre/calibre/src/calibre/utils/formatter_functions.py:1836
 msgid "Yes"
@@ -2946,7 +3019,7 @@ msgid ""
 msgstr "%prog saved_searches [options] (list|add|remove)\n\nSpravovat uložená hledání umístěná v této databázi.\nPokud se pokusíte přidat dotaz s názvem, který již existuje,\nbude nahrazen.\n\nSyntaxe pro přidání:\n\n%prog saved_searches add search_name search_expression\n\nSyntaxe pro odebrání:\n\n%prog saved_searches remove search_name"
 
 #: /__w/calibre/calibre/src/calibre/db/cli/cmd_saved_searches.py:58
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:552
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:567
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1063
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/manage_fonts.py:108
 msgid "Name:"
@@ -3231,19 +3304,19 @@ msgid "On Device"
 msgstr "V zařízení"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:452
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1254
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1252
 msgid "Main"
 msgstr "Hlavní"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:454
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:96
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1256
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1254
 msgid "Card A"
 msgstr "Karta A"
 
 #: /__w/calibre/calibre/src/calibre/db/fields.py:456
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:98
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1258
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1256
 msgid "Card B"
 msgstr "Karta B"
 
@@ -3429,7 +3502,7 @@ msgstr "Rozpoznána rekurzivní skupina dotazů: {0}"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:683
 msgid "Templates are not allowed in search expressions"
-msgstr ""
+msgstr "Šablony nejsou povolené ve vyhledávacím výrazu"
 
 #: /__w/calibre/calibre/src/calibre/db/search.py:694
 #, python-brace-format
@@ -7867,7 +7940,7 @@ msgid ""
 msgstr "Pokud vlastnost {property} {match_type} {query}\n{action}"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:71
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1422
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/edit_authors_dialog.py:331
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:753
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1232
@@ -7878,7 +7951,7 @@ msgstr "Poznámky"
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/to_html.py:410
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/links.py:170
 #: /__w/calibre/calibre/src/calibre/ebooks/mobi/writer8/toc.py:12
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1396
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:666
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/transforms/htmltoc.py:13
 #: /__w/calibre/calibre/src/calibre/ebooks/pdf/html_writer.py:795
@@ -7894,7 +7967,7 @@ msgstr "Obsah"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/docx/writer/images.py:243
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/opf2.py:1754
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1394
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1408
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.py:415
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.py:559
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single.py:1292
@@ -8412,7 +8485,7 @@ msgstr "DRM"
 #: /__w/calibre/calibre/src/calibre/ebooks/metadata/book/base.py:758
 #: /__w/calibre/calibre/src/calibre/gui2/device.py:963
 #: /__w/calibre/calibre/src/calibre/gui2/library/models.py:955
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:344
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:350
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/plugins.py:356
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/check.py:196
 #: /__w/calibre/calibre/src/calibre/utils/ipc/job.py:60
@@ -9086,71 +9159,71 @@ msgstr "Tento soubor MOBI obsahuje jak data KF8, tak starší Mobi6. Vylepšení
 msgid "No details available"
 msgstr "Nejsou dostupné žádné podrobnosti"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1395
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:991
 msgid "Title page"
 msgstr "Titulní stránka"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1397
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1411
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:993
 msgid "Index"
 msgstr "Rejstřík"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1398
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1412
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:994
 msgid "Glossary"
 msgstr "Slovník pojmů"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1399
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1413
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:995
 msgid "Acknowledgements"
 msgstr "Poděkování"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1400
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1414
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:996
 msgid "Bibliography"
 msgstr "Bibliografie"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1401
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1415
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:997
 msgid "Colophon"
 msgstr "Tiráž"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1402
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1416
 msgid "Copyright"
 msgstr "Autorská práva"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1403
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1417
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1000
 msgid "Dedication"
 msgstr "Věnování"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1404
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1418
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1001
 msgid "Epigraph"
 msgstr "Moto"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1405
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1419
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1002
 msgid "Foreword"
 msgstr "Předmluva"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1406
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1420
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1003
 msgid "List of illustrations"
 msgstr "Seznam Ilustrací"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1407
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1421
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1004
 msgid "List of tables"
 msgstr "Seznam tabulek"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1409
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1423
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:1006
 msgid "Preface"
 msgstr "Úvod"
 
-#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1410
+#: /__w/calibre/calibre/src/calibre/ebooks/oeb/base.py:1424
 msgid "Main text"
 msgstr "Hlavní text"
 
@@ -10060,21 +10133,21 @@ msgstr "Obrázky jsou již plně optimalizovány"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/images.py:177
 msgid "No unused images found"
-msgstr ""
+msgstr "Nenalezeny žádné nepoužívané obrázky"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/images.py:181
 #, python-brace-format
 msgid "Removing unused image: {}"
-msgstr ""
+msgstr "Odebírání nepoužívaného obrázku: {}"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/images.py:186
 #, python-brace-format
 msgid "Removed one unused image"
 msgid_plural "Removed {} unused images"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Odebrán {} nepoužívaný obrázek"
+msgstr[1] "Odebrány {} nepoužívané obrázky"
+msgstr[2] "Odebráno {} nepoužívaných obrázků"
+msgstr[3] "Odebrány {} nepoužívané obrázky"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:58
 #, python-format, python-brace-format
@@ -10273,7 +10346,7 @@ msgstr "Odebírání nepoužívaných pravidel CSS"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:283
 msgid "Removing unused images"
-msgstr ""
+msgstr "Odebírání nepoužívaných obrázků: {}"
 
 #: /__w/calibre/calibre/src/calibre/ebooks/oeb/polish/main.py:289
 msgid "Losslessly compressing images"
@@ -10552,163 +10625,163 @@ msgstr "Obsah:"
 msgid "[Image: {}]"
 msgstr "[Image: {}]"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:183
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:171
 #: /__w/calibre/calibre/src/calibre/gui2/icon_theme.py:670
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:44
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/main_interface.py:133
 msgid "Default icons"
 msgstr "Výchozí ikony"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:326
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:314
 msgid "Show more buttons"
 msgstr "Zobrazit více tlačítek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:587
 msgid "Send file to storage card instead of main memory by default"
 msgstr "Odesílat soubory na pamětovou kartu namísto hlavní paměti"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:589
 msgid "Confirm before deleting"
 msgstr "Potvrzení před odstraněním"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:591
 msgid "Main window geometry"
 msgstr "Uspořádání hlavního okna"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:593
 msgid "Notify when a new version is available"
 msgstr "Upozornit na dostupnost nové verze"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:607
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:595
 msgid "Use Roman numerals for series number"
 msgstr "Používat římské číslice pro číslo série"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:597
 msgid "Sort tags list by name, popularity, or rating"
 msgstr "Seřadit seznam štítků podle jména, oblíbenost nebo hodnocení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:599
 msgid "Match tags by any or all."
 msgstr "Porovnat štítky podle kteréhokoliv nebo všech."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:601
 msgid "Number of covers to show in the cover browsing mode"
 msgstr "Počet zobrazených obálek v režimu procházení obálek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:615
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:603
 msgid "Defaults for conversion to LRF"
 msgstr "Výchozí nastavení pro převod do LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:617
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:605
 msgid "Options for the LRF e-book viewer"
 msgstr "Volby pro prohlížeč e-knih LRF"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:621
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:609
 msgid "Formats that are viewed using the internal viewer"
 msgstr "Formáty zobrazované pomocí interního prohlížeče"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:623
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:611
 msgid "Columns to be displayed in the book list"
 msgstr "Sloupce zobrazované v seznamu knih"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:612
 msgid "Automatically launch Content server on application startup"
 msgstr "Automaticky spustit Server s obsahem po spuštění aplikace"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:625
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:613
 msgid "Oldest news kept in database"
 msgstr "Nejstarší zprávy ponechané v databázi"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:626
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:614
 msgid "Show system tray icon"
 msgstr "Zobrazit ikonu hlavního panelu systému"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:616
 msgid "Upload downloaded news to device"
 msgstr "Odeslat stažené zprávy do zařízení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:618
 msgid "Delete news books from library after uploading to device"
 msgstr "Odstranit nové knihy z knihovny po odeslání do zařízení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:620
 msgid ""
 "Show the cover flow in a separate window instead of in the main calibre "
 "window"
 msgstr "Zobrazit tok obálek v samostatném okně namísto hlavního okna Calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:634
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:622
 msgid "Disable notifications from the system tray icon"
 msgstr "Zakázat oznámení od ikony hlavního panelu systému"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:636
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:624
 msgid "Default action to perform when the \"Send to device\" button is clicked"
 msgstr "Výchozí provedená akce při kliknutí na tlačítko „Odeslat do zařízení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:641
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:629
 msgid ""
 "Start searching as you type. If this is disabled then search will only take "
 "place when the Enter key is pressed."
 msgstr "Spustit hledání během psaní. Pokud je zakázáno, bude se hledat pouze při stisknutí klávesy Enter."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:644
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:632
 msgid ""
 "When searching, show all books with search results highlighted instead of "
 "showing only the matches. You can use the N or F3 keys to go to the next "
 "match."
 msgstr "Při hledání zobrazit všechny knihy se zvýrazněnými výsledky hledání namísto pouhého zobrazení shod. Můžete použít klávesy N nebo F3 pro přejití na další shodu."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:659
 msgid ""
 "Maximum number of simultaneous conversion/news download jobs. This number is"
 " twice the actual value for historical reasons."
 msgstr "Maximální počet souběžných úloh převodu nebo stahování zpráv. Z historických důvodů je toto číslo je dvojnásobek skutečné hodnoty."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:662
 msgid "Download social metadata (tags/rating/etc.)"
 msgstr "Stáhnout sociální metadata (štítky, hodnocení atd.)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:664
 msgid "Overwrite author and title with new metadata"
 msgstr "Přepsat autora a název novými metadaty"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:678
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:666
 msgid "Automatically download the cover, if available"
 msgstr "Automaticky stáhnout obálku, pokud je dostupná"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:680
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:668
 msgid "Limit max simultaneous jobs to number of CPUs"
 msgstr "Omezit maximální počet souběžných úloh na počet procesorů"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:670
 msgid ""
 "The layout of the user interface. Wide has the Book details panel on the "
 "right and narrow has it at the bottom."
 msgstr "Rozložení uživatelského rozhraní. Široké má panel Podrobnosti o knize vpravo a úzké ho má dole."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:686
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:674
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/look_feel_tabs/tb_display_ui.py:145
 msgid "Show the average rating per item indication in the Tag browser"
 msgstr "Zobrazit průměrné hodnocení na položku v Prohlížeči štítků"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:688
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:676
 msgid "Disable UI animations"
 msgstr "Zakázat animace uživatelského rozhraní"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:693
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:681
 msgid "Tag browser categories not to display"
 msgstr "Kategorie Prohlížeče štítků, které nezobrazovat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:757
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:745
 #: /__w/calibre/calibre/src/calibre/gui2/actions/embed.py:88
 msgid "WARNING:"
 msgstr "VAROVÁNÍ:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:768
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:756
 msgid "ERROR:"
 msgstr "CHYBA:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:785
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:773
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/confirm_merge.py:99
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:427
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:507
@@ -10716,17 +10789,17 @@ msgstr "CHYBA:"
 msgid "Show this confirmation again"
 msgstr "Zobrazit toto potvrzení znovu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:843
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:831
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1444
 msgid "Restart needed"
 msgstr "Vyžadován restart"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:845
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:833
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/plugin_updater.py:523
 msgid "&Restart calibre now"
 msgstr "Restartovat Calibre nyní"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1065
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1061
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:183
 #: /__w/calibre/calibre/src/calibre/gui2/linux_file_dialogs.py:266
 #: /__w/calibre/calibre/src/calibre/gui2/win_file_dialogs.py:163
@@ -10735,33 +10808,33 @@ msgstr "Restartovat Calibre nyní"
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1183
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1179
 msgid "Detach from the controlling terminal, if any (Linux only)"
 msgstr "Odpojit od řídícího terminálu, pokud nějaký je (pouze pro Linux)"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1184
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/exim.py:150
 msgid "Click \"Show details\" for more information."
 msgstr "Pro více informací klikněte na \"Zobrazit podrobnosti\"."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1190
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1186
 #, python-format
 msgid "The %s environment variable is set. Try unsetting it."
 msgstr "Proměnná prostředí %s je nastavena. Zkuste zrušit její nastavení."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1191
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1187
 msgid "Could not create temporary folder"
 msgstr "Nelze vytvořit dočasnou složku"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1192
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1188
 msgid "Could not create temporary folder, calibre cannot start."
 msgstr "Nelze vytvořit dočasnou složku, Calibre nelze spustit."
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1346
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1337
 msgid "Windows XP not supported"
 msgstr "Windows XP není podporováno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1347
+#: /__w/calibre/calibre/src/calibre/gui2/__init__.py:1338
 #, python-format
 msgid ""
 "calibre versions newer than 2.0 do not run on Windows XP. This is because "
@@ -11843,7 +11916,7 @@ msgstr "Vytvořit katalog knih ve vaší knihovně Calibre"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:131
 #: /__w/calibre/calibre/src/calibre/gui2/actions/convert.py:147
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1091
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1092
 msgid "Cannot convert"
 msgstr "Nelze převést"
 
@@ -11932,7 +12005,7 @@ msgstr "Hledat knihovnu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:255
 #: /__w/calibre/calibre/src/calibre/gui2/image_popup.py:159
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:495
 #: /__w/calibre/calibre/src/calibre/gui2/widgets2.py:200
 #: /__w/calibre/calibre/src/calibre/utils/localization.py:358
 msgid "&Copy"
@@ -11990,8 +12063,8 @@ msgstr "Nevybrat &nic"
 
 #: /__w/calibre/calibre/src/calibre/gui2/actions/copy_to_library.py:315
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/duplicates.py:56
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:134
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:408
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:135
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:452
 #: /__w/calibre/calibre/src/calibre/gui2/jobs.py:473
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:143
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:265
@@ -14067,6 +14140,7 @@ msgstr "&Náhled knihy"
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/tag_list_editor.py:397
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/template_dialog.py:639
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.py:1342
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1253
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/printing.py:199
 msgid "&Cancel"
 msgstr "&Zrušit"
@@ -14271,7 +14345,7 @@ msgstr "%s nemá žádné dostupné formáty."
 #: /__w/calibre/calibre/src/calibre/gui2/init.py:406
 #: /__w/calibre/calibre/src/calibre/gui2/layout.py:213
 #: /__w/calibre/calibre/src/calibre/gui2/search_restriction_mixin.py:378
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:311
 msgid "Virtual library"
 msgstr "Virtuální knihovna"
 
@@ -14956,7 +15030,7 @@ msgstr "Vybraný text"
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/widgets.py:120
 #: /__w/calibre/calibre/src/calibre/gui2/widgets.py:854
 #: /__w/calibre/calibre/src/calibre/linux.py:1335
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:96
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:97
 msgid "Search"
 msgstr "Hledat"
 
@@ -15682,17 +15756,17 @@ msgstr "Prohlížeč obálek"
 msgid "Toggle layout between wide and narrow"
 msgstr "Přepínání rozložení mezi širokým a úzkým"
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:143
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:144
 msgid "Send query to AI"
 msgstr "Odeslat dotaz AI"
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:171
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:172
 msgid ""
 "AI generated answers can be inaccurate, please verify any answers before "
 "acting on them."
 msgstr "Odpovědi generované AI mohou být nepřesné, ověřte je předtím, než podle nich budete jednat."
 
-#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:220
+#: /__w/calibre/calibre/src/calibre/gui2/chat_widget.py:227
 msgid "Details:"
 msgstr "Podrobnosti:"
 
@@ -16072,7 +16146,7 @@ msgid "Remove this image"
 msgstr "Odebrat tento obrázek"
 
 #: /__w/calibre/calibre/src/calibre/gui2/comments_editor.py:1175
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:488
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:493
 msgid "Open link"
 msgstr "Otevřít odkaz"
 
@@ -17474,7 +17548,7 @@ msgstr "Přidat aktuální výraz na seznam výrazů, které budou použity"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:144
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/authors_edit.py:154
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:637
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:652
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:150
 msgid "&Add"
 msgstr "&Přidat"
@@ -17488,7 +17562,7 @@ msgid "Remove the currently selected expression"
 msgstr "Odebrat aktuálně vybraný výraz"
 
 #: /__w/calibre/calibre/src/calibre/gui2/convert/search_and_replace_ui.py:148
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:639
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:654
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:1219
 #: /__w/calibre/calibre/src/calibre/gui2/open_with.py:405
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:158
@@ -18100,7 +18174,7 @@ msgstr "Moje barevné schéma"
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:438
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:1399
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:681
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:696
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1030
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/search.py:1181
 msgid "Cannot edit"
@@ -18111,7 +18185,7 @@ msgid "Cannot edit a builtin color scheme. Create a new color scheme instead."
 msgstr "Nelze upravovat vestavěné barevné schéma. Vytvořte namísto toho nové barevné schéma."
 
 #: /__w/calibre/calibre/src/calibre/gui2/covers.py:456
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:696
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:711
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/texture_chooser.py:161
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/toolbar.py:346
 msgid "Cannot remove"
@@ -18929,7 +19003,7 @@ msgid "Page numbering (APNX)"
 msgstr "Číslování stránek (APNX)"
 
 #: /__w/calibre/calibre/src/calibre/gui2/device_drivers/mtp_config.py:512
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:238
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:239
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:318
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1050
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/tweaks.py:471
@@ -19253,7 +19327,7 @@ msgstr "Zkontrolovat integritu databáze a zkomprimovat ji pro zvýšení výkon
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:67
 msgid "Also rebuild the annotations search index"
-msgstr ""
+msgstr "Také přestavět vyhledávací index pro anotace"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/check_library.py:70
 msgid ""
@@ -20938,12 +21012,12 @@ msgstr "&Kopírovat text"
 msgid "&FFML documentation"
 msgstr "Dokumentace &FFML"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:64
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1235
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1249
 msgid "Active jobs"
 msgstr "Aktivní úlohy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:65
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:70
 #: /__w/calibre/calibre/src/calibre/gui2/library/annotations.py:998
 #: /__w/calibre/calibre/src/calibre/gui2/library/notes.py:340
 #: /__w/calibre/calibre/src/calibre/gui2/tag_browser/ui.py:679
@@ -20956,7 +21030,7 @@ msgstr "Aktivní úlohy"
 msgid "Find next match"
 msgstr "Najít další shodu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:66
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:71
 #: /__w/calibre/calibre/src/calibre/gui2/fts/search.py:640
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search.py:31
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:189
@@ -20965,29 +21039,40 @@ msgstr "Najít další shodu"
 msgid "&Search"
 msgstr "&Hledat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:67
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:72
 msgid "&Stop selected jobs"
 msgstr "&Zastavit vybrané úlohy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:68
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:73
 msgid "&Hide selected jobs"
 msgstr "&Skrýt vybrané úlohy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:69
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:74
 msgid "Show job &details"
 msgstr "Zobrazit &podrobnosti úlohy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:70
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:75
 msgid "Show &all jobs"
 msgstr "Zobrazit &všechny úlohy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:71
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:76
 msgid "Stop &all non device jobs"
 msgstr "Z&astavit všechny úlohy nesouvisející se zařízením"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:72
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:77
 msgid "&Hide all jobs"
 msgstr "&Skrýt všechny úlohy"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:78
+msgid "&Automatically close calibre after all jobs are finished"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/jobs_ui.py:79
+msgid ""
+"Once all currently running jobs are completed, calibre will automatically "
+"quit. Before quitting, a popup will be shown for thirty seconds allowing you"
+" to cancel the automatic quit."
+msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:88
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:53
@@ -21022,7 +21107,7 @@ msgid ""
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/llm_book.py:200
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:743
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:758
 #: /__w/calibre/calibre/src/calibre/gui2/viewer/llm.py:68
 msgid "AI Settings"
 msgstr "AI nastavení"
@@ -21104,42 +21189,60 @@ msgid ""
 "the device icon and select <i>Update cached metadata</i>)</p>"
 msgstr "<p>Nezapomeňte aktualizovat metadata v zařízení, až budete hotovi (klikněte pravým tlačítkem myši na ikonu zařízení a vyberte <i>Aktualizovat metadata v mezipaměti</i>)</p>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:139
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:458
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:148
 msgid "Show &details"
 msgstr "Zobrazit &podrobnosti"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:139
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:415
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:140
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:459
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:149
 msgid "Hide &details"
 msgstr "Skrýt &podrobnosti"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:143
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:419
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:144
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:463
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:153
 msgid "Show detailed information about this error"
 msgstr "Zobrazit podrobné informace o této chybě"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:198
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:199
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:496
 #: /__w/calibre/calibre/src/calibre/gui2/proceed.py:197
 msgid "Copied"
 msgstr "Zkopírováno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:305
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:361
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:306
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:362
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1114
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/single_download.py:1225
 msgid "&View log"
 msgstr "&Zobrazit protokol"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:411
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:387
+msgid "calibre is about to quit"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:388
+msgid "calibre is about to quit. Proceed or abort?"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:394
+#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:749
+msgid "Abort"
+msgstr "Přerušit"
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:421
+#, python-brace-format
+msgid "Close now ({}s)"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:455
 msgid "&Retry"
 msgstr "&Opakovat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:440
+#: /__w/calibre/calibre/src/calibre/gui2/dialogs/message_box.py:484
 #, python-brace-format
 msgid "Hide the remaining error message"
 msgid_plural "Hide the {} remaining error messages"
@@ -22648,7 +22751,7 @@ msgid "&Dock"
 msgstr "&Ukotvit"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/quickview_ui.py:95
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:233
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:239
 #: /__w/calibre/calibre/src/calibre/gui2/store/search/search_ui.py:192
 #: /__w/calibre/calibre/src/calibre/gui2/store/stores/mobileread/store_dialog_ui.py:75
 msgid "&Close"
@@ -23313,7 +23416,7 @@ msgid "Choose formats"
 msgstr "Zvolte formáty"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/show_category_note.py:90
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:638
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:653
 #: /__w/calibre/calibre/src/calibre/gui2/metadata/basic_widgets.py:852
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/ui.py:621
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/widgets.py:154
@@ -23401,12 +23504,12 @@ msgid "The port must be a number between 8000 and 65535."
 msgstr "Port musí být číslo mezi 8000 a 65535."
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:137
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:493
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
 msgid "Problem starting the wireless device"
 msgstr "Problém se spuštěním bezdrátového zařízení"
 
 #: /__w/calibre/calibre/src/calibre/gui2/dialogs/smartdevice.py:138
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:494
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:495
 #, python-format
 msgid "The wireless device driver had problems starting. It said \"%s\""
 msgstr "Ovladač bezdrátového zařízení měl problémy se spuštěním. Hlásil \"%s\""
@@ -26727,170 +26830,216 @@ msgstr "Přetažení na zařízení není podporováno. Nejdříve přidejte kni
 msgid "File name"
 msgstr "Název souboru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:77
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:79
 msgid "Reasoning used by AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:163
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:165
 msgid "AI Assistant Note"
 msgstr "Poznámky AI asistenta"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:172
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:174
 #: /__w/calibre/calibre/src/calibre/web/feeds/recipes/collection.py:66
 msgid "You"
 msgstr "Vy"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:182
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:184
 msgid "Conversation record"
 msgstr "Záznam konverzace"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:212
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:218
 msgid "Type a question to the AI"
 msgstr "Zeptat se otázku AI"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:224
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:230
 msgid "Se&ttings"
 msgstr "Nas&ttavení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:262
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:268
 msgid "Quick actions"
 msgstr "Rychlé akce"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:281
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:287
 msgid "First, configure an AI provider"
 msgstr "Nejdříve nakonfigurujte poskytovatele AI"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:290
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:296
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:789
 msgid "Assistant"
 msgstr "Asistent"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:310
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:316
 msgid "Copy this specific response to the clipboard"
 msgstr "Zkopírovat tuto odpověď do schránky"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:314
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:320
 msgid "Show the reasoning behind this response from the AI"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:327
 msgid "answering"
 msgstr "odpovídám"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:321
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:327
 msgid "thinking"
 msgstr "přemýšlím"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:325
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:331
 #, python-brace-format
 msgid "{assistant} {activity}"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:340
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:346
 msgid "AI provider not configured."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:341
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:347
 msgid "Configure AI provider"
 msgstr "Konfigurace poskytovatele AI"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:378
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:389
 msgid "Talking to AI failed with error:"
 msgstr "Komunikace s AI selhala, chyba:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:409
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:423
 msgid "free"
 msgstr "bezplatný"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:412
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:414
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:426
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:428
 msgid "Queries:"
 msgstr "Dotazů:"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:493
 msgid "&New chat"
 msgstr "&Nový chat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:479
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:493
 msgid "Start a new conversation"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:481
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:495
 msgid "Copy this conversation to the clipboard"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:498
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:512
 msgid "Select text in the book to begin."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:561
 msgid "Add Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:546
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:561
 msgid "Edit Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:553
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:568
 msgid "Prompt:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:605
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/insert_resource.py:90
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/editor/themes.py:373
 #: /__w/calibre/calibre/src/calibre/gui2/tweak_book/file_list.py:1224
 msgid "No name specified"
 msgstr "Nezadán žádný název souboru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:590
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:605
 msgid "You must specify a name for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:607
 msgid "No prompt specified"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:592
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:607
 msgid "You must specify a prompt for the Quick action"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:599
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:614
 msgid "Ask the AI to respond in the current language"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:601
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:616
 msgid ""
 "Ask the AI to respond in the current calibre user interface language. Note "
 "that how well this works depends on the individual model being used. "
 "Different models support different languages."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:630
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:645
 msgid "&Quick actions:"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:682
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:697
 msgid ""
 "Cannot edit builtin actions. Instead uncheck this action and create a new "
 "action with the same name."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:697
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:712
 msgid ""
 "Cannot remove builtin actions. Instead simply uncheck it to prevent it from "
 "showing up as a button."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:699
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:714
 #, python-brace-format
 msgid "Remove the {} action?"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:700
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:715
 msgid "&Show this confirmation again"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/llm.py:753
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:768
 msgid "AI &Provider"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:815
+#, python-brace-format
+msgid "Full document renders: {}"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:871
+msgid "AI streaming render demo"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:880
+msgid "Immediate full re-render"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:881
+#, python-brace-format
+msgid "{} ms batched re-render"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:886
+msgid "Restart demo"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:890
+#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:755
+msgid "Close"
+msgstr "Zavřít"
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:912
+msgid "Demonstrate a streaming markdown response."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:916
+#, python-brace-format
+msgid ""
+"Injecting {chunks} chunks at {interval} ms per chunk into two widgets with "
+"identical content."
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/llm.py:930
+#, python-brace-format
+msgid ""
+"Immediate widget: {immediate} full renders. Batched widget: {throttled} full"
+" renders."
 msgstr ""
 
 #: /__w/calibre/calibre/src/calibre/gui2/lrf_renderer/config_ui.py:47
@@ -27095,7 +27244,7 @@ msgid ""
 msgstr "Došlo k chybě během spuštění {0}. Části {0} možná nebudou fungovat. Pro další informace klikněte na \"Zobrazit podrobnosti\"."
 
 #: /__w/calibre/calibre/src/calibre/gui2/main.py:327
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:975
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:976
 msgid "Corrupted database"
 msgstr "Poškozená databáze"
 
@@ -33353,8 +33502,8 @@ msgid "&Search the internet"
 msgstr "&Vyhledat na internetu"
 
 #: /__w/calibre/calibre/src/calibre/gui2/preferences/server.py:1310
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:543
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:628
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:629
 msgid "Failed to start Content server"
 msgstr "Nepodařilo se spustit Server s obsahem"
 
@@ -40964,70 +41113,74 @@ msgid ""
 "            "
 msgstr "\n<h3>Živý náhled</h3>\n\n<p>Zde uvidíte živý náhled souboru HTML, který právě upravujete.\nNáhled se bude automaticky aktualizovat, jak budete provádět změny.\n\n<p style=\"font-size:x-small; color: gray\">Pamatujte, že toto je pouze rychlý\nnáhled, není určen k simulaci skutečné čtečky e-knih. Některé aspekty vaší\ne-knihy, jako jsou konce stránek a okraje stránek, nebudou fungovat."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:486
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:490
+msgid "Reset zoom to 100%"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:491
 msgid "Inspect element"
 msgstr "Zkontrolovat prvek"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:501
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:506
 #, python-format
 msgid "Edit %s"
 msgstr "Upravit %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:541
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:546
 msgid "Loading preview, please wait..."
 msgstr "Načítání náhledu, čekejte…"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:596
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:601
 msgid "Search in preview"
 msgstr "Hledat v náhledu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:642
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:647
 msgid "Invalid location"
 msgstr "Neplatné umístění"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:643
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:648
 msgid "Cannot split on the body tag"
 msgstr "Nelze rozdělit na značce body"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:670
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:675
 msgid "Failed to launch worker"
 msgstr "Nepodařilo se spustit pracovní vlákno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:671
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:676
 msgid "Failed to launch the worker process used for rendering the preview"
 msgstr "Nepodařilo se spustit proces pracovní vlákno použitý pro vykreslení náhledu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:730
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
 msgid "Cannot disable"
 msgstr "Nelze zakázat"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:731
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:736
 msgid ""
 "Auto reloading of the preview panel cannot be disabled while the Live CSS "
 "panel is open."
 msgstr "Automatické opětovné načítání panelu náhledu nemůže být zakázáno, když je otevřený panel Živé CSS."
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:734
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
 msgid "Auto reload preview when text changes in editor"
 msgstr "Automatické opětovné načtení náhledu, když se změní text v editoru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:735
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
 msgid "Disable auto reload of preview"
 msgstr "Zakázat automatické opětovné načtení náhledu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:739
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:744
 msgid "Disable syncing of preview position to editor position"
 msgstr "Zakázat synchronizaci pozice náhledu s pozicí editoru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:740
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:745
 msgid "Enable syncing of preview position to editor position"
 msgstr "Povolit synchronizaci pozice náhledu s pozicí editoru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:748
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:753
 msgid "Abort file split"
 msgstr "Přerušit rozdělení souboru"
 
-#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:749
+#: /__w/calibre/calibre/src/calibre/gui2/tweak_book/preview.py:754
 msgid ""
 "Split this file at a specified location.<p>After clicking this button, click"
 " inside the preview panel above at the location you want the file to be "
@@ -43434,43 +43587,43 @@ msgstr "Úvodní příručka"
 msgid "&Donate to support calibre"
 msgstr "&Přispět na podporu Calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:274
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:275
 msgid "&Eject connected device"
 msgstr "&Vysunout připojené zařízení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:279
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:280
 msgid "Quit calibre"
 msgstr "Ukončit Calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:286
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:287
 msgid "Minimize the calibre window"
 msgstr "Minimalizovat okno Calibre"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:295
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:296
 msgid "Clear the current search"
 msgstr "Vymazat aktuální hledání"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:302
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:303
 msgid "Focus the book list"
 msgstr "Zaměřit seznam knih"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:309
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:310
 msgid "Clear the Virtual library"
 msgstr "Vymazat Virtuální knihovnu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:316
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:317
 msgid "Clear the additional restriction"
 msgstr "Vymazat dodatečná omezení"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:323
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:324
 msgid "Open the template documentation editor"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:451
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:452
 msgid "Debug mode"
 msgstr "Režim ladění"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:452
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:453
 #, python-format
 msgid ""
 "You have started calibre in debug mode. After you quit calibre, the debug "
@@ -43478,11 +43631,11 @@ msgid ""
 "automatically."
 msgstr "Spustili jste Calibre v režimu ladění. Po ukončení Calibre bude dostupný protokol ladění v souboru: %s<p>Protokol bude zobrazen automaticky."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:507
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
 msgid "Content server changed!"
 msgstr "Server s obsahem změněn!"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:508
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:509
 msgid ""
 "calibre 3 comes with a completely re-written Content server. As such any "
 "custom configuration you have for the content server no longer applies. You "
@@ -43490,7 +43643,7 @@ msgid ""
 " the net"
 msgstr "Calibre 3 přichází s kompletně přepsaným Serverem s obsahem. Z tohoto důvodu se již pro Server s obsahem nepoužijí žádné vlastní konfigurace. Měli byste zkontrolovat a aktualizovat svá nastavení v Předvolby->Sdílení->Sdílení po síti"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:544
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:545
 #, python-format
 msgid ""
 "Could not start the Content server. Error:\n"
@@ -43498,25 +43651,25 @@ msgid ""
 "%s"
 msgstr "Nelze spustit Server s obsahem. Chyba:\n\n%s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:598
 msgid "Hide main window"
 msgstr "Skrýt hlavní okno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:597
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:598
 msgid "Show main window"
 msgstr "Zobrazit hlavní okno"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:894
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:895
 msgid "Failed to update annotations"
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:895
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:896
 msgid ""
 "Failed to update annotations in the database for the book being currently "
 "viewed."
 msgstr ""
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:976
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:977
 #, python-format
 msgid ""
 "The library database at %s appears to be corrupted. Do you want calibre to "
@@ -43524,17 +43677,17 @@ msgid ""
 "successful."
 msgstr "Databáze knihovny v %s se zdá být poškozená. Chcete, aby se ji Calibre pokusilo znovu sestavit automaticky? Opětovné sestavení nemusí být úplně úspěšné."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1079
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1080
 msgid "Conversion error"
 msgstr "Chyba převodu"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1100
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1125
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1101
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1126
 #, python-format
 msgid "<p><b>Failed to convert: %s"
 msgstr "<p><b>Nepodařilo se převést: %s"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1101
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1102
 msgid ""
 "\n"
 "                Many older e-book reader devices are incapable of displaying\n"
@@ -43551,51 +43704,59 @@ msgid ""
 "                        "
 msgstr "\nMnoho starších čtecích zařízení e-knih nemůže zobrazit soubory\nEPUB, které mají vnitřní komponenty větší než určité velikosti.\nProto se při převodu do EPUB Calibre automaticky pokouší rozdělit\nEPUB na části s menší velikostí. U některých souborů, které jsou\nvelkými bloku nerozlišeného textu, toto rozdělení selže.\n<p>Můžete <b>opravit problém</b> buď zvětšením maximální velikosti\nrozdělení ve <i>Výstup EPUB</i> v dialogovém okně převodu, nebo zapnutím\nHeuristického zpracování také v dialogovém okně převodu. Pamatujte,\nže pokud bude maximální velikost rozdělení příliš velká, vaše čtečka\ne-knih může mít potíže s tímto EPUB."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1115
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1129
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1116
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1130
 msgid "Conversion failed"
 msgstr "Převod selhal"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1127
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1128
 msgid "here"
 msgstr "sem"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1140
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1141
 msgid "Recipe Disabled"
 msgstr "Předpis zakázán"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1173
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1174
 msgid "<b>Failed</b>"
 msgstr "<b>Selhalo</b>"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1228
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1242
 msgid "There are active jobs. Are you sure you want to quit?"
 msgstr "Jsou zde aktivní úlohy. Opravdu chcete ukončit?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1231
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1245
 msgid ""
 " is communicating with the device!<br>\n"
 "                      Quitting may cause corruption on the device.<br>\n"
 "                      Are you sure you want to quit?"
 msgstr " komunikuje se zařízením!<br>\nUkončení může způsobit poškození v zařízení.<br>\nOpravdu chcete ukončit?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1239
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1250
+msgid "Quit after jobs &finish"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1252
+msgid "Quit anyway"
+msgstr ""
+
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1267
 msgid "There are library updates waiting. Are you sure you want to quit?"
 msgstr "Jsou zde čekající aktualizace knihovny. Opravdu chcete ukončit?"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1240
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1268
 msgid "Library updates waiting"
 msgstr "Čekající aktualizace knihovny"
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1271
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1299
 msgid "Running database shutdown plugins. This could take a few seconds..."
 msgstr "Spouštění modulů vypnutí databáze. Může to trvat pár sekund..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1328
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1356
 msgid "Shutting down the Content server. This could take a while..."
 msgstr "Vypínání Serveru s obsahem. Může to chvíli trvat..."
 
-#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1384
+#: /__w/calibre/calibre/src/calibre/gui2/ui.py:1412
 msgid ""
 "will keep running in the system tray. To close it, choose <b>Quit</b> in the"
 " context menu of the system tray."
@@ -45653,13 +45814,13 @@ msgstr "Složky vyvolávající výjimku"
 msgid "INVALID CONDITION"
 msgstr "NEPLATNÁ PODMÍNKA"
 
-#: /__w/calibre/calibre/src/calibre/library/database2.py:119
-#: /__w/calibre/calibre/src/calibre/library/database2.py:128
+#: /__w/calibre/calibre/src/calibre/library/database2.py:117
+#: /__w/calibre/calibre/src/calibre/library/database2.py:126
 #, python-format
 msgid "Path to library too long. Must be less than %d characters."
 msgstr "Cesta ke knihovně je příliš dlouhá. Musí mít méně než %d znaků."
 
-#: /__w/calibre/calibre/src/calibre/library/database2.py:1259
+#: /__w/calibre/calibre/src/calibre/library/database2.py:1257
 #, python-format
 msgid " (%s books)"
 msgstr "(%s knih)"
@@ -45941,27 +46102,27 @@ msgstr "Vydáno: {pubdate}"
 msgid "Publisher: {publisher}"
 msgstr "Vydavatel: {publisher}"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:58
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:59
 msgid "Show "
 msgstr "Zobrazit"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:73
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:74
 msgid " sorted by "
 msgstr "seřazeno podle"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:130
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:131
 msgid "Change library"
 msgstr "Změnit knihovnu"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:130
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:131
 msgid "Change library to: "
 msgstr "Změnit knihovnu na:"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:200
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:216
 msgid "Switch to the full interface (non-mobile interface)"
 msgstr "Přepnout na úplné rozhraní (nemobilní rozhraní)"
 
-#: /__w/calibre/calibre/src/calibre/srv/legacy.py:203
+#: /__w/calibre/calibre/src/calibre/srv/legacy.py:219
 msgid ""
 "The full interface gives you many more features, but it may not work well on"
 " a small screen"
@@ -47934,17 +48095,9 @@ msgstr "&Ne"
 msgid "N&o to All"
 msgstr "Ne &pro všechny"
 
-#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:749
-msgid "Abort"
-msgstr "Přerušit"
-
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:751
 msgid "Retry"
 msgstr "Opakovat"
-
-#: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:755
-msgid "Close"
-msgstr "Zavřít"
 
 #: /home/ci/qt-base/qtbase-everywhere-src-6.4.2/src/gui/kernel/qplatformtheme.cpp:763
 msgid "Apply"

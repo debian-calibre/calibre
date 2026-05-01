@@ -9,6 +9,7 @@ from calibre.ai.google import GoogleAI
 from calibre.ai.lm_studio import LMStudioAI
 from calibre.ai.ollama import OllamaAI
 from calibre.ai.open_router import OpenRouterAI
+from calibre.ai.openai_compatible import OpenAICompatible
 from calibre.constants import numeric_version
 from calibre.customize import FileTypePlugin, InterfaceActionBase, MetadataReaderPlugin, MetadataWriterPlugin, PreferencesPlugin, StoreBase
 from calibre.ebooks.html.to_zip import HTML2ZIP
@@ -1986,7 +1987,7 @@ plugins += [
 
 # }}}
 
-plugins.extend((OpenRouterAI, GoogleAI, GitHubAI, OllamaAI, LMStudioAI))
+plugins.extend((OpenRouterAI, GoogleAI, GitHubAI, OllamaAI, LMStudioAI, OpenAICompatible))
 
 if __name__ == '__main__':
     # Test load speed

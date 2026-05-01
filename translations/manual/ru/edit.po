@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# ashed <craysy@gmail.com>, 2020-2023,2025
+# ashed <craysy@gmail.com>, 2020-2023,2025-2026
 # Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-04-29 04:37+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
-"Last-Translator: ashed <craysy@gmail.com>, 2020-2023,2025\n"
+"Last-Translator: ashed <craysy@gmail.com>, 2020-2023,2025-2026\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -88,7 +88,7 @@ msgid ""
 "replace. The checkpointing functionality is in addition to the normal "
 "undo/redo mechanism when editing individual files. Checkpoints are needed "
 "for when changes are spread over multiple files in the book."
-msgstr ""
+msgstr "Полезная функция :guilabel: `Контрольные точки`. Прежде чем приступить к каким-либо масштабным изменениям, вы можете создать контрольную точку. Контрольная точка сохранит текущее состояние книги, а затем сделанные изменения в книге можно вернуть к состоянию при создании контрольной точки. Чтобы создать контрольную точку, используйте :guilabel:`Правка->Создать контрольную точку`. Контрольные точки будут автосоздаваться каждый раз, при запуске автоматизированного инструмента, вроде глобального поиска и замены. Функциональность контрольных точек -  дополнение к обычному механизму отмены/возврата при редактировании отдельных файлов. Контрольные точки полезны, когда изменения распространяются на несколько файлов в книге."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:55
 msgid ""
@@ -247,7 +247,7 @@ msgid ""
 "the user ever converts the EPUB file in calibre to another format. This is "
 "because when converting, calibre assumes that the marked title page contains"
 " only the cover and no other content."
-msgstr ""
+msgstr "Кроме того, файлы EPUB имеют концепцию *titlepage*. Титульный лист - это HTML-файл, который выполняет роль титульного листа/обложки книги. Вы можете пометить HTML-файл как титульную страницу при редактировании EPUB, щёлкнув правой кнопкой мыши. Будьте внимательны, чтобы помеченный вами файл содержал только сопроводительную информацию. Если он содержит другое содержимое, такое как первая глава, то это содержимое будет потеряно, если пользователь когда-либо преобразует файл EPUB в calibre в другой формат. Это связано с тем, что при конвертации calibre предполагает, что отмеченная титульная страница содержит обложку и только её."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:163
 msgid "Deleting files"
@@ -428,7 +428,7 @@ msgid ""
 "<i>word</i>.`` you can search for ``on a word`` and it will be found even "
 "though there is an ``<i>`` tag in the middle. Use this tool via the "
 ":guilabel:`Search->Search ignoring HTML markup` menu item."
-msgstr ""
+msgstr "Существует также специальный инструмент для поиска текста, игнорирующий любые HTML-теги между ними. Например, если в книге есть HTML ``Empahisis on a <i>word</i>``, вы можете искать ``on a word`` , и он будет найден, даже если в середине есть тег ``<i>``. Используйте этот инструмент через пункт меню :guilabel: `Поиск->Поиск, игнорирующий HTML-разметку`."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:287
 msgid "Automated tools"
@@ -816,7 +816,7 @@ msgid ""
 " cause the cursor in the editor to be positioned over the element you "
 "clicked. If you click a link pointing to another file in the book, that file"
 " will be opened in the edit and the preview panel, automatically."
-msgstr ""
+msgstr ":guilabel:`Просмотр файла` дает обзор различных файлов внутри. Панель живого предпросмотра показывает изменения, которые вы вносите в реальном времени (с задержкой в одну или две секунды). При редактировании файлов HTML или CSS панель предварительного просмотра обновляется автоматически, чтобы отразить ваши изменения. Когда вы перемещаете курсор в редакторе, панель предварительного просмотра будет отслеживать его местоположение, показывая вам соответствующее местоположение в книге. Щелчок на панели предварительного просмотра приведет к тому, что курсор в редакторе будет расположен над элементом, который вы щелкнули. Если щелкнуть ссылку, указывающую на другой файл в книге, этот файл будет автоматически открыт в панели редактирования и предварительного просмотра."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:550
 msgid ""
@@ -837,7 +837,7 @@ msgid ""
 "embedded fonts that use font name aliasing. Use the preview panel while you "
 "are working on the book, but once you are done, review it in an actual "
 "reader device or software emulator."
-msgstr ""
+msgstr "Панель предварительного просмотра показывает, как будет выглядеть текст при просмотре. Тем не менее, панель предварительного просмотра не является заменой для фактического тестирования вашей книги в реальном устройстве чтения. Он более и менее способен, чем настоящий читатель. Он будет лучше переносить ошибки и небрежную разметку, чем большинство устройств для чтения. Также не будут отображаться поля страницы, разрывы страниц и встроенные шрифты, которые используют псевдонимы имен шрифтов. Используйте панель предварительного просмотра, пока вы работаете над книгой, но как только вы закончите, просмотрите её в реальном устройстве чтения или программном эмуляторе."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:564
 msgid ""
@@ -1151,7 +1151,7 @@ msgid ""
 "can double click entries in the :guilabel:`Source` column to jump to where "
 "the link is defined and entries in the :guilabel:`Target` column to jump to "
 "where the link points."
-msgstr ""
+msgstr "Редактор включает в себя замечательный инструмент *Отчёты* (через :guilabel:`Инструменты->Отчёты`), который показывает сводку файлов, изображений, ссылок, слов, символов и стилей, используемых в книге. Каждая строка в отчете имеет горячую ссылку. Двойной щелчок по строке переходит к месту в книге, где этот элемент используется или определён (в зависимости от ситуации). Например, в представлении :guilabel:`Ссылки` можно дважды щелкнуть записи в столбце :guilabel:`Источник`, чтобы перейти туда, где определена ссылка, и записи в столбце :guilabel:`Цель`, чтобы перейти туда, где цель ссылки."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:798
 msgid "The Reports tool with information and statistics about the book"
