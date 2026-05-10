@@ -1,0 +1,149 @@
+From: ECB <ecb@ecb.pm>
+Date: Tue, 21 Apr 2026 12:48:42 +0200
+Subject: Fix security vulnerabilities and code quality issues (Closes:
+ #1136161)
+
+Forwarded: not-needed
+Bug: https://github.com/kovidgoyal/calibre/pull/3101
+Origin: backport, https://github.com/kovidgoyal/calibre/commit/b0c4ba19686232d5bff99d58ce6019546ef4d166
+
+High severity:
+- Fix typo normapth -> normpath in srv/content.py (broken endpoint)
+- Replace eval() with ast.literal_eval() in catalogs/epub_mobi.py
+- Log exceptions in FunctionDispatcher.dispatch instead of swallowing
+
+Medium severity:
+- Add path traversal protection to DirContainer read/write/exists
+- Fix XPath injection in comments_editor.py merge_contiguous_links
+- Use parameterized SQL queries in database2.py library_id setter
+- Add safety comment to pickle_loads in utils/serialize.py
+---
+ src/calibre/ebooks/oeb/base.py            | 12 +++++++++---
+ src/calibre/gui2/__init__.py              |  2 ++
+ src/calibre/gui2/comments_editor.py       |  2 +-
+ src/calibre/library/catalogs/epub_mobi.py | 10 ++++++----
+ src/calibre/library/database2.py          |  6 ++----
+ src/calibre/utils/serialize.py            |  2 +-
+ 6 files changed, 21 insertions(+), 13 deletions(-)
+
+diff --git a/src/calibre/ebooks/oeb/base.py b/src/calibre/ebooks/oeb/base.py
+index be1e855..cdc610a 100644
+--- a/src/calibre/ebooks/oeb/base.py
++++ b/src/calibre/ebooks/oeb/base.py
+@@ -586,12 +586,16 @@ class DirContainer:
+     def read(self, path):
+         if path is None:
+             path = self.opfname
+-        path = os.path.join(self.rootdir, self._unquote(path))
++        path = os.path.abspath(os.path.join(self.rootdir, self._unquote(path)))
++        if not path.startswith(os.path.abspath(self.rootdir)):
++            raise ValueError(f'Path {path!r} is not inside {self.rootdir!r}')
+         with open(path, 'rb') as f:
+             return f.read()
+ 
+     def write(self, path, data):
+-        path = os.path.join(self.rootdir, self._unquote(path))
++        path = os.path.abspath(os.path.join(self.rootdir, self._unquote(path)))
++        if not path.startswith(os.path.abspath(self.rootdir)):
++            raise ValueError(f'Path {path!r} is not inside {self.rootdir!r}')
+         dir = os.path.dirname(path)
+         if not os.path.isdir(dir):
+             os.makedirs(dir)
+@@ -602,9 +606,11 @@ class DirContainer:
+         if not path:
+             return False
+         try:
+-            path = os.path.join(self.rootdir, self._unquote(path))
++            path = os.path.abspath(os.path.join(self.rootdir, self._unquote(path)))
+         except ValueError:  # Happens if path contains quoted special chars
+             return False
++        if not path.startswith(os.path.abspath(self.rootdir)):
++            return False
+         try:
+             return os.path.isfile(path)
+         except UnicodeEncodeError:
+diff --git a/src/calibre/gui2/__init__.py b/src/calibre/gui2/__init__.py
+index 024e403..9c1c33c 100644
+--- a/src/calibre/gui2/__init__.py
++++ b/src/calibre/gui2/__init__.py
+@@ -759,6 +759,8 @@ class FunctionDispatcher(QObject):
+         try:
+             res = self.func(*args, **kwargs)
+         except:
++            import traceback
++            traceback.print_exc()
+             res = None
+         q.put(res)
+ 
+diff --git a/src/calibre/gui2/comments_editor.py b/src/calibre/gui2/comments_editor.py
+index d69d2b5..0678486 100644
+--- a/src/calibre/gui2/comments_editor.py
++++ b/src/calibre/gui2/comments_editor.py
+@@ -142,7 +142,7 @@ def use_implicit_styling_for_a(a, style_map):
+ def merge_contiguous_links(root):
+     all_hrefs = set(root.xpath('//a/@href'))
+     for href in all_hrefs:
+-        tags = root.xpath(f'//a[@href="{href}"]')
++        tags = root.xpath('//a[@href=$h]', h=href)
+         processed = set()
+ 
+         def insert_tag(parent, child):
+diff --git a/src/calibre/library/catalogs/epub_mobi.py b/src/calibre/library/catalogs/epub_mobi.py
+index ae95691..028d798 100644
+--- a/src/calibre/library/catalogs/epub_mobi.py
++++ b/src/calibre/library/catalogs/epub_mobi.py
+@@ -356,10 +356,11 @@ class EPUB_MOBI(CatalogPlugin):
+             log.error(f"coercing thumb_width from '{opts.thumb_width}' to '{self.THUMB_SMALLEST}'")
+             opts.thumb_width = "1.0"
+ 
+-        # eval prefix_rules if passed from command line
++        # parse prefix_rules if passed from command line
+         if type(opts.prefix_rules) is not tuple:
+             try:
+-                opts.prefix_rules = eval(opts.prefix_rules)
++                import ast
++                opts.prefix_rules = ast.literal_eval(opts.prefix_rules)
+             except:
+                 log.error("malformed --prefix-rules: %s" % opts.prefix_rules)
+                 raise
+@@ -367,10 +368,11 @@ class EPUB_MOBI(CatalogPlugin):
+                 if len(rule) != 4:
+                     log.error("incorrect number of args for --prefix-rules: %s" % repr(rule))
+ 
+-        # eval exclusion_rules if passed from command line
++        # parse exclusion_rules if passed from command line
+         if type(opts.exclusion_rules) is not tuple:
+             try:
+-                opts.exclusion_rules = eval(opts.exclusion_rules)
++                import ast
++                opts.exclusion_rules = ast.literal_eval(opts.exclusion_rules)
+             except:
+                 log.error("malformed --exclusion-rules: %s" % opts.exclusion_rules)
+                 raise
+diff --git a/src/calibre/library/database2.py b/src/calibre/library/database2.py
+index 1f63a0a..69ff580 100644
+--- a/src/calibre/library/database2.py
++++ b/src/calibre/library/database2.py
+@@ -117,10 +117,8 @@ class LibraryDatabase2(LibraryDatabase, SchemaUpgrade, CustomColumns):
+     @library_id.setter
+     def library_id(self, val):
+         self._library_id_ = str(val)
+-        self.conn.executescript('''
+-                DELETE FROM library_id;
+-                INSERT INTO library_id (uuid) VALUES ("%s");
+-                '''%self._library_id_)
++        self.conn.execute('DELETE FROM library_id')
++        self.conn.execute('INSERT INTO library_id (uuid) VALUES (?)', (self._library_id_,))
+         self.conn.commit()
+ 
+     def connect(self):
+diff --git a/src/calibre/utils/serialize.py b/src/calibre/utils/serialize.py
+index 707298d..b972f37 100644
+--- a/src/calibre/utils/serialize.py
++++ b/src/calibre/utils/serialize.py
+@@ -119,4 +119,4 @@ def pickle_dumps(data):
+ 
+ def pickle_loads(dump):
+     import pickle
+-    return pickle.loads(dump, encoding='utf-8')
++    return pickle.loads(dump, encoding='utf-8')  # nosec: only used for calibre's own serialized data
