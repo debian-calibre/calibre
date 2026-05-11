@@ -1,0 +1,47 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Tue, 12 May 2026 02:29:13 +0900
+Subject: Don't regenerate images for reproducible build
+
+Forwarded: not-needed
+---
+ imgsrc/generate.py    | 7 ++-----
+ imgsrc/render-logo.py | 8 ++------
+ 2 files changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/imgsrc/generate.py b/imgsrc/generate.py
+index 8d0e0c5..d5cadea 100755
+--- a/imgsrc/generate.py
++++ b/imgsrc/generate.py
+@@ -53,11 +53,8 @@ def iterfiles(only=()):
+ 
+ 
+ def rsvg(src, size, dest):
+-    cmd = ['rsvg-convert', '-d', '96', '-p', '96']
+-    if size != 'original':
+-        cmd += ['--width', size, '--height', size]
+-    subprocess.check_call(cmd + ['-o', dest, src])
+-    subprocess.check_call(['optipng', '-o7', '-quiet', '-strip', 'all', dest])
++    # don't regenarate images for reproducible build
++    pass
+ 
+ 
+ def render(src, output_files):
+diff --git a/imgsrc/render-logo.py b/imgsrc/render-logo.py
+index 2cd19ba..c878620 100755
+--- a/imgsrc/render-logo.py
++++ b/imgsrc/render-logo.py
+@@ -15,12 +15,8 @@ srv = j(os.path.dirname(os.path.dirname(base)), 'srv')
+ 
+ 
+ def render(outpath, sz, background=None):
+-    sz = str(sz)
+-    cmd = ['rsvg-convert', j(base, 'calibre.svg'), '-w', sz, '-h', sz, '-d', '96', '-p', '96', '-o', outpath]
+-    if background:
+-        cmd.insert(2, background), cmd.insert(2, '-b')
+-    subprocess.check_call(cmd)
+-    subprocess.check_call(['optipng', '-o7', '-strip', 'all', outpath])
++    # don't regenarate images for reproducible build
++    pass
+ 
+ 
+ render(j(resources, 'images', 'library.png'), 1024)
