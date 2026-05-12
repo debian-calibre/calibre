@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Wed, 13 May 2026 08:20:43 +0900
+Subject: Drop non-reproducible icons for reproducible builds
+
+Forwarded: not-needed
+---
+ src/calibre/linux.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index 6c7e1eb..4ff1527 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -891,7 +891,7 @@ class PostInstall:
+             self.icon_resources.append((context, basename, str(size)))
+ 
+         def install_icons(iconsrc, basename, context, is_last_icon=False):
+-            sizes = (16, 32, 48, 64, 128, 256)
++            sizes = (16, 128, 256)
+             for size in sizes:
+                 install_single_icon(iconsrc, basename, size, context, is_last_icon and size is sizes[-1])
+ 
