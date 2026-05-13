@@ -2,6 +2,10 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Wed, 13 May 2026 10:57:41 +0900
 Subject: Use PIL to provide reproducible icon image
 
+Forwarded: not-needed
+
+PyQt (QImage class) dose not provide reproducible image data.
+Use PIL for reproducible build.
 ---
  src/calibre/linux.py | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
