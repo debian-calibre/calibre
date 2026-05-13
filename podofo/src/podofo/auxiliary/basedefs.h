@@ -26,15 +26,6 @@
  * };
  *
  * bool PODOFO_API doThatThing();
- *
- * For an exception type that may be thrown across a DSO boundary, you must
- * use:
- *
- * class PODOFO_EXCEPTION_API(PODOFO_API) MyException
- * {
- *     ...
- * };
- *
  */
 
 // Sanity check, can't compile both shared and static library
@@ -66,21 +57,38 @@
     #define PODOFO_IMPORT __attribute__ ((visibility("default")))
 #endif
 
+// If detected, undefine some macros that are defined by Windows
+// headers and that may cause errors when consuming PoDoFo. To
+// avoid this behavior, define PODOFO_WIN32_SKIP_UNDEF_MACROS
+// before including PoDoFo headers.
+#if defined(_WIN32) && !defined(PODOFO_WIN32_SKIP_UNDEF_MACROS)
+#ifdef min
+#undef min
+#endif // min
+
+#ifdef max
+#undef max
+#endif // max
+
+#ifdef GetObject
+#undef GetObject
+#endif // GetObject
+
+#ifdef CreateFont
+#undef CreateFont
+#endif // CreateFont
+
+#ifdef DrawText
+#undef DrawText
+#endif // DrawText
+#endif
+
 #if defined(PODOFO_BUILD)
 #define PODOFO_API PODOFO_EXPORT
 #else
 #define PODOFO_API PODOFO_IMPORT
 #endif
 
-#endif
-
-// Throwable classes must always be exported by all binaries when
-// using gcc. Marking exception classes with PODOFO_EXCEPTION_API
-// ensures this.
-#ifdef _WIN32
-  #define PODOFO_EXCEPTION_API(api) api
-#else
-  #define PODOFO_EXCEPTION_API(api) PODOFO_API
 #endif
 
 // Set up some other compiler-specific but not platform-specific macros
