@@ -1,0 +1,25 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Wed, 13 May 2026 10:57:41 +0900
+Subject: Use PIL to provide reproducible icon image
+
+---
+ src/calibre/linux.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/calibre/linux.py b/src/calibre/linux.py
+index 6c7e1eb..545883e 100644
+--- a/src/calibre/linux.py
++++ b/src/calibre/linux.py
+@@ -1332,9 +1332,9 @@ def write_appdata(key, entry, base, translators):
+ 
+ 
+ def render_img(image, dest, width=128, height=128):
+-    from qt.core import QImage, Qt
+-    img = QImage(I(image)).scaled(int(width), int(height), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
+-    img.save(dest)
++    from PIL import Image
++    img = Image.open(fp=I(image)).resize(size=(int(width), int(height)))
++    img.save(fp=dest)
+ 
+ 
+ def main():
