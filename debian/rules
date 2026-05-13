@@ -97,19 +97,6 @@ calibre_auto_install:
 #	# Debian package "python3-tinycss" doesn't installs test code
 	rm    -v debian/tmp/usr/lib/calibre/tinycss/tests/*.py
 	rmdir -v debian/tmp/usr/lib/calibre/tinycss/tests/
-#	# Drop non-reproducible icons for reproducible build
-	rm    -v debian/tmp/usr/share/icons/hicolor/32x32/apps/calibre-ebook-edit.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/32x32/apps/calibre-gui.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/32x32/apps/calibre-viewer.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/32x32/mimetypes/application-x-topaz-ebook.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/apps/calibre-ebook-edit.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/apps/calibre-gui.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/apps/calibre-viewer.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/mimetypes/application-lrf.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/mimetypes/application-x-kindle-application.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/mimetypes/application-x-mobi8-ebook.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/48x48/mimetypes/text-lrs.png
-	rm    -v debian/tmp/usr/share/icons/hicolor/64x64/apps/calibre-ebook-edit.png
 #
 #	# Remove source path name from pyuic6 outputs
 	find debian/tmp/usr/lib/calibre/calibre/gui2 -name '*_ui.py' -print | xargs --no-run-if-empty sed --separate --file=debian/remove-ui-basepath.sed --in-place
