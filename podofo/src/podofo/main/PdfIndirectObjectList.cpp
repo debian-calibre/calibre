@@ -107,8 +107,13 @@ void PdfIndirectObjectList::Clear()
         delete obj;
 
     m_Objects.clear();
-    m_ObjectCount = 1;
-    m_StreamFactory = nullptr;
+    if (m_Document == nullptr)
+        m_ObjectCount = 0;
+    else
+        m_ObjectCount = 1;
+    m_FreeObjects.clear();
+    m_unavailableObjects.clear();
+    m_compressedObjectStreams.clear();
 }
 
 PdfObject& PdfIndirectObjectList::MustGetObject(const PdfReference& ref) const
@@ -170,7 +175,7 @@ unique_ptr<PdfObject> PdfIndirectObjectList::ReplaceObject(const PdfReference& r
 unique_ptr<PdfObject> PdfIndirectObjectList::removeObject(const iterator& it, bool markAsFree)
 {
     auto obj = *it;
-    if (m_objectStreams.find(obj->GetIndirectReference().ObjectNumber()) != m_objectStreams.end())
+    if (m_compressedObjectStreams.find(obj->GetIndirectReference().ObjectNumber()) != m_compressedObjectStreams.end())
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Can't remove a compressed object stream");
 
     if (markAsFree)
@@ -300,9 +305,9 @@ void PdfIndirectObjectList::AddFreeObject(const PdfReference& reference)
     }
 }
 
-void PdfIndirectObjectList::AddObjectStream(uint32_t objectNum)
+void PdfIndirectObjectList::AddCompressedObjectStream(uint32_t objectNum)
 {
-    m_objectStreams.insert(objectNum);
+    m_compressedObjectStreams.insert(objectNum);
 }
 
 void PdfIndirectObjectList::addNewObject(PdfObject* obj)
@@ -348,13 +353,25 @@ void PdfIndirectObjectList::CollectGarbage()
 
     unordered_set<PdfReference> referencedOjects;
     visitObject(m_Document->GetTrailer().GetObject(), referencedOjects);
+    for (auto objId : m_compressedObjectStreams)
+    {
+        PdfReference ref(objId, 0);
+        if (referencedOjects.find(ref) != referencedOjects.end())
+            continue;
+
+        // If the compressed object streams are not referenced,
+        // visit them as well as they won't be deleted
+        visitObject(*GetObject(ref), referencedOjects);
+    }
+
     vector<PdfObject*> objectsToDelete;
     ObjectList newlist;
     for (PdfObject* obj : m_Objects)
     {
+        // Delete the object if not referenced and not a compressed object stream
         auto& ref = obj->GetIndirectReference();
         if (referencedOjects.find(ref) == referencedOjects.end()
-            && m_objectStreams.find(ref.ObjectNumber()) == m_objectStreams.end())
+            && m_compressedObjectStreams.find(ref.ObjectNumber()) == m_compressedObjectStreams.end())
         {
             SafeAddFreeObject(ref);
             objectsToDelete.push_back(obj);

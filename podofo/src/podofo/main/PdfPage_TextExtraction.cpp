@@ -301,17 +301,17 @@ void PdfPage::ExtractTextTo(vector<PdfTextEntry>& entries, const string_view& pa
                             context.States.Current->PdfState.WordSpacing = content.Stack[2].GetReal();
                         }
 
+                        if (content.Operator == PdfOperator::Quote
+                            || content.Operator == PdfOperator::DoubleQuote)
+                        {
+                            context.TStar_Operator();
+                        }
+
                         if (decodeString(str, *context.States.Current, decoded, lengths, positions)
                             && decoded.length() != 0)
                         {
                             context.PushString(StatefulString(std::move(decoded), *context.States.Current,
                                 std::move(lengths), std::move(positions)), true);
-                        }
-
-                        if (content.Operator == PdfOperator::Quote
-                            || content.Operator == PdfOperator::DoubleQuote)
-                        {
-                            context.TStar_Operator();
                         }
 
                         break;
@@ -406,6 +406,10 @@ void PdfPage::ExtractTextTo(vector<PdfTextEntry>& entries, const string_view& pa
                     context.States.Push();
                 }
 
+                // The form XObject matrix concatenates to
+                // the CTM like a 'cm' operator
+                auto matrix = content.XObject->GetMatrix();
+                context.cm_Operator(matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
                 break;
             }
             case PdfContentType::EndXObjectForm:
