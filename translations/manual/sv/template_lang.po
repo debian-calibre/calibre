@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 04:37+0000\n"
+"POT-Creation-Date: 2026-05-24 03:34+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Karl Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -78,7 +78,7 @@ msgid ""
 "(``{}``) that is replaced by the corresponding metadata from the book being "
 "processed. For example, the default template in calibre used for saving "
 "books to device has 4 ``template expressions``::"
-msgstr "En grundläggande mall består av ett eller flera \"malluttryck\". Ett \"malluttryck\" består av text och namn inom klammerparenteser (\"{}\") som ersätts av motsvarande metadata från boken som bearbetas. Till exempel har standardmallen i calibre som används för att spara böcker till enheten fyra \"malluttryck\"::"
+msgstr "En grundläggande mall består av ett eller flera ``malluttryck``. Ett ``malluttryck`` består av text och namn inom klammerparenteser (``{}``) som ersätts av motsvarande metadata från boken som bearbetas. Till exempel har standardmallen i calibre som används för att spara böcker till enheten fyra ``malluttryck``::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:23
 msgid "For the book \"The Foundation\" by \"Isaac Asimov\" the template will become::"
@@ -107,7 +107,7 @@ msgid ""
 "custom series column named ``#myseries``, there will also be a column named "
 "``#myseries_index``. The standard series column's index is named "
 "``series_index``."
-msgstr "Ett \"malluttryck\" kan komma åt alla metadata som finns tillgängliga i calibre, inklusive anpassade kolumner (kolumner du skapar själv), genom att använda en kolumns \"sökningsnamn\". För att hitta söknamnet för en \"kolumn\" (ibland kallad \"fält\"), håll muspekaren över kolumnrubriken i calibres boklista. Söknamn för anpassade kolumner börjar alltid med \"#\". För kolumner av serietyp finns det ett ytterligare fält med namnet \"#sökningsnamn_index\" som är serieindexet för den boken i serien. Om du till exempel har en anpassad seriekolumn med namnet \"#minserie\" kommer det också att finnas en kolumn med namnet \"#minserie_index\". Standardseriekolumnens index heter \"serie_index\"."
+msgstr "Ett ``malluttryck`` kan komma åt alla metadata som finns tillgängliga i calibre, inklusive anpassade kolumner (kolumner du skapar själv), genom att använda en kolumns ``lookup name``. För att hitta söknamnet för en `kolumn` (ibland kallad `fält`), håll muspekaren över kolumnrubriken i calibres boklista. Söknamn för anpassade kolumner börjar alltid med ``#``. För kolumner av serietyp finns det ett ytterligare fält med namnet ``#lookup name_index`` som är serieindexet för den boken i serien. Om du till exempel har en anpassad seriekolumn med namnet ``#myseries`` kommer det också att finnas en kolumn med namnet ``#myseries_index``. Standardseriekolumnens index heter ``series_index``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:37
 msgid "In addition to the standard column based fields, you also can use:"
@@ -198,7 +198,7 @@ msgid ""
 "then the result will be `prefix_textXXXXXsuffix_text`. If ``field`` is empty"
 " (has no value) then the result will be the empty string (nothing) because "
 "the prefix and suffix are ignored. The prefix and suffix can contain blanks."
-msgstr "Detta ``malluttryck`` säger att om ``fält`` har värdet `XXXX` så blir resultatet `prefix_textXXXXXsuffix_text`. Om ``fält`` är tomt (har inget värde) blir resultatet en tom sträng (ingenting) eftersom prefixet och suffixet ignoreras. Prefixet och suffixet kan innehålla mellanslag."
+msgstr "Detta ``template expression`` säger att om ``field`` har värdet `XXXX` så blir resultatet `prefix_textXXXXXsuffix_text`. Om ``field`` är tomt (har inget värde) blir resultatet en tom sträng (ingenting) eftersom prefixet och suffixet ignoreras. Prefixet och suffixet kan innehålla mellanslag."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:75
 msgid ""
@@ -235,7 +235,7 @@ msgstr "Du måste inkludera kolon efter ``uppslagsnamn`` om du använder ett pre
 msgid ""
 "You must use either no or both ``|`` characters. Using one, as in ``{field:|"
 " - }``, is not allowed."
-msgstr "Du måste använda antingen inga eller båda ``|`` tecknen. Att använda ett av dem, som i ``{field:| - }``, är inte tillåtet."
+msgstr "Du måste använda antingen inga eller båda ``|``-tecknen. Att använda ett av dem, som i ``{field:| - }``, är inte tillåtet."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:87
 msgid ""
@@ -251,7 +251,7 @@ msgstr "**Formatering**"
 msgid ""
 "Suppose you want the ``series_index`` to be formatted as three digits with "
 "leading zeros. This does the trick:"
-msgstr "Anta att du vill att ``serieindex`` ska formateras som tre siffror med inledande nollor. Detta gör tricket:"
+msgstr "Anta att du vill att ``series_index`` ska formateras som tre siffror med inledande nollor. Detta gör tricket:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:93
 msgid "``{series_index:0>3s}`` - Three digits with leading zeros"
@@ -377,13 +377,13 @@ msgstr "en pluggbräda med en exakt matchning på format och enhet, till exempel
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
-msgstr "en pluggbräda med en exakt matchning på format och den speciella ``any device`` val, till exempel `` EPUB`` och ``any device``"
+msgstr "en pluggbräda med exakt matchande format och det speciella alternativet ``valfri enhet``, t.ex. ``EPUB`` och ``valfri enhet``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:135
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
-msgstr "en pluggbräda med en exakt matchning på format och den speciella ``any device`` val, och ``ANDROID``"
+msgstr "en pluggbräda med det speciella valet ``valfritt format`` och en exakt matchning på enheten, t.ex. ``valfritt format`` och ``ANDROID``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:136
 msgid "a plugboard with ``any format`` and ``any device``"

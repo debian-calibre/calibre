@@ -6,6 +6,7 @@ __copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
 
 import json
 import os
+from base64 import standard_b64encode
 from compression import zlib
 from functools import partial
 from http.client import FORBIDDEN, NOT_FOUND, OK
@@ -55,6 +56,73 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
+    def test_move_duplicate_to_library(self):  # {{{
+        'Test that ignored duplicates are not removed when moving to another library'
+        target_library_path = self.mkdtemp()
+        self.create_db(target_library_path)
+        with self.create_server(libraries=(self.library_path, target_library_path), auth=True, auth_mode='basic') as server:
+            server.handler.ctx.user_manager.add_user('12', 'test')
+            ctx = server.handler.router.ctx
+            library_map = ctx.library_broker.library_map
+            target_library_id = next(
+                library_id for library_id, name in library_map.items()
+                if name == os.path.basename(target_library_path))
+            source_db = ctx.library_broker.get(None)
+            target_db = ctx.library_broker.get(target_library_id)
+            target_book_ids = target_db.all_book_ids()
+            self.assertTrue(source_db.has_id(1))
+            conn = server.connect()
+            r, data = make_request(
+                conn, f'/cdb/copy-to-library/{target_library_id}/{source_db.server_library_id}',
+                username='12', password='test',
+                prefix='', method='POST', headers={'Content-Type': 'application/json'}, data=json.dumps({
+                    'book_ids': [1], 'move': True, 'duplicate_action': 'ignore', 'automerge_action': 'overwrite',
+                }).encode('utf-8'))
+            self.ae(r.status, OK)
+            self.assertTrue(data['1']['ok'])
+            self.ae(data['1']['payload']['action'], 'duplicate')
+            self.assertIsNone(data['1']['payload']['new_book_id'])
+            self.assertTrue(source_db.has_id(1))
+            self.ae(target_db.all_book_ids(), target_book_ids)
+
+    # }}}
+
+    def test_data_file_paths_are_confined_to_book_dir(self):  # {{{
+        with self.create_server(auth=True, auth_mode='basic') as server:
+            server.handler.ctx.user_manager.add_user('12', 'test')
+            db = server.handler.router.ctx.library_broker.get(None)
+            bookdir = os.path.dirname(db.format_abspath(1, 'FMT1'))
+            sibling = bookdir + ' sibling'
+            os.makedirs(sibling)
+            victim = os.path.join(sibling, 'victim')
+            with open(victim, 'wb') as f:
+                f.write(b'outside')
+
+            conn = server.connect()
+            url_for = server.handler.router.url_for
+            bad_name = '../../' + os.path.basename(sibling) + '/victim'
+            r, data = make_request(
+                conn, url_for('/data-files/upload', book_id=1), prefix='', method='POST',
+                username='12', password='test',
+                headers={'Content-Type': 'application/json'}, data=json.dumps([{
+                    'name': bad_name,
+                    'data_url': 'data:application/octet-stream;base64,' + standard_b64encode(b'bad').decode('ascii'),
+                }]).encode('utf-8'))
+            self.ae(r.status, OK)
+            with open(victim, 'rb') as f:
+                self.ae(f.read(), b'outside')
+            self.assertNotIn('data/' + bad_name, data['data_files'])
+
+            r, data = make_request(
+                conn, url_for('/data-files/remove', book_id=1), prefix='', method='POST',
+                username='12', password='test',
+                headers={'Content-Type': 'application/json'}, data=json.dumps(['data/' + bad_name]).encode('utf-8'))
+            self.ae(r.status, OK)
+            with open(victim, 'rb') as f:
+                self.ae(f.read(), b'outside')
+
+    # }}}
+
     def test_ajax_categories(self):  # {{{
         'Test /ajax/categories and /ajax/search'
         with self.create_server() as server:
@@ -93,6 +161,8 @@ class ContentTest(LibraryBaseTest):
             db = server.handler.router.ctx.library_broker.get(None)
             db.set_pref('virtual_libraries', {'1':'id:1', '12':'id:1 or id:2'})
             db.set_field('tags', {1: ['present'], 3: ['missing']})
+            db.add_extra_files(1, {'data/visible.txt': BytesIO(b'visible')})
+            db.add_extra_files(3, {'data/hidden.txt': BytesIO(b'hidden')})
             self.assertTrue(db.has_id(3))
             server.handler.ctx.user_manager.add_user('12', 'test', restriction={
                 'library_restrictions':{os.path.basename(db.backend.library_path): 'id:1 or id:2'}})
@@ -157,6 +227,27 @@ class ContentTest(LibraryBaseTest):
             # content.py
             ok(url_for('/get', what='thumb', book_id=1))
             nf(url_for('/get', what='thumb', book_id=3))
+            ae(ok(url_for('/data-files/get', book_id=1, relpath='data/visible.txt')), b'visible')
+            nf(url_for('/data-files/get', book_id=3, relpath='data/hidden.txt'))
+            nf(url_for('/data-files/upload', book_id=3), method='POST')
+            nf(url_for('/data-files/remove', book_id=3), method='POST')
+
+            # fts.py
+            def fake_fts_search(query, use_stemming=True, return_text=True, process_each_result=None, restrict_to_book_ids=None, **kwargs):
+                candidate_ids = {1, 3} if restrict_to_book_ids is None else set(restrict_to_book_ids) & {1, 3}
+                for book_id in sorted(candidate_ids):
+                    result = {'id': book_id, 'book_id': book_id, 'format': 'TXT', 'text': 'matching text'}
+                    yield process_each_result(result) if process_each_result else result
+
+            db.is_fts_enabled = lambda: True
+            db.fts_indexing_progress = lambda: (0, 0, None)
+            db.fts_search = fake_fts_search
+            data = ok('/fts/search?' + urlencode({'query': 'matching'}))
+            ae({x['book_id'] for x in data['results']}, {1})
+            data = ok('/fts/search?' + urlencode({'query': 'matching', 'restriction': 'tags:missing'}))
+            ae({x['book_id'] for x in data['results']}, set())
+            data = ok('/fts/snippets/1,3?' + urlencode({'query': 'matching'}))
+            ae(set(map(int, data['snippets'])), {1})
 
             # Not going test legacy and opds as they are too painful
     # }}}

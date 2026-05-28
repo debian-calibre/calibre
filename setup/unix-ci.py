@@ -193,6 +193,7 @@ IGNORED_DEPENDENCY_CVES = [
     'CVE-2026-1502',
     'CVE-2026-4224',  # expat parser unused
     'CVE-2026-4519',  # webbrowser() unused
+    'CVE-2026-7210',  # DoS in unused XML parser
     # nodejs used only at build time CVEs are irrelevant
     'CVE-2026-21710',
     'CVE-2026-21717',
@@ -316,8 +317,8 @@ username = api
         os.environ['OPENSSL_MODULES'] = os.path.join(SW, 'lib', 'ossl-modules')
         os.environ['PIPER_TTS_DIR'] = os.path.join(SW, 'piper')
         if ismacos:
-            os.environ['SSL_CERT_FILE'] = os.path.abspath(
-                'resources/mozilla-ca-certs.pem')
+            os.environ['SSL_CERT_DIR'] = os.path.abspath(
+                'resources/mozilla-ca-certs')
             # needed to ensure correct libxml2 is loaded
             os.environ['DYLD_INSERT_LIBRARIES'] = ':'.join(os.path.join(SW, 'lib', x) for x in 'libxml2.dylib libxslt.dylib libexslt.dylib'.split())
             os.environ['OPENSSL_ENGINES'] = os.path.join(SW, 'lib', 'engines-3')
