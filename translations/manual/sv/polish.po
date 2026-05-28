@@ -8,14 +8,15 @@
 # Karl Jonatan Nyberg, 2016-2017,2021-2024
 # Karl Jonatan Nyberg, 2019-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
+# Karl Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 02:31+0000\n"
+"POT-Creation-Date: 2026-05-24 03:34+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2025-2026\n"
+"Last-Translator: Karl Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,7 +73,7 @@ msgid ""
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr "Namn: Dessa är sökvägar till böckernas filerna relativt rotmappen. De innehåller alltid POSIX-avskiljare och är utan citattecken. De kan ses som kanoniska identifierare för filer i boken. De flesta metoder på behållarobjektet arbetar med namn. Namn är alltid i NFC Unicode-normalformen."
+msgstr "Namn: Dessa är sökvägar till böckernas filer relativt rotmappen. De innehåller alltid POSIX-avskiljare och är utan citattecken. De kan ses som kanoniska identifierare för filer i boken. De flesta metoder på behållarobjektet arbetar med namn. Namn är alltid i NFC Unicode-normalformen."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -82,7 +83,7 @@ msgid ""
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr "Kloner: behållarobjektet stödjer effektiva on-disk kloning, som används för att implementera kontrollpunkter i e-bokredigeraren. För att göra detta arbete, bör du aldrig komma åt filer på filsystemet direkt. Istället används :meth:`raw_data` eller :meth:` open` att läsa / skriva till komponentfiler i boken."
+msgstr "Kloner: behållarobjektet stödjer effektiva kloning på disk, som används för att implementera kontrollpunkter i e-bokredigeraren. För att detta ska fungera, bör du aldrig komma åt filer på filsystemet direkt. Istället används :meth:`raw_data` eller :meth:`open` att läsa / skriva till komponentfiler i boken."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
@@ -94,7 +95,7 @@ msgstr "När du konverterar mellan hrefs och namn använd de metoder som denna k
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
 msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
-msgstr "Konvertera en absolut sökväg till en kanoniskt namn i förhållande till :attr:`root`"
+msgstr "Konvertera en absolut sökväg till ett kanoniskt namn i förhållande till :attr:`root`"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:0
 msgid "Parameters"
@@ -143,7 +144,7 @@ msgstr "Typen av bok (epub för EPUB-filer och azw3 för AZW3-filer)"
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the e-book"
 " file at outpath."
-msgstr "Begå alla smutsiga analyserade objekt till filsystemet och skriva ut ebook filen på utsökväg."
+msgstr "Skriv alla ändrade analyserade objekt till filsystemet och skriv e-boksfilen till utsökvägen."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
@@ -188,7 +189,7 @@ msgstr "True om en fil/mapp som motsvarar det kanoniska namn som finns. Observer
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr "Returnera storlek i byte av filen som representeras av det angivna kanoniska namnet. Hanterar automatiskt smutsiga analyserade objekt. Se även: :meth:`analyserade`"
+msgstr "Returnera storlek i byte av filen som representeras av det angivna kanoniska namnet. Hanterar automatiskt smutsiga analyserade objekt. Se även: :meth:`parsed`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
@@ -397,10 +398,10 @@ msgstr "Om True är det återgivna unicode-objektet normaliserat till NFC-normal
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.relpath:1
 msgid ""
-"Convert an absolute path (with os separators) to a path relative to base "
+"Convert an absolute path (with OS separators) to a path relative to base "
 "(defaults to self.root). The relative path is *not* a name. Use "
 ":meth:`abspath_to_name` for that."
-msgstr "Konvertera en absolut sökväg (med os avskiljare) till en sökväg i förhållande till basen (standard att self.root). Den relativa sökvägen är *inte* ett namn. Använd :meth:`abspath_to_name` för detta."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_spine:1
@@ -488,7 +489,7 @@ msgstr "En iterator som ger posten name is_linear för varje post i bokryggen. P
 msgid ""
 "An iterator yielding name and is_linear for every item in the books' spine. "
 "See also: :attr:`spine_iter` and :attr:`spine_items`."
-msgstr "En iterator som ger name och is_linear för varje post i bokens rygg. Se även: :attr:`spine_iter` and :attr:`spine_items`."
+msgstr "En iterator som ger name och is_linear för varje post i bokens rygg. Se även: :attr:`spine_iter` och :attr:`spine_items`."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:36
 msgid "Managing component files in a container"
@@ -532,7 +533,7 @@ msgstr "Byt namn på filer i behållaren, uppdaterar automatiskt alla länkar ti
 msgid ""
 "A mapping of old canonical name to new canonical name, for example: "
 ":code:`{'text/chapter1.html': 'chapter1.html'}`."
-msgstr "En kartläggning av gammalt kanoniskt namn till nytt kanoniskt namn, till exempel: :code:`{'text/kapitel 1.html': 'kapitel 1.html'}`."
+msgstr "En kartläggning av gammalt kanoniskt namn till nytt kanoniskt namn, till exempel: :code:`{'text/chapter1.html': 'chapter1.html'}`."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.get_recommended_folders:1
@@ -599,7 +600,7 @@ msgstr "Ta bort ett befintligt skal, om något. Returnerar False om inget befint
 msgid ""
 "Either create a new jacket from the book's metadata or replace an existing "
 "jacket. Returns True if an existing jacket was replaced."
-msgstr "Antingen skapa ett nytt skal från bokens metadata eller ersätta en befintligt skal. Returnerar True om ett befintligt omslag ersattes."
+msgstr "Antingen skapa ett nytt skal från bokens metadata eller ersätta ett befintligt skal. Returnerar True om ett befintligt omslag ersattes."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
@@ -703,7 +704,7 @@ msgid ""
 "covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
 "EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
 "existing image in the book)"
-msgstr "Ingen eller en ordbok som kontrollerar hur omslaget ställs in. Ordboken kan innehålla poster: **keep_aspect**: True eller False (bevara omslagsbildförhållanden i EPUB) **no_svg**: True eller False (använd ett SVG-omslagshölje i EPUB-titelsidan) **befintliga**: True eller False (``cover_path`` refererar till en befintlig bild i boken)"
+msgstr "Ingen eller en ordbok som kontrollerar hur omslaget ställs in. Ordboken kan innehålla poster: **keep_aspect**: True or False (bevara omslagsbildförhållanden i EPUB) **no_svg**: True or False (använd ett SVG-omslagshölje i EPUB-titelsidan) **existing**: True or False (``cover_path`` refererar till en befintlig bild i boken)"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
@@ -799,7 +800,7 @@ msgid ""
 "expression in the list corresponds to a level of the generate ToC. For "
 "example: :code:`['//h:h1', '//h:h2', '//h:h3']` will generate a three level "
 "Table of Contents from the ``<h1>``, ``<h2>`` and ``<h3>`` tags."
-msgstr "Skapa en innehållsförteckning från en lista med XPath-uttryck. Varje uttryck i listan motsvarar en nivå av den skapade innehållsförteckningen. Till exempel: :code:`['//h:h1', '//h:h2', '//h:h3']`  kommer att skapa en trenivåers innehållsförteckning från ``<h1>``, ``<h2>`` and ``<h3>`` taggar."
+msgstr "Skapa en innehållsförteckning från en lista med XPath-uttryck. Varje uttryck i listan motsvarar en nivå av den skapade innehållsförteckningen. Till exempel: :code:`['//h:h1', '//h:h2', '//h:h3']`  kommer att skapa en trenivåers innehållsförteckning från ``<h1>``, ``<h2>`` och ``<h3>`` taggar."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
 #: of calibre.ebooks.oeb.polish.toc.from_links:1
@@ -816,7 +817,7 @@ msgstr "Skapa innehållsförteckning från filer i boken."
 msgid ""
 "Create an inline (HTML) Table of Contents from an existing NCX Table of "
 "Contents."
-msgstr "Skapa en indragsinnehållsförteckning (HTML) från en befintlig NCX-innehållsförteckning."
+msgstr "Skapa en inbäddad innehållsförteckning (HTML) från en befintlig NCX-innehållsförteckning."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
 #: of calibre.ebooks.oeb.polish.toc.create_inline_toc:3
@@ -839,7 +840,7 @@ msgstr "Basklass för enskilda verktyg i ett bokredigering insticksmodul. Använ
 msgid ""
 "``self.plugin``: A reference to the :class:`calibre.customize.Plugin` object"
 " to which this tool belongs."
-msgstr "``self.plugin``: En referens till: :class:`calibre.customize.Plugin` objekt till vilket detta verktyg tillhör."
+msgstr "``self.plugin``: En referens till det :class:`calibre.customize.Plugin`-objekt som verktyget tillhör."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool:4
@@ -1037,7 +1038,7 @@ msgstr "En mall för att initiera den öppnade redigeraren med"
 msgid ""
 "Open the e-book at ``path`` for editing. Will show an error if the e-book is"
 " not in a supported format or the current book has unsaved changes."
-msgstr "Öppna e-bok på ``sökväg`` för redigering. Kommer att visa ett fel om e-boken inte är i ett format som stöds eller den aktuella boken har osparade ändringar."
+msgstr "Öppna e-bok på ``path`` för redigering. Kommer att visa ett fel om e-boken inte är i ett format som stöds eller den aktuella boken har osparade ändringar."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.open_book:3

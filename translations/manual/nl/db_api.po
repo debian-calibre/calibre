@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-20 10:11+0000\n"
+"POT-Creation-Date: 2026-05-24 03:34+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015\n"
 "Language-Team: Dutch (http://app.transifex.com/calibre/calibre/language/nl/)\n"
@@ -59,50 +59,50 @@ msgid ""
 "was necessary for maximum performance and flexibility."
 msgstr "SQLITE wordt gebruikt om te lezen en schrijven van metadata .db op een robuuste manier. De logica van alle tabellen lezen/sorteren/zoeken/cachen wordt herimplementeerd. Dit was noodzakelijk voor maximale prestatie en flexibiliteit."
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
 msgstr "Wanneer een nieuw boekrecord wordt aangemaakt in de database, met het boek-id als enige argument"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
 msgid "When a book format is edited, with arguments: (book_id, fmt)"
 msgstr "Wanneer een boekformaat wordt bewerkt, met argumenten: (boek_id, fmt)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.books_removed:1
 msgid ""
 "When books are removed from the database with the list of book ids as the "
 "only argument"
 msgstr "Wanneer boeken uit de database worden verwijderd met de lijst met boek-id's als enige argument"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
 msgstr "Wanneer een formaat aan een boek wordt toegevoegd, met argumenten: (boek_id, formaat)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
 msgstr "Wanneer formaten uit een boek worden verwijderd, met argumenten: (toewijzing van boek-id aan set formaten die uit het boek zijn verwijderd)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
 msgid "When the indexing progress changes"
 msgstr "Wanneer de indexeringsvoortgang verandert"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_removed:1
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
 "(field_name, affected book ids, ids of removed items)"
 msgstr "Wanneer items zoals tags of auteurs uit sommige boeken worden verwijderd. Argumenten: (veldnaam, betreffende boek-id's, id's van verwijderde items)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_renamed:1
 msgid ""
 "When items such as tags or authors are renamed in some or all books. "
@@ -110,21 +110,21 @@ msgid ""
 "id)"
 msgstr "Wanneer items zoals tags of auteurs in sommige of alle boeken worden hernoemd. Argumenten: (veldnaam, betreffende boek-id's, kaart van oude item-id naar nieuwe item-id)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.links_changed:1
 msgid ""
 "When the links associated with items(s) are changed, with arguments: "
 "(field_name, item_ids)"
 msgstr "Wanneer de links die aan items zijn gekoppeld worden gewijzigd, met argumenten: (veldnaam, item-id's)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
 msgid ""
 "When some metadata is changed for some books, with arguments: (name of "
 "changed field, set of affected book ids)"
 msgstr "Wanneer bepaalde metadata voor bepaalde boeken wordt gewijzigd, met argumenten: (naam van het gewijzigde veld, reeks betreffende boek-id's)"
 
-#: ../../../__w/calibre/calibre/manual/docstring of
+#: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.notes_changed:1
 msgid ""
 "When the notes associated with item(s) are changed, with arguments: "
@@ -207,6 +207,11 @@ msgid ""
 msgstr "Voeg de opgegeven bron toe zodat deze door notities kan worden geraadpleegd en retourneer de inhoudshash ervan."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.all_annotation_styles:1
+msgid "Return a tuple of all built-in annotation styles."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_types:1
 msgid "Return a tuple of all annotation types in the database."
 msgstr "Geef een tuple terug met alle annotatietypen in de database."
@@ -276,6 +281,8 @@ msgstr "Geeft auteurgegevens terug als woordenboek met toetsen: naam, sortering,
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_data:3
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:3
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
@@ -288,6 +295,11 @@ msgid ""
 "preferring the author sort associated with the author over the computed "
 "string."
 msgstr "Geef een lijst met auteurs, terugkeren naar auteur_sorteren string voor de auteurs, voorkeur dat de auteur sortering geassocieerd is met de auteur over het berekende string."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.author_sorts:1
+msgid "Return author sorts for specified authors."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -616,9 +628,9 @@ msgstr "{veld: {veldwaarde, linkwaarde}, ... voor alle velden met een veldwaarde
 #: calibre.db.cache.Cache.get_book_path:1
 msgid ""
 "Return the relative book path for the given id. Prefer this because you can "
-"choose the directory separator, default use the os one. If unsafe is True, "
+"choose the directory separator, default use the OS one. If unsafe is True, "
 "allow to return None if the book_id is not in the library."
-msgstr "Geef het relatieve boekpad voor de opgegeven id terug. Geef hier de voorkeur aan, omdat u de mapseparator kunt kiezen. Standaard wordt die van het besturingssysteem gebruikt. Als unsafe True is, mag None worden teruggegeven als de book_id niet in de bibliotheek staat."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_categories:1
@@ -722,6 +734,11 @@ msgid ""
 msgstr "Geef een dict terug met de brongegevens en naam, of None als er geen bron met de opgegeven hash wordt gevonden."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.get_pages:1
+msgid "Return page count information for the specified book"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_proxy_metadata:1
 msgid ""
 "Like :meth:`get_metadata` except that it returns a ProxyMetadata object that"
@@ -808,6 +825,11 @@ msgid ""
 msgstr "Een tuple van alle extra bestanden die overeenkomen met het opgegeven patroon. Elk element van de tuple is ExtraFile(relpath, file_path, stat_result). Waarbij relpath het relatieve pad is van het bestand naar de boekmap, met / als scheidingsteken. stat_result is het resultaat van het aanroepen van os.stat() op het bestand."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.mark_for_pages_recount:1
+msgid "Mark all books for recount of pages"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_annotations_for_book:1
 msgid ""
 "Merge the specified annotations into the existing annotations for book_id, "
@@ -863,11 +885,27 @@ msgid ""
 msgstr "Geef de set resource-hashes terug van alle resources die door de notitie voor het opgegeven item worden gebruikt."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.pages_needs_scan:1
+msgid ""
+"Return the subset of books (or all books if empty) that are marked as "
+"needing a scan to update page count"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
 msgstr "Geef de waarde voor de opgegeven voorkeur terug of de waarde die is opgegeven als ``default`` als de voorkeur niet is ingesteld."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.queue_pages_scan:1
+msgid ""
+"Start a scan updating page counts for all books that need a scan. If book_id"
+" is specified, then only that book is scanned and it is always scanned. When"
+" `force` is True, the existing pages value, if any, is discarded so that the"
+" book is forcibly rescanned even if the existing value was up-to-date."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
@@ -1125,6 +1163,11 @@ msgid ""
 "updating a note automatically cleans up resources pertaining to that note "
 "anyway."
 msgstr "Stel het notitiedocument in. Als de doorzoekbare tekst verschilt van het document, geef deze dan op als searchable_text. Als het document verwijst naar bronnen, moeten hun hashes aanwezig zijn in resource_hashes. Stel remove_unused_resources in op True om ongebruikte bronnen op te ruimen. Houd er rekening mee dat het bijwerken van een notitie automatisch de bronnen met betrekking tot die notitie opruimt."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.set_pages:1
+msgid "Set page count information for the specified book"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
