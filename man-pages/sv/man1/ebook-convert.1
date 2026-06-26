@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.4 manpage writer.
+.\" by the Docutils 0.23 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "maj 28, 2026" "9.9.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "juni 26, 2026" "9.10.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -44,9 +44,9 @@ Konvertera en e\-bok från ett format till ett annat.
 .sp
 input_file är inmatningsfilen och output_file är utmatningsfilen. Båda måste anges som de två första argumenten i kommandot.
 .sp
-Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angivits för utmatningsfilen, så behandlas den som en mapp till vilken en \(dqÖppen e\-bok\(dq (OEB) bestående av HTML filer kommer att skrivas till den mappen. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
+Utmatningsformatet för e\-boken uppskattas utifrån filändelsen i output_file. output_file kan även ges specialformatet .EXT, där EXT är utmatningsfilsändelsen. Om det används kommer namnet på utmatningsfilen att härledas från namnet på inmatningsfilen. Observera att filnamnen inte får börja med bindestreck. Om ingen filinsticksmodul har angetts för utmatningsfilen, så behandlas den som en mapp till vilken en \(dqÖppen e\-bok\(dq (OEB) bestående av HTML filer kommer att skrivas till den mappen. Dessa filer är de filer som normalt sett skulle ha skickats till utmatningsinsticksmodulen.
 .sp
-Efter att ha angivit in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
+Efter att ha angett in\- och utmatningsfilerna kan du anpassa konverteringen genom att ange olika alternativ. Vilka alternativ som är tillgängliga beror på in\- och utmatningsfiltyperna. För att få hjälp med dem, ange in\- och utmatningsfilerna och lägg därefter till alternativet \-h.
 .sp
 För fullständig dokumentation om konverteringssystemet, gå till
 Konvertering av e\-bok \%<#\:conversion>
@@ -135,7 +135,7 @@ Det här alternativet behövs endast om du tänker använda EPUB:en med FBReader
 .INDENT 0.0
 .TP
 .B \-\-epub\-inline\-toc
-Infoga en indragsinnehållsförteckning som kommer att visas som en del av bokens innehåll.
+Infoga en inbäddad innehållsförteckning som visas som en del av bokens innehåll.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,7 +145,7 @@ Maximal bildstorlek (bredd x höjd). Ett värde på profile betyder att du anvä
 .INDENT 0.0
 .TP
 .B \-\-epub\-toc\-at\-end
-Placera den infogade indragsinnehållsförteckningen i slutet av boken istället för början.
+Placera den inbäddade innehållsförteckningen i slutet av boken i stället för i början.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ Om det anges, kommer utmatningsinsticksmodulen att försöka skapa utmatning som
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Titel för alla genererade indragsinnehållsförteckningar.
+Titel för genererad inbäddad innehållsförteckning.
 .UNINDENT
 .SH UTSEENDE OCH KÄNSLA
 .sp
@@ -203,7 +203,7 @@ Grundteckensnittsstorleken i punkter. Alla teckensnittsstorlekar i den producera
 .INDENT 0.0
 .TP
 .B \-\-change\-justification
-Ändra textjusteringen. Värdet \fB\(dq\fPvänster\fB\(dq\fP konverterar all marginaljusterad text i källan till vänsterjusterad text (dvs. ojusterad). Med värdet \fB\(dq\fPjustera\fB\(dq\fP konverteras all ojusterad text till mariginaljusterad. Värdet \fB\(dq\fPoriginal\fB\(dq\fP (standard) behåller de inställningar för justering som anges i källfilen. Observera att endast vissa format stöder mariginaljustering.
+Ändra textjusteringen. Värdet \fB\(dq\fPvänster\fB\(dq\fP konverterar all marginaljusterad text i källan till vänsterjusterad text (dvs. ojusterad). Med värdet \fB\(dq\fPjustera\fB\(dq\fP konverteras all ojusterad text till marginaljusterad. Värdet \fB\(dq\fPoriginal\fB\(dq\fP (standard) behåller de inställningar för justering som anges i källfilen. Observera att endast vissa format stöder marginaljustering.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -253,7 +253,7 @@ Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mell
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är en kombinerad karaktär av ett par tecken som ff, fi, fl et cetera. De flesta läsare har inte stöd för ligaturer i sina standardteckensnitt, så det är osannolikt att de renderas korrekt. Som standard kommer calibre att förvandla en ligatur till motsvarande par normala tecken. Observera att ligaturer här endast betyder Unicode\-ligaturer, inte ligaturer skapade via CSS eller teckensnittsstilar. Det här alternativet kommer att bevara dem istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är ett sammansatt tecken av ett par tecken som ff, fi, fl et cetera. De flesta läsare har inte stöd för ligaturer i sina standardteckensnitt, så det är osannolikt att de renderas korrekt. Som standard kommer calibre att förvandla en ligatur till motsvarande par normala tecken. Observera att ligaturer här endast betyder Unicode\-ligaturer, inte ligaturer skapade via CSS eller teckensnittsstilar. Det här alternativet kommer att bevara dem istället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,7 +308,7 @@ Konvertera vanliga citattecken, bindestreck och ellipser till deras typografiskt
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Använd delmängd av alla inbäddade teckensnitt. Varje inbäddat teckensnitt reduceras till endast innehålla de glyfer som används i detta dokument. Detta minskar storleken på teckensnittsfiler. Användbart om du bäddar in ett särskilt stort teckensnitt med massor av oanvända glyfer.
+Skapa delmängder av alla inbäddade teckensnitt. Varje inbäddat teckensnitt reduceras till att endast innehålla de glyfer som används i detta dokument. Detta minskar storleken på teckensnittsfiler. Användbart om du bäddar in ett särskilt stort teckensnitt med massor av oanvända glyfer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -620,7 +620,7 @@ Spara utmatning från olika stadier av konverteringsprocessen till den angivna m
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Nivå på informationsnivån. Ange flera gånger för ökad informationsnivå. Att ange den två gånger resulterar i full informationsnivån, en gång i medelinformationsnivån och noll gånger i minsta nivån.
+Detaljnivå. Ange flera gånger för högre detaljnivå. Två gånger ger full detaljnivå, en gång medelhög detaljnivå och noll gånger lägsta detaljnivå.
 .UNINDENT
 .SH Author
 Kovid Goyal

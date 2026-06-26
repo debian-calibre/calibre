@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.4 manpage writer.
+.\" by the Docutils 0.23 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "maj 28, 2026" "9.9.0" "calibre"
+.TH "CALIBREDB" "1" "juni 26, 2026" "9.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -89,7 +89,7 @@ list
 add
 .INDENT 2.0
 .IP \(bu 2
-TILLÄGGNING TILL FRÅN MAPPAR
+LÄGGA TILL FRÅN MAPPAR
 .UNINDENT
 .IP \(bu 2
 remove
@@ -190,7 +190,7 @@ Sortera resultaten i stigande ordning
 .INDENT 0.0
 .TP
 .B \-\-fields, \-f
-Fälten som ska visas när böcker listar i databasen. Bör vara en kommaseparerad lista med fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standard: title,authors. Specialfältet \fB\(dq\fPalla\fB\(dq\fP kan användas för att välja alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
+Fält som ska visas när böcker listas i databasen. Ska vara en kommaseparerad lista med fält. Tillgängliga fält: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Standard: title,authors. Specialfältet \fB\(dq\fPall\fB\(dq\fP kan användas för att välja alla fält. Förutom de inbyggda fälten ovan är anpassade fält också tillgängliga som *field_name, till exempel för ett anpassat fält #rating, använd namnet: *rating
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -316,7 +316,7 @@ Ange taggar i den tillagda boken eller de tillagda böckerna
 .B \-\-title, \-t
 Ange namn på den tillagda boken eller de tillagda böckerna
 .UNINDENT
-.SS TILLÄGGNING TILL FRÅN MAPPAR
+.SS LÄGGA TILL FRÅN MAPPAR
 .sp
 Alternativ för att anpassa tilläggning av böcker från mappar. Som standard läggs endast filer som har ändelser av kända e\-boksfiltyper till.
 .INDENT 0.0
@@ -581,12 +581,12 @@ Regex beskriver taggar som ska exkluderas som genrer Standard: \fB\(aq\fP[.+]|^+
 .INDENT 0.0
 .TP
 .B \-\-exclusion\-rules
-Anger de regler som används för att exkludera böcker från den genererade katalogen.Modellen för en undantagsregel är antingen(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTaggar\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) eller(\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP).Till exempel:((\fB\(dq\fPArkiverade böcker\fB\(dq\fP, \fB\(dq\fP# status\fB\(dq\fP, \fB\(dq\fPArkiverade\fB\(dq\fP),)kommer att exkludera en bok med ett värde på \fB\(dq\fPstatus\fB\(dq\fP \fB\(dq\fPArkiverat\fB\(dq\fP i den anpassade kolumnen.När flera regler är definierade, kommer alla regler tillämpas.Standard:\fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fPGäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att exkludera böcker från den genererade katalogen. Modellen för en undantagsregel är antingen (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) eller (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Till exempel: ((\fB\(dq\fPArchived books\fB\(dq\fP, \fB\(dq\fP#status\fB\(dq\fP, \fB\(dq\fPArchived\fB\(dq\fP),) kommer att exkludera en bok med värdet \fB\(aq\fPArchived\fB\(aq\fP i den anpassade kolumnen \fB\(aq\fPstatus\fB\(aq\fP\&. När flera regler har definierats tillämpas alla regler. Standard: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-authors
-Inkludera \fB\(aq\fPFörfattar\fB\(aq\fP sektion i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Inkludera sektionen \fB\(aq\fPFörfattare\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -601,12 +601,12 @@ Inkludera sektionen \fB\(aq\fPGenrer\fB\(aq\fP i katalogen. Standard: \fB\(aq\fP
 .INDENT 0.0
 .TP
 .B \-\-generate\-recently\-added
-Inkludera sektioen \fB\(aq\fPNyligen tillagda\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Inkludera sektionen \fB\(aq\fPNyligen tillagda\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-generate\-series
-Inkludera sektioen \fB\(aq\fPSerier\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Inkludera sektionen \fB\(aq\fPSerier\fB\(aq\fP i katalogen. Standard: \fB\(aq\fPFalse\fB\(aq\fP  Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -636,7 +636,7 @@ Anger utmatningsprofilen. I vissa fall krävs en utmatningsprofil för att optim
 .INDENT 0.0
 .TP
 .B \-\-prefix\-rules
-Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler är definierade, kommer den första matchande regeln användas. Standard: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Anger de regler som används för att inkludera prefix som indikerar lästa böcker, önskelistsposter och andra användardefinierade prefix. Modellen för en prefixregel är (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). När flera regler har definierats används den första matchande regeln. Standard: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -773,7 +773,7 @@ calibredb restore_database [options]
 mapp i calibre\-biblioteket. Det här är användbart om din metadata.db\-fil
 har skadats.
 .sp
-VARNING: Det här kommandot återskapar din databas hlet. Du förlorar
+VARNING: Det här kommandot återskapar din databas helt. Du förlorar
 alla sparade sökningar, användarkategorier, pluggbrädor, lagrade
 konverterings inställningar per bok och anpassade recept. Återställda metadata är
 bara så exakta som det som finns i OPF\-filerna.
@@ -964,7 +964,7 @@ Kontrollera indexeringsprocessen för heltextsökning.
 Aktiverar FTS\-indexering för det här biblioteket
 .TP
 .B disable
-Inaktiverar av FTS\-indexering för det här biblioteket
+Inaktiverar FTS\-indexering för det här biblioteket
 .TP
 .B status
 Visar aktuell indexeringsstatus

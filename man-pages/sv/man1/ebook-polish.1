@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.4 manpage writer.
+.\" by the Docutils 0.23 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "maj 28, 2026" "9.9.0" "calibre"
+.TH "EBOOK-POLISH" "1" "juni 26, 2026" "9.10.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
@@ -65,7 +65,7 @@ Komprimerar förlustfritt bilder i boken, för att minska filstorleken, utan att
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Sökvägen till en omslagsbild. Ändrar omslag angivit i boken. Om inget omslag finns, eller omslaget inte är korrekt identifierade, infogas ett nytt omslag.
+Sökvägen till en omslagsbild. Ändrar omslaget som anges i e\-boken. Om inget omslag finns, eller omslaget inte är korrekt identifierade, infogas ett nytt omslag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -85,7 +85,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Infoga ett \fB\(dq\fPbokomslag\fB\(dq\fP i början av boken som innehåller  alla om bokens metadata som titel, taggar, författare, serier, kommentarer,  etc. Alla tidigare bokomslag kommer att ersättas.
+Infoga en \fB\(dq\fPbokjacka\fB\(dq\fP i början av boken som innehåller all metadata för boken, t.ex. titel, taggar, författare, serier och kommentarer. Alla tidigare bokjackor kommer att ersättas.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -95,7 +95,7 @@ Sökväg till en OPF\-fil. Metadata i boken uppdateras från OPF\-filen.
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Ta bort tidigare infogat bokomslag.
+Ta bort tidigare infogad bokjacka.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -105,7 +105,7 @@ Ta bort mjuka bindestreck från all text i boken.
 .INDENT 0.0
 .TP
 .B \-\-remove\-unused\-css, \-u
-Ta bort alla oanvända CSS\-regler från stilmallar och <stil>taggar. Vissa böcker  skapade från produktionsmallar kan ha ett stort antal extra CSS\-regler som inte matchar något faktiskt innehåll. Dessa extra regler kan sakta ner läsenheter som behöver analysera dem alla.
+Ta bort alla oanvända CSS\-regler från stilmallar och <style>\-taggar. Vissa böcker  skapade från produktionsmallar kan ha ett stort antal extra CSS\-regler som inte matchar något faktiskt innehåll. Dessa extra regler kan sakta ner läsenheter som behöver analysera dem alla.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -115,7 +115,7 @@ Konvertera bindestreck, ellipser, citattecken, flertal bindestreck etc. till der
 .INDENT 0.0
 .TP
 .B \-\-subset\-fonts, \-f
-Underuppsätta teckensnitt innebär att man reducerar ett inbäddat teckensnitt så att det endast innehåller de tecken som används från det teckensnittet i boken. Detta minskar storleken på teckensnittsfilerna (halvering av teckensnittsfilstorlekar är vanligt). Till exempel, om boken använder ett specifikt teckensnitt för rubriker, kommer underuppsättningen att minska teckensnittet så att det endast innehåller de tecken som finns i själva rubrikerna i boken. Eller om boken bäddar in de fet och kursiva versionerna av ett teckensnitt, men fet och kursiv text är relativt sällsynt, eller helt saknas, kan fetstil och kursiv teckensnitt antingen reduceras till bara några få tecken eller tas bort helt. Den enda nackdelen med att underuppsätta teckensnitt är att om du vid ett senare tillfälle bestämmer dig för att lägga till mer text i dina böcker kanske den nyligen tillagda texten inte täcks av teckensnittet för delmängden.
+Att skapa delmängder av teckensnitt innebär att man reducerar ett inbäddat teckensnitt så att det endast innehåller de tecken som används från det teckensnittet i boken. Detta minskar storleken på teckensnittsfilerna (halvering av teckensnittsfilstorlekar är vanligt). Till exempel, om boken använder ett specifikt teckensnitt för rubriker, kommer delmängdsskapandet att reducera teckensnittet så att det endast innehåller de tecken som finns i själva rubrikerna i boken. Eller om boken bäddar in de feta och kursiva versionerna av ett teckensnitt, men fet och kursiv text är relativt sällsynt, eller helt saknas, kan teckensnitten för fet och kursiv stil antingen reduceras till bara några få tecken eller tas bort helt. Den enda nackdelen med att skapa delmängder av teckensnitt är att om du vid ett senare tillfälle bestämmer dig för att lägga till mer text i dina böcker kanske den nyligen tillagda texten inte täcks av delmängdsteckensnittet.
 .UNINDENT
 .INDENT 0.0
 .TP
