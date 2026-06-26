@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.4 manpage writer.
+.\" by the Docutils 0.23 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "května 28, 2026" "9.9.0" "calibre"
+.TH "CALIBREDB" "1" "června 26, 2026" "9.10.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,46 +40,58 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP is the command line interface to the calibre database. It has
-several sub\-commands, documented below.
+\fBcalibredb\fP je rozhraní příkazového řádku k databázi calibre. Má několik
+dílčích příkazů, které jsou zdokumentovány níže.
 .sp
-\fBcalibredb\fP can be used to manipulate either a calibre database
-specified by path or a calibre Content server running either on
-the local machine or over the internet. You can start a calibre
-Content server using either the \fBcalibre\-server\fP
-program or in the main calibre program click Connect/share  → 
-Start Content server\&. Since \fBcalibredb\fP can make changes to your
-calibre libraries, you must setup authentication on the server first. There
-are two ways to do that:
+\fBcalibredb\fP lze použít k manipulaci buď s databází calibre určenou
+cestou, nebo se serverem calibre Server s obsahem, který běží buď
+na místním počítači, nebo přes internet. Server s obsahem calibre
+můžete spustit buď pomocí programu \fBcalibre\-server\fP, nebo
+v hlavním programu calibre kliknutím na Připojit nebo sdílet  → 
+Spustit Server s obsahem\&. Protože \fBcalibredb\fP může provádět
+změny ve vašich knihovnách calibre, musíte na serveru nejprve nastavit
+ověřování. Lze to udělat dvěma způsoby:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-If you plan to connect only to a server running on the same computer,
-you can simply use the \fB\-\-enable\-local\-write\fP option of the
-Content server, to allow any program, including calibredb, running on
-the local computer to make changes to your calibre data. When running
-the server from the main calibre program, this option is in
-Preferences → Sharing over the net → Advanced\&. Be careful though,
-because some browsers, primarily Firefox, allow arbitrary websites to also
-access local servers. If you use Firefox, it is better to setup username
-and password, as described below. Local Network Access restriction has
-still not been implemented as of Firefox v149.
+.INDENT 2.0
+.TP
+.B Pokud se plánujete připojovat pouze k serveru spuštěnému na stejném
+počítači, můžete jednoduše použít volbu \fB\-\-enable\-local\-write\fP Serveru
+s obsahem, která umožní libovolnému programu včetně calibredb
+spuštěnému na místním počítači provádět změny ve vašich datech calibre.
+Při spuštění serveru z hlavního programu calibre je tato volba
+v Předvolby → Sdílení po síti → Rozšířené\&. Buďte však opatrní,
+protože některé prohlížeče, především Firefox, umožňují libovolným webům
+přistupovat také k místním serverům. Pokud používáte Firefox, je lepší
+nastavit uživatelské jméno a heslo, jak je popsáno níže. Omezení Local
+Network Access ve Firefoxu v149 stále ještě není implementováno.
+.UNINDENT
 .IP \(bu 2
-If you want to enable access over the internet, then you should setup
-user accounts on the server and use the \fB\-\-username\fP and \fB\-\-password\fP
-options to \fBcalibredb\fP to give it access. You can setup
-user authentication for \fBcalibre\-server\fP by using the \fB\-\-enable\-auth\fP
-option and using \fB\-\-manage\-users\fP to create the user accounts.
-If you are running the server from the main calibre program, use
-Preferences → Sharing over the net → Require username/password\&.
+Pokud chcete povolit přístup přes internet, měli byste na serveru nastavit
+uživatelské účty a použít volby \fB\-\-username\fP a \fB\-\-password\fP
+.INDENT 2.0
+.INDENT 3.5
+příkazu \fBcalibredb\fP, abyste mu udělili přístup. Ověřování
+uživatelů pro \fBcalibre\-server\fP můžete nastavit pomocí volby
+\fB\-\-enable\-auth\fP a vytvořit uživatelské účty pomocí \fB\-\-manage\-users\fP\&. Pokud
+.INDENT 0.0
+.INDENT 3.5
+server spouštíte z hlavního programu calibre, použijte Předvolby → 
+Sdílení po síti → Vyžadovat uživatelské jméno a heslo pro přístup k Serveru
+s obsahem\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-To connect to a running Content server, pass the URL of the server to the
-\fB\-\-with\-library\fP option, see the documentation of that option for
-details and examples.
+Chcete\-li se připojit ke spuštěnému Serveru s obsahem, předejte URL
+serveru volbě \fB\-\-with\-library\fP; podrobnosti a příklady najdete
+v dokumentaci k této volbě.
 .INDENT 0.0
 .IP \(bu 2
 GLOBÁLNÍ VOLBY
@@ -372,7 +384,7 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .TP
 .B \-\-as\-extra\-data\-file
-Přidat soubor jako dodatečný datový soubor do knihy, ne jako formát e\-knihy
+Přidat soubor do knihy jako dodatečný datový soubor, ne jako formát e\-knihy
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -769,7 +781,7 @@ calibredb restore_database [options]
 .sp
 Obnovit tuto databázi z metadat uložených v souborech OPF v každé
 složce knihovny Calibre. To je užitečné, pokud byl váš soubor
-meatadata.db poškozen.
+metadata.db poškozen.
 .sp
 VAROVÁNÍ: Tento příkaz znovu úplně vygeneruje vaši databázi. Ztratíte
 všechna uložená hledání, uživatelské katalogy, zásuvné panely, uložená
@@ -937,7 +949,7 @@ calibredb search [options] search expression
 .UNINDENT
 .sp
 Vyhledat v knihovně zadaný hledaný výraz vracející čárkami oddělený seznam
-identifikátorů knih odpovídající hledanému výrazu.Výstupní formát je užitečný
+identifikátorů knih odpovídající hledanému výrazu. Výstupní formát je užitečný
 pro zásobení jiných příkazů, které přijímají seznam identifikátorů jako vstup.
 .sp
 Hledaný výraz může být cokoliv z výkonného jazyka vyhledávacích dotazů Calibre,
@@ -959,24 +971,24 @@ calibredb fts_index [volby] enable/disable/status/reindex
 .UNINDENT
 .UNINDENT
 .sp
-Ovládání procesu indexování fulltextového vyhledávání.
+Řídí proces indexování pro fulltextové vyhledávání.
 .INDENT 0.0
 .TP
 .B enable
-Zapne indexování FTV pro tuto knihovnu.
+Zapne indexování FTS pro tuto knihovnu
 .TP
 .B disable
-Vypne indexování FTV pro tuto knihovnu.
+Vypne indexování FTS pro tuto knihovnu
 .TP
 .B status
 Zobrazí aktuální stav indexování
 .TP
 .B reindex
-Může být použito ke znovu indexování buď konkrétních
-knih, nebo celé knihovny. Pro znovu indexování konkrétních
-knih zadejte identifikátory knih jako další argumenty za
-příkazem reindex. Pokud nejsou zadány žádné identifikátory
-knih, bude znovu indexována celá knihovna.
+Slouží k přeindexování konkrétních knih nebo
+celé knihovny. Chcete\-li přeindexovat konkrétní knihy,
+zadejte ID knih jako další argumenty za příkazem
+reindex. Pokud nejsou zadána žádná ID knih,
+přeindexuje se celá knihovna.
 .UNINDENT
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces

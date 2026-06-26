@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.4 manpage writer.
+.\" by the Docutils 0.23 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "5월 28, 2026" "9.9.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "6월 26, 2026" "9.10.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -87,17 +87,17 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-캘리버를 Windows 기본 프로그램에 등록/제거 합니다. \fB\-\-default\-programs\fP = \fB(register|unregister)\fP
+calibre를 Windows 기본 프로그램에 등록/제거 합니다. \fB\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-diff
-캘리버의 diff 도구를 실행합니다. 예: calibre\-debug \fB\-\-diff\fP 파일1 파일2
+calibre의 diff 도구를 실행합니다. 예: calibre\-debug \fB\-\-diff\fP 파일1 파일2
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-캘리버 \fB\(dq\fP책 편집\fB\(dq\fP 도구를 디버그 모드로 실행합니다. \-g와 마찬가지로 명령줄 인수를 전달하려면 \-\-를 사용하세요.
+calibre \fB\(dq\fP책 편집\fB\(dq\fP 도구를 디버그 모드로 실행합니다. \-g와 마찬가지로 명령줄 인수를 전달하려면 \-\-를 사용하세요.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -122,7 +122,7 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-지정한 경로에 로그를 기록하면서 GUI를 디버그 콘솔과 함께 실행합니다. 내부 용도 전용이며, GUI를 디버그 모드로 실행하려면 \-g 옵션을 사용하십시오.
+지정한 경로에 로그를 기록하면서 GUI를 디버그 콘솔과 함께 실행합니다. 내부 용도 전용이며, GUI를 디버그 모드로 실행하려면 \-g 옵션을 사용하기
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -137,12 +137,12 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-이전에 내보낸 캘리버 데이터 가져오기
+이전에 내보낸 calibre 데이터 가져오기
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-inspect\-mobi, \-m
-지정된 경로의 MOBI 파일을 검사합니다.
+지정된 경로의 MOBI 파일을 검사
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -152,7 +152,7 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-paths
-캘리버 환경을 설정하는데 필요한 경로들을 출력합니다.
+calibre 환경을 설정하는데 필요한 경로들을 출력
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -162,7 +162,7 @@ Python 코드를 실행합니다.
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-디버깅을 활성화한 상태로 GUI를 실행합니다. 디버그 출력은 stdout과 stderr에 기록됩니다. 명령줄 인수를 전달하려면 \fB\-\-\fP 뒤에 인수를 붙이십시오. 예: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
+디버깅을 활성화한 상태로 GUI를 실행합니다. 디버그 출력은 stdout과 stderr에 기록됩니다. 명령줄 인수를 전달하려면 \fB\-\-\fP 뒤에 인수를 붙이십시오. 예: calibre\-debug \-g \fB\-\-\fP /path/to/ebook.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -172,7 +172,7 @@ DEBUG 플래그를 설정한 채 실행하지 마세요
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-실행 중인 캘리버 인스턴스가 있다면 종료시킵니다. 만일 실행 중인 작업이 있다면 조용히 처리가 중단되니 조심해서 사용하도록 하십시오.
+실행 중인 calibre 인스턴스가 있다면 종료시킵니다. 만일 실행 중인 작업이 있다면 조용히 처리가 중단되니 조심해서 사용하도록 하십시오.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -182,7 +182,7 @@ DEBUG 플래그를 설정한 채 실행하지 마세요
 .INDENT 0.0
 .TP
 .B \-\-test\-build
-빌드 시 바이너리 모듈을 검사합니다.
+빌드 시 바이너리 모듈을 검사
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -192,7 +192,7 @@ DEBUG 플래그를 설정한 채 실행하지 마세요
 .INDENT 0.0
 .TP
 .B \-\-version
-프로그램의 버전을 표시한 후 종료합니다.
+프로그램의 버전을 표시한 후 종료함
 .UNINDENT
 .INDENT 0.0
 .TP

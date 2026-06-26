@@ -194,6 +194,8 @@ IGNORED_DEPENDENCY_CVES = [
     'CVE-2026-4224',  # expat parser unused
     'CVE-2026-4519',  # webbrowser() unused
     'CVE-2026-7210',  # DoS in unused XML parser
+    'CVE-2026-3276',  # DoS in unicodedata.normalize()
+    'CVE-2026-7774',  # tarfile.data_filter path traversal bypass
     # nodejs used only at build time CVEs are irrelevant
     'CVE-2026-21710',
     'CVE-2026-21717',
@@ -201,6 +203,8 @@ IGNORED_DEPENDENCY_CVES = [
     'CVE-2026-21713',
     'CVE-2026-21715',
     'CVE-2026-21716',
+    'CVE-2026-48937',
+    'CVE-2026-48617',
     # libtiff
     'CVE-2025-8851',  # this is erroneously marked as fixed in the database but no release of libtiff has been made with the fix
     # hyphen
@@ -215,6 +219,7 @@ IGNORED_DEPENDENCY_CVES = [
     'CVE-2025-25469', 'CVE-2025-25468',  # memory leak, not a security issue
     'CVE-2025-12343', 'CVE-2025-10256',  # DoS in video decoder unused in calibre
     'CVE-2026-40962',  # overflow in video decoder not used by calibre
+    'CVE-2026-8461',  # DoS in YUV decoder unused in calibre
 
     'CVE-2026-2673',  # openssl fix not released
 ]

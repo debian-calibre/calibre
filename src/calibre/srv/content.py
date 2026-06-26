@@ -248,7 +248,17 @@ def static(ctx, rd, what):
 
 @endpoint('/favicon.png', auth_required=False, cache_control=24)
 def favicon(ctx, rd):
-    return share_open(I('lt.png'), 'rb')
+    return share_open(I('favicon-512.png'), 'rb')
+
+
+@endpoint('/favicon.svg', auth_required=False, cache_control=24)
+def favicon_svg(ctx, rd):
+    return share_open(I('calibre.svg'), 'rb')
+
+
+@endpoint('/favicon-192.png', auth_required=False, cache_control=24)
+def favicon_192(ctx, rd):
+    return share_open(I('favicon-192.png'), 'rb')
 
 
 @endpoint('/apple-touch-icon.png', auth_required=False, cache_control=24)

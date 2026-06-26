@@ -123,13 +123,16 @@ def _add_default_custom_column_values(mi, fm):
     cols = fm.custom_field_metadata(include_composites=False)
     for cc,col in cols.items():
         dv = col['display'].get('default_value', None)
+        if dv is None:
+            continue
         try:
-            if dv is not None:
-                if not mi.get_user_metadata(cc, make_copy=False):
-                    mi.set_user_metadata(cc, col)
-                dt = col['datatype']
-                if dt == 'datetime' and icu_lower(dv) == 'now':
-                    dv = nowf()
+            if not mi.get_user_metadata(cc, make_copy=False):
+                mi.set_user_metadata(cc, col)
+            dt = col['datatype']
+            if dt == 'datetime' and icu_lower(dv) == 'now':
+                dv = nowf()
+            current_val = mi.get(cc, default=mi)
+            if current_val is mi:
                 mi.set(cc, dv)
         except Exception:
             traceback.print_exc()
@@ -3792,30 +3795,30 @@ def import_library(library_key, importer, library_path, progress=None, abort=Non
         raise ValueError('Corrupted files:\n' + '\n'.join(importer.corrupted_files))
     cache = Cache(DB(library_path, load_user_formatter_functions=False))
     cache.init()
-
-    format_data = {int(book_id):data for book_id, data in metadata['format_data'].items()}
-    extra_files = {int(book_id):data for book_id, data in metadata.get('extra_files', {}).items()}
-    for i, (book_id, fmt_key_map) in enumerate(format_data.items()):
-        if abort is not None and abort.is_set():
-            return
-        title = cache._field_for('title', book_id)
-        if progress is not None:
-            progress(title, i + poff, total)
-        cache._update_path((book_id,), mark_as_dirtied=False)
-        for fmt, fmtkey in fmt_key_map.items():
-            if fmt == '.cover':
-                with importer.start_file(fmtkey, _('Cover for %s') % title) as stream:
+    with cache.write_lock:
+        format_data = {int(book_id):data for book_id, data in metadata['format_data'].items()}
+        extra_files = {int(book_id):data for book_id, data in metadata.get('extra_files', {}).items()}
+        for i, (book_id, fmt_key_map) in enumerate(format_data.items()):
+            if abort is not None and abort.is_set():
+                return
+            title = cache._field_for('title', book_id)
+            if progress is not None:
+                progress(title, i + poff, total)
+            cache._update_path((book_id,), mark_as_dirtied=False)
+            for fmt, fmtkey in fmt_key_map.items():
+                if fmt == '.cover':
+                    with importer.start_file(fmtkey, _('Cover for %s') % title) as stream:
+                        path = cache._get_book_path(book_id)
+                        cache.backend.set_cover(book_id, path, stream, no_processing=True)
+                else:
+                    with importer.start_file(fmtkey, _('{0} format for {1}').format(fmt.upper(), title)) as stream:
+                        size, fname = cache._do_add_format(book_id, fmt, stream, mtime=stream.mtime)
+                        cache.fields['formats'].table.update_fmt(book_id, fmt, fname, size, cache.backend)
+            for relpath, efkey in extra_files.get(book_id, {}).items():
+                with importer.start_file(efkey, _('Extra file {0} for book {1}').format(relpath, title)) as stream:
                     path = cache._get_book_path(book_id)
-                    cache.backend.set_cover(book_id, path, stream, no_processing=True)
-            else:
-                with importer.start_file(fmtkey, _('{0} format for {1}').format(fmt.upper(), title)) as stream:
-                    size, fname = cache._do_add_format(book_id, fmt, stream, mtime=stream.mtime)
-                    cache.fields['formats'].table.update_fmt(book_id, fmt, fname, size, cache.backend)
-        for relpath, efkey in extra_files.get(book_id, {}).items():
-            with importer.start_file(efkey, _('Extra file {0} for book {1}').format(relpath, title)) as stream:
-                path = cache._get_book_path(book_id)
-                cache.backend.add_extra_file(relpath, stream, path)
-        cache.dump_metadata({book_id})
+                    cache.backend.add_extra_file(relpath, stream, path)
+            cache.dump_metadata({book_id})
     if importer.corrupted_files:
         raise ValueError('Corrupted files:\n' + '\n'.join(importer.corrupted_files))
     if progress is not None:

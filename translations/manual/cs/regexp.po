@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Michal Várady <miko.vaji@gmail.com>, 2026
 # Trottel <trottel09@gmail.com>, 2014-2015,2017-2018,2020-2022
 # Trottel <trottel09@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-06-24 05:21+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Trottel <trottel09@gmail.com>, 2014-2015,2017-2018,2020-2022\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2026\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -408,7 +409,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr "(nestydatě vytrženo z `tohoto vlákna <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Museli byste také odstranit některé značky. V tomto příkladu bych doporučoval začít značkou ``<b class=\"calibre2\">``, nyní budete muset skončit odpovídající uzavírací značkou (otevírací značky jsou ``<značka>``, uzavírací značky jsou ``</značka>``), což je v tomto případě jednoduše následující ``</b>``. (Podívejte se do dobré příručky k HTML nebo se zeptejte ve fóru, pokud si v tomto bodě nejste jisti.) Počáteční značku lze popsat pomocí ``<b.*?>``, uzavírací značku pomocí ``</b>``, takže bychom mohli odstranit vše mezi těmito značkami pomocí ``<b.*?>.*?</b>``. Ale použití tohoto výrazu by byl špatný nápad, protože odstraňuje vše, co je uzavřeno značkami <b> (který mimochodem vykreslí uzavřený text tučným písmem), a vsaďte se, že tímto způsobem odstraníme části knihy. Místo toho zahrňte i začátek uzavřeného řetězce, takže regulární výraz bude ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``.  ``\\s`` s kvantifikátory jsou zde zahrnuty namísto výslovného použití mezer, jak je vidět v řetězci, aby byly zachyceny všechny variace řetězce, které by mohly nastat. Nezapomeňte zkontrolovat, co Calibre odstraní, když testuje nový výraz, abyste se ujistili, že neodstraníte žádné části, které chcete zachovat. Pokud zkontrolujete pouze jeden výskyt, může vám uniknout neshoda někde jinde v textu. Také pamatujte, že kdybyste omylem odstranili více nebo méně značek, než jste doopravdy chtěli, Calibre se pokusí opravit poškozený kód po provedení odstranění."
+msgstr "(nestydatě vytrženo z `tohoto vlákna <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Museli byste také odstranit některé značky. V tomto příkladu bych doporučoval začít značkou ``<b class=\"calibre2\">``, nyní budete muset skončit odpovídající uzavírací značkou (otevírací značky jsou ``<tag>``, uzavírací značky jsou ``</tag>``), což je v tomto případě jednoduše následující ``</b>``. (Podívejte se do dobré příručky k HTML nebo se zeptejte ve fóru, pokud si v tomto bodě nejste jisti.) Počáteční značku lze popsat pomocí ``<b.*?>``, uzavírací značku pomocí ``</b>``, takže bychom mohli odstranit vše mezi těmito značkami pomocí ``<b.*?>.*?</b>``. Ale použití tohoto výrazu by byl špatný nápad, protože odstraňuje vše, co je uzavřeno značkami <b> (který mimochodem vykreslí uzavřený text tučným písmem), a vsaďte se, že tímto způsobem odstraníme části knihy. Místo toho zahrňte i začátek uzavřeného řetězce, takže regulární výraz bude ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``.  ``\\s`` s kvantifikátory jsou zde zahrnuty namísto výslovného použití mezer, jak je vidět v řetězci, aby byly zachyceny všechny variace řetězce, které by mohly nastat. Nezapomeňte zkontrolovat, co Calibre odstraní, když testuje nový výraz, abyste se ujistili, že neodstraníte žádné části, které chcete zachovat. Pokud zkontrolujete pouze jeden výskyt, může vám uniknout neshoda někde jinde v textu. Také pamatujte, že kdybyste omylem odstranili více nebo méně značek, než jste doopravdy chtěli, Calibre se pokusí opravit poškozený kód po provedení odstranění."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
@@ -435,7 +436,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "Další věc, ke které můžete regulární výrazy použít, je získávání metadat z názvů souborů. Tuto funkci najdete v části nastavení „Přidávání knih“. Je zde jedna zvláštní možnost: pro pole metadat můžete použít názvy polí, například ``(?P<title>)`` by znamenalo, že calibre použije tuto část řetězce jako název knihy. Povolené názvy polí jsou vypsány v okně společně s dalším užitečným testovacím polem. Příklad: řekněme, že chcete importovat větší množství souborů pojmenovaných například ``Classical Texts: The Divine Comedy by Dante Alighieri.mobi``. (Samozřejmě už ji v knihovně máte, protože všichni milujeme klasickou italskou poezii.) Nebo ``Science Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. To je očividně schéma pojmenování, ze kterého calibre samo nezíská žádná smysluplná data - jeho standardní výraz pro získávání metadat je ``(?P<title>.+) - (?P<author>[^_]+)``. Regulární výraz, který zde funguje, by byl ``[a-zA-Z]+: (?<title>P.+) by (?P<author>.+)``. Všimněte si, že uvnitř skupiny pro pole metadat musíte použít výrazy popisující, čemu má pole skutečně odpovídat. A také si všimněte, že při použití testovacího pole poskytovaného calibre musíte k testovacímu názvu souboru přidat příponu souboru, jinak nezískáte žádné shody, i když použijete funkční výraz."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
@@ -465,7 +466,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "Poslední částí je :guilabel:`Hledat a nahradit` pomocí regulárních výrazů v polích metadat. Dostanete se k ní tak, že v knihovně vyberete více knih a použijete hromadnou úpravu metadat. Při použití této poslední funkce buďte velmi opatrní, protože může s vaší knihovnou provést **velice nepěkné věci**! Pomocí testovacích polí si dvakrát ověřte, že vaše výrazy dělají to, co chcete, a označte jen knihy, které opravdu chcete změnit. V režimu hledání pomocí regulárních výrazů můžete hledat v jednom poli, nahradit text něčím jiným a výsledek dokonce zapsat do jiného pole. Praktický příklad: řekněme, že vaše knihovna obsahuje knihy ze série Duna od Franka Herberta pojmenované ve stylu ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` a tak dále. Teď chcete dostat ``Dune`` do pole série. Můžete to udělat tak, že v poli názvu vyhledáte ``(.*?) \\d+ - .*`` a v poli série ho nahradíte za ``\\1``. Vidíte, co se stalo? Je to odkaz na první skupinu, jejíž hodnotou nahrazujete pole série. Když už máte sérii nastavenou, stačí ještě v poli názvu vyhledat ``.*? -`` a nahradit ho za ``\"\"`` (prázdný řetězec), opět v poli názvu, a vaše metadata budou pěkně uklizená. Není to skvělé? Mimochodem, místo nahrazení celého pole můžete k poli text připojit také na konec nebo na začátek, takže pokud byste *chtěli* před název knihy přidat informace o sérii, i toto můžete udělat. Jak jste si už nepochybně všimli, je zde zaškrtávací políčko označené :guilabel:`Rozlišovat velikost písmen`, takže k výběru chování zde nemusíte používat příznaky."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""

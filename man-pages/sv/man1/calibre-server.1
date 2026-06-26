@@ -1,5 +1,5 @@
 .\" Man page generated from reStructuredText
-.\" by the Docutils 0.22.4 manpage writer.
+.\" by the Docutils 0.23 manpage writer.
 .
 .
 .nr rst2man-indent-level 0
@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "maj 28, 2026" "9.9.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "juni 26, 2026" "9.10.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -51,7 +51,7 @@ När du skickar argument till \fBcalibre\-server\fP som har blanksteg i dem, bif
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Sökväg till tillgångs loggfil. Denna loggfil innehåller information om klienter som ansluter till servern och gör efterfrågningar. Som standard görs ingen åtkomstloggning.
+Sökväg till åtkomstloggfil. Denna loggfil innehåller information om klienter som ansluter till servern och gör efterfrågningar. Som standard görs ingen åtkomstloggning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -126,7 +126,7 @@ Tillåt icke\-autentiserade lokala anslutningar att göra ändringar.   Normalt 
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Logga HTTP 404 (inte hittad)\-förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan skapa en hel del skräploggar, om din server är inriktad från robotar. Använd det här alternativet för att stänga av dem. Som standard är det här alternativet aktiverat.
+Logga HTTP 404 (inte hittad)\-förfrågningar.         Normalt loggar servern alla HTTP\-förfrågningar för resurser som inte finns. Detta kan skapa en hel del skräploggar, om din server utsätts för robottrafik. Använd det här alternativet för att stänga av dem. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -151,7 +151,7 @@ Ignorera användardefinierade metadatafält.  Kommaseparerad lista över använd
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-Gränssnitt för att lyssna efter anslutningar.       Standard är att lyssna på alla tillgängliga IPv6\- och IPv4\-gränssnitt. Du kan ändra detta till till exempel \fB\(dq\fP127.0.0.1\fB\(dq\fP för att bara lyssna efter IPv4\-anslutningar från den lokala maskinen, eller till \fB\(dq\fP0.0.0.0\fB\(dq\fP för att lyssna på alla inkommande IPv4\-anslutningar.
+Gränssnitt för att lyssna efter anslutningar.       Standard är att lyssna på alla tillgängliga IPv6\- och IPv4\-gränssnitt. Du kan till exempel ändra detta till \fB\(dq\fP127.0.0.1\fB\(dq\fP för att bara lyssna efter IPv4\-anslutningar från den lokala maskinen, eller till \fB\(dq\fP0.0.0.0\fB\(dq\fP för att lyssna på alla inkommande IPv4\-anslutningar.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -3,26 +3,27 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
+# Michal Várady <miko.vaji@gmail.com>, 2026
 # Trottel <trottel09@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-02 15:47+0000\n"
-"PO-Revision-Date: 2021-11-23 15:50+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Czech (http://www.transifex.com/calibre/calibre/language/cs/)\n"
+"POT-Creation-Date: 2026-06-24 05:21+0000\n"
+"PO-Revision-Date: 2014-07-05 16:50+0000\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2026\n"
+"Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:4
+#: ../../../__w/calibre/calibre/manual/polish.rst:4
 msgid "API documentation for the e-book editing tools"
 msgstr "Dokumentace API pro nástroje pro úpravu e-knih"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:6
+#: ../../../__w/calibre/calibre/manual/polish.rst:6
 msgid ""
 "The e-book editing tools consist of a "
 ":class:`calibre.ebooks.oeb.polish.container.Container` object that "
@@ -32,44 +33,44 @@ msgid ""
 "``calibre.ebooks.oeb.polish.*`` modules."
 msgstr "Nástroje pro úpravu e-knih se skládají z objektu :class:`calibre.ebooks.oeb.polish.container.Container`, který představuje knihu jako kolekci souborů HTML a zdrojů a různých nástrojů, které lze použít k provádění operací na kontejneru. Všechny nástroje jsou ve formě funkcí na úrovni modulů v různých modulech ``calibre.ebooks.oeb.polish.*``."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:15
+#: ../../../__w/calibre/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
 msgstr "Objekt kontejneru pro knihu v cestě získáte takto::"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:20
+#: ../../../__w/calibre/calibre/manual/polish.rst:20
 msgid ""
 "If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
 msgstr "Pokud píšete modul pro Editor e-knih, získáte aktuální kontejner pro upravovanou knihu takto::"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:30
+#: ../../../__w/calibre/calibre/manual/polish.rst:30
 msgid "The Container object"
 msgstr "Objekt kontejneru"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:1
 msgid ""
 "A container represents an open e-book as a folder full of files and an OPF "
 "file. There are two important concepts:"
-msgstr ""
+msgstr "Kontejner představuje otevřenou e-knihu jako složku plnou souborů a soubor OPF. Existují dva důležité koncepty:"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:4
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
 "inside this folder or in its sub-folders."
-msgstr ""
+msgstr "Kořenová složka. Je základem e-knihy. Všechny soubory e-knihy jsou uvnitř této složky nebo v jejích podsložkách."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
 msgid ""
 "Names: These are paths to the books' files relative to the root folder. They"
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr ""
+msgstr "Názvy: Jsou to cesty k souborům knihy relativní ke kořenové složce. Vždy obsahují oddělovače POSIX a nejsou URL-kódované. Lze je chápat jako kanonické identifikátory souborů v knize. Většina metod objektu kontejneru pracuje s názvy. Názvy jsou vždy v normalizační formě Unicode NFC."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
 msgid ""
 "Clones: the container object supports efficient on-disk cloning, which is "
@@ -77,133 +78,98 @@ msgid ""
 "work, you should never access files on the filesystem directly. Instead, use"
 " :meth:`raw_data` or :meth:`open` to read/write to component files in the "
 "book."
-msgstr ""
+msgstr "Klony: objekt kontejneru podporuje efektivní klonování na disku, které se používá k implementaci kontrolních bodů v editoru e-knih. Aby to fungovalo, nikdy byste neměli k souborům v souborovém systému přistupovat přímo. Místo toho použijte :meth:`raw_data` nebo :meth:`open` pro čtení komponentních souborů v knize nebo zápis do nich."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:18
 msgid ""
 "When converting between hrefs and names use the methods provided by this "
 "class, they assume all hrefs are quoted."
-msgstr ""
+msgstr "Při převodu mezi hodnotami href a názvy používejte metody poskytované touto třídou; předpokládají, že všechny hodnoty href jsou URL-kódované."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
 msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
-msgstr ""
+msgstr "Převede absolutní cestu na kanonický název relativní k :attr:`root`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
-#: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
-#: of calibre.ebooks.oeb.polish.container.Container.commit:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
-#: of calibre.ebooks.oeb.polish.container.Container.raw_data:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.replace_links:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
-#: of calibre.ebooks.oeb.polish.replace.rename_files:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.split:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.multisplit:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
-#: of calibre.ebooks.oeb.polish.split.merge:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.set_cover:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
-#: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:0
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.create_inline_toc:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.open_book:0
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:0
+#: ../../../__w/calibre/calibre/manual/polish.rst:0
 msgid "Parameters"
 msgstr "Parametry"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:3
 msgid ""
 "The base folder. By default the root for this container object is used."
-msgstr ""
+msgstr "Základní složka. Ve výchozím nastavení se použije kořen tohoto objektu kontejneru."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_file:1
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr ""
+msgstr "Přidá soubor do tohoto kontejneru. Záznamy pro soubor se automaticky vytvoří v manifestu OPF a ve spine (pokud je soubor textový dokument)"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr ""
+msgstr "Přidá do manifestu záznam pro soubor se zadaným názvem. Vrátí ID manifestu."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
 msgid "Add the specified properties to the manifest item identified by name."
-msgstr ""
+msgstr "Přidá zadané vlastnosti k položce manifestu identifikované názvem."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
 msgid ""
 "Ensure that the specified properties are set on only the manifest item "
 "identified by name. You can pass None as the name to remove the property "
 "from all items."
-msgstr ""
+msgstr "Zajistí, že zadané vlastnosti budou nastavené pouze u položky manifestu identifikované názvem. Jako název můžete předat None, chcete-li vlastnost odebrat ze všech položek."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.ebooks.oeb.polish.container.Container.book_type:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.book_type:1
 msgid "The type of book (epub for EPUB files and azw3 for AZW3 files)"
 msgstr "Typ knihy (epub pro soubory EPUB a azw3 pro soubory AZW3)"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:1
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the e-book"
 " file at outpath."
-msgstr ""
+msgstr "Zapíše všechny změněné parsované objekty do souborového systému a uloží soubor e-knihy do umístění outpath."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
 msgid ""
 "The path to write the saved e-book file to. If None, the path of the "
 "original book file is used."
-msgstr ""
+msgstr "Cesta, do které se má zapsat uložený soubor e-knihy. Pokud je None, použije se cesta původního souboru knihy."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
 msgid ""
 "If True the parsed representations of committed items are kept in the cache."
-msgstr ""
+msgstr "Pokud je True, parsované reprezentace zapsaných položek se ponechají v cache."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
 msgid ""
 "Commit a parsed object to disk (it is serialized and written to the "
 "underlying file). If ``keep_parsed`` is True the parsed representation is "
 "retained in the cache. See also: :meth:`parsed`"
-msgstr ""
+msgstr "Zapíše parsovaný objekt na disk (serializuje se a zapíše do podkladového souboru). Pokud je ``keep_parsed`` True, parsovaná reprezentace se zachová v cache. Viz také: :meth:`parsed`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.dirty:1
 msgid ""
 "Mark the parsed object corresponding to name as dirty. See also: "
 ":meth:`parsed`."
-msgstr ""
+msgstr "Označí parsovaný objekt odpovídající názvu jako změněný. Viz také: :meth:`parsed`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.exists:1
 msgid ""
 "True iff a file/folder corresponding to the canonical name exists. Note that"
@@ -211,62 +177,62 @@ msgid ""
 " in particular case (in)sensitivity. So on a case insensitive filesystem "
 "this will return True even if the case of name is different from the case of"
 " the underlying filesystem file. See also :meth:`has_name`"
-msgstr ""
+msgstr "True právě tehdy, když existuje soubor nebo složka odpovídající kanonickému názvu. Pamatujte, že tato funkce podléhá omezením podkladového souborového systému operačního systému, zejména citlivosti nebo necitlivosti na velikost písmen. Na souborovém systému nerozlišujícím velikost písmen proto vrátí True i tehdy, když se velikost písmen v názvu liší od velikosti písmen v podkladovém souboru souborového systému. Viz také :meth:`has_name`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.filesize:1
 msgid ""
 "Return the size in bytes of the file represented by the specified canonical "
 "name. Automatically handles dirtied parsed objects. See also: :meth:`parsed`"
-msgstr ""
+msgstr "Vrátí velikost v bajtech souboru reprezentovaného zadaným kanonickým názvem. Automaticky zpracuje změněné parsované objekty. Viz také: :meth:`parsed`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.generate_item:1
 msgid ""
 "Add an item to the manifest with href derived from the given name. Ensures "
 "uniqueness of href and id automatically. Returns generated item."
-msgstr ""
+msgstr "Přidá do manifestu položku s href odvozeným od daného názvu. Automaticky zajistí jedinečnost href a id. Vrátí vygenerovanou položku."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.get_file_path_for_processing:1
 msgid ""
 "Similar to open() except that it returns a file path, instead of an open "
 "file object."
-msgstr ""
+msgstr "Podobné jako open(), s tím rozdílem, že místo otevřeného objektu souboru vrací cestu k souboru."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
 msgid "Mapping of guide type to canonical name"
-msgstr ""
+msgstr "Mapování typu průvodce na kanonický název"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.has_name:1
 msgid ""
 "Return True iff a file with the same canonical name as that specified "
 "exists. Unlike :meth:`exists` this method is always case-sensitive."
-msgstr ""
+msgstr "Vrátí True právě tehdy, když existuje soubor se stejným kanonickým názvem, jako byl zadán. Na rozdíl od :meth:`exists` tato metoda vždy rozlišuje velikost písmen."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.href_to_name:1
 msgid ""
 "Convert an href (relative to base) to a name. base must be a name or None, "
 "in which case self.root is used."
-msgstr ""
+msgstr "Převede href (relativní k base) na název. base musí být název nebo None; v takovém případě se použije self.root."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.insert_into_xml:1
 msgid ""
 "Insert item into parent (or append if index is None), fixing indentation. "
 "Only works with self closing items."
-msgstr ""
+msgstr "Vloží položku do rodičovského prvku (nebo ji připojí na konec, pokud je index None) a opraví odsazení. Funguje pouze se samozavíracími položkami."
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.ebooks.oeb.polish.container.Container.is_dir:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.is_dir:1
 msgid "If this container represents an unzipped book (a directory)"
 msgstr "Pokud tento kontejner představuje rozbalenou knihu (adresář)"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.iterlinks:1
 msgid ""
 "Iterate over all links in name. If get_line_numbers is True the yields "
@@ -274,128 +240,128 @@ msgid ""
 "line_number at which the link occurs and offset is the number of characters "
 "from the start of the line. Note that offset could actually encompass "
 "several lines if not zero."
-msgstr ""
+msgstr "Iteruje přes všechny odkazy v name. Pokud je get_line_numbers True, vrací výsledky ve tvaru (link, line_number, offset). line_number je číslo řádku, na kterém se odkaz vyskytuje, a offset je počet znaků od začátku řádku. Pamatujte, že pokud offset není nula, může ve skutečnosti zahrnovat několik řádků."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.make_name_unique:1
 msgid ""
 "Ensure that `name` does not already exist in this book. If it does, return a"
 " modified version that does not exist."
-msgstr ""
+msgstr "Zajistí, že `name` v této knize ještě neexistuje. Pokud existuje, vrátí upravenou verzi, která neexistuje."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
 msgid "Return True if the manifest has an entry corresponding to name"
-msgstr ""
+msgstr "Vrátí True, pokud manifest obsahuje záznam odpovídající názvu"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
 msgid "Mapping of manifest id to canonical names"
-msgstr ""
+msgstr "Mapování ID manifestu na kanonické názvy"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1
 msgid ""
 "The names of all manifest items whose media-type matches predicate. "
 "`predicate` can be a set, a list, a string or a function taking a single "
 "argument, which will be called with the media-type."
-msgstr ""
+msgstr "Názvy všech položek manifestu, jejichž media-type odpovídá predikátu. `predicate` může být množina, seznam, řetězec nebo funkce přijímající jeden argument, která bude zavolána s hodnotou media-type."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.manifest_items_with_property:1
 msgid "All manifest items that have the specified property"
-msgstr ""
+msgstr "Všechny položky manifestu, které mají zadanou vlastnost"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_type_map:1
 msgid ""
 "Mapping of manifest media-type to list of canonical names of that media-type"
-msgstr ""
+msgstr "Mapování media-type manifestu na seznam kanonických názvů daného media-type"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.mi:1
 msgid ""
 "The metadata of this book as a Metadata object. Note that this object is "
 "constructed on the fly every time this property is requested, so use it "
 "sparingly."
-msgstr ""
+msgstr "Metadata této knihy jako objekt Metadata. Pamatujte, že tento objekt se vytváří za běhu pokaždé, když je tato vlastnost vyžádána, proto ji používejte střídmě."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_abspath:1
 msgid "Convert a canonical name to an absolute OS dependent path"
-msgstr ""
+msgstr "Převede kanonický název na absolutní cestu závislou na OS"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_href:1
 msgid ""
 "Convert a name to a href relative to base, which must be a name or None in "
 "which case self.root is used as the base"
-msgstr ""
+msgstr "Převede název na href relativní k parametru base, který musí být názvem nebo None; v takovém případě se jako base použije self.root"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
 "Set of names that must never be renamed. Depends on the e-book file format."
-msgstr ""
+msgstr "Množina názvů, které se nikdy nesmí přejmenovat. Závisí na formátu souboru e-knihy."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_removed:1
 msgid ""
 "Set of names that must never be deleted from the container. Depends on the "
 "e-book file format."
-msgstr ""
+msgstr "Množina názvů, které se nikdy nesmí z kontejneru odstranit. Závisí na formátu souboru e-knihy."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.names_that_need_not_be_manifested:1
 msgid ""
 "Set of names that are allowed to be missing from the manifest. Depends on "
 "the e-book file format."
-msgstr ""
+msgstr "Množina názvů, které mohou v manifestu chybět. Závisí na formátu souboru e-knihy."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.open:1
 msgid ""
 "Open the file pointed to by name for direct read/write. Note that this will "
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr ""
+msgstr "Otevře soubor určený hodnotou name pro přímé čtení nebo zápis. Pamatujte, že pokud je soubor označený jako změněný, zapíše ho a odstraní ho z cache parsování. Než znovu přistoupíte k jeho parsované verzi, musíte práci s tímto souborem dokončit, jinak dojde k problémům."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
 msgid "The parsed OPF file"
-msgstr ""
+msgstr "Parsovaný soubor OPF"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_get_or_create:1
 msgid ""
 "Convenience method to either return the first XML element with the specified"
 " name or create it under the opf:package element and then return it, if it "
 "does not already exist."
-msgstr ""
+msgstr "Pomocná metoda, která vrátí první prvek XML se zadaným názvem, nebo ho vytvoří pod prvkem opf:package a poté ho vrátí, pokud ještě neexistuje."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
 msgid "The version set on the OPF's <package> element"
-msgstr ""
+msgstr "Verze nastavená v prvku <package> souboru OPF"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version_parsed:1
 msgid "The version set on the OPF's <package> element as a tuple of integers"
-msgstr ""
+msgstr "Verze nastavená v prvku <package> souboru OPF jako n-tice celých čísel"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_xpath:1
 msgid ""
 "Convenience method to evaluate an XPath expression on the OPF file, has the "
 "opf: and dc: namespace prefixes pre-defined."
-msgstr ""
+msgstr "Pomocná metoda pro vyhodnocení výrazu XPath nad souborem OPF; má předdefinované předpony jmenných prostorů opf: a dc:."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.parsed:1
 msgid ""
 "Return a parsed representation of the file specified by name. For HTML and "
@@ -403,76 +369,76 @@ msgid ""
 " returned. Note that parsed objects are cached for performance. If you make "
 "any changes to the parsed object, you must call :meth:`dirty` so that the "
 "container knows to update the cache. See also :meth:`replace`."
-msgstr ""
+msgstr "Vrátí parsovanou reprezentaci souboru zadaného pomocí name. U souborů HTML a XML se vrátí strom lxml. U souborů CSS se vrátí šablona stylů css_parser. Pamatujte, že parsované objekty se kvůli výkonu ukládají do cache. Pokud v parsovaném objektu provedete jakékoli změny, musíte zavolat :meth:`dirty`, aby kontejner věděl, že má aktualizovat cache. Viz také :meth:`replace`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:1
 msgid "Return the raw data corresponding to the file specified by name"
-msgstr ""
+msgstr "Vrátí surová data odpovídající souboru zadanému pomocí name"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:3
 msgid ""
 "If True and the file has a text based MIME type, decode it and return a "
 "unicode object instead of raw bytes."
-msgstr ""
+msgstr "Pokud je True a soubor má textový typ MIME, dekóduje ho a místo surových bajtů vrátí objekt unicode."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.raw_data:4
 msgid ""
 "If True the returned unicode object is normalized to the NFC normal form as "
 "is required for the EPUB and AZW3 file formats."
-msgstr ""
+msgstr "Pokud je True, vrácený objekt unicode se normalizuje do normalizační formy NFC, jak vyžadují formáty souborů EPUB a AZW3."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.relpath:1
 msgid ""
-"Convert an absolute path (with os separators) to a path relative to base "
+"Convert an absolute path (with OS separators) to a path relative to base "
 "(defaults to self.root). The relative path is *not* a name. Use "
 ":meth:`abspath_to_name` for that."
-msgstr ""
+msgstr "Převede absolutní cestu (s oddělovači OS) na cestu relativní k base (výchozí je self.root). Relativní cesta *není* name. K tomu použijte :meth:`abspath_to_name`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_spine:1
 msgid ""
 "Remove the specified items (by canonical name) from the spine. If "
 "``remove_if_no_longer_in_spine`` is True, the items are also deleted from "
 "the book, not just from the spine."
-msgstr ""
+msgstr "Odstraní zadané položky (podle kanonického názvu) ze spine. Pokud je ``remove_if_no_longer_in_spine`` True, položky se odstraní také z knihy, nejen ze spine."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_xml:1
 msgid ""
 "Removes item from parent, fixing indentation (works only with self closing "
 "items)"
-msgstr ""
+msgstr "Odstraní položku z rodičovského prvku a opraví odsazení (funguje pouze se samozavíracími položkami)"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_item:1
 msgid ""
 "Remove the item identified by name from this container. This removes all "
 "references to the item in the OPF manifest, guide and spine as well as from "
 "any internal caches."
-msgstr ""
+msgstr "Odstraní z tohoto kontejneru položku identifikovanou pomocí name. Tím se odstraní všechny odkazy na položku v manifestu OPF, guide a spine i ze všech interních cache."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.rename:1
 msgid ""
 "Renames a file from current_name to new_name. It automatically rebases all "
 "links inside the file if the folder the file is in changes. Note however, "
 "that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr ""
+msgstr "Přejmenuje soubor z current_name na new_name. Pokud se změní složka, ve které se soubor nachází, automaticky přepočítá všechny odkazy uvnitř tohoto souboru na nový základ. Pamatujte však, že odkazy v ostatních souborech, které by mohly na tento soubor odkazovat, se neaktualizují. Je to kvůli výkonu; takové aktualizace by se měly provádět najednou hromadně."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
 msgid ""
 "Replace the parsed object corresponding to name with obj, which must be a "
 "similar object, i.e. an lxml tree for HTML/XML or a css_parser stylesheet "
 "for a CSS file."
-msgstr ""
+msgstr "Nahradí parsovaný objekt odpovídající name objektem obj, který musí být podobného typu, tj. strom lxml pro HTML/XML nebo šablona stylů css_parser pro soubor CSS."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace_links:1
 msgid ""
 "Replace all links in name using replace_func, which must be a callable that "
@@ -480,252 +446,252 @@ msgid ""
 "attribute that is set to True if any actual replacement is done. Convenient "
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
-msgstr ""
+msgstr "Nahradí všechny odkazy v name pomocí replace_func, což musí být volatelný objekt, který přijímá URL a vrací nahrazenou URL. Musí mít také atribut 'replaced', který se nastaví na True, pokud se provede nějaké skutečné nahrazení. Pohodlné způsoby vytváření takových volatelných objektů poskytují třídy :class:`LinkReplacer` a :class:`LinkRebaser`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1
 msgid ""
 "Convert a parsed object (identified by canonical name) into a bytestring. "
 "See :meth:`parsed`."
-msgstr ""
+msgstr "Převede parsovaný objekt (identifikovaný kanonickým názvem) na bajtový řetězec. Viz :meth:`parsed`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.set_spine:1
 msgid ""
 "Set the spine to be spine_items where spine_items is an iterable of the form"
 " (name, linear). Will raise an error if one of the names is not present in "
 "the manifest."
-msgstr ""
+msgstr "Nastaví spine na spine_items, kde spine_items je iterovatelný objekt ve tvaru (name, linear). Vyvolá chybu, pokud některý z názvů není přítomen v manifestu."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_items:1
 msgid ""
 "An iterator yielding the path for every item in the books' spine. See also: "
 ":attr:`spine_iter` and :attr:`spine_items`."
-msgstr ""
+msgstr "Iterátor vracející cestu pro každou položku ve spine knihy. Viz také: :attr:`spine_iter` a :attr:`spine_items`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_iter:1
 msgid ""
 "An iterator that yields item, name is_linear for every item in the books' "
 "spine. item is the lxml element, name is the canonical file name and "
 "is_linear is True if the item is linear. See also: :attr:`spine_names` and "
 ":attr:`spine_items`."
-msgstr ""
+msgstr "Iterátor, který pro každou položku ve spine knihy vrací item, name a is_linear. item je prvek lxml, name je kanonický název souboru a is_linear je True, pokud je položka lineární. Viz také: :attr:`spine_names` a :attr:`spine_items`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_names:1
 msgid ""
 "An iterator yielding name and is_linear for every item in the books' spine. "
 "See also: :attr:`spine_iter` and :attr:`spine_items`."
-msgstr ""
+msgstr "Iterátor vracející name a is_linear pro každou položku ve spine knihy. Viz také: :attr:`spine_iter` a :attr:`spine_items`."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:36
+#: ../../../__w/calibre/calibre/manual/polish.rst:36
 msgid "Managing component files in a container"
 msgstr "Správa souborů komponent v kontejneru"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:1
 msgid ""
 "Replace links to files in the container. Will iterate over all files in the "
 "container and change the specified links in them."
-msgstr ""
+msgstr "Nahradí odkazy na soubory v kontejneru. Projde všechny soubory v kontejneru a změní v nich zadané odkazy."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:3
 msgid ""
 "A mapping of old canonical name to new canonical name. For example: "
 ":code:`{'images/old.png': 'images/new.png'}`"
-msgstr ""
+msgstr "Mapování starého kanonického názvu na nový kanonický název. Například: :code:`{'images/old.png': 'images/new.png'}`"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:4
 msgid ""
 "A callable that takes two arguments ``(name, anchor)`` and returns a new "
 "anchor. This is useful if you need to change the anchors in HTML files. By "
 "default, it does nothing."
-msgstr ""
+msgstr "Volatelný objekt, který přijímá dva argumenty ``(name, anchor)`` a vrací novou kotvu. To je užitečné, pokud potřebujete změnit kotvy v souborech HTML. Ve výchozím nastavení nedělá nic."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:7
 msgid "If False, links are not replaced in the OPF file."
-msgstr ""
+msgstr "Pokud je False, odkazy v souboru OPF se nenahrazují."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:1
 msgid ""
 "Rename files in the container, automatically updating all links to them."
-msgstr ""
+msgstr "Přejmenuje soubory v kontejneru a automaticky aktualizuje všechny odkazy na ně."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:3
 msgid ""
 "A mapping of old canonical name to new canonical name, for example: "
 ":code:`{'text/chapter1.html': 'chapter1.html'}`."
-msgstr ""
+msgstr "Mapování starého kanonického názvu na nový kanonický název, například: :code:`{'text/chapter1.html': 'chapter1.html'}`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.get_recommended_folders:1
 msgid ""
 "Return the folders that are recommended for the given filenames. The "
 "recommendation is based on where the majority of files of the same type are "
 "located in the container. If no files of a particular type are present, the "
 "recommended folder is assumed to be the folder containing the OPF file."
-msgstr ""
+msgstr "Vrátí složky doporučené pro dané názvy souborů. Doporučení vychází z toho, kde se v kontejneru nachází většina souborů stejného typu. Pokud nejsou přítomny žádné soubory určitého typu, za doporučenou složku se považuje složka obsahující soubor OPF."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:47
+#: ../../../__w/calibre/calibre/manual/polish.rst:47
 msgid "Pretty printing and auto fixing parse errors"
 msgstr "Pěkný tisk a automatická analýza opravy chyb"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_html:1
 msgid ""
 "Fix any parsing errors in the HTML represented as a string in raw. Fixing is"
 " done using the HTML5 parsing algorithm."
-msgstr ""
+msgstr "Opraví všechny chyby parsování v HTML reprezentovaném jako řetězec v raw. Oprava se provádí pomocí parsovacího algoritmu HTML5."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_all_html:1
 msgid ""
 "Fix any parsing errors in all HTML files in the container. Fixing is done "
 "using the HTML5 parsing algorithm."
-msgstr ""
+msgstr "Opraví všechny chyby parsování ve všech souborech HTML v kontejneru. Oprava se provádí pomocí parsovacího algoritmu HTML5."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_html:1
 msgid "Pretty print the HTML represented as a string in raw"
-msgstr ""
+msgstr "Naformátuje pro přehlednost HTML reprezentované jako řetězec v raw"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_css:1
 msgid "Pretty print the CSS represented as a string in raw"
-msgstr ""
+msgstr "Naformátuje pro přehlednost CSS reprezentované jako řetězec v raw"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_xml:1
 msgid ""
 "Pretty print the XML represented as a string in raw. If ``name`` is the name"
 " of the OPF, extra OPF-specific prettying is performed."
-msgstr ""
+msgstr "Naformátuje pro přehlednost XML reprezentované jako řetězec v raw. Pokud je ``name`` názvem OPF, provede se dodatečné formátování specifické pro OPF."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_all:1
 msgid "Pretty print all HTML/CSS/XML files in the container"
-msgstr ""
+msgstr "Naformátuje pro přehlednost všechny soubory HTML/CSS/XML v kontejneru"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:65
+#: ../../../__w/calibre/calibre/manual/polish.rst:65
 msgid "Managing book jackets"
 msgstr "Správa přebalů knih"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.remove_jacket:1
 msgid ""
 "Remove an existing jacket, if any. Returns False if no existing jacket was "
 "found."
-msgstr ""
+msgstr "Odstraní existující přebal, pokud nějaký existuje. Vrátí False, pokud nebyl nalezen žádný existující přebal."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.add_or_replace_jacket:1
 msgid ""
 "Either create a new jacket from the book's metadata or replace an existing "
 "jacket. Returns True if an existing jacket was replaced."
-msgstr ""
+msgstr "Vytvoří nový přebal z metadat knihy nebo nahradí existující přebal. Vrátí True, pokud byl existující přebal nahrazen."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:74
+#: ../../../__w/calibre/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
 msgstr "Rozdělování a slučování souborů"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:1
 msgid ""
 "Split the file specified by name at the position specified by loc_or_xpath. "
 "Splitting automatically migrates all links and references to the affected "
 "files."
-msgstr ""
+msgstr "Rozdělí soubor zadaný pomocí name na pozici určené hodnotou loc_or_xpath. Rozdělení automaticky migruje všechny odkazy a reference na dotčené soubory."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:5
 msgid ""
 "Should be an XPath expression such as //h:div[@id=\"split_here\"]. Can also "
 "be a *loc* which is used internally to implement splitting in the preview "
 "panel."
-msgstr ""
+msgstr "Měl by to být výraz XPath, například //h:div[@id=\"split_here\"]. Může to být také *loc*, který se interně používá k implementaci dělení v panelu náhledu."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:8
 msgid ""
 "If True the split occurs before the identified element otherwise after it."
-msgstr ""
+msgstr "Pokud je True, rozdělení proběhne před identifikovaným prvkem, jinak za ním."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:9
 msgid "Used internally"
-msgstr ""
+msgstr "Používá se interně"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:1
 msgid ""
 "Split the specified file at multiple locations (all tags that match the "
 "specified XPath expression). See also: :func:`split`. Splitting "
 "automatically migrates all links and references to the affected files."
-msgstr ""
+msgstr "Rozdělí zadaný soubor na více místech (všechny značky, které odpovídají zadanému výrazu XPath). Viz také: :func:`split`. Rozdělení automaticky migruje všechny odkazy a reference na dotčené soubory."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.multisplit:5
 msgid ""
 "If True the splits occur before the identified element otherwise after it."
-msgstr ""
+msgstr "Pokud je True, rozdělení proběhnou před identifikovaným prvkem, jinak za ním."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:1
 msgid ""
 "Merge the specified files into a single file, automatically migrating all "
 "links and references to the affected files. The file must all either be HTML"
 " or CSS files."
-msgstr ""
+msgstr "Sloučí zadané soubory do jednoho souboru a automaticky migruje všechny odkazy a reference na dotčené soubory. Všechny soubory musí být buď soubory HTML, nebo CSS."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:4
 msgid "Must be either ``'text'`` for HTML files or ``'styles'`` for CSS files"
-msgstr ""
+msgstr "Musí být buď ``'text'`` pro soubory HTML, nebo ``'styles'`` pro soubory CSS"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:5
 msgid "The list of files to be merged"
-msgstr ""
+msgstr "Seznam souborů ke sloučení"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:6
 msgid ""
 "Which of the merged files is the *master* file, that is, the file that will "
 "remain after merging."
-msgstr ""
+msgstr "Který ze slučovaných souborů je *master* soubor, tedy soubor, který po sloučení zůstane."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:85
+#: ../../../__w/calibre/calibre/manual/polish.rst:85
 msgid "Managing covers"
 msgstr "Správa obálek"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:1
 msgid "Set the cover of the book to the image pointed to by cover_path."
-msgstr ""
+msgstr "Nastaví obálku knihy na obrázek určený pomocí cover_path."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:3
 msgid ""
 "Either the absolute path to an image file or the canonical name of an image "
 "in the book. When using an image in the book, you must also set options, see"
 " below."
-msgstr ""
+msgstr "Buď absolutní cesta k souboru obrázku, nebo kanonický název obrázku v knize. Při použití obrázku v knize musíte také nastavit options, viz níže."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:6
 msgid ""
 "An optional callable that takes a single argument. It will be called with "
 "information about the tasks being processed."
-msgstr ""
+msgstr "Volitelný volatelný objekt, který přijímá jeden argument. Bude volán s informacemi o zpracovávaných úlohách."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:8
 msgid ""
 "None or a dictionary that controls how the cover is set. The dictionary can "
@@ -733,398 +699,393 @@ msgid ""
 "covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
 "EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
 "existing image in the book)"
-msgstr ""
+msgstr "None nebo slovník určující, jak se obálka nastaví. Slovník může obsahovat položky: **keep_aspect**: True nebo False (Zachovat poměr stran obálek v EPUB) **no_svg**: True nebo False (Použít na titulní stránce EPUB obalový prvek SVG pro obálku) **existing**: True nebo False (``cover_path`` odkazuje na existující obrázek v knize)"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
 msgid "Mark the specified image as the cover image."
-msgstr ""
+msgstr "Označí zadaný obrázek jako obrázek obálky."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:1
 msgid "Mark the specified HTML file as the titlepage of the EPUB."
-msgstr ""
+msgstr "Označí zadaný soubor HTML jako titulní stránku EPUB."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:3
 msgid "If True the HTML file is moved to the start of the spine"
-msgstr ""
+msgstr "Pokud je True, soubor HTML se přesune na začátek spine"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:96
+#: ../../../__w/calibre/calibre/manual/polish.rst:96
 msgid "Working with CSS"
 msgstr "Práce s CSS"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/fonts.pydocstring
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/fonts.pydocstring
 #: of calibre.ebooks.oeb.polish.fonts.change_font:1
 msgid ""
 "Change a font family from old_name to new_name. Changes all occurrences of "
 "the font family in stylesheets, style tags and style attributes. If the "
 "old_name refers to an embedded font, it is removed. You can set new_name to "
 "None to remove the font family instead of changing it."
-msgstr ""
+msgstr "Změní rodinu písma z old_name na new_name. Změní všechny výskyty rodiny písma v šablonách stylů, značkách `<style>` a atributech `style`. Pokud old_name odkazuje na vložené písmo, bude odstraněno. Nastavením new_name na None můžete rodinu písma místo změny odebrat."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:1
 msgid ""
 "Remove all unused CSS rules from the book. An unused CSS rule is one that "
 "does not match any actual content."
-msgstr ""
+msgstr "Odstraní z knihy všechna nepoužitá pravidla CSS. Nepoužité pravidlo CSS je takové, které neodpovídá žádnému skutečnému obsahu."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:3
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:3
 msgid ""
 "An optional callable that takes a single argument. It is called with "
 "information about the operations being performed."
-msgstr ""
+msgstr "Volitelný volatelný objekt, který přijímá jeden argument. Volá se s informacemi o prováděných operacích."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:4
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:4
 msgid ""
 "If True, class attributes in the HTML that do not match any CSS rules are "
 "also removed."
-msgstr ""
+msgstr "Pokud je True, odstraní se také atributy class v HTML, které neodpovídají žádným pravidlům CSS."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:5
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:5
 msgid "If True, rules with identical selectors are merged."
-msgstr ""
+msgstr "Pokud je True, sloučí se pravidla se stejnými selektory."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:6
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:6
 msgid "If True, rules with identical properties are merged."
-msgstr ""
+msgstr "Pokud je True, sloučí se pravidla se stejnými vlastnostmi."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.remove_unused_css:7
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.remove_unused_css:7
 msgid ""
 "If True, stylesheets that are not referenced by any content are removed"
-msgstr ""
+msgstr "Pokud je True, odstraní se šablony stylů, na které neodkazuje žádný obsah"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:1
 msgid "Remove the specified CSS properties from all CSS rules in the book."
-msgstr ""
+msgstr "Odstraní zadané vlastnosti CSS ze všech pravidel CSS v knize."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:3
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:3
 msgid ""
 "Set of properties to remove. For example: :code:`{'font-family', 'color'}`."
-msgstr ""
+msgstr "Množina vlastností k odstranění. Například: :code:`{'font-family', 'color'}`."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring of
-#: calibre.ebooks.oeb.polish.css.filter_css:4
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
+#: of calibre.ebooks.oeb.polish.css.filter_css:4
 msgid ""
 "The files from which to remove the properties. Defaults to all HTML and CSS "
 "files in the book."
-msgstr ""
+msgstr "Soubory, ze kterých se mají vlastnosti odstranit. Výchozí jsou všechny soubory HTML a CSS v knize."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:108
+#: ../../../__w/calibre/calibre/manual/polish.rst:108
 msgid "Working with the Table of Contents"
 msgstr "Práce s obsahem"
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.from_xpaths:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.from_xpaths:1
 msgid ""
 "Generate a Table of Contents from a list of XPath expressions. Each "
 "expression in the list corresponds to a level of the generate ToC. For "
 "example: :code:`['//h:h1', '//h:h2', '//h:h3']` will generate a three level "
 "Table of Contents from the ``<h1>``, ``<h2>`` and ``<h3>`` tags."
-msgstr ""
+msgstr "Vygeneruje obsah ze seznamu výrazů XPath. Každý výraz v seznamu odpovídá jedné úrovni generovaného obsahu. Například: :code:`['//h:h1', '//h:h2', '//h:h3']` vygeneruje tříúrovňový obsah ze značek ``<h1>``, ``<h2>`` a ``<h3>``."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.from_links:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.from_links:1
 msgid "Generate a Table of Contents from links in the book."
-msgstr ""
+msgstr "Vygeneruje obsah z odkazů v knize."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.from_files:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.from_files:1
 msgid "Generate a Table of Contents from files in the book."
-msgstr ""
+msgstr "Vygeneruje obsah ze souborů v knize."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.create_inline_toc:1
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.create_inline_toc:1
 msgid ""
 "Create an inline (HTML) Table of Contents from an existing NCX Table of "
 "Contents."
-msgstr ""
+msgstr "Vytvoří vložený obsah (HTML) z existujícího obsahu NCX."
 
-#: ../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring of
-#: calibre.ebooks.oeb.polish.toc.create_inline_toc:3
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
+#: of calibre.ebooks.oeb.polish.toc.create_inline_toc:3
 msgid "The title for this table of contents."
-msgstr ""
+msgstr "Název tohoto obsahu."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:122
+#: ../../../__w/calibre/calibre/manual/polish.rst:122
 msgid "Edit book tool"
 msgstr "Nástroj na úpravu knih"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:1
-msgid "Bases: :py:class:`object`"
-msgstr ""
-
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:1
 msgid ""
 "The base class for individual tools in an Edit Book plugin. Useful members "
 "include:"
-msgstr ""
+msgstr "Základní třída pro jednotlivé nástroje v pluginu Editoru e-knih. Mezi užitečné členy patří:"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:3
 msgid ""
 "``self.plugin``: A reference to the :class:`calibre.customize.Plugin` object"
 " to which this tool belongs."
-msgstr ""
+msgstr "``self.plugin``: Odkaz na objekt :class:`calibre.customize.Plugin`, ke kterému tento nástroj patří."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:4
 msgid "self. :attr:`boss`"
-msgstr ""
+msgstr "self. :attr:`boss`"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:5
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:5
 msgid "self. :attr:`gui`"
-msgstr ""
+msgstr "self. :attr:`gui`"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:7
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:7
 msgid "Methods that must be overridden in sub classes:"
-msgstr ""
+msgstr "Metody, které musí být přepsány v podtřídách:"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:9
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:9
 msgid ":meth:`create_action`"
-msgstr ""
+msgstr ":meth:`create_action`"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool:10
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool:10
 msgid ":meth:`register_shortcut`"
-msgstr ""
+msgstr ":meth:`register_shortcut`"
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.name:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.name:1
 msgid "Set this to a unique name it will be used as a key"
-msgstr ""
+msgstr "Nastavte na jedinečný název; použije se jako klíč"
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
 msgid "If True the user can choose to place this tool in the plugins toolbar"
-msgstr ""
+msgstr "Pokud je True, uživatel může zvolit umístění tohoto nástroje na panel nástrojů modulů"
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
 msgid "If True the user can choose to place this tool in the plugins menu"
-msgstr ""
+msgstr "Pokud je True, uživatel může zvolit umístění tohoto nástroje do nabídky modulů"
 
-#: ../../__w/calibre/calibre/manual/docstring of
-#: calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
 msgid ""
 "The popup mode for the menu (if any) of the toolbar button. Possible values "
 "are 'delayed', 'instant', 'button'"
-msgstr ""
+msgstr "Režim vyskakovací nabídky tlačítka na panelu nástrojů, pokud nějakou má. Možné hodnoty jsou 'delayed', 'instant', 'button'"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.boss:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.boss:1
 msgid ""
 "The :class:`calibre.gui2.tweak_book.boss.Boss` object. Used to control the "
 "user interface."
-msgstr ""
+msgstr "Objekt :class:`calibre.gui2.tweak_book.boss.Boss`. Používá se k ovládání uživatelského rozhraní."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.gui:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.gui:1
 msgid "The main window of the user interface"
-msgstr ""
+msgstr "Hlavní okno uživatelského rozhraní"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.current_container:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.current_container:1
 msgid ""
 "Return the current :class:`calibre.ebooks.oeb.polish.container.Container` "
 "object that represents the book being edited."
-msgstr ""
+msgstr "Vrátí aktuální objekt :class:`calibre.ebooks.oeb.polish.container.Container`, který představuje upravovanou knihu."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:1
 msgid ""
 "Register a keyboard shortcut that will trigger the specified ``qaction``. "
 "This keyboard shortcut will become automatically customizable by the user in"
 " the Keyboard shortcuts section of the editor preferences."
-msgstr ""
+msgstr "Zaregistruje klávesovou zkratku, která vyvolá zadaný ``qaction``. Tuto klávesovou zkratku si uživatel bude moci automaticky přizpůsobit v části Klávesové zkratky předvoleb editoru."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
 msgid ""
 "A QAction object, it will be triggered when the configured key combination "
 "is pressed by the user."
-msgstr ""
+msgstr "Objekt QAction, který bude vyvolán, když uživatel stiskne nakonfigurovanou kombinaci kláves."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:6
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:6
 msgid ""
 "A unique name for this shortcut/action. It will be used internally, it must "
 "not be shared by any other actions in this plugin."
-msgstr ""
+msgstr "Jedinečný název této zkratky nebo akce. Použije se interně a nesmí být sdílen s žádnými jinými akcemi v tomto pluginu."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:9
 msgid ""
 "A list of the default keyboard shortcuts. If not specified no default "
 "shortcuts will be set. If the shortcuts specified here conflict with either "
 "builtin shortcuts or shortcuts from user configuration/other plugins, they "
 "will be ignored. In that case, users will have to configure the shortcuts "
 "manually via Preferences. For example: ``default_keys=('Ctrl+J', 'F9')``."
-msgstr ""
+msgstr "Seznam výchozích klávesových zkratek. Pokud není zadán, nenastaví se žádné výchozí zkratky. Pokud jsou zde zadané zkratky v konfliktu s vestavěnými zkratkami nebo se zkratkami z uživatelské konfigurace či jiných pluginů, budou ignorovány. V takovém případě budou uživatelé muset zkratky nakonfigurovat ručně v Předvolbách. Například: ``default_keys=('Ctrl+J', 'F9')``."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:15
 msgid ""
 "An optional short description of this action. If not specified the text from"
 " the QAction will be used."
-msgstr ""
+msgstr "Volitelný krátký popis této akce. Pokud není zadán, použije se text z QAction."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.register_shortcut:17
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:17
 msgid ""
 "An optional longer description of this action, it will be used in the "
 "preferences entry for this shortcut."
-msgstr ""
+msgstr "Volitelný delší popis této akce; použije se v položce předvoleb pro tuto zkratku."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.create_action:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.create_action:1
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr ""
+msgstr "Vytvoří QAction, který bude přidán buď na panel nástrojů modulů, nebo do nabídky modulů podle ``for_toolbar``. Například::"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring of
-#: calibre.gui2.tweak_book.plugin.Tool.create_action:19
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
+#: of calibre.gui2.tweak_book.plugin.Tool.create_action:19
 msgid "Method :meth:`register_shortcut`."
-msgstr ""
+msgstr "Metoda :meth:`register_shortcut`."
 
-#: ../../__w/calibre/calibre/manual/polish.rst:131
+#: ../../../__w/calibre/calibre/manual/polish.rst:131
 msgid "Controlling the editor's user interface"
 msgstr "Ovládání uživatelského rozhraní editoru"
 
-#: ../../__w/calibre/calibre/manual/polish.rst:133
+#: ../../../__w/calibre/calibre/manual/polish.rst:133
 msgid ""
 "The e-book editor's user interface is controlled by a single global *Boss* "
 "object. This has many useful methods that can be used in plugin code to "
 "perform common tasks."
 msgstr "Uživatelské rozhraní editoru e-knih je ovládáno jediným globálním *Hlavním* objektem. To má mnoho užitečných metod, které lze použít v kódu modulu k provádění běžných úkolů."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.add_savepoint:1
 msgid "Create a restore checkpoint with the name specified as ``msg``"
-msgstr ""
+msgstr "Vytvoří kontrolní bod obnovení s názvem zadaným jako ``msg``"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:1
 msgid ""
 "Update all the components of the user interface to reflect the latest data "
 "in the current book container."
-msgstr ""
+msgstr "Aktualizuje všechny komponenty uživatelského rozhraní tak, aby odrážely nejnovější data v aktuálním kontejneru knihy."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:3
 msgid ""
 "If True, the book will be marked as modified, so the user will be prompted "
 "to save it when quitting."
-msgstr ""
+msgstr "Pokud je True, kniha bude označena jako změněná, takže uživatel bude při ukončení vyzván k jejímu uložení."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.close_editor:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.close_editor:1
 msgid "Close the editor that is editing the file specified by ``name``"
-msgstr ""
+msgstr "Zavře editor, který upravuje soubor zadaný pomocí ``name``"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.commit_all_editors_to_container:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.commit_all_editors_to_container:1
 msgid ""
 "Commit any changes that the user has made to files open in editors to the "
 "container. You should call this method before performing any actions on the "
 "current container"
-msgstr ""
+msgstr "Potvrdí do kontejneru všechny změny, které uživatel provedl v souborech otevřených v editorech. Tuto metodu byste měli zavolat před prováděním jakýchkoli akcí s aktuálním kontejnerem"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.currently_editing:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.currently_editing:1
 msgid ""
 "Return the name of the file being edited currently or None if no file is "
 "being edited"
-msgstr ""
+msgstr "Vrátí název aktuálně upravovaného souboru nebo None, pokud se žádný soubor neupravuje"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:1
 msgid "Open the file specified by name in an editor"
-msgstr ""
+msgstr "Otevře soubor zadaný pomocí name v editoru"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:3
 msgid ""
 "The media type of the file, for example, ``'text/html'``. If not specified "
 "it is guessed from the file extension."
-msgstr ""
+msgstr "Typ média souboru, například ``'text/html'``. Pokud není zadán, odhadne se z přípony souboru."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.edit_file:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.edit_file:4
 msgid "A template to initialize the opened editor with"
-msgstr ""
+msgstr "Šablona, kterou se inicializuje otevřený editor"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.open_book:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.open_book:1
 msgid ""
 "Open the e-book at ``path`` for editing. Will show an error if the e-book is"
 " not in a supported format or the current book has unsaved changes."
-msgstr ""
+msgstr "Otevře e-knihu v umístění ``path`` k úpravám. Zobrazí chybu, pokud e-kniha není v podporovaném formátu nebo aktuální kniha obsahuje neuložené změny."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.open_book:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.open_book:3
 msgid ""
 "The name of a file inside the newly opened book to start editing. Can also "
 "be a list of names."
-msgstr ""
+msgstr "Název souboru v nově otevřené knize, jehož úpravy se mají zahájit. Může to být také seznam názvů."
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.rewind_savepoint:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.rewind_savepoint:1
 msgid ""
 "Undo the previous creation of a restore checkpoint, useful if you create a "
 "checkpoint, then abort the operation with no changes"
-msgstr ""
+msgstr "Vrátí zpět předchozí vytvoření kontrolního bodu obnovení; užitečné, pokud vytvoříte kontrolní bod a poté operaci zrušíte bez provedení změn"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.save_book:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.save_book:1
 msgid "Save the book. Saving is performed in the background"
-msgstr ""
+msgstr "Uloží knihu. Ukládání se provádí na pozadí"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.set_modified:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.set_modified:1
 msgid "Mark the book as having been modified"
-msgstr ""
+msgstr "Označí knihu jako upravenou"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:1
 msgid "Show the changes to the book from its last checkpointed state"
-msgstr ""
+msgstr "Zobrazí změny knihy oproti stavu posledního kontrolního bodu"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:3
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:3
 msgid ""
 "If True the diff dialog will have a button to allow the user to revert all "
 "changes"
-msgstr ""
+msgstr "Pokud je True, dialog rozdílů bude obsahovat tlačítko umožňující uživateli vrátit všechny změny"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_current_diff:4
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:4
 msgid ""
 "A container object to compare the current container to. If None, the "
 "previously checkpointed container is used"
-msgstr ""
+msgstr "Objekt kontejneru, se kterým se má aktuální kontejner porovnat. Pokud je None, použije se kontejner z předchozího kontrolního bodu"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.show_editor:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.show_editor:1
 msgid "Show the editor that is editing the file specified by ``name``"
-msgstr ""
+msgstr "Zobrazí editor, který upravuje soubor zadaný pomocí ``name``"
 
-#: ../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring of
-#: calibre.gui2.tweak_book.boss.Boss.sync_preview_to_editor:1
+#: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
+#: of calibre.gui2.tweak_book.boss.Boss.sync_preview_to_editor:1
 msgid ""
 "Sync the position of the preview panel to the current cursor position in the"
 " current editor"
-msgstr ""
+msgstr "Synchronizuje pozici panelu náhledu s aktuální pozicí kurzoru v aktuálním editoru"
