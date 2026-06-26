@@ -1,5 +1,8 @@
 # -*- mode: conf -*-
 
+# avoid PyPy3 error (Debian bug #1137284)
+calibre: drop-python-version-declaration [debian/control:104]
+
 # Bundled Stylelint code
 # https://github.com/openstyles/stylelint-bundle
 calibre: source-is-missing [resources/stylelint-bundle.min.js]
