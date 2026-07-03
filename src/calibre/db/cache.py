@@ -126,13 +126,12 @@ def _add_default_custom_column_values(mi, fm):
         if dv is None:
             continue
         try:
-            if not mi.get_user_metadata(cc, make_copy=False):
+            if not (had_meta := mi.get_user_metadata(cc, make_copy=False)):
                 mi.set_user_metadata(cc, col)
             dt = col['datatype']
             if dt == 'datetime' and icu_lower(dv) == 'now':
                 dv = nowf()
-            current_val = mi.get(cc, default=mi)
-            if current_val is mi:
+            if not had_meta or mi.get(cc) is None:
                 mi.set(cc, dv)
         except Exception:
             traceback.print_exc()
@@ -349,7 +348,8 @@ class Cache:
         return self.backend.field_metadata
 
     def _get_metadata(self, book_id, get_user_categories=True):  # {{{
-        mi = Metadata(None, template_cache=self.formatter_template_cache)
+        from calibre.ebooks.metadata.book.formatter import SafeFormat
+        mi = Metadata(None, template_cache=self.formatter_template_cache, formatter=SafeFormat())
 
         mi._proxy_metadata = ProxyMetadata(self, book_id, formatter=mi.formatter)
 

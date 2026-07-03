@@ -34197,7 +34197,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.10.0";
+        CALIBRE_VERSION = "9.11.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -57525,12 +57525,8 @@ return this.__repr__();
             ρσ_interpolate_kwargs.call(this, set_css, [document.getElementById("book-top-margin")].concat([ρσ_desugar_kwargs({height: margin_top + "px", font_size: header_footer_font_size(margin_top) + "px"})]));
             ρσ_interpolate_kwargs.call(this, set_css, [document.getElementById("book-bottom-margin")].concat([ρσ_desugar_kwargs({height: margin_bottom + "px", font_size: header_footer_font_size(margin_bottom) + "px"})]));
             function side_margin(which, val) {
-                var m, usable_width, s;
+                var m, s;
                 m = document.getElementById("book-{}-margin".format(which));
-                if (which === "left") {
-                    usable_width = max(0, container_width - margin_left - margin_right - self.book_scrollbar.effective_width);
-                    m.nextSibling.style.maxWidth = usable_width + "px";
-                }
                 ρσ_interpolate_kwargs.call(this, set_css, [m].concat([ρσ_desugar_kwargs({width: val + "px"})]));
                 val = min(val, 25);
                 s = m.querySelector(".arrow").style;
