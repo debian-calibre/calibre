@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import atexit
 import errno
 import os
@@ -34,6 +33,7 @@ if iswindows:
         except OSError:
             return True
         return False
+
 else:
     import fcntl
 
@@ -47,6 +47,7 @@ else:
 
     def unlock_file(fobj):
         from calibre.utils.ipc import eintr_retry_call
+
         eintr_retry_call(fcntl.lockf, fobj.fileno(), fcntl.LOCK_UN)
         fobj.close()
 
@@ -98,10 +99,13 @@ def retry_lock_tdir(path, timeout=30, sleep=0.1):
             time.sleep(sleep)
 
 
+_tdir_in_cache_scanned: set[str] = set()
+
+
 def tdir_in_cache(base):
-    ''' Create a temp dir inside cache_dir/base. The created dir is robust
+    """Create a temp dir inside cache_dir/base. The created dir is robust
     against application crashes. i.e. it will be cleaned up the next time the
-    application starts, even if it was left behind by a previous crash. '''
+    application starts, even if it was left behind by a previous crash."""
     b = os.path.join(os.path.realpath(cache_dir()), base)
     try:
         os.makedirs(b)
@@ -110,12 +114,13 @@ def tdir_in_cache(base):
             raise
     global_lock = retry_lock_tdir(b)
     try:
-        if b not in tdir_in_cache.scanned:
-            tdir_in_cache.scanned.add(b)
+        if b not in _tdir_in_cache_scanned:
+            _tdir_in_cache_scanned.add(b)
             try:
                 clean_tdirs_in(b)
             except Exception:
                 import traceback
+
                 traceback.print_exc()
         tdir = tempfile.mkdtemp(dir=b)
         lock_data = lock_tdir(tdir)
@@ -125,6 +130,3 @@ def tdir_in_cache(base):
         return tdir
     finally:
         unlock_file(global_lock)
-
-
-tdir_in_cache.scanned = set()

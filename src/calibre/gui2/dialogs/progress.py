@@ -1,18 +1,14 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2009, Kovid Goyal kovid@kovidgoyal.net'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, Kovid Goyal kovid@kovidgoyal.net
 
 from qt.core import QApplication, QDialog, QDialogButtonBox, QFont, QFontMetrics, QHBoxLayout, QIcon, QLabel, QProgressBar, QSize, Qt, QVBoxLayout, pyqtSignal
 
 from calibre.gui2 import elided_text, question_dialog
 from calibre.gui2.progress_indicator import ProgressIndicator
+from calibre.utils.localization import _
 
 
 class ProgressDialog(QDialog):
-
     canceled_signal = pyqtSignal()
 
     def __init__(self, title, msg='\u00a0', min=0, max=99, parent=None, cancelable=True, icon=None, cancel_confirm_msg=''):
@@ -33,7 +29,11 @@ class ProgressDialog(QDialog):
 
         self.title_label = t = QLabel(title)
         self.setWindowTitle(title)
-        t.setStyleSheet('QLabel { font-weight: bold }'), t.setAlignment(Qt.AlignmentFlag.AlignCenter), t.setTextFormat(Qt.TextFormat.PlainText)
+        (
+            t.setStyleSheet('QLabel { font-weight: bold }'),
+            t.setAlignment(Qt.AlignmentFlag.AlignCenter),
+            t.setTextFormat(Qt.TextFormat.PlainText),
+        )
         l.addWidget(t)
 
         self.bar = b = QProgressBar(self)
@@ -42,7 +42,11 @@ class ProgressDialog(QDialog):
 
         self.message = m = QLabel(self)
         fm = QFontMetrics(self.font())
-        m.setAlignment(Qt.AlignmentFlag.AlignCenter), m.setMinimumWidth(fm.averageCharWidth() * 80), m.setTextFormat(Qt.TextFormat.PlainText)
+        (
+            m.setAlignment(Qt.AlignmentFlag.AlignCenter),
+            m.setMinimumWidth(fm.averageCharWidth() * 80),
+            m.setTextFormat(Qt.TextFormat.PlainText),
+        )
         l.addWidget(m)
         self.msg = msg
 
@@ -109,13 +113,17 @@ class ProgressDialog(QDialog):
     @msg.setter
     def msg(self, val):
         val = str(val or '')
-        self.message.setText(elided_text(val, self.font(), self.message.minimumWidth()-10))
+        self.message.setText(elided_text(val, self.font(), self.message.minimumWidth() - 10))
 
     def _canceled(self, *args):
         if self.cancel_confirm_msg:
             if not question_dialog(
-                self, _('Are you sure?'), self.cancel_confirm_msg, override_icon='dialog_warning.png',
-                yes_text=_('Yes, abort'), no_text=_('No, keep copying')
+                self,
+                _('Are you sure?'),
+                self.cancel_confirm_msg,
+                override_icon='dialog_warning.png',
+                yes_text=_('Yes, abort'),
+                no_text=_('No, keep copying'),
             ):
                 return
         self.canceled = True
@@ -128,16 +136,15 @@ class ProgressDialog(QDialog):
             return
         QDialog.reject(self)
 
-    def keyPressEvent(self, ev):
-        if ev.key() == Qt.Key.Key_Escape:
+    def keyPressEvent(self, a0):
+        if a0.key() == Qt.Key.Key_Escape:
             if self.cancelable:
                 self._canceled()
         else:
-            QDialog.keyPressEvent(self, ev)
+            QDialog.keyPressEvent(self, a0)
 
 
 class BlockingBusy(QDialog):
-
     def __init__(self, msg, parent=None, window_title=_('Working')):
         QDialog.__init__(self, parent)
 
@@ -145,9 +152,9 @@ class BlockingBusy(QDialog):
         self.setLayout(self._layout)
         self.msg = QLabel(msg)
         # self.msg.setWordWrap(True)
-        self.font = QFont()
-        self.font.setPointSize(self.font.pointSize() + 8)
-        self.msg.setFont(self.font)
+        self._label_font = QFont()
+        self._label_font.setPointSize(self._label_font.pointSize() + 8)
+        self.msg.setFont(self._label_font)
         self.pi = ProgressIndicator(self)
         self.pi.setDisplaySize(QSize(100, 100))
         self._layout.addWidget(self.pi, 0, Qt.AlignmentFlag.AlignHCenter)
@@ -173,6 +180,7 @@ class BlockingBusy(QDialog):
 
 if __name__ == '__main__':
     from qt.core import QTimer
+
     app = QApplication([])
     d = ProgressDialog('A title', 'A message', icon='lt.png')
     d.show(), d.canceled_signal.connect(app.quit)

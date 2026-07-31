@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # vim:fileencoding=utf-8
-'''
+"""
 newscientist.com
-'''
+"""
 
 from calibre.web.feeds.news import BasicNewsRecipe, classes
 
@@ -29,16 +29,12 @@ class NewScientist(BasicNewsRecipe):
     remove_attributes = ['style', 'height', 'width']
     masthead_url = 'https://cdn.shopify.com/s/files/1/0266/6843/3505/files/logo.svg?v=1629189295'
 
-    conversion_options = {
-        'comment': description,
-        'tags': category,
-        'publisher': publisher,
-        'language': language
-    }
+    conversion_options = {'comment': description, 'tags': category, 'publisher': publisher, 'language': language}
 
     def get_browser(self):
         br = BasicNewsRecipe.get_browser(self)
         if self.username is not None and self.password is not None:
+
             def is_login_form(form):
                 return 'action' in form.attrs and form.attrs['action'] == '/login/'
 
@@ -56,28 +52,21 @@ class NewScientist(BasicNewsRecipe):
 
     extra_css = '''
         img {display:block; margin:0 auto;}
-        .ArticleHeader__Category { font-size:small; color:#404040; }
-        .ArticleHeader__Author, .ArticleHeader__DateTimeWrapper { font-size:small; }
-        .ArticleHeader__Copy { font-style:italic; color:#202020; }
-        .ArticleImage { font-size:small; text-align:center; }
-        .ArticleImageCaption__Credit { font-size:smaller; }
+        .article__category { font-size:small; color:#404040; }
+        .article__byline, .article__date { font-size:small; }
+        .article__excerpt { font-style:italic; color:#202020; }
+        figcaption { font-size:small; text-align:center; }
+        .wp-image__caption--credit { font-size:smaller; }
     '''
 
-    keep_only_tags = [
-        classes('ArticleHeader ArticleContent')
-    ]
+    keep_only_tags = [classes('article__category article__title article__excerpt article__byline article__date article__content')]
 
     remove_tags = [
         dict(name=['svg', 'button']),
-        classes('ArticleHeader__SocialWrapper AdvertWrapper ReadMoreWithImage ArticleTopics')
+        classes('advert-wrapper read-more__standard wp-block-newscientist-newsletter-promotion js-content-prompt-opportunity'),
     ]
 
-    recipe_specific_options = {
-        'issue': {
-            'short': 'Enter the Issue Number you want to download ',
-            'long': 'For example, 3498'
-        }
-    }
+    recipe_specific_options = {'issue': {'short': 'Enter the Issue Number you want to download ', 'long': 'For example, 3498'}}
 
     def parse_index(self):
         issue_url = 'https://www.newscientist.com/issues/current/'
@@ -86,27 +75,39 @@ class NewScientist(BasicNewsRecipe):
             issue_url = 'https://www.newscientist.com/issue/' + d
 
         soup = self.index_to_soup(issue_url)
-        div = soup.find('div', attrs={'class':'ThisWeeksMagazineHero__CoverInfo'})
-        tme = div.find(**classes('ThisWeeksMagazineHero__MagInfoHeading'))
-        self.log('Downloading issue:', self.tag_to_string(tme))
-        self.timefmt = ' [' + self.tag_to_string(tme) + ']'
-        self.cover_url = div.find(**classes('ThisWeeksMagazineHero__ImageLink')).img['src']
+        issue_date = soup.find(**classes('issue__date'))
+        issue_number = soup.find(**classes('issue__number'))
+        cover = soup.find(**classes('issue__cover'))
+        if issue_date is None or issue_number is None or cover is None or cover.img is None:
+            raise ValueError('Failed to find issue metadata on New Scientist')
+        issue = ' - '.join((self.tag_to_string(issue_date).strip(), self.tag_to_string(issue_number).strip()))
+        self.log('Downloading issue:', issue)
+        self.timefmt = ' [' + issue + ']'
+        self.cover_url = cover.img['src']
 
         feeds = []
-        for cont in soup.findAll(attrs={'class':'TableOfContents__Section'}):
-            sec = self.tag_to_string(cont.find('h3'))
+        for cont in soup.findAll(**classes('issue__table-of-contents-section')):
+            sec = self.tag_to_string(cont.find('h3')).strip()
             self.log(sec)
             articles = []
-            for a in cont.findAll('a', attrs={'class':'CardLink'}):
-                url = a['href']
-                if url.startswith('http') is False:
-                    url = 'https://www.newscientist.com' + a['href']
-                title = self.tag_to_string(a.find(**classes('Card__Title')))
-                desc = ''
-                desc += self.tag_to_string(a.find(**classes('Card__Category')))
-                teaser = a.find(**classes('Card__TeaserCopy'))
-                if teaser:
-                    desc += ' | ' + self.tag_to_string(teaser)
+            for a in cont.findAll('a', **classes('content-item')):
+                url = a.get('href')
+                title_tag = a.find(**classes('content-item__title'))
+                if not url or title_tag is None:
+                    continue
+                if not url.startswith('http'):
+                    url = 'https://www.newscientist.com' + url
+                title = self.tag_to_string(title_tag).strip()
+                desc = []
+                for x in (
+                    a.find(**classes('content-item__subject')),
+                    a.find(**classes('content-item__tag')),
+                    a.find(**classes('content-item__excerpt')),
+                ):
+                    text = self.tag_to_string(x).strip()
+                    if text:
+                        desc.append(text)
+                desc = ' | '.join(desc)
                 self.log('\t', title, '\n\t', desc, '\n\t\t', url)
                 articles.append({'title': title, 'description': desc, 'url': url})
             if articles:
@@ -114,10 +115,10 @@ class NewScientist(BasicNewsRecipe):
         return feeds
 
     def preprocess_html(self, soup):
-        time = soup.find(**classes('ArticleHeader__DateTimeWrapper'))
+        time = soup.find('time', **classes('article__pubdate'))
         if time:
             time.name = 'div'
-        for img in soup.findAll('img', attrs={'data-src':True}):
+        for img in soup.findAll('img', attrs={'data-src': True}):
             img['src'] = img['data-src'].split('?')[0] + '?width=700'
         for figc in soup.findAll('figcaption'):
             for p in figc.findAll('p'):

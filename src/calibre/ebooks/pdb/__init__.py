@@ -1,6 +1,4 @@
-__license__   = 'GPL v3'
-__copyright__ = '2009, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
 
 class PDBError(Exception):
@@ -57,7 +55,6 @@ IDENTITY_TO_NAME = {
     'DataPlkr': 'Plucker',
     'BOOKMTIT': 'Haodoo.net',
     'BOOKMTIU': 'Haodoo.net',
-
     'BVokBDIC': 'BDicty',
     'DB99DBOS': 'DB (Database program)',
     'vIMGView': 'FireViewer (ImageViewer)',
@@ -84,20 +81,22 @@ IDENTITY_TO_NAME = {
 
 
 def get_reader(identity):
-    '''
+    """
     Returns None if no reader is found for the identity.
-    '''
+    """
     global FORMAT_READERS
     if FORMAT_READERS is None:
         _import_readers()
+    assert FORMAT_READERS is not None
     return FORMAT_READERS.get(identity, None)
 
 
 def get_writer(extension):
-    '''
+    """
     Returns None if no writer is found for extension.
-    '''
+    """
     global FORMAT_WRITERS
     if FORMAT_WRITERS is None:
         _import_writers()
+    assert FORMAT_WRITERS is not None
     return FORMAT_WRITERS.get(extension, None)

@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2012, Kovid Goyal <kovid at kovidgoyal.net>
 
 from operator import attrgetter
 
@@ -11,6 +7,7 @@ from qt.core import QDialog, QDialogButtonBox, QIcon, QLabel, QSize, Qt, QTabWid
 
 from calibre.gui2 import file_icon_provider
 from calibre.utils.icu import lower as icu_lower
+from calibre.utils.localization import _
 
 
 def browser_item(f, parent):
@@ -29,7 +26,6 @@ def browser_item(f, parent):
 
 
 class Storage(QTreeWidget):
-
     def __init__(self, storage, show_files=False, item_func=browser_item):
         QTreeWidget.__init__(self)
         self.item_func = item_func
@@ -58,7 +54,6 @@ class Storage(QTreeWidget):
 
 
 class Folders(QTabWidget):
-
     selected = pyqtSignal()
 
     def __init__(self, filesystem_cache, show_files=True):
@@ -74,19 +69,19 @@ class Folders(QTabWidget):
     @property
     def current_item(self):
         w = self.currentWidget()
-        if w is not None:
+        if isinstance(w, Storage):
             return w.current_item
+        return None
 
 
 class Browser(QDialog):
-
     def __init__(self, filesystem_cache, show_files=True, parent=None):
         QDialog.__init__(self, parent)
         self.l = l = QVBoxLayout()
         self.setLayout(l)
         self.folders = cw = Folders(filesystem_cache, show_files=show_files)
         l.addWidget(cw)
-        bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
+        bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         l.addWidget(bb)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
@@ -101,14 +96,13 @@ class Browser(QDialog):
 
 
 class IgnoredFolders(QDialog):
-
     def __init__(self, dev, ignored_folders=None, parent=None):
         QDialog.__init__(self, parent)
         self.l = l = QVBoxLayout()
         self.setLayout(l)
-        self.la = la = QLabel('<p>'+ _('<b>Scanned folders:</b>') + ' ' +
-            _('You can select which folders calibre will '
-              'scan when searching this device for books.'))
+        self.la = la = QLabel(
+            '<p>' + _('<b>Scanned folders:</b>') + ' ' + _('You can select which folders calibre will scan when searching this device for books.')
+        )
         la.setWordWrap(True)
         l.addWidget(la)
         self.tabs = QTabWidget(self)
@@ -123,19 +117,18 @@ class IgnoredFolders(QDialog):
             self.widgets.append(w)
             w.itemChanged.connect(self.item_changed)
 
-        self.la2 = la = QLabel(_(
-            'If you a select a previously unselected folder, any sub-folders'
-            ' will not be visible until you restart calibre.'))
+        self.la2 = la = QLabel(_('If you a select a previously unselected folder, any sub-folders will not be visible until you restart calibre.'))
         l.addWidget(la)
         la.setWordWrap(True)
 
-        self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok |
-                                   QDialogButtonBox.StandardButton.Cancel)
+        self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         self.bb.accepted.connect(self.accept)
         self.bb.rejected.connect(self.reject)
         self.sab = self.bb.addButton(_('Select &all'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert self.sab is not None
         self.sab.clicked.connect(self.select_all)
         self.snb = self.bb.addButton(_('Select &none'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert self.snb is not None
         self.snb.clicked.connect(self.select_none)
         l.addWidget(self.bb)
         self.setWindowTitle(_('Choose folders to scan'))
@@ -161,7 +154,7 @@ class IgnoredFolders(QDialog):
             w.itemChanged.connect(self.item_changed)
 
     def iterchildren(self, node):
-        ' Iterate over all descendants of node '
+        "Iterate over all descendants of node"
         for i in range(node.childCount()):
             child = node.child(i)
             yield child
@@ -172,21 +165,31 @@ class IgnoredFolders(QDialog):
         ans = QTreeWidgetItem(parent, [name])
         ans.setData(0, Qt.ItemDataRole.UserRole, '/'.join(f.full_path[1:]))
         ans.setFlags(Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsEnabled)
-        ans.setCheckState(0,
-            Qt.CheckState.Unchecked if self.dev.is_folder_ignored(f.storage_id, f.full_path[1:]) else Qt.CheckState.Checked)
+        ans.setCheckState(
+            0,
+            Qt.CheckState.Unchecked if self.dev.is_folder_ignored(f.storage_id, f.full_path[1:]) else Qt.CheckState.Checked,
+        )
         ans.setData(0, Qt.ItemDataRole.DecorationRole, file_icon_provider().icon_from_ext('dir'))
         return ans
 
     def select_all(self):
-        w = self.tabs.currentWidget()
-        for i in range(w.invisibleRootItem().childCount()):
-            c = w.invisibleRootItem().child(i)
+        tw = self.tabs.currentWidget()
+        assert isinstance(tw, QTreeWidget)
+        root = tw.invisibleRootItem()
+        assert root is not None
+        for i in range(root.childCount()):
+            c = root.child(i)
+            assert c is not None
             c.setCheckState(0, Qt.CheckState.Checked)
 
     def select_none(self):
-        w = self.tabs.currentWidget()
-        for i in range(w.invisibleRootItem().childCount()):
-            c = w.invisibleRootItem().child(i)
+        tw = self.tabs.currentWidget()
+        assert isinstance(tw, QTreeWidget)
+        root = tw.invisibleRootItem()
+        assert root is not None
+        for i in range(root.childCount()):
+            c = root.child(i)
+            assert c is not None
             c.setCheckState(0, Qt.CheckState.Unchecked)
 
     @property
@@ -208,6 +211,7 @@ class IgnoredFolders(QDialog):
 def setup_device():
     from calibre.devices.mtp.driver import MTP_DEVICE
     from calibre.devices.scanner import DeviceScanner
+
     s = DeviceScanner()
     s.scan()
     dev = MTP_DEVICE(None)
@@ -221,6 +225,7 @@ def setup_device():
 
 def browse():
     from calibre.gui2 import Application
+
     app = Application([])
     app
     dev = setup_device()
@@ -232,6 +237,7 @@ def browse():
 
 def ignored_folders():
     from calibre.gui2 import Application
+
     app = Application([])
     app
     dev = setup_device()

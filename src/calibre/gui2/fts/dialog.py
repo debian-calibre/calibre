@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPL v3 Copyright: 2022, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import os
 
 from qt.core import QAction, QDialogButtonBox, QHBoxLayout, QIcon, QLabel, QSize, QStackedWidget, Qt, QVBoxLayout
@@ -12,13 +11,16 @@ from calibre.gui2.fts.search import ResultsPanel
 from calibre.gui2.fts.utils import get_db
 from calibre.gui2.ui import get_gui
 from calibre.gui2.widgets2 import Dialog
+from calibre.utils.localization import _
 
 
 class FTSDialog(Dialog):
-
     def __init__(self, parent=None):
-        super().__init__(_('Search the text of all books in the library'), 'library-fts-dialog',
-                         default_buttons=QDialogButtonBox.StandardButton.Close)
+        super().__init__(
+            _('Search the text of all books in the library'),
+            'library-fts-dialog',
+            default_buttons=QDialogButtonBox.StandardButton.Close,
+        )
         self.setWindowIcon(QIcon.ic('fts.png'))
         self.setWindowFlags(self.windowFlags() | Qt.WindowType.WindowMinMaxButtonsHint)
         self.view_action = ac = QAction(self)
@@ -35,9 +37,10 @@ class FTSDialog(Dialog):
     def setup_ui(self):
         l = QVBoxLayout(self)
         self.fat_warning = fw = QLabel(
-            f'<span style="color:red; font-weight: bold">{_("WARNING")}:</span> ' +
-            _("The calibre library is on a FAT drive, indexing more than a few hundred books won't work.") +
-            f' <a href="xxx" style="text-decoration: none">{_("Learn more")}</a>')
+            f'<span style="color:red; font-weight: bold">{_("WARNING")}:</span> '
+            + _("The calibre library is on a FAT drive, indexing more than a few hundred books won't work.")
+            + f' <a href="xxx" style="text-decoration: none">{_("Learn more")}</a>'
+        )
         # fw.setVisible(False)
         fw.linkActivated.connect(self.show_fat_details)
         l.addWidget(self.fat_warning)
@@ -47,9 +50,13 @@ class FTSDialog(Dialog):
         h.setContentsMargins(0, 0, 0, 0)
         l.addLayout(h)
         self.indexing_label = il = QLabel(self)
-        il.setToolTip('<p>' + _(
-            'Indexing of all books in this library is not yet complete, so search results'
-            ' will not be from all books. Click the <i>Show indexing status</i> button to see details.'))
+        il.setToolTip(
+            '<p>'
+            + _(
+                'Indexing of all books in this library is not yet complete, so search results'
+                ' will not be from all books. Click the <i>Show indexing status</i> button to see details.'
+            )
+        )
         h.addWidget(il), h.addStretch(), h.addWidget(self.bb)
         self.scan_status = ss = ScanStatus(self)
         ss.switch_to_search_panel.connect(self.show_results_panel)
@@ -67,10 +74,16 @@ class FTSDialog(Dialog):
         self.addAction(self.results_panel.focus_search_action)
 
     def show_fat_details(self):
-        warning_dialog(self, _('Library on a FAT drive'), _(
-            'The calibre library {} is on a FAT drive. These drives have a limit on the maximum file size. Therefore'
-            ' indexing of more than a few hundred books will fail. You should move your calibre library to an NTFS'
-            ' or exFAT drive.').format(get_db().backend.library_path), show=True)
+        warning_dialog(
+            self,
+            _('Library on a FAT drive'),
+            _(
+                'The calibre library {} is on a FAT drive. These drives have a limit on the maximum file size. Therefore'
+                ' indexing of more than a few hundred books will fail. You should move your calibre library to an NTFS'
+                ' or exFAT drive.'
+            ).format(get_db().backend.library_path),
+            show=True,
+        )
 
     def update_fat_warning(self):
         db = get_db()
@@ -141,7 +154,8 @@ class FTSDialog(Dialog):
 if __name__ == '__main__':
     from calibre.gui2 import Application
     from calibre.library import db
-    get_db.db = db(os.path.expanduser('~/test library'))
+
+    setattr(get_db, 'db', db(os.path.expanduser('~/test library')))
     app = Application([])
     d = FTSDialog()
     d.exec()

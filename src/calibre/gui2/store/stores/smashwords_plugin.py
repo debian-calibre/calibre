@@ -1,23 +1,16 @@
 # -*- coding: utf-8 -*-
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 7  # Needed for dynamic plugin loading
 
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
-
 import random
 import re
 from contextlib import closing
+from urllib.parse import quote
 
 from lxml import html
-
-try:
-    from urllib.parse import quote
-except ImportError:
-    from urllib import quote
-
 from qt.core import QUrl
 
 from calibre import browser, url_slash_cleaner
@@ -88,8 +81,7 @@ def search(query, max_results=10, timeout=60, save_raw=None):
 
 
 class SmashwordsStore(BasicStoreConfig, StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         url = 'https://www.smashwords.com/'
 
         aff_id = '?ref=usernone'
@@ -114,7 +106,7 @@ class SmashwordsStore(BasicStoreConfig, StorePlugin):
         for a in search(query, max_results=max_results, timeout=timeout):
             yield a
 
-    def get_details(self, search_result, timeout):
+    def get_details(self, search_result, timeout=60):
         url = 'https://www.smashwords.com/'
 
         br = browser()
@@ -126,5 +118,6 @@ class SmashwordsStore(BasicStoreConfig, StorePlugin):
 
 if __name__ == '__main__':
     import sys
+
     for r in search(' '.join(sys.argv[1:]), save_raw='/t/raw.html'):
         print(r)

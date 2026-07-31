@@ -69,7 +69,6 @@ def scroll_to_node(node, sync_context):
 state = {'blocks_found': False, 'in_split_mode': False}
 
 
-
 def go_to_line(lnum, sync_context):
     for node in document.querySelectorAll(f'[data-lnum="{lnum}"]'):
         if is_hidden(node):
@@ -77,7 +76,9 @@ def go_to_line(lnum, sync_context):
         scroll_to_node(node, sync_context)
         break
 
+
 @from_python
+@no_prune
 def go_to_sourceline_address(sourceline, tags, sync_context):
     nodes = document.querySelectorAll(f'[data-lnum="{sourceline}"]')
     for index in range(nodes.length):
@@ -88,15 +89,17 @@ def go_to_sourceline_address(sourceline, tags, sync_context):
             return scroll_to_node(node, sync_context)
     go_to_line(sourceline, sync_context)
 
+
 def line_numbers():
     found_body = False
-    ans = v'[]'
+    ans = []
     for node in document.getElementsByTagName('*'):
-        if not found_body and node.tagName.toLowerCase() is "body":
+        if not found_body and node.tagName.toLowerCase() is 'body':
             found_body = True
         if found_body:
             ans.push(node.dataset.lnum)
     return ans
+
 
 def find_blocks():
     if state.blocks_found:
@@ -106,16 +109,19 @@ def find_blocks():
             elem.setAttribute('data-is-block', '1')
     state.blocks_found = True
 
+
 @from_python
+@no_prune
 def set_split_mode(enabled):
     state.in_split_mode = enabled
     document.body.dataset.inSplitMode = '1' if enabled else '0'
     if enabled:
         find_blocks()
 
+
 def report_split(node):
-    loc = v'[]'
-    totals = v'[]'
+    loc = []
+    totals = []
     parent = find_containing_block(node)
     while parent and parent.tagName.toLowerCase() is not 'body':
         totals.push(parent.parentNode.children.length)
@@ -129,6 +135,7 @@ def report_split(node):
     loc.reverse()
     totals.reverse()
     to_python.request_split(loc, totals)
+
 
 def onclick(event):
     event.preventDefault()
@@ -147,7 +154,9 @@ def onclick(event):
             to_python.request_sync(tn, href, address)
     return False
 
+
 @from_python
+@no_prune
 def go_to_anchor(anchor):
     elem = document.getElementById(anchor)
     if not elem:
@@ -158,10 +167,12 @@ def go_to_anchor(anchor):
         if to_python.request_sync:
             to_python.request_sync('', '', address)
 
+
 @from_python
+@no_prune
 def live_css(editor_name, sourceline, tags):
     all_properties = {}
-    ans = {'nodes':v'[]', 'computed_css':all_properties, 'editor_name': editor_name, 'sourceline': sourceline, 'tags': tags}
+    ans = {'nodes': [], 'computed_css': all_properties, 'editor_name': editor_name, 'sourceline': sourceline, 'tags': tags}
     target = None
     i = 0
     for node in document.querySelectorAll(f'[data-lnum="{sourceline}"]'):

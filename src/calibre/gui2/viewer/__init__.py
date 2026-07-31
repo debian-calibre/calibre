@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import sys
 from time import monotonic_ns
 
@@ -14,10 +13,14 @@ def get_current_book_data(set_val=False):
     return getattr(get_current_book_data, 'ans', {})
 
 
+_boss = None
+
+
 def get_boss(set_val=False):
+    global _boss
     if set_val:
-        get_boss.ans = set_val
-    return get_boss.ans
+        _boss = set_val
+    return _boss
 
 
 def link_prefix_for_location_links(add_open_at=True):
@@ -57,7 +60,6 @@ def url_for_book_in_library():
 
 
 class PerformanceMonitor:
-
     def __init__(self):
         self.start_time = monotonic_ns()
 

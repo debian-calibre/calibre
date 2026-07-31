@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 from time import monotonic
 
@@ -31,11 +28,11 @@ from calibre.ebooks.oeb.polish.toc import commit_toc, get_toc
 from calibre.gui2 import error_dialog, info_dialog, make_view_use_window_background
 from calibre.gui2.toc.main import ItemEdit, TOCView
 from calibre.gui2.tweak_book import TOP, actions, current_container, tprefs
+from calibre.utils.localization import _
 from calibre_extensions.progress_indicator import set_no_activate_on_click
 
 
 class TOCEditor(QDialog):
-
     explode_done = pyqtSignal(object)
     writing_done = pyqtSignal(object)
 
@@ -45,7 +42,7 @@ class TOCEditor(QDialog):
 
         t = title or current_container().mi.title
         self.book_title = t
-        self.setWindowTitle(_('Edit the ToC in %s')%t)
+        self.setWindowTitle(_('Edit the ToC in %s') % t)
         self.setWindowIcon(QIcon.ic('toc.png'))
 
         l = self.l = QVBoxLayout()
@@ -59,11 +56,12 @@ class TOCEditor(QDialog):
         self.item_edit = ItemEdit(self, tprefs)
         s.addWidget(self.item_edit)
 
-        bb = self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
+        bb = self.bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         l.addWidget(bb)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         self.undo_button = b = bb.addButton(_('&Undo'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setToolTip(_('Undo the last action, if any'))
         b.setIcon(QIcon.ic('edit-undo.png'))
         b.clicked.connect(self.toc_view.undo)
@@ -103,9 +101,13 @@ class TOCEditor(QDialog):
     def really_accept(self, tb):
         self.save_geometry(tprefs, 'toc_editor_window_geom')
         if tb:
-            error_dialog(self, _('Failed to write book'),
-                _('Could not write %s. Click "Show details" for'
-                  ' more information.')%self.book_title, det_msg=tb, show=True)
+            error_dialog(
+                self,
+                _('Failed to write book'),
+                _('Could not write %s. Click "Show details" for more information.') % self.book_title,
+                det_msg=tb,
+                show=True,
+            )
             super().reject()
             return
 
@@ -132,8 +134,7 @@ class TOCEditor(QDialog):
     def write_toc(self):
         toc = self.toc_view.create_toc()
         toc.toc_title = getattr(self.toc_view, 'toc_title', None)
-        commit_toc(current_container(), toc, lang=self.toc_view.toc_lang,
-                uid=self.toc_view.toc_uid)
+        commit_toc(current_container(), toc, lang=self.toc_view.toc_lang, uid=self.toc_view.toc_uid)
 
 
 DEST_ROLE = Qt.ItemDataRole.UserRole
@@ -141,14 +142,13 @@ FRAG_ROLE = DEST_ROLE + 1
 
 
 class Delegate(QStyledItemDelegate):
-
-    def sizeHint(self, *args):
-        ans = QStyledItemDelegate.sizeHint(self, *args)
+    def sizeHint(self, option=None, index=None):
+        assert option is not None and index is not None
+        ans = QStyledItemDelegate.sizeHint(self, option, index)
         return ans + QSize(0, 10)
 
 
 class TOCViewer(QWidget):
-
     navigate_requested = pyqtSignal(object, object)
     refresh_requested = pyqtSignal()
 
@@ -191,6 +191,7 @@ class TOCViewer(QWidget):
             except Exception:
                 # ignore errors during live refresh of the toc
                 import traceback
+
                 traceback.print_exc()
 
     def refresh(self):
@@ -211,7 +212,7 @@ class TOCViewer(QWidget):
 
     def iter_items(self, parent=None):
         if parent is None:
-            parent = self.invisibleRootItem()
+            parent = self.view.invisibleRootItem()
         for i in range(parent.childCount()):
             child = parent.child(i)
             yield child
@@ -240,18 +241,17 @@ class TOCViewer(QWidget):
                 node.setText(0, child.title or '')
                 node.setData(0, DEST_ROLE, child.dest or '')
                 node.setData(0, FRAG_ROLE, child.frag or '')
-                tt = _('File: {0}\nAnchor: {1}').format(
-                    child.dest or '', child.frag or _('Top of file'))
+                tt = _('File: {0}\nAnchor: {1}').format(child.dest or '', child.frag or _('Top of file'))
                 node.setData(0, Qt.ItemDataRole.ToolTipRole, tt)
                 process_node(child, node)
 
         self.view.clear()
         process_node(toc, self.view.invisibleRootItem())
 
-    def showEvent(self, ev):
-        if self.toc_name is None or not ev.spontaneous():
+    def showEvent(self, a0):
+        if self.toc_name is None or not a0.spontaneous():
             self.build()
-        return super().showEvent(ev)
+        return super().showEvent(a0)
 
     def update_if_visible(self):
         if self.isVisible():

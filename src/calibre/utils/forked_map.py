@@ -7,7 +7,7 @@ import select
 import signal
 import ssl
 import traceback
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Sequence
 from contextlib import ExitStack
 from itertools import batched, chain
 from typing import Any, BinaryIO, NamedTuple
@@ -16,6 +16,7 @@ from typing import Any, BinaryIO, NamedTuple
 class _RemoteTraceback(Exception):
     def __init__(self, tb):
         self.tb = tb
+
     def __str__(self):
         return self.tb
 
@@ -28,6 +29,7 @@ class _ExceptionWithTraceback:
         # contain references to all the objects in the exception scope
         self.exc.__traceback__ = None
         self.tb = f'\n"""\n{tb}"""'
+
     def __reduce__(self):
         return _rebuild_exc, (self.exc, self.tb)
 
@@ -91,7 +93,7 @@ def run_jobs(*jobs: Job) -> Worker:
                         result = Result(False, job.id, _ExceptionWithTraceback(e))
                     pickler.dump(result)
                     pipe.flush()
-        except (BrokenPipeError, KeyboardInterrupt):
+        except BrokenPipeError, KeyboardInterrupt:
             pass
         except BaseException:
             traceback.print_exc()
@@ -100,16 +102,22 @@ def run_jobs(*jobs: Job) -> Worker:
         os._exit(os.EX_OK)
 
 
-def forked_map[T, R](fn: Callable[[T], R], iterable: T, *iterables: T, timeout: int | float | None = None, num_workers: int = 0) -> Iterator[R]:
-    '''
+def forked_map[T, R](
+    fn: Callable[[T], R],
+    iterable: Sequence[T],
+    *iterables: Sequence[T],
+    timeout: int | float | None = None,
+    num_workers: int = 0,
+) -> Iterator[R]:
+    """
     Should be used only in worker processes that have no threads and that do not use/import any non fork safe libraries such as macOS
     system libraries.
-    '''
+    """
     num_items = len(iterable) + sum(map(len, iterables))
     if num_items < 1:
         return
     if num_workers <= 0:
-        num_workers = max(1, min(num_items, os.cpu_count()))
+        num_workers = max(1, min(num_items, os.cpu_count() or 1))
     chunk_size = max(1, num_items // num_workers)
     groups = batched((Job(i, arg, fn) for i, arg in enumerate(chain(iterable, *iterables))), chunk_size)
     cache: dict[int, Result] = {}
@@ -152,27 +160,52 @@ def forked_map[T, R](fn: Callable[[T], R], iterable: T, *iterables: T, timeout: 
 forked_map_is_supported = hasattr(os, 'fork')
 
 
-def find_tests():
+def forked_map_test_main() -> None:
     import random
     import time
     import unittest
+
+    def sleep(x: int) -> int:
+        time.sleep(10 * x)
+        return x
+
+    def raise_error(x: int) -> None:
+        raise ReferenceError('testing')
+
+    tc = unittest.TestCase()
+    tc.maxDiff = None
+
+    with tc.assertRaises(TimeoutError):
+        tuple(forked_map(sleep, range(3), timeout=0.001))
+
+    with tc.assertRaises(ReferenceError):
+        tuple(forked_map(raise_error, range(3)))
+
+    timings = 0, 1, 2, 3
+
+    def echo(x: int) -> int:
+        time.sleep(0.0001 * random.choice(timings))
+        return x
+
+    for num_workers in range(1, 9):
+        items = tuple(range(num_workers * 3 + 1))
+        tc.assertEqual(tuple(map(echo, items)), tuple(forked_map(echo, items, num_workers=num_workers)))
+
+
+def find_tests():
+    import subprocess
+    import unittest
+
+    from calibre.utils.ipc.simple_worker import start_pipe_worker
+
     class TestForkedMap(unittest.TestCase):
         @unittest.skipUnless(forked_map_is_supported, 'forking not supported on this platform')
         def test_forked_map(self):
-            def sleep(x: int) -> int:
-                time.sleep(10 * x)
-                return x
-            with self.assertRaises(TimeoutError):
-                tuple(forked_map(sleep, range(3), timeout=0.001))
-            def raise_error(x: int) -> None:
-                raise ReferenceError('testing')
-            with self.assertRaises(ReferenceError):
-                tuple(forked_map(raise_error, range(3)))
-            timings = 0, 1, 2, 3
-            def echo(x: int) -> int:
-                time.sleep(0.0001 * random.choice(timings))
-                return x
-            for num_workers in range(1, 9):
-                items = tuple(range(num_workers * 3 + 1))
-                self.assertEqual(tuple(map(echo, items)), tuple(forked_map(echo, items, num_workers=num_workers)))
+            proc = start_pipe_worker(
+                'from calibre.utils.forked_map import forked_map_test_main; forked_map_test_main()',
+                stderr=subprocess.STDOUT,
+            )
+            if proc.wait(60) != 0:
+                raise AssertionError(f'forked_map test failed with output:\n{proc.stdout.read().decode()}')
+
     return unittest.defaultTestLoader.loadTestsFromTestCase(TestForkedMap)

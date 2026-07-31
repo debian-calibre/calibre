@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2009, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import shutil
 
 from qt.core import (
@@ -47,35 +46,35 @@ from calibre.gui2.convert.search_and_replace import SearchAndReplaceWidget
 from calibre.gui2.convert.structure_detection import StructureDetectionWidget
 from calibre.gui2.convert.toc import TOCWidget
 from calibre.utils.config import prefs
+from calibre.utils.localization import _
 
 
 class GroupModel(QAbstractListModel):
-
     def __init__(self, widgets):
         self.widgets = widgets
         QAbstractListModel.__init__(self)
 
-    def rowCount(self, *args):
+    def rowCount(self, parent=...):
         return len(self.widgets)
 
-    def data(self, index, role):
+    def data(self, index, role=...):
         try:
             widget = self.widgets[index.row()]
         except Exception:
             return None
         if role == Qt.ItemDataRole.DisplayRole:
-            return (widget.config_title())
+            return widget.config_title()
         if role == Qt.ItemDataRole.DecorationRole:
-            return (widget.config_icon())
+            return widget.config_icon()
         if role == Qt.ItemDataRole.FontRole:
             f = QFont()
             f.setBold(True)
-            return (f)
+            return f
         return None
 
 
 class Config(QDialog):
-    '''
+    """
     Configuration dialog for single book conversion. If accepted, has the
     following important attributes
 
@@ -85,18 +84,16 @@ class Config(QDialog):
     cover_path - Path to user specified cover (can be None)
     recommendations - A pickled list of 3 tuples in the same format as the
     recommendations member of the Input/Output plugins.
-    '''
+    """
 
-    def __init__(self, parent, db, book_id,
-            preferred_input_format=None, preferred_output_format=None):
+    def __init__(self, parent, db, book_id, preferred_input_format=None, preferred_output_format=None):
         QDialog.__init__(self, parent)
         self.widgets = []
         self.setupUi()
         self.opt_individual_saved_settings.setVisible(False)
         self.db, self.book_id = db, book_id
 
-        self.setup_input_output_formats(self.db, self.book_id, preferred_input_format,
-                preferred_output_format)
+        self.setup_input_output_formats(self.db, self.book_id, preferred_input_format, preferred_output_format)
         self.setup_pipeline()
 
         self.input_formats.currentIndexChanged.connect(self.setup_pipeline)
@@ -104,6 +101,7 @@ class Config(QDialog):
         self.groups.setSpacing(5)
         self.groups.entered[(QModelIndex)].connect(self.show_group_help)
         rb = self.buttonBox.button(QDialogButtonBox.StandardButton.RestoreDefaults)
+        assert rb is not None
         rb.setText(_('Restore &defaults'))
         rb.setIcon(QIcon.ic('clear_left.png'))
         rb.clicked.connect(self.restore_defaults)
@@ -170,8 +168,8 @@ class Config(QDialog):
         self.buttonBox = QDialogButtonBox(self)
         self.buttonBox.setOrientation(Qt.Orientation.Horizontal)
         self.buttonBox.setStandardButtons(
-            QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok|
-            QDialogButtonBox.StandardButton.RestoreDefaults)
+            QDialogButtonBox.StandardButton.Cancel | QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.RestoreDefaults
+        )
         self.buttonBox.setObjectName('buttonBox')
         self.gridLayout.addWidget(self.buttonBox, 3, 1, 1, 1)
         self.help = QTextEdit(self)
@@ -194,8 +192,10 @@ class Config(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
     def sizeHint(self):
-        geom = self.screen().availableSize()
-        nh, nw = max(300, geom.height()-100), max(400, geom.width()-70)
+        screen = self.screen()
+        assert screen is not None
+        geom = screen.availableSize()
+        nh, nw = max(300, geom.height() - 100), max(400, geom.width() - 70)
         return QSize(nw, nh)
 
     def restore_defaults(self):
@@ -223,11 +223,10 @@ class Config(QDialog):
         self.plumber = create_dummy_plumber(input_format, output_format)
 
         def widget_factory(cls):
-            return cls(self, self.plumber.get_option_by_name,
-                self.plumber.get_option_help, self.db, self.book_id)
+            return cls(self, self.plumber.get_option_by_name, self.plumber.get_option_help, self.db, self.book_id)
 
         self.mw = widget_factory(MetadataWidget)
-        self.setWindowTitle(_('Convert')+ ' ' + str(self.mw.title.text()))
+        self.setWindowTitle(_('Convert') + ' ' + str(self.mw.title.text()))
         lf = widget_factory(LookAndFeelWidget)
         hw = widget_factory(HeuristicsWidget)
         sr = widget_factory(SearchAndReplaceWidget)
@@ -235,15 +234,16 @@ class Config(QDialog):
         sd = widget_factory(StructureDetectionWidget)
         toc = widget_factory(TOCWidget)
         from calibre.gui2.actions.toc_edit import SUPPORTED
+
         toc.manually_fine_tune_toc.setVisible(output_format.upper() in SUPPORTED)
         debug = widget_factory(DebugWidget)
 
         output_widget = self.plumber.output_plugin.gui_configuration_widget(
-                self, self.plumber.get_option_by_name,
-                self.plumber.get_option_help, self.db, self.book_id)
+            self, self.plumber.get_option_by_name, self.plumber.get_option_help, self.db, self.book_id
+        )
         input_widget = self.plumber.input_plugin.gui_configuration_widget(
-                self, self.plumber.get_option_by_name,
-                self.plumber.get_option_help, self.db, self.book_id)
+            self, self.plumber.get_option_by_name, self.plumber.get_option_help, self.db, self.book_id
+        )
 
         self.break_cycles()
         self.widgets = widgets = [self.mw, lf, hw, ps, sd, toc, sr]
@@ -263,23 +263,22 @@ class Config(QDialog):
         idx = oidx if -1 < oidx < self._groups_model.rowCount() else 0
         self.groups.setCurrentIndex(self._groups_model.index(idx))
         self.show_pane(idx)
-        self.groups.selectionModel().currentChanged.connect(self.current_group_changed)
+        sel_model = self.groups.selectionModel()
+        assert sel_model is not None
+        sel_model.currentChanged.connect(self.current_group_changed)
         try:
             shutil.rmtree(self.plumber.archive_input_tdir, ignore_errors=True)
         except Exception:
             pass
 
-    def setup_input_output_formats(self, db, book_id, preferred_input_format,
-            preferred_output_format):
+    def setup_input_output_formats(self, db, book_id, preferred_input_format, preferred_output_format):
         if preferred_output_format:
             preferred_output_format = preferred_output_format.upper()
         output_formats = get_output_formats(preferred_output_format)
-        input_format, input_formats = get_input_format_for_book(db, book_id,
-                preferred_input_format)
-        preferred_output_format = preferred_output_format if \
-            preferred_output_format in output_formats else \
-            sort_formats_by_preference(output_formats,
-                    [prefs['output_format']])[0]
+        input_format, input_formats = get_input_format_for_book(db, book_id, preferred_input_format)
+        preferred_output_format = (
+            preferred_output_format if preferred_output_format in output_formats else sort_formats_by_preference(output_formats, [prefs['output_format']])[0]
+        )
         self.input_formats.addItems(str(x.upper()) for x in input_formats)
         self.output_formats.addItems(str(x.upper()) for x in output_formats)
         self.input_formats.setCurrentIndex(input_formats.index(input_format))
@@ -317,10 +316,10 @@ class Config(QDialog):
         self.break_cycles()
         QDialog.reject(self)
 
-    def done(self, r):
+    def done(self, a0):
         if self.isVisible():
             self.save_geometry(gprefs, 'convert_single_dialog_geom')
-        return QDialog.done(self, r)
+        return QDialog.done(self, a0)
 
     def break_cycles(self):
         for w in self.widgets:
@@ -328,8 +327,7 @@ class Config(QDialog):
 
     @property
     def recommendations(self):
-        recs = [(k, v, OptionRecommendation.HIGH) for k, v in
-                self._recommendations.items()]
+        recs = [(k, v, OptionRecommendation.HIGH) for k, v in self._recommendations.items()]
         return recs
 
     def show_group_help(self, index):

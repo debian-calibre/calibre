@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 13:52+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2026\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
@@ -365,7 +365,7 @@ msgid ""
 msgstr "2024년 Kindle 이후 모델이나 Android 장치를 연결 중이고 macOS 또는 Linux를 사용 중이라면 :ref:`android_usb` 아래의 참고를 읽으세요."
 
 #: ../../../__w/calibre/calibre/manual/faq.rst:183
-#: ../../../__w/calibre/calibre/manual/faq.rst:1014
+#: ../../../__w/calibre/calibre/manual/faq.rst:1013
 msgid ""
 "On macOS if you get permission errors when connecting a device to calibre, "
 "you can fix that by looking under :guilabel:`System Preferences > Security "
@@ -1769,16 +1769,15 @@ msgid ""
 "This will be because of an incompatibility between Qt WebEngine, which the "
 "viewer uses to render and the GPU drivers on your system. First try "
 "upgrading the GPU drivers. If that does not help, you can try turning off "
-"hardware acceleration in Qt WebEngine by setting the environment variable "
-"``QTWEBENGINE_CHROMIUM_FLAGS`` to the value ``--disable-gpu``. See "
-":ref:`customize_env_vars` for how to change environment variables."
-msgstr "이것은 뷰어가 렌더링에 사용하는 Qt WebEngine과 시스템 GPU 드라이버 사이의 비호환성 때문입니다. 먼저 GPU 드라이버를 업그레이드해 보세요. 그래도 도움이 안 되면 환경 변수 ``QTWEBENGINE_CHROMIUM_FLAGS`` 값을 ``--disable-gpu`` 로 설정해 Qt WebEngine의 하드웨어 가속을 끌 수 있습니다. 환경 변수 변경 방법은 :ref:`customize_env_vars` 를 보세요."
+"hardware acceleration in Qt WebEngine via Preferences->Tweaks->Control GPU "
+"usage in Qt WebEngine."
+msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:957
+#: ../../../__w/calibre/calibre/manual/faq.rst:956
 msgid "I downloaded the installer, but it is not working?"
 msgstr "설치 프로그램을 내려받았는데 동작하지 않습니다?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:959
+#: ../../../__w/calibre/calibre/manual/faq.rst:958
 msgid ""
 "Downloading from the Internet can sometimes result in a corrupted download. "
 "If the calibre installer you downloaded is not opening, try downloading it "
@@ -1788,32 +1787,32 @@ msgid ""
 "it from running."
 msgstr "인터넷에서 내려받을 때 파일이 손상되는 경우가 있습니다. 내려받은 calibre 설치 프로그램이 열리지 않으면 다시 내려받아 보세요. 다시 내려받아도 안 되면 `다른 위치 <https://github.com/kovidgoyal/calibre/releases/latest>`_ 에서 내려받으세요. 그래도 설치 프로그램이 동작하지 않으면 컴퓨터의 무언가가 실행을 막고 있는 것입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:961
+#: ../../../__w/calibre/calibre/manual/faq.rst:960
 msgid ""
 "Try temporarily disabling your antivirus program (Microsoft Security "
 "Essentials, or Kaspersky or Norton or McAfee or whatever). This is most "
 "likely the culprit if the upgrade process is hanging in the middle."
 msgstr "백신 프로그램(Microsoft Security Essentials, Kaspersky, Norton, McAfee 등)을 잠시 꺼 보세요. 업그레이드 과정이 중간에서 멈춘다면 가장 가능성이 큰 원인입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:962
+#: ../../../__w/calibre/calibre/manual/faq.rst:961
 msgid ""
 "Similarly, if the installer is failing/rolling back and you have Microsoft "
 "PowerToys running, quit it."
 msgstr "마찬가지로 설치가 실패하거나 롤백되는데 Microsoft PowerToys가 실행 중이라면 종료하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:963
+#: ../../../__w/calibre/calibre/manual/faq.rst:962
 msgid ""
 "If you have installed to a non-standard location, try running the installer "
 "as Administrator"
 msgstr "표준이 아닌 위치에 설치했다면 설치 프로그램을 관리자 권한으로 실행해 보세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:964
+#: ../../../__w/calibre/calibre/manual/faq.rst:963
 msgid ""
 "Try rebooting your computer and running a registry cleaner like `Wise "
 "registry cleaner <https://www.wisecleaner.com>`_."
 msgstr "컴퓨터를 재부팅하고 `Wise registry cleaner <https://www.wisecleaner.com>`_ 같은 레지스트리 클리너를 실행해 보세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:965
+#: ../../../__w/calibre/calibre/manual/faq.rst:964
 msgid ""
 "Try a clean install. That is, uninstall calibre, delete :file:`C:\\\\Program"
 " Files\\\\Calibre2` (or wherever you previously chose to install calibre). "
@@ -1821,13 +1820,13 @@ msgid ""
 " settings."
 msgstr "깨끗한 설치를 시도하세요. 즉 calibre를 제거하고 :file:`C:\\Program Files\\Calibre2` (또는 이전에 calibre를 설치한 위치)를 삭제한 뒤 calibre를 다시 설치하세요. 제거해도 책이나 설정은 건드리지 않습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:966
+#: ../../../__w/calibre/calibre/manual/faq.rst:965
 msgid ""
 "Try downloading the installer with an alternate browser. For example if you "
 "are using Microsoft Edge, try using Firefox or Chrome instead."
 msgstr "다른 브라우저로 설치 프로그램을 내려받아 보세요. 예를 들어 Microsoft Edge를 사용 중이라면 Firefox나 Chrome을 사용해 보세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:967
+#: ../../../__w/calibre/calibre/manual/faq.rst:966
 msgid ""
 "If you get an error about a missing DLL on Windows, then most likely, the "
 "permissions on your temporary folder are incorrect. Go to the folder "
@@ -1837,18 +1836,18 @@ msgid ""
 "that your user account has full control for this folder."
 msgstr "Windows에서 DLL 누락 오류가 나면 임시 폴더 권한이 잘못된 경우가 대부분입니다. Windows 탐색기에서 :file:`C:\\Users\\USERNAME\\AppData\\Local` 로 가서 :file:`Temp` 폴더를 오른쪽 클릭하고 :guilabel:`속성` -> :guilabel:`보안` 탭으로 이동하세요. 사용자 계정이 이 폴더에 대해 전체 제어 권한을 가지고 있는지 확인하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:974
+#: ../../../__w/calibre/calibre/manual/faq.rst:973
 msgid ""
 "If you still cannot get the installer to work and you are on Windows, you "
 "can use the :website:`calibre portable install <download_portable>`, which "
 "does not need an installer (it is just a ZIP file)."
 msgstr "그래도 설치 프로그램을 동작시킬 수 없고 Windows를 사용 중이라면 설치 프로그램이 필요 없는 :website:`calibre 포터블 설치본 <download_portable>` 을 사용할 수 있습니다(ZIP 파일일 뿐입니다)."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:977
+#: ../../../__w/calibre/calibre/manual/faq.rst:976
 msgid "My antivirus program claims calibre is a virus/trojan?"
 msgstr "내 백신 프로그램이 calibre를 바이러스/트로이 목마라고 주장합니다?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:979
+#: ../../../__w/calibre/calibre/manual/faq.rst:978
 msgid ""
 "The first thing to check is that you are downloading calibre from the "
 ":website:`official website <download>`. Make sure you are clicking the "
@@ -1857,7 +1856,7 @@ msgid ""
 "offering it for download to fool the unwary."
 msgstr "가장 먼저 확인할 것은 calibre를 :website:`공식 웹사이트 <download>` 에서 내려받고 있는지입니다. 오른쪽 광고가 아니라 왼쪽 다운로드 링크를 클릭하고 있는지 확인하세요. calibre는 매우 인기 있는 프로그램이라 악의적인 사람들이 다운로드를 제공하는 척하는 웹사이트를 만들어 사용자를 속이려 합니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:985
+#: ../../../__w/calibre/calibre/manual/faq.rst:984
 msgid ""
 "If you have the official download and your antivirus program is still "
 "claiming calibre is a virus, then, your antivirus program is wrong. "
@@ -1871,11 +1870,11 @@ msgid ""
 " and then re-enable it."
 msgstr "공식 다운로드인데도 백신 프로그램이 calibre를 바이러스라고 한다면, 백신 프로그램이 틀린 것입니다. 백신 프로그램은 “수상해 보이는” 코드 패턴 같은 휴리스틱으로 바이러스를 탐지합니다. 일종의 프로파일링과 비슷합니다. calibre는 완전한 오픈 소스 제품입니다. 실제로 소스 코드를 직접 살펴보거나(또는 누군가에게 확인을 맡겨) 바이러스가 아님을 검증할 수 있습니다. 이런 오탐은 당신이 구입한 백신 소프트웨어 회사에 신고하세요. 백신이 calibre의 다운로드/설치를 막는다면 잠시 비활성화하고 calibre를 설치한 뒤 다시 활성화하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:996
+#: ../../../__w/calibre/calibre/manual/faq.rst:995
 msgid "How do I backup calibre?"
 msgstr "calibre는 어떻게 백업하나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:998
+#: ../../../__w/calibre/calibre/manual/faq.rst:997
 msgid ""
 "The most important thing to backup is the calibre library folder, that "
 "contains all your books and metadata. This is the folder you chose for your "
@@ -1884,7 +1883,7 @@ msgid ""
 " You must backup this complete folder with all its files and sub-folders."
 msgstr "가장 중요한 백업 대상은 모든 책과 메타데이터가 들어 있는 calibre 라이브러리 폴더입니다. 이것은 calibre를 처음 실행할 때 calibre 라이브러리로 선택한 폴더입니다. 라이브러리 폴더 경로는 기본 도구 모음의 calibre 아이콘을 클릭하면 알 수 있습니다. 이 전체 폴더와 그 안의 모든 파일 및 하위 폴더를 백업해야 합니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1000
+#: ../../../__w/calibre/calibre/manual/faq.rst:999
 msgid ""
 "You can switch calibre to using a backed up library folder by simply "
 "clicking the calibre icon on the toolbar and choosing your backup library "
@@ -1892,7 +1891,7 @@ msgid ""
 "searches as well as all your books and metadata."
 msgstr "백업한 라이브러리 폴더를 사용하도록 calibre를 바꾸는 것은 쉽습니다. 도구 모음의 calibre 아이콘을 클릭하고 백업 라이브러리 폴더를 선택하면 됩니다. 백업된 라이브러리 폴더에는 사용자 열, 저장된 검색, 모든 책과 메타데이터가 함께 포함됩니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1002
+#: ../../../__w/calibre/calibre/manual/faq.rst:1001
 msgid ""
 "If you want to backup the calibre configuration/plugins, you have to backup "
 "the config folder. You can find this config folder via "
@@ -1902,13 +1901,13 @@ msgid ""
 " to restore."
 msgstr "calibre 설정/플러그인까지 백업하려면 설정 폴더도 백업해야 합니다. 이 설정 폴더는 :guilabel:`환경설정->기타` 에서 찾을 수 있습니다. 설정 폴더 복원은 공식 지원 대상은 아니지만 대부분의 경우 동작합니다. 복원하려면 백업 폴더 내용을 현재 설정 폴더로 복사하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1005
+#: ../../../__w/calibre/calibre/manual/faq.rst:1004
 msgid ""
 "How do I use purchased EPUB books with calibre (or what do I do with .acsm "
 "files)?"
 msgstr "구입한 EPUB 책을 calibre와 함께 사용하려면 어떻게 하나요(.acsm 파일은 어떻게 하나요)?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1006
+#: ../../../__w/calibre/calibre/manual/faq.rst:1005
 msgid ""
 "Most purchased EPUB books have :doc:`DRM <drm>`. This prevents calibre from "
 "opening them. You can still use calibre to store and transfer them to your "
@@ -1921,44 +1920,44 @@ msgid ""
 "Editions\", from where you can add it to calibre."
 msgstr "대부분의 유료 EPUB 책에는 :doc:`DRM <drm>` 이 걸려 있습니다. 그래서 calibre가 이를 열 수 없습니다. 그래도 calibre를 사용해 이런 책을 저장하고 전자책 리더로 전송하는 것은 가능합니다. 먼저 Windows 컴퓨터에서 Adobe Digital Editions로 리더를 인증해야 합니다. 이 작업을 마치면 calibre로 전송한 EPUB 책이 리더에서 정상 동작합니다. 웹사이트에서 epub 책을 구입하면 “.acsm” 파일을 받게 됩니다. 이 파일은 Adobe Digital Editions로 열어야 하며, 그러면 실제 “.epub” 전자책을 내려받습니다. 전자책 파일은 “My Digital Editions” 폴더에 저장되며, այնտեղ서 calibre에 추가할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1009
+#: ../../../__w/calibre/calibre/manual/faq.rst:1008
 msgid "I am getting a \"Permission Denied\" error?"
 msgstr "\"권한 거부됨\" 오류가 발생합니까?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1011
+#: ../../../__w/calibre/calibre/manual/faq.rst:1010
 msgid ""
 "A permission denied error can occur because of many possible reasons, none "
 "of them having anything to do with calibre."
 msgstr "permission denied 오류는 calibre와는 무관한 여러 이유로 발생할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1013
+#: ../../../__w/calibre/calibre/manual/faq.rst:1012
 msgid ""
 "You can get permission denied errors if you are using an SD card with write "
 "protect enabled."
 msgstr "쓰기 금지가 활성화된 SD 카드를 사용할 때 permission denied 오류가 발생할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1017
+#: ../../../__w/calibre/calibre/manual/faq.rst:1016
 msgid ""
 "If you, or some program you used changed the file permissions of the files "
 "in question to read only."
 msgstr "사용자나 사용한 어떤 프로그램이 해당 파일의 권한을 읽기 전용으로 바꾼 경우입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1018
+#: ../../../__w/calibre/calibre/manual/faq.rst:1017
 msgid ""
 "If there is a filesystem error on the device which caused your operating "
 "system to mount the filesystem in read only mode or mark a particular file "
 "as read only pending recovery."
 msgstr "장치에 파일 시스템 오류가 있는 경우, 운영 체제가 읽기 전용 모드에서 파일 시스템을 마운트하거나 특정 파일을 복구 보류 중인 읽기 전용으로 표시합니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1019
+#: ../../../__w/calibre/calibre/manual/faq.rst:1018
 msgid "If the files have their owner set to a user other than you."
 msgstr "파일 소유자가 사용자 자신이 아닌 다른 사용자로 설정된 경우입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1020
+#: ../../../__w/calibre/calibre/manual/faq.rst:1019
 msgid "If your file is open in another program."
 msgstr "사용자의 파일이 다른 프로그램에서 열려 있는 경우입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1021
+#: ../../../__w/calibre/calibre/manual/faq.rst:1020
 msgid ""
 "If the file resides on a device, you may have reached the limit of a maximum"
 " of 256 files in the root of the device. In this case you need to reformat "
@@ -1966,18 +1965,18 @@ msgid ""
 " or delete some files from the SD card/device memory."
 msgstr "파일이 장치에 있다면 장치 루트에 둘 수 있는 최대 파일 수 256개 제한에 도달했을 수 있습니다. 이런 경우 오류 메시지에 나온 장치/SD 카드를 FAT32 파일시스템으로 다시 포맷하거나 SD 카드/장치 메모리에서 일부 파일을 삭제해야 합니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1023
+#: ../../../__w/calibre/calibre/manual/faq.rst:1022
 msgid ""
 "You will need to fix the underlying cause of the permissions error before "
 "resuming to use calibre. Read the error message carefully, see what file it "
 "points to and fix the permissions on that file or its containing folders."
 msgstr "calibre 사용을 다시 시작하기 전에 권한 오류의 근본 원인을 먼저 해결해야 합니다. 오류 메시지를 주의 깊게 읽고 어떤 파일을 가리키는지 확인한 뒤 해당 파일이나 그 파일이 들어 있는 폴더의 권한을 수정하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1026
+#: ../../../__w/calibre/calibre/manual/faq.rst:1025
 msgid "Can I have the comment metadata show up on my reader?"
 msgstr "댓글 메타데이터를 리더기에서도 보이게 할 수 있나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1028
+#: ../../../__w/calibre/calibre/manual/faq.rst:1027
 msgid ""
 "Most readers do not support this. You should complain to the manufacturer "
 "about it and hopefully if enough people complain, things will change. In the"
@@ -1990,7 +1989,7 @@ msgid ""
 "that format to the same format."
 msgstr "대부분의 리더기는 이것을 지원하지 않습니다. 제조사에 불만을 제기하세요. 충분히 많은 사람이 불만을 제기하면 언젠가는 바뀔지도 모릅니다. 그동안은 변환 시 “책 시작 부분에 페이지로 메타데이터 삽입” 옵션을 사용해 댓글을 포함한 메타데이터를 전자책 시작 부분의 “재킷 페이지(Jacket page)”에 넣을 수 있습니다. 이 옵션은 변환 설정의 :guilabel:`구조 감지` 섹션에 있습니다. 이 기능이 적용되려면 반드시 책을 *변환* 해야 한다는 점을 기억하세요. 이미 변환이 필요 없는 형식이라면 같은 형식에서 같은 형식으로 변환하면 됩니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1030
+#: ../../../__w/calibre/calibre/manual/faq.rst:1029
 msgid ""
 "Another alternative is to create a catalog in e-book form containing a "
 "listing of all the books in your calibre library, with their metadata. "
@@ -1999,11 +1998,11 @@ msgid ""
 "to\" books on your reader."
 msgstr "또 다른 방법은 calibre 라이브러리에 있는 모든 책과 그 메타데이터 목록이 들어 있는 전자책 형식의 카탈로그를 만드는 것입니다. 카탈로그 생성 도구에 접근하려면 :guilabel:`변환` 버튼을 길게 누르세요. 그리고 미리 답하자면, 아니요, 그 카탈로그가 리더기의 책으로 “직접 링크”되게 할 수는 없습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1033
+#: ../../../__w/calibre/calibre/manual/faq.rst:1032
 msgid "How do I get calibre to use my HTTP proxy?"
 msgstr "calibre가 내 HTTP 프록시를 사용하게 하려면 어떻게 하나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1035
+#: ../../../__w/calibre/calibre/manual/faq.rst:1034
 msgid ""
 "By default, calibre uses whatever proxy settings are set in your OS. "
 "Sometimes these are incorrect, for example, on Windows if you don't use "
@@ -2016,21 +2015,21 @@ msgid ""
 "current proxies used by calibre in Preferences->Miscellaneous."
 msgstr "기본적으로 calibre는 운영체제에 설정된 프록시 설정을 사용합니다. 하지만 이것이 잘못된 경우가 있습니다. 예를 들어 Windows에서 Microsoft Edge를 사용하지 않으면 프록시 설정이 최신이 아닐 수 있습니다. ``http_proxy`` 와 ``https_proxy`` 환경 변수를 설정해 calibre가 특정 프록시 서버를 사용하도록 할 수 있습니다. 변수 형식은 ``http://username:password@servername`` 입니다. 이 변수의 올바른 값은 네트워크 관리자에게 문의하세요. calibre는 SOCKS 프록시가 아니라 HTTP 프록시만 지원합니다. calibre가 현재 사용하는 프록시는 환경설정->기타에서 볼 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1046
+#: ../../../__w/calibre/calibre/manual/faq.rst:1045
 msgid "I want some feature added to calibre. What can I do?"
 msgstr "calibre에 어떤 기능을 추가하고 싶습니다. 어떻게 해야 하나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1047
+#: ../../../__w/calibre/calibre/manual/faq.rst:1046
 msgid "You have two choices:"
 msgstr "선택지는 두 가지입니다:"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1048
+#: ../../../__w/calibre/calibre/manual/faq.rst:1047
 msgid ""
 "Create a patch by hacking on calibre and send it to me for review and "
 "inclusion. See :website:`Development <get-involved>`."
 msgstr "calibre를 직접 수정해 패치를 만든 뒤 검토와 포함을 위해 저에게 보내세요. :website:`개발 <get-involved>` 을 보세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1049
+#: ../../../__w/calibre/calibre/manual/faq.rst:1048
 msgid ""
 ":website:`Open a bug requesting the feature <bugs>`. Remember that while you"
 " may think your feature request is extremely important/essential, calibre "
@@ -2041,15 +2040,15 @@ msgid ""
 ":ref:`pluginstutorial`."
 msgstr ":website:`그 기능을 요청하는 버그를 여세요 <bugs>`. 당신은 그 기능이 매우 중요하거나 필수라고 생각할 수 있지만, calibre 개발자들은 동의하지 않을 수 있다는 점을 기억하세요. 다행히 calibre는 오픈 소스이므로 언제나 직접 기능을 구현하거나 누군가에게 구현을 의뢰할 수 있습니다. 또한 calibre에는 포괄적인 플러그인 아키텍처가 있으므로 원하는 기능을 플러그인으로 개발할 수도 있습니다. :ref:`pluginstutorial` 을 보세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1052
+#: ../../../__w/calibre/calibre/manual/faq.rst:1051
 msgid "Why doesn't calibre have an automatic update?"
 msgstr "왜 calibre에는 자동 업데이트가 없나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1054
+#: ../../../__w/calibre/calibre/manual/faq.rst:1053
 msgid "For many reasons:"
 msgstr "이유는 많습니다:"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1056
+#: ../../../__w/calibre/calibre/manual/faq.rst:1055
 msgid ""
 "*There is no need to update every week*. If you are happy with how calibre "
 "works turn off the update notification and be on your merry way. Check back "
@@ -2057,7 +2056,7 @@ msgid ""
 " off the update notification, on the update notification itself."
 msgstr "*매주 업데이트할 필요가 없습니다*. calibre가 잘 동작한다면 업데이트 알림을 끄고 그대로 사용하면 됩니다. 1년쯤 뒤에 업데이트할지 다시 확인해도 됩니다. 업데이트 알림 자체에 이 알림을 끄는 체크 상자가 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1061
+#: ../../../__w/calibre/calibre/manual/faq.rst:1060
 msgid ""
 "calibre downloads currently use :website_base:`about 150TB of bandwidth a "
 "month <dynamic/downloads>`. Implementing automatic updates would greatly "
@@ -2065,7 +2064,7 @@ msgid ""
 " has to pay."
 msgstr "현재 calibre 다운로드는 :website_base:`한 달에 약 150TB의 대역폭 <dynamic/downloads>` 을 사용합니다. 자동 업데이트를 구현하면 이 사용량이 크게 늘어나 매달 수천 달러가 더 들게 되며, 누군가는 그 비용을 부담해야 합니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1066
+#: ../../../__w/calibre/calibre/manual/faq.rst:1065
 msgid ""
 "If I implement a dialog that downloads the update and launches it, instead "
 "of going to the website as it does now, that would save the most ardent "
@@ -2073,39 +2072,39 @@ msgid ""
 " things to do in calibre development."
 msgstr "지금처럼 웹사이트로 가는 대신 업데이트를 내려받아 실행하는 대화상자를 구현한다고 해도, calibre를 가장 자주 업데이트하는 사용자에게 절약되는 것은 *많아야 주당 다섯 번의 클릭* 정도입니다. calibre 개발에는 이것보다 훨씬 우선순위가 높은 일이 많습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1071
+#: ../../../__w/calibre/calibre/manual/faq.rst:1070
 msgid ""
 "If you really, really hate downloading calibre every week but still want to "
 "be up to the latest, I encourage you to run from source, which makes "
 "updating trivial. Instructions are :ref:`available here <develop>`."
 msgstr "매주 calibre를 내려받는 것이 정말, 정말 싫지만 최신 상태는 유지하고 싶다면 소스에서 직접 실행하는 방식을 권합니다. 이렇게 하면 업데이트가 아주 쉬워집니다. 지침은 :ref:`여기 <develop>` 에 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1075
+#: ../../../__w/calibre/calibre/manual/faq.rst:1074
 msgid ""
 "There are third party automatic updaters for calibre made by calibre users "
 "in the `calibre forum "
 "<https://www.mobileread.com/forums/forumdisplay.php?f=238>`_."
 msgstr "calibre 사용자가 만든 서드파티 자동 업데이트 도구가 `calibre 포럼 <https://www.mobileread.com/forums/forumdisplay.php?f=238>`_ 에 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1078
+#: ../../../__w/calibre/calibre/manual/faq.rst:1077
 msgid ""
 "There is a third party plugin called :guilabel:`calibre Auto-update` that "
 "you can install via :guilabel:`Preferences->Plugins->Get new plugins` for a "
 "more streamlined update experience."
 msgstr "보다 간편한 업데이트 환경을 위해 `calibre Auto-update`라는 타사 플러그인을 `환경설정->플러그인->새 플러그인 가져오기`를 통해 설치할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1082
+#: ../../../__w/calibre/calibre/manual/faq.rst:1081
 msgid ""
 "Additionally, some third-party updaters such as Norton or Avast may update "
 "software behind the user's back. If you find calibre has updated "
 "unexpectedly, check for the presence of one."
 msgstr "또한 Norton이나 Avast 같은 일부 서드파티 업데이트 도구는 사용자 몰래 소프트웨어를 업데이트할 수 있습니다. calibre가 예상치 않게 업데이트되었다면 이런 프로그램이 설치되어 있는지 확인하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1087
+#: ../../../__w/calibre/calibre/manual/faq.rst:1086
 msgid "How is calibre licensed?"
 msgstr "calibre는 어떤 라이선스로 배포되나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1088
+#: ../../../__w/calibre/calibre/manual/faq.rst:1087
 msgid ""
 "calibre is licensed under the GNU General Public License v3 (an open source "
 "license). This means that you are free to redistribute calibre as long as "
@@ -2118,30 +2117,30 @@ msgid ""
 "`The GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_."
 msgstr "calibre는 GNU General Public License v3(오픈 소스 라이선스)로 배포됩니다. 즉 소스 코드를 함께 제공하는 한 calibre를 자유롭게 재배포할 수 있습니다. 따라서 제품과 함께 calibre를 CD에 넣고 싶다면 calibre 소스 코드도 CD에 함께 넣어야 합니다. 소스 코드는 `여기서 내려받을 수 있습니다 <https://download.calibre-ebook.com>`_. calibre 변환 결과물은 원하는 대로 사용할 수 있습니다. 하지만 calibre의 코드나 라이브러리를 사용하려면 사용자 소프트웨어도 오픈 소스로 공개해야 합니다. 자세한 내용은 `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_ 를 보세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1091
+#: ../../../__w/calibre/calibre/manual/faq.rst:1090
 msgid "How do I run calibre from my USB stick?"
 msgstr "USB 메모리에서 calibre를 실행하려면 어떻게 하나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1093
+#: ../../../__w/calibre/calibre/manual/faq.rst:1092
 msgid ""
 "A portable version of calibre is available :website:`here "
 "<download_portable>`."
 msgstr "포터블 버전의 calibre는 :website:`여기 <download_portable>` 에서 받을 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1096
+#: ../../../__w/calibre/calibre/manual/faq.rst:1095
 msgid ""
 "How do I run parts of calibre like news download and the Content server on "
 "my own Linux server?"
 msgstr "내 Linux 서버에서 뉴스 다운로드나 콘텐츠 서버 같은 calibre 기능 일부를 실행하려면 어떻게 하나요?"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1098
+#: ../../../__w/calibre/calibre/manual/faq.rst:1097
 msgid ""
 "First, you must install calibre onto your Linux server. If your server is "
 "using a modern Linux distribution, you should have no problems installing "
 "calibre onto it."
 msgstr "먼저 Linux 서버에 calibre를 설치해야 합니다. 서버가 최신 Linux 배포판을 사용한다면 calibre 설치에는 문제가 없을 것입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1102
+#: ../../../__w/calibre/calibre/manual/faq.rst:1101
 msgid ""
 "calibre needs GLIBC >= 2.31 and libstdc++ >= 6.0.28. If you have an older "
 "server, you will either need to compile these from source, or use calibre "
@@ -2155,34 +2154,34 @@ msgid ""
 "cursor0``, ``libxcb-xinerama0``, ``libegl1``, ``libopengl0``."
 msgstr "calibre에는 GLIBC >= 2.31 및 libstdc++ >= 6.0.28이 필요합니다. 서버가 더 오래되었다면 이것들을 소스에서 직접 컴파일하거나, GLIBC >= 2.17이 필요한 calibre 3.48, GLIBC >= 2.13이 필요한 2.85.1, 또는 GLIBC >= 2.10만 필요한 calibre 1.48을 사용해야 합니다. 또한 calibre 명령줄 유틸리티는 실행 중인 X 서버가 필요 없지만, 일부는 시스템에 X 서버 라이브러리가 설치되어 있어야 합니다. 이는 다양한 이미지 처리 작업에 사용되는 Qt가 이 라이브러리들에 링크되기 때문입니다. Qt 모듈 관련 ImportError가 난다면 X 라이브러리가 빠져 있을 가능성이 큽니다. 대표적인 후보는 ``libxcb-cursor0``, ``libxcb-xinerama0``, ``libegl1``, ``libopengl0`` 입니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1113
+#: ../../../__w/calibre/calibre/manual/faq.rst:1112
 msgid "You can run the calibre server via the command::"
 msgstr "다음 명령으로 calibre 서버를 실행할 수 있습니다::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1117
+#: ../../../__w/calibre/calibre/manual/faq.rst:1116
 msgid "You can download news and convert it into an e-book with the command::"
 msgstr "다음 명령을 사용하여 뉴스를 다운로드하고 전자책으로 변환할 수 있습니다::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1121
+#: ../../../__w/calibre/calibre/manual/faq.rst:1120
 msgid ""
 "If you want to generate MOBI, use :file:`outputfile.mobi` instead and use "
 "``--output-profile kindle``."
 msgstr "MOBI를 생성하려면 대신 :file:`outputfile.mobi` 를 사용하고 ``--output-profile kindle`` 를 사용하세요."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1123
+#: ../../../__w/calibre/calibre/manual/faq.rst:1122
 msgid "You can email downloaded news with the command::"
 msgstr "다음 명령으로 내려받은 뉴스를 이메일로 보낼 수 있습니다::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1127
+#: ../../../__w/calibre/calibre/manual/faq.rst:1126
 msgid ""
 "I leave figuring out the exact command line as an exercise for the reader."
 msgstr "정확한 명령줄은 독자에게 숙제로 남겨 두겠습니다."
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1129
+#: ../../../__w/calibre/calibre/manual/faq.rst:1128
 msgid "Finally, you can add downloaded news to the calibre library with::"
 msgstr "마지막으로 다음과 같이 내려받은 뉴스를 calibre 라이브러리에 추가할 수 있습니다::"
 
-#: ../../../__w/calibre/calibre/manual/faq.rst:1133
+#: ../../../__w/calibre/calibre/manual/faq.rst:1132
 msgid ""
 "Remember to read the :ref:`cli` section of the calibre User Manual to learn "
 "more about these, and other commands."

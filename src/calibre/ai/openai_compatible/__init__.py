@@ -2,6 +2,7 @@
 # License: GPLv3 Copyright: 2026, OpenAI
 
 from calibre.customize import AIProviderPlugin
+from calibre.utils.localization import _
 
 
 class OpenAICompatible(AIProviderPlugin):
@@ -17,4 +18,5 @@ class OpenAICompatible(AIProviderPlugin):
     @property
     def capabilities(self):
         from calibre.ai import AICapabilities
+
         return AICapabilities.text_to_text

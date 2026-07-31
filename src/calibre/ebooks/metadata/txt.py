@@ -1,20 +1,20 @@
-__license__   = 'GPL v3'
-__copyright__ = '2009, John Schember <john@nachtimwald.com>'
+# License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
-'''
+"""
 Read meta information from TXT files
-'''
+"""
 
 import os
 import re
 
 from calibre.ebooks.metadata import MetaInformation
+from calibre.utils.localization import _
 
 
 def get_metadata(stream, extract_cover=True):
-    '''
+    """
     Return metadata as a L{MetaInfo} object
-    '''
+    """
     name = getattr(stream, 'name', '').rpartition('.')[0]
     if name:
         name = os.path.basename(name)

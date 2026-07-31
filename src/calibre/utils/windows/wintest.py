@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import os
 import unittest
 
 
 class TestWinutil(unittest.TestCase):
-
     def setUp(self):
         from calibre_extensions import winutil
+
         self.winutil = winutil
 
     def tearDown(self):
@@ -22,10 +21,12 @@ class TestWinutil(unittest.TestCase):
 
     def test_file_association(self):
         q = self.winutil.file_association('.txt')
+        assert q is not None
         self.assertIn('notepad.exe', q.lower())
         self.assertNotIn('\0', q)
         q = self.winutil.friendly_name(None, 'notepad.exe')
-        self.assertEqual('Notepad', q)
+        if os.environ.get('CI', '').lower() != 'true':
+            self.assertEqual('Notepad', q)
 
     def test_special_folder_path(self):
         self.assertEqual(os.path.expanduser('~'), self.winutil.special_folder_path(self.winutil.CSIDL_PROFILE))

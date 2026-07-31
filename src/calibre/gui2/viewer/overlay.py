@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from qt.core import QFontInfo, QLabel, QPalette, Qt, QVBoxLayout, QWidget
 
 from calibre.gui2.progress_indicator import ProgressIndicator
 
 
 class LoadingOverlay(QWidget):
-
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.l = l = QVBoxLayout(self)
@@ -42,7 +40,9 @@ class LoadingOverlay(QWidget):
 
     def __call__(self, msg=''):
         self.label.setText(msg)
-        self.resize(self.parent().size())
+        par = self.parent()
+        assert isinstance(par, QWidget)
+        self.resize(par.size())
         self.move(0, 0)
         self.setVisible(True)
         self.raise_()
@@ -50,16 +50,20 @@ class LoadingOverlay(QWidget):
         self.update()
 
     def hide(self):
-        self.parent().web_view.setFocus(Qt.FocusReason.OtherFocusReason)
+        par = self.parent()
+        assert isinstance(par, QWidget)
+        web_view = getattr(par, 'web_view', None)
+        if web_view is not None:
+            web_view.setFocus(Qt.FocusReason.OtherFocusReason)
         self.pi.stop()
         return QWidget.hide(self)
 
-    def showEvent(self, ev):
+    def showEvent(self, a0):
         # import time
         # self.st = time.monotonic()
         self.pi.start()
 
-    def hideEvent(self, ev):
+    def hideEvent(self, a0):
         # import time
         # print(1111111, time.monotonic() - self.st)
         self.pi.stop()
@@ -67,6 +71,7 @@ class LoadingOverlay(QWidget):
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     w = LoadingOverlay()
     w.show()

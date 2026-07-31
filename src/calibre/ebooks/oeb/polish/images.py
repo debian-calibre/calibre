@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import os
 import tempfile
 from functools import partial
@@ -9,11 +8,10 @@ from queue import Empty, Queue
 from threading import Event, Thread
 
 from calibre import detect_ncpus, filesystem_encoding, force_unicode, human_readable
-from calibre.utils.localization import ngettext
+from calibre.utils.localization import _, ngettext
 
 
 class Worker(Thread):
-
     daemon = True
 
     def __init__(self, abort, name, queue, results, jpeg_quality, webp_quality, progress_callback):
@@ -35,17 +33,20 @@ class Worker(Thread):
                 self.compress(name, path, mt)
             except Exception:
                 import traceback
+
                 self.results[name] = (False, traceback.format_exc())
             finally:
                 try:
                     self.progress_callback(name)
                 except Exception:
                     import traceback
+
                     traceback.print_exc()
                 self.queue.task_done()
 
     def compress(self, name, path, mime_type):
         from calibre.utils.img import encode_jpeg, encode_webp, optimize_jpeg, optimize_png, optimize_webp
+
         if 'png' in mime_type:
             func = optimize_png
         elif 'webp' in mime_type:
@@ -72,19 +73,19 @@ class Worker(Thread):
 def get_compressible_images(container):
     mt_map = container.manifest_type_map
     images = set()
-    for mt in 'png jpg jpeg webp'.split():
+    for mt in 'png jpg jpeg webp gif'.split():
         images |= set(mt_map.get('image/' + mt, ()))
     return images
 
 
 def convert_png_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75, report=None):
-    '''Convert a PNG image in the container to JPEG or WEBP format.
+    """Convert a PNG image in the container to JPEG or WEBP format.
 
     :param fmt: ``'jpeg'``, ``'webp'`` (lossy), or ``'webp-lossless'``
     :returns: ``(new_name, before, after)`` where *before* and *after* are the
         file sizes in bytes before and after conversion, or ``(name, 0, 0)`` if
         conversion was skipped.
-    '''
+    """
     from calibre.ebooks.oeb.polish.replace import rename_files
     from calibre.utils.img import image_from_data, image_to_data
 
@@ -148,16 +149,121 @@ def convert_png_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75
 
     if report:
         if before != after:
-            report(_('{0} converted to {1} [{2} {5} {3}, {4:.1%} reduction]').format(
-                name, new_name, human_readable(before), human_readable(after), (before - after) / before), '→')
+            report(
+                _('{0} converted to {1} [{2} {5} {3}, {4:.1%} reduction]').format(
+                    name, new_name, human_readable(before), human_readable(after), (before - after) / before, '→'
+                )
+            )
         else:
             report(_('{0} converted to {1} [no size change]').format(name, new_name))
 
     return new_name, before, after
 
 
-def compress_images(container, report=None, names=None, jpeg_quality=None, webp_quality=None, compress_png=True,
-                    png_to_format=None, progress_callback=lambda n, t, name:True):
+def convert_gif_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75, report=None):
+    """Convert a GIF image in the container to JPEG or WEBP format.
+
+    Animated GIFs are skipped when converting to JPEG.
+
+    :param fmt: ``'jpeg'``, ``'webp'`` (lossy), or ``'webp-lossless'``
+    :returns: ``(new_name, before, after)`` where *before* and *after* are the
+        file sizes in bytes before and after conversion, or ``(name, 0, 0)`` if
+        conversion was skipped.
+    """
+    from calibre.ebooks.oeb.polish.replace import rename_files
+    from calibre.utils.img import image_from_data, image_to_data
+
+    if fmt == 'jpeg':
+        new_ext = 'jpg'
+        new_mt = 'image/jpeg'
+        img_fmt = 'JPEG'
+        quality = jpeg_quality
+    elif fmt == 'webp':
+        new_ext = 'webp'
+        new_mt = 'image/webp'
+        img_fmt = 'WEBP'
+        quality = webp_quality
+    elif fmt == 'webp-lossless':
+        new_ext = 'webp'
+        new_mt = 'image/webp'
+        img_fmt = 'WEBP'
+        quality = 100
+    else:
+        return name, 0, 0
+
+    path = container.get_file_path_for_processing(name)
+
+    if fmt == 'jpeg':
+        from qt.core import QImageReader
+
+        reader = QImageReader(path)
+        if reader.imageCount() > 1:
+            if report:
+                report(_('Skipping animated GIF {0}: animated GIFs cannot be converted to JPEG').format(name))
+            return name, 0, 0
+
+    base = name.rsplit('.', 1)[0] if '.' in name else name
+    new_name = f'{base}.{new_ext}'
+
+    if new_name != name and container.exists(new_name):
+        if report:
+            report(_('Skipping conversion of {0} as {1} already exists').format(name, new_name))
+        return name, 0, 0
+
+    before = os.path.getsize(path)
+    with open(path, 'rb') as f:
+        original_data = f.read()
+
+    img = image_from_data(original_data)
+    new_data = image_to_data(img, compression_quality=quality, fmt=img_fmt)
+    after = len(new_data)
+
+    path_dir = os.path.dirname(path)
+    fd, tmp_path = tempfile.mkstemp(dir=path_dir)
+    try:
+        with os.fdopen(fd, 'wb') as f:
+            f.write(new_data)
+        os.replace(tmp_path, path)
+    except Exception:
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
+
+    if new_name != name:
+        rename_files(container, {name: new_name})
+        container.mime_map[new_name] = new_mt
+        for itemid, q in container.manifest_id_map.items():
+            if q == new_name:
+                for item in container.opf_xpath(f'//opf:manifest/opf:item[@href and @id="{itemid}"]'):
+                    item.set('media-type', new_mt)
+        container.dirty(container.opf_name)
+
+    if report:
+        if before != after:
+            report(
+                _('{0} converted to {1} [{2} {5} {3}, {4:.1%} reduction]').format(
+                    name, new_name, human_readable(before), human_readable(after), (before - after) / before, '→'
+                )
+            )
+        else:
+            report(_('{0} converted to {1} [no size change]').format(name, new_name))
+
+    return new_name, before, after
+
+
+def compress_images(
+    container,
+    report=None,
+    names=None,
+    jpeg_quality=None,
+    webp_quality=None,
+    compress_png=True,
+    png_to_format=None,
+    gif_to_format=None,
+    progress_callback=lambda n, t, name: True,
+):
     images = get_compressible_images(container)
     if names is not None:
         images &= set(names)
@@ -169,10 +275,7 @@ def compress_images(container, report=None, names=None, jpeg_quality=None, webp_
         j_quality = jpeg_quality if jpeg_quality is not None else 75
         w_quality = webp_quality if webp_quality is not None else 75
         for name in png_images:
-            new_name, before, after = convert_png_to_format(
-                container, name, png_to_format,
-                jpeg_quality=j_quality, webp_quality=w_quality,
-                report=report)
+            new_name, before, after = convert_png_to_format(container, name, png_to_format, jpeg_quality=j_quality, webp_quality=w_quality, report=report)
             if new_name != name:
                 images.discard(name)
                 images.add(new_name)
@@ -180,6 +283,24 @@ def compress_images(container, report=None, names=None, jpeg_quality=None, webp_
                 conv_num += 1
                 conv_before_total += before
                 conv_after_total += after
+
+    gif_conv_before_total = gif_conv_after_total = gif_conv_num = 0
+    if gif_to_format:
+        gif_images = sorted(name for name in images if container.mime_map.get(name) == 'image/gif')
+        j_quality = jpeg_quality if jpeg_quality is not None else 75
+        w_quality = webp_quality if webp_quality is not None else 75
+        for name in gif_images:
+            new_name, before, after = convert_gif_to_format(container, name, gif_to_format, jpeg_quality=j_quality, webp_quality=w_quality, report=report)
+            if new_name != name:
+                images.discard(name)
+                images.add(new_name)
+            if before:
+                gif_conv_num += 1
+                gif_conv_before_total += before
+                gif_conv_after_total += after
+
+    # Remove any remaining GIFs — no lossless compression tool is available for them
+    images = {name for name in images if container.mime_map.get(name) != 'image/gif'}
 
     if not compress_png:
         images = {name for name in images if container.mime_map.get(name) != 'image/png'}
@@ -200,12 +321,13 @@ def compress_images(container, report=None, names=None, jpeg_quality=None, webp_
         keep_going = progress_callback(len(results), num_to_process, name)
         if not keep_going:
             abort.set()
+
     progress_callback(0, num_to_process, '')
     [Worker(abort, f'CompressImage{i}', queue, results, jpeg_quality, webp_quality, pc) for i in range(min(detect_ncpus(), num_to_process))]
     queue.join()
     before_total = after_total = 0
     processed_num = 0
-    changed = conv_num > 0
+    changed = conv_num > 0 or gif_conv_num > 0
     for name, (ok, res) in results.items():
         name = force_unicode(name, filesystem_encoding)
         if ok:
@@ -217,44 +339,86 @@ def compress_images(container, report=None, names=None, jpeg_quality=None, webp_
             after_total += after
             if report:
                 if before != after:
-                    report(_('{0} compressed from {1} to {2} bytes [{3:.1%} reduction]').format(
-                        name, human_readable(before), human_readable(after), (before - after)/before))
+                    report(
+                        _('{0} compressed from {1} to {2} bytes [{3:.1%} reduction]').format(
+                            name, human_readable(before), human_readable(after), (before - after) / before
+                        )
+                    )
                 else:
                     report(_('{0} could not be further compressed').format(name))
-        else:
+        elif report:
             report(_('Failed to process {0} with error:').format(name))
             report(res)
     if report:
         if conv_num:
             report('')
             if conv_before_total and conv_before_total != conv_after_total:
-                report(ngettext(
-                    'PNG conversion: {0} file converted, total size changed from {1} to {2} [{3:.1%} reduction]',
-                    'PNG conversion: {0} files converted, total size changed from {1} to {2} [{3:.1%} reduction]',
-                    conv_num).format(conv_num, human_readable(conv_before_total), human_readable(conv_after_total),
-                                     (conv_before_total - conv_after_total) / conv_before_total))
+                report(
+                    ngettext(
+                        'PNG conversion: {0} file converted, total size changed from {1} to {2} [{3:.1%} reduction]',
+                        'PNG conversion: {0} files converted, total size changed from {1} to {2} [{3:.1%} reduction]',
+                        conv_num,
+                    ).format(
+                        conv_num,
+                        human_readable(conv_before_total),
+                        human_readable(conv_after_total),
+                        (conv_before_total - conv_after_total) / conv_before_total,
+                    )
+                )
             else:
-                report(ngettext(
-                    'PNG conversion: {0} file converted, no size change',
-                    'PNG conversion: {0} files converted, no size change',
-                    conv_num).format(conv_num))
-        grand_before = before_total + conv_before_total
-        grand_after = after_total + conv_after_total
-        grand_changed = processed_num + conv_num
+                report(
+                    ngettext(
+                        'PNG conversion: {0} file converted, no size change',
+                        'PNG conversion: {0} files converted, no size change',
+                        conv_num,
+                    ).format(conv_num)
+                )
+        if gif_conv_num:
+            report('')
+            if gif_conv_before_total and gif_conv_before_total != gif_conv_after_total:
+                report(
+                    ngettext(
+                        'GIF conversion: {0} file converted, total size changed from {1} to {2} [{3:.1%} reduction]',
+                        'GIF conversion: {0} files converted, total size changed from {1} to {2} [{3:.1%} reduction]',
+                        gif_conv_num,
+                    ).format(
+                        gif_conv_num,
+                        human_readable(gif_conv_before_total),
+                        human_readable(gif_conv_after_total),
+                        (gif_conv_before_total - gif_conv_after_total) / gif_conv_before_total,
+                    )
+                )
+            else:
+                report(
+                    ngettext(
+                        'GIF conversion: {0} file converted, no size change',
+                        'GIF conversion: {0} files converted, no size change',
+                        gif_conv_num,
+                    ).format(gif_conv_num)
+                )
+        grand_before = before_total + conv_before_total + gif_conv_before_total
+        grand_after = after_total + conv_after_total + gif_conv_after_total
+        grand_changed = processed_num + conv_num + gif_conv_num
         if grand_before and grand_changed:
             report('')
-            report(_('Total image filesize reduced from {0} to {1} [{2:.1%} reduction, {3} images changed]').format(
-                human_readable(grand_before), human_readable(grand_after), (grand_before - grand_after)/grand_before, grand_changed))
+            report(
+                _('Total image filesize reduced from {0} to {1} [{2:.1%} reduction, {3} images changed]').format(
+                    human_readable(grand_before),
+                    human_readable(grand_after),
+                    (grand_before - grand_after) / grand_before,
+                    grand_changed,
+                )
+            )
         elif not grand_changed:
             report(_('Images are already fully optimized'))
     return changed, results
 
 
 def remove_unused_images(container, report=None):
-    '''
+    """
     Remove images that are not referenced by any file in the spine or by any
     stylesheet used by files in the spine.
-    '''
+    """
     report = report or (lambda x: x)
     from calibre.ebooks.oeb.polish.container import OEB_STYLES
     from calibre.ebooks.oeb.polish.report import safe_href_to_name
@@ -281,7 +445,7 @@ def remove_unused_images(container, report=None):
     for source_name in relevant_sources:
         if not container.exists(source_name):
             continue
-        for href, line_number, offset in container.iterlinks(source_name):
+        for href, _line_number, _offset in container.iterlinks(source_name):
             target = safe_href_to_name(container, href, source_name)
             if target and container.exists(target):
                 mt = container.mime_map.get(target, '')

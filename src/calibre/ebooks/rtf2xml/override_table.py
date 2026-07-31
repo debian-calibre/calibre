@@ -13,19 +13,19 @@
 
 
 class OverrideTable:
-    '''
+    """
     Parse a line of text to make the override table. Return a string
     (which will convert to XML) and the dictionary containing all the
     information about the lists. This dictionary is the result of the
     dictionary that is first passed to this module. This module
     modifies the dictionary, assigning lists numbers to each list.
-    '''
+    """
 
     def __init__(
-                self,
-                list_of_lists,
-                run_level=1,
-                ):
+        self,
+        list_of_lists,
+        run_level=1,
+    ):
         self.__list_of_lists = list_of_lists
         self.__initiate_values()
         self.__run_level = run_level
@@ -35,17 +35,17 @@ class OverrideTable:
         self.__state = 'default'
         self.__override_list = []
         self.__state_dict = {
-            'default'   : self.__default_func,
-            'override'  : self.__override_func,
-            'unsure_ob' : self.__after_bracket_func,
+            'default': self.__default_func,
+            'override': self.__override_func,
+            'unsure_ob': self.__after_bracket_func,
         }
         self.__override_dict = {
-            'cw<ls<lis-tbl-id'  : 'list-table-id',
-            'cw<ls<list-id___'  : 'list-id',
+            'cw<ls<lis-tbl-id': 'list-table-id',
+            'cw<ls<list-id___': 'list-id',
         }
 
     def __override_func(self, line):
-        '''
+        """
         Requires:
             line -- line to parse
         Returns:
@@ -54,9 +54,8 @@ class OverrideTable:
             The group {\\override has been found.
             Check for the end of the group.
             Otherwise, add appropriate tokens to the override dictionary.
-        '''
-        if self.__token_info == 'cb<nu<clos-brack' and\
-            self.__cb_count == self.__override_ob_count:
+        """
+        if self.__token_info == 'cb<nu<clos-brack' and self.__cb_count == self.__override_ob_count:
             self.__state = 'default'
             self.__parse_override_dict()
         else:
@@ -66,7 +65,7 @@ class OverrideTable:
                 self.__override_list[-1][att] = value
 
     def __parse_override_dict(self):
-        '''
+        """
         Requires:
             nothing
         Returns:
@@ -84,16 +83,16 @@ class OverrideTable:
                 [[{list-id:[HERE!],[{}]]
             This is a list, since one list in the table in the preamble of RTF can
             apply to multiple lists in the body.
-        '''
+        """
         override_dict = self.__override_list[-1]
         list_id = override_dict.get('list-id')
-        if list_id is None and self.__level > 3:
+        if list_id is None and self.__run_level > 3:
             msg = 'This override does not appear to have a list-id\n'
-            raise self.__bug_handler(msg)
+            raise Exception(msg)
         current_table_id = override_dict.get('list-table-id')
         if current_table_id is None and self.__run_level > 3:
             msg = 'This override does not appear to have a list-table-id\n'
-            raise self.__bug_handler(msg)
+            raise Exception(msg)
         counter = 0
         for list in self.__list_of_lists:
             info_dict = list[0]
@@ -104,7 +103,7 @@ class OverrideTable:
             counter += 1
 
     def __parse_lines(self, line):
-        '''
+        """
         Requires:
             line -- line to parse
         Returns:
@@ -112,7 +111,7 @@ class OverrideTable:
         Logic:
             Break the into tokens by splitting it on the newline.
             Call on the method according to the state.
-        '''
+        """
         lines = line.split('\n')
         self.__ob_count = 0
         self.__ob_group = 0
@@ -127,24 +126,25 @@ class OverrideTable:
             action = self.__state_dict.get(self.__state)
             if action is None:
                 print(self.__state)
+            assert action is not None
             action(line)
         self.__write_final_string()
         # self.__add_to_final_line()
 
     def __default_func(self, line):
-        '''
+        """
         Requires:
             line -- line to parse
         Return:
             nothing
         Logic:
             Look for an open bracket and change states when found.
-        '''
+        """
         if self.__token_info == 'ob<nu<open-brack':
             self.__state = 'unsure_ob'
 
     def __after_bracket_func(self, line):
-        '''
+        """
         Requires:
             line -- line to parse
         Returns:
@@ -156,7 +156,7 @@ class OverrideTable:
             state will remain unsure_ob, which means no other text will be
             parsed. I should do states by a list and simply pop this
             unsure_ob state to get the previous state.
-        '''
+        """
         if self.__token_info == 'cw<ls<lis-overid':
             self.__state = 'override'
             self.__override_ob_count = self.__ob_count
@@ -165,7 +165,7 @@ class OverrideTable:
         elif self.__run_level > 3:
             msg = 'No matching token after open bracket\n'
             msg += f'token is "{line}\n"'
-            raise self.__bug_handler(msg)
+            raise Exception(msg)
 
     def __write_final_string(self):
         '''
@@ -185,21 +185,20 @@ class OverrideTable:
             self.__override_table_final += 'mi<tg<empty-att_<override-list'
             the_keys = the_dict.keys()
             for the_key in the_keys:
-                self.__override_table_final += \
-                    f'<{the_key}>{the_dict[the_key]}'
+                self.__override_table_final += f'<{the_key}>{the_dict[the_key]}'
             self.__override_table_final += '\n'
         self.__override_table_final += '\n'
         self.__override_table_final += 'mi<mk<overri-end\n' + 'mi<tg<close_____<override-table\n'
         self.__override_table_final += 'mi<mk<overribend_\n'
 
     def parse_override_table(self, line):
-        '''
+        """
         Requires:
             line -- line with border definition in it
         Returns:
             A string that will be converted to XML, and a dictionary of
             all the properties of the RTF lists.
         Logic:
-        '''
+        """
         self.__parse_lines(line)
         return self.__override_table_final, self.__list_of_lists

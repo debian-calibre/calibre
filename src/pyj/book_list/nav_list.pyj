@@ -5,16 +5,16 @@ from __python__ import hash_literals
 from elementmaker import E
 from gettext import gettext as _
 
+from ajax import ajax
 from book_list.globals import get_session_data
 from book_list.item_list import create_item, create_item_list
 from book_list.library_data import browse_field_for, url_books_query, cover_url, current_library_id
 from book_list.router import back, update_window_title
+from book_list.theme import get_color
 from book_list.top_bar import create_top_bar
 from book_list.ui import set_panel_handler, show_panel
-from book_list.theme import get_color
-from session import get_interface_data
 from dom import add_extra_css, build_rule, clear, svgicon
-from ajax import ajax
+from session import get_interface_data
 from utils import parse_url_params
 from widgets import create_pager_widget, create_button
 
@@ -35,7 +35,7 @@ def sync_cs_list_row_heights(list_root):
     if disp.indexOf('flex') == -1:
         return
     ch = ul.children
-    lis = v'[]'
+    lis = []
     for i in range(ch.length):
         node = ch[i]
         if node.tagName.toLowerCase() is 'li':
@@ -149,7 +149,7 @@ def tags_cache_key():
 cached_names = {}
 series_cover_cache = {}
 series_cover_inflight = {}
-SERIES_COVER_CLASSES = v'["covers-0","covers-1","covers-2","covers-3","covers-4","covers-5"]'
+SERIES_COVER_CLASSES = ['covers-0', 'covers-1', 'covers-2', 'covers-3', 'covers-4', 'covers-5']
 
 
 def series_cover_key(library_id, series_name):
@@ -179,7 +179,7 @@ def set_series_stack_cover_count(div, total):
 
 def series_stack_cover_urls(urls):
     actual = []
-    for u in urls or v'[]':
+    for u in urls or []:
         if u:
             actual.push(u)
     return actual.slice(0, series_stack_cover_count(actual.length))
@@ -195,7 +195,7 @@ def render_series_stack_covers(div, urls):
         div.appendChild(img)
     return count
 
-add_extra_css(def():
+add_extra_css(def ():
     sel = '.cs-nav-list '
     style = ''
     # Unified nav subtitle (so "Browse all ..." looks consistent across fields)
@@ -343,7 +343,6 @@ add_extra_css(def():
     style += build_rule('.cs-nav-list[data-field="series"]:not([data-series-display="list"]) .cs-series-stack-covers img.cover-img:hover',
         box_shadow='0 26px 64px rgba(0,0,0,0.22)'
     )
-
     # Per-count sizing/positioning: odd stacks only (1 / 3 / 5).
     style += r'''
 .cs-nav-list .cs-series-stack-covers.covers-0 {
@@ -406,7 +405,7 @@ add_extra_css(def():
     style += build_rule(sel + '.cs-loading-overlay',
         position='absolute', left='0', top='0', right='0', bottom='0',
         display='flex', align_items='center', justify_content='center',
-        background_color='rgba(255,255,255,0.55)',
+        background_color=get_color('window-background'),
         opacity='0',
         pointer_events='none',
         transition='opacity 160ms ease'
@@ -426,8 +425,9 @@ add_extra_css(def():
         flex_direction='column',
     )
     nav_flex_li_cell = (
-        '.cs-nav-list:not([data-field="series"]) .cs-list-content.generic-items-list > ul > li:not(:has(> div:nth-child(2))) > div:nth-child(1), ' +
-        '.cs-nav-list[data-field="series"][data-series-display="list"] .cs-list-content.generic-items-list > ul > li:not(:has(> div:nth-child(2))) > div:nth-child(1)'
+        '.cs-nav-list:not([data-field="series"]) .cs-list-content.generic-items-list > ul > li:not(:has(> div:nth-child(2))) > div:nth-child(1), '
+        '.cs-nav-list[data-field="series"][data-series-display="list"]'
+        ' .cs-list-content.generic-items-list > ul > li:not(:has(> div:nth-child(2))) > div:nth-child(1)'
     )
     style += build_rule(nav_flex_li_cell,
         flex_grow='1',
@@ -470,9 +470,7 @@ add_extra_css(def():
         overflow='hidden',
         box_sizing='border-box',
     )
-
     # Series card grid: same row has subtitle-nav but layout must stay columnar (not browse-row center).
-
     style += build_rule(sel + '.cs-loading .cs-loading-overlay', opacity='1')
     style += build_rule(sel + '.cs-loading .cs-list-content', opacity='0.45')
     style += r'''
@@ -514,7 +512,6 @@ add_extra_css(def():
     style += build_rule('.cs-nav-list[data-field="series"]:not([data-series-display="list"]) .generic-items-list .cs-series-stack-item-row',
         flex_direction='column',
         align_items='stretch')
-
     # Disable hover "lift" animation for series items (prevents cover zoom feel)
     style += build_rule('.generic-items-list li.cs-series-stack-item:hover', transform='none')
     style += build_rule('.generic-items-list li.cs-series-stack-item:active', transform='none')
@@ -540,7 +537,9 @@ add_extra_css(def():
     style += build_rule('.cs-nav-list[data-field="series"]:not([data-series-display="list"]) .generic-items-list li.cs-series-stack-item .item-title-body',
         padding_right='0',
     )
-    style += build_rule('.cs-nav-list[data-field="series"]:not([data-series-display="list"]) .generic-items-list li.cs-series-stack-item .item-subtitle.item-subtitle-nav',
+    style += build_rule(
+        '.cs-nav-list[data-field="series"]:not([data-series-display="list"])'
+        ' .generic-items-list li.cs-series-stack-item .item-subtitle.item-subtitle-nav',
        position='relative',
        right='0',
        top='0',
@@ -656,8 +655,8 @@ def create_nav_list_panel(container_id):
         body.dataset.seriesDisplay = series_mode
 
     top_pager_widget = create_pager_widget(
-        def(): update_nav_list_url(field, max(0, offset - num), num, query_text, replace=True);,
-        def(): update_nav_list_url(field, offset + num, num, query_text, replace=True);,
+        def (): update_nav_list_url(field, max(0, offset - num), num, query_text, replace=True);,
+        def (): update_nav_list_url(field, offset + num, num, query_text, replace=True);,
     )
     body.appendChild(E.div(top_pager_widget.container, style='margin: 0 0.75rem'))
     status = top_pager_widget.count_msg
@@ -668,12 +667,12 @@ def create_nav_list_panel(container_id):
             value=query_text,
             class_='cs-filter'
         )
-        search_inp.addEventListener('keydown', def(ev):
+        search_inp.addEventListener('keydown', def (ev):
             if ev.key is 'Enter':
                 ev.preventDefault()
                 apply_btn.click()
         )
-        apply_btn = create_button(_('Apply'), icons='search', action=def():
+        apply_btn = create_button(_('Apply'), icons='search', action=def ():
             nonlocal query_text
             query_text = search_inp.value or ''
             update_nav_list_url(field, 0, num, query_text, replace=True)
@@ -685,7 +684,7 @@ def create_nav_list_panel(container_id):
         a = E.a(href='#', class_='cs-toggle-btn')
         a.setAttribute('aria-pressed', 'true' if group_mode is mode else 'false')
         a.appendChild(E.span(label))
-        a.addEventListener('click', def(evt):
+        a.addEventListener('click', def (evt):
             evt.preventDefault()
             update_nav_list_url(field, 0, num, None, replace=True, g=mode)
         )
@@ -720,7 +719,7 @@ def create_nav_list_panel(container_id):
             list_wrap.classList.add('cs-loading')
         else:
             # Delay removal slightly to avoid a flash on very fast responses
-            setTimeout(def():
+            setTimeout(def ():
                 list_wrap.classList.remove('cs-loading')
             , 60)
 
@@ -773,7 +772,7 @@ def create_nav_list_panel(container_id):
         if p.rating:
             info = parse_rating_from_api(avg_rating)
             if info:
-                parts.push(info.text )
+                parts.push(info.text)
         return ' · '.join(parts)
 
     def browse_cache_key():
@@ -797,7 +796,7 @@ def create_nav_list_panel(container_id):
             except Exception:
                 proceed(False, 'Invalid JSON from server')
                 return
-            proceed(True, data.items or v'[]')
+            proceed(True, data.items or [])
 
         ajax(f'interface-data/browse-field/{encodeURIComponent(field)}', done, query=query, bypass_cache=False).send()
 
@@ -806,7 +805,7 @@ def create_nav_list_panel(container_id):
             return
         lid = current_library_id()
         key = series_cover_key(lid, series_name)
-        series_cover_targets[key] = (series_cover_targets[key] or v'[]')
+        series_cover_targets[key] = (series_cover_targets[key] or [])
         series_cover_targets[key].push(target_div)
         cached = series_cover_cache[key]
         if cached:
@@ -829,7 +828,7 @@ def create_nav_list_panel(container_id):
                 data = JSON.parse(xhr.responseText)
             except Exception:
                 return
-            ids = data.search_result?.book_ids or v'[]'
+            ids = data.search_result?.book_ids or []
             urls = []
             for bid in ids.slice(0, 5):
                 urls.push(cover_url(bid))
@@ -839,7 +838,7 @@ def create_nav_list_panel(container_id):
         ajax('interface-data/get-books', done, query=query).send()
 
     def apply_series_covers(key, urls):
-        targets = series_cover_targets[key] or v'[]'
+        targets = series_cover_targets[key] or []
         for div in targets:
             render_series_stack_covers(div, urls)
 
@@ -847,13 +846,13 @@ def create_nav_list_panel(container_id):
         nonlocal series_cover_targets
         set_loading(False)
         series_cover_targets = {}
-        raw = data or v'[]'
+        raw = data or []
         items = [to_item(x) for x in raw]
         items = filtered(items)
         total = items.length or 0
 
         def make_action(search_query):
-            return def(ev):
+            return def (ev):
                 if ev:
                     ev.preventDefault()
                 show_panel('book_list', query=search_query, replace=False)
@@ -894,7 +893,7 @@ def create_nav_list_panel(container_id):
                 a = E.a(href='#', class_='cs-show-more')
                 a.appendChild(svgicon('plus'))
                 a.appendChild(E.span(_('Show more')))
-                a.addEventListener('click', def(ev):
+                a.addEventListener('click', def (ev):
                     nonlocal visible_tags
                     ev.preventDefault()
                     visible_tags = min(total, visible_tags + 50)
@@ -916,7 +915,7 @@ def create_nav_list_panel(container_id):
         list_items = []
 
         def make_action(search_query):
-            return def(ev):
+            return def (ev):
                 if ev:
                     ev.preventDefault()
                 show_panel('book_list', query=search_query, replace=False)
@@ -970,8 +969,8 @@ def create_nav_list_panel(container_id):
         # Bottom prev/next mirrors top pager state
         clear(bottom_pager)
         bot_widget = create_pager_widget(
-            def(): update_nav_list_url(field, max(0, offset - num), num, query_text, replace=True);,
-            def(): update_nav_list_url(field, offset + num, num, query_text, replace=True);,
+            def (): update_nav_list_url(field, max(0, offset - num), num, query_text, replace=True);,
+            def (): update_nav_list_url(field, offset + num, num, query_text, replace=True);,
         )
         bot_widget.set_enabled(offset > 0, end < total)
         bottom_pager.appendChild(bot_widget.container)
@@ -985,7 +984,7 @@ def create_nav_list_panel(container_id):
             list_container.appendChild(E.div(payload or '', style='opacity:0.8; padding: 0 1rem 1rem 1rem; font-size: smaller'))
             return
         # Update without flashing: create_item_list will clear content itself
-        names = payload or v'[]'
+        names = payload or []
         cached_names[browse_cache_key()] = names
         render_page(names)
 
@@ -996,4 +995,6 @@ def create_nav_list_panel(container_id):
         set_loading(True)
         fetch_browse_items(render)
 
-set_panel_handler('nav_list', create_nav_list_panel)
+
+def set_panel_handlers():
+    set_panel_handler('nav_list', create_nav_list_panel)

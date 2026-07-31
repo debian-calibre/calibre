@@ -1,20 +1,19 @@
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
+from typing import overload
 
-from qt.core import QAbstractItemModel, QIcon, QModelIndex, QStyledItemDelegate, Qt
+from qt.core import QAbstractItemModel, QIcon, QModelIndex, QObject, QStyledItemDelegate, Qt
 
 from calibre import fit_image
 from calibre.customize.ui import disable_plugin, enable_plugin, is_disabled
 from calibre.db.search import CONTAINS_MATCH, EQUALS_MATCH, REGEXP_MATCH, _match
 from calibre.utils.config_base import prefs
 from calibre.utils.icu import sort_key
+from calibre.utils.localization import _
 from calibre.utils.search_query_parser import SearchQueryParser
 
 
 class Delegate(QStyledItemDelegate):
-
     def paint(self, painter, option, index):
         icon = index.data(Qt.ItemDataRole.DecorationRole)
         if icon and not icon.isNull():
@@ -34,7 +33,6 @@ class Delegate(QStyledItemDelegate):
 
 
 class Matches(QAbstractItemModel):
-
     HEADERS = [_('Enabled'), _('Name'), _('No DRM'), _('Headquarters'), _('Affiliate'), _('Formats')]
     HTML_COLS = (1,)
     CENTERED_COLUMNS = (0, 2, 3, 4)
@@ -94,45 +92,49 @@ class Matches(QAbstractItemModel):
     def index(self, row, column, parent=QModelIndex()):
         return self.createIndex(row, column)
 
-    def parent(self, index):
-        if not index.isValid() or index.internalId() == 0:
+    @overload
+    def parent(self, child: QModelIndex) -> QModelIndex: ...
+    @overload
+    def parent(self) -> QObject | None: ...
+    def parent(self, child: QModelIndex = QModelIndex()):
+        if not child.isValid() or child.internalId() == 0:
             return QModelIndex()
         return self.createIndex(0, 0)
 
-    def rowCount(self, *args):
+    def rowCount(self, parent=...):
         return len(self.matches)
 
-    def columnCount(self, *args):
+    def columnCount(self, parent=...):
         return len(self.HEADERS)
 
-    def headerData(self, section, orientation, role):
+    def headerData(self, section, orientation, role=...):
         if role != Qt.ItemDataRole.DisplayRole:
             return None
         text = ''
         if orientation == Qt.Orientation.Horizontal:
             if section < len(self.HEADERS):
                 text = self.HEADERS[section]
-            return (text)
+            return text
         else:
-            return (section+1)
+            return section + 1
 
-    def data(self, index, role):
+    def data(self, index, role=...):
         row, col = index.row(), index.column()
         result = self.matches[row]
         if role in (Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole):
             if col == 1:
-                return (f'<b>{result.name}</b><br><i>{result.description}</i>')
+                return f'<b>{result.name}</b><br><i>{result.description}</i>'
             elif col == 3:
-                return (result.headquarters)
+                return result.headquarters
             elif col == 5:
-                return (', '.join(result.formats).upper())
+                return ', '.join(result.formats).upper()
         elif role == Qt.ItemDataRole.DecorationRole:
             if col == 2:
                 if result.drm_free_only:
-                    return (self.NO_DRM_ICON)
+                    return self.NO_DRM_ICON
             if col == 4:
                 if result.affiliate:
-                    return (self.DONATE_ICON)
+                    return self.DONATE_ICON
         elif role == Qt.ItemDataRole.CheckStateRole:
             if col == 0:
                 if is_disabled(result):
@@ -145,31 +147,42 @@ class Matches(QAbstractItemModel):
         elif role == Qt.ItemDataRole.ToolTipRole:
             if col == 0:
                 if is_disabled(result):
-                    return ('<p>' + _('This store is currently disabled and cannot be used in other parts of calibre.') + '</p>')
+                    return '<p>' + _('This store is currently disabled and cannot be used in other parts of calibre.') + '</p>'
                 else:
-                    return ('<p>' + _('This store is currently enabled and can be used in other parts of calibre.') + '</p>')
+                    return '<p>' + _('This store is currently enabled and can be used in other parts of calibre.') + '</p>'
             elif col == 1:
-                return (f'<p>{result.description}</p>')
+                return f'<p>{result.description}</p>'
             elif col == 2:
                 if result.drm_free_only:
-                    return ('<p>' + _('This store only distributes e-books without DRM.') + '</p>')
+                    return '<p>' + _('This store only distributes e-books without DRM.') + '</p>'
                 else:
-                    return ('<p>' + _('This store distributes e-books with DRM. It may have some titles without DRM, but you will need to check on a per title basis.') + '</p>')  # noqa: E501
+                    return (
+                        '<p>'
+                        + _('This store distributes e-books with DRM. It may have some titles without DRM, but you will need to check on a per title basis.')
+                        + '</p>'
+                    )  # noqa: E501
             elif col == 3:
-                return ('<p>' + _('This store is headquartered in %s. This is a good indication of what market the store caters to. However, this does not necessarily mean that the store is limited to that market only.') % result.headquarters + '</p>')  # noqa: E501
+                return (
+                    '<p>'
+                    + _(
+                        'This store is headquartered in %s. This is a good indication of what market the store caters to. However, this does not necessarily mean that the store is limited to that market only.'  # noqa: E501
+                    )
+                    % result.headquarters
+                    + '</p>'
+                )
             elif col == 4:
                 if result.affiliate:
-                    return ('<p>' + _('Buying from this store supports the calibre developer: %s.') % result.author + '</p>')
+                    return '<p>' + _('Buying from this store supports the calibre developer: %s.') % result.author + '</p>'
             elif col == 5:
-                return ('<p>' + _('This store distributes e-books in the following formats: %s') % ', '.join(result.formats) + '</p>')
+                return '<p>' + _('This store distributes e-books in the following formats: %s') % ', '.join(result.formats) + '</p>'
         return None
 
-    def setData(self, index, data, role):
+    def setData(self, index, value, role=...):
         if not index.isValid():
             return False
         col = index.column()
         if col == 0:
-            if data in (Qt.CheckState.Checked, Qt.CheckState.Checked.value):
+            if value in (Qt.CheckState.Checked, Qt.CheckState.Checked.value):
                 enable_plugin(self.get_plugin(index))
             else:
                 disable_plugin(self.get_plugin(index))
@@ -195,19 +208,18 @@ class Matches(QAbstractItemModel):
             text = 'a' if getattr(match, 'affiliate', False) else 'b'
         return text
 
-    def sort(self, col, order, reset=True):
-        self.sort_col = col
+    def sort(self, column, order: Qt.SortOrder = Qt.SortOrder.AscendingOrder, reset=True):
+        self.sort_col = column
         self.sort_order = order
         if not self.matches:
             return
         descending = order == Qt.SortOrder.DescendingOrder
-        self.matches.sort(key=lambda x: sort_key(str(self.data_as_text(x, col))), reverse=descending)
+        self.matches.sort(key=lambda x: sort_key(str(self.data_as_text(x, column))), reverse=descending)
         if reset:
             self.beginResetModel(), self.endResetModel()
 
 
 class SearchFilter(SearchQueryParser):
-
     USABLE_LOCATIONS = [
         'all',
         'affiliate',
@@ -227,7 +239,7 @@ class SearchFilter(SearchQueryParser):
     def universal_set(self):
         return self.srs
 
-    def get_matches(self, location, query):
+    def get_matches(self, location, query, candidates=None):
         location = location.lower().strip()
         if location == 'formats':
             location = 'format'
@@ -291,7 +303,7 @@ class SearchFilter(SearchQueryParser):
                         m = matchkind
 
                     if locvalue == 'format':
-                        vals = accessor(sr).split(',')
+                        vals = str(accessor(sr)).split(',')
                     else:
                         vals = [accessor(sr)]
                     if _match(query, vals, m, use_primary_find_in_search=upf):
@@ -299,5 +311,6 @@ class SearchFilter(SearchQueryParser):
                         break
                 except ValueError:  # Unicode errors
                     import traceback
+
                     traceback.print_exc()
         return matches

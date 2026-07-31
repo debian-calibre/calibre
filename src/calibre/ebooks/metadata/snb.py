@@ -1,19 +1,18 @@
-'''Read meta information from SNB files'''
+# License: GPLv3 Copyright: 2010, Li Fanxi <lifanxi@freemindworld.com>
 
-
-__license__   = 'GPL v3'
-__copyright__ = '2010, Li Fanxi <lifanxi@freemindworld.com>'
+"""Read meta information from SNB files"""
 
 import io
 import os
 
 from calibre.ebooks.metadata import MetaInformation
 from calibre.ebooks.snb.snbfile import SNBFile
+from calibre.utils.localization import _
 from calibre.utils.xml_parse import safe_xml_fromstring
 
 
 def get_metadata(stream, extract_cover=True):
-    ''' Return metadata as a L{MetaInfo} object '''
+    """Return metadata as a L{MetaInfo} object"""
     mi = MetaInformation(_('Unknown'), [_('Unknown')])
     snbFile = SNBFile()
 
@@ -28,10 +27,20 @@ def get_metadata(stream, extract_cover=True):
 
         if meta is not None:
             meta = safe_xml_fromstring(meta)
-            mi.title = meta.find('.//head/name').text
-            mi.authors = [meta.find('.//head/author').text]
-            mi.language = meta.find('.//head/language').text.lower().replace('_', '-')
-            mi.publisher = meta.find('.//head/publisher').text
+            _name = meta.find('.//head/name')
+            assert _name is not None
+            mi.title = _name.text
+            _author = meta.find('.//head/author')
+            assert _author is not None
+            mi.authors = [_author.text]
+            _language = meta.find('.//head/language')
+            assert _language is not None
+            lang_text = _language.text
+            assert lang_text is not None
+            mi.language = lang_text.lower().replace('_', '-')
+            _publisher = meta.find('.//head/publisher')
+            assert _publisher is not None
+            mi.publisher = _publisher.text
 
             if extract_cover:
                 cover = meta.find('.//head/cover')
@@ -43,6 +52,7 @@ def get_metadata(stream, extract_cover=True):
 
     except Exception:
         import traceback
+
         traceback.print_exc()
 
     return mi

@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-__license__   = 'GPL v3'
-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid@kovidgoyal.net>
 
 import os
 import subprocess
@@ -20,9 +17,11 @@ if iswindows:
     try:
         windows_null_file = open(os.devnull, 'wb')
     except Exception:
-        raise RuntimeError('NUL file missing in windows. This indicates a'
-                ' corrupted windows. You should contact Microsoft'
-                ' for assistance and/or follow the steps described here: https://bytes.com/topic/net/answers/264804-compile-error-null-device-missing')
+        raise RuntimeError(
+            'NUL file missing in windows. This indicates a'
+            ' corrupted windows. You should contact Microsoft'
+            ' for assistance and/or follow the steps described here: https://bytes.com/topic/net/answers/264804-compile-error-null-device-missing'
+        )
 
 
 def renice(niceness):
@@ -33,17 +32,17 @@ def renice(niceness):
 
 
 def macos_viewer_bundle_path():
-    base = os.path.dirname(sys.executables_location)
+    base = os.path.dirname(getattr(sys, 'executables_location'))
     return os.path.join(base, 'ebook-viewer.app/Contents/MacOS/')
 
 
 def macos_edit_book_bundle_path():
-    base = os.path.dirname(sys.executables_location)
+    base = os.path.dirname(getattr(sys, 'executables_location'))
     return os.path.join(base, 'ebook-viewer.app/Contents/ebook-edit.app/Contents/MacOS/')
 
 
 def macos_headless_bundle_path():
-    base = os.path.dirname(sys.executables_location)
+    base = os.path.dirname(getattr(sys, 'executables_location'))
     return os.path.join(base, 'ebook-viewer.app/Contents/ebook-edit.app/Contents/headless.app/Contents/MacOS/')
 
 
@@ -51,19 +50,18 @@ def exe_path(exe_name):
     if hasattr(sys, 'running_from_setup'):
         return [sys.executable, os.path.join(sys.setup_dir, 'run-calibre-worker.py')]
     if getattr(sys, 'run_local', False):
-        return [sys.executable, sys.run_local, exe_name]
+        return [sys.executable, getattr(sys, 'run_local'), exe_name]
     e = exe_name
     if iswindows:
-        return os.path.join(os.path.dirname(sys.executable),
-                e+'.exe' if isfrozen else f'Scripts\\{e}.exe')
+        return os.path.join(os.path.dirname(sys.executable), e + '.exe' if isfrozen else f'Scripts\\{e}.exe')
     if ismacos:
-        return os.path.join(sys.executables_location, e)
+        return os.path.join(getattr(sys, 'executables_location'), e)
 
     if isfrozen:
-        return os.path.join(sys.executables_location, e)
+        return os.path.join(getattr(sys, 'executables_location'), e)
 
     if hasattr(sys, 'executables_location'):
-        c = os.path.join(sys.executables_location, e)
+        c = os.path.join(getattr(sys, 'executables_location'), e)
         if os.access(c, os.X_OK):
             return c
     return e
@@ -77,14 +75,14 @@ def headless_exe_path(exe_name='calibre-parallel'):
 
 def windows_creationflags_for_worker_process(priority: str = 'normal') -> int:
     return {
-        'high'  : subprocess.HIGH_PRIORITY_CLASS,
+        'high': subprocess.HIGH_PRIORITY_CLASS,
         'normal': subprocess.NORMAL_PRIORITY_CLASS,
-        'low'   : subprocess.IDLE_PRIORITY_CLASS
+        'low': subprocess.IDLE_PRIORITY_CLASS,
     }[priority] | subprocess.DETACHED_PROCESS
 
 
 class Worker:
-    '''
+    """
     Platform independent object for launching child processes. All processes
     have the environment variable :envvar:`CALIBRE_WORKER` set.
 
@@ -94,7 +92,7 @@ class Worker:
     To launch child simply call the Worker object. By default, the child's
     output is redirected to an on disk file, the path to which is returned by
     the call.
-    '''
+    """
 
     exe_name = 'calibre-parallel'
 
@@ -110,7 +108,7 @@ class Worker:
             if self.job_name == 'ebook-edit':
                 return os.path.join(macos_edit_book_bundle_path(), self.exe_name)
 
-            return os.path.join(sys.executables_location, self.exe_name)
+            return os.path.join(getattr(sys, 'executables_location'), self.exe_name)
 
         return self.executable
 
@@ -155,7 +153,7 @@ class Worker:
                 try:
                     self.child.terminate()
                     st = time.time()
-                    while self.is_alive and time.time()-st < 2:
+                    while self.is_alive and time.time() - st < 2:
                         time.sleep(0.2)
                 finally:
                     if self.is_alive:
@@ -169,10 +167,10 @@ class Worker:
         self._env = (env or {}).copy()
 
     def __call__(self, redirect_output=True, cwd=None, priority=None, pass_fds=()):
-        '''
+        """
         If redirect_output is True, output from the child is redirected
         to a file on disk and this method returns the path to that file.
-        '''
+        """
         exe = self.gui_executable if self.gui else self.executable
         env = self.env
         try:
@@ -186,16 +184,16 @@ class Worker:
             priority = prefs['worker_process_priority']
         cmd = [exe] if isinstance(exe, (str, bytes)) else exe
         args = {
-                'env': env,
-                'cwd': _cwd,
-                }
+            'env': env,
+            'cwd': _cwd,
+        }
         if iswindows:
             args['creationflags'] = windows_creationflags_for_worker_process(priority)
         else:
             niceness = {
-                    'normal': 0,
-                    'low'   : 10,
-                    'high'  : 20,
+                'normal': 0,
+                'low': 10,
+                'high': 20,
             }[priority]
             args['env']['CALIBRE_WORKER_NICENESS'] = str(niceness)
         ret = None
@@ -220,15 +218,16 @@ class Worker:
                 if iswindows:
                     for fd in pass_fds:
                         os.set_handle_inheritable(fd, True)
-                    args['startupinfo'] = subprocess.STARTUPINFO(lpAttributeList={'handle_list':pass_fds})
+                    args['startupinfo'] = subprocess.STARTUPINFO(lpAttributeList={'handle_list': pass_fds})
                 else:
                     args['pass_fds'] = pass_fds
-            self.child = subprocess.Popen(cmd, **args)
+            self.child = subprocess.Popen(cmd, **args)  # type: ignore
         finally:
             if iswindows and pass_fds:
                 for fd in pass_fds:
                     os.set_handle_inheritable(fd, False)
         if 'stdin' in args:
+            assert self.child.stdin is not None
             self.child.stdin.close()
 
         self.log_path = ret

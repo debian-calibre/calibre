@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "juli 03, 2026" "9.11.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "juli 31, 2026" "9.12.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -109,7 +109,7 @@ Ange utdataprofil. Utdataprofilen anger omvandlingen hur systemet kan optimera s
 .INDENT 0.0
 .TP
 .B \-\-version
-visar programmets versionsnummer och avsluta
+visa programmets versionsnummer och avsluta
 .UNINDENT
 .SH ALTERNATIV FÖR INMATNING
 .sp
@@ -160,7 +160,7 @@ Extrahera innehållet i den genererade boken till den angivna mappen. Innehålle
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Dela alla HTML\-filer som är större än denna storlek (i KiB). Detta är nödvändigt eftersom de flesta EPUB\-läsenheter inte kan hantera stora filer. Standardvärdet 260KB är den storlek som krävs för Adobe Digital Editions. Satt till 0 för stänga av storleksbaserad delning.
+Dela alla HTML\-filer som överskrider den här storleken (i kB). Detta är nödvändigt eftersom de flesta EPUB\-läsenheter inte kan hantera stora filer. Standardvärdet 260KB är den storlek som krävs för Adobe Digital Editions. Ange 0 för att inaktivera storleksbaserad uppdelning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -223,7 +223,7 @@ Bädda in den angivna teckensnittsfamiljen i boken. Här anges \fB\(dq\fPbas\fB\
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Som standard kommer calibre att använda stenografiformen för olika CSS\-egenskaper som marginal, utfyllnad, kanter, etc. Det här alternativet kommer att få den att använda hela expanderade formen istället. Observera att CSS alltid utökas vid skapande av EPUB\-filer med utmatningsprofilen inställd på en av Nook\-profilerna eftersom Nook inte kan hantera stenografisk CSS.
+Som standard kommer calibre att använda stenografiformen för olika CSS\-egenskaper som marginal, utfyllnad, kanter, etc. Det här alternativet kommer att få den att använda hela expanderade formen i stället. Observera att CSS alltid utökas vid skapande av EPUB\-filer med utmatningsprofilen inställd på en av Nook\-profilerna eftersom Nook inte kan hantera stenografisk CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -253,7 +253,7 @@ Ställ in höjden på de infogade tomma raderna (i em). Höjden på raderna mell
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är ett sammansatt tecken av ett par tecken som ff, fi, fl et cetera. De flesta läsare har inte stöd för ligaturer i sina standardteckensnitt, så det är osannolikt att de renderas korrekt. Som standard kommer calibre att förvandla en ligatur till motsvarande par normala tecken. Observera att ligaturer här endast betyder Unicode\-ligaturer, inte ligaturer skapade via CSS eller teckensnittsstilar. Det här alternativet kommer att bevara dem istället.
+Bevara ligaturer som finns i inmatningsdokumentet. En ligatur är ett sammansatt tecken av ett par tecken som ff, fi, fl et cetera. De flesta läsare har inte stöd för ligaturer i sina standardteckensnitt, så det är osannolikt att de renderas korrekt. Som standard kommer calibre att förvandla en ligatur till motsvarande par normala tecken. Observera att ligaturer här endast betyder Unicode\-ligaturer, inte ligaturer skapade via CSS eller teckensnittsstilar. Det här alternativet kommer att bevara dem i stället.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -475,7 +475,7 @@ Ett XPath\-uttryck för att identifiera platsen i dokumentet där läsningen ska
 .UNINDENT
 .SH INNEHÅLLSFÖRTECKNING
 .sp
-Anpassa hur innehållsförteckningen genereras. Om källfilen har en innehållsförteckning, kommer denna att användas istället för den automatiskt genererade.
+Anpassa hur innehållsförteckningen genereras. Om källfilen har en innehållsförteckning, kommer denna att användas i stället för den automatiskt genererade.
 .INDENT 0.0
 .TP
 .B \-\-duplicate\-links\-in\-toc

@@ -1,8 +1,5 @@
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>, 2012 Eli Algranti <idea00@hotmail.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>, 2012 Eli Algranti <idea00@hotmail.com>
 
-import codecs
 import json
 from contextlib import suppress
 
@@ -14,13 +11,12 @@ from calibre.ebooks.conversion.search_replace import compile_regular_expression
 from calibre.gui2 import choose_files, choose_save_file, error_dialog, question_dialog
 from calibre.gui2.convert import Widget
 from calibre.gui2.convert.search_and_replace_ui import Ui_Form
-from calibre.utils.localization import localize_user_manual_link
+from calibre.utils.localization import _, localize_user_manual_link
 
 
 class SearchAndReplaceWidget(Widget, Ui_Form):
-
     TITLE = _('Search &\nreplace')
-    HELP  = _('Modify the document text and structure using user defined patterns.')
+    HELP = _('Modify the document text and structure using user defined patterns.')
     COMMIT_NAME = 'search_and_replace'
     ICON = 'search.png'
     STRIP_TEXT_FIELDS = False
@@ -32,7 +28,7 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
             x = f'sr{i}_'
             for y in ('search', 'replace'):
                 z = x + y
-                setattr(self, 'opt_'+z, z)
+                setattr(self, 'opt_' + z, z)
         self.opt_search_replace = 'search_replace'
 
         Widget.__init__(self, parent, OPTIONS['pipe']['search_and_replace'])
@@ -50,8 +46,7 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
         self.search_replace.setColumnCount(2)
         self.search_replace.setColumnWidth(0, 320)
         self.search_replace.setColumnWidth(1, 320)
-        self.search_replace.setHorizontalHeaderLabels([
-            _('Search regular expression'), _('Replacement text')])
+        self.search_replace.setHorizontalHeaderLabels([_('Search regular expression'), _('Replacement text')])
 
         self.sr_add.clicked.connect(self.sr_add_clicked)
         self.sr_change.clicked.connect(self.sr_change_clicked)
@@ -65,8 +60,7 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
         self.initialize_options(get_option, get_help, db, book_id)
 
         try:
-            self.rh_label.setText(self.rh_label.text() % localize_user_manual_link(
-                'https://manual.calibre-ebook.com/regexp.html'))
+            self.rh_label.setText(self.rh_label.text() % localize_user_manual_link('https://manual.calibre-ebook.com/regexp.html'))
         except TypeError:
             pass  # link already localized
 
@@ -78,10 +72,14 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
     def sr_add_row(self, search, replace):
         row = self.search_replace.rowCount()
         self.search_replace.setRowCount(row + 1)
-        newItem = self.search_replace.itemPrototype().clone()
+        proto = self.search_replace.itemPrototype()
+        assert proto is not None
+        newItem = proto.clone()
+        assert newItem is not None
         newItem.setText(search)
         self.search_replace.setItem(row, 0, newItem)
-        newItem = self.search_replace.itemPrototype().clone()
+        newItem = proto.clone()
+        assert newItem is not None
         newItem.setText(replace)
         self.search_replace.setItem(row, 1, newItem)
         return row
@@ -89,46 +87,57 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
     def sr_change_clicked(self):
         row = self.search_replace.currentRow()
         if row >= 0:
-            self.search_replace.item(row, 0).setText(self.sr_search.regex)
-            self.search_replace.item(row, 1).setText(self.sr_replace.text())
+            item0 = self.search_replace.item(row, 0)
+            assert item0 is not None
+            item0.setText(self.sr_search.regex)
+            item1 = self.search_replace.item(row, 1)
+            assert item1 is not None
+            item1.setText(self.sr_replace.text())
             self.search_replace.setCurrentCell(row, 0)
 
     def sr_remove_clicked(self):
         row = self.search_replace.currentRow()
         if row >= 0:
             self.search_replace.removeRow(row)
-            self.search_replace.setCurrentCell(row if row < self.search_replace.rowCount() else row-1, 0)
+            self.search_replace.setCurrentCell(row if row < self.search_replace.rowCount() else row - 1, 0)
             self.sr_search.clear()
             self.sr_replace.clear()
             self.changed_signal.emit()
 
     def sr_load_clicked(self):
-        files = choose_files(self, 'sr_saved_patterns',
-                _('Load calibre search-replace definitions file'),
-                filters=[
-                    (_('calibre search-replace definitions file'), ['csr'])
-                    ], select_only_single_file=True)
+        files = choose_files(
+            self,
+            'sr_saved_patterns',
+            _('Load calibre search-replace definitions file'),
+            filters=[(_('calibre search-replace definitions file'), ['csr'])],
+            select_only_single_file=True,
+        )
         if files:
             from calibre.ebooks.conversion.cli import read_sr_patterns
+
             try:
-                self.set_value(self.opt_search_replace,
-                    read_sr_patterns(files[0]))
+                self.set_value(self.opt_search_replace, read_sr_patterns(files[0]))
                 self.search_replace.setCurrentCell(0, 0)
             except Exception as e:
-                error_dialog(self, _('Failed to read'),
-                        _('Failed to load patterns from %s, click "Show details"'
-                            ' to learn more.')%files[0], det_msg=as_unicode(e),
-                        show=True)
+                error_dialog(
+                    self,
+                    _('Failed to read'),
+                    _('Failed to load patterns from %s, click "Show details" to learn more.') % files[0],
+                    det_msg=as_unicode(e),
+                    show=True,
+                )
 
     def sr_save_clicked(self):
         from calibre.ebooks.conversion.cli import escape_sr_pattern as escape
-        filename = choose_save_file(self, 'sr_saved_patterns',
-                _('Save calibre search-replace definitions file'),
-                filters=[
-                    (_('calibre search-replace definitions file'), ['csr'])
-                    ])
+
+        filename = choose_save_file(
+            self,
+            'sr_saved_patterns',
+            _('Save calibre search-replace definitions file'),
+            filters=[(_('calibre search-replace definitions file'), ['csr'])],
+        )
         if filename:
-            with codecs.open(filename, 'w', 'utf-8') as f:
+            with open(filename, 'w', encoding='utf-8') as f:
                 for search, replace in self.get_definitions():
                     f.write(escape(search) + '\n' + escape(replace) + '\n\n')
 
@@ -142,22 +151,28 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
         row = self.search_replace.currentRow()
         for col in range(self.search_replace.columnCount()):
             item1 = self.search_replace.item(row, col)
-            item2 = self.search_replace.item(row+i, col)
+            item2 = self.search_replace.item(row + i, col)
+            assert item1 is not None
+            assert item2 is not None
             value = item1.text()
             item1.setText(item2.text())
             item2.setText(value)
-        self.search_replace.setCurrentCell(row+i, 0)
+        self.search_replace.setCurrentCell(row + i, 0)
 
     def sr_currentCellChanged(self, row, column, previousRow, previousColumn):
         if row >= 0:
             self.sr_change.setEnabled(True)
             self.sr_remove.setEnabled(True)
             self.sr_save.setEnabled(True)
-            self.sr_search.set_regex(self.search_replace.item(row, 0).text())
-            self.sr_replace.setText(self.search_replace.item(row, 1).text())
+            sr_item0 = self.search_replace.item(row, 0)
+            assert sr_item0 is not None
+            sr_item1 = self.search_replace.item(row, 1)
+            assert sr_item1 is not None
+            self.sr_search.set_regex(sr_item0.text())
+            self.sr_replace.setText(sr_item1.text())
             # set the up/down buttons
             self.sr_up.setEnabled(row > 0)
-            self.sr_down.setEnabled(row < self.search_replace.rowCount()-1)
+            self.sr_down.setEnabled(row < self.search_replace.rowCount() - 1)
         else:
             self.sr_change.setEnabled(False)
             self.sr_remove.setEnabled(False)
@@ -190,12 +205,16 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
                 if search == edit_search and replace == edit_replace:
                     found = True
                     break
-            if not found and not question_dialog(self,
-                    _('Unused search & replace definition'),
-                    _('The search/replace definition being edited '
-                        ' has not been added to the list of definitions. '
-                        'Do you wish to continue with the conversion '
-                        '(the definition will not be used)?')):
+            if not found and not question_dialog(
+                self,
+                _('Unused search & replace definition'),
+                _(
+                    'The search/replace definition being edited '
+                    ' has not been added to the list of definitions. '
+                    'Do you wish to continue with the conversion '
+                    '(the definition will not be used)?'
+                ),
+            ):
                 return False
 
         # Verify all search expressions are valid
@@ -203,16 +222,15 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
             try:
                 compile_regular_expression(search)
             except Exception as err:
-                error_dialog(self, _('Invalid regular expression'),
-                             _('Invalid regular expression: %s')%err, show=True)
+                error_dialog(self, _('Invalid regular expression'), _('Invalid regular expression: %s') % err, show=True)
                 return False
 
         return True
 
     # Options handling
 
-    def connect_gui_obj_handler(self, g, slot):
-        if g is self.opt_search_replace:
+    def connect_gui_obj_handler(self, gui_obj, slot):
+        if gui_obj is self.opt_search_replace:
             self.search_replace.cellChanged.connect(slot)
 
     def get_value_handler(self, g):
@@ -225,7 +243,9 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
         for row in range(self.search_replace.rowCount()):
             colItems = []
             for col in range(self.search_replace.columnCount()):
-                colItems.append(str(self.search_replace.item(row, col).text()))
+                cell_item = self.search_replace.item(row, col)
+                assert cell_item is not None
+                colItems.append(str(cell_item.text()))
             ans.append(colItems)
         return ans
 
@@ -247,17 +267,20 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
 
         for row, colItems in enumerate(rowItems):
             for col, cellValue in enumerate(colItems):
-                newItem = self.search_replace.itemPrototype().clone()
+                sv_proto = self.search_replace.itemPrototype()
+                assert sv_proto is not None
+                newItem = sv_proto.clone()
+                assert newItem is not None
                 newItem.setText(cellValue)
                 self.search_replace.setItem(row, col, newItem)
         return True
 
     def apply_recommendations(self, recs):
-        '''
+        """
         Handle the legacy sr* options that may have been previously saved. They
         are applied only if the new search_replace option has not been set in
         recs.
-        '''
+        """
         new_val = None
         legacy = {}
         rest = {}
@@ -278,7 +301,7 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
         if new_val is None and legacy:
             for i in range(1, 4):
                 x = f'sr{i}'
-                s, r = x+'_search', x+'_replace'
+                s, r = x + '_search', x + '_replace'
                 s, r = legacy.get(s, ''), legacy.get(r, '')
                 if s:
                     self.sr_add_row(s, r)
@@ -287,8 +310,10 @@ class SearchAndReplaceWidget(Widget, Ui_Form):
 
     def setup_help_handler(self, g, help):
         if g is self.opt_search_replace:
-            self.search_replace._help = _(
-                'The list of search/replace definitions that will be applied '
-                'to this conversion.')
+            setattr(
+                self.search_replace,
+                '_help',
+                _('The list of search/replace definitions that will be applied to this conversion.'),
+            )
             self.setup_widget_help(self.search_replace)
         return True

@@ -11,6 +11,7 @@ from contextlib import suppress
 from dataclasses import dataclass
 from itertools import count
 from time import monotonic
+from typing import cast
 
 from qt.core import QAudio, QAudioFormat, QAudioSink, QByteArray, QIODevice, QIODeviceBase, QMediaDevices, QObject, Qt, QTextToSpeech, QWidget, pyqtSignal, sip
 
@@ -19,7 +20,7 @@ from calibre.gui2 import error_dialog
 from calibre.gui2.tts.types import TTS_EMBEDED_CONFIG, EngineSpecificSettings, Quality, TTSBackend, Voice, widget_parent
 from calibre.spell.break_iterator import PARAGRAPH_SEPARATOR, split_into_sentences_for_tts
 from calibre.utils.filenames import ascii_text
-from calibre.utils.localization import canonicalize_lang, get_lang
+from calibre.utils.localization import _, canonicalize_lang, get_lang
 from calibre.utils.resources import get_path as P
 from calibre.utils.tts.piper import SynthesisResult, global_piper_instance, global_piper_instance_if_exists, play_pcm_data
 
@@ -29,10 +30,10 @@ HIGH_QUALITY_SAMPLE_RATE = 22050
 def debug(*a, **kw):
     if is_debugging():
         if not hasattr(debug, 'first'):
-            debug.first = monotonic()
+            setattr(debug, 'first', monotonic())
         kw['end'] = kw.get('end', '\r\n')
         kw['flush'] = True
-        print(f'[{monotonic() - debug.first:.2f}]', *a, **kw)
+        print(f'[{monotonic() - getattr(debug, 'first'):.2f}]', *a, **kw)
 
 
 def audio_format(audio_rate: int = HIGH_QUALITY_SAMPLE_RATE) -> QAudioFormat:
@@ -46,11 +47,11 @@ def audio_format(audio_rate: int = HIGH_QUALITY_SAMPLE_RATE) -> QAudioFormat:
 def piper_process_metadata(callback, model_path, config_path, s: EngineSpecificSettings, voice: Voice) -> int:
     if not model_path:
         raise Exception('Could not download voice data')
+    assert voice.engine_data is not None
     if 'metadata' not in voice.engine_data:
         with open(config_path) as f:
             voice.engine_data['metadata'] = json.load(f)
-    return global_piper_instance().set_voice(
-        callback, config_path, model_path, length_scale_multiplier=s.rate, sentence_delay=s.sentence_delay)
+    return global_piper_instance().set_voice(callback, config_path, model_path, length_scale_multiplier=s.rate, sentence_delay=s.sentence_delay)
 
 
 def piper_cache_dir() -> str:
@@ -58,7 +59,9 @@ def piper_cache_dir() -> str:
 
 
 def paths_for_voice(voice: Voice) -> tuple[str, str]:
+    assert voice.engine_data is not None
     fname = voice.engine_data['model_filename']
+    assert isinstance(fname, str)
     model_path = os.path.join(piper_cache_dir(), fname)
     config_path = os.path.join(os.path.dirname(model_path), fname + '.json')
     return model_path, config_path
@@ -84,10 +87,19 @@ def load_voice_metadata() -> tuple[dict[str, Voice], tuple[Voice, ...], dict[str
                 if best_qual is None or q.value < best_qual.value:
                     best_qual = q
                     mf = f'{bcp_code}-{ascii_text(voice_name)}-{qual}.onnx'
-                    voice = Voice(bcp_code + ':' + voice_name, lang, country, human_name=voice_name, quality=q, engine_data={
-                        'model_url': e['model'], 'config_url': e['config'],
-                        'model_filename': mf, 'is_downloaded': mf in downloaded,
-                    })
+                    voice = Voice(
+                        bcp_code + ':' + voice_name,
+                        lang,
+                        country,
+                        human_name=voice_name,
+                        quality=q,
+                        engine_data={
+                            'model_url': e['model'],
+                            'config_url': e['config'],
+                            'model_filename': mf,
+                            'is_downloaded': mf in downloaded,
+                        },
+                    )
             if voice:
                 ans.append(voice)
                 _voice_name_map[voice.name] = human_voice_name_map[voice.human_name] = voice
@@ -111,11 +123,18 @@ def download_voice(voice: Voice, download_even_if_exists: bool = False, parent: 
         if not download_even_if_exists:
             return model_path, config_path
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    assert voice.engine_data is not None
     from calibre.gui2.tts.download import download_resources
-    ok = download_resources(_('Downloading voice for Read aloud'), _('Downloading neural network for the {} voice').format(voice.human_name), {
-            voice.engine_data['model_url']: (model_path, _('Neural network data')),
-            voice.engine_data['config_url']: (config_path, _('Neural network metadata')),
-        }, parent=widget_parent(parent), headless=headless,
+
+    ok = download_resources(
+        _('Downloading voice for Read aloud'),
+        _('Downloading neural network for the {} voice').format(voice.human_name),
+        {
+            cast(str, voice.engine_data['model_url']): (model_path, _('Neural network data')),
+            cast(str, voice.engine_data['config_url']): (config_path, _('Neural network metadata')),
+        },
+        parent=widget_parent(parent) if parent is not None else None,
+        headless=headless,
     )
     voice.engine_data['is_downloaded'] = bool(ok)
     return (model_path, config_path) if ok else ('', '')
@@ -137,7 +156,6 @@ UTTERANCE_SEPARATOR = b'\n'
 
 
 class UtteranceAudioQueue(QIODevice):
-
     saying = pyqtSignal(int, int)
     update_status = pyqtSignal()
 
@@ -201,10 +219,10 @@ class UtteranceAudioQueue(QIODevice):
     def seek(self, pos):
         return False
 
-    def readData(self, maxlen: int) -> QByteArray:
+    def readData(self, maxlen: int) -> bytes:
         if maxlen < 1:
             debug(f'Audio data sent to output: {maxlen=}')
-            return QByteArray()
+            return cast(bytes, QByteArray())
         if maxlen >= len(self.current_audio_data):
             ans = self.current_audio_data
             self.current_audio_data = QByteArray()
@@ -212,7 +230,7 @@ class UtteranceAudioQueue(QIODevice):
             ans = self.current_audio_data.first(maxlen)
             self.current_audio_data = self.current_audio_data.last(len(self.current_audio_data) - maxlen)
         debug(f'Audio sent to output: {maxlen=} {len(ans)=}')
-        return ans
+        return cast(bytes, ans)
 
 
 def split_into_utterances(text: str, counter: count, lang: str = 'en'):
@@ -223,13 +241,12 @@ def split_into_utterances(text: str, counter: count, lang: str = 'en'):
 
 
 class Piper(TTSBackend):
-
     engine_name: str = 'piper'
     filler_char: str = PARAGRAPH_SEPARATOR
     _synthesis_done = pyqtSignal(object, object, object)
 
     def __init__(self, engine_name: str = '', parent: QObject | None = None):
-        super().__init__(parent)
+        super().__init__(engine_name, parent)
         self._audio_sink: QAudioSink | None = None
 
         self._current_voice: Voice | None = None
@@ -250,7 +267,7 @@ class Piper(TTSBackend):
     @property
     def available_voices(self) -> dict[str, tuple[Voice, ...]]:
         self._load_voice_metadata()
-        return {'': self._voices}
+        return {'': self._voices or ()}
 
     def say(self, text: str) -> None:
         if self._last_error:
@@ -387,8 +404,10 @@ class Piper(TTSBackend):
         elif state is QAudio.State.SuspendedState:
             self._set_state(QTextToSpeech.State.Paused)
         elif state is QAudio.State.StoppedState:
-            if self._audio_sink.error() not in (QAudio.Error.NoError, QAudio.Error.UnderrunError):
-                self._set_error(f'Audio playback failed with error: {self._audio_sink.error()}')
+            _audio_sink = self._audio_sink
+            assert _audio_sink is not None
+            if _audio_sink.error() not in (QAudio.Error.NoError, QAudio.Error.UnderrunError):
+                self._set_error(f'Audio playback failed with error: {_audio_sink.error()}')
             elif self._state is not QTextToSpeech.State.Error:
                 self._set_state(QTextToSpeech.State.Ready)
         elif state is QAudio.State.IdleState:
@@ -414,7 +433,9 @@ class Piper(TTSBackend):
         self._load_voice_metadata()
         lang = get_lang()
         lang = canonicalize_lang(lang) or lang
-        return self._voice_for_lang.get(lang) or self._voice_for_lang['eng']
+        _voice_for_lang = self._voice_for_lang
+        assert _voice_for_lang is not None
+        return _voice_for_lang.get(lang) or _voice_for_lang['eng']
 
     @property
     def cache_dir(self) -> str:
@@ -434,6 +455,7 @@ class Piper(TTSBackend):
         for path in paths_for_voice(v):
             with suppress(FileNotFoundError):
                 os.remove(path)
+        assert v.engine_data is not None
         v.engine_data['is_downloaded'] = False
 
     def _download_voice(self, voice: Voice, download_even_if_exists: bool = False) -> tuple[str, str]:
@@ -453,18 +475,28 @@ class Piper(TTSBackend):
         try:
             m, c = self._ensure_voice_is_downloaded(voice)
             if not m:
-                error_dialog(parent, _('Failed to download voice'), _('Failed to download the voice: {}').format(voice.human_name), show=True)
+                error_dialog(
+                    parent,
+                    _('Failed to download voice'),
+                    _('Failed to download the voice: {}').format(voice.human_name),
+                    show=True,
+                )
                 return False
         except Exception:
             import traceback
-            error_dialog(parent, _('Failed to download voice'), _('Failed to download the voice: {}').format(voice.human_name),
-                         det_msg=traceback.format_exc(), show=True)
+
+            error_dialog(
+                parent,
+                _('Failed to download voice'),
+                _('Failed to download the voice: {}').format(voice.human_name),
+                det_msg=traceback.format_exc(),
+                show=True,
+            )
             return False
         return True
 
 
 class PiperEmbedded:
-
     def __init__(self):
         self._embedded_settings = EngineSpecificSettings.create_from_config('piper', TTS_EMBEDED_CONFIG)
         self._voice_name_map, self._voices, self._voice_for_lang, self.human_voice_name_map = load_voice_metadata()
@@ -476,6 +508,7 @@ class PiperEmbedded:
 
     def resolve_voice(self, lang: str, voice_name: str) -> Voice:
         from calibre.utils.localization import canonicalize_lang, get_lang
+
         lang = canonicalize_lang(lang or get_lang() or 'en')
         pv = self._embedded_settings.preferred_voices or {}
         if voice_name and voice_name in self.human_voice_name_map:
@@ -487,7 +520,12 @@ class PiperEmbedded:
         return voice
 
     def text_to_raw_audio_data(
-        self, texts: Iterable[str], lang: str = '', voice_name: str = '', sample_rate: int = HIGH_QUALITY_SAMPLE_RATE, timeout: float = 10.,
+        self,
+        texts: Iterable[str],
+        lang: str = '',
+        voice_name: str = '',
+        sample_rate: int = HIGH_QUALITY_SAMPLE_RATE,
+        timeout: float = 10.0,
     ) -> Iterator[tuple[bytes, float]]:
         voice = self.resolve_voice(lang, voice_name)
         if voice is not self._current_voice:
@@ -501,7 +539,7 @@ class PiperEmbedded:
         for text in texts:
             text = text.strip()
             if not text:
-                yield b'', 0.
+                yield b'', 0.0
                 continue
             all_data = []
             global_piper_instance().synthesize(1, text)
@@ -518,7 +556,7 @@ class PiperEmbedded:
                 raw_data = resample_raw_audio_16bit(raw_data, self._current_audio_rate, sample_rate)
             yield raw_data, duration_of_raw_audio_data(raw_data, sample_rate)
 
-    def ensure_voices_downloaded(self, specs: Iterable[tuple[str, str]], parent: QObject = None) -> bool:
+    def ensure_voices_downloaded(self, specs: Iterable[tuple[str, str]], parent: QObject | None = None) -> bool:
         for lang, voice_name in specs:
             voice = self.resolve_voice(lang, voice_name)
             m, c = download_voice(voice, parent=parent, headless=parent is None)
@@ -532,6 +570,7 @@ class PiperEmbedded:
             if gp is not None:
                 gp.cancel()
             self._current_audio_rate = 0
+
     __del__ = shutdown
 
     def on_synthesis_done(self, sr: SynthesisResult, exc: Exception, tb: str) -> None:
@@ -540,10 +579,11 @@ class PiperEmbedded:
     def ensure_started(self):
         if self._current_audio_rate == 0:
             from queue import Queue
+
+            assert self._current_voice is not None
             model_path, config_path = download_voice(self._current_voice, headless=True)
             self._queue = Queue()
-            self._current_audio_rate = piper_process_metadata(
-                    self.on_synthesis_done, model_path, config_path, self._embedded_settings, self._current_voice)
+            self._current_audio_rate = piper_process_metadata(self.on_synthesis_done, model_path, config_path, self._embedded_settings, self._current_voice)
 
 
 def duration_of_raw_audio_data(data: bytes, sample_rate: int = HIGH_QUALITY_SAMPLE_RATE, bytes_per_sample: int = 2, num_channels: int = 1) -> float:
@@ -557,7 +597,9 @@ def develop_embedded():
     p = PiperEmbedded()
     all_data = []
     for data, duration in p.text_to_raw_audio_data((
-        'Hello, good day to you.', 'This is the second sentence.', 'This is the final sentence.'
+        'Hello, good day to you.',
+        'This is the second sentence.',
+        'This is the final sentence.',
     )):
         print(f'{duration=} {len(data)=}')
         all_data.append(data)
@@ -569,9 +611,11 @@ def develop():
     from qt.core import QSocketNotifier
 
     from calibre.gui2 import Application
+
     app = Application([])
     p = Piper()
     play_started = False
+
     def state_changed(s):
         nonlocal play_started
         debug('TTS State:', s)
@@ -608,28 +652,34 @@ def develop():
     # text = f'Hello world{PARAGRAPH_SEPARATOR}.{PARAGRAPH_SEPARATOR}Bye world'
 
     def saying(offset, length):
-        debug('Saying:', repr(text[offset:offset+length]))
+        debug('Saying:', repr(text[offset : offset + length]))
 
     p.state_changed.connect(state_changed)
     p.saying.connect(saying)
     if iswindows:
         from threading import Thread
-        current_input = b''
+
         class Dispatcher(QObject):
             dispatch = pyqtSignal(object)
+
         o = Dispatcher(app)
         o.dispatch.connect(handle_input)
+
         def poll_input():
-            nonlocal current_input
             import msvcrt
+
             while True:
                 o.dispatch.emit(msvcrt.getch())
+
         Thread(target=poll_input, daemon=True).start()
     else:
         import tty
+
+        from qt.core import sip
+
         attr = tty.setraw(sys.stdin.fileno())
         os.set_blocking(sys.stdin.fileno(), False)
-        sn = QSocketNotifier(sys.stdin.fileno(), QSocketNotifier.Type.Read, p)
+        sn = QSocketNotifier(sip.voidptr(sys.stdin.fileno()), QSocketNotifier.Type.Read, p)
         sn.activated.connect(lambda: handle_input(sys.stdin.buffer.read()))
     try:
         p.say(text)
@@ -637,6 +687,7 @@ def develop():
     finally:
         if not iswindows:
             import termios
+
             termios.tcsetattr(sys.stdout.fileno(), termios.TCSANOW, attr)
 
 

@@ -24,6 +24,7 @@ def absolutize(url):
 def search_ec(query, max_results=10, timeout=60, write_html_to=''):
     import json
     from urllib.parse import parse_qs, urlparse
+
     url = 'https://www.ebooks.com/SearchApp/SearchResults.net?term=' + quote_plus(query)
     br = browser()
     with closing(br.open(url, timeout=timeout)) as f:
@@ -31,7 +32,9 @@ def search_ec(query, max_results=10, timeout=60, write_html_to=''):
     if write_html_to:
         with open(write_html_to, 'wb') as d:
             d.write(raw)
-    api = re.search(r'data-endpoint="(/api/search/.+?)"', raw.decode('utf-8')).group(1)
+    m = re.search(r'data-endpoint="(/api/search/.+?)"', raw.decode('utf-8'))
+    assert m is not None
+    api = m.group(1)
     counter = max_results
     url = absolutize(api)
     cc = parse_qs(urlparse(url).query)['CountryCode'][0]
@@ -63,6 +66,7 @@ def ec_details(search_result, timeout=30, write_data_to=''):
     import json
 
     from calibre.scraper.simple import read_url
+
     # cloudflared endpoint, sigh
     # https://www.ebooks.com/api/book/?bookId=362956&countryCode=IN
     raw = read_url(storage, search_result.ebooks_com_api_url)
@@ -86,8 +90,7 @@ def ec_details(search_result, timeout=30, write_data_to=''):
 
 
 class EbookscomStore(BasicStoreConfig, StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         if detail_item:
             purl = detail_item
             url = purl
@@ -106,16 +109,17 @@ class EbookscomStore(BasicStoreConfig, StorePlugin):
     def search(self, query, max_results=10, timeout=60):
         yield from search_ec(query, max_results, timeout)
 
-    def get_details(self, search_result, timeout):
+    def get_details(self, search_result, timeout=60):
         ec_details(search_result, timeout)
         return True
 
 
 if __name__ == '__main__':
     import sys
+
     results = tuple(search_ec(' '.join(sys.argv[1:]), write_html_to='/t/ec.html'))
     for result in results:
         print(result)
     ec_details(results[0], write_data_to='/t/ecd.json')
-    print('-'*80)
+    print('-' * 80)
     print(results[0])

@@ -1,11 +1,9 @@
 #!/usr/bin/env python
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
-
-__license__   = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
-'''
+"""
 Try to read metadata from an HTML file.
-'''
+"""
 
 import re
 import unittest
@@ -14,11 +12,12 @@ from collections import defaultdict
 from html5_parser import parse
 from lxml.etree import Comment
 
-from calibre import isbytestring, replace_entities
+from calibre import replace_entities
 from calibre.ebooks.chardet import xml_to_unicode
 from calibre.ebooks.metadata import authors_to_string, string_to_authors
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.utils.date import is_date_undefined, parse_date
+from calibre.utils.localization import _
 
 
 def get_metadata(stream):
@@ -47,7 +46,14 @@ META_NAMES = {
     'publisher': ('publisher', 'dc.publisher', 'dcterms.publisher'),
     'isbn': ('isbn',),
     'languages': ('dc.language', 'dcterms.language'),
-    'pubdate': ('pubdate', 'date of publication', 'dc.date.published', 'dc.date.publication', 'dc.date.issued', 'dcterms.issued'),
+    'pubdate': (
+        'pubdate',
+        'date of publication',
+        'dc.date.published',
+        'dc.date.publication',
+        'dc.date.issued',
+        'dcterms.issued',
+    ),
     'timestamp': ('timestamp', 'date of creation', 'dc.date.created', 'dc.date.creation', 'dcterms.created'),
     'series': ('series',),
     'series_index': ('seriesnumber', 'series_index', 'series.index'),
@@ -55,19 +61,21 @@ META_NAMES = {
     'comments': ('comments', 'dc.description'),
     'tags': ('tags', 'subject'),
 }
-rmap_comment = {v:k for k, v in COMMENT_NAMES.items()}
-rmap_meta = {v:k for k, l in META_NAMES.items() for v in l}
-
+rmap_comment = {v: k for k, v in COMMENT_NAMES.items()}
+rmap_meta = {v: k for k, l in META_NAMES.items() for v in l}
 
 # Extract an HTML attribute value, supports both single and double quotes and
 # single quotes inside double quotes and vice versa.
 attr_pat = r'''(?:(?P<sq>')|(?P<dq>"))(?P<content>(?(sq)[^']+|[^"]+))(?(sq)'|")'''
 
+_handle_comment_pat: re.Pattern[str] | None = None
+
 
 def handle_comment(data, comment_tags):
-    if not hasattr(handle_comment, 'pat'):
-        handle_comment.pat = re.compile(rf'''(?P<name>\S+)\s*=\s*{attr_pat}''')
-    for match in handle_comment.pat.finditer(data):
+    global _handle_comment_pat
+    if _handle_comment_pat is None:
+        _handle_comment_pat = re.compile(rf'''(?P<name>\S+)\s*=\s*{attr_pat}''')
+    for match in _handle_comment_pat.finditer(data):
         x = match.group('name')
         field = None
         try:
@@ -130,7 +138,7 @@ def get_metadata_(src, encoding=None):
     # Meta data definitions as in
     # https://www.mobileread.com/forums/showpost.php?p=712544&postcount=9
 
-    if isbytestring(src):
+    if isinstance(src, bytes):
         if not encoding:
             src = xml_to_unicode(src)[0]
         else:
@@ -177,7 +185,11 @@ def get_metadata_(src, encoding=None):
     for field in ('comments',):
         val = get(field)
         if val:
-            setattr(mi, field, val.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&apos;'))
+            setattr(
+                mi,
+                field,
+                val.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&apos;'),
+            )
 
     # Date fields
     for field in ('pubdate', 'timestamp'):
@@ -230,7 +242,7 @@ def get_metadata_(src, encoding=None):
             mi.tags = tags
 
     # IDENTIFIERS
-    for k,v in meta_tag_ids.items():
+    for k, v in meta_tag_ids.items():
         v = [x.strip() for x in v if x.strip()]
         if v:
             mi.set_identifier(k, v[0])
@@ -239,11 +251,21 @@ def get_metadata_(src, encoding=None):
 
 
 class MetadataHtmlTest(unittest.TestCase):
-
     def compare_metadata(self, meta_a, meta_b):
         for attr in (
-            'title', 'authors', 'publisher', 'isbn', 'languages', 'pubdate', 'timestamp', 'series',
-            'series_index', 'rating', 'comments', 'tags', 'identifiers'
+            'title',
+            'authors',
+            'publisher',
+            'isbn',
+            'languages',
+            'pubdate',
+            'timestamp',
+            'series',
+            'series_index',
+            'rating',
+            'comments',
+            'tags',
+            'identifiers',
         ):
             self.assertEqual(getattr(meta_a, attr), getattr(meta_b, attr))
 

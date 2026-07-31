@@ -1,5 +1,4 @@
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
 from qt.core import QAbstractItemView, QDialog, QSortFilterProxyModel, QStringListModel, Qt
 
@@ -9,10 +8,10 @@ from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.dialogs.tag_editor_ui import Ui_TagEditor
 from calibre.startup import connect_lambda
 from calibre.utils.icu import sort_key
+from calibre.utils.localization import _
 
 
 class TagEditor(QDialog, Ui_TagEditor):
-
     def __init__(self, window, db, id_=None, key=None, current_tags=None):
         QDialog.__init__(self, window)
         Ui_TagEditor.__init__(self)
@@ -36,17 +35,27 @@ class TagEditor(QDialog, Ui_TagEditor):
             self.setWindowTitle(self.windowTitle() + ': ' + db.field_metadata['tags']['name'])
 
         if self.sep == '&':
-            self.add_tag_input.setToolTip('<p>' +
-                        _('If the item you want is not in the available list, '
-                          'you can add it here. Accepts an ampersand-separated '
-                          'list of items. The items will be applied to '
-                          'the book.') + '</p>')
+            self.add_tag_input.setToolTip(
+                '<p>'
+                + _(
+                    'If the item you want is not in the available list, '
+                    'you can add it here. Accepts an ampersand-separated '
+                    'list of items. The items will be applied to '
+                    'the book.'
+                )
+                + '</p>'
+            )
         else:
-            self.add_tag_input.setToolTip('<p>' +
-                        _('If the item you want is not in the available list, '
-                          'you can add it here. Accepts a comma-separated '
-                          'list of items. The items will be applied to '
-                          'the book.') + '</p>')
+            self.add_tag_input.setToolTip(
+                '<p>'
+                + _(
+                    'If the item you want is not in the available list, '
+                    'you can add it here. Accepts a comma-separated '
+                    'list of items. The items will be applied to '
+                    'the book.'
+                )
+                + '</p>'
+            )
         self.key = key
         self.index = db.row(id_) if id_ is not None else None
         if self.index is not None:
@@ -117,32 +126,36 @@ class TagEditor(QDialog, Ui_TagEditor):
 
     def delete_tags(self):
         confirms, deletes = [], []
-        row_indices = list(self.available_tags.selectionModel().selectedRows())
+        _avail_sel_model = self.available_tags.selectionModel()
+        assert _avail_sel_model is not None
+        row_indices = list(_avail_sel_model.selectedRows())
 
         if not row_indices:
             error_dialog(self, _('No tags selected'), _('You must select at least one tag from the list of Available tags.')).exec()
             return
-        if not confirm(
-            _('Deleting tags is done immediately and there is no undo.'),
-            'tag_editor_delete'):
+        if not confirm(_('Deleting tags is done immediately and there is no undo.'), 'tag_editor_delete'):
             return
-        pos = self.available_tags.verticalScrollBar().value()
+        _avail_vsb = self.available_tags.verticalScrollBar()
+        assert _avail_vsb is not None
+        pos = _avail_vsb.value()
         for ri in row_indices:
             tag = ri.data()
-            used = self.db.is_tag_used(tag) \
-                if self.key is None else \
-                self.db.is_item_used_in_multiple(tag, label=self.key)
+            used = self.db.is_tag_used(tag) if self.key is None else self.db.is_item_used_in_multiple(tag, label=self.key)
             if used:
                 confirms.append(ri)
             else:
                 deletes.append(ri)
         if confirms:
             ct = ', '.join(item.data() for item in confirms)
-            if question_dialog(self, _('Are your sure?'),
-                '<p>'+_('The following tags are used by one or more books. '
-                    'Are you certain you want to delete them?')+'<br>'+ct):
+            if question_dialog(
+                self,
+                _('Are your sure?'),
+                '<p>' + _('The following tags are used by one or more books. Are you certain you want to delete them?') + '<br>' + ct,
+            ):
                 deletes += confirms
 
+        _avail_model = self.available_tags.model()
+        assert _avail_model is not None
         for item in sorted(deletes, key=lambda r: r.row(), reverse=True):
             tag = item.data()
             if self.key is None:
@@ -150,11 +163,13 @@ class TagEditor(QDialog, Ui_TagEditor):
             else:
                 bks = self.db.delete_item_from_multiple(tag, label=self.key)
                 self.db.refresh_ids(bks)
-            self.available_tags.model().removeRows(item.row(), 1)
-        self.available_tags.verticalScrollBar().setValue(pos)
+            _avail_model.removeRows(item.row(), 1)
+        _avail_vsb.setValue(pos)
 
     def apply_tags(self, item=None):
-        row_indices = list(self.available_tags.selectionModel().selectedRows())
+        _avail_sel_model2 = self.available_tags.selectionModel()
+        assert _avail_sel_model2 is not None
+        row_indices = list(_avail_sel_model2.selectedRows())
         row_indices.sort(key=lambda r: r.row(), reverse=True)
         if not row_indices:
             text = self.available_filter_input.text()
@@ -162,13 +177,17 @@ class TagEditor(QDialog, Ui_TagEditor):
                 self.add_tag_input.setText(text)
                 self.add_tag_input.setFocus(Qt.FocusReason.OtherFocusReason)
             return
-        pos = self.available_tags.verticalScrollBar().value()
+        _avail_vsb2 = self.available_tags.verticalScrollBar()
+        assert _avail_vsb2 is not None
+        pos = _avail_vsb2.value()
         tags = self._get_applied_tags_box_contents()
+        _avail_model2 = self.available_tags.model()
+        assert _avail_model2 is not None
         for item in row_indices:
             tag = item.data()
             tags.append(tag)
-            self.available_tags.model().removeRows(item.row(), 1)
-        self.available_tags.verticalScrollBar().setValue(pos)
+            _avail_model2.removeRows(item.row(), 1)
+        _avail_vsb2.setValue(pos)
 
         if not self.is_names:
             tags.sort(key=sort_key)
@@ -178,7 +197,9 @@ class TagEditor(QDialog, Ui_TagEditor):
         return list(self.applied_model.stringList())
 
     def unapply_tags(self, item=None):
-        row_indices = list(self.applied_tags.selectionModel().selectedRows())
+        _appl_sel_model = self.applied_tags.selectionModel()
+        assert _appl_sel_model is not None
+        row_indices = list(_appl_sel_model.selectedRows())
         tags = [r.data() for r in row_indices]
         row_indices.sort(key=lambda r: r.row(), reverse=True)
         for item in row_indices:
@@ -196,8 +217,13 @@ class TagEditor(QDialog, Ui_TagEditor):
             if not tag:
                 continue
             if self.all_tags_model.rowCount():
-                for index in self.all_tags_model.match(self.all_tags_model.index(0), Qt.ItemDataRole.DisplayRole, tag, -1,
-                                                    Qt.MatchFlag.MatchFixedString | Qt.MatchFlag.MatchCaseSensitive | Qt.MatchFlag.MatchWrap):
+                for index in self.all_tags_model.match(
+                    self.all_tags_model.index(0),
+                    Qt.ItemDataRole.DisplayRole,
+                    tag,
+                    -1,
+                    Qt.MatchFlag.MatchFixedString | Qt.MatchFlag.MatchCaseSensitive | Qt.MatchFlag.MatchWrap,
+                ):
                     self.all_tags_model.removeRow(index.row())
             if tag not in tags_in_box:
                 tags_in_box.append(tag)
@@ -229,6 +255,7 @@ class TagEditor(QDialog, Ui_TagEditor):
 if __name__ == '__main__':
     from calibre.gui2 import Application
     from calibre.library import db
+
     db = db()
     app = Application([])
     d = TagEditor(None, db, current_tags='a b c'.split())

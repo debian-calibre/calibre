@@ -11,7 +11,6 @@ from calibre.utils.localization import _
 
 
 class ResultsDelegate(QStyledItemDelegate):  # {{{
-
     add_ellipsis = True
     emphasize_text = True
     has_icons = False
@@ -31,7 +30,7 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
         try:
             p = option.palette
             c = QPalette.ColorRole.HighlightedText if option.state & QStyle.StateFlag.State_Selected else QPalette.ColorRole.Text
-            group = (QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else QPalette.ColorGroup.Inactive)
+            group = QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else QPalette.ColorGroup.Inactive
             c = p.color(group, c)
             painter.setPen(c)
             font = option.font
@@ -41,7 +40,12 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
             else:
                 emphasis_font = font
             flags = Qt.AlignmentFlag.AlignTop | Qt.TextFlag.TextSingleLine | Qt.TextFlag.TextIncludeTrailingSpaces
-            rect = option.rect.adjusted(option.decorationSize.width() + (6 if self.has_icons else 4) if self.has_icons or is_hidden else 0, 0, 0, 0)
+            rect = option.rect.adjusted(
+                option.decorationSize.width() + (6 if self.has_icons else 4) if self.has_icons or is_hidden else 0,
+                0,
+                0,
+                0,
+            )
             painter.setClipRect(rect)
             before = re.sub(r'\s+', ' ', result_before)
             if show_leading_dot:
@@ -65,13 +69,40 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
                 painter.drawText(rect, flags, text)
             else:
                 self.draw_match(
-                    painter, flags, before, text, after, rect, before_width, match_width, after_width, ellipsis_width, emphasis_font, font)
+                    painter,
+                    flags,
+                    before,
+                    text,
+                    after,
+                    rect,
+                    before_width,
+                    match_width,
+                    after_width,
+                    ellipsis_width,
+                    emphasis_font,
+                    font,
+                )
         except Exception:
             import traceback
+
             traceback.print_exc()
         painter.restore()
 
-    def draw_match(self, painter, flags, before, text, after, rect, before_width, match_width, after_width, ellipsis_width, emphasis_font, normal_font):
+    def draw_match(
+        self,
+        painter,
+        flags,
+        before,
+        text,
+        after,
+        rect,
+        before_width,
+        match_width,
+        after_width,
+        ellipsis_width,
+        emphasis_font,
+        normal_font,
+    ):
         extra_width = int(rect.width() - match_width)
         if before_width < after_width:
             left_width = min(extra_width // 2, before_width)
@@ -105,11 +136,11 @@ class ResultsDelegate(QStyledItemDelegate):  # {{{
             painter.setFont(normal_font)
             painter.drawText(r, flags, eafter)
 
+
 # }}}
 
 
 class SearchBox(HistoryComboBox):  # {{{
-
     history_saved = pyqtSignal(object, object)
     history_cleared = pyqtSignal()
     cleared = pyqtSignal()
@@ -117,9 +148,11 @@ class SearchBox(HistoryComboBox):  # {{{
     def __init__(self, parent=None):
         HistoryComboBox.__init__(self, parent, strip_completion_entries=False)
         self.suppress_history = False
-        self.lineEdit().setPlaceholderText(_('Search'))
-        self.lineEdit().setClearButtonEnabled(True)
-        ac = self.lineEdit().findChild(QAction, QT_HIDDEN_CLEAR_ACTION)
+        le = self.lineEdit()
+        assert le is not None
+        le.setPlaceholderText(_('Search'))
+        le.setClearButtonEnabled(True)
+        ac = le.findChild(QAction, QT_HIDDEN_CLEAR_ACTION)
         if ac is not None:
             ac.triggered.connect(self.cleared)
 
@@ -135,9 +168,14 @@ class SearchBox(HistoryComboBox):  # {{{
         super().clear_history()
         self.history_cleared.emit()
 
-    def contextMenuEvent(self, event):
-        menu = self.lineEdit().createStandardContextMenu()
+    def contextMenuEvent(self, e):
+        ctx_le = self.lineEdit()
+        assert ctx_le is not None
+        menu = ctx_le.createStandardContextMenu()
+        assert menu is not None
         menu.addSeparator()
         menu.addAction(_('Clear search history'), self.clear_history)
-        menu.exec(event.globalPos())
+        menu.exec(e.globalPos())
+
+
 # }}}

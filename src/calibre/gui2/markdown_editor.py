@@ -9,40 +9,40 @@ from calibre.gui2 import gprefs, safe_open_url
 from calibre.gui2.book_details import resolved_css
 from calibre.gui2.widgets2 import HTMLDisplay
 from calibre.library.comments import markdown as get_markdown
+from calibre.utils.localization import _
 
 
 class Preview(HTMLDisplay):
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setDefaultStyleSheet(resolved_css())
         self.setTabChangesFocus(True)
         self.base_url = None
 
-    def loadResource(self, rtype, qurl):
-        if self.base_url is not None and qurl.isRelative():
-            qurl = self.base_url.resolved(qurl)
-        return super().loadResource(rtype, qurl)
+    def loadResource(self, type, name):
+        if self.base_url is not None and name.isRelative():
+            name = self.base_url.resolved(name)
+        return super().loadResource(type, name)
 
 
 class MarkdownEdit(QPlainTextEdit):
-
     smarten_punctuation = pyqtSignal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
         from calibre.gui2.markdown_syntax_highlighter import MarkdownHighlighter
+
         self.highlighter = MarkdownHighlighter(self.document())
 
-    def contextMenuEvent(self, ev):
+    def contextMenuEvent(self, e):
         m = self.createStandardContextMenu()
+        assert m is not None
         m.addSeparator()
         m.addAction(_('Smarten punctuation'), self.smarten_punctuation.emit)
-        m.exec(ev.globalPos())
+        m.exec(e.globalPos())
 
 
 class MarkdownEditDialog(QDialog):
-
     def __init__(self, parent, text, column_name=None, base_url=None):
         QDialog.__init__(self, parent)
         self.setObjectName('MarkdownEditDialog')
@@ -57,7 +57,7 @@ class MarkdownEditDialog(QDialog):
         l.addWidget(bb)
         # Remove help icon on title bar
         icon = self.windowIcon()
-        self.setWindowFlags(self.windowFlags()&(~Qt.WindowType.WindowContextHelpButtonHint))
+        self.setWindowFlags(self.windowFlags() & (~Qt.WindowType.WindowContextHelpButtonHint))
         self.setWindowIcon(icon)
 
         self.textbox.markdown = text
@@ -78,9 +78,9 @@ class MarkdownEditDialog(QDialog):
         self.save_geometry(gprefs, 'markdown_edit_dialog_geom')
         QDialog.reject(self)
 
-    def closeEvent(self, ev):
+    def closeEvent(self, a0):
         self.save_geometry(gprefs, 'markdown_edit_dialog_geom')
-        return QDialog.closeEvent(self, ev)
+        return QDialog.closeEvent(self, a0)
 
     @property
     def text(self):
@@ -92,7 +92,6 @@ class MarkdownEditDialog(QDialog):
 
 
 class Editor(QWidget):  # {{{
-
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.base_url = None
@@ -112,7 +111,9 @@ class Editor(QWidget):  # {{{
         self.tabs.addTab(self.preview, _('&Preview'))
 
         self.tabs.currentChanged[int].connect(self.change_tab)
-        self.layout().setContentsMargins(0, 0, 0, 0)
+        _layout = self.layout()
+        assert _layout is not None
+        _layout.setContentsMargins(0, 0, 0, 0)
 
     def link_clicked(self, qurl):
         safe_open_url(qurl)
@@ -161,19 +162,24 @@ class Editor(QWidget):  # {{{
         self.editor.setReadOnly(bool(val))
 
     def hide_tabs(self):
-        self.tabs.tabBar().setVisible(False)
+        tab_bar = self.tabs.tabBar()
+        assert tab_bar is not None
+        tab_bar.setVisible(False)
 
     def smarten_punctuation(self):
         from calibre.ebooks.conversion.preprocess import smarten_punctuation
+
         markdown = self.markdown
         newmarkdown = smarten_punctuation(markdown)
         if markdown != newmarkdown:
             self.markdown = newmarkdown
-# }}}
 
+
+# }}}
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     w = Editor()
     w.set_base_url(QUrl.fromLocalFile(os.getcwd()))

@@ -37,16 +37,19 @@ from calibre.gui2.dialogs.show_category_note import Display
 from calibre.gui2.viewer.widgets import ResultsDelegate, SearchBox
 from calibre.gui2.widgets import BusyCursor
 from calibre.gui2.widgets2 import Dialog, FlowLayout
-from calibre.utils.localization import ngettext
+from calibre.utils.localization import _, ngettext
 
 
 def current_db() -> Cache:
     from calibre.gui2.ui import get_gui
-    return (getattr(current_db, 'ans', None) or get_gui().current_db).new_api
+
+    ans = getattr(current_db, 'ans', None)
+    if ans is not None:
+        return ans.new_api
+    return get_gui(fail_if_absent=True).current_db.new_api
 
 
 class NotesResultsDelegate(ResultsDelegate):
-
     add_ellipsis = True
     emphasize_text = False
 
@@ -69,10 +72,10 @@ class NotesResultsDelegate(ResultsDelegate):
 
 
 class ResultsList(QTreeWidget):
-
     current_result_changed = pyqtSignal(object)
     note_edited = pyqtSignal(object, object)
     export_requested = pyqtSignal()
+    delete_requested = pyqtSignal()
 
     def __init__(self, parent):
         QTreeWidget.__init__(self, parent)
@@ -94,7 +97,9 @@ class ResultsList(QTreeWidget):
         nd = current_db().notes_data_for(field, item_id)
         if nd:
             for category in (self.topLevelItem(i) for i in range(self.topLevelItemCount())):
+                assert category is not None
                 for item in (category.child(c) for c in range(category.childCount())):
+                    assert item is not None
                     r = item.data(0, Qt.ItemDataRole.UserRole)
                     if r['id'] == nd['id']:
                         r['text'] = nd['searchable_text']
@@ -165,18 +170,18 @@ class ResultsList(QTreeWidget):
             if d.exec() == QDialog.DialogCode.Accepted:
                 self.note_edited.emit(r['field'], r['item_id'])
 
-    def keyPressEvent(self, ev):
-        if ev.matches(QKeySequence.StandardKey.Delete):
+    def keyPressEvent(self, event):
+        if event.matches(QKeySequence.StandardKey.Delete):
             self.delete_requested.emit()
-            ev.accept()
+            event.accept()
             return
-        if ev.key() == Qt.Key.Key_F2:
+        if event.key() == Qt.Key.Key_F2:
             item = self.currentItem()
             if item:
                 self.edit_note(item)
-                ev.accept()
+                event.accept()
                 return
-        return QTreeWidget.keyPressEvent(self, ev)
+        return QTreeWidget.keyPressEvent(self, event)
 
     @property
     def tree_state(self):
@@ -185,6 +190,7 @@ class ResultsList(QTreeWidget):
         if item is not None:
             ans['current'] = item.data(0, Qt.ItemDataRole.UserRole)
         for item in (self.topLevelItem(i) for i in range(self.topLevelItemCount())):
+            assert item is not None
             if not item.isExpanded():
                 ans['closed'].add(item.data(0, Qt.ItemDataRole.UserRole))
         return ans
@@ -193,6 +199,7 @@ class ResultsList(QTreeWidget):
     def tree_state(self, state):
         closed = state['closed']
         for item in (self.topLevelItem(i) for i in range(self.topLevelItemCount())):
+            assert item is not None
             if item.data(0, Qt.ItemDataRole.UserRole) in closed:
                 item.setExpanded(False)
 
@@ -211,13 +218,17 @@ class ResultsList(QTreeWidget):
         self.fi_map = {}
         db = current_db()
         fm = db.field_metadata
-        field_map = {f: {'title': fm[f].get('name') or f, 'matches': []} for f in db.field_supports_notes()}
+        fields_with_notes = db.field_supports_notes()
+        assert not isinstance(fields_with_notes, bool)
+        field_map = {f: {'title': fm[f].get('name') or f, 'matches': []} for f in fields_with_notes}
         for result in results:
             field_map[result['field']]['matches'].append(result)
         for field, entry in field_map.items():
             if not entry['matches']:
                 continue
-            section = QTreeWidgetItem([entry['title']], 1)
+            title = entry['title']
+            assert isinstance(title, str)
+            section = QTreeWidgetItem([title], 1)
             section.setFlags(Qt.ItemFlag.ItemIsEnabled)
             section.setFont(0, self.section_font)
             section.setData(0, Qt.ItemDataRole.UserRole, field)
@@ -239,7 +250,6 @@ class ResultsList(QTreeWidget):
 
 
 class RestrictFields(QWidget):
-
     restriction_changed = pyqtSignal()
 
     def __init__(self, parent=None):
@@ -250,13 +260,21 @@ class RestrictFields(QWidget):
         self.restricted_fields = []
         self.add_button = b = QToolButton(self)
         b.setToolTip(_('Add categories to which to restrict results.\nWhen no categories are specified no restriction is in effect'))
-        b.setIcon(QIcon.ic('plus.png')), b.setText(_('Add')), b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        (
+            b.setIcon(QIcon.ic('plus.png')),
+            b.setText(_('Add')),
+            b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon),
+        )
         b.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
         self.fields_menu = m = QMenu()
         b.setMenu(m)
         m.aboutToShow.connect(self.build_add_menu)
         self.remove_button = b = QToolButton(self)
-        b.setIcon(QIcon.ic('minus.png')), b.setText(_('Remove')), b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        (
+            b.setIcon(QIcon.ic('minus.png')),
+            b.setText(_('Remove')),
+            b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon),
+        )
         b.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
         self.remove_fields_menu = m = QMenu()
         b.setMenu(m)
@@ -264,10 +282,14 @@ class RestrictFields(QWidget):
 
         db = current_db()
         fm = db.field_metadata
+
         def field_name(field):
             return fm[field].get('name') or field
-        self.field_names = {f:field_name(f) for f in db.field_supports_notes()}
-        self.field_labels = {f: QLabel(self.field_names[f], self) for f in sorted(self.field_names, key=self.field_names.get)}
+
+        _fsn = db.field_supports_notes()
+        assert not isinstance(_fsn, bool)
+        self.field_names = {f: field_name(f) for f in _fsn}
+        self.field_labels = {f: QLabel(self.field_names[f], self) for f in sorted(self.field_names, key=self.field_names.__getitem__)}
         for l in self.field_labels.values():
             l.setVisible(False)
 
@@ -314,7 +336,6 @@ class RestrictFields(QWidget):
 
 
 class SearchInput(QWidget):
-
     show_next_signal = pyqtSignal()
     show_previous_signal = pyqtSignal()
     search_changed = pyqtSignal()
@@ -328,8 +349,10 @@ class SearchInput(QWidget):
         self.search_box = sb = SearchBox(self)
         sb.initialize('library-notes-browser-search-box')
         sb.cleared.connect(self.cleared, type=Qt.ConnectionType.QueuedConnection)
-        sb.lineEdit().returnPressed.connect(self.search_changed)
-        sb.lineEdit().setPlaceholderText(_('Enter words to search for'))
+        sb_le = sb.lineEdit()
+        assert sb_le is not None
+        sb_le.returnPressed.connect(self.search_changed)
+        sb_le.setPlaceholderText(_('Enter words to search for'))
         h.addWidget(sb)
 
         self.next_button = nb = QToolButton(self)
@@ -352,10 +375,14 @@ class SearchInput(QWidget):
 
     @property
     def current_query(self):
+        sb_le = self.search_box.lineEdit()
+        assert sb_le is not None
+        _cq_p = self.parent()
+        assert isinstance(_cq_p, NotesBrowser)
         return {
-            'fts_engine_query': self.search_box.lineEdit().text().strip(),
+            'fts_engine_query': sb_le.text().strip(),
             'restrict_to_fields': tuple(self.restrict.restricted_fields),
-            'use_stemming': bool(self.parent().use_stemmer.isChecked()),
+            'use_stemming': bool(_cq_p.use_stemmer.isChecked()),
         }
 
     def cleared(self):
@@ -369,7 +396,6 @@ class SearchInput(QWidget):
 
 
 class NoteDisplay(QWidget):
-
     field = item_id = None
     edit_requested = pyqtSignal(str, int)
 
@@ -425,7 +451,6 @@ class NoteDisplay(QWidget):
 
 
 class NotesBrowser(Dialog):
-
     current_query = None
 
     def __init__(self, parent=None):
@@ -460,22 +485,29 @@ class NotesBrowser(Dialog):
 
         self.use_stemmer = us = QCheckBox(_('&Match on related words'))
         us.setChecked(gprefs['browse_notes_use_stemmer'])
-        us.setToolTip('<p>' + _(
-            'With this option searching for words will also match on any related words (supported in several languages). For'
-            ' example, in the English language: <i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well'))
+        us.setToolTip(
+            '<p>'
+            + _(
+                'With this option searching for words will also match on any related words (supported in several languages). For'
+                ' example, in the English language: <i>correction</i> matches <i>correcting</i> and <i>corrected</i> as well'
+            )
+        )
         us.stateChanged.connect(lambda state: gprefs.set('browse_notes_use_stemmer', state != Qt.CheckState.Unchecked.value))
 
         h = QHBoxLayout()
         l.addLayout(h)
         b = self.bb.addButton(_('Export'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setIcon(QIcon.ic('save.png'))
         b.clicked.connect(self.export_selected)
         b.setToolTip(_('Export the selected notes as HTML files'))
         h.addWidget(us), h.addStretch(10), h.addWidget(self.bb)
         from calibre.gui2.ui import get_gui
+
         gui = get_gui()
         if gui is not None:
             b = self.bb.addButton(_('Search books'), QDialogButtonBox.ButtonRole.ActionRole)
+            assert b is not None
             b.setToolTip(_('Search the calibre library for books in the currently selected categories'))
             b.clicked.connect(self.search_books)
             b.setIcon(QIcon.ic('search.png'))
@@ -491,15 +523,18 @@ class NotesBrowser(Dialog):
         if vals:
             search_expression = ' OR '.join(f'{r["field"]}:"={ival}"' for ival in vals)
             from calibre.gui2.ui import get_gui
-            get_gui().search.set_search_string(search_expression)
+
+            get_gui(fail_if_absent=True).search.set_search_string(search_expression)
 
     def export_selected(self):
         results = tuple(self.results_list.selected_results())
         if not results:
-            return error_dialog(self, _('No results selected'), _(
-                'No results selected, nothing to export'), show=True)
-        path = choose_dir(self, 'export-notes-dir', ngettext(
-            'Choose folder for exported note', 'Choose folder for {} exported notes', len(results)).format(len(results)))
+            return error_dialog(self, _('No results selected'), _('No results selected, nothing to export'), show=True)
+        path = choose_dir(
+            self,
+            'export-notes-dir',
+            ngettext('Choose folder for exported note', 'Choose folder for {} exported notes', len(results)).format(len(results)),
+        )
         if not path:
             return
         with BusyCursor():
@@ -514,6 +549,7 @@ class NotesBrowser(Dialog):
 
     def note_edited(self, field, item_id):
         from calibre.gui2.ui import get_gui
+
         self.notes_display.refresh()
         self.results_list.update_item(field, item_id)
         gui = get_gui()
@@ -531,30 +567,35 @@ class NotesBrowser(Dialog):
             return
         try:
             with BusyCursor():
-                results = current_db().search_notes(
-                    highlight_start='\x1d', highlight_end='\x1d', snippet_size=64, **q
-                )
+                results = current_db().search_notes(highlight_start='\x1d', highlight_end='\x1d', snippet_size=64, **q)
                 self.results_list.set_results(results, bool(q['fts_engine_query']))
                 self.current_query = q
         except FTSQueryError as err:
-            return error_dialog(self, _('Invalid search expression'), '<p>' + _(
-                'The search expression: {0} is invalid. The search syntax used is the'
-                ' SQLite Full text Search Query syntax, <a href="{1}">described here</a>.').format(
-                    err.query, 'https://www.sqlite.org/fts5.html#full_text_query_syntax'),
-                det_msg=str(err), show=True)
+            return error_dialog(
+                self,
+                _('Invalid search expression'),
+                '<p>'
+                + _(
+                    'The search expression: {0} is invalid. The search syntax used is the'
+                    ' SQLite Full text Search Query syntax, <a href="{1}">described here</a>.'
+                ).format(err.query, 'https://www.sqlite.org/fts5.html#full_text_query_syntax'),
+                det_msg=str(err),
+                show=True,
+            )
 
-    def keyPressEvent(self, ev):
-        k = ev.key()
+    def keyPressEvent(self, a0):
+        k = a0.key()
         if k in (Qt.Key.Key_Enter, Qt.Key.Key_Return):  # prevent enter from closing dialog
-            ev.ignore()
+            a0.ignore()
             return
-        return super().keyPressEvent(ev)
+        return super().keyPressEvent(a0)
 
 
 if __name__ == '__main__':
     from calibre.library import db
+
     app = Application([])
-    current_db.ans = db(os.path.expanduser('~/test library'))
+    setattr(current_db, 'ans', db(os.path.expanduser('~/test library')))
     br = NotesBrowser()
     br.exec()
     del br

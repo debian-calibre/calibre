@@ -5,14 +5,14 @@ import os
 from contextlib import suppress
 from enum import Enum, auto
 from functools import lru_cache
-from typing import Literal, NamedTuple
+from typing import Any, Literal, NamedTuple
 
 from qt.core import QApplication, QLocale, QObject, QTextToSpeech, QVoice, QWidget, pyqtSignal
 
 from calibre.constants import islinux, ismacos, iswindows
 from calibre.utils.config import JSONConfig
 from calibre.utils.config_base import tweaks
-from calibre.utils.localization import canonicalize_lang
+from calibre.utils.localization import _, canonicalize_lang
 
 CONFIG_NAME = 'tts'
 TTS_EMBEDED_CONFIG = 'tts-embedded'
@@ -28,9 +28,9 @@ def load_config(config_name=CONFIG_NAME) -> JSONConfig:
 
 
 class TrackingCapability(Enum):
-    NoTracking: int = auto()
-    WordByWord: int = auto()
-    Sentence: int = auto()
+    NoTracking = auto()
+    WordByWord = auto()
+    Sentence = auto()
 
 
 class EngineMetadata(NamedTuple):
@@ -49,10 +49,10 @@ class EngineMetadata(NamedTuple):
 
 
 class Quality(Enum):
-    High: int = auto()
-    Medium: int = auto()
-    Low: int = auto()
-    ExtraLow: int = auto()
+    High = auto()
+    Medium = auto()
+    Low = auto()
+    ExtraLow = auto()
 
     @classmethod
     def from_piper_quality(self, x: str) -> Quality:
@@ -80,7 +80,7 @@ class Voice(NamedTuple):
     age: QVoice.Age = QVoice.Age.Other
     quality: Quality = Quality.High
 
-    engine_data: dict[str, str] | None = None
+    engine_data: dict[str, str | bool] | None = None
 
     @property
     def basic_name(self) -> str:
@@ -105,11 +105,11 @@ class Voice(NamedTuple):
             ans.append(_('Gender: {}').format(QVoice.genderName(self.gender)))
         return '\n'.join(ans)
 
-    def sort_key(self) -> tuple[Quality, str]:
+    def sort_key(self) -> tuple[int, str]:
         return (self.quality.value, self.basic_name.lower())
 
 
-def qvoice_to_voice(v: QVoice) -> QVoice:
+def qvoice_to_voice(v: QVoice) -> Voice:
     lang = canonicalize_lang(QLocale.languageToCode(v.language())) or 'und'
     country = QLocale.territoryToString(v.locale().territory())
     return Voice(v.name(), lang, country, gender=v.gender(), age=v.age())
@@ -132,7 +132,7 @@ class EngineSpecificSettings(NamedTuple):
     preferred_voices: dict[str, str] | None = None
 
     @classmethod
-    def create_from_prefs(cls, engine_name: str, prefs: dict[str, object] | None = None) -> EngineSpecificSettings:
+    def create_from_prefs(cls, engine_name: str, prefs: dict[str, Any] | None = None) -> EngineSpecificSettings:
         prefs = prefs or {}
         adev = prefs.get('audio_device_id')
         audio_device_id = None
@@ -143,22 +143,32 @@ class EngineSpecificSettings(NamedTuple):
                 audio_device_id = AudioDeviceId(aid, description)
         rate = 0
         with suppress(Exception):
-            rate = max(-1, min(float(prefs.get('rate')), 1))
+            rate = max(-1, min(float(prefs.get('rate', 0)), 1))
         pitch = 0
         with suppress(Exception):
-            pitch = max(-1, min(float(prefs.get('pitch')), 1))
-        volume = None
+            pitch = max(-1, min(float(prefs.get('pitch', 0)), 1))
+        volume: float | None = None
         with suppress(Exception):
-            volume = max(0, min(float(prefs.get('volume')), 1))
+            sv = prefs.get('volume')
+            if sv is not None:
+                volume = max(0, min(float(sv), 1))
         om = str(prefs.get('output_module', ''))
-        sentence_delay = 0.
+        sentence_delay = 0.0
         with suppress(Exception):
-            sentence_delay = max(0, float(prefs.get('sentence_delay')))
+            sentence_delay = max(0, float(prefs.get('sentence_delay', 0)))
         with suppress(Exception):
             preferred_voices = prefs.get('preferred_voices')
         return EngineSpecificSettings(
-            voice_name=str(prefs.get('voice', '')), output_module=om, sentence_delay=sentence_delay, preferred_voices=preferred_voices,
-            audio_device_id=audio_device_id, rate=rate, pitch=pitch, volume=volume, engine_name=engine_name)
+            voice_name=str(prefs.get('voice', '')),
+            output_module=om,
+            sentence_delay=sentence_delay,
+            preferred_voices=preferred_voices,
+            audio_device_id=audio_device_id,
+            rate=rate,
+            pitch=pitch,
+            volume=volume,
+            engine_name=engine_name,
+        )
 
     @classmethod
     def create_from_config(cls, engine_name: str, config_name: str = CONFIG_NAME) -> EngineSpecificSettings:
@@ -170,7 +180,10 @@ class EngineSpecificSettings(NamedTuple):
     def as_dict(self) -> dict[str, object]:
         ans = {}
         if self.audio_device_id:
-            ans['audio_device_id'] = {'id': self.audio_device_id.id.hex(), 'description': self.audio_device_id.description}
+            ans['audio_device_id'] = {
+                'id': self.audio_device_id.id.hex(),
+                'description': self.audio_device_id.description,
+            }
         if self.voice_name:
             ans['voice'] = self.voice_name
         if self.rate:
@@ -187,7 +200,7 @@ class EngineSpecificSettings(NamedTuple):
             ans['preferred_voices'] = self.preferred_voices
         return ans
 
-    def save_to_config(self, prefs:JSONConfig | None = None, config_name: str = CONFIG_NAME):
+    def save_to_config(self, prefs: JSONConfig | None = None, config_name: str = CONFIG_NAME):
         prefs = load_config(config_name) if prefs is None else prefs
         val = self.as_dict
         engines = prefs.get('engines', {})
@@ -203,62 +216,93 @@ def available_engines() -> dict[str, EngineMetadata]:
     ans = {}
     e = QTextToSpeech()
 
-    def qt_engine_metadata(name: str, human_name: str, desc: str, allows_choosing_audio_device: bool = False) -> EngineMetadata:
+    def qt_engine_metadata(
+        name: Literal['winrt', 'darwin', 'sapi', 'flite', 'speechd', 'piper'],
+        human_name: str,
+        desc: str,
+        allows_choosing_audio_device: bool = False,
+    ) -> EngineMetadata:
         e.setEngine(name)
         cap = int(e.engineCapabilities().value)
-        return EngineMetadata(name, human_name, desc,
-            tracking_capability=TrackingCapability.WordByWord if cap & int(
-                QTextToSpeech.Capability.WordByWordProgress.value) else TrackingCapability.NoTracking,
+        return EngineMetadata(
+            name,
+            human_name,
+            desc,
+            tracking_capability=TrackingCapability.WordByWord
+            if cap & int(QTextToSpeech.Capability.WordByWordProgress.value)
+            else TrackingCapability.NoTracking,
             allows_choosing_audio_device=allows_choosing_audio_device,
-            can_synthesize_audio_data=bool(cap & int(QTextToSpeech.Capability.Synthesize.value)))
+            can_synthesize_audio_data=bool(cap & int(QTextToSpeech.Capability.Synthesize.value)),
+        )
 
     for x in QTextToSpeech.availableEngines():
         if x == 'winrt':
-            ans[x] = qt_engine_metadata(x, _('Modern Windows Engine'), _(
-                'The "winrt" engine can track the currently spoken word on screen. Additional voices for it are available from Microsoft.'
-                ), True)
+            ans[x] = qt_engine_metadata(
+                x,
+                _('Modern Windows Engine'),
+                _('The "winrt" engine can track the currently spoken word on screen. Additional voices for it are available from Microsoft.'),
+                True,
+            )
         elif x == 'darwin':
-            ans[x] = qt_engine_metadata(x, _('macOS Engine'), _(
-                'The "darwin" engine can track the currently spoken word on screen. Additional voices for it are available from Apple.'
-            ))
+            ans[x] = qt_engine_metadata(
+                x,
+                _('macOS Engine'),
+                _('The "darwin" engine can track the currently spoken word on screen. Additional voices for it are available from Apple.'),
+            )
         elif x == 'sapi':
-            ans[x] = qt_engine_metadata(x, _('Legacy Windows Engine'), _(
-                'The "sapi" engine can track the currently spoken word on screen. It is no longer supported by Microsoft.'
-            ))
+            ans[x] = qt_engine_metadata(
+                x,
+                _('Legacy Windows Engine'),
+                _('The "sapi" engine can track the currently spoken word on screen. It is no longer supported by Microsoft.'),
+            )
         elif x == 'macos':
             # this is slated for removal in Qt 6.8 so skip it
             continue
         elif x == 'flite':
-            ans[x] = qt_engine_metadata(x, _('The "flite" Engine'), _(
-                'The "flite" engine can track the currently spoken word on screen.'
-            ), True)
+            ans[x] = qt_engine_metadata(x, _('The "flite" Engine'), _('The "flite" engine can track the currently spoken word on screen.'), True)
         elif x == 'speechd':
             continue
 
     try:
         import calibre_extensions.piper as check_that_piper_imports
+
         del check_that_piper_imports
     except ImportError:
         pass
     else:
-        ans['piper'] = EngineMetadata('piper', _('The Piper Neural Engine'), _(
-            'The "piper" engine can track the currently spoken sentence on screen. It uses a neural network '
-            'for natural sounding voices. The neural network is run locally on your computer, it is fairly resource intensive to run.'
-        ), TrackingCapability.Sentence, can_change_pitch=False, voices_have_quality_metadata=True, has_managed_voices=True,
-        has_sentence_delay=True)
+        ans['piper'] = EngineMetadata(
+            'piper',
+            _('The Piper Neural Engine'),
+            _(
+                'The "piper" engine can track the currently spoken sentence on screen. It uses a neural network '
+                'for natural sounding voices. The neural network is run locally on your computer, it is fairly resource intensive to run.'
+            ),
+            TrackingCapability.Sentence,
+            can_change_pitch=False,
+            voices_have_quality_metadata=True,
+            has_managed_voices=True,
+            has_sentence_delay=True,
+        )
 
     if islinux:
         try:
-            from speechd.paths import SPD_SPAWN_CMD
+            from speechd.paths import SPD_SPAWN_CMD  # type: ignore
         except ImportError:
             pass
         else:
             cmd = os.getenv('SPEECHD_CMD', SPD_SPAWN_CMD)
             if cmd and os.access(cmd, os.X_OK) and os.path.isfile(cmd):
-                ans['speechd'] = EngineMetadata('speechd', _('The Speech Dispatcher Engine'), _(
-                    'The "speechd" engine can usually track the currently spoken word on screen, however, it depends on the'
-                    ' underlying output module. The default espeak output module does support it.'
-                ), TrackingCapability.WordByWord, allows_choosing_audio_device=False, has_multiple_output_modules=True)
+                ans['speechd'] = EngineMetadata(
+                    'speechd',
+                    _('The Speech Dispatcher Engine'),
+                    _(
+                        'The "speechd" engine can usually track the currently spoken word on screen, however, it depends on the'
+                        ' underlying output module. The default espeak output module does support it.'
+                    ),
+                    TrackingCapability.WordByWord,
+                    allows_choosing_audio_device=False,
+                    has_multiple_output_modules=True,
+                )
 
     return ans
 
@@ -276,9 +320,10 @@ def default_engine_name() -> str:
 
 
 def widget_parent(p: QObject) -> QWidget | None:
-    while p is not None and not isinstance(p, QWidget):
-        p = p.parent()
-    return p
+    q: QObject | None = p
+    while q is not None and not isinstance(q, QWidget):
+        q = q.parent()
+    return q if isinstance(q, QWidget) else None
 
 
 class TTSBackend(QObject):
@@ -289,7 +334,7 @@ class TTSBackend(QObject):
     default_output_module: str = ''
     filler_char: str = ' '
 
-    def __init__(self, engine_name: str = '', parent: QObject|None = None):
+    def __init__(self, engine_name: str = '', parent: QObject | None = None):
         super().__init__(parent)
 
     def pause(self) -> None:
@@ -308,6 +353,9 @@ class TTSBackend(QObject):
         raise NotImplementedError()
 
     def reload_after_configure(self) -> None:
+        raise NotImplementedError()
+
+    def _qt_reload_after_configure(self, engine_name: str) -> None:
         raise NotImplementedError()
 
     def validate_settings(self, s: EngineSpecificSettings, parent: QWidget | None) -> bool:
@@ -342,17 +390,20 @@ def create_tts_backend(force_engine: str = '', config_name: str = CONFIG_NAME) -
     if engine_name == 'piper':
         if engine_name not in engine_instances:
             from calibre.gui2.tts.piper import Piper
+
             engine_instances[engine_name] = Piper(engine_name, QApplication.instance())
         ans = engine_instances[engine_name]
     elif engine_name == 'speechd':
         if engine_name not in engine_instances:
             from calibre.gui2.tts.speechd import SpeechdTTSBackend
+
             engine_instances[engine_name] = SpeechdTTSBackend(engine_name, QApplication.instance())
         ans = engine_instances[engine_name]
     else:
         if 'qt' not in engine_instances:
             # Bad things happen with more than one QTextToSpeech instance
             from calibre.gui2.tts.qt import QtTTSBackend
+
             engine_instances['qt'] = QtTTSBackend(engine_name if engine_name in available_engines() else '', QApplication.instance())
         ans = engine_instances['qt']
         if ans.engine_name != engine_name:

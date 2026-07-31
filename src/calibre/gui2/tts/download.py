@@ -25,11 +25,10 @@ from qt.core import (
 
 from calibre import human_readable
 from calibre.gui2 import error_dialog
-from calibre.utils.localization import ngettext
+from calibre.utils.localization import _, ngettext
 
 
 class ProgressBar(QWidget):
-
     done = pyqtSignal(str)
 
     def __init__(self, qurl: QUrl, path: str, nam: QNetworkAccessManager, text: str, parent: QWidget | None):
@@ -48,10 +47,14 @@ class ProgressBar(QWidget):
         self.file_obj = tempfile.NamedTemporaryFile('wb', dir=os.path.dirname(self.path), delete=False)
         req = QNetworkRequest(qurl)
         fi = QFileInfo(self.path)
-        if fi.exists():
-            req.setHeader(QNetworkRequest.KnownHeaders.IfModifiedSinceHeader, fi.lastModified(QTimeZone(QTimeZone.Initialization.UTC)))
+        if fi.exists():  # type: ignore
+            req.setHeader(
+                QNetworkRequest.KnownHeaders.IfModifiedSinceHeader,
+                fi.lastModified(QTimeZone(QTimeZone.Initialization.UTC)),
+            )
 
         self.reply = reply = nam.get(req)
+        assert reply is not None
         self.over_reported = False
         reply.downloadProgress.connect(self.on_download)
         reply.errorOccurred.connect(self.on_error)
@@ -60,12 +63,16 @@ class ProgressBar(QWidget):
 
     def data_received(self):
         try:
-            self.file_obj.write(self.reply.readAll())
+            reply = self.reply
+            assert reply is not None
+            self.file_obj.write(reply.readAll())
         except Exception as e:
             self.on_over(_('Failed to write downloaded data with error: {}').format(e))
 
     def on_error(self, ec: QNetworkReply.NetworkError) -> None:
-        self.on_over(_('Failed to write downloaded data with error: {}').format(self.reply.errorString()))
+        reply = self.reply
+        assert reply is not None
+        self.on_over(_('Failed to write downloaded data with error: {}').format(reply.errorString()))
 
     def on_over(self, err_msg: str = '') -> None:
         if self.over_reported:
@@ -77,7 +84,9 @@ class ProgressBar(QWidget):
             with suppress(OSError):
                 os.remove(self.file_obj.name)
         else:
-            code = self.reply.attribute(QNetworkRequest.Attribute.HttpStatusCodeAttribute)
+            reply = self.reply
+            assert reply is not None
+            code = reply.attribute(QNetworkRequest.Attribute.HttpStatusCodeAttribute)
             if code == 200:
                 os.replace(self.file_obj.name, self.path)
             else:
@@ -103,7 +112,6 @@ class ProgressBar(QWidget):
 
 
 class DownloadResources(QDialog):
-
     def __init__(self, title: str, message: str, urls: dict[str, tuple[str, str]], parent: QWidget | None = None):
         super().__init__(parent)
         self.setWindowTitle(title)
@@ -115,7 +123,7 @@ class DownloadResources(QDialog):
         sa.setWidgetResizable(True)
         l.addWidget(sa)
         self.central = central = QWidget(sa)
-        central.l = QVBoxLayout(central)
+        central_l = QVBoxLayout(central)
         sa.setWidget(central)
 
         self.todo = set()
@@ -127,10 +135,10 @@ class DownloadResources(QDialog):
             self.todo.add(qurl)
             pb = ProgressBar(qurl, path, nam, desc, self)
             pb.done.connect(self.on_done, type=Qt.ConnectionType.QueuedConnection)
-            central.l.addWidget(pb)
+            central_l.addWidget(pb)
             self.bars.append(pb)
 
-        self.bb = bb = QDialogButtonBox(QDialogButtonBox.Cancel, self)
+        self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel, self)
         bb.rejected.connect(self.reject)
         l.addWidget(bb)
         sz = self.sizeHint()
@@ -139,6 +147,8 @@ class DownloadResources(QDialog):
 
     def on_done(self, err_msg: str):
         pb = self.sender()
+        assert pb is not None
+        assert isinstance(pb, ProgressBar)
         self.todo.discard(pb.qurl)
         if err_msg:
             self.failures.append(_('Failed to download {0} with error: {1}').format(pb.desc, err_msg))
@@ -149,8 +159,12 @@ class DownloadResources(QDialog):
                 else:
                     msg = _('Could not download some resources.')
                 error_dialog(
-                        self, _('Download failed'), msg + ' ' + _('Click "Show details" for more information'),
-                        det_msg='\n\n'.join(self.failures), show=True)
+                    self,
+                    _('Download failed'),
+                    msg + ' ' + _('Click "Show details" for more information'),
+                    det_msg='\n\n'.join(self.failures),
+                    show=True,
+                )
                 self.reject()
             else:
                 self.accept()
@@ -158,17 +172,18 @@ class DownloadResources(QDialog):
     def reject(self):
         for pb in self.bars:
             pb.blockSignals(True)
-            pb.reply.abort()
+            pb_reply = pb.reply
+            assert pb_reply is not None
+            pb_reply.abort()
         super().reject()
 
 
-def download_resources(
-    title: str, message: str, urls: dict[str, tuple[str, str]], parent: QWidget | None = None, headless: bool = False
-) -> bool:
+def download_resources(title: str, message: str, urls: dict[str, tuple[str, str]], parent: QWidget | None = None, headless: bool = False) -> bool:
     if not headless:
         d = DownloadResources(title, message, urls, parent=parent)
         return d.exec() == QDialog.DialogCode.Accepted
     from calibre import browser
+
     print(title)
     print(message)
     br = browser()
@@ -182,12 +197,17 @@ def download_resources(
 
 def develop():
     from calibre.gui2 import Application
+
     app = Application([])
     urls = {
         'https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx': (
-            '/tmp/model', 'Voice neural network'),
+            '/tmp/model',
+            'Voice neural network',
+        ),
         'https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/lessac/medium/en_US-lessac-medium.onnx.json': (
-            '/tmp/config', 'Voice configuration'),
+            '/tmp/config',
+            'Voice configuration',
+        ),
     }
     d = DownloadResources('Test download resources', 'Downloading voice data', urls)
     d.exec()

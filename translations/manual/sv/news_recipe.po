@@ -3,20 +3,22 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018,2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Karl Jonatan Nyberg, 2016-2017,2021-2024
-# Karl Jonatan Nyberg, 2018-2021
+# Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2016-2017,2021-2024,2026
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2026\n"
+"Last-Translator: efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018,2020\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +57,7 @@ msgid ""
 "Perform some processing on image urls (perhaps removing size restrictions "
 "for dynamically generated images, etc.) and return the processed URL. Return"
 " None or an empty string to skip fetching the image."
-msgstr "Utför en del bearbetning av bildwebbadresser (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder etc.) och returnera den bearbetade webbadressen. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
+msgstr "Utför en del bearbetning av bild-URL:er (kanske ta bort storleksbegränsningar för dynamiskt genererade bilder etc.) och returnera den bearbetade URL:en. Returnera None eller en tom sträng för att hoppa över att hämta bilden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.print_version:1
@@ -72,7 +74,7 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
 "extract the text from it recursively, including any CDATA sections and alt "
 "tag attributes. Return a possibly empty Unicode string."
-msgstr "Bekväm metod som använder en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tagga` och extrahera texten från den rekursivt, inklusive godtyckliga CDATA-avsnitt och alt-tagg-attribut. Returnera en eventuellt tom Unicode-sträng."
+msgstr "Bekväm metod som tar en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_-:code:`Tag` och rekursivt extraherar texten ur den, inklusive eventuella CDATA-avsnitt och alt-attribut. Returnerar en Unicode-sträng som kan vara tom."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
@@ -178,7 +180,7 @@ msgid ""
 "Extracts main article content from 'html', cleans up and returns as a "
 "(article_html, extracted_title) tuple. Based on the original readability "
 "algorithm by Arc90."
-msgstr "Extraherar huvudartikelinnehållet från 'html', rensas upp och returneras som en (artikel_html, extraherad_titel) tupel. Baserat på den ursprungliga läsbarhetsalgoritmen från Arc90."
+msgstr "Extraherar artikelns huvudinnehåll från 'html', rensar det och returnerar en tupel av formen (article_html, extracted_title). Bygger på Arc90:s ursprungliga Readability-algoritm."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_article_url:1
@@ -190,7 +192,7 @@ msgid ""
 "for the original link (for feeds syndicated via a service like FeedBurner or"
 " Pheedo) and if found, returns that or else returns `article.link "
 "<https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
-msgstr "Åsidosätt i en underklass för att anpassa extraheringen av :term:`URL` som hänvisar till innehållet för varje artikel. Returnera artikelwebbadressen. Den anropas med `article`, ett objekt som representerar en analyserad artikel från ett flöde. Se `feedparser <https://pythonhosted.org/feedparser/>`_. Normalt söker den efter den ursprungliga länken (till flöde syndikerade via en tjänst som FeedBurner eller Pheedo) och om den hittas, returnerar detta eller annars returneras `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
+msgstr "Åsidosätt i en underklass för att anpassa extraheringen av :term:`URL` som hänvisar till innehållet för varje artikel. Returnera artikelns URL. Den anropas med `article`, ett objekt som representerar en analyserad artikel från ett flöde. Se `feedparser <https://pythonhosted.org/feedparser/>`_. Normalt söker den efter den ursprungliga länken (för flöden som syndikeras via en tjänst som FeedBurner eller Pheedo) och om den hittas returneras den; annars returneras `article.link <https://pythonhosted.org/feedparser/reference-entry-link.html>`_."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:1
@@ -214,7 +216,7 @@ msgid ""
 "`None`. If you want your recipe to download a cover for the e-book override "
 "this method in your subclass, or set the member variable `self.cover_url` "
 "before this method is called."
-msgstr "Returnera en :term:`URL` till omslagsbild för den här utgåvan eller `None`. Som standard returneras värdet av elementet `self.cover_url` som normalt är `None`. Om du vill att ditt recept för att hämtar ett omslag för e-boken åsidosätter den här metoden i din underklass, eller ställa medlemsvariabeln `self.cover_url` innan denna metod anropas."
+msgstr "Returnera en :term:`URL` till omslagsbilden för det här numret eller `None`. Som standard returneras värdet i `self.cover_url`, som normalt är `None`. Om receptet ska hämta ett omslag till e-boken åsidosätter du metoden i underklassen eller anger medlemsvariabeln `self.cover_url` innan metoden anropas."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_extra_css:1
@@ -231,7 +233,7 @@ msgid ""
 "None or an empty string, the title from the feed is used. This method is "
 "useful if your recipe needs to do some processing to figure out the list of "
 "feeds to download. If so, override in your subclass."
-msgstr "Returnera en lista med :term:`RSS`-flöden att hämta för den här profilen. Varje element i listan måste vara ett 2-elements tupel av formen (titel, url). Om titeln är None eller en tom sträng, används titeln från flödet. Denna metod är användbar om du receptet behöver göra en del bearbetning för att räkna ut lista med inlägg för att hämtar. Om så är fallet, åsidosätt i din underklass."
+msgstr "Returnera en lista över :term:`RSS`-flöden som ska hämtas för den här profilen. Varje element i listan måste vara en tupel med två element i formen (title, url). Om title är None eller en tom sträng används flödets titel. Metoden är användbar om receptet behöver bearbeta information för att fastställa listan över flöden som ska hämtas. Åsidosätt i så fall metoden i underklassen."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_masthead_title:1
@@ -261,7 +263,7 @@ msgid ""
 "temporary files. The `url` key in the dictionary is useful if the effective "
 "URL of the article is different from the URL passed into this method, for "
 "example, because of redirects. It can be omitted if the URL is unchanged."
-msgstr "Om du ställer in `articles_are_obfuscated` anropas denna metod med varje artikel-URL. Den ska returnera sökvägen till en fil i filsystemet som innehåller artikelns HTML. Den filen bearbetas av den rekursiva HTML-hämtningsmotorn, så den kan innehålla länkar till sidor/bilder på webben. Alternativt kan du returnera en ordbok av formatet: {'data': <HTML data>, 'url': <the resolved URL of the article>}. Detta undviker att behöva skapa tillfälliga filer. `url`-nyckeln i ordboken är användbar om artikelns effektiva URL skiljer sig från URL-adressen som skickas till den här metoden, till exempel på grund av omdirigeringar. Den kan utelämnas om URL:en är oförändrad."
+msgstr "Om du anger `articles_are_obfuscated` anropas metoden med varje artikeladress. Den ska returnera sökvägen till en fil i filsystemet som innehåller artikelns HTML. Filen bearbetas av den rekursiva HTML-hämtningsmotorn och kan därför innehålla länkar till sidor och bilder på webben. Alternativt kan du returnera en ordbok i formen: {'data': <HTML data>, 'url': <the resolved URL of the article>}. Då behöver inga tillfälliga filer skapas. Nyckeln `url` är användbar om artikelns faktiska URL skiljer sig från den URL som skickades till metoden, till exempel på grund av omdirigeringar. Den kan utelämnas om URL:en är oförändrad."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_obfuscated_article:11
@@ -277,7 +279,7 @@ msgid ""
 "programmatically determine the delay for the specified URL, override this "
 "method in your subclass, returning self.delay by default for URLs you do not"
 " want to affect."
-msgstr "Returnera fördröjningen i sekunder innan du hämtar den här webbadressen. Om du programmatiskt vill bestämma fördröjningen för den angivna URL:en, åsidosätt den här metoden i din underklass och returnerar self.delay som standard för URL:er som du inte vill påverka."
+msgstr "Returnera fördröjningen i sekunder innan URL:en hämtas. Om du vill bestämma fördröjningen programmatiskt för den angivna URL:en åsidosätter du metoden i underklassen. Returnera self.delay som standard för URL:er som inte ska påverkas."
 
 #: ../../../__w/calibre/calibre/manual/news_recipe.rst:0
 msgid "Returns"
@@ -299,7 +301,7 @@ msgstr "Bekväm metod som använder en URL som indexsida och returnerar en `Beau
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
 msgid "`url_or_raw`: Either a URL or the downloaded index page as a string"
-msgstr "`url_or_raw`: Antingen en webbadress eller den hämtade indexsidan som en sträng"
+msgstr "`url_or_raw`: Antingen en URL eller den hämtade indexsidan som en sträng"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:1
@@ -333,7 +335,7 @@ msgid ""
 "that have a \"Print Edition\" webpage that lists all the articles in the "
 "current print edition. If this function is implemented, it will be used in "
 "preference to :meth:`BasicNewsRecipe.parse_feeds`."
-msgstr "Denna metod bör implementeras på recept för att analysera en webbplats istället för flöden skapar en lista med artiklar. Typiska användningsområden är för nyhetskällor som har en \"tryckt upplaga\"-webbplats som listar alla artiklar i den aktuella tryckupplagan. Om denna funktion implementeras kommer den att användas istället för :meth:`BasicNewsRecipe.parse_feeds`."
+msgstr "Den här metoden bör implementeras i recept som analyserar en webbplats i stället för flöden för att skapa en lista med artiklar. Typiska användningsområden är för nyhetskällor som har en \"tryckt upplaga\"-webbplats som listar alla artiklar i den aktuella tryckupplagan. Om funktionen implementeras används den i stället för :meth:`BasicNewsRecipe.parse_feeds`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:7
@@ -360,7 +362,7 @@ msgid ""
 "If you want to abort processing for some reason and have calibre show the "
 "user a simple message instead of an error, call "
 ":meth:`abort_recipe_processing`."
-msgstr "Om du vill avbryta behandlingen av någon anledning och låta calibre visa användaren ett enkelt budskap istället för ett fel, anropa :meth:`abort_recipe_processing`."
+msgstr "Om du vill avbryta behandlingen av någon anledning och låta calibre visa användaren ett enkelt budskap i stället för ett fel, anropa :meth:`abort_recipe_processing`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
@@ -368,7 +370,7 @@ msgid ""
 "Called when each HTML page belonging to article is downloaded. Intended to "
 "be used to get article metadata like author/summary/etc. from the parsed "
 "HTML (soup)."
-msgstr "Anropas när varje HTML-sida som tillhör artikel hämtas. Avsedd att användas för att få artikelns metadata som författare/sammanfattning/etc. från den analyserad HTML:en (soap)."
+msgstr "Anropas när varje HTML-sida som hör till artikeln har hämtats. Metoden är avsedd att användas för att hämta artikelmetadata, såsom författare och sammanfattning, från den analyserade HTML-strukturen (`soup`)."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:5
@@ -457,7 +459,7 @@ msgid ""
 "before it is parsed into an object tree. raw_html is a unicode string "
 "representing the raw HTML downloaded from the web. url is the URL from which"
 " the HTML was downloaded."
-msgstr "Denna metod anropas med källa av varje hämtad :term:`HTML`-fil, innan den analyseras i ett objektträd. raw_html är en unicode sträng som representerar råa HTML-hämtning från webben. url är URL från vilken HTML:en var hämtad."
+msgstr "Den här metoden anropas med källkoden för varje hämtad :term:`HTML`-fil innan filen tolkas till ett objektträd. `raw_html` är en Unicode-sträng som innehåller den råa HTML-kod som hämtades från webben. `url` är den URL som HTML-koden hämtades från."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:6
@@ -491,7 +493,7 @@ msgstr "Denna metod anropas med källan till varje hämtad :term:`HTML`-fil, inn
 msgid ""
 "Convenience method to sort the titles in `index` according to `weights`. "
 "`index` is sorted in place. Returns `index`."
-msgstr "Bekväm metod för att sortera titlar i `index` enligt `weights`. index` sorteras efter plats. Returnerar `index`."
+msgstr "Bekväm metod för att sortera titlarna i `index` enligt `weights`. `index` sorteras på plats. Returnerar `index`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
@@ -554,7 +556,7 @@ msgid ""
 "left at their default values, images will be scaled to fit in the screen "
 "dimensions set by the output profile and compressed to size at most (w * "
 "h)/16 where w x h are the scaled image dimensions."
-msgstr "Ställ in detta på False för att ignorera alla skalnings- och komprimeringsparametrar och skicka bilder genom oförändrade. Om True och de andra komprimeringsparametrarna lämnas på sina standardvärden, skalas bilderna för att passa i skärmmåtten som ställts in av utmatningsprofilen och komprimeras till högst storlek (b * h)/16 där b x h är de skalade bildmåtten."
+msgstr "Ange False för att ignorera alla skalnings- och komprimeringsparametrar och lämna bilderna oförändrade. Om värdet är True och övriga komprimeringsparametrar behåller sina standardvärden skalas bilderna så att de ryms inom skärmmåtten i utmatningsprofilen och komprimeras till en storlek på högst (w * h)/16, där w × h är de skalade bildmåtten."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_auto_size:1
@@ -570,7 +572,7 @@ msgid ""
 "will first be scaled and then its quality lowered until its size is less "
 "than (w * h)/factor where w and h are now the *scaled* image dimensions. In "
 "other words, this compression happens after scaling."
-msgstr "Faktorn som används vid automatisk komprimering av JPEG-bilder. Om den är inställd på Ingen är automatisk komprimering inaktiverad. Annars kommer bilderna att reduceras i storlek till (b * h) / compress_news_images_auto_size byte om möjligt genom att minska kvalitetsnivån, där b x h är bilddimensionerna i pixlar. Minsta JPEG-kvalitet är 5/100 så det är möjligt att denna begränsning inte uppfylls. Denna parameter kan åsidosättas av parametern compress_news_images_max_size som ger en fast maximal storlek för bilder. Observera att om du aktiverar skala_nyheter_images_till_utrustning kommer bilden först att skalas och sedan reduceras dess kvalitet tills dess storlek är mindre än (b*h)/faktor där b och h nu är de *skalade* bilddimensionerna. Med andra ord, denna komprimering sker efter skalning."
+msgstr "Faktorn som används vid automatisk komprimering av JPEG-bilder. Om värdet är None inaktiveras automatisk komprimering. Annars minskas bildernas storlek om möjligt till (w * h)/compress_news_images_auto_size byte genom att kvalitetsnivån sänks, där w × h är bildens mått i pixlar. Den lägsta JPEG-kvaliteten är 5/100, så begränsningen kan inte alltid uppfyllas. Parametern kan åsidosättas av compress_news_images_max_size, som anger en fast maximal bildstorlek. Om scale_news_images_to_device aktiveras skalas bilden först och dess kvalitet sänks sedan tills storleken understiger (w * h)/factor, där w och h nu är de *skalade* bildmåtten. Komprimeringen sker alltså efter skalningen."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images_max_size:1
@@ -600,7 +602,7 @@ msgid ""
 "15px on the top and bottom. Color names are defined `here "
 "<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
 " white does not always work in Windows. Use #ffffff instead"
-msgstr "Som standard används omslagsbilden som returneras av get_cover_url() som omslaget för tidskriften. Att åsidosätta detta i ditt recept instruerar calibre att göra det hämtade omslaget till en ram vars bredd och höjd uttrycks i procent av det hämtade omslaget. cover_margins = (10, 15, '#ffffff') fyller omslaget med en vit marginal 10 pixlar till vänster och höger, 15 pixlar på toppen och botten. Färgnamn definieras på `här <https://www.imagemagick.org/script/color.php>`_. Observera att vit av någon anledning inte alltid fungerar i Windows. Använd istället #ffffff"
+msgstr "Som standard används omslagsbilden som returneras av get_cover_url() som omslaget för tidskriften. Att åsidosätta detta i ditt recept instruerar calibre att göra det hämtade omslaget till en ram vars bredd och höjd uttrycks i procent av det hämtade omslaget. cover_margins = (10, 15, '#ffffff') fyller omslaget med en vit marginal 10 pixlar till vänster och höger, 15 pixlar på toppen och botten. Färgnamn definieras på `här <https://www.imagemagick.org/script/color.php>`_. Observera att vit av någon anledning inte alltid fungerar i Windows. Använd i stället #ffffff"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -636,7 +638,7 @@ msgid ""
 "is declared using the style attribute on individual :term:`HTML` tags. Note "
 "that if you want to programmatically generate the extra_css override the "
 ":meth:`get_extra_css()` method instead. For example::"
-msgstr "Ange någon extra :term:`CSS` som bör läggas till hämtade :term:`HTML`-filer. Det kommer att införas i `<style>`-taggar, precis före den avslutande `</head>`-taggen därigenom åsidosätts alla :term:`CSS` utom det som deklarerats med hjälp av formatattribut på individuella :term:`HTML`-taggar. Observera att om du vill att programmässigt skapa extra_css åsidosätt :meth:`get_extra_css()` metoden istället. Till exempel::"
+msgstr "Ange någon extra :term:`CSS` som bör läggas till hämtade :term:`HTML`-filer. Det kommer att införas i `<style>`-taggar, precis före den avslutande `</head>`-taggen därigenom åsidosätts alla :term:`CSS` utom det som deklarerats med hjälp av formatattribut på individuella :term:`HTML`-taggar. Observera att om du vill att programmässigt skapa extra_css åsidosätt :meth:`get_extra_css()` metoden i stället. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
@@ -655,7 +657,7 @@ msgstr "Lista med reguljära uttryck som avgör vilka länkar att ignorera. Om d
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
 msgid "will remove all URLs that have `ads.doubleclick.net` in them."
-msgstr "kommer att ta bort alla URL:er som innehåller `ads.doubleclick.net`. \n "
+msgstr "kommer att ta bort alla URL:er som innehåller `ads.doubleclick.net`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:9
@@ -684,7 +686,7 @@ msgstr "Ignorera dubbletter av artiklar som finns i mer än ett avsnitt. En dubb
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
 msgid "To use URLs instead, set it to::"
-msgstr "För att använda URL:er istället, ställ in den till::"
+msgstr "För att använda URL:er i stället, ställ in den till::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:11
@@ -783,7 +785,7 @@ msgstr "kommer att ta bort allt från `<!--Article ends here-->` till `</body>`.
 msgid ""
 "Publication type Set to newspaper, magazine or blog. If set to None, no "
 "publication type metadata will be written to the opf file."
-msgstr "Publikationstyp inställd till tidning, tidskrift eller blogg. Om inställt till None, kommer ingen publikationstypsmetadata skrivas till OPF-filen."
+msgstr "Publikationstyp. Ange newspaper, magazine eller blog. Om värdet är None skrivs ingen metadata om publikationstyp till OPF-filen."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recipe_disabled:1
@@ -799,7 +801,7 @@ msgid ""
 "user to customize in the Advanced tab of the Fetch News dialog or at the "
 "ebook-convert command line. The options are specified as a dictionary "
 "mapping option name to metadata about the option. For example::"
-msgstr "Ange alternativ som är specifika för detta recept. Dessa kommer att vara tillgängliga för användaren att anpassa på fliken Avancerat i dialogrutan Hämta nyheter eller på kommandoraden för ebook-convert. Alternativen är specificerade som ett namn på ett ordboksmappningsalternativ till metadata om alternativet. Till exempel::"
+msgstr "Ange alternativ som är specifika för receptet. Användaren kan anpassa dem på fliken Avancerat i dialogrutan Hämta nyheter eller på kommandoraden för ebook-convert. Alternativen anges som en ordbok som mappar alternativnamn till metadata om respektive alternativ. Exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recipe_specific_options:13
@@ -809,7 +811,7 @@ msgid ""
 "unspecified by the user, it will have the value specified by 'default'. If "
 "no default is specified, the option will not be in the dict at all, when "
 "unspecified by the user."
-msgstr "När receptet körs kommer self.recipe_specific_options att vara ett dict-mappningsalternativnamn till det alternativvärde som anges av användaren. När alternativet är ospecificerat av användaren, kommer det att ha värdet som anges av 'default'. Om ingen standard är angiven, kommer alternativet inte att finnas i dict alls, när ospecificerat av användaren."
+msgstr "När receptet körs är self.recipe_specific_options en dict som mappar varje alternativnamn till det värde som användaren har angett. Om användaren inte anger något används värdet i 'default'. Om inget standardvärde har angetts finns alternativet inte alls i dict när användaren lämnar det ospecificerat."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.recursions:1
@@ -895,7 +897,7 @@ msgid ""
 "article rather than its original web URL. If you set this to True, you might"
 " also need to implement :meth:`canonicalize_internal_url` to work with the "
 "URL scheme of your particular website."
-msgstr "Om den är inställd till True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att hänvisa till den hämtade kopian av artikeln istället för dess ursprungliga URL. Om du ställer in detta till True, kan du också behöva implementera :meth:`canonicalize_internal_url` för att fungera med webbadresschemat för din specifika webbplats."
+msgstr "Om den är inställd till True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att hänvisa till den hämtade kopian av artikeln i stället för dess ursprungliga URL. Om du ställer in detta till True, kan du också behöva implementera :meth:`canonicalize_internal_url` för att fungera med URL-schemat för din specifika webbplats."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
@@ -909,7 +911,7 @@ msgid ""
 "is True this is set to the device screen dimensions set by the output "
 "profile unless there is no profile set, in which case it is left at whatever"
 " value it has been assigned (default None)."
-msgstr "Största dimensioner (w, h) att skala bilder till. Om scale_news_images_to_device är True så är detta inställt på enhetens skärmmått för utskriftsprofil om det inte finns någon profil som, i vilket fall det är kvar på oavsett värde den har tilldelats (standard None)."
+msgstr "Största mått (w, h) som bilderna ska skalas till. Om scale_news_images_to_device är True sätts värdet till enhetens skärmmått enligt utmatningsprofilen. Om ingen utmatningsprofil har angetts behålls det tilldelade värdet, vars standardvärde är None."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.scale_news_images_to_device:1
@@ -936,7 +938,7 @@ msgid ""
 "The CSS that is used to style the templates, i.e., the navigation bars and "
 "the Tables of Contents. Rather than overriding this variable, you should use"
 " `extra_css` in your recipe to customize look and feel."
-msgstr "CSS som används för att utforma mallar, dvs. navigeringsfältet och innehållsförteckningen. Istället för att åsidosätta denna variabel bör du använda `extra_css` i ditt recept för att anpassa utseende och känsla."
+msgstr "CSS som används för att utforma mallar, dvs. navigeringsfältet och innehållsförteckningen. I stället för att åsidosätta denna variabel bör du använda `extra_css` i ditt recept för att anpassa utseende och känsla."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.timefmt:1

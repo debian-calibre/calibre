@@ -16,8 +16,10 @@ from utils import fmt_sidx, safe_set_inner_html, sandboxed_html
 CUSTOM_LIST_CLASS = 'book-list-custom-list'
 ITEM_CLASS = CUSTOM_LIST_CLASS + '-item'
 
+
 def description():
     return _('A customizable list (see Preferences->Sharing over the net->Book list template)')
+
 
 def custom_list_css():
     ans = ''
@@ -40,7 +42,7 @@ def custom_list_css():
     ans += build_rule(f'{sel}:hover .custom-list-left > img', box_shadow='0 10px 24px rgba(0,0,0,0.14)')
     s = sel + ' .custom-list-left'
     ans += build_rule(s, margin_right='1em')
-    ans += build_rule(s + ' > img', border_radius=BORDER_RADIUS+'px', transition='box-shadow 160ms ease')
+    ans += build_rule(s + ' > img', border_radius=BORDER_RADIUS + 'px', transition='box-shadow 160ms ease')
     sel += ' iframe'
     # To enable clicking anywhere on the item to load book details to work, we
     # have to set pointer-events: none
@@ -52,11 +54,11 @@ def custom_list_css():
 def default_template():
     # Should never actually be needed
     if not default_template.ans:
-        default_template.ans =  {
+        default_template.ans = {
             'thumbnail': True,
             'thumbnail_height': 140,
             'height': 'auto',
-            'comments_fields': v"['comments']",
+            'comments_fields': ['comments'],
             'lines': [
                 _('<b>{title}</b> by {authors}'),
                 _('{series_index} of <i>{series}</i>') + '|||{rating}',
@@ -122,7 +124,7 @@ def render_field(field, mi, book_id):  # {{{
         if val:
             keys = Object.keys(val)
             if keys.length:
-                ans = v'[]'
+                ans = []
                 for key in keys:
                     ans.push(key + ':' + val[key])
                 return add_val(ans, join=', ')
@@ -220,7 +222,7 @@ def render_part(part, template, book_id, metadata):
     ans = E.div()
     ans.innerHTML = part
     iterator = document.createNodeIterator(ans, NodeFilter.SHOW_TEXT)
-    replacements = v'[]'
+    replacements = []
     while True:
         n = iterator.nextNode()
         if not n:
@@ -237,7 +239,7 @@ def render_part(part, template, book_id, metadata):
                     rendered.appendChild(val)
             else:
                 rendered.appendChild(document.createTextNode(field))
-        replacements.push(v'[rendered, n]')
+        replacements.push([rendered, n])
 
     for new_child, old_child in replacements:
         old_child.parentNode.replaceChild(new_child, old_child)
@@ -248,7 +250,7 @@ def render_part(part, template, book_id, metadata):
 
 
 def render_line(line, template, book_id, metadata):
-    parts = v'[]'
+    parts = []
     line = line or '\xa0'
     for p in line.split(/\|\|\|/):
         part = render_part(p, template, book_id, metadata)
@@ -299,7 +301,7 @@ def on_img_load(img, load_type):
             E.div(_('by'), style='text-align: center'),
             E.h2(img.dataset.authors, style='text-align:center; font-size:larger; font-weight: bold')
         ))
-        set_css(div, border='dashed 1px currentColor', border_radius=BORDER_RADIUS+'px')
+        set_css(div, border='dashed 1px currentColor', border_radius=BORDER_RADIUS + 'px')
 
 
 def create_item(book_id, metadata, create_image, show_book_details, href):

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "julho 03, 2026" "9.11.0" "calibre"
+.TH "CALIBREDB" "1" "julho 31, 2026" "9.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,15 +40,24 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-:command:calibredb é a interface de linha de comando para o banco de dados do calibre. Ele possui vários subcomandos, documentados abaixo.
+\fBcalibredb\fP é a interface de linha de comando para o banco de dados do calibre. Ele possui vários subcomandos, documentados abaixo.
+.sp
+O \fBcalibredb\fP pode ser usado para manipular um banco de dados do calibre especificado por caminho ou um Servidor de conteúdo do calibre em execução na máquina local ou pela internet. Você pode iniciar um Servidor de conteúdo do calibre usando o programa \fBcalibre\-server\fP ou, no programa principal do calibre, clicando em Conectar/compartilhar  →  Iniciar servidor de conteúdo\&. Como o \fBcalibredb\fP pode fazer alterações nas suas bibliotecas do calibre, você deve configurar a autenticação no servidor primeiro. Existem
+duas maneiras de fazer isso:
 .INDENT 0.0
-.TP
-.B command:calibredb pode ser usado para manipular um banco de dados do calibre especificado por caminho, ou um :guilabel:Servidor de Conteúdo do calibre em execução na máquina local ou pela internet. Você pode iniciar um :guilabel:Servidor de Conteúdo do calibre usando o programa :command:calibre\-server ou, no programa principal do calibre, clicando em :guilabel:Conectar/compartilhar \-> Iniciar Servidor de Conteúdo. Como o :command:calibredb pode fazer alterações nas suas bibliotecas do calibre, você deve configurar autenticação no servidor primeiro. Há duas formas de fazer isso
+.IP \(bu 2
+Se você pretende conectar\-se apenas a um servidor em execução no mesmo computador, pode simplesmente usar a opção \fB\-\-enable\-local\-write\fP do Servidor de conteúdo para permitir que qualquer programa, incluindo o calibredb, em execução no computador local faça alterações nos seus dados do calibre.
 .UNINDENT
 .sp
-Se você pretende conectar apenas a um servidor em execução no mesmo computador, pode simplesmente usar a opção \-\-enable\-local\-write do Servidor de Conteúdo, para permitir que qualquer programa — incluindo o calibredb — em execução no computador local faça alterações nos seus dados do calibre. Ao executar o servidor pelo programa principal do calibre, essa opção está em :guilabel:Preferências\->Compartilhamento pela rede\->Avançado. Tenha cuidado, pois alguns navegadores, principalmente o Firefox, permitem que sites arbitrários também acessem servidores locais. Se você usa o Firefox, é melhor configurar usuário e senha, conforme descrito abaixo. A restrição de Acesso à Rede Local ainda não foi implementada até o Firefox v149.
-Se você quiser habilitar o acesso pela internet, deve configurar contas de usuário no servidor e usar as opções :option:\-\-username e :option:\-\-password no :command:calibredb para conceder acesso. Você pode configurar a autenticação de usuários para o :command:calibre\-server usando a opção \-\-enable\-auth e \-\-manage\-users para criar as contas de usuário. Se estiver executando o servidor pelo programa principal do calibre, use :guilabel:Preferências\->Compartilhamento pela rede\->Exigir usuário/senha.
-Para conectar a um Servidor de Conteúdo em execução, passe a URL do servidor para a opção :option:\-\-with\-library; consulte a documentação dessa opção para detalhes e exemplos.
+Ao executar o servidor a partir do programa principal do calibre, essa opção encontra\-se em Preferências → Compartilhamento pela rede → Avançado\&. Tenha cuidado, no entanto, pois alguns navegadores, principalmente o Firefox, permitem que sites arbitrários também acessem servidores locais. Se você usa o Firefox, é melhor configurar um nome de usuário e senha, conforme descrito abaixo. A restrição de acesso à rede local ainda não foi implementada até a versão 149 do Firefox.
+.INDENT 0.0
+.IP \(bu 2
+Se você quiser habilitar o acesso pela internet, deve configurar contas de usuário no servidor e usar as opções \fB\-\-username\fP e \fB\-\-password\fP no \fBcalibredb\fP para conceder acesso. Você pode configurar a autenticação de usuário para o \fBcalibre\-server\fP usando a opção \fB\-\-enable\-auth\fP e usando \fB\-\-manage\-users\fP para criar as contas de usuário.
+.UNINDENT
+.sp
+Se estiver executando o servidor a partir do programa principal do calibre, use Preferências → Compartilhamento pela rede → Exigir nome de usuário/senha\&.
+.sp
+Para se conectar a um servidor de conteúdo em execução, passe a URL do servidor para a opção \fB\-\-with\-library\fP; consulte a documentação dessa opção para obter detalhes e exemplos.
 .INDENT 0.0
 .IP \(bu 2
 OPÇÕES GLOBAIS

@@ -52,12 +52,12 @@ UnLjko1lIrCOKLnkGFuysQfJpGRDQUTMko2dpMS0ZGM5OUaWbJJKjg1KNnaIMC3ZkJeMzEs21pZI
 
 
 def thumbnail():
-    icon = base64.decodestring(iconstr)
+    icon = base64.decodebytes(iconstr)
     return icon
 
 
 if __name__ == '__main__':
     icon = thumbnail()
-    f = open('thumbnail.png','wb')
+    f = open('thumbnail.png', 'wb')
     f.write(icon)
     f.close()

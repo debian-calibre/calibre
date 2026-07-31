@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import json
 from functools import partial
 from importlib import import_module
 from threading import Lock
+from typing import Any, Protocol
 
 from calibre.srv.auth import AuthController
 from calibre.srv.errors import HTTPForbidden
@@ -16,10 +16,13 @@ from calibre.utils.date import utcnow
 from calibre.utils.search_query_parser import ParseException
 
 
-class Context:
+class UrlForCallable(Protocol):
+    def __call__(self, route: str | None, **kwargs: Any) -> str: ...
 
+
+class Context:
     log = None
-    url_for = None
+    url_for: UrlForCallable = lambda route, **kwargs: ''
     jobs_manager = None
     CATEGORY_CACHE_SIZE = 25
     SEARCH_CACHE_SIZE = 100
@@ -39,12 +42,15 @@ class Context:
             self._notify_changes(library_path, change_event)
 
     def start_job(self, name, module, func, args=(), kwargs=None, job_done_callback=None, job_data=None):
+        assert self.jobs_manager is not None
         return self.jobs_manager.start_job(name, module, func, args, kwargs, job_done_callback, job_data)
 
     def job_status(self, job_id):
+        assert self.jobs_manager is not None
         return self.jobs_manager.job_status(job_id)
 
     def abort_job(self, job_id):
+        assert self.jobs_manager is not None
         return self.jobs_manager.abort_job(job_id)
 
     def is_field_displayable(self, field):
@@ -127,10 +133,8 @@ class Context:
                 raise
             return frozenset()
 
-    def get_categories(self, request_data, db, sort='name', first_letter_sort=True,
-                       vl='', report_parse_errors=False):
-        restrict_to_ids = self.get_effective_book_ids(db, request_data, vl,
-                                          report_parse_errors=report_parse_errors)
+    def get_categories(self, request_data, db, sort='name', first_letter_sort=True, vl='', report_parse_errors=False):
+        restrict_to_ids = self.get_effective_book_ids(db, request_data, vl, report_parse_errors=report_parse_errors)
         key = restrict_to_ids, sort, first_letter_sort
         with self.lock:
             cache = self.library_broker.category_caches[db.server_library_id]
@@ -192,32 +196,57 @@ SRV_MODULES = ('ajax', 'books', 'cdb', 'code', 'content', 'legacy', 'opds', 'use
 
 
 class Handler:
-
     def __init__(self, libraries, opts, testing=False, notify_changes=None):
         ctx = Context(libraries, opts, testing=testing, notify_changes=notify_changes)
         self.auth_controller = None
         if opts.auth:
             has_ssl = opts.ssl_certfile is not None and opts.ssl_keyfile is not None
-            prefer_basic_auth = {'auto':has_ssl, 'basic':True}.get(opts.auth_mode, False)
+            prefer_basic_auth = {'auto': has_ssl, 'basic': True}.get(opts.auth_mode, False)
             self.auth_controller = AuthController(
-                user_credentials=ctx.user_manager, prefer_basic_auth=prefer_basic_auth, ban_time_in_minutes=opts.ban_for, ban_after=opts.ban_after)
+                user_credentials=ctx.user_manager,
+                prefer_basic_auth=prefer_basic_auth,
+                ban_time_in_minutes=opts.ban_for,
+                ban_after=opts.ban_after,
+            )
         self.router = Router(ctx=ctx, url_prefix=opts.url_prefix, auth_controller=self.auth_controller)
         for module in SRV_MODULES:
             module = import_module('calibre.srv.' + module)
             self.router.load_routes(vars(module).values())
+        self._load_content_server_plugin_routes()
         self.router.finalize()
+        assert self.router.ctx is not None
         self.router.ctx.url_for = self.router.url_for
         self.dispatch = self.router.dispatch
 
+    def _load_content_server_plugin_routes(self):
+        from calibre.customize.ui import content_server_plugins
+
+        for plugin in content_server_plugins():
+            try:
+                endpoints = plugin.content_server_endpoints()
+            except Exception:
+                continue
+            for ep in endpoints:
+                try:
+                    self.router.add(ep)
+                except ValueError:
+                    # Route key already exists (built-in or another plugin).
+                    # Plugins do not override existing routes.
+                    pass
+
     def set_log(self, log):
+        assert self.router.ctx is not None
         self.router.ctx.log = log
         if self.auth_controller is not None:
             self.auth_controller.log = log
 
     def set_jobs_manager(self, jobs_manager):
+        assert self.router.ctx is not None
         self.router.ctx.jobs_manager = jobs_manager
 
     def close(self):
+        assert self.router is not None
+        assert self.router.ctx is not None
         self.router.ctx.library_broker.close()
 
     @property

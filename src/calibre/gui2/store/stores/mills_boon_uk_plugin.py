@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 4  # Needed for dynamic plugin loading
 
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
-
 from contextlib import closing
-
-try:
-    from urllib.parse import quote
-except ImportError:
-    from urllib import quote
+from urllib.parse import quote
 
 from qt.core import QUrl
 
@@ -30,8 +24,7 @@ except ImportError:
 
 
 class MillsBoonUKStore(BasicStoreConfig, StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         url = 'https://www.millsandboon.co.uk'
 
         if external or self.config.get('open_external', False):

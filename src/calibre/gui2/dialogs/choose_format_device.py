@@ -1,5 +1,4 @@
-__license__   = 'GPL v3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
 from qt.core import QDialog, QIcon, QModelIndex, QTreeWidgetItem
 
@@ -8,16 +7,15 @@ from calibre.gui2.dialogs.choose_format_device_ui import Ui_ChooseFormatDeviceDi
 
 
 class ChooseFormatDeviceDialog(QDialog, Ui_ChooseFormatDeviceDialog):
-
     def __init__(self, window, msg, formats):
-        '''
+        """
         formats is a list of tuples: [(format, exists, convertible)].
             format: Lower case format identifier. E.G. mobi
             exists: String representing the number of books that
                     exist in the format.
             convertible: True if the format is a convertible format.
         formats should be ordered in the device's preferred format ordering.
-        '''
+        """
         QDialog.__init__(self, window)
         Ui_ChooseFormatDeviceDialog.__init__(self)
         self.setupUi(self)
@@ -38,7 +36,9 @@ class ChooseFormatDeviceDialog(QDialog, Ui_ChooseFormatDeviceDialog):
         self.formats.resizeColumnToContents(2)
         self.formats.resizeColumnToContents(1)
         self.formats.resizeColumnToContents(0)
-        self.formats.header().resizeSection(0, self.formats.header().sectionSize(0) * 2)
+        fmt_header = self.formats.header()
+        assert fmt_header is not None
+        fmt_header.resizeSection(0, fmt_header.sectionSize(0) * 2)
         self._format = None
 
     def activated_slot(self, *args):
@@ -48,5 +48,7 @@ class ChooseFormatDeviceDialog(QDialog, Ui_ChooseFormatDeviceDialog):
         return self._format
 
     def accept(self):
-        self._format = str(self.formats.currentItem().text(0))
+        fmt_item = self.formats.currentItem()
+        assert fmt_item is not None
+        self._format = str(fmt_item.text(0))
         return QDialog.accept(self)

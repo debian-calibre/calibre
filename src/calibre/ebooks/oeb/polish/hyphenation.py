@@ -2,10 +2,12 @@
 # License: GPL v3 Copyright: 2019, Kovid Goyal <kovid at kovidgoyal.net>
 
 from calibre.ebooks.oeb.base import OEB_DOCS
+from calibre.utils.localization import _
 
 
 def add_soft_hyphens(container, report=None):
     from calibre.utils.hyphenation.hyphenate import add_soft_hyphens_to_html
+
     for name, mt in container.mime_map.items():
         if mt not in OEB_DOCS:
             continue
@@ -17,6 +19,7 @@ def add_soft_hyphens(container, report=None):
 
 def remove_soft_hyphens(container, report=None):
     from calibre.utils.hyphenation.hyphenate import remove_soft_hyphens_from_html
+
     for name, mt in container.mime_map.items():
         if mt not in OEB_DOCS:
             continue

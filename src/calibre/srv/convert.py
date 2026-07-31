@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-
+import json as stdlib_json
 import os
 import shutil
 import tempfile
@@ -23,13 +23,11 @@ cache_lock = Lock()
 
 
 class JobStatus:
-
     def __init__(self, job_id, book_id, tdir, library_id, pathtoebook, conversion_data):
         self.job_id = job_id
         self.log = self.traceback = ''
         self.book_id = book_id
-        self.output_path = os.path.join(
-            tdir, 'output.' + conversion_data['output_fmt'].lower())
+        self.output_path = os.path.join(tdir, 'output.' + conversion_data['output_fmt'].lower())
         self.tdir = tdir
         self.library_id, self.pathtoebook = library_id, pathtoebook
         self.conversion_data = conversion_data
@@ -99,9 +97,9 @@ def convert_book(path_to_ebook, opf_path, cover_path, output_fmt, recs):
     from calibre.customize.conversion import OptionRecommendation
     from calibre.ebooks.conversion.plumber import Plumber
     from calibre.utils.logging import Log
+
     recs.append(('verbose', 2, OptionRecommendation.HIGH))
-    recs.append(('read_metadata_from_opf', opf_path,
-                OptionRecommendation.HIGH))
+    recs.append(('read_metadata_from_opf', opf_path, OptionRecommendation.HIGH))
     if cover_path:
         recs.append(('cover', cover_path, OptionRecommendation.HIGH))
     log = Log()
@@ -113,8 +111,7 @@ def convert_book(path_to_ebook, opf_path, cover_path, output_fmt, recs):
         status_file.flush()
 
     output_path = os.path.abspath('output.' + output_fmt.lower())
-    plumber = Plumber(path_to_ebook, output_path, log,
-                      report_progress=notification, override_input_metadata=True)
+    plumber = Plumber(path_to_ebook, output_path, log, report_progress=notification, override_input_metadata=True)
     plumber.merge_ui_recommendations(recs)
     plumber.run()
 
@@ -123,6 +120,7 @@ def queue_job(ctx, rd, library_id, db, fmt, book_id, conversion_data):
     from calibre.customize.conversion import OptionRecommendation
     from calibre.ebooks.conversion.config import GuiRecommendations, save_specifics
     from calibre.ebooks.metadata.opf2 import metadata_to_opf
+
     tdir = tempfile.mkdtemp(dir=rd.tdir)
     with tempfile.NamedTemporaryFile(prefix='', suffix=('.' + fmt.lower()), dir=tdir, delete=False) as src_file:
         db.copy_format_to(book_id, fmt, src_file)
@@ -141,30 +139,42 @@ def queue_job(ctx, rd, library_id, db, fmt, book_id, conversion_data):
     recs = [(k, v, OptionRecommendation.HIGH) for k, v in recs.items()]
 
     job_id = ctx.start_job(
-        f'Convert book {book_id} ({fmt})', 'calibre.srv.convert',
-        'convert_book', args=(
-            src_file.name, opf_file.name, cover_path, conversion_data['output_fmt'], recs),
-        job_done_callback=job_done
+        f'Convert book {book_id} ({fmt})',
+        'calibre.srv.convert',
+        'convert_book',
+        args=(src_file.name, opf_file.name, cover_path, conversion_data['output_fmt'], recs),
+        job_done_callback=job_done,
     )
     expire_old_jobs()
     with cache_lock:
-        conversion_jobs[job_id] = JobStatus(
-            job_id, book_id, tdir, library_id, src_file.name, conversion_data)
+        conversion_jobs[job_id] = JobStatus(job_id, book_id, tdir, library_id, src_file.name, conversion_data)
     return job_id
 
 
-@endpoint('/conversion/start/{book_id}', postprocess=json, needs_db_write=True, types={'book_id': int}, methods=receive_data_methods)
+@endpoint(
+    '/conversion/start/{book_id}',
+    postprocess=json,
+    needs_db_write=True,
+    types={'book_id': int},
+    methods=receive_data_methods,
+)
 def start_conversion(ctx, rd, book_id):
     db, library_id = get_library_data(ctx, rd)[:2]
     if not ctx.has_id(rd, db, book_id):
         raise BookNotFound(book_id, db)
-    data = json.loads(rd.request_body_file.read())
+    data = stdlib_json.loads(rd.request_body_file.read())
     input_fmt = data['input_fmt']
     job_id = queue_job(ctx, rd, library_id, db, input_fmt, book_id, data)
     return job_id
 
 
-@endpoint('/conversion/status/{job_id}', postprocess=json, needs_db_write=True, types={'job_id': int}, methods=receive_data_methods)
+@endpoint(
+    '/conversion/status/{job_id}',
+    postprocess=json,
+    needs_db_write=True,
+    types={'job_id': int},
+    methods=receive_data_methods,
+)
 def conversion_status(ctx, rd, job_id):
     with cache_lock:
         job_status = conversion_jobs.get(job_id)
@@ -180,9 +190,13 @@ def conversion_status(ctx, rd, job_id):
         del conversion_jobs[job_id]
 
     try:
-        ans = {'running': False, 'ok': job_status.ok, 'was_aborted':
-               job_status.was_aborted, 'traceback': job_status.traceback,
-               'log': job_status.log}
+        ans = {
+            'running': False,
+            'ok': job_status.ok,
+            'was_aborted': job_status.was_aborted,
+            'traceback': job_status.traceback,
+            'log': job_status.log,
+        }
         if job_status.ok:
             db, library_id = get_library_data(ctx, rd)[:2]
             if library_id != job_status.library_id:
@@ -191,8 +205,7 @@ def conversion_status(ctx, rd, job_id):
             try:
                 db.add_format(job_status.book_id, fmt, job_status.output_path)
             except NoSuchBook:
-                raise HTTPNotFound(
-                    f'book_id {job_status.book_id} not found in library')
+                raise HTTPNotFound(f'book_id {job_status.book_id} not found in library')
             run_plugins_on_postconvert(db, job_status.book_id, fmt)
             formats_added({job_status.book_id: (fmt,)})
             ans['size'] = os.path.getsize(job_status.output_path)
@@ -206,30 +219,38 @@ def get_conversion_options(input_fmt, output_fmt, book_id, db):
     from calibre.customize.conversion import OptionRecommendation
     from calibre.ebooks.conversion.config import OPTIONS, load_defaults, load_specifics, options_for_input_fmt, options_for_output_fmt
     from calibre.ebooks.conversion.plumber import create_dummy_plumber
+
     plumber = create_dummy_plumber(input_fmt, output_fmt)
     specifics = load_specifics(db, book_id)
-    ans = {'options': {}, 'disabled': set(), 'defaults': {}, 'help': {}}
-    ans['input_plugin_name'] = plumber.input_plugin.commit_name
-    ans['output_plugin_name'] = plumber.output_plugin.commit_name
-    ans['input_ui_data'] = plumber.input_plugin.ui_data
-    ans['output_ui_data'] = plumber.output_plugin.ui_data
+    options_dict: dict = {}
+    disabled_set: set = set()
+    defaults_dict: dict = {}
+    help_dict: dict = {}
+    ans = {
+        'options': options_dict,
+        'disabled': disabled_set,
+        'defaults': defaults_dict,
+        'help': help_dict,
+        'input_plugin_name': plumber.input_plugin.commit_name,
+        'output_plugin_name': plumber.output_plugin.commit_name,
+        'input_ui_data': plumber.input_plugin.ui_data,
+        'output_ui_data': plumber.output_plugin.ui_data,
+    }
 
     def merge_group(group_name, option_names):
         if not group_name or group_name in ('debug', 'metadata'):
             return
         defs = load_defaults(group_name)
-        defs.merge_recommendations(
-            plumber.get_option_by_name, OptionRecommendation.LOW, option_names)
-        specifics.merge_recommendations(
-            plumber.get_option_by_name, OptionRecommendation.HIGH, option_names, only_existing=True)
+        defs.merge_recommendations(plumber.get_option_by_name, OptionRecommendation.LOW, option_names)
+        specifics.merge_recommendations(plumber.get_option_by_name, OptionRecommendation.HIGH, option_names, only_existing=True)
         defaults = defs.as_dict()['options']
         for k in defs:
             if k in specifics:
                 defs[k] = specifics[k]
         defs = defs.as_dict()
-        ans['options'].update(defs['options'])
-        ans['disabled'] |= set(defs['disabled'])
-        ans['defaults'].update(defaults)
+        options_dict.update(defs['options'])
+        disabled_set.update(defs['disabled'])
+        defaults_dict.update(defaults)
         ans['help'] = plumber.get_all_help()
 
     for group_name, option_names in OPTIONS['pipe'].items():
@@ -240,13 +261,17 @@ def get_conversion_options(input_fmt, output_fmt, book_id, db):
     group_name, option_names = options_for_output_fmt(output_fmt)
     merge_group(group_name, option_names)
 
-    ans['disabled'] = tuple(ans['disabled'])
+    ans['disabled'] = tuple(disabled_set)
     return ans
 
 
+_profiles_cache: dict | None = None
+
+
 def profiles():
-    ans = getattr(profiles, 'ans', None)
-    if ans is None:
+    global _profiles_cache
+    if _profiles_cache is None:
+
         def desc(profile):
             w, h = profile.screen_size
             if w >= 10000:
@@ -256,15 +281,16 @@ def profiles():
             ss = _('Screen size: %s') % ss
             return {'name': profile.name, 'description': (f'{profile.description} [{ss}]')}
 
-        ans = profiles.ans = {}
-        ans['input'] = {p.short_name: desc(p) for p in input_profiles()}
-        ans['output'] = {p.short_name: desc(p) for p in output_profiles()}
-    return ans
+        _profiles_cache = {}
+        _profiles_cache['input'] = {p.short_name: desc(p) for p in input_profiles()}
+        _profiles_cache['output'] = {p.short_name: desc(p) for p in output_profiles()}
+    return _profiles_cache
 
 
 @endpoint('/conversion/book-data/{book_id}', postprocess=json, types={'book_id': int})
 def conversion_data(ctx, rd, book_id):
     from calibre.ebooks.conversion.config import NoSupportedInputFormats, get_input_format_for_book, get_sorted_output_formats
+
     db = get_library_data(ctx, rd)[0]
     if not ctx.has_id(rd, db, book_id):
         raise BookNotFound(book_id, db)
@@ -287,6 +313,6 @@ def conversion_data(ctx, rd, book_id):
         'conversion_options': get_conversion_options(input_fmt, output_formats[0], book_id, db),
         'title': db.field_for('title', book_id),
         'authors': db.field_for('authors', book_id),
-        'book_id': book_id
+        'book_id': book_id,
     }
     return ans

@@ -1,11 +1,9 @@
-__license__ = 'GPL 3'
-__copyright__ = '''2011, John Schember <john@nachtimwald.com>
-2011, Leigh Parry <leighparry@blueyonder.co.uk>'''
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-'''
+"""
 Transform OEB content into Textile formatted plain text
-'''
+"""
+
 import re
 from functools import partial
 
@@ -15,13 +13,12 @@ from calibre.ebooks.oeb.stylizer import Stylizer
 
 
 class MarkdownMLizer(OEB2HTML):
-
     def extract_content(self, oeb_book, opts):
         self.log.info('Converting XHTML to Markdown formatted TXT...')
         self.opts = opts
         self.in_code = False
         self.in_pre = False
-        self.list = []
+        self.list: list = []
         self.blockquotes = 0
         self.remove_space_after_newline = False
         self.base_hrefs = [item.href for item in oeb_book.spine]
@@ -100,18 +97,16 @@ class MarkdownMLizer(OEB2HTML):
             new_text.append('    ' + l)
         return '\n'.join(new_text)
 
-    def dump_text(self, elem, stylizer):
-        '''
+    def dump_text(self, elem, stylizer, page=None):
+        """
         @elem: The element in the etree that we are working on.
         @stylizer: The style information attached to the element.
-        '''
+        """
 
         # We can only processes tags. If there isn't a tag return any text.
-        if not isinstance(elem.tag, (str, bytes)) \
-           or namespace(elem.tag) != XHTML_NS:
+        if not isinstance(elem.tag, (str, bytes)) or namespace(elem.tag) != XHTML_NS:
             p = elem.getparent()
-            if p is not None and isinstance(p.tag, (str, bytes)) and namespace(p.tag) == XHTML_NS \
-                    and elem.tail:
+            if p is not None and isinstance(p.tag, (str, bytes)) and namespace(p.tag) == XHTML_NS and elem.tail:
                 return [elem.tail]
             return ['']
 
@@ -123,8 +118,7 @@ class MarkdownMLizer(OEB2HTML):
         attribs = elem.attrib
 
         # Ignore anything that is set to not be displayed.
-        if style['display'] in ('none', 'oeb-page-head', 'oeb-page-foot') \
-           or style['visibility'] == 'hidden':
+        if style['display'] in ('none', 'oeb-page-head', 'oeb-page-foot') or style['visibility'] == 'hidden':
             if hasattr(elem, 'tail') and elem.tail:
                 return [elem.tail]
             return ['']
@@ -207,6 +201,7 @@ class MarkdownMLizer(OEB2HTML):
             self.list.append({'name': tag, 'num': 0})
         elif tag == 'li':
             # Get the last list from our list of lists
+            li: dict
             if self.list:
                 li = self.list[-1]
             else:

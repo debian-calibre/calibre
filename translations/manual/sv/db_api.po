@@ -3,21 +3,23 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Karl Jonatan Nyberg, 2025-2026
+# Jonatan Nyberg, 2025-2026
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Karl Jonatan Nyberg, 2016-2017,2021-2025
-# Karl Jonatan Nyberg, 2018-2021
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
+# Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2016-2017,2021-2026
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2017
 # Sebastian Rasmussen <sebras@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 05:21+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2026\n"
+"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +41,7 @@ msgstr "Denna API är trådsäker (använder ett flerläsar-, singelskrivarutel�
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr "Om du är i en calibre-insticksmodul som är en del av calibres huvudanvändargränssnitt får du tillgång till den så här istället::"
+msgstr "Om du är i en calibre-insticksmodul som är en del av calibres huvudanvändargränssnitt får du tillgång till den så här i stället::"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -79,7 +81,7 @@ msgstr "När böcker tas bort från databasen med listan över bok-ID som enda a
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
-msgstr "När ett format läggs till i en bok, med argument: (bok_id, format)"
+msgstr "När ett format läggs till i en bok, med argumenten: (book_id, format)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
@@ -136,7 +138,7 @@ msgid ""
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr "Lägg till de angivna böckerna i biblioteket. Böcker bör vara en uppräknelig mängd i multipel av 2, varje multipel av 2 med formen  :code:`(mi, format_map)` där mi är ett metadataobjekt och format_map är en ordbok med formen :code:`{fmt: path_or_stream}`, till exempel: :code:`{'EPUB': '/sökväg/till/fil.epub'}`."
+msgstr "Lägg till de angivna böckerna i biblioteket. Böckerna ska anges som en itererbar samling av 2-tupler. Varje tupel ska ha formen :code:`(mi, format_map)`, där mi är ett Metadata-objekt och format_map är en ordbok av formen :code:`{fmt: path_or_stream}`, exempelvis :code:`{'EPUB': '/path/to/file.epub'}`."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
@@ -234,7 +236,7 @@ msgid ""
 "Return a tuple containing all annotations for the specified book_id as a "
 "dict with keys: `format`, `user_type`, `user`, `annotation`. Here, "
 "annotation is the annotation data."
-msgstr "Returnera en tuppel som innehåller alla noteringar för det angivna book_id som ett ordbok med nycklar: `format`, `user_type`, `user`, `noteringar`. Här är noteringar noteringsdata."
+msgstr "Returnera en tuppel som innehåller alla anteckningar för angivet book_id, som en ordbok med nycklarna: `format`, `user_type`, `user`, `annotation`. Här innehåller `annotation` anteckningsdata."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
@@ -356,7 +358,7 @@ msgstr "Kopiera formatet ``fmt`` till det fillika objektet ``dest``. Om det angi
 msgid ""
 "Return the cover image or None. By default, returns the cover as a "
 "bytestring."
-msgstr "Returnera omslagsbild eller inget. Som standard, returneras omslag som en byte sträng."
+msgstr "Returnera omslagsbilden eller None. Som standard returneras omslaget som en bytesträng."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:4
@@ -426,7 +428,7 @@ msgstr "Ta bort en post från papperskorgen. Här är kategorin 'b' för böcker
 msgid ""
 "Update metadata in all formats of the specified book_ids to current metadata"
 " in the database."
-msgstr "Uppdatera metadata i alla format av de angivna bok_ids till aktuell metadata i databasen."
+msgstr "Uppdatera metadata i alla format av de angivna book_ids till aktuell metadata i databasen."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.expire_old_trash:1
@@ -470,7 +472,7 @@ msgid ""
 "is identifiers for which the returned value is always a dictionary. The "
 "returned tuples are always in link order, that is, the order in which they "
 "were created."
-msgstr "Det återgivna värdet för is_multiple fält är alltid tupler, även om inga värden finns (med andra ord, default_value ignoreras). Undantaget är identifierare som det återgav värdet alltid är en ordbok. De återgivna tuplerna är alltid i länkordning, det vill säga i vilken ordning de skapades."
+msgstr "De returnerade värdena för is_multiple-fält är alltid tupler, även när inga värden hittas. Med andra ord ignoreras default_value. Undantaget är identifierare, där det returnerade värdet alltid är en ordbok. De returnerade tuplerna är alltid i länkordning, det vill säga i den ordning som de skapades."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_ids_for:1
@@ -507,7 +509,7 @@ msgid ""
 "If True the e-book format is returned as a file object. Note that the file "
 "object is a SpooledTemporaryFile, so if what you want to do is copy the "
 "format to another file, use :meth:`copy_format_to` instead for performance."
-msgstr "Om True returneras e-bokformatet som ett filobjekt. Observera att filobjektet är en SpooledTemporaryFile, så om vad du vill göra är att kopiera formatet till en annan fil, använd :meth:`copy_format_to` istället för prestanda."
+msgstr "Om True returneras e-bokformatet som ett filobjekt. Observera att filobjektet är en SpooledTemporaryFile, så om vad du vill göra är att kopiera formatet till en annan fil, använd :meth:`copy_format_to` i stället för prestanda."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:8
@@ -529,7 +531,7 @@ msgid ""
 "Return absolute path to the e-book file of format `format`. You should "
 "almost never use this, as it breaks the threadsafe promise of this API. "
 "Instead use, :meth:`copy_format_to`."
-msgstr "Returnera absolut sökväg till e-bokfilen i formatet `format`. Du bör nästan aldrig använda det, eftersom det bryter trådsäkerhetsgarantin i detta API. Använd istället, :meth:`copy_format_to`."
+msgstr "Returnera absolut sökväg till e-bokfilen i formatet `format`. Du bör nästan aldrig använda det, eftersom det bryter trådsäkerhetsgarantin i detta API. Använd i stället, :meth:`copy_format_to`."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:5
@@ -560,7 +562,7 @@ msgid ""
 "book. You should not use path unless you absolutely have to, since accessing"
 " it directly breaks the threadsafe guarantees of this API. Instead use the "
 ":meth:`copy_format_to` method."
-msgstr "Returnera sökväg, storlek och mtime för det specifika formatet för den specifika boken. Du bör inte använda sökväg  annat om du absolut måste, eftersom direkt tillgång av den förstör trådsäkerhetsgarantin av denna API. Istället använd :meth:`copy_format_to` metoden."
+msgstr "Returnera sökväg, storlek och mtime för det specifika formatet för den specifika boken. Du bör inte använda sökväg  annat om du absolut måste, eftersom direkt tillgång av den förstör trådsäkerhetsgarantin av denna API. I stället använd :meth:`copy_format_to` metoden."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_metadata:6
@@ -641,7 +643,7 @@ msgid ""
 "Get data for name. By default returns data for all book_ids, pass in a list "
 "of book ids if you only want some data. Returns a map of book_id to values. "
 "If a particular value could not be decoded, uses default for it."
-msgstr "Hämta data för namn. Som standard returneras data för alla book_ids, förse med en lista med bokidentifierare om du bara vill  ha några data. returnerar en översikt av book_id till värden. Om en speciellt värde inte kan identifieras, används istället standardvärde för den."
+msgstr "Hämta data för namn. Som standard returneras data för alla book_ids, förse med en lista med bokidentifierare om du bara vill  ha några data. returnerar en översikt av book_id till värden. Om en speciellt värde inte kan identifieras, används i stället standardvärde för den."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_id_map:1
@@ -662,7 +664,7 @@ msgid ""
 " slow if doing lookups for multiple names use either get_item_ids() or "
 "get_item_name_map(). Similarly, case sensitive lookups are faster than case "
 "insensitive ones."
-msgstr "Returnera post-id för item_name eller None om den inte hittas. Den här funktionen är väldigt långsam om man gör uppslagningar för flera namn med antingen get_item_ids() eller get_item_name_map(). På samma sätt är skiftlägeskänsliga sökningar snabbare än skiftlägesokänsliga."
+msgstr "Returnera post-ID:t för item_name eller None om det inte hittas. Funktionen är mycket långsam vid uppslagning av flera namn; använd i stället get_item_ids() eller get_item_name_map(). Skiftlägeskänsliga uppslagningar är också snabbare än skiftlägesokänsliga."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
@@ -722,7 +724,7 @@ msgstr "Det serieliknande fältet (standard är den inbyggda seriekolumnen)"
 #: calibre.db.cache.Cache.get_next_series_num_for:5
 msgid ""
 "If True, returns a mapping of book_id to current series_index value instead."
-msgstr "Om True, returneras en kartläggning av book_id till aktuellt serie_index-värde istället."
+msgstr "Om True, returneras en kartläggning av book_id till aktuellt serie_index-värde i stället."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_notes_resource:1
@@ -758,7 +760,7 @@ msgid ""
 "Return True iff the database contains an entry with the same title as the "
 "passed in Metadata object. The comparison is case-insensitive. See also "
 ":meth:`data_for_has_book`."
-msgstr "Returnera True om och endast om databasen innehåller en post med samma titel som den angivna i metadataobjektet. Jämförelsen är skiftlägeskänslig. Se även :meth:`data_for_has_book`."
+msgstr "Returnera True om och endast om databasen innehåller en post med samma titel som det angivna Metadata-objektet. Jämförelsen är skiftlägesokänslig. Se även :meth:`data_for_has_book`."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_format:1
@@ -768,7 +770,7 @@ msgstr "Returnera True om och endast om formatet finns på disken"
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_id:1
 msgid "Return True iff the specified book_id exists in the db"
-msgstr "Returnera True om och endast om specificerad bok_id finns i db"
+msgstr "Returnera True om och endast om specificerad book_id finns i db"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.import_note:1
@@ -868,7 +870,7 @@ msgstr "fälten måste vara en lista med 2-tupler av formatet (field_name, ascen
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.notes_data_for:1
 msgid "Return all notes data as a dict or None if note does not exist"
-msgstr "Returnera all anteckningsdata som ett diktat eller inget om anteckningen inte finns"
+msgstr "Returnera alla anteckningsdata som en ordbok, eller None om anteckningen inte finns"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.notes_for:1
@@ -894,7 +896,7 @@ msgstr "Returnera delmängden av böcker (eller alla böcker om de är tomma) so
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr "Returnera värdet för det specifika förvalet eller värdet angivet som ``standard`` om ingen inställning är angivet."
+msgstr "Returnera värdet för den angivna inställningen eller värdet som anges som ``default`` om inställningen inte har angetts."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.queue_pages_scan:1
@@ -1187,7 +1189,7 @@ msgstr "Om f är en sammansatt kolumnsökningsnyckel och kolumnen är is_multipl
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr "Returnera id av alla böcker som har taggen ``tagg`` som är äldre än den angivna tiden. taggjämförelse är skiftlägesoberoende."
+msgstr "Returnera ID:n för alla böcker med taggen ``tag`` som är äldre än den angivna tiden. Taggjämförelsen är skiftlägesokänslig."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
@@ -1200,14 +1202,14 @@ msgstr "Ett tidsdeltaobjekt eller None. Om None returneras alla id med taggen."
 msgid ""
 "If not None the list of matches will be restricted to books that have this "
 "tag"
-msgstr "Om inte ingen kommer listan över matchningar att vara begränsad till böcker som har denna tagg"
+msgstr "Om värdet inte är None begränsas listan till böcker som har den här taggen"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:10
 msgid ""
 "A list of authors. If not None the list of matches will be restricted to "
 "books that have these authors (case insensitive)."
-msgstr "En lista över författare. Om inte ingen kommer listan över matchningar att begränsas till böcker som har dessa författare (skiftlägesokänslig)."
+msgstr "En lista över författare. Om värdet inte är None begränsas matchningslistan till böcker som har dessa författare (skiftlägesokänsligt)."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.unretire_note_for:1

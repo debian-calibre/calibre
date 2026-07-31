@@ -20,7 +20,6 @@ from calibre.ptempfile import PersistentTemporaryDirectory
 
 
 class FakeResponse:
-
     def __init__(self):
         self.queue = Queue()
         self.done = False
@@ -43,12 +42,13 @@ class FakeResponse:
         self._reason = res.get('http_status_message')
         if not self._reason:
             from http.client import responses
+
             with suppress(KeyError):
                 self._reason = responses[self._status]
         self._headers = res['headers']
         if 'error' in res:
             ex = URLError(res['error'])
-            ex.worth_retry = bool(res.get('worth_retry'))
+            setattr(ex, 'worth_retry', bool(res.get('worth_retry')))
             raise ex
         with suppress(FileNotFoundError):
             self._data = open(res['output'], 'rb')
@@ -74,12 +74,14 @@ class FakeResponse:
     def status(self) -> int | None:
         self._wait()
         return self._status
+
     code = status
 
     @property
     def headers(self):
         self._wait()
         from email.message import EmailMessage
+
         ans = EmailMessage()
         for k, v in self._headers:
             ans[k] = v
@@ -116,8 +118,13 @@ def shutdown_browser(bref):
 
 
 class Browser:
-
-    def __init__(self, user_agent: str = '', headers: tuple[tuple[str, str], ...] = (), verify_ssl_certificates: bool = True, start_worker: bool = False):
+    def __init__(
+        self,
+        user_agent: str = '',
+        headers: tuple[tuple[str, str], ...] = (),
+        verify_ssl_certificates: bool = True,
+        start_worker: bool = False,
+    ):
         self.tdir = ''
         self.worker = self.dispatcher = None
         self.dispatch_map = {}
@@ -131,10 +138,11 @@ class Browser:
         if start_worker:
             self._ensure_state()
 
-    def _open(self, url_or_request: Request, data=None, timeout=None, visit: bool = True):
+    def _open(self, url_or_request: Request | str, data=None, timeout=None, visit: bool = True):
         method = 'POST' if data else 'GET'
         headers = []
         if hasattr(url_or_request, 'get_method'):
+            assert isinstance(url_or_request, Request)
             r = url_or_request
             method = r.get_method()
             data = data or r.data
@@ -145,14 +153,14 @@ class Browser:
 
         def has_header(x: str) -> bool:
             x = x.lower()
-            for h,v in headers:
+            for h, v in headers:
                 if h.lower() == x:
                     return True
             return False
 
         if isinstance(data, dict):
             headers.append(('Content-Type', 'application/x-www-form-urlencoded'))
-            data = urlencode(data)
+            data = urlencode(data)  # type: ignore
         if isinstance(data, str):
             data = data.encode('utf-8')
             if not has_header('Content-Type'):
@@ -165,14 +173,20 @@ class Browser:
             self._ensure_state()
             self.id_counter += 1
             cmd = {
-                'action': 'download', 'id': self.id_counter, 'url': url, 'method': method, 'timeout': timeout,
-                'headers': self.addheaders + headers, 'visit': visit,}
+                'action': 'download',
+                'id': self.id_counter,
+                'url': url,
+                'method': method,
+                'timeout': timeout,
+                'headers': self.addheaders + headers,
+                'visit': visit,
+            }
             if data:
                 with open(os.path.join(self.tdir, f'i{self.id_counter}'), 'wb') as f:
                     if hasattr(data, 'read'):
-                        shutil.copyfileobj(data, f)
+                        shutil.copyfileobj(data, f)  # type: ignore
                     else:
-                        f.write(data)
+                        f.write(data)  # type: ignore
                 cmd['data_path'] = f.name
                 for k, v in cmd['headers']:
                     if k.lower() == 'content-type':
@@ -184,7 +198,7 @@ class Browser:
             self._send_command(cmd)
         return res
 
-    def open(self, url_or_request: Request, data=None, timeout=None):
+    def open(self, url_or_request: Request | str, data=None, timeout=None):
         return self._open(url_or_request, data, timeout)
 
     def open_novisit(self, url_or_request: Request, data=None, timeout=None):
@@ -194,13 +208,14 @@ class Browser:
         return True
 
     def set_simple_cookie(self, name: str, value: str, domain: str | None = None, path: str | None = '/'):
-        '''
+        """
         Set a simple cookie using a name and value. If domain is specified, the cookie is only sent with requests
         to matching domains, otherwise it is sent with all requests. The leading dot in domain is optional.
         Similarly, by default all paths match, to restrict to certain path use the path parameter.
-        '''
+        """
         c = {'name': name, 'value': value, 'domain': domain, 'path': path}
-        self._send_command({'action': 'set_cookies', 'cookies':[c]})
+        self._send_command({'action': 'set_cookies', 'cookies': [c]})
+
     set_cookie = set_simple_cookie
 
     def set_user_agent(self, val: str = '') -> None:
@@ -213,9 +228,13 @@ class Browser:
     def _send_command(self, cmd):
         with self.lock:
             self._ensure_state()
-            self.worker.stdin.write(json.dumps(cmd).encode())
-            self.worker.stdin.write(b'\n')
-            self.worker.stdin.flush()
+            _worker = self.worker
+            assert _worker is not None
+            _w_stdin = _worker.stdin
+            assert _w_stdin is not None
+            _w_stdin.write(json.dumps(cmd).encode())
+            _w_stdin.write(b'\n')
+            _w_stdin.flush()
 
     def _ensure_state(self):
         with self.lock:
@@ -230,7 +249,11 @@ class Browser:
 
     def _dispatch(self):
         try:
-            for line in self.worker.stdout:
+            _dispatch_worker = self.worker
+            assert _dispatch_worker is not None
+            _dispatch_stdout = _dispatch_worker.stdout
+            assert _dispatch_stdout is not None
+            for line in _dispatch_stdout:
                 cmd = json.loads(line)
                 if cmd.get('action') == 'finished':
                     with self.lock:
@@ -241,6 +264,7 @@ class Browser:
         except Exception:
             if not self.shutting_down:
                 import traceback
+
                 traceback.print_exc()
 
     def shutdown(self):
@@ -248,9 +272,13 @@ class Browser:
         if self.worker:
             w, self.worker = self.worker, None
             with suppress(OSError):
-                w.stdin.close()
+                _w_stdin_s = w.stdin
+                assert _w_stdin_s is not None
+                _w_stdin_s.close()
             with suppress(OSError):
-                w.stdout.close()
+                _w_stdout_s = w.stdout
+                assert _w_stdout_s is not None
+                _w_stdout_s.close()
             give_up_at = time.monotonic() + 1.5
             while time.monotonic() < give_up_at and w.poll() is None:
                 time.sleep(0.01)
@@ -269,32 +297,37 @@ class Browser:
 
 
 class WebEngineBrowser(Browser):
-
     def run_worker(self) -> subprocess.Popen:
         return run_worker(self.tdir, self.user_agent, self.verify_ssl_certificates, function='webengine_worker')
 
 
 def run_worker(tdir: str, user_agent: str, verify_ssl_certificates: bool, function: str = 'worker'):
     from calibre.utils.ipc.simple_worker import start_pipe_worker
+
     return start_pipe_worker(f'from calibre.scraper.qt import {function}; {function}({tdir!r}, {user_agent!r}, {verify_ssl_certificates!r})')
 
 
 def worker(*args):
     from calibre.gui2 import must_use_qt
+
     must_use_qt()
     from .qt_backend import worker
+
     worker(*args)
 
 
 def webengine_worker(*args):
     from calibre.gui2 import must_use_qt
+
     must_use_qt()
     from .webengine_backend import worker
+
     worker(*args)
 
 
 def develop():
     import sys
+
     br = Browser()
     try:
         for url in sys.argv[1:]:

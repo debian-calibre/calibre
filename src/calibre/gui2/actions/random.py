@@ -1,20 +1,15 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, Kovid Goyal <kovid@kovidgoyal.net>
 
 import random
 
 from calibre.gui2.actions import InterfaceAction
+from calibre.utils.localization import _
 
 
 class PickRandomAction(InterfaceAction):
-
     name = 'Pick Random Book'
-    action_spec = (_('Pick a random book'), 'random.png',
-            _('Select a random book from your calibre library'), ())
+    action_spec = (_('Pick a random book'), 'random.png', _('Select a random book from your calibre library'), ())
     dont_add_to = frozenset(['context-menu-device'])
 
     def genesis(self):

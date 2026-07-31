@@ -8,11 +8,16 @@ import sys
 import time
 from threading import Thread
 
+_kdialog_supports_desktopfile: bool | None = None
+_linux_native_dialog_failed: bool = False
+_check_for_linux_native_dialogs_ans: str | bool | None = None
+
 from qt.core import QEventLoop
 
 from calibre import force_unicode
 from calibre.constants import DEBUG, filesystem_encoding, preferred_encoding
 from calibre.utils.config import dynamic
+from calibre.utils.localization import _
 from polyglot.builtins import reraise
 
 
@@ -104,6 +109,7 @@ def encode_arg(title):
 
 def image_extensions():
     from calibre.gui2.dnd import image_extensions
+
     return image_extensions()
 
 
@@ -117,6 +123,7 @@ def decode_output(raw):
 
 def run(cmd):
     from calibre.gui2 import sanitize_env_vars
+
     if DEBUG:
         try:
             print(cmd)
@@ -131,17 +138,19 @@ def run(cmd):
 
 # KDE {{{
 
-def kdialog_supports_desktopfile():
-    ans = getattr(kdialog_supports_desktopfile, 'ans', None)
-    if ans is None:
+
+def kdialog_supports_desktopfile() -> bool:
+    global _kdialog_supports_desktopfile
+    if _kdialog_supports_desktopfile is None:
         from calibre.gui2 import sanitize_env_vars
+
         try:
             with sanitize_env_vars():
                 raw = subprocess.check_output(['kdialog', '--help'])
-        except (subprocess.CalledProcessError, FileNotFoundError, OSError):
+        except subprocess.CalledProcessError, FileNotFoundError, OSError:
             raw = b'--desktopfile'
-        ans = kdialog_supports_desktopfile.ans = b'--desktopfile' in raw
-    return ans
+        _kdialog_supports_desktopfile = b'--desktopfile' in raw
+    return _kdialog_supports_desktopfile
 
 
 def kde_cmd(window, title, *rest):
@@ -222,12 +231,19 @@ def kdialog_choose_save_file(window, name, title, filters=[], all_files=True, in
 
 def kdialog_choose_images(window, name, title, select_only_single_file=True, formats=None):
     return kdialog_choose_files(
-        window, name, title, select_only_single_file=select_only_single_file, all_files=False,
-        filters=[(_('Images'), list(formats or image_extensions()))])
+        window,
+        name,
+        title,
+        select_only_single_file=select_only_single_file,
+        all_files=False,
+        filters=[(_('Images'), list(formats or image_extensions()))],
+    )
+
+
 # }}}
 
-
 # GTK {{{
+
 
 def zenity_cmd(window, title, *rest):
     ans = ['zenity', '--modal', '--file-selection', '--title=' + title, '--separator=\n']
@@ -305,8 +321,15 @@ def zenity_choose_save_file(window, name, title, filters=[], all_files=True, ini
 
 def zenity_choose_images(window, name, title, select_only_single_file=True, formats=None):
     return zenity_choose_files(
-        window, name, title, select_only_single_file=select_only_single_file, all_files=False,
-        filters=[(_('Images'), list(formats or image_extensions()))])
+        window,
+        name,
+        title,
+        select_only_single_file=select_only_single_file,
+        all_files=False,
+        filters=[(_('Images'), list(formats or image_extensions()))],
+    )
+
+
 # }}}
 
 
@@ -316,8 +339,10 @@ def linux_native_dialog(name):
 
     @functools.wraps(func)
     def looped(window, *args, **kwargs):
-        if hasattr(linux_native_dialog, 'native_failed'):
+        global _linux_native_dialog_failed
+        if _linux_native_dialog_failed:
             import importlib
+
             m = importlib.import_module('calibre.gui2.qt_file_dialogs')
             qfunc = getattr(m, 'choose_' + name)
             return qfunc(window, *args, **kwargs)
@@ -335,6 +360,7 @@ def linux_native_dialog(name):
                 while not loop.isRunning():
                     time.sleep(0.001)  # yield so that loop starts
                 loop.quit()
+
             t = Thread(name='FileDialogHelper', target=r)
             t.daemon = True
             t.start()
@@ -343,37 +369,47 @@ def linux_native_dialog(name):
                 reraise(*ret[1])
             return ret[0]
         except Exception:
-            linux_native_dialog.native_failed = True
+            _linux_native_dialog_failed = True
             import traceback
+
             traceback.print_exc()
             return looped(window, *args, **kwargs)
 
     return looped
 
 
-def check_for_linux_native_dialogs():
-    ans = getattr(check_for_linux_native_dialogs, 'ans', None)
-    if ans is None:
+def check_for_linux_native_dialogs() -> str | bool:
+    global _check_for_linux_native_dialogs_ans
+    if _check_for_linux_native_dialogs_ans is None:
         de = detect_desktop_environment()
         order = ('zenity', 'kdialog')
         if de == 'GNOME':
             order = ('zenity',)
         elif de == 'KDE':
             order = ('kdialog',)
+        ans: str | bool = False
         for exe in order:
             if is_executable_present(exe):
                 ans = exe
                 break
-        else:
-            ans = False
-        check_for_linux_native_dialogs.ans = ans
-    return ans
+        _check_for_linux_native_dialogs_ans = ans
+    return _check_for_linux_native_dialogs_ans
 
 
 if __name__ == '__main__':
     # print(repr(kdialog_choose_dir(None, 'testkddcd', 'Testing choose dir...')))
-    print(repr(kdialog_choose_files(None, 'testkddcf', 'Testing choose files...', select_only_single_file=False, filters=[
-        ('moo', 'epub png'.split()), ('boo', 'docx'.split())], all_files=True)))
+    print(
+        repr(
+            kdialog_choose_files(
+                None,
+                'testkddcf',
+                'Testing choose files...',
+                select_only_single_file=False,
+                filters=[('moo', 'epub png'.split()), ('boo', 'docx'.split())],
+                all_files=True,
+            )
+        )
+    )
     # print(repr(kdialog_choose_images(None, 'testkddci', 'Testing choose images...')))
     # print(repr(kdialog_choose_save_file(None, 'testkddcs', 'Testing choose save file...', initial_filename='moo.x')))
     # print(repr(zenity_choose_dir(None, 'testzcd', 'Testing choose dir...')))

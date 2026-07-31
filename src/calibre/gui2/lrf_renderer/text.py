@@ -1,5 +1,4 @@
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
 import collections
 import copy
@@ -7,6 +6,7 @@ import numbers
 import operator
 import re
 import sys
+from typing import cast
 
 from qt.core import QBrush, QColor, QFont, QFontMetrics, QGraphicsItem, QGraphicsPixmapItem, QGraphicsRectItem, QPen, QPixmap, QRectF, Qt
 
@@ -31,12 +31,11 @@ def WEIGHT(a, b):
 
 
 class PixmapItem(QGraphicsPixmapItem):
-
     def __init__(self, data, encoding, x0, y0, x1, y1, xsize, ysize):
         p = QPixmap()
         p.loadFromData(data, encoding, Qt.ImageConversionFlag.AutoColor)
         w, h = p.width(), p.height()
-        p = p.copy(x0, y0, min(w, x1-x0), min(h, y1-y0))
+        p = p.copy(x0, y0, min(w, x1 - x0), min(h, y1 - y0))
         if p.width() != xsize or p.height() != ysize:
             p = p.scaled(int(xsize), int(ysize), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation)
         QGraphicsPixmapItem.__init__(self, p)
@@ -46,27 +45,32 @@ class PixmapItem(QGraphicsPixmapItem):
 
     def resize(self, width, height):
         p = self.pixmap()
-        self.setPixmap(p.scaled(int(width), int(height), Qt.AspectRatioMode.IgnoreAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        self.setPixmap(
+            p.scaled(
+                int(width),
+                int(height),
+                Qt.AspectRatioMode.IgnoreAspectRatio,
+                Qt.TransformationMode.SmoothTransformation,
+            )
+        )
         self.width, self.height = width, height
 
 
 class Plot(PixmapItem):
-
     def __init__(self, plot, dpi):
         img = plot.refobj
-        xsize, ysize = dpi*plot.attrs['xsize']/720, dpi*plot.attrs['ysize']/720
+        xsize, ysize = dpi * plot.attrs['xsize'] / 720, dpi * plot.attrs['ysize'] / 720
         x0, y0, x1, y1 = img.x0, img.y0, img.x1, img.y1
         data, encoding = img.data, img.encoding
         PixmapItem.__init__(self, data, encoding, x0, y0, x1, y1, xsize, ysize)
 
 
 class FontLoader:
-
     font_map = {
-                'Swis721 BT Roman'     : 'Liberation Sans',
-                'Dutch801 Rm BT Roman' : 'Liberation Serif',
-                'Courier10 BT Roman'   : 'Liberation Mono',
-                }
+        'Swis721 BT Roman': 'Liberation Sans',
+        'Dutch801 Rm BT Roman': 'Liberation Serif',
+        'Courier10 BT Roman': 'Liberation Mono',
+    }
 
     def __init__(self, font_map, dpi):
         self.face_map = {}
@@ -87,14 +91,19 @@ class FontLoader:
         sz = text_style.fontsize
         wt = text_style.fontweight
         style = text_style.fontstyle
-        font = (face, wt, style, sz,)
+        font = (
+            face,
+            wt,
+            style,
+            sz,
+        )
         if font in self.cache:
             rfont = self.cache[font]
         else:
             italic = font[2] == QFont.Style.StyleItalic
             rfont = QFont(font[0], int(font[3]), int(font[1]), italic)
             rfont.setPixelSize(int(font[3]))
-            rfont.setBold(wt>=69)
+            rfont.setBold(wt >= 69)
             self.cache[font] = rfont
         qfont = rfont
         if text_style.emplinetype != 'none':
@@ -108,7 +117,7 @@ class Style:
     map = collections.defaultdict(lambda: NULL)
 
     def __init__(self, style, dpi):
-        self.fdpi = dpi/720
+        self.fdpi = dpi / 720
         self.update(style.as_dict())
 
     def update(self, *args, **kwds):
@@ -122,8 +131,8 @@ class Style:
 
 
 class TextStyle(Style):
-
-    map = collections.defaultdict(lambda: NULL,
+    map = collections.defaultdict(
+        lambda: NULL,
         fontsize=operator.mul,
         fontwidth=operator.mul,
         fontweight=WEIGHT,
@@ -138,11 +147,11 @@ class TextStyle(Style):
         textlinewidth=operator.mul,
         charspace=operator.mul,
         linecolor=COLOR,
-        )
+    )
 
     def __init__(self, style, font_loader, ruby_tags):
         self.font_loader = font_loader
-        self.fontstyle   = QFont.Style.StyleNormal
+        self.fontstyle = QFont.Style.StyleNormal
         for attr in ruby_tags:
             setattr(self, attr, ruby_tags[attr])
         Style.__init__(self, style, font_loader.dpi)
@@ -155,45 +164,40 @@ class TextStyle(Style):
 
 
 class BlockStyle(Style):
-    map = collections.defaultdict(lambda: NULL,
+    map = collections.defaultdict(
+        lambda: NULL,
         bgcolor=COLOR,
         framecolor=COLOR,
-        )
+    )
+    blockwidth: int
+    blockheight: int
+    sidemargin: int
+    blockrule: str
 
 
 class ParSkip:
-
     def __init__(self, parskip):
         self.height = parskip
 
     def __str__(self):
-        return 'Parskip: '+str(self.height)
+        return 'Parskip: ' + str(self.height)
 
 
 class TextBlock:
-
     class HeightExceeded(Exception):
         pass
 
-    has_content = property(fget=lambda self: self.peek_index < len(self.lines)-1)
-    XML_ENTITIES = {
-            'apos': "'",
-            'quot': '"',
-            'amp' : '&',
-            'lt'  : '<',
-            'gt'  : '>'
-    }
+    has_content = property(fget=lambda self: self.peek_index < len(self.lines) - 1)
+    XML_ENTITIES = {'apos': "'", 'quot': '"', 'amp': '&', 'lt': '<', 'gt': '>'}
 
-    def __init__(self, tb, font_loader, respect_max_y, text_width, logger,
-                 opts, ruby_tags, link_activated):
+    def __init__(self, tb, font_loader, respect_max_y, text_width, logger, opts, ruby_tags, link_activated):
         self.block_id = tb.id
-        self.bs, self.ts = BlockStyle(tb.style, font_loader.dpi), \
-                            TextStyle(tb.textstyle, font_loader, ruby_tags)
+        self.bs, self.ts = BlockStyle(tb.style, font_loader.dpi), TextStyle(tb.textstyle, font_loader, ruby_tags)
         self.bs.update(tb.attrs)
         self.ts.update(tb.attrs)
         self.lines = collections.deque()
         self.line_length = min(self.bs.blockwidth, text_width)
-        self.line_length -= 2*self.bs.sidemargin
+        self.line_length -= 2 * self.bs.sidemargin
         self.line_offset = self.bs.sidemargin
         self.first_line = True
         self.current_style = self.ts.copy()
@@ -213,7 +217,7 @@ class TextBlock:
             # logger.warning('TextBlock height exceeded, skipping line:\n%s'%(err,))
 
     def peek(self):
-        return self.lines[self.peek_index+1]
+        return self.lines[self.peek_index + 1]
 
     def commit(self):
         self.peek_index += 1
@@ -224,6 +228,7 @@ class TextBlock:
     def create_link(self, refobj):
         if self.current_line is None:
             self.create_line()
+        assert self.current_line is not None
         self.current_line.start_link(refobj, self.link_activated)
         self.link_activated(refobj, on_creation=True)
 
@@ -276,13 +281,16 @@ class TextBlock:
                 plot = Plot(i, self.font_loader.dpi)
                 if self.current_line is None:
                     self.create_line()
+                assert self.current_line is not None
                 if not self.current_line.can_add_plot(plot):
                     self.end_line()
                     self.create_line()
+                assert self.current_line is not None
                 self.current_line.add_plot(plot)
             elif i.name in ['Sup', 'Sub']:
                 if self.current_line is None:
                     self.create_line()
+                assert self.current_line is not None
                 self.current_line.valign = i.name
                 open_containers.append(((self.close_valign, []),))
             elif i.name == 'Space' and self.current_line is not None:
@@ -298,10 +306,8 @@ class TextBlock:
 
     def end_line(self):
         if self.current_line is not None:
-            self.height += self.current_line.finalize(self.current_style.baselineskip,
-                                                      self.current_style.linespace,
-                                                      self.opts.visual_debug)
-            if self.height > self.max_y+10:
+            self.height += self.current_line.finalize(self.current_style.baselineskip, self.current_style.linespace, self.opts.visual_debug)
+            if self.height > self.max_y + 10:
                 raise TextBlock.HeightExceeded(str(self.current_line))
             self.lines.append(self.current_line)
             self.current_line = None
@@ -312,10 +318,14 @@ class TextBlock:
         if self.first_line:
             line_length -= self.current_style.parindent
             line_offset += self.current_style.parindent
-        self.current_line = Line(line_length, line_offset,
-                                 self.current_style.linespace,
-                                 self.current_style.align,
-                                 self.opts.hyphenate, self.block_id)
+        self.current_line = Line(
+            line_length,
+            line_offset,
+            self.current_style.linespace,
+            self.current_style.align,
+            self.opts.hyphenate,
+            self.block_id,
+        )
         self.first_line = False
 
     def process_text(self, raw):
@@ -324,6 +334,7 @@ class TextBlock:
         while len(raw) > 0:
             if self.current_line is None:
                 self.create_line()
+            assert self.current_line is not None
             pos, line_filled = self.current_line.populate(raw, self.current_style)
             raw = raw[pos:]
             if line_filled:
@@ -342,25 +353,29 @@ class TextBlock:
 
 
 class Link(QGraphicsRectItem):
-    inactive_brush = QBrush(QColor(0xff, 0xff, 0xff, 0xff))
-    active_brush   = QBrush(QColor(0x00, 0x00, 0x00, 0x59))
+    inactive_brush = QBrush(QColor(0xFF, 0xFF, 0xFF, 0xFF))
+    active_brush = QBrush(QColor(0x00, 0x00, 0x00, 0x59))
 
     def __init__(self, parent, start, stop, refobj, slot):
-        QGraphicsRectItem.__init__(self, start, 0, stop-start, parent.height, parent)
+        QGraphicsRectItem.__init__(self, start, 0, stop - start, parent.height, parent)
         self.refobj = refobj
         self.slot = slot
-        self.brush = self.__class__.inactive_brush
+        self._brush = self.__class__.inactive_brush
         self.setPen(QPen(Qt.PenStyle.NoPen))
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setAcceptHoverEvents(True)
 
     def hoverEnterEvent(self, event):
-        self.brush = self.__class__.active_brush
-        self.parentItem().update()
+        self._brush = self.__class__.active_brush
+        parent_item = self.parentItem()
+        assert parent_item is not None
+        parent_item.update()
 
     def hoverLeaveEvent(self, event):
-        self.brush = self.__class__.inactive_brush
-        self.parentItem().update()
+        self._brush = self.__class__.inactive_brush
+        parent_item = self.parentItem()
+        assert parent_item is not None
+        parent_item.update()
 
     def mousePressEvent(self, event):
         self.hoverLeaveEvent(None)
@@ -382,9 +397,7 @@ class Line(QGraphicsItem):
         self.height, self.descent, self.width = 0, 0, 0
         self.links = collections.deque()
         self.current_link = None
-        self.valign = None
-        if not hasattr(self, 'children'):
-            self.children = self.childItems
+        self.valign: str | None = None
 
     def start_link(self, refobj, slot):
         self.current_link = [self.current_width, sys.maxsize, refobj, slot]
@@ -410,7 +423,7 @@ class Line(QGraphicsItem):
         matches = self.__class__.whitespace.finditer(phrase)
         font = QFont(ts.font)
         if self.valign is not None:
-            font.setPixelSize(int(font.pixelSize()/1.5))
+            font.setPixelSize(int(font.pixelSize() / 1.5))
         fm = QFontMetrics(font)
         single_space_width = fm.horizontalAdvance(' ')
         height, descent = fm.height(), fm.descent()
@@ -419,7 +432,7 @@ class Line(QGraphicsItem):
             left, right = match.span()
             if not process_space:
                 right = left
-            space_width = single_space_width * (right-left)
+            space_width = single_space_width * (right - left)
             word = phrase[phrase_pos:left]
             width = fm.horizontalAdvance(word)
             if self.current_width + width < self.line_length:
@@ -432,24 +445,24 @@ class Line(QGraphicsItem):
             # Word doesn't fit on line
             if self.hyphenate and len(word) > 3:
                 tokens = hyphenate_word(word)
-                for i in range(len(tokens)-2, -1, -1):
-                    word = ''.join(tokens[0:i+1])+'-'
+                for i in range(len(tokens) - 2, -1, -1):
+                    word = ''.join(tokens[0 : i + 1]) + '-'
                     width = fm.horizontalAdvance(word)
                     if self.current_width + width < self.line_length:
                         self.commit(word, width, height, descent, ts, font)
-                        return phrase_pos + len(word)-1, True
+                        return phrase_pos + len(word) - 1, True
             if self.current_width < 5:  # Force hyphenation as word is longer than line
-                for i in range(len(word)-5, 0, -5):
+                for i in range(len(word) - 5, 0, -5):
                     part = word[:i] + '-'
                     width = fm.horizontalAdvance(part)
                     if self.current_width + width < self.line_length:
                         self.commit(part, width, height, descent, ts, font)
-                        return phrase_pos + len(part)-1, True
+                        return phrase_pos + len(part) - 1, True
             # Failed to add word.
             return phrase_pos, True
 
         if not processed:
-            return self.populate(phrase+' ', ts, False)
+            return self.populate(phrase + ' ', ts, False)
 
         return phrase_pos, False
 
@@ -467,7 +480,7 @@ class Line(QGraphicsItem):
     def justify(self):
         delta = self.line_length - self.current_width
         if self.length_in_space > 0:
-            frac = 1 + float(delta)/self.length_in_space
+            frac = 1 + float(delta) / self.length_in_space
             for i in range(len(self.tokens)):
                 if isinstance(self.tokens[i], numbers.Number):
                     self.tokens[i] *= frac
@@ -498,8 +511,8 @@ class Line(QGraphicsItem):
     def boundingRect(self):
         return QRectF(0, 0, self.width, self.height)
 
-    def paint(self, painter, option, widget):
-        x, y = 0, 0+self.height-self.descent
+    def paint(self, painter, option, widget=None):
+        x, y = 0, 0 + self.height - self.descent
         if self.vdebug:
             painter.save()
             painter.setPen(QPen(Qt.GlobalColor.yellow, 1, Qt.PenStyle.DotLine))
@@ -507,8 +520,8 @@ class Line(QGraphicsItem):
             painter.restore()
         painter.save()
         painter.setPen(QPen(Qt.PenStyle.NoPen))
-        for c in self.children():
-            painter.setBrush(c.brush)
+        for c in self.childItems():
+            painter.setBrush(cast('Link', c)._brush)
             painter.drawRect(c.boundingRect())
         painter.restore()
         painter.save()
@@ -527,9 +540,9 @@ class Line(QGraphicsItem):
                 if tok.valign is None:
                     painter.drawText(int(x), int(y), tok.string)
                 elif tok.valign == 'Sub':
-                    painter.drawText(int(x+1), int(y+self.descent/1.5), tok.string)
+                    painter.drawText(int(x + 1), int(y + self.descent / 1.5), tok.string)
                 elif tok.valign == 'Sup':
-                    painter.drawText(int(x+1), int(y-2.*self.descent), tok.string)
+                    painter.drawText(int(x + 1), int(y - 2.0 * self.descent), tok.string)
                 x += tok.width
             else:
                 painter.drawPixmap(int(x), 0, tok.pixmap())
@@ -572,7 +585,7 @@ class Line(QGraphicsItem):
         if self.align == 'foot':
             return textwidth - self.width
         if self.align == 'center':
-            return (textwidth-self.width)/2.
+            return (textwidth - self.width) / 2.0
 
     def __unicode__(self):
         s = ''
@@ -588,7 +601,6 @@ class Line(QGraphicsItem):
 
 
 class Word:
-
     def __init__(self, string, width, height, ts, font, valign):
         self.string, self.width, self.height = string, width, height
         self.font = font

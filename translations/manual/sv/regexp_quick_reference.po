@@ -6,16 +6,16 @@
 # Translators:
 # Merarom <merarom@yahoo.es>, 2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2026
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.8.0\n"
+"Project-Id-Version: calibre 9.11.104\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2017-12-15 03:02+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2026\n"
+"Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (https://app.transifex.com/calibre/teams/19337/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +60,7 @@ msgstr "Exempel:"
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:241
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
 msgid "**Representation**"
-msgstr "**Representation**"
+msgstr "**Notation**"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:21
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:52
@@ -141,7 +141,7 @@ msgstr "Exempel::"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:49
 msgid "Shorthand character classes"
-msgstr "Stenografiska karaktärsklasser"
+msgstr "Förkortade teckenklasser"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:55
 msgid "``\\d``"
@@ -427,9 +427,9 @@ msgid ""
 " *search* or *replace* patterns with ``\\n``, where ``n`` is the sequence "
 "number of the capturing group (starting at 1 in reading order)"
 msgstr ""
-"Fångstgrupp som lagrar matchningen och kan återanvändas senare i *sök* eller"
-" *ersätt* mönstren med ``\\n``, där ``n`` är sekvensnumret för fångstgruppen"
-" (som börjar vid 1 i läsordningen)"
+"Fångstgrupp som lagrar matchningen. Den kan återanvändas senare i *sök-* "
+"eller *ersättningsmönstret* med ``\\n``, där ``n`` är fångstgruppens "
+"ordningsnummer (från 1 i läsordning)."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:167
 msgid "``(?:expression)``"
@@ -449,9 +449,9 @@ msgid ""
 "passes, and if the rest of the pattern fails, it will not backtrack to try "
 "other combinations with the expression. Atomic groups do not capture."
 msgstr ""
-"Atomic Group: Så snart uttrycket är uppfyllt passerar regexp-motorn, och om "
-"resten av mönstret misslyckas kommer det inte att gå tillbaka för att testa "
-"andra kombinationer med uttrycket. Atomgrupper fångar inte."
+"Atomgrupp: Så snart uttrycket har matchats fortsätter motorn. Om resten av "
+"mönstret sedan misslyckas går den inte tillbaka in i atomgruppen för att "
+"prova andra kombinationer. Atomgrupper fångar inte."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:176
 msgid "``(?|expression)``"
@@ -531,10 +531,10 @@ msgid ""
 "satisfied, the regexp engine passes, and if the rest of the pattern fails, "
 "it will not backtrack inside the lookaround to try other combinations."
 msgstr ""
-"Lookaheads och lookbehinds konsumerar inte tecken, de är noll långa och "
-"fångar inte. De är atomgrupper: så snart påståendet är tillfredsställt "
-"passerar regexp-motorn, och om resten av mönstret misslyckas kommer det inte"
-" att spåra inuti sökningen för att testa andra kombinationer."
+"Framåt- och bakåtblickande villkor förbrukar inga tecken, har längden noll "
+"och fångar inte. De är atomgrupper: så snart villkoret är uppfyllt "
+"fortsätter motorn, och om resten av mönstret misslyckas söker den inte bakåt"
+" inne i villkoret efter andra kombinationer."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
 msgid ""
@@ -567,13 +567,12 @@ msgid ""
 "``\\K`` rather than a positive lookbehind when you have a quantifier (or "
 "worse, several) in a capturing group of the positive lookbehind."
 msgstr ""
-"Grupper kan placeras i lookarounds, men fånga är sällan användbart. Icke "
-"desto mindre, om det är användbart, kommer det att vara nödvändigt att vara "
-"mycket försiktig när man använder en kvantifierare i en lookbehind: "
-"girigheten som är associerad med frånvaron av backtracking kan ge en "
-"överraskande fångst. Använd därför ``\\K`` i stället för en positiv "
-"lookbehind när du har en kvantifierare (eller värre, flera) i en fångande "
-"grupp av den positiva lookbehind."
+"Grupper kan placeras i lookaround-uttryck, men fångst är sällan användbar. "
+"Om det ändå behövs måste du vara mycket försiktig med kvantifierare i ett "
+"lookbehind-uttryck: girigheten i kombination med avsaknaden av backtracking "
+"kan ge oväntade fångster. Använd därför ``\\K`` i stället för en positiv "
+"lookbehind när en fångstgrupp i lookbehind-uttrycket innehåller en eller "
+"flera kvantifierare."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:228
 msgid "Example of negative lookahead:"
@@ -766,5 +765,5 @@ msgid ""
 "Makes the ``^`` and ``$`` anchors match the start and end of lines instead "
 "of the start and end of the entire string."
 msgstr ""
-"Gör så att ankarna ``^`` och ``$`` matchar början och slutet av rader "
-"istället för början och slutet av hela strängen."
+"Gör så att ankarna ``^`` och ``$`` matchar början och slutet av rader i "
+"stället för början och slutet av hela strängen."

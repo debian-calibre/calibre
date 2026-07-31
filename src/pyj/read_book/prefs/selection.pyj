@@ -3,11 +3,11 @@
 from __python__ import bound_methods, hash_literals
 
 from elementmaker import E
+from gettext import gettext as _
 
 from book_list.globals import get_session_data
 from complete import create_simple_input_with_history
 from dom import clear, svgicon, unique_id
-from gettext import gettext as _
 from read_book.globals import is_dark_theme
 from read_book.highlights import all_styles
 from read_book.prefs.utils import create_button_box
@@ -146,7 +146,7 @@ def update_quick_action_table():
 
 
 def selected_quick_actions():
-    ans = v'[]'
+    ans = []
     c = get_container().querySelector('.quick-actions')
     for inp in c.querySelectorAll('input:checked'):
         if inp.value:

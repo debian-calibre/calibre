@@ -1,10 +1,8 @@
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
 import re
 
-from qt.core import QDialog, QDialogButtonBox
+from qt.core import QCheckBox, QComboBox, QDialog, QDialogButtonBox, QLineEdit
 
 from calibre.gui2.store.config.chooser.adv_search_builder_ui import Ui_Dialog
 from calibre.library.caches import CONTAINS_MATCH, EQUALS_MATCH
@@ -12,13 +10,16 @@ from calibre.utils.localization import localize_user_manual_link
 
 
 class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
+    FIELDS: dict[str, str]
+    text: QLineEdit
+    negate: QCheckBox
+    field: QComboBox
 
     def __init__(self, parent):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         try:
-            self.sh_label.setText(self.sh_label.text() % localize_user_manual_link(
-                'https://manual.calibre-ebook.com/gui.html#the-search-interface'))
+            self.sh_label.setText(self.sh_label.text() % localize_user_manual_link('https://manual.calibre-ebook.com/gui.html#the-search-interface'))
         except TypeError:
             pass  # link already localized
 
@@ -35,9 +36,13 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
 
     def tab_changed(self, idx):
         if idx == 1:
-            self.tab_2_button_box.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+            btn = self.tab_2_button_box.button(QDialogButtonBox.StandardButton.Ok)
+            assert btn is not None
+            btn.setDefault(True)
         else:
-            self.buttonBox.button(QDialogButtonBox.StandardButton.Ok).setDefault(True)
+            btn = self.buttonBox.button(QDialogButtonBox.StandardButton.Ok)
+            assert btn is not None
+            btn.setDefault(True)
 
     def advanced_search_button_pushed(self):
         self.adv_search_used = True
@@ -94,8 +99,8 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
         txt = str(self.text.text()).strip()
         if txt:
             if self.negate.isChecked():
-                txt = '!'+txt
-            tok = self.FIELDS[str(self.field.currentText())]+txt
+                txt = '!' + txt
+            tok = self.FIELDS[str(self.field.currentText())] + txt
             if re.search(r'\s', tok):
                 tok = f'"{tok}"'
             return tok

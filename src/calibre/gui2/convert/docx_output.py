@@ -1,20 +1,18 @@
-__license__ = 'GPL 3'
-__copyright__ = '2009, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
 from qt.core import QCheckBox, QComboBox, QDoubleSpinBox, QFormLayout, QLineEdit, QSizePolicy
 
 from calibre.ebooks.conversion.config import OPTIONS
 from calibre.gui2.convert import Widget
+from calibre.utils.localization import _
 
 paper_size_model = None
 orientation_model = None
 
 
 class PluginWidget(Widget):
-
     TITLE = _('DOCX output')
-    HELP = _('Options specific to')+' DOCX '+_('output')
+    HELP = _('Options specific to') + ' DOCX ' + _('output')
     COMMIT_NAME = 'docx_output'
     ICON = 'mimetypes/docx.png'
 
@@ -24,7 +22,9 @@ class PluginWidget(Widget):
             self.opt_docx_page_size.addItem(x)
 
         self.initialize_options(get_option, get_help, db, book_id)
-        self.layout().setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        lay = self.layout()
+        assert isinstance(lay, QFormLayout)
+        lay.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
     def setupUi(self, *a):
         self.l = l = QFormLayout(self)
@@ -33,7 +33,12 @@ class PluginWidget(Widget):
         self.opt_docx_custom_page_size = w = QLineEdit(self)
         w.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         l.addRow(_('&Custom size:'), w)
-        for i, text in enumerate((_('Page &left margin'), _('Page &top margin'), _('Page &right margin'), _('Page &bottom margin'))):
+        for i, text in enumerate((
+            _('Page &left margin'),
+            _('Page &top margin'),
+            _('Page &right margin'),
+            _('Page &bottom margin'),
+        )):
             m = 'left top right bottom'.split()[i]
             w = QDoubleSpinBox(self)
             w.setRange(-100, 500), w.setSuffix(' pt'), w.setDecimals(1)

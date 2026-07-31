@@ -15,6 +15,7 @@ from calibre.ai.open_router import OpenRouterAI
 from calibre.ai.prefs import decode_secret, pref_for_provider
 from calibre.ai.utils import chat_with_error_handler, develop_text_chat, get_cached_resource, read_streaming_response
 from calibre.constants import cache_dir
+from calibre.utils.localization import _
 
 module_version = 2  # needed for live updates
 MODELS_URL = 'https://openrouter.ai/api/v1/models'
@@ -39,22 +40,26 @@ def human_readable_model_name(model_id: str) -> str:
 
 class Pricing(NamedTuple):
     # Values are in credits per token/request/unit
-    input_token: float        = 0  # cost per input token
-    output_token: float       = 0  # cost per output token
-    request: float            = 0  # per API request
-    image: float              = 0  # per image
-    web_search: float         = 0  # per web search
+    input_token: float = 0  # cost per input token
+    output_token: float = 0  # cost per output token
+    request: float = 0  # per API request
+    image: float = 0  # per image
+    web_search: float = 0  # per web search
     internal_reasoning: float = 0  # cost per internal reasoning token
-    input_cache_read: float   = 0  # cost per cached input token read
-    input_cache_write: float  = 0  # cost per cached input token write
+    input_cache_read: float = 0  # cost per cached input token read
+    input_cache_write: float = 0  # cost per cached input token write
 
     @classmethod
     def from_dict(cls, x: dict[str, str]) -> Pricing:
         return Pricing(
-            input_token=float(x['prompt']), output_token=float(x['completion']), request=float(x.get('request', 0)),
-            image=float(x.get('image', 0)), web_search=float(x.get('web_search', 0)),
+            input_token=float(x['prompt']),
+            output_token=float(x['completion']),
+            request=float(x.get('request', 0)),
+            image=float(x.get('image', 0)),
+            web_search=float(x.get('web_search', 0)),
             internal_reasoning=float(x.get('internal_reasoning', 0)),
-            input_cache_read=float(x.get('input_cache_read', 0)), input_cache_write=float(x.get('input_cache_write', 0)),
+            input_cache_read=float(x.get('input_cache_read', 0)),
+            input_cache_write=float(x.get('input_cache_write', 0)),
         )
 
     @property
@@ -66,7 +71,7 @@ class Model(NamedTuple):
     name: str
     id: str
     slug: str
-    created: int
+    created: datetime.datetime
     description: str
     context_length: int
     pricing: Pricing
@@ -95,7 +100,7 @@ class Model(NamedTuple):
         return re.sub(r' \(free\)$', '', self.name.partition(':')[-1].strip()).strip()
 
     @classmethod
-    def from_dict(cls, x: dict[str, object]) -> Model:
+    def from_dict(cls, x: dict[str, Any]) -> Model:
         arch = x['architecture']
         capabilities = AICapabilities.none
         if 'text' in arch['input_modalities']:
@@ -105,10 +110,16 @@ class Model(NamedTuple):
                 capabilities |= AICapabilities.text_to_image
 
         return Model(
-            name=x['name'], id=x['id'], created=datetime.datetime.fromtimestamp(x['created'], datetime.UTC),
-            description=x['description'], context_length=x['context_length'], slug=x['canonical_slug'],
-            parameters=tuple(x['supported_parameters']), pricing=Pricing.from_dict(x['pricing']),
-            is_moderated=x['top_provider']['is_moderated'], tokenizer=arch['tokenizer'],
+            name=x['name'],
+            id=x['id'],
+            created=datetime.datetime.fromtimestamp(x['created'], datetime.UTC),
+            description=x['description'],
+            context_length=x['context_length'],
+            slug=x['canonical_slug'],
+            parameters=tuple(x['supported_parameters']),
+            pricing=Pricing.from_dict(x['pricing']),
+            is_moderated=x['top_provider']['is_moderated'],
+            tokenizer=arch['tokenizer'],
             capabilities=capabilities,
         )
 
@@ -123,6 +134,7 @@ def parse_models_list(entries: dict[str, Any]) -> dict[str, Model]:
 
 def config_widget():
     from calibre.ai.open_router.config import ConfigWidget
+
     return ConfigWidget()
 
 
@@ -139,9 +151,7 @@ def is_ready_for_use() -> bool:
 
 
 @lru_cache(64)
-def free_model_choice(
-    capabilities: AICapabilities = AICapabilities.text_to_text, allow_paid: bool = False
-) -> tuple[Model, ...]:
+def free_model_choice(capabilities: AICapabilities = AICapabilities.text_to_text, allow_paid: bool = False) -> tuple[Model, ...]:
     gemini_free, gemini_paid = [], []
     deep_seek_free, deep_seek_paid = [], []
     grok_free, grok_paid = [], []
@@ -184,7 +194,7 @@ def free_model_choice(
     return tuple(sorted(only(gemini_paid, gpt5_paid, grok_paid, claude_paid, deep_seek_paid), key=lambda m: m.pricing.output_token))
 
 
-def model_choice_for_text() -> Iterator[Model, ...]:
+def model_choice_for_text() -> Iterator[Model]:
     model_id, model_name = pref('text_model', ('', ''))
     if m := get_available_models().get(model_id):
         yield m
@@ -270,11 +280,21 @@ def text_chat_implementation(messages: Iterable[ChatMessage], use_model: str = '
             rd = d.get('reasoning_details') or ()
             role = d.get('role') or 'assistant'
             if c or r or rd:
-                yield ChatResponse(content=c, reasoning=r, reasoning_details=rd, type=ChatMessageType(role), plugin_name=OpenRouterAI.name)
+                yield ChatResponse(
+                    content=c,
+                    reasoning=r,
+                    reasoning_details=rd,
+                    type=ChatMessageType(role),
+                    plugin_name=OpenRouterAI.name,
+                )
         if u := data.get('usage'):
             yield ChatResponse(
-                cost=float(u['cost'] or 0), currency=_('credits'), provider=data.get('provider') or '',
-                model=data.get('model') or '', has_metadata=True, plugin_name=OpenRouterAI.name
+                cost=float(u['cost'] or 0),
+                currency=_('credits'),
+                provider=data.get('provider') or '',
+                model=data.get('model') or '',
+                has_metadata=True,
+                plugin_name=OpenRouterAI.name,
             )
 
 

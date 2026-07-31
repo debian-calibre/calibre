@@ -1,16 +1,14 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid@kovidgoyal.net>
 
 import re
 import sys
 from functools import partial
+from typing import ClassVar, TypedDict
 
 from qt.core import (
     QAbstractItemView,
+    QBoxLayout,
     QCheckBox,
     QComboBox,
     QDoubleSpinBox,
@@ -35,15 +33,14 @@ from calibre.ebooks.conversion.config import load_defaults
 from calibre.gui2 import error_dialog, gprefs, open_url, question_dialog
 from calibre.utils.config import JSONConfig
 from calibre.utils.icu import sort_key
-from calibre.utils.localization import localize_user_manual_link
+from calibre.utils.localization import _, localize_user_manual_link
 
 from .catalog_epub_mobi_ui import Ui_Form
 
 
 class PluginWidget(QWidget, Ui_Form):
-
     TITLE = _('E-book options')
-    HELP  = _('Options specific to')+' AZW3/EPUB/MOBI '+_('output')
+    HELP = _('Options specific to') + ' AZW3/EPUB/MOBI ' + _('output')
     DEBUG = False
     handles_scrolling = True
 
@@ -51,7 +48,7 @@ class PluginWidget(QWidget, Ui_Form):
     sync_enabled = True
 
     # Formats supported by this plugin
-    formats = {'azw3','epub','mobi'}
+    formats = {'azw3', 'epub', 'mobi'}
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -86,49 +83,57 @@ class PluginWidget(QWidget, Ui_Form):
             elif type(self.__dict__[item]) is QTextEdit:
                 TextEditControls.append(self.__dict__[item].objectName())
 
-        option_fields = list(zip(CheckBoxControls,
-                            [True for i in CheckBoxControls],
-                            ['check_box' for i in CheckBoxControls]))
-        option_fields += list(zip(ComboBoxControls,
-                            [None for i in ComboBoxControls],
-                            ['combo_box' for i in ComboBoxControls]))
-        option_fields += list(zip(RadioButtonControls,
-                            [None for i in RadioButtonControls],
-                            ['radio_button' for i in RadioButtonControls]))
+        option_fields: list[tuple[str, bool | str | int | float | dict[str, int | str] | None, str]] = list(
+            zip(CheckBoxControls, [True for i in CheckBoxControls], ['check_box' for i in CheckBoxControls])
+        )
+        option_fields += list(zip(ComboBoxControls, [None for i in ComboBoxControls], ['combo_box' for i in ComboBoxControls]))
+        option_fields += list(zip(RadioButtonControls, [None for i in RadioButtonControls], ['radio_button' for i in RadioButtonControls]))
 
         # LineEditControls
-        option_fields += list(zip(['exclude_genre'],[r'\[.+\]|^\+$'],['line_edit']))
+        option_fields += list(zip(['exclude_genre'], [r'\[.+\]|^\+$'], ['line_edit']))
 
         # TextEditControls
         # option_fields += list(zip(['exclude_genre_results'],['excluded genres will appear here'],['text_edit']))
 
         # SpinBoxControls
-        option_fields += list(zip(['thumb_width'],[1.00],['spin_box']))
+        option_fields += list(zip(['thumb_width'], [1.00], ['spin_box']))
 
         # Exclusion rules
-        option_fields += list(zip(['exclusion_rules_tw'],
-                             [{'ordinal':0,
-                               'enabled':True,
-                               'name':_('Catalogs'),
-                               'field':_('Tags'),
-                               'pattern':'Catalog'},],
-                             ['table_widget']))
+        option_fields += list(
+            zip(
+                ['exclusion_rules_tw'],
+                [
+                    {'ordinal': 0, 'enabled': True, 'name': _('Catalogs'), 'field': _('Tags'), 'pattern': 'Catalog'},
+                ],
+                ['table_widget'],
+            )
+        )
 
         # Prefix rules
-        option_fields += list(zip(['prefix_rules_tw','prefix_rules_tw'],
-                             [{'ordinal':0,
-                               'enabled':True,
-                               'name':_('Read book'),
-                               'field':_('Tags'),
-                               'pattern':'+',
-                               'prefix':'✓'},
-                              {'ordinal':1,
-                               'enabled':True,
-                               'name':_('Wishlist item'),
-                               'field':_('Tags'),
-                               'pattern':'Wishlist',
-                               'prefix':'×'},],
-                             ['table_widget','table_widget']))
+        option_fields += list(
+            zip(
+                ['prefix_rules_tw', 'prefix_rules_tw'],
+                [
+                    {
+                        'ordinal': 0,
+                        'enabled': True,
+                        'name': _('Read book'),
+                        'field': _('Tags'),
+                        'pattern': '+',
+                        'prefix': '✓',
+                    },
+                    {
+                        'ordinal': 1,
+                        'enabled': True,
+                        'name': _('Wishlist item'),
+                        'field': _('Tags'),
+                        'pattern': 'Wishlist',
+                        'prefix': '×',
+                    },
+                ],
+                ['table_widget', 'table_widget'],
+            )
+        )
 
         self.OPTION_FIELDS = option_fields
 
@@ -143,11 +148,11 @@ class PluginWidget(QWidget, Ui_Form):
             getattr(self, c_name).blockSignals(bool)
 
     def construct_tw_opts_object(self, c_name, opt_value, opts_dict):
-        '''
+        """
         Build an opts object from the UI settings to pass to the catalog builder
         Handles two types of rules sets, with and without ['prefix'] field
         Store processed opts object to opt_dict
-        '''
+        """
         rule_set = []
         for stored_rule in opt_value:
             rule = stored_rule.copy()
@@ -161,14 +166,14 @@ class PluginWidget(QWidget, Ui_Form):
             if rule['field'] != _('Tags'):
                 # Look up custom column friendly name
                 rule['field'] = self.eligible_custom_fields[rule['field']]['field']
-                if rule['pattern'] in [_('any value'),_('any date')]:
+                if rule['pattern'] in [_('any value'), _('any date')]:
                     rule['pattern'] = '.*'
                 elif rule['pattern'] == _('unspecified'):
                     rule['pattern'] = 'None'
             if 'prefix' in rule:
-                pr = (rule['name'],rule['field'],rule['pattern'],rule['prefix'])
+                pr = (rule['name'], rule['field'], rule['pattern'], rule['prefix'])
             else:
-                pr = (rule['name'],rule['field'],rule['pattern'])
+                pr = (rule['name'], rule['field'], rule['pattern'])
 
             rule_set.append(pr)
         opt_value = tuple(rule_set)
@@ -176,7 +181,7 @@ class PluginWidget(QWidget, Ui_Form):
         opts_dict[c_name[:-3]] = opt_value
 
     def exclude_genre_changed(self):
-        ''' Dynamically compute excluded genres.
+        """Dynamically compute excluded genres.
 
         Run exclude_genre regex against selected genre_source_field to show excluded tags.
 
@@ -186,15 +191,16 @@ class PluginWidget(QWidget, Ui_Form):
 
         Output:
          self.exclude_genre_results (QLabel): updated to show tags to be excluded as genres
-        '''
+        """
+
         def _truncated_results(excluded_tags, limit=180):
-            '''
+            """
             Limit number of genres displayed to avoid dialog explosion
-            '''
+            """
             start = []
             end = []
             lower = 0
-            upper = len(excluded_tags) -1
+            upper = len(excluded_tags) - 1
             excluded_tags.sort()
             while True:
                 if lower > upper:
@@ -251,24 +257,23 @@ class PluginWidget(QWidget, Ui_Form):
     def exclude_genre_reset(self):
         for default in self.OPTION_FIELDS:
             if default[0] == 'exclude_genre':
-                self.exclude_genre.setText(default[1])
+                self.exclude_genre.setText(str(default[1]))
                 break
 
     def fetch_eligible_custom_fields(self):
         self.all_custom_fields = self.db.custom_field_keys()
         custom_fields = {}
-        custom_fields[_('Tags')] = {'field':'tag', 'datatype':'text'}
+        custom_fields[_('Tags')] = {'field': 'tag', 'datatype': 'text'}
         for custom_field in self.all_custom_fields:
             field_md = self.db.metadata_for_field(custom_field)
-            if field_md['datatype'] in ['bool','composite','datetime','enumeration','text']:
-                custom_fields[field_md['name']] = {'field':custom_field,
-                                                   'datatype':field_md['datatype']}
+            if field_md['datatype'] in ['bool', 'composite', 'datetime', 'enumeration', 'text']:
+                custom_fields[field_md['name']] = {'field': custom_field, 'datatype': field_md['datatype']}
         self.eligible_custom_fields = custom_fields
 
     def generate_descriptions_changed(self, enabled):
-        '''
+        """
         Toggle Description-related controls
-        '''
+        """
         self.header_note_source_field.setEnabled(enabled)
         self.include_hr.setEnabled(enabled)
         self.merge_after.setEnabled(enabled)
@@ -277,16 +282,16 @@ class PluginWidget(QWidget, Ui_Form):
         self.thumb_width.setEnabled(enabled)
 
     def generate_genres_changed(self, enabled):
-        '''
+        """
         Toggle Genres-related controls
-        '''
+        """
         self.genre_source_field.setEnabled(enabled)
 
     def genre_source_field_changed(self, new_index):
-        '''
+        """
         Process changes in the genre_source_field combo box
         Update Excluded genres preview
-        '''
+        """
         new_source = self.genre_source_field.currentText()
         self.genre_source_field_name = new_source
         if new_source != _('Tags'):
@@ -304,9 +309,9 @@ class PluginWidget(QWidget, Ui_Form):
         return current_format, current_title
 
     def header_note_source_field_changed(self, new_index):
-        '''
+        """
         Process changes in the header_note_source_field combo box
-        '''
+        """
         new_source = self.header_note_source_field.currentText()
         self.header_note_source_field_name = new_source
         if new_source:
@@ -314,7 +319,7 @@ class PluginWidget(QWidget, Ui_Form):
             self.header_note_source_field_name = header_note_source_spec['field']
 
     def initialize(self, name, db):
-        '''
+        """
         CheckBoxControls (c_type: check_box):
             ['cross_reference_authors',
              'generate_titles','generate_series','generate_genres',
@@ -334,7 +339,7 @@ class PluginWidget(QWidget, Ui_Form):
         TextEditControls (c_type: text_edit):
             ['exclude_genre_results']
 
-        '''
+        """
         self.name = name
         self.db = db
         self.all_genre_tags = []
@@ -362,7 +367,7 @@ class PluginWidget(QWidget, Ui_Form):
                     index = getattr(self, c_name).findText(opt_value)
                     if index == -1:
                         if c_name == 'read_source_field':
-                            index = self.read_source_field.findText(_('Tags'))
+                            index = getattr(self, c_name).findText(_('Tags'))
                         elif c_name == 'genre_source_field':
                             index = self.genre_source_field.findText(_('Tags'))
                 getattr(self, c_name).setCurrentIndex(index)
@@ -422,12 +427,10 @@ class PluginWidget(QWidget, Ui_Form):
         self.generate_genres_changed(self.generate_genres.isChecked())
 
         # Initialize exclusion rules
-        self.exclusion_rules_table = ExclusionRules(self, self.exclusion_rules_gb,
-            'exclusion_rules_tw', exclusion_rules)
+        self.exclusion_rules_table = ExclusionRules(self, self.exclusion_rules_gb, 'exclusion_rules_tw', exclusion_rules)
 
         # Initialize prefix rules
-        self.prefix_rules_table = PrefixRules(self, self.prefix_rules_gb,
-            'prefix_rules_tw', prefix_rules)
+        self.prefix_rules_table = PrefixRules(self, self.prefix_rules_gb, 'prefix_rules_tw', prefix_rules)
 
         # Initialize excluded genres preview
         self.exclude_genre_changed()
@@ -440,9 +443,9 @@ class PluginWidget(QWidget, Ui_Form):
         self.blocking_all_signals = False
 
     def merge_source_field_changed(self, new_index):
-        '''
+        """
         Process changes in the merge_source_field combo box
-        '''
+        """
         new_source = self.merge_source_field.currentText()
         self.merge_source_field_name = new_source
         if new_source:
@@ -460,12 +463,12 @@ class PluginWidget(QWidget, Ui_Form):
             self.include_hr.setEnabled(False)
 
     def options(self):
-        '''
+        """
         Return, optionally save current options
         exclude_genre stores literally
         Section switches store as True/False
         others store as lists
-        '''
+        """
 
         opts_dict = {}
         prefix_rules_processed = False
@@ -498,7 +501,7 @@ class PluginWidget(QWidget, Ui_Form):
             gprefs.set(self.name + '_' + c_name, opt_value)
 
             # Construct opts object for catalog builder
-            if c_name in ['exclusion_rules_tw','prefix_rules_tw']:
+            if c_name in ['exclusion_rules_tw', 'prefix_rules_tw']:
                 self.construct_tw_opts_object(c_name, opt_value, opts_dict)
             else:
                 opts_dict[c_name] = opt_value
@@ -574,16 +577,14 @@ class PluginWidget(QWidget, Ui_Form):
         custom_fields = {}
         for custom_field in self.all_custom_fields:
             field_md = self.db.metadata_for_field(custom_field)
-            if field_md['datatype'] in ['bool','composite','datetime','enumeration','text']:
-                custom_fields[field_md['name']] = {'field':custom_field,
-                                                   'datatype':field_md['datatype']}
+            if field_md['datatype'] in ['bool', 'composite', 'datetime', 'enumeration', 'text']:
+                custom_fields[field_md['name']] = {'field': custom_field, 'datatype': field_md['datatype']}
         # Populate the 'Header note' combo box
         custom_fields = {}
         for custom_field in self.all_custom_fields:
             field_md = self.db.metadata_for_field(custom_field)
-            if field_md['datatype'] in ['bool','composite','datetime','enumeration','text']:
-                custom_fields[field_md['name']] = {'field':custom_field,
-                                                   'datatype':field_md['datatype']}
+            if field_md['datatype'] in ['bool', 'composite', 'datetime', 'enumeration', 'text']:
+                custom_fields[field_md['name']] = {'field': custom_field, 'datatype': field_md['datatype']}
         # Blank field first
         self.header_note_source_field.addItem('')
         # Add the sorted eligible fields to the combo box
@@ -596,9 +597,8 @@ class PluginWidget(QWidget, Ui_Form):
         custom_fields = {}
         for custom_field in self.all_custom_fields:
             field_md = self.db.metadata_for_field(custom_field)
-            if field_md['datatype'] in ['text','comments','composite']:
-                custom_fields[field_md['name']] = {'field':custom_field,
-                                                   'datatype':field_md['datatype']}
+            if field_md['datatype'] in ['text', 'comments', 'composite']:
+                custom_fields[field_md['name']] = {'field': custom_field, 'datatype': field_md['datatype']}
         # Blank field first
         self.merge_source_field.addItem('')
         # Add the sorted eligible fields to the combo box
@@ -611,12 +611,11 @@ class PluginWidget(QWidget, Ui_Form):
         self.include_hr.setEnabled(False)
 
         # Populate the 'Genres' combo box
-        custom_fields = {_('Tags'):{'field':None,'datatype':None}}
+        custom_fields = {_('Tags'): {'field': None, 'datatype': None}}
         for custom_field in self.all_custom_fields:
             field_md = self.db.metadata_for_field(custom_field)
-            if field_md['datatype'] in ['text','enumeration']:
-                custom_fields[field_md['name']] = {'field':custom_field,
-                                                   'datatype':field_md['datatype']}
+            if field_md['datatype'] in ['text', 'enumeration']:
+                custom_fields[field_md['name']] = {'field': custom_field, 'datatype': field_md['datatype']}
         # Add the sorted eligible fields to the combo box
         for cf in sorted(custom_fields, key=sort_key):
             self.genre_source_field.addItem(cf)
@@ -630,9 +629,9 @@ class PluginWidget(QWidget, Ui_Form):
         self.preset_field.addItems(self.preset_field_values)
 
     def preset_change(self, idx):
-        '''
+        """
         Update catalog options from current preset
-        '''
+        """
         if idx <= 0:
             return
 
@@ -665,7 +664,7 @@ class PluginWidget(QWidget, Ui_Form):
                     index = getattr(self, c_name).findText(opt_value)
                     if index == -1:
                         if c_name == 'read_source_field':
-                            index = self.read_source_field.findText(_('Tags'))
+                            index = getattr(self, c_name).findText(_('Tags'))
                         elif c_name == 'genre_source_field':
                             index = self.genre_source_field.findText(_('Tags'))
                 getattr(self, c_name).setCurrentIndex(index)
@@ -685,13 +684,11 @@ class PluginWidget(QWidget, Ui_Form):
 
         # Reset exclusion rules
         self.exclusion_rules_table.clearLayout()
-        self.exclusion_rules_table = ExclusionRules(self, self.exclusion_rules_gb,
-            'exclusion_rules_tw', exclusion_rules)
+        self.exclusion_rules_table = ExclusionRules(self, self.exclusion_rules_gb, 'exclusion_rules_tw', exclusion_rules)
 
         # Reset prefix rules
         self.prefix_rules_table.clearLayout()
-        self.prefix_rules_table = PrefixRules(self, self.prefix_rules_gb,
-            'prefix_rules_tw', prefix_rules)
+        self.prefix_rules_table = PrefixRules(self, self.prefix_rules_gb, 'prefix_rules_tw', prefix_rules)
 
         # Reset excluded genres preview
         self.exclude_genre_changed()
@@ -710,9 +707,11 @@ class PluginWidget(QWidget, Ui_Form):
         if self.preset_field.currentIndex() == 0:
             return
 
-        if not question_dialog(self, _('Delete saved catalog preset'),
-                _('The selected saved catalog preset will be deleted. '
-                    'Are you sure?')):
+        if not question_dialog(
+            self,
+            _('Delete saved catalog preset'),
+            _('The selected saved catalog preset will be deleted. Are you sure?'),
+        ):
             return
 
         item_id = self.preset_field.currentIndex()
@@ -731,24 +730,24 @@ class PluginWidget(QWidget, Ui_Form):
         names = ['']
         names.extend(self.preset_field_values)
         try:
-            dex = names.index(self.preset_search_name)
+            dex = names.index(getattr(self, 'preset_search_name', ''))
         except Exception:
             dex = 0
         name = ''
         while not name:
-            name, ok = QInputDialog.getItem(self, _('Save catalog preset'),
-                    _('Preset name:'), names, dex, True)
+            name, ok = QInputDialog.getItem(self, _('Save catalog preset'), _('Preset name:'), names, dex, True)
             if not ok:
                 return
             if not name:
-                error_dialog(self, _('Save catalog preset'),
-                        _('You must provide a name.'), show=True)
+                error_dialog(self, _('Save catalog preset'), _('You must provide a name.'), show=True)
         new = True
         name = str(name)
         if name in self.presets.keys():
-            if not question_dialog(self, _('Save catalog preset'),
-                    _('That saved preset already exists and will be overwritten. '
-                        'Are you sure?')):
+            if not question_dialog(
+                self,
+                _('Save catalog preset'),
+                _('That saved preset already exists and will be overwritten. Are you sure?'),
+            ):
                 return
             new = False
 
@@ -783,7 +782,7 @@ class PluginWidget(QWidget, Ui_Form):
 
             preset[c_name] = opt_value
             # Construct cli version of table rules
-            if c_name in ['exclusion_rules_tw','prefix_rules_tw']:
+            if c_name in ['exclusion_rules_tw', 'prefix_rules_tw']:
                 self.construct_tw_opts_object(c_name, opt_value, preset)
 
         format, title = self.get_format_and_title()
@@ -833,30 +832,30 @@ class PluginWidget(QWidget, Ui_Form):
                 parent.title.setText(title)
 
     def settings_changed(self, source):
-        '''
+        """
         When anything changes, clear Preset combobox
-        '''
+        """
         if self.DEBUG:
             print(f'settings_changed: {source}')
         self.preset_field.setCurrentIndex(0)
 
     def show_help(self):
-        '''
+        """
         Display help file
-        '''
+        """
         open_url(QUrl(localize_user_manual_link('https://manual.calibre-ebook.com/catalogs.html')))
 
 
 class CheckableTableWidgetItem(QTableWidgetItem):
-    '''
+    """
     Borrowed from kiwidude
-    '''
+    """
 
     def __init__(self, checked=False, is_tristate=False):
         QTableWidgetItem.__init__(self, '')
         self.setFlags(Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsEnabled)
         if is_tristate:
-            self.setFlags(self.flags() | Qt.ItemFlag.ItemIsTristate)
+            self.setFlags(self.flags() | Qt.ItemFlag.ItemIsUserTristate)
         if checked:
             self.setCheckState(Qt.CheckState.Checked)
         elif is_tristate and checked is None:
@@ -865,10 +864,10 @@ class CheckableTableWidgetItem(QTableWidgetItem):
             self.setCheckState(Qt.CheckState.Unchecked)
 
     def get_boolean_value(self):
-        '''
+        """
         Return a boolean value indicating whether checkbox is checked
         If this is a tristate checkbox, a partially checked value is returned as None
-        '''
+        """
         if self.checkState() == Qt.CheckState.PartiallyChecked:
             return None
         else:
@@ -876,10 +875,9 @@ class CheckableTableWidgetItem(QTableWidgetItem):
 
 
 class NoWheelComboBox(QComboBox):
-
-    def wheelEvent(self, event):
+    def wheelEvent(self, e):
         # Disable the mouse wheel on top of the combo box changing selection as plays havoc in a grid
-        event.ignore()
+        e.ignore()
 
 
 class ComboBox(NoWheelComboBox):
@@ -900,22 +898,39 @@ class ComboBox(NoWheelComboBox):
             self.setCurrentIndex(0)
 
 
+class _ColumnDef(TypedDict):
+    ordinal: int
+    name: str
+
+
 class GenericRulesTable(QTableWidget):
-    '''
+    """
     Generic methods for managing rows in a QTableWidget
-    '''
+    """
+
     DEBUG = False
     MAXIMUM_TABLE_HEIGHT = 113
     NAME_FIELD_WIDTH = 225
+    COLUMNS: ClassVar[dict[str, _ColumnDef]] = {}
+
+    def populate_table_row(self, row: int, data: dict[str, object]) -> None:
+        raise NotImplementedError
+
+    def create_blank_row_data(self) -> dict[str, object]:
+        raise NotImplementedError
+
+    def convert_row_to_data(self, row: int) -> dict[str, object]:
+        raise NotImplementedError
 
     def __init__(self, parent, parent_gb, object_name, rules):
-        self.parent = parent
+        self._plugin_widget = parent
         self.rules = rules
         self.eligible_custom_fields = parent.eligible_custom_fields
         self.db = parent.db
         QTableWidget.__init__(self)
         self.setObjectName(object_name)
-        self.layout = parent_gb.layout()
+        self._group_layout = parent_gb.layout()
+        assert self._group_layout is not None
 
         # Add ourselves to the layout
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
@@ -927,10 +942,12 @@ class GenericRulesTable(QTableWidget):
 
         self.setColumnCount(0)
         self.setRowCount(0)
-        self.layout.addWidget(self)
+        self._group_layout.addWidget(self)
 
         self.last_row_selected = self.currentRow()
-        self.last_rows_selected = self.selectionModel().selectedRows()
+        _init_sel_model = self.selectionModel()
+        assert _init_sel_model is not None
+        self.last_rows_selected = _init_sel_model.selectedRows()
 
         # Add the controls
         self._init_controls()
@@ -969,7 +986,9 @@ class GenericRulesTable(QTableWidget):
         self.move_rule_down_tb.clicked.connect(self.move_row_down)
         vbl.addWidget(self.move_rule_down_tb)
 
-        self.layout.addLayout(vbl)
+        _lay = self._group_layout
+        assert isinstance(_lay, QBoxLayout)
+        _lay.addLayout(vbl)
 
     def add_row(self):
         self.setFocus()
@@ -981,11 +1000,14 @@ class GenericRulesTable(QTableWidget):
         self.select_and_scroll_to_row(row)
         self.resizeColumnsToContents()
         # In case table was empty
-        self.horizontalHeader().setStretchLastSection(True)
+        _hdr = self.horizontalHeader()
+        assert _hdr is not None
+        _hdr.setStretchLastSection(True)
 
     def clearLayout(self):
-        if self.layout is not None:
-            old_layout = self.layout
+        _lay = self._group_layout
+        if _lay is not None:
+            old_layout = _lay
 
             for child in old_layout.children():
                 for i in reversed(range(child.count())):
@@ -1009,7 +1031,9 @@ class GenericRulesTable(QTableWidget):
         first = rows[0].row() + 1
         last = rows[-1].row() + 1
 
-        first_rule_name = str(self.cellWidget(first-1, self.COLUMNS['NAME']['ordinal']).text()).strip()
+        _name_widget = self.cellWidget(first - 1, self.COLUMNS['NAME']['ordinal'])
+        assert isinstance(_name_widget, QLineEdit)
+        first_rule_name = str(_name_widget.text()).strip()
         message = _("Are you sure you want to delete '%s'?") % (first_rule_name)
         if len(rows) > 1:
             message = _('Are you sure you want to delete rules #%(first)d-%(last)d?') % dict(first=first, last=last)
@@ -1037,7 +1061,9 @@ class GenericRulesTable(QTableWidget):
     def focusOutEvent(self, e):
         # Override of QTableWidget method - clear selection when table loses focus
         self.last_row_selected = self.currentRow()
-        self.last_rows_selected = self.selectionModel().selectedRows()
+        _focus_out_sel_model = self.selectionModel()
+        assert _focus_out_sel_model is not None
+        self.last_rows_selected = _focus_out_sel_model.selectedRows()
         self.clearSelection()
         if self.DEBUG:
             print(f'{self.objectName()}:focusOutEvent(): self.last_row_selected: {self.last_row_selected}')
@@ -1126,7 +1152,9 @@ class GenericRulesTable(QTableWidget):
             print(f'{self.objectName()}:rule_name_edited()')
 
         current_row = self.currentRow()
-        self.cellWidget(current_row, 1).home(False)
+        _rn_widget = self.cellWidget(current_row, 1)
+        assert isinstance(_rn_widget, QLineEdit)
+        _rn_widget.home(False)
         self.select_and_scroll_to_row(current_row)
         self.settings_changed('rule_name_edited')
 
@@ -1135,11 +1163,13 @@ class GenericRulesTable(QTableWidget):
         self.selectRow(row)
         self.scrollToItem(self.currentItem())
         self.last_row_selected = self.currentRow()
-        self.last_rows_selected = self.selectionModel().selectedRows()
+        _scroll_sel_model = self.selectionModel()
+        assert _scroll_sel_model is not None
+        self.last_rows_selected = _scroll_sel_model.selectedRows()
 
     def settings_changed(self, source):
-        if not self.parent.blocking_all_signals:
-            self.parent.settings_changed(source)
+        if not self._plugin_widget.blocking_all_signals:
+            self._plugin_widget.settings_changed(source)
 
     def _source_index_changed(self, combo):
         # Figure out which row we're in
@@ -1162,15 +1192,14 @@ class GenericRulesTable(QTableWidget):
         elif source_field == _('Tags'):
             values = sorted(self.db.all_tags(), key=sort_key)
         elif self.eligible_custom_fields[str(source_field)]['datatype'] in ['enumeration', 'text']:
-            values = self.db.all_custom(self.db.field_metadata.key_to_label(
-                                        self.eligible_custom_fields[str(source_field)]['field']))
+            values = self.db.all_custom(self.db.field_metadata.key_to_label(self.eligible_custom_fields[str(source_field)]['field']))
             values = sorted(values, key=sort_key)
         elif self.eligible_custom_fields[str(source_field)]['datatype'] == 'bool':
-            values = [_('True'),_('False'),_('unspecified')]
+            values = [_('True'), _('False'), _('unspecified')]
         elif self.eligible_custom_fields[str(source_field)]['datatype'] == 'composite':
-            values = [_('any value'),_('unspecified')]
+            values = [_('any value'), _('unspecified')]
         elif self.eligible_custom_fields[str(source_field)]['datatype'] == 'datetime':
-            values = [_('any date'),_('unspecified')]
+            values = [_('any date'), _('unspecified')]
 
         values_combo = ComboBox(self, values, pattern)
         values_combo.currentIndexChanged.connect(partial(self.values_index_changed, values_combo))
@@ -1191,11 +1220,12 @@ class GenericRulesTable(QTableWidget):
 
 
 class ExclusionRules(GenericRulesTable):
-
-    COLUMNS = {'ENABLED':{'ordinal': 0, 'name': ''},
-                'NAME':   {'ordinal': 1, 'name': _('Name')},
-                'FIELD':  {'ordinal': 2, 'name': _('Field')},
-                'PATTERN':  {'ordinal': 3, 'name': _('Value')},}
+    COLUMNS: ClassVar[dict[str, _ColumnDef]] = {
+        'ENABLED': {'ordinal': 0, 'name': ''},
+        'NAME': {'ordinal': 1, 'name': _('Name')},
+        'FIELD': {'ordinal': 2, 'name': _('Field')},
+        'PATTERN': {'ordinal': 3, 'name': _('Value')},
+    }
 
     def __init__(self, parent, parent_gb_hl, object_name, rules):
         super().__init__(parent, parent_gb_hl, object_name, rules)
@@ -1204,8 +1234,7 @@ class ExclusionRules(GenericRulesTable):
         self._initialize()
 
     def _init_table_widget(self):
-        header_labels = [self.COLUMNS[index]['name']
-            for index in sorted(self.COLUMNS.keys(), key=lambda c: self.COLUMNS[c]['ordinal'])]
+        header_labels = [self.COLUMNS[index]['name'] for index in sorted(self.COLUMNS.keys(), key=lambda c: self.COLUMNS[c]['ordinal'])]
         self.setColumnCount(len(header_labels))
         self.setHorizontalHeaderLabels(header_labels)
         self.setSortingEnabled(False)
@@ -1215,16 +1244,26 @@ class ExclusionRules(GenericRulesTable):
         self.populate_table()
         self.resizeColumnsToContents()
         self.resize_name()
-        self.horizontalHeader().setStretchLastSection(True)
+        _excl_hdr = self.horizontalHeader()
+        assert _excl_hdr is not None
+        _excl_hdr.setStretchLastSection(True)
         self.clearSelection()
 
     def convert_row_to_data(self, row):
         data = self.create_blank_row_data()
         data['ordinal'] = row
-        data['enabled'] = self.item(row, self.COLUMNS['ENABLED']['ordinal']).checkState() == Qt.CheckState.Checked
-        data['name'] = str(self.cellWidget(row, self.COLUMNS['NAME']['ordinal']).text()).strip()
-        data['field'] = str(self.cellWidget(row, self.COLUMNS['FIELD']['ordinal']).currentText()).strip()
-        data['pattern'] = str(self.cellWidget(row, self.COLUMNS['PATTERN']['ordinal']).currentText()).strip()
+        _excl_item = self.item(row, int(self.COLUMNS['ENABLED']['ordinal']))
+        assert _excl_item is not None
+        data['enabled'] = _excl_item.checkState() == Qt.CheckState.Checked
+        _excl_name_w = self.cellWidget(row, int(self.COLUMNS['NAME']['ordinal']))
+        assert isinstance(_excl_name_w, QLineEdit)
+        data['name'] = str(_excl_name_w.text()).strip()
+        _excl_field_w = self.cellWidget(row, int(self.COLUMNS['FIELD']['ordinal']))
+        assert isinstance(_excl_field_w, QComboBox)
+        data['field'] = str(_excl_field_w.currentText()).strip()
+        _excl_pattern_w = self.cellWidget(row, int(self.COLUMNS['PATTERN']['ordinal']))
+        assert isinstance(_excl_pattern_w, QComboBox)
+        data['pattern'] = str(_excl_pattern_w.currentText()).strip()
         return data
 
     def create_blank_row_data(self):
@@ -1240,12 +1279,13 @@ class ExclusionRules(GenericRulesTable):
         data_items = []
         for row in range(self.rowCount()):
             data = self.convert_row_to_data(row)
-            data_items.append(
-                               {'ordinal':data['ordinal'],
-                                'enabled':data['enabled'],
-                                'name':data['name'],
-                                'field':data['field'],
-                                'pattern':data['pattern']})
+            data_items.append({
+                'ordinal': data['ordinal'],
+                'enabled': data['enabled'],
+                'name': data['name'],
+                'field': data['field'],
+                'pattern': data['pattern'],
+            })
         return data_items
 
     def populate_table_row(self, row, data):
@@ -1283,12 +1323,13 @@ class ExclusionRules(GenericRulesTable):
 
 
 class PrefixRules(GenericRulesTable):
-
-    COLUMNS = {'ENABLED':{'ordinal': 0, 'name': ''},
-                'NAME':   {'ordinal': 1, 'name': _('Name')},
-                'PREFIX': {'ordinal': 2, 'name': _('Prefix')},
-                'FIELD':  {'ordinal': 3, 'name': _('Field')},
-                'PATTERN':{'ordinal': 4, 'name': _('Value')},}
+    COLUMNS: ClassVar[dict[str, _ColumnDef]] = {
+        'ENABLED': {'ordinal': 0, 'name': ''},
+        'NAME': {'ordinal': 1, 'name': _('Name')},
+        'PREFIX': {'ordinal': 2, 'name': _('Prefix')},
+        'FIELD': {'ordinal': 3, 'name': _('Field')},
+        'PATTERN': {'ordinal': 4, 'name': _('Value')},
+    }
 
     def __init__(self, parent, parent_gb_hl, object_name, rules):
         super().__init__(parent, parent_gb_hl, object_name, rules)
@@ -1297,8 +1338,7 @@ class PrefixRules(GenericRulesTable):
         self._initialize()
 
     def _init_table_widget(self):
-        header_labels = [self.COLUMNS[index]['name']
-            for index in sorted(self.COLUMNS.keys(), key=lambda c: self.COLUMNS[c]['ordinal'])]
+        header_labels = [self.COLUMNS[index]['name'] for index in sorted(self.COLUMNS.keys(), key=lambda c: self.COLUMNS[c]['ordinal'])]
         self.setColumnCount(len(header_labels))
         self.setHorizontalHeaderLabels(header_labels)
         self.setSortingEnabled(False)
@@ -1309,17 +1349,29 @@ class PrefixRules(GenericRulesTable):
         self.populate_table()
         self.resizeColumnsToContents()
         self.resize_name()
-        self.horizontalHeader().setStretchLastSection(True)
+        _prefix_hdr = self.horizontalHeader()
+        assert _prefix_hdr is not None
+        _prefix_hdr.setStretchLastSection(True)
         self.clearSelection()
 
     def convert_row_to_data(self, row):
         data = self.create_blank_row_data()
         data['ordinal'] = row
-        data['enabled'] = self.item(row, self.COLUMNS['ENABLED']['ordinal']).checkState() == Qt.CheckState.Checked
-        data['name'] = str(self.cellWidget(row, self.COLUMNS['NAME']['ordinal']).text()).strip()
-        data['prefix'] = str(self.cellWidget(row, self.COLUMNS['PREFIX']['ordinal']).currentText()).strip()
-        data['field'] = str(self.cellWidget(row, self.COLUMNS['FIELD']['ordinal']).currentText()).strip()
-        data['pattern'] = str(self.cellWidget(row, self.COLUMNS['PATTERN']['ordinal']).currentText()).strip()
+        _prefix_item = self.item(row, int(self.COLUMNS['ENABLED']['ordinal']))
+        assert isinstance(_prefix_item, QCheckBox)
+        data['enabled'] = _prefix_item.checkState() == Qt.CheckState.Checked
+        _pfx_name_w = self.cellWidget(row, int(self.COLUMNS['NAME']['ordinal']))
+        assert isinstance(_pfx_name_w, QLineEdit)
+        data['name'] = str(_pfx_name_w.text()).strip()
+        _pfx_prefix_w = self.cellWidget(row, int(self.COLUMNS['PREFIX']['ordinal']))
+        assert isinstance(_pfx_prefix_w, QComboBox)
+        data['prefix'] = str(_pfx_prefix_w.currentText()).strip()
+        _pfx_field_w = self.cellWidget(row, int(self.COLUMNS['FIELD']['ordinal']))
+        assert isinstance(_pfx_field_w, QComboBox)
+        data['field'] = str(_pfx_field_w.currentText()).strip()
+        _pfx_pattern_w = self.cellWidget(row, int(self.COLUMNS['PATTERN']['ordinal']))
+        assert isinstance(_pfx_pattern_w, QComboBox)
+        data['pattern'] = str(_pfx_pattern_w.currentText()).strip()
         return data
 
     def create_blank_row_data(self):
@@ -1462,7 +1514,7 @@ class PrefixRules(GenericRulesTable):
             ('_x', 'x'),
             ('_y', 'y'),
             ('_z', 'z'),
-            ]
+        ]
         raw_prefix_list = sorted(raw_prefix_list, key=prefix_sorter)
         self.prefix_list = [x[1] for x in raw_prefix_list]
 
@@ -1470,13 +1522,14 @@ class PrefixRules(GenericRulesTable):
         data_items = []
         for row in range(self.rowCount()):
             data = self.convert_row_to_data(row)
-            data_items.append(
-                               {'ordinal':data['ordinal'],
-                                'enabled':data['enabled'],
-                                'name':data['name'],
-                                'field':data['field'],
-                                'pattern':data['pattern'],
-                                'prefix':data['prefix']})
+            data_items.append({
+                'ordinal': data['ordinal'],
+                'enabled': data['enabled'],
+                'name': data['name'],
+                'field': data['field'],
+                'pattern': data['pattern'],
+                'prefix': data['prefix'],
+            })
         return data_items
 
     def populate_table_row(self, row, data):

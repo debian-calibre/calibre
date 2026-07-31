@@ -1,11 +1,8 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2010, Kovid Goyal <kovid@kovidgoyal.net>
 
 import textwrap
+from collections.abc import Callable
 from functools import partial
 
 from qt.core import (
@@ -15,12 +12,14 @@ from qt.core import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
+    QDropEvent,
     QEvent,
     QGroupBox,
     QIcon,
     QLineEdit,
     QListView,
     QListWidget,
+    QPushButton,
     QRadioButton,
     Qt,
     QTableWidget,
@@ -33,6 +32,7 @@ from calibre.customize.ui import preferences_plugins
 from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.widgets import HistoryLineEdit
 from calibre.utils.config import ConfigProxy
+from calibre.utils.localization import _
 
 
 class AbortCommit(Exception):
@@ -44,12 +44,12 @@ class AbortInitialize(Exception):
 
 
 class ConfigWidgetInterface:
-    '''
+    """
     This class defines the interface that all widgets displayed in the
     Preferences dialog must implement. See :class:`ConfigWidgetBase` for
     a base class that implements this interface and defines various convenience
     methods as well.
-    '''
+    """
 
     #: This signal must be emitted whenever the user changes a value in this
     #: widget
@@ -59,20 +59,19 @@ class ConfigWidgetInterface:
     supports_restoring_to_defaults = True
 
     #: The tooltip for the "Restore defaults" button
-    restore_defaults_desc = _('Restore settings to default values. '
-            'You have to click Apply to actually save the default settings.')
+    restore_defaults_desc = _('Restore settings to default values. You have to click Apply to actually save the default settings.')
 
     #: If True the Preferences dialog will not allow the user to set any more
     #: preferences. Only has effect if :meth:`commit` returns True.
     restart_critical = False
 
     def genesis(self, gui):
-        '''
+        """
         Called once before the widget is displayed, should perform any
         necessary setup.
 
         :param gui: The main calibre graphical user interface
-        '''
+        """
         raise NotImplementedError()
 
     def initialize(self):
@@ -84,38 +83,38 @@ class ConfigWidgetInterface:
         raise NotImplementedError()
 
     def restore_defaults(self):
-        '''
+        """
         Should set all config values to their defaults.
-        '''
+        """
         pass
 
     def commit(self):
-        '''
+        """
         Save any changed settings. Return True if the changes require a
         restart, False otherwise. Raise an :class:`AbortCommit` exception
         to indicate that an error occurred. You are responsible for giving the
         user feedback about what the error is and how to correct it.
-        '''
+        """
         return False
 
     def refresh_gui(self, gui):
-        '''
+        """
         Called once after this widget is committed. Responsible for causing the
         gui to reread any changed settings. Note that by default the GUI
         re-initializes various elements anyway, so most widgets won't need to
         use this method.
-        '''
+        """
         pass
 
     def initial_tab_changed(self):
-        '''
+        """
         Called if the initially displayed tab is changed before the widget is shown, but after it is initialized.
-        '''
+        """
         pass
 
     def do_on_child_tabs(self, method, *args):
         r = False
-        for t in self.child_tabs:
+        for t in self.child_tabs:  # type: ignore
             lazy_init_called = getattr(t, 'lazy_init_called', True)
             if method in ('commit', 'refresh_gui') and not lazy_init_called:
                 continue
@@ -139,17 +138,13 @@ def set_help_tips(gui_obj, tt):
 
 
 class Setting:
-
     CHOICES_SEARCH_FLAGS = Qt.MatchFlag.MatchExactly | Qt.MatchFlag.MatchCaseSensitive
 
-    def __init__(self, name, config_obj, widget, gui_name=None,
-            empty_string_is_None=True, choices=None, restart_required=False):
-        self.name, self.gui_name = name, gui_name
+    def __init__(self, name, config_obj, widget, gui_name=None, empty_string_is_None=True, choices=None, restart_required=False):
+        self.name, self.gui_name = name, ('opt_' + name) if gui_name is None else gui_name
         self.empty_string_is_None = empty_string_is_None
         self.restart_required = restart_required
         self.choices = choices
-        if gui_name is None:
-            self.gui_name = 'opt_'+name
         self.config_obj = config_obj
         self.gui_obj = getattr(widget, self.gui_name)
         self.widget = widget
@@ -178,8 +173,7 @@ class Setting:
         else:
             raise ValueError(f'Unknown data type {self.gui_obj.__class__}')
 
-        if isinstance(self.config_obj, ConfigProxy) and \
-                not str(self.gui_obj.toolTip()):
+        if isinstance(self.config_obj, ConfigProxy) and not str(self.gui_obj.toolTip()):
             h = self.config_obj.help(self.name)
             if h:
                 self.gui_obj.setToolTip(h)
@@ -237,8 +231,7 @@ class Setting:
             if isinstance(self.gui_obj, EditWithComplete):
                 self.gui_obj.setText(val)
             else:
-                idx = self.gui_obj.findData((val), role=Qt.ItemDataRole.UserRole,
-                        flags=self.CHOICES_SEARCH_FLAGS)
+                idx = self.gui_obj.findData((val), role=Qt.ItemDataRole.UserRole, flags=self.CHOICES_SEARCH_FLAGS)
                 if idx == -1:
                     idx = 0
                 self.gui_obj.setCurrentIndex(idx)
@@ -263,7 +256,6 @@ class Setting:
 
 
 class CommaSeparatedList(Setting):
-
     def set_gui_val(self, val):
         x = ''
         if val:
@@ -280,7 +272,7 @@ class CommaSeparatedList(Setting):
 
 
 class ConfigWidgetBase(QWidget, ConfigWidgetInterface):
-    '''
+    """
     Base class that contains code to easily add standard config widgets like
     checkboxes, combo boxes, text fields and so on. See the :meth:`register`
     method.
@@ -292,7 +284,7 @@ class ConfigWidgetBase(QWidget, ConfigWidgetInterface):
     If your config widget inherits from this class but includes setting that
     are not registered, you should override the :class:`ConfigWidgetInterface` methods
     and call the base class methods inside the overrides.
-    '''
+    """
 
     changed_signal = pyqtSignal()
     restart_now = pyqtSignal()
@@ -302,16 +294,24 @@ class ConfigWidgetBase(QWidget, ConfigWidgetInterface):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         if hasattr(self, 'setupUi'):
-            self.setupUi(self)
+            self.setupUi(self)  # type: ignore
         self.settings = {}
         self.child_tabs = []
         for v in self.__dict__.values():
             if isinstance(v, LazyConfigWidgetBase):
                 self.child_tabs.append(v)
 
-    def register(self, name, config_obj, gui_name=None, choices=None,
-            restart_required=False, empty_string_is_None=True, setting=Setting):
-        '''
+    def register(
+        self,
+        name,
+        config_obj,
+        gui_name=None,
+        choices=None,
+        restart_required=False,
+        empty_string_is_None=True,
+        setting=Setting,
+    ):
+        """
         Register a setting.
 
         :param name: The setting name
@@ -325,10 +325,16 @@ class ConfigWidgetBase(QWidget, ConfigWidgetInterface):
         :param setting: The class responsible for managing this setting. The
                         default class handles almost all cases, so this param
                         is rarely used.
-        '''
-        setting = setting(name, config_obj, self, gui_name=gui_name,
-                choices=choices, restart_required=restart_required,
-                empty_string_is_None=empty_string_is_None)
+        """
+        setting = setting(
+            name,
+            config_obj,
+            self,
+            gui_name=gui_name,
+            choices=choices,
+            restart_required=restart_required,
+            empty_string_is_None=empty_string_is_None,
+        )
         return self.register_setting(setting)
 
     def register_setting(self, setting):
@@ -359,15 +365,14 @@ def get_plugin(category, name):
     for plugin in preferences_plugins():
         if plugin.category == category and plugin.name == name:
             return plugin
-    raise ValueError(
-            f'No Preferences Plugin with category: {category} and name: {name} found')
+    raise ValueError(f'No Preferences Plugin with category: {category} and name: {name} found')
 
 
 class LazyConfigWidgetBase(ConfigWidgetBase):
-    '''
+    """
     Use this for dialogs that are tabs, accessed either from the left or on the
     top. It directly replaces ConfigWidgetBase, supporting the lazy operations.
-    '''
+    """
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -376,27 +381,26 @@ class LazyConfigWidgetBase(ConfigWidgetBase):
     def ensure_lazy_initialized(self):
         if not self.lazy_init_called:
             if hasattr(self, 'lazy_initialize'):
-                self.lazy_initialize()
+                self.lazy_initialize()  # type: ignore
             self.lazy_init_called = True
 
     def set_changed_signal(self, changed_signal):
         self.changed_signal.connect(changed_signal)
 
-    def restore_defaults(self):
+    def restore_defaults(self, *args):
         self.ensure_lazy_initialized()
         super().restore_defaults()
 
-    def showEvent(self, event):
+    def showEvent(self, a0):
         # called when the widget is actually displays. We can't do something like
         # lazy_genesis because Qt does "things" before showEvent() is called. In
         # particular, the register function doesn't work with combo boxes if
         # genesis isn't called before everything else. Why is a mystery.
         self.ensure_lazy_initialized()
-        super().showEvent(event)
+        super().showEvent(a0)
 
 
 class ConfigDialog(QDialog):
-
     def set_widget(self, w):
         self.w = w
 
@@ -412,6 +416,7 @@ def init_gui():
     from calibre.gui2.main import option_parser
     from calibre.gui2.ui import Main
     from calibre.library import db
+
     parser = option_parser()
     opts, args = parser.parse_args([])
     actions = tuple(Main.create_application_menubar())
@@ -421,9 +426,8 @@ def init_gui():
     return gui
 
 
-def show_config_widget(category, name, gui=None, show_restart_msg=False,
-        parent=None, never_shutdown=False, callback=None):
-    '''
+def show_config_widget(category, name, gui=None, show_restart_msg=False, parent=None, never_shutdown=False, callback=None):
+    """
     Show the preferences plugin identified by category and name
 
     :param gui: gui instance, if None a hidden gui is created
@@ -433,8 +437,9 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
 
     :return: True iff a restart is required for the changes made by the user to
     take effect
-    '''
+    """
     from calibre.gui2 import gprefs
+
     pl = get_plugin(category, name)
     d = ConfigDialog(parent)
     d.resize(750, 550)
@@ -442,23 +447,30 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
     d.setWindowTitle(_('Configure ') + pl.gui_name)
     d.setWindowIcon(QIcon.ic('config.png'))
     bb = QDialogButtonBox(d)
-    bb.setStandardButtons(QDialogButtonBox.StandardButton.Apply|QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.RestoreDefaults)
+    bb.setStandardButtons(QDialogButtonBox.StandardButton.Apply | QDialogButtonBox.StandardButton.Cancel | QDialogButtonBox.StandardButton.RestoreDefaults)
     bb.accepted.connect(d.accept)
     bb.rejected.connect(d.reject)
     w = pl.create_widget(d)
     d.set_widget(w)
-    bb.button(QDialogButtonBox.StandardButton.RestoreDefaults).clicked.connect(w.restore_defaults)
-    bb.button(QDialogButtonBox.StandardButton.RestoreDefaults).setEnabled(w.supports_restoring_to_defaults)
-    bb.button(QDialogButtonBox.StandardButton.Apply).setEnabled(False)
-    bb.button(QDialogButtonBox.StandardButton.Apply).clicked.connect(d.accept)
+
+    def button(which) -> QPushButton:
+        ans = bb.button(which)
+        assert ans is not None
+        return ans
+
+    button(QDialogButtonBox.StandardButton.RestoreDefaults).clicked.connect(w.restore_defaults)
+    button(QDialogButtonBox.StandardButton.RestoreDefaults).setEnabled(w.supports_restoring_to_defaults)
+    button(QDialogButtonBox.StandardButton.Apply).setEnabled(False)
+    button(QDialogButtonBox.StandardButton.Apply).clicked.connect(d.accept)
 
     def onchange():
-        b = bb.button(QDialogButtonBox.StandardButton.Apply)
+        b = button(QDialogButtonBox.StandardButton.Apply)
         b.setEnabled(True)
         b.setDefault(True)
         b.setAutoDefault(True)
+
     w.changed_signal.connect(onchange)
-    bb.button(QDialogButtonBox.StandardButton.Cancel).setFocus(Qt.FocusReason.OtherFocusReason)
+    button(QDialogButtonBox.StandardButton.Cancel).setFocus(Qt.FocusReason.OtherFocusReason)
     l = QVBoxLayout()
     d.setLayout(l)
     l.addWidget(w)
@@ -479,6 +491,7 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
     rr = getattr(d, 'restart_required', False)
     if show_restart_msg and rr:
         from calibre.gui2 import warning_dialog
+
         warning_dialog(gui, 'Restart required', 'Restart required', show=True)
     if mygui and not never_shutdown:
         gui.shutdown()
@@ -486,64 +499,71 @@ def show_config_widget(category, name, gui=None, show_restart_msg=False,
 
 
 class ListViewWithMoveByKeyPress(QListView):
-
     def set_movement_functions(self, up_function, down_function):
         self.up_function = partial(up_function, use_kbd_modifiers=False)
         self.down_function = partial(down_function, use_kbd_modifiers=False)
 
-    def event(self, event):
-        if (event.type() == QEvent.KeyPress and
-            QApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier):
-            if event.key() == Qt.Key.Key_Up:
+    def event(self, e):
+        if e.type() == QEvent.Type.KeyPress and QApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
+            if e.key() == Qt.Key.Key_Up:
                 self.up_function()
-            elif event.key() == Qt.Key.Key_Down:
+            elif e.key() == Qt.Key.Key_Down:
                 self.down_function()
             return True
-        return QListView.event(self, event)
+        return QListView.event(self, e)
 
 
 class ListWidgetWithMoveByKeyPress(QListWidget):
+    handle_drop_event: Callable[[QDropEvent | None], None] | None = None
 
     def set_movement_functions(self, up_function, down_function):
         self.up_function = partial(up_function, use_kbd_modifiers=False)
         self.down_function = partial(down_function, use_kbd_modifiers=False)
 
-    def event(self, event):
-        if (event.type() == QEvent.KeyPress and
-            QApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier):
-            if event.key() == Qt.Key.Key_Up:
+    def event(self, e):
+        if e.type() == QEvent.Type.KeyPress and QApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
+            if e.key() == Qt.Key.Key_Up:
                 self.up_function()
-            elif event.key() == Qt.Key.Key_Down:
+            elif e.key() == Qt.Key.Key_Down:
                 self.down_function()
             return True
-        return QListWidget.event(self, event)
+        return QListWidget.event(self, e)
+
+    def dropEvent(self, event: QDropEvent | None):
+        if self.handle_drop_event is not None:
+            self.handle_drop_event(event)
+        else:
+            super().dropEvent(event)
 
 
 class TableWidgetWithMoveByKeyPress(QTableWidget):
-
     def set_movement_functions(self, up_function, down_function):
         self.up_function = partial(up_function, use_kbd_modifiers=False)
         self.down_function = partial(down_function, use_kbd_modifiers=False)
 
-    def event(self, event):
-        if (event.type() == QEvent.KeyPress and
-            QApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier):
-            if event.key() == Qt.Key.Key_Up:
+    def event(self, e):
+        if e.type() == QEvent.Type.KeyPress and QApplication.keyboardModifiers() == Qt.KeyboardModifier.ControlModifier:
+            if e.key() == Qt.Key.Key_Up:
                 self.up_function()
-            elif event.key() == Qt.Key.Key_Down:
+            elif e.key() == Qt.Key.Key_Down:
                 self.down_function()
             return True
-        return QTableWidget.event(self, event)
+        return QTableWidget.event(self, e)
 
 
 def get_move_count(row_count):
     mods = QApplication.keyboardModifiers() & (
-        Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier |Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.MetaModifier)
-    return {Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier: row_count,
-            Qt.KeyboardModifier.ShiftModifier: 5, Qt.KeyboardModifier.ControlModifier: 10}.get(mods, 1)
+        Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.MetaModifier
+    )
+    return {
+        Qt.KeyboardModifier.ShiftModifier | Qt.KeyboardModifier.ControlModifier: row_count,
+        Qt.KeyboardModifier.ShiftModifier: 5,
+        Qt.KeyboardModifier.ControlModifier: 10,
+    }.get(mods, 1)
 
 
 # Testing {{{
+
 
 def test_widget(category, name, gui=None, callback=None):
     show_config_widget(category, name, gui=gui, show_restart_msg=True, callback=callback)
@@ -551,6 +571,7 @@ def test_widget(category, name, gui=None, callback=None):
 
 def test_all():
     from qt.core import QApplication
+
     app = QApplication([])
     app
     gui = init_gui()

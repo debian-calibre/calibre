@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2016, Kovid Goyal <kovid at kovidgoyal.net>
 
-
-from qt.core import QApplication, QBrush, QColor, QFont, QFontMetrics, QPainter, QPen, QPixmap, QSplashScreen, Qt
+from qt.core import QBrush, QColor, QFont, QFontMetrics, QPainter, QPen, QPixmap, QSplashScreen, Qt
 
 from calibre.constants import __appname__, numeric_version
+from calibre.gui2 import qapplication_or_fail
+from calibre.utils.localization import _
 from calibre.utils.monotonic import monotonic
 from calibre.utils.resources import get_image_path as I
 
 
 class SplashScreen(QSplashScreen):
-
     TITLE_SIZE = 20  # pt
     BODY_SIZE = 12  # pt
     FOOTER_SIZE = 9  # pt
@@ -36,10 +36,14 @@ class SplashScreen(QSplashScreen):
         self.footer_font = f = QFont()
         f.setPointSize(self.FOOTER_SIZE)
         f.setItalic(True)
-        self.dpr = QApplication.instance().devicePixelRatio()
+        self.dpr = qapplication_or_fail().devicePixelRatio()
         self.pmap = QPixmap(I('library.png', allow_user_override=False))
         self.pmap.setDevicePixelRatio(self.dpr)
-        self.pmap = self.pmap.scaled(int(self.dpr * self.LOGO_SIZE), int(self.dpr * self.LOGO_SIZE), transformMode=Qt.TransformationMode.SmoothTransformation)
+        self.pmap = self.pmap.scaled(
+            int(self.dpr * self.LOGO_SIZE),
+            int(self.dpr * self.LOGO_SIZE),
+            transformMode=Qt.TransformationMode.SmoothTransformation,
+        )
         self.light_brush = QBrush(QColor('#F6F3E9'))
         self.dark_brush = QBrush(QColor('#39322B'))
         pmap = QPixmap(int(self.WIDTH * self.dpr), int(self.total_height * self.dpr))
@@ -77,14 +81,27 @@ class SplashScreen(QSplashScreen):
         x = pw + 10
         width -= num_width + 5 + x
         painter.setFont(self.title_font)
-        painter.drawText(x, y, width, self.title_height, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextSingleLine, 'CALIBRE')
+        painter.drawText(
+            x,
+            y,
+            width,
+            self.title_height,
+            Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextSingleLine,
+            'CALIBRE',
+        )
 
         # Draw starting up message
         y += self.title_height + 5
         painter.setPen(QPen(self.dark_brush.color()))
         painter.setFont(self.body_font)
-        br = painter.drawText(x, y, width, self.line_height, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextSingleLine, _(
-            'Starting up, please wait...'))
+        br = painter.drawText(
+            x,
+            y,
+            width,
+            self.line_height,
+            Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextSingleLine,
+            _('Starting up, please wait...'),
+        )
         starting_up_bottom = br.bottom()
 
         # Draw footer
@@ -92,7 +109,14 @@ class SplashScreen(QSplashScreen):
         if m and m.strip():
             painter.setFont(self.footer_font)
             b = max(starting_up_bottom + 5, bottom - self.line_height)
-            painter.drawText(x, b, width, self.line_height, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop | Qt.TextFlag.TextSingleLine, m)
+            painter.drawText(
+                x,
+                b,
+                width,
+                self.line_height,
+                Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop | Qt.TextFlag.TextSingleLine,
+                m,
+            )
 
         painter.restore()
 
@@ -105,17 +129,18 @@ class SplashScreen(QSplashScreen):
         self.drawn_once = False
         st = monotonic()
         while not self.drawn_once and (monotonic() - st < 0.1):
-            QApplication.instance().processEvents()
+            qapplication_or_fail().processEvents()
 
-    def keyPressEvent(self, ev):
+    def keyPressEvent(self, a0):
         if not self.develop:
-            return QSplashScreen.keyPressEvent(self, ev)
-        ev.accept()
-        QApplication.instance().exit()
+            return QSplashScreen.keyPressEvent(self, a0)
+        a0.accept()
+        qapplication_or_fail().exit()
 
 
 def main():
     from calibre.gui2 import Application
+
     app = Application([])
     spl = SplashScreen(develop=True)
     spl.show()

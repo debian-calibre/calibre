@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 from threading import Lock
@@ -20,10 +18,10 @@ from calibre.gui2.store.stores.mobileread.cache_update_thread import CacheUpdate
 from calibre.gui2.store.stores.mobileread.models import SearchFilter
 from calibre.gui2.store.stores.mobileread.store_dialog import MobileReadStoreDialog
 from calibre.gui2.store.web_store_dialog import WebStoreDialog
+from calibre.utils.localization import _
 
 
 class MobileReadStore(BasicStoreConfig, StorePlugin):
-
     def __init__(self, *args, **kwargs):
         StorePlugin.__init__(self, *args, **kwargs)
         self.lock = Lock()
@@ -32,13 +30,13 @@ class MobileReadStore(BasicStoreConfig, StorePlugin):
     def cache(self):
         if not hasattr(self, '_mr_cache'):
             from calibre.utils.config import JSONConfig
+
             self._mr_cache = JSONConfig('mobileread_get_books')
-            self._mr_cache.file_path = os.path.join(cache_dir(),
-                                                 'mobileread_get_books.json')
+            self._mr_cache.file_path = os.path.join(cache_dir(), 'mobileread_get_books.json')
             self._mr_cache.refresh()
         return self._mr_cache
 
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         url = 'https://www.mobileread.com/'
 
         if external or self.config.get('open_external', False):
@@ -68,8 +66,7 @@ class MobileReadStore(BasicStoreConfig, StorePlugin):
             book.drm = SearchResult.DRM_UNLOCKED
             yield book
 
-    def update_cache(self, parent=None, timeout=10, force=False,
-            suppress_progress=False):
+    def update_cache(self, parent=None, timeout=10, force=False, suppress_progress=False):
         if self.lock.acquire(False):
             try:
                 update_thread = CacheUpdateThread(self.cache, self.seralize_books, timeout)

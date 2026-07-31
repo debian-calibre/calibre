@@ -1,12 +1,8 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
 
 class NullSmarts:
-
     override_tab_stop_width = None
 
     def __init__(self, editor):
@@ -35,3 +31,24 @@ class NullSmarts:
 
     def get_completion_data(self, editor, ev=None):
         return None
+
+    def rename_block_tag(self, editor, new_name):
+        pass
+
+    def set_text_alignment(self, editor, value):
+        pass
+
+    def surround_with_custom_tag(self, editor, opent, close):
+        pass
+
+    def insert_hyperlink(self, editor, target, text, template=None):
+        pass
+
+    def insert_tag(self, editor, name):
+        pass
+
+    def remove_tag(self, editor):
+        pass
+
+    def split_tag(self, editor):
+        pass

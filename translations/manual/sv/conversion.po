@@ -5,19 +5,20 @@
 # Translators:
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017,2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Karl Jonatan Nyberg, 2016-2017,2021-2024
-# Karl Jonatan Nyberg, 2018-2021
+# Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2016-2017,2021-2024,2026
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017-2018
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
 # Karl Jonatan Nyberg, 2026
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2016
 # Sebastian Rasmussen <sebras@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 19:09+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -302,7 +303,7 @@ msgid ""
 "others do not. Normally, calibre will preserve the justification in the "
 "original document. If you want to override it you can use the "
 ":guilabel:`Text justification` option in this section."
-msgstr "Text kan antingen justeras eller inte. Justerad text har extra blanksteg mellan ord för att ge en jämn högermarginal. Vissa människor föredrar justerad text, andra gör det inte. Normalt kommer calibre bevara justeringen i originaldokuemtet. Om du vill åsidosätta det kan du använda alternativet :guilabel:`Textjustering` i det här avsnittet."
+msgstr "Text kan vara marginaljusterad eller inte. Marginaljusterad text har extra mellanrum mellan orden för att skapa en jämn högermarginal. Vissa föredrar marginaljusterad text, medan andra inte gör det. Normalt bevarar calibre marginaljusteringen i originaldokumentet. Om du vill åsidosätta den kan du använda alternativet :guilabel:`Textjustering` i det här avsnittet."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:173
 msgid ""
@@ -343,14 +344,14 @@ msgid ""
 "set the option and be sure that it performs as advertised, irrespective of "
 "how messy the input file is. The one exception is when the input file uses "
 "hard line breaks to implement inter-paragraph spacing."
-msgstr "Normalt återges stycken i XHTML med en blnakrad mellan dem och inget inledande textindrag. calibre har ett par alternativ för att anpassa detta. :guilabel:`Ta bort avstånd mellan stycken` ser till att alla stycken inte har något avstånd mellan stycken. Den ställer också in textindraget till 1.5em (kan ändras) för att markera början på varje stycke. :guilabel:`Infoga tom rad` gör det motsatta och garanterar att det finns exakt en tom rad mellan varje par av stycken. Båda dessa alternativ är mycket omfattande, tar bort avstånd eller infogar det för *alla* stycken (tekniska <p>- och <div>-taggar). Detta är så att du bara kan ställa in alternativet och vara säker på att den fungerar som utlovat, oavsett hur rörig inmatningsfilen är. Det enda undantaget är när inmatningsfilen använder hårda radbrytningar för att implementera avstånd mellan stycken."
+msgstr "Normalt återges stycken i XHTML med en tom rad mellan sig och utan inledande textindrag. calibre har ett par alternativ för att styra detta. :guilabel:`Ta bort avstånd mellan stycken` tar bort allt avstånd mellan styckena. Alternativet ställer också in textindraget på 1.5em, vilket kan ändras, för att markera början på varje stycke. :guilabel:`Infoga tom rad` gör motsatsen och ser till att det finns exakt en tom rad mellan varje par av stycken. Båda alternativen gäller för *alla* stycken, tekniskt sett <p>- och <div>-taggar. På så sätt fungerar alternativet som utlovat oavsett hur rörig inmatningsfilen är. Undantaget är när inmatningsfilen använder hårda radbrytningar för att skapa avstånd mellan stycken."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:201
 msgid ""
 "If you want to remove the spacing between all paragraphs, except a select "
 "few, don't use these options. Instead add the following CSS code to "
 ":ref:`Extra CSS <extra-css>`::"
-msgstr "Om du vill ta bort avstånd mellan alla stycken, förutom några få utvalda, använd inte dessa alternativ. Lägg istället till följande CSS-kod i :ref:`Extra CSS <extra-css>`::"
+msgstr "Om du vill ta bort avstånd mellan alla stycken, förutom några få utvalda, använd inte dessa alternativ. Lägg i stället till följande CSS-kod i :ref:`Extra CSS <extra-css>`::"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:207
 msgid ""
@@ -697,7 +698,7 @@ msgid ""
 "The replacement pattern is optional, if left blank then text matching the "
 "search pattern will be deleted from the document.  You can learn more about "
 "regular expressions and their syntax at :ref:`regexptutorial`."
-msgstr "Sökningen fungerar med hjälp av ett Python-reguljärt uttryck. All matchad text tas helt enkelt bort från dokumentet eller ersätt med hjälp av ersättningsmönstret. Ersättningsmönster är valfritt, om det lämnas tomt kommer text som matchar sökbegreppet kommer att tas bort från dokumentet. Du kan läsa mer om reguljära uttryck och deras syntax på :ref:`regexptutorial`."
+msgstr "Sökningen använder ett reguljärt Python-uttryck. All matchad text tas bort från dokumentet eller ersätts med ersättningsmönstret. Ersättningsmönstret är valfritt. Om det lämnas tomt tas text som matchar sökmönstret bort från dokumentet. Du kan läsa mer om reguljära uttryck och deras syntax i :ref:`regexptutorial`."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:404
 msgid "Structure detection"
@@ -761,7 +762,7 @@ msgid ""
 "what calibre does when it detects a chapter. By default, it will insert a "
 "page break before the chapter. You can have it insert a ruled line instead "
 "of, or in addition to the page break. You can also have it do nothing."
-msgstr "Ett relaterat alternativ är :guilabel:`Kapitelmarkering`, som låter dig anpassa vad calibre gör när det upptäcker ett kapitel. Som standard kommer det att infoga en sidbrytning före kapitlet. Du kan låta den infoga en uppmätt rad istället för eller utöver sidbrytningen. Du kan också låta den göra ingenting."
+msgstr "Ett relaterat alternativ är :guilabel:`Kapitelmarkering`, som låter dig anpassa vad calibre gör när det upptäcker ett kapitel. Som standard kommer det att infoga en sidbrytning före kapitlet. Du kan låta den infoga en uppmätt rad i stället för eller utöver sidbrytningen. Du kan också låta den göra ingenting."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:437
 msgid "The default setting for detecting page breaks is::"
@@ -811,7 +812,7 @@ msgid ""
 " calibre, then the converted book will have two covers. This option will "
 "simply remove the first image from the source document, thereby ensuring "
 "that the converted book has only one cover, the one specified in calibre."
-msgstr "Ibland innehåller källdokumentet du konverterar omslaget som en del av boken, istället för som ett separat omslag. Om du också ange ett omslag i calibre, den då konverterade boken kommer att ha två omslag. Det här alternativet kommer att helt enkelt ta bort den första bilden från källdokumentet, vilket säkerställer att den konverterade boken har bara ett omslag, det som anges i calibre."
+msgstr "Ibland innehåller källdokumentet du konverterar omslaget som en del av boken, i stället för som ett separat omslag. Om du också ange ett omslag i calibre, den då konverterade boken kommer att ha två omslag. Det här alternativet kommer att helt enkelt ta bort den första bilden från källdokumentet, vilket säkerställer att den konverterade boken har bara ett omslag, det som anges i calibre."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:466
 msgid "Table of Contents"
@@ -952,7 +953,7 @@ msgid ""
 "``<h2>`` tags, instead of using the text inside the tag. Note the trailing "
 "``/@title`` on the XPath expression, you can use this form to tell calibre "
 "to get the text from any attribute you like."
-msgstr "Ändra :guilabel:`Nivå 1 TOC` inställning till ``//h:h2/@title``. Då tar calibre titeln från värdet på ``titel`` attribut på ``<h2>`` taggar, istället för att använda texten i taggen. Observera den avslutande ``/@title`` på XPath-uttryck kan du använda den här formen för att ange att calibre ska hämta texten från valfritt attribut."
+msgstr "Ange ``//h:h2/@title`` för inställningen :guilabel:`Nivå 1 i innehållsförteckningen`. calibre hämtar då titeln från värdet i attributet ``title`` på ``<h2>``-taggarna i stället för från texten inuti taggen. Observera det avslutande ``/@title`` i XPath-uttrycket. Den här formen kan användas för att hämta text från valfritt attribut."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:598
 msgid "How options are set/saved for conversion"
@@ -1404,7 +1405,7 @@ msgid ""
 " to use the page size from the :guilabel:`output profile` instead. So if "
 "your output profile is set to Kindle, calibre will create a PDF with page "
 "size suitable for viewing on the small Kindle screen."
-msgstr "Den första, viktigaste inställningen att bestämma när man konverterar till PDF är sidstorleken. Som standard använder calibre en sidstorlek för \"U.S. Letter\". Du kan ändra detta till en annan standard sidstorlek eller en helt anpassad storlek i avsnittet :guilabel:`PDF-utmatning` sektionen i konverteringsdialogrutan. Om du skapar en PDF som ska användas på en viss enhet kan du slå på alternativet för att använda sidstorleken från :guilabel:`utmatningsprofilen` istället. Så om din utskriftsprofil är inställd på Kindle, kommer calibre att skapa en PDF med sidstorlek som är lämplig för visning på den lilla Kindle-skärmen."
+msgstr "Den första, viktigaste inställningen att bestämma när man konverterar till PDF är sidstorleken. Som standard använder calibre en sidstorlek för \"U.S. Letter\". Du kan ändra detta till en annan standard sidstorlek eller en helt anpassad storlek i avsnittet :guilabel:`PDF-utmatning` sektionen i konverteringsdialogrutan. Om du skapar en PDF som ska användas på en viss enhet kan du slå på alternativet för att använda sidstorleken från :guilabel:`utmatningsprofilen` i stället. Så om din utskriftsprofil är inställd på Kindle, kommer calibre att skapa en PDF med sidstorlek som är lämplig för visning på den lilla Kindle-skärmen."
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:856
 msgid "Headers and Footers"
@@ -1467,7 +1468,7 @@ msgid ""
 "You can even use JavaScript inside the header and footer templates, for "
 "example, the following template will cause page numbers to start at 4 "
 "instead of 1::"
-msgstr "Du kan till och med använda JavaScript i sidhuvud- och sidfotsmallarna, till exempel kommer följande mall att leda till att sidnummer börjar vid 4 istället för 1::"
+msgstr "Du kan till och med använda JavaScript i sidhuvud- och sidfotsmallarna, till exempel kommer följande mall att leda till att sidnummer börjar vid 4 i stället för 1::"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:911
 msgid ""

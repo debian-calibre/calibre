@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
 import errno
 import os
@@ -10,7 +7,9 @@ import shutil
 import time
 import traceback
 from collections import defaultdict, namedtuple
+from io import BytesIO
 from queue import Empty
+from typing import cast
 
 from qt.core import QObject, Qt, pyqtSignal
 
@@ -27,6 +26,7 @@ from calibre.library.save_to_disk import find_plugboard, get_path_components, pl
 from calibre.ptempfile import PersistentTemporaryDirectory, SpooledTemporaryFile
 from calibre.utils.filenames import make_long_path_useable
 from calibre.utils.ipc.pool import Failure, Pool
+from calibre.utils.localization import _
 
 BookId = namedtuple('BookId', 'title authors')
 
@@ -44,12 +44,13 @@ def ensure_unique_components(data):  # {{{
                 suffix = f' ({i + 1})'
                 components = bid_map[book_id]
                 components[-1] = components[-1] + suffix
+
+
 # }}}
 
 
 class SpooledFile(SpooledTemporaryFile):  # {{{
-
-    def __init__(self, file_obj, max_size=50*1024*1024):
+    def __init__(self, file_obj, max_size=50 * 1024 * 1024):
         self._file_obj = file_obj
         SpooledTemporaryFile.__init__(self, max_size)
 
@@ -58,18 +59,20 @@ class SpooledFile(SpooledTemporaryFile):  # {{{
             return
         orig = self._file
         newfile = self._file = self._file_obj
-        del self._TemporaryFileArgs
+        del self._TemporaryFileArgs  # type: ignore
 
-        newfile.write(orig.getvalue())
+        newfile.write(cast(BytesIO, orig).getvalue())
         newfile.seek(orig.tell(), 0)
 
         self._rolled = True
+
+
 # }}}
 
 
 class Saver(QObject):
-
     do_one_signal = pyqtSignal()
+    pd_title = ''
 
     def __init__(self, book_ids, db, opts, root, parent=None, pool=None):
         QObject.__init__(self, parent)
@@ -87,7 +90,14 @@ class Saver(QObject):
         self.errors = defaultdict(list)
         self._book_id_data = {}
         self.all_book_ids = frozenset(book_ids)
-        self.pd = ProgressDialog(_('Saving %d books...') % len(self.all_book_ids), _('Collecting metadata...'), min=0, max=0, parent=parent, icon='save.png')
+        self.pd = ProgressDialog(
+            self.pd_title or (_('Saving %d books...') % len(self.all_book_ids)),
+            _('Collecting metadata...'),
+            min=0,
+            max=0,
+            parent=parent,
+            icon='save.png',
+        )
         self.do_one_signal.connect(self.tick, type=Qt.ConnectionType.QueuedConnection)
         self.do_one = self.do_one_collect
         self.ids_to_collect = iter(self.all_book_ids)
@@ -101,9 +111,11 @@ class Saver(QObject):
             self.start_time = time.time()
 
     def tick(self):
-        if self.pd.canceled:
-            self.pd.close()
-            self.pd.deleteLater()
+        pd = self.pd
+        assert pd is not None
+        if pd.canceled:
+            pd.close()
+            pd.deleteLater()
             self.break_cycles()
             return
         self.do_one()
@@ -113,15 +125,16 @@ class Saver(QObject):
         if self.pool is not None:
             self.pool.shutdown()
         self.setParent(None)
-        self.jobs = self.pool = self.plugboards = self.template_functions = self.library_id =\
-                self.collected_data = self.all_book_ids = self.pd = self.db = None
+        self.jobs = self.pool = self.plugboards = self.template_functions = self.library_id = self.collected_data = self.all_book_ids = self.pd = self.db = None
         self.deleteLater()
 
     def book_id_data(self, book_id):
         ans = self._book_id_data.get(book_id)
         if ans is None:
             try:
-                ans = BookId(self.db.field_for('title', book_id), self.db.field_for('authors', book_id))
+                db = self.db
+                assert db is not None
+                ans = BookId(db.field_for('title', book_id), db.field_for('authors', book_id))
             except Exception:
                 ans = BookId((_('Unknown') + f' ({book_id})'), (_('Unknown'),))
             self._book_id_data[book_id] = ans
@@ -140,32 +153,45 @@ class Saver(QObject):
         self.do_one_signal.emit()
 
     def collect_data(self, book_id):
-        mi = self.db.get_metadata(book_id)
+        db = self.db
+        assert db is not None
+        mi = db.get_metadata(book_id)
         self._book_id_data[book_id] = BookId(mi.title, mi.authors)
         components = get_path_components(self.opts, mi, book_id, self.path_length)
-        self.collected_data[book_id] = (mi, components, {fmt.lower() for fmt in self.db.formats(book_id)})
+        collected_data = self.collected_data
+        assert collected_data is not None
+        collected_data[book_id] = (mi, components, {fmt.lower() for fmt in db.formats(book_id)})
 
     def collection_finished(self):
         self.do_one = self.do_one_write
-        ensure_unique_components(self.collected_data)
-        self.ids_to_write = iter(self.collected_data)
-        self.pd.title = _('Copying files and writing metadata...') if self.opts.update_metadata else _(
-            'Copying files...')
-        self.pd.max = len(self.collected_data)
-        self.pd.value = 0
+        collected_data = self.collected_data
+        assert collected_data is not None
+        ensure_unique_components(collected_data)
+        self.ids_to_write = iter(collected_data)
+        pd = self.pd
+        assert pd is not None
+        pd.title = _('Copying files and writing metadata...') if self.opts.update_metadata else _('Copying files...')
+        pd.max = len(collected_data)
+        pd.value = 0
         if self.opts.update_metadata:
-            all_fmts = {fmt for data in self.collected_data.values() for fmt in data[2]}
-            plugboards_cache = {fmt:find_plugboard(plugboard_save_to_disk_value, fmt, self.plugboards) for fmt in all_fmts}
+            all_fmts = {fmt for data in collected_data.values() for fmt in data[2]}
+            plugboards_cache = {fmt: find_plugboard(plugboard_save_to_disk_value, fmt, self.plugboards) for fmt in all_fmts}
             self.pool = Pool(name='SaveToDisk') if self.pool is None else self.pool
             try:
-                self.pool.set_common_data({'plugboard_cache': plugboards_cache,
-                                           'template_functions': self.template_functions,
-                                           'library_id': self.library_id})
+                self.pool.set_common_data({
+                    'plugboard_cache': plugboards_cache,
+                    'template_functions': self.template_functions,
+                    'library_id': self.library_id,
+                })
             except Failure as err:
-                error_dialog(self.pd, _('Critical failure'), _(
-                    'Could not save books to disk, click "Show details" for more information'),
-                    det_msg=force_unicode(err.failure_message) + '\n' + force_unicode(err.details), show=True)
-                self.pd.canceled = True
+                error_dialog(
+                    pd,
+                    _('Critical failure'),
+                    _('Could not save books to disk, click "Show details" for more information'),
+                    det_msg=force_unicode(err.failure_message) + '\n' + force_unicode(err.details),
+                    show=True,
+                )
+                pd.canceled = True
         self.do_one_signal.emit()
 
     def do_one_write(self):
@@ -175,10 +201,14 @@ class Saver(QObject):
             self.writing_finished()
             return
         if not self.opts.update_metadata:
-            self.pd.msg = self.book_id_data(book_id).title
-            self.pd.value += 1
+            pd = self.pd
+            assert pd is not None
+            pd.msg = self.book_id_data(book_id).title
+            pd.value += 1
+        collected_data = self.collected_data
+        assert collected_data is not None
         try:
-            self.write_book(book_id, *self.collected_data[book_id])
+            self.write_book(book_id, *collected_data[book_id])
         except Exception:
             self.errors[book_id].append(('critical', traceback.format_exc()))
         self.consume_results()
@@ -192,15 +222,20 @@ class Saver(QObject):
                 except Empty:
                     break
                 book_id = worker_result.id
+                pd = self.pd
+                assert pd is not None
                 if worker_result.is_terminal_failure:
-                    error_dialog(self.pd, _('Critical failure'), _(
-                        'The update metadata worker process crashed while processing'
-                        ' the book %s. Saving is aborted.') % self.book_id_data(book_id).title, show=True)
-                    self.pd.canceled = True
+                    error_dialog(
+                        pd,
+                        _('Critical failure'),
+                        _('The update metadata worker process crashed while processing the book %s. Saving is aborted.') % self.book_id_data(book_id).title,
+                        show=True,
+                    )
+                    pd.canceled = True
                     return
                 result = worker_result.result
-                self.pd.value += 1
-                self.pd.msg = self.book_id_data(book_id).title
+                pd.value += 1
+                pd.msg = self.book_id_data(book_id).title
                 if result.err is not None:
                     self.errors[book_id].append(('metadata', (None, result.err + '\n' + result.traceback)))
                 if result.value:
@@ -208,6 +243,8 @@ class Saver(QObject):
                         self.errors[book_id].append(('metadata', (fmt, tb)))
 
     def write_book(self, book_id, mi, components, fmts):
+        db = self.db
+        assert db is not None
         base_path = os.path.join(self.root, *components)
         base_dir = os.path.dirname(base_path)
         if self.opts.formats and self.opts.formats != 'all':
@@ -223,7 +260,7 @@ class Saver(QObject):
         extra_files = {}
         if self.opts.save_extra_files:
             extra_files = {}
-            for efx in self.db.new_api.list_extra_files(int(book_id), pattern=DATA_FILE_PATTERN):
+            for efx in db.new_api.list_extra_files(int(book_id), pattern=DATA_FILE_PATTERN):
                 extra_files[efx.relpath] = efx.file_path
         if not fmts and not self.opts.write_opf and not self.opts.save_cover and not extra_files:
             return
@@ -241,7 +278,7 @@ class Saver(QObject):
             d = {}
             d['last_modified'] = mi.last_modified.isoformat()
 
-        cdata = self.db.cover(book_id)
+        cdata = db.cover(book_id)
         mi.cover, mi.cover_data = None, (None, None)
 
         if cdata:
@@ -270,8 +307,9 @@ class Saver(QObject):
             if self.opts.update_metadata:
                 d['opf'] = fname
         mi.cover, mi.cover_data = None, (None, None)
+        fmts_list: list[str] = []
         if self.opts.update_metadata:
-            d['fmts'] = []
+            d['fmts'] = fmts_list
         if extra_files:
             for relpath, src_path in extra_files.items():
                 src_path = make_long_path_useable(src_path)
@@ -286,28 +324,40 @@ class Saver(QObject):
             try:
                 fmtpath = self.write_fmt(book_id, fmt, base_path)
                 if fmtpath and self.opts.update_metadata and can_set_metadata(fmt):
-                    d['fmts'].append(fmtpath)
+                    fmts_list.append(fmtpath)
             except Exception:
                 self.errors[book_id].append(('fmt', (fmt, traceback.format_exc())))
         if self.opts.update_metadata:
-            if d['fmts']:
+            if fmts_list:
+                pool = self.pool
+                assert pool is not None
+                pd = self.pd
+                assert pd is not None
                 try:
-                    self.pool(book_id, 'calibre.library.save_to_disk', 'update_serialized_metadata', d)
+                    pool(book_id, 'calibre.library.save_to_disk', 'update_serialized_metadata', d)
                 except Failure as err:
-                    error_dialog(self.pd, _('Critical failure'), _(
-                        'Could not save books to disk, click "Show details" for more information'),
-                        det_msg=str(err.failure_message) + '\n' + str(err.details), show=True)
-                    self.pd.canceled = True
+                    error_dialog(
+                        pd,
+                        _('Critical failure'),
+                        _('Could not save books to disk, click "Show details" for more information'),
+                        det_msg=str(err.failure_message) + '\n' + str(err.details),
+                        show=True,
+                    )
+                    pd.canceled = True
             else:
-                self.pd.value += 1
-                self.pd.msg = self.book_id_data(book_id).title
+                pd = self.pd
+                assert pd is not None
+                pd.value += 1
+                pd.msg = self.book_id_data(book_id).title
 
     def write_fmt(self, book_id, fmt, base_path):
+        db = self.db
+        assert db is not None
         fmtpath = base_path + os.extsep + fmt
         written = False
         with open(fmtpath, 'w+b') as f:
             try:
-                self.db.copy_format_to(book_id, fmt, f)
+                db.copy_format_to(book_id, fmt, f)
                 written = True
             except NoSuchFormat:
                 self.errors[book_id].append(('fmt', (fmt, _('No %s format file present') % fmt.upper())))
@@ -325,13 +375,21 @@ class Saver(QObject):
 
     def do_one_update(self):
         self.consume_results()
+        pool = self.pool
+        assert pool is not None
+        pd = self.pd
+        assert pd is not None
         try:
-            self.pool.wait_for_tasks(0.1)
+            pool.wait_for_tasks(0.1)
         except Failure as err:
-            error_dialog(self.pd, _('Critical failure'), _(
-                'Could not save books to disk, click "Show details" for more information'),
-                det_msg=str(err.failure_message) + '\n' + str(err.details), show=True)
-            self.pd.canceled = True
+            error_dialog(
+                pd,
+                _('Critical failure'),
+                _('Could not save books to disk, click "Show details" for more information'),
+                det_msg=str(err.failure_message) + '\n' + str(err.details),
+                show=True,
+            )
+            pd.canceled = True
         except RuntimeError:
             pass  # tasks not completed
         else:
@@ -341,11 +399,18 @@ class Saver(QObject):
 
     def updating_metadata_finished(self):
         if DEBUG:
-            prints(f'Saved {len(self.all_book_ids)} books in {time.time()-self.start_time:.1f} seconds')
-        self.pd.close()
-        self.pd.deleteLater()
+            all_book_ids = self.all_book_ids
+            assert all_book_ids is not None
+            prints(f'Saved {len(all_book_ids)} books in {time.time() - self.start_time:.1f} seconds')
+        pd = self.pd
+        assert pd is not None
+        pd.close()
+        pd.deleteLater()
         self.report()
         self.break_cycles()
+        self.on_complete()
+
+    def on_complete(self):
         if gprefs['show_files_after_save']:
             open_local_file(self.root)
 
@@ -361,7 +426,7 @@ class Saver(QObject):
             types = {t for t, data in errors}
             title, authors = self.book_id_data(book_id).title, authors_to_string(self.book_id_data(book_id).authors[:1])
             if report:
-                a('\n' + ('_'*70) + '\n')
+                a('\n' + ('_' * 70) + '\n')
             if 'critical' in types:
                 a(_('Failed to save: {0} by {1} to disk, with error:').format(title, authors))
                 for t, tb in errors:
@@ -385,11 +450,13 @@ class Saver(QObject):
     def report(self):
         if not self.errors:
             return
+        all_book_ids = self.all_book_ids
+        assert all_book_ids is not None
         err_types = {e[0] for errors in self.errors.values() for e in errors}
         if err_types == {'metadata'}:
             msg = _('Failed to update metadata in some books, click "Show details" for more information')
             d = warning_dialog
-        elif len(self.errors) == len(self.all_book_ids):
+        elif len(self.errors) == len(all_book_ids):
             msg = _('Failed to save any books to disk, click "Show details" for more information')
             d = error_dialog
         else:

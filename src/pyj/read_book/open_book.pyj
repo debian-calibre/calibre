@@ -3,11 +3,11 @@
 from __python__ import bound_methods, hash_literals
 
 from elementmaker import E
+from gettext import gettext as _
 
 from book_list.globals import get_session_data
 from book_list.item_list import create_item, create_item_list
 from dom import clear, unique_id
-from gettext import gettext as _
 from read_book.globals import ui_operations
 from widgets import create_button
 
@@ -55,7 +55,7 @@ def rebuild_open_list(container):
 
 def clear_recent_list(container_id):
     sd = get_session_data()
-    sd.set('standalone_recently_opened', v'[]')
+    sd.set('standalone_recently_opened', [])
     document.getElementById(container_id).style.display = 'none'
 
 
@@ -68,7 +68,7 @@ def add_book_to_recently_viewed(book):
         'title': book.metadata.title, 'authors': book.metadata.authors,
         'timestamp': Date().toISOString(),
     }
-    ans = v'[]'
+    ans = []
     ans.push(new_entry)
     for entry in rl:
         if entry.key is not key:
@@ -80,7 +80,7 @@ def add_book_to_recently_viewed(book):
 def remove_recently_opened(path):
     sd = get_session_data()
     rl = sd.get('standalone_recently_opened')
-    newl = v'[]'
+    newl = []
     if path:
         for entry in rl:
             if entry.key is not path:

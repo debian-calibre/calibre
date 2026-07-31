@@ -1,36 +1,39 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import json
 import random
 
 from calibre.utils.resources import get_path as P
 
+_user_agent_data_cache = None
+_common_english_words_cache: tuple | None = None
+
 
 def user_agent_data():
-    ans = getattr(user_agent_data, 'ans', None)
-    if ans is None:
-        ans = user_agent_data.ans = json.loads(
-            P('user-agent-data.json', data=True, allow_user_override=False))
-    return ans
+    global _user_agent_data_cache
+    if _user_agent_data_cache is None:
+        _user_agent_data_cache = json.loads(P('user-agent-data.json', data=True, allow_user_override=False))
+    return _user_agent_data_cache
 
 
 def common_english_words():
-    ans = getattr(common_english_words, 'ans', None)
-    if ans is None:
-        ans = common_english_words.ans = tuple(x.strip() for x in P('common-english-words.txt', data=True).decode('utf-8').splitlines())
-    return ans
+    global _common_english_words_cache
+    if _common_english_words_cache is None:
+        _common_english_words_cache = tuple(x.strip() for x in P('common-english-words.txt', data=True).decode('utf-8').splitlines())
+    return _common_english_words_cache
 
 
 def random_english_text(max_num_sentences=3, min_words_per_sentence=8, max_words_per_sentence=41):
     import random
-    num_sentences = random.randrange(1, max_num_sentences+1)
+
+    num_sentences = random.randrange(1, max_num_sentences + 1)
     words = common_english_words()
 
     def sentence():
-        num_words = random.randrange(min_words_per_sentence, max_words_per_sentence+1)
+        num_words = random.randrange(min_words_per_sentence, max_words_per_sentence + 1)
         return ' '.join(random.choice(words) for i in range(num_words)).capitalize() + '.'
+
     return ' '.join(sentence() for i in range(num_sentences))
 
 

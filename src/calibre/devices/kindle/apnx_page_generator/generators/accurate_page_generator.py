@@ -1,7 +1,6 @@
-__license__ = 'GPL v3'
-__copyright__ = '2022, Vaso Peras-Likodric <vaso at vipl.in.rs>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2022, Vaso Peras-Likodric <vaso at vipl.in.rs>
 
+from typing import ClassVar
 
 from calibre.devices.kindle.apnx_page_generator.generators.fast_page_generator import FastPageGenerator
 from calibre.devices.kindle.apnx_page_generator.i_page_generator import IPageGenerator, mobi_html
@@ -9,8 +8,7 @@ from calibre.devices.kindle.apnx_page_generator.pages import Pages
 
 
 class AccuratePageGenerator(IPageGenerator):
-
-    instance = None
+    instance: ClassVar[AccuratePageGenerator]
 
     def name(self) -> str:
         return 'accurate'

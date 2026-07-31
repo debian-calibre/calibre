@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
+# License: GPLv3 Copyright: 2011, Alex Stanev <alex@stanev.org>
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
-__license__ = 'GPL 3'
-__copyright__ = '2011, Alex Stanev <alex@stanev.org>'
-__docformat__ = 'restructuredtext en'
-
 from contextlib import closing
-
-try:
-    from urllib.error import HTTPError
-    from urllib.parse import quote
-except ImportError:
-    from urllib2 import HTTPError, quote
+from urllib.error import HTTPError
+from urllib.parse import quote
 
 from qt.core import QUrl
 
@@ -43,8 +37,7 @@ def parse_book_page(doc, base_url, counter):
         counter -= 1
 
         s = SearchResult()
-        s.cover_url = 'http:' + ''.join(
-            data.xpath('.//div[@class="media-left"]/a[@class="booklink"]/div/img/@src')).strip()
+        s.cover_url = 'http:' + ''.join(data.xpath('.//div[@class="media-left"]/a[@class="booklink"]/div/img/@src')).strip()
 
         s.title = ''.join(data.xpath('.//div[@class="media-body"]/a[@class="booklink"]/i/text()')).strip()
         alternative_headline = data.xpath('.//div[@class="media-body"]/div[@itemprop="alternativeHeadline"]/text()')
@@ -54,15 +47,15 @@ def parse_book_page(doc, base_url, counter):
         s.author = ', '.join(data.xpath('.//div[@class="media-body"]/div[@class="bookauthor"]/span/a/text()')).strip(', ')
         s.detail_item = id
         s.drm = SearchResult.DRM_UNLOCKED
-        s.downloads['FB2'] = base_url + ''.join(data.xpath(
-            './/div[@class="media-body"]/div[@class="download-links"]/div/a[contains(@class,"dl-fb2")]/@href')).strip().replace(
-            '.zip', '')
-        s.downloads['EPUB'] = base_url + ''.join(data.xpath(
-            './/div[@class="media-body"]/div[@class="download-links"]/div/a[contains(@class,"dl-epub")]/@href')).strip().replace(
-            '.zip', '')
-        s.downloads['TXT'] = base_url + ''.join(data.xpath(
-            './/div[@class="media-body"]/div[@class="download-links"]/div/a[contains(@class,"dl-txt")]/@href')).strip().replace(
-            '.zip', '')
+        s.downloads['FB2'] = base_url + ''.join(
+            data.xpath('.//div[@class="media-body"]/div[@class="download-links"]/div/a[contains(@class,"dl-fb2")]/@href')
+        ).strip().replace('.zip', '')
+        s.downloads['EPUB'] = base_url + ''.join(
+            data.xpath('.//div[@class="media-body"]/div[@class="download-links"]/div/a[contains(@class,"dl-epub")]/@href')
+        ).strip().replace('.zip', '')
+        s.downloads['TXT'] = base_url + ''.join(
+            data.xpath('.//div[@class="media-body"]/div[@class="download-links"]/div/a[contains(@class,"dl-txt")]/@href')
+        ).strip().replace('.zip', '')
         s.formats = 'FB2, EPUB, TXT'
         yield s
 
@@ -70,8 +63,7 @@ def parse_book_page(doc, base_url, counter):
 
 
 class ChitankaStore(BasicStoreConfig, StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         url = 'http://chitanka.info'
 
         if external or self.config.get('open_external', False):

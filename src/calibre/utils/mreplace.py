@@ -1,15 +1,12 @@
-# multiple replace from dictionary : http://code.activestate.com/recipes/81330/
+# License: GPLv3 Copyright: 2010, sengian <sengian1 @ gmail.com>
 
-__license__   = 'GPL v3'
-__copyright__ = '2010, sengian <sengian1 @ gmail.com>'
-__docformat__ = 'restructuredtext en'
+# multiple replace from dictionary : http://code.activestate.com/recipes/81330/
 
 import re
 from collections import UserDict
 
 
 class MReplace(UserDict):
-
     def __init__(self, data=None, case_sensitive=True):
         UserDict.__init__(self, data)
         self.re = None
@@ -32,10 +29,11 @@ class MReplace(UserDict):
                     self.regex = re.compile(self.re, re.I)
 
     def __call__(self, mo):
-        return self[mo.string[mo.start():mo.end()]]
+        return self[mo.string[mo.start() : mo.end()]]
 
     def mreplace(self, text):
         # Replace without regex compile
         if len(self.data) < 1 or self.re is None:
             return text
+        assert self.regex is not None
         return self.regex.sub(self, text)

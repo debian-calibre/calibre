@@ -1,14 +1,12 @@
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
 from qt.core import QWidget
 
 from calibre.gui2.store.basic_config_widget_ui import Ui_Form
+from calibre.utils.config import JSONConfig
 
 
 class BasicStoreConfigWidget(QWidget, Ui_Form):
-
     def __init__(self, store):
         QWidget.__init__(self)
         self.setupUi(self)
@@ -25,6 +23,7 @@ class BasicStoreConfigWidget(QWidget, Ui_Form):
 
 
 class BasicStoreConfig:
+    config: JSONConfig
 
     def customization_help(self, gui=False):
         return 'Customize the behavior of this store.'

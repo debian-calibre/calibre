@@ -1,28 +1,24 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
-
+# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid@kovidgoyal.net>
 
 from qt.core import QListWidgetItem, QWidget
 
 from calibre.gui2 import gprefs
 from calibre.gui2.catalog.catalog_bibtex_ui import Ui_Form
+from calibre.utils.localization import _
 
 
 class PluginWidget(QWidget, Ui_Form):
-
     TITLE = _('BibTeX options')
-    HELP  = _('Options specific to')+' BibTeX '+_('output')
-    OPTION_FIELDS = [('bib_cit','{authors}{id}'),
-                     ('bib_entry', 0),  # mixed
-                     ('bibfile_enc', 0),  # utf-8
-                     ('bibfile_enctag', 0),  # strict
-                     ('impcit', True),
-                     ('addfiles', False),
-                     ]
+    HELP = _('Options specific to') + ' BibTeX ' + _('output')
+    OPTION_FIELDS = [
+        ('bib_cit', '{authors}{id}'),
+        ('bib_entry', 0),  # mixed
+        ('bibfile_enc', 0),  # utf-8
+        ('bibfile_enctag', 0),  # strict
+        ('impcit', True),
+        ('addfiles', False),
+    ]
 
     sync_enabled = False
     formats = {'bib'}
@@ -39,22 +35,22 @@ class PluginWidget(QWidget, Ui_Form):
         for x in sorted(db.custom_field_keys()):
             self.all_fields.append(x)
             if db.field_metadata[x]['datatype'] == 'series':
-                self.all_fields.append(x+'_index')
+                self.all_fields.append(x + '_index')
         # populate
         for x in self.all_fields:
             QListWidgetItem(x, self.db_fields)
 
         self.name = name
-        fields = gprefs.get(name+'_db_fields', self.all_fields)
+        fields = gprefs.get(name + '_db_fields', self.all_fields)
         # Restore the activated db_fields from last use
         for x in range(self.db_fields.count()):
             item = self.db_fields.item(x)
+            assert item is not None
             item.setSelected(str(item.text()) in fields)
         self.bibfile_enc.clear()
         self.bibfile_enc.addItems(['utf-8', 'cp1252', 'ascii/LaTeX'])
         self.bibfile_enctag.clear()
-        self.bibfile_enctag.addItems(['strict', 'replace', 'ignore',
-            'backslashreplace'])
+        self.bibfile_enctag.addItems(['strict', 'replace', 'ignore', 'backslashreplace'])
         self.bib_entry.clear()
         self.bib_entry.addItems(['mixed', 'misc', 'book'])
         # Update dialog fields from stored options
@@ -73,15 +69,17 @@ class PluginWidget(QWidget, Ui_Form):
         fields = []
         for x in range(self.db_fields.count()):
             item = self.db_fields.item(x)
+            assert item is not None
             if item.isSelected():
                 fields.append(str(item.text()))
-        gprefs.set(self.name+'_db_fields', fields)
+        gprefs.set(self.name + '_db_fields', fields)
 
         # Dictionary currently activated fields
+        opts_dict: dict[str, list[str] | int | bool | str]
         if len(self.db_fields.selectedItems()):
-            opts_dict = {'fields':[str(i.text()) for i in self.db_fields.selectedItems()]}
+            opts_dict = {'fields': [str(i.text()) for i in self.db_fields.selectedItems()]}
         else:
-            opts_dict = {'fields':['all']}
+            opts_dict = {'fields': ['all']}
 
         # Save/return the current options
         # bib_cit stores as text

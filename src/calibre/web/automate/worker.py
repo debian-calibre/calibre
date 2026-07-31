@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2026, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import asyncio
 import errno
 import json
@@ -12,7 +11,7 @@ import struct
 import sys
 from collections.abc import Awaitable, Callable
 from functools import partial
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, cast
 
 from calibre.constants import islinux, ismacos, iswindows
 from calibre.ptempfile import base_dir
@@ -51,7 +50,6 @@ def debug(*a, **kw):
 
 
 class SingleObjectProtocol(asyncio.Protocol):
-
     def __init__(self, handler_callback: Handler):
         self.handler = handler_callback
         self.transport = None
@@ -69,14 +67,15 @@ class SingleObjectProtocol(asyncio.Protocol):
             del self._buffer[:4]
             self.expected_length = struct.unpack('!I', header)[0]
         if self.expected_length is not None and len(self._buffer) >= self.expected_length:
-            complete_data = self._buffer[:self.expected_length]
-            del self._buffer[:self.expected_length]
+            complete_data = self._buffer[: self.expected_length]
+            del self._buffer[: self.expected_length]
             self.expected_length = None
             self.task = asyncio.create_task(self._process_and_respond(complete_data))
 
     def eof_received(self):
         if self.task is None:
             payload = {'exception': 'Complete message not received from client'}
+            assert self.transport is not None
             self.transport.write(msgpack_dumps(payload))
         return False  # Returning False closes the transport
 
@@ -88,8 +87,10 @@ class SingleObjectProtocol(asyncio.Protocol):
             payload = {'response': response}
         except Exception as e:
             import traceback
+
             payload = {'exception': str(e), 'traceback': traceback.format_exc()}
         finally:
+            assert self.transport is not None
             self.transport.write(msgpack_dumps(payload))
             self.transport.close()
 
@@ -99,7 +100,6 @@ async def echo(x):
 
 
 class Server:
-
     def __init__(self, platform_implementation: asyncio.Server | list[asyncio.Transport]):
         self.platform_implementation = platform_implementation
 
@@ -135,14 +135,18 @@ async def start_server(
     random_suffix: str = '',
     num_attempts: int = 10,
 ) -> tuple[str, Server]:
-    '''Tries to start the server, retrying on name collisions.'''
+    """Tries to start the server, retrying on name collisions."""
     loop = asyncio.get_running_loop()
     protocol_factory = partial(SingleObjectProtocol, handle_client)
     for attempt in range(num_attempts):
         path = get_random_socket_path(name, random_suffix)
         try:
             if iswindows:
-                server = await loop.start_serving_pipe(protocol_factory, path)
+                from asyncio import Transport
+                from asyncio.windows_events import ProactorEventLoop
+
+                wserver = await cast(ProactorEventLoop, loop).start_serving_pipe(protocol_factory, path)
+                server = cast(list[Transport], wserver)
             else:
                 sock = None
                 if path.startswith('/'):
@@ -160,21 +164,24 @@ async def start_server(
             return path, Server(server)
         except OSError as e:
             if iswindows:
-                exists = e.winerror in (winutil.ERROR_ACCESS_DENIED, winutil.ERROR_ALREADY_EXISTS, winutil.ERROR_PIPE_BUSY)
+                exists = e.winerror in (
+                    winutil.ERROR_ACCESS_DENIED,
+                    winutil.ERROR_ALREADY_EXISTS,
+                    winutil.ERROR_PIPE_BUSY,
+                )
             else:
                 exists = e.errno in (errno.EADDRINUSE, errno.EEXIST)
             if not exists:
                 raise
             random_suffix = ''
+    raise RuntimeError(f'Failed to start {name!r} server after {num_attempts} attempts due to name collisions')
 
 
 async def no_setup() -> None:
     pass
 
 
-async def handler_with_setup(
-    x: Any, handler: Handler, setup: Callable[[], Awaitable[None]], setup_done: asyncio.Event, setup_lock: asyncio.Lock
-) -> Any:
+async def handler_with_setup(x: Any, handler: Handler, setup: Callable[[], Awaitable[None]], setup_done: asyncio.Event, setup_lock: asyncio.Lock) -> Any:
     if not setup_done.is_set():
         async with setup_lock:
             if not setup_done.is_set():
@@ -186,11 +193,11 @@ async def handler_with_setup(
 
 async def async_main(
     # async handler that is called to handle each connection
-    handler: Handler = echo,
+    handler: Callable[..., Awaitable[Any]] = echo,
     # global setup called exactly once when first connection arrives
-    delayed_setup: Callable[[], Awaitable[None]] = no_setup,
+    delayed_setup: Callable[..., Awaitable[None]] = no_setup,
     # called after server is shutdown
-    finalizer: Callable[[], None] = lambda: None,
+    finalizer: Callable[..., Any] = lambda: None,
     read_input_data: bool = False,
 ) -> None:
     input_data = None
@@ -207,6 +214,7 @@ async def async_main(
     stdout_is_tty = sys.stdout.isatty()
     try:
         path, server = await start_server(wh)
+        assert sys.__stdout__ is not None
         sys.__stdout__.write(json.dumps(path))
         sys.__stdout__.flush()
         if stdout_is_tty:
@@ -228,19 +236,17 @@ def main(*a, **kw) -> None:
     asyncio.run(async_main(*a, **kw))
 
 
-def start_worker(
-    handler: str = '', delayed_setup: str = '', finalizer: str = '', input_data: Any = None
-) -> tuple[str, Callable[[], None]]:
-    '''
+def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = '', input_data: Any = None) -> tuple[str, Callable[[], None]]:
+    """
     Run the specified handler, delayed_setup and finalizer functions in a worker process, passing input_data (if not None)
     to each function as its first parameter.
 
     Returns: path the worker is listening on for connections and a function to gracefully kill the worker. The worker
     will anyway gracefully close when its parent process closes. The function is mainly useful for testing.
-    '''
+    """
     from calibre.utils.ipc.simple_worker import start_pipe_worker
 
-    def parse(x: str) -> tuple[str, str, str]:
+    def parse(x: str) -> tuple[str, str]:
         module, _, func = x.partition(':')
         return module, func
 
@@ -279,9 +285,11 @@ def start_worker(
         socket_path: str = json.loads(path_data)
     except Exception:
         raise ValueError(f'Got invalid response from worker process: {path_data}')
+
     def close_and_reap():
         p.stdin.close()
         return p.wait()
+
     return socket_path, close_and_reap
 
 
@@ -292,7 +300,7 @@ class Response(NamedTuple):
 
 
 def make_request(worker_path: str, data: Any = None) -> Response:
-    ' Make a request and get a response from the worker '
+    "Make a request and get a response from the worker"
     data = msgpack_dumps(data)
     datalen = struct.pack('!I', len(data))
     if iswindows:

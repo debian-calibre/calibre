@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2012, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import textwrap
 
 from qt.core import QIcon, QLabel, QListWidget, QListWidgetItem, QPushButton, Qt, QVBoxLayout
@@ -9,10 +8,10 @@ from qt.core import QIcon, QLabel, QListWidget, QListWidgetItem, QPushButton, Qt
 from calibre.customize.ui import enable_plugin
 from calibre.gui2 import gprefs
 from calibre.gui2.preferences import ConfigWidgetBase, test_widget
+from calibre.utils.localization import _
 
 
 class ConfigWidget(ConfigWidgetBase):
-
     restart_critical = False
 
     def genesis(self, gui):
@@ -21,9 +20,7 @@ class ConfigWidget(ConfigWidgetBase):
         self.setLayout(l)
         self.confirms_reset = False
 
-        self.la = la = QLabel(_(
-            'The list of devices that you have asked calibre to ignore. '
-            'Uncheck a device to have calibre stop ignoring it.'))
+        self.la = la = QLabel(_('The list of devices that you have asked calibre to ignore. Uncheck a device to have calibre stop ignoring it.'))
         la.setWordWrap(True)
         l.addWidget(la)
 
@@ -32,10 +29,13 @@ class ConfigWidget(ConfigWidgetBase):
         f.itemChanged.connect(self.changed_signal)
         f.itemDoubleClicked.connect(self.toggle_item)
 
-        self.la2 = la = QLabel(_(
-            'The list of device plugins you have disabled. Uncheck an entry '
-            'to enable the plugin. calibre cannot detect devices that are '
-            'managed by disabled plugins.'))
+        self.la2 = la = QLabel(
+            _(
+                'The list of device plugins you have disabled. Uncheck an entry '
+                'to enable the plugin. calibre cannot detect devices that are '
+                'managed by disabled plugins.'
+            )
+        )
         la.setWordWrap(True)
         l.addWidget(la)
 
@@ -45,10 +45,15 @@ class ConfigWidget(ConfigWidgetBase):
         f.itemDoubleClicked.connect(self.toggle_item)
 
         self.reset_confirmations_button = b = QPushButton(_('Reset allowed devices'))
-        b.setToolTip(textwrap.fill(_(
-            'This will erase the list of devices that calibre knows about'
-            ' causing it to ask you for permission to manage them again,'
-            ' the next time they connect')))
+        b.setToolTip(
+            textwrap.fill(
+                _(
+                    'This will erase the list of devices that calibre knows about'
+                    ' causing it to ask you for permission to manage them again,'
+                    ' the next time they connect'
+                )
+            )
+        )
         b.clicked.connect(self.reset_confirmations)
         l.addWidget(b)
 
@@ -57,8 +62,7 @@ class ConfigWidget(ConfigWidgetBase):
         self.changed_signal.emit()
 
     def toggle_item(self, item):
-        item.setCheckState(Qt.CheckState.Checked if item.checkState() == Qt.CheckState.Unchecked else
-                Qt.CheckState.Unchecked)
+        item.setCheckState(Qt.CheckState.Checked if item.checkState() == Qt.CheckState.Unchecked else Qt.CheckState.Unchecked)
 
     def initialize(self):
         self.confirms_reset = False
@@ -68,7 +72,7 @@ class ConfigWidget(ConfigWidgetBase):
             for d, name in dev.get_user_blacklisted_devices().items():
                 item = QListWidgetItem(f'{name} [{d}]', self.devices)
                 item.setData(Qt.ItemDataRole.UserRole, (dev, d))
-                item.setFlags(Qt.ItemFlag.ItemIsEnabled|Qt.ItemFlag.ItemIsUserCheckable|Qt.ItemFlag.ItemIsSelectable)
+                item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsSelectable)
                 item.setCheckState(Qt.CheckState.Checked)
         self.devices.blockSignals(False)
 
@@ -77,20 +81,21 @@ class ConfigWidget(ConfigWidgetBase):
             n = dev.get_gui_name()
             item = QListWidgetItem(n, self.device_plugins)
             item.setData(Qt.ItemDataRole.UserRole, dev)
-            item.setFlags(Qt.ItemFlag.ItemIsEnabled|Qt.ItemFlag.ItemIsUserCheckable|Qt.ItemFlag.ItemIsSelectable)
+            item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsSelectable)
             item.setCheckState(Qt.CheckState.Checked)
             item.setIcon(QIcon.ic('plugins.png'))
         self.device_plugins.sortItems()
         self.device_plugins.blockSignals(False)
 
-    def restore_defaults(self):
+    def restore_defaults(self, *args):
         if self.devices.count() > 0:
             self.devices.clear()
 
-    def commit(self):
+    def commit(self, *args):
         devs = {}
         for i in range(self.devices.count()):
             e = self.devices.item(i)
+            assert e is not None
             dev, uid = e.data(Qt.ItemDataRole.UserRole)
             if dev not in devs:
                 devs[dev] = []
@@ -102,6 +107,7 @@ class ConfigWidget(ConfigWidgetBase):
 
         for i in range(self.device_plugins.count()):
             e = self.device_plugins.item(i)
+            assert e is not None
             dev = e.data(Qt.ItemDataRole.UserRole)
             if e.checkState() == Qt.CheckState.Unchecked:
                 enable_plugin(dev)
@@ -113,5 +119,6 @@ class ConfigWidget(ConfigWidgetBase):
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     test_widget('Sharing', 'Ignored Devices')

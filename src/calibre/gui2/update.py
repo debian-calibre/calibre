@@ -1,19 +1,19 @@
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
 import re
 import ssl
 from threading import Event, Thread
+from typing import TYPE_CHECKING
 
-from qt.core import QApplication, QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QIcon, QLabel, QObject, Qt, QUrl, pyqtSignal
+from qt.core import QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QIcon, QLabel, QObject, Qt, QUrl, pyqtSignal
 
 from calibre import as_unicode, prints
 from calibre.constants import __appname__, __version__, ismacos, isportable, iswindows, numeric_version
-from calibre.gui2 import config, dynamic, icon_resource_manager, open_url
+from calibre.gui2 import config, dynamic, icon_resource_manager, open_url, qapplication_or_fail
 from calibre.gui2.dialogs.plugin_updater import get_plugin_updates_available
 from calibre.utils.config import prefs
 from calibre.utils.https import get_https_resource_securely
-from calibre.utils.localization import localize_website_link, ngettext
+from calibre.utils.localization import _, localize_website_link, ngettext
 from calibre.utils.serialize import msgpack_dumps, msgpack_loads
 from polyglot.binary import as_hex_unicode, from_hex_bytes
 
@@ -21,11 +21,12 @@ URL = 'https://code.calibre-ebook.com/latest'
 FALLBACK_URL = 'https://calibre-ebook.com/latest-version'
 # URL = 'http://localhost:8000/latest'
 NO_CALIBRE_UPDATE = (0, 0, 0)
+if TYPE_CHECKING:
+    from calibre.gui2.ui import Main
 
 
 def get_download_url():
-    which = ('portable' if isportable else 'windows' if iswindows
-            else 'osx' if ismacos else 'linux')
+    which = 'portable' if isportable else 'windows' if iswindows else 'osx' if ismacos else 'linux'
     return localize_website_link('https://calibre-ebook.com/download_' + which)
 
 
@@ -33,8 +34,8 @@ def get_newest_version():
     icon_theme_name = icon_resource_manager.user_theme_name
     if icon_theme_name == 'default':
         icon_theme_name = ''
-    headers={
-        'CALIBRE-VERSION':__version__,
+    headers = {
+        'CALIBRE-VERSION': __version__,
         'CALIBRE-OS': ('win' if iswindows else 'osx' if ismacos else 'oth'),
         'CALIBRE-INSTALL-UUID': prefs['installation_uuid'],
         'CALIBRE-ICON-THEME': icon_theme_name,
@@ -45,6 +46,7 @@ def get_newest_version():
         if getattr(err, 'reason', None) != 'CERTIFICATE_VERIFY_FAILED':
             raise
         from urllib.request import urlopen
+
         # certificate verification failed, use fallback
         version = urlopen(FALLBACK_URL).read()
     try:
@@ -59,13 +61,11 @@ def get_newest_version():
 
 
 class Signal(QObject):
-
     update_found = pyqtSignal(object, object)
 
 
 class CheckForUpdates(Thread):
-
-    INTERVAL = 24*60*60  # seconds
+    INTERVAL = 24 * 60 * 60  # seconds
     daemon = True
 
     def __init__(self, parent):
@@ -118,7 +118,6 @@ def save_version_notified(calibre_version):
 
 
 class UpdateNotification(QDialog):
-
     def __init__(self, calibre_version, plugin_updates, parent=None):
         QDialog.__init__(self, parent)
         self.setAttribute(Qt.WidgetAttribute.WA_QuitOnClose, False)
@@ -130,28 +129,30 @@ class UpdateNotification(QDialog):
         self.logo.setPixmap(QIcon.ic('lt.png').pixmap(100, 100))
         ver = calibre_version
         ver = ver.removesuffix('.0')
-        self.label = QLabel('<p>'+ _(
-            'New version <b>{ver}</b> of {app} is available for download. '
-            'See the <a href="{url}">new features</a>.').format(
-                url=localize_website_link('https://calibre-ebook.com/whats-new'),
-                app=__appname__, ver=ver))
+        self.label = QLabel(
+            '<p>'
+            + _('New version <b>{ver}</b> of {app} is available for download. See the <a href="{url}">new features</a>.').format(
+                url=localize_website_link('https://calibre-ebook.com/whats-new'), app=__appname__, ver=ver
+            )
+        )
         self.label.setOpenExternalLinks(True)
         self.label.setWordWrap(True)
         self.setWindowTitle(_('Update available!'))
         self.setWindowIcon(QIcon.ic('lt.png'))
         self.l.addWidget(self.logo, 0, 0)
         self.l.addWidget(self.label, 0, 1)
-        self.cb = QCheckBox(
-            _('Show this notification for future updates'), self)
+        self.cb = QCheckBox(_('Show this notification for future updates'), self)
         self.l.addWidget(self.cb, 1, 0, 1, -1)
         self.cb.setChecked(config.get('new_version_notification'))
         self.cb.stateChanged.connect(self.show_future)
         self.bb = QDialogButtonBox(self)
         b = self.bb.addButton(_('&Get update'), QDialogButtonBox.ButtonRole.AcceptRole)
+        assert b is not None
         b.setDefault(True)
         b.setIcon(QIcon.ic('arrow-down.png'))
         if plugin_updates > 0:
             b = self.bb.addButton(_('Update &plugins'), QDialogButtonBox.ButtonRole.ActionRole)
+            assert b is not None
             b.setIcon(QIcon.ic('plugins/plugin_updater.png'))
             b.clicked.connect(self.get_plugins, type=Qt.ConnectionType.QueuedConnection)
         self.bb.addButton(QDialogButtonBox.StandardButton.Cancel)
@@ -162,12 +163,13 @@ class UpdateNotification(QDialog):
 
     def get_plugins(self):
         from calibre.gui2.dialogs.plugin_updater import FILTER_UPDATE_AVAILABLE, PluginUpdaterDialog
-        d = PluginUpdaterDialog(self.parent(),
-                initial_filter=FILTER_UPDATE_AVAILABLE)
+
+        d = PluginUpdaterDialog(self.parent(), initial_filter=FILTER_UPDATE_AVAILABLE)
         d.exec()
         if d.do_restart:
             QDialog.accept(self)
             from calibre.gui2.ui import get_gui
+
             gui = get_gui()
             if gui is not None:
                 gui.quit(restart=True)
@@ -182,22 +184,17 @@ class UpdateNotification(QDialog):
 
 
 class UpdateMixin:
-
-    def __init__(self, *args, **kw):
-        pass
-
-    def init_update_mixin(self, opts):
+    def init_update_mixin(self: Main, opts):
         self.last_newest_calibre_version = NO_CALIBRE_UPDATE
         if not opts.no_update_check:
             self.update_checker = CheckForUpdates(self)
-            self.update_checker.signal.update_found.connect(self.update_found,
-                    type=Qt.ConnectionType.QueuedConnection)
+            self.update_checker.signal.update_found.connect(self.update_found, type=Qt.ConnectionType.QueuedConnection)
             self.update_checker.start()
 
-    def recalc_update_label(self, number_of_plugin_updates):
+    def recalc_update_label(self: Main, number_of_plugin_updates):
         self.update_found(self.last_newest_calibre_version, number_of_plugin_updates)
 
-    def update_found(self, calibre_version, number_of_plugin_updates, force=False, no_show_popup=False):
+    def update_found(self: Main, calibre_version, number_of_plugin_updates, force=False, no_show_popup=False):
         self.last_newest_calibre_version = calibre_version
         has_calibre_update = calibre_version != NO_CALIBRE_UPDATE and calibre_version[0] > 0
         has_plugin_updates = number_of_plugin_updates > 0
@@ -211,10 +208,10 @@ class UpdateMixin:
             plt = ''
             if has_plugin_updates:
                 plt = ngettext(' and one plugin update', ' and {} plugin updates', number_of_plugin_updates).format(number_of_plugin_updates)
-            green = 'darkgreen' if QApplication.instance().is_dark_theme else 'green'
-            msg = ('<span style="color:{}; font-weight: bold">{}: '
-                    '<a href="update:{}">{}{}</a></span>').format(
-                            green, _('Update available'), version_url, calibre_version, plt)
+            green = 'darkgreen' if qapplication_or_fail().is_dark_theme else 'green'
+            msg = ('<span style="color:{}; font-weight: bold">{}: <a href="update:{}">{}{}</a></span>').format(
+                green, _('Update available'), version_url, calibre_version, plt
+            )
         else:
             plt = ngettext('plugin update available', 'plugin updates available', number_of_plugin_updates)
             msg = f'<a href="update:{version_url}">{number_of_plugin_updates} {plt}</a>'
@@ -222,47 +219,48 @@ class UpdateMixin:
         self.status_bar.update_label.setVisible(True)
 
         if has_calibre_update:
-            if (force or (config.get('new_version_notification') and not is_version_notified(calibre_version))):
+            if force or (config.get('new_version_notification') and not is_version_notified(calibre_version)):
                 if not no_show_popup:
-                    self._update_notification__ = UpdateNotification(calibre_version,
-                            number_of_plugin_updates, parent=self)
+                    self._update_notification__ = UpdateNotification(calibre_version, number_of_plugin_updates, parent=self)
                     self._update_notification__.show()
         elif has_plugin_updates:
             if force:
                 self.show_plugin_update_dialog()
 
-    def show_plugin_update_dialog(self):
+    def show_plugin_update_dialog(self: Main):
         from calibre.gui2.dialogs.plugin_updater import FILTER_UPDATE_AVAILABLE, PluginUpdaterDialog
+
         d = PluginUpdaterDialog(self, initial_filter=FILTER_UPDATE_AVAILABLE)
         d.exec()
         if d.do_restart:
             self.quit(restart=True)
 
-    def plugin_update_found(self, number_of_updates):
+    def plugin_update_found(self: Main, number_of_updates):
         # Change the plugin icon to indicate there are updates available
         plugin = self.iactions.get('Plugin Updater', None)
         if not plugin:
             return
         if number_of_updates:
-            plugin.qaction.setText(_('Plugin updates')+'*')
+            plugin.qaction.setText(_('Plugin updates') + '*')
             plugin.qaction.setIcon(QIcon.ic('plugins/plugin_updater_updates.png'))
             plugin.qaction.setToolTip(
-                ngettext('A plugin update is available',
-                         'There are {} plugin updates available', number_of_updates).format(number_of_updates))
+                ngettext('A plugin update is available', 'There are {} plugin updates available', number_of_updates).format(number_of_updates)
+            )
         else:
             plugin.qaction.setText(_('Plugin updates'))
             plugin.qaction.setIcon(QIcon.ic('plugins/plugin_updater.png'))
             plugin.qaction.setToolTip(_('Install and configure user plugins'))
 
-    def update_link_clicked(self, url):
+    def update_link_clicked(self: Main, url):
         url = str(url)
         if url.startswith('update:'):
-            calibre_version, number_of_plugin_updates = msgpack_loads(from_hex_bytes(url[len('update:'):]))
+            calibre_version, number_of_plugin_updates = msgpack_loads(from_hex_bytes(url[len('update:') :]))
             self.update_found(calibre_version, number_of_plugin_updates, force=True)
 
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     UpdateNotification('x.y.z', False).exec()
     del app

@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 import ipaddress
 import os
@@ -14,6 +11,7 @@ from contextlib import suppress
 from functools import lru_cache, partial
 from io import BytesIO
 from queue import Empty, Full
+from typing import Any
 
 from calibre import as_unicode
 from calibre.constants import iswindows
@@ -45,8 +43,7 @@ IPPROTO_IPV6 = getattr(socket, 'IPPROTO_IPV6', 41)
 
 
 class ReadBuffer:  # {{{
-
-    ' A ring buffer used to speed up the readline() implementation by minimizing recv() calls '
+    "A ring buffer used to speed up the readline() implementation by minimizing recv() calls"
 
     __slots__ = ('ba', 'buf', 'full_state', 'read_pos', 'write_pos')
 
@@ -72,13 +69,13 @@ class ReadBuffer:  # {{{
         if self.read_pos < self.write_pos:
             sz = min(self.write_pos - self.read_pos, size)
             npos = self.read_pos + sz
-            ans = self.buf[self.read_pos:npos].tobytes()
+            ans = self.buf[self.read_pos : npos].tobytes()
             self.read_pos = npos
             if self.read_pos == self.write_pos:
                 self.full_state = WRITE
         else:
             sz = min(size, len(self.buf) - self.read_pos)
-            ans = self.buf[self.read_pos:self.read_pos + sz].tobytes()
+            ans = self.buf[self.read_pos : self.read_pos + sz].tobytes()
             self.read_pos = (self.read_pos + sz) % len(self.buf)
             if self.read_pos == self.write_pos:
                 self.full_state = WRITE
@@ -91,10 +88,10 @@ class ReadBuffer:  # {{{
         if self.read_pos == self.write_pos and self.full_state is READ:
             return 0
         if self.write_pos < self.read_pos:
-            num = socket.recv_into(self.buf[self.write_pos:self.read_pos])
+            num = socket.recv_into(self.buf[self.write_pos : self.read_pos])
             self.write_pos += num
         else:
-            num = socket.recv_into(self.buf[self.write_pos:])
+            num = socket.recv_into(self.buf[self.write_pos :])
             self.write_pos = (self.write_pos + num) % len(self.buf)
         if self.write_pos == self.read_pos:
             self.full_state = READ
@@ -109,7 +106,7 @@ class ReadBuffer:  # {{{
             pos = self.ba.find(b'\n', self.read_pos, self.write_pos)
             if pos < 0:
                 pos = self.write_pos - 1
-            ans = self.buf[self.read_pos:pos + 1].tobytes()
+            ans = self.buf[self.read_pos : pos + 1].tobytes()
             self.read_pos = (pos + 1) % len(self.buf)
             if self.read_pos == self.write_pos:
                 self.full_state = WRITE
@@ -119,16 +116,17 @@ class ReadBuffer:  # {{{
                 pos = self.ba.find(b'\n', 0, self.write_pos)
                 if pos < 0:
                     pos = self.write_pos - 1
-                ans = self.buf[self.read_pos:].tobytes() + self.buf[:pos+1].tobytes()
+                ans = self.buf[self.read_pos :].tobytes() + self.buf[: pos + 1].tobytes()
                 self.read_pos = (pos + 1) % len(self.buf)
                 if self.read_pos == self.write_pos:
                     self.full_state = WRITE
             else:
-                ans = self.buf[self.read_pos:pos + 1].tobytes()
+                ans = self.buf[self.read_pos : pos + 1].tobytes()
                 self.read_pos = (pos + 1) % len(self.buf)
                 if self.read_pos == self.write_pos:
                     self.full_state = WRITE
         return ans
+
     # }}}
 
 
@@ -169,7 +167,6 @@ def is_local_address(addr: ipaddress.IPv4Address | ipaddress.IPv6Address | None)
 
 
 class Connection:  # {{{
-
     def __init__(self, socket, opts, ssl_context, tdir, addr, pool, log, access_log, wakeup):
         self.opts, self.pool, self.log, self.wakeup, self.access_log = opts, pool, log, wakeup, access_log
         try:
@@ -221,7 +218,7 @@ class Connection:  # {{{
         self.wait_for = wait_for
         if args or kwargs:
             pfunc = partial(func, *args, **kwargs)
-            pfunc.__name__ = func.__name__
+            setattr(pfunc, '__name__', func.__name__)
             func = pfunc
         self.handle_event = func
 
@@ -282,7 +279,7 @@ class Connection:  # {{{
         amt = amt or len(buf)
         if self.read_buffer.has_data:
             data = self.read_buffer.read(amt)
-            buf[0:len(data)] = data
+            buf[0 : len(data)] = data
             return len(data)
         try:
             bytes_read = self.socket.recv_into(buf, amt)
@@ -380,6 +377,8 @@ class Connection:  # {{{
 
     def handle_timeout(self):
         return False
+
+
 # }}}
 
 
@@ -389,24 +388,25 @@ def parsed_trusted_ips(raw):
 
 
 class ServerLoop:
-
-    LISTENING_MSG = 'calibre server listening on'
+    LISTENING_MSG: str | None = 'calibre server listening on'
+    control_in: Any
+    control_out: Any
 
     def __init__(
         self,
         handler,
-        opts=None,
+        opts: Options | None = None,
         plugins=(),
         # A calibre logging object. If None, a default log that logs to
         # stdout is used
         log=None,
         # A calibre logging object for access logging, by default no access
         # logging is performed
-        access_log=None
+        access_log=None,
     ):
         self.ready = False
         self.handler = handler
-        self.opts = opts or Options()
+        self.opts: Options = opts if opts is not None else Options()
         self.log = log or ThreadSafeLog(level=ThreadSafeLog.DEBUG)
         self.jobs_manager = JobsManager(self.opts, self.log)
         self.access_log = access_log
@@ -429,6 +429,7 @@ class ServerLoop:
         self.socket_was_preactivated = False
         if self.opts.allow_socket_preallocation:
             from calibre.srv.pre_activated import pre_activated_socket
+
             self.pre_activated_socket = pre_activated_socket()
             if self.pre_activated_socket is not None:
                 set_socket_inherit(self.pre_activated_socket, False)
@@ -440,7 +441,7 @@ class ServerLoop:
 
     def on_ssl_servername(self, socket, server_name, ssl_context):
         c = self.connection_map.get(socket.fileno())
-        if getattr(c, 'ssl_handshake_done', False):
+        if c is not None and getattr(c, 'ssl_handshake_done', False):
             c.ready = False
             c.ssl_terminated = True
             # We do not allow client initiated SSL renegotiation
@@ -453,7 +454,7 @@ class ServerLoop:
             r, w = os.pipe()
             os.set_blocking(r, False)
             os.set_blocking(w, True)
-            self.control_in =  open(w, 'wb')
+            self.control_in = open(w, 'wb')
             self.control_out = open(r, 'rb')
 
     def close_control_connection(self):
@@ -464,6 +465,7 @@ class ServerLoop:
 
     def __str__(self):
         return f'{self.__class__.__name__}({self.bind_address!r})'
+
     __repr__ = __str__
 
     @property
@@ -473,17 +475,14 @@ class ServerLoop:
     def do_bind(self):
         # Get the correct address family for our host (allows IPv6 addresses)
         host, port = self.bind_address
+        assert host is not None
         try:
-            info = socket.getaddrinfo(
-                host, port, socket.AF_UNSPEC,
-                socket.SOCK_STREAM, 0, socket.AI_PASSIVE)
+            info = socket.getaddrinfo(host, port, socket.AF_UNSPEC, socket.SOCK_STREAM, 0, socket.AI_PASSIVE)
         except socket.gaierror:
             if ':' in host:
-                info = [(socket.AF_INET6, socket.SOCK_STREAM,
-                        0, '', self.bind_address + (0, 0))]
+                info = [(socket.AF_INET6, socket.SOCK_STREAM, 0, '', self.bind_address + (0, 0))]
             else:
-                info = [(socket.AF_INET, socket.SOCK_STREAM,
-                        0, '', self.bind_address)]
+                info = [(socket.AF_INET, socket.SOCK_STREAM, 0, '', self.bind_address)]
 
         self.socket = None
         msg = 'No socket could be created'
@@ -525,6 +524,7 @@ class ServerLoop:
         from calibre.utils.network import format_addr_for_url
 
         self.connection_map = {}
+        assert self.socket is not None
         if not self.socket_was_preactivated:
             self.socket.listen(min(socket.SOMAXCONN, 128))
         self.bound_address = ba = self.socket.getsockname()
@@ -553,28 +553,28 @@ class ServerLoop:
             self.shutdown()
 
     def serve_forever(self):
-        ''' Listen for incoming connections. '''
+        """Listen for incoming connections."""
         self.initialize_socket()
         self.serve()
 
     def setup_socket(self):
+        assert self.socket is not None
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
         # If listening on the IPV6 any address ('::' = IN6ADDR_ANY),
         # activate dual-stack.
-        if (hasattr(socket, 'AF_INET6') and self.socket.family == socket.AF_INET6 and
-                self.bind_address[0] in ('::', '::0', '::0.0.0.0')):
+        if hasattr(socket, 'AF_INET6') and self.socket.family == socket.AF_INET6 and self.bind_address[0] in ('::', '::0', '::0.0.0.0'):
             try:
                 self.socket.setsockopt(IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
-            except (AttributeError, OSError):
+            except AttributeError, OSError:
                 # Apparently, the socket option is not available in
                 # this machine's TCP stack
                 pass
-        self.socket.setblocking(0)
+        self.socket.setblocking(False)
 
     def bind(self, family, atype, proto=0):
-        '''Create (or recreate) the actual socket object.'''
+        """Create (or recreate) the actual socket object."""
         self.socket = socket.socket(family, atype, proto)
         set_socket_inherit(self.socket, False)
         self.setup_socket()
@@ -618,6 +618,7 @@ class ServerLoop:
         if readable:
             writable = []
         else:
+            assert self.socket is not None
             try:
                 readable, writable, _ = select.select([self.socket.fileno(), self.control_out.fileno()] + read_needed, write_needed, [], self.opts.timeout)
             except ValueError:  # self.socket.fileno() == -1
@@ -706,6 +707,7 @@ class ServerLoop:
         conn.close()
 
     def get_actions(self, readable, writable):
+        assert self.socket is not None
         listener = self.socket.fileno()
         control = self.control_out.fileno()
         for s in readable:
@@ -715,7 +717,16 @@ class ServerLoop:
                     s = sock.fileno()
                     if s > -1:
                         self.connection_map[s] = conn = self.handler(
-                            sock, self.opts, self.ssl_context, self.tdir, addr, self.pool, self.log, self.access_log, self.wakeup)
+                            sock,
+                            self.opts,
+                            self.ssl_context,
+                            self.tdir,
+                            addr,
+                            self.pool,
+                            self.log,
+                            self.access_log,
+                            self.wakeup,
+                        )
                         if self.ssl_context is not None:
                             yield s, conn, RDWR
             elif s == control:
@@ -747,6 +758,7 @@ class ServerLoop:
             yield s, conn, WRITE
 
     def accept(self):
+        assert self.socket is not None
         try:
             sock, addr = self.socket.accept()
             set_socket_inherit(sock, False), sock.setblocking(False)
@@ -762,6 +774,7 @@ class ServerLoop:
         self.jobs_manager.shutdown()
         with suppress(socket.error):
             if getattr(self, 'socket', None):
+                assert self.socket is not None
                 self.socket.close()
                 self.socket = None
         for s, conn in tuple(self.connection_map.items()):
@@ -775,7 +788,6 @@ class ServerLoop:
 
 
 class EchoLine(Connection):  # {{{
-
     bye_after_echo = False
 
     def connection_ready(self):
@@ -807,6 +819,8 @@ class EchoLine(Connection):  # {{{
                 self.ready = False
         else:
             self.rbuf.seek(pos + sent)
+
+
 # }}}
 
 

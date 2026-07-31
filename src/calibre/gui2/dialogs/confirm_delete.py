@@ -1,23 +1,27 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2008, Kovid Goyal kovid@kovidgoyal.net'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2008, Kovid Goyal kovid@kovidgoyal.net
 
 from qt.core import QCheckBox, QDialog, QDialogButtonBox, QHBoxLayout, QIcon, QLabel, QMenu, Qt, QVBoxLayout
 
 from calibre import confirm_config_name
 from calibre.gui2 import dynamic
 from calibre.gui2.dialogs.message_box import Icon
+from calibre.utils.localization import _
 
 
 class Dialog(QDialog):
-
     def __init__(
-        self, msg, name, parent, config_set=dynamic, icon='dialog_warning.png',
-        title=None, confirm_msg=None, show_cancel_button=True, extra_button=None,
-        extra_button_choices=None
+        self,
+        msg,
+        name,
+        parent,
+        config_set=dynamic,
+        icon='dialog_warning.png',
+        title=None,
+        confirm_msg=None,
+        show_cancel_button=True,
+        extra_button=None,
+        extra_button_choices=None,
     ):
         QDialog.__init__(self, parent)
         self.setWindowTitle(title or _('Are you sure?'))
@@ -71,13 +75,16 @@ class Dialog(QDialog):
         self.config_set = config_set
 
         self.resize(self.sizeHint())
-        bb.button(standard_button).setFocus(Qt.FocusReason.OtherFocusReason)
+        standard_btn = bb.button(standard_button)
+        assert standard_btn is not None
+        standard_btn.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def on_extra_button_click(self):
         self.extra_button_clicked = True
 
     def on_extra_choice_click(self):
         ac = self.sender()
+        assert ac is not None
         self.extra_button_choice = ac.objectName()
         self.accept()
 
@@ -86,8 +93,16 @@ class Dialog(QDialog):
 
 
 def confirm(
-    msg, name, parent=None, pixmap='dialog_warning.png', title=None,
-    show_cancel_button=True, confirm_msg=None, config_set=None, extra_button=None, extra_button_choices=None
+    msg,
+    name,
+    parent=None,
+    pixmap='dialog_warning.png',
+    title=None,
+    show_cancel_button=True,
+    confirm_msg=None,
+    config_set=None,
+    extra_button=None,
+    extra_button_choices=None,
 ):
     config_set = config_set or dynamic
     if not config_set.get(confirm_config_name(name), True):
@@ -96,8 +111,18 @@ def confirm(
                 return True, None
             return True, False
         return True
-    d = Dialog(msg, name, parent, config_set=config_set, icon=pixmap, extra_button=extra_button,
-               title=title, confirm_msg=confirm_msg, show_cancel_button=show_cancel_button, extra_button_choices=extra_button_choices)
+    d = Dialog(
+        msg,
+        name,
+        parent,
+        config_set=config_set,
+        icon=pixmap,
+        extra_button=extra_button,
+        title=title,
+        confirm_msg=confirm_msg,
+        show_cancel_button=show_cancel_button,
+        extra_button_choices=extra_button_choices,
+    )
     ret = d.exec() == QDialog.DialogCode.Accepted
     if extra_button:
         if extra_button_choices:

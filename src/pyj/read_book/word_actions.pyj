@@ -40,7 +40,7 @@ def add(container_id):
             'You must specify both a name and a URL.'))
         return
     sd = get_session_data()
-    actions = sd.get('word_actions', v'[]')
+    actions = sd.get('word_actions', [])
     actions.push({'title': name, 'url': url})
     sd.set('word_actions', actions)
     toggle_custom_container(container_id, False)
@@ -52,7 +52,7 @@ def add_custom(container_id):
     if not container:
         return
     clear(container)
-    container.appendChild(E.div(style="margin: 1rem",
+    container.appendChild(E.div(style='margin: 1rem',
         _('Enter the name and URL for a custom lookup source. The URL must contain '
           ' {0} in it, which will be replaced by the word being looked up. For example: '
           ' {1}').format('{word}', 'https://google.com/search?q={word}')
@@ -76,7 +76,7 @@ def remove(container_id, num):
     if not container:
         return
     sd = get_session_data()
-    actions = sd.get('word_actions', v'[]')
+    actions = sd.get('word_actions', [])
     actions.splice(num, 1)
     sd.set('word_actions', actions)
     toggle_custom_container(container_id, False)
@@ -88,10 +88,10 @@ def remove_custom(container_id):
     if not container:
         return
     clear(container)
-    container.appendChild(E.div(style="margin: 1rem", _('Choose a custom lookup to remove')))
+    container.appendChild(E.div(style='margin: 1rem', _('Choose a custom lookup to remove')))
     items = [create_item(_('Cancel (no removals)'), toggle_custom_container.bind(None, container_id, False))]
     sd = get_session_data()
-    actions = sd.get('word_actions', v'[]')
+    actions = sd.get('word_actions', [])
     for i, item in enumerate(actions):
         items.push(create_item(item.title, remove.bind(None, container_id, i)))
     container.appendChild(E.div())
@@ -105,7 +105,7 @@ def lookup_items(word, close_panel_func, container_id):
     def a(title, url):
         items.push(create_item(title, lookup.bind(word, close_panel_func, url.format(word=eword))))
 
-    custom_actions = get_session_data().get('word_actions', v'[]')
+    custom_actions = get_session_data().get('word_actions', [])
     has_custom = custom_actions and custom_actions.length
     if has_custom:
         for entry in custom_actions:
@@ -142,4 +142,4 @@ def create_word_actions_panel(container, word, close_panel_func):
 
 def develop(container):
     container.appendChild(E.div())
-    create_word_actions_panel(container, 'develop', def():pass;)
+    create_word_actions_panel(container, 'develop', def (): pass;)

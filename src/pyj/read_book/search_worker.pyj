@@ -2,9 +2,10 @@
 # License: GPL v3 Copyright: 2021, Kovid Goyal <kovid at kovidgoyal.net>
 from __python__ import bound_methods, hash_literals
 
+from traceback import format_exception
+
 from read_book.db import DB
 from read_book.resources import text_from_serialized_html
-from traceback import format_exception
 
 GET_SPINE_FAILED = 1
 CONNECT_FAILED = 2
@@ -21,6 +22,7 @@ invisible_chars = '(?:[\u00ad\u200c\u200d]{0,1})'
 # together as one code point.
 _ESCAPED_ATOM = /\\[\s\S]|[\s\S]/gu
 
+
 def escape(string):
     return string.replace(_RE_ESCAPE, '\\$&')
 
@@ -35,7 +37,7 @@ def text_to_regex(text):
         return r'\s+'
     has_leading = text.lstrip() is not text
     has_trailing = text.rstrip() is not text
-    ans = v'[]'
+    ans = []
     if has_leading:
         ans.push(r'\s+')
     for wpart in split_string(spat, text.strip()):
@@ -56,15 +58,14 @@ def text_to_regex(text):
 
 
 class ToCOffsetMap:
-
     def __init__(self, toc_nodes, offset_map, previous_toc_node, parent_map):
-        self.toc_nodes = toc_nodes or v'[]'
+        self.toc_nodes = toc_nodes or []
         self.offset_map = offset_map or {}
         self.previous_toc_node = previous_toc_node or None
         self.parent_map = parent_map or {}
 
     def toc_nodes_for_offset(self, offset):
-        matches = v'[]'
+        matches = []
         for node in self.toc_nodes:
             q = self.offset_map[node.id]
             if q?:
@@ -73,9 +74,9 @@ class ToCOffsetMap:
                 matches.push(node)
         if not matches and self.previous_toc_node:
             matches.push(self.previous_toc_node)
-        ans = v'[]'
+        ans = []
         if matches.length:
-            ancestors = v'[]'
+            ancestors = []
             node = matches[-1]
             parent = self.parent_map[node.id]
             while parent?:
@@ -121,13 +122,12 @@ def toc_nodes_for_search_result(sr):
     sidx = sr.spine_idx
     name = wc.current_book.spine[sidx]
     if not name:
-        return v'[]'
+        return []
     tmap = toc_offset_map_for_name(name)
     return tmap.toc_nodes_for_offset(sr.offset)
 
 
 class Worker:
-
     def __init__(self):
         self.db = None
         self.connected_to_db = False
@@ -171,7 +171,7 @@ def search_in_text_of(name):
         text = m[0]
         start, end = m.index, r.lastIndex
         before = haystack[Math.max(0, start - ctx_size):start]
-        after = haystack[end:end+ctx_size]
+        after = haystack[end:end + ctx_size]
         q = (before or '')[-15:] + text + (after or '')[:15]
         match_counts[q] = match_counts[q] or 0
         wc.result_num += 1
@@ -231,7 +231,7 @@ def regex_for_query(query):
         flags += 'i'
     if query.mode is not 'regex':
         if query.mode is 'word':
-            words = v'[]'
+            words = []
             for part in expr.split(' '):
                 words.push(r'\b' + text_to_regex(part) + r'\b')
             expr = words.join(r'\s+')
@@ -279,7 +279,7 @@ def on_worker_db_error(title, msg, details):
 def worker_main():
     wc.db = DB(worker_connection_done, on_worker_db_error)
 
-    self.onmessage = def(e):
+    self.onmessage = def (e):
         if e.data.type is 'search':
             wc.current_query_id = e.data.id
             if wc.connected_to_db:

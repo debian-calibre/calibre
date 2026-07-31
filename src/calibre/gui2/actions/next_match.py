@@ -1,31 +1,36 @@
 #!/usr/bin/env python
+# License: GPLv3 Copyright: 2010, Kovid Goyal <kovid@kovidgoyal.net>
 
-
-__license__   = 'GPL v3'
-__copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+from qt.core import QAction
 
 from calibre.gui2.actions import InterfaceAction
+from calibre.utils.localization import _
 
 
 class NextMatchAction(InterfaceAction):
+    p_action: QAction
     name = 'Move to next highlighted book'
-    action_spec = (_('Move to next match'), 'arrow-down.png',
-            _('Move to next highlighted match'), [_('N'), _('F3')])
+    action_spec = (_('Move to next match'), 'arrow-down.png', _('Move to next highlighted match'), [_('N'), _('F3')])
     dont_add_to = frozenset(('context-menu-device',))
     action_type = 'current'
 
     def genesis(self):
-        '''
+        """
         Setup this plugin. Only called once during initialization. self.gui is
         available. The action specified by :attr:`action_spec` is available as
         ``self.qaction``.
-        '''
+        """
         self.can_move = None
         self.qaction.triggered.connect(self.move_forward)
-        self.create_action(spec=(_('Move to previous item'), 'arrow-up.png',
-              _('Move to previous highlighted item'), ['Shift+N',
-                  'Shift+F3']), attr='p_action')
+        self.create_action(
+            spec=(
+                _('Move to previous item'),
+                'arrow-up.png',
+                _('Move to previous highlighted item'),
+                ['Shift+N', 'Shift+F3'],
+            ),
+            attr='p_action',
+        )
         self.gui.addAction(self.p_action)
         self.p_action.triggered.connect(self.move_backward)
 

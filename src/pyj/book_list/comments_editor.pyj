@@ -3,21 +3,21 @@
 from __python__ import bound_methods, hash_literals
 
 from elementmaker import E
+from gettext import gettext as _
+from uuid import short_uuid4
 
 from book_list.theme import color_scheme, get_color, get_color_as_rgba
 from dom import add_extra_css, build_rule, clear, ensure_id, svgicon
-from gettext import gettext as _
 from iframe_comm import IframeClient, create_wrapped_iframe
 from image_popup import fit_image
 from modals import create_custom_dialog
 from utils import html_escape
-from uuid import short_uuid4
 from widgets import create_button
 
 CLASS_NAME = 'comments-editor'
 TOOLBAR_CLASS = 'comments-editor-toolbar'
 
-add_extra_css(def():
+add_extra_css(def ():
     sel = '.' + TOOLBAR_CLASS + ' '
     style = ''
     style += build_rule(sel, display='flex', flex_wrap='wrap', padding_top='0.25ex', padding_bottom='0.25ex')
@@ -33,23 +33,20 @@ add_extra_css(def():
 
 
 def choose_block_style(proceed):
-    create_custom_dialog(_('Choose style'), def(parent, close_modal):
-
+    create_custom_dialog(_('Choose style'), def (parent, close_modal):
         def action(which):
             close_modal()
             proceed(which)
-
         def s(text, tag):
             ans = create_button(text, action=action.bind(None, tag))
             ans.style.marginBottom = '1ex'
             return ans
-
         spc = '\xa0'
-
         parent.appendChild(E.div(
             E.div(_('Choose the block style you would like to use')),
             E.div(class_='button-box button-box--wrap-chips', style='flex-wrap: wrap',
-                s(_('Normal'), 'div'), spc, s('H1', 'h1'), spc, s('H2', 'h2'), spc, s('H3', 'h3'), spc, s('H4', 'h4'), spc, s('H5', 'h5'), spc, s('H6', 'h6'), spc, s(_('Quote'), 'blockquote')
+                s(_('Normal'), 'div'), spc, s('H1', 'h1'), spc, s('H2', 'h2'), spc, s('H3', 'h3'), spc,
+                s('H4', 'h4'), spc, s('H5', 'h5'), spc, s('H6', 'h6'), spc, s(_('Quote'), 'blockquote')
             )
         ))
     )
@@ -63,7 +60,7 @@ def insert_heading(editor_id, cmd):
 
 
 def insert_image(editor):
-    acceptable_image_types = v'["image/png", "image/jpeg", "image/gif", "image/webp"]'
+    acceptable_image_types = ['image/png', 'image/jpeg', 'image/gif', 'image/webp']
     parent_id = ''
     accepted = False
     align_name = 'align-radio-button'
@@ -122,7 +119,7 @@ def insert_image(editor):
             for f in files:
                 if acceptable_image_types.indexOf(f.type) > -1:
                     r = new FileReader()
-                    r.onload = def():
+                    r.onload = def ():
                         img.src = r.result
                     r.readAsDataURL(f)
                     h = parent.querySelector('.button-box').offsetHeight
@@ -137,13 +134,13 @@ def insert_image(editor):
             alert(_('No valid image file found'))
 
         parent.appendChild(E.div(
-            ondragenter=def(e):
+            ondragenter=def (e):
                 e.stopPropagation(), e.preventDefault()
             ,
-            ondragover=def(e):
+            ondragover = def (e):
                 e.stopPropagation(), e.preventDefault()
             ,
-            ondrop=def(e):
+            ondrop = def (e):
                 e.stopPropagation(), e.preventDefault()
                 handle_files(e.dataTransfer.files)
             ,
@@ -156,15 +153,13 @@ def insert_image(editor):
                 E.div(
                     E.input(
                         type='file', accept=','.join(acceptable_image_types),
-                        onchange=def(e): handle_files(e.target.files);, style='display: none'
+                        onchange=def (e): handle_files(e.target.files);, style='display: none'
                     ),
-
                     E.p(E.a(
                         _('Select an image from your files'),
                         class_='blue-link', href='javascript:void(0)', onclick=def ():
                         parent.querySelector('input[type=file]').click()
                     ), E.span(_(' or drag and drop an image here.'))),
-
                     E.div(
                         style='display: none; margin-top: 0.5rem', class_='image-alignment',
                         _('Place image:'), E.br(),
@@ -186,7 +181,6 @@ def insert_image(editor):
                                 style='margin-left: 0.5rem', title=_('A value of zero means no effect')
                         )),
                     ),
-
                     E.p(_('No image selected!'), class_='no-image-selected', style='color:red; display:none'),
                 ),
             ),
@@ -194,21 +188,18 @@ def insert_image(editor):
                   create_button(_('Cancel'), action=action.bind(None, False), highlight=False),
                   create_button(_('OK'), action=action.bind(None, True), highlight=True),
             ),
-
         ))
     create_custom_dialog(_('Insert image'), dialog, on_close=on_close)
 
 
 def insert_link(title, msg, proceed):
-    create_custom_dialog(title, def(parent, close_modal):
-
+    create_custom_dialog(title, def (parent, close_modal):
         def action(ok, evt):
             close_modal()
             c = evt.currentTarget.closest('.il-modal-container')
             url = c.querySelector('input[name="url"]').value
             name = c.querySelector('input[name="name"]').value
             proceed(ok, url, name)
-
         parent.appendChild(E.div(class_='il-modal-container',
             E.div(msg),
             E.table(style='width: 100%; max-width: 100%; margin-top: 1ex; table-layout: fixed; box-sizing: border-box',
@@ -236,13 +227,12 @@ def insert_link_or_image(editor_id, is_image, ok, url, title):
 
 
 def set_color(title, msg, proceed):
-    create_custom_dialog(title, def(parent, close_modal):
+    create_custom_dialog(title, def (parent, close_modal):
         def action(ok, evt):
             close_modal()
             c = evt.currentTarget.closest('.sc-modal-container')
             color = c.querySelector('input[name="color"]').value
             proceed(ok, color)
-
         parent.appendChild(E.div(class_='sc-modal-container',
             E.div(msg),
             E.div(E.input(type='color', name='color')),
@@ -259,7 +249,6 @@ def change_color(editor_id, which, ok, color):
     if ok:
         editor.exec_command(which, color)
     editor.focus()
-
 
 
 def all_editor_actions():  # {{{
@@ -398,7 +387,11 @@ def all_editor_actions():  # {{{
                     if editor.insert_image_files:
                         insert_image(editor)
                     else:
-                        insert_link(_('Insert an image'), _('Enter the image URL and optionally the image name'), insert_link_or_image.bind(None, editor.id, True))
+                        insert_link(
+                            _('Insert an image'),
+                            _('Enter the image URL and optionally the image name'),
+                            insert_link_or_image.bind(None, editor.id, True)
+                        )
             },
             'fg': {
                 'icon': 'fg',
@@ -426,7 +419,6 @@ def style_from_align(align):
 
 
 class CommentsEditorBoss:
-
     def __init__(self):
         handlers = {
             'initialize': self.initialize,
@@ -440,8 +432,8 @@ class CommentsEditorBoss:
     def initialize(self, data):
         window.onerror = self.onerror
         clear(document.body)
-        document.execCommand("defaultParagraphSeparator", False, "div")
-        document.execCommand("styleWithCSS", False, False)
+        document.execCommand('defaultParagraphSeparator', False, 'div')
+        document.execCommand('styleWithCSS', False, False)
         document.body.style.margin = '0'
         document.body.style.padding = '0'
         document.body.style.fontFamily = window.default_font_family
@@ -500,14 +492,15 @@ class CommentsEditorBoss:
         self.comm.send_message('update_state', state=state)
 
 
-
 registry = {}
+
 
 def destroy_removed_editors():
     for k in Object.keys(registry):
         if not document.getElementById(k):
             registry[k].destroy()
             v'delete registry[k]'
+
 
 def add_editor(editor):
     destroy_removed_editors()
@@ -519,7 +512,6 @@ def destroy_editor(container):
 
 
 class Editor:
-
     def __init__(self, iframe_kw, insert_image_files):
         handlers = {
             'ready': self.on_iframe_ready,
@@ -531,8 +523,8 @@ class Editor:
         self.id = iframe.id
         self.ready = False
         self.pending_set_html = None
-        self.pending_get_html = v'[]'
-        self.get_html_callbacks = v'[]'
+        self.pending_get_html = []
+        self.get_html_callbacks = []
         self.iframe_obj = iframe
         self.insert_image_files = v'!!insert_image_files'
 
@@ -541,7 +533,7 @@ class Editor:
 
     def destroy(self):
         self.iframe_wrapper.destroy()
-        self.get_html_callbacks = v'[]'
+        self.get_html_callbacks = []
 
     def focus(self):
         self.iframe.contentWindow.focus()
@@ -582,7 +574,7 @@ class Editor:
         if self.get_html_callbacks.length:
             for f in self.get_html_callbacks:
                 f(data.html, data.extra_data)
-            self.get_html_callbacks = v'[]'
+            self.get_html_callbacks = []
 
     def exec_command(self, name, value=None):
         if self.ready:
@@ -689,5 +681,6 @@ def develop(container):
     editor.init()
 
 
+@no_prune
 def main():
     main.boss = CommentsEditorBoss()

@@ -1,22 +1,23 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
 import textwrap
 from math import ceil
+from typing import TYPE_CHECKING, cast
 
 from qt.core import QEvent, QPainter, QPalette, QSize, QStaticText, Qt, QTextCursor, QTextOption, QTimer, QWidget
+
+if TYPE_CHECKING:
+    from calibre.gui2.tweak_book.editor.text import TextEdit
 
 from calibre import prepare_string_for_xml, prints
 from calibre.gui2 import error_dialog
 from calibre.gui2.tweak_book.widgets import make_highlighted_text
 from calibre.utils.icu import string_length
+from calibre.utils.localization import _
 
 
 class ChoosePopupWidget(QWidget):
-
     TOP_MARGIN = BOTTOM_MARGIN = 2
     SIDE_MARGIN = 4
 
@@ -29,7 +30,8 @@ class ChoosePopupWidget(QWidget):
         self.setMouseTracking(True)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        self.current_results = self.current_size_hint = None
+        self.current_results: tuple = ()
+        self.current_size_hint = None
 
         self.max_text_length = 0
         self.current_index = -1
@@ -73,7 +75,9 @@ class ChoosePopupWidget(QWidget):
             st = self.rendered_text_cache[otext] = QStaticText(text)
             st.setTextOption(self.text_option)
             st.setTextFormat(Qt.TextFormat.RichText)
-            st.prepare(font=self.parent().font())
+            parent_widget = self.parent()
+            assert isinstance(parent_widget, QWidget)
+            st.prepare(font=parent_widget.font())
         return st
 
     def sizeHint(self):
@@ -84,12 +88,13 @@ class ChoosePopupWidget(QWidget):
                 height += ceil(sz.height()) + self.BOTTOM_MARGIN
                 max_width = max(max_width, ceil(sz.width()))
             self.current_size_hint = QSize(max_width + 2 * self.SIDE_MARGIN, height + self.BOTTOM_MARGIN + self.TOP_MARGIN)
+        assert self.current_size_hint is not None
         return self.current_size_hint
 
     def iter_visible_items(self):
         y = self.TOP_MARGIN
         bottom = self.rect().bottom()
-        for i, (text, positions) in enumerate(self.current_results[self.current_top_index:]):
+        for i, (text, positions) in enumerate(self.current_results[self.current_top_index :]):
             st = self.get_static_text(text, positions)
             height = self.BOTTOM_MARGIN + ceil(st.size().height())
             if y + height > bottom:
@@ -102,15 +107,17 @@ class ChoosePopupWidget(QWidget):
             if top <= y < top + height:
                 return idx
 
-    def paintEvent(self, ev):
+    def paintEvent(self, a0):
         painter = QPainter(self)
-        painter.setClipRect(ev.rect())
+        painter.setClipRect(a0.rect())
         pal = self.palette()
         painter.fillRect(self.rect(), pal.color(QPalette.ColorRole.Text))
         crect = self.rect().adjusted(1, 1, -1, -1)
         painter.fillRect(crect, pal.color(QPalette.ColorRole.Base))
         painter.setClipRect(crect)
-        painter.setFont(self.parent().font())
+        parent_widget = self.parent()
+        assert isinstance(parent_widget, QWidget)
+        painter.setFont(parent_widget.font())
         width = self.rect().width()
         for i, st, y, height in self.iter_visible_items():
             painter.save()
@@ -127,11 +134,14 @@ class ChoosePopupWidget(QWidget):
             QTimer.singleShot(0, self.layout)
 
     def layout(self, cursor_rect=None):
-        p = self.parent()
+        p_raw = self.parent()
+        assert p_raw is not None
+        p = cast('TextEdit', p_raw)
         if cursor_rect is None:
             cursor_rect = p.cursorRect().adjusted(0, 0, 0, 2)
         gutter_width = p.gutter_width
         vp = p.viewport()
+        assert vp is not None
         above = cursor_rect.top() > vp.height() - cursor_rect.bottom()
         max_height = min(self.max_height, (cursor_rect.top() if above else vp.height() - cursor_rect.bottom()) - 15)
         max_width = vp.width() - 25 - gutter_width
@@ -167,6 +177,7 @@ class ChoosePopupWidget(QWidget):
     def hide(self):
         QWidget.hide(self)
         self.relayout_timer.stop()
+
     abort = hide
 
     def activate_current_result(self):
@@ -189,33 +200,33 @@ class ChoosePopupWidget(QWidget):
             return True
         return False
 
-    def eventFilter(self, obj, ev):
-        if obj is self.parent() and self.isVisible():
-            etype = ev.type()
+    def eventFilter(self, a0, a1):
+        if a0 is self.parent() and self.isVisible():
+            etype = a1.type()
             if etype == QEvent.Type.KeyPress:
-                ret = self.handle_keypress(ev)
+                ret = self.handle_keypress(a1)
                 if ret:
-                    ev.accept()
+                    a1.accept()
                 return ret
             elif etype == QEvent.Type.Resize:
                 self.relayout_timer.start()
         return False
 
-    def mouseMoveEvent(self, ev):
-        y = ev.pos().y()
+    def mouseMoveEvent(self, a0):
+        y = a0.pos().y()
         idx = self.index_for_y(y)
         if idx is not None and idx != self.current_index:
             self.current_index = idx
             self.update()
-            ev.accept()
+            a0.accept()
 
-    def mouseReleaseEvent(self, ev):
-        y = ev.pos().y()
+    def mouseReleaseEvent(self, a0):
+        y = a0.pos().y()
         idx = self.index_for_y(y)
         if idx is not None:
             self.activate_current_result()
             self.hide()
-        ev.accept()
+        a0.accept()
 
     def choose_next_result(self, previous=False):
         if self.current_results:
@@ -233,7 +244,6 @@ class ChoosePopupWidget(QWidget):
 
 
 class CompletionPopup(ChoosePopupWidget):
-
     def __init__(self, parent, max_height=1000):
         ChoosePopupWidget.__init__(self, parent, max_height=max_height)
         self.completion_error_shown = False
@@ -251,7 +261,7 @@ class CompletionPopup(ChoosePopupWidget):
     def activate_current_result(self):
         if self.current_completion is not None:
             c = self.current_completion
-            text = self.current_query if self.current_index == -1 else self.current_results[self.current_index][0]
+            text = (self.current_query or '') if self.current_index == -1 else self.current_results[self.current_index][0]
             c.insertText(text)
             chars = string_length(text)
             c.setPosition(c.position() - chars)
@@ -271,9 +281,13 @@ class CompletionPopup(ChoosePopupWidget):
         if result.traceback:
             prints(result.traceback)
             if not self.completion_error_shown:
-                error_dialog(self, _('Completion failed'), _(
-                    'Failed to get completions, click "Show details" for more information.'
-                    ' Future errors during completion will be suppressed.'), det_msg=result.traceback, show=True)
+                error_dialog(
+                    self,
+                    _('Completion failed'),
+                    _('Failed to get completions, click "Show details" for more information. Future errors during completion will be suppressed.'),
+                    det_msg=result.traceback,
+                    show=True,
+                )
                 self.completion_error_shown = True
             self.hide()
             return
@@ -295,9 +309,11 @@ if __name__ == '__main__':
         c = editor.__c = CompletionPopup(editor.editor, max_height=100)
         items = 'a ab abc abcd abcde abcdef abcdefg abcdefgh'.split()
         m = Matcher(items)
-        c.set_items(m('a'), descriptions={x:x for x in items})
+        c.set_items(m('a'), descriptions={x: x for x in items})
         QTimer.singleShot(100, c.show)
+
     from calibre.gui2.tweak_book.editor.widget import launch_editor
+
     raw = textwrap.dedent('''\
     Is the same as saying through shrinking from toil and pain. These
     cases are perfectly simple and easy to distinguish. In a free hour, when

@@ -16,6 +16,7 @@ from calibre.ai.github import GitHubAI
 from calibre.ai.prefs import decode_secret, pref_for_provider
 from calibre.ai.utils import chat_with_error_handler, develop_text_chat, get_cached_resource, read_streaming_response
 from calibre.constants import cache_dir
+from calibre.utils.localization import _
 
 module_version = 2  # needed for live updates
 MODELS_URL = 'https://models.github.ai/catalog/models'
@@ -43,7 +44,7 @@ def decoded_api_key() -> str:
 
 
 @lru_cache(2)
-def headers() -> tuple[tuple[str, str]]:
+def headers() -> tuple[tuple[str, str], ...]:
     api_key = decoded_api_key()
     return (
         ('Authorization', f'Bearer {api_key}'),
@@ -67,7 +68,7 @@ class Model(NamedTuple):
     publisher: str
 
     @classmethod
-    def from_dict(cls, x: dict[str, object]) -> Model:
+    def from_dict(cls, x: dict[str, Any]) -> Model:
         mid = x['id']
         caps = AICapabilities.none
         if 'embedding' in x['capabilities'] or 'embeddings' in x['supported_output_modalities']:
@@ -79,10 +80,16 @@ class Model(NamedTuple):
                 if output_has_text:
                     caps |= AICapabilities.text_to_text
         return Model(
-            name=x['name'], id=mid, description=x.get('summary', ''), version=x['version'],
-            context_length=int(x['limits']['max_input_tokens'] or 0), publisher=x['publisher'],
+            name=x['name'],
+            id=mid,
+            description=x.get('summary', ''),
+            version=x['version'],
+            context_length=int(x['limits']['max_input_tokens'] or 0),
+            publisher=x['publisher'],
             output_token_limit=int(x['limits']['max_output_tokens'] or 0),
-            capabilities=caps, url=x['html_url'], thinking='reasoning' in x['capabilities'],
+            capabilities=caps,
+            url=x['html_url'],
+            thinking='reasoning' in x['capabilities'],
         )
 
 
@@ -111,6 +118,7 @@ def find_models_matching_name(name: str) -> Iterator[str]:
 
 def config_widget():
     from calibre.ai.github.config import ConfigWidget
+
     return ConfigWidget()
 
 
@@ -195,9 +203,9 @@ def newest_gpt_models() -> dict[str, Model]:
                 which = low
             which.append(model)
     return {
-        'high': sorted(high, key=get_date)[-1],
-        'medium': sorted(medium, key=get_date)[-1],
-        'low': sorted(low, key=get_date)[-1],
+        'high': max(high, key=get_date),
+        'medium': max(medium, key=get_date),
+        'low': max(low, key=get_date),
     }
 
 
@@ -236,13 +244,16 @@ def unavailable_model_error_message(err: HTTPError) -> str:
 def chat_request(data: dict[str, Any], model: Model) -> Request:
     data['stream'] = True
     data['stream_options'] = {'include_usage': True}
-    return Request(
-        CHAT_URL, data=json.dumps(data).encode('utf-8'),
-        headers=dict(headers()), method='POST')
+    return Request(CHAT_URL, data=json.dumps(data).encode('utf-8'), headers=dict(headers()), method='POST')
 
 
 def for_assistant(self: ChatMessage) -> dict[str, Any]:
-    if self.type not in (ChatMessageType.assistant, ChatMessageType.system, ChatMessageType.user, ChatMessageType.developer):
+    if self.type not in (
+        ChatMessageType.assistant,
+        ChatMessageType.system,
+        ChatMessageType.user,
+        ChatMessageType.developer,
+    ):
         raise ValueError(f'Unsupported message type: {self.type}')
     return {'role': self.type.value, 'content': self.query}
 
@@ -261,7 +272,12 @@ def as_chat_responses(d: dict[str, Any], model: Model) -> Iterator[ChatResponse]
         has_metadata = True
     if has_metadata or content:
         yield ChatResponse(
-            type=ChatMessageType.assistant, content=content, has_metadata=has_metadata, model=model.id, plugin_name=GitHubAI.name)
+            type=ChatMessageType.assistant,
+            content=content,
+            has_metadata=has_metadata,
+            model=model.id,
+            plugin_name=GitHubAI.name,
+        )
 
 
 def text_chat_implementation(messages: Iterable[ChatMessage], use_model: str = '') -> Iterator[ChatResponse]:

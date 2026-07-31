@@ -1,10 +1,8 @@
-'''
-Read meta information from pdb files.
-'''
+# License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
-__license__   = 'GPL v3'
-__copyright__ = '2009, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+"""
+Read meta information from pdb files.
+"""
 
 import re
 
@@ -13,6 +11,7 @@ from calibre.ebooks.metadata.ereader import get_metadata as get_eReader
 from calibre.ebooks.metadata.haodoo import get_metadata as get_Haodoo
 from calibre.ebooks.metadata.plucker import get_metadata as get_plucker
 from calibre.ebooks.pdb.header import PdbHeaderReader
+from calibre.utils.localization import _
 
 MREADER = {
     'PNPdPPrs': get_eReader,
@@ -31,9 +30,9 @@ MWRITER = {
 
 
 def get_metadata(stream, extract_cover=True):
-    '''
+    """
     Return metadata as a L{MetaInfo} object
-    '''
+    """
 
     pheader = PdbHeaderReader(stream)
 

@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import errno
+import io
 import json
 import os
 import re
 import subprocess
 import sys
+import tempfile
+import time
+from base64 import standard_b64decode, standard_b64encode
+from functools import lru_cache
+from typing import Any
 
-from calibre import force_unicode
 from calibre.constants import (
     FAKE_HOST,
     FAKE_PROTOCOL,
@@ -21,10 +25,9 @@ from calibre.constants import (
     builtin_decorations,
     dark_link_color,
 )
-from calibre.ptempfile import TemporaryDirectory
-from calibre.utils.filenames import atomic_rename
+from calibre.utils.filenames import atomic_rename, is_existing_subpath, is_path_inside
 from calibre.utils.resources import get_path as P
-from polyglot.builtins import as_bytes, as_unicode, exec_path
+from polyglot.builtins import as_bytes, exec_path
 
 COMPILER_PATH = 'rapydscript/compiler.js.xz'
 
@@ -35,158 +38,297 @@ def abspath(x):
 
 # Update RapydScript {{{
 
+
 def update_rapydscript():
     import lzma
-    d = os.path.dirname
-    base = d(d(d(d(d(abspath(__file__))))))
-    base = os.path.join(base, 'rapydscript')
-    with TemporaryDirectory() as tdir:
-        subprocess.check_call(['node', '--harmony', os.path.join(base, 'bin', 'web-repl-export'), tdir])
+
+    with tempfile.TemporaryDirectory() as tdir:
+        subprocess.check_call(['rapydscript', 'web-repl-export', tdir])
         with open(os.path.join(tdir, 'rapydscript.js'), 'rb') as f:
             raw = f.read()
     path = P(COMPILER_PATH, allow_user_override=False)
     with lzma.open(path, 'wb', format=lzma.FORMAT_XZ) as f:
         f.write(raw)
+
+
 # }}}
 
-
 # Compiler {{{
+
 
 def to_dict(obj):
     return dict(zip(list(obj.keys()), list(obj.values())))
 
 
-def compiler():
-    import lzma
-    ans = getattr(compiler, 'ans', None)
-    if ans is not None:
-        return ans
-    from qt.core import QApplication, QEventLoop
-    from qt.webengine import QWebEnginePage, QWebEngineScript
+_compiler_instance = None
 
-    from calibre import walk
+
+def compiler():
+    global _compiler_instance
+    import lzma
+
+    if _compiler_instance is not None:
+        return _compiler_instance
+    from qt.core import QApplication, QEventLoop, QFile, QIODevice, QObject, pyqtSlot
+    from qt.webengine import QWebChannel, QWebEnginePage, QWebEngineScript
+
     from calibre.gui2 import must_use_qt
     from calibre.utils.webengine import secure_webengine, setup_default_profile, setup_profile
+
     must_use_qt()
     setup_default_profile()
+    null = object()
+    base = base_dir()
+    rapydscript_dir = os.path.join(base, 'src', 'pyj')
+    cache_path = os.path.join(module_cache_dir(), 'embedded-compiler-write-cache')
+    os.makedirs(cache_path, exist_ok=True)
+
+    class JSBridge(QObject):
+        result: Any = null
+        error: Any = null
+
+        def __enter__(self):
+            self.result = null
+            self.error = null
+
+        def __exit__(self, *a):
+            pass
+
+        def working(self):
+            return self.result is null and self.error is null
+
+        @pyqtSlot('QVariant')
+        def on_result(self, data):
+            self.result = data
+
+        @pyqtSlot('QVariant')
+        def on_error(self, data):
+            self.error = data
+
+        @pyqtSlot(str, str, bool)
+        def write_file(self, name: str, data: str, is_binary: bool) -> None:
+            if name.startswith('__vfs__/'):
+                name = name.partition('/')[2]
+                path = os.path.abspath(os.path.join(cache_path, name))
+                if is_path_inside(cache_path, path):
+                    os.makedirs(os.path.dirname(path), exist_ok=True)
+                    if is_binary:
+                        with open(path, 'wb') as fb:
+                            fb.write(standard_b64decode(data))
+                    else:
+                        with open(path, 'w') as f:
+                            f.write(data)
+
+        @pyqtSlot(str, result='QVariant')
+        def getmtime(self, name):
+            if name.startswith('__vfs__/'):
+                name = name.partition('/')[2]
+                for base in (rapydscript_dir, cache_path):
+                    path = os.path.abspath(os.path.join(base, name))
+                    try:
+                        return ['', int(os.path.getmtime(path) * 1000)]
+                    except OSError:
+                        pass
+            return ['ENOENT', f'No file named {name} exists in {rapydscript_dir}']
+
+        @pyqtSlot(str, str, result='QVariant')
+        def read_file(self, name: str, encoding: str) -> list[str]:
+            if name.startswith('__vfs__/'):
+                name = name.partition('/')[2]
+                for base in (rapydscript_dir, cache_path):
+                    path = os.path.abspath(os.path.join(base, name))
+                    if is_existing_subpath(path, base):
+                        try:
+                            with open(path, 'rb') as f:
+                                ans = f.read()
+                            if encoding:
+                                payload = ans.decode(encoding)
+                            else:
+                                payload = standard_b64encode(ans).decode('ascii')
+                            return ['', payload]
+                        except OSError as e:
+                            return ['EIO', str(e)]
+            return ['ENOENT', f'No file named {name} exists in {rapydscript_dir}']
 
     with lzma.open(P(COMPILER_PATH, allow_user_override=False)) as lzf:
         compiler_script = lzf.read().decode('utf-8')
 
-    base = base_dir()
-    rapydscript_dir = os.path.join(base, 'src', 'pyj')
-    cache_path = os.path.join(module_cache_dir(), 'embedded-compiler-write-cache.json')
-
-    def create_vfs():
-        ans = {}
-        for x in walk(rapydscript_dir):
-            if x.endswith('.pyj'):
-                r = os.path.relpath(x, rapydscript_dir).replace('\\', '/')
-                with open(x, 'rb') as f:
-                    ans['__stdlib__/' + r] = f.read().decode('utf-8')
-        return ans
-
     def vfs_script():
-        try:
-            with open(cache_path, 'rb') as f:
-                write_cache = f.read().decode('utf-8')
-        except Exception:
-            write_cache = '{}'
-
         return '''
 (function() {
 "use strict";
-var vfs = VFS;
 
-function read_file_sync(name) {
-    var ans = vfs[name];
-    if (typeof ans === "string") return ans;
-    ans = write_cache[name];
-    if (typeof ans === "string") return ans;
-    return null;
+async function stat_file(name) {
+    const [a, b] = await py_bridge.getmtime(name);
+    if (a.length === 0) return {mtimeMs: b};
+    let e = new Error(b);
+    e.code = a;
+    throw e;
 }
 
-function write_file_sync(name, data) {
-    write_cache[name] = data;
+async function read_file(name, encoding) {
+    const [a, b] = await py_bridge.read_file(name, encoding || '');
+    if (a.length === 0) {
+        if (encoding && encoding.length) return b;
+        return Uint8Array.fromBase64(b);
+    }
+    let e = new Error(b);
+    e.code = a;
+    throw e;
+}
+
+if (typeof Uint8Array.prototype.toBase64 !== 'function') {
+  Uint8Array.prototype.toBase64 = function (options = {}) {
+    const alphabetType = options.alphabet || 'base64';
+    const omitPadding = !!options.omitPadding;
+
+    // 1. Standard Base64 Standard Alphabet vs Base64URL Alphabet
+    const chars = alphabetType === 'base64url'
+      ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+      : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+    let result = '';
+    const len = this.length;
+    const extraBytes = len % 3;
+    const mainLength = len - extraBytes;
+
+    // 2. Process bytes in chunks of 3 (turns 3 bytes into 4 base64 characters)
+    for (let i = 0; i < mainLength; i += 3) {
+      const chunk = (this[i] << 16) | (this[i + 1] << 8) | this[i + 2];
+      result += chars[(chunk >> 18) & 63] +
+                chars[(chunk >> 12) & 63] +
+                chars[(chunk >> 6) & 63] +
+                chars[chunk & 63];
+    }
+
+    // 3. Handle remaining bytes (padding logic)
+    if (extraBytes === 1) {
+      const chunk = this[mainLength];
+      result += chars[(chunk >> 2) & 63] + chars[(chunk << 4) & 63];
+      if (!omitPadding) result += '==';
+    } else if (extraBytes === 2) {
+      const chunk = (this[mainLength] << 8) | this[mainLength + 1];
+      result += chars[(chunk >> 10) & 63] + chars[(chunk >> 4) & 63] + chars[(chunk << 2) & 63];
+      if (!omitPadding) result += '=';
+    }
+
+    return result;
+  };
+}
+
+async function write_file(name, data) {
+    let payload = data;
+    let is_binary = false;
+    if (data instanceof Uint8Array) {
+        payload = data.toBase64();
+        is_binary = true;
+    } else if (typeof data !== 'string') {
+        throw new Error("Unsupported data type!");
+    }
+    await py_bridge.write_file(name, payload, is_binary);
 }
 
 RapydScript.virtual_file_system = {
-    'read_file_sync': read_file_sync,
-    'write_file_sync': write_file_sync
+    read_file: read_file, write_file: write_file, stat_file: stat_file,
 };
 
-window.compiler = RapydScript.create_embedded_compiler();
-document.title = 'compiler initialized';
+let compiler_lazy = {promise: RapydScript.create_embedded_compiler()};
+async function compile(src, options) {
+    if (!compiler_lazy.compiler) compiler_lazy.compiler = await compiler_lazy.promise;
+    return await compiler_lazy.compiler.compile(src, options);
+}
+window.compile = compile;
+new QWebChannel(qt.webChannelTransport, async function (channel) {
+    window.py_bridge = channel.objects.py_bridge;
+    document.title = 'compiler initialized';
+})
 })();
-'''.replace('VFS', json.dumps(create_vfs()) + ';\n' + 'window.write_cache = ' + write_cache, 1)
+'''
+
+    world = QWebEngineScript.ScriptWorldId.MainWorld
 
     def create_script(src, name):
         s = QWebEngineScript()
         s.setName(name)
         s.setInjectionPoint(QWebEngineScript.InjectionPoint.DocumentReady)
-        s.setWorldId(QWebEngineScript.ScriptWorldId.ApplicationWorld)
+        s.setWorldId(world)
         s.setRunsOnSubFrames(True)
         s.setSourceCode(src)
         return s
 
     class Compiler(QWebEnginePage):
-
         def __init__(self):
             super().__init__()
             setup_profile(self.profile())
+            secure_webengine(self, for_viewer=True)
+            self.bridge = JSBridge()
+            self.channel = QWebChannel()
+            self.channel.registerObject('py_bridge', self.bridge)
             self.errors = []
-            secure_webengine(self)
+            self.setWebChannel(self.channel)
+            file = QFile(':/qtwebchannel/qwebchannel.js')
+            if not file.open(QIODevice.OpenModeFlag.ReadOnly):
+                raise RuntimeError('Could not load qwebchannel.js')
+            qwc = bytes(file.readAll()).decode()
             script = compiler_script
-            script += '\n\n;;\n\n' + vfs_script()
+            self.scripts().insert(create_script(qwc, 'qwebchannel.js'))
             self.scripts().insert(create_script(script, 'rapydscript.js'))
+            self.scripts().insert(create_script(vfs_script(), 'vfs.js'))
             self.setHtml('<p>initialize')
-            while self.title() != 'compiler initialized':
-                self.spin_loop()
+            self.spin_loop(
+                lambda: self.title() != 'compiler initialized',
+                'Creating RapydScript compiler took too long',
+                timeout=10,
+            )
 
-        def spin_loop(self):
-            QApplication.instance().processEvents(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
+        def spin_loop(self, while_condition, timeout_err, timeout=60):
+            limit = time.monotonic() + timeout
+            while while_condition():
+                app = QApplication.instance()
+                assert app is not None
+                app.processEvents(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
+                if time.monotonic() > limit:
+                    raise TimeoutError(timeout_err)
 
-        def javaScriptConsoleMessage(self, level, msg, line_num, source_id):
-            if level == QWebEnginePage.JavaScriptConsoleMessageLevel.ErrorMessageLevel:
-                self.errors.append(msg)
-            else:
-                print(f'{source_id}:{line_num}:{msg}')
+        def javaScriptConsoleMessage(self, level, message, lineNumber, sourceID):
+            print(f'{str(level).rpartition('.')[-1]}:{sourceID}:{lineNumber}:{message}', flush=True)
 
-        def __call__(self, src, options):
-            self.compiler_result = null = object()
+        def __call__(self, src, options) -> dict[str, str]:
             self.errors = []
             self.working = True
-            options['basedir'] = '__stdlib__'
             options['write_name'] = True
             options['keep_docstrings'] = False
-            src = 'var js = window.compiler.compile({}, {}); [js, window.write_cache]'.format(*map(json.dumps, (src, options)))
-            self.runJavaScript(src, QWebEngineScript.ScriptWorldId.ApplicationWorld, self.compilation_done)
-            while self.working:
-                self.spin_loop()
-            if self.compiler_result is null or self.compiler_result is None:
-                raise CompileFailure('Failed to compile rapydscript code with error: ' + '\n'.join(self.errors))
-            write_cache = self.compiler_result[1]
-            with open(cache_path, 'wb') as f:
-                f.write(as_bytes(json.dumps(write_cache)))
-            return self.compiler_result[0]
+            src = '''
+    (async () => {{
+            try {{
+                var js = await window.compile({}, {});
+                py_bridge.on_result(js);
+            }} catch (error) {{
+                py_bridge.on_error({{name: error.name, message: error.message, stack: error.stack}})
+            }}
+    }})();
+'''.format(*map(json.dumps, (src, options)))
+            with self.bridge:
+                self.runJavaScript(src, world)
+                self.spin_loop(self.bridge.working, 'Compilation of RapydScript code took too long')
+            if self.bridge.error is not null:
+                e = self.bridge.error
+                raise CompileFailure(f'Failed to compile rapydscript code with error: {e['name']}: {e['message']}\n{e['stack']}')
+            return self.bridge.result
 
         def eval(self, js):
-            self.compiler_result = null = object()
-            self.errors = []
-            self.working = True
-            self.runJavaScript(js, QWebEngineScript.ScriptWorldId.ApplicationWorld, self.compilation_done)
-            while self.working:
-                self.spin_loop()
-            if self.compiler_result is null:
-                raise CompileFailure('Failed to eval JS with error: ' + '\n'.join(self.errors))
-            return self.compiler_result
+            eval_result = null
 
-        def compilation_done(self, js):
-            self.working = False
-            self.compiler_result = js
+            def on_complete(result):
+                nonlocal eval_result
+                eval_result = result
 
-    compiler.ans = Compiler()
-    return compiler.ans
+            self.runJavaScript(js, world, on_complete)
+            self.spin_loop(lambda: eval_result is null, 'eval of JS took too long')
+            return eval_result
+
+    _compiler_instance = Compiler()
+    return _compiler_instance
 
 
 class CompileFailure(ValueError):
@@ -212,6 +354,7 @@ def module_cache_dir():
 
 def ok_to_import_webengine():
     from qt.core import QApplication
+
     if QApplication.instance() is None:
         return True
     if 'PyQt6.QtWebEngineCore' in sys.modules:
@@ -225,25 +368,32 @@ OUTPUT_SENTINEL = b'-----RS webengine compiler output starts here------'
 def forked_compile():
     c = compiler()
     stdin = getattr(sys.stdin, 'buffer', sys.stdin)
-    data = stdin.read().decode('utf-8')
+    raw = stdin.read()
+    data = raw.decode('utf-8') if isinstance(raw, bytes) else raw
     options = json.loads(sys.argv[-1])
     result = c(data, options)
     stdout = getattr(sys.stdout, 'buffer', sys.stdout)
-    stdout.write(OUTPUT_SENTINEL)
-    stdout.write(as_bytes(result))
+    stdout.write(OUTPUT_SENTINEL)  # type: ignore
+    stdout.write(as_bytes(json.dumps(result)))  # type: ignore
     stdout.close()
 
 
-def run_forked_compile(data, options):
+def run_forked_compile(data, options) -> dict[str, str]:
     from calibre.debug import run_calibre_debug
-    p = run_calibre_debug('-c', 'from calibre.utils.rapydscript import *; forked_compile()',
-            json.dumps(options), stdin=subprocess.PIPE, stdout=subprocess.PIPE, headless=True)
+
+    p = run_calibre_debug(
+        '-c',
+        'from calibre.utils.rapydscript import *; forked_compile()',
+        json.dumps(options),
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        headless=True,
+    )
     stdout = p.communicate(as_bytes(data))[0]
     if p.wait() != 0:
         raise SystemExit(p.returncode)
     idx = stdout.find(OUTPUT_SENTINEL)
-    result = as_unicode(stdout[idx+len(OUTPUT_SENTINEL):])
-    return result
+    return json.loads(stdout[idx + len(OUTPUT_SENTINEL) :])
 
 
 def compile_pyj(
@@ -253,16 +403,19 @@ def compile_pyj(
     private_scope=True,
     libdir=None,
     omit_baselib=False,
-    js_version=5,
-):
+    tree_shaking=True,
+    source_map_line_offset=0,
+) -> dict[str, str]:
     if isinstance(data, bytes):
         data = data.decode('utf-8')
     options = {
-        'beautify':beautify,
-        'private_scope':private_scope,
+        'beautify': beautify,
+        'private_scope': private_scope,
         'keep_baselib': not omit_baselib,
         'filename': filename,
-        'js_version': js_version,
+        'source_map_line_offset': source_map_line_offset,
+        'tree_shaking': tree_shaking,
+        'source_map': 'embedded',
     }
     if not ok_to_import_webengine():
         result = run_forked_compile(data, options)
@@ -278,25 +431,30 @@ def compile_pyj(
     return result
 
 
-has_external_compiler = None
-
-
-def detect_external_compiler():
+@lru_cache(maxsize=2)
+def external_compiler_version() -> tuple[str, tuple[int, int, int]]:
     from calibre.utils.filenames import find_executable_in_path
+
     rs = find_executable_in_path('rapydscript')
+    ver = (0, 0, 0)
     try:
         raw = subprocess.check_output([rs, '--version'])
     except Exception:
-        raw = b''
+        return '', ver
     if raw.startswith(b'rapydscript-ng '):
-        ver = raw.partition(b' ')[-1]
+        rver = raw.partition(b' ')[-1]
         try:
-            ver = tuple(map(int, ver.split(b'.')))
+            qver = tuple(map(int, rver.split(b'.')))
+            ver = qver[0], qver[1], qver[2]
         except Exception:
-            ver = (0, 0, 0)
-        if ver >= (0, 7, 5):
-            return rs
-    return False
+            return '', ver
+        if ver < (0, 8, 5):
+            return '', ver
+    return rs, ver
+
+
+def external_compiler() -> str:
+    return external_compiler_version()[0]
 
 
 def compile_fast(
@@ -306,13 +464,20 @@ def compile_fast(
     private_scope=True,
     libdir=None,
     omit_baselib=False,
-    js_version=None,
-):
-    global has_external_compiler
-    if has_external_compiler is None:
-        has_external_compiler = detect_external_compiler()
-    if not has_external_compiler:
-        return compile_pyj(data, filename or '<stdin>', beautify, private_scope, libdir, omit_baselib, js_version or 6)
+    tree_shaking=True,
+    source_map_line_offset=0,
+) -> dict[str, str]:
+    if not (rs := external_compiler()):
+        return compile_pyj(
+            data,
+            filename or '<stdin>',
+            beautify,
+            private_scope,
+            libdir,
+            omit_baselib,
+            tree_shaking=tree_shaking,
+            source_map_line_offset=source_map_line_offset,
+        )
     args = ['--cache-dir', module_cache_dir()]
     if libdir:
         args += ['--import-path', libdir]
@@ -322,18 +487,22 @@ def compile_fast(
         args.append('--bare')
     if omit_baselib:
         args.append('--omit-baselib')
-    if js_version:
-        args.append(f'--js-version={js_version or 6}')
     if not isinstance(data, bytes):
         data = data.encode('utf-8')
     if filename:
         args.append('--filename-for-stdin'), args.append(filename)
-    p = subprocess.Popen([has_external_compiler, 'compile'] + args,
-            stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    js, stderr = p.communicate(data)
-    if p.wait() != 0:
-        raise CompileFailure(force_unicode(stderr, 'utf-8'))
-    return js.decode('utf-8')
+    if tree_shaking:
+        args.append('--tree-shaking')
+    with tempfile.TemporaryDirectory() as tdir:
+        smap = os.path.join(tdir, 'smap')
+        js = os.path.join(tdir, 'js')
+        args.extend(('--source-map', smap, '--source-map-line-offset', str(source_map_line_offset)))
+        args.extend(('--output', js))
+        p = subprocess.run([rs, 'compile'] + args, capture_output=True, input=data)
+        if p.returncode != 0:
+            raise CompileFailure(p.stderr.decode())
+        with open(smap, encoding='utf-8') as sf, open(js, encoding='utf-8') as jf:
+            return {'code': jf.read(), 'source_map': sf.read()}
 
 
 def base_dir():
@@ -351,8 +520,10 @@ def atomic_write(base, name, content):
 
 def run_rapydscript_tests():
     from calibre.gui2 import must_use_qt
+
     must_use_qt()
     from calibre.utils.webengine import create_script, insert_scripts, secure_webengine, setup_default_profile, setup_fake_protocol, setup_profile
+
     setup_fake_protocol()
     setup_default_profile()
     from urllib.parse import parse_qs
@@ -367,28 +538,27 @@ def run_rapydscript_tests():
     rapydscript_dir = os.path.join(base, 'src', 'pyj')
     fname = os.path.join(rapydscript_dir, 'test.pyj')
     with open(fname, 'rb') as f:
-        js = compile_fast(f.read(), fname)
+        result = compile_fast(f.read(), fname)
 
     class UrlSchemeHandler(QWebEngineUrlSchemeHandler):
-
         def __init__(self, parent=None):
             QWebEngineUrlSchemeHandler.__init__(self, parent)
             self.allowed_hosts = (FAKE_HOST,)
             self.registered_data = {}
 
-        def requestStarted(self, rq):
-            if bytes(rq.requestMethod()) != b'GET':
-                return self.fail_request(rq, QWebEngineUrlRequestJob.Error.RequestDenied)
-            url = rq.requestUrl()
+        def requestStarted(self, a0):
+            if bytes(a0.requestMethod()) != b'GET':
+                return self.fail_request(a0, QWebEngineUrlRequestJob.Error.RequestDenied)
+            url = a0.requestUrl()
             host = url.host()
             if host not in self.allowed_hosts:
-                return self.fail_request(rq)
+                return self.fail_request(a0)
             q = parse_qs(url.query())
             if not q:
-                return self.fail_request(rq)
+                return self.fail_request(a0)
             mt = q.get('mime-type', ('text/plain',))[0]
             data = q.get('data', ('',))[0].encode('utf-8')
-            send_reply(rq, mt, data)
+            send_reply(a0, mt, data)
 
         def fail_request(self, rq, fail_code=None):
             if fail_code is None:
@@ -397,12 +567,11 @@ def run_rapydscript_tests():
             print(f'Blocking FAKE_PROTOCOL request: {rq.requestUrl().toString()}', file=sys.stderr)
 
     class Tester(QWebEnginePage):
-
         def __init__(self):
             profile = QWebEngineProfile(QApplication.instance())
             profile.setHttpUserAgent('calibre-tester')
             setup_profile(profile)
-            insert_scripts(profile, create_script('test-rapydscript.js', js, on_subframes=False))
+            insert_scripts(profile, create_script('test-rapydscript.js', result['code'], on_subframes=False))
             url_handler = UrlSchemeHandler(profile)
             profile.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
             QWebEnginePage.__init__(self, profile, None)
@@ -418,27 +587,33 @@ def run_rapydscript_tests():
 
         def spin_loop(self):
             while self.working:
-                QApplication.instance().processEvents(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
+                app = QApplication.instance()
+                assert app is not None
+                app.processEvents(QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
             return self.result
 
         def callback(self, result):
             self.result = result
             self.working = False
 
-        def javaScriptConsoleMessage(self, level, msg, line_num, source_id):
-            print(msg, file=sys.stdout if level == QWebEnginePage.JavaScriptConsoleMessageLevel.InfoMessageLevel else sys.stderr)
+        def javaScriptConsoleMessage(self, level, message, lineNumber, sourceID):
+            print(
+                message,
+                file=sys.stdout if level == QWebEnginePage.JavaScriptConsoleMessageLevel.InfoMessageLevel else sys.stderr,
+            )
 
     tester = Tester()
-    result = tester.spin_loop()
-    if result is None:
-        result = 1
-    raise SystemExit(int(result))
+    res = tester.spin_loop()
+    if res is None:
+        res = 1
+    raise SystemExit(int(res))
 
 
-def set_data(src, **kw):
+def set_data(src, output: str, source_map: str = '', source_url: str = '', **kw) -> str:
     from calibre.db.constants import NO_SEARCH_LINK
     from calibre.ebooks.oeb.polish.main import SUPPORTED
     from calibre.library.page_count import CHARS_PER_PAGE
+
     for k, v in {
         '__SPECIAL_TITLE__': SPECIAL_TITLE_FOR_WEBENGINE_COMMS,
         '__FAKE_PROTOCOL__': FAKE_PROTOCOL,
@@ -455,17 +630,31 @@ def set_data(src, **kw):
         src = src.replace(k, v, 1)
     for k, v in kw.items():
         src = src.replace(k, v, 1)
-    return src
+    src = src.rstrip()
+    src = src.removesuffix('//# sourceMappingURL=smap')
+    if source_map:
+        from base64 import standard_b64encode
+
+        payload = standard_b64encode(source_map.encode()).decode()
+        smurl = f'//# sourceMappingURL=data:application/json;charset=utf-8;base64,{payload}'
+    else:
+        smurl = f'//# sourceMappingURL={output + '.map'}'
+    if source_url:
+        src += f'//# sourceURL={source_url}'
+    return src + '\n' + smurl
 
 
 def compile_editor():
     base = base_dir()
     rapydscript_dir = os.path.join(base, 'src', 'pyj')
     fname = os.path.join(rapydscript_dir, 'editor.pyj')
-    with open(fname, 'rb') as f:
-        js = set_data(compile_fast(f.read(), fname))
     base = os.path.join(base, 'resources')
-    atomic_write(base, 'editor.js', js)
+    output = 'editor.js'
+    with open(fname, 'rb') as f:
+        result = compile_fast(f.read(), fname)
+        js = set_data(result['code'], output)
+    atomic_write(base, output, js)
+    atomic_write(base, output + '.map', result['source_map'])
 
 
 def compile_viewer():
@@ -482,11 +671,22 @@ def compile_viewer():
 
     rapydscript_dir = os.path.join(base, 'src', 'pyj')
     fname = os.path.join(rapydscript_dir, 'viewer-main.pyj')
+    output = 'viewer.js'
     with open(fname, 'rb') as f:
-        js = set_data(compile_fast(f.read(), fname))
+        result = compile_fast(f.read(), fname)
+        js = set_data(result['code'], output)
     base = os.path.join(base, 'resources')
-    atomic_write(base, 'viewer.js', js)
+    atomic_write(base, output, js)
+    atomic_write(base, output + '.map', result['source_map'])
     atomic_write(base, 'viewer.html', html)
+
+
+def count_lines_before(text: str, qline: str) -> int:
+    qline = qline.strip()
+    for line_number, line in enumerate(io.StringIO(text)):
+        if line.strip() == qline:
+            return line_number
+    raise ValueError(f'{qline} not found')
 
 
 def compile_srv():
@@ -494,56 +694,63 @@ def compile_srv():
     iconf = os.path.join(base, 'imgsrc', 'srv', 'generate.py')
     g = {'__file__': iconf}
     exec_path(iconf, g)
-    icons = g['merge']().encode('utf-8')
+    icons = g['merge']()
     with open(os.path.join(base, 'resources', 'content-server', 'reset.css')) as f:
         reset = f.read()
     with open(os.path.join(base, 'resources', 'content-server', 'base.css')) as f:
         base_css = f.read()
     with open(os.path.join(base, 'src', 'pyj', 'book_list', 'constants.pyj')) as f:
         constants = f.read()
-    cs_top_bar_host_id = re.search(r"^cs_top_bar_host_id = '(.+?)'", constants, flags=re.M).group(1)
-    book_list_container_id = re.search(r"^book_list_container_id = '(.+?)'", constants, flags=re.M).group(1)
-    read_book_container_id = re.search(r"^read_book_container_id = '(.+?)'", constants, flags=re.M).group(1)
+    m = re.search(r"^cs_top_bar_host_id = '(.+?)'", constants, flags=re.M)
+    assert m is not None
+    cs_top_bar_host_id = m.group(1)
+    m = re.search(r"^book_list_container_id = '(.+?)'", constants, flags=re.M)
+    assert m is not None
+    book_list_container_id = m.group(1)
+    m = re.search(r"^read_book_container_id = '(.+?)'", constants, flags=re.M)
+    assert m is not None
+    read_book_container_id = m.group(1)
     base_css = base_css.replace('CS_TOP_BAR_HOST_ID', cs_top_bar_host_id)
     base_css = base_css.replace('BOOK_LIST_CONTAINER_ID', book_list_container_id)
     base_css = base_css.replace('READ_BOOK_CONTAINER_ID', read_book_container_id)
     rapydscript_dir = os.path.join(base, 'src', 'pyj')
     rb = os.path.join(base, 'src', 'calibre', 'srv', 'render_book.py')
     with open(rb, 'rb') as f:
-        rv = str(int(re.search(br'^RENDER_VERSION\s+=\s+(\d+)', f.read(), re.M).group(1)))
+        rv_m = re.search(rb'^RENDER_VERSION\s+=\s+(\d+)', f.read(), re.M)
+        assert rv_m is not None
+        rv = str(int(rv_m.group(1)))
     mathjax_version = json.loads(P('mathjax/manifest.json', data=True, allow_user_override=False))['etag']
     base = os.path.join(base, 'resources', 'content-server')
     fname = os.path.join(rapydscript_dir, 'srv.pyj')
+    output = 'index.js'
     with open(fname, 'rb') as f:
-        js = set_data(
-            compile_fast(f.read(), fname),
-            __RENDER_VERSION__=rv,
-            __MATHJAX_VERSION__=mathjax_version
-        ).encode('utf-8')
-    with open(os.path.join(base, 'index.html'), 'rb') as f:
-        html = f.read().replace(
-                b'RESET_STYLES', reset.encode(), 1).replace(
-                b'ICONS', icons, 1).replace(
-                b'MAIN_JS', js, 1).replace(
-                b'BASE_STYLES', base_css.encode(), 1)
+        result = compile_fast(f.read(), fname)
+        js = set_data(result['code'], output, source_url=output, __RENDER_VERSION__=rv, __MATHJAX_VERSION__=mathjax_version)
+    with open(os.path.join(base, 'index.html')) as f:
+        html = f.read().replace('RESET_STYLES', reset, 1).replace('ICONS', icons, 1).replace('MAIN_JS', js, 1).replace('BASE_STYLES', base_css, 1)
 
     atomic_write(base, 'index-generated.html', html)
+    atomic_write(base, output + '.map', result['source_map'])
+
+
+def compile_all():
+    compile_editor()
+    compile_viewer()
+    compile_srv()
+
 
 # }}}
 
-
 # Translations {{{
 
+
 def create_pot(source_files):
-    global has_external_compiler
-    if has_external_compiler is None:
-        has_external_compiler = detect_external_compiler()
     gettext_options = {
         'package_name': __appname__,
         'package_version': __version__,
-        'bugs_address': 'https://bugs.launchpad.net/calibre'
+        'bugs_address': 'https://bugs.launchpad.net/calibre',
     }
-    if not has_external_compiler:
+    if not (rs := external_compiler()):
         c = compiler()
         c.eval(f'window.catalog = {{}}; window.gettext_options = {json.dumps(gettext_options)}; 1')
         for fname in source_files:
@@ -553,10 +760,20 @@ def create_pot(source_files):
 
         buf = c.eval('ans = []; RapydScript.gettext_output(window.catalog, window.gettext_options, ans.push.bind(ans)); ans;')
         return ''.join(buf)
-    cp = subprocess.run([
-        has_external_compiler, 'gettext', '--package-name', gettext_options['package_name'],
-        '--package-version', gettext_options['package_version'], '--bugs-address', gettext_options['bugs_address'],
-    ] + list(source_files), capture_output=True)
+    cp = subprocess.run(
+        [
+            rs,
+            'gettext',
+            '--package-name',
+            gettext_options['package_name'],
+            '--package-version',
+            gettext_options['package_version'],
+            '--bugs-address',
+            gettext_options['bugs_address'],
+        ]
+        + list(source_files),
+        capture_output=True,
+    )
     if cp.returncode != 0:
         sys.stderr.buffer.write(cp.stderr)
         raise SystemExit(cp.returncode)
@@ -564,16 +781,14 @@ def create_pot(source_files):
 
 
 def msgfmt(po_data_as_string):
-    global has_external_compiler
-    if has_external_compiler is None:
-        has_external_compiler = detect_external_compiler()
-    if not has_external_compiler:
+    if not (rs := external_compiler()):
         c = compiler()
-        return c.eval('RapydScript.msgfmt({}, {})'.format(
-            json.dumps(po_data_as_string), json.dumps({'use_fuzzy': False})))
-    cp = subprocess.run([has_external_compiler, 'msgfmt'], input=po_data_as_string.encode(), capture_output=True)
+        return c.eval('RapydScript.msgfmt({}, {})'.format(json.dumps(po_data_as_string), json.dumps({'use_fuzzy': False})))
+    cp = subprocess.run([rs, 'msgfmt'], input=po_data_as_string.encode(), capture_output=True)
     if cp.returncode != 0:
         sys.stderr.write(cp.stderr)
         raise SystemExit(cp.returncode)
     return cp.stdout.decode().strip()
+
+
 # }}}

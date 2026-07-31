@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
+# License: GPLv3 Copyright: 2017-2019, Tomasz Długosz <tomek3d@gmail.com>
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
-__license__ = 'GPL 3'
-__copyright__ = '2017-2019, Tomasz Długosz <tomek3d@gmail.com>'
-__docformat__ = 'restructuredtext en'
-
 from base64 import b64encode
 from contextlib import closing
-
-try:
-    from urllib.parse import quote
-except ImportError:
-    from urllib import quote
+from urllib.parse import quote
 
 from qt.core import QUrl
 
@@ -23,11 +17,7 @@ from calibre.gui2.store import StorePlugin
 from calibre.gui2.store.basic_config import BasicStoreConfig
 from calibre.gui2.store.search_result import SearchResult
 from calibre.gui2.store.web_store_dialog import WebStoreDialog
-
-try:
-    from calibre.xml_parse import safe_html_fromstring
-except ImportError:
-    from lxml.html import fromstring as safe_html_fromstring
+from calibre.utils.xml_parse import safe_html_fromstring
 
 
 def as_base64(data):
@@ -40,8 +30,7 @@ def as_base64(data):
 
 
 class SwiatEbookowStore(BasicStoreConfig, StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         aff_root = 'https://www.a4b-tracking.com/pl/stat-click-text-link/181/58/'
 
         url = 'https://www.swiatebookow.pl/'
@@ -63,7 +52,7 @@ class SwiatEbookowStore(BasicStoreConfig, StorePlugin):
     def search(self, query, max_results=10, timeout=60):
 
         br = browser()
-        page=1
+        page = 1
 
         counter = max_results
         while counter:
@@ -78,7 +67,7 @@ class SwiatEbookowStore(BasicStoreConfig, StorePlugin):
                         continue
 
                     cover_url = ''.join(data.xpath('.//div[@class="cover-xs"]//img/@data-src'))
-                    price = ''.join(data.xpath('.//span[@class="item-price"]/text()')+data.xpath('.//span[@class="sub-price"]/text()'))
+                    price = ''.join(data.xpath('.//span[@class="item-price"]/text()') + data.xpath('.//span[@class="sub-price"]/text()'))
                     title = ''.join(data.xpath('.//div[@class="largebox-book-info"]//h2/a/text()'))
                     author = ', '.join(data.xpath('.//div[@class="largebox-book-info"]/p/a/text()'))
 
@@ -96,4 +85,4 @@ class SwiatEbookowStore(BasicStoreConfig, StorePlugin):
                     yield s
                 if not doc.xpath('//div[@class="paging_bootstrap pagination"]//a[@class="next"]'):
                     break
-            page+=1
+            page += 1

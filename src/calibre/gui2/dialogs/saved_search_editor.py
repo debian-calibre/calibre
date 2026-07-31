@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from qt.core import QDialog, QDialogButtonBox, QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, QPlainTextEdit, Qt, QVBoxLayout
 
 from calibre import prepare_string_for_xml
@@ -10,38 +9,43 @@ from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.widgets2 import Dialog
 from calibre.utils.icu import lower as icu_lower
 from calibre.utils.icu import sort_key
+from calibre.utils.localization import _
 
 
 def commit_searches(searches):
     from calibre.gui2.ui import get_gui
-    db = get_gui().current_db
+
+    db = get_gui(fail_if_absent=True).current_db
     db.saved_search_set_all(searches)
 
 
 class AddSavedSearch(Dialog):
-
     def __init__(self, parent=None, search=None, commit_changes=True, label=None, validate=None):
         self.initial_search = search
         self.validate = validate
         self.label = label
         self.commit_changes = commit_changes
-        Dialog.__init__(
-            self, _('Add a new Saved search'), 'add-saved-search', parent)
+        Dialog.__init__(self, _('Add a new Saved search'), 'add-saved-search', parent)
         from calibre.gui2.ui import get_gui
-        db = get_gui().current_db
+
+        db = get_gui(fail_if_absent=True).current_db
         self.searches = {}
         for name in db.saved_search_names():
             self.searches[name] = db.saved_search_lookup(name)
-        self.search_names = {icu_lower(n):n for n in db.saved_search_names()}
+        self.search_names = {icu_lower(n): n for n in db.saved_search_names()}
 
     def setup_ui(self):
         self.l = l = QFormLayout(self)
         l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
 
-        self.la = la = QLabel(self.label or _(
-            'You can create a <i>Saved search</i>, for frequently used searches here.'
-            ' The search will be visible under <i>Saved searches</i> in the Tag browser,'
-            ' using the name that you specify here.'))
+        self.la = la = QLabel(
+            self.label
+            or _(
+                'You can create a <i>Saved search</i>, for frequently used searches here.'
+                ' The search will be visible under <i>Saved searches</i> in the Tag browser,'
+                ' using the name that you specify here.'
+            )
+        )
         la.setWordWrap(True)
         l.addRow(la)
 
@@ -61,18 +65,15 @@ class AddSavedSearch(Dialog):
     def accept(self):
         name = self.sname.text().strip()
         if not name:
-            return error_dialog(
-                self,
-                _('No search name'),
-                _('You must specify a name for the Saved search'),
-                show=True)
+            return error_dialog(self, _('No search name'), _('You must specify a name for the Saved search'), show=True)
         expression = self.search.toPlainText().strip()
         if not expression:
             return error_dialog(
                 self,
                 _('No search expression'),
                 _('You must specify a search expression for the Saved search'),
-                show=True)
+                show=True,
+            )
         self.accepted_data = name, expression
         if self.validate is not None:
             err = self.validate(name, expression)
@@ -87,25 +88,27 @@ class AddSavedSearch(Dialog):
 
 
 class SavedSearchEditor(Dialog):
-
     def __init__(self, parent, initial_search=None):
         self.initial_search = initial_search
-        Dialog.__init__(
-            self, _('Manage Saved searches'), 'manage-saved-searches', parent)
+        Dialog.__init__(self, _('Manage Saved searches'), 'manage-saved-searches', parent)
 
     def setup_ui(self):
         from calibre.gui2.ui import get_gui
-        db = get_gui().current_db
+
+        db = get_gui(fail_if_absent=True).current_db
         self.l = l = QVBoxLayout(self)
         b = self.bb.addButton(_('&Add search'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setIcon(QIcon.ic('search_add_saved.png'))
         b.clicked.connect(self.add_search)
 
         b = self.bb.addButton(_('&Remove search'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setIcon(QIcon.ic('search_delete_saved.png'))
         b.clicked.connect(self.del_search)
 
         b = self.bb.addButton(_('&Edit search'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setIcon(QIcon.ic('modified.png'))
         b.clicked.connect(self.edit_search)
 
@@ -139,11 +142,11 @@ class SavedSearchEditor(Dialog):
             if ans in self.searches:
                 return ans
 
-    def keyPressEvent(self, ev):
-        if ev.key() == Qt.Key.Key_Delete:
+    def keyPressEvent(self, a0):
+        if a0.key() == Qt.Key.Key_Delete:
             self.del_search()
             return
-        return Dialog.keyPressEvent(self, ev)
+        return Dialog.keyPressEvent(self, a0)
 
     def populate_search_list(self):
         self.slist.clear()
@@ -163,10 +166,10 @@ class SavedSearchEditor(Dialog):
         n = self.current_search_name
         if n is not None:
             if not confirm(
-                '<p>' + _(
-                    'The current saved search will be '
-                    '<b>permanently deleted</b>. Are you sure?') + '</p>',
-                'saved_search_editor_delete', self):
+                '<p>' + _('The current saved search will be <b>permanently deleted</b>. Are you sure?') + '</p>',
+                'saved_search_editor_delete',
+                self,
+            ):
                 return
             self.slist.takeItem(self.slist.currentRow())
             del self.searches[n]
@@ -175,16 +178,21 @@ class SavedSearchEditor(Dialog):
         n = self.current_search_name
         if not n:
             return
-        d = AddSavedSearch(parent=self, commit_changes=False,
-                           label=_('Edit the name and/or expression below.'),
-                           validate=self.validate_edit)
+        d = AddSavedSearch(
+            parent=self,
+            commit_changes=False,
+            label=_('Edit the name and/or expression below.'),
+            validate=self.validate_edit,
+        )
         d.setWindowTitle(_('Edit saved search'))
         d.sname.setText(n)
         d.search.setPlainText(self.searches[n])
         if d.exec() != QDialog.DialogCode.Accepted:
             return
         name, expression = d.accepted_data
-        self.slist.currentItem().setText(name)
+        current_item = self.slist.currentItem()
+        assert current_item is not None
+        current_item.setText(name)
         del self.searches[n]
         self.searches[name] = expression
         self.current_index_changed(self.slist.currentItem())

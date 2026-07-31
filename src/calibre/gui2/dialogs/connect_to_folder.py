@@ -23,10 +23,10 @@ from calibre.customize.ui import usbms_plugins
 from calibre.gui2 import Application, choose_dir, gprefs
 from calibre.gui2.widgets2 import Dialog, HistoryLineEdit2
 from calibre.utils.icu import primary_sort_key
+from calibre.utils.localization import _
 
 
 class ChooseFolder(QWidget):
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.folder_edit = fe = HistoryLineEdit2(parent=self)
@@ -61,10 +61,10 @@ class ChooseFolder(QWidget):
 
 
 class Model(QStandardItemModel):
-
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         root = self.invisibleRootItem()
+        assert root is not None
         man_map = {}
         for cls in usbms_plugins():
             for model in cls.model_metadata():
@@ -83,8 +83,10 @@ class Model(QStandardItemModel):
 
     def itermodels(self):
         root = self.invisibleRootItem()
+        assert root is not None
         for i in range(root.rowCount()):
             m = root.child(i, 0)
+            assert m is not None
             for j in range(m.rowCount()):
                 yield m.child(j, 0)
 
@@ -96,7 +98,6 @@ class Model(QStandardItemModel):
 
 
 class ConnectToFolder(Dialog):
-
     def __init__(self, parent=None):
         super().__init__(_('Connect to folder'), 'connect-to-folder', parent=parent)
 
@@ -109,14 +110,17 @@ class ConnectToFolder(Dialog):
         self.l = l = QVBoxLayout(self)
         self.folder_chooser = fc = ChooseFolder(self)
         l.addWidget(fc)
-        self.la = la = QLabel('<p>' + _(
-            'Choose a device to connect as below. If no device is chosen a generic <i>Folder device</i>'
-            ' will be used.'))
-        self.la2 = la2 = QLabel('<p>' + _('<b>WARNING</b>: Connecting as a specific device will work only'
-            ' if the chosen folder above contains the actual files from an actual device, as the'
-            ' device drivers often expect to find certain device specific files. So only choose'
-            ' a device below if you have copied the files from a real device or mounted it at the'
-            ' chosen location.'))
+        self.la = la = QLabel('<p>' + _('Choose a device to connect as below. If no device is chosen a generic <i>Folder device</i> will be used.'))
+        self.la2 = la2 = QLabel(
+            '<p>'
+            + _(
+                '<b>WARNING</b>: Connecting as a specific device will work only'
+                ' if the chosen folder above contains the actual files from an actual device, as the'
+                ' device drivers often expect to find certain device specific files. So only choose'
+                ' a device below if you have copied the files from a real device or mounted it at the'
+                ' chosen location.'
+            )
+        )
         la.setWordWrap(True), la2.setWordWrap(True)
         l.addWidget(la)
         self.devices_group = dg = QGroupBox(_('Connect as device'), self)
@@ -126,7 +130,7 @@ class ConnectToFolder(Dialog):
         fe.setClearButtonEnabled(True)
         l.addWidget(dg)
         l.addWidget(self.bb)
-        dg.l = l = QVBoxLayout(dg)
+        l = QVBoxLayout(dg)
         self.devices = d = QTreeView(self)
         self.devices_model = m = Model(d)
         self.proxy_model = p = QSortFilterProxyModel(d)
@@ -149,10 +153,14 @@ class ConnectToFolder(Dialog):
         if selected_device is not None:
             idx = m.indexFromItem(selected_device)
             idx = p.mapFromSource(idx)
-            d.selectionModel().select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect)
+            sm = d.selectionModel()
+            assert sm is not None
+            sm.select(idx, QItemSelectionModel.SelectionFlag.ClearAndSelect)
             d.scrollTo(idx)
         self.device_selection_changed()
-        d.selectionModel().selectionChanged.connect(self.device_selection_changed)
+        sm2 = d.selectionModel()
+        assert sm2 is not None
+        sm2.selectionChanged.connect(self.device_selection_changed)
 
     def update_filter(self):
         q = self.filter_edit.text().strip()

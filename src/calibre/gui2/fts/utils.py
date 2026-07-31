@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPL v3 Copyright: 2022, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import re
 
 from qt.core import Qt
@@ -10,12 +9,13 @@ from calibre import prepare_string_for_xml
 from calibre.gui2 import safe_open_url
 from calibre.gui2.ui import get_gui
 from calibre.gui2.widgets2 import HTMLDisplay
+from calibre.utils.localization import _
 
 
 def get_db():
     if hasattr(get_db, 'db'):
         return get_db.db.new_api
-    return get_gui().current_db.new_api
+    return get_gui(fail_if_absent=True).current_db.new_api
 
 
 def markup_text(text: str, open_tag: str = '<b><i>', close_tag: str = '</i></b>') -> str:
@@ -53,7 +53,8 @@ div { margin-top: 0.5ex }
 .bq { margin-left: 1em; margin-top: 0.5ex; margin-bottom: 0.5ex; font-style: italic }
 p { margin: 0; }
 </style><div class="wrapper">
-                   ''' + _('''
+                   ''' + _(
+        '''
 <div class="h">Search for single words</div>
 <p>Simply type the word:</p>
 <div class="bq">awesome<br>calibre</div>
@@ -70,7 +71,9 @@ p { margin: 0; }
 <p>Here, 30 is the most words allowed between near groups. Defaults to 10 when unspecified.</p>
 
 <div style="margin-top: 1em"><a href="{fts_url}">Complete syntax reference</a></div>\
-''' + '</div>').format(fts_url=fts_url)
+'''
+        + '</div>'
+    ).format(fts_url=fts_url)
 
 
 def help_panel(parent=None) -> HTMLDisplay:
@@ -78,6 +81,8 @@ def help_panel(parent=None) -> HTMLDisplay:
     hp.setDefaultStyleSheet('a { text-decoration: none; }')
     hp.setHtml(help_html())
     hp.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-    hp.document().setDocumentMargin(0)
+    doc = hp.document()
+    assert doc is not None
+    doc.setDocumentMargin(0)
     hp.anchor_clicked.connect(safe_open_url)
     return hp
