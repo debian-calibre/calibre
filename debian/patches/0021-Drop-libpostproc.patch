@@ -9,11 +9,11 @@ FFmpeg 8 drops "libpostproc" and move it to source-plugins.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/setup/build_environment.py b/setup/build_environment.py
-index f5ca099..9523672 100644
+index e39e128..88bb220 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
-@@ -224,7 +224,7 @@ else:
-             'libonnxruntime', '', '/usr/include/onnxruntime')
+@@ -223,7 +223,7 @@ else:
+     piper_inc_dirs = pkgconfig_include_dirs('espeak-ng', '', '/usr/include') + pkgconfig_include_dirs('libonnxruntime', '', '/usr/include/onnxruntime')
      piper_lib_dirs = pkgconfig_lib_dirs('espeak-ng', '', '/usr/lib') + pkgconfig_lib_dirs('libonnxruntime', '', '/usr/lib')
      piper_libs = pkgconfig_libs('espeak-ng', '', 'espeak-ng') + pkgconfig_libs('libonnxruntime', '', 'onnxruntime')
 -    for x in ('libavcodec', 'libavformat', 'libavdevice', 'libavfilter', 'libavutil', 'libpostproc', 'libswresample', 'libswscale'):

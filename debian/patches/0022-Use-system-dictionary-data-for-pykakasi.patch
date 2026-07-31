@@ -10,18 +10,18 @@ Forwarded: not-needed
  1 file changed, 33 deletions(-)
 
 diff --git a/src/calibre/ebooks/unihandecode/jadecoder.py b/src/calibre/ebooks/unihandecode/jadecoder.py
-index 2bf5998..28ca61f 100644
+index e731e58..48dcf30 100644
 --- a/src/calibre/ebooks/unihandecode/jadecoder.py
 +++ b/src/calibre/ebooks/unihandecode/jadecoder.py
-@@ -16,7 +16,6 @@ This functionality is owned by Kakasi Japanese processing engine.
+@@ -14,7 +14,6 @@ This functionality is owned by Kakasi Japanese processing engine.
  Copyright (c) 2010 Hiroshi Miura
- '''
+ """
  
 -import pickle
  import re
  import warnings
  from importlib.resources import files
-@@ -31,38 +30,6 @@ from calibre.ebooks.unihandecode.unicodepoints import CODEPOINTS
+@@ -29,38 +28,6 @@ from calibre.ebooks.unihandecode.unicodepoints import CODEPOINTS
  from calibre.ebooks.unihandecode.unidecoder import Unidecoder
  
  
@@ -34,8 +34,8 @@ index 2bf5998..28ca61f 100644
 -    return q.read_bytes()
 -
 -
--def jisyo_init(self, dbname):
--    self._dict = pickle.loads(dictdata(dbname))
+-def jisyo_init(self, dictname):
+-    self._dict = pickle.loads(dictdata(dictname))
 -
 -
 -def itaiji_init(self):
@@ -58,5 +58,5 @@ index 2bf5998..28ca61f 100644
 -
 -
  class Jadecoder(Unidecoder):
- 
      def __init__(self):
+         self.codepoints = CODEPOINTS.copy()

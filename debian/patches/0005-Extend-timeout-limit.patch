@@ -9,10 +9,10 @@ Forwarded: not-needed
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/calibre/db/tests/filesystem.py b/src/calibre/db/tests/filesystem.py
-index 3aaa623..c503d18 100644
+index c1065f8..c5ecb20 100644
 --- a/src/calibre/db/tests/filesystem.py
 +++ b/src/calibre/db/tests/filesystem.py
-@@ -331,7 +331,7 @@ class FilesystemTest(BaseTest):
+@@ -346,7 +346,7 @@ class FilesystemTest(BaseTest):
          cache.enable_fts()
          cache.set_fts_num_of_workers(4)
          st = time.monotonic()
@@ -22,19 +22,19 @@ index 3aaa623..c503d18 100644
          if cache.fts_indexing_left > 0:
              raise ValueError('FTS indexing did not complete')
 diff --git a/src/calibre/db/tests/fts_api.py b/src/calibre/db/tests/fts_api.py
-index 6318e69..5512c70 100644
+index 212f140..d0af671 100644
 --- a/src/calibre/db/tests/fts_api.py
 +++ b/src/calibre/db/tests/fts_api.py
-@@ -53,7 +53,7 @@ class FTSAPITest(BaseTest):
+@@ -54,7 +54,7 @@ class FTSAPITest(BaseTest):
          self.libraries_to_close.append(ans)
          return ans
  
 -    def wait_for_fts_to_finish(self, fts, timeout=30):
 +    def wait_for_fts_to_finish(self, fts, timeout=3000):
          import apsw
+ 
          if fts.pool.initialized:
-             st = time.monotonic()
-@@ -130,7 +130,7 @@ class FTSAPITest(BaseTest):
+@@ -133,7 +133,7 @@ class FTSAPITest(BaseTest):
  
          # check shutdown when workers have hung
          for w in fts.pool.workers:

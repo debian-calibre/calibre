@@ -9,15 +9,15 @@ Add some more time to wait test results.
 ---
  src/calibre/srv/tests/base.py |  2 +-
  src/calibre/srv/tests/http.py | 16 ++++++++--------
- src/calibre/srv/tests/loop.py |  4 ++--
+ src/calibre/srv/tests/loop.py |  2 +-
  src/calibre/test_build.py     |  2 +-
- 4 files changed, 12 insertions(+), 12 deletions(-)
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index d371d46..5123b0d 100644
+index 9d9baaf..b5512c3 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
-@@ -141,7 +141,7 @@ class TestServer(Thread):
+@@ -139,7 +139,7 @@ class TestServer(Thread):
          self.log = self.loop.log
  
      def setup_defaults(self, kwargs):
@@ -27,10 +27,10 @@ index d371d46..5123b0d 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index 6b6ae10..54bab63 100644
+index d0e43d4..f299e23 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
-@@ -96,7 +96,7 @@ class TestHTTP(BaseTest):
+@@ -105,7 +105,7 @@ class TestHTTP(BaseTest):
          def handler(data):
              return data.lang_code + data._('Unknown')
  
@@ -39,25 +39,25 @@ index 6b6ae10..54bab63 100644
              conn = server.connect()
  
              def test(al, q):
-@@ -155,7 +155,7 @@ class TestHTTP(BaseTest):
-             conn._HTTPConnection__state = http.client._CS_REQ_SENT
+@@ -167,7 +167,7 @@ class TestHTTP(BaseTest):
+             conn._HTTPConnection__state = http.client._CS_REQ_SENT  # type: ignore
              return conn.getresponse()
  
 -        base_timeout = 0.5 if is_ci else 0.1
 +        base_timeout = 50 if is_ci else 10
  
-         with TestServer(handler, timeout=base_timeout, max_header_line_size=100./1024, max_request_body_size=100./(1024*1024)) as server:
-             conn = server.connect()
-@@ -299,7 +299,7 @@ class TestHTTP(BaseTest):
+         with TestServer(
+             handler,
+@@ -327,7 +327,7 @@ class TestHTTP(BaseTest):
              conn = server.connect()
  
              # Test closing
 -            server.loop.opts.timeout = 10  # ensure socket is not closed because of timeout
 +            server.loop.opts.timeout = 1000  # ensure socket is not closed because of timeout
+ 
              def assert_no_active_connections():
                  server.loop.wakeup()
-                 num = 10
-@@ -329,8 +329,8 @@ class TestHTTP(BaseTest):
+@@ -358,8 +358,8 @@ class TestHTTP(BaseTest):
              conn.close()
  
              # Test timeout
@@ -68,25 +68,25 @@ index 6b6ae10..54bab63 100644
              conn.request('GET', '/something')
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'something')
-@@ -344,7 +344,7 @@ class TestHTTP(BaseTest):
-         def handler(conn):
-             return conn.generate_static_output('test', lambda: ''.join(conn.path))
-         with NamedTemporaryFile(suffix='test.epub') as f, open(P('localization/locales.zip'), 'rb') as lf, \
--                TestServer(handler, timeout=1, compress_min_size=0) as server:
-+                TestServer(handler, timeout=100, compress_min_size=0) as server:
+@@ -377,7 +377,7 @@ class TestHTTP(BaseTest):
+         with (
+             NamedTemporaryFile(suffix='test.epub') as f,
+             open(P('localization/locales.zip'), 'rb') as lf,
+-            TestServer(handler, timeout=1, compress_min_size=0) as server,
++            TestServer(handler, timeout=100, compress_min_size=0) as server,
+         ):
              fdata = (string.ascii_letters * 100).encode('ascii')
              f.write(fdata), f.seek(0)
- 
-@@ -445,7 +445,7 @@ class TestHTTP(BaseTest):
+@@ -480,7 +480,7 @@ class TestHTTP(BaseTest):
                  lf.seek(0)
                  data = lf.read()
-                 server.change_handler(lambda conn: lf)
+                 server.change_handler(lambda _conn: lf)
 -                conn = server.connect(timeout=1)
 +                conn = server.connect(timeout=100)
                  conn.request('GET', '/test')
                  r = conn.getresponse()
                  self.ae(r.status, http.client.OK)
-@@ -454,7 +454,7 @@ class TestHTTP(BaseTest):
+@@ -489,7 +489,7 @@ class TestHTTP(BaseTest):
                  self.ae(hashlib.sha1(data).hexdigest(), hashlib.sha1(rdata).hexdigest())
                  self.ae(data, rdata)
                  time_taken = monotonic() - start_time
@@ -96,30 +96,28 @@ index 6b6ae10..54bab63 100644
      # }}}
  
 diff --git a/src/calibre/srv/tests/loop.py b/src/calibre/srv/tests/loop.py
-index f29fbab..b4e24a2 100644
+index 7efbd86..6f619c4 100644
 --- a/src/calibre/srv/tests/loop.py
 +++ b/src/calibre/srv/tests/loop.py
-@@ -113,8 +113,8 @@ class LoopTest(BaseTest):
+@@ -112,7 +112,7 @@ class LoopTest(BaseTest):
  
-         from calibre.srv.bonjour import BonJour
          b = BonJour(wait_for_stop=False)
--        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=5) as server:
+         with TestServer(lambda data: data.path[0] + data.read(), plugins=(b,), shutdown_timeout=5) as server:
 -            self.assertTrue(b.started.wait(5), 'BonJour not started')
-+        with TestServer(lambda data:(data.path[0] + data.read()), plugins=(b,), shutdown_timeout=500) as server:
 +            self.assertTrue(b.started.wait(50), 'BonJour not started')
              self.ae(b.advertised_port, server.address[1])
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index a6e6187..21bfa9c 100644
+index 6570b70..5c93201 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -626,7 +626,7 @@ def test_webengine_worker_main():
+@@ -724,7 +724,7 @@ def test_webengine_worker_main():
      p.titleChanged.connect(do_webengine_test)
      p.renderProcessTerminated.connect(render_process_crashed)
      p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
 -    timeout = 10
 +    timeout = 1000
-     QTimer.singleShot(timeout * 1000, lambda: QApplication.instance().quit())
-     QApplication.instance().exec()
+     QTimer.singleShot(timeout * 1000, app.quit)
+     app.exec()
      if not hasattr(callback, 'result'):

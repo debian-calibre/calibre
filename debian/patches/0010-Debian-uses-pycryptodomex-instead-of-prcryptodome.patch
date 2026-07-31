@@ -14,10 +14,10 @@ So, this hack is not needed yet.
  1 file changed, 4 deletions(-)
 
 diff --git a/src/calibre/constants.py b/src/calibre/constants.py
-index f0c58d3..1cfda97 100644
+index 8ddb96f..23c96af 100644
 --- a/src/calibre/constants.py
 +++ b/src/calibre/constants.py
-@@ -215,10 +215,6 @@ class DeVendor:
+@@ -214,10 +214,6 @@ class DeVendor:
              if fullname == 'PyQt5':
                  return ModuleSpec(fullname, DeVendorLoader('qt'))
              return ModuleSpec(fullname, DeVendorLoader('qt.webengine' if 'QWebEngine' in fullname else 'qt.core'))
@@ -27,4 +27,4 @@ index f0c58d3..1cfda97 100644
 -            return ModuleSpec(fullname, DeVendorLoader(fullname.replace('dome', '', 1)))
  
  
- class ExtensionsPackageLoader:
+ class ExtensionsPackageLoader(Loader):
