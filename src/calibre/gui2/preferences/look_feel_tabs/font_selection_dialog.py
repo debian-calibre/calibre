@@ -1,5 +1,7 @@
 from qt.core import QDialog, QDialogButtonBox, QFontDatabase, QFontInfo, QHBoxLayout, QLabel, QListWidget, Qt, QVBoxLayout, QWidget, pyqtSignal
 
+from calibre.utils.localization import _
+
 
 class FontSelectionDialog(QDialog):
     fontSelected = pyqtSignal(str, str)  # family, style
@@ -83,7 +85,7 @@ class FontSelectionDialog(QDialog):
         main_layout.addWidget(button_box)
 
     def _populate_families(self):
-        '''Populate the families list with smoothly scalable fonts only'''
+        """Populate the families list with smoothly scalable fonts only"""
         self.families_list.clear()
 
         # Get all font families
@@ -108,7 +110,7 @@ class FontSelectionDialog(QDialog):
             self._on_family_changed(self.families_list.currentItem(), None)
 
     def _on_family_changed(self, current, previous):
-        '''When a family is selected, populate the styles list'''
+        """When a family is selected, populate the styles list"""
         if not current:
             self.styles_list.clear()
             return
@@ -129,11 +131,11 @@ class FontSelectionDialog(QDialog):
         self._update_preview()
 
     def _on_style_changed(self, current, previous):
-        '''Update the preview when style changes'''
+        """Update the preview when style changes"""
         self._update_preview()
 
     def _update_preview(self):
-        '''Update the preview labels with the selected font'''
+        """Update the preview labels with the selected font"""
         family_item = self.families_list.currentItem()
         style_item = self.styles_list.currentItem()
 
@@ -145,7 +147,7 @@ class FontSelectionDialog(QDialog):
         systems = tuple(QFontDatabase.writingSystems(family))
         text = ''
         for s in systems:
-            if (t := QFontDatabase.writingSystemSample(s)):
+            if t := QFontDatabase.writingSystemSample(s):
                 text = t
                 break
 
@@ -161,21 +163,22 @@ class FontSelectionDialog(QDialog):
             else:
                 prefix = _('Maximum size:')
             label.setText(prefix + ' ' + text)
+
         s(self.preview_small, self.min_size)
         s(self.preview_medium, self.medium_size)
         s(self.preview_large, self.max_size)
 
     def selected_font(self):
-        '''Returns the selected font family and style as a tuple'''
+        """Returns the selected font family and style as a tuple"""
         family_item = self.families_list.currentItem()
-        style_item = self.styles_list. currentItem()
+        style_item = self.styles_list.currentItem()
 
         if family_item and style_item:
             return family_item.text(), style_item.text()
         return None, None
 
     def get_font(self, size=None):
-        '''Returns a QFont object for the selected family and style'''
+        """Returns a QFont object for the selected family and style"""
         family, style = self.selected_font()
         if family and style:
             if size is None:
@@ -184,7 +187,7 @@ class FontSelectionDialog(QDialog):
         return None
 
     def accept(self):
-        '''Override accept to emit signal with selected font'''
+        """Override accept to emit signal with selected font"""
         family, style = self.selected_font()
         if family and style:
             self.fontSelected.emit(family, style)
@@ -202,6 +205,6 @@ if __name__ == '__main__':
             family, style = dialog.selected_font()
             selected_font = dialog.get_font(16)
             print(f'Selected:  {family} - {style}')
-            print(f'Font: {selected_font. family()} {selected_font.styleName()} {selected_font.pointSize()}pt')
+            print(f'Font: {selected_font.family()} {selected_font.styleName()} {selected_font.pointSize()}pt')
 
     show_dialog()

@@ -1,11 +1,6 @@
 #!/usr/bin/env python
+# License: GPLv3 Copyright: 2012, Kovid Goyal <kovid@kovidgoyal.net>
 
-
-__license__ = 'GPL v3'
-__copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
-
-import codecs
 import os
 import re
 from collections import namedtuple
@@ -17,7 +12,7 @@ from calibre.utils.localization import _
 
 
 class CSV_XML(CatalogPlugin):
-    'CSV/XML catalog generator'
+    "CSV/XML catalog generator"
 
     Option = namedtuple('Option', 'option, default, dest, action, help')
 
@@ -29,29 +24,37 @@ class CSV_XML(CatalogPlugin):
     file_types = {'csv', 'xml'}
 
     cli_options = [
-            Option('--fields',
-                default='all',
-                dest='fields',
-                action=None,
-                help=_('The fields to output when cataloging books in the '
-                    'database.  Should be a comma-separated list of fields.\n'
-                    'Available fields: %(fields)s,\n'
-                    'plus user-created custom fields.\n'
-                    'Example: %(opt)s=title,authors,tags\n'
-                    "Default: '%%default'\n"
-                    "Applies to: CSV, XML output formats") % dict(
-                        fields=', '.join(FIELDS), opt='--fields')),
-
-            Option('--sort-by',
-                default='id',
-                dest='sort_by',
-                action=None,
-                help=_('Output field to sort on.\n'
+        Option(
+            '--fields',
+            default='all',
+            dest='fields',
+            action=None,
+            help=_(
+                'The fields to output when cataloging books in the '
+                'database.  Should be a comma-separated list of fields.\n'
+                'Available fields: %(fields)s,\n'
+                'plus user-created custom fields.\n'
+                'Example: %(opt)s=title,authors,tags\n'
+                "Default: '%%default'\n"
+                "Applies to: CSV, XML output formats"
+            )
+            % dict(fields=', '.join(FIELDS), opt='--fields'),
+        ),
+        Option(
+            '--sort-by',
+            default='id',
+            dest='sort_by',
+            action=None,
+            help=_(
+                'Output field to sort on.\n'
                 'Available fields: author_sort, id, rating, size, timestamp, title_sort\n'
                 "Default: '%default'\n"
-                "Applies to: CSV, XML output formats"))]
+                "Applies to: CSV, XML output formats"
+            ),
+        ),
+    ]
 
-    def run(self, path_to_output, opts, db, notification=DummyReporter()):
+    def run(self, path_to_output, opts, db, ids=None, notification=DummyReporter()):
         from lxml import etree
 
         from calibre.ebooks.metadata import authors_to_string
@@ -106,7 +109,7 @@ class CSV_XML(CatalogPlugin):
         fm = {x: db.field_metadata.get(x, {}) for x in fields}
 
         if self.fmt == 'csv':
-            outfile = codecs.open(path_to_output, 'w', 'utf8')
+            outfile = open(path_to_output, 'w', encoding='utf8')
 
             # Write a UTF-8 BOM
             outfile.write('\ufeff')
@@ -150,7 +153,7 @@ class CSV_XML(CatalogPlugin):
                     elif fm.get(field, {}).get('datatype') == 'datetime':
                         item = isoformat(item, as_utc=False)
                     elif fm.get(field, {}).get('datatype', None) == 'rating' and item:
-                        item = f'{item/2:.2g}'
+                        item = f'{item / 2:.2g}'
 
                     # Convert HTML to markdown text
                     if isinstance(item, str):
@@ -187,16 +190,14 @@ class CSV_XML(CatalogPlugin):
                             item = getattr(E, field.replace('#', '_'))(val)
                             record.append(item)
 
-                    for field in ('id', 'uuid', 'publisher', 'rating', 'size',
-                                'isbn', 'ondevice', 'identifiers'):
+                    for field in ('id', 'uuid', 'publisher', 'rating', 'size', 'isbn', 'ondevice', 'identifiers'):
                         if field in fields:
                             val = r[field]
                             if not val:
                                 continue
                             if not isinstance(val, (bytes, str)):
-                                if (fm.get(field, {}).get('datatype', None) ==
-                                        'rating' and val):
-                                    val = f'{val/2:.2g}'
+                                if fm.get(field, {}).get('datatype', None) == 'rating' and val:
+                                    val = f'{val / 2:.2g}'
                                 val = str(val)
                             item = getattr(E, field)(val)
                             record.append(item)
@@ -225,8 +226,7 @@ class CSV_XML(CatalogPlugin):
                         record.append(E.comments(r['comments']))
 
                     if 'series' in fields and r['series']:
-                        record.append(E.series(r['series'],
-                            index=str(r['series_index'])))
+                        record.append(E.series(r['series'], index=str(r['series_index'])))
 
                     if 'languages' in fields and r['languages']:
                         record.append(E.languages(r['languages']))
@@ -246,5 +246,4 @@ class CSV_XML(CatalogPlugin):
                     raise Exception('Failed to convert {} to XML with error: {}'.format(r['title'], e)) from e
 
             with open(path_to_output, 'wb') as f:
-                f.write(etree.tostring(root, encoding='utf-8',
-                    xml_declaration=True, pretty_print=True))
+                f.write(etree.tostring(root, encoding='utf-8', xml_declaration=True, pretty_print=True))

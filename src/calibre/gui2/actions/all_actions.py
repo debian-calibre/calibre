@@ -9,14 +9,17 @@ from qt.core import QIcon, QMenu, Qt, QToolButton
 from calibre.gui2.actions import InterfaceAction, show_menu_under_widget
 from calibre.gui2.preferences.toolbar import AllModel, CurrentModel
 from calibre.utils.icu import sort_key
+from calibre.utils.localization import _
 
 
 class AllGUIActions(InterfaceAction):
-
     name = 'All GUI actions'
-    action_spec = (_('All actions'), 'wizard.png',
-                   _('Show a menu of all available actions, including from third party plugins.\nThis menu '
-                     'is not available when looking at books on a device'), None)
+    action_spec = (
+        _('All actions'),
+        'wizard.png',
+        _('Show a menu of all available actions, including from third party plugins.\nThis menu is not available when looking at books on a device'),
+        None,
+    )
 
     action_type = 'current'
     popup_type = QToolButton.ToolButtonPopupMode.InstantPopup
@@ -26,17 +29,19 @@ class AllGUIActions(InterfaceAction):
     def genesis(self):
         self.layout_icon = QIcon.ic('wizard.png')
         self.menu = m = self.qaction.menu()
+        assert m is not None
         m.aboutToShow.connect(self.about_to_show_menu)
 
         # Create a "hidden" menu that can have a shortcut.
         self.hidden_menu = QMenu()
         self.shortcut_action = self.create_menu_action(
-                        menu=self.hidden_menu,
-                        unique_name='Main window layout',
-                        shortcut='Ctrl+F1',
-                        text=_('Show a menu of all available actions.'),
-                        icon='wizard.png',
-                        triggered=self.show_menu)
+            menu=self.hidden_menu,
+            unique_name='Main window layout',
+            shortcut='Ctrl+F1',
+            text=_('Show a menu of all available actions.'),
+            icon='wizard.png',
+            triggered=self.show_menu,
+        )
 
     # We want to show the menu when a shortcut is used. Apparently the only way
     # to do that is to scan the toolbar(s) for the action button then exec the
@@ -50,7 +55,9 @@ class AllGUIActions(InterfaceAction):
         show_menu_under_widget(self.gui, self.menu, self.qaction, self.name)
 
     def gui_layout_complete(self):
-        self.qaction.menu().aboutToShow.connect(self.about_to_show_menu)
+        m = self.qaction.menu()
+        assert m is not None
+        m.aboutToShow.connect(self.about_to_show_menu)
 
     def initialization_complete(self):
         self.populate_menu()
@@ -61,6 +68,7 @@ class AllGUIActions(InterfaceAction):
     def populate_menu(self):
         # Need to do this on every invocation because shortcuts can change
         m = self.qaction.menu()
+        assert m is not None
         m.clear()
 
         name_data = {}  # A dict of display names to actions data
@@ -74,9 +82,10 @@ class AllGUIActions(InterfaceAction):
                 name = model.names((dex,))[0]  # this is the action name
                 if name is not None and not name.startswith('---'):
                     name_data[model.data(dex, Qt.ItemDataRole.DisplayRole)] = {
-                                    'action': model.name_to_action(name, self.gui),
-                                    'action_name':name,
-                                    'icon': model.data(dex, Qt.ItemDataRole.DecorationRole)}
+                        'action': model.name_to_action(name, self.gui),
+                        'action_name': name,
+                        'icon': model.data(dex, Qt.ItemDataRole.DecorationRole),
+                    }
         # The loop leaves the variable 'model' set to a valid value
 
         # Get display names of builtin and user plugins. We tell the difference
@@ -86,7 +95,7 @@ class AllGUIActions(InterfaceAction):
         for display_name, act_data in name_data.items():
             act = model.name_to_action(act_data['action_name'], self.gui)
             if act is not None:
-                module = f'{act.__module__}.{act.__class__ .__name__}'
+                module = f'{act.__module__}.{act.__class__.__name__}'
                 if module.startswith('calibre_plugins'):
                     user_plugins.append(display_name)
                 else:
@@ -99,11 +108,10 @@ class AllGUIActions(InterfaceAction):
         # the actions. For shortcuts sometimes the action name and sometimes the
         # display name is used. Test both. Unfortunately, there are case
         # differences to deal with so we use lower case keys.
-        lower_names = ({n['action_name'].lower() for n in name_data.values()} |
-                       {n.lower() for n in name_data.keys()})
+        lower_names = {n['action_name'].lower() for n in name_data.values()} | {n.lower() for n in name_data.keys()}
         kbd = self.gui.keyboard
         shortcut_map = {}
-        for n,v in kbd.keys_map.items():
+        for n, v in kbd.keys_map.items():
             act_name = kbd.shortcuts[n]['name'].lower()
             if act_name in lower_names:
                 shortcuts = [sc.toString() for sc in v]
@@ -137,8 +145,7 @@ class AllGUIActions(InterfaceAction):
         def partition(names):
             def add_range(start_letter, end_letter, action_names):
                 # Add a N - M range. If N == M then show only N
-                sm = m.addMenu(QIcon.ic('wizard.png'),
-                               f'{start_letter}{"" if start_letter == end_letter else " - " + end_letter}')
+                sm = m.addMenu(QIcon.ic('wizard.png'), f'{start_letter}{"" if start_letter == end_letter else " - " + end_letter}')
                 for n in action_names:
                     add_action(sm, n)
 
@@ -162,6 +169,7 @@ class AllGUIActions(InterfaceAction):
                         start_let = None
                 if start_let is not None:
                     add_range(start_let, cur_let, in_partition)
+
         # Add a named section for builtin actions if user plugins are installed.
         if user_plugins:
             m.addSection(_('Built-in calibre actions') + ' ')

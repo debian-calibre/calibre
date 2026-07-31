@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "juli 03, 2026" "9.11.0" "calibre"
+.TH "CALIBREDB" "1" "juli 31, 2026" "9.12.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,46 +40,48 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP är kommandoradsgränssnittet till calibre\-databasen. Den har
-flera underkommandon, dokumenterade nedan.
+\fBcalibredb\fP är kommandoradsgränssnittet till calibre\-databasen. Det har
+flera underkommandon som dokumenteras nedan.
 .sp
-\fBcalibredb\fP kan användas för att manipulera antingen en calibre\-databas
-specificerad med sökväg eller en calibre Content server som körs antingen på
-den lokala maskinen eller över internet. Du kan starta en calibre
-innehållsserver med antingen \fBcalibre\-server\fP\-programmet
-eller i calibres huvudprogram klicka på Anslut/dela  → 
-Starta innehållsserver\&. Eftersom \fBcalibredb\fP kan göra ändringar i dina
-calibre\-bibliotek måste du först konfigurera autentisering på servern. Det finns
-två sätt att göra det:
+\fBcalibredb\fP kan användas för att hantera antingen en calibre\-databas
+som anges med en sökväg eller en calibre\-innehållsserver som körs
+antingen på den lokala datorn eller via internet. Du kan starta en calibre\-
+innehållsserver antingen med programmet \fBcalibre\-server\fP
+eller genom att klicka på Anslut/dela  → 
+Starta innehållsserver i huvudprogrammet calibre. Eftersom
+\fBcalibredb\fP kan ändra dina calibre\-bibliotek måste du först
+konfigurera autentisering på servern. Det kan göras på två sätt:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
 .IP \(bu 2
-Om du planerar att bara ansluta till en server som körs på samma dator
-kan du helt enkelt använda alternativet \fB\-\-enable\-local\-write\fP på
-innehållsservern för att tillåta alla program, inklusive calibredb, som körs på
-den lokala datorn att göra ändringar i dina calibre\-data. När du kör
-servern från huvudprogrammet i calibre finns detta alternativ i
-Inställningar → Dela över nätet → Avancerat\&. Var dock försiktig,
-eftersom vissa webbläsare, främst Firefox, tillåter godtyckliga webbplatser att också
-komma åt lokala servrar. Om du använder Firefox är det bättre att konfigurera användarnamn
-och lösenord, enligt beskrivningen nedan. Begränsning av lokal nätverksåtkomst har
-fortfarande inte implementerats från och med Firefox v149.
+Om du endast tänker ansluta till en server som körs på samma dator
+kan du använda innehållsserverns alternativ \fB\-\-enable\-local\-write\fP\&.
+Då kan alla program som körs på den lokala datorn, inklusive calibredb,
+ändra dina calibre\-data. När servern körs från huvudprogrammet calibre
+finns alternativet under
+Inställningar → Dela via nätet → Avancerat\&. Var dock försiktig,
+eftersom vissa webbläsare, framför allt Firefox, även låter godtyckliga
+webbplatser komma åt lokala servrar. Om du använder Firefox är det bättre
+att konfigurera användarnamn och lösenord enligt beskrivningen nedan.
+Begränsning av åtkomst till lokala nätverk är fortfarande inte
+implementerad i Firefox 149.
 .IP \(bu 2
-Om du vill aktivera åtkomst via internet bör du konfigurera
-användarkonton på servern och använda alternativen \fB\-\-username\fP och \fB\-\-password\fP
-till \fBcalibredb\fP för att ge den åtkomst. Du kan konfigurera
-användarautentisering för \fBcalibre\-server\fP genom att använda alternativet \fB\-\-enable\-auth\fP
-och använda \fB\-\-manage\-users\fP för att skapa användarkontona.
-Om du kör servern från calibres huvudprogram, använd
+Om du vill aktivera åtkomst via internet bör du skapa användarkonton
+på servern och använda alternativen \fB\-\-username\fP och
+\fB\-\-password\fP för \fBcalibredb\fP för att ge programmet
+åtkomst. Du kan konfigurera användarautentisering för
+\fBcalibre\-server\fP genom att använda alternativet
+\fB\-\-enable\-auth\fP och skapa användarkonton med \fB\-\-manage\-users\fP\&.
+Om du kör servern från huvudprogrammet calibre använder du
 Inställningar → Dela via nätet → Kräv användarnamn/lösenord\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-För att ansluta till en aktiv innehållsserver, skicka serverns URL till alternativet
-\fB\-\-with\-library\fP\&. Se dokumentationen för det alternativet för
-detaljer och exempel.
+För att ansluta till en innehållsserver som körs anger du serverns URL med
+alternativet \fB\-\-with\-library\fP\&. Se dokumentationen för alternativet
+för detaljer och exempel.
 .INDENT 0.0
 .IP \(bu 2
 GLOBALA ALTERNATIV
@@ -167,7 +169,7 @@ Användarnamn för anslutning till en calibre\-innehållsserver
 .INDENT 0.0
 .TP
 .B \-\-version
-visar programmets versionsnummer och avsluta
+visa programmets versionsnummer och avsluta
 .UNINDENT
 .SH LIST
 .INDENT 0.0
@@ -432,7 +434,7 @@ När du skickar argument till calibredb som har blanksteg i dem, bifoga argument
 .INDENT 0.0
 .TP
 .B \-\-field, \-f
-Fältet för att ställa in. Format är field_name:value, till exempel: \fB\-\-field\fP tags:tag1,tag2. Använd \fB\-\-list\-fields\fP för att få en lista över alla fältnamn. Du kan ange det här alternativet flera gånger för att ställa in flera fält. Observera: För språk du måste använda ISO639\-språkkoder (t.ex. en för engelska, fr för franska och så vidare). För identifierare, är syntaxen \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För boolean (ja/nej) fält använder sann och falsk eller ja och nej.
+Fältet som ska anges. Formatet är field_name:value, till exempel: \fB\-\-field\fP tags:tag1,tag2. Använd \fB\-\-list\-fields\fP för att få en lista över alla fältnamn. Du kan ange alternativet flera gånger för att ställa in flera fält. Observera att du för språk måste använda ISO 639\-språkkoder (t.ex. en för engelska och fr för franska). För identifierare är syntaxen \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. För booleska fält (ja/nej) använder du true och false eller yes och no.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -854,7 +856,7 @@ Den typ av CSV\-fil som ska produceras. Val: excel, excel\-tab, unix
 .INDENT 0.0
 .TP
 .B \-\-item_count, \-i
-Mata endast ut antalet poster i en kategori istället för antalet per post inom kategorin
+Mata endast ut antalet poster i en kategori i stället för antalet per post inom kategorin
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -6,11 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 store_version = 17  # Needed for dynamic plugin loading
 
 from contextlib import closing
-
-try:
-    from urllib.parse import urlencode
-except ImportError:
-    from urllib import urlencode
+from urllib.parse import urlencode
 
 from lxml import etree
 from qt.core import QUrl
@@ -30,7 +26,7 @@ SEARCH_BASE_QUERY = {'i': 'digital-text'}
 BY = 'de'
 KINDLE_EDITION = 'Format Kindle'
 DETAILS_URL = 'https://amazon.fr/dp/'
-STORE_LINK =  'https://www.amazon.fr'
+STORE_LINK = 'https://www.amazon.fr'
 DRM_SEARCH_TEXT = 'Simultaneous Device Usage'
 DRM_FREE_TEXT = 'Unlimited'
 
@@ -39,12 +35,15 @@ def get_user_agent():
     return 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'
 
 
-def search_amazon(query, max_results=10, timeout=60,
-                  write_html_to=None,
-                  base_url=SEARCH_BASE_URL,
-                  base_query=SEARCH_BASE_QUERY,
-                  field_keywords='k'
-                  ):
+def search_amazon(
+    query,
+    max_results=10,
+    timeout=60,
+    write_html_to=None,
+    base_url=SEARCH_BASE_URL,
+    base_query=SEARCH_BASE_QUERY,
+    field_keywords='k',
+):
     uquery = base_query.copy()
     uquery[field_keywords] = query
 
@@ -52,7 +51,8 @@ def search_amazon(query, max_results=10, timeout=60,
         if isinstance(x, type('')):
             x = x.encode('utf-8')
         return x
-    uquery = {asbytes(k):asbytes(v) for k, v in uquery.items()}
+
+    uquery = {asbytes(k): asbytes(v) for k, v in uquery.items()}
     url = base_url + '?' + urlencode(uquery)
     br = browser(user_agent=get_user_agent())
 
@@ -80,7 +80,7 @@ def search_amazon(query, max_results=10, timeout=60,
             adiv = result.xpath('.//div[contains(@class, "a-color-secondary")]')[0]
             aparts = etree.tostring(adiv, method='text', encoding='unicode').split()
             idx = aparts.index(BY)
-            author = ' '.join(aparts[idx+1:]).split('|')[0].strip()
+            author = ' '.join(aparts[idx + 1 :]).split('|')[0].strip()
             price = ''
             for span in result.xpath('.//span[contains(@class, "a-price")]/span[contains(@class, "a-offscreen")]'):
                 q = ''.join(span.xpath('./text()'))
@@ -102,8 +102,7 @@ def search_amazon(query, max_results=10, timeout=60,
 
 
 class AmazonKindleStore(StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         store_link = (DETAILS_URL + detail_item) if detail_item else STORE_LINK
         open_url(QUrl(store_link))
 
@@ -111,17 +110,14 @@ class AmazonKindleStore(StorePlugin):
         for result in search_amazon(query, max_results=max_results, timeout=timeout):
             yield result
 
-    def get_details(self, search_result, timeout):
+    def get_details(self, search_result, timeout=60):
         url = DETAILS_URL
 
         br = browser(user_agent=get_user_agent())
         with closing(br.open(url + search_result.detail_item, timeout=timeout)) as nf:
             idata = safe_html_fromstring(nf.read())
-            if idata.xpath('boolean(//div[@class="content"]//li/b[contains(text(), "' +
-                           DRM_SEARCH_TEXT + '")])'):
-                if idata.xpath('boolean(//div[@class="content"]//li[contains(., "' +
-                               DRM_FREE_TEXT + '") and contains(b, "' +
-                               DRM_SEARCH_TEXT + '")])'):
+            if idata.xpath('boolean(//div[@class="content"]//li/b[contains(text(), "' + DRM_SEARCH_TEXT + '")])'):
+                if idata.xpath('boolean(//div[@class="content"]//li[contains(., "' + DRM_FREE_TEXT + '") and contains(b, "' + DRM_SEARCH_TEXT + '")])'):
                     search_result.drm = SearchResult.DRM_UNLOCKED
                 else:
                     search_result.drm = SearchResult.DRM_UNKNOWN
@@ -132,5 +128,6 @@ class AmazonKindleStore(StorePlugin):
 
 if __name__ == '__main__':
     import sys
+
     for result in search_amazon(' '.join(sys.argv[1:]), write_html_to='/t/amazon.html'):
         print(result)

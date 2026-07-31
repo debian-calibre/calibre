@@ -1,26 +1,28 @@
-__license__ = 'GPL 3'
-__copyright__ = '2009, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
 import os
 
 from calibre.customize.conversion import OptionRecommendation, OutputFormatPlugin
+from calibre.utils.localization import _
 
 
 class TCROutput(OutputFormatPlugin):
-
     name = 'TCR Output'
     author = 'John Schember'
     file_type = 'tcr'
     commit_name = 'tcr_output'
 
     options = {
-        OptionRecommendation(name='tcr_output_encoding', recommended_value='utf-8',
+        OptionRecommendation(
+            name='tcr_output_encoding',
+            recommended_value='utf-8',
             level=OptionRecommendation.LOW,
-            help=_('Specify the character encoding of the output document. '
-            'The default is utf-8.'))}
+            help=_('Specify the character encoding of the output document. The default is utf-8.'),
+        )
+    }
 
-    def convert(self, oeb_book, output_path, input_plugin, opts, log):
+    def convert(self, oeb_book, output, input_plugin, opts, log):
+        output_path = output
         from calibre.ebooks.compression.tcr import compress
         from calibre.ebooks.txt.txtml import TXTMLizer
 

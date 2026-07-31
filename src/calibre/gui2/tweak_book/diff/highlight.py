@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
 import os
 
@@ -16,7 +13,6 @@ from calibre.gui2.tweak_book.editor.themes import get_theme, highlight_to_char_f
 
 
 class QtHighlighter(QTextDocument):
-
     def __init__(self, parent, text, hlclass):
         QTextDocument.__init__(self, parent)
         self.l = QPlainTextDocumentLayout(self)
@@ -27,9 +23,9 @@ class QtHighlighter(QTextDocument):
         self.setPlainText(text)
 
     def copy_lines(self, lo, hi, cursor):
-        ''' Copy specified lines from the syntax highlighted buffer into the
+        """Copy specified lines from the syntax highlighted buffer into the
         destination cursor, preserving all formatting created by the syntax
-        highlighter. '''
+        highlighter."""
         self.highlighter.join()
         num = hi - lo
         if num > 0:
@@ -39,8 +35,10 @@ class QtHighlighter(QTextDocument):
                 cursor.insertText(block.text())
                 dest_block = cursor.block()
                 c = QTextCursor(dest_block)
+                layout = block.layout()
+                assert layout is not None
                 try:
-                    afs = block.layout().formats()
+                    afs = layout.formats()
                 except AttributeError:
                     afs = ()
                 for af in afs:
@@ -53,7 +51,6 @@ class QtHighlighter(QTextDocument):
 
 
 class NullHighlighter:
-
     def __init__(self, text):
         self.lines = text.splitlines()
 
@@ -69,8 +66,10 @@ def pygments_lexer(filename):
         from pygments.util import ClassNotFound
     except ImportError:
         return None
+
     def glff(n):
         return get_lexer_for_filename(n, stripnl=False)
+
     try:
         return glff(filename)
     except ClassNotFound:
@@ -80,16 +79,16 @@ def pygments_lexer(filename):
 
 
 class PygmentsHighlighter:
-
     def __init__(self, text, lexer):
         theme, cache = get_theme(tprefs['editor_theme']), {}
-        theme = {k:highlight_to_char_format(v) for k, v in theme.items()}
+        theme = {k: highlight_to_char_format(v) for k, v in theme.items()}
         theme[None] = NULL_FMT
 
         def fmt(token):
             return format_for_pygments_token(theme, cache, token)
 
         from pygments import lex
+
         lines = self.lines = [[]]
         current_line = lines[0]
         for token, val in lex(text, lexer):

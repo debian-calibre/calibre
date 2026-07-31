@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
 import copy
 import re
@@ -10,6 +7,7 @@ import weakref
 from collections import OrderedDict, namedtuple
 from itertools import groupby
 from operator import attrgetter, itemgetter
+from typing import TYPE_CHECKING, cast
 
 from qt.core import (
     QDialog,
@@ -41,7 +39,10 @@ from calibre.gui2.tweak_book.editor.smarts.utils import get_text_before_cursor
 from calibre.gui2.tweak_book.widgets import Dialog, PlainTextEdit
 from calibre.utils.config import JSONConfig
 from calibre.utils.icu import string_length as strlen
-from calibre.utils.localization import localize_user_manual_link
+from calibre.utils.localization import _, localize_user_manual_link
+
+if TYPE_CHECKING:
+    from calibre.gui2.tweak_book.editor.text import TextEdit
 
 
 def string_length(x):
@@ -66,7 +67,7 @@ def contains(l1, r1, l2, r2):
 
 
 builtin_snippets = {  # {{{
-    snip_key('Lorem', 'html', 'xml'):  {
+    snip_key('Lorem', 'html', 'xml'): {
         'description': _('Insert filler text'),
         'template': '''\
 <p>The actual teachings of the great explorer of the truth, the master-builder
@@ -81,34 +82,27 @@ example, which of us ever undertakes laborious physical exercise, except to
 obtain some advantage from it? But.</p>
 ''',
     },
-
-    snip_key('<<', 'html', 'xml'):  {
+    snip_key('<<', 'html', 'xml'): {
         'description': _('Insert a tag'),
         'template': '<$1>${2*}</$1>$3',
     },
-
     snip_key('<>', 'html', 'xml'): {
         'description': _('Insert a self closing tag'),
         'template': '<$1/>$2',
     },
-
     snip_key('<a', 'html'): {
         'description': _('Insert a HTML link'),
         'template': '<a href="${1:filename}">${2*}</a>$3',
     },
-
     snip_key('<i', 'html'): {
         'description': _('Insert a HTML image'),
         'template': '<img src="${1:filename}" alt="${2*:description}" />$3',
     },
-
     snip_key('<c', 'html'): {
         'description': _('Insert a HTML tag with a class'),
         'template': '<$1 class="${2:classname}">${3*}</$1>$4',
     },
-
 }  # }}}
-
 
 # Parsing of snippets {{{
 escape = unescape = None
@@ -117,18 +111,28 @@ escape = unescape = None
 def escape_funcs():
     global escape, unescape
     if escape is None:
-        escapem = {('\\' + x):chr(i+1) for i, x in enumerate('\\${}')}
+        escapem = {('\\' + x): chr(i + 1) for i, x in enumerate('\\${}')}
         escape_pat = re.compile('|'.join(map(re.escape, escapem)))
+
         def escape(x):
             return escape_pat.sub(lambda m: escapem[m.group()], x.replace('\\\\', '\x01'))
-        unescapem = {v:k[1] for k, v in escapem.items()}
+
+        unescapem = {v: k[1] for k, v in escapem.items()}
         unescape_pat = re.compile('|'.join(unescapem))
+
         def unescape(x):
             return unescape_pat.sub(lambda m: unescapem[m.group()], x)
+
     return escape, unescape
 
 
 class TabStop(str):
+    num: int
+    start: int
+    is_toplevel: bool
+    is_mirror: bool
+    takes_selection: bool
+    parent: TabStop | None
 
     def __new__(self, raw, start_offset, tab_stops, is_toplevel=True):  # noqa: PLW0211
         if raw.endswith('}'):
@@ -160,7 +164,8 @@ class TabStop(str):
     def __repr__(self):
         return (
             f'TabStop(text={str.__repr__(self)} num={self.num} start={self.start} is_mirror={self.is_mirror}'
-            f' takes_selection={self.takes_selection} is_toplevel={self.is_toplevel})')
+            f' takes_selection={self.takes_selection} is_toplevel={self.is_toplevel})'
+        )
 
 
 def parse_template(template, start_offset=0, is_toplevel=True, grouped=True):
@@ -187,8 +192,8 @@ def parse_template(template, start_offset=0, is_toplevel=True, grouped=True):
         tab_stops = ans
     return ''.join(parts), tab_stops
 
-# }}}
 
+# }}}
 
 _snippets = None
 user_snippets = JSONConfig('editor_snippets')
@@ -201,15 +206,15 @@ def snippets(refresh=False):
         for snip in user_snippets.get('snippets', []):
             if snip['trigger'] and isinstance(snip['trigger'], str):
                 key = snip_key(snip['trigger'], *snip['syntaxes'])
-                _snippets[key] = {'template':snip['template'], 'description':snip['description']}
+                _snippets[key] = {'template': snip['template'], 'description': snip['description']}
         _snippets = sorted(_snippets.items(), key=(lambda key_snip: string_length(key_snip[0].trigger)), reverse=True)
     return _snippets
 
 
 # Editor integration {{{
 
-class EditorTabStop:
 
+class EditorTabStop:
     def __init__(self, left, tab_stops, editor):
         self.editor = weakref.ref(editor)
         tab_stop = tab_stops[0]
@@ -236,7 +241,9 @@ class EditorTabStop:
     def __repr__(self):
         return (
             f'EditorTabStop(num={self.num!r} text={self.text!r} left={self.left!r} right={self.right!r} '
-            f'is_deleted={self.is_deleted!r} mirrors={self.mirrors!r})')
+            f'is_deleted={self.is_deleted!r} mirrors={self.mirrors!r})'
+        )
+
     __str__ = __unicode__ = __repr__
 
     def apply_selected_text(self, text):
@@ -302,6 +309,10 @@ class EditorTabStop:
 
 
 class Template(list):
+    left_most_ts: EditorTabStop | None
+    right_most_ts: EditorTabStop | None
+    has_tab_stops: bool
+    active_tab_stop: EditorTabStop | None
 
     def __new__(self, tab_stops):  # noqa: PLW0211
         self = list.__new__(self)
@@ -341,6 +352,7 @@ class Template(list):
         ts = self.active_tab_stop
         if not ts.is_deleted:
             if ts.has_transform:
+                assert ts.transform is not None
                 ts.text = ts.transform(ts.text)
             for m in ts.mirrors:
                 if not m.is_deleted:
@@ -399,7 +411,6 @@ def find_matching_snip(text, syntax=None, snip_func=None):
 
 
 class SnippetManager(QObject):
-
     def __init__(self, editor):
         QObject.__init__(self, editor)
         self.active_templates = []
@@ -426,7 +437,9 @@ class SnippetManager(QObject):
         return at
 
     def handle_key_press(self, ev):
-        editor = self.parent()
+        editor_raw = self.parent()
+        assert editor_raw is not None
+        editor = cast('TextEdit', editor_raw)
         if ev.key() == KEY and ev.modifiers() & MODIFIER:
             at = self.get_active_template(editor.textCursor())
             if at is not None:
@@ -444,8 +457,7 @@ class SnippetManager(QObject):
             c, text = get_text_before_cursor(editor)
             snip, trigger = find_matching_snip(text, editor.syntax, self.snip_func)
             if snip is None:
-                error_dialog(self.parent(), _('No snippet found'), _(
-                    'No matching snippet was found'), show=True)
+                error_dialog(self.parent(), _('No snippet found'), _('No matching snippet was found'), show=True)
                 self.last_selected_text = self.last_selected_text or lst
                 return True
             template = expand_template(editor, trigger, snip['template'])
@@ -458,27 +470,27 @@ class SnippetManager(QObject):
             ev.accept()
             return True
         return False
-# }}}
 
+
+# }}}
 
 # Config {{{
 
-class SnippetTextEdit(PlainTextEdit):
 
+class SnippetTextEdit(PlainTextEdit):
     def __init__(self, text, parent=None):
         PlainTextEdit.__init__(self, parent)
         if text:
             self.setPlainText(text)
         self.snippet_manager = SnippetManager(self)
 
-    def keyPressEvent(self, ev):
-        if self.snippet_manager.handle_key_press(ev):
+    def keyPressEvent(self, e):
+        if self.snippet_manager.handle_key_press(e):
             return
-        PlainTextEdit.keyPressEvent(self, ev)
+        PlainTextEdit.keyPressEvent(self, e)
 
 
 class EditSnippet(QWidget):
-
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.l = l = QGridLayout(self)
@@ -494,8 +506,9 @@ class EditSnippet(QWidget):
 
         self.heading = la = QLabel('<h2>\xa0')
         add_row(la)
-        self.helpl = la = QLabel(_('For help with snippets, see the <a href="%s">User Manual</a>') %
-                                 localize_user_manual_link('https://manual.calibre-ebook.com/snippets.html'))
+        self.helpl = la = QLabel(
+            _('For help with snippets, see the <a href="%s">User Manual</a>') % localize_user_manual_link('https://manual.calibre-ebook.com/snippets.html')
+        )
         la.setOpenExternalLinks(True)
         add_row(la)
 
@@ -515,7 +528,7 @@ class EditSnippet(QWidget):
         t.setFlow(QListView.Flow.LeftToRight)
         t.setWrapping(True), t.setResizeMode(QListView.ResizeMode.Adjust), t.setSpacing(5)
         fm = t.fontMetrics()
-        t.setMaximumHeight(2*(fm.ascent() + fm.descent()) + 25)
+        t.setMaximumHeight(2 * (fm.ascent() + fm.descent()) + 25)
         add_row(_('&File types:'), t)
         t.setToolTip(_('Which file types this snippet should be active in'))
 
@@ -555,10 +568,13 @@ class EditSnippet(QWidget):
         ftypes = snip.get('syntaxes', ())
         for i in range(self.types.count()):
             i = self.types.item(i)
+            assert i is not None
             ftype = i.data(Qt.ItemDataRole.UserRole)
             i.setCheckState(Qt.CheckState.Checked if ftype in ftypes else Qt.CheckState.Unchecked)
         if self.creating_snippet and not ftypes:
-            self.types.item(0).setCheckState(Qt.CheckState.Checked)
+            _first_type_item = self.types.item(0)
+            assert _first_type_item is not None
+            _first_type_item.setCheckState(Qt.CheckState.Checked)
         (self.name if self.creating_snippet else self.template).setFocus(Qt.FocusReason.OtherFocusReason)
 
     @property
@@ -566,9 +582,15 @@ class EditSnippet(QWidget):
         ftypes = []
         for i in range(self.types.count()):
             i = self.types.item(i)
+            assert i is not None
             if i.checkState() == Qt.CheckState.Checked:
                 ftypes.append(i.data(Qt.ItemDataRole.UserRole))
-        return {'description':self.name.text().strip(), 'trigger':self.trig.text(), 'template':self.template.toPlainText(), 'syntaxes':ftypes}
+        return {
+            'description': self.name.text().strip(),
+            'trigger': self.trig.text(),
+            'template': self.template.toPlainText(),
+            'syntaxes': ftypes,
+        }
 
     @snip.setter
     def snip(self, snip):
@@ -589,7 +611,6 @@ class EditSnippet(QWidget):
 
 
 class UserSnippets(Dialog):
-
     def __init__(self, parent=None):
         Dialog.__init__(self, _('Create/edit snippets'), 'snippet-editor', parent=parent)
         self.setWindowIcon(QIcon.ic('snippets.png'))
@@ -601,8 +622,8 @@ class UserSnippets(Dialog):
         l.addLayout(s), l.addWidget(self.bb)
         self.listc = c = QWidget(self)
         s.addWidget(c)
-        c.l = l = QVBoxLayout(c)
-        c.h = h = QHBoxLayout()
+        l = QVBoxLayout(c)
+        h = QHBoxLayout()
         l.addLayout(h)
 
         self.search_bar = sb = QLineEdit(self)
@@ -612,31 +633,47 @@ class UserSnippets(Dialog):
         b.clicked.connect(self.find_next)
         h.addWidget(b)
 
-        c.h2 = h = QHBoxLayout()
+        h = QHBoxLayout()
         l.addLayout(h)
         self.snip_list = sl = QListWidget(self)
         sl.doubleClicked.connect(self.edit_snippet)
         h.addWidget(sl)
 
-        c.l2 = l = QVBoxLayout()
+        l = QVBoxLayout()
         h.addLayout(l)
         self.add_button = b = QToolButton(self)
-        b.setIcon(QIcon.ic('plus.png')), b.setText(_('&Add snippet')), b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        (
+            b.setIcon(QIcon.ic('plus.png')),
+            b.setText(_('&Add snippet')),
+            b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon),
+        )
         b.clicked.connect(self.add_snippet)
         l.addWidget(b)
 
         self.edit_button = b = QToolButton(self)
-        b.setIcon(QIcon.ic('modified.png')), b.setText(_('&Edit snippet')), b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        (
+            b.setIcon(QIcon.ic('modified.png')),
+            b.setText(_('&Edit snippet')),
+            b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon),
+        )
         b.clicked.connect(self.edit_snippet)
         l.addWidget(b)
 
         self.add_button = b = QToolButton(self)
-        b.setIcon(QIcon.ic('minus.png')), b.setText(_('&Remove snippet')), b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        (
+            b.setIcon(QIcon.ic('minus.png')),
+            b.setText(_('&Remove snippet')),
+            b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon),
+        )
         b.clicked.connect(self.remove_snippet)
         l.addWidget(b)
 
         self.add_button = b = QToolButton(self)
-        b.setIcon(QIcon.ic('config.png')), b.setText(_('Change &built-in')), b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        (
+            b.setIcon(QIcon.ic('config.png')),
+            b.setText(_('Change &built-in')),
+            b.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon),
+        )
         b.clicked.connect(self.change_builtin)
         l.addWidget(b)
 
@@ -671,6 +708,7 @@ class UserSnippets(Dialog):
                     item = self.snip_to_item(self.edit_snip.snip)
                 else:
                     item = self.snip_list.currentItem()
+                    assert item is not None
                     snip = self.edit_snip.snip
                     item.setText(self.snip_to_text(snip))
                     item.setData(Qt.ItemDataRole.UserRole, snip)
@@ -679,7 +717,12 @@ class UserSnippets(Dialog):
             else:
                 error_dialog(self, _('Invalid snippet'), err, show=True)
             return
-        user_snippets['snippets'] = [self.snip_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.snip_list.count())]
+        _snippets_data = []
+        for i in range(self.snip_list.count()):
+            _snip_item = self.snip_list.item(i)
+            assert _snip_item is not None
+            _snippets_data.append(_snip_item.data(Qt.ItemDataRole.UserRole))
+        user_snippets['snippets'] = _snippets_data
         snippets(refresh=True)
         return Dialog.accept(self)
 
@@ -708,11 +751,10 @@ class UserSnippets(Dialog):
             return
         matches = self.snip_list.findItems(q, Qt.MatchFlag.MatchContains | Qt.MatchFlag.MatchWrap)
         if len(matches) < 1:
-            return error_dialog(self, _('No snippets found'), _(
-                'No snippets found for query: %s') % q, show=True)
+            return error_dialog(self, _('No snippets found'), _('No snippets found for query: %s') % q, show=True)
         ci = self.snip_list.currentItem()
         try:
-            item = matches[(matches.index(ci) + 1) % len(matches)]
+            item = matches[(matches.index(ci) + 1) % len(matches)] if ci is not None else matches[0]
         except Exception:
             item = matches[0]
         self.snip_list.setCurrentItem(item)
@@ -726,21 +768,25 @@ class UserSnippets(Dialog):
             snip['trigger'], snip['syntaxes'] = trigger, syntaxes
             i = QListWidgetItem(self.snip_to_text(snip), lw)
             i.setData(Qt.ItemDataRole.UserRole, snip)
-        d.l = l = QVBoxLayout(d)
+        l = QVBoxLayout(d)
         l.addWidget(QLabel(_('Choose the built-in snippet to modify:')))
         l.addWidget(lw)
         lw.itemDoubleClicked.connect(d.accept)
-        d.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         l.addWidget(bb)
         bb.accepted.connect(d.accept), bb.rejected.connect(d.reject)
         if d.exec() == QDialog.DialogCode.Accepted and lw.currentItem() is not None:
             self.stack.setCurrentIndex(1)
-            self.edit_snip.apply_snip(lw.currentItem().data(Qt.ItemDataRole.UserRole), creating_snippet=True)
-# }}}
+            _lw_current_item = lw.currentItem()
+            assert _lw_current_item is not None
+            self.edit_snip.apply_snip(_lw_current_item.data(Qt.ItemDataRole.UserRole), creating_snippet=True)
 
+
+# }}}
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     d = UserSnippets()
     d.exec()

@@ -15,7 +15,6 @@ from qt.core import (
     QListWidget,
     QListWidgetItem,
     QMenu,
-    QPainter,
     QPalette,
     QPixmap,
     QRectF,
@@ -26,6 +25,7 @@ from qt.core import (
     Qt,
     QTabWidget,
     QVBoxLayout,
+    QWidget,
     pyqtSignal,
 )
 
@@ -35,6 +35,7 @@ from calibre.gui2 import choose_dir, choose_save_file, error_dialog
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.widgets import BusyCursor
 from calibre.gui2.widgets2 import Dialog
+from calibre.utils.localization import _
 
 THUMBNAIL_SIZE = 60, 80
 MARGIN_SIZE = 8
@@ -51,7 +52,6 @@ def time_spec(mtime: float) -> str:
 
 
 class TrashItemDelegate(QStyledItemDelegate):
-
     def __init__(self, parent):
         super().__init__(parent)
         self.pixmap_cache = {}
@@ -59,14 +59,13 @@ class TrashItemDelegate(QStyledItemDelegate):
     def sizeHint(self, option, index):
         return QSize(THUMBNAIL_SIZE[0] + MARGIN_SIZE + 256, THUMBNAIL_SIZE[1] + MARGIN_SIZE)
 
-    def paint(self, painter: QPainter, option, index):
+    def paint(self, painter, option, index):
         super().paint(painter, option, index)
         painter.save()
         entry: TrashEntry = index.data(Qt.ItemDataRole.UserRole)
         if option is not None and option.state & QStyle.StateFlag.State_Selected:
             p = option.palette
-            group = (QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else
-                    QPalette.ColorGroup.Inactive)
+            group = QPalette.ColorGroup.Active if option.state & QStyle.StateFlag.State_Active else QPalette.ColorGroup.Inactive
             c = p.color(group, QPalette.ColorRole.HighlightedText)
             painter.setPen(c)
 
@@ -75,7 +74,9 @@ class TrashItemDelegate(QStyledItemDelegate):
             text += '\n' + ', '.join(sorted(entry.formats))
         r = QRectF(option.rect)
         if entry.cover_path:
-            dp = self.parent().devicePixelRatioF()
+            par = self.parent()
+            assert isinstance(par, QWidget)
+            dp = par.devicePixelRatioF()
             p = self.pixmap_cache.get(entry.cover_path)
             if p is None:
                 p = QPixmap()
@@ -83,7 +84,7 @@ class TrashItemDelegate(QStyledItemDelegate):
                 scaled, w, h = fit_image(p.width(), p.height(), int(THUMBNAIL_SIZE[0] * dp), int(THUMBNAIL_SIZE[1] * dp))
                 if scaled:
                     p = p.scaled(w, h, transformMode=Qt.TransformationMode.SmoothTransformation)
-                p.setDevicePixelRatio(self.parent().devicePixelRatioF())
+                p.setDevicePixelRatio(par.devicePixelRatioF())
                 self.pixmap_cache[entry.cover_path] = p
             w, h = p.width() / dp, p.height() / dp
             width, height = THUMBNAIL_SIZE[0] + MARGIN_SIZE, THUMBNAIL_SIZE[1] + MARGIN_SIZE
@@ -99,7 +100,6 @@ class TrashItemDelegate(QStyledItemDelegate):
 
 
 class TrashList(QListWidget):
-
     restore_item = pyqtSignal(object, object)
 
     def __init__(self, entries: list[TrashEntry], parent: TrashView, is_books: bool):
@@ -131,7 +131,9 @@ class TrashList(QListWidget):
             return
         m = QMenu(self)
         entry = item.data(Qt.ItemDataRole.UserRole)
-        m.addAction(QIcon.ic('save.png'), _('Save "{}" to disk').format(entry.title)).triggered.connect(self.save_current_item)
+        _save_action = m.addAction(QIcon.ic('save.png'), _('Save "{}" to disk').format(entry.title))
+        assert _save_action is not None
+        _save_action.triggered.connect(self.save_current_item)
         m.exec(self.mapToGlobal(pos))
 
     def save_current_item(self):
@@ -147,21 +149,29 @@ class TrashList(QListWidget):
             self.db.copy_book_from_trash(entry.book_id, dest)
         else:
             for fmt in entry.formats:
-                dest = choose_save_file(self, 'save-trash-format', _('Choose a location to save: {}').format(
-                    entry.title +'.' + fmt.lower()), initial_filename=entry.title + '.' + fmt.lower())
+                dest = choose_save_file(
+                    self,
+                    'save-trash-format',
+                    _('Choose a location to save: {}').format(entry.title + '.' + fmt.lower()),
+                    initial_filename=entry.title + '.' + fmt.lower(),
+                )
                 if dest:
                     self.db.copy_format_from_trash(entry.book_id, fmt, dest)
 
 
 class TrashView(Dialog):
-
     books_restored = pyqtSignal(object)
 
     def __init__(self, db, parent=None):
         self.db = db.new_api
         self.expire_on_close = False
         self.formats_restored = set()
-        super().__init__(_('Recently deleted books'), 'trash-view-for-library', parent=parent, default_buttons=QDialogButtonBox.StandardButton.Close)
+        super().__init__(
+            _('Recently deleted books'),
+            'trash-view-for-library',
+            parent=parent,
+            default_buttons=QDialogButtonBox.StandardButton.Close,
+        )
         self.finished.connect(self.expire_old_trash)
 
     def setup_ui(self):
@@ -187,10 +197,12 @@ class TrashView(Dialog):
         ad.setSpecialValueText(_('on close'))
         ad.setValue(int(self.db.pref('expire_old_trash_after', DEFAULT_TRASH_EXPIRY_TIME_SECONDS) / 86400))
         ad.setSuffix(_(' days'))
-        ad.setToolTip(_(
-            'Deleted items are permanently deleted automatically after the specified number of days.\n'
-            'If set to "on close" they are deleted whenever the library is closed, that is when switching to another library or exiting calibre.'
-        ))
+        ad.setToolTip(
+            _(
+                'Deleted items are permanently deleted automatically after the specified number of days.\n'
+                'If set to "on close" they are deleted whenever the library is closed, that is when switching to another library or exiting calibre.'
+            )
+        )
         ad.valueChanged.connect(self.trash_expiry_time_changed)
         h = QHBoxLayout()
         h.addWidget(la), h.addWidget(ad), h.addStretch(10)
@@ -200,20 +212,29 @@ class TrashView(Dialog):
         h = QHBoxLayout()
         l.addWidget(self.bb)
         self.restore_button = b = self.bb.addButton(_('&Restore selected'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.clicked.connect(self.restore_selected)
         b.setIcon(QIcon.ic('edit-undo.png'))
         self.delete_button = b = self.bb.addButton(_('Permanently &delete selected'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setToolTip(_('Remove the selected entries from the trash bin, thereby deleting them permanently'))
         b.setIcon(QIcon.ic('edit-clear.png'))
         b.clicked.connect(self.delete_selected)
         self.clear_button = b = self.bb.addButton(_('&Clear'), QDialogButtonBox.ButtonRole.ResetRole)
+        assert b is not None
         b.clicked.connect(self.clear_all)
         b.setIcon(QIcon.ic('dialog_warning.png'))
         self.update_titles()
-        self.bb.button(QDialogButtonBox.StandardButton.Close).setFocus(Qt.FocusReason.OtherFocusReason)
+        _close_btn = self.bb.button(QDialogButtonBox.StandardButton.Close)
+        assert _close_btn is not None
+        _close_btn.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def clear_all(self):
-        if not confirm('<p>'+_('All books and formats will be <b>permanently deleted</b>! Are you sure?'), 'clear_trash_bin', self):
+        if not confirm(
+            '<p>' + _('All books and formats will be <b>permanently deleted</b>! Are you sure?'),
+            'clear_trash_bin',
+            self,
+        ):
             return
         self.db.clear_trash_bin()
         self.books.clear()
@@ -237,7 +258,9 @@ class TrashView(Dialog):
 
     def do_operation_on_selected(self, func):
         ok_items, failed_items = [], []
-        for i in self.tabs.currentWidget().selectedItems():
+        cw = self.tabs.currentWidget()
+        assert isinstance(cw, TrashList)
+        for i in cw.selectedItems():
             entry = i.data(Qt.ItemDataRole.UserRole)
             try:
                 func(entry)
@@ -284,6 +307,7 @@ class TrashView(Dialog):
 
     def remove_entries(self, remove):
         w = self.tabs.currentWidget()
+        assert isinstance(w, TrashList)
         for i in remove:
             w.takeItem(w.row(i))
         self.update_titles()
@@ -293,6 +317,7 @@ class TrashView(Dialog):
 
         def f(entry):
             self.db.delete_trash_entry(entry.book_id, category)
+
         ok, failed = self.do_operation_on_selected(f)
         self.remove_entries(ok)
         self.show_failures(failed, _('delete'))
@@ -301,7 +326,7 @@ class TrashView(Dialog):
         if not failures:
             return
         det_msg = []
-        for (entry, exc, tb) in failures:
+        for entry, exc, tb in failures:
             det_msg.append(_('Failed for the book {} with error:').format(entry.title))
             det_msg.append(tb)
             det_msg.append('-' * 40)
@@ -309,14 +334,18 @@ class TrashView(Dialog):
         det_msg = det_msg[:-2]
         entry_type = _('Books') if self.books_tab_is_selected else _('Formats')
         error_dialog(
-            self, _('Failed to process some {}').format(entry_type),
+            self,
+            _('Failed to process some {}').format(entry_type),
             _('Could not {0} some {1}. Click "Show details" for details.').format(operation, entry_type),
-            det_msg='\n'.join(det_msg), show=True)
+            det_msg='\n'.join(det_msg),
+            show=True,
+        )
 
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
     from calibre.library import db
+
     app = Application([])
     TrashView(db()).exec()
     del app

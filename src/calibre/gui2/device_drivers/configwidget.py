@@ -1,6 +1,4 @@
-__license__ = 'GPL 3'
-__copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2012, Kovid Goyal <kovid at kovidgoyal.net>
 
 import textwrap
 
@@ -10,13 +8,21 @@ from calibre.ebooks import BOOK_EXTENSIONS
 from calibre.gui2 import error_dialog, question_dialog
 from calibre.gui2.device_drivers.configwidget_ui import Ui_ConfigWidget
 from calibre.utils.formatter import validation_formatter
+from calibre.utils.localization import _
 
 
 class ConfigWidget(QWidget, Ui_ConfigWidget):
-
-    def __init__(self, settings, all_formats, supports_subdirs,
-        must_read_metadata, supports_use_author_sort,
-        extra_customization_message, device, extra_customization_choices=None):
+    def __init__(
+        self,
+        settings,
+        all_formats,
+        supports_subdirs,
+        must_read_metadata,
+        supports_use_author_sort,
+        extra_customization_message,
+        device,
+        extra_customization_choices=None,
+    ):
 
         QWidget.__init__(self)
         Ui_ConfigWidget.__init__(self)
@@ -38,7 +44,7 @@ class ConfigWidget(QWidget, Ui_ConfigWidget):
         for format in format_map + sorted(disabled_formats):
             item = QListWidgetItem(format, self.columns)
             item.setData(Qt.ItemDataRole.UserRole, (format))
-            item.setFlags(Qt.ItemFlag.ItemIsEnabled|Qt.ItemFlag.ItemIsUserCheckable|Qt.ItemFlag.ItemIsSelectable)
+            item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsSelectable)
             item.setCheckState(Qt.CheckState.Checked if format in format_map else Qt.CheckState.Unchecked)
 
         self.column_up.clicked.connect(self.up_column)
@@ -69,13 +75,18 @@ class ConfigWidget(QWidget, Ui_ConfigWidget):
             if isinstance(extra_customization_message, list):
                 self.opt_extra_customization = []
                 if len(extra_customization_message) > 6:
+
                     def row_func(x, y):
-                        return (x // 2 * 2 + y)
+                        return x // 2 * 2 + y
+
                     def col_func(x):
-                        return (x % 2)
+                        return x % 2
+
                 else:
+
                     def row_func(x, y):
-                        return (x * 2 + y)
+                        return x * 2 + y
+
                     def col_func(x):
                         return 0
 
@@ -85,29 +96,30 @@ class ConfigWidget(QWidget, Ui_ConfigWidget):
                         self.opt_extra_customization.append(None)
                         continue
                     if isinstance(settings.extra_customization[i], bool):
-                        self.opt_extra_customization.append(QCheckBox(label_text))
-                        self.opt_extra_customization[-1].setToolTip(tt)
-                        self.opt_extra_customization[i].setChecked(bool(settings.extra_customization[i]))
+                        opt_ec = QCheckBox(label_text)
+                        self.opt_extra_customization.append(opt_ec)
+                        opt_ec.setToolTip(tt)
+                        opt_ec.setChecked(bool(settings.extra_customization[i]))
                     elif i in extra_customization_choices:
                         cb = QComboBox(self)
                         self.opt_extra_customization.append(cb)
                         l = QLabel(label_text)
                         l.setToolTip(tt), cb.setToolTip(tt), l.setBuddy(cb), cb.setToolTip(tt)
                         for li in sorted(extra_customization_choices[i]):
-                            self.opt_extra_customization[i].addItem(li)
+                            cb.addItem(li)
                         cb.setCurrentIndex(max(0, cb.findText(settings.extra_customization[i])))
                     else:
-                        self.opt_extra_customization.append(QLineEdit(self))
+                        opt_ec_i = QLineEdit(self)
+                        self.opt_extra_customization.append(opt_ec_i)
                         l = QLabel(label_text)
                         l.setToolTip(tt)
-                        self.opt_extra_customization[i].setToolTip(tt)
-                        l.setBuddy(self.opt_extra_customization[i])
+                        opt_ec_i.setToolTip(tt)
+                        l.setBuddy(opt_ec_i)
                         l.setWordWrap(True)
-                        self.opt_extra_customization[i].setText(settings.extra_customization[i])
-                        self.opt_extra_customization[i].setCursorPosition(0)
+                        opt_ec_i.setText(settings.extra_customization[i])
+                        opt_ec_i.setCursorPosition(0)
                         self.extra_layout.addWidget(l, row_func(i, 0), col_func(i))
-                    self.extra_layout.addWidget(self.opt_extra_customization[i],
-                                                row_func(i, 1), col_func(i))
+                    self.extra_layout.addWidget(self.opt_extra_customization[i], row_func(i, 1), col_func(i))
             else:
                 self.opt_extra_customization = QLineEdit()
                 label_text, tt = parse_msg(extra_customization_message)
@@ -126,21 +138,22 @@ class ConfigWidget(QWidget, Ui_ConfigWidget):
     def up_column(self):
         idx = self.columns.currentRow()
         if idx > 0:
-            self.columns.insertItem(idx-1, self.columns.takeItem(idx))
-            self.columns.setCurrentRow(idx-1)
+            self.columns.insertItem(idx - 1, self.columns.takeItem(idx))
+            self.columns.setCurrentRow(idx - 1)
 
     def down_column(self):
         idx = self.columns.currentRow()
-        if idx < self.columns.count()-1:
-            self.columns.insertItem(idx+1, self.columns.takeItem(idx))
-            self.columns.setCurrentRow(idx+1)
+        if idx < self.columns.count() - 1:
+            self.columns.insertItem(idx + 1, self.columns.takeItem(idx))
+            self.columns.setCurrentRow(idx + 1)
 
     def format_map(self):
-        formats = [
-                str(self.columns.item(i).data(Qt.ItemDataRole.UserRole) or '')
-                for i in range(self.columns.count())
-                if self.columns.item(i).checkState()==Qt.CheckState.Checked
-        ]
+        formats = []
+        for i in range(self.columns.count()):
+            col_item = self.columns.item(i)
+            assert col_item is not None
+            if col_item.checkState() == Qt.CheckState.Checked:
+                formats.append(str(col_item.data(Qt.ItemDataRole.UserRole) or ''))
         return formats
 
     def use_subdirs(self):
@@ -157,12 +170,16 @@ class ConfigWidget(QWidget, Ui_ConfigWidget):
         extra = formats - set(self.calibre_known_formats)
         if extra:
             fmts = sorted(x.upper() for x in extra)
-            if not question_dialog(self, _('Unknown formats'),
-                    _('You have enabled the <b>{0}</b> formats for'
-                        ' your {1}. The {1} may not support them.'
-                        ' If you send these formats to your {1} they '
-                        'may not work. Are you sure?').format(
-                            (', '.join(fmts)), self.device_name)):
+            if not question_dialog(
+                self,
+                _('Unknown formats'),
+                _(
+                    'You have enabled the <b>{0}</b> formats for'
+                    ' your {1}. The {1} may not support them.'
+                    ' If you send these formats to your {1} they '
+                    'may not work. Are you sure?'
+                ).format((', '.join(fmts)), self.device_name),
+            ):
                 return False
 
         tmpl = str(self.opt_save_template.text())
@@ -170,8 +187,11 @@ class ConfigWidget(QWidget, Ui_ConfigWidget):
             validation_formatter.validate(tmpl)
             return True
         except Exception as err:
-            error_dialog(self, _('Invalid template'),
-                    '<p>'+_('The template %s is invalid:')%tmpl +
-                    '<br>'+str(err), show=True)
+            error_dialog(
+                self,
+                _('Invalid template'),
+                '<p>' + _('The template %s is invalid:') % tmpl + '<br>' + str(err),
+                show=True,
+            )
 
             return False

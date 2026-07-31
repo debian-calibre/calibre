@@ -16,7 +16,7 @@ from calibre.gui2.ui import get_gui
 from calibre.gui2.widgets2 import Dialog
 from calibre.library.comments import comments_as_markdown
 from calibre.utils.icu import primary_sort_key
-from calibre.utils.localization import ngettext
+from calibre.utils.localization import _, ngettext
 from polyglot.binary import from_hex_unicode
 
 
@@ -67,18 +67,20 @@ def format_books_for_query(books: list[Metadata]) -> str:
 
 def get_allowed_fields() -> set[str]:
     db = get_current_db()
-    ans = set(db.pref('llm-book-allowed-custom-fields') or ())
-    return set(gprefs.get('llm-book-allowed-standard-fields') or ()) | ans
+    ans: set[str] = set(db.pref('llm-book-allowed-custom-fields') or ())
+    standard: set[str] = set(gprefs.get('llm-book-allowed-standard-fields') or ())
+    return standard | ans
 
 
 class Action(ActionData):
-
     def prompt_text(self, books: list[Metadata]) -> str:
         pt = self.prompt_template
         return pt.format(
             books_word='book' if len(books) < 2 else 'books',
             is_are='is' if len(books) < 2 else 'are',
-            title=books[0].title, authors=books[0].format_authors(), series=books[0].series or '',
+            title=books[0].title,
+            authors=books[0].format_authors(),
+            series=books[0].series or '',
         )
 
 
@@ -88,11 +90,19 @@ def default_actions() -> tuple[Action, ...]:
         Action('summarize', _('Summarize'), 'Provide a concise summary of the previously described {books_word}.'),
         Action('chapters', _('Chapters'), 'Provide a chapter by chapter summary of the previously described {books_word}.'),
         Action('read_next', _('Read next'), 'Suggest some good books to read after the previously described {books_word}.'),
-        Action('universe', _('Universe'), 'Describe the fictional universe the previously described {books_word} {is_are} set in.'
-               ' Outline major plots, themes and characters in the universe.'),
-        Action('series', ngettext('Series', 'Series', 1), 'Give the series the previously described {books_word} {is_are} in.'
-               ' List all the books in the series, in both published and internal chronological order.'
-               ' Also describe any prominent spin-off series.')
+        Action(
+            'universe',
+            _('Universe'),
+            'Describe the fictional universe the previously described {books_word} {is_are} set in.'
+            ' Outline major plots, themes and characters in the universe.',
+        ),
+        Action(
+            'series',
+            ngettext('Series', 'Series', 1),
+            'Give the series the previously described {books_word} {is_are} in.'
+            ' List all the books in the series, in both published and internal chronological order.'
+            ' Also describe any prominent spin-off series.',
+        ),
     )
 
 
@@ -109,7 +119,6 @@ def current_actions(include_disabled=False) -> Iterator[Action]:
 
 
 class LLMSettingsWidget(LLMActionsSettingsWidget):
-
     action_edit_help_text = '<p>' + _(
         'The prompt is a template. The expression {0} will be replaced by "book"'
         ' when there is only a single book being discussed and "books" otherwise.'
@@ -123,18 +132,19 @@ class LLMSettingsWidget(LLMActionsSettingsWidget):
     def set_actions_in_prefs(self, s: dict[str, Any]) -> None:
         gprefs.set('llm_book_quick_actions', s)
 
-    def create_custom_widgets(self) -> Iterator[str, QWidget]:
+    def create_custom_widgets(self) -> Iterator[tuple[str, QWidget]]:
         yield '', LocalisedResults()
 
 
 def get_current_db() -> Cache:
     if db := getattr(get_current_db, 'ans', None):
         return db.new_api
-    return get_gui().current_db.new_api
+    gui = get_gui()
+    assert gui is not None
+    return gui.current_db.new_api
 
 
 class MetadataSettings(QWidget):
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.l = l = QVBoxLayout(self)
@@ -158,8 +168,12 @@ class MetadataSettings(QWidget):
             item.setCheckState(Qt.CheckState.Checked if field_name in allowed else Qt.CheckState.Unchecked)
             item.setData(Qt.ItemDataRole.UserRole, field_name)
         bb = QDialogButtonBox(self)
-        bb.addButton(_('Select &all'), QDialogButtonBox.ButtonRole.ActionRole).clicked.connect(self.select_all)
-        bb.addButton(_('Select &none'), QDialogButtonBox.ButtonRole.ActionRole).clicked.connect(self.select_none)
+        btn_all = bb.addButton(_('Select &all'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert btn_all is not None
+        btn_all.clicked.connect(self.select_all)
+        btn_none = bb.addButton(_('Select &none'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert btn_none is not None
+        btn_none.clicked.connect(self.select_none)
         l.addWidget(bb)
 
     def __iter__(self):
@@ -175,8 +189,7 @@ class MetadataSettings(QWidget):
             item.setCheckState(Qt.CheckState.Unchecked)
 
     def toggle_item(self, item):
-        item.setCheckState(
-            Qt.CheckState.Unchecked if item.checkState() == Qt.CheckState.Checked else Qt.CheckState.Checked)
+        item.setCheckState(Qt.CheckState.Unchecked if item.checkState() == Qt.CheckState.Checked else Qt.CheckState.Checked)
 
     def commit(self) -> bool:
         allowed_standard = set()
@@ -195,11 +208,10 @@ class MetadataSettings(QWidget):
 
 
 class LLMSettingsDialog(LLMSettingsDialogBase):
-
     def __init__(self, parent=None):
         super().__init__(title=_('AI Settings'), name='llm-book-settings-dialog', prefs=gprefs, parent=parent)
 
-    def custom_tabs(self) -> Iterator[str, str, QWidget]:
+    def custom_tabs(self) -> Iterator[tuple[str, str, QWidget]]:
         yield 'config.png', _('&Actions'), LLMSettingsWidget(self)
         yield 'metadata.png', _('&Metadata'), MetadataSettings(self)
 
@@ -238,6 +250,7 @@ class LLMPanel(ConverseWidget):
         msg += '<p>' + _('Or, type a question to the AI below, for example:') + '<br>'
         msg += '<i>Discuss the literary influences in this book</i>'
         return msg
+
     ready_message = choose_action_message
 
     def create_initial_messages(self, action_prompt: str, **kwargs: Any) -> Iterator[ChatMessage]:
@@ -259,13 +272,14 @@ class LLMPanel(ConverseWidget):
 
 
 class LLMBookDialog(Dialog):
-
     def __init__(self, books: list[Metadata], parent: QWidget | None = None):
         self.books = books
         super().__init__(
-            name='llm-book-dialog', title=_('Ask AI about {}').format(books[0].title) if len(books) < 2 else _(
-                'Ask AI about {} books').format(len(books)),
-            parent=parent, default_buttons=QDialogButtonBox.StandardButton.Close)
+            name='llm-book-dialog',
+            title=_('Ask AI about {}').format(books[0].title) if len(books) < 2 else _('Ask AI about {} books').format(len(books)),
+            parent=parent,
+            default_buttons=QDialogButtonBox.StandardButton.Close,
+        )
 
     def setup_ui(self):
         l = QVBoxLayout(self)
@@ -283,7 +297,8 @@ class LLMBookDialog(Dialog):
 
 def develop():
     from calibre.library import db
-    get_current_db.ans = db()
+
+    setattr(get_current_db, 'ans', db())
     app = Application([])
     LLMBookDialog([Metadata('The Trials of Empire', ['Richard Swan'])]).exec()
     del app

@@ -25,22 +25,25 @@ from calibre.ai.prefs import decode_secret, encode_secret, pref_for_provider, se
 from calibre.ai.utils import configure, plugin_for_name
 from calibre.gui2 import error_dialog
 from calibre.gui2.widgets import BusyCursor
+from calibre.utils.localization import _
 
 pref = partial(pref_for_provider, OpenAICompatible.name)
 
 
 class ConfigWidget(QWidget):
-
     def __init__(self, parent: QWidget | None = None):
         super().__init__(parent)
         l = QFormLayout(self)
         l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
-        la = QLabel('<p>' + _(
-            'Connect calibre to any self-hosted or third-party service that implements the OpenAI compatible'
-            ' <code>/v1/chat/completions</code> API. This is useful for gateways, local servers and other'
-            ' services that are not listed as dedicated providers.'
-        ))
+        la = QLabel(
+            '<p>'
+            + _(
+                'Connect calibre to any self-hosted or third-party service that implements the OpenAI compatible'
+                ' <code>/v1/chat/completions</code> API. This is useful for gateways, local servers and other'
+                ' services that are not listed as dedicated providers.'
+            )
+        )
         la.setWordWrap(True)
         l.addRow(la)
 
@@ -82,11 +85,11 @@ class ConfigWidget(QWidget):
 
         self.model_combo = mc = QComboBox(w)
         mc.setEditable(True)
-        mc.setInsertPolicy(QComboBox.NoInsert)
+        mc.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         mc.setView(QListView(mc))
-        mc.setSizeAdjustPolicy(QComboBox.AdjustToContentsOnFirstShow)
+        mc.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToContentsOnFirstShow)
         completer = QCompleter(mc)
-        completer.setCaseSensitivity(Qt.CaseInsensitive)
+        completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         mc.setCompleter(completer)
 
         if saved_model := pref('text_model') or '':

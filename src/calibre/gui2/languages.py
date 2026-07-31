@@ -1,20 +1,15 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, Kovid Goyal <kovid@kovidgoyal.net>
 
 from qt.core import QComboBox
 
 from calibre.gui2 import gui_prefs
-from calibre.gui2.complete2 import EditWithComplete
+from calibre.gui2.complete2 import EditWithComplete, LineEdit
 from calibre.utils.icu import lower, sort_key
 from calibre.utils.localization import lang_map_for_ui
 
 
 class LanguagesEdit(EditWithComplete):
-
     def __init__(self, parent=None, db=None, prefs=None):
         self.prefs = prefs or gui_prefs()
         self.refresh_recently_used()
@@ -24,19 +19,21 @@ class LanguagesEdit(EditWithComplete):
         self.setMinimumContentsLength(20)
         self._lang_map = lang_map_for_ui()
         self.names_with_commas = [x for x in self._lang_map.values() if ',' in x]
-        self.comma_map = {k:k.replace(',', '|') for k in self.names_with_commas}
-        self.comma_rmap = {v:k for k, v in self.comma_map.items()}
-        self._rmap = {lower(v):k for k,v in self._lang_map.items()}
+        self.comma_map = {k: k.replace(',', '|') for k in self.names_with_commas}
+        self.comma_rmap = {v: k for k, v in self.comma_map.items()}
+        self._rmap = {lower(v): k for k, v in self._lang_map.items()}
         self.init_langs(db)
         self.item_selected.connect(self.update_recently_used)
-        self.lineEdit().set_use_startswith_search(False)
+        line_edit = self.lineEdit()
+        assert isinstance(line_edit, LineEdit)
+        line_edit.set_use_startswith_search(False)
 
     def init_langs(self, db):
         self.update_items_cache(self._lang_map.values())
 
     def refresh_recently_used(self):
         recently_used = self.prefs.get('recently_used_languages') or ()
-        self.recently_used = {x:i for i, x in enumerate(recently_used) if x}
+        self.recently_used = {x: i for i, x in enumerate(recently_used) if x}
 
     def update_recently_used(self):
         recently_used = self.prefs.get('recently_used_languages') or []
@@ -54,7 +51,9 @@ class LanguagesEdit(EditWithComplete):
 
     @property
     def vals(self):
-        raw = str(self.lineEdit().text())
+        line_edit = self.lineEdit()
+        assert line_edit is not None
+        raw = str(line_edit.text())
         for k, v in self.comma_map.items():
             raw = raw.replace(k, v)
         parts = [x.strip() for x in raw.split(',')]
@@ -86,7 +85,9 @@ class LanguagesEdit(EditWithComplete):
         if allow_undo:
             orig, self.disable_popup = self.disable_popup, True
             try:
-                self.lineEdit().selectAll(), self.lineEdit().insert(ans)
+                _le = self.lineEdit()
+                assert _le is not None
+                _le.selectAll(), _le.insert(ans)
             finally:
                 self.disable_popup = orig
         else:
@@ -105,8 +106,10 @@ class LanguagesEdit(EditWithComplete):
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     from qt.core import QMainWindow
+
     w = LanguagesEdit()
     w.setMaximumHeight(50)
     d = QMainWindow()

@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2012, Kovid Goyal <kovid at kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2012, Kovid Goyal <kovid at kovidgoyal.net>
 
 from functools import wraps
+from typing import Any
 
 from calibre import prints
 from calibre.constants import DEBUG
 from calibre.devices.interface import DevicePlugin
+from calibre.utils.localization import _
 
 
 def debug(*args, **kwargs):
@@ -22,6 +20,7 @@ def synchronous(func):
     def synchronizer(self, *args, **kwargs):
         with self.lock:
             return func(self, *args, **kwargs)
+
     return synchronizer
 
 
@@ -32,6 +31,7 @@ class MTPDeviceBase(DevicePlugin):
     description = _('Communicate with MTP devices')
     author = 'Kovid Goyal'
     version = (1, 0, 0)
+    prefs: dict[str, Any]
 
     def __init__(self, *args, **kwargs):
         DevicePlugin.__init__(self, *args, **kwargs)
@@ -40,8 +40,7 @@ class MTPDeviceBase(DevicePlugin):
         self.report_progress = lambda x, y: None
         self.current_serial_num = None
 
-    def reset(self, key='-1', log_packets=False, report_progress=None,
-            detected_device=None):
+    def reset(self, key='-1', log_packets=False, report_progress=None, detected_device=None):
         pass
 
     def set_progress_reporter(self, report_progress):
@@ -50,14 +49,24 @@ class MTPDeviceBase(DevicePlugin):
     def get_gui_name(self):
         return getattr(self, 'current_friendly_name', self.gui_name)
 
-    def is_usb_connected(self, devices_on_system, debug=False,
-            only_presence=False):
+    def is_usb_connected(self, devices_on_system, debug=False, only_presence=False):
         # We manage device presence ourselves, so this method should always
         # return False
         return False
 
+    @property
+    def save_template(self) -> str:
+        raise NotImplementedError
+
+    def filesystem_callback(self, msg: str) -> None:
+        pass
+
+    def is_folder_ignored(self, storage_or_storage_id, path) -> bool:
+        return False
+
     def build_template_regexp(self):
         from calibre.devices.utils import build_template_regexp
+
         return build_template_regexp(self.save_template)
 
     def is_customizable(self):

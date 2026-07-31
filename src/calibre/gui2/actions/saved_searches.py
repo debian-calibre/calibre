@@ -5,13 +5,12 @@
 from qt.core import QMenu, QToolButton
 
 from calibre.gui2.actions import InterfaceAction, show_menu_under_widget
+from calibre.utils.localization import _
 
 
 class SavedSearchesAction(InterfaceAction):
-
     name = 'Saved searches'
-    action_spec = (_('Saved searches'), 'folder_saved_search.png',
-                   _('Show a menu of saved searches'), None)
+    action_spec = (_('Saved searches'), 'folder_saved_search.png', _('Show a menu of saved searches'), None)
     action_type = 'current'
     popup_type = QToolButton.ToolButtonPopupMode.InstantPopup
     action_add_menu = True
@@ -19,16 +18,18 @@ class SavedSearchesAction(InterfaceAction):
 
     def genesis(self):
         self.menu = m = self.qaction.menu()
+        assert m is not None
         m.aboutToShow.connect(self.about_to_show_menu)
 
         # Create a "hidden" menu that can have a shortcut.
         self.hidden_menu = QMenu()
         self.shortcut_action = self.create_menu_action(
-                        menu=self.hidden_menu,
-                        unique_name='Saved searches',
-                        text=_('Show a menu of saved searches'),
-                        icon='folder_saved_search.png',
-                        triggered=self.show_menu)
+            menu=self.hidden_menu,
+            unique_name='Saved searches',
+            text=_('Show a menu of saved searches'),
+            icon='folder_saved_search.png',
+            triggered=self.show_menu,
+        )
 
     # We want to show the menu when a shortcut is used. Apparently the only way
     # to do that is to scan the toolbar(s) for the action button then exec the
@@ -47,5 +48,6 @@ class SavedSearchesAction(InterfaceAction):
     def location_selected(self, loc):
         enabled = loc == 'library'
         self.qaction.setEnabled(enabled)
+        assert self.menu is not None
         for action in self.menu.actions():
             action.setEnabled(enabled)

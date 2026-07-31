@@ -5,7 +5,6 @@ from calibre.utils.resources import get_path as P
 
 
 class SchemaUpgrade:
-
     def __init__(self, conn, triggers_sql):
         self.conn = conn
         conn.execute('BEGIN EXCLUSIVE TRANSACTION')
@@ -18,11 +17,11 @@ class SchemaUpgrade:
                 meth = getattr(self, f'upgrade_version_{uv}', None)
                 if meth is None:
                     break
-                print(f'Upgrading Notes database to version {uv+1}...')
+                print(f'Upgrading Notes database to version {uv + 1}...')
                 meth()
                 self.user_version = uv + 1
             conn.execute(triggers_sql)
-        except (Exception, BaseException):
+        except Exception, BaseException:
             conn.execute('ROLLBACK')
             raise
         else:
@@ -31,8 +30,10 @@ class SchemaUpgrade:
 
     @property
     def user_version(self):
+        assert self.conn is not None
         return self.conn.get('PRAGMA notes_db.user_version', all=False) or 0
 
     @user_version.setter
     def user_version(self, val):
+        assert self.conn is not None
         self.conn.execute(f'PRAGMA notes_db.user_version={val}')

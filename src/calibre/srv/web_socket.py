@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import http.client
 import os
 import socket
@@ -22,12 +21,7 @@ from calibre_extensions.speedup import utf8_decode
 from calibre_extensions.speedup import websocket_mask as fast_mask
 from polyglot.binary import as_base64_unicode
 
-HANDSHAKE_STR = (
-    'HTTP/1.1 101 Switching Protocols\r\n'
-    'Upgrade: WebSocket\r\n'
-    'Connection: Upgrade\r\n'
-    'Sec-WebSocket-Accept: %s\r\n\r\n'
-)
+HANDSHAKE_STR = 'HTTP/1.1 101 Switching Protocols\r\nUpgrade: WebSocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: %s\r\n\r\n'
 GUID_STR = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11'
 
 CONTINUATION = 0x0
@@ -51,11 +45,14 @@ POLICY_VIOLATION = 1008
 MESSAGE_TOO_BIG = 1009
 UNEXPECTED_ERROR = 1011
 
-RESERVED_CLOSE_CODES = (1004,1005,1006,)
+RESERVED_CLOSE_CODES = (
+    1004,
+    1005,
+    1006,
+)
 
 
 class ReadFrame:  # {{{
-
     def __init__(self):
         self.header_buf = bytearray(14)
         self.rbuf = bytearray(CHUNK_SIZE)
@@ -127,10 +124,10 @@ class ReadFrame:  # {{{
         if self.payload_length < 126:
             self.mask = memoryview(self.header_buf)[2:6]
         elif self.payload_length == 126:
-            self.payload_length, = unpack_from(b'!H', self.header_buf, 2)
+            (self.payload_length,) = unpack_from(b'!H', self.header_buf, 2)
             self.mask = memoryview(self.header_buf)[4:8]
         else:
-            self.payload_length, = unpack_from(b'!Q', self.header_buf, 2)
+            (self.payload_length,) = unpack_from(b'!Q', self.header_buf, 2)
             self.mask = memoryview(self.header_buf)[10:14]
         self.frame_starting = True
         self.bytes_received = 0
@@ -139,7 +136,7 @@ class ReadFrame:  # {{{
                 conn.ws_data_received(self.empty, self.opcode, True, True, self.fin)
                 self.reset()
             else:
-                self.rview = memoryview(self.rbuf)[:self.payload_length]
+                self.rview = memoryview(self.rbuf)[: self.payload_length]
                 self.state = self.read_packet
         else:
             self.rview = memoryview(self.rbuf)
@@ -150,7 +147,7 @@ class ReadFrame:  # {{{
         if num_bytes == 0:
             return
         if num_bytes >= len(self.rview):
-            data = memoryview(self.rbuf)[:self.payload_length]
+            data = memoryview(self.rbuf)[: self.payload_length]
             fast_mask(data, self.mask)
             conn.ws_data_received(data, self.opcode, True, True, self.fin)
             self.reset()
@@ -170,10 +167,11 @@ class ReadFrame:  # {{{
         if frame_finished:
             self.reset()
 
+
 # }}}
 
-
 # Sending frames {{{
+
 
 def create_frame(fin, opcode, payload, mask=None, rsv=0):
     if isinstance(payload, str):
@@ -194,7 +192,7 @@ def create_frame(fin, opcode, payload, mask=None, rsv=0):
         frame[1] = 127
     if mask is not None:
         frame[1] |= 0b10000000
-        frame[header_len-4:header_len] = mask
+        frame[header_len - 4 : header_len] = mask
         if l > 0:
             fast_mask(memoryview(frame)[-l:], mask)
 
@@ -202,7 +200,6 @@ def create_frame(fin, opcode, payload, mask=None, rsv=0):
 
 
 class MessageWriter:
-
     def __init__(self, buf, mask=None, chunk_size=None):
         self.buf, self.data_type, self.mask = buf, BINARY, mask
         if isinstance(buf, str):
@@ -230,14 +227,14 @@ class MessageWriter:
         opcode = 0 if self.first_frame_created else self.data_type
         self.first_frame_created, self.exhausted = True, bool(fin)
         return ReadOnlyFileBuffer(create_frame(fin, opcode, raw, self.mask))
-# }}}
 
+
+# }}}
 
 conn_id = 0
 
 
 class UTF8Decoder:  # {{{
-
     def __init__(self):
         self.reset()
 
@@ -248,11 +245,12 @@ class UTF8Decoder:  # {{{
     def reset(self):
         self.state = 0
         self.codep = 0
+
+
 # }}}
 
 
 class WebSocketConnection(HTTPConnection):
-
     # Internal API {{{
     in_websocket_mode = False
     websocket_handler = None
@@ -310,7 +308,15 @@ class WebSocketConnection(HTTPConnection):
     def set_ws_state(self):
         if self.ws_close_sent or self.ws_close_received:
             if self.ws_close_sent:
-                self.ready = False
+                if self.ws_close_received:
+                    # Both sides have exchanged CLOSE frames; safe to close.
+                    self.ready = False
+                else:
+                    # Half-closed: server sent CLOSE+FIN but client is still
+                    # sending.  Keep reading to drain the receive buffer so the
+                    # OS does not issue a RST that would destroy the CLOSE
+                    # frame already queued in the client's TCP receive buffer.
+                    self.wait_for = READ
             else:
                 self.wait_for = WRITE
             return
@@ -343,6 +349,12 @@ class WebSocketConnection(HTTPConnection):
         self.set_ws_state()
 
     def ws_read(self):
+        if self.ws_close_sent:
+            # Drain mode: read and discard incoming data so the OS does not
+            # send RST when we close.  Connection.recv() sets ready=False on
+            # EOF, which causes the event loop to call close() after draining.
+            self.recv(4096)
+            return
         if not self.stop_reading:
             self.read_frame(self)
 
@@ -413,6 +425,7 @@ class WebSocketConnection(HTTPConnection):
             with self.cf_lock:
                 self.control_frames.append(f)
         elif opcode == PONG:
+            assert self.websocket_handler is not None
             try:
                 self.websocket_handler.handle_websocket_pong(self.websocket_connection_id, data)
             except Exception:
@@ -441,6 +454,13 @@ class WebSocketConnection(HTTPConnection):
                 self.end_send_optimization()
                 if getattr(self.send_buf, 'is_close_frame', False):
                     self.ws_close_sent = True
+                    # Half-close the write side so the client receives FIN
+                    # after the CLOSE frame.  This unblocks the client's
+                    # read_messages() loop while we drain the receive buffer.
+                    try:
+                        self.socket.shutdown(socket.SHUT_WR)
+                    except OSError:
+                        pass
                 self.send_buf = None
         else:
             with self.cf_lock:
@@ -456,6 +476,7 @@ class WebSocketConnection(HTTPConnection):
 
     def close(self):
         if self.in_websocket_mode:
+            assert self.websocket_handler is not None
             try:
                 self.websocket_handler.handle_websocket_close(self.websocket_connection_id)
             except Exception:
@@ -471,20 +492,21 @@ class WebSocketConnection(HTTPConnection):
             Connection.close(self)
         else:
             HTTPConnection.close(self)
+
     # }}}
 
     def send_websocket_message(self, buf, wakeup=True):
-        ''' Send a complete message. This class will take care of splitting it
-        into appropriate frames automatically. `buf` must be a file like object. '''
+        """Send a complete message. This class will take care of splitting it
+        into appropriate frames automatically. `buf` must be a file like object."""
         self.sendq.put(MessageWriter(buf))
         self.wait_for = RDWR
         if wakeup:
             self.wakeup()
 
     def send_websocket_frame(self, data, is_first=True, is_last=True):
-        ''' Useful for streaming handlers that want to break up messages into
+        """Useful for streaming handlers that want to break up messages into
         frames themselves. Note that these frames will be interleaved with
-        control frames, so they should not be too large. '''
+        control frames, so they should not be too large."""
         opcode = (TEXT if isinstance(data, str) else BINARY) if is_first else CONTINUATION
         fin = 1 if is_last else 0
         frame = create_frame(fin, opcode, data)
@@ -492,8 +514,8 @@ class WebSocketConnection(HTTPConnection):
             self.control_frames.append(ReadOnlyFileBuffer(frame))
 
     def send_websocket_ping(self, data=b''):
-        ''' Send a PING to the remote client, it should reply with a PONG which
-        will be sent to the handle_websocket_pong callback in your handler. '''
+        """Send a PING to the remote client, it should reply with a PONG which
+        will be sent to the handle_websocket_pong callback in your handler."""
         if isinstance(data, str):
             data = data.encode('utf-8')
         frame = create_frame(True, PING, data)
@@ -501,17 +523,17 @@ class WebSocketConnection(HTTPConnection):
             self.control_frames.append(ReadOnlyFileBuffer(frame))
 
     def handle_websocket_data(self, data, message_starting, message_finished):
-        ''' Called when some data is received from the remote client. In
+        '''Called when some data is received from the remote client. In
         general the data may not constitute a complete "message", use the
         message_starting and message_finished flags to re-assemble it into a
         complete message in the handler. Note that for binary data, data is a
         mutable object. If you intend to keep it around after this method
-        returns, create a bytestring from it, using tobytes(). '''
+        returns, create a bytestring from it, using tobytes().'''
+        assert self.websocket_handler is not None
         self.websocket_handler.handle_websocket_data(self.websocket_connection_id, data, message_starting, message_finished)
 
 
 class DummyHandler:
-
     def handle_websocket_upgrade(self, connection_id, connection_ref, inheaders):
         conn = connection_ref()
         conn.websocket_close(NORMAL_CLOSE, 'No WebSocket handler available')
@@ -530,8 +552,8 @@ class DummyHandler:
 
 # Run this file with calibre-debug and use wstest to run the Autobahn test suite
 
-class EchoHandler:
 
+class EchoHandler:
     def __init__(self, *args, **kwargs):
         self.ws_connections = {}
 

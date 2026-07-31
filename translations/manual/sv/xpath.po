@@ -3,18 +3,20 @@
 # This file is distributed under the same license as the calibre package.
 # 
 # Translators:
-# Karl Jonatan Nyberg, 2016-2017,2021-2022
-# Karl Jonatan Nyberg, 2019-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2016-2017,2021-2022
+# Jonatan Nyberg, 2019-2021
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017
+# Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2026\n"
+"Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +26,7 @@ msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
-msgstr "XPath-handledning"
+msgstr "XPath-introduktion"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
@@ -35,7 +37,7 @@ msgid ""
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for e-book related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr "I den här handledningen kommer du att få en kort introduktion till `XPath <https://sv.wikipedia.org/wiki/XPath>`_, ett frågespråk som kan användas för att välja godtyckliga delar av `HTML <https://sv.wikipedia.org/wiki/HTML>`_-dokument i calibre. XPath är en allmänt använd standard, och att googla det kommer att ge massor av information. Den här handledningen fokuserar däremot på att använda XPath för e-bokrelaterade uppgifter som att hitta kapitelrubriker i ett ostrukturerat HTML-dokument."
+msgstr "I den här handledningen får du en lättillgänglig introduktion till `XPath <https://en.wikipedia.org/wiki/XPath>`_, ett frågespråk som kan användas för att välja valfria delar av `HTML <https://en.wikipedia.org/wiki/HTML>`_-dokument i calibre. XPath är en etablerad standard och det finns mycket information om språket på internet. Den här handledningen fokuserar på hur XPath används för e-boksrelaterade uppgifter, till exempel för att hitta kapitelrubriker i ett ostrukturerat HTML-dokument."
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
@@ -50,20 +52,20 @@ msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr "Den enklaste formen av val är att välja taggar efter namn. Anta till exempel att du vill välja alla ``<h2>``-taggar i ett dokument. XPath-förfrågan till detta är helt enkelt::"
+msgstr "Det enklaste är att välja taggar efter namn. Anta till exempel att du vill välja alla ``<h2>``-taggar i ett dokument. XPath-uttrycket är då helt enkelt::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr "Prefixet `//` betyder *sökning på alla nivåer i dokumentet*. Anta nu att du vill söka efter ``<span>``-taggar som finns inuti ``<a>``-taggar. Det kan uppnås med::"
+msgstr "Prefixet `//` betyder *sök på valfri nivå i dokumentet*. Anta nu att du vill söka efter ``<span>``-taggar som finns inuti ``<a>``-taggar. Det kan göras med::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr "Om du vill söka efter taggar på en viss nivå i dokumentet, ändra prefixet::"
+msgstr "Om du vill söka efter taggar på en viss nivå i dokumentet ändrar du prefixet::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
@@ -73,7 +75,7 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr "Det här kommer endast att matcha ``<p>En mycket kort e-bok för att demonstrera användningen av XPath.</p>`` i :ref:`sample_ebook` men inte någon av de andra ``<p>``-taggarna. Prefixet ``h:`` i exemplen ovan behövs för att matcha XHTML-taggar. Det här beror på att calibre internt representerar allt innehåll som XHTML. I XHTML har taggar ett *namespace* och ``h:`` är namespace-prefixet för HTML-taggar."
+msgstr "Detta matchar endast ``<p>A very short e-book to demonstrate the use of XPath.</p>`` i :ref:`sample_ebook`, inte någon av de andra ``<p>``-taggarna. Prefixet ``h:`` i exemplen ovan krävs för att matcha XHTML-taggar. Det beror på att calibre internt representerar allt innehåll som XHTML. I XHTML tillhör taggar ett *namnområde*, och ``h:`` är namnrymdsprefixet för HTML-taggar."
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
@@ -82,7 +84,7 @@ msgid ""
 "a test that is used to select tags. Tests can be arbitrarily powerful and as"
 " this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr "Anta nu att du vill välja både ``<h1>``- och ``<h2>``-taggar. För att göra det behöver vi en XPath-konstruktion som heter *predicate*. :dfn:`predicate` är helt enkelt ett test som används för att välja taggar. Tester kan vara godtyckligt kraftfulla och allt eftersom den här handledningen fortskrider kommer du att se fler kraftfulla exempel. Ett predikat skapas genom att omsluta testuttrycket inom hakparenteser::"
+msgstr "Anta nu att du vill välja både ``<h1>``- och ``<h2>``-taggar. Då behöver vi en XPath-konstruktion som kallas *predikat*. Ett :dfn:`predikat` är ett villkor som används för att välja taggar. Villkoren kan vara godtyckligt avancerade, och längre fram i handledningen visas kraftfullare exempel. Ett predikat skapas genom att omge villkorsuttrycket med hakparenteser::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
@@ -94,7 +96,7 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr "Det finns flera nya funktioner i detta XPath-uttryck. Den första är användningen av tecknet ``*``. Det betyder *matcha alla taggar*. Titta nu på testuttrycket ``name()='h1' or name()='h2'``. :term:`name()` är ett exempel på en *inbyggd funktion*. Den utvärderar helt enkelt namnet på taggen. Så genom att använda det kan vi välja taggar vars namn är antingen `h1` eller `h2`. Observera att funktionen :term:`name()` ignorerar namespaces så det inte finns något behov av prefixet ``h:``. XPath har flera användbara inbyggda funktioner. Några fler kommer att introduceras i den här guiden."
+msgstr "Det finns flera nya delar i XPath-uttrycket. Den första är jokertecknet ``*``, som betyder *matcha valfri tagg*. Titta sedan på villkorsuttrycket ``name()='h1' or name()='h2'``. :term:`name()` är en *inbyggd funktion* som returnerar taggens namn. Med den kan vi välja taggar vars namn är antingen `h1` eller `h2`. Funktionen :term:`name()` ignorerar namnrymder, så prefixet ``h:`` behövs inte. XPath har flera användbara inbyggda funktioner. Några fler presenteras i den här handledningen."
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
@@ -104,14 +106,14 @@ msgstr "Välja efter attribut"
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr "För att välja taggar baserat på deras attribut, användning av predikat krävs::"
+msgstr "För att välja taggar utifrån deras attribut krävs predikat::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr "Här hänvisar operatören ``@`` till attributen för taggen. Du kan använda en del av de `XPath inbyggda funktioner`_ att utföra mer avancerad matchning på attributvärden."
+msgstr "Här hänvisar operatorn ``@`` till taggens attribut. Du kan använda några av `XPaths inbyggda funktioner`_ för att göra mer avancerade matchningar av attributvärden."
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:76
 msgid "Selecting by tag content"
@@ -122,7 +124,7 @@ msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr "Med hjälp av XPath kan du även välja taggar som baseras på text de innehåller. Det bästa sättet att göra detta är att använda kraften i *reguljära uttryck* via den inbyggda funktionen :term:`re:test()`::"
+msgstr "Med XPath kan du även välja taggar utifrån den text de innehåller. Det bästa sättet är att använda *reguljära uttryck* via den inbyggda funktionen :term:`re:test()`::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:84
 msgid ""
@@ -132,11 +134,11 @@ msgstr "Här hänvisar ``.``-operatören till innehållet i taggen, precis som `
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:90
 msgid "Sample e-book"
-msgstr "Exempel e-bok"
+msgstr "Exempel-e-bok"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:96
 msgid "XPath built-in functions"
-msgstr "XPath inbyggda funktioner"
+msgstr "XPaths inbyggda funktioner"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:99
 msgid "name()"
@@ -165,4 +167,4 @@ msgid ""
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr "``re:test(src, pattern, flags)`` returnerar `true` om strängen `src` matchar med det reguljära uttrycks `mönster`. En särskilt användbar flaggan är ``i``, det gör matchning skiftlägesokänslig. En bra grund på syntaxen för reguljära uttryck finns på `regexp syntax <https://docs.python.org/library/re.html>`_"
+msgstr "``re:test(src, pattern, flags)`` returnerar `true` om strängen `src` matchar det reguljära uttrycket `pattern`. En särskilt användbar flagga är ``i``, som gör matchningen skiftlägesokänslig. En bra introduktion till syntaxen finns i `Python-dokumentationen <https://docs.python.org/library/re.html>`_."

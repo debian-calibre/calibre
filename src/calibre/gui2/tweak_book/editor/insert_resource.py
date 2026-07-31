@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 import os
 import sys
@@ -36,13 +33,14 @@ from qt.core import (
     QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
+    QWidget,
     pyqtSignal,
 )
 
 from calibre import fit_image
 from calibre.ebooks.metadata import string_to_authors
 from calibre.ebooks.metadata.book.base import Metadata
-from calibre.gui2 import choose_files, empty_index, error_dialog, pixmap_to_data
+from calibre.gui2 import choose_files, empty_index, error_dialog, pixmap_to_data, qapplication_or_fail
 from calibre.gui2.languages import LanguagesEdit
 from calibre.gui2.tweak_book import current_container, tprefs
 from calibre.gui2.tweak_book.file_list import name_is_ok
@@ -50,13 +48,12 @@ from calibre.gui2.tweak_book.widgets import Dialog
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.startup import connect_lambda
 from calibre.utils.icu import numeric_sort_key
-from calibre.utils.localization import canonicalize_lang, get_lang
+from calibre.utils.localization import _, canonicalize_lang, get_lang
 from calibre_extensions.progress_indicator import set_no_activate_on_click
 
 
 class ChooseName(Dialog):  # {{{
-
-    ''' Chooses the filename for a newly imported file, with error checking '''
+    """Chooses the filename for a newly imported file, with error checking"""
 
     def __init__(self, candidate, parent=None):
         self.candidate = candidate
@@ -87,19 +84,24 @@ class ChooseName(Dialog):  # {{{
 
     def accept(self):
         if not self.verify():
-            return error_dialog(self, _('No name specified'), _(
-                'You must specify a file name for the new file, with an extension.'), show=True)
+            return error_dialog(
+                self,
+                _('No name specified'),
+                _('You must specify a file name for the new file, with an extension.'),
+                show=True,
+            )
         n = str(self.name_edit.text()).replace('\\', '/')
         name, ext = n.rpartition('.')[0::2]
         self.filename = name + '.' + ext.lower()
         super().accept()
-# }}}
 
+
+# }}}
 
 # Images {{{
 
-class ImageDelegate(QStyledItemDelegate):
 
+class ImageDelegate(QStyledItemDelegate):
     MARGIN = 4
 
     def __init__(self, parent):
@@ -109,7 +111,7 @@ class ImageDelegate(QStyledItemDelegate):
 
     def change_size(self, increase=True):
         percent = 10 if increase else -10
-        frac = (100 + percent) / 100.
+        frac = (100 + percent) / 100.0
         self.current_basic_size[0] = min(1200, max(40, int(frac * self.current_basic_size[0])))
         self.current_basic_size[1] = min(1600, max(60, int(frac * self.current_basic_size[1])))
         tprefs.set('image-thumbnail-preview-size', self.current_basic_size)
@@ -118,10 +120,12 @@ class ImageDelegate(QStyledItemDelegate):
     def set_dimensions(self):
         width, height = self.current_basic_size
         self.cover_size = QSize(width, height)
-        f = self.parent().font()
+        p = self.parent()
+        assert isinstance(p, QWidget)
+        f = p.font()
         sz = f.pixelSize()
         if sz < 5:
-            sz = int(f.pointSize() * self.parent().logicalDpiY() / 72.0)
+            sz = int(f.pointSize() * p.logicalDpiY() / 72.0)
         self.title_height = max(25, sz + 10)
         self.item_size = self.cover_size + QSize(2 * self.MARGIN, (2 * self.MARGIN) + self.title_height)
         self.calculate_spacing()
@@ -153,7 +157,11 @@ class ImageDelegate(QStyledItemDelegate):
                 if not cover.isNull():
                     scaled, width, height = fit_image(cover.width(), cover.height(), self.cover_size.width(), self.cover_size.height())
                     if scaled:
-                        cover = self.cover_cache[name] = cover.scaled(int(dpr*width), int(dpr*height), transformMode=Qt.TransformationMode.SmoothTransformation)
+                        cover = self.cover_cache[name] = cover.scaled(
+                            int(dpr * width),
+                            int(dpr * height),
+                            transformMode=Qt.TransformationMode.SmoothTransformation,
+                        )
 
         painter.save()
         try:
@@ -162,22 +170,24 @@ class ImageDelegate(QStyledItemDelegate):
             trect = QRect(rect)
             rect.setBottom(rect.bottom() - self.title_height)
             if not cover.isNull():
-                dx = max(0, int((rect.width() - int(cover.width()/cover.devicePixelRatio()))/2.0))
-                dy = max(0, rect.height() - int(cover.height()/cover.devicePixelRatio()))
+                dx = max(0, int((rect.width() - int(cover.width() / cover.devicePixelRatio())) / 2.0))
+                dy = max(0, rect.height() - int(cover.height() / cover.devicePixelRatio()))
                 rect.adjust(dx, dy, -dx, 0)
                 painter.drawPixmap(rect, cover)
             rect = trect
             rect.setTop(rect.bottom() - self.title_height + 5)
             painter.setRenderHint(QPainter.RenderHint.TextAntialiasing, True)
             metrics = painter.fontMetrics()
-            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter|Qt.TextFlag.TextSingleLine,
-                                metrics.elidedText(name, Qt.TextElideMode.ElideLeft, rect.width()))
+            painter.drawText(
+                rect,
+                Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextSingleLine,
+                metrics.elidedText(name, Qt.TextElideMode.ElideLeft, rect.width()),
+            )
         finally:
             painter.restore()
 
 
 class Images(QAbstractListModel):
-
     def __init__(self, parent):
         QAbstractListModel.__init__(self, parent)
         self.icon_size = parent.iconSize()
@@ -194,16 +204,17 @@ class Images(QAbstractListModel):
 
     def refresh(self):
         from calibre.gui2.tweak_book.boss import get_boss
+
         boss = get_boss()
         boss.commit_all_editors_to_container()
         self.beginResetModel()
         self.build()
         self.endResetModel()
 
-    def rowCount(self, *args):
+    def rowCount(self, parent=None):
         return len(self.image_names)
 
-    def data(self, index, role):
+    def data(self, index, role=None):
         try:
             name = self.image_names[index.row()]
         except IndexError:
@@ -214,13 +225,16 @@ class Images(QAbstractListModel):
 
 
 class InsertImage(Dialog):
-
     image_activated = pyqtSignal(object)
 
     def __init__(self, parent=None, for_browsing=False):
         self.for_browsing = for_browsing
-        Dialog.__init__(self, _('Images in book') if for_browsing else _('Choose an image'),
-                        'browse-image-dialog' if for_browsing else 'insert-image-dialog', parent)
+        Dialog.__init__(
+            self,
+            _('Images in book') if for_browsing else _('Choose an image'),
+            'browse-image-dialog' if for_browsing else 'insert-image-dialog',
+            parent,
+        )
         self.chosen_image = None
         self.chosen_image_is_external = False
 
@@ -271,16 +285,19 @@ class InsertImage(Dialog):
             self.bb.clear()
             self.bb.addButton(QDialogButtonBox.StandardButton.Close)
             b = self.refresh_button = self.bb.addButton(_('&Refresh'), QDialogButtonBox.ButtonRole.ActionRole)
+            assert b is not None
             b.clicked.connect(self.refresh)
             b.setIcon(QIcon.ic('view-refresh.png'))
             b.setToolTip(_('Refresh the displayed images'))
             self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose, False)
         else:
             b = self.import_button = self.bb.addButton(_('&Import image'), QDialogButtonBox.ButtonRole.ActionRole)
+            assert b is not None
             b.clicked.connect(self.import_image)
             b.setIcon(QIcon.ic('view-image.png'))
             b.setToolTip(_('Import an image from elsewhere in your computer'))
             b = self.paste_button = self.bb.addButton(_('&Paste image'), QDialogButtonBox.ButtonRole.ActionRole)
+            assert b is not None
             b.clicked.connect(self.paste_image)
             b.setIcon(QIcon.ic('edit-paste.png'))
             b.setToolTip(_('Paste an image from the clipboard'))
@@ -297,9 +314,11 @@ class InsertImage(Dialog):
             l.addLayout(h, 3, 0, 1, -1)
             h.addWidget(f), h.addStretch(10), h.addWidget(a)
         b = self.bb.addButton(_('&Zoom in'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.clicked.connect(self.zoom_in)
         b.setIcon(QIcon.ic('plus.png'))
         b = self.bb.addButton(_('Zoom &out'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.clicked.connect(self.zoom_out)
         b.setIcon(QIcon.ic('minus.png'))
         l.addWidget(self.bb, 4, 0, 1, 2)
@@ -316,8 +335,14 @@ class InsertImage(Dialog):
         self.model.refresh()
 
     def import_image(self):
-        path = choose_files(self, 'tweak-book-choose-image-for-import', _('Choose image'),
-                            filters=[(_('Images'), ('jpg', 'jpeg', 'png', 'gif', 'svg'))], all_files=True, select_only_single_file=True)
+        path = choose_files(
+            self,
+            'tweak-book-choose-image-for-import',
+            _('Choose image'),
+            filters=[(_('Images'), ('jpg', 'jpeg', 'png', 'gif', 'svg'))],
+            all_files=True,
+            select_only_single_file=True,
+        )
         if path:
             path = path[0]
             basename = os.path.basename(path)
@@ -337,19 +362,23 @@ class InsertImage(Dialog):
         self.model.beginResetModel(), self.model.endResetModel()
 
     def paste_image(self):
-        c = QApplication.instance().clipboard()
+        c = qapplication_or_fail().clipboard()
+        assert c is not None
         img = c.image()
         if img.isNull():
             img = c.image(QClipboard.Mode.Selection)
         if img.isNull():
-            return error_dialog(self, _('No image'), _(
-                'There is no image on the clipboard'), show=True)
+            return error_dialog(self, _('No image'), _('There is no image on the clipboard'), show=True)
         d = ChooseName('image.jpg', self)
         if d.exec() == QDialog.DialogCode.Accepted and d.filename:
             fmt = d.filename.rpartition('.')[-1].lower()
             if fmt not in {'jpg', 'jpeg', 'png'}:
-                return error_dialog(self, _('Invalid file extension'), _(
-                    'The file name you choose must have a .jpg or .png extension'), show=True)
+                return error_dialog(
+                    self,
+                    _('Invalid file extension'),
+                    _('The file name you choose must have a .jpg or .png extension'),
+                    show=True,
+                )
             t = PersistentTemporaryFile(prefix='editor-paste-image-', suffix='.' + fmt)
             t.write(pixmap_to_data(img, fmt))
             t.close()
@@ -374,6 +403,7 @@ class InsertImage(Dialog):
         f = str(self.filter.text())
         self.fm.setFilterFixedString(f)
 
+
 # }}}
 
 
@@ -381,7 +411,12 @@ def get_resource_data(rtype, parent):
     if rtype == 'image':
         d = InsertImage(parent)
         if d.exec() == QDialog.DialogCode.Accepted:
-            return d.chosen_image, d.chosen_image_is_external, d.fullpage.isChecked(), d.preserve_aspect_ratio.isChecked()
+            return (
+                d.chosen_image,
+                d.chosen_image_is_external,
+                d.fullpage.isChecked(),
+                d.preserve_aspect_ratio.isChecked(),
+            )
 
 
 def create_folder_tree(container):
@@ -398,7 +433,6 @@ def create_folder_tree(container):
 
 
 class ChooseFolder(Dialog):  # {{{
-
     def __init__(self, msg=None, parent=None):
         self.msg = msg
         Dialog.__init__(self, _('Choose folder'), 'choose-folder', parent=parent)
@@ -407,8 +441,7 @@ class ChooseFolder(Dialog):  # {{{
         self.l = l = QVBoxLayout(self)
         self.setLayout(l)
 
-        self.msg = m = QLabel(self.msg or _(
-        'Choose the folder into which the files will be placed'))
+        self.msg = m = QLabel(self.msg or _('Choose the folder into which the files will be placed'))
         l.addWidget(m)
         m.setWordWrap(True)
 
@@ -425,6 +458,7 @@ class ChooseFolder(Dialog):  # {{{
             for child in sorted(node, key=numeric_sort_key):
                 c = QTreeWidgetItem(parent, (child,))
                 process(node[child], c)
+
         process(create_folder_tree(current_container()), self.root)
         self.root.setSelected(True)
         f.expandAll()
@@ -462,11 +496,12 @@ class ChooseFolder(Dialog):  # {{{
             return '/'.join(self.folder_path(self.folders.selectedItems()[0]))
         except IndexError:
             return ''
+
+
 # }}}
 
 
 class NewBook(Dialog):  # {{{
-
     def __init__(self, parent=None):
         self.fmt = 'epub'
         Dialog.__init__(self, _('Create new book'), 'create-new-book', parent=parent)
@@ -492,8 +527,10 @@ class NewBook(Dialog):  # {{{
         bb.clear()
         bb.addButton(QDialogButtonBox.StandardButton.Cancel)
         b = bb.addButton('&EPUB', QDialogButtonBox.ButtonRole.AcceptRole)
+        assert b is not None
         connect_lambda(b.clicked, self, lambda self: self.set_fmt('epub'))
         b = bb.addButton('&AZW3', QDialogButtonBox.ButtonRole.AcceptRole)
+        assert b is not None
         connect_lambda(b.clicked, self, lambda self: self.set_fmt('azw3'))
 
     def set_fmt(self, fmt):
@@ -513,13 +550,14 @@ class NewBook(Dialog):  # {{{
         mi.languages = self.languages.lang_codes or [get_lang()]
         return mi
 
-# }}}
 
+# }}}
 
 if __name__ == '__main__':
     app = QApplication([])  # noqa: F841
     from calibre.gui2.tweak_book import set_current_container
     from calibre.gui2.tweak_book.boss import get_container
+
     set_current_container(get_container(sys.argv[-1]))
 
     d = InsertImage(for_browsing=True)

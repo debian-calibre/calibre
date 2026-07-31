@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, Kovid Goyal <kovid@kovidgoyal.net>
 
 import json
 from threading import Thread
@@ -47,10 +43,10 @@ from calibre.gui2.preferences import LazyConfigWidgetBase, Setting, get_move_cou
 from calibre.gui2.preferences.coloring import EditRules
 from calibre.gui2.ui import get_gui
 from calibre.utils.formatter import EvalFormatter
+from calibre.utils.localization import _
 
 
 class DefaultAuthorLink(QWidget):
-
     changed_signal = pyqtSignal()
 
     def __init__(self, parent):
@@ -64,26 +60,28 @@ class DefaultAuthorLink(QWidget):
         self.choices = c = QComboBox()
         c.setMinimumContentsLength(30)
         for text, data in [
-                (_('Search for the author on Goodreads'), 'search-goodreads'),
-                (_('Search for the author on Amazon'), 'search-amzn'),
-                (_('Search for the author in your calibre library'), 'search-calibre'),
-                (_('Search for the author on Wikipedia'), 'search-wikipedia'),
-                (_('Search for the author on Google Books'), 'search-google'),
-                (_('Search for the book on Goodreads'), 'search-goodreads-book'),
-                (_('Search for the book on Amazon'), 'search-amzn-book'),
-                (_('Search for the book on Google Books'), 'search-google-book'),
-                (_('No author search URL'), NO_SEARCH_LINK),
-                (_('Use a custom search URL'), 'url'),
+            (_('Search for the author on Goodreads'), 'search-goodreads'),
+            (_('Search for the author on Amazon'), 'search-amzn'),
+            (_('Search for the author in your calibre library'), 'search-calibre'),
+            (_('Search for the author on Wikipedia'), 'search-wikipedia'),
+            (_('Search for the author on Google Books'), 'search-google'),
+            (_('Search for the book on Goodreads'), 'search-goodreads-book'),
+            (_('Search for the book on Amazon'), 'search-amzn-book'),
+            (_('Search for the book on Google Books'), 'search-google-book'),
+            (_('No author search URL'), NO_SEARCH_LINK),
+            (_('Use a custom search URL'), 'url'),
         ]:
             c.addItem(text, data)
         l.addRow(_('Clicking on &author names should:'), c)
         ul = QHBoxLayout()
         self.custom_url = u = QLineEdit(self)
-        u.setToolTip(_(
-            'Enter the URL to search. It should contain the string {0}'
-            '\nwhich will be replaced by the author name. For example,'
-            '\n{1}. Note: the author name is already URL-encoded.').format(
-                        '{author}', 'https://en.wikipedia.org/w/index.php?search={author}'))
+        u.setToolTip(
+            _(
+                'Enter the URL to search. It should contain the string {0}'
+                '\nwhich will be replaced by the author name. For example,'
+                '\n{1}. Note: the author name is already URL-encoded.'
+            ).format('{author}', 'https://en.wikipedia.org/w/index.php?search={author}')
+        )
         u.textChanged.connect(self.changed_signal)
         u.setPlaceholderText(_('Enter the URL'))
         ul.addWidget(u)
@@ -113,7 +111,7 @@ class DefaultAuthorLink(QWidget):
         self.choices.setCurrentIndex(i)
 
     def open_template_tester(self):
-        gui = get_gui()
+        gui = get_gui(fail_if_absent=True)
         db = gui.current_db.new_api
         lv = gui.library_view
         rows = lv.selectionModel().selectedRows()
@@ -122,11 +120,17 @@ class DefaultAuthorLink(QWidget):
         else:
             vals = []
             for row in rows:
-                book_id = lv.model().id(row)
+                from calibre.gui2.library.models import BooksModel as _BooksModel
+
+                lv_model = lv.model()
+                assert isinstance(lv_model, _BooksModel)
+                book_id = lv_model.id(row)
                 mi = db.new_api.get_proxy_metadata(book_id)
-                vals.append({'author': qquote(mi.authors[0]),
-                             'title': qquote(mi.title),
-                             'author_sort': qquote(mi.author_sort_map.get(mi.authors[0]))})
+                vals.append({
+                    'author': qquote(mi.authors[0]),
+                    'title': qquote(mi.title),
+                    'author_sort': qquote(mi.author_sort_map.get(mi.authors[0])),
+                })
         d = TemplateDialog(parent=self, text=self.custom_url.text(), mi=vals, formatter=EvalFormatter)
         if d.exec() == QDialog.DialogCode.Accepted:
             self.custom_url.setText(d.rule[1])
@@ -141,7 +145,6 @@ class DefaultAuthorLink(QWidget):
 
 
 class DisplayedFields(QAbstractListModel):
-
     def __init__(self, db, parent=None, pref_name=None, category_icons=None):
         self.pref_name = pref_name or 'book_display_fields'
         QAbstractListModel.__init__(self, parent)
@@ -160,10 +163,10 @@ class DisplayedFields(QAbstractListModel):
         self.endResetModel()
         self.changed = True
 
-    def rowCount(self, *args):
+    def rowCount(self, parent=...):
         return len(self.fields)
 
-    def data(self, index, role):
+    def data(self, index, role=...):
         try:
             field, visible = self.fields[index.row()]
         except Exception:
@@ -201,10 +204,10 @@ class DisplayedFields(QAbstractListModel):
         ans = QAbstractListModel.flags(self, index)
         return ans | Qt.ItemFlag.ItemIsUserCheckable
 
-    def setData(self, index, val, role):
+    def setData(self, index, value, role=...):
         ret = False
         if role == Qt.ItemDataRole.CheckStateRole:
-            self.fields[index.row()][1] = val in (Qt.CheckState.Checked, Qt.CheckState.Checked.value)
+            self.fields[index.row()][1] = value in (Qt.CheckState.Checked, Qt.CheckState.Checked.value)
             self.changed = True
             ret = True
             self.dataChanged.emit(index, index)
@@ -226,8 +229,8 @@ class DisplayedFields(QAbstractListModel):
         row = idx.row() + delta
         if row >= 0 and row < len(self.fields):
             t = self.fields[row]
-            self.fields[row] = self.fields[row-delta]
-            self.fields[row-delta] = t
+            self.fields[row] = self.fields[row - delta]
+            self.fields[row - delta] = t
             self.dataChanged.emit(idx, idx)
             idx = self.index(row)
             self.dataChanged.emit(idx, idx)
@@ -236,11 +239,9 @@ class DisplayedFields(QAbstractListModel):
 
 
 class RulesSetting(Setting):
-
     def __init__(self, name, config_obj, widget, gui_name=None, **kw):
-        self.name, self.gui_name = name, gui_name
-        if gui_name is None:
-            self.gui_name = 'opt_'+name
+        self.name = name
+        self.gui_name = gui_name or 'opt_' + name
         self.widget = widget
         self.edit_rules: EditRulesWidget = getattr(widget, self.gui_name)
         self.edit_rules.changed_signal.connect(self.widget.changed_signal)
@@ -257,7 +258,6 @@ class RulesSetting(Setting):
 
 
 class EditRulesWidget(QWidget):
-
     rule_set_name = ''
     changed_signal = pyqtSignal()
 
@@ -275,7 +275,8 @@ class EditRulesWidget(QWidget):
             return
         self.initialized = True
         from calibre.gui2.ui import get_gui
-        db = get_gui().current_db
+
+        db = get_gui(fail_if_absent=True).current_db
         mi = selected_rows_metadatas()
         self.rules_editor.initialize(db.field_metadata, db.prefs, mi, self.rule_set_name)
 
@@ -286,16 +287,16 @@ class EditRulesWidget(QWidget):
     def commit(self):
         self.initialize()
         from calibre.gui2.ui import get_gui
-        db = get_gui().current_db
+
+        db = get_gui(fail_if_absent=True).current_db
         self.rules_editor.commit(db.prefs)
 
-    def showEvent(self, ev):
+    def showEvent(self, a0):
         self.initialize()
-        super().showEvent(ev)
+        super().showEvent(a0)
 
 
 class EditRulesConfigWidgetBase(LazyConfigWidgetBase):
-
     rule_set_name = ''
 
     def setupUi(self, self_):
@@ -318,7 +319,6 @@ class ColumnIconRules(EditRulesConfigWidgetBase):
 
 
 class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
-
     changed_signal = pyqtSignal()
     restart_now = pyqtSignal()
 
@@ -355,6 +355,7 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
             self.load_from_gprefs()
 
         def load_from_gprefs(self, use_defaults=False):
+            assert self.config_name is not None
             rs = resolve_custom_background
             self.bcol_dark = QColor(*rs(self.config_name, for_dark=True, use_defaults=use_defaults))
             self.bcol_light = QColor(*rs(self.config_name, for_dark=False, use_defaults=use_defaults))
@@ -377,6 +378,7 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
 
         def change_texture(self, light=False):
             from calibre.gui2.preferences.texture_chooser import TextureChooser
+
             btex = self.btex_light if light else self.btex_dark
             d = TextureChooser(parent=self, initial=btex)
             if d.exec() == QDialog.DialogCode.Accepted:
@@ -388,8 +390,9 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
 
         def change_color(self, light=False):
             which = _('light') if light else _('dark')
-            col = QColorDialog.getColor(self.bcol_light if light else self.bcol_dark,
-                    self, _('Choose {} background color').format(which))
+            bcol = self.bcol_light if light else self.bcol_dark
+            assert bcol is not None
+            col = QColorDialog.getColor(bcol, self, _('Choose {} background color').format(which))
 
             if col.isValid():
                 if light:
@@ -399,9 +402,10 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
                 btex = self.btex_light if light else self.btex_dark
                 if btex:
                     if question_dialog(
-                        self, _('Remove background image?'),
-                        _('There is currently a background image set, so the color'
-                          ' you have chosen will not be visible. Remove the background image?')):
+                        self,
+                        _('Remove background image?'),
+                        _('There is currently a background image set, so the color you have chosen will not be visible. Remove the background image?'),
+                    ):
                         if light:
                             self.btex_light = None
                         else:
@@ -417,16 +421,19 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
             text = (
                 '<p style="text-align: center; color: {}"><b>{}</b><br>'
                 '<a style="text-decoration: none" href="la://color.me">{}</a><br>'
-                '<a style="text-decoration: none" href="la://texture.me">{}</a></p>')
+                '<a style="text-decoration: none" href="la://texture.me">{}</a></p>'
+            )
             self.light_label.setText(text.format('black', _('Light'), _('Change color'), _('Change texture')))
             self.dark_label.setText(text.format('white', _('Dark'), _('Change color'), _('Change texture')))
 
         def update_brush(self):
             self.light_brush = QBrush(self.bcol_light)
             self.dark_brush = QBrush(self.bcol_dark)
+
             def dotex(path, brush):
                 if path:
                     from calibre.gui2.preferences.texture_chooser import texture_path
+
                     path = texture_path(path)
                     if path:
                         p = QPixmap(path)
@@ -436,30 +443,36 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
                             dpr = self.devicePixelRatio()
                         p.setDevicePixelRatio(dpr)
                         brush.setTexture(p)
+
             dotex(self.btex_light, self.light_brush)
             dotex(self.btex_dark, self.dark_brush)
 
-        def restore_defaults(self):
+        def restore_defaults(self, *args):
             self.load_from_gprefs(use_defaults=True)
             self.changed_signal.emit()
 
-        def commit(self):
+        def commit(self, *args):
+            assert self.config_name is not None
             s = gprefs[self.config_name].copy()
-            s['light'] = tuple(self.bcol_light.getRgb())[:3]
-            s['dark'] = tuple(self.bcol_dark.getRgb())[:3]
+            bcol_light = self.bcol_light
+            assert bcol_light is not None
+            bcol_dark = self.bcol_dark
+            assert bcol_dark is not None
+            s['light'] = tuple(bcol_light.getRgb())[:3]
+            s['dark'] = tuple(bcol_dark.getRgb())[:3]
             s['light_texture'] = self.btex_light
             s['dark_texture'] = self.btex_dark
             gprefs[self.config_name] = s
 
-        def paintEvent(self, ev):
+        def paintEvent(self, a0):
             painter = QPainter(self)
             r = self.rect()
-            light = r.adjusted(0, 0, -r.width()//2, 0)
+            light = r.adjusted(0, 0, -r.width() // 2, 0)
             dark = r.adjusted(light.width(), 0, 0, 0)
             painter.fillRect(light, self.light_brush)
             painter.fillRect(dark, self.dark_brush)
             painter.end()
-            super().paintEvent(ev)
+            super().paintEvent(a0)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -485,7 +498,6 @@ class BackgroundConfig(QGroupBox, LazyConfigWidgetBase):
 
 
 class CoverCacheConfig(LazyConfigWidgetBase):
-
     size_calculated = pyqtSignal(object)
 
     def __init__(self, parent=None):
@@ -504,10 +516,13 @@ class CoverCacheConfig(LazyConfigWidgetBase):
         description = QLabel(group_box)
         description.setWordWrap(True)
         description.setText(
-            _("There are two kinds of caches that calibre uses to improve performance when rendering covers."
-            " A disk cache that is kept on your hard disk and stores the cover thumbnails and an in memory cache"
-            " used to ensure flicker free rendering of covers. For best results, keep the memory cache small and the disk cache large,"
-            " unless you have a lot of extra RAM in your computer and don't mind it being used by the memory cache."))
+            _(
+                "There are two kinds of caches that calibre uses to improve performance when rendering covers."
+                " A disk cache that is kept on your hard disk and stores the cover thumbnails and an in memory cache"
+                " used to ensure flicker free rendering of covers. For best results, keep the memory cache small and the disk cache large,"
+                " unless you have a lot of extra RAM in your computer and don't mind it being used by the memory cache."
+            )
+        )
 
         self.lbl_cache_size_multiple = QLabel(_('Number of screenfulls of covers to cache in &memory (keep this small):'), group_box)
         self.opt_cache_size_multiple = QSpinBox(group_box)
@@ -515,9 +530,12 @@ class CoverCacheConfig(LazyConfigWidgetBase):
         self.opt_cache_size_multiple.setMaximum(100)
         self.opt_cache_size_multiple.setSingleStep(1)
         self.opt_cache_size_multiple.setToolTip(
-            _('The maximum number of screenfulls of thumbnails to keep in memory.'
-            ' Increasing this will make rendering faster, at the cost of more memory usage. Note that regardless of this setting,'
-            ' a minimum of one hundred thumbnails are always kept in memory, to ensure flicker free rendering.'))
+            _(
+                'The maximum number of screenfulls of thumbnails to keep in memory.'
+                ' Increasing this will make rendering faster, at the cost of more memory usage. Note that regardless of this setting,'
+                ' a minimum of one hundred thumbnails are always kept in memory, to ensure flicker free rendering.'
+            )
+        )
         self.lbl_cache_size_multiple.setBuddy(self.opt_cache_size_multiple)
 
         self.lbl_cache_size_disk = QLabel(_('Maximum amount of &disk space to use for caching thumbnails: '), group_box)
@@ -556,6 +574,7 @@ class CoverCacheConfig(LazyConfigWidgetBase):
 
     def link(self, cover_cache, name_disk_cache_size, name_cache_size_multiple=None):
         from calibre.gui2.library.caches import ThumbnailRenderer
+
         self.cover_cache: ThumbnailRenderer = cover_cache.renderer
         self.name_disk_cache_size = name_disk_cache_size
         self.name_cache_size_multiple = name_cache_size_multiple
@@ -592,34 +611,41 @@ class CoverCacheConfig(LazyConfigWidgetBase):
 
 
 def export_layout(in_widget, model=None):
-    filename = choose_save_file(in_widget, 'look_feel_prefs_import_export_field_list',
-            _('Save column list to file'),
-            filters=[(_('Column list'), ['json'])])
+    filename = choose_save_file(
+        in_widget,
+        'look_feel_prefs_import_export_field_list',
+        _('Save column list to file'),
+        filters=[(_('Column list'), ['json'])],
+    )
     if filename:
         try:
+            assert model is not None
             with open(filename, 'w') as f:
                 json.dump(model.fields, f, indent=1)
         except Exception as err:
-            error_dialog(in_widget, _('Export field layout'),
-                         _('<p>Could not write field list. Error:<br>%s')%err, show=True)
+            error_dialog(in_widget, _('Export field layout'), _('<p>Could not write field list. Error:<br>%s') % err, show=True)
 
 
 def import_layout(in_widget, model=None):
-    filename = choose_files(in_widget, 'look_feel_prefs_import_export_field_list',
-            _('Load column list from file'),
-            filters=[(_('Column list'), ['json'])])
+    filename = choose_files(
+        in_widget,
+        'look_feel_prefs_import_export_field_list',
+        _('Load column list from file'),
+        filters=[(_('Column list'), ['json'])],
+    )
     if filename:
         try:
             with open(filename[0]) as f:
                 fields = json.load(f)
+            assert model is not None
             model.initialize(pref_data_override=fields)
             in_widget.changed_signal.emit()
         except Exception as err:
-            error_dialog(in_widget, _('Import layout'),
-                         _('<p>Could not read field list. Error:<br>%s')%err, show=True)
+            error_dialog(in_widget, _('Import layout'), _('<p>Could not read field list. Error:<br>%s') % err, show=True)
 
 
 def reset_layout(in_widget, model=None):
+    assert model is not None
     model.initialize(use_defaults=True)
     if hasattr(in_widget, 'changed_signal'):
         in_widget.changed_signal.emit()
@@ -650,8 +676,10 @@ def move_field_down(widget, model, *args, use_kbd_modifiers=True):
 def selected_rows_metadatas():
     rslt = []
     try:
-        db = get_gui().current_db
-        rows = get_gui().current_view().selectionModel().selectedRows()
+        gui = get_gui()
+        assert gui is not None
+        db = gui.current_db
+        rows = gui.current_view().selectionModel().selectedRows()
         for row in rows:
             if row.isValid():
                 rslt.append(db.new_api.get_proxy_metadata(db.data.index_to_id(row.row())))

@@ -1,21 +1,23 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2025, Kovid Goyal <kovid at kovidgoyal.net>
 
+from typing import Any
+
 from qt.core import QComboBox, QDialog, QGroupBox, QHBoxLayout, QLabel, QStackedLayout, QVBoxLayout, QWidget
 
 from calibre.ai import AICapabilities
 from calibre.ai.prefs import plugin_for_purpose, plugins_for_purpose, prefs
 from calibre.gui2 import Application, error_dialog
+from calibre.utils.localization import _
 
 
 class ConfigureAI(QWidget):
-
     def __init__(self, purpose: AICapabilities = AICapabilities.text_to_text, parent: QWidget | None = None):
         super().__init__(parent)
         plugins = tuple(plugins_for_purpose(purpose))
         self.available_plugins = plugins
         self.purpose = purpose
-        self.plugin_config_widgets: tuple[QWidget, ...] = tuple(p.config_widget() for p in plugins)
+        self.plugin_config_widgets: tuple[Any, ...] = tuple(p.config_widget() for p in plugins)
         v = QVBoxLayout(self)
         self.gb = QGroupBox(self)
         self.stack = s = QStackedLayout(self.gb)
@@ -36,8 +38,9 @@ class ConfigureAI(QWidget):
         elif len(plugins) == 1:
             self.gb.setTitle(_('Configure AI provider: {}').format(plugins[0].name))
         else:
-            self.none_label = la = QLabel(_('No AI providers found that have the capabilities: {}. Make sure you have not'
-                               ' disabled some AI provider plugins').format(purpose))
+            self.none_label = la = QLabel(
+                _('No AI providers found that have the capabilities: {}. Make sure you have not disabled some AI provider plugins').format(purpose)
+            )
             s.addWidget(la)
         v.addWidget(self.gb)
 

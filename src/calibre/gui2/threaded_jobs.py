@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, Kovid Goyal <kovid@kovidgoyal.net>
 
 import json
 import os
@@ -18,18 +14,8 @@ from calibre.utils.logging import GUILog
 
 
 class ThreadedJob(BaseJob):
-
-    def __init__(self,
-            type_, description,
-
-            func, args, kwargs,
-
-            callback,
-
-            max_concurrent_count=1,
-            killable=True,
-            log=None):
-        '''
+    def __init__(self, type_, description, func, args, kwargs, callback, max_concurrent_count=1, killable=True, log=None):
+        """
         A job that is run in its own thread in the calibre main process
 
         :param type_: The type of this job (a string). The type is used in
@@ -60,7 +46,7 @@ class ThreadedJob(BaseJob):
 
         :param log: Must be a subclass of GUILog or None. If None a default
         GUILog is created.
-        '''
+        """
         BaseJob.__init__(self, description)
 
         self.type = type_
@@ -80,20 +66,25 @@ class ThreadedJob(BaseJob):
 
     def start_work(self):
         self.start_time = time.time()
+        assert self.log is not None
         self.log('Starting job:', self.description)
         try:
+            assert self.func is not None and self.args is not None and self.kwargs is not None
             self.result = self.func(*self.args, **self.kwargs)
         except Exception as e:
             self.exception = e
             self.failed = True
-            self.log.exception(f'Job: "{self.description}" failed with error:')
-            self.log.debug('Called with args:', self.args, self.kwargs)
+            log = self.log
+            assert log is not None
+            log.exception(f'Job: "{self.description}" failed with error:')
+            log.debug('Called with args:', self.args, self.kwargs)
 
         self.duration = time.time() - self.start_time
         try:
             self.callback(self)
         except Exception:
             import traceback
+
             traceback.print_exc()
         self._cleanup()
 
@@ -118,13 +109,16 @@ class ThreadedJob(BaseJob):
             self.duration = time.time() - self.start_time
             self.abort.set()
 
+        assert self.log is not None
         self.log('Aborted job:', self.description)
         self.killed = True
         self.failed = True
         self._cleanup()
 
     def consolidate_log(self):
-        logs = [self.log.html, self.log.plain_text]
+        log = self.log
+        assert log is not None
+        logs = [log.html, log.plain_text]
         bdir = base_dir()
         log_dir = os.path.join(bdir, 'threaded_job_logs')
         if not os.path.exists(log_dir):
@@ -139,24 +133,28 @@ class ThreadedJob(BaseJob):
         self.log = None
 
     def read_consolidated_log(self):
+        assert self.consolidated_log is not None
         with open(self.consolidated_log, 'rb') as f:
             return json.loads(f.read().decode('utf-8'))
 
     @property
     def details(self):
         if self.consolidated_log is None:
-            return self.log.plain_text
+            log = self.log
+            assert log is not None
+            return log.plain_text
         return self.read_consolidated_log()[1]
 
     @property
     def html_details(self):
         if self.consolidated_log is None:
-            return self.log.html
+            log = self.log
+            assert log is not None
+            return log.html
         return self.read_consolidated_log()[0]
 
 
 class ThreadedJobWorker(Thread):
-
     def __init__(self, job):
         Thread.__init__(self)
         self.daemon = True
@@ -169,12 +167,12 @@ class ThreadedJobWorker(Thread):
             import traceback
 
             from calibre import prints
+
             prints('Job had unhandled exception:', self.job.description)
             traceback.print_exc()
 
 
 class ThreadedJobServer(Thread):
-
     def __init__(self):
         Thread.__init__(self)
         self.daemon = True
@@ -201,6 +199,7 @@ class ThreadedJobServer(Thread):
                 self.run_once()
             except Exception:
                 import traceback
+
                 traceback.print_exc()
             time.sleep(0.1)
 

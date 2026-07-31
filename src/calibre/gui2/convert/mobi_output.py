@@ -1,22 +1,17 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
-
+# License: GPLv3 Copyright: 2009, Kovid Goyal <kovid@kovidgoyal.net>
 
 from calibre.ebooks.conversion.config import OPTIONS
 from calibre.gui2.convert import Widget
 from calibre.gui2.convert.mobi_output_ui import Ui_Form
+from calibre.utils.localization import _
 
 font_family_model = None
 
 
 class PluginWidget(Widget, Ui_Form):
-
     TITLE = _('MOBI output')
-    HELP = _('Options specific to')+' MOBI '+_('output')
+    HELP = _('Options specific to') + ' MOBI ' + _('output')
     COMMIT_NAME = 'mobi_output'
     ICON = 'mimetypes/mobi.png'
 

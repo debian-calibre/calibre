@@ -1,14 +1,13 @@
-'''
+"""
 Created on 4 Jun 2010
 
 @author: charles
-'''
+"""
 
 import json
 import traceback
 from datetime import datetime, time
 
-from calibre import isbytestring
 from calibre.constants import filesystem_encoding, preferred_encoding
 from calibre.ebooks.metadata.book import SERIALIZABLE_FIELDS
 from calibre.library.field_metadata import FieldMetadata
@@ -21,6 +20,7 @@ from polyglot.builtins import as_bytes
 
 def string_to_datetime(src):
     from calibre.utils.iso8601 import parse_iso8601
+
     if src != 'None':
         try:
             return parse_iso8601(src)
@@ -31,6 +31,7 @@ def string_to_datetime(src):
 
 def datetime_to_string(dateval):
     from calibre.utils.date import UNDEFINED_DATE, isoformat, local_tz
+
     if dateval is None:
         return 'None'
     if not isinstance(dateval, datetime):
@@ -43,10 +44,11 @@ def datetime_to_string(dateval):
 
 
 def encode_thumbnail(thumbnail):
-    '''
+    """
     Encode the image part of a thumbnail, then return the 3 part tuple
-    '''
+    """
     from calibre.utils.imghdr import identify
+
     if thumbnail is None:
         return None
     if not isinstance(thumbnail, (tuple, list)):
@@ -61,9 +63,9 @@ def encode_thumbnail(thumbnail):
 
 
 def decode_thumbnail(tup):
-    '''
+    """
     Decode an encoded thumbnail into its 3 component parts
-    '''
+    """
     if tup is None:
         return None
     return (tup[0], tup[1], from_base64_bytes(tup[2]))
@@ -74,10 +76,10 @@ def object_to_unicode(obj, enc=preferred_encoding):
     def dec(x):
         return x.decode(enc, 'replace')
 
-    if isbytestring(obj):
+    if isinstance(obj, bytes):
         return dec(obj)
     if isinstance(obj, (list, tuple)):
-        return [dec(x) if isbytestring(x) else object_to_unicode(x) for x in obj]
+        return [dec(x) if isinstance(x, bytes) else object_to_unicode(x) for x in obj]
     if isinstance(obj, dict):
         ans = {}
         for k, v in obj.items():
@@ -113,21 +115,17 @@ def decode_is_multiple(fm):
         if im:
             dt = fm.get('datatype', None)
             if dt == 'composite':
-                im = {'cache_to_list': ',', 'ui_to_list': ',',
-                      'list_to_ui': ', '}
+                im = {'cache_to_list': ',', 'ui_to_list': ',', 'list_to_ui': ', '}
             elif fm.get('display', {}).get('is_names', False):
-                im = {'cache_to_list': '|', 'ui_to_list': '&',
-                      'list_to_ui': ', '}
+                im = {'cache_to_list': '|', 'ui_to_list': '&', 'list_to_ui': ', '}
             else:
-                im = {'cache_to_list': '|', 'ui_to_list': ',',
-                      'list_to_ui': ', '}
+                im = {'cache_to_list': '|', 'ui_to_list': ',', 'list_to_ui': ', '}
         elif im is None:
             im = {}
         fm['is_multiple'] = im
 
 
 class JsonCodec:
-
     def __init__(self, field_metadata=None):
         self.field_metadata = field_metadata or FieldMetadata()
 
@@ -164,7 +162,7 @@ class JsonCodec:
         value = book.get(key)
         if key == 'thumbnail':
             return encode_thumbnail(value)
-        elif isbytestring(value):  # str includes bytes
+        elif isinstance(value, bytes):  # str includes bytes
             enc = filesystem_encoding if key == 'lpath' else preferred_encoding
             return object_to_unicode(value, enc=enc)
         elif datatype == 'datetime':
@@ -187,7 +185,7 @@ class JsonCodec:
     def raw_to_book(self, json_book, book_class, prefix):
         try:
             book = book_class(prefix, json_book.get('lpath', None))
-            for key,val in json_book.items():
+            for key, val in json_book.items():
                 meta = self.decode_metadata(key, val)
                 if key == 'user_metadata':
                     book.set_all_user_metadata(meta)

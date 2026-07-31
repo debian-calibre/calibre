@@ -6,12 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 store_version = 17  # Needed for dynamic plugin loading
 
 from calibre.gui2.store import StorePlugin
-
-try:
-    from calibre.gui2.store.amazon_base import AmazonStore
-except ImportError:
-    class AmazonStore:
-        minimum_calibre_version = 9999, 0, 0
+from calibre.gui2.store.amazon_base import AmazonStore
 
 
 class Base(AmazonStore):
@@ -21,7 +16,7 @@ class Base(AmazonStore):
     BY = 'di'
     KINDLE_EDITION = 'Formato Kindle'
     DETAILS_URL = 'https://amazon.it/dp/'
-    STORE_LINK =  'https://www.amazon.it'
+    STORE_LINK = 'https://www.amazon.it'
 
 
 class AmazonKindleStore(Base, StorePlugin):

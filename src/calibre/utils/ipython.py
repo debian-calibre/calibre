@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2012, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2012, Kovid Goyal <kovid@kovidgoyal.net>
 
 import os
 import re
@@ -14,7 +10,7 @@ from polyglot.builtins import exec_path
 
 ipydir = os.path.join(cache_dir(), 'ipython')
 
-BANNER = ('Welcome to the interactive calibre shell!\n')
+BANNER = 'Welcome to the interactive calibre shell!\n'
 
 
 def setup_pyreadline():
@@ -109,7 +105,8 @@ history_length(2000) #value of -1 means no limit
 #ctrl_c_tap_time_interval(0.3)
     '''
     try:
-        import pyreadline.rlmain
+        import pyreadline.rlmain  # type: ignore
+
         if not os.path.exists(ipydir):
             os.makedirs(ipydir)
         conf = os.path.join(ipydir, 'pyreadline.txt')
@@ -121,7 +118,7 @@ history_length(2000) #value of -1 means no limit
         import atexit
         import readline
 
-        import pyreadline.unicode_helper  # noqa: F401
+        import pyreadline.unicode_helper  # noqa: F401  # type: ignore
         # Normally the codepage for pyreadline is set to be sys.stdout.encoding
         # if you need to change this uncomment the following line
         # pyreadline.unicode_helper.pyreadline_codepage="utf8"
@@ -136,7 +133,8 @@ history_length(2000) #value of -1 means no limit
 
         def nop(val, word):
             return word
-        completer_obj._callable_postfix = nop
+
+        completer_obj._callable_postfix = nop  # type: ignore
         readline.set_completer(completer_obj.complete)
 
         # activate tab completion
@@ -147,9 +145,9 @@ history_length(2000) #value of -1 means no limit
 
 
 class Exit:
-
     def __repr__(self):
         raise SystemExit(0)
+
     __str__ = __repr__
 
     def __call__(self):
@@ -157,13 +155,12 @@ class Exit:
 
 
 class Helper:
-
     def __repr__(self):
-        return ('Type help() for interactive help, '
-                'or help(object) for help about object.')
+        return 'Type help() for interactive help, or help(object) for help about object.'
 
     def __call__(self, *args, **kwds):
         import pydoc
+
         return pydoc.help(*args, **kwds)
 
 
@@ -173,17 +170,20 @@ def simple_repl(user_ns={}):
     else:
         try:
             import readline, rlcompleter  # noqa: I001, E401, F401
+
             readline.parse_and_bind('tab: complete')
         except ImportError:
             pass
 
     user_ns = user_ns or {}
     import sys, re  # noqa: I001, E401, F401
+
     for x in ('os', 'sys', 're'):
         user_ns[x] = user_ns.get(x, globals().get(x, locals().get(x)))
     user_ns['exit'] = Exit()
     user_ns['help'] = Helper()
     from code import InteractiveConsole
+
     console = InteractiveConsole(user_ns)
     console.interact(BANNER + 'Use exit to quit')
 
@@ -192,16 +192,15 @@ def ipython(user_ns=None):
     os.environ['IPYTHONDIR'] = ipydir
     have_ipython = True
     try:
-        from IPython.terminal.embed import InteractiveShellEmbed
-        from IPython.terminal.prompts import Prompts, Token
-        from traitlets.config.loader import Config
+        from IPython.terminal.embed import InteractiveShellEmbed  # type: ignore
+        from IPython.terminal.prompts import Prompts, Token  # type: ignore
+        from traitlets.config.loader import Config  # type: ignore
     except ImportError:
         have_ipython = False
     if not have_ipython:
         return simple_repl(user_ns=user_ns)
 
     class CustomPrompt(Prompts):
-
         def in_prompt_tokens(self, cli=None):
             return [
                 (Token.Prompt, 'calibre['),
@@ -212,7 +211,7 @@ def ipython(user_ns=None):
         def out_prompt_tokens(self):
             return []
 
-    defns = {'os':os, 're':re, 'sys':sys}
+    defns = {'os': os, 're': re, 'sys': sys}
     defns.update(user_ns or {})
 
     c = Config()
@@ -222,7 +221,7 @@ def ipython(user_ns=None):
     c.TerminalInteractiveShell.prompts_class = CustomPrompt
     c.InteractiveShellApp.exec_lines = [
         'from __future__ import division, absolute_import, unicode_literals, print_function',
-        ]
+    ]
     c.TerminalInteractiveShell.confirm_exit = False
     c.TerminalInteractiveShell.banner1 = BANNER
     c.BaseIPythonApplication.ipython_dir = ipydir

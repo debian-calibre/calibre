@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from collections import OrderedDict
 
 from calibre.db.adding import compile_glob, compile_rule, filter_filename
@@ -13,12 +12,12 @@ from calibre.gui2.tag_mapper import Rules as RulesBase
 from calibre.gui2.tag_mapper import RulesDialog as RulesDialogBase
 from calibre.gui2.tag_mapper import Tester as TesterBase
 from calibre.utils.config import JSONConfig
+from calibre.utils.localization import _
 
 add_filters = JSONConfig('add-filter-rules')
 
 
 class RuleEdit(RuleEditBase):
-
     ACTION_MAP = OrderedDict((
         ('ignore', _('Ignore')),
         ('add', _('Add')),
@@ -66,6 +65,7 @@ class RuleEdit(RuleEditBase):
             idx = c.findData(str(rule.get(name, '')))
             idx = max(idx, 0)
             c.setCurrentIndex(idx)
+
         sc('action'), sc('match_type')
         self.query.setText(str(rule.get('query', '')).strip())
 
@@ -77,43 +77,42 @@ class RuleEdit(RuleEditBase):
                 try:
                     compile_glob(rule['query'])
                 except Exception:
-                    error_dialog(self, _('Query invalid'), _(
-                        '%s is not a valid glob expression') % rule['query'], show=True)
+                    error_dialog(self, _('Query invalid'), _('%s is not a valid glob expression') % rule['query'], show=True)
                     return False
         return ans
 
 
 class RuleEditDialog(RuleEditDialogBase):
-
     PREFS_NAME = 'edit-add-filter-rule'
     RuleEditClass = RuleEdit
 
 
 class RuleItem(RuleItemBase):
-
     @staticmethod
     def text_from_rule(rule, parent):
         query = elided_text(rule['query'], font=parent.font(), width=200, pos='right')
-        text = _(
-            '<b>{action}</b> the file, if the filename <i>{match_type}</i>: <b>{query}</b>').format(
-                action=RuleEdit.ACTION_MAP[rule['action']], match_type=RuleEdit.MATCH_TYPE_MAP[rule['match_type']], query=query)
+        text = _('<b>{action}</b> the file, if the filename <i>{match_type}</i>: <b>{query}</b>').format(
+            action=RuleEdit.ACTION_MAP[rule['action']],
+            match_type=RuleEdit.MATCH_TYPE_MAP[rule['match_type']],
+            query=query,
+        )
         return text
 
 
 class Rules(RulesBase):
-
     RuleItemClass = RuleItem
     RuleEditDialogClass = RuleEditDialog
-    MSG = _('You can specify rules to add/ignore files here. They will be used'
-            ' when recursively adding files from folders/archives and also'
-            ' when auto-adding. Click the "Add Rule" button'
-            ' below to get started. The rules will be processed in order for every file until either an'
-            ' "add" or an "ignore" rule matches. If no rules match, the file will be added only'
-            ' if its file extension is of a known e-book type.')
+    MSG = _(
+        'You can specify rules to add/ignore files here. They will be used'
+        ' when recursively adding files from folders/archives and also'
+        ' when auto-adding. Click the "Add Rule" button'
+        ' below to get started. The rules will be processed in order for every file until either an'
+        ' "add" or an "ignore" rule matches. If no rules match, the file will be added only'
+        ' if its file extension is of a known e-book type.'
+    )
 
 
 class Tester(TesterBase):
-
     DIALOG_TITLE = _('Test filename filter rules')
     PREFS_NAME = 'test-file-filter-rules'
     LABEL = _('Enter a filename to test:')
@@ -124,13 +123,12 @@ class Tester(TesterBase):
         filename = self.value.strip()
         allowed = filter_filename(map(compile_rule, self.rules), filename)
         if allowed is None:
-            self.result.setText(_('The filename %s did not match any rules') % filename)
+            self.result_widget.setText(_('The filename %s did not match any rules') % filename)
         else:
-            self.result.setText(_('The filename {0} will be {1}').format(filename, _('added' if allowed else 'ignored')))
+            self.result_widget.setText(_('The filename {0} will be {1}').format(filename, _('added' if allowed else 'ignored')))
 
 
 class RulesDialog(RulesDialogBase):
-
     DIALOG_TITLE = _('Edit file filter rules')
     PREFS_NAME = 'edit-file-filter-rules'
     RulesClass = Rules
@@ -142,10 +140,11 @@ if __name__ == '__main__':
     app = Application([])
     d = RulesDialog()
     d.rules = [
-        {'action':'ignore', 'query':'ignore-me', 'match_type':'startswith'},
-        {'action':'add', 'query':'*.moose', 'match_type':'glob'},
+        {'action': 'ignore', 'query': 'ignore-me', 'match_type': 'startswith'},
+        {'action': 'add', 'query': '*.moose', 'match_type': 'glob'},
     ]
     d.exec()
     from pprint import pprint
+
     pprint(d.rules)
     del d, app

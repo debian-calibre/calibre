@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 import os
 import shutil
@@ -36,23 +32,28 @@ from calibre.gui2 import error_dialog, file_icon_provider
 from calibre.gui2.progress_indicator import WaitLayout
 from calibre.libunzip import comic_exts
 from calibre.ptempfile import PersistentTemporaryDirectory
+from calibre.utils.localization import _
 
 
 class CoverDelegate(QStyledItemDelegate):
-
     def paint(self, painter, option, index):
         QStyledItemDelegate.paint(self, painter, option, index)
         style = QApplication.style()
+        assert style is not None
         # Ensure the cover is rendered over any selection rect
-        style.drawItemPixmap(painter, option.rect, Qt.AlignmentFlag.AlignTop|Qt.AlignmentFlag.AlignHCenter,
-            QPixmap(index.data(Qt.ItemDataRole.DecorationRole)))
+        style.drawItemPixmap(
+            painter,
+            option.rect,
+            Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter,
+            QPixmap(index.data(Qt.ItemDataRole.DecorationRole)),
+        )
 
 
 PAGES_PER_RENDER = 10
 
 
 class PDFCovers(QDialog):
-    'Choose a cover from the first few pages of a PDF'
+    "Choose a cover from the first few pages of a PDF"
 
     rendering_done = pyqtSignal()
 
@@ -64,7 +65,7 @@ class PDFCovers(QDialog):
         self.stack = WaitLayout(_('Rendering {} pages, please wait...').format('PDF' if self.is_pdf else _('comic book')), parent=self)
         self.container = self.stack.after
 
-        self.container.l = l = QVBoxLayout(self.container)
+        l = QVBoxLayout(self.container)
         self.la = la = QLabel(_('Choose a cover from the list of pages below'))
         l.addWidget(la)
         self.covers = c = QListWidget(self)
@@ -78,10 +79,11 @@ class PDFCovers(QDialog):
         c.setResizeMode(QListView.ResizeMode.Adjust)
         c.itemDoubleClicked.connect(self.accept, type=Qt.ConnectionType.QueuedConnection)
 
-        self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|QDialogButtonBox.StandardButton.Cancel)
+        self.bb = bb = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
         bb.accepted.connect(self.accept)
         bb.rejected.connect(self.reject)
         self.more_pages = b = bb.addButton(_('&More pages'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.clicked.connect(self.start_rendering)
         l.addWidget(bb)
         self.rendering_done.connect(self.show_pages, type=Qt.ConnectionType.QueuedConnection)
@@ -94,15 +96,17 @@ class PDFCovers(QDialog):
 
     def start_rendering(self):
         self.hide_pages()
-        self.thread = Thread(target=self.render, daemon=True, name='RenderPages')
-        self.thread.start()
+        self._render_thread = Thread(target=self.render, daemon=True, name='RenderPages')
+        self._render_thread.start()
 
     @property
     def cover_path(self):
         for item in self.covers.selectedItems():
             return str(item.data(Qt.ItemDataRole.UserRole) or '')
         if self.covers.count() > 0:
-            return str(self.covers.item(0).data(Qt.ItemDataRole.UserRole) or '')
+            _item = self.covers.item(0)
+            assert _item is not None
+            return str(_item.data(Qt.ItemDataRole.UserRole) or '')
 
     def cleanup(self):
         try:
@@ -110,7 +114,7 @@ class PDFCovers(QDialog):
         except OSError:
             pass
 
-    def render(self):
+    def render(self, *args, **kwargs):
         self.current_tdir = os.path.join(self.tdir, str(self.first))
         self.error = None
         try:
@@ -121,6 +125,7 @@ class PDFCovers(QDialog):
                 get_comic_images(self.pdfpath, self.current_tdir, first=self.first, last=self.first + PAGES_PER_RENDER - 1)
         except Exception as e:
             import traceback
+
             traceback.print_exc()
             if not self.covers.count():
                 self.error = as_unicode(e)
@@ -129,19 +134,19 @@ class PDFCovers(QDialog):
 
     def hide_pages(self):
         self.stack.start()
-        self.more_pages.setVisible(False)
+        more_pages = self.more_pages
+        assert more_pages is not None
+        more_pages.setVisible(False)
 
     def show_pages(self):
         if self.error is not None:
-            error_dialog(self, _('Failed to render'),
-                _('Could not render this file'), show=True, det_msg=self.error)
+            error_dialog(self, _('Failed to render'), _('Could not render this file'), show=True, det_msg=self.error)
             self.reject()
             return
         self.stack.stop()
         files = tuple(x for x in os.listdir(self.current_tdir) if os.path.splitext(x)[1][1:].lower() in comic_exts)
         if not files and not self.covers.count():
-            error_dialog(self, _('Failed to render'),
-                _('This book has no pages'), show=True)
+            error_dialog(self, _('Failed to render'), _('This book has no pages'), show=True)
             self.reject()
             return
 
@@ -153,8 +158,10 @@ class PDFCovers(QDialog):
         for i, f in enumerate(sorted(files)):
             path = os.path.join(self.current_tdir, f)
             p = QPixmap(path).scaled(
-                self.covers.iconSize()*dpr, aspectRatioMode=Qt.AspectRatioMode.IgnoreAspectRatio,
-                transformMode=Qt.TransformationMode.SmoothTransformation)
+                self.covers.iconSize() * dpr,
+                aspectRatioMode=Qt.AspectRatioMode.IgnoreAspectRatio,
+                transformMode=Qt.TransformationMode.SmoothTransformation,
+            )
             p.setDevicePixelRatio(dpr)
             i = QListWidgetItem(_('page %d') % (self.first + i))
             i.setData(Qt.ItemDataRole.DecorationRole, p)
@@ -162,11 +169,14 @@ class PDFCovers(QDialog):
             self.covers.addItem(i)
         self.first += len(files)
         if len(files) == PAGES_PER_RENDER:
-            self.more_pages.setVisible(True)
+            more_pages = self.more_pages
+            assert more_pages is not None
+            more_pages.setVisible(True)
 
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     d = PDFCovers(sys.argv[-1])
     d.exec()

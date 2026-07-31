@@ -16,7 +16,7 @@ def is_binary(stream):
 
 
 def prints(*a, **kw):
-    ' Print either unicode or bytes to either binary or text mode streams '
+    "Print either unicode or bytes to either binary or text mode streams"
     stream = kw.get('file', sys.stdout)
     if stream is None:
         return
@@ -48,7 +48,7 @@ def prints(*a, **kw):
 
 
 def debug_print(*args, **kw):
-    '''
+    """
     Prints debug information to the console if debugging is enabled.
 
     This function prints a message prefixed with a timestamp showing the elapsed time
@@ -67,16 +67,17 @@ def debug_print(*args, **kw):
     Behavior:
     - On the first call, initializes `base_time` to the current time using `time.monotonic()`.
     - If `is_debugging()` returns True, prints the elapsed time since `base_time` along with the provided arguments.
-    '''
+    """
     from calibre.constants import is_debugging
 
     # Get the base_time attribute, initializing it on the first call
     base_time = getattr(debug_print, 'base_time', None)
     if base_time is None:
         # Set base_time to the current monotonic time if it hasn't been set
-        debug_print.base_time = base_time = time.monotonic()
+        base_time = time.monotonic()
+        setattr(debug_print, 'base_time', base_time)
 
     # Check if debugging is enabled
     if is_debugging():
         # Print the elapsed time and the provided arguments if debugging is enabled
-        prints(f'DEBUG: {time.monotonic()-base_time:6.1f}', *args, **kw)
+        prints(f'DEBUG: {time.monotonic() - base_time:6.1f}', *args, **kw)

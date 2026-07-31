@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2010, Kovid Goyal <kovid@kovidgoyal.net>
 
 from qt.core import QVBoxLayout
 
@@ -12,7 +8,6 @@ from calibre.gui2.preferences import ConfigWidgetBase, test_widget
 
 
 class ConfigWidget(ConfigWidgetBase):
-
     def genesis(self, gui):
         self.gui = gui
         self.conf_widget = ShortcutConfig(self)
@@ -26,11 +21,11 @@ class ConfigWidget(ConfigWidgetBase):
         ConfigWidgetBase.initialize(self)
         self.conf_widget.initialize(self.gui.keyboard)
 
-    def restore_defaults(self):
+    def restore_defaults(self, *args):
         ConfigWidgetBase.restore_defaults(self)
         self.conf_widget.restore_defaults()
 
-    def commit(self):
+    def commit(self, *args):
         self.conf_widget.commit()
         return ConfigWidgetBase.commit(self)
 
@@ -43,5 +38,6 @@ class ConfigWidget(ConfigWidgetBase):
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     test_widget('Advanced', 'Keyboard')

@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2014, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
 import sys
 import textwrap
@@ -42,7 +39,7 @@ from calibre.utils.fonts.metadata import FontMetadata, UnsupportedFont
 from calibre.utils.fonts.scanner import NoFonts, font_scanner
 from calibre.utils.icu import lower as icu_lower
 from calibre.utils.icu import primary_sort_key as sort_key
-from calibre.utils.localization import ngettext
+from calibre.utils.localization import _, ngettext
 
 
 def rule_for_font(font_file, added_name):
@@ -63,10 +60,17 @@ def rule_for_font(font_file, added_name):
 
 def show_font_face_rule_for_font_file(file_data, added_name, parent=None):
     rule = rule_for_font(BytesIO(file_data), added_name)
-    QApplication.clipboard().setText(rule)
-    QMessageBox.information(parent, _('Font file added'), _(
-        'The font file <b>{}</b> has been added. The text for the CSS @font-face rule for this file has been copied'
-        ' to the clipboard. You should paste it into whichever CSS file you want to add this font to.').format(added_name))
+    clip = QApplication.clipboard()
+    assert clip is not None
+    clip.setText(rule)
+    QMessageBox.information(
+        parent,
+        _('Font file added'),
+        _(
+            'The font file <b>{}</b> has been added. The text for the CSS @font-face rule for this file has been copied'
+            ' to the clipboard. You should paste it into whichever CSS file you want to add this font to.'
+        ).format(added_name),
+    )
 
 
 def show_font_face_rule_for_font_files(container, added_names, parent=None):
@@ -76,14 +80,20 @@ def show_font_face_rule_for_font_files(container, added_names, parent=None):
         if rule:
             rules.append(rule)
     if rules:
-        QApplication.clipboard().setText('\n\n'.join(rules))
-        QMessageBox.information(parent, _('Font files added'), _(
-        'The specified font files have been added. The text for the CSS @font-face rules for these files has been copied'
-        ' to the clipboard. You should paste it into whichever CSS file you want to add these fonts to.'))
+        clip2 = QApplication.clipboard()
+        assert clip2 is not None
+        clip2.setText('\n\n'.join(rules))
+        QMessageBox.information(
+            parent,
+            _('Font files added'),
+            _(
+                'The specified font files have been added. The text for the CSS @font-face rules for these files has been copied'
+                ' to the clipboard. You should paste it into whichever CSS file you want to add these fonts to.'
+            ),
+        )
 
 
 class EmbeddingData(Dialog):
-
     def __init__(self, family, faces, parent=None):
         Dialog.__init__(self, _('Font faces for %s') % family, 'editor-embedding-data', parent)
         self.family, self.faces = family, faces
@@ -114,7 +124,6 @@ class EmbeddingData(Dialog):
 
 
 class AllFonts(QAbstractTableModel):
-
     def __init__(self, parent=None):
         QAbstractTableModel.__init__(self, parent)
         self.items = []
@@ -143,7 +152,7 @@ class AllFonts(QAbstractTableModel):
         reverse = not self.sorted_on[1]
         self.items = sorted(self.font_data, key=sort_key, reverse=reverse)
         if self.sorted_on[0] != 'name':
-            self.items.sort(key=self.font_data.get, reverse=reverse)
+            self.items.sort(key=self.font_data.__getitem__, reverse=reverse)
 
     def data(self, index, role=Qt.ItemDataRole.DisplayRole):
         if role == Qt.ItemDataRole.DisplayRole:
@@ -151,7 +160,7 @@ class AllFonts(QAbstractTableModel):
             try:
                 name = self.items[row]
                 embedded = '✓ ' if self.font_data[name] else ''
-            except (IndexError, KeyError):
+            except IndexError, KeyError:
                 return
             return name if col == 1 else embedded
         if role == Qt.ItemDataRole.TextAlignmentRole:
@@ -162,7 +171,7 @@ class AllFonts(QAbstractTableModel):
             row = index.row()
             try:
                 name = self.items[row]
-            except (IndexError, KeyError):
+            except IndexError, KeyError:
                 return
             if role == Qt.ItemDataRole.UserRole:
                 try:
@@ -172,8 +181,8 @@ class AllFonts(QAbstractTableModel):
             else:
                 return name
 
-    def sort(self, col, order=Qt.SortOrder.AscendingOrder):
-        sorted_on = (('name' if col == 1 else 'embedded'), order == Qt.SortOrder.AscendingOrder)
+    def sort(self, column, order=Qt.SortOrder.AscendingOrder):
+        sorted_on = (('name' if column == 1 else 'embedded'), order == Qt.SortOrder.AscendingOrder)
         if sorted_on != self.sorted_on:
             self.sorted_on = sorted_on
             self.beginResetModel()
@@ -186,17 +195,15 @@ class AllFonts(QAbstractTableModel):
             try:
                 name = self.items[idx.row()]
                 ans[name] = self.font_data[name]
-            except (IndexError, KeyError):
+            except IndexError, KeyError:
                 pass
         return ans
 
 
 class ChangeFontFamily(Dialog):
-
     def __init__(self, old_family, embedded_families, parent=None):
         self.old_family = old_family
-        self.local_families = {icu_lower(f) for f in font_scanner.find_font_families()} | {
-            icu_lower(f) for f in embedded_families}
+        self.local_families = {icu_lower(f) for f in font_scanner.find_font_families()} | {icu_lower(f) for f in embedded_families}
         Dialog.__init__(self, _('Change font'), 'change-font-family', parent=parent)
         self.setMinimumWidth(300)
         self.resize(self.sizeHint())
@@ -204,9 +211,7 @@ class ChangeFontFamily(Dialog):
     def setup_ui(self):
         self.l = l = QFormLayout(self)
         self.setLayout(l)
-        self.la = la = QLabel(ngettext(
-            'Change the font %s to:', 'Change the fonts %s to:',
-            self.old_family.count(',')+1) % self.old_family)
+        self.la = la = QLabel(ngettext('Change the font %s to:', 'Change the fonts %s to:', self.old_family.count(',') + 1) % self.old_family)
         la.setWordWrap(True)
         l.addRow(la)
         self._family = f = QLineEdit(self)
@@ -225,7 +230,7 @@ class ChangeFontFamily(Dialog):
         ans = self.family
         try:
             ans = font_scanner.fonts_for_family(ans)[0]['font-family']
-        except (NoFonts, IndexError, KeyError):
+        except NoFonts, IndexError, KeyError:
             pass
         if icu_lower(ans) == 'sansserif':
             ans = 'sans-serif'
@@ -234,15 +239,13 @@ class ChangeFontFamily(Dialog):
     def updated_family(self):
         family = self.family
         found = icu_lower(family) in self.local_families
-        t = _('The font <i>%s</i> <b>exists</b> on your computer') if found else _(
-            'The font <i>%s</i> <b>does not exist</b> on your computer')
+        t = _('The font <i>%s</i> <b>exists</b> on your computer') if found else _('The font <i>%s</i> <b>does not exist</b> on your computer')
         t = (t % family) if family else '\xa0'
         self.embed_status.setText(t)
         self.resize(self.sizeHint())
 
 
 class ManageFonts(Dialog):
-
     container_changed = pyqtSignal()
     embed_all_fonts = pyqtSignal()
     subset_all_fonts = pyqtSignal()
@@ -269,16 +272,18 @@ class ManageFonts(Dialog):
         self.fonts_view = fv = QTableView(self)
         fv.doubleClicked.connect(self.show_embedding_data)
         self.model = m = AllFonts(fv)
-        fv.horizontalHeader().setStretchLastSection(True)
+        fv_hh = fv.horizontalHeader()
+        assert fv_hh is not None
+        fv_hh.setStretchLastSection(True)
         fv.setModel(m)
         fv.setSortingEnabled(True)
         fv.setShowGrid(False)
         fv.setAlternatingRowColors(True)
         fv.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         fv.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-        fv.horizontalHeader().setSortIndicator(1, Qt.SortOrder.AscendingOrder)
+        fv_hh.setSortIndicator(1, Qt.SortOrder.AscendingOrder)
         self.container = c = QWidget()
-        l = c.l = QVBoxLayout(c)
+        l = QVBoxLayout(c)
         c.setLayout(l)
         s.addWidget(fv), s.addWidget(c)
 
@@ -299,15 +304,19 @@ class ManageFonts(Dialog):
         b.clicked.connect(self.subset_fonts)
         l.addWidget(b)
         self.refresh_button = b = self.bb.addButton(_('&Refresh'), QDialogButtonBox.ButtonRole.ActionRole)
+        assert b is not None
         b.setToolTip(_('Rescan the book for fonts in case you have made changes'))
         b.setIcon(QIcon.ic('view-refresh.png'))
         b.clicked.connect(self.refresh)
 
         self.la = la = QLabel(
-            '<p>' + _(
-            ''' All the fonts declared in this book are shown to the left, along with whether they are embedded or not.
-            You can remove or replace any selected font and also embed any declared fonts that are not already embedded.''') + '<p>' + _(
-            ''' Double click any font family to see if the font is available for embedding on your computer. ''')
+            '<p>'
+            + _(
+                ''' All the fonts declared in this book are shown to the left, along with whether they are embedded or not.
+            You can remove or replace any selected font and also embed any declared fonts that are not already embedded.'''
+            )
+            + '<p>'
+            + _(''' Double click any font family to see if the font is available for embedding on your computer. ''')
         )
         la.setWordWrap(True)
         l.addWidget(la)
@@ -318,20 +327,27 @@ class ManageFonts(Dialog):
         faces = index.data(Qt.ItemDataRole.UserRole)
         family = index.data(Qt.ItemDataRole.UserRole + 1)
         if not faces:
-            return error_dialog(self, _('Not found'), _(
-                'The font <b>%s</b> was not found on your computer. If you have the font files,'
-                ' you can install it using the "Install fonts" button in the lower left corner.'
-            ) % family, show=True)
+            return error_dialog(
+                self,
+                _('Not found'),
+                _(
+                    'The font <b>%s</b> was not found on your computer. If you have the font files,'
+                    ' you can install it using the "Install fonts" button in the lower left corner.'
+                )
+                % family,
+                show=True,
+            )
         EmbeddingData(family, faces, self).exec()
 
     def install_fonts(self):
         from calibre.gui2.font_family_chooser import add_fonts
+
         families = add_fonts(self)
         if not families:
             return
         font_scanner.do_scan()
         self.refresh()
-        info_dialog(self, _('Added fonts'), _('Added font families: %s')%(', '.join(families)), show=True)
+        info_dialog(self, _('Added fonts'), _('Added font families: %s') % (', '.join(families)), show=True)
 
     def sizeHint(self):
         return Dialog.sizeHint(self) + QSize(100, 50)
@@ -345,8 +361,12 @@ class ManageFonts(Dialog):
     def get_selected_data(self):
         ans = self.model.data_for_indices(list(self.fonts_view.selectedIndexes()))
         if not ans:
-            error_dialog(self, _('No fonts selected'), _(
-                'No fonts selected, you must first select some fonts in the left panel'), show=True)
+            error_dialog(
+                self,
+                _('No fonts selected'),
+                _('No fonts selected, you must first select some fonts in the left panel'),
+                show=True,
+            )
         return ans
 
     def change_fonts(self):
@@ -387,6 +407,7 @@ class ManageFonts(Dialog):
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     c = get_container(sys.argv[-1], tweak_mode=True)
     set_current_container(c)

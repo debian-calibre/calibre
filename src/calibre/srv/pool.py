@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2015, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 import sys
 from queue import Full, Queue
@@ -12,7 +9,6 @@ from calibre.utils.monotonic import monotonic
 
 
 class Worker(Thread):
-
     daemon = True
 
     def __init__(self, log, notify_server, num, request_queue, result_queue):
@@ -47,7 +43,6 @@ class Worker(Thread):
 
 
 class ThreadPool:
-
     def __init__(self, log, notify_server, count=10, queue_size=1000):
         self.request_queue, self.result_queue = Queue(queue_size), Queue(queue_size)
         self.workers = [Worker(log, notify_server, i, self.request_queue, self.result_queue) for i in range(count)]
@@ -84,15 +79,18 @@ class ThreadPool:
         return sum(int(not w.working) for w in self.workers)
 
 
-class PluginPool:
+class PluginThread(Thread):
+    def __init__(self, plugin, target, name):
+        super().__init__(target=target, args=(plugin,), name=name, daemon=True)
+        self.plugin = plugin
 
+
+class PluginPool:
     def __init__(self, loop, plugins):
-        self.workers = []
+        self.workers: list[PluginThread] = []
         self.loop = loop
         for plugin in plugins:
-            w = Thread(target=self.run_plugin, args=(plugin,), name=self.plugin_name(plugin))
-            w.daemon = True
-            w.plugin = plugin
+            w = PluginThread(plugin, target=self.run_plugin, name=self.plugin_name(plugin))
             self.workers.append(w)
 
     def plugin_name(self, plugin):

@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, Kovid Goyal <kovid@kovidgoyal.net>
 
 import numbers
 import textwrap
@@ -12,10 +8,10 @@ from qt.core import QCheckBox, QComboBox, QDoubleSpinBox, QGridLayout, QGroupBox
 
 from calibre.gui2.preferences.metadata_sources import FieldsModel as FM
 from calibre.utils.icu import sort_key
+from calibre.utils.localization import _
 
 
 class FieldsModel(FM):  # {{{
-
     def __init__(self, plugin):
         FM.__init__(self)
         self.plugin = plugin
@@ -34,8 +30,7 @@ class FieldsModel(FM):  # {{{
 
     def state(self, field, defaults=False):
         src = self.prefs.defaults if defaults else self.prefs
-        return (Qt.CheckState.Unchecked if field in src['ignore_fields']
-                    else Qt.CheckState.Checked)
+        return Qt.CheckState.Unchecked if field in src['ignore_fields'] else Qt.CheckState.Checked
 
     def restore_defaults(self):
         self.beginResetModel()
@@ -43,23 +38,20 @@ class FieldsModel(FM):  # {{{
         self.endResetModel()
 
     def commit(self):
-        ignored_fields = {x for x in self.prefs['ignore_fields'] if x not in
-            self.overrides}
-        changed = {k for k, v in self.overrides.items() if v ==
-            Qt.CheckState.Unchecked}
+        ignored_fields = {x for x in self.prefs['ignore_fields'] if x not in self.overrides}
+        changed = {k for k, v in self.overrides.items() if v == Qt.CheckState.Unchecked}
         self.prefs['ignore_fields'] = list(ignored_fields.union(changed))
+
 
 # }}}
 
 
 class FieldsList(QListView):
-
     def sizeHint(self):
         return self.minimumSizeHint()
 
 
 class ConfigWidget(QWidget):
-
     def __init__(self, plugin):
         QWidget.__init__(self)
         self.plugin = plugin
@@ -72,7 +64,7 @@ class ConfigWidget(QWidget):
             self.pchm.setOpenExternalLinks(True)
             l.addWidget(self.pchm, 10)
         l.addWidget(self.gb)
-        self.gb.l = g = QVBoxLayout(self.gb)
+        g = QVBoxLayout(self.gb)
         g.setContentsMargins(0, 0, 0, 0)
         self.fields_view = v = FieldsList(self)
         g.addWidget(v)
@@ -95,7 +87,7 @@ class ConfigWidget(QWidget):
         if opt.type == 'number':
             c = QSpinBox if isinstance(opt.default, numbers.Integral) else QDoubleSpinBox
             widget = c(self)
-            widget.setRange(min(widget.minimum(), 20 * val), max(widget.maximum(), 20 * val))
+            widget.setRange(int(min(widget.minimum(), 20 * val)), int(max(widget.maximum(), 20 * val)))
             widget.setValue(val)
         elif opt.type == 'string':
             widget = QLineEdit(self)
@@ -111,8 +103,8 @@ class ConfigWidget(QWidget):
                 widget.addItem(label, (key))
             idx = widget.findData(val)
             widget.setCurrentIndex(idx)
-        widget.opt = opt
         widget.setToolTip(textwrap.fill(opt.desc))
+        setattr(widget, 'opt', opt)
         self.widgets.append(widget)
         r = self.l.rowCount()
         if opt.type == 'bool':

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-__license__   = 'GPL v3'
+__license__ = 'GPL v3'
 __copyright__ = '2009, Kovid Goyal <kovid@kovidgoyal.net>'
 __docformat__ = 'restructuredtext en'
 
@@ -11,9 +11,11 @@ __all__ = [
     'build_dep',
     'cacerts',
     'check',
+    'check_all',
     'develop',
     'export_packages',
     'extdev',
+    'fmt',
     'get_translations',
     'git_hooks',
     'git_version',
@@ -51,6 +53,7 @@ __all__ = [
     'test',
     'test_rs',
     'translations',
+    'type_check',
     'upgrade_source_code',
     'upload_demo',
     'upload_installers',
@@ -122,15 +125,25 @@ from setup.gui import GUI
 
 gui = GUI()
 
-from setup.check import Check, UpgradeSourceCode
+from setup.check import Check, CheckAll, UpgradeSourceCode
 
 check = Check()
+check_all = CheckAll()
 upgrade_source_code = UpgradeSourceCode()
 
 from setup.test import Test, TestRS
 
 test = Test()
 test_rs = TestRS()
+
+from setup.type_check import TypeCheck
+
+type_check = TypeCheck()
+
+
+from setup.fmt import AutoFormat
+
+fmt = AutoFormat()
 
 from setup.resources import CACerts, RapydScript, RecentUAs, Resources
 

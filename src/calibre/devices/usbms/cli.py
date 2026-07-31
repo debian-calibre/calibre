@@ -1,6 +1,4 @@
-__license__   = 'GPL v3'
-__copyright__ = '2009, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
 import os
 import shutil
@@ -12,14 +10,13 @@ from calibre.utils.filenames import case_preserving_open_file
 
 
 class File:
-
     def __init__(self, path):
         stats = os.stat(path)
         self.is_dir = os.path.isdir(path)
         self.is_readonly = not os.access(path, os.W_OK)
         self.ctime = stats.st_ctime
         self.wtime = stats.st_mtime
-        self.size  = stats.st_size
+        self.size = stats.st_size
         if path.endswith(os.sep):
             path = path[:-1]
         self.path = path
@@ -33,6 +30,13 @@ def check_transfer(infile, dest):
 
 
 class CLI:
+    _main_prefix: str | None = None
+    _card_a_prefix: str | None = None
+    _card_b_prefix: str | None = None
+    SUPPORTS_SUB_DIRS: bool = False
+
+    def delete_books(self, paths, end_session=True):
+        raise NotImplementedError
 
     def get_file(self, path, outfile, end_session=True):
         path = self.munge_path(path)
@@ -67,14 +71,17 @@ class CLI:
         return actual_path
 
     def munge_path(self, path):
-        if path.startswith('/') and not (path.startswith(self._main_prefix) or
-            (self._card_a_prefix and path.startswith(self._card_a_prefix)) or
-            (self._card_b_prefix and path.startswith(self._card_b_prefix))):
-            path = self._main_prefix + path[1:]
+        main = self._main_prefix or ''
+        if path.startswith('/') and not (
+            path.startswith(main)
+            or (self._card_a_prefix and path.startswith(self._card_a_prefix))
+            or (self._card_b_prefix and path.startswith(self._card_b_prefix))
+        ):
+            path = main + path[1:]
         elif path.startswith('carda:'):
-            path = path.replace('carda:', self._card_a_prefix[:-1])
+            path = path.replace('carda:', (self._card_a_prefix or '')[:-1])
         elif path.startswith('cardb:'):
-            path = path.replace('cardb:', self._card_b_prefix[:-1])
+            path = path.replace('cardb:', (self._card_b_prefix or '')[:-1])
         return path
 
     def list(self, path, recurse=False, end_session=True, munge=True):
@@ -86,7 +93,7 @@ class CLI:
         dirs = [(path, entries)]
         for _file in entries:
             if recurse and _file.is_dir:
-                dirs[len(dirs):] = self.list(_file.path, recurse=True, munge=False)
+                dirs[len(dirs) :] = self.list(_file.path, recurse=True, munge=False)
         return dirs
 
     def mkdir(self, path, end_session=True):

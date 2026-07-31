@@ -1,16 +1,27 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import json
 
 from calibre import prints
 from calibre.db.legacy import LibraryDatabase
-from calibre.library.custom_columns import CustomColumns
+from calibre.utils.localization import _
 
 readonly = False
 version = 0  # change this if you change signature of implementation()
 no_remote = True
+CUSTOM_DATA_TYPES = frozenset((
+    'rating',
+    'text',
+    'comments',
+    'datetime',
+    'int',
+    'float',
+    'bool',
+    'series',
+    'composite',
+    'enumeration',
+))
 
 
 def implementation(db, notify_changes, *args):
@@ -27,18 +38,14 @@ Create a custom column. label is the machine friendly name of the column. Should
 not contain spaces or colons. name is the human friendly name of the column.
 datatype is one of: {0}
 '''
-        ).format(', '.join(sorted(CustomColumns.CUSTOM_DATA_TYPES)))
+        ).format(', '.join(sorted(CUSTOM_DATA_TYPES)))
     )
 
     parser.add_option(
         '--is-multiple',
         default=False,
         action='store_true',
-        help=_(
-            'This column stores tag like data (i.e. '
-            'multiple comma separated values). Only '
-            'applies if datatype is text.'
-        )
+        help=_('This column stores tag like data (i.e. multiple comma separated values). Only applies if datatype is text.'),
     )
     parser.add_option(
         '--display',
@@ -63,25 +70,20 @@ datatype is one of: {0}
             'backup OPF for a book (ensure that a new OPF has been created '
             'since the column was added). You will see the JSON for the '
             '"display" for the new column in the OPF.'
-        )
+        ),
     )
     return parser
 
 
 def do_add_custom_column(db, label, name, datatype, is_multiple, display):
-    num = db.create_custom_column(
-        label, name, datatype, is_multiple, display=display
-    )
+    num = db.create_custom_column(label, name, datatype, is_multiple, display=display)
     prints(f'Custom column created with id: {num}')
 
 
 def main(opts, args, dbctx):
     if len(args) < 3:
         raise SystemExit(_('You must specify label, name and datatype'))
-    do_add_custom_column(
-        dbctx.db, args[0], args[1], args[2], opts.is_multiple,
-        json.loads(opts.display)
-    )
+    do_add_custom_column(dbctx.db, args[0], args[1], args[2], opts.is_multiple, json.loads(opts.display))
     # Update the stored field_metadata
     dbctx.db.close()
     db = LibraryDatabase(dbctx.db.library_path)

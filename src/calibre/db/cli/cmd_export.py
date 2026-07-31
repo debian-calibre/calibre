@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import os
 
 from calibre.db.cli import integers_from_string
@@ -9,6 +8,7 @@ from calibre.db.constants import DATA_FILE_PATTERN
 from calibre.db.errors import NoSuchFormat
 from calibre.library.save_to_disk import config, do_save_book_to_disk, get_formats, sanitize_args
 from calibre.utils.formatter_functions import load_user_template_functions
+from calibre.utils.localization import _
 
 readonly = True
 version = 0  # change this if you change signature of implementation()
@@ -27,9 +27,7 @@ def implementation(db, notify_changes, action, *args):
         formats = get_formats(db.formats(book_id), formats)
         extra_files_for_export = tuple(ef.relpath for ef in db.list_extra_files(book_id, pattern=DATA_FILE_PATTERN))
         plugboards['extra_files_for_export'] = extra_files_for_export
-        return mi, plugboards, formats, db.library_id, db.pref(
-            'user_template_functions', []
-        )
+        return mi, plugboards, formats, db.library_id, db.pref('user_template_functions', [])
     if action == 'cover':
         return db.cover(args[0])
     if action == 'fmt':
@@ -41,6 +39,7 @@ def implementation(db, notify_changes, action, *args):
         book_id, relpath, dest = args
         if is_remote:
             from io import BytesIO
+
             output = BytesIO()
             db.copy_extra_file_to(book_id, relpath, output)
             return output.getvalue()
@@ -60,31 +59,10 @@ You can get id numbers from the search command.
 '''
         )
     )
-    parser.add_option(
-        '--all',
-        default=False,
-        action='store_true',
-        help=_('Export all books in database, ignoring the list of ids.')
-    )
-    parser.add_option(
-        '--to-dir',
-        default='.',
-        help=(
-            _('Export books to the specified folder. Default is') + ' %default'
-        )
-    )
-    parser.add_option(
-        '--single-dir',
-        default=False,
-        action='store_true',
-        help=_('Export all books into a single folder')
-    )
-    parser.add_option(
-        '--progress',
-        default=False,
-        action='store_true',
-        help=_('Report progress')
-    )
+    parser.add_option('--all', default=False, action='store_true', help=_('Export all books in database, ignoring the list of ids.'))
+    parser.add_option('--to-dir', default='.', help=(_('Export books to the specified folder. Default is') + ' %default'))
+    parser.add_option('--single-dir', default=False, action='store_true', help=_('Export all books into a single folder'))
+    parser.add_option('--progress', default=False, action='store_true', help=_('Report progress'))
     c = config()
     for pref in ['asciiize', 'update_metadata', 'write_opf', 'save_cover', 'save_extra_files']:
         opt = c.get_option(pref)
@@ -93,10 +71,8 @@ You can get id numbers from the search command.
             switch,
             default=True,
             action='store_false',
-            help=opt.help + ' ' +
-            _('Specifying this switch will turn '
-              'this behavior off.'),
-            dest=pref
+            help=opt.help + ' ' + _('Specifying this switch will turn this behavior off.'),
+            dest=pref,
         )
 
     for pref in ['timefmt', 'template', 'formats']:
@@ -113,7 +89,6 @@ You can get id numbers from the search command.
 
 
 class DBProxy:
-
     # Proxy to allow do_save_book_to_disk() to work with remote database
 
     def __init__(self, dbctx):
@@ -140,15 +115,11 @@ class DBProxy:
 
 
 def export(opts, dbctx, book_id, dest, dbproxy, length, first):
-    mi, plugboards, formats, library_id, template_funcs = dbctx.run(
-        'export', 'setup', book_id, opts.formats
-    )
+    mi, plugboards, formats, library_id, template_funcs = dbctx.run('export', 'setup', book_id, opts.formats)
     extra_files = plugboards.pop('extra_files_for_export', ())
     if dbctx.is_remote and first:
         load_user_template_functions(library_id, template_funcs)
-    return do_save_book_to_disk(
-        dbproxy, book_id, mi, plugboards, formats, dest, opts, length, extra_files
-    )
+    return do_save_book_to_disk(dbproxy, book_id, mi, plugboards, formats, dest, opts, length, extra_files)
 
 
 def main(opts, args, dbctx):
@@ -168,7 +139,7 @@ def main(opts, args, dbctx):
         export(opts, dbctx, book_id, dest, dbproxy, length, i == 0)
         if opts.progress:
             num = i + 1
-            print(f'\r  {num / total:.1%} [{num}/{total}]', end=' '*20)
+            print(f'\r  {num / total:.1%} [{num}/{total}]', end=' ' * 20)
     if opts.progress:
         print()
     return 0

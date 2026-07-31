@@ -4,19 +4,21 @@
 # 
 # Translators:
 # Anders Jonsson <transifex@norsjovallen.se>, 2022
+# efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018,2020
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2020
-# Karl Jonatan Nyberg, 2016-2017,2021-2025
-# Karl Jonatan Nyberg, 2018-2021
+# Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2016-2017,2021-2026
+# Jonatan Nyberg, 2018-2021
 # efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018
-# Karl Jonatan Nyberg, 2026
+# Jonatan Nyberg, 2026
 # Merarom <merarom@yahoo.es>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-07-30 18:07+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Karl Jonatan Nyberg, 2026\n"
+"Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -227,7 +229,7 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr "Det enda anmärkningsvärda funktionen är fältet :attr:`actual_plugin`. Eftersom calibre har både kommandorad och användargränssnitt bör användargränssnittsinsticksmoduler som denna inte läsa in några biblioteksanvändargränssnitt i __init__.py. Fältet actual_plugin gör detta åt dig, genom att berätta för calibre att den egentliga insticksmodulen finns i en annan fil i ditt ZIP-arkiv, som endast kommer att läsas in i ett användargränssnittssammanhang."
+msgstr "Den enda anmärkningsvärda funktionen är fältet :attr:`actual_plugin`. Eftersom calibre har både ett kommandoradsgränssnitt och ett grafiskt gränssnitt bör GUI-insticksmoduler som denna inte läsa in några GUI-bibliotek i __init__.py. Fältet actual_plugin hanterar detta genom att tala om för calibre att den egentliga insticksmodulen finns i en annan fil i ZIP-arkivet. Den filen läses endast in i ett GUI-sammanhang."
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
@@ -381,7 +383,7 @@ msgid ""
 " sizes in the book by a number provided by the user. This tool demonstrates "
 "various important concepts that you will need in developing your own "
 "plugins, so you should read the (heavily commented) source code carefully."
-msgstr "Här kommer vi att se definitionen av ett enda verktyg som kommer att multiplicera alla teckensnittsstorlekar i boken av ett nummer som användaren ger. Detta verktyg visar olika viktiga begrepp som du behöver för att utveckla dina egna insticksmodul, så du bör läsa (tungt kommenterade) källkoden noggrant."
+msgstr "Här definierar vi ett verktyg som multiplicerar alla teckensnittsstorlekar i boken med ett tal som användaren anger. Verktyget visar flera viktiga begrepp som du behöver när du utvecklar egna insticksmoduler, så läs den utförligt kommenterade källkoden noggrant."
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:230
 msgid ""
@@ -405,7 +407,7 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr "Nästa viktiga startpunkt är :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Denna metod skapar QAction-objekt som visas i insticksmodulsverktygsfältet och insticksmodulsmenyn. Den tilldelar också valfritt en tangentbordsgenväg som användaren kan skräddarsy. Den utlösta signalen från QAction är ansluten till  metoden ask_user() som frågar användaren om teckensnittsstorlekensmultiplikatorn och sedan kör förstoringskoden."
+msgstr "Nästa viktiga startpunkt är :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action`. Denna metod skapar QAction-objekt som visas i insticksmodulsverktygsfältet och insticksmodulsmenyn. Den tilldelar också valfritt en kortkommando som användaren kan skräddarsy. Den utlösta signalen från QAction är ansluten till  metoden ask_user() som frågar användaren om teckensnittsstorlekensmultiplikatorn och sedan kör förstoringskoden."
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:245
 msgid ""
@@ -487,7 +489,7 @@ msgstr "Ersätt ``de`` med språkkoden för det språk som du vill testa."
 msgid ""
 "For translations with plurals, use the ``ngettext()`` function instead of "
 "``_()``. For example::"
-msgstr "För översättningar med plural, använd funktionen ``ngettext()`` istället för ``_()``. Till exempel::"
+msgstr "För översättningar med plural, använd funktionen ``ngettext()`` i stället för ``_()``. Till exempel::"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:301
 msgid "The plugin API"
@@ -522,7 +524,7 @@ msgstr "Den första och viktigaste steget är att köra calibre i felsökningsl�
 msgid ""
 "Or from within calibre by right-clicking the :guilabel:`Preferences` button "
 "or using the :kbd:`Ctrl+Shift+R` keyboard shortcut."
-msgstr "Eller inifrån calibre genom att högerklicka på :guilabel:`Inställningar` eller genom att använda tangentbordsgenvägen :kbd:`Ctrl+Skift+R`."
+msgstr "Eller inifrån calibre genom att högerklicka på :guilabel:`Inställningar` eller genom att använda kortkommandoen :kbd:`Ctrl+Skift+R`."
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:319
 msgid ""

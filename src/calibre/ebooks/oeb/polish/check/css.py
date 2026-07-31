@@ -15,6 +15,7 @@ from calibre import detect_ncpus as cpu_count
 from calibre import prints
 from calibre.ebooks.oeb.polish.check.base import ERROR, WARN, BaseError
 from calibre.gui2 import must_use_qt
+from calibre.utils.localization import _
 from calibre.utils.resources import get_path as P
 from calibre.utils.webengine import secure_webengine, setup_profile
 
@@ -23,16 +24,19 @@ class CSSParseError(BaseError):
     level = ERROR
     is_parsing_error = True
     FIXABLE_CSS_ERROR = False
+    css_rule_id: str | None = None
 
 
 class CSSError(BaseError):
     level = ERROR
     FIXABLE_CSS_ERROR = False
+    css_rule_id: str | None = None
 
 
 class CSSWarning(BaseError):
     level = WARN
     FIXABLE_CSS_ERROR = False
+    css_rule_id: str | None = None
 
 
 def as_int_or_none(x):
@@ -75,32 +79,42 @@ def message_to_error(message, name, line_offset, rule_metadata):
     return ans
 
 
+_stylelint_js_cache: tuple[tuple[str, str], ...] | None = None
+
+
 def stylelint_js():
-    ans = getattr(stylelint_js, 'ans', None)
-    if ans is None:
-        ans = stylelint_js.ans = (
-            ('stylelint-bundle.min.js', P('stylelint-bundle.min.js', data=True, allow_user_override=False).decode('utf-8')),
+    global _stylelint_js_cache
+    if _stylelint_js_cache is None:
+        _stylelint_js_cache = (
+            (
+                'stylelint-bundle.min.js',
+                P('stylelint-bundle.min.js', data=True, allow_user_override=False).decode('utf-8'),
+            ),
             ('stylelint.js', P('stylelint.js', data=True, allow_user_override=False).decode('utf-8')),
         )
-    return ans
+    return _stylelint_js_cache
+
+
+_create_profile_cache: QWebEngineProfile | None = None
 
 
 def create_profile():
-    ans = getattr(create_profile, 'ans', None)
-    if ans is None:
-        ans = create_profile.ans = QWebEngineProfile(QApplication.instance())
-        setup_profile(ans)
+    global _create_profile_cache
+    if _create_profile_cache is None:
+        _create_profile_cache = QWebEngineProfile(QApplication.instance())
+        setup_profile(_create_profile_cache)
         for name, code in stylelint_js():
             s = QWebEngineScript()
             s.setName(name)
             s.setSourceCode(code)
             s.setWorldId(QWebEngineScript.ScriptWorldId.ApplicationWorld)
-            ans.scripts().insert(s)
-    return ans
+            _scripts = _create_profile_cache.scripts()
+            assert _scripts is not None
+            _scripts.insert(s)
+    return _create_profile_cache
 
 
 class Worker(QWebEnginePage):
-
     work_done = pyqtSignal(object, object)
 
     def __init__(self):
@@ -123,17 +137,19 @@ class Worker(QWebEnginePage):
         elif new_title == 'checked':
             self.runJavaScript('window.get_css_results()', QWebEngineScript.ScriptWorldId.ApplicationWorld, self.check_done)
 
-    def javaScriptConsoleMessage(self, level, msg, lineno, source_id):
-        msg = f'{source_id}:{lineno}:{msg}'
+    def javaScriptConsoleMessage(self, level, message, lineNumber, sourceID):
+        message = f'{sourceID}:{lineNumber}:{message}'
         try:
-            print(msg)
+            print(message)
         except Exception:
             pass
 
     def check_css(self, src, fix=False):
         self.working = True
         self.runJavaScript(
-            f'window.check_css({json.dumps(src)}, {"true" if fix else "false"})', QWebEngineScript.ScriptWorldId.ApplicationWorld)
+            f'window.check_css({json.dumps(src)}, {"true" if fix else "false"})',
+            QWebEngineScript.ScriptWorldId.ApplicationWorld,
+        )
 
     def check_css_when_ready(self, src, fix=False):
         if self.ready:
@@ -149,7 +165,6 @@ class Worker(QWebEnginePage):
 
 
 class Pool:
-
     def __init__(self):
         self.workers = []
         self.max_workers = cpu_count()
@@ -166,6 +181,7 @@ class Pool:
         self.working = True
         self.assign_work()
         app = QApplication.instance()
+        assert app is not None
         while self.working:
             app.processEvents(QEventLoop.ProcessEventsFlag.WaitForMoreEvents | QEventLoop.ProcessEventsFlag.ExcludeUserInputEvents)
         return self.results
@@ -223,8 +239,12 @@ def check_css(jobs):
     results = pool.check_css([j.css for j in jobs])
     for job, result in zip(jobs, results):
         if result['type'] == 'error':
-            errors.append(CSSParseError(_('Failed to process CSS in {name} with errors: {errors}').format(
-                name=job.name, errors=result['error']), job.name))
+            errors.append(
+                CSSParseError(
+                    _('Failed to process CSS in {name} with errors: {errors}').format(name=job.name, errors=result['error']),
+                    job.name,
+                )
+            )
             continue
         result = json.loads(result['results']['output'])
         rule_metadata = result['rule_metadata']

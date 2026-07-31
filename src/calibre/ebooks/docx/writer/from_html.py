@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__ = 'GPL v3'
-__copyright__ = '2013, Kovid Goyal <kovid at kovidgoyal.net>'
+# License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
 import re
 from collections import Counter
@@ -28,7 +25,6 @@ def lang_for_tag(tag):
 
 
 class Style(St):
-
     def __init__(self, *args, **kwargs):
         St.__init__(self, *args, **kwargs)
         self._letterSpacing = None
@@ -45,7 +41,6 @@ class Style(St):
 
 
 class Stylizer(Sz):
-
     def style(self, element):
         try:
             return self._styles[element]
@@ -54,7 +49,6 @@ class Stylizer(Sz):
 
 
 class TextRun:
-
     ws_pat = soft_hyphen_pat = None
 
     def __init__(self, namespace, style, first_html_parent, lang=None):
@@ -72,7 +66,9 @@ class TextRun:
 
     def add_text(self, text, preserve_whitespace, bookmark=None, link=None):
         if not preserve_whitespace:
-            text = self.ws_pat.sub(' ', text)
+            ws_pat = self.ws_pat
+            assert ws_pat is not None
+            text = ws_pat.sub(' ', text)
             if text.strip() != text:
                 # If preserve_whitespace is False, Word ignores leading and
                 # trailing whitespace
@@ -92,7 +88,9 @@ class TextRun:
         r = makeelement(parent, 'w:r')
         rpr = makeelement(r, 'w:rPr', append=False)
         if getattr(self.descendant_style, 'id', None) is not None:
-            makeelement(rpr, 'w:rStyle', w_val=self.descendant_style.id)
+            ds = self.descendant_style
+            assert ds is not None
+            makeelement(rpr, 'w:rStyle', w_val=ds.id)
         if self.lang:
             makeelement(rpr, 'w:lang', w_bidi=self.lang, w_val=self.lang, w_eastAsia=self.lang)
         if len(rpr) > 0:
@@ -113,7 +111,9 @@ class TextRun:
             elif hasattr(text, 'xpath'):
                 r.append(text)
             elif text:
-                for x in self.soft_hyphen_pat.split(text):
+                soft_hyphen_pat = self.soft_hyphen_pat
+                assert soft_hyphen_pat is not None
+                for x in soft_hyphen_pat.split(text):
                     if x == '\u00ad':
                         # trailing spaces in <w:t> before a soft hyphen are
                         # ignored, so put them in a preserve whitespace
@@ -152,8 +152,18 @@ class TextRun:
 
 
 class Block:
-
-    def __init__(self, namespace, styles_manager, links_manager, html_block, style, is_table_cell=False, float_spec=None, is_list_item=False, parent_bg=None):
+    def __init__(
+        self,
+        namespace,
+        styles_manager,
+        links_manager,
+        html_block,
+        style,
+        is_table_cell=False,
+        float_spec=None,
+        is_list_item=False,
+        parent_bg=None,
+    ):
         self.force_not_empty = False
         self.namespace = namespace
         self.bookmarks = set()
@@ -186,7 +196,17 @@ class Block:
             if self.list_tag is not None:
                 next_block.list_tag = self.list_tag
 
-    def add_text(self, text, style, ignore_leading_whitespace=False, html_parent=None, is_parent_style=False, bookmark=None, link=None, lang=None):
+    def add_text(
+        self,
+        text,
+        style,
+        ignore_leading_whitespace=False,
+        html_parent=None,
+        is_parent_style=False,
+        bookmark=None,
+        link=None,
+        lang=None,
+    ):
         ws = style['white-space']
         preserve_whitespace = ws in {'pre', 'pre-wrap', '-o-pre-wrap'}
         ts = self.styles_manager.create_text_style(style, is_parent_style=is_parent_style)
@@ -258,6 +278,7 @@ class Block:
 
     def __repr__(self):
         return f'Block({self.runs!r})'
+
     __str__ = __repr__
 
     def is_empty(self):
@@ -270,7 +291,6 @@ class Block:
 
 
 class Blocks:
-
     def __init__(self, namespace, styles_manager, links_manager):
         self.top_bookmark = None
         self.namespace = namespace
@@ -310,9 +330,16 @@ class Blocks:
                     parent_bg = ps.background_color
         self.end_current_block()
         self.current_block = Block(
-            self.namespace, self.styles_manager, self.links_manager, html_block, style,
-            is_table_cell=is_table_cell, float_spec=float_spec, is_list_item=is_list_item,
-            parent_bg=parent_bg)
+            self.namespace,
+            self.styles_manager,
+            self.links_manager,
+            html_block,
+            style,
+            is_table_cell=is_table_cell,
+            float_spec=float_spec,
+            is_list_item=is_list_item,
+            parent_bg=parent_bg,
+        )
         self.html_tag_start_blocks[html_block] = self.current_block
         self.open_html_blocks.add(html_block)
         return self.current_block
@@ -324,11 +351,13 @@ class Blocks:
     def start_new_row(self, html_tag, tag_style):
         if self.current_table is None:
             self.start_new_table(html_tag)
+        assert self.current_table is not None
         self.current_table.start_new_row(html_tag, tag_style)
 
     def start_new_cell(self, html_tag, tag_style):
         if self.current_table is None:
             self.start_new_table(html_tag)
+        assert self.current_table is not None
         self.current_table.start_new_cell(html_tag, tag_style)
 
     def finish_tag(self, html_tag):
@@ -374,7 +403,7 @@ class Blocks:
             next_block.bookmarks.update(block.bookmarks)
             for attr in 'page_break_after page_break_before'.split():
                 setattr(next_block, attr, getattr(block, attr))
-        except (IndexError, KeyError):
+        except IndexError, KeyError:
             pass
 
     def __enter__(self):
@@ -420,12 +449,8 @@ class Blocks:
                 if bl == default_lang:
                     block.block_lang = None
 
-    def __repr__(self):
-        return f'Block({self.runs!r})'
-
 
 class Convert:
-
     # Word does not apply default styling to hyperlinks, so we ensure they get
     # default styling (the conversion pipeline does not apply any styling to
     # them).
@@ -443,6 +468,7 @@ class Convert:
 
     def __call__(self):
         from calibre.ebooks.oeb.transforms.rasterize import SVGRasterizer
+
         self.svg_rasterizer = SVGRasterizer(base_css=self.base_css)
         self.svg_rasterizer(self.oeb, self.opts)
 
@@ -469,7 +495,7 @@ class Convert:
         remove_blocks = []
         for i, block in enumerate(all_blocks):
             try:
-                nb = all_blocks[i+1]
+                nb = all_blocks[i + 1]
             except IndexError:
                 break
             block.resolve_skipped(nb)
@@ -486,6 +512,9 @@ class Convert:
         self.lists_manager.finalize(all_blocks)
         self.styles_manager.finalize(all_blocks)
         self.write()
+
+    def abshref(self, x: str) -> str:
+        return x
 
     def process_item(self, item):
         self.current_item = item
@@ -519,7 +548,7 @@ class Convert:
                 float_spec = FloatSpec(self.docx.namespace, html_tag, tag_style)
 
             if display in {'inline', 'inline-block'} or tagname == 'br':  # <br> has display:block but we don't want to start a new paragraph
-                if is_float and float_spec.is_dropcaps:
+                if is_float and float_spec is not None and float_spec.is_dropcaps:
                     self.add_block_tag(tagname, html_tag, tag_style, stylizer, float_spec=float_spec)
                     float_spec = None
                 else:
@@ -571,7 +600,13 @@ class Convert:
             # Ignore trailing space after a block tag, as otherwise it will
             # become a new empty paragraph
             block = self.create_block_from_parent(html_tag, stylizer)
-            block.add_text(html_tag.tail, stylizer.style(html_tag.getparent()), is_parent_style=True, link=self.current_link, lang=self.current_lang)
+            block.add_text(
+                html_tag.tail,
+                stylizer.style(html_tag.getparent()),
+                is_parent_style=True,
+                link=self.current_link,
+                lang=self.current_lang,
+            )
 
     def create_block_from_parent(self, html_tag, stylizer):
         parent = html_tag.getparent()
@@ -581,8 +616,7 @@ class Convert:
         return block
 
     def add_block_tag(self, tagname, html_tag, tag_style, stylizer, is_table_cell=False, float_spec=None, is_list_item=False):
-        block = self.blocks.start_new_block(
-            html_tag, tag_style, is_table_cell=is_table_cell, float_spec=float_spec, is_list_item=is_list_item)
+        block = self.blocks.start_new_block(html_tag, tag_style, is_table_cell=is_table_cell, float_spec=float_spec, is_list_item=is_list_item)
         anchor = html_tag.get('id') or html_tag.get('name')
         if anchor:
             block.bookmarks.add(self.bookmark_for_anchor(anchor, html_tag))
@@ -595,7 +629,14 @@ class Convert:
             if text and has_sublist and not text.strip():
                 text = ''  # whitespace only, ignore
             if text:
-                block.add_text(text, tag_style, ignore_leading_whitespace=True, is_parent_style=True, link=self.current_link, lang=self.current_lang)
+                block.add_text(
+                    text,
+                    tag_style,
+                    ignore_leading_whitespace=True,
+                    is_parent_style=True,
+                    link=self.current_link,
+                    lang=self.current_lang,
+                )
             elif has_sublist:
                 block.force_not_empty = True
 
@@ -607,13 +648,23 @@ class Convert:
         if tagname == 'br':
             if html_tag.tail or html_tag is not tuple(html_tag.getparent().iterchildren('*'))[-1]:
                 block = self.create_block_from_parent(html_tag, stylizer)
-                block.add_break(clear={'both':'all', 'left':'left', 'right':'right'}.get(tag_style['clear'], 'none'), bookmark=bmark)
+                block.add_break(
+                    clear={'both': 'all', 'left': 'left', 'right': 'right'}.get(tag_style['clear'], 'none'),
+                    bookmark=bmark,
+                )
         elif tagname == 'img':
             block = self.create_block_from_parent(html_tag, stylizer)
             self.images_manager.add_image(html_tag, block, stylizer, bookmark=bmark)
         elif html_tag.text:
             block = self.create_block_from_parent(html_tag, stylizer)
-            block.add_text(html_tag.text, tag_style, is_parent_style=False, bookmark=bmark, link=self.current_link, lang=self.current_lang)
+            block.add_text(
+                html_tag.text,
+                tag_style,
+                is_parent_style=False,
+                bookmark=bmark,
+                link=self.current_link,
+                lang=self.current_lang,
+            )
         elif bmark:
             block = self.create_block_from_parent(html_tag, stylizer)
             block.add_text('', tag_style, is_parent_style=False, bookmark=bmark, link=self.current_link, lang=self.current_lang)

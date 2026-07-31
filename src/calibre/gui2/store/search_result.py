@@ -1,10 +1,7 @@
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
 
 class SearchResult:
-
     DRM_LOCKED = 1
     DRM_UNLOCKED = 2
     DRM_UNKNOWN = 3
@@ -25,6 +22,7 @@ class SearchResult:
         self.affiliate = False
         self.plugin_author = ''
         self.create_browser = None
+        self.ebooks_com_api_url = ''
 
     def __eq__(self, other):
         return self.title == other.title and self.author == other.author and self.store_name == other.store_name and self.formats == other.formats
@@ -37,5 +35,6 @@ class SearchResult:
         for x in 'store_name title author price formats detail_item cover_url'.split():
             items.append(f'\t{x}={getattr(self, x)!r}')
         return 'SearchResult(\n{}\n)'.format('\n'.join(items))
+
     __repr__ = __str__
     __unicode__ = __str__

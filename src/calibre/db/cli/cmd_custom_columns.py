@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from pprint import pformat
 
 from calibre import prints
+from calibre.utils.localization import _
 
 readonly = True
 version = 0  # change this if you change signature of implementation()
@@ -24,13 +24,7 @@ List available custom columns. Shows column labels and ids.
     '''
         )
     )
-    parser.add_option(
-        '-d',
-        '--details',
-        default=False,
-        action='store_true',
-        help=_('Show details for each column.')
-    )
+    parser.add_option('-d', '--details', default=False, action='store_true', help=_('Show details for each column.'))
     return parser
 
 

@@ -11,28 +11,27 @@ from functools import lru_cache
 
 from polyglot.builtins import environ_item, hasenv
 
-__appname__   = 'calibre'
-numeric_version = (9, 11, 0)
-__version__   = '.'.join(map(str, numeric_version))
-git_version   = None
-__author__    = 'Kovid Goyal <kovid@kovidgoyal.net>'
+__appname__ = 'calibre'
+numeric_version = (9, 12, 0)
+__version__ = '.'.join(map(str, numeric_version))
+git_version = None
+__author__ = 'Kovid Goyal <kovid@kovidgoyal.net>'
 
 '''
 Various run time constants.
 '''
 
-
 _plat = sys.platform.lower()
 iswindows = 'win32' in _plat or 'win64' in _plat
 ismacos = isosx = 'darwin' in _plat
-isnewosx  = ismacos and getattr(sys, 'new_app_bundle', False)
+isnewosx = ismacos and getattr(sys, 'new_app_bundle', False)
 isfreebsd = 'freebsd' in _plat
 isnetbsd = 'netbsd' in _plat
 isdragonflybsd = 'dragonfly' in _plat
 isbsd = isfreebsd or isnetbsd or isdragonflybsd
 ishaiku = 'haiku' in _plat
-islinux   = not (iswindows or ismacos or isbsd or ishaiku)
-isfrozen  = hasattr(sys, 'frozen')
+islinux = not (iswindows or ismacos or isbsd or ishaiku)
+isfrozen = hasattr(sys, 'frozen')
 isunix = ismacos or islinux or ishaiku
 isportable = hasenv('CALIBRE_PORTABLE_BUILD')
 ispy3 = sys.version_info.major > 2
@@ -78,7 +77,6 @@ builtin_decorations = {
     'strikeout': {'text-decoration-line': 'line-through', 'text-decoration-color': 'red'},
 }
 
-
 _osx_ver = None
 
 
@@ -86,11 +84,12 @@ def get_osx_version():
     global _osx_ver
     if _osx_ver is None:
         import platform
+
         OSX = namedtuple('OSX', 'major minor tertiary')
         try:
             ver = platform.mac_ver()[0].split('.')
             if len(ver) == 2:
-                ver.append(0)
+                ver.append('0')
             _osx_ver = OSX(*map(int, ver))  # no2to3
         except Exception:
             _osx_ver = OSX(0, 0, 0)
@@ -111,7 +110,6 @@ else:
     except Exception:
         filesystem_encoding = 'utf-8'
 
-
 DEBUG = hasenv('CALIBRE_DEBUG')
 
 
@@ -126,6 +124,8 @@ def is_debugging():
 
 def _get_cache_dir():
     import errno
+
+    assert config_dir is not None
     confcache = os.path.join(config_dir, 'caches')
     try:
         os.makedirs(confcache)
@@ -153,8 +153,7 @@ def _get_cache_dir():
         candidate = os.path.join(os.path.expanduser('~/Library/Caches'), __appname__)
     else:
         candidate = os.getenv('XDG_CACHE_HOME', '~/.cache')
-        candidate = os.path.join(os.path.expanduser(candidate),
-                                    __appname__)
+        candidate = os.path.join(os.path.expanduser(candidate), __appname__)
         if isinstance(candidate, bytes):
             try:
                 candidate = candidate.decode(filesystem_encoding)
@@ -171,25 +170,26 @@ def _get_cache_dir():
 def cache_dir():
     ans = getattr(cache_dir, 'ans', None)
     if ans is None:
-        ans = cache_dir.ans = os.path.realpath(_get_cache_dir())
+        ans = os.path.realpath(_get_cache_dir())
+        setattr(cache_dir, 'ans', ans)
     return ans
 
 
 # plugins {{{
-plugins_loc = sys.extensions_location
+plugins_loc = getattr(sys, 'extensions_location')
 system_plugins_loc = getattr(sys, 'system_plugins_location', None)
 
 from importlib import import_module
+from importlib.abc import Loader
 from importlib.machinery import EXTENSION_SUFFIXES, ExtensionFileLoader, ModuleSpec
 from importlib.util import find_spec
 
 
-class DeVendorLoader:
-
+class DeVendorLoader(Loader):
     def __init__(self, aliased_name):
         self.aliased_module = import_module(aliased_name)
         try:
-            self.path = self.aliased_module.__loader__.path
+            self.path = self.aliased_module.__loader__.path  # type: ignore
         except Exception:
             self.path = aliased_name
 
@@ -204,12 +204,11 @@ class DeVendorLoader:
 
 
 class DeVendor:
-
     def find_spec(self, fullname, path=None, target=None):
         if fullname == 'calibre.web.feeds.feedparser':
             return find_spec('feedparser')
         if fullname.startswith('calibre.ebooks.markdown'):
-            return ModuleSpec(fullname, DeVendorLoader(fullname[len('calibre.ebooks.'):]))
+            return ModuleSpec(fullname, DeVendorLoader(fullname[len('calibre.ebooks.') :]))
         if fullname.startswith('PyQt5'):
             # this is present for third party plugin compat
             if fullname == 'PyQt5':
@@ -221,8 +220,7 @@ class DeVendor:
             return ModuleSpec(fullname, DeVendorLoader(fullname.replace('dome', '', 1)))
 
 
-class ExtensionsPackageLoader:
-
+class ExtensionsPackageLoader(Loader):
     def __init__(self, calibre_extensions):
         self.calibre_extensions = calibre_extensions
 
@@ -241,12 +239,11 @@ class ExtensionsPackageLoader:
     def create_module(self, spec):
         pass
 
-    def exec_module(self, spec):
+    def exec_module(self, module):
         pass
 
 
 class ExtensionsImporter:
-
     def __init__(self):
         extensions = (
             'pictureflow',
@@ -319,27 +316,30 @@ if iswindows:
 
 
 class Plugins(Mapping):
-
     def __iter__(self):
-        from importlib.resources import contents
-        return contents('calibre_extensions')
+        from importlib.resources import files
+
+        return (x.name for x in files('calibre_extensions').iterdir())
 
     def __len__(self):
-        from importlib.resources import contents
+        from importlib.resources import files
+
         ans = 0
-        for x in contents('calibre_extensions'):
+        for _ in files('calibre_extensions').iterdir():
             ans += 1
         return ans
 
     def __contains__(self, name):
-        from importlib.resources import contents
-        for x in contents('calibre_extensions'):
-            if x == name:
+        from importlib.resources import files
+
+        for x in files('calibre_extensions').iterdir():
+            if x.name == name:
                 return True
         return False
 
     def __getitem__(self, name):
         from importlib import import_module
+
         try:
             return import_module('calibre_extensions.' + name), ''
         except ModuleNotFoundError:
@@ -383,7 +383,7 @@ elif iswindows:
         config_dir = winutil.special_folder_path(winutil.CSIDL_APPDATA)
     except ValueError:
         config_dir = None
-    if not config_dir or not os.access(config_dir, os.W_OK|os.X_OK):
+    if not config_dir or not os.access(config_dir, os.W_OK | os.X_OK):
         config_dir = os.path.expanduser('~')
     config_dir = os.path.join(config_dir, 'calibre')
 elif ismacos:
@@ -395,27 +395,29 @@ else:
         os.makedirs(config_dir, mode=CONFIG_DIR_MODE)
     except Exception:
         pass
-    if not os.path.exists(config_dir) or \
-            not os.access(config_dir, os.W_OK) or not \
-            os.access(config_dir, os.X_OK):
+    if not os.path.exists(config_dir) or not os.access(config_dir, os.W_OK) or not os.access(config_dir, os.X_OK):
         print('No write access to', config_dir, 'using a temporary dir instead')
         import atexit
         import tempfile
+
         config_dir = tempfile.mkdtemp(prefix='calibre-config-')
 
         def cleanup_cdir():
             try:
                 import shutil
+
+                assert config_dir
                 shutil.rmtree(config_dir)
             except Exception:
                 pass
+
         atexit.register(cleanup_cdir)
 # }}}
 
 is_running_from_develop = False
 if getattr(sys, 'frozen', False):
     try:
-        from bypy_importer import running_in_develop_mode
+        from bypy_importer import running_in_develop_mode  # type: ignore
     except ImportError:
         pass
     else:
@@ -428,7 +430,7 @@ if iswindows:
 
 
 def get_version():
-    '''Return version string for display to user '''
+    """Return version string for display to user"""
     if git_version is not None:
         v = git_version
     else:
@@ -442,6 +444,8 @@ def get_version():
 
 
 def get_appname_for_display():
+    from calibre.utils.localization import _
+
     ans = __appname__
     if isportable:
         ans = _('{} Portable').format(ans)
@@ -449,17 +453,17 @@ def get_appname_for_display():
 
 
 def get_portable_base():
-    'Return path to the directory that contains calibre-portable.exe or None'
-    if isportable:
-        return os.path.dirname(os.path.dirname(os.getenv('CALIBRE_PORTABLE_BUILD')))
+    "Return path to the directory that contains calibre-portable.exe or None"
+    if isportable and (cpb := os.getenv('CALIBRE_PORTABLE_BUILD')):
+        return os.path.dirname(os.path.dirname(cpb))
 
 
 def get_windows_username():
-    '''
+    """
     Return the user name of the currently logged in user as a unicode string.
     Note that usernames on windows are case insensitive, the case of the value
     returned depends on what the user typed into the login box at login time.
-    '''
+    """
     return winutil.username()
 
 
@@ -476,11 +480,14 @@ def get_windows_number_formats():
     if ans is None:
         d = winutil.localeconv()
         thousands_sep, decimal_point = d['thousands_sep'], d['decimal_point']
-        ans = get_windows_number_formats.ans = thousands_sep, decimal_point
+        ans = thousands_sep, decimal_point
+        setattr(get_windows_number_formats, 'ans', ans)
     return ans
 
 
 def trash_name():
+    from calibre.utils.localization import _
+
     return _('Trash') if ismacos else _('Recycle Bin')
 
 
@@ -506,36 +513,36 @@ def bundled_binaries_dir() -> str:
         base = sys.extensions_location if hasattr(sys, 'new_app_layout') else os.path.dirname(sys.executable)
         return base
     if (islinux or isbsd) and getattr(sys, 'frozen', False):
-        return os.path.join(sys.executables_location, 'bin')
+        return os.path.join(getattr(sys, 'executables_location'), 'bin')
     return ''
 
 
 @contextmanager
 def sanitize_env_vars():
-    '''Unset various environment variables that calibre uses. This
-    is needed to prevent library conflicts when launching external utilities.'''
+    """Unset various environment variables that calibre uses. This
+    is needed to prevent library conflicts when launching external utilities."""
 
     if islinux and isfrozen:
         env_vars = {
-            'LD_LIBRARY_PATH':'/lib', 'OPENSSL_MODULES': '/lib/ossl-modules',
+            'LD_LIBRARY_PATH': '/lib',
+            'OPENSSL_MODULES': '/lib/ossl-modules',
         }
     elif iswindows:
         env_vars = {'OPENSSL_MODULES': None, 'QTWEBENGINE_DISABLE_SANDBOX': None}
         if os.environ.get('CALIBRE_USE_SYSTEM_CERTIFICATES', '') != '1':
             env_vars['SSL_CERT_DIR'] = None
     elif ismacos:
-        env_vars = {k:None for k in (
-                    'FONTCONFIG_FILE FONTCONFIG_PATH OPENSSL_ENGINES OPENSSL_MODULES').split()}
+        env_vars = {k: None for k in ('FONTCONFIG_FILE FONTCONFIG_PATH OPENSSL_ENGINES OPENSSL_MODULES').split()}
         if os.environ.get('CALIBRE_USE_SYSTEM_CERTIFICATES', '') != '1':
             env_vars['SSL_CERT_DIR'] = None
     else:
         env_vars = {}
 
-    originals = {x:os.environ.get(x, '') for x in env_vars}
-    changed = {x:False for x in env_vars}
+    originals = {x: os.environ.get(x, '') for x in env_vars}
+    changed = {x: False for x in env_vars}
     for var, suffix in env_vars.items():
         paths = [x for x in originals[var].split(os.pathsep) if x]
-        npaths = [] if suffix is None else [x for x in paths if x != (sys.frozen_path + suffix)]
+        npaths = [] if suffix is None else [x for x in paths if x != (getattr(sys, 'frozen_path') + suffix)]
         if len(npaths) < len(paths):
             if npaths:
                 os.environ[var] = os.pathsep.join(npaths)

@@ -20,7 +20,7 @@ dependencies = [
 	"sgmllib3k == 1.0.0",
 	"Markdown == 3.10.0",
 	"html2text == 2025.4.15",
-	"soupsieve == 2.8",
+	"soupsieve == 2.8.4",
     "typing-extensions == 4.15.0",  # needed by beautifulsoup4
 	"beautifulsoup4 == 4.14.3",
 	"regex == 2025.11.3",
@@ -31,7 +31,7 @@ dependencies = [
 	"apsw == 3.53.2.0",
 	"webencodings == 0.5.1",
 	"html5lib == 1.1",
-	"pillow == 12.2.0",
+	"pillow == 12.3.0",
 	"netifaces == 0.11.0",
 	"psutil == 7.1.3",
 	"ifaddr == 0.2.0",
@@ -48,7 +48,7 @@ dependencies = [
 	"pykakasi == 2.3.0",
 	"zeroconf == 0.149.16",
 	"fonttools == 4.61.0",
-	"lxml_html_clean == 0.4.4",
+	"lxml_html_clean == 0.4.5",
 	"PyQt6_sip == 13.10.2",
 	"PyQt6 == 6.10.0",
 	"PyQt6_WebEngine == 6.10.0",
@@ -76,7 +76,7 @@ requires = [
 	"wheel == 0.46.2", # Needed for build which is needed for setuptools
 	"build == 1.3.0", # Needed for build which is needed for setuptools
     "pybind11 == 3.0.1", # Needed for pillow
-	"setuptools == 80.9.0",
+	"setuptools == 83.0.0",
     "pkgconfig == 1.5.5",  # Needed by Brotli
 	# Some packages (xxhash/py7zr/etc) erroneously declare this as a dependency even
 	# though it is needed only for sdist not building wheels
@@ -86,12 +86,20 @@ requires = [
 	"sip == 6.14.0",
 	"PyQt_builder == 1.19.1",
 ]
+[dependency-groups]
+dev = [
+    "ruff >= 0.15.21",
+    "types-lxml >= 2026.2.16",
+    "ty >= 0.0.59",
+    "rapydscript-ng >= 0.8.5",
+]
 
 [tool.ruff]
 line-length = 160
 builtins = ['_', 'I', 'P']
-include = ['*.py', '*.recipe']
-exclude = [
+include = ['*.py', '*.pyi', '*.recipe']
+extension = { recipe = "python" }
+extend-exclude = [
     "*_ui.py",
     "bypy/*",
     "setup/polib.py",
@@ -103,7 +111,7 @@ exclude = [
 preview = true
 
 [tool.ruff.format]
-quote-style = 'single'
+quote-style = 'preserve'
 
 [tool.ruff.lint]
 explicit-preview-rules = true
@@ -148,17 +156,14 @@ known-first-party = ["calibre_extensions", "calibre_plugins", "polyglot"]
 known-third-party = ["odf", "qt", "tinycss", "css_selectors"]
 relative-imports-order = "closest-to-furthest"
 split-on-trailing-comma = false
-section-order = ['__python__', "future", "standard-library", "third-party", "first-party", "local-folder"]
-
-[tool.ruff.lint.isort.sections]
-'__python__' = ['__python__']
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
 
 [tool.ruff.lint.flake8-comprehensions]
 allow-dict-calls-with-keyword-arguments = true
 
 [tool.ruff.lint.flake8-quotes]
 avoid-escape = true
-docstring-quotes = 'single'
+docstring-quotes = 'double'  # PEP 257
 inline-quotes = 'single'
 multiline-quotes = 'single'
 
@@ -281,5 +286,24 @@ exclude = [
     "src/tinycss/",
 ]
 
-[tool.pylsp-mypy]
-enabled = false
+[tool.ty.environment]
+root = ['./src']
+extra-paths = ['./stubs']
+python-platform = "all"
+
+[tool.ty.src]
+exclude = [
+	'**/*_ui.py', '**/*_test.py', '**/test_*.py',
+	'setup/*.py', 'setup.py', 'manual/**/*.py', 'bypy/**/*.py',
+	'**/tests/**',
+    '.github/workflows/*.py',
+	'src/calibre/library/add_to_library.py',
+	'src/calibre/library/database.py',
+	'src/calibre/library/database2.py',
+	'src/calibre/library/sqlite.py',
+	'src/calibre/library/prefs.py',
+	'src/calibre/library/restore.py',
+	'src/calibre/library/custom_columns.py',
+	'src/calibre/library/schema_upgrades.py',
+    'src/calibre/gui2/pyqt6_compat.py',
+]

@@ -1,12 +1,10 @@
-__license__ = 'GPL 3'
-__copyright__ = '2006, Ed Summers <ehs@pobox.com>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2006, Ed Summers <ehs@pobox.com>
 
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 
 class Query:
-    '''
+    """
     Represents an opensearch query Really this class is just a
     helper for substituting values into the macros in a format.
 
@@ -16,16 +14,23 @@ class Query:
     q.startIndex = 1
     q.count = 25
     print q.url()
-    '''
+    """
 
-    standard_macros = ['searchTerms', 'count', 'startIndex', 'startPage',
-        'language', 'outputEncoding', 'inputEncoding']
+    standard_macros = ['searchTerms', 'count', 'startIndex', 'startPage', 'language', 'outputEncoding', 'inputEncoding']
+
+    searchTerms: str
+    count: int
+    startIndex: int
+    startPage: int
+    language: str
+    outputEncoding: str
+    inputEncoding: str
 
     def __init__(self, format):
-        '''
+        """
         Create a query object by passing it the url format obtained
         from the opensearch Description.
-        '''
+        """
         self.format = format
 
         # unpack the url to a tuple
@@ -38,7 +43,7 @@ class Query:
         # opensearch names to the service specific ones
         # so q={searchTerms} will result in a mapping between searchTerms and q
         self.macro_map = {}
-        for key,values in self.query_string.items():
+        for key, values in self.query_string.items():
             # TODO eventually optional/required params should be
             # distinguished somehow (the ones with/without trailing ?
             macro = values[0].replace('{', '').replace('}', '').replace('?', '')
@@ -60,7 +65,7 @@ class Query:
 
         # copy the url parts and substitute in our new query string
         url_parts = list(self.url_parts)
-        url_parts[4] = urlencode(query_string, 1)
+        url_parts[4] = urlencode(query_string, True)
 
         # recompose and return url
         return urlunparse(tuple(url_parts))

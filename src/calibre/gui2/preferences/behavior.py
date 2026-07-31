@@ -1,14 +1,10 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2010, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2010, Kovid Goyal <kovid@kovidgoyal.net>
 
 import re
 from functools import partial
 
-from qt.core import QListWidgetItem, Qt
+from qt.core import QDropEvent, QListWidget, QListWidgetItem, Qt
 
 from calibre.constants import iswindows
 from calibre.customize.ui import all_input_formats, available_output_formats
@@ -20,31 +16,24 @@ from calibre.gui2.preferences import ConfigWidgetBase, Setting, get_move_count, 
 from calibre.gui2.preferences.behavior_ui import Ui_Form
 from calibre.utils.config import prefs
 from calibre.utils.icu import sort_key
-
-
-def input_order_drop_event(self, ev):
-    ret = self.opt_input_order.__class__.dropEvent(self.opt_input_order, ev)
-    if ev.isAccepted():
-        self.changed_signal.emit()
-    return ret
+from calibre.utils.localization import _
 
 
 class OutputFormatSetting(Setting):
-
     CHOICES_SEARCH_FLAGS = Qt.MatchFlag.MatchFixedString
 
 
 class ConfigWidget(ConfigWidgetBase, Ui_Form):
-
     def genesis(self, gui):
         self.gui = gui
         db = gui.library_view.model().db
 
         r = self.register
-        choices = [(_('Low'), 'low'), (_('Normal'), 'normal'), (_('High'),
-            'high')] if iswindows else \
-                    [(_('Normal'), 'normal'), (_('Low'), 'low'), (_('Very low'),
-                        'high')]
+        choices = (
+            [(_('Low'), 'low'), (_('Normal'), 'normal'), (_('High'), 'high')]
+            if iswindows
+            else [(_('Normal'), 'normal'), (_('Low'), 'low'), (_('Very low'), 'high')]
+        )
         r('worker_process_priority', prefs, choices=choices)
 
         r('network_timeout', prefs)
@@ -69,31 +58,38 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
         self.input_up_button.clicked.connect(partial(self.up_input, use_kbd_modifiers=True))
         self.input_down_button.clicked.connect(partial(self.down_input, use_kbd_modifiers=True))
-        self.opt_input_order.set_movement_functions(partial(self.up_input, use_kbd_modifiers=False),
-                                                    partial(self.down_input, use_kbd_modifiers=False))
-        self.opt_input_order.dropEvent = partial(input_order_drop_event, self)
+        self.opt_input_order.set_movement_functions(partial(self.up_input, use_kbd_modifiers=False), partial(self.down_input, use_kbd_modifiers=False))
+        self.opt_input_order.handle_drop_event = self.input_order_drop_event
         for signal in ('Activated', 'Changed', 'DoubleClicked', 'Clicked'):
-            signal = getattr(self.opt_internally_viewed_formats, 'item'+signal)
+            signal = getattr(self.opt_internally_viewed_formats, 'item' + signal)
             signal.connect(self.internally_viewed_formats_changed)
 
         r('bools_are_tristate', db.prefs, restart_required=True)
         r('numeric_collation', prefs, restart_required=True)
+
+    def input_order_drop_event(self, ev: QDropEvent | None) -> None:
+        QListWidget.dropEvent(self.opt_input_order, ev)
+        if ev is not None and ev.isAccepted():
+            self.changed_signal.emit()
 
     def initialize(self):
         ConfigWidgetBase.initialize(self)
         self.init_input_order()
         self.init_internally_viewed_formats()
 
-    def restore_defaults(self):
+    def restore_defaults(self, *args):
         ConfigWidgetBase.restore_defaults(self)
         self.init_input_order(defaults=True)
         self.init_internally_viewed_formats(defaults=True)
         self.changed_signal.emit()
 
-    def commit(self):
+    def commit(self, *args):
         input_map = prefs['input_format_order']
-        input_cols = [str(self.opt_input_order.item(i).data(Qt.ItemDataRole.UserRole) or '') for
-                i in range(self.opt_input_order.count())]
+        input_cols = []
+        for i in range(self.opt_input_order.count()):
+            _item = self.opt_input_order.item(i)
+            assert _item is not None
+            input_cols.append(str(_item.data(Qt.ItemDataRole.UserRole) or ''))
         if input_map != input_cols:
             prefs['input_format_order'] = input_cols
         fmts = self.current_internally_viewed_formats
@@ -123,15 +119,15 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         for ext in BOOK_EXTENSIONS:
             ext = ext.lower()
             ext = re.sub(r'(x{0,1})htm(l{0,1})', 'html', ext)
-            if ext == 'lrf' or is_supported('book.'+ext):
+            if ext == 'lrf' or is_supported('book.' + ext):
                 exts.add(ext)
         viewer.clear()
         for ext in sorted(exts):
             viewer.addItem(ext.upper())
-            item = viewer.item(viewer.count()-1)
-            item.setFlags(Qt.ItemFlag.ItemIsEnabled|Qt.ItemFlag.ItemIsUserCheckable)
-            item.setCheckState(Qt.CheckState.Checked if
-                    ext.upper() in fmts else Qt.CheckState.Unchecked)
+            item = viewer.item(viewer.count() - 1)
+            assert item is not None
+            item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsUserCheckable)
+            item.setCheckState(Qt.CheckState.Checked if ext.upper() in fmts else Qt.CheckState.Unchecked)
         viewer.blockSignals(False)
 
     @property
@@ -139,9 +135,12 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         fmts = []
         viewer = self.opt_internally_viewed_formats
         for i in range(viewer.count()):
-            if viewer.item(i).checkState() == Qt.CheckState.Checked:
-                fmts.append(str(viewer.item(i).text()))
+            _item = viewer.item(i)
+            assert _item is not None
+            if _item.checkState() == Qt.CheckState.Checked:
+                fmts.append(str(_item.text()))
         return fmts
+
     # }}}
 
     # Input format order {{{
@@ -157,24 +156,24 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         for format in input_map + list(all_formats.difference(input_map)):
             item = QListWidgetItem(format, self.opt_input_order)
             item.setData(Qt.ItemDataRole.UserRole, (format))
-            item.setFlags(Qt.ItemFlag.ItemIsEnabled|Qt.ItemFlag.ItemIsSelectable|Qt.ItemFlag.ItemIsDragEnabled)
+            item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsDragEnabled)
 
     def up_input(self, use_kbd_modifiers, *args):
         count = get_move_count(self.opt_input_order.count()) if use_kbd_modifiers else 1
-        for _ in range(count):
+        for _x in range(count):
             idx = self.opt_input_order.currentRow()
             if idx > 0:
-                self.opt_input_order.insertItem(idx-1, self.opt_input_order.takeItem(idx))
-                self.opt_input_order.setCurrentRow(idx-1)
+                self.opt_input_order.insertItem(idx - 1, self.opt_input_order.takeItem(idx))
+                self.opt_input_order.setCurrentRow(idx - 1)
                 self.changed_signal.emit()
 
     def down_input(self, use_kbd_modifiers, *args):
         count = get_move_count(self.opt_input_order.count()) if use_kbd_modifiers else 1
-        for _ in range(count):
+        for _x in range(count):
             idx = self.opt_input_order.currentRow()
-            if idx < self.opt_input_order.count()-1:
-                self.opt_input_order.insertItem(idx+1, self.opt_input_order.takeItem(idx))
-                self.opt_input_order.setCurrentRow(idx+1)
+            if idx < self.opt_input_order.count() - 1:
+                self.opt_input_order.insertItem(idx + 1, self.opt_input_order.takeItem(idx))
+                self.opt_input_order.setCurrentRow(idx + 1)
                 self.changed_signal.emit()
 
     # }}}
@@ -182,16 +181,17 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
     def reset_confirmation_dialogs(self, *args):
         from calibre.gui2.tweak_book import tprefs
         from calibre.gui2.viewer.config import vprefs
+
         for confloc in (dynamic, vprefs, tprefs):
             for key in confloc.keys():
                 if key.endswith('_again') and confloc[key] is False:
                     confloc[key] = True
         gprefs['questions_to_auto_skip'] = []
-        info_dialog(self, _('Done'),
-                _('Confirmation dialogs have all been reset'), show=True)
+        info_dialog(self, _('Done'), _('Confirmation dialogs have all been reset'), show=True)
 
 
 if __name__ == '__main__':
     from calibre.gui2 import Application
+
     app = Application([])
     test_widget('Interface', 'Behavior')

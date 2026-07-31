@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPL v3 Copyright: 2018, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from collections import OrderedDict
 
 from calibre.ebooks.metadata.tag_mapper import map_tags
@@ -13,12 +12,12 @@ from calibre.gui2.tag_mapper import Rules as RulesBase
 from calibre.gui2.tag_mapper import RulesDialog as RulesDialogBase
 from calibre.gui2.tag_mapper import Tester as TesterBase
 from calibre.utils.config import JSONConfig
+from calibre.utils.localization import _
 
 publisher_maps = JSONConfig('publisher-mapping-rules')
 
 
 class RuleEdit(RuleEditBase):
-
     ACTION_MAP = OrderedDict((
         ('replace', _('Change')),
         ('capitalize', _('Capitalize')),
@@ -69,41 +68,42 @@ class RuleEdit(RuleEditBase):
             idx = c.findData(str(rule.get(name, '')))
             idx = max(idx, 0)
             c.setCurrentIndex(idx)
+
         sc('match_type'), sc('action')
         self.query.setText(str(rule.get('query', '')).strip())
         self.replace.setText(str(rule.get('replace', '')).strip())
 
 
 class RuleEditDialog(RuleEditDialogBase):
-
     PREFS_NAME = 'edit-publisher-mapping-rule'
     RuleEditClass = RuleEdit
 
 
 class RuleItem(RuleItemBase):
-
     @staticmethod
     def text_from_rule(rule, parent):
         query = elided_text(rule['query'], font=parent.font(), width=200, pos='right')
-        text = _(
-            '<b>{action}</b> the publisher name, if it <i>{match_type}</i>: <b>{query}</b>').format(
-                action=RuleEdit.ACTION_MAP[rule['action']], match_type=RuleEdit.MATCH_TYPE_MAP[rule['match_type']], query=query)
+        text = _('<b>{action}</b> the publisher name, if it <i>{match_type}</i>: <b>{query}</b>').format(
+            action=RuleEdit.ACTION_MAP[rule['action']],
+            match_type=RuleEdit.MATCH_TYPE_MAP[rule['match_type']],
+            query=query,
+        )
         if rule['action'] == 'replace':
             text += '<br>' + _('to the name') + ' <b>{}</b>'.format(rule['replace'])
         return '<div style="white-space: nowrap">' + text + '</div>'
 
 
 class Rules(RulesBase):
-
     RuleItemClass = RuleItem
     RuleEditDialogClass = RuleEditDialog
-    MSG = _('You can specify rules to manipulate publisher names here.'
-            ' Click the "Add Rule" button'
-            ' below to get started. The rules will be processed in order for every publisher.')
+    MSG = _(
+        'You can specify rules to manipulate publisher names here.'
+        ' Click the "Add Rule" button'
+        ' below to get started. The rules will be processed in order for every publisher.'
+    )
 
 
 class Tester(TesterBase):
-
     DIALOG_TITLE = _('Test publisher mapping rules')
     PREFS_NAME = 'test-publisher-mapping-rules'
     LABEL = _('Enter a publisher name to test:')
@@ -113,11 +113,10 @@ class Tester(TesterBase):
     def do_test(self):
         publisher = self.value.strip()
         ans = map_tags([publisher], self.rules, separator='')
-        self.result.setText((ans or ('',))[0])
+        self.result_widget.setText((ans or ('',))[0])
 
 
 class RulesDialog(RulesDialogBase):
-
     DIALOG_TITLE = _('Edit publisher mapping rules')
     PREFS_NAME = 'edit-publisher-mapping-rules'
     RulesClass = Rules
@@ -129,9 +128,10 @@ if __name__ == '__main__':
     app = Application([])
     d = RulesDialog()
     d.rules = [
-            {'action':'replace', 'query':'alice Bob', 'match_type':'one_of', 'replace':'Alice Bob'},
+        {'action': 'replace', 'query': 'alice Bob', 'match_type': 'one_of', 'replace': 'Alice Bob'},
     ]
     d.exec()
     from pprint import pprint
+
     pprint(d.rules)
     del d, app

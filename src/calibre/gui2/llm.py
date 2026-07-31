@@ -6,11 +6,10 @@ from collections.abc import Iterator
 from html import escape
 from itertools import count
 from threading import Thread
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, Self
 
 from qt.core import (
     QAbstractItemView,
-    QApplication,
     QCheckBox,
     QDateTime,
     QDialog,
@@ -46,12 +45,12 @@ from calibre.ai.prefs import plugin_for_purpose
 from calibre.ai.prefs import prefs as aiprefs
 from calibre.ai.utils import ContentType, StreamedResponseAccumulator, response_to_html
 from calibre.customize import AIProviderPlugin
-from calibre.gui2 import error_dialog, safe_open_url
+from calibre.gui2 import error_dialog, qapplication_or_fail, safe_open_url
 from calibre.gui2.chat_widget import Button, ChatWidget, Header
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.widgets2 import Dialog
 from calibre.utils.icu import primary_sort_key
-from calibre.utils.localization import ui_language_as_english
+from calibre.utils.localization import _, ui_language_as_english
 from calibre.utils.logging import ERROR, WARN
 from calibre.utils.short_uuid import uuid4
 from polyglot.binary import as_hex_unicode
@@ -66,7 +65,7 @@ def for_display_to_human(self: ChatMessage, is_initial_query: bool = False, cont
         return ''
     q = self.query
     if is_initial_query and (idx := q.find(prompt_sep)) > -1:
-        q = q[:idx] + '\n\n' + q[idx + len(prompt_sep):]
+        q = q[:idx] + '\n\n' + q[idx + len(prompt_sep) :]
     return response_to_html(q, content_type=content_type)
 
 
@@ -85,14 +84,13 @@ def show_reasoning(reasoning: str, parent: QWidget | None = None):
 
 
 class ConversationHistory:
-
     def __init__(self):
         self.accumulator = StreamedResponseAccumulator()
         self.items: list[ChatMessage] = []
         self.model_used = ''
         self.api_call_active = False
         self.current_response_completed = True
-        self.cost = 0.
+        self.cost = 0.0
         self.response_count = 0
         self.currency = ''
 
@@ -145,9 +143,9 @@ class ConversationHistory:
             self.currency = self.accumulator.metadata.currency
 
     def format_llm_note(self, assistant_name: str, title: str = '') -> str:
-        '''
+        """
         Formats a conversation history into a standardized, self-contained note entry.
-        '''
+        """
         if not self:
             return ''
 
@@ -183,10 +181,7 @@ class ConversationHistory:
         record_body = '\n\n'.join(record_lines)
         record_header = f'{sep} {_("Conversation record")} {sep}'
 
-        return (
-            f'{header}\n\n{main_response}\n\n'
-            f'{record_header}\n\n{record_body}'
-        )
+        return f'{header}\n\n{main_response}\n\n{record_header}\n\n{record_body}'
 
 
 class ConverseWidget(QWidget):
@@ -212,19 +207,19 @@ class ConverseWidget(QWidget):
         self.update_ai_provider_plugin()
         self.clear_current_conversation()
 
-        self.layout = QVBoxLayout(self)
-        self.layout.setContentsMargins(5, 5, 5, 5)
+        vl = QVBoxLayout(self)
+        vl.setContentsMargins(5, 5, 5, 5)
 
         self.result_display = rd = ChatWidget(self, _('Type a question to the AI'))
         rd.link_clicked.connect(self.on_chat_link_clicked)
         rd.input_from_user.connect(self.run_custom_prompt)
-        self.layout.addWidget(rd)
+        vl.addWidget(rd)
 
         self.response_actions_layout = QHBoxLayout()
         self.response_buttons = {}
         self.add_buttons()
         self.response_actions_layout.addStretch()
-        self.layout.addLayout(self.response_actions_layout)
+        vl.addLayout(self.response_actions_layout)
 
         footer_layout = QHBoxLayout()
         self.settings_button = QPushButton(QIcon.ic('config.png'), _('Se&ttings'))
@@ -241,13 +236,13 @@ class ConverseWidget(QWidget):
             b.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
             b.clicked.connect(self.close_requested)
             footer_layout.addWidget(b)
-        self.layout.addLayout(footer_layout)
+        vl.addLayout(footer_layout)
 
         self.response_received.connect(self.on_response_from_ai, type=Qt.ConnectionType.QueuedConnection)
         self.show_initial_message()
         self.update_cost()
 
-    def setFocus(self, reason) -> None:
+    def setFocus(self, reason=...) -> None:
         self.result_display.setFocus(reason)
 
     def language_instruction(self):
@@ -293,6 +288,7 @@ class ConverseWidget(QWidget):
 
     @property
     def assistant_name(self) -> str:
+        assert self.ai_provider_plugin is not None
         return self.ai_provider_plugin.human_readable_model_name(self.conversation_history.model_used) or _('Assistant')
 
     def show_ai_conversation(self):
@@ -312,12 +308,20 @@ class ConverseWidget(QWidget):
                 is_response = True
                 buttons = tuple(self.per_response_buttons(i, message))
                 buttons += (
-                    Button('edit-copy.png', f'http://{self.copy_hostname}/{i}', _(
-                        'Copy this specific response to the clipboard')),
+                    Button(
+                        'edit-copy.png',
+                        f'http://{self.copy_hostname}/{i}',
+                        _('Copy this specific response to the clipboard'),
+                    ),
                 )
                 if message.reasoning:
-                    buttons += (Button(reasoning_icon, f'http://{self.reasoning_hostname}/{i}', _(
-                        'Show the reasoning behind this response from the AI')),)
+                    buttons += (
+                        Button(
+                            reasoning_icon,
+                            f'http://{self.reasoning_hostname}/{i}',
+                            _('Show the reasoning behind this response from the AI'),
+                        ),
+                    )
                 header = Header(assistant, buttons)
             self.result_display.add_block(content_for_display, header, is_response)
         if self.conversation_history.api_call_active:
@@ -328,8 +332,10 @@ class ConverseWidget(QWidget):
             if not has_content:
                 content_for_display = '<i>' + content_for_display + '</i>'
             self.result_display.add_block(
-                content_for_display, Header(_('{assistant} {activity}').format(
-                    assistant=assistant, activity=activity) + '…'), is_response=True)
+                content_for_display,
+                Header(_('{assistant} {activity}').format(assistant=assistant, activity=activity) + '…'),
+                is_response=True,
+            )
         self.result_display.re_render()
         self.scroll_to_bottom()
 
@@ -343,8 +349,10 @@ class ConverseWidget(QWidget):
 
     def start_api_call(self, action_prompt: str, **kwargs: Any) -> None:
         if not self.is_ready_for_use:
-            self.show_error(f'''<b>{_('AI provider not configured.')}</b> <a href="http://{self.configure_ai_hostname}">{_(
-                'Configure AI provider')}</a>''', is_critical=False)
+            self.show_error(
+                f'''<b>{_('AI provider not configured.')}</b> <a href="http://{self.configure_ai_hostname}">{_('Configure AI provider')}</a>''',
+                is_critical=False,
+            )
             return
         if err := self.ready_to_start_api_call():
             self.show_error(f"<b>{_('Error')}:</b> {err}", is_critical=True)
@@ -357,13 +365,15 @@ class ConverseWidget(QWidget):
                 self.conversation_history.append(msg)
         self.current_api_call_number = next(self.counter)
         self.conversation_history.new_api_call()
-        Thread(name='LLMAPICall', daemon=True, target=self.do_api_call, args=(
-            self.conversation_history.copy(), self.current_api_call_number, self.ai_provider_plugin)).start()
+        Thread(
+            name='LLMAPICall',
+            daemon=True,
+            target=self.do_api_call,
+            args=(self.conversation_history.copy(), self.current_api_call_number, self.ai_provider_plugin),
+        ).start()
         self.update_ui_state()
 
-    def do_api_call(
-        self, conversation_history: ConversationHistory, current_api_call_number: int, ai_plugin: AIProviderPlugin
-    ) -> None:
+    def do_api_call(self, conversation_history: ConversationHistory, current_api_call_number: int, ai_plugin: AIProviderPlugin) -> None:
         try:
             error_occurred = False
             for res in ai_plugin.text_chat(conversation_history.items, conversation_history.model_used):
@@ -389,7 +399,10 @@ class ConverseWidget(QWidget):
             self.streaming_render_timer.stop()
             self.result_display.show_message(
                 f'''{_('Talking to AI failed with error:')} {escape(str(r.exception))}''',
-                r.error_details, ERROR, clear_conversation=False)
+                r.error_details,
+                ERROR,
+                clear_conversation=False,
+            )
             return
         self.conversation_history.accumulator.accumulate(r)
         if not self.streaming_render_timer.isActive():
@@ -439,20 +452,26 @@ class ConverseWidget(QWidget):
 
     def show_reasoning(self, message_index: int) -> None:
         h = self.get_conversation_history_for_specific_response(message_index)
-        m = h.at(len(h)-1)
+        assert h is not None
+        m = h.at(len(h) - 1)
         if m.reasoning:
             show_reasoning(m.reasoning, self)
 
     def copy_specific_note(self, message_index: int) -> None:
         history_for_record = self.get_conversation_history_for_specific_response(message_index)
+        assert history_for_record is not None
         text = history_for_record.format_llm_note(self.assistant_name, self.NOTE_TITLE)
         if text:
-            QApplication.instance().clipboard().setText(text)
+            clip = qapplication_or_fail().clipboard()
+            assert clip is not None
+            clip.setText(text)
 
     def copy_to_clipboard(self) -> None:
         text = self.conversation_history.format_llm_note(self.assistant_name, self.NOTE_TITLE)
         if text:
-            QApplication.instance().clipboard().setText(text)
+            clip = qapplication_or_fail().clipboard()
+            assert clip is not None
+            clip.setText(text)
 
     def on_chat_link_clicked(self, qurl: QUrl):
         if qurl.scheme() not in ('http', 'https'):
@@ -474,10 +493,10 @@ class ConverseWidget(QWidget):
         safe_open_url(qurl)
 
     def set_all_inputs_enabled(self, enabled):
-        for i in range(self.quick_actions_layout.count()):
-            widget = self.quick_actions_layout.itemAt(i).widget()
-            if widget:
-                widget.setEnabled(enabled)
+        # for i in range(self.quick_actions_layout.count()):
+        #     widget = self.quick_actions_layout.itemAt(i).widget()
+        #     if widget:
+        #         widget.setEnabled(enabled)
         self.result_display.set_input_enabled(enabled)
 
     def add_button(self, icon: str, text: str, tooltip: str) -> QPushButton:
@@ -492,10 +511,8 @@ class ConverseWidget(QWidget):
     NOTE_TITLE = ''
 
     def add_buttons(self) -> None:
-        self.add_button('edit-clear.png', _('&New chat'), _('Start a new conversation')).clicked.connect(
-            self.start_new_conversation)
-        self.add_button('edit-copy.png', _('&Copy'), _('Copy this conversation to the clipboard')).clicked.connect(
-            self.copy_to_clipboard)
+        self.add_button('edit-clear.png', _('&New chat'), _('Start a new conversation')).clicked.connect(self.start_new_conversation)
+        self.add_button('edit-copy.png', _('&Copy'), _('Copy this conversation to the clipboard')).clicked.connect(self.copy_to_clipboard)
 
     def per_response_buttons(self, msgnum: int, msg: ChatMessage) -> Iterator[Button]:
         if False:
@@ -529,6 +546,7 @@ class ConverseWidget(QWidget):
     def cleanup_on_close(self) -> None:
         self.streaming_render_timer.stop()
         self.response_received.disconnect(self.on_response_from_ai)
+
     # }}}
 
 
@@ -544,7 +562,7 @@ class ActionData(NamedTuple):
         return {'disabled': self.is_disabled, 'title': self.human_name, 'prompt_template': self.prompt_template}
 
     @classmethod
-    def unserialize(cls, p: dict[str, Any], default_actions: tuple[ActionData, ...], include_disabled=False) -> Iterator[ActionData]:
+    def unserialize(cls, p: dict[str, Any], default_actions: tuple[Self, ...], include_disabled=False) -> Iterator[Self]:
         dd = p.get('disabled_default_actions', ())
         for x in default_actions:
             x = x._replace(is_disabled=x.name in dd)
@@ -557,22 +575,21 @@ class ActionData(NamedTuple):
 
 
 class ActionEditDialog(QDialog):
-
-    def __init__(self, help_text: str, action: ActionData | None=None, parent=None):
+    def __init__(self, help_text: str, action: ActionData | None = None, parent=None):
         super().__init__(parent)
         self.setWindowTitle(_('Edit Quick action') if action else _('Add Quick action'))
-        self.layout = QFormLayout(self)
-        self.layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
+        fl = QFormLayout(self)
+        fl.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
         self.name_edit = QLineEdit(self)
         self.prompt_edit = QPlainTextEdit(self)
         self.prompt_edit.setMinimumHeight(100)
-        self.layout.addRow(_('Name:'), self.name_edit)
-        self.layout.addRow(_('Prompt:'), self.prompt_edit)
+        fl.addRow(_('Name:'), self.name_edit)
+        fl.addRow(_('Prompt:'), self.prompt_edit)
         self.help_label = la = QLabel(help_text)
         la.setWordWrap(True)
-        self.layout.addRow(la)
+        fl.addRow(la)
         self.button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
-        self.layout.addWidget(self.button_box)
+        fl.addWidget(self.button_box)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         if action is not None:
@@ -586,16 +603,16 @@ class ActionEditDialog(QDialog):
         ans.setWidth(max(500, ans.width()))
         return ans
 
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.Type.KeyPress:
-            if obj is self.name_edit and event.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
+    def eventFilter(self, a0, a1):
+        if a1.type() == QEvent.Type.KeyPress:
+            if a0 is self.name_edit and a1.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
                 self.prompt_edit.setFocus()
                 return True
-            if obj is self.prompt_edit and event.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
-                if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            if a0 is self.prompt_edit and a1.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
+                if a1.modifiers() & Qt.KeyboardModifier.ControlModifier:
                     self.accept()
                     return True
-        return super().eventFilter(obj, event)
+        return super().eventFilter(a0, a1)
 
     def get_action(self) -> ActionData:
         title = self.name_edit.text().strip()
@@ -611,13 +628,16 @@ class ActionEditDialog(QDialog):
 
 
 class LocalisedResults(QCheckBox):
-
     def __init__(self):
         super().__init__(_('Ask the AI to respond in the current language'))
-        self.setToolTip('<p>' + _(
-            'Ask the AI to respond in the current calibre user interface language. Note that how well'
-            ' this works depends on the individual model being used. Different models support'
-            ' different languages.'))
+        self.setToolTip(
+            '<p>'
+            + _(
+                'Ask the AI to respond in the current calibre user interface language. Note that how well'
+                ' this works depends on the individual model being used. Different models support'
+                ' different languages.'
+            )
+        )
 
     def load_settings(self):
         self.setChecked(aiprefs()['llm_localized_results'] == 'always')
@@ -628,25 +648,24 @@ class LocalisedResults(QCheckBox):
 
 
 class LLMActionsSettingsWidget(QWidget):
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setMinimumWidth(550)
-        self.layout = QVBoxLayout(self)
+        vl = QVBoxLayout(self)
         api_model_layout = QFormLayout()
         api_model_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow)
 
         self.custom_widgets = []
-        for (title, w) in self.create_custom_widgets():
+        for title, w in self.create_custom_widgets():
             if title:
                 api_model_layout.addRow(title, w)
             else:
                 api_model_layout.addRow(w)
             self.custom_widgets.append(w)
-        self.layout.addLayout(api_model_layout)
+        vl.addLayout(api_model_layout)
         self.qa_gb = gb = QGroupBox(_('&Quick actions:'), self)
-        self.layout.addWidget(gb)
-        gb.l = l = QVBoxLayout(gb)
+        vl.addWidget(gb)
+        l = QVBoxLayout(gb)
         self.actions_list = QListWidget(self)
         self.actions_list.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
         l.addWidget(self.actions_list)
@@ -668,10 +687,11 @@ class LLMActionsSettingsWidget(QWidget):
 
     def load_settings(self):
         for w in self.custom_widgets:
-            w.load_settings()
+            if ls := getattr(w, 'load_settings', None):
+                ls()
         self.load_actions_from_prefs()
 
-    def action_as_item(self, ac: ActionData) -> QListWidgetItem:
+    def action_as_item(self, ac: ActionData) -> None:
         item = QListWidgetItem(ac.human_name, self.actions_list)
         item.setData(Qt.ItemDataRole.UserRole, ac)
         item.setCheckState(Qt.CheckState.Unchecked if ac.is_disabled else Qt.CheckState.Checked)
@@ -695,8 +715,12 @@ class LLMActionsSettingsWidget(QWidget):
             return
         action = item.data(Qt.ItemDataRole.UserRole)
         if action.is_builtin:
-            return error_dialog(self, _('Cannot edit'), _(
-                'Cannot edit builtin actions. Instead uncheck this action and create a new action with the same name.'), show=True)
+            return error_dialog(
+                self,
+                _('Cannot edit'),
+                _('Cannot edit builtin actions. Instead uncheck this action and create a new action with the same name.'),
+                show=True,
+            )
         dialog = ActionEditDialog(self.action_edit_help_text, action, parent=self)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             new_action = dialog.get_action()
@@ -710,23 +734,30 @@ class LLMActionsSettingsWidget(QWidget):
             return
         action = item.data(Qt.ItemDataRole.UserRole)
         if action.is_builtin:
-            return error_dialog(self, _('Cannot remove'), _(
-                'Cannot remove builtin actions. Instead simply uncheck it to prevent it from showing up as a button.'), show=True)
+            return error_dialog(
+                self,
+                _('Cannot remove'),
+                _('Cannot remove builtin actions. Instead simply uncheck it to prevent it from showing up as a button.'),
+                show=True,
+            )
         if item and confirm(
-            _('Remove the {} action?').format(item.text()), 'confirm_remove_llm_action',
-            confirm_msg=_('&Show this confirmation again'), parent=self,
+            _('Remove the {} action?').format(item.text()),
+            'confirm_remove_llm_action',
+            confirm_msg=_('&Show this confirmation again'),
+            parent=self,
         ):
             self.actions_list.takeItem(self.actions_list.row(item))
 
     def commit(self) -> bool:
         for w in self.custom_widgets:
-            if not w.commit():
+            if (commit := getattr(w, 'commit', None)) and not commit():
                 return False
         disabled_defaults = []
         custom_actions = {}
         for i in range(self.actions_list.count()):
             item = self.actions_list.item(i)
-            action:ActionData = item.data(Qt.ItemDataRole.UserRole)
+            assert item is not None
+            action: ActionData = item.data(Qt.ItemDataRole.UserRole)
             action = action._replace(is_disabled=item.checkState() == Qt.CheckState.Unchecked)
             if action.is_builtin:
                 if action.is_disabled:
@@ -743,23 +774,24 @@ class LLMActionsSettingsWidget(QWidget):
 
     # Subclass API {{{
     action_edit_help_text = ''
+
     def get_actions_from_prefs(self) -> Iterator[ActionData]:
         raise NotImplementedError('implement in sub class')
 
     def set_actions_in_prefs(self, s: dict[str, Any]) -> None:
         raise NotImplementedError('implement in sub class')
 
-    def create_custom_widgets(self) -> Iterator[str, QWidget]:
+    def create_custom_widgets(self) -> Iterator[tuple[str, QWidget]]:
         raise NotImplementedError('implement in sub class')
+
     # }}}
 
 
 class LLMSettingsDialogBase(Dialog):
-
     def __init__(self, name, prefs, title='', parent=None):
         super().__init__(title=title or _('AI Settings'), name=name, prefs=prefs, parent=parent)
 
-    def custom_tabs(self) -> Iterator[str, str, QWidget]:
+    def custom_tabs(self) -> Iterator[tuple[str, str, QWidget]]:
         if False:
             yield 'icon', 'title', QWidget()
 
@@ -768,7 +800,7 @@ class LLMSettingsDialogBase(Dialog):
         self.tabs = tabs = QTabWidget(self)
         self.ai_config = ai = ConfigureAI(parent=self)
         tabs.addTab(ai, QIcon.ic('ai.png'), _('AI &Provider'))
-        for (icon, title, widget) in self.custom_tabs():
+        for icon, title, widget in self.custom_tabs():
             tabs.addTab(widget, QIcon.ic(icon), title)
         tabs.setCurrentIndex(1 if self.ai_config.is_ready_for_use else 0)
         l.addWidget(tabs)
@@ -777,14 +809,14 @@ class LLMSettingsDialogBase(Dialog):
     def accept(self):
         for i in range(self.tabs.count()):
             w = self.tabs.widget(i)
-            if not w.commit():
+            assert w is not None
+            if (commit := getattr(w, 'commit', None)) and not commit():
                 self.tabs.setCurrentWidget(w)
                 return
         super().accept()
 
 
 class FakeAIProvider:
-
     is_ready_for_use = True
 
     def human_readable_model_name(self, model_name: str) -> str:
@@ -792,18 +824,19 @@ class FakeAIProvider:
 
 
 class StreamingDemoWidget(ConverseWidget):
-
     def __init__(self, title: str, throttle_streaming: bool, parent: QWidget | None = None):
         self.demo_title = title
         self.throttle_streaming = throttle_streaming
         self.render_count = 0
         super().__init__(parent)
         self.render_count_label = QLabel('', self)
-        self.layout.insertWidget(0, self.render_count_label)
+        layout_ = self.layout()
+        assert isinstance(layout_, QVBoxLayout)
+        layout_.insertWidget(0, self.render_count_label)
         self.settings_button.setVisible(False)
         self.result_display.input.setEnabled(False)
         self.original_re_render = self.result_display.re_render
-        self.result_display.re_render = self.counted_re_render
+        self.result_display.re_render = self.counted_re_render  # type: ignore
         self.update_render_count(True)
 
     def counted_re_render(self) -> None:
@@ -861,7 +894,6 @@ class StreamingDemoWidget(ConverseWidget):
 
 
 class StreamingRenderDemo(QDialog):
-
     def __init__(self, auto_close: bool = False, parent: QWidget | None = None):
         super().__init__(parent)
         self.auto_close = auto_close
@@ -909,14 +941,16 @@ class StreamingRenderDemo(QDialog):
     def restart(self) -> None:
         self.chunk_timer.stop()
         payload = self.fake_streaming_answer()
-        self.chunks = [payload[i:i + self.chunk_size] for i in range(0, len(payload), self.chunk_size)]
+        self.chunks = [payload[i : i + self.chunk_size] for i in range(0, len(payload), self.chunk_size)]
         self.current_chunk = 0
         prompt = _('Demonstrate a streaming markdown response.')
         self.immediate_widget.start_demo_stream(prompt)
         self.throttled_widget.start_demo_stream(prompt)
-        self.status_label.setText(_(
-            'Injecting {chunks} chunks at {interval} ms per chunk into two widgets with identical content.'
-        ).format(chunks=len(self.chunks), interval=self.chunk_interval_ms))
+        self.status_label.setText(
+            _('Injecting {chunks} chunks at {interval} ms per chunk into two widgets with identical content.').format(
+                chunks=len(self.chunks), interval=self.chunk_interval_ms
+            )
+        )
         self.chunk_timer.start()
 
     def inject_next_chunk(self) -> None:
@@ -928,9 +962,7 @@ class StreamingRenderDemo(QDialog):
                 'immediate': self.immediate_widget.render_count,
                 'throttled': self.throttled_widget.render_count,
             }
-            self.status_label.setText(_(
-                'Immediate widget: {immediate} full renders. Batched widget: {throttled} full renders.'
-            ).format(**self.summary))
+            self.status_label.setText(_('Immediate widget: {immediate} full renders. Batched widget: {throttled} full renders.').format(**self.summary))
             if self.auto_close:
                 print(f"immediate={self.summary['immediate']} throttled={self.summary['throttled']}")
                 QTimer.singleShot(0, self.accept)

@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2024, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from collections import deque
 from contextlib import contextmanager
 from typing import TYPE_CHECKING, NamedTuple
 
-from qt.core import QApplication, QDialog, QObject, QTextToSpeech, pyqtSignal
+from qt.core import QDialog, QObject, QTextToSpeech, pyqtSignal
 
-from calibre.gui2 import error_dialog
+from calibre.gui2 import error_dialog, qapplication_or_fail
 from calibre.gui2.widgets import BusyCursor
+from calibre.utils.localization import _
 
 if TYPE_CHECKING:
     from calibre.gui2.tts.types import TTSBackend
-
 
 MAX_UTTERANCE_LENGTH = 32 * 1024
 
@@ -31,7 +30,6 @@ class Position(NamedTuple):
 
 
 class Tracker:
-
     def __init__(self):
         self.clear()
 
@@ -118,7 +116,6 @@ class ResumeData:
 
 
 class TTSManager(QObject):
-
     state_event = pyqtSignal(str)
     saying = pyqtSignal(int, int)
     configured = pyqtSignal()
@@ -146,6 +143,7 @@ class TTSManager(QObject):
         if self._tts is None:
             with BusyCursor():
                 from calibre.gui2.tts.types import create_tts_backend
+
                 try:
                     self._tts = create_tts_backend()
                 except AttributeError as e:
@@ -183,7 +181,10 @@ class TTSManager(QObject):
     def resume_after(self):
         rd = ResumeData()
         rd.is_speaking = self._tts is not None and self.state in (
-            QTextToSpeech.State.Speaking, QTextToSpeech.State.Synthesizing, QTextToSpeech.State.Paused)
+            QTextToSpeech.State.Speaking,
+            QTextToSpeech.State.Synthesizing,
+            QTextToSpeech.State.Paused,
+        )
         self._resuming_after_configure = rd.is_speaking
         if self.state is not QTextToSpeech.State.Paused and rd.is_speaking:
             self.tts.pause()
@@ -197,6 +198,7 @@ class TTSManager(QObject):
 
     def change_rate(self, steps: int = 1) -> bool:
         from calibre.gui2.tts.types import EngineSpecificSettings
+
         engine_name = self.tts.engine_name
         s = EngineSpecificSettings.create_from_config(engine_name)
         new_rate = max(-1, min(s.rate + 0.2 * steps, 1))
@@ -218,15 +220,16 @@ class TTSManager(QObject):
 
     def faster(self) -> None:
         if not self.change_rate(1):
-            QApplication.instance().beep()
+            qapplication_or_fail().beep()
 
     def slower(self) -> None:
         if not self.change_rate(-1):
-            QApplication.instance().beep()
+            qapplication_or_fail().beep()
 
     def configure(self) -> None:
         from calibre.gui2.tts.config import ConfigDialog
         from calibre.gui2.tts.types import widget_parent
+
         with self.resume_after() as rd:
             d = ConfigDialog(parent=widget_parent(self))
             if d.exec() != QDialog.DialogCode.Accepted:
@@ -245,6 +248,7 @@ class TTSManager(QObject):
         prev_state, self.state = self.state, state
         if state is QTextToSpeech.State.Error:
             from calibre.gui2.tts.types import widget_parent
+
             error_dialog(widget_parent(self), _('Read aloud failed'), self.tts.error_message(), show=True)
         elif state is QTextToSpeech.State.Paused:
             self.emit_state_event('pause')

@@ -15,6 +15,7 @@ from calibre.ai.openai import OpenAI
 from calibre.ai.prefs import decode_secret, pref_for_provider
 from calibre.ai.utils import chat_with_error_handler, develop_text_chat, get_cached_resource, read_streaming_response
 from calibre.constants import cache_dir
+from calibre.utils.localization import _
 
 module_version = 1  # needed for live updates
 MODELS_URL = 'https://api.openai.com/v1/models'
@@ -41,7 +42,7 @@ def decoded_api_key() -> str:
 
 
 @lru_cache(2)
-def headers() -> tuple[tuple[str, str]]:
+def headers() -> tuple[tuple[str, str], ...]:
     api_key = decoded_api_key()
     return (
         ('Authorization', f'Bearer {api_key}'),
@@ -52,18 +53,23 @@ def headers() -> tuple[tuple[str, str]]:
 class Model(NamedTuple):
     # See https://platform.openai.com/docs/api-reference/models/retrieve
     id: str
-    id_parts: Sequence[str, ...]
+    id_parts: Sequence[str]
     created: datetime.datetime
     version: float
 
     @classmethod
-    def from_dict(cls, x: dict[str, object]) -> Model:
+    def from_dict(cls, x: dict[str, Any]) -> Model:
         id_parts = tuple(x['id'].split('-'))
         try:
             version = float(id_parts[1])
         except Exception:
             version = 0
-        return Model(id=x['id'], created=datetime.datetime.fromtimestamp(x['created'], datetime.UTC), id_parts=id_parts, version=version)
+        return Model(
+            id=x['id'],
+            created=datetime.datetime.fromtimestamp(x['created'], datetime.UTC),
+            id_parts=id_parts,
+            version=version,
+        )
 
     @property
     def is_preview(self) -> bool:
@@ -89,13 +95,14 @@ def get_available_models() -> dict[str, Model]:
 def find_models_matching_name(name: str) -> Iterator[str]:
     name = name.strip().lower()
     for model in get_available_models().values():
-        q = model.name.strip().lower()
+        q = model.id.strip().lower()
         if name in q:
             yield model.id
 
 
 def config_widget():
     from calibre.ai.openai.config import ConfigWidget
+
     return ConfigWidget()
 
 
@@ -121,9 +128,9 @@ def newest_gpt_models() -> dict[str, Model]:
                 which = high
             which.append(model)
     return {
-        'high': sorted(high, key=attrgetter('created'))[-1],
-        'medium': sorted(medium, key=attrgetter('created'))[-1],
-        'low': sorted(low, key=attrgetter('created'))[-1],
+        'high': max(high, key=attrgetter('created')),
+        'medium': max(medium, key=attrgetter('created')),
+        'low': max(low, key=attrgetter('created')),
     }
 
 
@@ -134,9 +141,7 @@ def model_choice_for_text() -> Model:
 
 
 def reasoning_effort():
-    return {
-            'none': 'minimal', 'auto': 'medium', 'low': 'low', 'medium': 'medium', 'high': 'high'
-    }.get(pref('reasoning_strategy', 'auto'), 'medium')
+    return {'none': 'minimal', 'auto': 'medium', 'low': 'low', 'medium': 'medium', 'high': 'high'}.get(pref('reasoning_strategy', 'auto'), 'medium')
 
 
 def chat_request(data: dict[str, Any], model: Model) -> Request:
@@ -145,17 +150,17 @@ def chat_request(data: dict[str, Any], model: Model) -> Request:
     data['stream'] = True
     if pref('allow_web_searches', True):
         data.setdefault('tools', []).append({'type': 'web_search'})
-    data['reasoning'] = {
-        'effort': reasoning_effort(),
-        'summary': 'auto'
-    }
-    return Request(
-        CHAT_URL, data=json.dumps(data).encode('utf-8'),
-        headers=dict(headers()), method='POST')
+    data['reasoning'] = {'effort': reasoning_effort(), 'summary': 'auto'}
+    return Request(CHAT_URL, data=json.dumps(data).encode('utf-8'), headers=dict(headers()), method='POST')
 
 
 def for_assistant(self: ChatMessage) -> dict[str, Any]:
-    if self.type not in (ChatMessageType.assistant, ChatMessageType.system, ChatMessageType.user, ChatMessageType.developer):
+    if self.type not in (
+        ChatMessageType.assistant,
+        ChatMessageType.system,
+        ChatMessageType.user,
+        ChatMessageType.developer,
+    ):
         raise ValueError(f'Unsupported message type: {self.type}')
     return {'role': self.type.value, 'content': self.query}
 
@@ -178,7 +183,12 @@ def as_chat_responses(d: dict[str, Any], model: Model) -> Iterator[ChatResponse]
     if has_metadata or content:
         yield ChatResponse(
             id=d['id'],
-            type=ChatMessageType.assistant, content=content, has_metadata=has_metadata, model=model.id, plugin_name=OpenAI.name)
+            type=ChatMessageType.assistant,
+            content=content,
+            has_metadata=has_metadata,
+            model=model.id,
+            plugin_name=OpenAI.name,
+        )
 
 
 def text_chat_implementation(messages: Iterable[ChatMessage], use_model: str = '') -> Iterator[ChatResponse]:

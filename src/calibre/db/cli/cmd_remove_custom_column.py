@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import sys
 
 from calibre import prints
 from calibre.db.legacy import LibraryDatabase
+from calibre.utils.localization import _
 
 readonly = False
 version = 0  # change this if you change signature of implementation()
@@ -27,13 +27,7 @@ columns with the custom_columns command.
     '''
         )
     )
-    parser.add_option(
-        '-f',
-        '--force',
-        default=False,
-        action='store_true',
-        help=_('Do not ask for confirmation')
-    )
+    parser.add_option('-f', '--force', default=False, action='store_true', help=_('Do not ask for confirmation'))
     return parser
 
 
@@ -46,21 +40,13 @@ def input_unicode(prompt):
 
 def do_remove_custom_column(db, label, force):
     if not force:
-        q = input_unicode(
-            _('You will lose all data in the column: %s.'
-              ' Are you sure (y/n)? ') % label
-        )
+        q = input_unicode(_('You will lose all data in the column: %s. Are you sure (y/n)? ') % label)
         if q.lower().strip() != _('y'):
             return
     try:
         db.delete_custom_column(label=label)
     except KeyError:
-        raise SystemExit(
-            _(
-                'No column named %s found. You must use column labels, not titles.'
-                ' Use calibredb custom_columns to get a list of labels.'
-            ) % label
-        )
+        raise SystemExit(_('No column named %s found. You must use column labels, not titles. Use calibredb custom_columns to get a list of labels.') % label)
     prints(f'Column {label!r} removed.')
 
 

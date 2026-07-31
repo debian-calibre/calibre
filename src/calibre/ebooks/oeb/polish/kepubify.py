@@ -17,7 +17,7 @@ import re
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
-from typing import NamedTuple
+from typing import NamedTuple, cast
 
 from css_parser import CSSParser
 from css_parser.css import CSSComment, CSSPageRule, CSSRule
@@ -36,6 +36,7 @@ from calibre.spell.break_iterator import sentence_positions
 from calibre.srv.render_book import Profiler, calculate_number_of_workers
 from calibre.utils.filenames import make_long_path_useable
 from calibre.utils.localization import canonicalize_lang, get_lang
+from calibre.utils.resources import get_path as P
 from calibre.utils.short_uuid import uuid4
 
 KOBO_CSS_ID = 'kobostylehacks'  # kepubify uses class, actual books from Kobo use id
@@ -49,11 +50,18 @@ KOBO_SPAN_CLASS = 'koboSpan'
 DUMMY_TITLE_PAGE_NAME = 'kobo-title-page-generated-by-calibre'
 DUMMY_COVER_IMAGE_NAME = 'kobo-cover-image-generated-by-calibre'
 CSS_COMMENT_COOKIE = 'calibre-removed-css-for-kobo'
-SKIPPED_TAGS = frozenset((
-    '', 'script', 'style', 'atom', 'pre', 'audio', 'video', 'svg', 'math'
-))
+SKIPPED_TAGS = frozenset(('', 'script', 'style', 'atom', 'pre', 'audio', 'video', 'svg', 'math'))
 BLOCK_TAGS = frozenset((
-    'p', 'ol', 'ul', 'table', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'p',
+    'ol',
+    'ul',
+    'table',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
 ))
 KOBO_CSS = 'div#book-inner { margin-top: 0; margin-bottom: 0; }'
 # Needed for Kobo renderer: https://bugs.launchpad.net/calibre/+bug/2138855
@@ -97,13 +105,13 @@ def add_style_and_script(root, kobo_js_href: str, opts: Options) -> bool:
         e = parent.makeelement(XHTML('style'), type='text/css', id=KOBO_SPAN_STYLE_ID)
         e.text = KOBO_SPAN_CSS
         insert_self_closing(parent, e)
-        e.text += (e.tail or '')
+        e.text += e.tail or ''
         extra_css = (opts.hyphenation_css + '\n\n' + opts.extra_css).strip()
         if extra_css:
             e = parent.makeelement(XHTML('style'), type='text/css', id=EXTRA_CSS_ID)
             e.text = '\n' + extra_css
             insert_self_closing(parent, e)
-            e.text += (e.tail or '')
+            e.text += e.tail or ''
         e = parent.makeelement(XHTML('script'), type='text/javascript', src=kobo_js_href)
         insert_self_closing(parent, e)
 
@@ -117,7 +125,7 @@ def add_style_and_script(root, kobo_js_href: str, opts: Options) -> bool:
 
 
 def is_href_to_fname(href: str | None, fname: str) -> bool:
-    return href and href.rpartition('/')[-1] == fname
+    return bool(href and href.rpartition('/')[-1] == fname)
 
 
 def remove_kobo_styles_and_scripts(root):
@@ -175,8 +183,10 @@ def add_kobo_spans(inner, root_lang, prefer_justification=False):
     span_tag_name = XHTML('span')
     lstrip_pat = re.compile(r'^\s+')
     rstrip_pat = re.compile(r'\s+$')
+
     def lstrip(x):
         return lstrip_pat.sub('', x)
+
     def rstrip(x):
         return rstrip_pat.sub('', x)
 
@@ -185,13 +195,16 @@ def add_kobo_spans(inner, root_lang, prefer_justification=False):
         segnum += 1
         return parent.makeelement(span_tag_name, attrib={'class': KOBO_SPAN_CLASS, 'id': f'kobo.{paranum}.{segnum}'})
 
-    def wrap_text_in_spans(text: str, parent: etree.Element, after_child: etree.ElementBase, lang: str) -> str | None:
+    def wrap_text_in_spans(text: str, parent: etree.Element, after_child: etree.ElementBase | None, lang: str) -> str | None:
         nonlocal increment_next_para, paranum, segnum
         text_with_leading_whitespace_removed = lstrip(text)
         try:
             at = 0 if after_child is None else parent.index(after_child) + 1
         except ValueError:  # wrapped child
-            at = parent.index(after_child.getparent()) + 1
+            assert after_child is not None
+            gp = after_child.getparent()
+            assert gp is not None
+            at = parent.index(gp) + 1
 
         if increment_next_para:
             paranum += 1
@@ -210,7 +223,7 @@ def add_kobo_spans(inner, root_lang, prefer_justification=False):
             leading_whitespace = text[:num]
         before = None if text_with_leading_whitespace_removed and not prefer_justification else leading_whitespace
         if at:
-            parent[at-1].tail = before
+            parent[at - 1].tail = before
         else:
             parent.text = before
         if not text_with_leading_whitespace_removed:
@@ -219,7 +232,7 @@ def add_kobo_spans(inner, root_lang, prefer_justification=False):
             text = text_with_leading_whitespace_removed
         for pos, sz in sentence_positions(text, lang):
             s = kobo_span(parent)
-            s.text = inside_span = text[pos:pos+sz]
+            s.text = inside_span = text[pos : pos + sz]
             if prefer_justification:
                 inside_span_without_trailing_whitespace = rstrip(inside_span)
                 if tail_len := len(inside_span) - len(inside_span_without_trailing_whitespace):
@@ -234,6 +247,7 @@ def add_kobo_spans(inner, root_lang, prefer_justification=False):
         paranum += 1
         segnum = 0
         node = child.getparent()
+        assert node is not None
         idx = node.index(child)
         w = kobo_span(node)
         node[idx] = w
@@ -266,6 +280,7 @@ def add_kobo_spans(inner, root_lang, prefer_justification=False):
 
 def unwrap(span: etree.Element) -> None:
     p = span.getparent()
+    assert p is not None
     idx = p.index(span)
     del p[idx]
     if len(span):
@@ -273,7 +288,7 @@ def unwrap(span: etree.Element) -> None:
     else:
         text = (span.text or '') + (span.tail or '')
         if idx > 0:
-            prev = p[idx-1]
+            prev = p[idx - 1]
             prev.tail = (prev.tail or '') + text
         else:
             p.text = (p.text or '') + text
@@ -304,7 +319,7 @@ def remove_kobo_markup_from_html(root):
 
 def serialize_html(root) -> bytes:
     escape_cdata(root)
-    ans = etree.tostring(root, encoding='unicode', xml_declaration=False, pretty_print=False, with_tail=False)
+    ans = cast(str, etree.tostring(root, encoding='unicode', pretty_print=False, with_tail=False, xml_declaration=False))
     ans = ans.replace('\xa0', '&#160;')
     return b"<?xml version='1.0' encoding='utf-8'?>\n" + ans.encode('utf-8')
 
@@ -334,7 +349,7 @@ def process_stylesheet(css: str, opts: Options) -> str:
                     changed = True
     for i, cr in page_rules:
         pr = CSSPageRule()
-        pr.cssText = cr.cssText[len(f'/* {CSS_COMMENT_COOKIE}: '):-3]
+        pr.cssText = cr.cssText[len(f'/* {CSS_COMMENT_COOKIE}: ') : -3]
         sheet.deleteRule(i)
         sheet.insertRule(pr, i)
 
@@ -436,10 +451,13 @@ def add_dummy_title_page(container: Container, cover_image_name: str, mi, kobo_j
         html = html.replace('__CONTENT__', f'<img src="{cover_href}" alt="cover" style="height: 100%" />')
     else:
         aus = authors_to_string(mi.authors)
-        html = html.replace('__CONTENT__', f'''
+        html = html.replace(
+            '__CONTENT__',
+            f'''
         <h1 style="text-align: center">{mi.title}</h1>
         <h3 style="text-align: center">{aus}</h1>
-        ''')
+        ''',
+        )
     with container.open(titlepage_name, 'w') as f:
         f.write(html)
     container.apply_unique_properties(titlepage_name, 'calibre:title-page')
@@ -479,7 +497,7 @@ def process_stylesheet_path(path: str, opts: Options) -> None:
             if ncss is not css:
                 f.seek(0)
                 f.truncate()
-                f.write(ncss)
+                f.write(ncss if isinstance(ncss, bytes) else ncss.encode())
 
 
 def process_path(path: str, kobo_js_href: str, metadata_lang: str, opts: Options, media_type: str) -> None:
@@ -492,17 +510,32 @@ def process_path(path: str, kobo_js_href: str, metadata_lang: str, opts: Options
 def do_work_in_parallel(container: Container, kobo_js_name: str, opts: Options, metadata_lang: str, max_workers: int) -> None:
     names_that_need_work = tuple(name for name, mt in container.mime_map.items() if mt in OEB_DOCS or mt in OEB_STYLES)
     num_workers = calculate_number_of_workers(names_that_need_work, container, max_workers)
+
     def name_to_abspath(name: str) -> str:
         return container.get_file_path_for_processing(name, allow_modification=True)
 
     if num_workers < 2:
         for name in names_that_need_work:
-            process_path(name_to_abspath(name), container.name_to_href(kobo_js_name, name), metadata_lang, opts, container.mime_map[name])
+            process_path(
+                name_to_abspath(name),
+                container.name_to_href(kobo_js_name, name),
+                metadata_lang,
+                opts,
+                container.mime_map[name],
+            )
     else:
         with ThreadPoolExecutor(max_workers=num_workers) as executor:
-            futures = tuple(executor.submit(
-                process_path, name_to_abspath(name), container.name_to_href(kobo_js_name, name),
-                metadata_lang, opts, container.mime_map[name]) for name in names_that_need_work)
+            futures = tuple(
+                executor.submit(
+                    process_path,
+                    name_to_abspath(name),
+                    container.name_to_href(kobo_js_name, name),
+                    metadata_lang,
+                    opts,
+                    container.mime_map[name],
+                )
+                for name in names_that_need_work
+            )
             for future in futures:
                 future.result()
 
@@ -534,7 +567,7 @@ def uniqify_name(container: Container, fname: str) -> str:
 
 
 def find_cover_image_omf(container):
-    ' "Open" Media format files '
+    '"Open" Media format files'
     images = ('image/jpeg', 'image/webp', 'image/png')
     for name, is_linear in container.spine_names:
         if container.mime_map.get(name, '') in images:
@@ -551,11 +584,11 @@ def kepubify_container(container: Container, opts: Options, max_workers: int = 0
     mi = container.mi
     if not cover_image_name:
         from calibre.ebooks.covers import generate_cover
+
         cdata = generate_cover(mi)
         cover_image_name = container.add_file(f'{DUMMY_COVER_IMAGE_NAME}.jpeg', cdata, modify_name_if_needed=True)
     container.apply_unique_properties(cover_image_name, 'cover-image')
-    kobo_js_name = container.add_file(
-            uniqify_name(container, KOBO_JS_NAME), kobo_js(), media_type='application/javascript', suggested_id='js-kobo.js')
+    kobo_js_name = container.add_file(uniqify_name(container, KOBO_JS_NAME), kobo_js(), media_type='application/javascript', suggested_id='js-kobo.js')
     if not find_cover_page(container) and not first_spine_item_is_probably_title_page(container):
         add_dummy_title_page(container, cover_image_name, mi, kobo_js_name)
     do_work_in_parallel(container, kobo_js_name, opts, metadata_lang, max_workers)
@@ -602,7 +635,7 @@ def unkepubify_path(path, outpath='', max_workers=0, allow_overwrite=False):
     return outpath
 
 
-def check_if_css_needs_modification(extra_css: str) -> tuple[bool, bool]:
+def check_if_css_needs_modification(extra_css: str) -> tuple[object, bool, bool]:
     remove_widows_and_orphans = remove_at_page_rules = False
     sheet = None
     if extra_css:
@@ -631,7 +664,6 @@ def make_options(
     hyphenation_min_chars_after: int = 3,
     hyphenation_limit_lines: int = 2,
     prefer_justification: bool = False,
-
     remove_widows_and_orphans: bool | None = None,
     remove_at_page_rules: bool | None = None,
 ) -> Options:
@@ -673,8 +705,12 @@ h1, h2, h3, h4, h5, h6, td {{
 }}
 '''
     return Options(
-        extra_css=extra_css, hyphenation_css=hyphen_css, remove_widows_and_orphans=remove_widows_and_orphans,
-        remove_at_page_rules=remove_at_page_rules, prefer_justification=prefer_justification)
+        extra_css=extra_css,
+        hyphenation_css=hyphen_css,
+        remove_widows_and_orphans=remove_widows_and_orphans,
+        remove_at_page_rules=remove_at_page_rules,
+        prefer_justification=prefer_justification,
+    )
 
 
 def profile():
@@ -687,6 +723,7 @@ def develop():
     from zipfile import ZipFile
 
     from calibre.ptempfile import TemporaryDirectory
+
     path = sys.argv[-1]
     with TemporaryDirectory() as tdir:
         outpath = kepubify_path(path, max_workers=1)
@@ -709,7 +746,7 @@ def unkepubify_main(args=sys.argv):
     for path in args[1:]:
         outpath = ''
         if path.endswith('.kepub.epub'):
-            outpath = path[:-len('kepub.epub')] + 'epub'
+            outpath = path[: -len('kepub.epub')] + 'epub'
         kepub_path = unkepubify_path(path, outpath, allow_overwrite=True)
         print(f'{path} converted to: {kepub_path}')
 

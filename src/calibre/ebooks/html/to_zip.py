@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-
-
-__license__   = 'GPL v3'
-__copyright__ = '2011, Kovid Goyal <kovid@kovidgoyal.net>'
-__docformat__ = 'restructuredtext en'
+# License: GPLv3 Copyright: 2011, Kovid Goyal <kovid@kovidgoyal.net>
 
 import glob
 import os
@@ -11,16 +7,19 @@ import textwrap
 
 from calibre.constants import numeric_version
 from calibre.customize import FileTypePlugin
+from calibre.utils.localization import _
 
 
 class HTML2ZIP(FileTypePlugin):
     name = 'HTML to ZIP'
     author = 'Kovid Goyal'
-    description = textwrap.dedent(_('''\
+    description = textwrap.dedent(
+        _('''\
 Follow all local links in an HTML file and create a ZIP \
 file containing all linked files. This plugin is run \
 every time you add an HTML file to the library.\
-'''))
+''')
+    )
     version = numeric_version
     file_types = {'html', 'htm', 'xhtml', 'xhtm', 'shtm', 'shtml'}
     supported_platforms = ['windows', 'osx', 'linux']
@@ -31,6 +30,7 @@ every time you add an HTML file to the library.\
             sc = ''
         if sc.startswith('{'):
             import json
+
             try:
                 return json.loads(sc)
             except Exception:
@@ -40,7 +40,7 @@ every time you add an HTML file to the library.\
             enc, _, bfs = sc.partition('|')
             return {'encoding': enc, 'breadth_first': bfs == 'bf'}
 
-    def run(self, htmlfile):
+    def run(self, path_to_ebook):
         import codecs
 
         from calibre import prints
@@ -50,7 +50,7 @@ every time you add an HTML file to the library.\
         from calibre.ptempfile import TemporaryDirectory
 
         with TemporaryDirectory('_plugin_html2zip') as tdir:
-            recs =[('debug_pipeline', tdir, OptionRecommendation.HIGH)]
+            recs = [('debug_pipeline', tdir, OptionRecommendation.HIGH)]
             recs.append(['keep_ligatures', True, OptionRecommendation.HIGH])
             if self.site_customization and self.site_customization.strip():
                 settings = self.parse_my_settings(self.site_customization)
@@ -66,7 +66,7 @@ every time you add an HTML file to the library.\
                     recs.append(['breadth_first', True, OptionRecommendation.HIGH])
                 if settings.get('allow_local_files_outside_root'):
                     recs.append(['allow_local_files_outside_root', True, OptionRecommendation.HIGH])
-            gui_convert(htmlfile, tdir, recs, abort_after_input_dump=True)
+            gui_convert(path_to_ebook, tdir, recs, abort_after_input_dump=True)
             of = self.temporary_file('_plugin_html2zip.zip')
             tdir = os.path.join(tdir, 'input')
             opf = glob.glob(os.path.join(tdir, '*.opf'))[0]
@@ -80,15 +80,14 @@ every time you add an HTML file to the library.\
         return of.name
 
     def customization_help(self, gui=False):
-        return _('Character encoding for the input HTML files. Common choices '
-        'include: utf-8, cp1252, cp1251 and latin1.')
+        return _('Character encoding for the input HTML files. Common choices include: utf-8, cp1252, cp1251 and latin1.')
 
     def do_user_config(self, parent=None):
-        '''
+        """
         This method shows a configuration dialog for this plugin. It returns
         True if the user clicks OK, False otherwise. The changes are
         automatically applied.
-        '''
+        """
         import json
 
         from qt.core import QCheckBox, QDialog, QDialogButtonBox, QLabel, QLineEdit, Qt, QVBoxLayout
@@ -104,6 +103,7 @@ every time you add an HTML file to the library.\
         button_box.rejected.connect(config_dialog.reject)
         config_dialog.setWindowTitle(_('Customize') + ' ' + self.name)
         from calibre.customize.ui import customize_plugin, plugin_customization
+
         help_text = self.customization_help(gui=True)
         help_text = QLabel(help_text, config_dialog)
         help_text.setWordWrap(True)
@@ -112,12 +112,17 @@ every time you add an HTML file to the library.\
         help_text.setOpenExternalLinks(True)
         v.addWidget(help_text)
         bf = QCheckBox(_('Add linked files in breadth first order'))
-        bf.setToolTip(_('Normally, when following links in HTML files'
-            ' calibre does it depth first, i.e. if file A links to B and '
-            ' C, but B links to D, the files are added in the order A, B, D, C. '
-            ' With this option, they will instead be added as A, B, C, D'))
+        bf.setToolTip(
+            _(
+                'Normally, when following links in HTML files'
+                ' calibre does it depth first, i.e. if file A links to B and '
+                ' C, but B links to D, the files are added in the order A, B, D, C. '
+                ' With this option, they will instead be added as A, B, C, D'
+            )
+        )
         lr = QCheckBox(_('Allow resources outside the HTML file root folder'))
         from calibre.customize.ui import plugin_for_input_format
+
         hi = plugin_for_input_format('html')
         for opt in hi.options:
             if opt.option.name == 'allow_local_files_outside_root':

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 from calibre.srv.changes import BooksAdded, BooksDeleted, FormatsAdded, FormatsRemoved, MetadataChanged, SavedSearchesChanged
 
 
@@ -10,6 +9,7 @@ def handle_changes(changes, gui=None):
         return
     if gui is None:
         from calibre.gui2.ui import get_gui
+
         gui = get_gui()
     if gui is None:
         return
@@ -40,7 +40,7 @@ def handle_changes(changes, gui=None):
             position_based_recount = False
         if removed:
             next_id = gui.current_view().next_id
-            m = gui.library_view.model()
+            m = gui.library_view._model
             m.ids_deleted(removed)
             gui.iactions['Remove Books'].library_ids_deleted2(removed, next_id=next_id)
         if refresh_ids:

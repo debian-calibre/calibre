@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid at kovidgoyal.net>
 
-
 import copy
 import http.client
 import ssl
@@ -12,33 +11,33 @@ from mechanize import HTTPSHandler
 
 
 class ModernHTTPSHandler(HTTPSHandler):
-
     ssl_context = None
 
     def https_open(self, req):
         if self.client_cert_manager is not None:
-            key_file, cert_file = self.client_cert_manager.find_key_cert(
-                req.get_full_url())
+            key_file, cert_file = self.client_cert_manager.find_key_cert(req.get_full_url())
             if cert_file:
+                assert self.ssl_context is not None
                 self.ssl_context.load_cert_chain(cert_file, key_file)
 
         def conn_factory(hostport, **kw):
             kw['context'] = self.ssl_context
             return http.client.HTTPSConnection(hostport, **kw)
+
         return self.do_open(conn_factory, req)
 
 
 class Browser(B):
-    '''
+    """
     A clonable mechanize browser. Useful for multithreading. The idea is that
     each thread has a browser clone. Every clone uses the same thread safe
     cookie jar. All clones share the same browser configuration.
 
     Also adds support for fine-tuning SSL verification via an SSL context object.
-    '''
+    """
 
     handler_classes = B.handler_classes.copy()
-    handler_classes['https'] = ModernHTTPSHandler
+    handler_classes['https'] = ModernHTTPSHandler  # type: ignore
 
     def __init__(self, *args, **kwargs):
         self._clone_actions = {}
@@ -48,13 +47,13 @@ class Browser(B):
 
         B.__init__(self, *args, **kwargs)
         self.set_cookiejar(CookieJar())
-        self._ua_handlers['https'].ssl_context = sc
+        self._ua_handlers['https'].ssl_context = sc  # type: ignore
 
     @property
     def https_handler(self):
-        return self._ua_handlers['https']
+        return self._ua_handlers['https']  # type: ignore
 
-    def set_current_header(self, header, value=None):
+    def set_current_header(self, header: str, value: str | None = None):
         found = False
         q = header.lower()
         remove = []
@@ -66,7 +65,7 @@ class Browser(B):
                 else:
                     remove.append(i)
         if not found:
-            self.addheaders.append((header, value))
+            self.addheaders.append((header, value or ''))
         if remove:
             for i in reversed(remove):
                 del self.addheaders[i]
@@ -81,15 +80,14 @@ class Browser(B):
 
     def set_handle_refresh(self, *args, **kwargs):
         B.set_handle_refresh(self, *args, **kwargs)
-        self._clone_actions['set_handle_refresh'] = ('set_handle_refresh',
-                args, kwargs)
+        self._clone_actions['set_handle_refresh'] = ('set_handle_refresh', args, kwargs)
 
     def set_cookiejar(self, *args, **kwargs):
         B.set_cookiejar(self, *args, **kwargs)
         self._clone_actions['set_cookiejar'] = ('set_cookiejar', args, kwargs)
 
-    def set_cookie(self, name, value, domain, path='/'):
-        return self.set_simple_cookie(name, value, domain, path=path)
+    def set_cookie(self, cookie_string, value=None, domain=None, path='/'):  # type: ignore[override]
+        return self.set_simple_cookie(cookie_string, value, domain, path=path)
 
     @property
     def cookiejar(self):
@@ -97,38 +95,31 @@ class Browser(B):
 
     def set_handle_redirect(self, *args, **kwargs):
         B.set_handle_redirect(self, *args, **kwargs)
-        self._clone_actions['set_handle_redirect'] = ('set_handle_redirect',
-                args, kwargs)
+        self._clone_actions['set_handle_redirect'] = ('set_handle_redirect', args, kwargs)
 
     def set_handle_equiv(self, *args, **kwargs):
         B.set_handle_equiv(self, *args, **kwargs)
-        self._clone_actions['set_handle_equiv'] = ('set_handle_equiv',
-                args, kwargs)
+        self._clone_actions['set_handle_equiv'] = ('set_handle_equiv', args, kwargs)
 
     def set_handle_gzip(self, *args, **kwargs):
         B.set_handle_gzip(self, *args, **kwargs)
-        self._clone_actions['set_handle_gzip'] = ('set_handle_gzip',
-                args, kwargs)
+        self._clone_actions['set_handle_gzip'] = ('set_handle_gzip', args, kwargs)
 
     def set_debug_redirects(self, *args, **kwargs):
         B.set_debug_redirects(self, *args, **kwargs)
-        self._clone_actions['set_debug_redirects'] = ('set_debug_redirects',
-                args, kwargs)
+        self._clone_actions['set_debug_redirects'] = ('set_debug_redirects', args, kwargs)
 
     def set_debug_responses(self, *args, **kwargs):
         B.set_debug_responses(self, *args, **kwargs)
-        self._clone_actions['set_debug_responses'] = ('set_debug_responses',
-                args, kwargs)
+        self._clone_actions['set_debug_responses'] = ('set_debug_responses', args, kwargs)
 
     def set_debug_http(self, *args, **kwargs):
         B.set_debug_http(self, *args, **kwargs)
-        self._clone_actions['set_debug_http'] = ('set_debug_http',
-                args, kwargs)
+        self._clone_actions['set_debug_http'] = ('set_debug_http', args, kwargs)
 
     def set_handle_robots(self, *args, **kwargs):
         B.set_handle_robots(self, *args, **kwargs)
-        self._clone_actions['set_handle_robots'] = ('set_handle_robots',
-                args, kwargs)
+        self._clone_actions['set_handle_robots'] = ('set_handle_robots', args, kwargs)
 
     def set_proxies(self, *args, **kwargs):
         B.set_proxies(self, *args, **kwargs)
@@ -156,11 +147,11 @@ if __name__ == '__main__':
     from pprint import pprint
 
     from calibre import browser
+
     orig = browser()
     clone = orig.clone_browser()
     pprint(orig._ua_handlers)
     pprint(clone._ua_handlers)
     assert orig._ua_handlers.keys() == clone._ua_handlers.keys()
-    assert orig._ua_handlers['_cookies'].cookiejar is \
-            clone._ua_handlers['_cookies'].cookiejar
+    assert orig._ua_handlers['_cookies'].cookiejar is clone._ua_handlers['_cookies'].cookiejar
     assert orig.addheaders == clone.addheaders

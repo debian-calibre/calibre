@@ -3,28 +3,27 @@
 from __python__ import bound_methods, hash_literals
 
 from elementmaker import E
-
-from dom import unique_id
 from gettext import gettext as _
+
 from book_list.globals import get_session_data
-from session import session_defaults
+from dom import unique_id
 from modals import create_custom_dialog, error_dialog
+from session import session_defaults
 from widgets import create_button
 
 
 class Tracker:
-
     def __init__(self):
         self.clear()
 
     def clear(self):
-        self.positions = v'[]'
+        self.positions = []
         self.last_pos = 0
-        self.queue = v'[]'
+        self.queue = []
 
     def parse_marked_text(self, marked_text):
         self.clear()
-        text = v'[]'
+        text = []
         text_len = chunk_len = index_in_positions = offset_in_text = 0
         limit = 2048
 
@@ -43,7 +42,7 @@ class Tracker:
                 if chunk_len > limit:
                     commit()
                     chunk_len = 0
-                    text = v'[]'
+                    text = []
                     index_in_positions = max(0, self.positions.length - 1)
                     offset_in_text = text_len
         if text.length:
@@ -81,7 +80,7 @@ class Tracker:
             return
         start += self.queue[0].offset_in_text
         end = start + length
-        matches = v'[]'
+        matches = []
         while self.last_pos < self.positions.length:
             pos = self.positions[self.last_pos]
             if start <= pos.offset_in_text < end:
@@ -95,16 +94,15 @@ class Tracker:
 
 
 class Client:
-
     min_rate = 0.1
     max_rate = 2
 
     def __init__(self):
         self.stop_requested_at = None
         self.status = {'synthesizing': False, 'paused': False}
-        self.tracker = Tracker(v'[]')
+        self.tracker = Tracker([])
         self.last_reached_mark = None
-        self.onevent = def():
+        self.onevent = def ():
             pass
         data = get_session_data().get('tts_backend')
         self.current_voice_uri = data.voice or ''
@@ -206,7 +204,7 @@ class Client:
 
     def speak_simple_text(self, text):
         self.stop()
-        text = self.tracker.parse_marked_text(v'[text]')
+        text = self.tracker.parse_marked_text([text])
         if text and text.length:
             self.speak(text)
 
@@ -255,7 +253,6 @@ class Client:
 
         create_custom_dialog(_('Configure Text-to-Speech'), def (parent_div, close_modal):
                 pos_select = E.select(id=select_id)
-
                 def apos(text, name):
                     option = E.option(text, value=name)
                     if name is current_bar_pos:
@@ -268,7 +265,6 @@ class Client:
                 apos(_('Top left'), 'top-left')
                 apos(_('Bottom right'), 'bottom-right')
                 apos(_('Bottom left'), 'bottom-left')
-
                 select = E.select(size='5', id=voice_id, style='display:block')
                 voices = window.speechSynthesis.getVoices()
                 voices.sort(def (a, b):
@@ -292,10 +288,10 @@ class Client:
                     select.appendChild(E.option(_('No voices available')))
                     select.lastChild.disabled = True
                 else:
-                    original = Array.from(select.options).map(def(o): return {'text': o.text, 'value': o.value};)
-                    voice_filter.addEventListener('input', def(ev):
+                    original = Array.from (select.options).map(def (o): return {'text': o.text, 'value': o.value};)
+                    voice_filter.addEventListener('input', def (ev):
                         q = voice_filter.value.trim().toLowerCase()
-                        filtered = original.filter(def(item): return item.text.toLowerCase().includes(q);)
+                        filtered = original.filter(def (item): return item.text.toLowerCase().includes(q);)
                         frag = document.createDocumentFragment()
                         if filtered.length is 0:
                             frag.appendChild(E.option(_('No matches'), disabled=True))
@@ -321,8 +317,7 @@ class Client:
                         create_button(_('Close'), action=close_modal),
                         create_button(_('Restore defaults'), action=restore_defaults),
                 ))
-
-            , on_close=def():
+            , on_close = def ():
                 voice = document.getElementById(voice_id).value or ''
                 bar_pos = document.getElementById(select_id).value
                 rate = int(document.getElementById(rate_id).value) / 10

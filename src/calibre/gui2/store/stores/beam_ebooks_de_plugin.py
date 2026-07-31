@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
+# License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 5  # Needed for dynamic plugin loading
 
-__license__ = 'GPL 3'
-__copyright__ = '2011, John Schember <john@nachtimwald.com>'
-__docformat__ = 'restructuredtext en'
-
-try:
-    from urllib.parse import quote
-except ImportError:
-    from urllib2 import quote
 from contextlib import closing
+from urllib.parse import quote
 
 from qt.core import QUrl
 
@@ -29,8 +24,7 @@ except ImportError:
 
 
 class BeamEBooksDEStore(BasicStoreConfig, StorePlugin):
-
-    def open(self, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False):
         url = 'https://www.beam-shop.de/'
 
         if external or self.config.get('open_external', False):
