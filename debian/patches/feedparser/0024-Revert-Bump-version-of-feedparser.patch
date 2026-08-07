@@ -1,0 +1,45 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 7 Aug 2026 11:36:17 +0900
+Subject: Revert "Bump version of feedparser"
+
+Forwarded: not-needed
+
+Debian feedparser is outdated.
+Apply revert patch until feedparser-6.0.14.
+
+This reverts commit d01f57527db17c7e784ee39d6b846ad8c98f399e.
+---
+ pyproject.toml            | 4 ++--
+ src/calibre/test_build.py | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 6dc555d..d582b48 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -16,8 +16,8 @@ dependencies = [
+ 	"jeepney == 0.9.0",
+ 	"dnspython == 2.8.0",
+ 	"mechanize == 0.4.10",
+-	"feedparser-sgmllib == 2.0.1",
+-	"feedparser == 6.0.14",
++	"feedparser == 6.0.12",
++	"sgmllib3k == 1.0.0",
+ 	"Markdown == 3.10.0",
+ 	"html2text == 2025.4.15",
+ 	"soupsieve == 2.8.4",
+diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
+index bec4959..6cec801 100644
+--- a/src/calibre/test_build.py
++++ b/src/calibre/test_build.py
+@@ -530,7 +530,9 @@ class BuildTest(unittest.TestCase):
+ 
+     def test_feedparser(self):
+         # sgmllib is needed for feedparser parsing malformed feeds
+-        import feedparser_sgmllib as sgmllib
++        # on python3 you can get it by taking it from python2 stdlib and
++        # running 2to3 on it
++        import sgmllib
+ 
+         from calibre.web.feeds.feedparser import parse  # type: ignore
+ 
