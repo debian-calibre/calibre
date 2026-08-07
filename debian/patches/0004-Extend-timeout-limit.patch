@@ -109,10 +109,10 @@ index 7efbd86..6f619c4 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 6570b70..5c93201 100644
+index 2855f24..9f9c099 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -724,7 +724,7 @@ def test_webengine_worker_main():
+@@ -722,7 +722,7 @@ def test_webengine_worker_main():
      p.titleChanged.connect(do_webengine_test)
      p.renderProcessTerminated.connect(render_process_crashed)
      p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')
