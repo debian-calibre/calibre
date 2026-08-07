@@ -8,6 +8,7 @@ from queue import Empty, Queue
 from threading import Event, Thread
 
 from calibre import detect_ncpus, filesystem_encoding, force_unicode, human_readable
+from calibre.utils.filenames import atomic_rename
 from calibre.utils.localization import _, ngettext
 
 
@@ -161,11 +162,11 @@ def convert_png_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75
 
 
 def convert_gif_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75, report=None):
-    """Convert a GIF image in the container to JPEG or WEBP format.
+    """Convert a GIF image in the container to JPEG, WEBP, or PNG format.
 
     Animated GIFs are skipped when converting to JPEG.
 
-    :param fmt: ``'jpeg'``, ``'webp'`` (lossy), or ``'webp-lossless'``
+    :param fmt: ``'jpeg'``, ``'webp'`` (lossy), ``'webp-lossless'``, or ``'png'``
     :returns: ``(new_name, before, after)`` where *before* and *after* are the
         file sizes in bytes before and after conversion, or ``(name, 0, 0)`` if
         conversion was skipped.
@@ -188,6 +189,11 @@ def convert_gif_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75
         new_mt = 'image/webp'
         img_fmt = 'WEBP'
         quality = 100
+    elif fmt == 'png':
+        new_ext = 'png'
+        new_mt = 'image/png'
+        img_fmt = 'PNG'
+        quality = -1
     else:
         return name, 0, 0
 
@@ -197,7 +203,10 @@ def convert_gif_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75
         from qt.core import QImageReader
 
         reader = QImageReader(path)
-        if reader.imageCount() > 1:
+        is_animated = reader.imageCount() > 1
+        if d := reader.device():
+            d.close()
+        if is_animated:
             if report:
                 report(_('Skipping animated GIF {0}: animated GIFs cannot be converted to JPEG').format(name))
             return name, 0, 0
@@ -219,14 +228,13 @@ def convert_gif_to_format(container, name, fmt, jpeg_quality=75, webp_quality=75
     after = len(new_data)
 
     path_dir = os.path.dirname(path)
-    fd, tmp_path = tempfile.mkstemp(dir=path_dir)
+    with tempfile.NamedTemporaryFile(dir=path_dir, delete=False) as tf:
+        tf.write(new_data)
     try:
-        with os.fdopen(fd, 'wb') as f:
-            f.write(new_data)
-        os.replace(tmp_path, path)
+        atomic_rename(tf.name, path)
     except Exception:
         try:
-            os.unlink(tmp_path)
+            os.unlink(tf.name)
         except OSError:
             pass
         raise
@@ -286,11 +294,17 @@ def compress_images(
 
     gif_conv_before_total = gif_conv_after_total = gif_conv_num = 0
     if gif_to_format:
+        # If GIF target is PNG and PNG conversion is also enabled, go directly
+        # to the final format rather than producing an intermediate PNG that
+        # would immediately be converted again.
+        effective_gif_format = png_to_format if (gif_to_format == 'png' and png_to_format) else gif_to_format
         gif_images = sorted(name for name in images if container.mime_map.get(name) == 'image/gif')
         j_quality = jpeg_quality if jpeg_quality is not None else 75
         w_quality = webp_quality if webp_quality is not None else 75
         for name in gif_images:
-            new_name, before, after = convert_gif_to_format(container, name, gif_to_format, jpeg_quality=j_quality, webp_quality=w_quality, report=report)
+            new_name, before, after = convert_gif_to_format(
+                container, name, effective_gif_format, jpeg_quality=j_quality, webp_quality=w_quality, report=report
+            )
             if new_name != name:
                 images.discard(name)
                 images.add(new_name)
