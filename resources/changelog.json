@@ -1,5 +1,116 @@
 [
     {
+        "version": "9.14.0",
+        "date": "2026-08-28",
+        "new features": [
+            {
+                "type": "major",
+                "title": "Allow generating book covers using AI with different cover styles such as romance, sci-fi, pulp fiction etc.",
+                "description": "To use it select a book and click Edit metadata and then the \"AI Generate\" button. Note that you will have to configure an image generating AI provider the first time you use this feature."
+            },
+            {
+                "title": "Edit book: File browser: When hovering the mouse over an image file show a floating preview of the image next to the file browser"
+            },
+            {
+                "tickets": [
+                    2164853
+                ],
+                "title": "Tags editor: have searching ignore accents"
+            },
+            {
+                "title": "AI: Add Anthropic and Grok backends for Claude and Grok models"
+            },
+            {
+                "tickets": [
+                    2163567
+                ],
+                "title": "AI: Remove GitHub backend as service has been discontinued"
+            },
+            {
+                "title": "Edit metadata dialog: Always scale up cover preview to fill available space while maintaining aspect ratio"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2165075
+                ],
+                "title": "Content server: OPDS: Fix a regression that caused first line of comments to be missing"
+            },
+            {
+                "tickets": [
+                    2164811
+                ],
+                "title": "Undo delete books: Show a progress bar when more than five books have to be undeleted"
+            },
+            {
+                "tickets": [
+                    2164584
+                ],
+                "title": "Linux: Binary builds: Fix hyperlinks in labels not working on some Linux systems"
+            },
+            {
+                "tickets": [
+                    2164586
+                ],
+                "title": "Get books: Fix a regression that broke show in store"
+            },
+            {
+                "tickets": [
+                    1943495
+                ],
+                "title": "Fix cover images with empty EXIF records not showing on Kindle lockscreen"
+            },
+            {
+                "tickets": [
+                    2163674
+                ],
+                "title": "Fix a regression in 9.11 that broke configuring the Folder device driver"
+            },
+            {
+                "tickets": [
+                    2163025
+                ],
+                "title": "Google AI: Fix the checkbox to allow search grounding invisible in the config dialog"
+            },
+            {
+                "title": "Fix a regression in 9.11 that broke reading metadata from HTML files in builds of calibre with Python runtime assertions enabled"
+            },
+            {
+                "title": "Edit book: Jump to class: Fix @charset rule causing jump to class to be off-by-one because it uses tiny css which ignores chaset rules while cssutils does not"
+            },
+            {
+                "title": "FB2 Input: Only accept known FB2 namespaces to avoid arbitrary file write"
+            },
+            {
+                "title": "Content server: Fix various arbitrary file write bugs for authenticated users"
+            },
+            {
+                "title": "Content server: Fix remote code execution for authenticated users"
+            },
+            {
+                "title": "Content server: Fix cross site scripting in legacy book details page"
+            },
+            {
+                "title": "MOBI Output: Make palmdoc compression robust against crafted input"
+            }
+        ],
+        "improved recipes": [
+            "Pagina12",
+            "The Week",
+            "Nautilus",
+            "Smithsonian Magazine",
+            "FAZ.net",
+            "Daily Mail"
+        ],
+        "new recipes": [
+            {
+                "title": "The Golfer's Journal",
+                "author": "Ben Ng"
+            }
+        ]
+    },
+    {
         "version": "9.13.0",
         "date": "2026-08-07",
         "new features": [],

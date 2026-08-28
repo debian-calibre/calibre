@@ -66,6 +66,49 @@ class ChatResponse(NamedTuple):
     web_links: Sequence[WebLink] = ()
 
 
+class ImageData(NamedTuple):
+    data: bytes  # raw image bytes, not base64 encoded
+    mime_type: str = 'image/png'
+
+    def __bool__(self) -> bool:
+        return bool(self.data)
+
+
+class ImageGenerationOptions(NamedTuple):
+    # The desired aspect ratio for the generated image. One of:
+    # 'auto', '1:1', '16:9', '9:16', '4:3', '3:4'. Backends map this to
+    # whatever their provider supports, possibly only approximately.
+    aspect_ratio: str = 'auto'
+
+
+class ImageGenerationResult(NamedTuple):
+    image: ImageData | None = None
+    text: str = ''  # any accompanying text from multimodal models
+
+    exception: Exception | None = None
+    error_details: str = ''  # can be traceback or error message from HTTP response
+
+    cost: float = 0
+    currency: str = ''  # no currency means unknown
+    provider: str = ''
+    model: str = ''
+    plugin_name: str = ''
+
+
+class StructuredOutputResult(NamedTuple):
+    data: Any = None  # instance of the schema class passed in, or None on error
+    raw: str = ''  # the raw JSON text returned by the model, useful for debugging
+
+    exception: Exception | None = None
+    error_details: str = ''  # can be traceback or error message from HTTP response
+
+    cost: float = 0
+    currency: str = ''  # no currency means unknown
+    provider: str = ''
+    model: str = ''
+    plugin_name: str = ''
+
+
 class NoFreeModels(Exception):
     pass
 
@@ -138,13 +181,13 @@ class ResultBlockReason(Enum):
 
 
 class PromptBlocked(ValueError):
-    def __init__(self, reason: PromptBlockReason = PromptBlockReason.unknown, custom_message: str = ''):
+    def __init__(self, reason: PromptBlockReason = PromptBlockReason.unknown, custom_message: str = '') -> None:
         super().__init__(custom_message or reason.for_human)
         self.reason = reason
 
 
 class ResultBlocked(ValueError):
-    def __init__(self, reason: ResultBlockReason = ResultBlockReason.unknown, custom_message: str = ''):
+    def __init__(self, reason: ResultBlockReason = ResultBlockReason.unknown, custom_message: str = '') -> None:
         super().__init__(custom_message or reason.for_human)
         self.reason = reason
 

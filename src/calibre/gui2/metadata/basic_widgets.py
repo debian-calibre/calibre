@@ -1294,8 +1294,8 @@ class Cover(ImageView):  # {{{
         b.setMenu(m)
         self.remove_cover_button = CB(_('&Remove'), 'trash.png', self.remove_cover)
 
-        self.download_cover_button = CB(_('Download co&ver'), 'arrow-down.png', self.download_cover)
-        self.generate_cover_button = b = CB(_('&Generate cover'), 'default_cover.png', self.generate_cover)
+        self.download_cover_button = CB(_('&Download'), 'arrow-down.png', self.download_cover)
+        self.generate_cover_button = b = CB(_('&Generate'), 'default_cover.png', self.generate_cover)
         b.m = m = QMenu(b)
         b.setMenu(m)
         m.addAction(QIcon.ic('config.png'), _('Customize the styles and colors of the generated cover'), self.custom_cover)
@@ -1308,6 +1308,9 @@ class Cover(ImageView):  # {{{
             self.download_cover_button,
             self.generate_cover_button,
         ]
+        if not tweaks['hide_ai_features']:
+            self.ai_generate_cover_button = CB(_('&AI Generate'), 'ai.png', self.generate_cover_with_ai)
+            self.buttons.append(self.ai_generate_cover_button)
 
         self.frame_size = (300, 400)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred))
@@ -1452,6 +1455,17 @@ class Cover(ImageView):  # {{{
         mi = dialog.to_book_metadata()
         self.cdata_before_generate = self.current_val
         self.current_val = generate_cover(mi)
+
+    def generate_cover_with_ai(self):
+        from calibre.gui2.dialogs.llm_cover import CoverCreateDialog
+
+        dialog = self.dialog
+        assert dialog is not None
+        mi = dialog.to_book_metadata()
+        d = CoverCreateDialog(mi, parent=self)
+        if d.exec() == QDialog.DialogCode.Accepted and d.cover_data is not None:
+            self.cdata_before_generate = self.current_val
+            self.current_val = d.cover_data
 
     def custom_cover(self):
         from calibre.ebooks.covers import generate_cover

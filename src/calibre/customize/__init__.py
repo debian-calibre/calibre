@@ -1,5 +1,6 @@
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
+import builtins
 import enum
 import importlib
 import os
@@ -12,9 +13,9 @@ from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.localization import _
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterable, Iterator, Sequence
 
-    from calibre.ai import ChatMessage, ChatResponse
+    from calibre.ai import ChatMessage, ChatResponse, ImageData, ImageGenerationOptions, ImageGenerationResult, StructuredOutputResult
 
 if iswindows:
     platform = 'windows'
@@ -925,6 +926,50 @@ class AIProviderPlugin(Plugin):  # {{{
         if not self.builtin_live_module_name:
             raise NotImplementedError()
         yield from self.builtin_live_module.text_chat(messages, use_model)
+
+    def generate_image(
+        self,
+        prompt: str,
+        source_images: Sequence[ImageData] = (),
+        options: ImageGenerationOptions | None = None,
+        use_model: str = '',
+    ) -> ImageGenerationResult:
+        """
+        Generate an image from the specified prompt. When :code:`source_images` are specified,
+        they are edited/transformed as per the prompt instead (the plugin must have the
+        text_and_image_to_image capability for this). Errors are reported via the
+        exception field of the returned result, rather than being raised. The
+        :code:`use_model` parameter causes the plugin to use the specified model rather
+        than choosing one automatically.
+        """
+        if not self.builtin_live_module_name:
+            raise NotImplementedError()
+        if options is None:
+            from calibre.ai import ImageGenerationOptions
+
+            options = ImageGenerationOptions()
+        return self.builtin_live_module.generate_image(prompt, source_images, options, use_model)
+
+    # note: builtins.type as the Plugin.type class attribute shadows the builtin here
+    def generate_structured_output(self, prompt: str, schema: builtins.type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
+        """
+        Send the specified prompt to the AI and return its response as JSON conforming to the
+        specified schema, parsed into an instance of the schema class. The schema is specified
+        as a Python class with type annotated fields, see calibre.ai.structured for the supported
+        annotations. Use typing.Annotated[T, 'description'] and class docstrings to tell the AI
+        what fields mean. Providers that support structured output natively use it, others are
+        prompted with a TypeScript rendering of the schema. Errors are reported via the exception
+        field of the returned result, rather than being raised. Any extra :code:`instructions`
+        are sent to the AI as a system prompt. The :code:`use_model` parameter causes the plugin
+        to use the specified model rather than choosing one automatically.
+        """
+        m = self.builtin_live_module
+        if m is not None and hasattr(m, 'generate_structured_output'):
+            return m.generate_structured_output(prompt, schema, instructions, use_model)
+        # Fallback for third party plugins and stale live modules that only implement text_chat()
+        from calibre.ai.structured import structured_output_via_prompt, structured_output_with_error_handler
+
+        return structured_output_with_error_handler(lambda: structured_output_via_prompt(self.text_chat, prompt, schema, instructions, use_model, self.name))
 
     def human_readable_model_name(self, model_id: str) -> str:
         "Return a human readable model name for the specified model id"

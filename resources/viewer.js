@@ -4555,63 +4555,63 @@ var str = ρσ_str, repr = ρσ_repr;;
     ρσ_modules["read_book.footnotes"] = {};
     ρσ_modules.fs_images = {};
     ρσ_modules.range_utils = {};
-    ρσ_modules["read_book.extract"] = {};
-    ρσ_modules["read_book.anchor_visibility"] = {};
     ρσ_modules.select = {};
-    ρσ_modules["read_book.smil"] = {};
-    ρσ_modules["read_book.shortcuts"] = {};
-    ρσ_modules["read_book.referencing"] = {};
+    ρσ_modules["read_book.anchor_visibility"] = {};
+    ρσ_modules["read_book.extract"] = {};
+    ρσ_modules["read_book.find"] = {};
     ρσ_modules["read_book.flow_mode"] = {};
     ρσ_modules["read_book.mathjax"] = {};
     ρσ_modules["read_book.paged_mode"] = {};
-    ρσ_modules["read_book.find"] = {};
+    ρσ_modules["read_book.referencing"] = {};
+    ρσ_modules["read_book.shortcuts"] = {};
+    ρσ_modules["read_book.smil"] = {};
+    ρσ_modules["read_book.hints"] = {};
     ρσ_modules["read_book.touch"] = {};
     ρσ_modules["read_book.gestures"] = {};
-    ρσ_modules["read_book.hints"] = {};
     ρσ_modules.complete = {};
-    ρσ_modules["read_book.toc"] = {};
     ρσ_modules["read_book.highlights"] = {};
+    ρσ_modules["read_book.toc"] = {};
     ρσ_modules["read_book.iframe"] = {};
     ρσ_modules["book_list.item_list"] = {};
     ρσ_modules["read_book.open_book"] = {};
     ρσ_modules["read_book.prefs"] = {};
-    ρσ_modules["read_book.prefs.utils"] = {};
     ρσ_modules.viewer = {};
+    ρσ_modules["read_book.prefs.utils"] = {};
     ρσ_modules["viewer.constants"] = {};
     ρσ_modules["read_book.prefs.head_foot"] = {};
-    ρσ_modules["read_book.prefs.font_size"] = {};
-    ρσ_modules["read_book.goto"] = {};
-    ρσ_modules["read_book.prefs.scrolling"] = {};
-    ρσ_modules["read_book.prefs.fonts"] = {};
-    ρσ_modules["read_book.content_popup"] = {};
-    ρσ_modules["read_book.scrollbar"] = {};
     ρσ_modules["book_list.ui"] = {};
-    ρσ_modules["read_book.timers"] = {};
-    ρσ_modules["read_book.prefs.user_stylesheet"] = {};
-    ρσ_modules["read_book.prefs.colors"] = {};
     ρσ_modules["read_book.bookmarks"] = {};
+    ρσ_modules["read_book.content_popup"] = {};
+    ρσ_modules["read_book.goto"] = {};
+    ρσ_modules["read_book.prefs.colors"] = {};
+    ρσ_modules["read_book.prefs.font_size"] = {};
+    ρσ_modules["read_book.prefs.fonts"] = {};
+    ρσ_modules["read_book.prefs.scrolling"] = {};
+    ρσ_modules["read_book.prefs.user_stylesheet"] = {};
+    ρσ_modules["read_book.scrollbar"] = {};
+    ρσ_modules["read_book.timers"] = {};
     ρσ_modules["read_book.selection_bar"] = {};
     ρσ_modules["read_book.read_aloud"] = {};
     ρσ_modules["read_book.read_audio_ebook"] = {};
-    ρσ_modules["book_list.top_bar"] = {};
     ρσ_modules["book_list.cover_grid"] = {};
-    ρσ_modules["book_list.home"] = {};
-    ρσ_modules.worker = {};
+    ρσ_modules["book_list.top_bar"] = {};
     ρσ_modules["read_book.chrome"] = {};
     ρσ_modules["read_book.main_overlay_style"] = {};
     ρσ_modules["read_book.profiles"] = {};
+    ρσ_modules["read_book.word_actions"] = {};
+    ρσ_modules["book_list.home"] = {};
+    ρσ_modules.worker = {};
     ρσ_modules["read_book.search_worker"] = {};
     ρσ_modules["read_book.search"] = {};
-    ρσ_modules["read_book.word_actions"] = {};
     ρσ_modules["read_book.prefs.keyboard"] = {};
-    ρσ_modules["read_book.prefs.misc"] = {};
-    ρσ_modules["read_book.prefs.touch"] = {};
-    ρσ_modules["read_book.prefs.selection"] = {};
     ρσ_modules["read_book.prefs.layout"] = {};
+    ρσ_modules["read_book.prefs.misc"] = {};
+    ρσ_modules["read_book.prefs.selection"] = {};
+    ρσ_modules["read_book.prefs.touch"] = {};
     ρσ_modules["read_book.prefs.main"] = {};
     ρσ_modules["book_list.add"] = {};
-    ρσ_modules["book_list.delete_book"] = {};
     ρσ_modules["book_list.details_list"] = {};
+    ρσ_modules["book_list.delete_book"] = {};
     ρσ_modules["book_list.custom_list"] = {};
     ρσ_modules["book_list.search"] = {};
     ρσ_modules["book_list.views"] = {};
@@ -19694,143 +19694,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.extract";
-        var annot_id_uuid_map = ρσ_modules["read_book.globals"].annot_id_uuid_map;
-
-        function get_elements(x, y) {
-            var ans, tl, annot_id, elem;
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["link"] = null;
-                ρσ_d["img"] = null;
-                ρσ_d["highlight"] = null;
-                ρσ_d["crw"] = null;
-                return ρσ_d;
-            }).call(this);
-            var ρσ_Iter104 = document.elementsFromPoint(x, y);
-            ρσ_Iter104 = ((typeof ρσ_Iter104[Symbol.iterator] === "function") ? (ρσ_Iter104 instanceof Map ? ρσ_Iter104.keys() : ρσ_Iter104) : Object.keys(ρσ_Iter104));
-            for (var ρσ_Index104 of ρσ_Iter104) {
-                elem = ρσ_Index104;
-                tl = elem.tagName.toLowerCase();
-                if (tl === "a" && elem.getAttribute("href") && !ans.link) {
-                    ans.link = elem.getAttribute("href");
-                } else if ((tl === "img" || tl === "image") && elem.getAttribute("data-calibre-src") && !ans.img) {
-                    ans.img = elem.getAttribute("data-calibre-src");
-                } else if (ρσ_exists.d(elem.dataset).calibreRangeWrapper) {
-                    ans.crw = elem.dataset.calibreRangeWrapper;
-                    annot_id = annot_id_uuid_map[ρσ_bound_index(ans.crw, annot_id_uuid_map)];
-                    if (annot_id) {
-                        ans.highlight = annot_id;
-                    }
-                }
-            }
-            return ans;
-        };
-        if (!get_elements.__argnames__) Object.defineProperties(get_elements, {
-            __argnames__ : {value: ["x", "y"]},
-            __module__ : {value: "read_book.extract"}
-        });
-
-        ρσ_modules["read_book.extract"].get_elements = get_elements;
-    })();
-
-    (function(){
-        var __name__ = "read_book.anchor_visibility";
-        var anchor_position_cache;
-        var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
-        var get_boss = ρσ_modules["read_book.globals"].get_boss;
-
-        var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
-
-        anchor_position_cache = Object.create(null);
-        function invalidate_anchor_position_cache() {
-            anchor_position_cache = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["layout_mode"] = current_layout_mode();
-                ρσ_d["width"] = scroll_viewport.width();
-                ρσ_d["height"] = scroll_viewport.height();
-                ρσ_d["positions"] = {};
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!invalidate_anchor_position_cache.__module__) Object.defineProperties(invalidate_anchor_position_cache, {
-            __module__ : {value: "read_book.anchor_visibility"}
-        });
-
-        function ensure_anchor_cache_valid() {
-            var a;
-            a = anchor_position_cache;
-            if (a.layout_mode !== current_layout_mode() || a.width !== scroll_viewport.width() || a.height !== scroll_viewport.height()) {
-                invalidate_anchor_position_cache();
-            }
-        };
-        if (!ensure_anchor_cache_valid.__module__) Object.defineProperties(ensure_anchor_cache_valid, {
-            __module__ : {value: "read_book.anchor_visibility"}
-        });
-
-        function ensure_page_list_target_is_displayed(elem) {
-            if (elem && window.getComputedStyle(elem).display === "none") {
-                elem.textContent = "";
-                elem.setAttribute("style", "all: revert");
-            }
-        };
-        if (!ensure_page_list_target_is_displayed.__argnames__) Object.defineProperties(ensure_page_list_target_is_displayed, {
-            __argnames__ : {value: ["elem"]},
-            __module__ : {value: "read_book.anchor_visibility"}
-        });
-
-        function position_for_anchor(anchor, is_page_list_anchor) {
-            var cache, val, anchor_funcs, elem, q;
-            ensure_anchor_cache_valid();
-            cache = anchor_position_cache.positions;
-            val = cache[(typeof anchor === "number" && anchor < 0) ? cache.length + anchor : anchor];
-            if ((typeof val !== "undefined" && val !== null)) {
-                return val;
-            }
-            anchor_funcs = get_boss().anchor_funcs;
-            if (anchor) {
-                elem = document.getElementById(anchor);
-                if (!elem) {
-                    q = document.getElementsByName(anchor);
-                    if (q && q.length) {
-                        elem = q[0];
-                    }
-                }
-            } else {
-                elem = document.body;
-            }
-            if (is_page_list_anchor) {
-                ensure_page_list_target_is_displayed(elem);
-            }
-            val = (elem) ? anchor_funcs.pos_for_elem(elem) : anchor_funcs.pos_for_elem();
-            cache[(typeof anchor === "number" && anchor < 0) ? cache.length + anchor : anchor] = val;
-            return val;
-        };
-        if (!position_for_anchor.__argnames__) Object.defineProperties(position_for_anchor, {
-            __argnames__ : {value: ["anchor", "is_page_list_anchor"]},
-            __module__ : {value: "read_book.anchor_visibility"}
-        });
-
-        function is_anchor_on_screen(anchor) {
-            var pos, anchor_funcs;
-            pos = position_for_anchor(anchor);
-            anchor_funcs = get_boss().anchor_funcs;
-            return anchor_funcs.visibility(pos) === 0;
-        };
-        if (!is_anchor_on_screen.__argnames__) Object.defineProperties(is_anchor_on_screen, {
-            __argnames__ : {value: ["anchor"]},
-            __module__ : {value: "read_book.anchor_visibility"}
-        });
-
-        ρσ_modules["read_book.anchor_visibility"].anchor_position_cache = anchor_position_cache;
-        ρσ_modules["read_book.anchor_visibility"].invalidate_anchor_position_cache = invalidate_anchor_position_cache;
-        ρσ_modules["read_book.anchor_visibility"].ensure_anchor_cache_valid = ensure_anchor_cache_valid;
-        ρσ_modules["read_book.anchor_visibility"].ensure_page_list_target_is_displayed = ensure_page_list_target_is_displayed;
-        ρσ_modules["read_book.anchor_visibility"].position_for_anchor = position_for_anchor;
-        ρσ_modules["read_book.anchor_visibility"].is_anchor_on_screen = is_anchor_on_screen;
-    })();
-
-    (function(){
         var __name__ = "select";
         var caret_position_from_point, safe_nodes;
         if ((typeof document !== "undefined" && document !== null ? document : Object.create(null)).caretPositionFromPoint) {
@@ -19919,14 +19782,14 @@ return this.__repr__();
             height = window.innerHeight;
             xdelta = Math.floor(width / 10);
             ydelta = Math.floor(height / 10);
-            var ρσ_Iter105 = range(0, height, ydelta);
-            ρσ_Iter105 = ((typeof ρσ_Iter105[Symbol.iterator] === "function") ? (ρσ_Iter105 instanceof Map ? ρσ_Iter105.keys() : ρσ_Iter105) : Object.keys(ρσ_Iter105));
-            for (var ρσ_Index105 of ρσ_Iter105) {
-                y = ρσ_Index105;
-                var ρσ_Iter106 = range(0, width, xdelta);
-                ρσ_Iter106 = ((typeof ρσ_Iter106[Symbol.iterator] === "function") ? (ρσ_Iter106 instanceof Map ? ρσ_Iter106.keys() : ρσ_Iter106) : Object.keys(ρσ_Iter106));
-                for (var ρσ_Index106 of ρσ_Iter106) {
-                    x = ρσ_Index106;
+            var ρσ_Iter104 = range(0, height, ydelta);
+            ρσ_Iter104 = ((typeof ρσ_Iter104[Symbol.iterator] === "function") ? (ρσ_Iter104 instanceof Map ? ρσ_Iter104.keys() : ρσ_Iter104) : Object.keys(ρσ_Iter104));
+            for (var ρσ_Index104 of ρσ_Iter104) {
+                y = ρσ_Index104;
+                var ρσ_Iter105 = range(0, width, xdelta);
+                ρσ_Iter105 = ((typeof ρσ_Iter105[Symbol.iterator] === "function") ? (ρσ_Iter105 instanceof Map ? ρσ_Iter105.keys() : ρσ_Iter105) : Object.keys(ρσ_Iter105));
+                for (var ρσ_Index105 of ρσ_Iter105) {
+                    x = ρσ_Index105;
                     r = word_at_point(x, y);
                     if ((typeof r !== "undefined" && r !== null)) {
                         return r;
@@ -19994,10 +19857,10 @@ return this.__repr__();
                 } else {
                     top.visited = true;
                     if (top.node.childNodes) {
-                        var ρσ_Iter107 = (start) ? top.node.childNodes : reversed(top.node.childNodes);
-                        ρσ_Iter107 = ((typeof ρσ_Iter107[Symbol.iterator] === "function") ? (ρσ_Iter107 instanceof Map ? ρσ_Iter107.keys() : ρσ_Iter107) : Object.keys(ρσ_Iter107));
-                        for (var ρσ_Index107 of ρσ_Iter107) {
-                            c = ρσ_Index107;
+                        var ρσ_Iter106 = (start) ? top.node.childNodes : reversed(top.node.childNodes);
+                        ρσ_Iter106 = ((typeof ρσ_Iter106[Symbol.iterator] === "function") ? (ρσ_Iter106 instanceof Map ? ρσ_Iter106.keys() : ρσ_Iter106) : Object.keys(ρσ_Iter106));
+                        for (var ρσ_Index106 of ρσ_Iter106) {
+                            c = ρσ_Index106;
                             stack.push((function(){
                                 var ρσ_d = Object.create(null);
                                 ρσ_d["node"] = c;
@@ -20240,670 +20103,516 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.smil";
-        var is_anchor_on_screen = ρσ_modules["read_book.anchor_visibility"].is_anchor_on_screen;
-
+        var __name__ = "read_book.anchor_visibility";
+        var anchor_position_cache;
+        var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
         var get_boss = ρσ_modules["read_book.globals"].get_boss;
 
-        function flatten_seq(seq, par_list) {
-            var par, child;
-            if (seq.par) {
-                var ρσ_Iter108 = seq.par;
-                ρσ_Iter108 = ((typeof ρσ_Iter108[Symbol.iterator] === "function") ? (ρσ_Iter108 instanceof Map ? ρσ_Iter108.keys() : ρσ_Iter108) : Object.keys(ρσ_Iter108));
-                for (var ρσ_Index108 of ρσ_Iter108) {
-                    par = ρσ_Index108;
-                    if (par.anchor) {
-                        par_list.push(par);
+        var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
+
+        anchor_position_cache = Object.create(null);
+        function invalidate_anchor_position_cache() {
+            anchor_position_cache = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["layout_mode"] = current_layout_mode();
+                ρσ_d["width"] = scroll_viewport.width();
+                ρσ_d["height"] = scroll_viewport.height();
+                ρσ_d["positions"] = {};
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!invalidate_anchor_position_cache.__module__) Object.defineProperties(invalidate_anchor_position_cache, {
+            __module__ : {value: "read_book.anchor_visibility"}
+        });
+
+        function ensure_anchor_cache_valid() {
+            var a;
+            a = anchor_position_cache;
+            if (a.layout_mode !== current_layout_mode() || a.width !== scroll_viewport.width() || a.height !== scroll_viewport.height()) {
+                invalidate_anchor_position_cache();
+            }
+        };
+        if (!ensure_anchor_cache_valid.__module__) Object.defineProperties(ensure_anchor_cache_valid, {
+            __module__ : {value: "read_book.anchor_visibility"}
+        });
+
+        function ensure_page_list_target_is_displayed(elem) {
+            if (elem && window.getComputedStyle(elem).display === "none") {
+                elem.textContent = "";
+                elem.setAttribute("style", "all: revert");
+            }
+        };
+        if (!ensure_page_list_target_is_displayed.__argnames__) Object.defineProperties(ensure_page_list_target_is_displayed, {
+            __argnames__ : {value: ["elem"]},
+            __module__ : {value: "read_book.anchor_visibility"}
+        });
+
+        function position_for_anchor(anchor, is_page_list_anchor) {
+            var cache, val, anchor_funcs, elem, q;
+            ensure_anchor_cache_valid();
+            cache = anchor_position_cache.positions;
+            val = cache[(typeof anchor === "number" && anchor < 0) ? cache.length + anchor : anchor];
+            if ((typeof val !== "undefined" && val !== null)) {
+                return val;
+            }
+            anchor_funcs = get_boss().anchor_funcs;
+            if (anchor) {
+                elem = document.getElementById(anchor);
+                if (!elem) {
+                    q = document.getElementsByName(anchor);
+                    if (q && q.length) {
+                        elem = q[0];
+                    }
+                }
+            } else {
+                elem = document.body;
+            }
+            if (is_page_list_anchor) {
+                ensure_page_list_target_is_displayed(elem);
+            }
+            val = (elem) ? anchor_funcs.pos_for_elem(elem) : anchor_funcs.pos_for_elem();
+            cache[(typeof anchor === "number" && anchor < 0) ? cache.length + anchor : anchor] = val;
+            return val;
+        };
+        if (!position_for_anchor.__argnames__) Object.defineProperties(position_for_anchor, {
+            __argnames__ : {value: ["anchor", "is_page_list_anchor"]},
+            __module__ : {value: "read_book.anchor_visibility"}
+        });
+
+        function is_anchor_on_screen(anchor) {
+            var pos, anchor_funcs;
+            pos = position_for_anchor(anchor);
+            anchor_funcs = get_boss().anchor_funcs;
+            return anchor_funcs.visibility(pos) === 0;
+        };
+        if (!is_anchor_on_screen.__argnames__) Object.defineProperties(is_anchor_on_screen, {
+            __argnames__ : {value: ["anchor"]},
+            __module__ : {value: "read_book.anchor_visibility"}
+        });
+
+        ρσ_modules["read_book.anchor_visibility"].anchor_position_cache = anchor_position_cache;
+        ρσ_modules["read_book.anchor_visibility"].invalidate_anchor_position_cache = invalidate_anchor_position_cache;
+        ρσ_modules["read_book.anchor_visibility"].ensure_anchor_cache_valid = ensure_anchor_cache_valid;
+        ρσ_modules["read_book.anchor_visibility"].ensure_page_list_target_is_displayed = ensure_page_list_target_is_displayed;
+        ρσ_modules["read_book.anchor_visibility"].position_for_anchor = position_for_anchor;
+        ρσ_modules["read_book.anchor_visibility"].is_anchor_on_screen = is_anchor_on_screen;
+    })();
+
+    (function(){
+        var __name__ = "read_book.extract";
+        var annot_id_uuid_map = ρσ_modules["read_book.globals"].annot_id_uuid_map;
+
+        function get_elements(x, y) {
+            var ans, tl, annot_id, elem;
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["link"] = null;
+                ρσ_d["img"] = null;
+                ρσ_d["highlight"] = null;
+                ρσ_d["crw"] = null;
+                return ρσ_d;
+            }).call(this);
+            var ρσ_Iter107 = document.elementsFromPoint(x, y);
+            ρσ_Iter107 = ((typeof ρσ_Iter107[Symbol.iterator] === "function") ? (ρσ_Iter107 instanceof Map ? ρσ_Iter107.keys() : ρσ_Iter107) : Object.keys(ρσ_Iter107));
+            for (var ρσ_Index107 of ρσ_Iter107) {
+                elem = ρσ_Index107;
+                tl = elem.tagName.toLowerCase();
+                if (tl === "a" && elem.getAttribute("href") && !ans.link) {
+                    ans.link = elem.getAttribute("href");
+                } else if ((tl === "img" || tl === "image") && elem.getAttribute("data-calibre-src") && !ans.img) {
+                    ans.img = elem.getAttribute("data-calibre-src");
+                } else if (ρσ_exists.d(elem.dataset).calibreRangeWrapper) {
+                    ans.crw = elem.dataset.calibreRangeWrapper;
+                    annot_id = annot_id_uuid_map[ρσ_bound_index(ans.crw, annot_id_uuid_map)];
+                    if (annot_id) {
+                        ans.highlight = annot_id;
                     }
                 }
             }
-            if (seq.seq) {
-                var ρσ_Iter109 = seq.seq;
-                ρσ_Iter109 = ((typeof ρσ_Iter109[Symbol.iterator] === "function") ? (ρσ_Iter109 instanceof Map ? ρσ_Iter109.keys() : ρσ_Iter109) : Object.keys(ρσ_Iter109));
-                for (var ρσ_Index109 of ρσ_Iter109) {
-                    child = ρσ_Index109;
-                    flatten_seq(child, par_list);
-                }
-            }
+            return ans;
         };
-        if (!flatten_seq.__argnames__) Object.defineProperties(flatten_seq, {
-            __argnames__ : {value: ["seq", "par_list"]},
-            __module__ : {value: "read_book.smil"}
+        if (!get_elements.__argnames__) Object.defineProperties(get_elements, {
+            __argnames__ : {value: ["x", "y"]},
+            __module__ : {value: "read_book.extract"}
         });
 
-        function flatten_smil_map(smil_map) {
-            var anchor_map, par_list, i;
-            anchor_map = Object.create(null);
-            par_list = [];
-            if (smil_map) {
-                flatten_seq(smil_map, par_list);
-            }
-            par_list.sort((function() {
-                var ρσ_anonfunc = function (a, b) {
-                    return a.num - b.num;
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["a", "b"]},
-                    __module__ : {value: "read_book.smil"}
-                });
-                return ρσ_anonfunc;
-            })());
-            for (var ρσ_Index110 = 0; ρσ_Index110 < par_list.length; ρσ_Index110++) {
-                i = ρσ_Index110;
-                anchor_map[ρσ_bound_index(par_list[(typeof i === "number" && i < 0) ? par_list.length + i : i].anchor, anchor_map)] = i;
-            }
-            return [anchor_map, par_list];
-        };
-        if (!flatten_smil_map.__argnames__) Object.defineProperties(flatten_smil_map, {
-            __argnames__ : {value: ["smil_map"]},
-            __module__ : {value: "read_book.smil"}
-        });
+        ρσ_modules["read_book.extract"].get_elements = get_elements;
+    })();
 
-        function get_smil_audio_map(smil_map) {
-            var audio_map, v;
-            audio_map = Object.create(null);
-            function flatten(seq) {
-                var a, par, child;
-                if (seq.par) {
-                    var ρσ_Iter111 = seq.par;
-                    ρσ_Iter111 = ((typeof ρσ_Iter111[Symbol.iterator] === "function") ? (ρσ_Iter111 instanceof Map ? ρσ_Iter111.keys() : ρσ_Iter111) : Object.keys(ρσ_Iter111));
-                    for (var ρσ_Index111 of ρσ_Iter111) {
-                        par = ρσ_Index111;
-                        if (par.audio) {
-                            a = audio_map[ρσ_bound_index(par.audio, audio_map)];
-                            if (!a) {
-                                a = audio_map[ρσ_bound_index(par.audio, audio_map)] = [];
+    (function(){
+        var __name__ = "read_book.find";
+        var ignored_tags, block_tags_for_tts, cache;
+        ignored_tags = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["style"] = true;
+            ρσ_d["script"] = true;
+            ρσ_d["noscript"] = true;
+            ρσ_d["title"] = true;
+            ρσ_d["meta"] = true;
+            ρσ_d["head"] = true;
+            ρσ_d["link"] = true;
+            ρσ_d["html"] = true;
+            ρσ_d["img"] = true;
+            ρσ_d["rt"] = true;
+            ρσ_d["rp"] = true;
+            ρσ_d["rtc"] = true;
+            return ρσ_d;
+        }).call(this);
+        block_tags_for_tts = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["h1"] = true;
+            ρσ_d["h2"] = true;
+            ρσ_d["h3"] = true;
+            ρσ_d["h4"] = true;
+            ρσ_d["h5"] = true;
+            ρσ_d["h6"] = true;
+            ρσ_d["p"] = true;
+            ρσ_d["div"] = true;
+            ρσ_d["table"] = true;
+            ρσ_d["th"] = true;
+            ρσ_d["tr"] = true;
+            ρσ_d["td"] = true;
+            ρσ_d["section"] = true;
+            ρσ_d["article"] = true;
+            return ρσ_d;
+        }).call(this);
+        function build_text_map(for_tts) {
+            var node_list, flat_text, text_node_type, element_node_type, in_ruby;
+            node_list = [];
+            flat_text = "";
+            text_node_type = Node.TEXT_NODE;
+            element_node_type = Node.ELEMENT_NODE;
+            in_ruby = 0;
+            function process_node(node) {
+                var nt, text, rtext, tag, is_ruby_tag, children, i;
+                nt = node.nodeType;
+                if (nt === text_node_type) {
+                    text = node.nodeValue;
+                    if (text && text.length) {
+                        if (in_ruby) {
+                            rtext = text.trim();
+                            if (rtext.length) {
+                                node_list.push({node: node, offset: flat_text.length, length: rtext.length, offset_in_node: text.length - text.trimStart().length});
+                                flat_text += rtext;
                             }
-                            a.push(par);
+                        } else {
+                            node_list.push({node: node, offset: flat_text.length, length: text.length});
+                            flat_text += text;
                         }
                     }
-                }
-                if (seq.seq) {
-                    var ρσ_Iter112 = seq.seq;
-                    ρσ_Iter112 = ((typeof ρσ_Iter112[Symbol.iterator] === "function") ? (ρσ_Iter112 instanceof Map ? ρσ_Iter112.keys() : ρσ_Iter112) : Object.keys(ρσ_Iter112));
-                    for (var ρσ_Index112 of ρσ_Iter112) {
-                        child = ρσ_Index112;
-                        flatten(child);
+                } else if (nt === element_node_type) {
+                    if (!node.hasChildNodes()) {
+                        return;
+                    }
+                    tag = node.tagName.toLowerCase();
+                    if (ignored_tags[(typeof tag === "number" && tag < 0) ? ignored_tags.length + tag : tag]) {
+                        return;
+                    }
+                    is_ruby_tag = tag === "ruby";
+                    if (is_ruby_tag) {
+                        in_ruby += 1;
+                    }
+                    children = node.childNodes;
+                    for (var ρσ_Index108 = 0; ρσ_Index108 < children.length; ρσ_Index108++) {
+                        i = ρσ_Index108;
+                        process_node(children[i]);
+                    }
+                    if (is_ruby_tag) {
+                        in_ruby -= 1;
+                    }
+                    if (for_tts && block_tags_for_tts[(typeof tag === "number" && tag < 0) ? block_tags_for_tts.length + tag : tag]) {
+                        if (flat_text.length && " \n\t\r".indexOf(flat_text[flat_text.length-1]) > -1) {
+                            flat_text = flat_text.slice(0, -1) + "\u2029";
+                        } else if (node_list.length) {
+                            flat_text += "\u2029";
+                            node_list[node_list.length-1].length += 1;
+                        }
                     }
                 }
             };
-            if (!flatten.__argnames__) Object.defineProperties(flatten, {
-                __argnames__ : {value: ["seq"]},
-                __module__ : {value: "read_book.smil"}
+            if (!process_node.__argnames__) Object.defineProperties(process_node, {
+                __argnames__ : {value: ["node"]},
+                __module__ : {value: "read_book.find"}
             });
 
-            if (smil_map) {
-                flatten(smil_map);
-                var ρσ_Iter113 = Object.values(audio_map);
-                ρσ_Iter113 = ((typeof ρσ_Iter113[Symbol.iterator] === "function") ? (ρσ_Iter113 instanceof Map ? ρσ_Iter113.keys() : ρσ_Iter113) : Object.keys(ρσ_Iter113));
-                for (var ρσ_Index113 of ρσ_Iter113) {
-                    v = ρσ_Index113;
-                    v.sort((function() {
-                        var ρσ_anonfunc = function (a, b) {
-                            return a.start - b.start;
-                        };
-                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                            __argnames__ : {value: ["a", "b"]},
-                            __module__ : {value: "read_book.smil"}
-                        });
-                        return ρσ_anonfunc;
-                    })());
-                }
-            }
+            process_node(document.body);
             return (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["audio_files"] = audio_map;
+                ρσ_d["timestamp"] = window.performance.now();
+                ρσ_d["flat_text"] = flat_text;
+                ρσ_d["node_list"] = node_list;
                 return ρσ_d;
             }).call(this);
         };
-        if (!get_smil_audio_map.__argnames__) Object.defineProperties(get_smil_audio_map, {
-            __argnames__ : {value: ["smil_map"]},
-            __module__ : {value: "read_book.smil"}
+        if (!build_text_map.__argnames__) Object.defineProperties(build_text_map, {
+            __argnames__ : {value: ["for_tts"]},
+            __module__ : {value: "read_book.find"}
         });
 
-        function get_smil_id_for_timestamp(audio_file_name, timestamp, smil_audio_map, prev_idx) {
-            var pars, i;
-            pars = (ρσ_expr_temp = smil_audio_map.audio_files)[(typeof audio_file_name === "number" && audio_file_name < 0) ? ρσ_expr_temp.length + audio_file_name : audio_file_name];
-            if (!pars) {
-                return [null, null];
-            }
-            prev_idx = prev_idx || 0;
-            if (prev_idx >= pars.length || prev_idx < 0) {
-                prev_idx = 0;
-            }
-            for (var ρσ_Index114 = prev_idx; ρσ_Index114 < pars.length; ρσ_Index114++) {
-                i = ρσ_Index114;
-                if (pars[(typeof i === "number" && i < 0) ? pars.length + i : i].start <= timestamp && timestamp <= pars[(typeof i === "number" && i < 0) ? pars.length + i : i].end) {
-                    return [pars[(typeof i === "number" && i < 0) ? pars.length + i : i].anchor, i];
+        function index_for_node(node, node_list) {
+            var entry;
+            var ρσ_Iter109 = node_list;
+            ρσ_Iter109 = ((typeof ρσ_Iter109[Symbol.iterator] === "function") ? (ρσ_Iter109 instanceof Map ? ρσ_Iter109.keys() : ρσ_Iter109) : Object.keys(ρσ_Iter109));
+            for (var ρσ_Index109 of ρσ_Iter109) {
+                entry = ρσ_Index109;
+                if (entry.node.isSameNode(node)) {
+                    return entry.offset;
                 }
             }
-            for (var ρσ_Index115 = 0; ρσ_Index115 < prev_idx; ρσ_Index115++) {
-                i = ρσ_Index115;
-                if (pars[(typeof i === "number" && i < 0) ? pars.length + i : i].start <= timestamp && timestamp <= pars[(typeof i === "number" && i < 0) ? pars.length + i : i].end) {
-                    return [pars[(typeof i === "number" && i < 0) ? pars.length + i : i].anchor, i];
-                }
-            }
-            return [null, null];
         };
-        if (!get_smil_id_for_timestamp.__argnames__) Object.defineProperties(get_smil_id_for_timestamp, {
-            __argnames__ : {value: ["audio_file_name", "timestamp", "smil_audio_map", "prev_idx"]},
-            __module__ : {value: "read_book.smil"}
+        if (!index_for_node.__argnames__) Object.defineProperties(index_for_node, {
+            __argnames__ : {value: ["node", "node_list"]},
+            __module__ : {value: "read_book.find"}
         });
 
-        function next_audio_file_for_spine_item(audio_file_name, smil_audio_map) {
-            var keys, idx;
-            if (audio_file_name) {
-                keys = Object.keys(smil_audio_map);
-                idx = keys.indexOf(audio_file_name);
-                if (0 <= idx && idx < keys.length - 1) {
-                    return [keys[ρσ_bound_index(idx + 1, keys)], smil_audio_map[ρσ_bound_index(keys[ρσ_bound_index(idx + 1, keys)], smil_audio_map)]];
-                }
-            }
-            return [null, null];
+        function tts_word_regex() {
+            return /[\p{Letter}\p{Mark}\p{Number}\p{Punctuation}\p{Cf}]{1,50}/gu;
         };
-        if (!next_audio_file_for_spine_item.__argnames__) Object.defineProperties(next_audio_file_for_spine_item, {
-            __argnames__ : {value: ["audio_file_name", "smil_audio_map"]},
-            __module__ : {value: "read_book.smil"}
+        if (!tts_word_regex.__module__) Object.defineProperties(tts_word_regex, {
+            __module__ : {value: "read_book.find"}
         });
 
-        function first_par(smil_map) {
-            var par_list, par;
-            par_list = flatten_smil_map(smil_map)[1];
-            var ρσ_Iter116 = par_list;
-            ρσ_Iter116 = ((typeof ρσ_Iter116[Symbol.iterator] === "function") ? (ρσ_Iter116 instanceof Map ? ρσ_Iter116.keys() : ρσ_Iter116) : Object.keys(ρσ_Iter116));
-            for (var ρσ_Index116 of ρσ_Iter116) {
-                par = ρσ_Index116;
-                if (par.anchor) {
-                    return par;
-                }
+        function cached_tts_text_map() {
+            if (!cache.tts_text_map) {
+                cache.tts_text_map = build_text_map(true);
             }
-            return null;
+            return cache.tts_text_map;
         };
-        if (!first_par.__argnames__) Object.defineProperties(first_par, {
-            __argnames__ : {value: ["smil_map"]},
-            __module__ : {value: "read_book.smil"}
+        if (!cached_tts_text_map.__module__) Object.defineProperties(cached_tts_text_map, {
+            __module__ : {value: "read_book.find"}
         });
 
-        function find_next_audio_in_spine(spine_idx, book_manifest) {
-            var spine, file_map, q, f, par, i;
-            spine = book_manifest.spine;
-            file_map = book_manifest.files;
-            for (var ρσ_Index117 = spine_idx + 1; ρσ_Index117 < spine.length; ρσ_Index117++) {
-                i = ρσ_Index117;
-                q = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
-                f = file_map[(typeof q === "number" && q < 0) ? file_map.length + q : q];
-                if (f && f.smil_map) {
-                    par = first_par(f.smil_map);
-                    if (par) {
-                        return [q, par];
+        function tts_data(text_node, offset) {
+            var offset_in_flat_text, text_map, match, first, last, marked_text, text, start, trailer;
+            offset_in_flat_text = offset || 0;
+            text_map = cached_tts_text_map();
+            if (text_node) {
+                offset_in_flat_text += index_for_node(text_node, text_map.node_list) || 0;
+            }
+            match = null;
+            first = true;
+            last = null;
+            marked_text = [];
+            text = text_map.flat_text.slice(offset_in_flat_text);
+            for (match of text.matchAll(tts_word_regex())) {
+                start = match.index;
+                if (first) {
+                    first = false;
+                    if (start) {
+                        marked_text.push(text.slice(0, start));
                     }
+                } else if (start > last) {
+                    marked_text.push(text.slice(last, start));
                 }
+                marked_text.push(start + offset_in_flat_text);
+                marked_text.push(match[0]);
+                last = start + match[0].length;
             }
-            return [null, null];
-        };
-        if (!find_next_audio_in_spine.__argnames__) Object.defineProperties(find_next_audio_in_spine, {
-            __argnames__ : {value: ["spine_idx", "book_manifest"]},
-            __module__ : {value: "read_book.smil"}
-        });
-
-        function smil_element_at(pos, anchor_map, par_list) {
-            var elem, af, br, par;
-            if (pos) {
-                elem = document.elementFromPoint(pos.x, pos.y);
-                if (elem && elem.id && ρσ_exists.n(anchor_map[ρσ_bound_index(elem.id, anchor_map)])) {
-                    return par_list[ρσ_bound_index(anchor_map[ρσ_bound_index(elem.id, anchor_map)], par_list)];
-                }
-                af = get_boss().anchor_funcs;
-                var ρσ_Iter118 = par_list;
-                ρσ_Iter118 = ((typeof ρσ_Iter118[Symbol.iterator] === "function") ? (ρσ_Iter118 instanceof Map ? ρσ_Iter118.keys() : ρσ_Iter118) : Object.keys(ρσ_Iter118));
-                for (var ρσ_Index118 of ρσ_Iter118) {
-                    par = ρσ_Index118;
-                    if (par.anchor && par.audio) {
-                        elem = document.getElementById(par.anchor);
-                        if (elem) {
-                            br = af.get_bounding_client_rect(elem);
-                            if (br.x <= (ρσ_cond_temp = pos.x) && ρσ_cond_temp <= br.x + br.width && br.y <= (ρσ_cond_temp = pos.y) && ρσ_cond_temp <= br.y + br.height) {
-                                return par;
-                            }
-                        }
-                    }
-                }
-                return null;
+            if (last === null) {
+                marked_text.push(text);
             } else {
-                var ρσ_Iter119 = par_list;
-                ρσ_Iter119 = ((typeof ρσ_Iter119[Symbol.iterator] === "function") ? (ρσ_Iter119 instanceof Map ? ρσ_Iter119.keys() : ρσ_Iter119) : Object.keys(ρσ_Iter119));
-                for (var ρσ_Index119 of ρσ_Iter119) {
-                    par = ρσ_Index119;
-                    if (par.anchor && par.audio && is_anchor_on_screen(par.anchor)) {
-                        return par;
-                    }
-                }
-                var ρσ_Iter120 = par_list;
-                ρσ_Iter120 = ((typeof ρσ_Iter120[Symbol.iterator] === "function") ? (ρσ_Iter120 instanceof Map ? ρσ_Iter120.keys() : ρσ_Iter120) : Object.keys(ρσ_Iter120));
-                for (var ρσ_Index120 of ρσ_Iter120) {
-                    par = ρσ_Index120;
-                    if (par.audio) {
-                        return par;
-                    }
-                }
-                return null;
-            }
-        };
-        if (!smil_element_at.__argnames__) Object.defineProperties(smil_element_at, {
-            __argnames__ : {value: ["pos", "anchor_map", "par_list"]},
-            __module__ : {value: "read_book.smil"}
-        });
-
-        function mark_smil_element(anchor) {
-            var elem, sel;
-            elem = document.getElementById(anchor);
-            if (elem) {
-                sel = window.getSelection();
-                sel.selectAllChildren(elem);
-                return bool(sel.rangeCount && sel.toString());
-            }
-            return false;
-        };
-        if (!mark_smil_element.__argnames__) Object.defineProperties(mark_smil_element, {
-            __argnames__ : {value: ["anchor"]},
-            __module__ : {value: "read_book.smil"}
-        });
-
-        ρσ_modules["read_book.smil"].flatten_seq = flatten_seq;
-        ρσ_modules["read_book.smil"].flatten_smil_map = flatten_smil_map;
-        ρσ_modules["read_book.smil"].get_smil_audio_map = get_smil_audio_map;
-        ρσ_modules["read_book.smil"].get_smil_id_for_timestamp = get_smil_id_for_timestamp;
-        ρσ_modules["read_book.smil"].next_audio_file_for_spine_item = next_audio_file_for_spine_item;
-        ρσ_modules["read_book.smil"].first_par = first_par;
-        ρσ_modules["read_book.smil"].find_next_audio_in_spine = find_next_audio_in_spine;
-        ρσ_modules["read_book.smil"].smil_element_at = smil_element_at;
-        ρσ_modules["read_book.smil"].mark_smil_element = mark_smil_element;
-    })();
-
-    (function(){
-        var __name__ = "read_book.shortcuts";
-        var capital_letters, x;
-        var _ = ρσ_modules.gettext.gettext;
-
-        var runtime = ρσ_modules["read_book.globals"].runtime;
-
-        function parse_key_repr(sc) {
-            var parts, key, ans, q, modifier;
-            parts = sc.split("+");
-            if (sc.endsWith("++")) {
-                parts = parts.slice(0, -2);
-                parts.push("+");
-            }
-            key = parts[parts.length-1];
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["key"] = key;
-                ρσ_d["altKey"] = false;
-                ρσ_d["ctrlKey"] = false;
-                ρσ_d["metaKey"] = false;
-                ρσ_d["shiftKey"] = false;
-                return ρσ_d;
-            }).call(this);
-            var ρσ_Iter121 = parts.slice(0, -1);
-            ρσ_Iter121 = ((typeof ρσ_Iter121[Symbol.iterator] === "function") ? (ρσ_Iter121 instanceof Map ? ρσ_Iter121.keys() : ρσ_Iter121) : Object.keys(ρσ_Iter121));
-            for (var ρσ_Index121 of ρσ_Iter121) {
-                modifier = ρσ_Index121;
-                q = modifier.toLowerCase();
-                if (q === "ctrl") {
-                    ans.ctrlKey = true;
-                } else if (q === "alt") {
-                    ans.altKey = true;
-                } else if (q === "meta" || q === "cmd") {
-                    ans.metaKey = true;
-                } else if (q === "shift") {
-                    ans.shiftKey = true;
+                trailer = text.slice(last);
+                if (trailer) {
+                    marked_text.push(trailer);
                 }
             }
-            return ans;
+            return marked_text;
         };
-        if (!parse_key_repr.__argnames__) Object.defineProperties(parse_key_repr, {
-            __argnames__ : {value: ["sc"]},
-            __module__ : {value: "read_book.shortcuts"}
+        if (!tts_data.__argnames__) Object.defineProperties(tts_data, {
+            __argnames__ : {value: ["text_node", "offset"]},
+            __module__ : {value: "read_book.find"}
         });
 
-        function desc(sc, group, short, long) {
-            var pkey, x;
-            if (typeof sc === "string") {
-                sc = [ sc ];
-            }
-            pkey = [];
-            var ρσ_Iter122 = sc;
-            ρσ_Iter122 = ((typeof ρσ_Iter122[Symbol.iterator] === "function") ? (ρσ_Iter122 instanceof Map ? ρσ_Iter122.keys() : ρσ_Iter122) : Object.keys(ρσ_Iter122));
-            for (var ρσ_Index122 of ρσ_Iter122) {
-                x = ρσ_Index122;
-                pkey.push(parse_key_repr(x));
-            }
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["group"] = group;
-                ρσ_d["short"] = short;
-                ρσ_d["long"] = long;
-                ρσ_d["shortcuts"] = pkey;
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!desc.__argnames__) Object.defineProperties(desc, {
-            __argnames__ : {value: ["sc", "group", "short", "long"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function keyevent_as_shortcut(evt) {
-            var key;
-            key = evt.key;
-            if (capital_letters[(typeof key === "number" && key < 0) ? capital_letters.length + key : key] && evt.shiftKey) {
-                key = key.toLowerCase();
-            }
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["key"] = key;
-                ρσ_d["altKey"] = evt.altKey;
-                ρσ_d["ctrlKey"] = evt.ctrlKey;
-                ρσ_d["metaKey"] = evt.metaKey;
-                ρσ_d["shiftKey"] = evt.shiftKey;
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!keyevent_as_shortcut.__argnames__) Object.defineProperties(keyevent_as_shortcut, {
-            __argnames__ : {value: ["evt"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function shortcut_differs(a, b) {
-            return !((a.key === b.key && a.altKey === b.altKey && a.ctrlKey === b.ctrlKey && a.metaKey === b.metaKey && a.shiftKey === b.shiftKey));
-        };
-        if (!shortcut_differs.__argnames__) Object.defineProperties(shortcut_differs, {
-            __argnames__ : {value: ["a", "b"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        capital_letters = (function() {
-            var ρσ_Iter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", ρσ_Result = Object.create(null), x;
-            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-            for (var ρσ_Index of ρσ_Iter) {
-                x = ρσ_Index;
-                ρσ_Result[x] = (true);
-            }
-            return ρσ_Result;
-        })();
-        function get_key_text(evt) {
-            var key;
-            key = evt.key;
-            if (key) {
-                if (evt.code && key.toLowerCase() !== key && evt.code.startsWith("Key") && capital_letters[(typeof key === "number" && key < 0) ? capital_letters.length + key : key]) {
-                    key = key.toLowerCase();
+        function find_node_for_index_binary(node_list, idx_in_flat_text, start) {
+            var end, mid, q, limit, start_node, start_offset;
+            start = start || 0;
+            end = node_list.length - 1;
+            while (start <= end) {
+                mid = Math.floor((start + end) / 2);
+                q = node_list[(typeof mid === "number" && mid < 0) ? node_list.length + mid : mid];
+                limit = q.offset + q.length;
+                if (q.offset <= idx_in_flat_text && limit > idx_in_flat_text) {
+                    start_node = q.node;
+                    start_offset = idx_in_flat_text - q.offset;
+                    return [start_node, start_offset + (q.offset_in_node || 0), mid];
                 }
-            }
-            return key;
-        };
-        if (!get_key_text.__argnames__) Object.defineProperties(get_key_text, {
-            __argnames__ : {value: ["evt"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function keyevent_to_index(evt) {
-            var parts, mod;
-            parts = [];
-            var ρσ_Iter123 = [ "altKey", "ctrlKey", "metaKey", "shiftKey" ];
-            ρσ_Iter123 = ((typeof ρσ_Iter123[Symbol.iterator] === "function") ? (ρσ_Iter123 instanceof Map ? ρσ_Iter123.keys() : ρσ_Iter123) : Object.keys(ρσ_Iter123));
-            for (var ρσ_Index123 of ρσ_Iter123) {
-                mod = ρσ_Index123;
-                parts.push((evt[(typeof mod === "number" && mod < 0) ? evt.length + mod : mod]) ? "y" : "n");
-            }
-            return parts.join("") + get_key_text(evt);
-        };
-        if (!keyevent_to_index.__argnames__) Object.defineProperties(keyevent_to_index, {
-            __argnames__ : {value: ["evt"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function key_as_text(evt) {
-            var mods, x, key;
-            mods = [];
-            var ρσ_Iter124 = [ "alt", "ctrl", "meta", "shift" ];
-            ρσ_Iter124 = ((typeof ρσ_Iter124[Symbol.iterator] === "function") ? (ρσ_Iter124 instanceof Map ? ρσ_Iter124.keys() : ρσ_Iter124) : Object.keys(ρσ_Iter124));
-            for (var ρσ_Index124 of ρσ_Iter124) {
-                x = ρσ_Index124;
-                if (evt[ρσ_bound_index(x + "Key", evt)]) {
-                    if (ρσ_in("macos", window.navigator.userAgent)) {
-                        if (x === "alt") {
-                            x = "option";
-                        } else if (x === "meta") {
-                            x = "⌘";
-                        }
-                    }
-                    mods.push(x.capitalize());
-                }
-            }
-            mods = "+".join(mods);
-            if (mods) {
-                mods += "+";
-            }
-            key = get_key_text(evt);
-            if (key === " ") {
-                key = "Space";
-            }
-            return mods + key;
-        };
-        if (!key_as_text.__argnames__) Object.defineProperties(key_as_text, {
-            __argnames__ : {value: ["evt"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function common_shortcuts() {
-            return (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["start_of_file"] = desc([ "Ctrl+ArrowUp", "Ctrl+ArrowLeft", "Home" ], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file"));
-                ρσ_d["start_of_book"] = desc("Ctrl+Home", "scroll", _("Scroll to the beginning of the book"));
-                ρσ_d["end_of_book"] = desc("Ctrl+End", "scroll", _("Scroll to the end of the book"));
-                ρσ_d["end_of_file"] = desc([ "Ctrl+ArrowDown", "Ctrl+ArrowRight", "End" ], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file"));
-                ρσ_d["up"] = desc("ArrowUp", "scroll", _("Scroll backwards smoothly (by screen-fulls in paged mode)"), _("Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"));
-                ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
-                ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
-                ρσ_d["right"] = desc("ArrowRight", "scroll", _("Scroll right"), _("Scroll rightwards by a little in flow mode and by a page in paged mode"));
-                ρσ_d["pageup"] = desc([ "PageUp", "Shift+ " ], "scroll", _("Scroll backwards by screen-fulls"));
-                ρσ_d["pagedown"] = desc([ " ", "PageDown" ], "scroll", _("Scroll forwards by screen-fulls"));
-                ρσ_d["previous_section"] = desc("Ctrl+PageUp", "scroll", _("Scroll to the previous section"));
-                ρσ_d["next_section"] = desc("Ctrl+PageDown", "scroll", _("Scroll to the next section"));
-                ρσ_d["back"] = desc([ "Alt+ArrowLeft" ], "scroll", _("Back"));
-                ρσ_d["forward"] = desc([ "Alt+ArrowRight" ], "scroll", _("Forward"));
-                ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
-                ρσ_d["read_aloud"] = desc("Ctrl+s", "ui", _("Read aloud"));
-                ρσ_d["toggle_hints"] = desc("Alt+f", "ui", _("Follow links with the keyboard"));
-                ρσ_d["copy_to_clipboard"] = desc([ "Ctrl+c", "Meta+c" ], "ui", _("Copy to clipboard"));
-                ρσ_d["copy_location_to_clipboard"] = desc([ "Alt+c" ], "ui", _("Copy current location to clipboard"));
-                ρσ_d["copy_location_as_url_to_clipboard"] = desc([ "Ctrl+Shift+c" ], "ui", _("Copy current location as calibre:// URL to clipboard"));
-                ρσ_d["start_search"] = desc([ "/", "Ctrl+f", "Cmd+f" ], "ui", _("Start search"));
-                ρσ_d["next_match"] = desc([ "F3", "Enter" ], "ui", _("Find next"));
-                ρσ_d["previous_match"] = desc([ "Shift+F3", "Shift+Enter" ], "ui", _("Find previous"));
-                ρσ_d["increase_font_size"] = desc([ "Ctrl+=", "Ctrl++", "Ctrl+Shift++", "Ctrl+Shift+=", "Meta++", "Meta+Shift++", "Meta+Shift+=" ], "ui", _("Increase font size"));
-                ρσ_d["decrease_font_size"] = desc([ "Ctrl+-", "Ctrl+_", "Ctrl+Shift+-", "Ctrl+Shift+_", "Meta+-", "Meta+_" ], "ui", _("Decrease font size"));
-                ρσ_d["default_font_size"] = desc("Ctrl+0", "ui", _("Restore default font size"));
-                ρσ_d["increase_number_of_columns"] = desc([ "Ctrl+]" ], "ui", _("Increase number of pages per screen"));
-                ρσ_d["decrease_number_of_columns"] = desc([ "Ctrl+[" ], "ui", _("Decrease number of pages per screen"));
-                ρσ_d["reset_number_of_columns"] = desc([ "Ctrl+Alt+c" ], "ui", _("Make number of pages per screen automatic"));
-                ρσ_d["toggle_full_screen"] = desc([ "F11", "Ctrl+Shift+f" ], "ui", _("Toggle full screen"));
-                ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
-                ρσ_d["toggle_scrollbar"] = desc("Ctrl+w", "ui", _("Toggle the scrollbar"));
-                ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
-                ρσ_d["toggle_bookmarks"] = desc([ "Ctrl+b" ], "ui", _("Show/hide bookmarks"));
-                ρσ_d["new_bookmark"] = desc([ "Ctrl+Alt+b" ], "ui", _("Create a new bookmark"));
-                ρσ_d["metadata"] = desc([ "Ctrl+n", "Ctrl+e" ], "ui", _("Show the book metadata"));
-                ρσ_d["show_profiles"] = desc([ "Alt+p" ], "ui", _("Change settings quickly by creating and switching to \"profiles\""));
-                ρσ_d["reload_book"] = desc([ "Ctrl+Alt+F5", "Ctrl+Alt+r" ], "ui", _("Reload book"));
-                ρσ_d["extend_selection_by_word"] = desc([ "Ctrl+Shift+ArrowRight" ], "ui", _("Alter the current selection forward by a word"));
-                ρσ_d["shrink_selection_by_word"] = desc([ "Ctrl+Shift+ArrowLeft" ], "ui", _("Alter the current selection backwards by a word"));
-                ρσ_d["extend_selection_by_character"] = desc([ "Shift+ArrowRight" ], "ui", _("Alter the current selection forward by a character"));
-                ρσ_d["shrink_selection_by_character"] = desc([ "Shift+ArrowLeft" ], "ui", _("Alter the current selection backwards by a character"));
-                ρσ_d["extend_selection_by_line"] = desc([ "Shift+ArrowDown" ], "ui", _("Alter the current selection forward by a line"));
-                ρσ_d["extend_selection_to_start_of_line"] = desc([ "Shift+Home" ], "ui", _("Extend the current selection to the start of the line"));
-                ρσ_d["extend_selection_to_end_of_line"] = desc([ "Shift+End" ], "ui", _("Extend the current selection to the end of the line"));
-                ρσ_d["select_all"] = desc([ "Ctrl+a" ], "ui", _("Select all"));
-                ρσ_d["shrink_selection_by_line"] = desc([ "Shift+ArrowUp" ], "ui", _("Alter the current selection backwards by a line"));
-                ρσ_d["extend_selection_by_paragraph"] = desc([ "Ctrl+Shift+ArrowDown" ], "ui", _("Alter the current selection forward by a paragraph"));
-                ρσ_d["shrink_selection_by_paragraph"] = desc([ "Ctrl+Shift+ArrowUp" ], "ui", _("Alter the current selection backwards by a paragraph"));
-                ρσ_d["show_chrome"] = desc([ "Escape", "ContextMenu" ], "ui", _("Show the E-book viewer controls"));
-                ρσ_d["preferences"] = desc([ "Ctrl+,", "Ctrl+Escape", "Meta+Escape", "Meta+," ], "ui", _("Show E-book viewer preferences"));
-                ρσ_d["goto_location"] = desc([ ";", ":", "Shift+:", "Shift+;", "Ctrl+g" ], "ui", _("Go to a specified book location or position"));
-                ρσ_d["toggle_autoscroll"] = desc("Ctrl+ ", "scroll", _("Toggle auto-scroll"));
-                ρσ_d["scrollspeed_increase"] = desc("Alt+ArrowUp", "scroll", _("Auto scroll faster"));
-                ρσ_d["scrollspeed_decrease"] = desc("Alt+ArrowDown", "scroll", _("Auto scroll slower"));
-                return ρσ_d;
-            }).call(this);
-        };
-        if (!common_shortcuts.__module__) Object.defineProperties(common_shortcuts, {
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function shortcuts_definition() {
-            var ans;
-            ans = shortcuts_definition.ans;
-            if (!ans) {
-                ans = shortcuts_definition.ans = common_shortcuts();
-                if (runtime.is_standalone_viewer) {
-                    add_standalone_viewer_shortcuts(ans);
+                if (limit <= idx_in_flat_text) {
+                    start = mid + 1;
                 } else {
-                    ans["sync_book"] = desc([], "ui", _("Sync last read position/annotations"));
+                    end = mid - 1;
                 }
             }
-            return ans;
+            return [null, null, null];
         };
-        if (!shortcuts_definition.__module__) Object.defineProperties(shortcuts_definition, {
-            __module__ : {value: "read_book.shortcuts"}
+        if (!find_node_for_index_binary.__argnames__) Object.defineProperties(find_node_for_index_binary, {
+            __argnames__ : {value: ["node_list", "idx_in_flat_text", "start"]},
+            __module__ : {value: "read_book.find"}
         });
 
-        function shortcuts_group_desc() {
-            var ans;
-            ans = shortcuts_group_desc.ans;
-            if (!ans) {
-                ans = shortcuts_group_desc.ans = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["scroll"] = _("Navigation");
-                    ρσ_d["ui"] = _("Interface");
-                    return ρσ_d;
-                }).call(this);
-            }
-            return ans;
-        };
-        if (!shortcuts_group_desc.__module__) Object.defineProperties(shortcuts_group_desc, {
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function add_standalone_viewer_shortcuts(sc) {
-            var ismacos, quit_shortcut;
-            ismacos = ρσ_in("macos", window.navigator.userAgent);
-            sc["toggle_inspector"] = desc([ "Ctrl+i" ], "ui", _("Show/hide Inspector"));
-            sc["toggle_lookup"] = desc([ "Ctrl+l" ], "ui", _("Show/hide the word lookup panel"));
-            quit_shortcut = (ismacos) ? "Meta+q" : "Ctrl+q";
-            sc["quit"] = desc(quit_shortcut, "ui", _("Quit the E-book viewer"));
-            sc["print"] = desc("Ctrl+p", "ui", _("Print book to PDF"));
-            sc["toggle_toolbar"] = desc("Ctrl+F11", "ui", _("Toggle the toolbar"));
-            sc["toggle_highlights"] = desc("Ctrl+h", "ui", _("Toggle the highlights panel"));
-            sc["edit_book"] = desc("Ctrl+d", "ui", _("Edit this book"));
-        };
-        if (!add_standalone_viewer_shortcuts.__argnames__) Object.defineProperties(add_standalone_viewer_shortcuts, {
-            __argnames__ : {value: ["sc"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        function create_shortcut_map(custom_shortcuts) {
-            var ans, scd, entry, shortcuts, sc, sc_name;
-            ans = Object.create(null);
-            scd = shortcuts_definition();
-            var ρσ_Iter125 = Object.keys(scd);
-            ρσ_Iter125 = ((typeof ρσ_Iter125[Symbol.iterator] === "function") ? (ρσ_Iter125 instanceof Map ? ρσ_Iter125.keys() : ρσ_Iter125) : Object.keys(ρσ_Iter125));
-            for (var ρσ_Index125 of ρσ_Iter125) {
-                sc_name = ρσ_Index125;
-                entry = scd[(typeof sc_name === "number" && sc_name < 0) ? scd.length + sc_name : sc_name];
-                shortcuts = entry.shortcuts;
-                if (custom_shortcuts && custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name]) {
-                    shortcuts = custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name];
-                }
-                var ρσ_Iter126 = shortcuts;
-                ρσ_Iter126 = ((typeof ρσ_Iter126[Symbol.iterator] === "function") ? (ρσ_Iter126 instanceof Map ? ρσ_Iter126.keys() : ρσ_Iter126) : Object.keys(ρσ_Iter126));
-                for (var ρσ_Index126 of ρσ_Iter126) {
-                    sc = ρσ_Index126;
-                    ans[ρσ_bound_index(keyevent_to_index(sc), ans)] = sc_name;
+        function get_occurrence_data(node_list, start, end) {
+            var ρσ_unpack, start_node, start_offset, start_pos, end_node, end_offset, node_pos;
+            ρσ_unpack = find_node_for_index_binary(node_list, start);
+ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
+            start_node = ρσ_unpack[0];
+            start_offset = ρσ_unpack[1];
+            start_pos = ρσ_unpack[2];
+            if (start_node !== null) {
+                ρσ_unpack = find_node_for_index_binary(node_list, end, start_pos);
+ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
+                end_node = ρσ_unpack[0];
+                end_offset = ρσ_unpack[1];
+                node_pos = ρσ_unpack[2];
+                if (end_node !== null) {
+                    return (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["start_node"] = start_node;
+                        ρσ_d["start_offset"] = start_offset;
+                        ρσ_d["start_pos"] = start_pos;
+                        ρσ_d["end_node"] = end_node;
+                        ρσ_d["end_offset"] = end_offset;
+                        ρσ_d["end_pos"] = node_pos;
+                        return ρσ_d;
+                    }).call(this);
                 }
             }
-            return ans;
         };
-        if (!create_shortcut_map.__argnames__) Object.defineProperties(create_shortcut_map, {
-            __argnames__ : {value: ["custom_shortcuts"]},
-            __module__ : {value: "read_book.shortcuts"}
+        if (!get_occurrence_data.__argnames__) Object.defineProperties(get_occurrence_data, {
+            __argnames__ : {value: ["node_list", "start", "end"]},
+            __module__ : {value: "read_book.find"}
         });
 
-        function shortcut_for_key_event(evt, shortcut_map) {
-            var idx;
-            idx = keyevent_to_index(evt);
-            return shortcut_map[(typeof idx === "number" && idx < 0) ? shortcut_map.length + idx : idx];
-        };
-        if (!shortcut_for_key_event.__argnames__) Object.defineProperties(shortcut_for_key_event, {
-            __argnames__ : {value: ["evt", "shortcut_map"]},
-            __module__ : {value: "read_book.shortcuts"}
-        });
-
-        ρσ_modules["read_book.shortcuts"].capital_letters = capital_letters;
-        ρσ_modules["read_book.shortcuts"].x = x;
-        ρσ_modules["read_book.shortcuts"].parse_key_repr = parse_key_repr;
-        ρσ_modules["read_book.shortcuts"].desc = desc;
-        ρσ_modules["read_book.shortcuts"].keyevent_as_shortcut = keyevent_as_shortcut;
-        ρσ_modules["read_book.shortcuts"].shortcut_differs = shortcut_differs;
-        ρσ_modules["read_book.shortcuts"].get_key_text = get_key_text;
-        ρσ_modules["read_book.shortcuts"].keyevent_to_index = keyevent_to_index;
-        ρσ_modules["read_book.shortcuts"].key_as_text = key_as_text;
-        ρσ_modules["read_book.shortcuts"].common_shortcuts = common_shortcuts;
-        ρσ_modules["read_book.shortcuts"].shortcuts_definition = shortcuts_definition;
-        ρσ_modules["read_book.shortcuts"].shortcuts_group_desc = shortcuts_group_desc;
-        ρσ_modules["read_book.shortcuts"].add_standalone_viewer_shortcuts = add_standalone_viewer_shortcuts;
-        ρσ_modules["read_book.shortcuts"].create_shortcut_map = create_shortcut_map;
-        ρσ_modules["read_book.shortcuts"].shortcut_for_key_event = shortcut_for_key_event;
-    })();
-
-    (function(){
-        var __name__ = "read_book.referencing";
-        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
-
-        function elem_for_ref(refnum) {
-            refnum = int(refnum);
-            return (ρσ_expr_temp = document.getElementsByTagName("p"))[ρσ_bound_index(refnum - 1, ρσ_expr_temp)];
-        };
-        if (!elem_for_ref.__argnames__) Object.defineProperties(elem_for_ref, {
-            __argnames__ : {value: ["refnum"]},
-            __module__ : {value: "read_book.referencing"}
-        });
-
-        function start_reference_mode() {
-            var si, ρσ_unpack, i, p;
-            si = current_spine_item().index;
-            var ρσ_Iter127 = enumerate(document.getElementsByTagName("p"));
-            ρσ_Iter127 = ((typeof ρσ_Iter127[Symbol.iterator] === "function") ? (ρσ_Iter127 instanceof Map ? ρσ_Iter127.keys() : ρσ_Iter127) : Object.keys(ρσ_Iter127));
-            for (var ρσ_Index127 of ρσ_Iter127) {
-                ρσ_unpack = ρσ_Index127;
-                i = ρσ_unpack[0];
-                p = ρσ_unpack[1];
-                p.dataset.calibreRefNum = "" + ρσ_str.format("{}", si) + "." + ρσ_str.format("{}", i + 1) + "";
+        function find_specific_occurrence(q, num, before_len, after_len, text_map, from_offset) {
+            var from_idx, flat_text, match_num, idx;
+            if (!q || !q.length) {
+                return;
             }
-            document.body.classList.add("calibre-reference-mode");
+            from_idx = from_offset || 0;
+            flat_text = text_map.flat_text;
+            match_num = -1;
+            while (true) {
+                idx = flat_text.indexOf(q, from_idx);
+                if (idx < 0) {
+                    break;
+                }
+                match_num += 1;
+                from_idx = idx + 1;
+                if (match_num < num) {
+                    continue;
+                }
+                return get_occurrence_data(text_map.node_list, idx + before_len, idx + q.length - after_len);
+            }
         };
-        if (!start_reference_mode.__module__) Object.defineProperties(start_reference_mode, {
-            __module__ : {value: "read_book.referencing"}
+        if (!find_specific_occurrence.__argnames__) Object.defineProperties(find_specific_occurrence, {
+            __argnames__ : {value: ["q", "num", "before_len", "after_len", "text_map", "from_offset"]},
+            __module__ : {value: "read_book.find"}
         });
 
-        function end_reference_mode() {
-            document.body.classList.remove("calibre-reference-mode");
+        cache = Object.create(null);
+        function reset_find_caches() {
+            cache = Object.create(null);
         };
-        if (!end_reference_mode.__module__) Object.defineProperties(end_reference_mode, {
-            __module__ : {value: "read_book.referencing"}
+        if (!reset_find_caches.__module__) Object.defineProperties(reset_find_caches, {
+            __module__ : {value: "read_book.find"}
         });
 
-        ρσ_modules["read_book.referencing"].elem_for_ref = elem_for_ref;
-        ρσ_modules["read_book.referencing"].start_reference_mode = start_reference_mode;
-        ρσ_modules["read_book.referencing"].end_reference_mode = end_reference_mode;
+        function select_find_result(match) {
+            var sel;
+            sel = window.getSelection();
+            try {
+                sel.setBaseAndExtent(match.start_node, match.start_offset, match.end_node, match.end_offset);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    return false;
+                } 
+            }
+            return bool(sel.rangeCount && sel.toString());
+        };
+        if (!select_find_result.__argnames__) Object.defineProperties(select_find_result, {
+            __argnames__ : {value: ["match"]},
+            __module__ : {value: "read_book.find"}
+        });
+
+        function select_search_result(sr) {
+            var q, before_len, after_len, after, match;
+            window.getSelection().removeAllRanges();
+            if (!cache.text_map) {
+                cache.text_map = build_text_map();
+            }
+            q = "";
+            before_len = after_len = 0;
+            if (sr.before) {
+                q = sr.before.slice(-15);
+                before_len = q.length;
+            }
+            q += sr.text;
+            if (sr.after) {
+                after = sr.after.slice(0, 15);
+                after_len = after.length;
+                q += after;
+            }
+            match = find_specific_occurrence(q, int(sr.index), before_len, after_len, cache.text_map, sr.from_offset);
+            if (!match) {
+                return false;
+            }
+            return select_find_result(match);
+        };
+        if (!select_search_result.__argnames__) Object.defineProperties(select_search_result, {
+            __argnames__ : {value: ["sr"]},
+            __module__ : {value: "read_book.find"}
+        });
+
+        function find_word_length(text_map, idx) {
+            var r, match, word_length;
+            r = tts_word_regex();
+            r.lastIndex = idx;
+            match = r.exec(text_map.flat_text);
+            word_length = 5;
+            if (match) {
+                word_length = ρσ_exists.d(match[0]).length || 5;
+            }
+            return word_length;
+        };
+        if (!find_word_length.__argnames__) Object.defineProperties(find_word_length, {
+            __argnames__ : {value: ["text_map", "idx"]},
+            __module__ : {value: "read_book.find"}
+        });
+
+        function select_tts_mark(idx_in_flat_text, last_idx_in_flat_text) {
+            var text_map, match;
+            window.getSelection().removeAllRanges();
+            text_map = cached_tts_text_map();
+            if (idx_in_flat_text === last_idx_in_flat_text) {
+                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, idx_in_flat_text + find_word_length(text_map, idx_in_flat_text));
+            } else {
+                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, last_idx_in_flat_text + find_word_length(text_map, last_idx_in_flat_text));
+            }
+            if (!match) {
+                return false;
+            }
+            return select_find_result(match);
+        };
+        if (!select_tts_mark.__argnames__) Object.defineProperties(select_tts_mark, {
+            __argnames__ : {value: ["idx_in_flat_text", "last_idx_in_flat_text"]},
+            __module__ : {value: "read_book.find"}
+        });
+
+        ρσ_modules["read_book.find"].ignored_tags = ignored_tags;
+        ρσ_modules["read_book.find"].block_tags_for_tts = block_tags_for_tts;
+        ρσ_modules["read_book.find"].cache = cache;
+        ρσ_modules["read_book.find"].build_text_map = build_text_map;
+        ρσ_modules["read_book.find"].index_for_node = index_for_node;
+        ρσ_modules["read_book.find"].tts_word_regex = tts_word_regex;
+        ρσ_modules["read_book.find"].cached_tts_text_map = cached_tts_text_map;
+        ρσ_modules["read_book.find"].tts_data = tts_data;
+        ρσ_modules["read_book.find"].find_node_for_index_binary = find_node_for_index_binary;
+        ρσ_modules["read_book.find"].get_occurrence_data = get_occurrence_data;
+        ρσ_modules["read_book.find"].find_specific_occurrence = find_specific_occurrence;
+        ρσ_modules["read_book.find"].reset_find_caches = reset_find_caches;
+        ρσ_modules["read_book.find"].select_find_result = select_find_result;
+        ρσ_modules["read_book.find"].select_search_result = select_search_result;
+        ρσ_modules["read_book.find"].find_word_length = find_word_length;
+        ρσ_modules["read_book.find"].select_tts_mark = select_tts_mark;
     })();
 
     (function(){
@@ -20952,10 +20661,10 @@ return this.__repr__();
                     return;
                 }
                 amt = 0;
-                var ρσ_Iter128 = small_scroll_events;
-                ρσ_Iter128 = ((typeof ρσ_Iter128[Symbol.iterator] === "function") ? (ρσ_Iter128 instanceof Map ? ρσ_Iter128.keys() : ρσ_Iter128) : Object.keys(ρσ_Iter128));
-                for (var ρσ_Index128 of ρσ_Iter128) {
-                    x = ρσ_Index128;
+                var ρσ_Iter110 = small_scroll_events;
+                ρσ_Iter110 = ((typeof ρσ_Iter110[Symbol.iterator] === "function") ? (ρσ_Iter110 instanceof Map ? ρσ_Iter110.keys() : ρσ_Iter110) : Object.keys(ρσ_Iter110));
+                for (var ρσ_Index110 of ρσ_Iter110) {
+                    x = ρσ_Index110;
                     amt += x.amt;
                 }
                 clear_small_scrolls();
@@ -21626,10 +21335,10 @@ return this.__repr__();
             self.vertical = gesture.axis === "vertical";
             now = window.performance.now();
             points = times = null;
-            var ρσ_Iter129 = enumerate(gesture.times);
-            ρσ_Iter129 = ((typeof ρσ_Iter129[Symbol.iterator] === "function") ? (ρσ_Iter129 instanceof Map ? ρσ_Iter129.keys() : ρσ_Iter129) : Object.keys(ρσ_Iter129));
-            for (var ρσ_Index129 of ρσ_Iter129) {
-                ρσ_unpack = ρσ_Index129;
+            var ρσ_Iter111 = enumerate(gesture.times);
+            ρσ_Iter111 = ((typeof ρσ_Iter111[Symbol.iterator] === "function") ? (ρσ_Iter111 instanceof Map ? ρσ_Iter111.keys() : ρσ_Iter111) : Object.keys(ρσ_Iter111));
+            for (var ρσ_Index111 of ρσ_Iter111) {
+                ρσ_unpack = ρσ_Index111;
                 i = ρσ_unpack[0];
                 t = ρσ_unpack[1];
                 if (now - t < self.VELOCITY_HISTORY) {
@@ -22127,10 +21836,10 @@ return this.__repr__();
 
         function postprocess(link_uid) {
             var href, a;
-            var ρσ_Iter130 = document.getElementsByTagName("a");
-            ρσ_Iter130 = ((typeof ρσ_Iter130[Symbol.iterator] === "function") ? (ρσ_Iter130 instanceof Map ? ρσ_Iter130.keys() : ρσ_Iter130) : Object.keys(ρσ_Iter130));
-            for (var ρσ_Index130 of ρσ_Iter130) {
-                a = ρσ_Index130;
+            var ρσ_Iter112 = document.getElementsByTagName("a");
+            ρσ_Iter112 = ((typeof ρσ_Iter112[Symbol.iterator] === "function") ? (ρσ_Iter112 instanceof Map ? ρσ_Iter112.keys() : ρσ_Iter112) : Object.keys(ρσ_Iter112));
+            for (var ρσ_Index112 of ρσ_Iter112) {
+                a = ρσ_Index112;
                 href = a.getAttribute("href");
                 if (href && href.startswith("#")) {
                     a.setAttribute("href", "javascript: void(0)");
@@ -22202,16 +21911,16 @@ return this.__repr__();
                             var ρσ_anonfunc = function (styles, fonts, url) {
                                 var base, clone, font, key, font_name, full_name, src, name;
                                 base = url.partition("/")[2];
-                                var ρσ_Iter131 = fonts;
-                                ρσ_Iter131 = ((typeof ρσ_Iter131[Symbol.iterator] === "function") ? (ρσ_Iter131 instanceof Map ? ρσ_Iter131.keys() : ρσ_Iter131) : Object.keys(ρσ_Iter131));
-                                for (var ρσ_Index131 of ρσ_Iter131) {
-                                    name = ρσ_Index131;
+                                var ρσ_Iter113 = fonts;
+                                ρσ_Iter113 = ((typeof ρσ_Iter113[Symbol.iterator] === "function") ? (ρσ_Iter113 instanceof Map ? ρσ_Iter113.keys() : ρσ_Iter113) : Object.keys(ρσ_Iter113));
+                                for (var ρσ_Index113 of ρσ_Iter113) {
+                                    name = ρσ_Index113;
                                     clone = {};
                                     font = fonts[(typeof name === "number" && name < 0) ? fonts.length + name : name];
-                                    var ρσ_Iter132 = Object.keys(font);
-                                    ρσ_Iter132 = ((typeof ρσ_Iter132[Symbol.iterator] === "function") ? (ρσ_Iter132 instanceof Map ? ρσ_Iter132.keys() : ρσ_Iter132) : Object.keys(ρσ_Iter132));
-                                    for (var ρσ_Index132 of ρσ_Iter132) {
-                                        key = ρσ_Index132;
+                                    var ρσ_Iter114 = Object.keys(font);
+                                    ρσ_Iter114 = ((typeof ρσ_Iter114[Symbol.iterator] === "function") ? (ρσ_Iter114 instanceof Map ? ρσ_Iter114.keys() : ρσ_Iter114) : Object.keys(ρσ_Iter114));
+                                    for (var ρσ_Index114 of ρσ_Iter114) {
+                                        key = ρσ_Index114;
                                         clone[(typeof key === "number" && key < 0) ? clone.length + key : key] = font[(typeof key === "number" && key < 0) ? font.length + key : key];
                                     }
                                     font_name = clone.src.partition("/")[2].partition("\"")[0];
@@ -22292,10 +22001,10 @@ return this.__repr__();
                 })();
                 return ρσ_d;
             }).call(this);
-            var ρσ_Iter133 = document.scripts;
-            ρσ_Iter133 = ((typeof ρσ_Iter133[Symbol.iterator] === "function") ? (ρσ_Iter133 instanceof Map ? ρσ_Iter133.keys() : ρσ_Iter133) : Object.keys(ρσ_Iter133));
-            for (var ρσ_Index133 of ρσ_Iter133) {
-                s = ρσ_Index133;
+            var ρσ_Iter115 = document.scripts;
+            ρσ_Iter115 = ((typeof ρσ_Iter115[Symbol.iterator] === "function") ? (ρσ_Iter115 instanceof Map ? ρσ_Iter115.keys() : ρσ_Iter115) : Object.keys(ρσ_Iter115));
+            for (var ρσ_Index115 of ρσ_Iter115) {
+                s = ρσ_Index115;
                 if (s.type === "text/x-mathjax-config") {
                     es = document.createElement("script");
                     es.text = s.text;
@@ -22364,10 +22073,10 @@ return this.__repr__();
 
         function has_start_text(elem) {
             var c;
-            var ρσ_Iter134 = elem.childNodes;
-            ρσ_Iter134 = ((typeof ρσ_Iter134[Symbol.iterator] === "function") ? (ρσ_Iter134 instanceof Map ? ρσ_Iter134.keys() : ρσ_Iter134) : Object.keys(ρσ_Iter134));
-            for (var ρσ_Index134 of ρσ_Iter134) {
-                c = ρσ_Index134;
+            var ρσ_Iter116 = elem.childNodes;
+            ρσ_Iter116 = ((typeof ρσ_Iter116[Symbol.iterator] === "function") ? (ρσ_Iter116 instanceof Map ? ρσ_Iter116.keys() : ρσ_Iter116) : Object.keys(ρσ_Iter116));
+            for (var ρσ_Index116 of ρσ_Iter116) {
+                c = ρσ_Index116;
                 if (c.nodeType !== Node.TEXT_NODE) {
                     break;
                 }
@@ -22458,15 +22167,15 @@ return this.__repr__();
             block_limited_images = [];
             img_tags = document.getElementsByTagName("img");
             bounding_rects = [];
-            var ρσ_Iter135 = img_tags;
-            ρσ_Iter135 = ((typeof ρσ_Iter135[Symbol.iterator] === "function") ? (ρσ_Iter135 instanceof Map ? ρσ_Iter135.keys() : ρσ_Iter135) : Object.keys(ρσ_Iter135));
-            for (var ρσ_Index135 of ρσ_Iter135) {
-                img_tag = ρσ_Index135;
+            var ρσ_Iter117 = img_tags;
+            ρσ_Iter117 = ((typeof ρσ_Iter117[Symbol.iterator] === "function") ? (ρσ_Iter117 instanceof Map ? ρσ_Iter117.keys() : ρσ_Iter117) : Object.keys(ρσ_Iter117));
+            for (var ρσ_Index117 of ρσ_Iter117) {
+                img_tag = ρσ_Index117;
                 bounding_rects.push(get_bounding_client_rect(img_tag));
             }
             maxb = screen_block;
-            for (var ρσ_Index136 = 0; ρσ_Index136 < img_tags.length; ρσ_Index136++) {
-                i = ρσ_Index136;
+            for (var ρσ_Index118 = 0; ρσ_Index118 < img_tags.length; ρσ_Index118++) {
+                i = ρσ_Index118;
                 img = img_tags[(typeof i === "number" && i < 0) ? img_tags.length + i : i];
                 br = bounding_rects[(typeof i === "number" && i < 0) ? bounding_rects.length + i : i];
                 previously_limited = get_elem_data(img, "inline-limited", false);
@@ -22500,10 +22209,10 @@ return this.__repr__();
                 }
                 ρσ_interpolate_kwargs.call(this, set_important_css, [img].concat([ρσ_desugar_kwargs({break_inside: "avoid"})]));
             }
-            var ρσ_Iter137 = inline_limited_images;
-            ρσ_Iter137 = ((typeof ρσ_Iter137[Symbol.iterator] === "function") ? (ρσ_Iter137 instanceof Map ? ρσ_Iter137.keys() : ρσ_Iter137) : Object.keys(ρσ_Iter137));
-            for (var ρσ_Index137 of ρσ_Iter137) {
-                ρσ_unpack = ρσ_Index137;
+            var ρσ_Iter119 = inline_limited_images;
+            ρσ_Iter119 = ((typeof ρσ_Iter119[Symbol.iterator] === "function") ? (ρσ_Iter119 instanceof Map ? ρσ_Iter119.keys() : ρσ_Iter119) : Object.keys(ρσ_Iter119));
+            for (var ρσ_Index119 of ρσ_Iter119) {
+                ρσ_unpack = ρσ_Index119;
                 img_tag = ρσ_unpack[0];
                 max_inline_size = ρσ_unpack[1];
                 if (scroll_viewport.vertical_writing_mode) {
@@ -22513,10 +22222,10 @@ return this.__repr__();
                 }
                 set_elem_data(img_tag, "inline-limited", true);
             }
-            var ρσ_Iter138 = block_limited_images;
-            ρσ_Iter138 = ((typeof ρσ_Iter138[Symbol.iterator] === "function") ? (ρσ_Iter138 instanceof Map ? ρσ_Iter138.keys() : ρσ_Iter138) : Object.keys(ρσ_Iter138));
-            for (var ρσ_Index138 of ρσ_Iter138) {
-                img_tag = ρσ_Index138;
+            var ρσ_Iter120 = block_limited_images;
+            ρσ_Iter120 = ((typeof ρσ_Iter120[Symbol.iterator] === "function") ? (ρσ_Iter120 instanceof Map ? ρσ_Iter120.keys() : ρσ_Iter120) : Object.keys(ρσ_Iter120));
+            for (var ρσ_Index120 of ρσ_Iter120) {
+                img_tag = ρσ_Index120;
                 if (scroll_viewport.vertical_writing_mode) {
                     ρσ_interpolate_kwargs.call(this, set_important_css, [img_tag].concat([ρσ_desugar_kwargs({break_before: "always", max_width: "100vw"})]));
                 } else {
@@ -23112,8 +22821,8 @@ return this.__repr__();
             var ans, left, right, ρσ_unpack, top, bottom, midx, deltax, deltay, midy, yidx, yb, ya, ys, xidx, xb, xa, xs, cfi, curx, cury, cnum;
             ans = null;
             if (in_paged_mode()) {
-                for (var ρσ_Index139 = 0; ρσ_Index139 < cols_per_screen; ρσ_Index139++) {
-                    cnum = ρσ_Index139;
+                for (var ρσ_Index121 = 0; ρσ_Index121 < cols_per_screen; ρσ_Index121++) {
+                    cnum = ρσ_Index121;
                     left = cnum * (col_and_gap + gap);
                     right = left + col_size;
                     ρσ_unpack = [0, scroll_viewport.height()];
@@ -23133,10 +22842,10 @@ return this.__repr__();
                         }
                         yidx += 1;
                         ys = (ya === yb) ? [ ya ] : [ yb, ya ];
-                        var ρσ_Iter140 = ys;
-                        ρσ_Iter140 = ((typeof ρσ_Iter140[Symbol.iterator] === "function") ? (ρσ_Iter140 instanceof Map ? ρσ_Iter140.keys() : ρσ_Iter140) : Object.keys(ρσ_Iter140));
-                        for (var ρσ_Index140 of ρσ_Iter140) {
-                            cury = ρσ_Index140;
+                        var ρσ_Iter122 = ys;
+                        ρσ_Iter122 = ((typeof ρσ_Iter122[Symbol.iterator] === "function") ? (ρσ_Iter122 instanceof Map ? ρσ_Iter122.keys() : ρσ_Iter122) : Object.keys(ρσ_Iter122));
+                        for (var ρσ_Index122 of ρσ_Iter122) {
+                            cury = ρσ_Index122;
                             xidx = 0;
                             while (true) {
                                 ρσ_unpack = [midx - xidx * deltax, midx + xidx * deltax];
@@ -23147,10 +22856,10 @@ return this.__repr__();
                                 }
                                 xidx += 1;
                                 xs = (xa === xb) ? [ xa ] : [ xb, xa ];
-                                var ρσ_Iter141 = xs;
-                                ρσ_Iter141 = ((typeof ρσ_Iter141[Symbol.iterator] === "function") ? (ρσ_Iter141 instanceof Map ? ρσ_Iter141.keys() : ρσ_Iter141) : Object.keys(ρσ_Iter141));
-                                for (var ρσ_Index141 of ρσ_Iter141) {
-                                    curx = ρσ_Index141;
+                                var ρσ_Iter123 = xs;
+                                ρσ_Iter123 = ((typeof ρσ_Iter123[Symbol.iterator] === "function") ? (ρσ_Iter123 instanceof Map ? ρσ_Iter123.keys() : ρσ_Iter123) : Object.keys(ρσ_Iter123));
+                                for (var ρσ_Index123 of ρσ_Iter123) {
+                                    curx = ρσ_Index123;
                                     cfi = cfi_at_point(curx, cury);
                                     if (cfi) {
                                         return cfi;
@@ -23868,379 +23577,1006 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.find";
-        var ignored_tags, block_tags_for_tts, cache;
-        ignored_tags = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["style"] = true;
-            ρσ_d["script"] = true;
-            ρσ_d["noscript"] = true;
-            ρσ_d["title"] = true;
-            ρσ_d["meta"] = true;
-            ρσ_d["head"] = true;
-            ρσ_d["link"] = true;
-            ρσ_d["html"] = true;
-            ρσ_d["img"] = true;
-            ρσ_d["rt"] = true;
-            ρσ_d["rp"] = true;
-            ρσ_d["rtc"] = true;
-            return ρσ_d;
-        }).call(this);
-        block_tags_for_tts = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["h1"] = true;
-            ρσ_d["h2"] = true;
-            ρσ_d["h3"] = true;
-            ρσ_d["h4"] = true;
-            ρσ_d["h5"] = true;
-            ρσ_d["h6"] = true;
-            ρσ_d["p"] = true;
-            ρσ_d["div"] = true;
-            ρσ_d["table"] = true;
-            ρσ_d["th"] = true;
-            ρσ_d["tr"] = true;
-            ρσ_d["td"] = true;
-            ρσ_d["section"] = true;
-            ρσ_d["article"] = true;
-            return ρσ_d;
-        }).call(this);
-        function build_text_map(for_tts) {
-            var node_list, flat_text, text_node_type, element_node_type, in_ruby;
-            node_list = [];
-            flat_text = "";
-            text_node_type = Node.TEXT_NODE;
-            element_node_type = Node.ELEMENT_NODE;
-            in_ruby = 0;
-            function process_node(node) {
-                var nt, text, rtext, tag, is_ruby_tag, children, i;
-                nt = node.nodeType;
-                if (nt === text_node_type) {
-                    text = node.nodeValue;
-                    if (text && text.length) {
-                        if (in_ruby) {
-                            rtext = text.trim();
-                            if (rtext.length) {
-                                node_list.push({node: node, offset: flat_text.length, length: rtext.length, offset_in_node: text.length - text.trimStart().length});
-                                flat_text += rtext;
-                            }
-                        } else {
-                            node_list.push({node: node, offset: flat_text.length, length: text.length});
-                            flat_text += text;
-                        }
-                    }
-                } else if (nt === element_node_type) {
-                    if (!node.hasChildNodes()) {
-                        return;
-                    }
-                    tag = node.tagName.toLowerCase();
-                    if (ignored_tags[(typeof tag === "number" && tag < 0) ? ignored_tags.length + tag : tag]) {
-                        return;
-                    }
-                    is_ruby_tag = tag === "ruby";
-                    if (is_ruby_tag) {
-                        in_ruby += 1;
-                    }
-                    children = node.childNodes;
-                    for (var ρσ_Index142 = 0; ρσ_Index142 < children.length; ρσ_Index142++) {
-                        i = ρσ_Index142;
-                        process_node(children[i]);
-                    }
-                    if (is_ruby_tag) {
-                        in_ruby -= 1;
-                    }
-                    if (for_tts && block_tags_for_tts[(typeof tag === "number" && tag < 0) ? block_tags_for_tts.length + tag : tag]) {
-                        if (flat_text.length && " \n\t\r".indexOf(flat_text[flat_text.length-1]) > -1) {
-                            flat_text = flat_text.slice(0, -1) + "\u2029";
-                        } else if (node_list.length) {
-                            flat_text += "\u2029";
-                            node_list[node_list.length-1].length += 1;
-                        }
-                    }
-                }
-            };
-            if (!process_node.__argnames__) Object.defineProperties(process_node, {
-                __argnames__ : {value: ["node"]},
-                __module__ : {value: "read_book.find"}
-            });
+        var __name__ = "read_book.referencing";
+        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
 
-            process_node(document.body);
+        function elem_for_ref(refnum) {
+            refnum = int(refnum);
+            return (ρσ_expr_temp = document.getElementsByTagName("p"))[ρσ_bound_index(refnum - 1, ρσ_expr_temp)];
+        };
+        if (!elem_for_ref.__argnames__) Object.defineProperties(elem_for_ref, {
+            __argnames__ : {value: ["refnum"]},
+            __module__ : {value: "read_book.referencing"}
+        });
+
+        function start_reference_mode() {
+            var si, ρσ_unpack, i, p;
+            si = current_spine_item().index;
+            var ρσ_Iter124 = enumerate(document.getElementsByTagName("p"));
+            ρσ_Iter124 = ((typeof ρσ_Iter124[Symbol.iterator] === "function") ? (ρσ_Iter124 instanceof Map ? ρσ_Iter124.keys() : ρσ_Iter124) : Object.keys(ρσ_Iter124));
+            for (var ρσ_Index124 of ρσ_Iter124) {
+                ρσ_unpack = ρσ_Index124;
+                i = ρσ_unpack[0];
+                p = ρσ_unpack[1];
+                p.dataset.calibreRefNum = "" + ρσ_str.format("{}", si) + "." + ρσ_str.format("{}", i + 1) + "";
+            }
+            document.body.classList.add("calibre-reference-mode");
+        };
+        if (!start_reference_mode.__module__) Object.defineProperties(start_reference_mode, {
+            __module__ : {value: "read_book.referencing"}
+        });
+
+        function end_reference_mode() {
+            document.body.classList.remove("calibre-reference-mode");
+        };
+        if (!end_reference_mode.__module__) Object.defineProperties(end_reference_mode, {
+            __module__ : {value: "read_book.referencing"}
+        });
+
+        ρσ_modules["read_book.referencing"].elem_for_ref = elem_for_ref;
+        ρσ_modules["read_book.referencing"].start_reference_mode = start_reference_mode;
+        ρσ_modules["read_book.referencing"].end_reference_mode = end_reference_mode;
+    })();
+
+    (function(){
+        var __name__ = "read_book.shortcuts";
+        var capital_letters, x;
+        var _ = ρσ_modules.gettext.gettext;
+
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+
+        function parse_key_repr(sc) {
+            var parts, key, ans, q, modifier;
+            parts = sc.split("+");
+            if (sc.endsWith("++")) {
+                parts = parts.slice(0, -2);
+                parts.push("+");
+            }
+            key = parts[parts.length-1];
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["key"] = key;
+                ρσ_d["altKey"] = false;
+                ρσ_d["ctrlKey"] = false;
+                ρσ_d["metaKey"] = false;
+                ρσ_d["shiftKey"] = false;
+                return ρσ_d;
+            }).call(this);
+            var ρσ_Iter125 = parts.slice(0, -1);
+            ρσ_Iter125 = ((typeof ρσ_Iter125[Symbol.iterator] === "function") ? (ρσ_Iter125 instanceof Map ? ρσ_Iter125.keys() : ρσ_Iter125) : Object.keys(ρσ_Iter125));
+            for (var ρσ_Index125 of ρσ_Iter125) {
+                modifier = ρσ_Index125;
+                q = modifier.toLowerCase();
+                if (q === "ctrl") {
+                    ans.ctrlKey = true;
+                } else if (q === "alt") {
+                    ans.altKey = true;
+                } else if (q === "meta" || q === "cmd") {
+                    ans.metaKey = true;
+                } else if (q === "shift") {
+                    ans.shiftKey = true;
+                }
+            }
+            return ans;
+        };
+        if (!parse_key_repr.__argnames__) Object.defineProperties(parse_key_repr, {
+            __argnames__ : {value: ["sc"]},
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        function desc(sc, group, short, long) {
+            var pkey, x;
+            if (typeof sc === "string") {
+                sc = [ sc ];
+            }
+            pkey = [];
+            var ρσ_Iter126 = sc;
+            ρσ_Iter126 = ((typeof ρσ_Iter126[Symbol.iterator] === "function") ? (ρσ_Iter126 instanceof Map ? ρσ_Iter126.keys() : ρσ_Iter126) : Object.keys(ρσ_Iter126));
+            for (var ρσ_Index126 of ρσ_Iter126) {
+                x = ρσ_Index126;
+                pkey.push(parse_key_repr(x));
+            }
             return (function(){
                 var ρσ_d = Object.create(null);
-                ρσ_d["timestamp"] = window.performance.now();
-                ρσ_d["flat_text"] = flat_text;
-                ρσ_d["node_list"] = node_list;
+                ρσ_d["group"] = group;
+                ρσ_d["short"] = short;
+                ρσ_d["long"] = long;
+                ρσ_d["shortcuts"] = pkey;
                 return ρσ_d;
             }).call(this);
         };
-        if (!build_text_map.__argnames__) Object.defineProperties(build_text_map, {
-            __argnames__ : {value: ["for_tts"]},
-            __module__ : {value: "read_book.find"}
+        if (!desc.__argnames__) Object.defineProperties(desc, {
+            __argnames__ : {value: ["sc", "group", "short", "long"]},
+            __module__ : {value: "read_book.shortcuts"}
         });
 
-        function index_for_node(node, node_list) {
-            var entry;
-            var ρσ_Iter143 = node_list;
-            ρσ_Iter143 = ((typeof ρσ_Iter143[Symbol.iterator] === "function") ? (ρσ_Iter143 instanceof Map ? ρσ_Iter143.keys() : ρσ_Iter143) : Object.keys(ρσ_Iter143));
-            for (var ρσ_Index143 of ρσ_Iter143) {
-                entry = ρσ_Index143;
-                if (entry.node.isSameNode(node)) {
-                    return entry.offset;
+        function keyevent_as_shortcut(evt) {
+            var key;
+            key = evt.key;
+            if (capital_letters[(typeof key === "number" && key < 0) ? capital_letters.length + key : key] && evt.shiftKey) {
+                key = key.toLowerCase();
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["key"] = key;
+                ρσ_d["altKey"] = evt.altKey;
+                ρσ_d["ctrlKey"] = evt.ctrlKey;
+                ρσ_d["metaKey"] = evt.metaKey;
+                ρσ_d["shiftKey"] = evt.shiftKey;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!keyevent_as_shortcut.__argnames__) Object.defineProperties(keyevent_as_shortcut, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        function shortcut_differs(a, b) {
+            return !((a.key === b.key && a.altKey === b.altKey && a.ctrlKey === b.ctrlKey && a.metaKey === b.metaKey && a.shiftKey === b.shiftKey));
+        };
+        if (!shortcut_differs.__argnames__) Object.defineProperties(shortcut_differs, {
+            __argnames__ : {value: ["a", "b"]},
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        capital_letters = (function() {
+            var ρσ_Iter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", ρσ_Result = Object.create(null), x;
+            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+            for (var ρσ_Index of ρσ_Iter) {
+                x = ρσ_Index;
+                ρσ_Result[x] = (true);
+            }
+            return ρσ_Result;
+        })();
+        function get_key_text(evt) {
+            var key;
+            key = evt.key;
+            if (key) {
+                if (evt.code && key.toLowerCase() !== key && evt.code.startsWith("Key") && capital_letters[(typeof key === "number" && key < 0) ? capital_letters.length + key : key]) {
+                    key = key.toLowerCase();
                 }
             }
+            return key;
         };
-        if (!index_for_node.__argnames__) Object.defineProperties(index_for_node, {
-            __argnames__ : {value: ["node", "node_list"]},
-            __module__ : {value: "read_book.find"}
+        if (!get_key_text.__argnames__) Object.defineProperties(get_key_text, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.shortcuts"}
         });
 
-        function tts_word_regex() {
-            return /[\p{Letter}\p{Mark}\p{Number}\p{Punctuation}\p{Cf}]{1,50}/gu;
-        };
-        if (!tts_word_regex.__module__) Object.defineProperties(tts_word_regex, {
-            __module__ : {value: "read_book.find"}
-        });
-
-        function cached_tts_text_map() {
-            if (!cache.tts_text_map) {
-                cache.tts_text_map = build_text_map(true);
+        function keyevent_to_index(evt) {
+            var parts, mod;
+            parts = [];
+            var ρσ_Iter127 = [ "altKey", "ctrlKey", "metaKey", "shiftKey" ];
+            ρσ_Iter127 = ((typeof ρσ_Iter127[Symbol.iterator] === "function") ? (ρσ_Iter127 instanceof Map ? ρσ_Iter127.keys() : ρσ_Iter127) : Object.keys(ρσ_Iter127));
+            for (var ρσ_Index127 of ρσ_Iter127) {
+                mod = ρσ_Index127;
+                parts.push((evt[(typeof mod === "number" && mod < 0) ? evt.length + mod : mod]) ? "y" : "n");
             }
-            return cache.tts_text_map;
+            return parts.join("") + get_key_text(evt);
         };
-        if (!cached_tts_text_map.__module__) Object.defineProperties(cached_tts_text_map, {
-            __module__ : {value: "read_book.find"}
+        if (!keyevent_to_index.__argnames__) Object.defineProperties(keyevent_to_index, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.shortcuts"}
         });
 
-        function tts_data(text_node, offset) {
-            var offset_in_flat_text, text_map, match, first, last, marked_text, text, start, trailer;
-            offset_in_flat_text = offset || 0;
-            text_map = cached_tts_text_map();
-            if (text_node) {
-                offset_in_flat_text += index_for_node(text_node, text_map.node_list) || 0;
-            }
-            match = null;
-            first = true;
-            last = null;
-            marked_text = [];
-            text = text_map.flat_text.slice(offset_in_flat_text);
-            for (match of text.matchAll(tts_word_regex())) {
-                start = match.index;
-                if (first) {
-                    first = false;
-                    if (start) {
-                        marked_text.push(text.slice(0, start));
+        function key_as_text(evt) {
+            var mods, x, key;
+            mods = [];
+            var ρσ_Iter128 = [ "alt", "ctrl", "meta", "shift" ];
+            ρσ_Iter128 = ((typeof ρσ_Iter128[Symbol.iterator] === "function") ? (ρσ_Iter128 instanceof Map ? ρσ_Iter128.keys() : ρσ_Iter128) : Object.keys(ρσ_Iter128));
+            for (var ρσ_Index128 of ρσ_Iter128) {
+                x = ρσ_Index128;
+                if (evt[ρσ_bound_index(x + "Key", evt)]) {
+                    if (ρσ_in("macos", window.navigator.userAgent)) {
+                        if (x === "alt") {
+                            x = "option";
+                        } else if (x === "meta") {
+                            x = "⌘";
+                        }
                     }
-                } else if (start > last) {
-                    marked_text.push(text.slice(last, start));
-                }
-                marked_text.push(start + offset_in_flat_text);
-                marked_text.push(match[0]);
-                last = start + match[0].length;
-            }
-            if (last === null) {
-                marked_text.push(text);
-            } else {
-                trailer = text.slice(last);
-                if (trailer) {
-                    marked_text.push(trailer);
+                    mods.push(x.capitalize());
                 }
             }
-            return marked_text;
+            mods = "+".join(mods);
+            if (mods) {
+                mods += "+";
+            }
+            key = get_key_text(evt);
+            if (key === " ") {
+                key = "Space";
+            }
+            return mods + key;
         };
-        if (!tts_data.__argnames__) Object.defineProperties(tts_data, {
-            __argnames__ : {value: ["text_node", "offset"]},
-            __module__ : {value: "read_book.find"}
+        if (!key_as_text.__argnames__) Object.defineProperties(key_as_text, {
+            __argnames__ : {value: ["evt"]},
+            __module__ : {value: "read_book.shortcuts"}
         });
 
-        function find_node_for_index_binary(node_list, idx_in_flat_text, start) {
-            var end, mid, q, limit, start_node, start_offset;
-            start = start || 0;
-            end = node_list.length - 1;
-            while (start <= end) {
-                mid = Math.floor((start + end) / 2);
-                q = node_list[(typeof mid === "number" && mid < 0) ? node_list.length + mid : mid];
-                limit = q.offset + q.length;
-                if (q.offset <= idx_in_flat_text && limit > idx_in_flat_text) {
-                    start_node = q.node;
-                    start_offset = idx_in_flat_text - q.offset;
-                    return [start_node, start_offset + (q.offset_in_node || 0), mid];
-                }
-                if (limit <= idx_in_flat_text) {
-                    start = mid + 1;
+        function common_shortcuts() {
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["start_of_file"] = desc([ "Ctrl+ArrowUp", "Ctrl+ArrowLeft", "Home" ], "scroll", _("Scroll to the beginning of the current file"), _("When the e-book is made of multiple individual files, scroll to the start of the current file"));
+                ρσ_d["start_of_book"] = desc("Ctrl+Home", "scroll", _("Scroll to the beginning of the book"));
+                ρσ_d["end_of_book"] = desc("Ctrl+End", "scroll", _("Scroll to the end of the book"));
+                ρσ_d["end_of_file"] = desc([ "Ctrl+ArrowDown", "Ctrl+ArrowRight", "End" ], "scroll", _("Scroll to the end of the current file"), _("When the e-book is made of multiple individual files, scroll to the end of the current file"));
+                ρσ_d["up"] = desc("ArrowUp", "scroll", _("Scroll backwards smoothly (by screen-fulls in paged mode)"), _("Scroll backwards, smoothly in flow mode and by screen fulls in paged mode"));
+                ρσ_d["down"] = desc("ArrowDown", "scroll", _("Scroll forwards smoothly (by screen-fulls in paged mode)"), _("Scroll forwards, smoothly in flow mode and by screen fulls in paged mode"));
+                ρσ_d["left"] = desc("ArrowLeft", "scroll", _("Scroll left"), _("Scroll leftwards by a little in flow mode and by a page in paged mode"));
+                ρσ_d["right"] = desc("ArrowRight", "scroll", _("Scroll right"), _("Scroll rightwards by a little in flow mode and by a page in paged mode"));
+                ρσ_d["pageup"] = desc([ "PageUp", "Shift+ " ], "scroll", _("Scroll backwards by screen-fulls"));
+                ρσ_d["pagedown"] = desc([ " ", "PageDown" ], "scroll", _("Scroll forwards by screen-fulls"));
+                ρσ_d["previous_section"] = desc("Ctrl+PageUp", "scroll", _("Scroll to the previous section"));
+                ρσ_d["next_section"] = desc("Ctrl+PageDown", "scroll", _("Scroll to the next section"));
+                ρσ_d["back"] = desc([ "Alt+ArrowLeft" ], "scroll", _("Back"));
+                ρσ_d["forward"] = desc([ "Alt+ArrowRight" ], "scroll", _("Forward"));
+                ρσ_d["toggle_toc"] = desc("Ctrl+t", "ui", _("Show/hide Table of Contents"));
+                ρσ_d["read_aloud"] = desc("Ctrl+s", "ui", _("Read aloud"));
+                ρσ_d["toggle_hints"] = desc("Alt+f", "ui", _("Follow links with the keyboard"));
+                ρσ_d["copy_to_clipboard"] = desc([ "Ctrl+c", "Meta+c" ], "ui", _("Copy to clipboard"));
+                ρσ_d["copy_location_to_clipboard"] = desc([ "Alt+c" ], "ui", _("Copy current location to clipboard"));
+                ρσ_d["copy_location_as_url_to_clipboard"] = desc([ "Ctrl+Shift+c" ], "ui", _("Copy current location as calibre:// URL to clipboard"));
+                ρσ_d["start_search"] = desc([ "/", "Ctrl+f", "Cmd+f" ], "ui", _("Start search"));
+                ρσ_d["next_match"] = desc([ "F3", "Enter" ], "ui", _("Find next"));
+                ρσ_d["previous_match"] = desc([ "Shift+F3", "Shift+Enter" ], "ui", _("Find previous"));
+                ρσ_d["increase_font_size"] = desc([ "Ctrl+=", "Ctrl++", "Ctrl+Shift++", "Ctrl+Shift+=", "Meta++", "Meta+Shift++", "Meta+Shift+=" ], "ui", _("Increase font size"));
+                ρσ_d["decrease_font_size"] = desc([ "Ctrl+-", "Ctrl+_", "Ctrl+Shift+-", "Ctrl+Shift+_", "Meta+-", "Meta+_" ], "ui", _("Decrease font size"));
+                ρσ_d["default_font_size"] = desc("Ctrl+0", "ui", _("Restore default font size"));
+                ρσ_d["increase_number_of_columns"] = desc([ "Ctrl+]" ], "ui", _("Increase number of pages per screen"));
+                ρσ_d["decrease_number_of_columns"] = desc([ "Ctrl+[" ], "ui", _("Decrease number of pages per screen"));
+                ρσ_d["reset_number_of_columns"] = desc([ "Ctrl+Alt+c" ], "ui", _("Make number of pages per screen automatic"));
+                ρσ_d["toggle_full_screen"] = desc([ "F11", "Ctrl+Shift+f" ], "ui", _("Toggle full screen"));
+                ρσ_d["toggle_paged_mode"] = desc("Ctrl+m", "ui", _("Toggle between Paged mode and Flow mode for text layout"));
+                ρσ_d["toggle_scrollbar"] = desc("Ctrl+w", "ui", _("Toggle the scrollbar"));
+                ρσ_d["toggle_reference_mode"] = desc("Ctrl+x", "ui", _("Toggle the Reference mode"));
+                ρσ_d["toggle_bookmarks"] = desc([ "Ctrl+b" ], "ui", _("Show/hide bookmarks"));
+                ρσ_d["new_bookmark"] = desc([ "Ctrl+Alt+b" ], "ui", _("Create a new bookmark"));
+                ρσ_d["metadata"] = desc([ "Ctrl+n", "Ctrl+e" ], "ui", _("Show the book metadata"));
+                ρσ_d["show_profiles"] = desc([ "Alt+p" ], "ui", _("Change settings quickly by creating and switching to \"profiles\""));
+                ρσ_d["reload_book"] = desc([ "Ctrl+Alt+F5", "Ctrl+Alt+r" ], "ui", _("Reload book"));
+                ρσ_d["extend_selection_by_word"] = desc([ "Ctrl+Shift+ArrowRight" ], "ui", _("Alter the current selection forward by a word"));
+                ρσ_d["shrink_selection_by_word"] = desc([ "Ctrl+Shift+ArrowLeft" ], "ui", _("Alter the current selection backwards by a word"));
+                ρσ_d["extend_selection_by_character"] = desc([ "Shift+ArrowRight" ], "ui", _("Alter the current selection forward by a character"));
+                ρσ_d["shrink_selection_by_character"] = desc([ "Shift+ArrowLeft" ], "ui", _("Alter the current selection backwards by a character"));
+                ρσ_d["extend_selection_by_line"] = desc([ "Shift+ArrowDown" ], "ui", _("Alter the current selection forward by a line"));
+                ρσ_d["extend_selection_to_start_of_line"] = desc([ "Shift+Home" ], "ui", _("Extend the current selection to the start of the line"));
+                ρσ_d["extend_selection_to_end_of_line"] = desc([ "Shift+End" ], "ui", _("Extend the current selection to the end of the line"));
+                ρσ_d["select_all"] = desc([ "Ctrl+a" ], "ui", _("Select all"));
+                ρσ_d["shrink_selection_by_line"] = desc([ "Shift+ArrowUp" ], "ui", _("Alter the current selection backwards by a line"));
+                ρσ_d["extend_selection_by_paragraph"] = desc([ "Ctrl+Shift+ArrowDown" ], "ui", _("Alter the current selection forward by a paragraph"));
+                ρσ_d["shrink_selection_by_paragraph"] = desc([ "Ctrl+Shift+ArrowUp" ], "ui", _("Alter the current selection backwards by a paragraph"));
+                ρσ_d["show_chrome"] = desc([ "Escape", "ContextMenu" ], "ui", _("Show the E-book viewer controls"));
+                ρσ_d["preferences"] = desc([ "Ctrl+,", "Ctrl+Escape", "Meta+Escape", "Meta+," ], "ui", _("Show E-book viewer preferences"));
+                ρσ_d["goto_location"] = desc([ ";", ":", "Shift+:", "Shift+;", "Ctrl+g" ], "ui", _("Go to a specified book location or position"));
+                ρσ_d["toggle_autoscroll"] = desc("Ctrl+ ", "scroll", _("Toggle auto-scroll"));
+                ρσ_d["scrollspeed_increase"] = desc("Alt+ArrowUp", "scroll", _("Auto scroll faster"));
+                ρσ_d["scrollspeed_decrease"] = desc("Alt+ArrowDown", "scroll", _("Auto scroll slower"));
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!common_shortcuts.__module__) Object.defineProperties(common_shortcuts, {
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        function shortcuts_definition() {
+            var ans;
+            ans = shortcuts_definition.ans;
+            if (!ans) {
+                ans = shortcuts_definition.ans = common_shortcuts();
+                if (runtime.is_standalone_viewer) {
+                    add_standalone_viewer_shortcuts(ans);
                 } else {
-                    end = mid - 1;
+                    ans["sync_book"] = desc([], "ui", _("Sync last read position/annotations"));
                 }
             }
-            return [null, null, null];
+            return ans;
         };
-        if (!find_node_for_index_binary.__argnames__) Object.defineProperties(find_node_for_index_binary, {
-            __argnames__ : {value: ["node_list", "idx_in_flat_text", "start"]},
-            __module__ : {value: "read_book.find"}
+        if (!shortcuts_definition.__module__) Object.defineProperties(shortcuts_definition, {
+            __module__ : {value: "read_book.shortcuts"}
         });
 
-        function get_occurrence_data(node_list, start, end) {
-            var ρσ_unpack, start_node, start_offset, start_pos, end_node, end_offset, node_pos;
-            ρσ_unpack = find_node_for_index_binary(node_list, start);
-ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
-            start_node = ρσ_unpack[0];
-            start_offset = ρσ_unpack[1];
-            start_pos = ρσ_unpack[2];
-            if (start_node !== null) {
-                ρσ_unpack = find_node_for_index_binary(node_list, end, start_pos);
-ρσ_unpack = ρσ_unpack_asarray(3, ρσ_unpack);
-                end_node = ρσ_unpack[0];
-                end_offset = ρσ_unpack[1];
-                node_pos = ρσ_unpack[2];
-                if (end_node !== null) {
-                    return (function(){
+        function shortcuts_group_desc() {
+            var ans;
+            ans = shortcuts_group_desc.ans;
+            if (!ans) {
+                ans = shortcuts_group_desc.ans = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["scroll"] = _("Navigation");
+                    ρσ_d["ui"] = _("Interface");
+                    return ρσ_d;
+                }).call(this);
+            }
+            return ans;
+        };
+        if (!shortcuts_group_desc.__module__) Object.defineProperties(shortcuts_group_desc, {
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        function add_standalone_viewer_shortcuts(sc) {
+            var ismacos, quit_shortcut;
+            ismacos = ρσ_in("macos", window.navigator.userAgent);
+            sc["toggle_inspector"] = desc([ "Ctrl+i" ], "ui", _("Show/hide Inspector"));
+            sc["toggle_lookup"] = desc([ "Ctrl+l" ], "ui", _("Show/hide the word lookup panel"));
+            quit_shortcut = (ismacos) ? "Meta+q" : "Ctrl+q";
+            sc["quit"] = desc(quit_shortcut, "ui", _("Quit the E-book viewer"));
+            sc["print"] = desc("Ctrl+p", "ui", _("Print book to PDF"));
+            sc["toggle_toolbar"] = desc("Ctrl+F11", "ui", _("Toggle the toolbar"));
+            sc["toggle_highlights"] = desc("Ctrl+h", "ui", _("Toggle the highlights panel"));
+            sc["edit_book"] = desc("Ctrl+d", "ui", _("Edit this book"));
+        };
+        if (!add_standalone_viewer_shortcuts.__argnames__) Object.defineProperties(add_standalone_viewer_shortcuts, {
+            __argnames__ : {value: ["sc"]},
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        function create_shortcut_map(custom_shortcuts) {
+            var ans, scd, entry, shortcuts, sc, sc_name;
+            ans = Object.create(null);
+            scd = shortcuts_definition();
+            var ρσ_Iter129 = Object.keys(scd);
+            ρσ_Iter129 = ((typeof ρσ_Iter129[Symbol.iterator] === "function") ? (ρσ_Iter129 instanceof Map ? ρσ_Iter129.keys() : ρσ_Iter129) : Object.keys(ρσ_Iter129));
+            for (var ρσ_Index129 of ρσ_Iter129) {
+                sc_name = ρσ_Index129;
+                entry = scd[(typeof sc_name === "number" && sc_name < 0) ? scd.length + sc_name : sc_name];
+                shortcuts = entry.shortcuts;
+                if (custom_shortcuts && custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name]) {
+                    shortcuts = custom_shortcuts[(typeof sc_name === "number" && sc_name < 0) ? custom_shortcuts.length + sc_name : sc_name];
+                }
+                var ρσ_Iter130 = shortcuts;
+                ρσ_Iter130 = ((typeof ρσ_Iter130[Symbol.iterator] === "function") ? (ρσ_Iter130 instanceof Map ? ρσ_Iter130.keys() : ρσ_Iter130) : Object.keys(ρσ_Iter130));
+                for (var ρσ_Index130 of ρσ_Iter130) {
+                    sc = ρσ_Index130;
+                    ans[ρσ_bound_index(keyevent_to_index(sc), ans)] = sc_name;
+                }
+            }
+            return ans;
+        };
+        if (!create_shortcut_map.__argnames__) Object.defineProperties(create_shortcut_map, {
+            __argnames__ : {value: ["custom_shortcuts"]},
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        function shortcut_for_key_event(evt, shortcut_map) {
+            var idx;
+            idx = keyevent_to_index(evt);
+            return shortcut_map[(typeof idx === "number" && idx < 0) ? shortcut_map.length + idx : idx];
+        };
+        if (!shortcut_for_key_event.__argnames__) Object.defineProperties(shortcut_for_key_event, {
+            __argnames__ : {value: ["evt", "shortcut_map"]},
+            __module__ : {value: "read_book.shortcuts"}
+        });
+
+        ρσ_modules["read_book.shortcuts"].capital_letters = capital_letters;
+        ρσ_modules["read_book.shortcuts"].x = x;
+        ρσ_modules["read_book.shortcuts"].parse_key_repr = parse_key_repr;
+        ρσ_modules["read_book.shortcuts"].desc = desc;
+        ρσ_modules["read_book.shortcuts"].keyevent_as_shortcut = keyevent_as_shortcut;
+        ρσ_modules["read_book.shortcuts"].shortcut_differs = shortcut_differs;
+        ρσ_modules["read_book.shortcuts"].get_key_text = get_key_text;
+        ρσ_modules["read_book.shortcuts"].keyevent_to_index = keyevent_to_index;
+        ρσ_modules["read_book.shortcuts"].key_as_text = key_as_text;
+        ρσ_modules["read_book.shortcuts"].common_shortcuts = common_shortcuts;
+        ρσ_modules["read_book.shortcuts"].shortcuts_definition = shortcuts_definition;
+        ρσ_modules["read_book.shortcuts"].shortcuts_group_desc = shortcuts_group_desc;
+        ρσ_modules["read_book.shortcuts"].add_standalone_viewer_shortcuts = add_standalone_viewer_shortcuts;
+        ρσ_modules["read_book.shortcuts"].create_shortcut_map = create_shortcut_map;
+        ρσ_modules["read_book.shortcuts"].shortcut_for_key_event = shortcut_for_key_event;
+    })();
+
+    (function(){
+        var __name__ = "read_book.smil";
+        var is_anchor_on_screen = ρσ_modules["read_book.anchor_visibility"].is_anchor_on_screen;
+
+        var get_boss = ρσ_modules["read_book.globals"].get_boss;
+
+        function flatten_seq(seq, par_list) {
+            var par, child;
+            if (seq.par) {
+                var ρσ_Iter131 = seq.par;
+                ρσ_Iter131 = ((typeof ρσ_Iter131[Symbol.iterator] === "function") ? (ρσ_Iter131 instanceof Map ? ρσ_Iter131.keys() : ρσ_Iter131) : Object.keys(ρσ_Iter131));
+                for (var ρσ_Index131 of ρσ_Iter131) {
+                    par = ρσ_Index131;
+                    if (par.anchor) {
+                        par_list.push(par);
+                    }
+                }
+            }
+            if (seq.seq) {
+                var ρσ_Iter132 = seq.seq;
+                ρσ_Iter132 = ((typeof ρσ_Iter132[Symbol.iterator] === "function") ? (ρσ_Iter132 instanceof Map ? ρσ_Iter132.keys() : ρσ_Iter132) : Object.keys(ρσ_Iter132));
+                for (var ρσ_Index132 of ρσ_Iter132) {
+                    child = ρσ_Index132;
+                    flatten_seq(child, par_list);
+                }
+            }
+        };
+        if (!flatten_seq.__argnames__) Object.defineProperties(flatten_seq, {
+            __argnames__ : {value: ["seq", "par_list"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function flatten_smil_map(smil_map) {
+            var anchor_map, par_list, i;
+            anchor_map = Object.create(null);
+            par_list = [];
+            if (smil_map) {
+                flatten_seq(smil_map, par_list);
+            }
+            par_list.sort((function() {
+                var ρσ_anonfunc = function (a, b) {
+                    return a.num - b.num;
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["a", "b"]},
+                    __module__ : {value: "read_book.smil"}
+                });
+                return ρσ_anonfunc;
+            })());
+            for (var ρσ_Index133 = 0; ρσ_Index133 < par_list.length; ρσ_Index133++) {
+                i = ρσ_Index133;
+                anchor_map[ρσ_bound_index(par_list[(typeof i === "number" && i < 0) ? par_list.length + i : i].anchor, anchor_map)] = i;
+            }
+            return [anchor_map, par_list];
+        };
+        if (!flatten_smil_map.__argnames__) Object.defineProperties(flatten_smil_map, {
+            __argnames__ : {value: ["smil_map"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function get_smil_audio_map(smil_map) {
+            var audio_map, v;
+            audio_map = Object.create(null);
+            function flatten(seq) {
+                var a, par, child;
+                if (seq.par) {
+                    var ρσ_Iter134 = seq.par;
+                    ρσ_Iter134 = ((typeof ρσ_Iter134[Symbol.iterator] === "function") ? (ρσ_Iter134 instanceof Map ? ρσ_Iter134.keys() : ρσ_Iter134) : Object.keys(ρσ_Iter134));
+                    for (var ρσ_Index134 of ρσ_Iter134) {
+                        par = ρσ_Index134;
+                        if (par.audio) {
+                            a = audio_map[ρσ_bound_index(par.audio, audio_map)];
+                            if (!a) {
+                                a = audio_map[ρσ_bound_index(par.audio, audio_map)] = [];
+                            }
+                            a.push(par);
+                        }
+                    }
+                }
+                if (seq.seq) {
+                    var ρσ_Iter135 = seq.seq;
+                    ρσ_Iter135 = ((typeof ρσ_Iter135[Symbol.iterator] === "function") ? (ρσ_Iter135 instanceof Map ? ρσ_Iter135.keys() : ρσ_Iter135) : Object.keys(ρσ_Iter135));
+                    for (var ρσ_Index135 of ρσ_Iter135) {
+                        child = ρσ_Index135;
+                        flatten(child);
+                    }
+                }
+            };
+            if (!flatten.__argnames__) Object.defineProperties(flatten, {
+                __argnames__ : {value: ["seq"]},
+                __module__ : {value: "read_book.smil"}
+            });
+
+            if (smil_map) {
+                flatten(smil_map);
+                var ρσ_Iter136 = Object.values(audio_map);
+                ρσ_Iter136 = ((typeof ρσ_Iter136[Symbol.iterator] === "function") ? (ρσ_Iter136 instanceof Map ? ρσ_Iter136.keys() : ρσ_Iter136) : Object.keys(ρσ_Iter136));
+                for (var ρσ_Index136 of ρσ_Iter136) {
+                    v = ρσ_Index136;
+                    v.sort((function() {
+                        var ρσ_anonfunc = function (a, b) {
+                            return a.start - b.start;
+                        };
+                        if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                            __argnames__ : {value: ["a", "b"]},
+                            __module__ : {value: "read_book.smil"}
+                        });
+                        return ρσ_anonfunc;
+                    })());
+                }
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["audio_files"] = audio_map;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!get_smil_audio_map.__argnames__) Object.defineProperties(get_smil_audio_map, {
+            __argnames__ : {value: ["smil_map"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function get_smil_id_for_timestamp(audio_file_name, timestamp, smil_audio_map, prev_idx) {
+            var pars, i;
+            pars = (ρσ_expr_temp = smil_audio_map.audio_files)[(typeof audio_file_name === "number" && audio_file_name < 0) ? ρσ_expr_temp.length + audio_file_name : audio_file_name];
+            if (!pars) {
+                return [null, null];
+            }
+            prev_idx = prev_idx || 0;
+            if (prev_idx >= pars.length || prev_idx < 0) {
+                prev_idx = 0;
+            }
+            for (var ρσ_Index137 = prev_idx; ρσ_Index137 < pars.length; ρσ_Index137++) {
+                i = ρσ_Index137;
+                if (pars[(typeof i === "number" && i < 0) ? pars.length + i : i].start <= timestamp && timestamp <= pars[(typeof i === "number" && i < 0) ? pars.length + i : i].end) {
+                    return [pars[(typeof i === "number" && i < 0) ? pars.length + i : i].anchor, i];
+                }
+            }
+            for (var ρσ_Index138 = 0; ρσ_Index138 < prev_idx; ρσ_Index138++) {
+                i = ρσ_Index138;
+                if (pars[(typeof i === "number" && i < 0) ? pars.length + i : i].start <= timestamp && timestamp <= pars[(typeof i === "number" && i < 0) ? pars.length + i : i].end) {
+                    return [pars[(typeof i === "number" && i < 0) ? pars.length + i : i].anchor, i];
+                }
+            }
+            return [null, null];
+        };
+        if (!get_smil_id_for_timestamp.__argnames__) Object.defineProperties(get_smil_id_for_timestamp, {
+            __argnames__ : {value: ["audio_file_name", "timestamp", "smil_audio_map", "prev_idx"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function next_audio_file_for_spine_item(audio_file_name, smil_audio_map) {
+            var keys, idx;
+            if (audio_file_name) {
+                keys = Object.keys(smil_audio_map);
+                idx = keys.indexOf(audio_file_name);
+                if (0 <= idx && idx < keys.length - 1) {
+                    return [keys[ρσ_bound_index(idx + 1, keys)], smil_audio_map[ρσ_bound_index(keys[ρσ_bound_index(idx + 1, keys)], smil_audio_map)]];
+                }
+            }
+            return [null, null];
+        };
+        if (!next_audio_file_for_spine_item.__argnames__) Object.defineProperties(next_audio_file_for_spine_item, {
+            __argnames__ : {value: ["audio_file_name", "smil_audio_map"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function first_par(smil_map) {
+            var par_list, par;
+            par_list = flatten_smil_map(smil_map)[1];
+            var ρσ_Iter139 = par_list;
+            ρσ_Iter139 = ((typeof ρσ_Iter139[Symbol.iterator] === "function") ? (ρσ_Iter139 instanceof Map ? ρσ_Iter139.keys() : ρσ_Iter139) : Object.keys(ρσ_Iter139));
+            for (var ρσ_Index139 of ρσ_Iter139) {
+                par = ρσ_Index139;
+                if (par.anchor) {
+                    return par;
+                }
+            }
+            return null;
+        };
+        if (!first_par.__argnames__) Object.defineProperties(first_par, {
+            __argnames__ : {value: ["smil_map"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function find_next_audio_in_spine(spine_idx, book_manifest) {
+            var spine, file_map, q, f, par, i;
+            spine = book_manifest.spine;
+            file_map = book_manifest.files;
+            for (var ρσ_Index140 = spine_idx + 1; ρσ_Index140 < spine.length; ρσ_Index140++) {
+                i = ρσ_Index140;
+                q = spine[(typeof i === "number" && i < 0) ? spine.length + i : i];
+                f = file_map[(typeof q === "number" && q < 0) ? file_map.length + q : q];
+                if (f && f.smil_map) {
+                    par = first_par(f.smil_map);
+                    if (par) {
+                        return [q, par];
+                    }
+                }
+            }
+            return [null, null];
+        };
+        if (!find_next_audio_in_spine.__argnames__) Object.defineProperties(find_next_audio_in_spine, {
+            __argnames__ : {value: ["spine_idx", "book_manifest"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function smil_element_at(pos, anchor_map, par_list) {
+            var elem, af, br, par;
+            if (pos) {
+                elem = document.elementFromPoint(pos.x, pos.y);
+                if (elem && elem.id && ρσ_exists.n(anchor_map[ρσ_bound_index(elem.id, anchor_map)])) {
+                    return par_list[ρσ_bound_index(anchor_map[ρσ_bound_index(elem.id, anchor_map)], par_list)];
+                }
+                af = get_boss().anchor_funcs;
+                var ρσ_Iter141 = par_list;
+                ρσ_Iter141 = ((typeof ρσ_Iter141[Symbol.iterator] === "function") ? (ρσ_Iter141 instanceof Map ? ρσ_Iter141.keys() : ρσ_Iter141) : Object.keys(ρσ_Iter141));
+                for (var ρσ_Index141 of ρσ_Iter141) {
+                    par = ρσ_Index141;
+                    if (par.anchor && par.audio) {
+                        elem = document.getElementById(par.anchor);
+                        if (elem) {
+                            br = af.get_bounding_client_rect(elem);
+                            if (br.x <= (ρσ_cond_temp = pos.x) && ρσ_cond_temp <= br.x + br.width && br.y <= (ρσ_cond_temp = pos.y) && ρσ_cond_temp <= br.y + br.height) {
+                                return par;
+                            }
+                        }
+                    }
+                }
+                return null;
+            } else {
+                var ρσ_Iter142 = par_list;
+                ρσ_Iter142 = ((typeof ρσ_Iter142[Symbol.iterator] === "function") ? (ρσ_Iter142 instanceof Map ? ρσ_Iter142.keys() : ρσ_Iter142) : Object.keys(ρσ_Iter142));
+                for (var ρσ_Index142 of ρσ_Iter142) {
+                    par = ρσ_Index142;
+                    if (par.anchor && par.audio && is_anchor_on_screen(par.anchor)) {
+                        return par;
+                    }
+                }
+                var ρσ_Iter143 = par_list;
+                ρσ_Iter143 = ((typeof ρσ_Iter143[Symbol.iterator] === "function") ? (ρσ_Iter143 instanceof Map ? ρσ_Iter143.keys() : ρσ_Iter143) : Object.keys(ρσ_Iter143));
+                for (var ρσ_Index143 of ρσ_Iter143) {
+                    par = ρσ_Index143;
+                    if (par.audio) {
+                        return par;
+                    }
+                }
+                return null;
+            }
+        };
+        if (!smil_element_at.__argnames__) Object.defineProperties(smil_element_at, {
+            __argnames__ : {value: ["pos", "anchor_map", "par_list"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        function mark_smil_element(anchor) {
+            var elem, sel;
+            elem = document.getElementById(anchor);
+            if (elem) {
+                sel = window.getSelection();
+                sel.selectAllChildren(elem);
+                return bool(sel.rangeCount && sel.toString());
+            }
+            return false;
+        };
+        if (!mark_smil_element.__argnames__) Object.defineProperties(mark_smil_element, {
+            __argnames__ : {value: ["anchor"]},
+            __module__ : {value: "read_book.smil"}
+        });
+
+        ρσ_modules["read_book.smil"].flatten_seq = flatten_seq;
+        ρσ_modules["read_book.smil"].flatten_smil_map = flatten_smil_map;
+        ρσ_modules["read_book.smil"].get_smil_audio_map = get_smil_audio_map;
+        ρσ_modules["read_book.smil"].get_smil_id_for_timestamp = get_smil_id_for_timestamp;
+        ρσ_modules["read_book.smil"].next_audio_file_for_spine_item = next_audio_file_for_spine_item;
+        ρσ_modules["read_book.smil"].first_par = first_par;
+        ρσ_modules["read_book.smil"].find_next_audio_in_spine = find_next_audio_in_spine;
+        ρσ_modules["read_book.smil"].smil_element_at = smil_element_at;
+        ρσ_modules["read_book.smil"].mark_smil_element = mark_smil_element;
+    })();
+
+    (function(){
+        var __name__ = "read_book.hints";
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        var clear = ρσ_modules.dom.clear;
+
+        var shortcut_for_key_event = ρσ_modules["read_book.shortcuts"].shortcut_for_key_event;
+
+        function Hints() {
+            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
+            Hints.prototype.__bind_methods__.call(this);
+            Hints.prototype.__init__.apply(this, arguments);
+        }
+        Object.defineProperty(Hints.prototype, "__bind_methods__", {value: function () {
+            this.reset = Hints.prototype.reset.bind(this);
+            this.focus = Hints.prototype.focus.bind(this);
+            this.hide = Hints.prototype.hide.bind(this);
+            this.show = Hints.prototype.show.bind(this);
+            this.on_keydown = Hints.prototype.on_keydown.bind(this);
+            this.container_clicked = Hints.prototype.container_clicked.bind(this);
+            this.apply_prefix = Hints.prototype.apply_prefix.bind(this);
+            this.send_message = Hints.prototype.send_message.bind(this);
+            this.handle_message = Hints.prototype.handle_message.bind(this);
+            this.no_hints_found = Hints.prototype.no_hints_found.bind(this);
+        }});
+        Object.defineProperties(Hints.prototype,  {
+            "container": {
+                "enumerable": true, 
+                "get": function container() {
+                    var self = this;
+                    return document.getElementById("book-hints-overlay");
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+            "is_visible": {
+                "enumerable": true, 
+                "get": function is_visible() {
+                    var self = this;
+                    return self.container.style.display !== "none";
+                }, 
+                "set": function () { throw new AttributeError("can't set attribute") }
+            }, 
+        });
+        Hints.prototype.__init__ = function __init__(view) {
+            var self = this;
+            var container;
+            self.view = view;
+            container = self.container;
+            container.setAttribute("tabindex", "0");
+            container.style.overflow = "hidden";
+            container.addEventListener("keydown", self.on_keydown, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            container.addEventListener("click", self.container_clicked, (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["passive"] = false;
+                return ρσ_d;
+            }).call(this));
+            self.reset();
+        };
+        if (!Hints.prototype.__init__.__argnames__) Object.defineProperties(Hints.prototype.__init__, {
+            __argnames__ : {value: ["view"]},
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.__argnames__ = Hints.prototype.__init__.__argnames__;
+        Hints.__handles_kwarg_interpolation__ = Hints.prototype.__init__.__handles_kwarg_interpolation__;
+        Hints.prototype.reset = function reset() {
+            var self = this;
+            self.hints_map = Object.create(null);
+            self.current_prefix = "";
+        };
+        if (!Hints.prototype.reset.__module__) Object.defineProperties(Hints.prototype.reset, {
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.focus = function focus() {
+            var self = this;
+            self.container.focus();
+        };
+        if (!Hints.prototype.focus.__module__) Object.defineProperties(Hints.prototype.focus, {
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.hide = function hide() {
+            var self = this;
+            if (self.is_visible) {
+                self.container.style.display = "none";
+                self.send_message("hide");
+                self.reset();
+                self.view.focus_iframe();
+            }
+        };
+        if (!Hints.prototype.hide.__module__) Object.defineProperties(Hints.prototype.hide, {
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.show = function show() {
+            var self = this;
+            var c;
+            if (!self.is_visible) {
+                self.reset();
+                c = self.container;
+                c.style.display = "block";
+                clear(c);
+                self.focus();
+                self.send_message("show");
+            }
+        };
+        if (!Hints.prototype.show.__module__) Object.defineProperties(Hints.prototype.show, {
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.on_keydown = function on_keydown(ev) {
+            var self = this;
+            var hint_keys, q, sc_name;
+            [ev.preventDefault(), ev.stopPropagation()];
+            if (ev.key === "Escape") {
+                self.hide();
+                return;
+            }
+            if (ev.key === "Enter") {
+                if (self.current_prefix) {
+                    self.apply_prefix(true);
+                }
+                return;
+            }
+            if (ev.key === "Backspace") {
+                if (self.current_prefix) {
+                    self.current_prefix = self.current_prefix.slice(0, -1);
+                    self.apply_prefix();
+                }
+                return;
+            }
+            hint_keys = list("1234567890abcdefghijklmnopqrstuvwxyz");
+            q = ev.key.toLowerCase();
+            if (hint_keys.indexOf(q) > -1) {
+                self.current_prefix += q;
+                self.apply_prefix();
+            }
+            sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map);
+            if (!sc_name) {
+                return;
+            }
+        };
+        if (!Hints.prototype.on_keydown.__argnames__) Object.defineProperties(Hints.prototype.on_keydown, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.container_clicked = function container_clicked(ev) {
+            var self = this;
+            [ev.stopPropagation(), ev.preventDefault()];
+            self.hide();
+        };
+        if (!Hints.prototype.container_clicked.__argnames__) Object.defineProperties(Hints.prototype.container_clicked, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.apply_prefix = function apply_prefix(accept_full_match) {
+            var self = this;
+            var matches, q, k;
+            matches = [];
+            if (self.current_prefix) {
+                var ρσ_Iter144 = Object.keys(self.hints_map);
+                ρσ_Iter144 = ((typeof ρσ_Iter144[Symbol.iterator] === "function") ? (ρσ_Iter144 instanceof Map ? ρσ_Iter144.keys() : ρσ_Iter144) : Object.keys(ρσ_Iter144));
+                for (var ρσ_Index144 of ρσ_Iter144) {
+                    k = ρσ_Index144;
+                    if (k === "_length") {
+                        continue;
+                    }
+                    q = encode(int(k));
+                    if (accept_full_match) {
+                        if (q === self.current_prefix) {
+                            matches.push(k);
+                            break;
+                        }
+                    } else if (q.startswith(self.current_prefix)) {
+                        matches.push(k);
+                    }
+                }
+            }
+            if (matches.length === 1) {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["activate"].concat([ρσ_desugar_kwargs({hint: (ρσ_expr_temp = self.hints_map)[ρσ_bound_index(matches[0], ρσ_expr_temp)]})]));
+                self.hide();
+            } else {
+                ρσ_interpolate_kwargs.call(self, self.send_message, ["apply_prefix"].concat([ρσ_desugar_kwargs({prefix: self.current_prefix})]));
+            }
+        };
+        if (!Hints.prototype.apply_prefix.__argnames__) Object.defineProperties(Hints.prototype.apply_prefix, {
+            __argnames__ : {value: ["accept_full_match"]},
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.send_message = function send_message() {
+            var self = this;
+            var type = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var kw = arguments[arguments.length-1];
+            if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
+            ρσ_interpolate_kwargs.call(self.view.iframe_wrapper, self.view.iframe_wrapper.send_message, ["hints"].concat([ρσ_desugar_kwargs(kw, {type: type})]));
+        };
+        if (!Hints.prototype.send_message.__handles_kwarg_interpolation__) Object.defineProperties(Hints.prototype.send_message, {
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["type"]},
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.handle_message = function handle_message(msg) {
+            var self = this;
+            if (msg.type === "shown") {
+                self.reset();
+                self.hints_map = msg.hints_map;
+                if (!self.hints_map._length) {
+                    self.no_hints_found();
+                }
+            }
+        };
+        if (!Hints.prototype.handle_message.__argnames__) Object.defineProperties(Hints.prototype.handle_message, {
+            __argnames__ : {value: ["msg"]},
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.no_hints_found = function no_hints_found() {
+            var self = this;
+            var c;
+            c = self.container;
+            c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("No links found. Press Esc to close")].concat([ρσ_desugar_kwargs({style: "position: absolute; margin: auto; top: 50%; left: 50%; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + " padding: 1rem; border: solid 1px currentColor; border-radius: 4px; transform: translate(-50%, -50%);"})])));
+        };
+        if (!Hints.prototype.no_hints_found.__module__) Object.defineProperties(Hints.prototype.no_hints_found, {
+            __module__ : {value: "read_book.hints"}
+        });
+        Hints.prototype.__repr__ = function __repr__ () {
+                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
+        };
+        Hints.prototype.__str__ = function __str__ () {
+            return this.__repr__();
+        };
+        Object.defineProperty(Hints.prototype, "__bases__", {value: []});
+        
+        
+
+        function is_visible(a) {
+            var rect;
+            if (!a.offsetParent) {
+                return false;
+            }
+            rect = a.getBoundingClientRect();
+            return rect.left >= 0 && rect.top >= 0 && rect.left < window.innerWidth && rect.top < window.innerHeight;
+        };
+        if (!is_visible.__argnames__) Object.defineProperties(is_visible, {
+            __argnames__ : {value: ["a"]},
+            __module__ : {value: "read_book.hints"}
+        });
+
+        function encode(i) {
+            return i.toString(36).toLowerCase();
+        };
+        if (!encode.__argnames__) Object.defineProperties(encode, {
+            __argnames__ : {value: ["i"]},
+            __module__ : {value: "read_book.hints"}
+        });
+
+        function hint_visible_links() {
+            var i, hint_map, h, a;
+            i = 0;
+            hint_map = Object.create(null);
+            var ρσ_Iter145 = document.body.querySelectorAll("a[href]");
+            ρσ_Iter145 = ((typeof ρσ_Iter145[Symbol.iterator] === "function") ? (ρσ_Iter145 instanceof Map ? ρσ_Iter145.keys() : ρσ_Iter145) : Object.keys(ρσ_Iter145));
+            for (var ρσ_Index145 of ρσ_Iter145) {
+                a = ρσ_Index145;
+                if (is_visible(a)) {
+                    i += 1;
+                    h = i + "";
+                    a.dataset.calibreHintRender = encode(i);
+                    a.dataset.calibreHintValue = h;
+                    a.classList.add("calibre-hint-visible");
+                    hint_map[(typeof h === "number" && h < 0) ? hint_map.length + h : h] = (function(){
                         var ρσ_d = Object.create(null);
-                        ρσ_d["start_node"] = start_node;
-                        ρσ_d["start_offset"] = start_offset;
-                        ρσ_d["start_pos"] = start_pos;
-                        ρσ_d["end_node"] = end_node;
-                        ρσ_d["end_offset"] = end_offset;
-                        ρσ_d["end_pos"] = node_pos;
+                        ρσ_d["type"] = "link";
+                        ρσ_d["value"] = i;
                         return ρσ_d;
                     }).call(this);
                 }
             }
+            hint_map._length = i;
+            return hint_map;
         };
-        if (!get_occurrence_data.__argnames__) Object.defineProperties(get_occurrence_data, {
-            __argnames__ : {value: ["node_list", "start", "end"]},
-            __module__ : {value: "read_book.find"}
+        if (!hint_visible_links.__module__) Object.defineProperties(hint_visible_links, {
+            __module__ : {value: "read_book.hints"}
         });
 
-        function find_specific_occurrence(q, num, before_len, after_len, text_map, from_offset) {
-            var from_idx, flat_text, match_num, idx;
-            if (!q || !q.length) {
-                return;
+        function unhint_links() {
+            var a;
+            var ρσ_Iter146 = document.body.querySelectorAll("a[href]");
+            ρσ_Iter146 = ((typeof ρσ_Iter146[Symbol.iterator] === "function") ? (ρσ_Iter146 instanceof Map ? ρσ_Iter146.keys() : ρσ_Iter146) : Object.keys(ρσ_Iter146));
+            for (var ρσ_Index146 of ρσ_Iter146) {
+                a = ρσ_Index146;
+                a.classList.remove("calibre-hint-visible", "calibre-hint-enter");
+                delete a.dataset.calibreHintRender;
+                delete a.dataset.calibreHintValue;
             }
-            from_idx = from_offset || 0;
-            flat_text = text_map.flat_text;
-            match_num = -1;
-            while (true) {
-                idx = flat_text.indexOf(q, from_idx);
-                if (idx < 0) {
-                    break;
+        };
+        if (!unhint_links.__module__) Object.defineProperties(unhint_links, {
+            __module__ : {value: "read_book.hints"}
+        });
+
+        function apply_prefix_to_hints(prefix) {
+            var val, r, leftover, a;
+            var ρσ_Iter147 = document.body.querySelectorAll("[data-calibre-hint-value]");
+            ρσ_Iter147 = ((typeof ρσ_Iter147[Symbol.iterator] === "function") ? (ρσ_Iter147 instanceof Map ? ρσ_Iter147.keys() : ρσ_Iter147) : Object.keys(ρσ_Iter147));
+            for (var ρσ_Index147 of ρσ_Iter147) {
+                a = ρσ_Index147;
+                val = int(a.dataset.calibreHintValue);
+                r = encode(val);
+                a.classList.remove("calibre-hint-enter");
+                if (!prefix || r.startsWith(prefix)) {
+                    a.classList.add("calibre-hint-visible");
+                    a.dataset.calibreHintRender = leftover = r.slice(prefix.length) || " ";
+                    if (leftover === " ") {
+                        a.classList.add("calibre-hint-enter");
+                    }
+                } else {
+                    a.classList.remove("calibre-hint-visible");
                 }
-                match_num += 1;
-                from_idx = idx + 1;
-                if (match_num < num) {
-                    continue;
-                }
-                return get_occurrence_data(text_map.node_list, idx + before_len, idx + q.length - after_len);
             }
         };
-        if (!find_specific_occurrence.__argnames__) Object.defineProperties(find_specific_occurrence, {
-            __argnames__ : {value: ["q", "num", "before_len", "after_len", "text_map", "from_offset"]},
-            __module__ : {value: "read_book.find"}
+        if (!apply_prefix_to_hints.__argnames__) Object.defineProperties(apply_prefix_to_hints, {
+            __argnames__ : {value: ["prefix"]},
+            __module__ : {value: "read_book.hints"}
         });
 
-        cache = Object.create(null);
-        function reset_find_caches() {
-            cache = Object.create(null);
-        };
-        if (!reset_find_caches.__module__) Object.defineProperties(reset_find_caches, {
-            __module__ : {value: "read_book.find"}
-        });
-
-        function select_find_result(match) {
-            var sel;
-            sel = window.getSelection();
-            try {
-                sel.setBaseAndExtent(match.start_node, match.start_offset, match.end_node, match.end_offset);
-            } catch (ρσ_Exception) {
-                ρσ_last_exception = ρσ_Exception;
-                {
-                    return false;
-                } 
-            }
-            return bool(sel.rangeCount && sel.toString());
-        };
-        if (!select_find_result.__argnames__) Object.defineProperties(select_find_result, {
-            __argnames__ : {value: ["match"]},
-            __module__ : {value: "read_book.find"}
-        });
-
-        function select_search_result(sr) {
-            var q, before_len, after_len, after, match;
-            window.getSelection().removeAllRanges();
-            if (!cache.text_map) {
-                cache.text_map = build_text_map();
-            }
-            q = "";
-            before_len = after_len = 0;
-            if (sr.before) {
-                q = sr.before.slice(-15);
-                before_len = q.length;
-            }
-            q += sr.text;
-            if (sr.after) {
-                after = sr.after.slice(0, 15);
-                after_len = after.length;
-                q += after;
-            }
-            match = find_specific_occurrence(q, int(sr.index), before_len, after_len, cache.text_map, sr.from_offset);
-            if (!match) {
-                return false;
-            }
-            return select_find_result(match);
-        };
-        if (!select_search_result.__argnames__) Object.defineProperties(select_search_result, {
-            __argnames__ : {value: ["sr"]},
-            __module__ : {value: "read_book.find"}
-        });
-
-        function find_word_length(text_map, idx) {
-            var r, match, word_length;
-            r = tts_word_regex();
-            r.lastIndex = idx;
-            match = r.exec(text_map.flat_text);
-            word_length = 5;
-            if (match) {
-                word_length = ρσ_exists.d(match[0]).length || 5;
-            }
-            return word_length;
-        };
-        if (!find_word_length.__argnames__) Object.defineProperties(find_word_length, {
-            __argnames__ : {value: ["text_map", "idx"]},
-            __module__ : {value: "read_book.find"}
-        });
-
-        function select_tts_mark(idx_in_flat_text, last_idx_in_flat_text) {
-            var text_map, match;
-            window.getSelection().removeAllRanges();
-            text_map = cached_tts_text_map();
-            if (idx_in_flat_text === last_idx_in_flat_text) {
-                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, idx_in_flat_text + find_word_length(text_map, idx_in_flat_text));
-            } else {
-                match = get_occurrence_data(text_map.node_list, idx_in_flat_text, last_idx_in_flat_text + find_word_length(text_map, last_idx_in_flat_text));
-            }
-            if (!match) {
-                return false;
-            }
-            return select_find_result(match);
-        };
-        if (!select_tts_mark.__argnames__) Object.defineProperties(select_tts_mark, {
-            __argnames__ : {value: ["idx_in_flat_text", "last_idx_in_flat_text"]},
-            __module__ : {value: "read_book.find"}
-        });
-
-        ρσ_modules["read_book.find"].ignored_tags = ignored_tags;
-        ρσ_modules["read_book.find"].block_tags_for_tts = block_tags_for_tts;
-        ρσ_modules["read_book.find"].cache = cache;
-        ρσ_modules["read_book.find"].build_text_map = build_text_map;
-        ρσ_modules["read_book.find"].index_for_node = index_for_node;
-        ρσ_modules["read_book.find"].tts_word_regex = tts_word_regex;
-        ρσ_modules["read_book.find"].cached_tts_text_map = cached_tts_text_map;
-        ρσ_modules["read_book.find"].tts_data = tts_data;
-        ρσ_modules["read_book.find"].find_node_for_index_binary = find_node_for_index_binary;
-        ρσ_modules["read_book.find"].get_occurrence_data = get_occurrence_data;
-        ρσ_modules["read_book.find"].find_specific_occurrence = find_specific_occurrence;
-        ρσ_modules["read_book.find"].reset_find_caches = reset_find_caches;
-        ρσ_modules["read_book.find"].select_find_result = select_find_result;
-        ρσ_modules["read_book.find"].select_search_result = select_search_result;
-        ρσ_modules["read_book.find"].find_word_length = find_word_length;
-        ρσ_modules["read_book.find"].select_tts_mark = select_tts_mark;
+        ρσ_modules["read_book.hints"].Hints = Hints;
+        ρσ_modules["read_book.hints"].is_visible = is_visible;
+        ρσ_modules["read_book.hints"].encode = encode;
+        ρσ_modules["read_book.hints"].hint_visible_links = hint_visible_links;
+        ρσ_modules["read_book.hints"].unhint_links = unhint_links;
+        ρσ_modules["read_book.hints"].apply_prefix_to_hints = apply_prefix_to_hints;
     })();
 
     (function(){
@@ -24384,10 +24720,10 @@ return this.__repr__();
             if (!(typeof first !== "undefined" && first !== null)) {
                 return ans;
             }
-            var ρσ_Iter144 = points;
-            ρσ_Iter144 = ((typeof ρσ_Iter144[Symbol.iterator] === "function") ? (ρσ_Iter144 instanceof Map ? ρσ_Iter144.keys() : ρσ_Iter144) : Object.keys(ρσ_Iter144));
-            for (var ρσ_Index144 of ρσ_Iter144) {
-                p = ρσ_Index144;
+            var ρσ_Iter148 = points;
+            ρσ_Iter148 = ((typeof ρσ_Iter148[Symbol.iterator] === "function") ? (ρσ_Iter148 instanceof Map ? ρσ_Iter148.keys() : ρσ_Iter148) : Object.keys(ρσ_Iter148));
+            for (var ρσ_Index148 of ρσ_Iter148) {
+                p = ρσ_Index148;
                 delta = abs(p - first);
                 if (delta > ans) {
                     ans = delta;
@@ -24508,14 +24844,14 @@ return this.__repr__();
 
         function tap_on_link(gesture) {
             var x, y, link, delta_y, delta_x;
-            var ρσ_Iter145 = [ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ];
-            ρσ_Iter145 = ((typeof ρσ_Iter145[Symbol.iterator] === "function") ? (ρσ_Iter145 instanceof Map ? ρσ_Iter145.keys() : ρσ_Iter145) : Object.keys(ρσ_Iter145));
-            for (var ρσ_Index145 of ρσ_Iter145) {
-                delta_x = ρσ_Index145;
-                var ρσ_Iter146 = [ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ];
-                ρσ_Iter146 = ((typeof ρσ_Iter146[Symbol.iterator] === "function") ? (ρσ_Iter146 instanceof Map ? ρσ_Iter146.keys() : ρσ_Iter146) : Object.keys(ρσ_Iter146));
-                for (var ρσ_Index146 of ρσ_Iter146) {
-                    delta_y = ρσ_Index146;
+            var ρσ_Iter149 = [ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ];
+            ρσ_Iter149 = ((typeof ρσ_Iter149[Symbol.iterator] === "function") ? (ρσ_Iter149 instanceof Map ? ρσ_Iter149.keys() : ρσ_Iter149) : Object.keys(ρσ_Iter149));
+            for (var ρσ_Index149 of ρσ_Iter149) {
+                delta_x = ρσ_Index149;
+                var ρσ_Iter150 = [ 0, TAP_LINK_THRESHOLD, -TAP_LINK_THRESHOLD ];
+                ρσ_Iter150 = ((typeof ρσ_Iter150[Symbol.iterator] === "function") ? (ρσ_Iter150 instanceof Map ? ρσ_Iter150.keys() : ρσ_Iter150) : Object.keys(ρσ_Iter150));
+                for (var ρσ_Index150 of ρσ_Iter150) {
+                    delta_y = ρσ_Index150;
                     x = gesture.viewport_x + delta_x;
                     y = gesture.viewport_y + delta_y;
                     link = find_link(x, y);
@@ -24555,10 +24891,10 @@ return this.__repr__();
                 "get": function has_active_touches() {
                     var self = this;
                     var t, tid;
-                    var ρσ_Iter147 = self.ongoing_touches;
-                    ρσ_Iter147 = ((typeof ρσ_Iter147[Symbol.iterator] === "function") ? (ρσ_Iter147 instanceof Map ? ρσ_Iter147.keys() : ρσ_Iter147) : Object.keys(ρσ_Iter147));
-                    for (var ρσ_Index147 of ρσ_Iter147) {
-                        tid = ρσ_Index147;
+                    var ρσ_Iter151 = self.ongoing_touches;
+                    ρσ_Iter151 = ((typeof ρσ_Iter151[Symbol.iterator] === "function") ? (ρσ_Iter151 instanceof Map ? ρσ_Iter151.keys() : ρσ_Iter151) : Object.keys(ρσ_Iter151));
+                    for (var ρσ_Index151 of ρσ_Iter151) {
+                        tid = ρσ_Index151;
                         t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
                         if (t.active) {
                             return true;
@@ -24586,10 +24922,10 @@ return this.__repr__();
             var now, expired, t, tid;
             now = window.performance.now();
             expired = [];
-            var ρσ_Iter148 = self.ongoing_touches;
-            ρσ_Iter148 = ((typeof ρσ_Iter148[Symbol.iterator] === "function") ? (ρσ_Iter148 instanceof Map ? ρσ_Iter148.keys() : ρσ_Iter148) : Object.keys(ρσ_Iter148));
-            for (var ρσ_Index148 of ρσ_Iter148) {
-                tid = ρσ_Index148;
+            var ρσ_Iter152 = self.ongoing_touches;
+            ρσ_Iter152 = ((typeof ρσ_Iter152[Symbol.iterator] === "function") ? (ρσ_Iter152 instanceof Map ? ρσ_Iter152.keys() : ρσ_Iter152) : Object.keys(ρσ_Iter152));
+            for (var ρσ_Index152 of ρσ_Iter152) {
+                tid = ρσ_Index152;
                 t = (ρσ_expr_temp = self.ongoing_touches)[(typeof tid === "number" && tid < 0) ? ρσ_expr_temp.length + tid : tid];
                 if (t.active) {
                     if (now - (ρσ_expr_temp = t.mtimes)[ρσ_expr_temp.length-1] > 3e3) {
@@ -24597,10 +24933,10 @@ return this.__repr__();
                     }
                 }
             }
-            var ρσ_Iter149 = expired;
-            ρσ_Iter149 = ((typeof ρσ_Iter149[Symbol.iterator] === "function") ? (ρσ_Iter149 instanceof Map ? ρσ_Iter149.keys() : ρσ_Iter149) : Object.keys(ρσ_Iter149));
-            for (var ρσ_Index149 of ρσ_Iter149) {
-                tid = ρσ_Index149;
+            var ρσ_Iter153 = expired;
+            ρσ_Iter153 = ((typeof ρσ_Iter153[Symbol.iterator] === "function") ? (ρσ_Iter153 instanceof Map ? ρσ_Iter153.keys() : ρσ_Iter153) : Object.keys(ρσ_Iter153));
+            for (var ρσ_Index153 of ρσ_Iter153) {
+                tid = ρσ_Index153;
                 delete self.ongoing_touches[tid];
             }
         };
@@ -24641,10 +24977,10 @@ return this.__repr__();
             if (len(self.ongoing_touches) > 0) {
                 now = window.performance.now();
                 found_hold = false;
-                var ρσ_Iter150 = self.ongoing_touches;
-                ρσ_Iter150 = ((typeof ρσ_Iter150[Symbol.iterator] === "function") ? (ρσ_Iter150 instanceof Map ? ρσ_Iter150.keys() : ρσ_Iter150) : Object.keys(ρσ_Iter150));
-                for (var ρσ_Index150 of ρσ_Iter150) {
-                    touchid = ρσ_Index150;
+                var ρσ_Iter154 = self.ongoing_touches;
+                ρσ_Iter154 = ((typeof ρσ_Iter154[Symbol.iterator] === "function") ? (ρσ_Iter154 instanceof Map ? ρσ_Iter154.keys() : ρσ_Iter154) : Object.keys(ρσ_Iter154));
+                for (var ρσ_Index154 of ρσ_Iter154) {
+                    touchid = ρσ_Index154;
                     touch = (ρσ_expr_temp = self.ongoing_touches)[(typeof touchid === "number" && touchid < 0) ? ρσ_expr_temp.length + touchid : touchid];
                     if (touch.active && now - (ρσ_expr_temp = touch.mtimes)[ρσ_expr_temp.length-1] > HOLD_THRESHOLD) {
                         touch.is_held = true;
@@ -24668,10 +25004,10 @@ return this.__repr__();
             }
             ev.stopPropagation();
             self.prune_expired_touches();
-            var ρσ_Iter151 = ev.changedTouches;
-            ρσ_Iter151 = ((typeof ρσ_Iter151[Symbol.iterator] === "function") ? (ρσ_Iter151 instanceof Map ? ρσ_Iter151.keys() : ρσ_Iter151) : Object.keys(ρσ_Iter151));
-            for (var ρσ_Index151 of ρσ_Iter151) {
-                touch = ρσ_Index151;
+            var ρσ_Iter155 = ev.changedTouches;
+            ρσ_Iter155 = ((typeof ρσ_Iter155[Symbol.iterator] === "function") ? (ρσ_Iter155 instanceof Map ? ρσ_Iter155.keys() : ρσ_Iter155) : Object.keys(ρσ_Iter155));
+            for (var ρσ_Index155 of ρσ_Iter155) {
+                touch = ρσ_Index155;
                 (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)] = copy_touch(touch);
                 if (self.gesture_id === null) {
                     gesture_id += 1;
@@ -24694,10 +25030,10 @@ return this.__repr__();
                 ev.preventDefault();
             }
             ev.stopPropagation();
-            var ρσ_Iter152 = ev.changedTouches;
-            ρσ_Iter152 = ((typeof ρσ_Iter152[Symbol.iterator] === "function") ? (ρσ_Iter152 instanceof Map ? ρσ_Iter152.keys() : ρσ_Iter152) : Object.keys(ρσ_Iter152));
-            for (var ρσ_Index152 of ρσ_Iter152) {
-                touch = ρσ_Index152;
+            var ρσ_Iter156 = ev.changedTouches;
+            ρσ_Iter156 = ((typeof ρσ_Iter156[Symbol.iterator] === "function") ? (ρσ_Iter156 instanceof Map ? ρσ_Iter156.keys() : ρσ_Iter156) : Object.keys(ρσ_Iter156));
+            for (var ρσ_Index156 of ρσ_Iter156) {
+                touch = ρσ_Index156;
                 t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
                 if (t) {
                     update_touch(t, touch);
@@ -24716,10 +25052,10 @@ return this.__repr__();
                 ev.preventDefault();
             }
             ev.stopPropagation();
-            var ρσ_Iter153 = ev.changedTouches;
-            ρσ_Iter153 = ((typeof ρσ_Iter153[Symbol.iterator] === "function") ? (ρσ_Iter153 instanceof Map ? ρσ_Iter153.keys() : ρσ_Iter153) : Object.keys(ρσ_Iter153));
-            for (var ρσ_Index153 of ρσ_Iter153) {
-                touch = ρσ_Index153;
+            var ρσ_Iter157 = ev.changedTouches;
+            ρσ_Iter157 = ((typeof ρσ_Iter157[Symbol.iterator] === "function") ? (ρσ_Iter157 instanceof Map ? ρσ_Iter157.keys() : ρσ_Iter157) : Object.keys(ρσ_Iter157));
+            for (var ρσ_Index157 of ρσ_Iter157) {
+                touch = ρσ_Index157;
                 t = (ρσ_expr_temp = self.ongoing_touches)[ρσ_bound_index(touch_id(touch), ρσ_expr_temp)];
                 if (t) {
                     t.active = false;
@@ -24743,10 +25079,10 @@ return this.__repr__();
                 ev.preventDefault();
             }
             ev.stopPropagation();
-            var ρσ_Iter154 = ev.changedTouches;
-            ρσ_Iter154 = ((typeof ρσ_Iter154[Symbol.iterator] === "function") ? (ρσ_Iter154 instanceof Map ? ρσ_Iter154.keys() : ρσ_Iter154) : Object.keys(ρσ_Iter154));
-            for (var ρσ_Index154 of ρσ_Iter154) {
-                touch = ρσ_Index154;
+            var ρσ_Iter158 = ev.changedTouches;
+            ρσ_Iter158 = ((typeof ρσ_Iter158[Symbol.iterator] === "function") ? (ρσ_Iter158 instanceof Map ? ρσ_Iter158.keys() : ρσ_Iter158) : Object.keys(ρσ_Iter158));
+            for (var ρσ_Index158 of ρσ_Iter158) {
+                touch = ρσ_Index158;
                 tid = touch_id(touch);
                 delete self.ongoing_touches[tid];
             }
@@ -25242,342 +25578,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.hints";
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_color = ρσ_modules["book_list.theme"].get_color;
-
-        var clear = ρσ_modules.dom.clear;
-
-        var shortcut_for_key_event = ρσ_modules["read_book.shortcuts"].shortcut_for_key_event;
-
-        function Hints() {
-            if (this.ρσ_object_id === undefined) Object.defineProperty(this, "ρσ_object_id", {"value":++ρσ_object_counter});
-            Hints.prototype.__bind_methods__.call(this);
-            Hints.prototype.__init__.apply(this, arguments);
-        }
-        Object.defineProperty(Hints.prototype, "__bind_methods__", {value: function () {
-            this.reset = Hints.prototype.reset.bind(this);
-            this.focus = Hints.prototype.focus.bind(this);
-            this.hide = Hints.prototype.hide.bind(this);
-            this.show = Hints.prototype.show.bind(this);
-            this.on_keydown = Hints.prototype.on_keydown.bind(this);
-            this.container_clicked = Hints.prototype.container_clicked.bind(this);
-            this.apply_prefix = Hints.prototype.apply_prefix.bind(this);
-            this.send_message = Hints.prototype.send_message.bind(this);
-            this.handle_message = Hints.prototype.handle_message.bind(this);
-            this.no_hints_found = Hints.prototype.no_hints_found.bind(this);
-        }});
-        Object.defineProperties(Hints.prototype,  {
-            "container": {
-                "enumerable": true, 
-                "get": function container() {
-                    var self = this;
-                    return document.getElementById("book-hints-overlay");
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-            "is_visible": {
-                "enumerable": true, 
-                "get": function is_visible() {
-                    var self = this;
-                    return self.container.style.display !== "none";
-                }, 
-                "set": function () { throw new AttributeError("can't set attribute") }
-            }, 
-        });
-        Hints.prototype.__init__ = function __init__(view) {
-            var self = this;
-            var container;
-            self.view = view;
-            container = self.container;
-            container.setAttribute("tabindex", "0");
-            container.style.overflow = "hidden";
-            container.addEventListener("keydown", self.on_keydown, (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["passive"] = false;
-                return ρσ_d;
-            }).call(this));
-            container.addEventListener("click", self.container_clicked, (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["passive"] = false;
-                return ρσ_d;
-            }).call(this));
-            self.reset();
-        };
-        if (!Hints.prototype.__init__.__argnames__) Object.defineProperties(Hints.prototype.__init__, {
-            __argnames__ : {value: ["view"]},
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.__argnames__ = Hints.prototype.__init__.__argnames__;
-        Hints.__handles_kwarg_interpolation__ = Hints.prototype.__init__.__handles_kwarg_interpolation__;
-        Hints.prototype.reset = function reset() {
-            var self = this;
-            self.hints_map = Object.create(null);
-            self.current_prefix = "";
-        };
-        if (!Hints.prototype.reset.__module__) Object.defineProperties(Hints.prototype.reset, {
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.focus = function focus() {
-            var self = this;
-            self.container.focus();
-        };
-        if (!Hints.prototype.focus.__module__) Object.defineProperties(Hints.prototype.focus, {
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.hide = function hide() {
-            var self = this;
-            if (self.is_visible) {
-                self.container.style.display = "none";
-                self.send_message("hide");
-                self.reset();
-                self.view.focus_iframe();
-            }
-        };
-        if (!Hints.prototype.hide.__module__) Object.defineProperties(Hints.prototype.hide, {
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.show = function show() {
-            var self = this;
-            var c;
-            if (!self.is_visible) {
-                self.reset();
-                c = self.container;
-                c.style.display = "block";
-                clear(c);
-                self.focus();
-                self.send_message("show");
-            }
-        };
-        if (!Hints.prototype.show.__module__) Object.defineProperties(Hints.prototype.show, {
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.on_keydown = function on_keydown(ev) {
-            var self = this;
-            var hint_keys, q, sc_name;
-            [ev.preventDefault(), ev.stopPropagation()];
-            if (ev.key === "Escape") {
-                self.hide();
-                return;
-            }
-            if (ev.key === "Enter") {
-                if (self.current_prefix) {
-                    self.apply_prefix(true);
-                }
-                return;
-            }
-            if (ev.key === "Backspace") {
-                if (self.current_prefix) {
-                    self.current_prefix = self.current_prefix.slice(0, -1);
-                    self.apply_prefix();
-                }
-                return;
-            }
-            hint_keys = list("1234567890abcdefghijklmnopqrstuvwxyz");
-            q = ev.key.toLowerCase();
-            if (hint_keys.indexOf(q) > -1) {
-                self.current_prefix += q;
-                self.apply_prefix();
-            }
-            sc_name = shortcut_for_key_event(ev, self.view.keyboard_shortcut_map);
-            if (!sc_name) {
-                return;
-            }
-        };
-        if (!Hints.prototype.on_keydown.__argnames__) Object.defineProperties(Hints.prototype.on_keydown, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.container_clicked = function container_clicked(ev) {
-            var self = this;
-            [ev.stopPropagation(), ev.preventDefault()];
-            self.hide();
-        };
-        if (!Hints.prototype.container_clicked.__argnames__) Object.defineProperties(Hints.prototype.container_clicked, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.apply_prefix = function apply_prefix(accept_full_match) {
-            var self = this;
-            var matches, q, k;
-            matches = [];
-            if (self.current_prefix) {
-                var ρσ_Iter155 = Object.keys(self.hints_map);
-                ρσ_Iter155 = ((typeof ρσ_Iter155[Symbol.iterator] === "function") ? (ρσ_Iter155 instanceof Map ? ρσ_Iter155.keys() : ρσ_Iter155) : Object.keys(ρσ_Iter155));
-                for (var ρσ_Index155 of ρσ_Iter155) {
-                    k = ρσ_Index155;
-                    if (k === "_length") {
-                        continue;
-                    }
-                    q = encode(int(k));
-                    if (accept_full_match) {
-                        if (q === self.current_prefix) {
-                            matches.push(k);
-                            break;
-                        }
-                    } else if (q.startswith(self.current_prefix)) {
-                        matches.push(k);
-                    }
-                }
-            }
-            if (matches.length === 1) {
-                ρσ_interpolate_kwargs.call(self, self.send_message, ["activate"].concat([ρσ_desugar_kwargs({hint: (ρσ_expr_temp = self.hints_map)[ρσ_bound_index(matches[0], ρσ_expr_temp)]})]));
-                self.hide();
-            } else {
-                ρσ_interpolate_kwargs.call(self, self.send_message, ["apply_prefix"].concat([ρσ_desugar_kwargs({prefix: self.current_prefix})]));
-            }
-        };
-        if (!Hints.prototype.apply_prefix.__argnames__) Object.defineProperties(Hints.prototype.apply_prefix, {
-            __argnames__ : {value: ["accept_full_match"]},
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.send_message = function send_message() {
-            var self = this;
-            var type = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var kw = arguments[arguments.length-1];
-            if (kw === null || typeof kw !== "object" || kw [ρσ_kwargs_symbol] !== true) kw = {};
-            ρσ_interpolate_kwargs.call(self.view.iframe_wrapper, self.view.iframe_wrapper.send_message, ["hints"].concat([ρσ_desugar_kwargs(kw, {type: type})]));
-        };
-        if (!Hints.prototype.send_message.__handles_kwarg_interpolation__) Object.defineProperties(Hints.prototype.send_message, {
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["type"]},
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.handle_message = function handle_message(msg) {
-            var self = this;
-            if (msg.type === "shown") {
-                self.reset();
-                self.hints_map = msg.hints_map;
-                if (!self.hints_map._length) {
-                    self.no_hints_found();
-                }
-            }
-        };
-        if (!Hints.prototype.handle_message.__argnames__) Object.defineProperties(Hints.prototype.handle_message, {
-            __argnames__ : {value: ["msg"]},
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.no_hints_found = function no_hints_found() {
-            var self = this;
-            var c;
-            c = self.container;
-            c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("No links found. Press Esc to close")].concat([ρσ_desugar_kwargs({style: "position: absolute; margin: auto; top: 50%; left: 50%; background: " + ρσ_str.format("{}", get_color("window-background")) + ";" + " padding: 1rem; border: solid 1px currentColor; border-radius: 4px; transform: translate(-50%, -50%);"})])));
-        };
-        if (!Hints.prototype.no_hints_found.__module__) Object.defineProperties(Hints.prototype.no_hints_found, {
-            __module__ : {value: "read_book.hints"}
-        });
-        Hints.prototype.__repr__ = function __repr__ () {
-                        return "<" + __name__ + "." + this.constructor.name + " #" + this.ρσ_object_id + ">";
-        };
-        Hints.prototype.__str__ = function __str__ () {
-            return this.__repr__();
-        };
-        Object.defineProperty(Hints.prototype, "__bases__", {value: []});
-        
-        
-
-        function is_visible(a) {
-            var rect;
-            if (!a.offsetParent) {
-                return false;
-            }
-            rect = a.getBoundingClientRect();
-            return rect.left >= 0 && rect.top >= 0 && rect.left < window.innerWidth && rect.top < window.innerHeight;
-        };
-        if (!is_visible.__argnames__) Object.defineProperties(is_visible, {
-            __argnames__ : {value: ["a"]},
-            __module__ : {value: "read_book.hints"}
-        });
-
-        function encode(i) {
-            return i.toString(36).toLowerCase();
-        };
-        if (!encode.__argnames__) Object.defineProperties(encode, {
-            __argnames__ : {value: ["i"]},
-            __module__ : {value: "read_book.hints"}
-        });
-
-        function hint_visible_links() {
-            var i, hint_map, h, a;
-            i = 0;
-            hint_map = Object.create(null);
-            var ρσ_Iter156 = document.body.querySelectorAll("a[href]");
-            ρσ_Iter156 = ((typeof ρσ_Iter156[Symbol.iterator] === "function") ? (ρσ_Iter156 instanceof Map ? ρσ_Iter156.keys() : ρσ_Iter156) : Object.keys(ρσ_Iter156));
-            for (var ρσ_Index156 of ρσ_Iter156) {
-                a = ρσ_Index156;
-                if (is_visible(a)) {
-                    i += 1;
-                    h = i + "";
-                    a.dataset.calibreHintRender = encode(i);
-                    a.dataset.calibreHintValue = h;
-                    a.classList.add("calibre-hint-visible");
-                    hint_map[(typeof h === "number" && h < 0) ? hint_map.length + h : h] = (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["type"] = "link";
-                        ρσ_d["value"] = i;
-                        return ρσ_d;
-                    }).call(this);
-                }
-            }
-            hint_map._length = i;
-            return hint_map;
-        };
-        if (!hint_visible_links.__module__) Object.defineProperties(hint_visible_links, {
-            __module__ : {value: "read_book.hints"}
-        });
-
-        function unhint_links() {
-            var a;
-            var ρσ_Iter157 = document.body.querySelectorAll("a[href]");
-            ρσ_Iter157 = ((typeof ρσ_Iter157[Symbol.iterator] === "function") ? (ρσ_Iter157 instanceof Map ? ρσ_Iter157.keys() : ρσ_Iter157) : Object.keys(ρσ_Iter157));
-            for (var ρσ_Index157 of ρσ_Iter157) {
-                a = ρσ_Index157;
-                a.classList.remove("calibre-hint-visible", "calibre-hint-enter");
-                delete a.dataset.calibreHintRender;
-                delete a.dataset.calibreHintValue;
-            }
-        };
-        if (!unhint_links.__module__) Object.defineProperties(unhint_links, {
-            __module__ : {value: "read_book.hints"}
-        });
-
-        function apply_prefix_to_hints(prefix) {
-            var val, r, leftover, a;
-            var ρσ_Iter158 = document.body.querySelectorAll("[data-calibre-hint-value]");
-            ρσ_Iter158 = ((typeof ρσ_Iter158[Symbol.iterator] === "function") ? (ρσ_Iter158 instanceof Map ? ρσ_Iter158.keys() : ρσ_Iter158) : Object.keys(ρσ_Iter158));
-            for (var ρσ_Index158 of ρσ_Iter158) {
-                a = ρσ_Index158;
-                val = int(a.dataset.calibreHintValue);
-                r = encode(val);
-                a.classList.remove("calibre-hint-enter");
-                if (!prefix || r.startsWith(prefix)) {
-                    a.classList.add("calibre-hint-visible");
-                    a.dataset.calibreHintRender = leftover = r.slice(prefix.length) || " ";
-                    if (leftover === " ") {
-                        a.classList.add("calibre-hint-enter");
-                    }
-                } else {
-                    a.classList.remove("calibre-hint-visible");
-                }
-            }
-        };
-        if (!apply_prefix_to_hints.__argnames__) Object.defineProperties(apply_prefix_to_hints, {
-            __argnames__ : {value: ["prefix"]},
-            __module__ : {value: "read_book.hints"}
-        });
-
-        ρσ_modules["read_book.hints"].Hints = Hints;
-        ρσ_modules["read_book.hints"].is_visible = is_visible;
-        ρσ_modules["read_book.hints"].encode = encode;
-        ρσ_modules["read_book.hints"].hint_visible_links = hint_visible_links;
-        ρσ_modules["read_book.hints"].unhint_links = unhint_links;
-        ρσ_modules["read_book.hints"].apply_prefix_to_hints = apply_prefix_to_hints;
-    })();
-
-    (function(){
         var __name__ = "complete";
         var E = ρσ_modules.elementmaker.E;
 
@@ -25927,701 +25927,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.toc";
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var create_search_bar = ρσ_modules.complete.create_search_bar;
-
-        var ensure_id = ρσ_modules.dom.ensure_id;
-        var set_css = ρσ_modules.dom.set_css;
-        var svgicon = ρσ_modules.dom.svgicon;
-
-        var error_dialog = ρσ_modules.modals.error_dialog;
-
-        var position_for_anchor = ρσ_modules["read_book.anchor_visibility"].position_for_anchor;
-
-        var current_book = ρσ_modules["read_book.globals"].current_book;
-        var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
-        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
-        var get_boss = ρσ_modules["read_book.globals"].get_boss;
-        var set_toc_anchor_map = ρσ_modules["read_book.globals"].set_toc_anchor_map;
-        var toc_anchor_map = ρσ_modules["read_book.globals"].toc_anchor_map;
-
-        var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
-
-        var create_tree = ρσ_modules.widgets.create_tree;
-        var find_text_in_tree = ρσ_modules.widgets.find_text_in_tree;
-        var scroll_tree_item_into_view = ρσ_modules.widgets.scroll_tree_item_into_view;
-
-        function update_visible_toc_nodes(visible_anchors) {
-            update_visible_toc_nodes.data = visible_anchors;
-        };
-        if (!update_visible_toc_nodes.__argnames__) Object.defineProperties(update_visible_toc_nodes, {
-            __argnames__ : {value: ["visible_anchors"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        update_visible_toc_nodes.data = Object.create(null);
-        function iter_toc_descendants(node, callback) {
-            var child;
-            var ρσ_Iter160 = node.children;
-            ρσ_Iter160 = ((typeof ρσ_Iter160[Symbol.iterator] === "function") ? (ρσ_Iter160 instanceof Map ? ρσ_Iter160.keys() : ρσ_Iter160) : Object.keys(ρσ_Iter160));
-            for (var ρσ_Index160 of ρσ_Iter160) {
-                child = ρσ_Index160;
-                if (callback(child)) {
-                    return;
-                }
-                iter_toc_descendants(child, callback);
-            }
-        };
-        if (!iter_toc_descendants.__argnames__) Object.defineProperties(iter_toc_descendants, {
-            __argnames__ : {value: ["node", "callback"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_toc_nodes_bordering_spine_item(toc, csi) {
-            var spine, ρσ_unpack, spine_before, spine_after, which, before, after, prev, name;
-            toc = toc || current_book().manifest.toc;
-            csi = csi || current_spine_item();
-            spine = current_book().manifest.spine;
-            ρσ_unpack = [Object.create(null), Object.create(null)];
-            spine_before = ρσ_unpack[0];
-            spine_after = ρσ_unpack[1];
-            which = spine_before;
-            before = after = prev = null;
-            var ρσ_Iter161 = spine;
-            ρσ_Iter161 = ((typeof ρσ_Iter161[Symbol.iterator] === "function") ? (ρσ_Iter161 instanceof Map ? ρσ_Iter161.keys() : ρσ_Iter161) : Object.keys(ρσ_Iter161));
-            for (var ρσ_Index161 of ρσ_Iter161) {
-                name = ρσ_Index161;
-                if (name === csi) {
-                    which = spine_after;
-                } else {
-                    which[(typeof name === "number" && name < 0) ? which.length + name : name] = true;
-                }
-            }
-            iter_toc_descendants(toc, (function() {
-                var ρσ_anonfunc = function (node) {
-                    if (node.dest) {
-                        if (spine_before[ρσ_bound_index(node.dest, spine_before)]) {
-                            prev = node;
-                        } else if (spine_after[ρσ_bound_index(node.dest, spine_after)]) {
-                            if (!before) {
-                                before = prev;
-                            }
-                            if (!after) {
-                                after = node;
-                            }
-                            return true;
-                        }
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["node"]},
-                    __module__ : {value: "read_book.toc"}
-                });
-                return ρσ_anonfunc;
-            })());
-            if (!before && prev !== null) {
-                before = prev;
-            }
-            return [before, after];
-        };
-        if (!get_toc_nodes_bordering_spine_item.__argnames__) Object.defineProperties(get_toc_nodes_bordering_spine_item, {
-            __argnames__ : {value: ["toc", "csi"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_border_nodes(toc, id_map) {
-            var data, ρσ_unpack, before, after, sb, sa;
-            data = update_visible_toc_nodes.data;
-            ρσ_unpack = [data.before, data.after];
-            before = ρσ_unpack[0];
-            after = ρσ_unpack[1];
-            if (before) {
-                before = id_map[(typeof before === "number" && before < 0) ? id_map.length + before : before];
-            }
-            if (after) {
-                after = id_map[(typeof after === "number" && after < 0) ? id_map.length + after : after];
-            }
-            if (before && after) {
-                return [before, after];
-            }
-            ρσ_unpack = get_toc_nodes_bordering_spine_item(toc);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            sb = ρσ_unpack[0];
-            sa = ρσ_unpack[1];
-            before = before || sb;
-            after = after || sa;
-            return [before, after];
-        };
-        if (!get_border_nodes.__argnames__) Object.defineProperties(get_border_nodes, {
-            __argnames__ : {value: ["toc", "id_map"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function family_for_toc_node(toc_node_id, parent_map, id_map) {
-            var toc, ρσ_unpack, family, node, parent;
-            if (!id_map || !parent_map) {
-                toc = current_book().manifest.toc;
-                ρσ_unpack = get_toc_maps(toc);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-                parent_map = ρσ_unpack[0];
-                id_map = ρσ_unpack[1];
-            }
-            family = [];
-            node = id_map[(typeof toc_node_id === "number" && toc_node_id < 0) ? id_map.length + toc_node_id : toc_node_id];
-            while (node && node.title) {
-                family.unshift(node);
-                parent = parent_map[ρσ_bound_index(node.id, parent_map)];
-                node = null;
-                if (parent) {
-                    node = id_map[ρσ_bound_index(parent.id, id_map)];
-                }
-            }
-            return family;
-        };
-        if (!family_for_toc_node.__argnames__) Object.defineProperties(family_for_toc_node, {
-            __argnames__ : {value: ["toc_node_id", "parent_map", "id_map"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_page_list_id_map(page_list) {
-            return (function() {
-                var ρσ_Iter = page_list, ρσ_Result = Object.create(null), x;
-                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                for (var ρσ_Index of ρσ_Iter) {
-                    x = ρσ_Index;
-                    ρσ_Result[x.id] = (x);
-                }
-                return ρσ_Result;
-            })();
-        };
-        if (!get_page_list_id_map.__argnames__) Object.defineProperties(get_page_list_id_map, {
-            __argnames__ : {value: ["page_list"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_page_list_before(page_list, id_map) {
-            var csi, spine, ρσ_unpack, spine_before, spine_after, which, before, prev, name, item;
-            csi = csi || current_spine_item();
-            spine = current_book().manifest.spine;
-            ρσ_unpack = [Object.create(null), Object.create(null)];
-            spine_before = ρσ_unpack[0];
-            spine_after = ρσ_unpack[1];
-            which = spine_before;
-            before = prev = null;
-            var ρσ_Iter162 = spine;
-            ρσ_Iter162 = ((typeof ρσ_Iter162[Symbol.iterator] === "function") ? (ρσ_Iter162 instanceof Map ? ρσ_Iter162.keys() : ρσ_Iter162) : Object.keys(ρσ_Iter162));
-            for (var ρσ_Index162 of ρσ_Iter162) {
-                name = ρσ_Index162;
-                if (name === csi) {
-                    which = spine_after;
-                } else {
-                    which[(typeof name === "number" && name < 0) ? which.length + name : name] = true;
-                }
-            }
-            var ρσ_Iter163 = page_list;
-            ρσ_Iter163 = ((typeof ρσ_Iter163[Symbol.iterator] === "function") ? (ρσ_Iter163 instanceof Map ? ρσ_Iter163.keys() : ρσ_Iter163) : Object.keys(ρσ_Iter163));
-            for (var ρσ_Index163 of ρσ_Iter163) {
-                item = ρσ_Index163;
-                if (item.dest) {
-                    if (spine_before[ρσ_bound_index(item.dest, spine_before)]) {
-                        prev = item;
-                    } else if (spine_after[ρσ_bound_index(item.dest, spine_after)]) {
-                        if (!before) {
-                            before = prev;
-                        }
-                        break;
-                    }
-                }
-            }
-            return before;
-        };
-        if (!get_page_list_before.__argnames__) Object.defineProperties(get_page_list_before, {
-            __argnames__ : {value: ["page_list", "id_map"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_current_pagelist_items() {
-            var ans, page_list, data, id_map, before;
-            ans = Object.create(null);
-            page_list = current_book().manifest.page_list;
-            data = ρσ_exists.d(update_visible_toc_nodes.data).page_list;
-            if (!data || !page_list) {
-                return ans;
-            }
-            id_map = get_page_list_id_map(page_list);
-            if (data.has_visible) {
-                ans = data.visible_anchors;
-            } else {
-                if (ρσ_exists.n(data.before)) {
-                    ans[ρσ_bound_index(data.before, ans)] = true;
-                } else {
-                    before = get_page_list_before(page_list, id_map);
-                    if ((typeof before !== "undefined" && before !== null)) {
-                        ans[ρσ_bound_index(before.id, ans)] = true;
-                    }
-                }
-            }
-            return (function() {
-                var ρσ_Iter = Object.keys(ans), ρσ_Result = [], x;
-                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                for (var ρσ_Index of ρσ_Iter) {
-                    x = ρσ_Index;
-                    ρσ_Result.push(id_map[(typeof x === "number" && x < 0) ? id_map.length + x : x]);
-                }
-                ρσ_Result = ρσ_list_constructor(ρσ_Result);
-                return ρσ_Result;
-            })();
-        };
-        if (!get_current_pagelist_items.__module__) Object.defineProperties(get_current_pagelist_items, {
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_current_toc_nodes() {
-            var toc, ρσ_unpack, parent_map, id_map, data, ans, before, r, fam, x;
-            toc = current_book().manifest.toc;
-            ρσ_unpack = get_toc_maps(toc);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            parent_map = ρσ_unpack[0];
-            id_map = ρσ_unpack[1];
-            data = update_visible_toc_nodes.data;
-            ans = Object.create(null);
-            if (data.has_visible) {
-                ans = data.visible_anchors;
-            } else {
-                if (data.before) {
-                    ans[ρσ_bound_index(data.before, ans)] = true;
-                } else {
-                    before = get_border_nodes(toc, id_map)[0];
-                    if (before) {
-                        ans[ρσ_bound_index(before.id, ans)] = true;
-                    }
-                }
-            }
-            r = [];
-            var ρσ_Iter164 = Object.keys(ans);
-            ρσ_Iter164 = ((typeof ρσ_Iter164[Symbol.iterator] === "function") ? (ρσ_Iter164 instanceof Map ? ρσ_Iter164.keys() : ρσ_Iter164) : Object.keys(ρσ_Iter164));
-            for (var ρσ_Index164 of ρσ_Iter164) {
-                x = ρσ_Index164;
-                fam = family_for_toc_node(x, parent_map, id_map);
-                if ((typeof fam !== "undefined" && fam !== null ? fam : Object.create(null)).length) {
-                    r.push(fam);
-                }
-            }
-            return r;
-        };
-        if (!get_current_toc_nodes.__module__) Object.defineProperties(get_current_toc_nodes, {
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_highlighted_toc_nodes(toc, parent_map, id_map, skip_parents) {
-            var data, ans, before, p, node_id;
-            data = update_visible_toc_nodes.data;
-            ans = Object.create(null);
-            if (data.has_visible) {
-                ans = data.visible_anchors;
-            } else {
-                if (data.before) {
-                    ans[ρσ_bound_index(data.before, ans)] = true;
-                } else {
-                    before = get_border_nodes(toc, id_map)[0];
-                    if (before) {
-                        ans[ρσ_bound_index(before.id, ans)] = true;
-                    }
-                }
-            }
-            if (!skip_parents) {
-                var ρσ_Iter165 = Object.keys(ans);
-                ρσ_Iter165 = ((typeof ρσ_Iter165[Symbol.iterator] === "function") ? (ρσ_Iter165 instanceof Map ? ρσ_Iter165.keys() : ρσ_Iter165) : Object.keys(ρσ_Iter165));
-                for (var ρσ_Index165 of ρσ_Iter165) {
-                    node_id = ρσ_Index165;
-                    p = parent_map[(typeof node_id === "number" && node_id < 0) ? parent_map.length + node_id : node_id];
-                    while (p && p.title) {
-                        ans[ρσ_bound_index(p.id, ans)] = true;
-                        p = parent_map[ρσ_bound_index(p.id, parent_map)];
-                    }
-                }
-            }
-            return ans;
-        };
-        if (!get_highlighted_toc_nodes.__argnames__) Object.defineProperties(get_highlighted_toc_nodes, {
-            __argnames__ : {value: ["toc", "parent_map", "id_map", "skip_parents"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_toc_maps(toc) {
-            var ρσ_unpack, parent_map, id_map;
-            if (!toc) {
-                toc = current_book().manifest.toc;
-            }
-            ρσ_unpack = [Object.create(null), Object.create(null)];
-            parent_map = ρσ_unpack[0];
-            id_map = ρσ_unpack[1];
-            function process_node(node, parent) {
-                var c;
-                id_map[ρσ_bound_index(node.id, id_map)] = node;
-                parent_map[ρσ_bound_index(node.id, parent_map)] = parent;
-                var ρσ_Iter166 = node.children;
-                ρσ_Iter166 = ((typeof ρσ_Iter166[Symbol.iterator] === "function") ? (ρσ_Iter166 instanceof Map ? ρσ_Iter166.keys() : ρσ_Iter166) : Object.keys(ρσ_Iter166));
-                for (var ρσ_Index166 of ρσ_Iter166) {
-                    c = ρσ_Index166;
-                    process_node(c, node);
-                }
-            };
-            if (!process_node.__argnames__) Object.defineProperties(process_node, {
-                __argnames__ : {value: ["node", "parent"]},
-                __module__ : {value: "read_book.toc"}
-            });
-
-            process_node(toc);
-            return [parent_map, id_map];
-        };
-        if (!get_toc_maps.__argnames__) Object.defineProperties(get_toc_maps, {
-            __argnames__ : {value: ["toc"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function get_book_mark_title() {
-            var toc, ρσ_unpack, parent_map, id_map, highlighted_toc_nodes, node, node_id;
-            toc = current_book().manifest.toc;
-            ρσ_unpack = get_toc_maps(toc);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            parent_map = ρσ_unpack[0];
-            id_map = ρσ_unpack[1];
-            highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map, true);
-            var ρσ_Iter167 = Object.keys(highlighted_toc_nodes);
-            ρσ_Iter167 = ((typeof ρσ_Iter167[Symbol.iterator] === "function") ? (ρσ_Iter167 instanceof Map ? ρσ_Iter167.keys() : ρσ_Iter167) : Object.keys(ρσ_Iter167));
-            for (var ρσ_Index167 of ρσ_Iter167) {
-                node_id = ρσ_Index167;
-                node = id_map[(typeof node_id === "number" && node_id < 0) ? id_map.length + node_id : node_id];
-                if (node.title) {
-                    return node.title;
-                }
-            }
-            return "";
-        };
-        if (!get_book_mark_title.__module__) Object.defineProperties(get_book_mark_title, {
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function create_toc_tree(toc, onclick) {
-            var ρσ_unpack, parent_map, id_map, highlighted_toc_nodes;
-            ρσ_unpack = get_toc_maps(toc);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            parent_map = ρσ_unpack[0];
-            id_map = ρσ_unpack[1];
-            highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map);
-            function populate_data(node, li, a) {
-                var title;
-                li.dataset.tocDest = node.dest || "";
-                li.dataset.tocFrag = node.frag || "";
-                title = node.title || "";
-                if (highlighted_toc_nodes[ρσ_bound_index(node.id, highlighted_toc_nodes)]) {
-                    a.appendChild(E.b(E.i(title)));
-                } else {
-                    a.textContent = title;
-                }
-            };
-            if (!populate_data.__argnames__) Object.defineProperties(populate_data, {
-                __argnames__ : {value: ["node", "li", "a"]},
-                __module__ : {value: "read_book.toc"}
-            });
-
-            return create_tree(toc, populate_data, onclick);
-        };
-        if (!create_toc_tree.__argnames__) Object.defineProperties(create_toc_tree, {
-            __argnames__ : {value: ["toc", "onclick"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function do_search(text) {
-            var container, a;
-            container = document.getElementById(this);
-            a = find_text_in_tree(container, text);
-            if (!text) {
-                return;
-            }
-            if (!a) {
-                return error_dialog(_("No matches found"), _("The text \"{}\" was not found in the Table of Contents").format(text));
-            }
-            scroll_tree_item_into_view(a);
-        };
-        if (!do_search.__argnames__) Object.defineProperties(do_search, {
-            __argnames__ : {value: ["text"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function create_toc_panel(book, container, onclick) {
-            var toc_panel, toc_panel_id, search_button, t, search_bar, child;
-            function handle_click(event, li) {
-                if (event.button === 0) {
-                    onclick(li.dataset.tocDest, li.dataset.tocFrag);
-                }
-            };
-            if (!handle_click.__argnames__) Object.defineProperties(handle_click, {
-                __argnames__ : {value: ["event", "li"]},
-                __module__ : {value: "read_book.toc"}
-            });
-
-            toc_panel = create_toc_tree(book.manifest.toc, handle_click);
-            toc_panel_id = ensure_id(toc_panel);
-            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column", height: "100%", min_height: "100%", overflow: "hidden", max_height: "100vh", max_width: "100vw"})]));
-            ρσ_interpolate_kwargs.call(this, set_css, [toc_panel].concat([ρσ_desugar_kwargs({flex_grow: "10"})]));
-            container.appendChild(toc_panel);
-            search_button = ρσ_interpolate_kwargs.call(E, E.a, [svgicon("search")].concat([ρσ_desugar_kwargs({class_: "calibre-icon-button", href: "javascript:void(0)", title: _("Search"), onmousedown: (function() {
-                var ρσ_anonfunc = function (e) {
-                    e.preventDefault();
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["e"]},
-                    __module__ : {value: "read_book.toc"}
-                });
-                return ρσ_anonfunc;
-            })()})]));
-            t = _("Search Table of Contents");
-            search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [do_search.bind(toc_panel_id), "search-book-toc"].concat([ρσ_desugar_kwargs({button: search_button, placeholder: t})]));
-            ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "1em"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex; align-items: center"})])));
-            var ρσ_Iter168 = container.childNodes;
-            ρσ_Iter168 = ((typeof ρσ_Iter168[Symbol.iterator] === "function") ? (ρσ_Iter168 instanceof Map ? ρσ_Iter168.keys() : ρσ_Iter168) : Object.keys(ρσ_Iter168));
-            for (var ρσ_Index168 of ρσ_Iter168) {
-                child = ρσ_Index168;
-                child.style.flexShrink = "0";
-            }
-            toc_panel.style.flexGrow = "100";
-            toc_panel.style.flexShrink = "1";
-            toc_panel.style.overflow = "auto";
-        };
-        if (!create_toc_panel.__argnames__) Object.defineProperties(create_toc_panel, {
-            __argnames__ : {value: ["book", "container", "onclick"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function recalculate_toc_anchor_positions(tam, plam) {
-            var name, am, anchors, pos_map, ρσ_unpack, i, anchor, anchor_funcs, current_map;
-            name = current_spine_item().name;
-            am = Object.create(null);
-            anchors = [];
-            pos_map = Object.create(null);
-            var ρσ_Iter169 = enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []);
-            ρσ_Iter169 = ((typeof ρσ_Iter169[Symbol.iterator] === "function") ? (ρσ_Iter169 instanceof Map ? ρσ_Iter169.keys() : ρσ_Iter169) : Object.keys(ρσ_Iter169));
-            for (var ρσ_Index169 of ρσ_Iter169) {
-                ρσ_unpack = ρσ_Index169;
-                i = ρσ_unpack[0];
-                anchor = ρσ_unpack[1];
-                am[ρσ_bound_index(anchor.id, am)] = position_for_anchor(anchor.frag);
-                anchors.push(anchor.id);
-                pos_map[ρσ_bound_index(anchor.id, pos_map)] = i;
-            }
-            anchor_funcs = get_boss().anchor_funcs;
-            anchors.sort((function() {
-                var ρσ_anonfunc = function (a, b) {
-                    return anchor_funcs.cmp(am[(typeof a === "number" && a < 0) ? am.length + a : a], am[(typeof b === "number" && b < 0) ? am.length + b : b]) || pos_map[(typeof a === "number" && a < 0) ? pos_map.length + a : a] - pos_map[(typeof b === "number" && b < 0) ? pos_map.length + b : b];
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["a", "b"]},
-                    __module__ : {value: "read_book.toc"}
-                });
-                return ρσ_anonfunc;
-            })());
-            current_map = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["layout_mode"] = current_layout_mode();
-                ρσ_d["width"] = scroll_viewport.width();
-                ρσ_d["height"] = scroll_viewport.height();
-                ρσ_d["pos_map"] = am;
-                ρσ_d["sorted_anchors"] = anchors;
-                return ρσ_d;
-            }).call(this);
-            am = Object.create(null);
-            anchors = [];
-            pos_map = Object.create(null);
-            if (plam) {
-                var ρσ_Iter170 = enumerate(plam[(typeof name === "number" && name < 0) ? plam.length + name : name] || []);
-                ρσ_Iter170 = ((typeof ρσ_Iter170[Symbol.iterator] === "function") ? (ρσ_Iter170 instanceof Map ? ρσ_Iter170.keys() : ρσ_Iter170) : Object.keys(ρσ_Iter170));
-                for (var ρσ_Index170 of ρσ_Iter170) {
-                    ρσ_unpack = ρσ_Index170;
-                    i = ρσ_unpack[0];
-                    anchor = ρσ_unpack[1];
-                    am[ρσ_bound_index(anchor.id, am)] = position_for_anchor(anchor.frag, true);
-                    anchors.push(anchor.id);
-                    pos_map[ρσ_bound_index(anchor.id, pos_map)] = i;
-                }
-            }
-            anchors.sort((function() {
-                var ρσ_anonfunc = function (a, b) {
-                    return anchor_funcs.cmp(am[(typeof a === "number" && a < 0) ? am.length + a : a], am[(typeof b === "number" && b < 0) ? am.length + b : b]) || pos_map[(typeof a === "number" && a < 0) ? pos_map.length + a : a] - pos_map[(typeof b === "number" && b < 0) ? pos_map.length + b : b];
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["a", "b"]},
-                    __module__ : {value: "read_book.toc"}
-                });
-                return ρσ_anonfunc;
-            })());
-            current_map.page_list_pos_map = am;
-            current_map.page_list_sorted_anchors = anchors;
-            set_toc_anchor_map(current_map);
-            return current_map;
-        };
-        if (!recalculate_toc_anchor_positions.__argnames__) Object.defineProperties(recalculate_toc_anchor_positions, {
-            __argnames__ : {value: ["tam", "plam"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function current_toc_anchor_map(tam, plam) {
-            var current_map;
-            current_map = toc_anchor_map();
-            if (!((current_map && current_map.layout_mode === current_layout_mode() && current_map.width === scroll_viewport.width() && current_map.height === scroll_viewport.height()))) {
-                current_map = recalculate_toc_anchor_positions(tam, plam);
-            }
-            return current_map;
-        };
-        if (!current_toc_anchor_map.__argnames__) Object.defineProperties(current_toc_anchor_map, {
-            __argnames__ : {value: ["tam", "plam"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function update_visible_toc_anchors(toc_anchor_map, page_list_anchor_map, recalculate) {
-            var anchor_funcs, tam, before, after, visible_anchors, has_visible, pos, visibility, anchor_id, ans;
-            if (recalculate) {
-                recalculate_toc_anchor_positions(toc_anchor_map, page_list_anchor_map);
-            }
-            anchor_funcs = get_boss().anchor_funcs;
-            tam = current_toc_anchor_map(toc_anchor_map, page_list_anchor_map);
-            before = after = null;
-            visible_anchors = Object.create(null);
-            has_visible = false;
-            var ρσ_Iter171 = tam.sorted_anchors;
-            ρσ_Iter171 = ((typeof ρσ_Iter171[Symbol.iterator] === "function") ? (ρσ_Iter171 instanceof Map ? ρσ_Iter171.keys() : ρσ_Iter171) : Object.keys(ρσ_Iter171));
-            for (var ρσ_Index171 of ρσ_Iter171) {
-                anchor_id = ρσ_Index171;
-                pos = (ρσ_expr_temp = tam.pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
-                visibility = anchor_funcs.visibility(pos);
-                if (visibility < 0) {
-                    before = anchor_id;
-                } else if (visibility === 0) {
-                    has_visible = true;
-                    visible_anchors[(typeof anchor_id === "number" && anchor_id < 0) ? visible_anchors.length + anchor_id : anchor_id] = true;
-                } else if (visibility > 0) {
-                    after = anchor_id;
-                    break;
-                }
-            }
-            ans = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["visible_anchors"] = visible_anchors;
-                ρσ_d["has_visible"] = has_visible;
-                ρσ_d["before"] = before;
-                ρσ_d["after"] = after;
-                ρσ_d["sorted_anchors"] = tam.sorted_anchors;
-                return ρσ_d;
-            }).call(this);
-            before = after = null;
-            visible_anchors = Object.create(null);
-            has_visible = false;
-            var ρσ_Iter172 = tam.page_list_sorted_anchors;
-            ρσ_Iter172 = ((typeof ρσ_Iter172[Symbol.iterator] === "function") ? (ρσ_Iter172 instanceof Map ? ρσ_Iter172.keys() : ρσ_Iter172) : Object.keys(ρσ_Iter172));
-            for (var ρσ_Index172 of ρσ_Iter172) {
-                anchor_id = ρσ_Index172;
-                pos = (ρσ_expr_temp = tam.page_list_pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
-                visibility = anchor_funcs.visibility(pos);
-                if (visibility < 0) {
-                    before = anchor_id;
-                } else if (visibility === 0) {
-                    has_visible = true;
-                    visible_anchors[(typeof anchor_id === "number" && anchor_id < 0) ? visible_anchors.length + anchor_id : anchor_id] = true;
-                } else if (visibility > 0) {
-                    after = anchor_id;
-                    break;
-                }
-            }
-            ans.page_list = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["visible_anchors"] = visible_anchors;
-                ρσ_d["has_visible"] = has_visible;
-                ρσ_d["before"] = before;
-                ρσ_d["after"] = after;
-                ρσ_d["sorted_anchors"] = tam.page_list_sorted_anchors;
-                return ρσ_d;
-            }).call(this);
-            return ans;
-        };
-        if (!update_visible_toc_anchors.__argnames__) Object.defineProperties(update_visible_toc_anchors, {
-            __argnames__ : {value: ["toc_anchor_map", "page_list_anchor_map", "recalculate"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        function find_anchor_before_range(r, toc_anchor_map, page_list_anchor_map) {
-            var name, prev_anchor, tam, anchors, amap, x, anchor, is_before, elem, q, anchor_id;
-            name = current_spine_item().name;
-            prev_anchor = null;
-            tam = current_toc_anchor_map(toc_anchor_map, page_list_anchor_map);
-            anchors = toc_anchor_map[(typeof name === "number" && name < 0) ? toc_anchor_map.length + name : name];
-            if (anchors) {
-                amap = (function() {
-                    var ρσ_Iter = anchors, ρσ_Result = Object.create(null), x;
-                    ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                    for (var ρσ_Index of ρσ_Iter) {
-                        x = ρσ_Index;
-                        ρσ_Result[x.id] = (x);
-                    }
-                    return ρσ_Result;
-                })();
-                var ρσ_Iter173 = tam.sorted_anchors;
-                ρσ_Iter173 = ((typeof ρσ_Iter173[Symbol.iterator] === "function") ? (ρσ_Iter173 instanceof Map ? ρσ_Iter173.keys() : ρσ_Iter173) : Object.keys(ρσ_Iter173));
-                for (var ρσ_Index173 of ρσ_Iter173) {
-                    anchor_id = ρσ_Index173;
-                    anchor = amap[(typeof anchor_id === "number" && anchor_id < 0) ? amap.length + anchor_id : anchor_id];
-                    is_before = true;
-                    if (anchor.frag) {
-                        elem = document.getElementById(anchor.frag);
-                        if (elem) {
-                            q = document.createRange();
-                            q.selectNode(elem);
-                            if (q.compareBoundaryPoints(window.Range.START_TO_START, r) > 0) {
-                                is_before = false;
-                            }
-                        }
-                    }
-                    if (is_before) {
-                        prev_anchor = anchor;
-                    } else {
-                        break;
-                    }
-                }
-            }
-            return prev_anchor;
-        };
-        if (!find_anchor_before_range.__argnames__) Object.defineProperties(find_anchor_before_range, {
-            __argnames__ : {value: ["r", "toc_anchor_map", "page_list_anchor_map"]},
-            __module__ : {value: "read_book.toc"}
-        });
-
-        ρσ_modules["read_book.toc"].update_visible_toc_nodes = update_visible_toc_nodes;
-        ρσ_modules["read_book.toc"].iter_toc_descendants = iter_toc_descendants;
-        ρσ_modules["read_book.toc"].get_toc_nodes_bordering_spine_item = get_toc_nodes_bordering_spine_item;
-        ρσ_modules["read_book.toc"].get_border_nodes = get_border_nodes;
-        ρσ_modules["read_book.toc"].family_for_toc_node = family_for_toc_node;
-        ρσ_modules["read_book.toc"].get_page_list_id_map = get_page_list_id_map;
-        ρσ_modules["read_book.toc"].get_page_list_before = get_page_list_before;
-        ρσ_modules["read_book.toc"].get_current_pagelist_items = get_current_pagelist_items;
-        ρσ_modules["read_book.toc"].get_current_toc_nodes = get_current_toc_nodes;
-        ρσ_modules["read_book.toc"].get_highlighted_toc_nodes = get_highlighted_toc_nodes;
-        ρσ_modules["read_book.toc"].get_toc_maps = get_toc_maps;
-        ρσ_modules["read_book.toc"].get_book_mark_title = get_book_mark_title;
-        ρσ_modules["read_book.toc"].create_toc_tree = create_toc_tree;
-        ρσ_modules["read_book.toc"].do_search = do_search;
-        ρσ_modules["read_book.toc"].create_toc_panel = create_toc_panel;
-        ρσ_modules["read_book.toc"].recalculate_toc_anchor_positions = recalculate_toc_anchor_positions;
-        ρσ_modules["read_book.toc"].current_toc_anchor_map = current_toc_anchor_map;
-        ρσ_modules["read_book.toc"].update_visible_toc_anchors = update_visible_toc_anchors;
-        ρσ_modules["read_book.toc"].find_anchor_before_range = find_anchor_before_range;
-    })();
-
-    (function(){
         var __name__ = "read_book.highlights";
         var ICON_SIZE_VAL, ICON_SIZE_UNIT, ICON_SIZE, builtin_colors_light, builtin_colors_dark, builtin_decorations_light, builtin_decorations_dark, all_style_keys, url_pat, closing_bracket_map, opening_brackets;
         var E = ρσ_modules.elementmaker.E;
@@ -26706,10 +26011,10 @@ return this.__repr__();
         function all_builtin_styles() {
             var ans, col, which;
             ans = [];
-            var ρσ_Iter174 = builtin_colors_light;
-            ρσ_Iter174 = ((typeof ρσ_Iter174[Symbol.iterator] === "function") ? (ρσ_Iter174 instanceof Map ? ρσ_Iter174.keys() : ρσ_Iter174) : Object.keys(ρσ_Iter174));
-            for (var ρσ_Index174 of ρσ_Iter174) {
-                col = ρσ_Index174;
+            var ρσ_Iter160 = builtin_colors_light;
+            ρσ_Iter160 = ((typeof ρσ_Iter160[Symbol.iterator] === "function") ? (ρσ_Iter160 instanceof Map ? ρσ_Iter160.keys() : ρσ_Iter160) : Object.keys(ρσ_Iter160));
+            for (var ρσ_Index160 of ρσ_Iter160) {
+                col = ρσ_Index160;
                 ans.push((function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["type"] = "builtin";
@@ -26718,10 +26023,10 @@ return this.__repr__();
                     return ρσ_d;
                 }).call(this));
             }
-            var ρσ_Iter175 = builtin_decorations_light;
-            ρσ_Iter175 = ((typeof ρσ_Iter175[Symbol.iterator] === "function") ? (ρσ_Iter175 instanceof Map ? ρσ_Iter175.keys() : ρσ_Iter175) : Object.keys(ρσ_Iter175));
-            for (var ρσ_Index175 of ρσ_Iter175) {
-                which = ρσ_Index175;
+            var ρσ_Iter161 = builtin_decorations_light;
+            ρσ_Iter161 = ((typeof ρσ_Iter161[Symbol.iterator] === "function") ? (ρσ_Iter161 instanceof Map ? ρσ_Iter161.keys() : ρσ_Iter161) : Object.keys(ρσ_Iter161));
+            for (var ρσ_Index161 of ρσ_Iter161) {
+                which = ρσ_Index161;
                 ans.push((function(){
                     var ρσ_d = Object.create(null);
                     ρσ_d["type"] = "builtin";
@@ -26977,19 +26282,19 @@ return this.__repr__();
         function custom_styles_equal(a, b) {
             var seen, k;
             seen = Object.create(null);
-            var ρσ_Iter176 = a;
-            ρσ_Iter176 = ((typeof ρσ_Iter176[Symbol.iterator] === "function") ? (ρσ_Iter176 instanceof Map ? ρσ_Iter176.keys() : ρσ_Iter176) : Object.keys(ρσ_Iter176));
-            for (var ρσ_Index176 of ρσ_Iter176) {
-                k = ρσ_Index176;
+            var ρσ_Iter162 = a;
+            ρσ_Iter162 = ((typeof ρσ_Iter162[Symbol.iterator] === "function") ? (ρσ_Iter162 instanceof Map ? ρσ_Iter162.keys() : ρσ_Iter162) : Object.keys(ρσ_Iter162));
+            for (var ρσ_Index162 of ρσ_Iter162) {
+                k = ρσ_Index162;
                 seen[(typeof k === "number" && k < 0) ? seen.length + k : k] = true;
                 if (a[(typeof k === "number" && k < 0) ? a.length + k : k] !== b[(typeof k === "number" && k < 0) ? b.length + k : k]) {
                     return false;
                 }
             }
-            var ρσ_Iter177 = b;
-            ρσ_Iter177 = ((typeof ρσ_Iter177[Symbol.iterator] === "function") ? (ρσ_Iter177 instanceof Map ? ρσ_Iter177.keys() : ρσ_Iter177) : Object.keys(ρσ_Iter177));
-            for (var ρσ_Index177 of ρσ_Iter177) {
-                k = ρσ_Index177;
+            var ρσ_Iter163 = b;
+            ρσ_Iter163 = ((typeof ρσ_Iter163[Symbol.iterator] === "function") ? (ρσ_Iter163 instanceof Map ? ρσ_Iter163.keys() : ρσ_Iter163) : Object.keys(ρσ_Iter163));
+            for (var ρσ_Index163 of ρσ_Iter163) {
+                k = ρσ_Index163;
                 if (!seen[(typeof k === "number" && k < 0) ? seen.length + k : k]) {
                     if (a[(typeof k === "number" && k < 0) ? a.length + k : k] !== b[(typeof k === "number" && k < 0) ? b.length + k : k]) {
                         return false;
@@ -27007,16 +26312,16 @@ return this.__repr__();
             var ans, custom_highlight_styles, raw;
             ans = [];
             custom_highlight_styles = get_session_data().get("custom_highlight_styles");
-            var ρσ_Iter178 = custom_highlight_styles;
-            ρσ_Iter178 = ((typeof ρσ_Iter178[Symbol.iterator] === "function") ? (ρσ_Iter178 instanceof Map ? ρσ_Iter178.keys() : ρσ_Iter178) : Object.keys(ρσ_Iter178));
-            for (var ρσ_Index178 of ρσ_Iter178) {
-                raw = ρσ_Index178;
+            var ρσ_Iter164 = custom_highlight_styles;
+            ρσ_Iter164 = ((typeof ρσ_Iter164[Symbol.iterator] === "function") ? (ρσ_Iter164 instanceof Map ? ρσ_Iter164.keys() : ρσ_Iter164) : Object.keys(ρσ_Iter164));
+            for (var ρσ_Index164 of ρσ_Iter164) {
+                raw = ρσ_Index164;
                 ans.push(new HighlightStyle(raw));
             }
-            var ρσ_Iter179 = all_builtin_styles();
-            ρσ_Iter179 = ((typeof ρσ_Iter179[Symbol.iterator] === "function") ? (ρσ_Iter179 instanceof Map ? ρσ_Iter179.keys() : ρσ_Iter179) : Object.keys(ρσ_Iter179));
-            for (var ρσ_Index179 of ρσ_Iter179) {
-                raw = ρσ_Index179;
+            var ρσ_Iter165 = all_builtin_styles();
+            ρσ_Iter165 = ((typeof ρσ_Iter165[Symbol.iterator] === "function") ? (ρσ_Iter165 instanceof Map ? ρσ_Iter165.keys() : ρσ_Iter165) : Object.keys(ρσ_Iter165));
+            for (var ρσ_Index165 of ρσ_Iter165) {
+                raw = ρσ_Index165;
                 ans.push(new HighlightStyle(raw));
             }
             return ans;
@@ -27288,16 +26593,16 @@ return this.__repr__();
             })(), self.hide_add_style);
             self.seen_colors = Object.create(null);
             custom_highlight_styles = get_session_data().get("custom_highlight_styles");
-            var ρσ_Iter180 = custom_highlight_styles;
-            ρσ_Iter180 = ((typeof ρσ_Iter180[Symbol.iterator] === "function") ? (ρσ_Iter180 instanceof Map ? ρσ_Iter180.keys() : ρσ_Iter180) : Object.keys(ρσ_Iter180));
-            for (var ρσ_Index180 of ρσ_Iter180) {
-                raw = ρσ_Index180;
+            var ρσ_Iter166 = custom_highlight_styles;
+            ρσ_Iter166 = ((typeof ρσ_Iter166[Symbol.iterator] === "function") ? (ρσ_Iter166 instanceof Map ? ρσ_Iter166.keys() : ρσ_Iter166) : Object.keys(ρσ_Iter166));
+            for (var ρσ_Index166 of ρσ_Iter166) {
+                raw = ρσ_Index166;
                 self.add_color(new HighlightStyle(raw)).classList.add("custom-style");
             }
-            var ρσ_Iter181 = all_builtin_styles();
-            ρσ_Iter181 = ((typeof ρσ_Iter181[Symbol.iterator] === "function") ? (ρσ_Iter181 instanceof Map ? ρσ_Iter181.keys() : ρσ_Iter181) : Object.keys(ρσ_Iter181));
-            for (var ρσ_Index181 of ρσ_Iter181) {
-                raw = ρσ_Index181;
+            var ρσ_Iter167 = all_builtin_styles();
+            ρσ_Iter167 = ((typeof ρσ_Iter167[Symbol.iterator] === "function") ? (ρσ_Iter167 instanceof Map ? ρσ_Iter167.keys() : ρσ_Iter167) : Object.keys(ρσ_Iter167));
+            for (var ρσ_Index167 of ρσ_Iter167) {
+                raw = ρσ_Index167;
                 self.add_color(new HighlightStyle(raw));
             }
             if (!c.querySelector(".current-swatch")) {
@@ -27352,10 +26657,10 @@ return this.__repr__();
             hs = new HighlightStyle(new_style);
             item = self.add_color(hs, true);
             if (!item) {
-                var ρσ_Iter182 = self.container.getElementsByClassName("swatch");
-                ρσ_Iter182 = ((typeof ρσ_Iter182[Symbol.iterator] === "function") ? (ρσ_Iter182 instanceof Map ? ρσ_Iter182.keys() : ρσ_Iter182) : Object.keys(ρσ_Iter182));
-                for (var ρσ_Index182 of ρσ_Iter182) {
-                    q = ρσ_Index182;
+                var ρσ_Iter168 = self.container.getElementsByClassName("swatch");
+                ρσ_Iter168 = ((typeof ρσ_Iter168[Symbol.iterator] === "function") ? (ρσ_Iter168 instanceof Map ? ρσ_Iter168.keys() : ρσ_Iter168) : Object.keys(ρσ_Iter168));
+                for (var ρσ_Index168 of ρσ_Iter168) {
+                    q = ρσ_Index168;
                     if (q.dataset.key === hs.key) {
                         item = q;
                         break;
@@ -27372,10 +26677,10 @@ return this.__repr__();
                     ρσ_d[hs.key] = true;
                     return ρσ_d;
                 }).call(this);
-                var ρσ_Iter183 = sd.get("custom_highlight_styles");
-                ρσ_Iter183 = ((typeof ρσ_Iter183[Symbol.iterator] === "function") ? (ρσ_Iter183 instanceof Map ? ρσ_Iter183.keys() : ρσ_Iter183) : Object.keys(ρσ_Iter183));
-                for (var ρσ_Index183 of ρσ_Iter183) {
-                    style = ρσ_Index183;
+                var ρσ_Iter169 = sd.get("custom_highlight_styles");
+                ρσ_Iter169 = ((typeof ρσ_Iter169[Symbol.iterator] === "function") ? (ρσ_Iter169 instanceof Map ? ρσ_Iter169.keys() : ρσ_Iter169) : Object.keys(ρσ_Iter169));
+                for (var ρσ_Index169 of ρσ_Iter169) {
+                    style = ρσ_Index169;
                     hso = new HighlightStyle(style);
                     if (!seen[ρσ_bound_index(hso.key, seen)]) {
                         new_styles.push(style);
@@ -27458,10 +26763,10 @@ return this.__repr__();
             sd = get_session_data();
             custom_highlight_styles = sd.get("custom_highlight_styles");
             ans = [];
-            var ρσ_Iter184 = custom_highlight_styles;
-            ρσ_Iter184 = ((typeof ρσ_Iter184[Symbol.iterator] === "function") ? (ρσ_Iter184 instanceof Map ? ρσ_Iter184.keys() : ρσ_Iter184) : Object.keys(ρσ_Iter184));
-            for (var ρσ_Index184 of ρσ_Iter184) {
-                x = ρσ_Index184;
+            var ρσ_Iter170 = custom_highlight_styles;
+            ρσ_Iter170 = ((typeof ρσ_Iter170[Symbol.iterator] === "function") ? (ρσ_Iter170 instanceof Map ? ρσ_Iter170.keys() : ρσ_Iter170) : Object.keys(ρσ_Iter170));
+            for (var ρσ_Index170 of ρσ_Iter170) {
+                x = ρσ_Index170;
                 if (!custom_styles_equal(x, cct)) {
                     ans.push(x);
                 }
@@ -27483,10 +26788,10 @@ return this.__repr__();
         EditNotesAndColors.prototype.make_swatch_current = function make_swatch_current(item) {
             var self = this;
             var child;
-            var ρσ_Iter185 = item.parentNode.childNodes;
-            ρσ_Iter185 = ((typeof ρσ_Iter185[Symbol.iterator] === "function") ? (ρσ_Iter185 instanceof Map ? ρσ_Iter185.keys() : ρσ_Iter185) : Object.keys(ρσ_Iter185));
-            for (var ρσ_Index185 of ρσ_Iter185) {
-                child = ρσ_Index185;
+            var ρσ_Iter171 = item.parentNode.childNodes;
+            ρσ_Iter171 = ((typeof ρσ_Iter171[Symbol.iterator] === "function") ? (ρσ_Iter171 instanceof Map ? ρσ_Iter171.keys() : ρσ_Iter171) : Object.keys(ρσ_Iter171));
+            for (var ρσ_Index171 of ρσ_Iter171) {
+                child = ρσ_Index171;
                 child.style.backgroundColor = "unset";
                 child.classList.remove("current-swatch");
             }
@@ -27636,10 +26941,10 @@ return this.__repr__();
                 titles = [ _("Unknown chapter") ];
             }
             node = self;
-            var ρσ_Iter186 = titles;
-            ρσ_Iter186 = ((typeof ρσ_Iter186[Symbol.iterator] === "function") ? (ρσ_Iter186 instanceof Map ? ρσ_Iter186.keys() : ρσ_Iter186) : Object.keys(ρσ_Iter186));
-            for (var ρσ_Index186 of ρσ_Iter186) {
-                title = ρσ_Index186;
+            var ρσ_Iter172 = titles;
+            ρσ_Iter172 = ((typeof ρσ_Iter172[Symbol.iterator] === "function") ? (ρσ_Iter172 instanceof Map ? ρσ_Iter172.keys() : ρσ_Iter172) : Object.keys(ρσ_Iter172));
+            for (var ρσ_Index172 of ρσ_Iter172) {
+                title = ρσ_Index172;
                 node = node.group_for_title(title);
             }
             node.annotations.push(a);
@@ -27670,16 +26975,16 @@ return this.__repr__();
                 lines.push("#".repeat(self.level) + " " + self.title);
                 lines.push("");
             }
-            var ρσ_Iter187 = self.annotations;
-            ρσ_Iter187 = ((typeof ρσ_Iter187[Symbol.iterator] === "function") ? (ρσ_Iter187 instanceof Map ? ρσ_Iter187.keys() : ρσ_Iter187) : Object.keys(ρσ_Iter187));
-            for (var ρσ_Index187 of ρσ_Iter187) {
-                hl = ρσ_Index187;
+            var ρσ_Iter173 = self.annotations;
+            ρσ_Iter173 = ((typeof ρσ_Iter173[Symbol.iterator] === "function") ? (ρσ_Iter173 instanceof Map ? ρσ_Iter173.keys() : ρσ_Iter173) : Object.keys(ρσ_Iter173));
+            for (var ρσ_Index173 of ρσ_Iter173) {
+                hl = ρσ_Index173;
                 render_highlight_as_text(hl, lines, link_prefix, current_query, as_markdown);
             }
-            var ρσ_Iter188 = self.subgroups_in_order;
-            ρσ_Iter188 = ((typeof ρσ_Iter188[Symbol.iterator] === "function") ? (ρσ_Iter188 instanceof Map ? ρσ_Iter188.keys() : ρσ_Iter188) : Object.keys(ρσ_Iter188));
-            for (var ρσ_Index188 of ρσ_Iter188) {
-                title = ρσ_Index188;
+            var ρσ_Iter174 = self.subgroups_in_order;
+            ρσ_Iter174 = ((typeof ρσ_Iter174[Symbol.iterator] === "function") ? (ρσ_Iter174 instanceof Map ? ρσ_Iter174.keys() : ρσ_Iter174) : Object.keys(ρσ_Iter174));
+            for (var ρσ_Index174 of ρσ_Iter174) {
+                title = ρσ_Index174;
                 sg = (ρσ_expr_temp = self.subgroups)[(typeof title === "number" && title < 0) ? ρσ_expr_temp.length + title : title];
                 sg.render_as_text(lines, link_prefix, current_query, as_markdown);
             }
@@ -27750,10 +27055,10 @@ return this.__repr__();
                 as_markdown = fmt === "markdown";
                 lines = [];
                 root = new ChapterGroup;
-                var ρσ_Iter189 = all_highlights;
-                ρσ_Iter189 = ((typeof ρσ_Iter189[Symbol.iterator] === "function") ? (ρσ_Iter189 instanceof Map ? ρσ_Iter189.keys() : ρσ_Iter189) : Object.keys(ρσ_Iter189));
-                for (var ρσ_Index189 of ρσ_Iter189) {
-                    a = ρσ_Index189;
+                var ρσ_Iter175 = all_highlights;
+                ρσ_Iter175 = ((typeof ρσ_Iter175[Symbol.iterator] === "function") ? (ρσ_Iter175 instanceof Map ? ρσ_Iter175.keys() : ρσ_Iter175) : Object.keys(ρσ_Iter175));
+                for (var ρσ_Index175 of ρσ_Iter175) {
+                    a = ρσ_Index175;
                     root.add_annot(a);
                 }
                 root.render_as_text(lines, link_prefix, current_query, as_markdown);
@@ -27878,10 +27183,10 @@ return this.__repr__();
                 all_highlights.reverse();
             }
             q = text.toLowerCase();
-            var ρσ_Iter190 = all_highlights;
-            ρσ_Iter190 = ((typeof ρσ_Iter190[Symbol.iterator] === "function") ? (ρσ_Iter190 instanceof Map ? ρσ_Iter190.keys() : ρσ_Iter190) : Object.keys(ρσ_Iter190));
-            for (var ρσ_Index190 of ρσ_Iter190) {
-                h = ρσ_Index190;
+            var ρσ_Iter176 = all_highlights;
+            ρσ_Iter176 = ((typeof ρσ_Iter176[Symbol.iterator] === "function") ? (ρσ_Iter176 instanceof Map ? ρσ_Iter176.keys() : ρσ_Iter176) : Object.keys(ρσ_Iter176));
+            for (var ρσ_Index176 of ρσ_Iter176) {
+                h = ρσ_Index176;
                 if (h.dataset.title.toLowerCase().indexOf(q) > -1 || h.dataset.notes.toLowerCase().indexOf(q) > -1) {
                     set_current_highlight_entry(h);
                     h.scrollIntoView();
@@ -28005,10 +27310,10 @@ return this.__repr__();
                     return;
                 }
                 pos = 0;
-                var ρσ_Iter191 = urls;
-                ρσ_Iter191 = ((typeof ρσ_Iter191[Symbol.iterator] === "function") ? (ρσ_Iter191 instanceof Map ? ρσ_Iter191.keys() : ρσ_Iter191) : Object.keys(ρσ_Iter191));
-                for (var ρσ_Index191 of ρσ_Iter191) {
-                    ρσ_unpack = ρσ_Index191;
+                var ρσ_Iter177 = urls;
+                ρσ_Iter177 = ((typeof ρσ_Iter177[Symbol.iterator] === "function") ? (ρσ_Iter177 instanceof Map ? ρσ_Iter177.keys() : ρσ_Iter177) : Object.keys(ρσ_Iter177));
+                for (var ρσ_Index177 of ρσ_Iter177) {
+                    ρσ_unpack = ρσ_Index177;
                     s = ρσ_unpack[0];
                     e = ρσ_unpack[1];
                     if (s > pos) {
@@ -28025,10 +27330,10 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter192 = notes.splitlines();
-            ρσ_Iter192 = ((typeof ρσ_Iter192[Symbol.iterator] === "function") ? (ρσ_Iter192 instanceof Map ? ρσ_Iter192.keys() : ρσ_Iter192) : Object.keys(ρσ_Iter192));
-            for (var ρσ_Index192 of ρσ_Iter192) {
-                line = ρσ_Index192;
+            var ρσ_Iter178 = notes.splitlines();
+            ρσ_Iter178 = ((typeof ρσ_Iter178[Symbol.iterator] === "function") ? (ρσ_Iter178 instanceof Map ? ρσ_Iter178.keys() : ρσ_Iter178) : Object.keys(ρσ_Iter178));
+            for (var ρσ_Index178 of ρσ_Iter178) {
+                line = ρσ_Index178;
                 if (!line || !line.strip()) {
                     if (current_para.childNodes.length) {
                         add_para();
@@ -28058,10 +27363,10 @@ return this.__repr__();
         function set_current_highlight_entry(entry) {
             var c, h;
             c = get_container();
-            var ρσ_Iter193 = c.querySelectorAll(".highlight");
-            ρσ_Iter193 = ((typeof ρσ_Iter193[Symbol.iterator] === "function") ? (ρσ_Iter193 instanceof Map ? ρσ_Iter193.keys() : ρσ_Iter193) : Object.keys(ρσ_Iter193));
-            for (var ρσ_Index193 of ρσ_Iter193) {
-                h = ρσ_Index193;
+            var ρσ_Iter179 = c.querySelectorAll(".highlight");
+            ρσ_Iter179 = ((typeof ρσ_Iter179[Symbol.iterator] === "function") ? (ρσ_Iter179 instanceof Map ? ρσ_Iter179.keys() : ρσ_Iter179) : Object.keys(ρσ_Iter179));
+            for (var ρσ_Index179 of ρσ_Iter179) {
+                h = ρσ_Index179;
                 h.classList.remove("current");
             }
             entry.classList.add("current");
@@ -28147,10 +27452,10 @@ return this.__repr__();
         function item_select_toggled() {
             var entries, e;
             entries = all_selected_entries();
-            var ρσ_Iter194 = document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button");
-            ρσ_Iter194 = ((typeof ρσ_Iter194[Symbol.iterator] === "function") ? (ρσ_Iter194 instanceof Map ? ρσ_Iter194.keys() : ρσ_Iter194) : Object.keys(ρσ_Iter194));
-            for (var ρσ_Index194 of ρσ_Iter194) {
-                e = ρσ_Index194;
+            var ρσ_Iter180 = document.querySelectorAll("#" + ρσ_str.format("{}", get_container_id()) + " .sel-button");
+            ρσ_Iter180 = ((typeof ρσ_Iter180[Symbol.iterator] === "function") ? (ρσ_Iter180 instanceof Map ? ρσ_Iter180.keys() : ρσ_Iter180) : Object.keys(ρσ_Iter180));
+            for (var ρσ_Index180 of ρσ_Iter180) {
+                e = ρσ_Index180;
                 e.style.display = (entries.length) ? "inline-flex" : "none";
             }
         };
@@ -28160,10 +27465,10 @@ return this.__repr__();
 
         function clear_selection() {
             var e;
-            var ρσ_Iter195 = document.querySelectorAll(".highlight input:checked");
-            ρσ_Iter195 = ((typeof ρσ_Iter195[Symbol.iterator] === "function") ? (ρσ_Iter195 instanceof Map ? ρσ_Iter195.keys() : ρσ_Iter195) : Object.keys(ρσ_Iter195));
-            for (var ρσ_Index195 of ρσ_Iter195) {
-                e = ρσ_Index195;
+            var ρσ_Iter181 = document.querySelectorAll(".highlight input:checked");
+            ρσ_Iter181 = ((typeof ρσ_Iter181[Symbol.iterator] === "function") ? (ρσ_Iter181 instanceof Map ? ρσ_Iter181.keys() : ρσ_Iter181) : Object.keys(ρσ_Iter181));
+            for (var ρσ_Index181 of ρσ_Iter181) {
+                e = ρσ_Index181;
                 e.checked = false;
             }
             item_select_toggled();
@@ -28174,10 +27479,10 @@ return this.__repr__();
 
         function select_all() {
             var e;
-            var ρσ_Iter196 = document.querySelectorAll(".highlight input");
-            ρσ_Iter196 = ((typeof ρσ_Iter196[Symbol.iterator] === "function") ? (ρσ_Iter196 instanceof Map ? ρσ_Iter196.keys() : ρσ_Iter196) : Object.keys(ρσ_Iter196));
-            for (var ρσ_Index196 of ρσ_Iter196) {
-                e = ρσ_Index196;
+            var ρσ_Iter182 = document.querySelectorAll(".highlight input");
+            ρσ_Iter182 = ((typeof ρσ_Iter182[Symbol.iterator] === "function") ? (ρσ_Iter182 instanceof Map ? ρσ_Iter182.keys() : ρσ_Iter182) : Object.keys(ρσ_Iter182));
+            for (var ρσ_Index182 of ρσ_Iter182) {
+                e = ρσ_Index182;
                 e.checked = true;
             }
         };
@@ -28196,10 +27501,10 @@ return this.__repr__();
                 var ρσ_anonfunc = function (yes) {
                     var entry;
                     if (yes) {
-                        var ρσ_Iter197 = selected_highlight_items;
-                        ρσ_Iter197 = ((typeof ρσ_Iter197[Symbol.iterator] === "function") ? (ρσ_Iter197 instanceof Map ? ρσ_Iter197.keys() : ρσ_Iter197) : Object.keys(ρσ_Iter197));
-                        for (var ρσ_Index197 of ρσ_Iter197) {
-                            entry = ρσ_Index197;
+                        var ρσ_Iter183 = selected_highlight_items;
+                        ρσ_Iter183 = ((typeof ρσ_Iter183[Symbol.iterator] === "function") ? (ρσ_Iter183 instanceof Map ? ρσ_Iter183.keys() : ρσ_Iter183) : Object.keys(ρσ_Iter183));
+                        for (var ρσ_Index183 of ρσ_Iter183) {
+                            entry = ρσ_Index183;
                             entry.style.display = "none";
                             view.highlight_action(entry.dataset.uuid, "delete");
                         }
@@ -28308,10 +27613,10 @@ return this.__repr__();
             container.appendChild(c);
             toc_groups = Object.create(null);
             toc_tt = Object.create(null);
-            var ρσ_Iter198 = annotations_manager.all_highlights();
-            ρσ_Iter198 = ((typeof ρσ_Iter198[Symbol.iterator] === "function") ? (ρσ_Iter198 instanceof Map ? ρσ_Iter198.keys() : ρσ_Iter198) : Object.keys(ρσ_Iter198));
-            for (var ρσ_Index198 of ρσ_Iter198) {
-                h = ρσ_Index198;
+            var ρσ_Iter184 = annotations_manager.all_highlights();
+            ρσ_Iter184 = ((typeof ρσ_Iter184[Symbol.iterator] === "function") ? (ρσ_Iter184 instanceof Map ? ρσ_Iter184.keys() : ρσ_Iter184) : Object.keys(ρσ_Iter184));
+            for (var ρσ_Index184 of ρσ_Iter184) {
+                h = ρσ_Index184;
                 toc = _("Unknown");
                 if (ρσ_exists.d(h.toc_family_titles).length) {
                     toc = (ρσ_expr_temp = h.toc_family_titles)[ρσ_expr_temp.length-1];
@@ -28320,10 +27625,10 @@ return this.__repr__();
                     toc_groups[(typeof toc === "number" && toc < 0) ? toc_groups.length + toc : toc] = [];
                     if (ρσ_exists.d(h.toc_family_titles).length) {
                         lines = [];
-                        var ρσ_Iter199 = enumerate(h.toc_family_titles);
-                        ρσ_Iter199 = ((typeof ρσ_Iter199[Symbol.iterator] === "function") ? (ρσ_Iter199 instanceof Map ? ρσ_Iter199.keys() : ρσ_Iter199) : Object.keys(ρσ_Iter199));
-                        for (var ρσ_Index199 of ρσ_Iter199) {
-                            ρσ_unpack = ρσ_Index199;
+                        var ρσ_Iter185 = enumerate(h.toc_family_titles);
+                        ρσ_Iter185 = ((typeof ρσ_Iter185[Symbol.iterator] === "function") ? (ρσ_Iter185 instanceof Map ? ρσ_Iter185.keys() : ρσ_Iter185) : Object.keys(ρσ_Iter185));
+                        for (var ρσ_Index185 of ρσ_Iter185) {
+                            ρσ_unpack = ρσ_Index185;
                             i = ρσ_unpack[0];
                             node = ρσ_unpack[1];
                             lines.push("  ".repeat(i) + "➤ " + node);
@@ -28346,10 +27651,10 @@ return this.__repr__();
                 __module__ : {value: "read_book.highlights"}
             });
 
-            var ρσ_Iter200 = Object.keys(toc_groups);
-            ρσ_Iter200 = ((typeof ρσ_Iter200[Symbol.iterator] === "function") ? (ρσ_Iter200 instanceof Map ? ρσ_Iter200.keys() : ρσ_Iter200) : Object.keys(ρσ_Iter200));
-            for (var ρσ_Index200 of ρσ_Iter200) {
-                group = ρσ_Index200;
+            var ρσ_Iter186 = Object.keys(toc_groups);
+            ρσ_Iter186 = ((typeof ρσ_Iter186[Symbol.iterator] === "function") ? (ρσ_Iter186 instanceof Map ? ρσ_Iter186.keys() : ρσ_Iter186) : Object.keys(ρσ_Iter186));
+            for (var ρσ_Index186 of ρσ_Iter186) {
+                group = ρσ_Index186;
                 highlights = toc_groups[(typeof group === "number" && group < 0) ? toc_groups.length + group : group];
                 g = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.h3, [tree_icon("caret-right"), tree_icon("caret-down"), E.div(" " + group)].concat([ρσ_desugar_kwargs({title: toc_tt[(typeof group === "number" && group < 0) ? toc_tt.length + group : group] || "", onclick: (function() {
                     var ρσ_anonfunc = function (ev) {
@@ -28371,10 +27676,10 @@ return this.__repr__();
                 })()})])), ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})])].concat([ρσ_desugar_kwargs({class_: "toc-group expanded"})]));
                 c.appendChild(g);
                 ic = g.lastChild;
-                var ρσ_Iter201 = highlights;
-                ρσ_Iter201 = ((typeof ρσ_Iter201[Symbol.iterator] === "function") ? (ρσ_Iter201 instanceof Map ? ρσ_Iter201.keys() : ρσ_Iter201) : Object.keys(ρσ_Iter201));
-                for (var ρσ_Index201 of ρσ_Iter201) {
-                    h = ρσ_Index201;
+                var ρσ_Iter187 = highlights;
+                ρσ_Iter187 = ((typeof ρσ_Iter187[Symbol.iterator] === "function") ? (ρσ_Iter187 instanceof Map ? ρσ_Iter187.keys() : ρσ_Iter187) : Object.keys(ρσ_Iter187));
+                for (var ρσ_Index187 of ρσ_Iter187) {
+                    h = ρσ_Index187;
                     ic.appendChild(highlight_entry(h, onclick, annotations_manager.view, hide_panel));
                 }
             }
@@ -28434,6 +27739,701 @@ return this.__repr__();
         ρσ_modules["read_book.highlights"].highlight_entry = highlight_entry;
         ρσ_modules["read_book.highlights"].create_icon_button = create_icon_button;
         ρσ_modules["read_book.highlights"].create_highlights_panel = create_highlights_panel;
+    })();
+
+    (function(){
+        var __name__ = "read_book.toc";
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var create_search_bar = ρσ_modules.complete.create_search_bar;
+
+        var ensure_id = ρσ_modules.dom.ensure_id;
+        var set_css = ρσ_modules.dom.set_css;
+        var svgicon = ρσ_modules.dom.svgicon;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var position_for_anchor = ρσ_modules["read_book.anchor_visibility"].position_for_anchor;
+
+        var current_book = ρσ_modules["read_book.globals"].current_book;
+        var current_layout_mode = ρσ_modules["read_book.globals"].current_layout_mode;
+        var current_spine_item = ρσ_modules["read_book.globals"].current_spine_item;
+        var get_boss = ρσ_modules["read_book.globals"].get_boss;
+        var set_toc_anchor_map = ρσ_modules["read_book.globals"].set_toc_anchor_map;
+        var toc_anchor_map = ρσ_modules["read_book.globals"].toc_anchor_map;
+
+        var scroll_viewport = ρσ_modules["read_book.viewport"].scroll_viewport;
+
+        var create_tree = ρσ_modules.widgets.create_tree;
+        var find_text_in_tree = ρσ_modules.widgets.find_text_in_tree;
+        var scroll_tree_item_into_view = ρσ_modules.widgets.scroll_tree_item_into_view;
+
+        function update_visible_toc_nodes(visible_anchors) {
+            update_visible_toc_nodes.data = visible_anchors;
+        };
+        if (!update_visible_toc_nodes.__argnames__) Object.defineProperties(update_visible_toc_nodes, {
+            __argnames__ : {value: ["visible_anchors"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        update_visible_toc_nodes.data = Object.create(null);
+        function iter_toc_descendants(node, callback) {
+            var child;
+            var ρσ_Iter188 = node.children;
+            ρσ_Iter188 = ((typeof ρσ_Iter188[Symbol.iterator] === "function") ? (ρσ_Iter188 instanceof Map ? ρσ_Iter188.keys() : ρσ_Iter188) : Object.keys(ρσ_Iter188));
+            for (var ρσ_Index188 of ρσ_Iter188) {
+                child = ρσ_Index188;
+                if (callback(child)) {
+                    return;
+                }
+                iter_toc_descendants(child, callback);
+            }
+        };
+        if (!iter_toc_descendants.__argnames__) Object.defineProperties(iter_toc_descendants, {
+            __argnames__ : {value: ["node", "callback"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_toc_nodes_bordering_spine_item(toc, csi) {
+            var spine, ρσ_unpack, spine_before, spine_after, which, before, after, prev, name;
+            toc = toc || current_book().manifest.toc;
+            csi = csi || current_spine_item();
+            spine = current_book().manifest.spine;
+            ρσ_unpack = [Object.create(null), Object.create(null)];
+            spine_before = ρσ_unpack[0];
+            spine_after = ρσ_unpack[1];
+            which = spine_before;
+            before = after = prev = null;
+            var ρσ_Iter189 = spine;
+            ρσ_Iter189 = ((typeof ρσ_Iter189[Symbol.iterator] === "function") ? (ρσ_Iter189 instanceof Map ? ρσ_Iter189.keys() : ρσ_Iter189) : Object.keys(ρσ_Iter189));
+            for (var ρσ_Index189 of ρσ_Iter189) {
+                name = ρσ_Index189;
+                if (name === csi) {
+                    which = spine_after;
+                } else {
+                    which[(typeof name === "number" && name < 0) ? which.length + name : name] = true;
+                }
+            }
+            iter_toc_descendants(toc, (function() {
+                var ρσ_anonfunc = function (node) {
+                    if (node.dest) {
+                        if (spine_before[ρσ_bound_index(node.dest, spine_before)]) {
+                            prev = node;
+                        } else if (spine_after[ρσ_bound_index(node.dest, spine_after)]) {
+                            if (!before) {
+                                before = prev;
+                            }
+                            if (!after) {
+                                after = node;
+                            }
+                            return true;
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["node"]},
+                    __module__ : {value: "read_book.toc"}
+                });
+                return ρσ_anonfunc;
+            })());
+            if (!before && prev !== null) {
+                before = prev;
+            }
+            return [before, after];
+        };
+        if (!get_toc_nodes_bordering_spine_item.__argnames__) Object.defineProperties(get_toc_nodes_bordering_spine_item, {
+            __argnames__ : {value: ["toc", "csi"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_border_nodes(toc, id_map) {
+            var data, ρσ_unpack, before, after, sb, sa;
+            data = update_visible_toc_nodes.data;
+            ρσ_unpack = [data.before, data.after];
+            before = ρσ_unpack[0];
+            after = ρσ_unpack[1];
+            if (before) {
+                before = id_map[(typeof before === "number" && before < 0) ? id_map.length + before : before];
+            }
+            if (after) {
+                after = id_map[(typeof after === "number" && after < 0) ? id_map.length + after : after];
+            }
+            if (before && after) {
+                return [before, after];
+            }
+            ρσ_unpack = get_toc_nodes_bordering_spine_item(toc);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            sb = ρσ_unpack[0];
+            sa = ρσ_unpack[1];
+            before = before || sb;
+            after = after || sa;
+            return [before, after];
+        };
+        if (!get_border_nodes.__argnames__) Object.defineProperties(get_border_nodes, {
+            __argnames__ : {value: ["toc", "id_map"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function family_for_toc_node(toc_node_id, parent_map, id_map) {
+            var toc, ρσ_unpack, family, node, parent;
+            if (!id_map || !parent_map) {
+                toc = current_book().manifest.toc;
+                ρσ_unpack = get_toc_maps(toc);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                parent_map = ρσ_unpack[0];
+                id_map = ρσ_unpack[1];
+            }
+            family = [];
+            node = id_map[(typeof toc_node_id === "number" && toc_node_id < 0) ? id_map.length + toc_node_id : toc_node_id];
+            while (node && node.title) {
+                family.unshift(node);
+                parent = parent_map[ρσ_bound_index(node.id, parent_map)];
+                node = null;
+                if (parent) {
+                    node = id_map[ρσ_bound_index(parent.id, id_map)];
+                }
+            }
+            return family;
+        };
+        if (!family_for_toc_node.__argnames__) Object.defineProperties(family_for_toc_node, {
+            __argnames__ : {value: ["toc_node_id", "parent_map", "id_map"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_page_list_id_map(page_list) {
+            return (function() {
+                var ρσ_Iter = page_list, ρσ_Result = Object.create(null), x;
+                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                for (var ρσ_Index of ρσ_Iter) {
+                    x = ρσ_Index;
+                    ρσ_Result[x.id] = (x);
+                }
+                return ρσ_Result;
+            })();
+        };
+        if (!get_page_list_id_map.__argnames__) Object.defineProperties(get_page_list_id_map, {
+            __argnames__ : {value: ["page_list"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_page_list_before(page_list, id_map) {
+            var csi, spine, ρσ_unpack, spine_before, spine_after, which, before, prev, name, item;
+            csi = csi || current_spine_item();
+            spine = current_book().manifest.spine;
+            ρσ_unpack = [Object.create(null), Object.create(null)];
+            spine_before = ρσ_unpack[0];
+            spine_after = ρσ_unpack[1];
+            which = spine_before;
+            before = prev = null;
+            var ρσ_Iter190 = spine;
+            ρσ_Iter190 = ((typeof ρσ_Iter190[Symbol.iterator] === "function") ? (ρσ_Iter190 instanceof Map ? ρσ_Iter190.keys() : ρσ_Iter190) : Object.keys(ρσ_Iter190));
+            for (var ρσ_Index190 of ρσ_Iter190) {
+                name = ρσ_Index190;
+                if (name === csi) {
+                    which = spine_after;
+                } else {
+                    which[(typeof name === "number" && name < 0) ? which.length + name : name] = true;
+                }
+            }
+            var ρσ_Iter191 = page_list;
+            ρσ_Iter191 = ((typeof ρσ_Iter191[Symbol.iterator] === "function") ? (ρσ_Iter191 instanceof Map ? ρσ_Iter191.keys() : ρσ_Iter191) : Object.keys(ρσ_Iter191));
+            for (var ρσ_Index191 of ρσ_Iter191) {
+                item = ρσ_Index191;
+                if (item.dest) {
+                    if (spine_before[ρσ_bound_index(item.dest, spine_before)]) {
+                        prev = item;
+                    } else if (spine_after[ρσ_bound_index(item.dest, spine_after)]) {
+                        if (!before) {
+                            before = prev;
+                        }
+                        break;
+                    }
+                }
+            }
+            return before;
+        };
+        if (!get_page_list_before.__argnames__) Object.defineProperties(get_page_list_before, {
+            __argnames__ : {value: ["page_list", "id_map"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_current_pagelist_items() {
+            var ans, page_list, data, id_map, before;
+            ans = Object.create(null);
+            page_list = current_book().manifest.page_list;
+            data = ρσ_exists.d(update_visible_toc_nodes.data).page_list;
+            if (!data || !page_list) {
+                return ans;
+            }
+            id_map = get_page_list_id_map(page_list);
+            if (data.has_visible) {
+                ans = data.visible_anchors;
+            } else {
+                if (ρσ_exists.n(data.before)) {
+                    ans[ρσ_bound_index(data.before, ans)] = true;
+                } else {
+                    before = get_page_list_before(page_list, id_map);
+                    if ((typeof before !== "undefined" && before !== null)) {
+                        ans[ρσ_bound_index(before.id, ans)] = true;
+                    }
+                }
+            }
+            return (function() {
+                var ρσ_Iter = Object.keys(ans), ρσ_Result = [], x;
+                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                for (var ρσ_Index of ρσ_Iter) {
+                    x = ρσ_Index;
+                    ρσ_Result.push(id_map[(typeof x === "number" && x < 0) ? id_map.length + x : x]);
+                }
+                ρσ_Result = ρσ_list_constructor(ρσ_Result);
+                return ρσ_Result;
+            })();
+        };
+        if (!get_current_pagelist_items.__module__) Object.defineProperties(get_current_pagelist_items, {
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_current_toc_nodes() {
+            var toc, ρσ_unpack, parent_map, id_map, data, ans, before, r, fam, x;
+            toc = current_book().manifest.toc;
+            ρσ_unpack = get_toc_maps(toc);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            parent_map = ρσ_unpack[0];
+            id_map = ρσ_unpack[1];
+            data = update_visible_toc_nodes.data;
+            ans = Object.create(null);
+            if (data.has_visible) {
+                ans = data.visible_anchors;
+            } else {
+                if (data.before) {
+                    ans[ρσ_bound_index(data.before, ans)] = true;
+                } else {
+                    before = get_border_nodes(toc, id_map)[0];
+                    if (before) {
+                        ans[ρσ_bound_index(before.id, ans)] = true;
+                    }
+                }
+            }
+            r = [];
+            var ρσ_Iter192 = Object.keys(ans);
+            ρσ_Iter192 = ((typeof ρσ_Iter192[Symbol.iterator] === "function") ? (ρσ_Iter192 instanceof Map ? ρσ_Iter192.keys() : ρσ_Iter192) : Object.keys(ρσ_Iter192));
+            for (var ρσ_Index192 of ρσ_Iter192) {
+                x = ρσ_Index192;
+                fam = family_for_toc_node(x, parent_map, id_map);
+                if ((typeof fam !== "undefined" && fam !== null ? fam : Object.create(null)).length) {
+                    r.push(fam);
+                }
+            }
+            return r;
+        };
+        if (!get_current_toc_nodes.__module__) Object.defineProperties(get_current_toc_nodes, {
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_highlighted_toc_nodes(toc, parent_map, id_map, skip_parents) {
+            var data, ans, before, p, node_id;
+            data = update_visible_toc_nodes.data;
+            ans = Object.create(null);
+            if (data.has_visible) {
+                ans = data.visible_anchors;
+            } else {
+                if (data.before) {
+                    ans[ρσ_bound_index(data.before, ans)] = true;
+                } else {
+                    before = get_border_nodes(toc, id_map)[0];
+                    if (before) {
+                        ans[ρσ_bound_index(before.id, ans)] = true;
+                    }
+                }
+            }
+            if (!skip_parents) {
+                var ρσ_Iter193 = Object.keys(ans);
+                ρσ_Iter193 = ((typeof ρσ_Iter193[Symbol.iterator] === "function") ? (ρσ_Iter193 instanceof Map ? ρσ_Iter193.keys() : ρσ_Iter193) : Object.keys(ρσ_Iter193));
+                for (var ρσ_Index193 of ρσ_Iter193) {
+                    node_id = ρσ_Index193;
+                    p = parent_map[(typeof node_id === "number" && node_id < 0) ? parent_map.length + node_id : node_id];
+                    while (p && p.title) {
+                        ans[ρσ_bound_index(p.id, ans)] = true;
+                        p = parent_map[ρσ_bound_index(p.id, parent_map)];
+                    }
+                }
+            }
+            return ans;
+        };
+        if (!get_highlighted_toc_nodes.__argnames__) Object.defineProperties(get_highlighted_toc_nodes, {
+            __argnames__ : {value: ["toc", "parent_map", "id_map", "skip_parents"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_toc_maps(toc) {
+            var ρσ_unpack, parent_map, id_map;
+            if (!toc) {
+                toc = current_book().manifest.toc;
+            }
+            ρσ_unpack = [Object.create(null), Object.create(null)];
+            parent_map = ρσ_unpack[0];
+            id_map = ρσ_unpack[1];
+            function process_node(node, parent) {
+                var c;
+                id_map[ρσ_bound_index(node.id, id_map)] = node;
+                parent_map[ρσ_bound_index(node.id, parent_map)] = parent;
+                var ρσ_Iter194 = node.children;
+                ρσ_Iter194 = ((typeof ρσ_Iter194[Symbol.iterator] === "function") ? (ρσ_Iter194 instanceof Map ? ρσ_Iter194.keys() : ρσ_Iter194) : Object.keys(ρσ_Iter194));
+                for (var ρσ_Index194 of ρσ_Iter194) {
+                    c = ρσ_Index194;
+                    process_node(c, node);
+                }
+            };
+            if (!process_node.__argnames__) Object.defineProperties(process_node, {
+                __argnames__ : {value: ["node", "parent"]},
+                __module__ : {value: "read_book.toc"}
+            });
+
+            process_node(toc);
+            return [parent_map, id_map];
+        };
+        if (!get_toc_maps.__argnames__) Object.defineProperties(get_toc_maps, {
+            __argnames__ : {value: ["toc"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function get_book_mark_title() {
+            var toc, ρσ_unpack, parent_map, id_map, highlighted_toc_nodes, node, node_id;
+            toc = current_book().manifest.toc;
+            ρσ_unpack = get_toc_maps(toc);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            parent_map = ρσ_unpack[0];
+            id_map = ρσ_unpack[1];
+            highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map, true);
+            var ρσ_Iter195 = Object.keys(highlighted_toc_nodes);
+            ρσ_Iter195 = ((typeof ρσ_Iter195[Symbol.iterator] === "function") ? (ρσ_Iter195 instanceof Map ? ρσ_Iter195.keys() : ρσ_Iter195) : Object.keys(ρσ_Iter195));
+            for (var ρσ_Index195 of ρσ_Iter195) {
+                node_id = ρσ_Index195;
+                node = id_map[(typeof node_id === "number" && node_id < 0) ? id_map.length + node_id : node_id];
+                if (node.title) {
+                    return node.title;
+                }
+            }
+            return "";
+        };
+        if (!get_book_mark_title.__module__) Object.defineProperties(get_book_mark_title, {
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function create_toc_tree(toc, onclick) {
+            var ρσ_unpack, parent_map, id_map, highlighted_toc_nodes;
+            ρσ_unpack = get_toc_maps(toc);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            parent_map = ρσ_unpack[0];
+            id_map = ρσ_unpack[1];
+            highlighted_toc_nodes = get_highlighted_toc_nodes(toc, parent_map, id_map);
+            function populate_data(node, li, a) {
+                var title;
+                li.dataset.tocDest = node.dest || "";
+                li.dataset.tocFrag = node.frag || "";
+                title = node.title || "";
+                if (highlighted_toc_nodes[ρσ_bound_index(node.id, highlighted_toc_nodes)]) {
+                    a.appendChild(E.b(E.i(title)));
+                } else {
+                    a.textContent = title;
+                }
+            };
+            if (!populate_data.__argnames__) Object.defineProperties(populate_data, {
+                __argnames__ : {value: ["node", "li", "a"]},
+                __module__ : {value: "read_book.toc"}
+            });
+
+            return create_tree(toc, populate_data, onclick);
+        };
+        if (!create_toc_tree.__argnames__) Object.defineProperties(create_toc_tree, {
+            __argnames__ : {value: ["toc", "onclick"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function do_search(text) {
+            var container, a;
+            container = document.getElementById(this);
+            a = find_text_in_tree(container, text);
+            if (!text) {
+                return;
+            }
+            if (!a) {
+                return error_dialog(_("No matches found"), _("The text \"{}\" was not found in the Table of Contents").format(text));
+            }
+            scroll_tree_item_into_view(a);
+        };
+        if (!do_search.__argnames__) Object.defineProperties(do_search, {
+            __argnames__ : {value: ["text"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function create_toc_panel(book, container, onclick) {
+            var toc_panel, toc_panel_id, search_button, t, search_bar, child;
+            function handle_click(event, li) {
+                if (event.button === 0) {
+                    onclick(li.dataset.tocDest, li.dataset.tocFrag);
+                }
+            };
+            if (!handle_click.__argnames__) Object.defineProperties(handle_click, {
+                __argnames__ : {value: ["event", "li"]},
+                __module__ : {value: "read_book.toc"}
+            });
+
+            toc_panel = create_toc_tree(book.manifest.toc, handle_click);
+            toc_panel_id = ensure_id(toc_panel);
+            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column", height: "100%", min_height: "100%", overflow: "hidden", max_height: "100vh", max_width: "100vw"})]));
+            ρσ_interpolate_kwargs.call(this, set_css, [toc_panel].concat([ρσ_desugar_kwargs({flex_grow: "10"})]));
+            container.appendChild(toc_panel);
+            search_button = ρσ_interpolate_kwargs.call(E, E.a, [svgicon("search")].concat([ρσ_desugar_kwargs({class_: "calibre-icon-button", href: "javascript:void(0)", title: _("Search"), onmousedown: (function() {
+                var ρσ_anonfunc = function (e) {
+                    e.preventDefault();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["e"]},
+                    __module__ : {value: "read_book.toc"}
+                });
+                return ρσ_anonfunc;
+            })()})]));
+            t = _("Search Table of Contents");
+            search_bar = ρσ_interpolate_kwargs.call(this, create_search_bar, [do_search.bind(toc_panel_id), "search-book-toc"].concat([ρσ_desugar_kwargs({button: search_button, placeholder: t})]));
+            ρσ_interpolate_kwargs.call(this, set_css, [search_bar].concat([ρσ_desugar_kwargs({flex_grow: "10", margin_right: "1em"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [search_bar, search_button].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1em; display: flex; align-items: center"})])));
+            var ρσ_Iter196 = container.childNodes;
+            ρσ_Iter196 = ((typeof ρσ_Iter196[Symbol.iterator] === "function") ? (ρσ_Iter196 instanceof Map ? ρσ_Iter196.keys() : ρσ_Iter196) : Object.keys(ρσ_Iter196));
+            for (var ρσ_Index196 of ρσ_Iter196) {
+                child = ρσ_Index196;
+                child.style.flexShrink = "0";
+            }
+            toc_panel.style.flexGrow = "100";
+            toc_panel.style.flexShrink = "1";
+            toc_panel.style.overflow = "auto";
+        };
+        if (!create_toc_panel.__argnames__) Object.defineProperties(create_toc_panel, {
+            __argnames__ : {value: ["book", "container", "onclick"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function recalculate_toc_anchor_positions(tam, plam) {
+            var name, am, anchors, pos_map, ρσ_unpack, i, anchor, anchor_funcs, current_map;
+            name = current_spine_item().name;
+            am = Object.create(null);
+            anchors = [];
+            pos_map = Object.create(null);
+            var ρσ_Iter197 = enumerate(tam[(typeof name === "number" && name < 0) ? tam.length + name : name] || []);
+            ρσ_Iter197 = ((typeof ρσ_Iter197[Symbol.iterator] === "function") ? (ρσ_Iter197 instanceof Map ? ρσ_Iter197.keys() : ρσ_Iter197) : Object.keys(ρσ_Iter197));
+            for (var ρσ_Index197 of ρσ_Iter197) {
+                ρσ_unpack = ρσ_Index197;
+                i = ρσ_unpack[0];
+                anchor = ρσ_unpack[1];
+                am[ρσ_bound_index(anchor.id, am)] = position_for_anchor(anchor.frag);
+                anchors.push(anchor.id);
+                pos_map[ρσ_bound_index(anchor.id, pos_map)] = i;
+            }
+            anchor_funcs = get_boss().anchor_funcs;
+            anchors.sort((function() {
+                var ρσ_anonfunc = function (a, b) {
+                    return anchor_funcs.cmp(am[(typeof a === "number" && a < 0) ? am.length + a : a], am[(typeof b === "number" && b < 0) ? am.length + b : b]) || pos_map[(typeof a === "number" && a < 0) ? pos_map.length + a : a] - pos_map[(typeof b === "number" && b < 0) ? pos_map.length + b : b];
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["a", "b"]},
+                    __module__ : {value: "read_book.toc"}
+                });
+                return ρσ_anonfunc;
+            })());
+            current_map = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["layout_mode"] = current_layout_mode();
+                ρσ_d["width"] = scroll_viewport.width();
+                ρσ_d["height"] = scroll_viewport.height();
+                ρσ_d["pos_map"] = am;
+                ρσ_d["sorted_anchors"] = anchors;
+                return ρσ_d;
+            }).call(this);
+            am = Object.create(null);
+            anchors = [];
+            pos_map = Object.create(null);
+            if (plam) {
+                var ρσ_Iter198 = enumerate(plam[(typeof name === "number" && name < 0) ? plam.length + name : name] || []);
+                ρσ_Iter198 = ((typeof ρσ_Iter198[Symbol.iterator] === "function") ? (ρσ_Iter198 instanceof Map ? ρσ_Iter198.keys() : ρσ_Iter198) : Object.keys(ρσ_Iter198));
+                for (var ρσ_Index198 of ρσ_Iter198) {
+                    ρσ_unpack = ρσ_Index198;
+                    i = ρσ_unpack[0];
+                    anchor = ρσ_unpack[1];
+                    am[ρσ_bound_index(anchor.id, am)] = position_for_anchor(anchor.frag, true);
+                    anchors.push(anchor.id);
+                    pos_map[ρσ_bound_index(anchor.id, pos_map)] = i;
+                }
+            }
+            anchors.sort((function() {
+                var ρσ_anonfunc = function (a, b) {
+                    return anchor_funcs.cmp(am[(typeof a === "number" && a < 0) ? am.length + a : a], am[(typeof b === "number" && b < 0) ? am.length + b : b]) || pos_map[(typeof a === "number" && a < 0) ? pos_map.length + a : a] - pos_map[(typeof b === "number" && b < 0) ? pos_map.length + b : b];
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["a", "b"]},
+                    __module__ : {value: "read_book.toc"}
+                });
+                return ρσ_anonfunc;
+            })());
+            current_map.page_list_pos_map = am;
+            current_map.page_list_sorted_anchors = anchors;
+            set_toc_anchor_map(current_map);
+            return current_map;
+        };
+        if (!recalculate_toc_anchor_positions.__argnames__) Object.defineProperties(recalculate_toc_anchor_positions, {
+            __argnames__ : {value: ["tam", "plam"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function current_toc_anchor_map(tam, plam) {
+            var current_map;
+            current_map = toc_anchor_map();
+            if (!((current_map && current_map.layout_mode === current_layout_mode() && current_map.width === scroll_viewport.width() && current_map.height === scroll_viewport.height()))) {
+                current_map = recalculate_toc_anchor_positions(tam, plam);
+            }
+            return current_map;
+        };
+        if (!current_toc_anchor_map.__argnames__) Object.defineProperties(current_toc_anchor_map, {
+            __argnames__ : {value: ["tam", "plam"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function update_visible_toc_anchors(toc_anchor_map, page_list_anchor_map, recalculate) {
+            var anchor_funcs, tam, before, after, visible_anchors, has_visible, pos, visibility, anchor_id, ans;
+            if (recalculate) {
+                recalculate_toc_anchor_positions(toc_anchor_map, page_list_anchor_map);
+            }
+            anchor_funcs = get_boss().anchor_funcs;
+            tam = current_toc_anchor_map(toc_anchor_map, page_list_anchor_map);
+            before = after = null;
+            visible_anchors = Object.create(null);
+            has_visible = false;
+            var ρσ_Iter199 = tam.sorted_anchors;
+            ρσ_Iter199 = ((typeof ρσ_Iter199[Symbol.iterator] === "function") ? (ρσ_Iter199 instanceof Map ? ρσ_Iter199.keys() : ρσ_Iter199) : Object.keys(ρσ_Iter199));
+            for (var ρσ_Index199 of ρσ_Iter199) {
+                anchor_id = ρσ_Index199;
+                pos = (ρσ_expr_temp = tam.pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
+                visibility = anchor_funcs.visibility(pos);
+                if (visibility < 0) {
+                    before = anchor_id;
+                } else if (visibility === 0) {
+                    has_visible = true;
+                    visible_anchors[(typeof anchor_id === "number" && anchor_id < 0) ? visible_anchors.length + anchor_id : anchor_id] = true;
+                } else if (visibility > 0) {
+                    after = anchor_id;
+                    break;
+                }
+            }
+            ans = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["visible_anchors"] = visible_anchors;
+                ρσ_d["has_visible"] = has_visible;
+                ρσ_d["before"] = before;
+                ρσ_d["after"] = after;
+                ρσ_d["sorted_anchors"] = tam.sorted_anchors;
+                return ρσ_d;
+            }).call(this);
+            before = after = null;
+            visible_anchors = Object.create(null);
+            has_visible = false;
+            var ρσ_Iter200 = tam.page_list_sorted_anchors;
+            ρσ_Iter200 = ((typeof ρσ_Iter200[Symbol.iterator] === "function") ? (ρσ_Iter200 instanceof Map ? ρσ_Iter200.keys() : ρσ_Iter200) : Object.keys(ρσ_Iter200));
+            for (var ρσ_Index200 of ρσ_Iter200) {
+                anchor_id = ρσ_Index200;
+                pos = (ρσ_expr_temp = tam.page_list_pos_map)[(typeof anchor_id === "number" && anchor_id < 0) ? ρσ_expr_temp.length + anchor_id : anchor_id];
+                visibility = anchor_funcs.visibility(pos);
+                if (visibility < 0) {
+                    before = anchor_id;
+                } else if (visibility === 0) {
+                    has_visible = true;
+                    visible_anchors[(typeof anchor_id === "number" && anchor_id < 0) ? visible_anchors.length + anchor_id : anchor_id] = true;
+                } else if (visibility > 0) {
+                    after = anchor_id;
+                    break;
+                }
+            }
+            ans.page_list = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["visible_anchors"] = visible_anchors;
+                ρσ_d["has_visible"] = has_visible;
+                ρσ_d["before"] = before;
+                ρσ_d["after"] = after;
+                ρσ_d["sorted_anchors"] = tam.page_list_sorted_anchors;
+                return ρσ_d;
+            }).call(this);
+            return ans;
+        };
+        if (!update_visible_toc_anchors.__argnames__) Object.defineProperties(update_visible_toc_anchors, {
+            __argnames__ : {value: ["toc_anchor_map", "page_list_anchor_map", "recalculate"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        function find_anchor_before_range(r, toc_anchor_map, page_list_anchor_map) {
+            var name, prev_anchor, tam, anchors, amap, x, anchor, is_before, elem, q, anchor_id;
+            name = current_spine_item().name;
+            prev_anchor = null;
+            tam = current_toc_anchor_map(toc_anchor_map, page_list_anchor_map);
+            anchors = toc_anchor_map[(typeof name === "number" && name < 0) ? toc_anchor_map.length + name : name];
+            if (anchors) {
+                amap = (function() {
+                    var ρσ_Iter = anchors, ρσ_Result = Object.create(null), x;
+                    ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                    for (var ρσ_Index of ρσ_Iter) {
+                        x = ρσ_Index;
+                        ρσ_Result[x.id] = (x);
+                    }
+                    return ρσ_Result;
+                })();
+                var ρσ_Iter201 = tam.sorted_anchors;
+                ρσ_Iter201 = ((typeof ρσ_Iter201[Symbol.iterator] === "function") ? (ρσ_Iter201 instanceof Map ? ρσ_Iter201.keys() : ρσ_Iter201) : Object.keys(ρσ_Iter201));
+                for (var ρσ_Index201 of ρσ_Iter201) {
+                    anchor_id = ρσ_Index201;
+                    anchor = amap[(typeof anchor_id === "number" && anchor_id < 0) ? amap.length + anchor_id : anchor_id];
+                    is_before = true;
+                    if (anchor.frag) {
+                        elem = document.getElementById(anchor.frag);
+                        if (elem) {
+                            q = document.createRange();
+                            q.selectNode(elem);
+                            if (q.compareBoundaryPoints(window.Range.START_TO_START, r) > 0) {
+                                is_before = false;
+                            }
+                        }
+                    }
+                    if (is_before) {
+                        prev_anchor = anchor;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return prev_anchor;
+        };
+        if (!find_anchor_before_range.__argnames__) Object.defineProperties(find_anchor_before_range, {
+            __argnames__ : {value: ["r", "toc_anchor_map", "page_list_anchor_map"]},
+            __module__ : {value: "read_book.toc"}
+        });
+
+        ρσ_modules["read_book.toc"].update_visible_toc_nodes = update_visible_toc_nodes;
+        ρσ_modules["read_book.toc"].iter_toc_descendants = iter_toc_descendants;
+        ρσ_modules["read_book.toc"].get_toc_nodes_bordering_spine_item = get_toc_nodes_bordering_spine_item;
+        ρσ_modules["read_book.toc"].get_border_nodes = get_border_nodes;
+        ρσ_modules["read_book.toc"].family_for_toc_node = family_for_toc_node;
+        ρσ_modules["read_book.toc"].get_page_list_id_map = get_page_list_id_map;
+        ρσ_modules["read_book.toc"].get_page_list_before = get_page_list_before;
+        ρσ_modules["read_book.toc"].get_current_pagelist_items = get_current_pagelist_items;
+        ρσ_modules["read_book.toc"].get_current_toc_nodes = get_current_toc_nodes;
+        ρσ_modules["read_book.toc"].get_highlighted_toc_nodes = get_highlighted_toc_nodes;
+        ρσ_modules["read_book.toc"].get_toc_maps = get_toc_maps;
+        ρσ_modules["read_book.toc"].get_book_mark_title = get_book_mark_title;
+        ρσ_modules["read_book.toc"].create_toc_tree = create_toc_tree;
+        ρσ_modules["read_book.toc"].do_search = do_search;
+        ρσ_modules["read_book.toc"].create_toc_panel = create_toc_panel;
+        ρσ_modules["read_book.toc"].recalculate_toc_anchor_positions = recalculate_toc_anchor_positions;
+        ρσ_modules["read_book.toc"].current_toc_anchor_map = current_toc_anchor_map;
+        ρσ_modules["read_book.toc"].update_visible_toc_anchors = update_visible_toc_anchors;
+        ρσ_modules["read_book.toc"].find_anchor_before_range = find_anchor_before_range;
     })();
 
     (function(){
@@ -28599,7 +28599,7 @@ return this.__repr__();
         var is_ios = ρσ_modules.utils.is_ios;
 
         FORCE_FLOW_MODE = false;
-        CALIBRE_VERSION = "9.13.0";
+        CALIBRE_VERSION = "9.14.0";
         ONSCROLL_DEBOUNCE_TIME = 1e3;
         ERS_SUPPORTED_FEATURES = (function(){
             var s = ρσ_set();
@@ -30863,6 +30863,11 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "viewer";
+
+    })();
+
+    (function(){
         var __name__ = "read_book.prefs.utils";
         var E = ρσ_modules.elementmaker.E;
 
@@ -30893,11 +30898,6 @@ return this.__repr__();
         });
 
         ρσ_modules["read_book.prefs.utils"].create_button_box = create_button_box;
-    })();
-
-    (function(){
-        var __name__ = "viewer";
-
     })();
 
     (function(){
@@ -31314,1026 +31314,343 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.prefs.font_size";
-        var CONTAINER, MIN_FONT_SIZE, MAX_FONT_SIZE;
+        var __name__ = "book_list.ui";
+        var panel_handlers, default_panel_handler;
         var E = ρσ_modules.elementmaker.E;
 
-        var _ = ρσ_modules.gettext.gettext;
+        var book_list_container_id = ρσ_modules["book_list.constants"].book_list_container_id;
 
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+        var get_current_query = ρσ_modules["book_list.globals"].get_current_query;
 
-        var get_color = ρσ_modules["book_list.theme"].get_color;
+        var current_library_id = ρσ_modules["book_list.library_data"].current_library_id;
+        var current_virtual_library = ρσ_modules["book_list.library_data"].current_virtual_library;
 
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var rule = ρσ_modules.dom.rule;
-        var unique_id = ρσ_modules.dom.unique_id;
+        var push_state = ρσ_modules["book_list.router"].push_state;
 
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+        var ensure_id = ρσ_modules.dom.ensure_id;
+        var clear = ρσ_modules.dom.clear;
 
-        var session_defaults = ρσ_modules.session.session_defaults;
+        var encode_query_with_path = ρσ_modules.utils.encode_query_with_path;
 
-        var create_button = ρσ_modules.widgets.create_button;
+        panel_handlers = Object.create(null);
+        default_panel_handler = null;
+        function set_panel_handler(panel, handler) {
+            panel_handlers[(typeof panel === "number" && panel < 0) ? panel_handlers.length + panel : panel] = handler;
+        };
+        if (!set_panel_handler.__argnames__) Object.defineProperties(set_panel_handler, {
+            __argnames__ : {value: ["panel", "handler"]},
+            __module__ : {value: "book_list.ui"}
+        });
 
-        CONTAINER = unique_id("font-size-prefs");
-        MIN_FONT_SIZE = 8;
-        MAX_FONT_SIZE = 80;
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var style;
-                style = ρσ_interpolate_kwargs.call(this, rule, [CONTAINER, "option.current"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)"})]));
-                style += ρσ_interpolate_kwargs.call(this, rule, [CONTAINER, "option:hover"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)"})]));
-                return style;
+        function develop_panel(container_id) {
+            var container, q, m;
+            container = document.getElementById(container_id);
+            q = get_current_query();
+            m = q.widget_module;
+            if (m) {
+                m = get_module(m);
+                if ((typeof m !== "undefined" && m !== null ? m : Object.create(null)).develop) {
+                    m.develop(container);
+                } else {
+                    container.textContent = "The module {} either does not exist or has no develop method.".format(q.widget_module);
+                }
+            }
+        };
+        if (!develop_panel.__argnames__) Object.defineProperties(develop_panel, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "book_list.ui"}
+        });
+
+        set_panel_handler("develop-widgets", develop_panel);
+        function add_library_info(query) {
+            var vlid;
+            if (!query.library_id) {
+                query.library_id = current_library_id();
+            }
+            if (!query.vl) {
+                if (query.vl === null) {
+                    delete query.vl;
+                } else {
+                    vlid = current_virtual_library();
+                    if (vlid) {
+                        query.vl = vlid;
+                    }
+                }
+            }
+        };
+        if (!add_library_info.__argnames__) Object.defineProperties(add_library_info, {
+            __argnames__ : {value: ["query"]},
+            __module__ : {value: "book_list.ui"}
+        });
+
+        function prepare_query(query, panel) {
+            var q, k;
+            q = (function() {
+                var ρσ_Iter = query || Object.create(null), ρσ_Result = Object.create(null), k;
+                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                for (var ρσ_Index of ρσ_Iter) {
+                    k = ρσ_Index;
+                    if (k !== "panel") {
+                        ρσ_Result[k] = (query[(typeof k === "number" && k < 0) ? query.length + k : k]);
+                    }
+                }
+                return ρσ_Result;
+            })();
+            if (panel !== "home") {
+                q.panel = panel;
+                add_library_info(q);
+            }
+            return q;
+        };
+        if (!prepare_query.__argnames__) Object.defineProperties(prepare_query, {
+            __argnames__ : {value: ["query", "panel"]},
+            __module__ : {value: "book_list.ui"}
+        });
+
+        function query_as_href(query, panel) {
+            var q;
+            q = prepare_query(query, panel || "book_list");
+            return encode_query_with_path(q);
+        };
+        if (!query_as_href.__argnames__) Object.defineProperties(query_as_href, {
+            __argnames__ : {value: ["query", "panel"]},
+            __module__ : {value: "book_list.ui"}
+        });
+
+        function show_panel() {
+            var panel = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var query = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_panel.__defaults__.query : arguments[1];
+            var replace = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_panel.__defaults__.replace : arguments[2];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "query")){
+                query = ρσ_kwargs_obj.query;
+            }
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "replace")){
+                replace = ρσ_kwargs_obj.replace;
+            }
+            ρσ_interpolate_kwargs.call(this, push_state, [prepare_query(query, panel)].concat([ρσ_desugar_kwargs({replace: replace})]));
+        };
+        if (!show_panel.__defaults__) Object.defineProperties(show_panel, {
+            __defaults__ : {value: {query:null, replace:false}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["panel", "query", "replace"]},
+            __module__ : {value: "book_list.ui"}
+        });
+
+        function apply_url_state(state) {
+            var panel, c, handler;
+            panel = state.panel || "home";
+            c = document.getElementById(book_list_container_id);
+            clear(c);
+            c.appendChild(E.div());
+            c.dataset.panel = panel;
+            handler = panel_handlers[(typeof panel === "number" && panel < 0) ? panel_handlers.length + panel : panel] || default_panel_handler;
+            handler(ensure_id(c.firstChild, "panel"));
+        };
+        if (!apply_url_state.__argnames__) Object.defineProperties(apply_url_state, {
+            __argnames__ : {value: ["state"]},
+            __module__ : {value: "book_list.ui"}
+        });
+
+        apply_url_state.back_from_current = (function() {
+            var ρσ_anonfunc = function back_from_current(current_query) {
+                var q, k;
+                q = current_query;
+                if (q.panel) {
+                    if (ρσ_in("^", q.panel)) {
+                        q = (function() {
+                            var ρσ_Iter = q, ρσ_Result = Object.create(null), k;
+                            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
+                            for (var ρσ_Index of ρσ_Iter) {
+                                k = ρσ_Index;
+                                ρσ_Result[k] = (q[(typeof k === "number" && k < 0) ? q.length + k : k]);
+                            }
+                            return ρσ_Result;
+                        })();
+                        q.panel = q.panel.rpartition("^")[0];
+                    } else if (q.panel === "book_list") {
+                        q = Object.create(null);
+                    } else {
+                        q = (function(){
+                            var ρσ_d = Object.create(null);
+                            ρσ_d["panel"] = "book_list";
+                            return ρσ_d;
+                        }).call(this);
+                        add_library_info(q);
+                    }
+                }
+                return q;
             };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "read_book.prefs.font_size"}
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["current_query"]},
+                __module__ : {value: "book_list.ui"}
             });
             return ρσ_anonfunc;
-        })());
-        function change_font_size(sz) {
-            var sd;
-            sd = get_session_data();
-            if (sd.get("base_font_size") !== sz) {
-                sd.set("base_font_size", sz);
-                ui_operations.update_font_size();
-            }
-        };
-        if (!change_font_size.__argnames__) Object.defineProperties(change_font_size, {
-            __argnames__ : {value: ["sz"]},
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        function apply_font_size() {
-            var fs;
-            fs = int(document.getElementById(CONTAINER).dataset.cfs);
-            change_font_size(fs);
-        };
-        if (!apply_font_size.__module__) Object.defineProperties(apply_font_size, {
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        function set_quick_size(ev) {
-            var newval;
-            newval = ev.currentTarget.value;
-            try {
-                int(newval);
-            } catch (ρσ_Exception) {
-                ρσ_last_exception = ρσ_Exception;
-                {
-                    return;
-                } 
-            }
-            if (newval !== document.getElementById(CONTAINER).dataset.cfs) {
-                display_changed_font_size(newval);
-            }
-        };
-        if (!set_quick_size.__argnames__) Object.defineProperties(set_quick_size, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        function change_font_size_by(frac) {
-            var sd, sz, amt, nsz;
-            sd = get_session_data();
-            sz = sd.get("base_font_size");
-            amt = sz * frac;
-            if (abs(amt) < 1) {
-                amt = (amt < 0) ? -1 : 1;
-            }
-            nsz = Math.round(sz + amt);
-            nsz = max(MIN_FONT_SIZE, min(nsz, MAX_FONT_SIZE));
-            change_font_size(nsz);
-        };
-        if (!change_font_size_by.__argnames__) Object.defineProperties(change_font_size_by, {
-            __argnames__ : {value: ["frac"]},
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        function restore_default_font_size() {
-            change_font_size(session_defaults().base_font_size);
-        };
-        if (!restore_default_font_size.__module__) Object.defineProperties(restore_default_font_size, {
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        function display_changed_font_size(sz) {
-            var c, option, input;
-            sz = max(MIN_FONT_SIZE, min(int(sz), MAX_FONT_SIZE));
-            sz += "";
-            c = document.getElementById(CONTAINER);
-            c.dataset.cfs = sz;
-            var ρσ_Iter230 = c.querySelectorAll("option");
-            ρσ_Iter230 = ((typeof ρσ_Iter230[Symbol.iterator] === "function") ? (ρσ_Iter230 instanceof Map ? ρσ_Iter230.keys() : ρσ_Iter230) : Object.keys(ρσ_Iter230));
-            for (var ρσ_Index230 of ρσ_Iter230) {
-                option = ρσ_Index230;
-                if (option.value === sz) {
-                    option.classList.add("current");
-                } else {
-                    option.classList.remove("current");
-                }
-            }
-            var ρσ_Iter231 = c.querySelectorAll("input");
-            ρσ_Iter231 = ((typeof ρσ_Iter231[Symbol.iterator] === "function") ? (ρσ_Iter231 instanceof Map ? ρσ_Iter231.keys() : ρσ_Iter231) : Object.keys(ρσ_Iter231));
-            for (var ρσ_Index231 of ρσ_Iter231) {
-                input = ρσ_Index231;
-                input.value = sz;
-            }
-            c.querySelector(".cfs_preview").style.fontSize = "" + ρσ_str.format("{}", sz) + "px";
-        };
-        if (!display_changed_font_size.__argnames__) Object.defineProperties(display_changed_font_size, {
-            __argnames__ : {value: ["sz"]},
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        function create_font_size_panel(container, close) {
-            var sd, cfs, quick, sz;
-            sd = get_session_data();
-            cfs = sd.get("base_font_size");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "max-width: 500px; width: 80vw; border-radius: 8px; border: solid 1px currentColor; padding:1ex 1rem;", onclick: (function() {
-                var ρσ_anonfunc = function (ev) {
-                    [ev.preventDefault(), ev.stopPropagation()];
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.prefs.font_size"}
-                });
-                return ρσ_anonfunc;
-            })()})])].concat([ρσ_desugar_kwargs({style: "width: 100%; height: 100%; display: flex; justify-content: center; align-items: center"})])));
-            container = container.lastChild.lastChild;
-            container.style.backgroundColor = get_color("window-background");
-            container.dataset.cfs = cfs + "";
-            quick = ρσ_interpolate_kwargs.call(E, E.datalist, [ρσ_desugar_kwargs({style: "display:flex; justify-content:space-around; flex-wrap: wrap; align-items: baseline;"})]);
-            container.appendChild(quick);
-            var ρσ_Iter232 = [ 10, 12, 14, 16, 18, 20, 22 ];
-            ρσ_Iter232 = ((typeof ρσ_Iter232[Symbol.iterator] === "function") ? (ρσ_Iter232 instanceof Map ? ρσ_Iter232.keys() : ρσ_Iter232) : Object.keys(ρσ_Iter232));
-            for (var ρσ_Index232 of ρσ_Iter232) {
-                sz = ρσ_Index232;
-                quick.appendChild(ρσ_interpolate_kwargs.call(E, E.option, ["Aa"].concat([ρσ_desugar_kwargs({title: "{} px".format(sz), class_: (cfs === sz) ? "current" : "", value: sz + "", style: "display: inline-block; font-size:" + ρσ_str.format("{}", sz) + "px; padding: 5px; cursor: pointer; border-radius: 4px; margin: 0 0.5rem", onclick: (function() {
-                    var ρσ_anonfunc = function (ev) {
-                        set_quick_size(ev);
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["ev"]},
-                        __module__ : {value: "read_book.prefs.font_size"}
-                    });
-                    return ρσ_anonfunc;
-                })()})])));
-            }
-            function set_size(ev) {
-                var newval, q;
-                newval = ev.currentTarget.value;
-                try {
-                    q = int(newval);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        return;
-                    } 
-                }
-                if (MIN_FONT_SIZE <= q && q <= MAX_FONT_SIZE) {
-                    set_quick_size(ev);
-                }
-            };
-            if (!set_size.__argnames__) Object.defineProperties(set_size, {
-                __argnames__ : {value: ["ev"]},
-                __module__ : {value: "read_book.prefs.font_size"}
-            });
-
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "range", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", value: cfs + "", style: "flex-grow: 4", oninput: set_quick_size})]), E.span(" ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({value: "" + ρσ_str.format("{}", cfs) + "", oninput: set_size, type: "number", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", step: "1"})]), " px")].concat([ρσ_desugar_kwargs({style: "display: flex; margin-top: 1rem"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Sample to preview font size")].concat([ρσ_desugar_kwargs({class_: "cfs_preview"})]))].concat([ρσ_desugar_kwargs({style: "font-size: " + ρσ_str.format("{}", cfs) + "px; margin-top: 1rem; min-height: 60px; max-height: 60px; overflow: hidden; display: flex;"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("OK")].concat([ρσ_desugar_kwargs({highlight: true, action: (function() {
-                var ρσ_anonfunc = function () {
-                    apply_font_size();
-                    close();
-                };
-                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                    __module__ : {value: "read_book.prefs.font_size"}
-                });
-                return ρσ_anonfunc;
-            })()})])), "  ", ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: close})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; text-align: right"})])));
-        };
-        if (!create_font_size_panel.__argnames__) Object.defineProperties(create_font_size_panel, {
-            __argnames__ : {value: ["container", "close"]},
-            __module__ : {value: "read_book.prefs.font_size"}
-        });
-
-        ρσ_modules["read_book.prefs.font_size"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.font_size"].MIN_FONT_SIZE = MIN_FONT_SIZE;
-        ρσ_modules["read_book.prefs.font_size"].MAX_FONT_SIZE = MAX_FONT_SIZE;
-        ρσ_modules["read_book.prefs.font_size"].change_font_size = change_font_size;
-        ρσ_modules["read_book.prefs.font_size"].apply_font_size = apply_font_size;
-        ρσ_modules["read_book.prefs.font_size"].set_quick_size = set_quick_size;
-        ρσ_modules["read_book.prefs.font_size"].change_font_size_by = change_font_size_by;
-        ρσ_modules["read_book.prefs.font_size"].restore_default_font_size = restore_default_font_size;
-        ρσ_modules["read_book.prefs.font_size"].display_changed_font_size = display_changed_font_size;
-        ρσ_modules["read_book.prefs.font_size"].create_font_size_panel = create_font_size_panel;
+        })();
+        ρσ_modules["book_list.ui"].panel_handlers = panel_handlers;
+        ρσ_modules["book_list.ui"].default_panel_handler = default_panel_handler;
+        ρσ_modules["book_list.ui"].set_panel_handler = set_panel_handler;
+        ρσ_modules["book_list.ui"].develop_panel = develop_panel;
+        ρσ_modules["book_list.ui"].add_library_info = add_library_info;
+        ρσ_modules["book_list.ui"].prepare_query = prepare_query;
+        ρσ_modules["book_list.ui"].query_as_href = query_as_href;
+        ρσ_modules["book_list.ui"].show_panel = show_panel;
+        ρσ_modules["book_list.ui"].apply_url_state = apply_url_state;
     })();
 
     (function(){
-        var __name__ = "read_book.goto";
-        var traceback = ρσ_modules.traceback;
-
+        var __name__ = "read_book.bookmarks";
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
 
-        var encode_query_component = ρσ_modules.ajax.encode_query_component;
-
         var build_list = ρσ_modules["book_list.item_list"].build_list;
         var create_item = ρσ_modules["book_list.item_list"].create_item;
+        var create_side_action = ρσ_modules["book_list.item_list"].create_side_action;
 
         var ensure_id = ρσ_modules.dom.ensure_id;
         var set_css = ρσ_modules.dom.set_css;
 
-        var error_dialog = ρσ_modules.modals.error_dialog;
+        var question_dialog = ρσ_modules.modals.question_dialog;
 
-        var current_book = ρσ_modules["read_book.globals"].current_book;
-        var runtime = ρσ_modules["read_book.globals"].runtime;
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-
-        var format_pos = ρσ_modules["read_book.prefs.head_foot"].format_pos;
-
-        var get_border_nodes = ρσ_modules["read_book.toc"].get_border_nodes;
-        var get_toc_maps = ρσ_modules["read_book.toc"].get_toc_maps;
+        var get_book_mark_title = ρσ_modules["read_book.toc"].get_book_mark_title;
 
         var create_button = ρσ_modules.widgets.create_button;
 
-        function create_goto_list() {
-            var onclick = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var current_position_data = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
-            var page_list = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
-            var show_sub_panel = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_goto_list.__defaults__.show_sub_panel : arguments[3];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "show_sub_panel")){
-                show_sub_panel = ρσ_kwargs_obj.show_sub_panel;
+        function goto_cfi(cfi, view) {
+            view.goto_cfi(cfi, true);
+        };
+        if (!goto_cfi.__argnames__) Object.defineProperties(goto_cfi, {
+            __argnames__ : {value: ["cfi", "view"]},
+            __module__ : {value: "read_book.bookmarks"}
+        });
+
+        function remove_bookmark(annotations_manager, title, list_dom_node) {
+            question_dialog(_("Are you sure?"), _("Do you want to permanently delete this bookmark?"), (function() {
+                var ρσ_anonfunc = function (yes) {
+                    if (yes) {
+                        annotations_manager.remove_bookmark(title);
+                        list_dom_node.style.display = "none";
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["yes"]},
+                    __module__ : {value: "read_book.bookmarks"}
+                });
+                return ρσ_anonfunc;
+            })());
+        };
+        if (!remove_bookmark.__argnames__) Object.defineProperties(remove_bookmark, {
+            __argnames__ : {value: ["annotations_manager", "title", "list_dom_node"]},
+            __module__ : {value: "read_book.bookmarks"}
+        });
+
+        function edit_bookmark(annotations_manager, title, list_dom_node) {
+            var new_title;
+            new_title = window.prompt(_("Enter new title for bookmark:"), title);
+            if (new_title) {
+                if (annotations_manager.edit_bookmark(title, new_title)) {
+                    console.log(list_dom_node);
+                    list_dom_node.querySelector(".item-title").textContent = new_title;
+                }
             }
-            var ans, items, location_text, landmarks, toc, id_map, ρσ_unpack, before, after, l;
-            ans = E.div();
+        };
+        if (!edit_bookmark.__argnames__) Object.defineProperties(edit_bookmark, {
+            __argnames__ : {value: ["annotations_manager", "title", "list_dom_node"]},
+            __module__ : {value: "read_book.bookmarks"}
+        });
+
+        function create_bookmarks_list(annotations_manager, onclick) {
+            var bookmarks, items, sa, ea, bookmark, c;
+            bookmarks = ρσ_interpolate_kwargs.call(this, sorted, [annotations_manager.all_bookmarks()].concat([ρσ_desugar_kwargs({key: (function() {
+                var ρσ_anonfunc = function (x) {
+                    return x.title.toLowerCase();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["x"]},
+                    __module__ : {value: "read_book.bookmarks"}
+                });
+                return ρσ_anonfunc;
+            })()})]));
             items = [];
-            location_text = format_pos(current_position_data.progress_frac, current_position_data.book_length) + " :: ";
-            if (current_position_data.cfi) {
-                location_text += current_position_data.cfi;
-            }
-            landmarks = current_book().manifest.landmarks;
-            toc = current_book().manifest.toc;
-            id_map = get_toc_maps(toc)[1];
-            ρσ_unpack = get_border_nodes(toc, id_map);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            before = ρσ_unpack[0];
-            after = ρσ_unpack[1];
-            if (after) {
-                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Next section")].concat([ρσ_desugar_kwargs({icon: "caret-right", subtitle: after.title, action: onclick.bind(null, after.dest, after.frag)})])));
-            }
-            if (before) {
-                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Previous section")].concat([ρσ_desugar_kwargs({icon: "caret-left", subtitle: before.title, action: onclick.bind(null, before.dest, before.frag)})])));
-            }
-            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Book start")].concat([ρσ_desugar_kwargs({action: onclick.bind(null, (function() {
-                var ρσ_anonfunc = function (view) {
-                    view.goto_doc_boundary(true);
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["view"]},
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })())})])));
-            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Book end")].concat([ρσ_desugar_kwargs({action: onclick.bind(null, (function() {
-                var ρσ_anonfunc = function (view) {
-                    view.goto_doc_boundary(false);
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["view"]},
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })())})])));
-            function panel_action(name, fallback_fn) {
-                if (show_sub_panel) {
-                    return (function() {
-                        var ρσ_anonfunc = function () {
-                            show_sub_panel(name);
-                        };
-                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                            __module__ : {value: "read_book.goto"}
-                        });
-                        return ρσ_anonfunc;
-                    })();
+            var ρσ_Iter230 = bookmarks;
+            ρσ_Iter230 = ((typeof ρσ_Iter230[Symbol.iterator] === "function") ? (ρσ_Iter230 instanceof Map ? ρσ_Iter230.keys() : ρσ_Iter230) : Object.keys(ρσ_Iter230));
+            for (var ρσ_Index230 of ρσ_Iter230) {
+                bookmark = ρσ_Index230;
+                if (!bookmark.removed) {
+                    sa = create_side_action("trash", remove_bookmark.bind(null, annotations_manager, bookmark.title), _("Remove this bookmark"));
+                    ea = create_side_action("edit", edit_bookmark.bind(null, annotations_manager, bookmark.title), _("Edit this bookmark"));
+                    items.push(ρσ_interpolate_kwargs.call(this, create_item, [bookmark.title].concat([ρσ_desugar_kwargs({data: bookmark.pos, action: onclick.bind(null, goto_cfi.bind(null, bookmark.pos)), side_actions: [ sa, ea ]})])));
                 }
-                return onclick.bind(null, fallback_fn);
-            };
-            if (!panel_action.__argnames__) Object.defineProperties(panel_action, {
-                __argnames__ : {value: ["name", "fallback_fn"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Metadata")].concat([ρσ_desugar_kwargs({subtitle: _("Details about this book"), action: panel_action("metadata", (function() {
-                var ρσ_anonfunc = function (view) {
-                    view.overlay.show_metadata();
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["view"]},
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })())})])));
-            if (!runtime.is_standalone_viewer) {
-                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Book page in library")].concat([ρσ_desugar_kwargs({subtitle: _("The page for this book in the calibre library"), action: onclick.bind(null, (function() {
-                    var ρσ_anonfunc = function (view) {
-                        view.open_book_page();
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["view"]},
-                        __module__ : {value: "read_book.goto"}
-                    });
-                    return ρσ_anonfunc;
-                })())})])));
             }
-            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Location")].concat([ρσ_desugar_kwargs({subtitle: location_text, action: panel_action("location", (function() {
-                var ρσ_anonfunc = function (view) {
-                    view.overlay.show_ask_for_location();
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["view"]},
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })())})])));
-            if (page_list && page_list.length > 0) {
-                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Page number")].concat([ρσ_desugar_kwargs({subtitle: _("Typically the page number from a paper edition of this book"), action: panel_action("page_list", (function() {
-                    var ρσ_anonfunc = function (view) {
-                        view.overlay.show_page_list(page_list);
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["view"]},
-                        __module__ : {value: "read_book.goto"}
-                    });
-                    return ρσ_anonfunc;
-                })())})])));
-            }
-            var ρσ_Iter233 = landmarks;
-            ρσ_Iter233 = ((typeof ρσ_Iter233[Symbol.iterator] === "function") ? (ρσ_Iter233 instanceof Map ? ρσ_Iter233.keys() : ρσ_Iter233) : Object.keys(ρσ_Iter233));
-            for (var ρσ_Index233 of ρσ_Iter233) {
-                l = ρσ_Index233;
-                items.push(ρσ_interpolate_kwargs.call(this, create_item, [l.title].concat([ρσ_desugar_kwargs({action: onclick.bind(null, l.dest, l.frag)})])));
-            }
-            build_list(ans, items);
-            return ans;
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex"})]);
+            build_list(c, items);
+            return c;
         };
-        if (!create_goto_list.__defaults__) Object.defineProperties(create_goto_list, {
-            __defaults__ : {value: {show_sub_panel:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["onclick", "current_position_data", "page_list", "show_sub_panel"]},
-            __module__ : {value: "read_book.goto"}
+        if (!create_bookmarks_list.__argnames__) Object.defineProperties(create_bookmarks_list, {
+            __argnames__ : {value: ["annotations_manager", "onclick"]},
+            __module__ : {value: "read_book.bookmarks"}
         });
 
-        function get_next_section(forward) {
-            var toc, id_map, ρσ_unpack, before, after;
-            toc = current_book().manifest.toc;
-            id_map = get_toc_maps(toc)[1];
-            ρσ_unpack = get_border_nodes(toc, id_map);
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            before = ρσ_unpack[0];
-            after = ρσ_unpack[1];
-            return (forward) ? after : before;
+        function create_new_bookmark(annotations_manager, data) {
+            var base_default_title, title, cfi;
+            base_default_title = get_book_mark_title() || _("Bookmark");
+            title = window.prompt(_("Enter title for bookmark:"), data.selected_text || annotations_manager.default_bookmark_title(base_default_title));
+            if (!title) {
+                return false;
+            }
+            cfi = data.cfi;
+            if (ρσ_exists.d(data.selection_bounds).start) {
+                cfi = data.selection_bounds.start;
+            }
+            annotations_manager.add_bookmark(title, cfi);
+            return true;
         };
-        if (!get_next_section.__argnames__) Object.defineProperties(get_next_section, {
-            __argnames__ : {value: ["forward"]},
-            __module__ : {value: "read_book.goto"}
+        if (!create_new_bookmark.__argnames__) Object.defineProperties(create_new_bookmark, {
+            __argnames__ : {value: ["annotations_manager", "data"]},
+            __module__ : {value: "read_book.bookmarks"}
         });
 
-        function create_goto_panel() {
-            var current_position_data = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var book = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
-            var container = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
-            var onclick = ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[3];
-            var show_sub_panel = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_goto_panel.__defaults__.show_sub_panel : arguments[4];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "show_sub_panel")){
-                show_sub_panel = ρσ_kwargs_obj.show_sub_panel;
-            }
-            var panel;
-            panel = create_goto_list(onclick, current_position_data, book.manifest.page_list, show_sub_panel);
-            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
-            ρσ_interpolate_kwargs.call(this, set_css, [panel].concat([ρσ_desugar_kwargs({flex_grow: "10"})]));
-            container.appendChild(panel);
-        };
-        if (!create_goto_panel.__defaults__) Object.defineProperties(create_goto_panel, {
-            __defaults__ : {value: {show_sub_panel:null}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["current_position_data", "book", "container", "onclick", "show_sub_panel"]},
-            __module__ : {value: "read_book.goto"}
-        });
-
-        function create_page_list_overlay(book, overlay, container) {
-            var list_container, pl, text, search_input, page_list, items, x;
-            list_container = E.div();
-            pl = overlay.view.current_pagelist_items;
-            function goto(x) {
-                overlay.view.goto_pagelist_item(x);
-                overlay.hide();
-            };
-            if (!goto.__argnames__) Object.defineProperties(goto, {
-                __argnames__ : {value: ["x"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            function goto_matching_page(text) {
-                var x, q;
-                var ρσ_Iter234 = page_list;
-                ρσ_Iter234 = ((typeof ρσ_Iter234[Symbol.iterator] === "function") ? (ρσ_Iter234 instanceof Map ? ρσ_Iter234.keys() : ρσ_Iter234) : Object.keys(ρσ_Iter234));
-                for (var ρσ_Index234 of ρσ_Iter234) {
-                    x = ρσ_Index234;
-                    if (x.pagenum === text) {
-                        goto(x);
-                        return;
-                    }
-                }
-                q = text.toLowerCase();
-                var ρσ_Iter235 = page_list;
-                ρσ_Iter235 = ((typeof ρσ_Iter235[Symbol.iterator] === "function") ? (ρσ_Iter235 instanceof Map ? ρσ_Iter235.keys() : ρσ_Iter235) : Object.keys(ρσ_Iter235));
-                for (var ρσ_Index235 of ρσ_Iter235) {
-                    x = ρσ_Index235;
-                    if (x.pagenum.toLowerCase() === q) {
-                        goto(x);
-                        return;
-                    }
-                }
-                error_dialog(_("No such page"), _("No page {!r} exists").format(text));
-            };
-            if (!goto_matching_page.__argnames__) Object.defineProperties(goto_matching_page, {
-                __argnames__ : {value: ["text"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            if (pl && pl.length > 0) {
-                if (pl.length === 1) {
-                    text = _("Currently on page: {}").format(pl[0].pagenum);
-                } else {
-                    text = _("Currently on pages: {}").format(pl[0].pagenum + " - " + pl[1].pagenum);
-                }
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 1em"})])));
-            }
-            search_input = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", placeholder: _("Enter a page number"), onkeydown: (function() {
-                var ρσ_anonfunc = function (ev) {
-                    var text;
-                    if (ev.key === "Enter") {
-                        text = ev.target.value;
-                        if (text) {
-                            goto_matching_page(text);
-                        }
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })()})]))].concat([ρσ_desugar_kwargs({style: "margin: 1em"})]));
-            container.appendChild(search_input);
-            container.appendChild(list_container);
-            page_list = book.manifest.page_list || [];
-            items = [];
-            var ρσ_Iter236 = page_list;
-            ρσ_Iter236 = ((typeof ρσ_Iter236[Symbol.iterator] === "function") ? (ρσ_Iter236 instanceof Map ? ρσ_Iter236.keys() : ρσ_Iter236) : Object.keys(ρσ_Iter236));
-            for (var ρσ_Index236 of ρσ_Iter236) {
-                x = ρσ_Index236;
-                items.push(ρσ_interpolate_kwargs.call(this, create_item, [x.pagenum].concat([ρσ_desugar_kwargs({action: goto.bind(null, x)})])));
-            }
-            build_list(list_container, items);
-        };
-        if (!create_page_list_overlay.__argnames__) Object.defineProperties(create_page_list_overlay, {
-            __argnames__ : {value: ["book", "overlay", "container"]},
-            __module__ : {value: "read_book.goto"}
-        });
-
-        function create_location_overlay(current_position_data, book, overlay, container) {
-            var container_id, current_cfi, calibre_book_url;
-            container_id = ensure_id(container);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 0 1rem"})]));
-            container = container.lastChild;
-            current_cfi = current_position_data.cfi;
-            calibre_book_url = (typeof book !== "undefined" && book !== null ? book : Object.create(null)).calibre_book_url;
-            function copy_button(text_to_copy) {
-                return ρσ_interpolate_kwargs.call(this, create_button, [_("Copy")].concat([ρσ_desugar_kwargs({action: (function() {
+        function new_bookmark(container_id, annotations_manager, data, onclick, ev) {
+            if (create_new_bookmark(annotations_manager, data)) {
+                onclick((function() {
                     var ρσ_anonfunc = function () {
-                        var src, orig;
-                        src = document.querySelector("#" + ρσ_str.format("{}", container_id) + " input");
-                        orig = src.value;
-                        src.value = text_to_copy;
-                        src.focus();
-                        src.select();
-                        try {
-                            document.execCommand("copy");
-                        } finally {
-                            src.value = orig;
-                        }
                     };
                     if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "read_book.goto"}
+                        __module__ : {value: "read_book.bookmarks"}
                     });
                     return ρσ_anonfunc;
-                })()})]));
-            };
-            if (!copy_button.__argnames__) Object.defineProperties(copy_button, {
-                __argnames__ : {value: ["text_to_copy"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            function display_and_copy(label, text) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [label, " ", ρσ_interpolate_kwargs.call(E, E.span, [text].concat([ρσ_desugar_kwargs({style: "font-size: smaller; font-family: monospace; overflow-wrap: anywhere"})]))].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; text-overflow: ellipsis; margin-bottom: 1ex"})])), copy_button(text)].concat([ρσ_desugar_kwargs({style: "margin: 1rem; margin-bottom: calc(1rem - 1ex); display: flex; align-items: baseline; flex-wrap: wrap"})])));
-            };
-            if (!display_and_copy.__argnames__) Object.defineProperties(display_and_copy, {
-                __argnames__ : {value: ["label", "text"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            if (current_cfi) {
-                display_and_copy(_("Current location:"), current_cfi);
-            }
-            function goto_cfi(cfi) {
-                if (ui_operations.goto_cfi(cfi)) {
-                    overlay.hide();
-                } else {
-                    error_dialog(_("No such location"), _("No location {} found").format(cfi));
-                }
-            };
-            if (!goto_cfi.__argnames__) Object.defineProperties(goto_cfi, {
-                __argnames__ : {value: ["cfi"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            function goto_ref(ref) {
-                ref = ref.replace(/,/g, ".");
-                if (ui_operations.goto_reference(ref)) {
-                    overlay.hide();
-                } else {
-                    error_dialog(_("No such reference"), _("No reference {} found").format(ref));
-                }
-            };
-            if (!goto_ref.__argnames__) Object.defineProperties(goto_ref, {
-                __argnames__ : {value: ["ref"]},
-                __module__ : {value: "read_book.goto"}
-            });
-
-            if (current_position_data.book_length > 0) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Current position: {}").format(format_pos(current_position_data.progress_frac, current_position_data.book_length))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-            }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Type the position, location or reference below. For a reference type ref: followed by the reference:")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-            function goto_pos() {
-                var src;
-                src = document.querySelector("#" + ρσ_str.format("{}", container_id) + " [name=newpos]").value;
-                if (!src) {
-                    return;
-                }
-                if (src.indexOf("epubcfi(") === 0) {
-                    return goto_cfi(src);
-                }
-                if (src.indexOf("ref:") === 0) {
-                    return goto_ref(src.slice(len("ref:")));
-                }
-                var ρσ_try_else_1 = false;
-                try {
-                    ui_operations.goto_book_position(float(src));
-                    ρσ_try_else_1 = true;
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        error_dialog(_("Not a valid book position"), _("{} is not a valid book position").format(src), traceback.format_exc());
-                    } 
-                }
-                if (ρσ_try_else_1) {
-                    overlay.hide();
-                }
-            };
-            if (!goto_pos.__module__) Object.defineProperties(goto_pos, {
-                __module__ : {value: "read_book.goto"}
-            });
-
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.label, [_("Go to:")].concat([ρσ_desugar_kwargs({style: "margin-right: 1rem"})])), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "newpos", type: "text", style: "flex-grow: 10; margin-right: 1rem", onkeydown: (function() {
-                var ρσ_anonfunc = function (ev) {
-                    if (ev.key === "Enter") {
-                        goto_pos();
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })()})]), E.span(" "), ρσ_interpolate_kwargs.call(this, create_button, [_("Go")].concat([ρσ_desugar_kwargs({action: goto_pos})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: baseline; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem;"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Note that using a position is not very robust, it is best to use either the location or reference.")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-            if (calibre_book_url) {
-                if (current_cfi) {
-                    calibre_book_url += "?open_at=" + encode_query_component(current_cfi);
-                }
-                display_and_copy(_("URL for this position:"), calibre_book_url);
-            } else if (!runtime.is_standalone_viewer) {
-                display_and_copy(_("URL for this position:"), window.top.location.toString());
-            }
-            window.setTimeout((function() {
-                var ρσ_anonfunc = function () {
-                    var container;
-                    container = document.getElementById(container_id);
-                    if (container) {
-                        container.querySelector("[name=newpos]").focus();
-                    }
-                };
-                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                    __module__ : {value: "read_book.goto"}
-                });
-                return ρσ_anonfunc;
-            })(), 10);
-        };
-        if (!create_location_overlay.__argnames__) Object.defineProperties(create_location_overlay, {
-            __argnames__ : {value: ["current_position_data", "book", "overlay", "container"]},
-            __module__ : {value: "read_book.goto"}
-        });
-
-        ρσ_modules["read_book.goto"].create_goto_list = create_goto_list;
-        ρσ_modules["read_book.goto"].get_next_section = get_next_section;
-        ρσ_modules["read_book.goto"].create_goto_panel = create_goto_panel;
-        ρσ_modules["read_book.goto"].create_page_list_overlay = create_page_list_overlay;
-        ρσ_modules["read_book.goto"].create_location_overlay = create_location_overlay;
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.scrolling";
-        var CONTAINER, MIN_SCROLL_SPEED_AUTO, MAX_SCROLL_SPEED_AUTO, MIN_SCROLL_AUTO_DELAY, MAX_SCROLL_AUTO_DELAY, MIN_SCROLL_SPEED_SMOOTH, MAX_SCROLL_SPEED_SMOOTH, MIN_SCROLL_MOUSE_DELAY, MAX_SCROLL_MOUSE_DELAY, develop;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
-        var session_defaults = ρσ_modules.session.session_defaults;
-
-        CONTAINER = unique_id("standalone-scrolling-settings");
-        MIN_SCROLL_SPEED_AUTO = .05;
-        MAX_SCROLL_SPEED_AUTO = 5;
-        MIN_SCROLL_AUTO_DELAY = -1;
-        MAX_SCROLL_AUTO_DELAY = 50;
-        MIN_SCROLL_SPEED_SMOOTH = 5;
-        MAX_SCROLL_SPEED_SMOOTH = 80;
-        MIN_SCROLL_MOUSE_DELAY = 0;
-        MAX_SCROLL_MOUSE_DELAY = 5;
-        function restore_defaults() {
-            var container, val, control;
-            container = get_container();
-            var ρσ_Iter237 = container.querySelectorAll("input[name]");
-            ρσ_Iter237 = ((typeof ρσ_Iter237[Symbol.iterator] === "function") ? (ρσ_Iter237 instanceof Map ? ρσ_Iter237.keys() : ρσ_Iter237) : Object.keys(ρσ_Iter237));
-            for (var ρσ_Index237 of ρσ_Iter237) {
-                control = ρσ_Index237;
-                val = (ρσ_expr_temp = session_defaults())[ρσ_bound_index(control.getAttribute("name"), ρσ_expr_temp)];
-                if (control.type === "checkbox") {
-                    control.checked = val;
-                } else {
-                    control.valueAsNumber = val;
-                }
+                })());
             }
         };
-        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
-            __module__ : {value: "read_book.prefs.scrolling"}
+        if (!new_bookmark.__argnames__) Object.defineProperties(new_bookmark, {
+            __argnames__ : {value: ["container_id", "annotations_manager", "data", "onclick", "ev"]},
+            __module__ : {value: "read_book.bookmarks"}
         });
 
-        function get_container() {
-            return document.getElementById(CONTAINER);
-        };
-        if (!get_container.__module__) Object.defineProperties(get_container, {
-            __module__ : {value: "read_book.prefs.scrolling"}
-        });
-
-        function change_scroll_speed(amt) {
-            var sd, lps, nlps;
-            sd = get_session_data();
-            lps = sd.get("lines_per_sec_auto");
-            nlps = max(MIN_SCROLL_SPEED_AUTO, min(lps + amt, MAX_SCROLL_SPEED_AUTO));
-            if ((nlps !== lps && (typeof nlps !== "object" || ρσ_not_equals(nlps, lps)))) {
-                sd.set("lines_per_sec_auto", nlps);
-            }
-            return nlps;
-        };
-        if (!change_scroll_speed.__argnames__) Object.defineProperties(change_scroll_speed, {
-            __argnames__ : {value: ["amt"]},
-            __module__ : {value: "read_book.prefs.scrolling"}
-        });
-
-        function create_scrolling_panel(container, apply_func, cancel_func) {
-            var sd;
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
+        function create_bookmarks_panel(annotations_manager, data, book, container, onclick) {
+            var container_id, button;
+            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 1rem"})]));
             container = container.lastChild;
-            sd = get_session_data();
-            function cb(name, text, title) {
-                var ans;
-                ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: name, style: "margin-left: 0"})]);
-                if (sd.get(name)) {
-                    ans.checked = true;
-                }
-                return ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.label, [ans, text].concat([ρσ_desugar_kwargs({title: title || ""})]))].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
-            };
-            if (!cb.__argnames__) Object.defineProperties(cb, {
-                __argnames__ : {value: ["name", "text", "title"]},
-                __module__ : {value: "read_book.prefs.scrolling"}
-            });
-
-            function spinner() {
-                var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-                var text = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
-                var kwargs = arguments[arguments.length-1];
-                if (kwargs === null || typeof kwargs !== "object" || kwargs [ρσ_kwargs_symbol] !== true) kwargs = {};
-                var ans, ρσ_unpack, key, val;
-                ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: name, id: name})]);
-                var ρσ_Iter238 = Object.entries(kwargs);
-                ρσ_Iter238 = ((typeof ρσ_Iter238[Symbol.iterator] === "function") ? (ρσ_Iter238 instanceof Map ? ρσ_Iter238.keys() : ρσ_Iter238) : Object.keys(ρσ_Iter238));
-                for (var ρσ_Index238 of ρσ_Iter238) {
-                    ρσ_unpack = ρσ_Index238;
-                    key = ρσ_unpack[0];
-                    val = ρσ_unpack[1];
-                    ans[(typeof key === "number" && key < 0) ? ans.length + key : key] = val;
-                }
-                ans.valueAsNumber = sd.get(name, (ρσ_expr_temp = session_defaults())[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
-                return [ρσ_interpolate_kwargs.call(E, E.label, [text].concat([ρσ_desugar_kwargs({"for": name})])), 
-                ans];
-            };
-            if (!spinner.__handles_kwarg_interpolation__) Object.defineProperties(spinner, {
-                __handles_kwarg_interpolation__ : {value: true},
-                __argnames__ : {value: ["name", "text"]},
-                __module__ : {value: "read_book.prefs.scrolling"}
-            });
-
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how scrolling works in paged mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
-            container.lastChild.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
-            container.lastChild.appendChild(cb("paged_wheel_section_jumps", _("Horizontal mouse wheel jumps to next/previous section")));
-            container.lastChild.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
-            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", " " + _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e4})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
-            container.lastChild.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
-            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: .05, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_mouse_boundary_delay", _("Seconds to pause when mouse-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Set to zero to scroll past internal file boundaries without delay"), step: .25, min: MIN_SCROLL_MOUSE_DELAY, max: MAX_SCROLL_MOUSE_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Miscellaneous")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
-            container.lastChild.appendChild(cb("book_scrollbar", _("Show a scrollbar")));
-            container.lastChild.appendChild(cb("reverse_page_turn_zones", _("Invert the page turn tap areas"), _("Have tapping on the left side turn the page forward and the right side backwards")));
-            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
+            container_id = ensure_id(container);
+            button = create_button(_("New bookmark"), "plus", new_bookmark.bind(null, container_id, annotations_manager, data, onclick));
+            container.appendChild(E.div(button));
+            container.appendChild(E.div(create_bookmarks_list(annotations_manager, onclick)));
         };
-        if (!create_scrolling_panel.__argnames__) Object.defineProperties(create_scrolling_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.scrolling"}
+        if (!create_bookmarks_panel.__argnames__) Object.defineProperties(create_bookmarks_panel, {
+            __argnames__ : {value: ["annotations_manager", "data", "book", "container", "onclick"]},
+            __module__ : {value: "read_book.bookmarks"}
         });
 
-        develop = create_scrolling_panel;
-        function commit_scrolling(onchange) {
-            var sd, container, changed, name, val, control;
-            sd = get_session_data();
-            container = get_container();
-            changed = false;
-            var ρσ_Iter239 = container.querySelectorAll("input[name]");
-            ρσ_Iter239 = ((typeof ρσ_Iter239[Symbol.iterator] === "function") ? (ρσ_Iter239 instanceof Map ? ρσ_Iter239.keys() : ρσ_Iter239) : Object.keys(ρσ_Iter239));
-            for (var ρσ_Index239 of ρσ_Iter239) {
-                control = ρσ_Index239;
-                name = control.getAttribute("name");
-                val = (control.type === "checkbox") ? control.checked : control.valueAsNumber;
-                if (val !== sd.get(name) && control.validity.valid) {
-                    sd.set(name, val);
-                    changed = true;
-                }
-            }
-            if (changed) {
-                onchange();
-            }
-        };
-        if (!commit_scrolling.__argnames__) Object.defineProperties(commit_scrolling, {
-            __argnames__ : {value: ["onchange"]},
-            __module__ : {value: "read_book.prefs.scrolling"}
-        });
-
-        ρσ_modules["read_book.prefs.scrolling"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_SPEED_AUTO = MIN_SCROLL_SPEED_AUTO;
-        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_SPEED_AUTO = MAX_SCROLL_SPEED_AUTO;
-        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_AUTO_DELAY = MIN_SCROLL_AUTO_DELAY;
-        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_AUTO_DELAY = MAX_SCROLL_AUTO_DELAY;
-        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_SPEED_SMOOTH = MIN_SCROLL_SPEED_SMOOTH;
-        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_SPEED_SMOOTH = MAX_SCROLL_SPEED_SMOOTH;
-        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_MOUSE_DELAY = MIN_SCROLL_MOUSE_DELAY;
-        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_MOUSE_DELAY = MAX_SCROLL_MOUSE_DELAY;
-        ρσ_modules["read_book.prefs.scrolling"].develop = develop;
-        ρσ_modules["read_book.prefs.scrolling"].restore_defaults = restore_defaults;
-        ρσ_modules["read_book.prefs.scrolling"].get_container = get_container;
-        ρσ_modules["read_book.prefs.scrolling"].change_scroll_speed = change_scroll_speed;
-        ρσ_modules["read_book.prefs.scrolling"].create_scrolling_panel = create_scrolling_panel;
-        ρσ_modules["read_book.prefs.scrolling"].commit_scrolling = commit_scrolling;
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.fonts";
-        var CONTAINER, DEFAULT_STANDARD_FONT, DEFAULT_MINIMUM_FONT_SIZE, DEFAULT_ZOOM_STEP_SIZE, MIN_ZOOM_STEP_SIZE, develop;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var svgicon = ρσ_modules.dom.svgicon;
-
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var runtime = ρσ_modules["read_book.globals"].runtime;
-
-        var MAX_FONT_SIZE = ρσ_modules["read_book.prefs.font_size"].MAX_FONT_SIZE;
-        var MIN_FONT_SIZE = ρσ_modules["read_book.prefs.font_size"].MIN_FONT_SIZE;
-
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
-        CONTAINER = unique_id("standalone-font-settings");
-        DEFAULT_STANDARD_FONT = "serif";
-        DEFAULT_MINIMUM_FONT_SIZE = 8;
-        DEFAULT_ZOOM_STEP_SIZE = 20;
-        MIN_ZOOM_STEP_SIZE = 10;
-        function current_zoom_step_size() {
-            var s;
-            s = get_session_data().get("standalone_font_settings");
-            return s.zoom_step_size || DEFAULT_ZOOM_STEP_SIZE;
-        };
-        if (!current_zoom_step_size.__module__) Object.defineProperties(current_zoom_step_size, {
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function font_select(name, settings) {
-            var ans, current_val, family;
-            ans = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: name})]);
-            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("— Choose a font —")].concat([ρσ_desugar_kwargs({value: ""})])));
-            current_val = settings[(typeof name === "number" && name < 0) ? settings.length + name : name];
-            if (!current_val) {
-                ans.lastChild.setAttribute("selected", "selected");
-            }
-            var ρσ_Iter240 = runtime.all_font_families;
-            ρσ_Iter240 = ((typeof ρσ_Iter240[Symbol.iterator] === "function") ? (ρσ_Iter240 instanceof Map ? ρσ_Iter240.keys() : ρσ_Iter240) : Object.keys(ρσ_Iter240));
-            for (var ρσ_Index240 of ρσ_Iter240) {
-                family = ρσ_Index240;
-                if (family) {
-                    ans.appendChild(E.option(family));
-                    if (family === current_val) {
-                        ans.lastChild.setAttribute("selected", "selected");
-                    }
-                }
-            }
-            return ρσ_interpolate_kwargs.call(E, E.div, [ans, E.span(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({data_component: "select"})]));
-        };
-        if (!font_select.__argnames__) Object.defineProperties(font_select, {
-            __argnames__ : {value: ["name", "settings"]},
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function standard_font(settings) {
-            var ans, sf;
-            ans = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: "standard_font"})]);
-            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("Serif")].concat([ρσ_desugar_kwargs({value: "serif"})])));
-            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("Sans-serif")].concat([ρσ_desugar_kwargs({value: "sans"})])));
-            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("Monospace")].concat([ρσ_desugar_kwargs({value: "mono"})])));
-            sf = settings.standard_font || DEFAULT_STANDARD_FONT;
-            ans.querySelector("[value=" + ρσ_str.format("{}", sf) + "]").setAttribute("selected", "selected");
-            return ρσ_interpolate_kwargs.call(E, E.div, [ans, E.span(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({data_component: "select"})]));
-        };
-        if (!standard_font.__argnames__) Object.defineProperties(standard_font, {
-            __argnames__ : {value: ["settings"]},
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function minimum_font_size(settings) {
-            var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: str(MAX_FONT_SIZE), min: str(MIN_FONT_SIZE), step: "1", type: "number", name: "minimum_font_size"})]);
-            if (typeof settings.minimum_font_size === "number") {
-                ans.value = settings.minimum_font_size + "";
-            } else {
-                ans.value = "" + DEFAULT_MINIMUM_FONT_SIZE;
-            }
-            return ans;
-        };
-        if (!minimum_font_size.__argnames__) Object.defineProperties(minimum_font_size, {
-            __argnames__ : {value: ["settings"]},
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function zoom_step_size(settings) {
-            var ans;
-            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: MIN_ZOOM_STEP_SIZE + "", step: "1", type: "number", name: "zoom_step_size"})]);
-            if (typeof settings.zoom_step_size === "number") {
-                ans.value = max(10, parseInt(settings.zoom_step_size)) + "";
-            } else {
-                ans.value = "" + DEFAULT_ZOOM_STEP_SIZE;
-            }
-            return ans;
-        };
-        if (!zoom_step_size.__argnames__) Object.defineProperties(zoom_step_size, {
-            __argnames__ : {value: ["settings"]},
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function restore_defaults() {
-            var container, q;
-            container = get_container();
-            var ρσ_Iter241 = [ "serif_family", "sans_family", "mono_family" ];
-            ρσ_Iter241 = ((typeof ρσ_Iter241[Symbol.iterator] === "function") ? (ρσ_Iter241 instanceof Map ? ρσ_Iter241.keys() : ρσ_Iter241) : Object.keys(ρσ_Iter241));
-            for (var ρσ_Index241 of ρσ_Iter241) {
-                q = ρσ_Index241;
-                container.querySelector("[name=" + ρσ_str.format("{}", q) + "]").value = "";
-            }
-            container.querySelector("[name=zoom_step_size]").value = DEFAULT_ZOOM_STEP_SIZE + "";
-            container.querySelector("[name=minimum_font_size]").value = DEFAULT_MINIMUM_FONT_SIZE + "";
-            container.querySelector("[name=standard_font]").value = DEFAULT_STANDARD_FONT;
-        };
-        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function get_container() {
-            return document.getElementById(CONTAINER);
-        };
-        if (!get_container.__module__) Object.defineProperties(get_container, {
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        function create_fonts_panel(container, apply_func, cancel_func) {
-            var sd, settings;
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
-            container = container.lastChild;
-            container.append(ρσ_interpolate_kwargs.call(E, E.div, [_("Choose fonts to use for un-styled text:")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
-            sd = get_session_data();
-            settings = sd.get("standalone_font_settings");
-            function row(label, widget) {
-                return E.tr(ρσ_interpolate_kwargs.call(E, E.td, [label + ": "].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])), ρσ_interpolate_kwargs.call(E, E.td, [widget].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
-            };
-            if (!row.__argnames__) Object.defineProperties(row, {
-                __argnames__ : {value: ["label", "widget"]},
-                __module__ : {value: "read_book.prefs.fonts"}
-            });
-
-            container.append(ρσ_interpolate_kwargs.call(E, E.table, [row(_("Serif family"), font_select("serif_family", settings)), row(_("Sans-serif family"), font_select("sans_family", settings)), row(_("Monospace family"), font_select("mono_family", settings)), row(_("Standard font"), standard_font(settings))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
-            container.append(ρσ_interpolate_kwargs.call(E, E.div, [_("Zoom related settings")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; padding-top: 1rem; width: 100%; border-top: solid 1px"})])));
-            container.append(E.table(row(_("Zoom step size (%)"), zoom_step_size(settings)), row(_("Minimum font size (px)"), minimum_font_size(settings))));
-            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
-        };
-        if (!create_fonts_panel.__argnames__) Object.defineProperties(create_fonts_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        develop = create_fonts_panel;
-        function commit_fonts(onchange) {
-            var sd, container, vals, zss, mfs, sf, val, q;
-            sd = get_session_data();
-            container = get_container();
-            vals = Object.create(null);
-            zss = parseInt(container.querySelector("[name=zoom_step_size]").value);
-            if (zss !== DEFAULT_ZOOM_STEP_SIZE) {
-                vals.zoom_step_size = max(MIN_ZOOM_STEP_SIZE, zss);
-            }
-            mfs = parseInt(container.querySelector("[name=minimum_font_size]").value);
-            if (mfs !== DEFAULT_MINIMUM_FONT_SIZE) {
-                vals.minimum_font_size = mfs;
-            }
-            sf = container.querySelector("[name=standard_font]").value;
-            if (sf !== DEFAULT_STANDARD_FONT) {
-                vals.standard_font = sf;
-            }
-            var ρσ_Iter242 = [ "serif_family", "sans_family", "mono_family" ];
-            ρσ_Iter242 = ((typeof ρσ_Iter242[Symbol.iterator] === "function") ? (ρσ_Iter242 instanceof Map ? ρσ_Iter242.keys() : ρσ_Iter242) : Object.keys(ρσ_Iter242));
-            for (var ρσ_Index242 of ρσ_Iter242) {
-                q = ρσ_Index242;
-                val = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]").value;
-                if (val) {
-                    vals[(typeof q === "number" && q < 0) ? vals.length + q : q] = val;
-                }
-            }
-            sd.set("standalone_font_settings", vals);
-        };
-        if (!commit_fonts.__argnames__) Object.defineProperties(commit_fonts, {
-            __argnames__ : {value: ["onchange"]},
-            __module__ : {value: "read_book.prefs.fonts"}
-        });
-
-        ρσ_modules["read_book.prefs.fonts"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.fonts"].DEFAULT_STANDARD_FONT = DEFAULT_STANDARD_FONT;
-        ρσ_modules["read_book.prefs.fonts"].DEFAULT_MINIMUM_FONT_SIZE = DEFAULT_MINIMUM_FONT_SIZE;
-        ρσ_modules["read_book.prefs.fonts"].DEFAULT_ZOOM_STEP_SIZE = DEFAULT_ZOOM_STEP_SIZE;
-        ρσ_modules["read_book.prefs.fonts"].MIN_ZOOM_STEP_SIZE = MIN_ZOOM_STEP_SIZE;
-        ρσ_modules["read_book.prefs.fonts"].develop = develop;
-        ρσ_modules["read_book.prefs.fonts"].current_zoom_step_size = current_zoom_step_size;
-        ρσ_modules["read_book.prefs.fonts"].font_select = font_select;
-        ρσ_modules["read_book.prefs.fonts"].standard_font = standard_font;
-        ρσ_modules["read_book.prefs.fonts"].minimum_font_size = minimum_font_size;
-        ρσ_modules["read_book.prefs.fonts"].zoom_step_size = zoom_step_size;
-        ρσ_modules["read_book.prefs.fonts"].restore_defaults = restore_defaults;
-        ρσ_modules["read_book.prefs.fonts"].get_container = get_container;
-        ρσ_modules["read_book.prefs.fonts"].create_fonts_panel = create_fonts_panel;
-        ρσ_modules["read_book.prefs.fonts"].commit_fonts = commit_fonts;
+        ρσ_modules["read_book.bookmarks"].goto_cfi = goto_cfi;
+        ρσ_modules["read_book.bookmarks"].remove_bookmark = remove_bookmark;
+        ρσ_modules["read_book.bookmarks"].edit_bookmark = edit_bookmark;
+        ρσ_modules["read_book.bookmarks"].create_bookmarks_list = create_bookmarks_list;
+        ρσ_modules["read_book.bookmarks"].create_new_bookmark = create_new_bookmark;
+        ρσ_modules["read_book.bookmarks"].new_bookmark = new_bookmark;
+        ρσ_modules["read_book.bookmarks"].create_bookmarks_panel = create_bookmarks_panel;
     })();
 
     (function(){
@@ -32710,6 +32027,1743 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.goto";
+        var traceback = ρσ_modules.traceback;
+
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var encode_query_component = ρσ_modules.ajax.encode_query_component;
+
+        var build_list = ρσ_modules["book_list.item_list"].build_list;
+        var create_item = ρσ_modules["book_list.item_list"].create_item;
+
+        var ensure_id = ρσ_modules.dom.ensure_id;
+        var set_css = ρσ_modules.dom.set_css;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var current_book = ρσ_modules["read_book.globals"].current_book;
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var format_pos = ρσ_modules["read_book.prefs.head_foot"].format_pos;
+
+        var get_border_nodes = ρσ_modules["read_book.toc"].get_border_nodes;
+        var get_toc_maps = ρσ_modules["read_book.toc"].get_toc_maps;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        function create_goto_list() {
+            var onclick = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var current_position_data = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var page_list = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
+            var show_sub_panel = (arguments[3] === undefined || ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_goto_list.__defaults__.show_sub_panel : arguments[3];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "show_sub_panel")){
+                show_sub_panel = ρσ_kwargs_obj.show_sub_panel;
+            }
+            var ans, items, location_text, landmarks, toc, id_map, ρσ_unpack, before, after, l;
+            ans = E.div();
+            items = [];
+            location_text = format_pos(current_position_data.progress_frac, current_position_data.book_length) + " :: ";
+            if (current_position_data.cfi) {
+                location_text += current_position_data.cfi;
+            }
+            landmarks = current_book().manifest.landmarks;
+            toc = current_book().manifest.toc;
+            id_map = get_toc_maps(toc)[1];
+            ρσ_unpack = get_border_nodes(toc, id_map);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            before = ρσ_unpack[0];
+            after = ρσ_unpack[1];
+            if (after) {
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Next section")].concat([ρσ_desugar_kwargs({icon: "caret-right", subtitle: after.title, action: onclick.bind(null, after.dest, after.frag)})])));
+            }
+            if (before) {
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Previous section")].concat([ρσ_desugar_kwargs({icon: "caret-left", subtitle: before.title, action: onclick.bind(null, before.dest, before.frag)})])));
+            }
+            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Book start")].concat([ρσ_desugar_kwargs({action: onclick.bind(null, (function() {
+                var ρσ_anonfunc = function (view) {
+                    view.goto_doc_boundary(true);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["view"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })())})])));
+            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Book end")].concat([ρσ_desugar_kwargs({action: onclick.bind(null, (function() {
+                var ρσ_anonfunc = function (view) {
+                    view.goto_doc_boundary(false);
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["view"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })())})])));
+            function panel_action(name, fallback_fn) {
+                if (show_sub_panel) {
+                    return (function() {
+                        var ρσ_anonfunc = function () {
+                            show_sub_panel(name);
+                        };
+                        if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                            __module__ : {value: "read_book.goto"}
+                        });
+                        return ρσ_anonfunc;
+                    })();
+                }
+                return onclick.bind(null, fallback_fn);
+            };
+            if (!panel_action.__argnames__) Object.defineProperties(panel_action, {
+                __argnames__ : {value: ["name", "fallback_fn"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Metadata")].concat([ρσ_desugar_kwargs({subtitle: _("Details about this book"), action: panel_action("metadata", (function() {
+                var ρσ_anonfunc = function (view) {
+                    view.overlay.show_metadata();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["view"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })())})])));
+            if (!runtime.is_standalone_viewer) {
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Book page in library")].concat([ρσ_desugar_kwargs({subtitle: _("The page for this book in the calibre library"), action: onclick.bind(null, (function() {
+                    var ρσ_anonfunc = function (view) {
+                        view.open_book_page();
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["view"]},
+                        __module__ : {value: "read_book.goto"}
+                    });
+                    return ρσ_anonfunc;
+                })())})])));
+            }
+            items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Location")].concat([ρσ_desugar_kwargs({subtitle: location_text, action: panel_action("location", (function() {
+                var ρσ_anonfunc = function (view) {
+                    view.overlay.show_ask_for_location();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["view"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })())})])));
+            if (page_list && page_list.length > 0) {
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [_("Page number")].concat([ρσ_desugar_kwargs({subtitle: _("Typically the page number from a paper edition of this book"), action: panel_action("page_list", (function() {
+                    var ρσ_anonfunc = function (view) {
+                        view.overlay.show_page_list(page_list);
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["view"]},
+                        __module__ : {value: "read_book.goto"}
+                    });
+                    return ρσ_anonfunc;
+                })())})])));
+            }
+            var ρσ_Iter231 = landmarks;
+            ρσ_Iter231 = ((typeof ρσ_Iter231[Symbol.iterator] === "function") ? (ρσ_Iter231 instanceof Map ? ρσ_Iter231.keys() : ρσ_Iter231) : Object.keys(ρσ_Iter231));
+            for (var ρσ_Index231 of ρσ_Iter231) {
+                l = ρσ_Index231;
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [l.title].concat([ρσ_desugar_kwargs({action: onclick.bind(null, l.dest, l.frag)})])));
+            }
+            build_list(ans, items);
+            return ans;
+        };
+        if (!create_goto_list.__defaults__) Object.defineProperties(create_goto_list, {
+            __defaults__ : {value: {show_sub_panel:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["onclick", "current_position_data", "page_list", "show_sub_panel"]},
+            __module__ : {value: "read_book.goto"}
+        });
+
+        function get_next_section(forward) {
+            var toc, id_map, ρσ_unpack, before, after;
+            toc = current_book().manifest.toc;
+            id_map = get_toc_maps(toc)[1];
+            ρσ_unpack = get_border_nodes(toc, id_map);
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            before = ρσ_unpack[0];
+            after = ρσ_unpack[1];
+            return (forward) ? after : before;
+        };
+        if (!get_next_section.__argnames__) Object.defineProperties(get_next_section, {
+            __argnames__ : {value: ["forward"]},
+            __module__ : {value: "read_book.goto"}
+        });
+
+        function create_goto_panel() {
+            var current_position_data = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var book = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+            var container = ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[2];
+            var onclick = ( 3 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[3];
+            var show_sub_panel = (arguments[4] === undefined || ( 4 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? create_goto_panel.__defaults__.show_sub_panel : arguments[4];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "show_sub_panel")){
+                show_sub_panel = ρσ_kwargs_obj.show_sub_panel;
+            }
+            var panel;
+            panel = create_goto_list(onclick, current_position_data, book.manifest.page_list, show_sub_panel);
+            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
+            ρσ_interpolate_kwargs.call(this, set_css, [panel].concat([ρσ_desugar_kwargs({flex_grow: "10"})]));
+            container.appendChild(panel);
+        };
+        if (!create_goto_panel.__defaults__) Object.defineProperties(create_goto_panel, {
+            __defaults__ : {value: {show_sub_panel:null}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["current_position_data", "book", "container", "onclick", "show_sub_panel"]},
+            __module__ : {value: "read_book.goto"}
+        });
+
+        function create_page_list_overlay(book, overlay, container) {
+            var list_container, pl, text, search_input, page_list, items, x;
+            list_container = E.div();
+            pl = overlay.view.current_pagelist_items;
+            function goto(x) {
+                overlay.view.goto_pagelist_item(x);
+                overlay.hide();
+            };
+            if (!goto.__argnames__) Object.defineProperties(goto, {
+                __argnames__ : {value: ["x"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            function goto_matching_page(text) {
+                var x, q;
+                var ρσ_Iter232 = page_list;
+                ρσ_Iter232 = ((typeof ρσ_Iter232[Symbol.iterator] === "function") ? (ρσ_Iter232 instanceof Map ? ρσ_Iter232.keys() : ρσ_Iter232) : Object.keys(ρσ_Iter232));
+                for (var ρσ_Index232 of ρσ_Iter232) {
+                    x = ρσ_Index232;
+                    if (x.pagenum === text) {
+                        goto(x);
+                        return;
+                    }
+                }
+                q = text.toLowerCase();
+                var ρσ_Iter233 = page_list;
+                ρσ_Iter233 = ((typeof ρσ_Iter233[Symbol.iterator] === "function") ? (ρσ_Iter233 instanceof Map ? ρσ_Iter233.keys() : ρσ_Iter233) : Object.keys(ρσ_Iter233));
+                for (var ρσ_Index233 of ρσ_Iter233) {
+                    x = ρσ_Index233;
+                    if (x.pagenum.toLowerCase() === q) {
+                        goto(x);
+                        return;
+                    }
+                }
+                error_dialog(_("No such page"), _("No page {!r} exists").format(text));
+            };
+            if (!goto_matching_page.__argnames__) Object.defineProperties(goto_matching_page, {
+                __argnames__ : {value: ["text"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            if (pl && pl.length > 0) {
+                if (pl.length === 1) {
+                    text = _("Currently on page: {}").format(pl[0].pagenum);
+                } else {
+                    text = _("Currently on pages: {}").format(pl[0].pagenum + " - " + pl[1].pagenum);
+                }
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 1em"})])));
+            }
+            search_input = ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", placeholder: _("Enter a page number"), onkeydown: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    var text;
+                    if (ev.key === "Enter") {
+                        text = ev.target.value;
+                        if (text) {
+                            goto_matching_page(text);
+                        }
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })()})]))].concat([ρσ_desugar_kwargs({style: "margin: 1em"})]));
+            container.appendChild(search_input);
+            container.appendChild(list_container);
+            page_list = book.manifest.page_list || [];
+            items = [];
+            var ρσ_Iter234 = page_list;
+            ρσ_Iter234 = ((typeof ρσ_Iter234[Symbol.iterator] === "function") ? (ρσ_Iter234 instanceof Map ? ρσ_Iter234.keys() : ρσ_Iter234) : Object.keys(ρσ_Iter234));
+            for (var ρσ_Index234 of ρσ_Iter234) {
+                x = ρσ_Index234;
+                items.push(ρσ_interpolate_kwargs.call(this, create_item, [x.pagenum].concat([ρσ_desugar_kwargs({action: goto.bind(null, x)})])));
+            }
+            build_list(list_container, items);
+        };
+        if (!create_page_list_overlay.__argnames__) Object.defineProperties(create_page_list_overlay, {
+            __argnames__ : {value: ["book", "overlay", "container"]},
+            __module__ : {value: "read_book.goto"}
+        });
+
+        function create_location_overlay(current_position_data, book, overlay, container) {
+            var container_id, current_cfi, calibre_book_url;
+            container_id = ensure_id(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin: 0 1rem"})]));
+            container = container.lastChild;
+            current_cfi = current_position_data.cfi;
+            calibre_book_url = (typeof book !== "undefined" && book !== null ? book : Object.create(null)).calibre_book_url;
+            function copy_button(text_to_copy) {
+                return ρσ_interpolate_kwargs.call(this, create_button, [_("Copy")].concat([ρσ_desugar_kwargs({action: (function() {
+                    var ρσ_anonfunc = function () {
+                        var src, orig;
+                        src = document.querySelector("#" + ρσ_str.format("{}", container_id) + " input");
+                        orig = src.value;
+                        src.value = text_to_copy;
+                        src.focus();
+                        src.select();
+                        try {
+                            document.execCommand("copy");
+                        } finally {
+                            src.value = orig;
+                        }
+                    };
+                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                        __module__ : {value: "read_book.goto"}
+                    });
+                    return ρσ_anonfunc;
+                })()})]));
+            };
+            if (!copy_button.__argnames__) Object.defineProperties(copy_button, {
+                __argnames__ : {value: ["text_to_copy"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            function display_and_copy(label, text) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [label, " ", ρσ_interpolate_kwargs.call(E, E.span, [text].concat([ρσ_desugar_kwargs({style: "font-size: smaller; font-family: monospace; overflow-wrap: anywhere"})]))].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; text-overflow: ellipsis; margin-bottom: 1ex"})])), copy_button(text)].concat([ρσ_desugar_kwargs({style: "margin: 1rem; margin-bottom: calc(1rem - 1ex); display: flex; align-items: baseline; flex-wrap: wrap"})])));
+            };
+            if (!display_and_copy.__argnames__) Object.defineProperties(display_and_copy, {
+                __argnames__ : {value: ["label", "text"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            if (current_cfi) {
+                display_and_copy(_("Current location:"), current_cfi);
+            }
+            function goto_cfi(cfi) {
+                if (ui_operations.goto_cfi(cfi)) {
+                    overlay.hide();
+                } else {
+                    error_dialog(_("No such location"), _("No location {} found").format(cfi));
+                }
+            };
+            if (!goto_cfi.__argnames__) Object.defineProperties(goto_cfi, {
+                __argnames__ : {value: ["cfi"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            function goto_ref(ref) {
+                ref = ref.replace(/,/g, ".");
+                if (ui_operations.goto_reference(ref)) {
+                    overlay.hide();
+                } else {
+                    error_dialog(_("No such reference"), _("No reference {} found").format(ref));
+                }
+            };
+            if (!goto_ref.__argnames__) Object.defineProperties(goto_ref, {
+                __argnames__ : {value: ["ref"]},
+                __module__ : {value: "read_book.goto"}
+            });
+
+            if (current_position_data.book_length > 0) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Current position: {}").format(format_pos(current_position_data.progress_frac, current_position_data.book_length))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Type the position, location or reference below. For a reference type ref: followed by the reference:")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            function goto_pos() {
+                var src;
+                src = document.querySelector("#" + ρσ_str.format("{}", container_id) + " [name=newpos]").value;
+                if (!src) {
+                    return;
+                }
+                if (src.indexOf("epubcfi(") === 0) {
+                    return goto_cfi(src);
+                }
+                if (src.indexOf("ref:") === 0) {
+                    return goto_ref(src.slice(len("ref:")));
+                }
+                var ρσ_try_else_1 = false;
+                try {
+                    ui_operations.goto_book_position(float(src));
+                    ρσ_try_else_1 = true;
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        error_dialog(_("Not a valid book position"), _("{} is not a valid book position").format(src), traceback.format_exc());
+                    } 
+                }
+                if (ρσ_try_else_1) {
+                    overlay.hide();
+                }
+            };
+            if (!goto_pos.__module__) Object.defineProperties(goto_pos, {
+                __module__ : {value: "read_book.goto"}
+            });
+
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.label, [_("Go to:")].concat([ρσ_desugar_kwargs({style: "margin-right: 1rem"})])), ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "newpos", type: "text", style: "flex-grow: 10; margin-right: 1rem", onkeydown: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    if (ev.key === "Enter") {
+                        goto_pos();
+                    }
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })()})]), E.span(" "), ρσ_interpolate_kwargs.call(this, create_button, [_("Go")].concat([ρσ_desugar_kwargs({action: goto_pos})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: baseline; flex-wrap: wrap"})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem;"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Note that using a position is not very robust, it is best to use either the location or reference.")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            if (calibre_book_url) {
+                if (current_cfi) {
+                    calibre_book_url += "?open_at=" + encode_query_component(current_cfi);
+                }
+                display_and_copy(_("URL for this position:"), calibre_book_url);
+            } else if (!runtime.is_standalone_viewer) {
+                display_and_copy(_("URL for this position:"), window.top.location.toString());
+            }
+            window.setTimeout((function() {
+                var ρσ_anonfunc = function () {
+                    var container;
+                    container = document.getElementById(container_id);
+                    if (container) {
+                        container.querySelector("[name=newpos]").focus();
+                    }
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.goto"}
+                });
+                return ρσ_anonfunc;
+            })(), 10);
+        };
+        if (!create_location_overlay.__argnames__) Object.defineProperties(create_location_overlay, {
+            __argnames__ : {value: ["current_position_data", "book", "overlay", "container"]},
+            __module__ : {value: "read_book.goto"}
+        });
+
+        ρσ_modules["read_book.goto"].create_goto_list = create_goto_list;
+        ρσ_modules["read_book.goto"].get_next_section = get_next_section;
+        ρσ_modules["read_book.goto"].create_goto_panel = create_goto_panel;
+        ρσ_modules["read_book.goto"].create_page_list_overlay = create_page_list_overlay;
+        ρσ_modules["read_book.goto"].create_location_overlay = create_location_overlay;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.colors";
+        var CONTAINER, COLOR_LIST, ACTION_BUTTONS, EDIT_SCHEME, MARGINS, develop;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var cached_color_to_rgba = ρσ_modules["book_list.theme"].cached_color_to_rgba;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+        var clear = ρσ_modules.dom.clear;
+        var set_css = ρσ_modules.dom.set_css;
+        var set_radio_group_value = ρσ_modules.dom.set_radio_group_value;
+        var svgicon = ρσ_modules.dom.svgicon;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var default_color_schemes = ρσ_modules["read_book.globals"].default_color_schemes;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        var session_defaults = ρσ_modules.session.session_defaults;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        CONTAINER = unique_id("reader-color-scheme");
+        COLOR_LIST = unique_id();
+        ACTION_BUTTONS = unique_id();
+        EDIT_SCHEME = unique_id();
+        MARGINS = ["left", "right", "top", "bottom"];
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var sel, style;
+                sel = "#" + COLOR_LIST;
+                style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({list_style_type: "none", display: "flex", flex_wrap: "wrap"})]));
+                sel += " > li";
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({padding: "1ex 1rem", margin: "1ex 0.5rem", border_radius: "4px", cursor: "pointer", border: "solid 1px currentColor"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " svg"].concat([ρσ_desugar_kwargs({visibility: "hidden"})]));
+                sel += ".current-color";
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " svg"].concat([ρσ_desugar_kwargs({visibility: "visible"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, ["#{} #{} td".format(CONTAINER, EDIT_SCHEME)].concat([ρσ_desugar_kwargs({padding: "1ex 1em"})]));
+                sel = "#" + ACTION_BUTTONS;
+                style += sel + ("{margin-top:2ex; padding-top:1ex; border-top: solid 1px currentColor;" + " margin-bottom: 2ex; padding-bottom: 1ex; border-bottom: solid 1px currentColor}");
+                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > span "].concat([ρσ_desugar_kwargs({margin: "1ex 0.5rem", display: "inline-block"})]));
+                return style;
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "read_book.prefs.colors"}
+            });
+            return ρσ_anonfunc;
+        })());
+        function get_container() {
+            return document.getElementById(CONTAINER);
+        };
+        if (!get_container.__module__) Object.defineProperties(get_container, {
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function resolve_color_scheme(current_color_scheme) {
+            var sd, cs, ucs, ans, sn, rgba;
+            sd = get_session_data();
+            cs = current_color_scheme || sd.get("current_color_scheme") || session_defaults().current_color_scheme;
+            ucs = sd.get("user_color_schemes");
+            if (default_color_schemes[(typeof cs === "number" && cs < 0) ? default_color_schemes.length + cs : cs]) {
+                ans = default_color_schemes[(typeof cs === "number" && cs < 0) ? default_color_schemes.length + cs : cs];
+            } else if (ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs] && ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs].foreground && ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs].background) {
+                ans = ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs];
+            } else {
+                var ρσ_Iter235 = default_color_schemes;
+                ρσ_Iter235 = ((typeof ρσ_Iter235[Symbol.iterator] === "function") ? (ρσ_Iter235 instanceof Map ? ρσ_Iter235.keys() : ρσ_Iter235) : Object.keys(ρσ_Iter235));
+                for (var ρσ_Index235 of ρσ_Iter235) {
+                    sn = ρσ_Index235;
+                    ans = default_color_schemes[(typeof sn === "number" && sn < 0) ? default_color_schemes.length + sn : sn];
+                    break;
+                }
+            }
+            rgba = cached_color_to_rgba(ans.background);
+            ans.is_dark_theme = max(rgba[0], rgba[1], rgba[2]) < 115;
+            return ans;
+        };
+        if (!resolve_color_scheme.__argnames__) Object.defineProperties(resolve_color_scheme, {
+            __argnames__ : {value: ["current_color_scheme"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function change_current_color(ev) {
+            var ul, li;
+            ul = ev.currentTarget.parentNode;
+            var ρσ_Iter236 = ul.childNodes;
+            ρσ_Iter236 = ((typeof ρσ_Iter236[Symbol.iterator] === "function") ? (ρσ_Iter236 instanceof Map ? ρσ_Iter236.keys() : ρσ_Iter236) : Object.keys(ρσ_Iter236));
+            for (var ρσ_Index236 of ρσ_Iter236) {
+                li = ρσ_Index236;
+                li.setAttribute("class", (li === ev.currentTarget) ? "current-color" : "");
+            }
+            set_action_button_visibility(ul.parentNode);
+        };
+        if (!change_current_color.__argnames__) Object.defineProperties(change_current_color, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function new_color_scheme(ev) {
+            var container, inp;
+            container = document.getElementById(EDIT_SCHEME);
+            container.style.display = "block";
+            var ρσ_Iter237 = container.querySelectorAll("input");
+            ρσ_Iter237 = ((typeof ρσ_Iter237[Symbol.iterator] === "function") ? (ρσ_Iter237 instanceof Map ? ρσ_Iter237.keys() : ρσ_Iter237) : Object.keys(ρσ_Iter237));
+            for (var ρσ_Index237 of ρσ_Iter237) {
+                inp = ρσ_Index237;
+                if (inp.name.endswith("_color_type")) {
+                    inp.checked = inp.value === "default";
+                } else if (inp.name.startswith("margin_")) {
+                } else {
+                    inp.value = (ρσ_expr_temp = (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["name"] = "";
+                        ρσ_d["bg"] = "#ffffff";
+                        ρσ_d["fg"] = "#000000";
+                        ρσ_d["link"] = "#0000ee";
+                        return ρσ_d;
+                    }).call(this))[ρσ_bound_index(inp.name, ρσ_expr_temp)];
+                }
+            }
+            container.querySelector("input").focus();
+            return container;
+        };
+        if (!new_color_scheme.__argnames__) Object.defineProperties(new_color_scheme, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function edit_color_scheme(ev) {
+            var container, ccs, all_schemes, scheme, attr, val, ρσ_unpack, bg, fg, which;
+            container = new_color_scheme(ev);
+            ccs = current_color_scheme(container);
+            all_schemes = all_color_schemes();
+            if (all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs]) {
+                scheme = all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs];
+                container = document.getElementById(EDIT_SCHEME);
+                container.querySelector("input").value = scheme.name;
+                container.querySelector("input[name=bg]").value = scheme.background;
+                container.querySelector("input[name=fg]").value = scheme.foreground;
+                set_radio_group_value(container, "link_color_type", (scheme.link) ? "custom" : "default");
+                if (scheme.link) {
+                    container.querySelector("input[name=link]").value = scheme.link;
+                }
+                var ρσ_Iter238 = MARGINS;
+                ρσ_Iter238 = ((typeof ρσ_Iter238[Symbol.iterator] === "function") ? (ρσ_Iter238 instanceof Map ? ρσ_Iter238.keys() : ρσ_Iter238) : Object.keys(ρσ_Iter238));
+                for (var ρσ_Index238 of ρσ_Iter238) {
+                    which = ρσ_Index238;
+                    attr = "margin_" + ρσ_str.format("{}", which) + "";
+                    val = scheme[(typeof attr === "number" && attr < 0) ? scheme.length + attr : attr];
+                    set_radio_group_value(container, "" + ρσ_str.format("{}", attr) + "_color_type", (val) ? "custom" : "default");
+                    if (val) {
+                        ρσ_unpack = val.split(":");
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+                        bg = ρσ_unpack[0];
+                        fg = ρσ_unpack[1];
+                        container.querySelector("input[name=" + ρσ_str.format("{}", attr) + "_bg]").value = bg;
+                        container.querySelector("input[name=" + ρσ_str.format("{}", attr) + "_fg]").value = fg;
+                    }
+                }
+            }
+        };
+        if (!edit_color_scheme.__argnames__) Object.defineProperties(edit_color_scheme, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function remove_color_scheme(ev) {
+            var ccs, sd, ucs;
+            ccs = current_color_scheme();
+            if (default_color_schemes[(typeof ccs === "number" && ccs < 0) ? default_color_schemes.length + ccs : ccs]) {
+                return error_dialog(_("Cannot remove"), _("Cannot remove a builtin color scheme"));
+            }
+            sd = get_session_data();
+            ucs = sd.get("user_color_schemes");
+            delete ucs[ccs];
+            sd.set("user_color_schemes", ucs);
+            create_color_buttons();
+            set_current_color_scheme();
+        };
+        if (!remove_color_scheme.__argnames__) Object.defineProperties(remove_color_scheme, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function current_color_scheme() {
+            try {
+                return get_container().querySelector("li.current-color").getAttribute("data-name");
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                if (ρσ_Exception instanceof Error) {
+                    return session_defaults().current_color_scheme;
+                } else {
+                    throw ρσ_Exception;
+                }
+            }
+        };
+        if (!current_color_scheme.__module__) Object.defineProperties(current_color_scheme, {
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function set_current_color_scheme(value) {
+            var ul, done, li;
+            ul = document.getElementById(COLOR_LIST);
+            done = false;
+            var ρσ_Iter239 = ul.childNodes;
+            ρσ_Iter239 = ((typeof ρσ_Iter239[Symbol.iterator] === "function") ? (ρσ_Iter239 instanceof Map ? ρσ_Iter239.keys() : ρσ_Iter239) : Object.keys(ρσ_Iter239));
+            for (var ρσ_Index239 of ρσ_Iter239) {
+                li = ρσ_Index239;
+                li.classList.remove("current-color");
+                if (li.getAttribute("data-name") === value) {
+                    li.classList.add("current-color");
+                    done = true;
+                }
+            }
+            if (!done) {
+                var ρσ_Iter240 = ul.childNodes;
+                ρσ_Iter240 = ((typeof ρσ_Iter240[Symbol.iterator] === "function") ? (ρσ_Iter240 instanceof Map ? ρσ_Iter240.keys() : ρσ_Iter240) : Object.keys(ρσ_Iter240));
+                for (var ρσ_Index240 of ρσ_Iter240) {
+                    li = ρσ_Index240;
+                    li.classList.add("current-color");
+                    break;
+                }
+            }
+            set_action_button_visibility();
+        };
+        if (!set_current_color_scheme.__argnames__) Object.defineProperties(set_current_color_scheme, {
+            __argnames__ : {value: ["value"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function add_color_scheme(ev) {
+            var colors, div, name, col, which, margin, key, sd, ucs;
+            colors = Object.create(null);
+            function check_color(col) {
+                colors[(typeof col === "number" && col < 0) ? colors.length + col : col] = div.querySelector("input[name=" + ρσ_str.format("{}", col) + "]").value;
+                if (!/^#[0-9A-F]{6}$/i.test(colors[(typeof col === "number" && col < 0) ? colors.length + col : col])) {
+                    error_dialog(_("Invalid color"), _("The color {} is not a valid color").format(colors[(typeof col === "number" && col < 0) ? colors.length + col : col]));
+                    return false;
+                }
+                return true;
+            };
+            if (!check_color.__argnames__) Object.defineProperties(check_color, {
+                __argnames__ : {value: ["col"]},
+                __module__ : {value: "read_book.prefs.colors"}
+            });
+
+            div = document.getElementById(EDIT_SCHEME);
+            if (this !== "cancel") {
+                name = div.querySelector("input[name=name]").value;
+                if (!name) {
+                    error_dialog(_("Name not specified"), _("You must specify a name for the color scheme"));
+                    return;
+                }
+                var ρσ_Iter241 = [ "bg", "fg", "link" ];
+                ρσ_Iter241 = ((typeof ρσ_Iter241[Symbol.iterator] === "function") ? (ρσ_Iter241 instanceof Map ? ρσ_Iter241.keys() : ρσ_Iter241) : Object.keys(ρσ_Iter241));
+                for (var ρσ_Index241 of ρσ_Iter241) {
+                    col = ρσ_Index241;
+                    if (!check_color(col)) {
+                        return;
+                    }
+                }
+                var ρσ_Iter242 = MARGINS;
+                ρσ_Iter242 = ((typeof ρσ_Iter242[Symbol.iterator] === "function") ? (ρσ_Iter242 instanceof Map ? ρσ_Iter242.keys() : ρσ_Iter242) : Object.keys(ρσ_Iter242));
+                for (var ρσ_Index242 of ρσ_Iter242) {
+                    margin = ρσ_Index242;
+                    var ρσ_Iter243 = [ "fg", "bg" ];
+                    ρσ_Iter243 = ((typeof ρσ_Iter243[Symbol.iterator] === "function") ? (ρσ_Iter243 instanceof Map ? ρσ_Iter243.keys() : ρσ_Iter243) : Object.keys(ρσ_Iter243));
+                    for (var ρσ_Index243 of ρσ_Iter243) {
+                        which = ρσ_Index243;
+                        if (!check_color("margin_" + ρσ_str.format("{}", margin) + "_" + ρσ_str.format("{}", which) + "")) {
+                            return;
+                        }
+                    }
+                }
+                key = "*" + name;
+                sd = get_session_data();
+                ucs = Object.assign(Object.create(null), sd.get("user_color_schemes"));
+                ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key] = (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["name"] = name;
+                    ρσ_d["foreground"] = colors.fg;
+                    ρσ_d["background"] = colors.bg;
+                    return ρσ_d;
+                }).call(this);
+                if (div.querySelector("input[name=link_color_type]:checked").value === "custom") {
+                    ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key].link = colors.link;
+                }
+                var ρσ_Iter244 = MARGINS;
+                ρσ_Iter244 = ((typeof ρσ_Iter244[Symbol.iterator] === "function") ? (ρσ_Iter244 instanceof Map ? ρσ_Iter244.keys() : ρσ_Iter244) : Object.keys(ρσ_Iter244));
+                for (var ρσ_Index244 of ρσ_Iter244) {
+                    margin = ρσ_Index244;
+                    if (div.querySelector("input[name=margin_" + ρσ_str.format("{}", margin) + "_color_type]:checked").value === "custom") {
+                        (ρσ_expr_temp = ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key])[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "", ρσ_expr_temp)] = colors[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "_bg", colors)] + ":" + colors[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "_fg", colors)];
+                    }
+                }
+                sd.set("user_color_schemes", ucs);
+                create_color_buttons();
+                set_current_color_scheme(key);
+            }
+            div.style.display = "none";
+        };
+        if (!add_color_scheme.__argnames__) Object.defineProperties(add_color_scheme, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function all_color_schemes() {
+            var all_schemes, k, sd, ucs;
+            all_schemes = Object.create(null);
+            var ρσ_Iter245 = default_color_schemes;
+            ρσ_Iter245 = ((typeof ρσ_Iter245[Symbol.iterator] === "function") ? (ρσ_Iter245 instanceof Map ? ρσ_Iter245.keys() : ρσ_Iter245) : Object.keys(ρσ_Iter245));
+            for (var ρσ_Index245 of ρσ_Iter245) {
+                k = ρσ_Index245;
+                all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k] = default_color_schemes[(typeof k === "number" && k < 0) ? default_color_schemes.length + k : k];
+            }
+            sd = get_session_data();
+            ucs = sd.get("user_color_schemes");
+            var ρσ_Iter246 = ucs;
+            ρσ_Iter246 = ((typeof ρσ_Iter246[Symbol.iterator] === "function") ? (ρσ_Iter246 instanceof Map ? ρσ_Iter246.keys() : ρσ_Iter246) : Object.keys(ρσ_Iter246));
+            for (var ρσ_Index246 of ρσ_Iter246) {
+                k = ρσ_Index246;
+                all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k] = ucs[(typeof k === "number" && k < 0) ? ucs.length + k : k];
+            }
+            return all_schemes;
+        };
+        if (!all_color_schemes.__module__) Object.defineProperties(all_color_schemes, {
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function create_color_buttons() {
+            var ul, sd, all_schemes, ccs, scheme, is_current, item, name;
+            ul = document.getElementById(COLOR_LIST);
+            sd = get_session_data();
+            clear(ul);
+            all_schemes = all_color_schemes();
+            ccs = sd.get("current_color_scheme");
+            if (!all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs]) {
+                ccs = session_defaults().current_color_scheme;
+            }
+            var ρσ_Iter247 = ρσ_interpolate_kwargs.call(this, sorted, [all_schemes].concat([ρσ_desugar_kwargs({key: (function() {
+                var ρσ_anonfunc = function (k) {
+                    return all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k].name.toLowerCase();
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["k"]},
+                    __module__ : {value: "read_book.prefs.colors"}
+                });
+                return ρσ_anonfunc;
+            })()})]));
+            ρσ_Iter247 = ((typeof ρσ_Iter247[Symbol.iterator] === "function") ? (ρσ_Iter247 instanceof Map ? ρσ_Iter247.keys() : ρσ_Iter247) : Object.keys(ρσ_Iter247));
+            for (var ρσ_Index247 of ρσ_Iter247) {
+                name = ρσ_Index247;
+                scheme = all_schemes[(typeof name === "number" && name < 0) ? all_schemes.length + name : name];
+                is_current = name === ccs;
+                item = ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.li, [svgicon("check"), " " + scheme.name].concat([ρσ_desugar_kwargs({data_name: name, onclick: change_current_color, class_: (is_current) ? "current-color" : ""})]))].concat([ρσ_desugar_kwargs({color: scheme.foreground, background_color: scheme.background})]));
+                ul.appendChild(item);
+            }
+        };
+        if (!create_color_buttons.__module__) Object.defineProperties(create_color_buttons, {
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function set_action_button_visibility() {
+            var container, ccs, is_custom, is_first, button;
+            container = get_container();
+            ccs = current_color_scheme(container);
+            is_custom = ccs.startswith("*");
+            is_first = true;
+            var ρσ_Iter248 = container.querySelectorAll("#" + ACTION_BUTTONS + " > span");
+            ρσ_Iter248 = ((typeof ρσ_Iter248[Symbol.iterator] === "function") ? (ρσ_Iter248 instanceof Map ? ρσ_Iter248.keys() : ρσ_Iter248) : Object.keys(ρσ_Iter248));
+            for (var ρσ_Index248 of ρσ_Iter248) {
+                button = ρσ_Index248;
+                if (is_first) {
+                    is_first = false;
+                } else {
+                    button.style.display = (is_custom) ? "inline-block" : "none";
+                }
+            }
+        };
+        if (!set_action_button_visibility.__module__) Object.defineProperties(set_action_button_visibility, {
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        function create_colors_panel(container, apply_func, cancel_func) {
+            var sd, cs, ul;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
+            container = container.lastChild;
+            sd = get_session_data();
+            cs = resolve_color_scheme();
+            container.dataset.bg = cs.background;
+            container.dataset.fg = cs.foreground;
+            container.dataset.link = cs.link || "";
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Choose a color scheme below")].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1ex 0"})])));
+            ul = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({id: COLOR_LIST})]);
+            container.appendChild(ul);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(_("Override all book colors:") + " "), E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "never"})]), _("Never")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "dark"})]), _("In dark mode")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "always"})]), _("Always"))].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1ex 0; white-space: pre-wrap"})])));
+            try {
+                container.lastChild.querySelector("[name=override_book_colors][value=" + ρσ_str.format("{}", sd.get("override_book_colors")) + "]").checked = true;
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    container.lastChild.querySelector("[name=override_book_colors][value=never]").checked = true;
+                } 
+            }
+            create_color_buttons();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(create_button(_("New scheme"), "plus", new_color_scheme)), E.span(create_button(_("Edit scheme"), "pencil", edit_color_scheme)), E.span(create_button(_("Remove scheme"), "trash", remove_color_scheme))].concat([ρσ_desugar_kwargs({id: ACTION_BUTTONS})])));
+            function margin_row(title, which) {
+                return E.tr(E.td(title), E.td(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "margin_" + ρσ_str.format("{}", which) + "_color_type", value: "default"})]), _("Default")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "margin_" + ρσ_str.format("{}", which) + "_color_type", value: "custom"})]), _("Custom")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "margin_" + ρσ_str.format("{}", which) + "_bg", type: "color", value: "#ffffff", onclick: (function() {
+                    var ρσ_anonfunc = function (ev) {
+                        set_radio_group_value(ev.currentTarget.closest("td"), "margin_" + ρσ_str.format("{}", which) + "_color_type", "custom");
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["ev"]},
+                        __module__ : {value: "read_book.prefs.colors"}
+                    });
+                    return ρσ_anonfunc;
+                })()})]), " " + _("Background")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "margin_" + ρσ_str.format("{}", which) + "_fg", type: "color", value: "#000000", onclick: (function() {
+                    var ρσ_anonfunc = function (ev) {
+                        set_radio_group_value(ev.currentTarget.closest("td"), "margin_" + ρσ_str.format("{}", which) + "_color_type", "custom");
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["ev"]},
+                        __module__ : {value: "read_book.prefs.colors"}
+                    });
+                    return ρσ_anonfunc;
+                })()})]), " " + _("Foreground"))));
+            };
+            if (!margin_row.__argnames__) Object.defineProperties(margin_row, {
+                __argnames__ : {value: ["title", "which"]},
+                __module__ : {value: "read_book.prefs.colors"}
+            });
+
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.table(E.tr(E.td(_("Name:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "name"})]))), E.tr(E.td(_("Background:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "bg", type: "color", value: "#ffffff"})]))), E.tr(E.td(_("Foreground:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "fg", type: "color", value: "#000000"})]))), E.tr(E.td(_("Link:")), E.td(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "default"})]), _("Default")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "custom"})]), _("Custom")), " ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "link", type: "color", value: "#000000", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    set_radio_group_value(ev.currentTarget.closest("td"), "link_color_type", "custom");
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.prefs.colors"}
+                });
+                return ρσ_anonfunc;
+            })()})]))), margin_row(_("Top margin:"), "top"), margin_row(_("Bottom margin:"), "bottom"), margin_row(_("Left margin:"), "left"), margin_row(_("Right margin:"), "right")), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Apply"), "check", add_color_scheme), E.span(" "), create_button(_("Discard"), "close", add_color_scheme.bind("cancel"))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content: flex-end; margin: 1ex 1em"})]))].concat([ρσ_desugar_kwargs({id: EDIT_SCHEME, style: "display:none"})])));
+            set_action_button_visibility();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(null, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+        };
+        if (!create_colors_panel.__argnames__) Object.defineProperties(create_colors_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        develop = create_colors_panel;
+        function commit_colors(onchange) {
+            var ccs, rcs, c, sd, prev_obc, cur_obc;
+            ccs = current_color_scheme();
+            rcs = resolve_color_scheme(ccs);
+            c = get_container();
+            sd = get_session_data();
+            prev_obc = sd.get("override_book_colors");
+            cur_obc = c.querySelector("[name=override_book_colors]:checked").value;
+            sd.set("current_color_scheme", ccs);
+            if (cur_obc !== prev_obc) {
+                sd.set("override_book_colors", cur_obc);
+            }
+            if (rcs.foreground !== c.dataset.fg || rcs.background !== c.dataset.bg || c.dataset.link !== rcs.link || cur_obc !== prev_obc) {
+                ui_operations.update_color_scheme();
+                onchange();
+            }
+        };
+        if (!commit_colors.__argnames__) Object.defineProperties(commit_colors, {
+            __argnames__ : {value: ["onchange"]},
+            __module__ : {value: "read_book.prefs.colors"}
+        });
+
+        ρσ_modules["read_book.prefs.colors"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.colors"].COLOR_LIST = COLOR_LIST;
+        ρσ_modules["read_book.prefs.colors"].ACTION_BUTTONS = ACTION_BUTTONS;
+        ρσ_modules["read_book.prefs.colors"].EDIT_SCHEME = EDIT_SCHEME;
+        ρσ_modules["read_book.prefs.colors"].MARGINS = MARGINS;
+        ρσ_modules["read_book.prefs.colors"].develop = develop;
+        ρσ_modules["read_book.prefs.colors"].get_container = get_container;
+        ρσ_modules["read_book.prefs.colors"].resolve_color_scheme = resolve_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].change_current_color = change_current_color;
+        ρσ_modules["read_book.prefs.colors"].new_color_scheme = new_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].edit_color_scheme = edit_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].remove_color_scheme = remove_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].current_color_scheme = current_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].set_current_color_scheme = set_current_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].add_color_scheme = add_color_scheme;
+        ρσ_modules["read_book.prefs.colors"].all_color_schemes = all_color_schemes;
+        ρσ_modules["read_book.prefs.colors"].create_color_buttons = create_color_buttons;
+        ρσ_modules["read_book.prefs.colors"].set_action_button_visibility = set_action_button_visibility;
+        ρσ_modules["read_book.prefs.colors"].create_colors_panel = create_colors_panel;
+        ρσ_modules["read_book.prefs.colors"].commit_colors = commit_colors;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.font_size";
+        var CONTAINER, MIN_FONT_SIZE, MAX_FONT_SIZE;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var get_color = ρσ_modules["book_list.theme"].get_color;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var rule = ρσ_modules.dom.rule;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var session_defaults = ρσ_modules.session.session_defaults;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        CONTAINER = unique_id("font-size-prefs");
+        MIN_FONT_SIZE = 8;
+        MAX_FONT_SIZE = 80;
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var style;
+                style = ρσ_interpolate_kwargs.call(this, rule, [CONTAINER, "option.current"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)"})]));
+                style += ρσ_interpolate_kwargs.call(this, rule, [CONTAINER, "option:hover"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)"})]));
+                return style;
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "read_book.prefs.font_size"}
+            });
+            return ρσ_anonfunc;
+        })());
+        function change_font_size(sz) {
+            var sd;
+            sd = get_session_data();
+            if (sd.get("base_font_size") !== sz) {
+                sd.set("base_font_size", sz);
+                ui_operations.update_font_size();
+            }
+        };
+        if (!change_font_size.__argnames__) Object.defineProperties(change_font_size, {
+            __argnames__ : {value: ["sz"]},
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function apply_font_size() {
+            var fs;
+            fs = int(document.getElementById(CONTAINER).dataset.cfs);
+            change_font_size(fs);
+        };
+        if (!apply_font_size.__module__) Object.defineProperties(apply_font_size, {
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function set_quick_size(ev) {
+            var newval;
+            newval = ev.currentTarget.value;
+            try {
+                int(newval);
+            } catch (ρσ_Exception) {
+                ρσ_last_exception = ρσ_Exception;
+                {
+                    return;
+                } 
+            }
+            if (newval !== document.getElementById(CONTAINER).dataset.cfs) {
+                display_changed_font_size(newval);
+            }
+        };
+        if (!set_quick_size.__argnames__) Object.defineProperties(set_quick_size, {
+            __argnames__ : {value: ["ev"]},
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function change_font_size_by(frac) {
+            var sd, sz, amt, nsz;
+            sd = get_session_data();
+            sz = sd.get("base_font_size");
+            amt = sz * frac;
+            if (abs(amt) < 1) {
+                amt = (amt < 0) ? -1 : 1;
+            }
+            nsz = Math.round(sz + amt);
+            nsz = max(MIN_FONT_SIZE, min(nsz, MAX_FONT_SIZE));
+            change_font_size(nsz);
+        };
+        if (!change_font_size_by.__argnames__) Object.defineProperties(change_font_size_by, {
+            __argnames__ : {value: ["frac"]},
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function restore_default_font_size() {
+            change_font_size(session_defaults().base_font_size);
+        };
+        if (!restore_default_font_size.__module__) Object.defineProperties(restore_default_font_size, {
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function display_changed_font_size(sz) {
+            var c, option, input;
+            sz = max(MIN_FONT_SIZE, min(int(sz), MAX_FONT_SIZE));
+            sz += "";
+            c = document.getElementById(CONTAINER);
+            c.dataset.cfs = sz;
+            var ρσ_Iter249 = c.querySelectorAll("option");
+            ρσ_Iter249 = ((typeof ρσ_Iter249[Symbol.iterator] === "function") ? (ρσ_Iter249 instanceof Map ? ρσ_Iter249.keys() : ρσ_Iter249) : Object.keys(ρσ_Iter249));
+            for (var ρσ_Index249 of ρσ_Iter249) {
+                option = ρσ_Index249;
+                if (option.value === sz) {
+                    option.classList.add("current");
+                } else {
+                    option.classList.remove("current");
+                }
+            }
+            var ρσ_Iter250 = c.querySelectorAll("input");
+            ρσ_Iter250 = ((typeof ρσ_Iter250[Symbol.iterator] === "function") ? (ρσ_Iter250 instanceof Map ? ρσ_Iter250.keys() : ρσ_Iter250) : Object.keys(ρσ_Iter250));
+            for (var ρσ_Index250 of ρσ_Iter250) {
+                input = ρσ_Index250;
+                input.value = sz;
+            }
+            c.querySelector(".cfs_preview").style.fontSize = "" + ρσ_str.format("{}", sz) + "px";
+        };
+        if (!display_changed_font_size.__argnames__) Object.defineProperties(display_changed_font_size, {
+            __argnames__ : {value: ["sz"]},
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        function create_font_size_panel(container, close) {
+            var sd, cfs, quick, sz;
+            sd = get_session_data();
+            cfs = sd.get("base_font_size");
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "max-width: 500px; width: 80vw; border-radius: 8px; border: solid 1px currentColor; padding:1ex 1rem;", onclick: (function() {
+                var ρσ_anonfunc = function (ev) {
+                    [ev.preventDefault(), ev.stopPropagation()];
+                };
+                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                    __argnames__ : {value: ["ev"]},
+                    __module__ : {value: "read_book.prefs.font_size"}
+                });
+                return ρσ_anonfunc;
+            })()})])].concat([ρσ_desugar_kwargs({style: "width: 100%; height: 100%; display: flex; justify-content: center; align-items: center"})])));
+            container = container.lastChild.lastChild;
+            container.style.backgroundColor = get_color("window-background");
+            container.dataset.cfs = cfs + "";
+            quick = ρσ_interpolate_kwargs.call(E, E.datalist, [ρσ_desugar_kwargs({style: "display:flex; justify-content:space-around; flex-wrap: wrap; align-items: baseline;"})]);
+            container.appendChild(quick);
+            var ρσ_Iter251 = [ 10, 12, 14, 16, 18, 20, 22 ];
+            ρσ_Iter251 = ((typeof ρσ_Iter251[Symbol.iterator] === "function") ? (ρσ_Iter251 instanceof Map ? ρσ_Iter251.keys() : ρσ_Iter251) : Object.keys(ρσ_Iter251));
+            for (var ρσ_Index251 of ρσ_Iter251) {
+                sz = ρσ_Index251;
+                quick.appendChild(ρσ_interpolate_kwargs.call(E, E.option, ["Aa"].concat([ρσ_desugar_kwargs({title: "{} px".format(sz), class_: (cfs === sz) ? "current" : "", value: sz + "", style: "display: inline-block; font-size:" + ρσ_str.format("{}", sz) + "px; padding: 5px; cursor: pointer; border-radius: 4px; margin: 0 0.5rem", onclick: (function() {
+                    var ρσ_anonfunc = function (ev) {
+                        set_quick_size(ev);
+                    };
+                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                        __argnames__ : {value: ["ev"]},
+                        __module__ : {value: "read_book.prefs.font_size"}
+                    });
+                    return ρσ_anonfunc;
+                })()})])));
+            }
+            function set_size(ev) {
+                var newval, q;
+                newval = ev.currentTarget.value;
+                try {
+                    q = int(newval);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        return;
+                    } 
+                }
+                if (MIN_FONT_SIZE <= q && q <= MAX_FONT_SIZE) {
+                    set_quick_size(ev);
+                }
+            };
+            if (!set_size.__argnames__) Object.defineProperties(set_size, {
+                __argnames__ : {value: ["ev"]},
+                __module__ : {value: "read_book.prefs.font_size"}
+            });
+
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "range", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", value: cfs + "", style: "flex-grow: 4", oninput: set_quick_size})]), E.span(" ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({value: "" + ρσ_str.format("{}", cfs) + "", oninput: set_size, type: "number", min: MIN_FONT_SIZE + "", max: MAX_FONT_SIZE + "", step: "1"})]), " px")].concat([ρσ_desugar_kwargs({style: "display: flex; margin-top: 1rem"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Sample to preview font size")].concat([ρσ_desugar_kwargs({class_: "cfs_preview"})]))].concat([ρσ_desugar_kwargs({style: "font-size: " + ρσ_str.format("{}", cfs) + "px; margin-top: 1rem; min-height: 60px; max-height: 60px; overflow: hidden; display: flex;"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("OK")].concat([ρσ_desugar_kwargs({highlight: true, action: (function() {
+                var ρσ_anonfunc = function () {
+                    apply_font_size();
+                    close();
+                };
+                if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                    __module__ : {value: "read_book.prefs.font_size"}
+                });
+                return ρσ_anonfunc;
+            })()})])), "  ", ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: close})]))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; text-align: right"})])));
+        };
+        if (!create_font_size_panel.__argnames__) Object.defineProperties(create_font_size_panel, {
+            __argnames__ : {value: ["container", "close"]},
+            __module__ : {value: "read_book.prefs.font_size"}
+        });
+
+        ρσ_modules["read_book.prefs.font_size"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.font_size"].MIN_FONT_SIZE = MIN_FONT_SIZE;
+        ρσ_modules["read_book.prefs.font_size"].MAX_FONT_SIZE = MAX_FONT_SIZE;
+        ρσ_modules["read_book.prefs.font_size"].change_font_size = change_font_size;
+        ρσ_modules["read_book.prefs.font_size"].apply_font_size = apply_font_size;
+        ρσ_modules["read_book.prefs.font_size"].set_quick_size = set_quick_size;
+        ρσ_modules["read_book.prefs.font_size"].change_font_size_by = change_font_size_by;
+        ρσ_modules["read_book.prefs.font_size"].restore_default_font_size = restore_default_font_size;
+        ρσ_modules["read_book.prefs.font_size"].display_changed_font_size = display_changed_font_size;
+        ρσ_modules["read_book.prefs.font_size"].create_font_size_panel = create_font_size_panel;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.fonts";
+        var CONTAINER, DEFAULT_STANDARD_FONT, DEFAULT_MINIMUM_FONT_SIZE, DEFAULT_ZOOM_STEP_SIZE, MIN_ZOOM_STEP_SIZE, develop;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var svgicon = ρσ_modules.dom.svgicon;
+
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+
+        var MAX_FONT_SIZE = ρσ_modules["read_book.prefs.font_size"].MAX_FONT_SIZE;
+        var MIN_FONT_SIZE = ρσ_modules["read_book.prefs.font_size"].MIN_FONT_SIZE;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        CONTAINER = unique_id("standalone-font-settings");
+        DEFAULT_STANDARD_FONT = "serif";
+        DEFAULT_MINIMUM_FONT_SIZE = 8;
+        DEFAULT_ZOOM_STEP_SIZE = 20;
+        MIN_ZOOM_STEP_SIZE = 10;
+        function current_zoom_step_size() {
+            var s;
+            s = get_session_data().get("standalone_font_settings");
+            return s.zoom_step_size || DEFAULT_ZOOM_STEP_SIZE;
+        };
+        if (!current_zoom_step_size.__module__) Object.defineProperties(current_zoom_step_size, {
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function font_select(name, settings) {
+            var ans, current_val, family;
+            ans = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: name})]);
+            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("— Choose a font —")].concat([ρσ_desugar_kwargs({value: ""})])));
+            current_val = settings[(typeof name === "number" && name < 0) ? settings.length + name : name];
+            if (!current_val) {
+                ans.lastChild.setAttribute("selected", "selected");
+            }
+            var ρσ_Iter252 = runtime.all_font_families;
+            ρσ_Iter252 = ((typeof ρσ_Iter252[Symbol.iterator] === "function") ? (ρσ_Iter252 instanceof Map ? ρσ_Iter252.keys() : ρσ_Iter252) : Object.keys(ρσ_Iter252));
+            for (var ρσ_Index252 of ρσ_Iter252) {
+                family = ρσ_Index252;
+                if (family) {
+                    ans.appendChild(E.option(family));
+                    if (family === current_val) {
+                        ans.lastChild.setAttribute("selected", "selected");
+                    }
+                }
+            }
+            return ρσ_interpolate_kwargs.call(E, E.div, [ans, E.span(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({data_component: "select"})]));
+        };
+        if (!font_select.__argnames__) Object.defineProperties(font_select, {
+            __argnames__ : {value: ["name", "settings"]},
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function standard_font(settings) {
+            var ans, sf;
+            ans = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: "standard_font"})]);
+            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("Serif")].concat([ρσ_desugar_kwargs({value: "serif"})])));
+            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("Sans-serif")].concat([ρσ_desugar_kwargs({value: "sans"})])));
+            ans.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [_("Monospace")].concat([ρσ_desugar_kwargs({value: "mono"})])));
+            sf = settings.standard_font || DEFAULT_STANDARD_FONT;
+            ans.querySelector("[value=" + ρσ_str.format("{}", sf) + "]").setAttribute("selected", "selected");
+            return ρσ_interpolate_kwargs.call(E, E.div, [ans, E.span(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({data_component: "select"})]));
+        };
+        if (!standard_font.__argnames__) Object.defineProperties(standard_font, {
+            __argnames__ : {value: ["settings"]},
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function minimum_font_size(settings) {
+            var ans;
+            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: str(MAX_FONT_SIZE), min: str(MIN_FONT_SIZE), step: "1", type: "number", name: "minimum_font_size"})]);
+            if (typeof settings.minimum_font_size === "number") {
+                ans.value = settings.minimum_font_size + "";
+            } else {
+                ans.value = "" + DEFAULT_MINIMUM_FONT_SIZE;
+            }
+            return ans;
+        };
+        if (!minimum_font_size.__argnames__) Object.defineProperties(minimum_font_size, {
+            __argnames__ : {value: ["settings"]},
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function zoom_step_size(settings) {
+            var ans;
+            ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({max: "100", min: MIN_ZOOM_STEP_SIZE + "", step: "1", type: "number", name: "zoom_step_size"})]);
+            if (typeof settings.zoom_step_size === "number") {
+                ans.value = max(10, parseInt(settings.zoom_step_size)) + "";
+            } else {
+                ans.value = "" + DEFAULT_ZOOM_STEP_SIZE;
+            }
+            return ans;
+        };
+        if (!zoom_step_size.__argnames__) Object.defineProperties(zoom_step_size, {
+            __argnames__ : {value: ["settings"]},
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function restore_defaults() {
+            var container, q;
+            container = get_container();
+            var ρσ_Iter253 = [ "serif_family", "sans_family", "mono_family" ];
+            ρσ_Iter253 = ((typeof ρσ_Iter253[Symbol.iterator] === "function") ? (ρσ_Iter253 instanceof Map ? ρσ_Iter253.keys() : ρσ_Iter253) : Object.keys(ρσ_Iter253));
+            for (var ρσ_Index253 of ρσ_Iter253) {
+                q = ρσ_Index253;
+                container.querySelector("[name=" + ρσ_str.format("{}", q) + "]").value = "";
+            }
+            container.querySelector("[name=zoom_step_size]").value = DEFAULT_ZOOM_STEP_SIZE + "";
+            container.querySelector("[name=minimum_font_size]").value = DEFAULT_MINIMUM_FONT_SIZE + "";
+            container.querySelector("[name=standard_font]").value = DEFAULT_STANDARD_FONT;
+        };
+        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function get_container() {
+            return document.getElementById(CONTAINER);
+        };
+        if (!get_container.__module__) Object.defineProperties(get_container, {
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        function create_fonts_panel(container, apply_func, cancel_func) {
+            var sd, settings;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
+            container = container.lastChild;
+            container.append(ρσ_interpolate_kwargs.call(E, E.div, [_("Choose fonts to use for un-styled text:")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+            sd = get_session_data();
+            settings = sd.get("standalone_font_settings");
+            function row(label, widget) {
+                return E.tr(ρσ_interpolate_kwargs.call(E, E.td, [label + ": "].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])), ρσ_interpolate_kwargs.call(E, E.td, [widget].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
+            };
+            if (!row.__argnames__) Object.defineProperties(row, {
+                __argnames__ : {value: ["label", "widget"]},
+                __module__ : {value: "read_book.prefs.fonts"}
+            });
+
+            container.append(ρσ_interpolate_kwargs.call(E, E.table, [row(_("Serif family"), font_select("serif_family", settings)), row(_("Sans-serif family"), font_select("sans_family", settings)), row(_("Monospace family"), font_select("mono_family", settings)), row(_("Standard font"), standard_font(settings))].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem"})])));
+            container.append(ρσ_interpolate_kwargs.call(E, E.div, [_("Zoom related settings")].concat([ρσ_desugar_kwargs({style: "margin-top: 1rem; padding-top: 1rem; width: 100%; border-top: solid 1px"})])));
+            container.append(E.table(row(_("Zoom step size (%)"), zoom_step_size(settings)), row(_("Minimum font size (px)"), minimum_font_size(settings))));
+            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
+        };
+        if (!create_fonts_panel.__argnames__) Object.defineProperties(create_fonts_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        develop = create_fonts_panel;
+        function commit_fonts(onchange) {
+            var sd, container, vals, zss, mfs, sf, val, q;
+            sd = get_session_data();
+            container = get_container();
+            vals = Object.create(null);
+            zss = parseInt(container.querySelector("[name=zoom_step_size]").value);
+            if (zss !== DEFAULT_ZOOM_STEP_SIZE) {
+                vals.zoom_step_size = max(MIN_ZOOM_STEP_SIZE, zss);
+            }
+            mfs = parseInt(container.querySelector("[name=minimum_font_size]").value);
+            if (mfs !== DEFAULT_MINIMUM_FONT_SIZE) {
+                vals.minimum_font_size = mfs;
+            }
+            sf = container.querySelector("[name=standard_font]").value;
+            if (sf !== DEFAULT_STANDARD_FONT) {
+                vals.standard_font = sf;
+            }
+            var ρσ_Iter254 = [ "serif_family", "sans_family", "mono_family" ];
+            ρσ_Iter254 = ((typeof ρσ_Iter254[Symbol.iterator] === "function") ? (ρσ_Iter254 instanceof Map ? ρσ_Iter254.keys() : ρσ_Iter254) : Object.keys(ρσ_Iter254));
+            for (var ρσ_Index254 of ρσ_Iter254) {
+                q = ρσ_Index254;
+                val = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]").value;
+                if (val) {
+                    vals[(typeof q === "number" && q < 0) ? vals.length + q : q] = val;
+                }
+            }
+            sd.set("standalone_font_settings", vals);
+        };
+        if (!commit_fonts.__argnames__) Object.defineProperties(commit_fonts, {
+            __argnames__ : {value: ["onchange"]},
+            __module__ : {value: "read_book.prefs.fonts"}
+        });
+
+        ρσ_modules["read_book.prefs.fonts"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.fonts"].DEFAULT_STANDARD_FONT = DEFAULT_STANDARD_FONT;
+        ρσ_modules["read_book.prefs.fonts"].DEFAULT_MINIMUM_FONT_SIZE = DEFAULT_MINIMUM_FONT_SIZE;
+        ρσ_modules["read_book.prefs.fonts"].DEFAULT_ZOOM_STEP_SIZE = DEFAULT_ZOOM_STEP_SIZE;
+        ρσ_modules["read_book.prefs.fonts"].MIN_ZOOM_STEP_SIZE = MIN_ZOOM_STEP_SIZE;
+        ρσ_modules["read_book.prefs.fonts"].develop = develop;
+        ρσ_modules["read_book.prefs.fonts"].current_zoom_step_size = current_zoom_step_size;
+        ρσ_modules["read_book.prefs.fonts"].font_select = font_select;
+        ρσ_modules["read_book.prefs.fonts"].standard_font = standard_font;
+        ρσ_modules["read_book.prefs.fonts"].minimum_font_size = minimum_font_size;
+        ρσ_modules["read_book.prefs.fonts"].zoom_step_size = zoom_step_size;
+        ρσ_modules["read_book.prefs.fonts"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.fonts"].get_container = get_container;
+        ρσ_modules["read_book.prefs.fonts"].create_fonts_panel = create_fonts_panel;
+        ρσ_modules["read_book.prefs.fonts"].commit_fonts = commit_fonts;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.scrolling";
+        var CONTAINER, MIN_SCROLL_SPEED_AUTO, MAX_SCROLL_SPEED_AUTO, MIN_SCROLL_AUTO_DELAY, MAX_SCROLL_AUTO_DELAY, MIN_SCROLL_SPEED_SMOOTH, MAX_SCROLL_SPEED_SMOOTH, MIN_SCROLL_MOUSE_DELAY, MAX_SCROLL_MOUSE_DELAY, develop;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        var session_defaults = ρσ_modules.session.session_defaults;
+
+        CONTAINER = unique_id("standalone-scrolling-settings");
+        MIN_SCROLL_SPEED_AUTO = .05;
+        MAX_SCROLL_SPEED_AUTO = 5;
+        MIN_SCROLL_AUTO_DELAY = -1;
+        MAX_SCROLL_AUTO_DELAY = 50;
+        MIN_SCROLL_SPEED_SMOOTH = 5;
+        MAX_SCROLL_SPEED_SMOOTH = 80;
+        MIN_SCROLL_MOUSE_DELAY = 0;
+        MAX_SCROLL_MOUSE_DELAY = 5;
+        function restore_defaults() {
+            var container, val, control;
+            container = get_container();
+            var ρσ_Iter255 = container.querySelectorAll("input[name]");
+            ρσ_Iter255 = ((typeof ρσ_Iter255[Symbol.iterator] === "function") ? (ρσ_Iter255 instanceof Map ? ρσ_Iter255.keys() : ρσ_Iter255) : Object.keys(ρσ_Iter255));
+            for (var ρσ_Index255 of ρσ_Iter255) {
+                control = ρσ_Index255;
+                val = (ρσ_expr_temp = session_defaults())[ρσ_bound_index(control.getAttribute("name"), ρσ_expr_temp)];
+                if (control.type === "checkbox") {
+                    control.checked = val;
+                } else {
+                    control.valueAsNumber = val;
+                }
+            }
+        };
+        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
+            __module__ : {value: "read_book.prefs.scrolling"}
+        });
+
+        function get_container() {
+            return document.getElementById(CONTAINER);
+        };
+        if (!get_container.__module__) Object.defineProperties(get_container, {
+            __module__ : {value: "read_book.prefs.scrolling"}
+        });
+
+        function change_scroll_speed(amt) {
+            var sd, lps, nlps;
+            sd = get_session_data();
+            lps = sd.get("lines_per_sec_auto");
+            nlps = max(MIN_SCROLL_SPEED_AUTO, min(lps + amt, MAX_SCROLL_SPEED_AUTO));
+            if ((nlps !== lps && (typeof nlps !== "object" || ρσ_not_equals(nlps, lps)))) {
+                sd.set("lines_per_sec_auto", nlps);
+            }
+            return nlps;
+        };
+        if (!change_scroll_speed.__argnames__) Object.defineProperties(change_scroll_speed, {
+            __argnames__ : {value: ["amt"]},
+            __module__ : {value: "read_book.prefs.scrolling"}
+        });
+
+        function create_scrolling_panel(container, apply_func, cancel_func) {
+            var sd;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
+            container = container.lastChild;
+            sd = get_session_data();
+            function cb(name, text, title) {
+                var ans;
+                ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: name, style: "margin-left: 0"})]);
+                if (sd.get(name)) {
+                    ans.checked = true;
+                }
+                return ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.label, [ans, text].concat([ρσ_desugar_kwargs({title: title || ""})]))].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})]));
+            };
+            if (!cb.__argnames__) Object.defineProperties(cb, {
+                __argnames__ : {value: ["name", "text", "title"]},
+                __module__ : {value: "read_book.prefs.scrolling"}
+            });
+
+            function spinner() {
+                var name = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+                var text = ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[1];
+                var kwargs = arguments[arguments.length-1];
+                if (kwargs === null || typeof kwargs !== "object" || kwargs [ρσ_kwargs_symbol] !== true) kwargs = {};
+                var ans, ρσ_unpack, key, val;
+                ans = ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: name, id: name})]);
+                var ρσ_Iter256 = Object.entries(kwargs);
+                ρσ_Iter256 = ((typeof ρσ_Iter256[Symbol.iterator] === "function") ? (ρσ_Iter256 instanceof Map ? ρσ_Iter256.keys() : ρσ_Iter256) : Object.keys(ρσ_Iter256));
+                for (var ρσ_Index256 of ρσ_Iter256) {
+                    ρσ_unpack = ρσ_Index256;
+                    key = ρσ_unpack[0];
+                    val = ρσ_unpack[1];
+                    ans[(typeof key === "number" && key < 0) ? ans.length + key : key] = val;
+                }
+                ans.valueAsNumber = sd.get(name, (ρσ_expr_temp = session_defaults())[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
+                return [ρσ_interpolate_kwargs.call(E, E.label, [text].concat([ρσ_desugar_kwargs({"for": name})])), 
+                ans];
+            };
+            if (!spinner.__handles_kwarg_interpolation__) Object.defineProperties(spinner, {
+                __handles_kwarg_interpolation__ : {value: true},
+                __argnames__ : {value: ["name", "text"]},
+                __module__ : {value: "read_book.prefs.scrolling"}
+            });
+
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how scrolling works in paged mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
+            container.lastChild.appendChild(cb("paged_wheel_scrolls_by_screen", _("Mouse wheel scrolls by screen fulls instead of pages")));
+            container.lastChild.appendChild(cb("paged_wheel_section_jumps", _("Horizontal mouse wheel jumps to next/previous section")));
+            container.lastChild.appendChild(cb("paged_margin_clicks_scroll_by_screen", _("Clicking on the margins scrolls by screen fulls instead of pages")));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["paged_pixel_scroll_threshold", " " + _("Pixel scroll threshold:")].concat([ρσ_desugar_kwargs({title: _("When using a touchpad or mouse wheel that produces scroll events in pixels, set the number of pixels before a page turn is triggered"), step: 5, min: 0, max: 1e4})])).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Control how smooth scrolling works in flow mode")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
+            container.lastChild.appendChild(cb("scroll_stop_boundaries", _("Stop at internal file boundaries when smooth scrolling by holding down the scroll key")));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.div, ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_smooth", _("Smooth scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: 5, min: MIN_SCROLL_SPEED_SMOOTH, max: MAX_SCROLL_SPEED_SMOOTH})])).concat(ρσ_interpolate_kwargs.call(this, spinner, ["lines_per_sec_auto", _("Auto scrolling speed in lines/sec:")].concat([ρσ_desugar_kwargs({step: .05, min: MIN_SCROLL_SPEED_AUTO, max: MAX_SCROLL_SPEED_AUTO})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_auto_boundary_delay", _("Seconds to pause before auto-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Use negative values to not auto-scroll past internal file boundaries"), step: .25, min: MIN_SCROLL_AUTO_DELAY, max: MAX_SCROLL_AUTO_DELAY})]))).concat(ρσ_interpolate_kwargs.call(this, spinner, ["scroll_mouse_boundary_delay", _("Seconds to pause when mouse-scrolling past internal file boundaries:")].concat([ρσ_desugar_kwargs({title: _("Set to zero to scroll past internal file boundaries without delay"), step: .25, min: MIN_SCROLL_MOUSE_DELAY, max: MAX_SCROLL_MOUSE_DELAY})]))).concat([ρσ_desugar_kwargs({style: "display:grid;margin-top:1ex;align-items:center;grid-template-columns:auto min-content;grid-gap:1ex; max-width: 30em"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Miscellaneous")].concat([ρσ_desugar_kwargs({style: "margin-top:1ex"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-left: 1rem"})]));
+            container.lastChild.appendChild(cb("book_scrollbar", _("Show a scrollbar")));
+            container.lastChild.appendChild(cb("reverse_page_turn_zones", _("Invert the page turn tap areas"), _("Have tapping on the left side turn the page forward and the right side backwards")));
+            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
+        };
+        if (!create_scrolling_panel.__argnames__) Object.defineProperties(create_scrolling_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.scrolling"}
+        });
+
+        develop = create_scrolling_panel;
+        function commit_scrolling(onchange) {
+            var sd, container, changed, name, val, control;
+            sd = get_session_data();
+            container = get_container();
+            changed = false;
+            var ρσ_Iter257 = container.querySelectorAll("input[name]");
+            ρσ_Iter257 = ((typeof ρσ_Iter257[Symbol.iterator] === "function") ? (ρσ_Iter257 instanceof Map ? ρσ_Iter257.keys() : ρσ_Iter257) : Object.keys(ρσ_Iter257));
+            for (var ρσ_Index257 of ρσ_Iter257) {
+                control = ρσ_Index257;
+                name = control.getAttribute("name");
+                val = (control.type === "checkbox") ? control.checked : control.valueAsNumber;
+                if (val !== sd.get(name) && control.validity.valid) {
+                    sd.set(name, val);
+                    changed = true;
+                }
+            }
+            if (changed) {
+                onchange();
+            }
+        };
+        if (!commit_scrolling.__argnames__) Object.defineProperties(commit_scrolling, {
+            __argnames__ : {value: ["onchange"]},
+            __module__ : {value: "read_book.prefs.scrolling"}
+        });
+
+        ρσ_modules["read_book.prefs.scrolling"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_SPEED_AUTO = MIN_SCROLL_SPEED_AUTO;
+        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_SPEED_AUTO = MAX_SCROLL_SPEED_AUTO;
+        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_AUTO_DELAY = MIN_SCROLL_AUTO_DELAY;
+        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_AUTO_DELAY = MAX_SCROLL_AUTO_DELAY;
+        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_SPEED_SMOOTH = MIN_SCROLL_SPEED_SMOOTH;
+        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_SPEED_SMOOTH = MAX_SCROLL_SPEED_SMOOTH;
+        ρσ_modules["read_book.prefs.scrolling"].MIN_SCROLL_MOUSE_DELAY = MIN_SCROLL_MOUSE_DELAY;
+        ρσ_modules["read_book.prefs.scrolling"].MAX_SCROLL_MOUSE_DELAY = MAX_SCROLL_MOUSE_DELAY;
+        ρσ_modules["read_book.prefs.scrolling"].develop = develop;
+        ρσ_modules["read_book.prefs.scrolling"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.scrolling"].get_container = get_container;
+        ρσ_modules["read_book.prefs.scrolling"].change_scroll_speed = change_scroll_speed;
+        ρσ_modules["read_book.prefs.scrolling"].create_scrolling_panel = create_scrolling_panel;
+        ρσ_modules["read_book.prefs.scrolling"].commit_scrolling = commit_scrolling;
+    })();
+
+    (function(){
+        var __name__ = "read_book.prefs.user_stylesheet";
+        var BLANK, develop;
+        var E = ρσ_modules.elementmaker.E;
+
+        var hexlify = ρσ_modules.encodings.hexlify;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var absolute_path = ρσ_modules.ajax.absolute_path;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var ensure_id = ρσ_modules.dom.ensure_id;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        var session_defaults = ρσ_modules.session.session_defaults;
+
+        var FAKE_HOST = ρσ_modules["viewer.constants"].FAKE_HOST;
+        var FAKE_PROTOCOL = ρσ_modules["viewer.constants"].FAKE_PROTOCOL;
+
+        var create_button = ρσ_modules.widgets.create_button;
+        var create_select = ρσ_modules.widgets.create_select;
+
+        BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+        function change_background_image(img_id) {
+            ui_operations.change_background_image(img_id);
+        };
+        if (!change_background_image.__argnames__) Object.defineProperties(change_background_image, {
+            __argnames__ : {value: ["img_id"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function clear_image(img_id) {
+            var i;
+            i = document.getElementById(img_id);
+            i.src = BLANK;
+            i.dataset.url = "";
+        };
+        if (!clear_image.__argnames__) Object.defineProperties(clear_image, {
+            __argnames__ : {value: ["img_id"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function modify_background_image_url_for_fetch(url) {
+            var encoded, x;
+            if (!url) {
+                return BLANK;
+            }
+            if (runtime.is_standalone_viewer) {
+                if (url.startswith("" + ρσ_str.format("{}", FAKE_PROTOCOL) + ":")) {
+                    return url;
+                }
+                encoded = hexlify(url);
+                return "" + ρσ_str.format("{}", FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", FAKE_HOST) + "/reader-background-" + ρσ_str.format("{}", encoded) + "";
+            }
+            if (url.startswith("" + ρσ_str.format("{}", FAKE_PROTOCOL) + ":")) {
+                x = (ρσ_expr_temp = str.split(url, "/"))[ρσ_expr_temp.length-1].partition("?")[0].partition("-")[2];
+                return absolute_path("reader-background/" + ρσ_str.format("{}", x) + "");
+            }
+            return url;
+        };
+        if (!modify_background_image_url_for_fetch.__argnames__) Object.defineProperties(modify_background_image_url_for_fetch, {
+            __argnames__ : {value: ["url"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function standalone_background_widget(sd) {
+            var url, src, img_id;
+            url = sd.get("background_image");
+            src = modify_background_image_url_for_fetch(url);
+            img_id = unique_id("bg-image");
+            return ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: src, data_url: url, id: img_id, class_: "bg-image-preview", style: "width: 75px; height: 75px; border: solid 1px"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "margin: 0.5rem"})])), ρσ_interpolate_kwargs.call(this, create_button, [_("Change image")].concat([ρσ_desugar_kwargs({action: change_background_image.bind(null, img_id)})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "margin: 0.5rem"})])), ρσ_interpolate_kwargs.call(this, create_button, [_("Clear image")].concat([ρσ_desugar_kwargs({action: clear_image.bind(null, img_id)})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center"})]));
+        };
+        if (!standalone_background_widget.__argnames__) Object.defineProperties(standalone_background_widget, {
+            __argnames__ : {value: ["sd"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function background_widget(sd) {
+            if (runtime.is_standalone_viewer) {
+                return standalone_background_widget(sd);
+            }
+            return ρσ_interpolate_kwargs.call(E, E.div, [E.label(_("Image URL") + ": ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "url", name: "background_image", value: sd.get("background_image") || ""})]))].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})]));
+        };
+        if (!background_widget.__argnames__) Object.defineProperties(background_widget, {
+            __argnames__ : {value: ["sd"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function background_style_widget(sd) {
+            var title, ρσ_unpack, c, s;
+            title = _("Background image style");
+            ρσ_unpack = ρσ_interpolate_kwargs.call(this, create_select, [title, sd.get("background_image_style")].concat([ρσ_desugar_kwargs({scaled: _("Scaled"), tiled: _("Tiled")})]));
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            c = ρσ_unpack[0];
+            s = ρσ_unpack[1];
+            s.setAttribute("name", "background_image_style");
+            return ρσ_interpolate_kwargs.call(E, E.div, [E.label(title + ": ", c)].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})]));
+        };
+        if (!background_style_widget.__argnames__) Object.defineProperties(background_style_widget, {
+            __argnames__ : {value: ["sd"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function background_fade_widget(sd) {
+            return E.div(E.label(_("Background image fade (%)") + ": ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "background_image_fade", type: "number", max: "100", min: "0", step: "1", value: "" + sd.get("background_image_fade"), style: "min-width: 8ch", title: _("Fading of the background image is done by blending it with the background color")})])));
+        };
+        if (!background_fade_widget.__argnames__) Object.defineProperties(background_fade_widget, {
+            __argnames__ : {value: ["sd"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function restore_defaults() {
+            var container, i;
+            container = document.getElementById(create_user_stylesheet_panel.container_id);
+            container.querySelector("[name=user-stylesheet]").value = "";
+            if (runtime.is_standalone_viewer) {
+                i = container.querySelector("img");
+                clear_image(i.id);
+            } else {
+                container.querySelector("[name=background_image]").value = "";
+            }
+            container.querySelector("select[name=background_image_style]").value = session_defaults().background_image_style;
+            container.querySelector("input[name=background_image_fade]").value = str(session_defaults().background_image_fade);
+        };
+        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        function create_user_stylesheet_panel(container, apply_func, cancel_func) {
+            var sd, val;
+            sd = get_session_data();
+            create_user_stylesheet_panel.container_id = ensure_id(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a background image to display behind the book text")].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1.5ex"})])), background_widget(sd), background_style_widget(sd), background_fade_widget(sd)].concat([ρσ_desugar_kwargs({style: "border-bottom: solid 1px; margin-bottom: 1.5ex; padding-bottom: 1.5ex"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("A CSS style sheet that can be used to control the look and feel of the text. For examples, click"), " ", ρσ_interpolate_kwargs.call(E, E.a, [_("here.")].concat([ρσ_desugar_kwargs({class_: "blue-link", title: _("Examples of user style sheets"), target: (runtime.is_standalone_viewer) ? "_self" : "_blank", href: "https://www.mobileread.com/forums/showthread.php?t=51500"})])), " ", _("Note that you can use the selectors body.calibre-viewer-paginated and body.calibre-viewer-scrolling to target the Paged and Flow modes. Similarly, use body.calibre-viewer-light-colors and body.calibre-viewer-dark-colors to target light and dark color schemes.")), ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({name: "user-stylesheet", style: "width: 100%; margin-top: 1ex; box-sizing: border-box; flex-grow: 10"})])].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; display: flex; flex-flow: column"})]))].concat([ρσ_desugar_kwargs({style: "min-height: 75vh; display: flex; flex-flow: column; margin: 1ex 1rem; padding: 1ex 0"})])));
+            val = sd.get("user_stylesheet");
+            if (val) {
+                container.querySelector("[name=user-stylesheet]").value = val;
+            }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(restore_defaults, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+        };
+        if (!create_user_stylesheet_panel.__argnames__) Object.defineProperties(create_user_stylesheet_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        develop = create_user_stylesheet_panel;
+        function commit_user_stylesheet(onchange, container) {
+            var sd, ta, val, old, changed, bg_image, bis, bif;
+            sd = get_session_data();
+            ta = container.querySelector("[name=user-stylesheet]");
+            val = ta.value || "";
+            old = sd.get("user_stylesheet");
+            changed = false;
+            if (old !== val) {
+                sd.set("user_stylesheet", val);
+                changed = true;
+            }
+            if (runtime.is_standalone_viewer) {
+                bg_image = container.querySelector("img.bg-image-preview").dataset.url;
+                if (bg_image === BLANK || !bg_image) {
+                    bg_image = null;
+                }
+            } else {
+                bg_image = container.querySelector("input[name=background_image]").value;
+            }
+            old = sd.get("background_image");
+            if (old !== bg_image) {
+                sd.set("background_image", bg_image);
+                changed = true;
+            }
+            old = sd.get("background_image_style");
+            bis = container.querySelector("select[name=background_image_style]").value;
+            if (bis !== old) {
+                changed = true;
+                sd.set("background_image_style", bis);
+            }
+            old = int(sd.get("background_image_fade"));
+            bif = int(container.querySelector("input[name=background_image_fade]").value);
+            if (old !== bif) {
+                changed = true;
+                sd.set("background_image_fade", bif);
+            }
+            if (changed) {
+                onchange();
+            }
+        };
+        if (!commit_user_stylesheet.__argnames__) Object.defineProperties(commit_user_stylesheet, {
+            __argnames__ : {value: ["onchange", "container"]},
+            __module__ : {value: "read_book.prefs.user_stylesheet"}
+        });
+
+        ρσ_modules["read_book.prefs.user_stylesheet"].BLANK = BLANK;
+        ρσ_modules["read_book.prefs.user_stylesheet"].develop = develop;
+        ρσ_modules["read_book.prefs.user_stylesheet"].change_background_image = change_background_image;
+        ρσ_modules["read_book.prefs.user_stylesheet"].clear_image = clear_image;
+        ρσ_modules["read_book.prefs.user_stylesheet"].modify_background_image_url_for_fetch = modify_background_image_url_for_fetch;
+        ρσ_modules["read_book.prefs.user_stylesheet"].standalone_background_widget = standalone_background_widget;
+        ρσ_modules["read_book.prefs.user_stylesheet"].background_widget = background_widget;
+        ρσ_modules["read_book.prefs.user_stylesheet"].background_style_widget = background_style_widget;
+        ρσ_modules["read_book.prefs.user_stylesheet"].background_fade_widget = background_fade_widget;
+        ρσ_modules["read_book.prefs.user_stylesheet"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.user_stylesheet"].create_user_stylesheet_panel = create_user_stylesheet_panel;
+        ρσ_modules["read_book.prefs.user_stylesheet"].commit_user_stylesheet = commit_user_stylesheet;
+    })();
+
+    (function(){
         var __name__ = "read_book.scrollbar";
         var SIZE;
         var E = ρσ_modules.elementmaker.E;
@@ -32967,192 +34021,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "book_list.ui";
-        var panel_handlers, default_panel_handler;
-        var E = ρσ_modules.elementmaker.E;
-
-        var book_list_container_id = ρσ_modules["book_list.constants"].book_list_container_id;
-
-        var get_current_query = ρσ_modules["book_list.globals"].get_current_query;
-
-        var current_library_id = ρσ_modules["book_list.library_data"].current_library_id;
-        var current_virtual_library = ρσ_modules["book_list.library_data"].current_virtual_library;
-
-        var push_state = ρσ_modules["book_list.router"].push_state;
-
-        var ensure_id = ρσ_modules.dom.ensure_id;
-        var clear = ρσ_modules.dom.clear;
-
-        var encode_query_with_path = ρσ_modules.utils.encode_query_with_path;
-
-        panel_handlers = Object.create(null);
-        default_panel_handler = null;
-        function set_panel_handler(panel, handler) {
-            panel_handlers[(typeof panel === "number" && panel < 0) ? panel_handlers.length + panel : panel] = handler;
-        };
-        if (!set_panel_handler.__argnames__) Object.defineProperties(set_panel_handler, {
-            __argnames__ : {value: ["panel", "handler"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        function develop_panel(container_id) {
-            var container, q, m;
-            container = document.getElementById(container_id);
-            q = get_current_query();
-            m = q.widget_module;
-            if (m) {
-                m = get_module(m);
-                if ((typeof m !== "undefined" && m !== null ? m : Object.create(null)).develop) {
-                    m.develop(container);
-                } else {
-                    container.textContent = "The module {} either does not exist or has no develop method.".format(q.widget_module);
-                }
-            }
-        };
-        if (!develop_panel.__argnames__) Object.defineProperties(develop_panel, {
-            __argnames__ : {value: ["container_id"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        set_panel_handler("develop-widgets", develop_panel);
-        function add_library_info(query) {
-            var vlid;
-            if (!query.library_id) {
-                query.library_id = current_library_id();
-            }
-            if (!query.vl) {
-                if (query.vl === null) {
-                    delete query.vl;
-                } else {
-                    vlid = current_virtual_library();
-                    if (vlid) {
-                        query.vl = vlid;
-                    }
-                }
-            }
-        };
-        if (!add_library_info.__argnames__) Object.defineProperties(add_library_info, {
-            __argnames__ : {value: ["query"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        function prepare_query(query, panel) {
-            var q, k;
-            q = (function() {
-                var ρσ_Iter = query || Object.create(null), ρσ_Result = Object.create(null), k;
-                ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                for (var ρσ_Index of ρσ_Iter) {
-                    k = ρσ_Index;
-                    if (k !== "panel") {
-                        ρσ_Result[k] = (query[(typeof k === "number" && k < 0) ? query.length + k : k]);
-                    }
-                }
-                return ρσ_Result;
-            })();
-            if (panel !== "home") {
-                q.panel = panel;
-                add_library_info(q);
-            }
-            return q;
-        };
-        if (!prepare_query.__argnames__) Object.defineProperties(prepare_query, {
-            __argnames__ : {value: ["query", "panel"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        function query_as_href(query, panel) {
-            var q;
-            q = prepare_query(query, panel || "book_list");
-            return encode_query_with_path(q);
-        };
-        if (!query_as_href.__argnames__) Object.defineProperties(query_as_href, {
-            __argnames__ : {value: ["query", "panel"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        function show_panel() {
-            var panel = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
-            var query = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_panel.__defaults__.query : arguments[1];
-            var replace = (arguments[2] === undefined || ( 2 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? show_panel.__defaults__.replace : arguments[2];
-            var ρσ_kwargs_obj = arguments[arguments.length-1];
-            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "query")){
-                query = ρσ_kwargs_obj.query;
-            }
-            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "replace")){
-                replace = ρσ_kwargs_obj.replace;
-            }
-            ρσ_interpolate_kwargs.call(this, push_state, [prepare_query(query, panel)].concat([ρσ_desugar_kwargs({replace: replace})]));
-        };
-        if (!show_panel.__defaults__) Object.defineProperties(show_panel, {
-            __defaults__ : {value: {query:null, replace:false}},
-            __handles_kwarg_interpolation__ : {value: true},
-            __argnames__ : {value: ["panel", "query", "replace"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        function apply_url_state(state) {
-            var panel, c, handler;
-            panel = state.panel || "home";
-            c = document.getElementById(book_list_container_id);
-            clear(c);
-            c.appendChild(E.div());
-            c.dataset.panel = panel;
-            handler = panel_handlers[(typeof panel === "number" && panel < 0) ? panel_handlers.length + panel : panel] || default_panel_handler;
-            handler(ensure_id(c.firstChild, "panel"));
-        };
-        if (!apply_url_state.__argnames__) Object.defineProperties(apply_url_state, {
-            __argnames__ : {value: ["state"]},
-            __module__ : {value: "book_list.ui"}
-        });
-
-        apply_url_state.back_from_current = (function() {
-            var ρσ_anonfunc = function back_from_current(current_query) {
-                var q, k;
-                q = current_query;
-                if (q.panel) {
-                    if (ρσ_in("^", q.panel)) {
-                        q = (function() {
-                            var ρσ_Iter = q, ρσ_Result = Object.create(null), k;
-                            ρσ_Iter = ((typeof ρσ_Iter[Symbol.iterator] === "function") ? (ρσ_Iter instanceof Map ? ρσ_Iter.keys() : ρσ_Iter) : Object.keys(ρσ_Iter));
-                            for (var ρσ_Index of ρσ_Iter) {
-                                k = ρσ_Index;
-                                ρσ_Result[k] = (q[(typeof k === "number" && k < 0) ? q.length + k : k]);
-                            }
-                            return ρσ_Result;
-                        })();
-                        q.panel = q.panel.rpartition("^")[0];
-                    } else if (q.panel === "book_list") {
-                        q = Object.create(null);
-                    } else {
-                        q = (function(){
-                            var ρσ_d = Object.create(null);
-                            ρσ_d["panel"] = "book_list";
-                            return ρσ_d;
-                        }).call(this);
-                        add_library_info(q);
-                    }
-                }
-                return q;
-            };
-            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                __argnames__ : {value: ["current_query"]},
-                __module__ : {value: "book_list.ui"}
-            });
-            return ρσ_anonfunc;
-        })();
-        ρσ_modules["book_list.ui"].panel_handlers = panel_handlers;
-        ρσ_modules["book_list.ui"].default_panel_handler = default_panel_handler;
-        ρσ_modules["book_list.ui"].set_panel_handler = set_panel_handler;
-        ρσ_modules["book_list.ui"].develop_panel = develop_panel;
-        ρσ_modules["book_list.ui"].add_library_info = add_library_info;
-        ρσ_modules["book_list.ui"].prepare_query = prepare_query;
-        ρσ_modules["book_list.ui"].query_as_href = query_as_href;
-        ρσ_modules["book_list.ui"].show_panel = show_panel;
-        ρσ_modules["book_list.ui"].apply_url_state = apply_url_state;
-    })();
-
-    (function(){
         var __name__ = "read_book.timers";
         var THRESHOLD, FILTER_THRESHOLD, MAX_SAMPLES;
         var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
@@ -33307,874 +34175,6 @@ return this.__repr__();
         ρσ_modules["read_book.timers"].FILTER_THRESHOLD = FILTER_THRESHOLD;
         ρσ_modules["read_book.timers"].MAX_SAMPLES = MAX_SAMPLES;
         ρσ_modules["read_book.timers"].Timers = Timers;
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.user_stylesheet";
-        var BLANK, develop;
-        var E = ρσ_modules.elementmaker.E;
-
-        var hexlify = ρσ_modules.encodings.hexlify;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var absolute_path = ρσ_modules.ajax.absolute_path;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var ensure_id = ρσ_modules.dom.ensure_id;
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var runtime = ρσ_modules["read_book.globals"].runtime;
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
-        var session_defaults = ρσ_modules.session.session_defaults;
-
-        var FAKE_HOST = ρσ_modules["viewer.constants"].FAKE_HOST;
-        var FAKE_PROTOCOL = ρσ_modules["viewer.constants"].FAKE_PROTOCOL;
-
-        var create_button = ρσ_modules.widgets.create_button;
-        var create_select = ρσ_modules.widgets.create_select;
-
-        BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-        function change_background_image(img_id) {
-            ui_operations.change_background_image(img_id);
-        };
-        if (!change_background_image.__argnames__) Object.defineProperties(change_background_image, {
-            __argnames__ : {value: ["img_id"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function clear_image(img_id) {
-            var i;
-            i = document.getElementById(img_id);
-            i.src = BLANK;
-            i.dataset.url = "";
-        };
-        if (!clear_image.__argnames__) Object.defineProperties(clear_image, {
-            __argnames__ : {value: ["img_id"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function modify_background_image_url_for_fetch(url) {
-            var encoded, x;
-            if (!url) {
-                return BLANK;
-            }
-            if (runtime.is_standalone_viewer) {
-                if (url.startswith("" + ρσ_str.format("{}", FAKE_PROTOCOL) + ":")) {
-                    return url;
-                }
-                encoded = hexlify(url);
-                return "" + ρσ_str.format("{}", FAKE_PROTOCOL) + "://" + ρσ_str.format("{}", FAKE_HOST) + "/reader-background-" + ρσ_str.format("{}", encoded) + "";
-            }
-            if (url.startswith("" + ρσ_str.format("{}", FAKE_PROTOCOL) + ":")) {
-                x = (ρσ_expr_temp = str.split(url, "/"))[ρσ_expr_temp.length-1].partition("?")[0].partition("-")[2];
-                return absolute_path("reader-background/" + ρσ_str.format("{}", x) + "");
-            }
-            return url;
-        };
-        if (!modify_background_image_url_for_fetch.__argnames__) Object.defineProperties(modify_background_image_url_for_fetch, {
-            __argnames__ : {value: ["url"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function standalone_background_widget(sd) {
-            var url, src, img_id;
-            url = sd.get("background_image");
-            src = modify_background_image_url_for_fetch(url);
-            img_id = unique_id("bg-image");
-            return ρσ_interpolate_kwargs.call(E, E.div, [E.div(ρσ_interpolate_kwargs.call(E, E.img, [ρσ_desugar_kwargs({src: src, data_url: url, id: img_id, class_: "bg-image-preview", style: "width: 75px; height: 75px; border: solid 1px"})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "margin: 0.5rem"})])), ρσ_interpolate_kwargs.call(this, create_button, [_("Change image")].concat([ρσ_desugar_kwargs({action: change_background_image.bind(null, img_id)})])), ρσ_interpolate_kwargs.call(E, E.div, [" "].concat([ρσ_desugar_kwargs({style: "margin: 0.5rem"})])), ρσ_interpolate_kwargs.call(this, create_button, [_("Clear image")].concat([ρσ_desugar_kwargs({action: clear_image.bind(null, img_id)})]))].concat([ρσ_desugar_kwargs({style: "display: flex; align-items: center"})]));
-        };
-        if (!standalone_background_widget.__argnames__) Object.defineProperties(standalone_background_widget, {
-            __argnames__ : {value: ["sd"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function background_widget(sd) {
-            if (runtime.is_standalone_viewer) {
-                return standalone_background_widget(sd);
-            }
-            return ρσ_interpolate_kwargs.call(E, E.div, [E.label(_("Image URL") + ": ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "url", name: "background_image", value: sd.get("background_image") || ""})]))].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})]));
-        };
-        if (!background_widget.__argnames__) Object.defineProperties(background_widget, {
-            __argnames__ : {value: ["sd"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function background_style_widget(sd) {
-            var title, ρσ_unpack, c, s;
-            title = _("Background image style");
-            ρσ_unpack = ρσ_interpolate_kwargs.call(this, create_select, [title, sd.get("background_image_style")].concat([ρσ_desugar_kwargs({scaled: _("Scaled"), tiled: _("Tiled")})]));
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            c = ρσ_unpack[0];
-            s = ρσ_unpack[1];
-            s.setAttribute("name", "background_image_style");
-            return ρσ_interpolate_kwargs.call(E, E.div, [E.label(title + ": ", c)].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1ex"})]));
-        };
-        if (!background_style_widget.__argnames__) Object.defineProperties(background_style_widget, {
-            __argnames__ : {value: ["sd"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function background_fade_widget(sd) {
-            return E.div(E.label(_("Background image fade (%)") + ": ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "background_image_fade", type: "number", max: "100", min: "0", step: "1", value: "" + sd.get("background_image_fade"), style: "min-width: 8ch", title: _("Fading of the background image is done by blending it with the background color")})])));
-        };
-        if (!background_fade_widget.__argnames__) Object.defineProperties(background_fade_widget, {
-            __argnames__ : {value: ["sd"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function restore_defaults() {
-            var container, i;
-            container = document.getElementById(create_user_stylesheet_panel.container_id);
-            container.querySelector("[name=user-stylesheet]").value = "";
-            if (runtime.is_standalone_viewer) {
-                i = container.querySelector("img");
-                clear_image(i.id);
-            } else {
-                container.querySelector("[name=background_image]").value = "";
-            }
-            container.querySelector("select[name=background_image_style]").value = session_defaults().background_image_style;
-            container.querySelector("input[name=background_image_fade]").value = str(session_defaults().background_image_fade);
-        };
-        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        function create_user_stylesheet_panel(container, apply_func, cancel_func) {
-            var sd, val;
-            sd = get_session_data();
-            create_user_stylesheet_panel.container_id = ensure_id(container);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a background image to display behind the book text")].concat([ρσ_desugar_kwargs({style: "margin-bottom: 1.5ex"})])), background_widget(sd), background_style_widget(sd), background_fade_widget(sd)].concat([ρσ_desugar_kwargs({style: "border-bottom: solid 1px; margin-bottom: 1.5ex; padding-bottom: 1.5ex"})])), ρσ_interpolate_kwargs.call(E, E.div, [E.div(_("A CSS style sheet that can be used to control the look and feel of the text. For examples, click"), " ", ρσ_interpolate_kwargs.call(E, E.a, [_("here.")].concat([ρσ_desugar_kwargs({class_: "blue-link", title: _("Examples of user style sheets"), target: (runtime.is_standalone_viewer) ? "_self" : "_blank", href: "https://www.mobileread.com/forums/showthread.php?t=51500"})])), " ", _("Note that you can use the selectors body.calibre-viewer-paginated and body.calibre-viewer-scrolling to target the Paged and Flow modes. Similarly, use body.calibre-viewer-light-colors and body.calibre-viewer-dark-colors to target light and dark color schemes.")), ρσ_interpolate_kwargs.call(E, E.textarea, [ρσ_desugar_kwargs({name: "user-stylesheet", style: "width: 100%; margin-top: 1ex; box-sizing: border-box; flex-grow: 10"})])].concat([ρσ_desugar_kwargs({style: "flex-grow: 10; display: flex; flex-flow: column"})]))].concat([ρσ_desugar_kwargs({style: "min-height: 75vh; display: flex; flex-flow: column; margin: 1ex 1rem; padding: 1ex 0"})])));
-            val = sd.get("user_stylesheet");
-            if (val) {
-                container.querySelector("[name=user-stylesheet]").value = val;
-            }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(restore_defaults, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-        };
-        if (!create_user_stylesheet_panel.__argnames__) Object.defineProperties(create_user_stylesheet_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        develop = create_user_stylesheet_panel;
-        function commit_user_stylesheet(onchange, container) {
-            var sd, ta, val, old, changed, bg_image, bis, bif;
-            sd = get_session_data();
-            ta = container.querySelector("[name=user-stylesheet]");
-            val = ta.value || "";
-            old = sd.get("user_stylesheet");
-            changed = false;
-            if (old !== val) {
-                sd.set("user_stylesheet", val);
-                changed = true;
-            }
-            if (runtime.is_standalone_viewer) {
-                bg_image = container.querySelector("img.bg-image-preview").dataset.url;
-                if (bg_image === BLANK || !bg_image) {
-                    bg_image = null;
-                }
-            } else {
-                bg_image = container.querySelector("input[name=background_image]").value;
-            }
-            old = sd.get("background_image");
-            if (old !== bg_image) {
-                sd.set("background_image", bg_image);
-                changed = true;
-            }
-            old = sd.get("background_image_style");
-            bis = container.querySelector("select[name=background_image_style]").value;
-            if (bis !== old) {
-                changed = true;
-                sd.set("background_image_style", bis);
-            }
-            old = int(sd.get("background_image_fade"));
-            bif = int(container.querySelector("input[name=background_image_fade]").value);
-            if (old !== bif) {
-                changed = true;
-                sd.set("background_image_fade", bif);
-            }
-            if (changed) {
-                onchange();
-            }
-        };
-        if (!commit_user_stylesheet.__argnames__) Object.defineProperties(commit_user_stylesheet, {
-            __argnames__ : {value: ["onchange", "container"]},
-            __module__ : {value: "read_book.prefs.user_stylesheet"}
-        });
-
-        ρσ_modules["read_book.prefs.user_stylesheet"].BLANK = BLANK;
-        ρσ_modules["read_book.prefs.user_stylesheet"].develop = develop;
-        ρσ_modules["read_book.prefs.user_stylesheet"].change_background_image = change_background_image;
-        ρσ_modules["read_book.prefs.user_stylesheet"].clear_image = clear_image;
-        ρσ_modules["read_book.prefs.user_stylesheet"].modify_background_image_url_for_fetch = modify_background_image_url_for_fetch;
-        ρσ_modules["read_book.prefs.user_stylesheet"].standalone_background_widget = standalone_background_widget;
-        ρσ_modules["read_book.prefs.user_stylesheet"].background_widget = background_widget;
-        ρσ_modules["read_book.prefs.user_stylesheet"].background_style_widget = background_style_widget;
-        ρσ_modules["read_book.prefs.user_stylesheet"].background_fade_widget = background_fade_widget;
-        ρσ_modules["read_book.prefs.user_stylesheet"].restore_defaults = restore_defaults;
-        ρσ_modules["read_book.prefs.user_stylesheet"].create_user_stylesheet_panel = create_user_stylesheet_panel;
-        ρσ_modules["read_book.prefs.user_stylesheet"].commit_user_stylesheet = commit_user_stylesheet;
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.colors";
-        var CONTAINER, COLOR_LIST, ACTION_BUTTONS, EDIT_SCHEME, MARGINS, develop;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var cached_color_to_rgba = ρσ_modules["book_list.theme"].cached_color_to_rgba;
-
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var build_rule = ρσ_modules.dom.build_rule;
-        var clear = ρσ_modules.dom.clear;
-        var set_css = ρσ_modules.dom.set_css;
-        var set_radio_group_value = ρσ_modules.dom.set_radio_group_value;
-        var svgicon = ρσ_modules.dom.svgicon;
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var error_dialog = ρσ_modules.modals.error_dialog;
-
-        var default_color_schemes = ρσ_modules["read_book.globals"].default_color_schemes;
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
-        var session_defaults = ρσ_modules.session.session_defaults;
-
-        var create_button = ρσ_modules.widgets.create_button;
-
-        CONTAINER = unique_id("reader-color-scheme");
-        COLOR_LIST = unique_id();
-        ACTION_BUTTONS = unique_id();
-        EDIT_SCHEME = unique_id();
-        MARGINS = ["left", "right", "top", "bottom"];
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var sel, style;
-                sel = "#" + COLOR_LIST;
-                style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({list_style_type: "none", display: "flex", flex_wrap: "wrap"})]));
-                sel += " > li";
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({padding: "1ex 1rem", margin: "1ex 0.5rem", border_radius: "4px", cursor: "pointer", border: "solid 1px currentColor"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " svg"].concat([ρσ_desugar_kwargs({visibility: "hidden"})]));
-                sel += ".current-color";
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " svg"].concat([ρσ_desugar_kwargs({visibility: "visible"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, ["#{} #{} td".format(CONTAINER, EDIT_SCHEME)].concat([ρσ_desugar_kwargs({padding: "1ex 1em"})]));
-                sel = "#" + ACTION_BUTTONS;
-                style += sel + ("{margin-top:2ex; padding-top:1ex; border-top: solid 1px currentColor;" + " margin-bottom: 2ex; padding-bottom: 1ex; border-bottom: solid 1px currentColor}");
-                style += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > span "].concat([ρσ_desugar_kwargs({margin: "1ex 0.5rem", display: "inline-block"})]));
-                return style;
-            };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "read_book.prefs.colors"}
-            });
-            return ρσ_anonfunc;
-        })());
-        function get_container() {
-            return document.getElementById(CONTAINER);
-        };
-        if (!get_container.__module__) Object.defineProperties(get_container, {
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function resolve_color_scheme(current_color_scheme) {
-            var sd, cs, ucs, ans, sn, rgba;
-            sd = get_session_data();
-            cs = current_color_scheme || sd.get("current_color_scheme") || session_defaults().current_color_scheme;
-            ucs = sd.get("user_color_schemes");
-            if (default_color_schemes[(typeof cs === "number" && cs < 0) ? default_color_schemes.length + cs : cs]) {
-                ans = default_color_schemes[(typeof cs === "number" && cs < 0) ? default_color_schemes.length + cs : cs];
-            } else if (ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs] && ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs].foreground && ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs].background) {
-                ans = ucs[(typeof cs === "number" && cs < 0) ? ucs.length + cs : cs];
-            } else {
-                var ρσ_Iter243 = default_color_schemes;
-                ρσ_Iter243 = ((typeof ρσ_Iter243[Symbol.iterator] === "function") ? (ρσ_Iter243 instanceof Map ? ρσ_Iter243.keys() : ρσ_Iter243) : Object.keys(ρσ_Iter243));
-                for (var ρσ_Index243 of ρσ_Iter243) {
-                    sn = ρσ_Index243;
-                    ans = default_color_schemes[(typeof sn === "number" && sn < 0) ? default_color_schemes.length + sn : sn];
-                    break;
-                }
-            }
-            rgba = cached_color_to_rgba(ans.background);
-            ans.is_dark_theme = max(rgba[0], rgba[1], rgba[2]) < 115;
-            return ans;
-        };
-        if (!resolve_color_scheme.__argnames__) Object.defineProperties(resolve_color_scheme, {
-            __argnames__ : {value: ["current_color_scheme"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function change_current_color(ev) {
-            var ul, li;
-            ul = ev.currentTarget.parentNode;
-            var ρσ_Iter244 = ul.childNodes;
-            ρσ_Iter244 = ((typeof ρσ_Iter244[Symbol.iterator] === "function") ? (ρσ_Iter244 instanceof Map ? ρσ_Iter244.keys() : ρσ_Iter244) : Object.keys(ρσ_Iter244));
-            for (var ρσ_Index244 of ρσ_Iter244) {
-                li = ρσ_Index244;
-                li.setAttribute("class", (li === ev.currentTarget) ? "current-color" : "");
-            }
-            set_action_button_visibility(ul.parentNode);
-        };
-        if (!change_current_color.__argnames__) Object.defineProperties(change_current_color, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function new_color_scheme(ev) {
-            var container, inp;
-            container = document.getElementById(EDIT_SCHEME);
-            container.style.display = "block";
-            var ρσ_Iter245 = container.querySelectorAll("input");
-            ρσ_Iter245 = ((typeof ρσ_Iter245[Symbol.iterator] === "function") ? (ρσ_Iter245 instanceof Map ? ρσ_Iter245.keys() : ρσ_Iter245) : Object.keys(ρσ_Iter245));
-            for (var ρσ_Index245 of ρσ_Iter245) {
-                inp = ρσ_Index245;
-                if (inp.name.endswith("_color_type")) {
-                    inp.checked = inp.value === "default";
-                } else if (inp.name.startswith("margin_")) {
-                } else {
-                    inp.value = (ρσ_expr_temp = (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["name"] = "";
-                        ρσ_d["bg"] = "#ffffff";
-                        ρσ_d["fg"] = "#000000";
-                        ρσ_d["link"] = "#0000ee";
-                        return ρσ_d;
-                    }).call(this))[ρσ_bound_index(inp.name, ρσ_expr_temp)];
-                }
-            }
-            container.querySelector("input").focus();
-            return container;
-        };
-        if (!new_color_scheme.__argnames__) Object.defineProperties(new_color_scheme, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function edit_color_scheme(ev) {
-            var container, ccs, all_schemes, scheme, attr, val, ρσ_unpack, bg, fg, which;
-            container = new_color_scheme(ev);
-            ccs = current_color_scheme(container);
-            all_schemes = all_color_schemes();
-            if (all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs]) {
-                scheme = all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs];
-                container = document.getElementById(EDIT_SCHEME);
-                container.querySelector("input").value = scheme.name;
-                container.querySelector("input[name=bg]").value = scheme.background;
-                container.querySelector("input[name=fg]").value = scheme.foreground;
-                set_radio_group_value(container, "link_color_type", (scheme.link) ? "custom" : "default");
-                if (scheme.link) {
-                    container.querySelector("input[name=link]").value = scheme.link;
-                }
-                var ρσ_Iter246 = MARGINS;
-                ρσ_Iter246 = ((typeof ρσ_Iter246[Symbol.iterator] === "function") ? (ρσ_Iter246 instanceof Map ? ρσ_Iter246.keys() : ρσ_Iter246) : Object.keys(ρσ_Iter246));
-                for (var ρσ_Index246 of ρσ_Iter246) {
-                    which = ρσ_Index246;
-                    attr = "margin_" + ρσ_str.format("{}", which) + "";
-                    val = scheme[(typeof attr === "number" && attr < 0) ? scheme.length + attr : attr];
-                    set_radio_group_value(container, "" + ρσ_str.format("{}", attr) + "_color_type", (val) ? "custom" : "default");
-                    if (val) {
-                        ρσ_unpack = val.split(":");
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-                        bg = ρσ_unpack[0];
-                        fg = ρσ_unpack[1];
-                        container.querySelector("input[name=" + ρσ_str.format("{}", attr) + "_bg]").value = bg;
-                        container.querySelector("input[name=" + ρσ_str.format("{}", attr) + "_fg]").value = fg;
-                    }
-                }
-            }
-        };
-        if (!edit_color_scheme.__argnames__) Object.defineProperties(edit_color_scheme, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function remove_color_scheme(ev) {
-            var ccs, sd, ucs;
-            ccs = current_color_scheme();
-            if (default_color_schemes[(typeof ccs === "number" && ccs < 0) ? default_color_schemes.length + ccs : ccs]) {
-                return error_dialog(_("Cannot remove"), _("Cannot remove a builtin color scheme"));
-            }
-            sd = get_session_data();
-            ucs = sd.get("user_color_schemes");
-            delete ucs[ccs];
-            sd.set("user_color_schemes", ucs);
-            create_color_buttons();
-            set_current_color_scheme();
-        };
-        if (!remove_color_scheme.__argnames__) Object.defineProperties(remove_color_scheme, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function current_color_scheme() {
-            try {
-                return get_container().querySelector("li.current-color").getAttribute("data-name");
-            } catch (ρσ_Exception) {
-                ρσ_last_exception = ρσ_Exception;
-                if (ρσ_Exception instanceof Error) {
-                    return session_defaults().current_color_scheme;
-                } else {
-                    throw ρσ_Exception;
-                }
-            }
-        };
-        if (!current_color_scheme.__module__) Object.defineProperties(current_color_scheme, {
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function set_current_color_scheme(value) {
-            var ul, done, li;
-            ul = document.getElementById(COLOR_LIST);
-            done = false;
-            var ρσ_Iter247 = ul.childNodes;
-            ρσ_Iter247 = ((typeof ρσ_Iter247[Symbol.iterator] === "function") ? (ρσ_Iter247 instanceof Map ? ρσ_Iter247.keys() : ρσ_Iter247) : Object.keys(ρσ_Iter247));
-            for (var ρσ_Index247 of ρσ_Iter247) {
-                li = ρσ_Index247;
-                li.classList.remove("current-color");
-                if (li.getAttribute("data-name") === value) {
-                    li.classList.add("current-color");
-                    done = true;
-                }
-            }
-            if (!done) {
-                var ρσ_Iter248 = ul.childNodes;
-                ρσ_Iter248 = ((typeof ρσ_Iter248[Symbol.iterator] === "function") ? (ρσ_Iter248 instanceof Map ? ρσ_Iter248.keys() : ρσ_Iter248) : Object.keys(ρσ_Iter248));
-                for (var ρσ_Index248 of ρσ_Iter248) {
-                    li = ρσ_Index248;
-                    li.classList.add("current-color");
-                    break;
-                }
-            }
-            set_action_button_visibility();
-        };
-        if (!set_current_color_scheme.__argnames__) Object.defineProperties(set_current_color_scheme, {
-            __argnames__ : {value: ["value"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function add_color_scheme(ev) {
-            var colors, div, name, col, which, margin, key, sd, ucs;
-            colors = Object.create(null);
-            function check_color(col) {
-                colors[(typeof col === "number" && col < 0) ? colors.length + col : col] = div.querySelector("input[name=" + ρσ_str.format("{}", col) + "]").value;
-                if (!/^#[0-9A-F]{6}$/i.test(colors[(typeof col === "number" && col < 0) ? colors.length + col : col])) {
-                    error_dialog(_("Invalid color"), _("The color {} is not a valid color").format(colors[(typeof col === "number" && col < 0) ? colors.length + col : col]));
-                    return false;
-                }
-                return true;
-            };
-            if (!check_color.__argnames__) Object.defineProperties(check_color, {
-                __argnames__ : {value: ["col"]},
-                __module__ : {value: "read_book.prefs.colors"}
-            });
-
-            div = document.getElementById(EDIT_SCHEME);
-            if (this !== "cancel") {
-                name = div.querySelector("input[name=name]").value;
-                if (!name) {
-                    error_dialog(_("Name not specified"), _("You must specify a name for the color scheme"));
-                    return;
-                }
-                var ρσ_Iter249 = [ "bg", "fg", "link" ];
-                ρσ_Iter249 = ((typeof ρσ_Iter249[Symbol.iterator] === "function") ? (ρσ_Iter249 instanceof Map ? ρσ_Iter249.keys() : ρσ_Iter249) : Object.keys(ρσ_Iter249));
-                for (var ρσ_Index249 of ρσ_Iter249) {
-                    col = ρσ_Index249;
-                    if (!check_color(col)) {
-                        return;
-                    }
-                }
-                var ρσ_Iter250 = MARGINS;
-                ρσ_Iter250 = ((typeof ρσ_Iter250[Symbol.iterator] === "function") ? (ρσ_Iter250 instanceof Map ? ρσ_Iter250.keys() : ρσ_Iter250) : Object.keys(ρσ_Iter250));
-                for (var ρσ_Index250 of ρσ_Iter250) {
-                    margin = ρσ_Index250;
-                    var ρσ_Iter251 = [ "fg", "bg" ];
-                    ρσ_Iter251 = ((typeof ρσ_Iter251[Symbol.iterator] === "function") ? (ρσ_Iter251 instanceof Map ? ρσ_Iter251.keys() : ρσ_Iter251) : Object.keys(ρσ_Iter251));
-                    for (var ρσ_Index251 of ρσ_Iter251) {
-                        which = ρσ_Index251;
-                        if (!check_color("margin_" + ρσ_str.format("{}", margin) + "_" + ρσ_str.format("{}", which) + "")) {
-                            return;
-                        }
-                    }
-                }
-                key = "*" + name;
-                sd = get_session_data();
-                ucs = Object.assign(Object.create(null), sd.get("user_color_schemes"));
-                ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key] = (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["name"] = name;
-                    ρσ_d["foreground"] = colors.fg;
-                    ρσ_d["background"] = colors.bg;
-                    return ρσ_d;
-                }).call(this);
-                if (div.querySelector("input[name=link_color_type]:checked").value === "custom") {
-                    ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key].link = colors.link;
-                }
-                var ρσ_Iter252 = MARGINS;
-                ρσ_Iter252 = ((typeof ρσ_Iter252[Symbol.iterator] === "function") ? (ρσ_Iter252 instanceof Map ? ρσ_Iter252.keys() : ρσ_Iter252) : Object.keys(ρσ_Iter252));
-                for (var ρσ_Index252 of ρσ_Iter252) {
-                    margin = ρσ_Index252;
-                    if (div.querySelector("input[name=margin_" + ρσ_str.format("{}", margin) + "_color_type]:checked").value === "custom") {
-                        (ρσ_expr_temp = ucs[(typeof key === "number" && key < 0) ? ucs.length + key : key])[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "", ρσ_expr_temp)] = colors[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "_bg", colors)] + ":" + colors[ρσ_bound_index("margin_" + ρσ_str.format("{}", margin) + "_fg", colors)];
-                    }
-                }
-                sd.set("user_color_schemes", ucs);
-                create_color_buttons();
-                set_current_color_scheme(key);
-            }
-            div.style.display = "none";
-        };
-        if (!add_color_scheme.__argnames__) Object.defineProperties(add_color_scheme, {
-            __argnames__ : {value: ["ev"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function all_color_schemes() {
-            var all_schemes, k, sd, ucs;
-            all_schemes = Object.create(null);
-            var ρσ_Iter253 = default_color_schemes;
-            ρσ_Iter253 = ((typeof ρσ_Iter253[Symbol.iterator] === "function") ? (ρσ_Iter253 instanceof Map ? ρσ_Iter253.keys() : ρσ_Iter253) : Object.keys(ρσ_Iter253));
-            for (var ρσ_Index253 of ρσ_Iter253) {
-                k = ρσ_Index253;
-                all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k] = default_color_schemes[(typeof k === "number" && k < 0) ? default_color_schemes.length + k : k];
-            }
-            sd = get_session_data();
-            ucs = sd.get("user_color_schemes");
-            var ρσ_Iter254 = ucs;
-            ρσ_Iter254 = ((typeof ρσ_Iter254[Symbol.iterator] === "function") ? (ρσ_Iter254 instanceof Map ? ρσ_Iter254.keys() : ρσ_Iter254) : Object.keys(ρσ_Iter254));
-            for (var ρσ_Index254 of ρσ_Iter254) {
-                k = ρσ_Index254;
-                all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k] = ucs[(typeof k === "number" && k < 0) ? ucs.length + k : k];
-            }
-            return all_schemes;
-        };
-        if (!all_color_schemes.__module__) Object.defineProperties(all_color_schemes, {
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function create_color_buttons() {
-            var ul, sd, all_schemes, ccs, scheme, is_current, item, name;
-            ul = document.getElementById(COLOR_LIST);
-            sd = get_session_data();
-            clear(ul);
-            all_schemes = all_color_schemes();
-            ccs = sd.get("current_color_scheme");
-            if (!all_schemes[(typeof ccs === "number" && ccs < 0) ? all_schemes.length + ccs : ccs]) {
-                ccs = session_defaults().current_color_scheme;
-            }
-            var ρσ_Iter255 = ρσ_interpolate_kwargs.call(this, sorted, [all_schemes].concat([ρσ_desugar_kwargs({key: (function() {
-                var ρσ_anonfunc = function (k) {
-                    return all_schemes[(typeof k === "number" && k < 0) ? all_schemes.length + k : k].name.toLowerCase();
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["k"]},
-                    __module__ : {value: "read_book.prefs.colors"}
-                });
-                return ρσ_anonfunc;
-            })()})]));
-            ρσ_Iter255 = ((typeof ρσ_Iter255[Symbol.iterator] === "function") ? (ρσ_Iter255 instanceof Map ? ρσ_Iter255.keys() : ρσ_Iter255) : Object.keys(ρσ_Iter255));
-            for (var ρσ_Index255 of ρσ_Iter255) {
-                name = ρσ_Index255;
-                scheme = all_schemes[(typeof name === "number" && name < 0) ? all_schemes.length + name : name];
-                is_current = name === ccs;
-                item = ρσ_interpolate_kwargs.call(this, set_css, [ρσ_interpolate_kwargs.call(E, E.li, [svgicon("check"), " " + scheme.name].concat([ρσ_desugar_kwargs({data_name: name, onclick: change_current_color, class_: (is_current) ? "current-color" : ""})]))].concat([ρσ_desugar_kwargs({color: scheme.foreground, background_color: scheme.background})]));
-                ul.appendChild(item);
-            }
-        };
-        if (!create_color_buttons.__module__) Object.defineProperties(create_color_buttons, {
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function set_action_button_visibility() {
-            var container, ccs, is_custom, is_first, button;
-            container = get_container();
-            ccs = current_color_scheme(container);
-            is_custom = ccs.startswith("*");
-            is_first = true;
-            var ρσ_Iter256 = container.querySelectorAll("#" + ACTION_BUTTONS + " > span");
-            ρσ_Iter256 = ((typeof ρσ_Iter256[Symbol.iterator] === "function") ? (ρσ_Iter256 instanceof Map ? ρσ_Iter256.keys() : ρσ_Iter256) : Object.keys(ρσ_Iter256));
-            for (var ρσ_Index256 of ρσ_Iter256) {
-                button = ρσ_Index256;
-                if (is_first) {
-                    is_first = false;
-                } else {
-                    button.style.display = (is_custom) ? "inline-block" : "none";
-                }
-            }
-        };
-        if (!set_action_button_visibility.__module__) Object.defineProperties(set_action_button_visibility, {
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        function create_colors_panel(container, apply_func, cancel_func) {
-            var sd, cs, ul;
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
-            container = container.lastChild;
-            sd = get_session_data();
-            cs = resolve_color_scheme();
-            container.dataset.bg = cs.background;
-            container.dataset.fg = cs.foreground;
-            container.dataset.link = cs.link || "";
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Choose a color scheme below")].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1ex 0"})])));
-            ul = ρσ_interpolate_kwargs.call(E, E.ul, [ρσ_desugar_kwargs({id: COLOR_LIST})]);
-            container.appendChild(ul);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(_("Override all book colors:") + " "), E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "never"})]), _("Never")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "dark"})]), _("In dark mode")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "override_book_colors", value: "always"})]), _("Always"))].concat([ρσ_desugar_kwargs({style: "margin:1ex 1em; padding: 1ex 0; white-space: pre-wrap"})])));
-            try {
-                container.lastChild.querySelector("[name=override_book_colors][value=" + ρσ_str.format("{}", sd.get("override_book_colors")) + "]").checked = true;
-            } catch (ρσ_Exception) {
-                ρσ_last_exception = ρσ_Exception;
-                {
-                    container.lastChild.querySelector("[name=override_book_colors][value=never]").checked = true;
-                } 
-            }
-            create_color_buttons();
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.span(create_button(_("New scheme"), "plus", new_color_scheme)), E.span(create_button(_("Edit scheme"), "pencil", edit_color_scheme)), E.span(create_button(_("Remove scheme"), "trash", remove_color_scheme))].concat([ρσ_desugar_kwargs({id: ACTION_BUTTONS})])));
-            function margin_row(title, which) {
-                return E.tr(E.td(title), E.td(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "margin_" + ρσ_str.format("{}", which) + "_color_type", value: "default"})]), _("Default")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "margin_" + ρσ_str.format("{}", which) + "_color_type", value: "custom"})]), _("Custom")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "margin_" + ρσ_str.format("{}", which) + "_bg", type: "color", value: "#ffffff", onclick: (function() {
-                    var ρσ_anonfunc = function (ev) {
-                        set_radio_group_value(ev.currentTarget.closest("td"), "margin_" + ρσ_str.format("{}", which) + "_color_type", "custom");
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["ev"]},
-                        __module__ : {value: "read_book.prefs.colors"}
-                    });
-                    return ρσ_anonfunc;
-                })()})]), " " + _("Background")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "margin_" + ρσ_str.format("{}", which) + "_fg", type: "color", value: "#000000", onclick: (function() {
-                    var ρσ_anonfunc = function (ev) {
-                        set_radio_group_value(ev.currentTarget.closest("td"), "margin_" + ρσ_str.format("{}", which) + "_color_type", "custom");
-                    };
-                    if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                        __argnames__ : {value: ["ev"]},
-                        __module__ : {value: "read_book.prefs.colors"}
-                    });
-                    return ρσ_anonfunc;
-                })()})]), " " + _("Foreground"))));
-            };
-            if (!margin_row.__argnames__) Object.defineProperties(margin_row, {
-                __argnames__ : {value: ["title", "which"]},
-                __module__ : {value: "read_book.prefs.colors"}
-            });
-
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.table(E.tr(E.td(_("Name:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "name"})]))), E.tr(E.td(_("Background:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "bg", type: "color", value: "#ffffff"})]))), E.tr(E.td(_("Foreground:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "fg", type: "color", value: "#000000"})]))), E.tr(E.td(_("Link:")), E.td(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "default"})]), _("Default")), "  ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "link_color_type", value: "custom"})]), _("Custom")), " ", ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({name: "link", type: "color", value: "#000000", onclick: (function() {
-                var ρσ_anonfunc = function (ev) {
-                    set_radio_group_value(ev.currentTarget.closest("td"), "link_color_type", "custom");
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["ev"]},
-                    __module__ : {value: "read_book.prefs.colors"}
-                });
-                return ρσ_anonfunc;
-            })()})]))), margin_row(_("Top margin:"), "top"), margin_row(_("Bottom margin:"), "bottom"), margin_row(_("Left margin:"), "left"), margin_row(_("Right margin:"), "right")), ρσ_interpolate_kwargs.call(E, E.div, [create_button(_("Apply"), "check", add_color_scheme), E.span(" "), create_button(_("Discard"), "close", add_color_scheme.bind("cancel"))].concat([ρσ_desugar_kwargs({style: "display:flex; justify-content: flex-end; margin: 1ex 1em"})]))].concat([ρσ_desugar_kwargs({id: EDIT_SCHEME, style: "display:none"})])));
-            set_action_button_visibility();
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(null, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-        };
-        if (!create_colors_panel.__argnames__) Object.defineProperties(create_colors_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        develop = create_colors_panel;
-        function commit_colors(onchange) {
-            var ccs, rcs, c, sd, prev_obc, cur_obc;
-            ccs = current_color_scheme();
-            rcs = resolve_color_scheme(ccs);
-            c = get_container();
-            sd = get_session_data();
-            prev_obc = sd.get("override_book_colors");
-            cur_obc = c.querySelector("[name=override_book_colors]:checked").value;
-            sd.set("current_color_scheme", ccs);
-            if (cur_obc !== prev_obc) {
-                sd.set("override_book_colors", cur_obc);
-            }
-            if (rcs.foreground !== c.dataset.fg || rcs.background !== c.dataset.bg || c.dataset.link !== rcs.link || cur_obc !== prev_obc) {
-                ui_operations.update_color_scheme();
-                onchange();
-            }
-        };
-        if (!commit_colors.__argnames__) Object.defineProperties(commit_colors, {
-            __argnames__ : {value: ["onchange"]},
-            __module__ : {value: "read_book.prefs.colors"}
-        });
-
-        ρσ_modules["read_book.prefs.colors"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.colors"].COLOR_LIST = COLOR_LIST;
-        ρσ_modules["read_book.prefs.colors"].ACTION_BUTTONS = ACTION_BUTTONS;
-        ρσ_modules["read_book.prefs.colors"].EDIT_SCHEME = EDIT_SCHEME;
-        ρσ_modules["read_book.prefs.colors"].MARGINS = MARGINS;
-        ρσ_modules["read_book.prefs.colors"].develop = develop;
-        ρσ_modules["read_book.prefs.colors"].get_container = get_container;
-        ρσ_modules["read_book.prefs.colors"].resolve_color_scheme = resolve_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].change_current_color = change_current_color;
-        ρσ_modules["read_book.prefs.colors"].new_color_scheme = new_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].edit_color_scheme = edit_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].remove_color_scheme = remove_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].current_color_scheme = current_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].set_current_color_scheme = set_current_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].add_color_scheme = add_color_scheme;
-        ρσ_modules["read_book.prefs.colors"].all_color_schemes = all_color_schemes;
-        ρσ_modules["read_book.prefs.colors"].create_color_buttons = create_color_buttons;
-        ρσ_modules["read_book.prefs.colors"].set_action_button_visibility = set_action_button_visibility;
-        ρσ_modules["read_book.prefs.colors"].create_colors_panel = create_colors_panel;
-        ρσ_modules["read_book.prefs.colors"].commit_colors = commit_colors;
-    })();
-
-    (function(){
-        var __name__ = "read_book.bookmarks";
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var build_list = ρσ_modules["book_list.item_list"].build_list;
-        var create_item = ρσ_modules["book_list.item_list"].create_item;
-        var create_side_action = ρσ_modules["book_list.item_list"].create_side_action;
-
-        var ensure_id = ρσ_modules.dom.ensure_id;
-        var set_css = ρσ_modules.dom.set_css;
-
-        var question_dialog = ρσ_modules.modals.question_dialog;
-
-        var get_book_mark_title = ρσ_modules["read_book.toc"].get_book_mark_title;
-
-        var create_button = ρσ_modules.widgets.create_button;
-
-        function goto_cfi(cfi, view) {
-            view.goto_cfi(cfi, true);
-        };
-        if (!goto_cfi.__argnames__) Object.defineProperties(goto_cfi, {
-            __argnames__ : {value: ["cfi", "view"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        function remove_bookmark(annotations_manager, title, list_dom_node) {
-            question_dialog(_("Are you sure?"), _("Do you want to permanently delete this bookmark?"), (function() {
-                var ρσ_anonfunc = function (yes) {
-                    if (yes) {
-                        annotations_manager.remove_bookmark(title);
-                        list_dom_node.style.display = "none";
-                    }
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["yes"]},
-                    __module__ : {value: "read_book.bookmarks"}
-                });
-                return ρσ_anonfunc;
-            })());
-        };
-        if (!remove_bookmark.__argnames__) Object.defineProperties(remove_bookmark, {
-            __argnames__ : {value: ["annotations_manager", "title", "list_dom_node"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        function edit_bookmark(annotations_manager, title, list_dom_node) {
-            var new_title;
-            new_title = window.prompt(_("Enter new title for bookmark:"), title);
-            if (new_title) {
-                if (annotations_manager.edit_bookmark(title, new_title)) {
-                    console.log(list_dom_node);
-                    list_dom_node.querySelector(".item-title").textContent = new_title;
-                }
-            }
-        };
-        if (!edit_bookmark.__argnames__) Object.defineProperties(edit_bookmark, {
-            __argnames__ : {value: ["annotations_manager", "title", "list_dom_node"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        function create_bookmarks_list(annotations_manager, onclick) {
-            var bookmarks, items, sa, ea, bookmark, c;
-            bookmarks = ρσ_interpolate_kwargs.call(this, sorted, [annotations_manager.all_bookmarks()].concat([ρσ_desugar_kwargs({key: (function() {
-                var ρσ_anonfunc = function (x) {
-                    return x.title.toLowerCase();
-                };
-                if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
-                    __argnames__ : {value: ["x"]},
-                    __module__ : {value: "read_book.bookmarks"}
-                });
-                return ρσ_anonfunc;
-            })()})]));
-            items = [];
-            var ρσ_Iter257 = bookmarks;
-            ρσ_Iter257 = ((typeof ρσ_Iter257[Symbol.iterator] === "function") ? (ρσ_Iter257 instanceof Map ? ρσ_Iter257.keys() : ρσ_Iter257) : Object.keys(ρσ_Iter257));
-            for (var ρσ_Index257 of ρσ_Iter257) {
-                bookmark = ρσ_Index257;
-                if (!bookmark.removed) {
-                    sa = create_side_action("trash", remove_bookmark.bind(null, annotations_manager, bookmark.title), _("Remove this bookmark"));
-                    ea = create_side_action("edit", edit_bookmark.bind(null, annotations_manager, bookmark.title), _("Edit this bookmark"));
-                    items.push(ρσ_interpolate_kwargs.call(this, create_item, [bookmark.title].concat([ρσ_desugar_kwargs({data: bookmark.pos, action: onclick.bind(null, goto_cfi.bind(null, bookmark.pos)), side_actions: [ sa, ea ]})])));
-                }
-            }
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex"})]);
-            build_list(c, items);
-            return c;
-        };
-        if (!create_bookmarks_list.__argnames__) Object.defineProperties(create_bookmarks_list, {
-            __argnames__ : {value: ["annotations_manager", "onclick"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        function create_new_bookmark(annotations_manager, data) {
-            var base_default_title, title, cfi;
-            base_default_title = get_book_mark_title() || _("Bookmark");
-            title = window.prompt(_("Enter title for bookmark:"), data.selected_text || annotations_manager.default_bookmark_title(base_default_title));
-            if (!title) {
-                return false;
-            }
-            cfi = data.cfi;
-            if (ρσ_exists.d(data.selection_bounds).start) {
-                cfi = data.selection_bounds.start;
-            }
-            annotations_manager.add_bookmark(title, cfi);
-            return true;
-        };
-        if (!create_new_bookmark.__argnames__) Object.defineProperties(create_new_bookmark, {
-            __argnames__ : {value: ["annotations_manager", "data"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        function new_bookmark(container_id, annotations_manager, data, onclick, ev) {
-            if (create_new_bookmark(annotations_manager, data)) {
-                onclick((function() {
-                    var ρσ_anonfunc = function () {
-                    };
-                    if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                        __module__ : {value: "read_book.bookmarks"}
-                    });
-                    return ρσ_anonfunc;
-                })());
-            }
-        };
-        if (!new_bookmark.__argnames__) Object.defineProperties(new_bookmark, {
-            __argnames__ : {value: ["container_id", "annotations_manager", "data", "onclick", "ev"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        function create_bookmarks_panel(annotations_manager, data, book, container, onclick) {
-            var container_id, button;
-            ρσ_interpolate_kwargs.call(this, set_css, [container].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "padding: 1rem"})]));
-            container = container.lastChild;
-            container_id = ensure_id(container);
-            button = create_button(_("New bookmark"), "plus", new_bookmark.bind(null, container_id, annotations_manager, data, onclick));
-            container.appendChild(E.div(button));
-            container.appendChild(E.div(create_bookmarks_list(annotations_manager, onclick)));
-        };
-        if (!create_bookmarks_panel.__argnames__) Object.defineProperties(create_bookmarks_panel, {
-            __argnames__ : {value: ["annotations_manager", "data", "book", "container", "onclick"]},
-            __module__ : {value: "read_book.bookmarks"}
-        });
-
-        ρσ_modules["read_book.bookmarks"].goto_cfi = goto_cfi;
-        ρσ_modules["read_book.bookmarks"].remove_bookmark = remove_bookmark;
-        ρσ_modules["read_book.bookmarks"].edit_bookmark = edit_bookmark;
-        ρσ_modules["read_book.bookmarks"].create_bookmarks_list = create_bookmarks_list;
-        ρσ_modules["read_book.bookmarks"].create_new_bookmark = create_new_bookmark;
-        ρσ_modules["read_book.bookmarks"].new_bookmark = new_bookmark;
-        ρσ_modules["read_book.bookmarks"].create_bookmarks_panel = create_bookmarks_panel;
     })();
 
     (function(){
@@ -37495,6 +37495,69 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "book_list.cover_grid";
+        var COVER_GRID_CLASS, COVER_GRID_VIEWPORT_FRAC, COVER_GRID_PCT_DEFAULT, COVER_GRID_PCT_MIN, COVER_GRID_PCT_MAX, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, THUMBNAIL_MIN_WIDTH, THUMBNAIL_MIN_HEIGHT, BORDER_RADIUS, COVER_GRID_ROW_GAP;
+        var build_rule = ρσ_modules.dom.build_rule;
+
+        COVER_GRID_CLASS = "book-list-cover-grid";
+        COVER_GRID_VIEWPORT_FRAC = .165;
+        COVER_GRID_PCT_DEFAULT = Math.round(100 * COVER_GRID_VIEWPORT_FRAC);
+        COVER_GRID_PCT_MIN = 8;
+        COVER_GRID_PCT_MAX = 45;
+        THUMBNAIL_MAX_WIDTH = 3 * 85;
+        THUMBNAIL_MAX_HEIGHT = int(THUMBNAIL_MAX_WIDTH * 3 / 2);
+        THUMBNAIL_MIN_WIDTH = 3 * 16;
+        THUMBNAIL_MIN_HEIGHT = int(THUMBNAIL_MIN_WIDTH * 3 / 2);
+        BORDER_RADIUS = 10;
+        COVER_GRID_ROW_GAP = 10;
+        function cover_grid_css() {
+            var grid_root, sel, item_sel, margin_unit, ans;
+            grid_root = "." + COVER_GRID_CLASS;
+            sel = grid_root;
+            item_sel = sel + " > a";
+            margin_unit = "px";
+            ans = ":root { --cs-cover-grid-pct: %s; }\n" % COVER_GRID_PCT_DEFAULT;
+            ans += ".book-list-cover-grid { --cs-cover-tile-px: 120px; }\n";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "grid", justify_items: "stretch", align_items: "end", justify_content: "start", user_select: "none", overflow: "visible", position: "relative", margin_top: "5" + margin_unit, row_gap: str(COVER_GRID_ROW_GAP) + margin_unit, column_gap: "0" + margin_unit, width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-list-container .cs-book-list-wrap, .local-books-list .cs-book-list-wrap"].concat([ρσ_desugar_kwargs({width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-list-container [data-component=\"book_list\"], .local-books-list [data-component=\"book_list\"]"].concat([ρσ_desugar_kwargs({display: "block", width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+            sel = item_sel;
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "0", display: "block", width: "100%", min_width: "0", max_width: "100%", height: "auto", aspect_ratio: "2 / 3", cursor: "pointer", position: "relative", overflow: "visible", box_sizing: "border-box", transition: "background-color 160ms ease, width 0.2s ease", container_type: "inline-size"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":hover"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":active"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light-2)"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " > .cs-cover-frame"].concat([ρσ_desugar_kwargs({position: "relative", width: "100%", height: "100%", overflow: "hidden", border_radius: BORDER_RADIUS + "px", box_shadow: "0 clamp(10px, 1.8vh, 14px) clamp(26px, 4.2vh, 48px) rgba(0,0,0,0.18)", border: "var(--calibre-border-style-subtle)", background_color: "rgba(0,0,0,0.02)", transition: "box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + ":hover > .cs-cover-frame"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)", border_color: "var(--calibre-color-border)", box_shadow: "0 clamp(14px, 2.6vh, 18px) clamp(34px, 5.2vh, 62px) rgba(0,0,0,0.24), 0 0 0 4px var(--calibre-color-primary-light)"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > .cs-cover-mask"].concat([ρσ_desugar_kwargs({position: "absolute", left: "0", right: "0", bottom: "0", padding: "0.85rem 0.75rem 0.6rem 0.75rem", display: "flex", flex_direction: "column", gap: "0.25rem", justify_content: "flex-end", align_items: "stretch", text_align: "right", background: "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.88) 18%, rgba(0,0,0,0.62) 48%, rgba(0,0,0,0.20) 78%, rgba(0,0,0,0.0) 100%)", color: "rgba(255,255,255,0.97)", text_shadow: "0 2px 10px rgba(0,0,0,0.65)", pointer_events: "none"})]));
+            ans += "\n@container (max-width: 10ch) {\n                .cs-cover-mask { display: none !important; }\n            }\n            ";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > .cs-cover-mask .cs-cover-mask-title"].concat([ρσ_desugar_kwargs({font_size: "0.95rem", font_weight: "800", width: "100%", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > .cs-cover-mask .cs-cover-mask-authors"].concat([ρσ_desugar_kwargs({font_size: "0.82rem", font_weight: "600", opacity: "0.92", width: "100%", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [grid_root + " > .cover-grid-filler"].concat([ρσ_desugar_kwargs({position: "absolute", left: "0", top: "0", width: "1px", height: "1px", margin: "0", padding: "0", overflow: "hidden", visibility: "hidden", pointer_events: "none", z_index: "-1"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > div"].concat([ρσ_desugar_kwargs({position: "relative", top: "-50%", transform: "translateY(50%)", margin: "0"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > img"].concat([ρσ_desugar_kwargs({width: "100%", height: "100%", display: "block", object_fit: "cover"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".cs-cover-grid-size-control"].concat([ρσ_desugar_kwargs({display: "inline-flex", align_items: "center", gap: "0.65rem", flex: "1 1 15rem", min_width: "min(100%, 13rem)", max_width: "24rem", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".cs-cover-grid-size-control .cs-cover-grid-size-label"].concat([ρσ_desugar_kwargs({font_size: "0.88rem", font_weight: "600", opacity: "0.88", white_space: "nowrap", flex_shrink: "0"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".cs-cover-grid-size-control .cs-cover-grid-size-range"].concat([ρσ_desugar_kwargs({flex: "1 1 auto", min_width: "3rem", margin: "0"})]));
+            return ans;
+        };
+        if (!cover_grid_css.__module__) Object.defineProperties(cover_grid_css, {
+            __module__ : {value: "book_list.cover_grid"}
+        });
+
+        ρσ_modules["book_list.cover_grid"].COVER_GRID_CLASS = COVER_GRID_CLASS;
+        ρσ_modules["book_list.cover_grid"].COVER_GRID_VIEWPORT_FRAC = COVER_GRID_VIEWPORT_FRAC;
+        ρσ_modules["book_list.cover_grid"].COVER_GRID_PCT_DEFAULT = COVER_GRID_PCT_DEFAULT;
+        ρσ_modules["book_list.cover_grid"].COVER_GRID_PCT_MIN = COVER_GRID_PCT_MIN;
+        ρσ_modules["book_list.cover_grid"].COVER_GRID_PCT_MAX = COVER_GRID_PCT_MAX;
+        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MAX_WIDTH = THUMBNAIL_MAX_WIDTH;
+        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MAX_HEIGHT = THUMBNAIL_MAX_HEIGHT;
+        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MIN_WIDTH = THUMBNAIL_MIN_WIDTH;
+        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MIN_HEIGHT = THUMBNAIL_MIN_HEIGHT;
+        ρσ_modules["book_list.cover_grid"].BORDER_RADIUS = BORDER_RADIUS;
+        ρσ_modules["book_list.cover_grid"].COVER_GRID_ROW_GAP = COVER_GRID_ROW_GAP;
+        ρσ_modules["book_list.cover_grid"].cover_grid_css = cover_grid_css;
+    })();
+
+    (function(){
         var __name__ = "book_list.top_bar";
         var CLASS_NAME, SPACING, VSPACING, THROBBER_NAME;
         var E = ρσ_modules.elementmaker.E;
@@ -37816,165 +37879,6 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "book_list.cover_grid";
-        var COVER_GRID_CLASS, COVER_GRID_VIEWPORT_FRAC, COVER_GRID_PCT_DEFAULT, COVER_GRID_PCT_MIN, COVER_GRID_PCT_MAX, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, THUMBNAIL_MIN_WIDTH, THUMBNAIL_MIN_HEIGHT, BORDER_RADIUS, COVER_GRID_ROW_GAP;
-        var build_rule = ρσ_modules.dom.build_rule;
-
-        COVER_GRID_CLASS = "book-list-cover-grid";
-        COVER_GRID_VIEWPORT_FRAC = .165;
-        COVER_GRID_PCT_DEFAULT = Math.round(100 * COVER_GRID_VIEWPORT_FRAC);
-        COVER_GRID_PCT_MIN = 8;
-        COVER_GRID_PCT_MAX = 45;
-        THUMBNAIL_MAX_WIDTH = 3 * 85;
-        THUMBNAIL_MAX_HEIGHT = int(THUMBNAIL_MAX_WIDTH * 3 / 2);
-        THUMBNAIL_MIN_WIDTH = 3 * 16;
-        THUMBNAIL_MIN_HEIGHT = int(THUMBNAIL_MIN_WIDTH * 3 / 2);
-        BORDER_RADIUS = 10;
-        COVER_GRID_ROW_GAP = 10;
-        function cover_grid_css() {
-            var grid_root, sel, item_sel, margin_unit, ans;
-            grid_root = "." + COVER_GRID_CLASS;
-            sel = grid_root;
-            item_sel = sel + " > a";
-            margin_unit = "px";
-            ans = ":root { --cs-cover-grid-pct: %s; }\n" % COVER_GRID_PCT_DEFAULT;
-            ans += ".book-list-cover-grid { --cs-cover-tile-px: 120px; }\n";
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({display: "grid", justify_items: "stretch", align_items: "end", justify_content: "start", user_select: "none", overflow: "visible", position: "relative", margin_top: "5" + margin_unit, row_gap: str(COVER_GRID_ROW_GAP) + margin_unit, column_gap: "0" + margin_unit, width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-list-container .cs-book-list-wrap, .local-books-list .cs-book-list-wrap"].concat([ρσ_desugar_kwargs({width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".book-list-container [data-component=\"book_list\"], .local-books-list [data-component=\"book_list\"]"].concat([ρσ_desugar_kwargs({display: "block", width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-            sel = item_sel;
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin: "0", display: "block", width: "100%", min_width: "0", max_width: "100%", height: "auto", aspect_ratio: "2 / 3", cursor: "pointer", position: "relative", overflow: "visible", box_sizing: "border-box", transition: "background-color 160ms ease, width 0.2s ease", container_type: "inline-size"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":hover"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + ":active"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light-2)"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " > .cs-cover-frame"].concat([ρσ_desugar_kwargs({position: "relative", width: "100%", height: "100%", overflow: "hidden", border_radius: BORDER_RADIUS + "px", box_shadow: "0 clamp(10px, 1.8vh, 14px) clamp(26px, 4.2vh, 48px) rgba(0,0,0,0.18)", border: "var(--calibre-border-style-subtle)", background_color: "rgba(0,0,0,0.02)", transition: "box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + ":hover > .cs-cover-frame"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)", border_color: "var(--calibre-color-border)", box_shadow: "0 clamp(14px, 2.6vh, 18px) clamp(34px, 5.2vh, 62px) rgba(0,0,0,0.24), 0 0 0 4px var(--calibre-color-primary-light)"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > .cs-cover-mask"].concat([ρσ_desugar_kwargs({position: "absolute", left: "0", right: "0", bottom: "0", padding: "0.85rem 0.75rem 0.6rem 0.75rem", display: "flex", flex_direction: "column", gap: "0.25rem", justify_content: "flex-end", align_items: "stretch", text_align: "right", background: "linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.88) 18%, rgba(0,0,0,0.62) 48%, rgba(0,0,0,0.20) 78%, rgba(0,0,0,0.0) 100%)", color: "rgba(255,255,255,0.97)", text_shadow: "0 2px 10px rgba(0,0,0,0.65)", pointer_events: "none"})]));
-            ans += "\n@container (max-width: 10ch) {\n                .cs-cover-mask { display: none !important; }\n            }\n            ";
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > .cs-cover-mask .cs-cover-mask-title"].concat([ρσ_desugar_kwargs({font_size: "0.95rem", font_weight: "800", width: "100%", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > .cs-cover-mask .cs-cover-mask-authors"].concat([ρσ_desugar_kwargs({font_size: "0.82rem", font_weight: "600", opacity: "0.92", width: "100%", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [grid_root + " > .cover-grid-filler"].concat([ρσ_desugar_kwargs({position: "absolute", left: "0", top: "0", width: "1px", height: "1px", margin: "0", padding: "0", overflow: "hidden", visibility: "hidden", pointer_events: "none", z_index: "-1"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > div"].concat([ρσ_desugar_kwargs({position: "relative", top: "-50%", transform: "translateY(50%)", margin: "0"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", item_sel) + " .cs-cover-frame > img"].concat([ρσ_desugar_kwargs({width: "100%", height: "100%", display: "block", object_fit: "cover"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".cs-cover-grid-size-control"].concat([ρσ_desugar_kwargs({display: "inline-flex", align_items: "center", gap: "0.65rem", flex: "1 1 15rem", min_width: "min(100%, 13rem)", max_width: "24rem", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".cs-cover-grid-size-control .cs-cover-grid-size-label"].concat([ρσ_desugar_kwargs({font_size: "0.88rem", font_weight: "600", opacity: "0.88", white_space: "nowrap", flex_shrink: "0"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [".cs-cover-grid-size-control .cs-cover-grid-size-range"].concat([ρσ_desugar_kwargs({flex: "1 1 auto", min_width: "3rem", margin: "0"})]));
-            return ans;
-        };
-        if (!cover_grid_css.__module__) Object.defineProperties(cover_grid_css, {
-            __module__ : {value: "book_list.cover_grid"}
-        });
-
-        ρσ_modules["book_list.cover_grid"].COVER_GRID_CLASS = COVER_GRID_CLASS;
-        ρσ_modules["book_list.cover_grid"].COVER_GRID_VIEWPORT_FRAC = COVER_GRID_VIEWPORT_FRAC;
-        ρσ_modules["book_list.cover_grid"].COVER_GRID_PCT_DEFAULT = COVER_GRID_PCT_DEFAULT;
-        ρσ_modules["book_list.cover_grid"].COVER_GRID_PCT_MIN = COVER_GRID_PCT_MIN;
-        ρσ_modules["book_list.cover_grid"].COVER_GRID_PCT_MAX = COVER_GRID_PCT_MAX;
-        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MAX_WIDTH = THUMBNAIL_MAX_WIDTH;
-        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MAX_HEIGHT = THUMBNAIL_MAX_HEIGHT;
-        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MIN_WIDTH = THUMBNAIL_MIN_WIDTH;
-        ρσ_modules["book_list.cover_grid"].THUMBNAIL_MIN_HEIGHT = THUMBNAIL_MIN_HEIGHT;
-        ρσ_modules["book_list.cover_grid"].BORDER_RADIUS = BORDER_RADIUS;
-        ρσ_modules["book_list.cover_grid"].COVER_GRID_ROW_GAP = COVER_GRID_ROW_GAP;
-        ρσ_modules["book_list.cover_grid"].cover_grid_css = cover_grid_css;
-    })();
-
-    (function(){
-        var __name__ = "book_list.home";
-        var CLASS_NAME, recently_read_by_user;
-        var BORDER_RADIUS = ρσ_modules["book_list.cover_grid"].BORDER_RADIUS;
-
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var build_rule = ρσ_modules.dom.build_rule;
-
-        CLASS_NAME = "home-page";
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var ans, sel, img_sel;
-                ans = "";
-                sel = "." + ρσ_str.format("{}", CLASS_NAME) + " ";
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, ["." + CLASS_NAME].concat([ρσ_desugar_kwargs({min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-content"].concat([ρσ_desugar_kwargs({padding: "0.75rem 1rem 1rem 1rem", max_width: "980px", width: "100%", min_width: "0", box_sizing: "border-box", margin_left: "auto", margin_right: "auto"})]));
-                ans += "\n@media (max-width: 720px) {\n  .home-page .cs-home-content { padding-left: 0.75rem; padding-right: 0.75rem; }\n}\n@media (max-width: 380px) {\n  .home-page .cs-home-content { padding-left: 0.5rem; padding-right: 0.5rem; }\n}\n";
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-section"].concat([ρσ_desugar_kwargs({margin_top: "0.95rem", padding: "1rem", border_radius: "18px", border: "var(--calibre-border-style-subtle)", background: "var(--calibre-color-surface-1)", box_shadow: "0 16px 44px rgba(0,0,0,0.10)", min_width: "0", max_width: "100%", box_sizing: "border-box", overflow_x: "hidden"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-section:first-child"].concat([ρσ_desugar_kwargs({margin_top: "0"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-section h2"].concat([ρσ_desugar_kwargs({margin: "0 0 0.85rem 0", padding: "0", font_size: "1.1em", font_weight: "800", opacity: "0.92"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-actions"].concat([ρσ_desugar_kwargs({display: "flex", flex_wrap: "wrap", gap: "0.65rem", min_width: "0", max_width: "100%"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-download-actions"].concat([ρσ_desugar_kwargs({margin_top: "0.55rem"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-actions a.calibre-push-button"].concat([ρσ_desugar_kwargs({margin: "0"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-covers"].concat([ρσ_desugar_kwargs({display: "flex", flex_wrap: "wrap", align_items: "flex-start", align_content: "flex-start", gap: "10px", row_gap: "10px", column_gap: "10px", width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-covers > div"].concat([ρσ_desugar_kwargs({margin: "0", flex_grow: "0", flex_shrink: "1", flex_basis: "auto", min_width: "0", width: "min(118px, max(72px, calc((100% - 20px) / 3.15)))", max_width: "100%", box_sizing: "border-box"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-covers > div > a"].concat([ρσ_desugar_kwargs({display: "block", width: "100%", min_width: "0", box_sizing: "border-box"})]));
-                img_sel = sel + ".recently-read img";
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, [img_sel].concat([ρσ_desugar_kwargs({width: "100%", height: "auto", aspect_ratio: "2 / 3", border_radius: "" + ρσ_str.format("{}", BORDER_RADIUS) + "px", display: "block", object_fit: "cover", border: "var(--calibre-border-style)", box_shadow: "0 10px 26px rgba(0,0,0,0.14)", transition: "box-shadow 160ms ease, filter 160ms ease"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", img_sel) + ":hover"].concat([ρσ_desugar_kwargs({box_shadow: "0 16px 44px rgba(0,0,0,0.18), 0 0 0 4px var(--calibre-color-primary-light)", filter: "brightness(1.03)"})]));
-                ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", img_sel) + ":active"].concat([ρσ_desugar_kwargs({box_shadow: "0 12px 34px rgba(0,0,0,0.18), 0 0 0 4px var(--calibre-color-primary-light-2)", filter: "brightness(1.01)"})]));
-                return ans;
-            };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "book_list.home"}
-            });
-            return ρσ_anonfunc;
-        })());
-        recently_read_by_user = (function(){
-            var ρσ_d = Object.create(null);
-            ρσ_d["updated"] = false;
-            return ρσ_d;
-        }).call(this);
-        function update_book_in_recently_read_by_user_on_home_page(library_id, book_id, book_format, cfi) {
-            var item;
-            if (recently_read_by_user.items) {
-                var ρσ_Iter274 = recently_read_by_user.items;
-                ρσ_Iter274 = ((typeof ρσ_Iter274[Symbol.iterator] === "function") ? (ρσ_Iter274 instanceof Map ? ρσ_Iter274.keys() : ρσ_Iter274) : Object.keys(ρσ_Iter274));
-                for (var ρσ_Index274 of ρσ_Iter274) {
-                    item = ρσ_Index274;
-                    if (item.library_id === library_id && item.book_id === book_id && item.format === book_format) {
-                        item.cfi = cfi;
-                    }
-                }
-            }
-        };
-        if (!update_book_in_recently_read_by_user_on_home_page.__argnames__) Object.defineProperties(update_book_in_recently_read_by_user_on_home_page, {
-            __argnames__ : {value: ["library_id", "book_id", "book_format", "cfi"]},
-            __module__ : {value: "book_list.home"}
-        });
-
-        ρσ_modules["book_list.home"].CLASS_NAME = CLASS_NAME;
-        ρσ_modules["book_list.home"].recently_read_by_user = recently_read_by_user;
-        ρσ_modules["book_list.home"].update_book_in_recently_read_by_user_on_home_page = update_book_in_recently_read_by_user_on_home_page;
-    })();
-
-    (function(){
-        var __name__ = "worker";
-        var main_js = ρσ_modules["book_list.globals"].main_js;
-
-        function worker_js_url(entry_point) {
-            if (!worker_js_url.ans) {
-                worker_js_url.ans = window.URL.createObjectURL(new Blob([ main_js() ]), (function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["type"] = "text/javascript";
-                    return ρσ_d;
-                }).call(this));
-            }
-            return worker_js_url.ans + "#" + entry_point;
-        };
-        if (!worker_js_url.__argnames__) Object.defineProperties(worker_js_url, {
-            __argnames__ : {value: ["entry_point"]},
-            __module__ : {value: "worker"}
-        });
-
-        function start_worker(entry_point) {
-            return new window.Worker(worker_js_url(entry_point));
-        };
-        if (!start_worker.__argnames__) Object.defineProperties(start_worker, {
-            __argnames__ : {value: ["entry_point"]},
-            __module__ : {value: "worker"}
-        });
-
-        ρσ_modules.worker.worker_js_url = worker_js_url;
-        ρσ_modules.worker.start_worker = start_worker;
-    })();
-
-    (function(){
         var __name__ = "read_book.chrome";
         var get_color = ρσ_modules["book_list.theme"].get_color;
 
@@ -38229,10 +38133,10 @@ return this.__repr__();
             pl.appendChild(E.div(_("Load settings from one of the previously saved profiles below…")));
             pl.appendChild(E.div());
             items = [];
-            var ρσ_Iter275 = names;
-            ρσ_Iter275 = ((typeof ρσ_Iter275[Symbol.iterator] === "function") ? (ρσ_Iter275 instanceof Map ? ρσ_Iter275.keys() : ρσ_Iter275) : Object.keys(ρσ_Iter275));
-            for (var ρσ_Index275 of ρσ_Iter275) {
-                name = ρσ_Index275;
+            var ρσ_Iter274 = names;
+            ρσ_Iter274 = ((typeof ρσ_Iter274[Symbol.iterator] === "function") ? (ρσ_Iter274 instanceof Map ? ρσ_Iter274.keys() : ρσ_Iter274) : Object.keys(ρσ_Iter274));
+            for (var ρσ_Index274 of ρσ_Iter274) {
+                name = ρσ_Index274;
                 display_name = name;
                 if (name === "__default__") {
                     display_name = _("Restore settings to default values");
@@ -38321,6 +38225,319 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.word_actions";
+        var current_data;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var create_item = ρσ_modules["book_list.item_list"].create_item;
+        var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
+
+        var clear = ρσ_modules.dom.clear;
+        var ensure_id = ρσ_modules.dom.ensure_id;
+
+        var error_dialog = ρσ_modules.modals.error_dialog;
+
+        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
+
+        var create_button = ρσ_modules.widgets.create_button;
+
+        function lookup(close_panel_func, url) {
+            close_panel_func();
+            ui_operations.open_url(url);
+        };
+        if (!lookup.__argnames__) Object.defineProperties(lookup, {
+            __argnames__ : {value: ["close_panel_func", "url"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function toggle_custom_container(container_id, visible) {
+            var container, c, list_container;
+            container = document.getElementById(container_id);
+            if (container) {
+                c = container.lastChild;
+                list_container = c.previousSibling;
+                list_container.style.display = (visible) ? "none" : "block";
+                c.style.display = (visible) ? "block" : "none";
+                return c;
+            }
+        };
+        if (!toggle_custom_container.__argnames__) Object.defineProperties(toggle_custom_container, {
+            __argnames__ : {value: ["container_id", "visible"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function add(container_id) {
+            var container, c, name, url, sd, actions;
+            container = document.getElementById(container_id);
+            if (!container) {
+                return;
+            }
+            c = container.lastChild;
+            name = c.querySelector("input[name=\"name\"]").value;
+            url = c.querySelector("input[name=\"url\"]").value;
+            if (!name || !url) {
+                error_dialog(_("Required fields missing"), _("You must specify both a name and a URL."));
+                return;
+            }
+            sd = get_session_data();
+            actions = sd.get("word_actions", []);
+            actions.push((function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["title"] = name;
+                ρσ_d["url"] = url;
+                return ρσ_d;
+            }).call(this));
+            sd.set("word_actions", actions);
+            toggle_custom_container(container_id, false);
+            populate_list(container);
+        };
+        if (!add.__argnames__) Object.defineProperties(add, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function add_custom(container_id) {
+            var container, do_add;
+            container = toggle_custom_container(container_id, true);
+            if (!container) {
+                return;
+            }
+            clear(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Enter the name and URL for a custom lookup source. The URL must contain  {0} in it, which will be replaced by the word being looked up. For example:  {1}").format("{word}", "https://google.com/search?q={word}")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            do_add = add.bind(null, container_id);
+            container.appendChild(E.form(ρσ_interpolate_kwargs.call(E, E.button, [ρσ_desugar_kwargs({style: "display:none", onclick: do_add})]), ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Name:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: "name"})]))), E.tr(E.td(" "), E.td(" ")), E.tr(E.td(_("URL:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "url", name: "url"})])))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})]))));
+            container.append(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Add"), "plus", add.bind(null, container_id)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: toggle_custom_container.bind(null, container_id, false)})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem; display: flex"})])));
+            container.querySelector("input").focus();
+        };
+        if (!add_custom.__argnames__) Object.defineProperties(add_custom, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function remove(container_id, num) {
+            var container, sd, actions;
+            container = document.getElementById(container_id);
+            if (!container) {
+                return;
+            }
+            sd = get_session_data();
+            actions = sd.get("word_actions", []);
+            actions.splice(num, 1);
+            sd.set("word_actions", actions);
+            toggle_custom_container(container_id, false);
+            populate_list(container);
+        };
+        if (!remove.__argnames__) Object.defineProperties(remove, {
+            __argnames__ : {value: ["container_id", "num"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function remove_custom(container_id) {
+            var container, items, sd, actions, ρσ_unpack, i, item;
+            container = toggle_custom_container(container_id, true);
+            if (!container) {
+                return;
+            }
+            clear(container);
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a custom lookup to remove")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+            items = [ create_item(_("Cancel (no removals)"), toggle_custom_container.bind(null, container_id, false)) ];
+            sd = get_session_data();
+            actions = sd.get("word_actions", []);
+            var ρσ_Iter275 = enumerate(actions);
+            ρσ_Iter275 = ((typeof ρσ_Iter275[Symbol.iterator] === "function") ? (ρσ_Iter275 instanceof Map ? ρσ_Iter275.keys() : ρσ_Iter275) : Object.keys(ρσ_Iter275));
+            for (var ρσ_Index275 of ρσ_Iter275) {
+                ρσ_unpack = ρσ_Index275;
+                i = ρσ_unpack[0];
+                item = ρσ_unpack[1];
+                items.push(create_item(item.title, remove.bind(null, container_id, i)));
+            }
+            container.appendChild(E.div());
+            create_item_list(container.lastChild, items);
+        };
+        if (!remove_custom.__argnames__) Object.defineProperties(remove_custom, {
+            __argnames__ : {value: ["container_id"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function lookup_items(word, close_panel_func, container_id) {
+            var eword, items, custom_actions, has_custom, entry;
+            eword = encodeURIComponent(word);
+            items = [];
+            function a(title, url) {
+                items.push(create_item(title, lookup.bind(word, close_panel_func, ρσ_interpolate_kwargs.call(url, url.format, [ρσ_desugar_kwargs({word: eword})]))));
+            };
+            if (!a.__argnames__) Object.defineProperties(a, {
+                __argnames__ : {value: ["title", "url"]},
+                __module__ : {value: "read_book.word_actions"}
+            });
+
+            custom_actions = get_session_data().get("word_actions", []);
+            has_custom = custom_actions && custom_actions.length;
+            if (has_custom) {
+                var ρσ_Iter276 = custom_actions;
+                ρσ_Iter276 = ((typeof ρσ_Iter276[Symbol.iterator] === "function") ? (ρσ_Iter276 instanceof Map ? ρσ_Iter276.keys() : ρσ_Iter276) : Object.keys(ρσ_Iter276));
+                for (var ρσ_Index276 of ρσ_Iter276) {
+                    entry = ρσ_Index276;
+                    if (entry.title && entry.url) {
+                        a(entry.title, entry.url);
+                    }
+                }
+            }
+            a(_("Google dictionary"), "https://google.com/search?q=define:{word}");
+            a(_("Wordnik"), "https://www.wordnik.com/words/{word}");
+            a(_("Search the internet"), "https://google.com/search?q={word}");
+            items.push(create_item(_("Add a custom lookup"), add_custom.bind(null, container_id)));
+            if (has_custom) {
+                items.push(create_item(_("Remove a custom lookup"), remove_custom.bind(null, container_id)));
+            }
+            return items;
+        };
+        if (!lookup_items.__argnames__) Object.defineProperties(lookup_items, {
+            __argnames__ : {value: ["word", "close_panel_func", "container_id"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        current_data = null;
+        function populate_list(container) {
+            var ρσ_unpack, word, close_panel_func, list_container;
+            ρσ_unpack = current_data;
+ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
+            word = ρσ_unpack[0];
+            close_panel_func = ρσ_unpack[1];
+            list_container = container.lastChild.previousSibling;
+            clear(list_container);
+            create_item_list(list_container, lookup_items(word, close_panel_func, ensure_id(container)));
+        };
+        if (!populate_list.__argnames__) Object.defineProperties(populate_list, {
+            __argnames__ : {value: ["container"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        function create_word_actions_panel(container, word, close_panel_func) {
+            word = str.replace(word, "\u00ad", "");
+            current_data = [word, close_panel_func];
+            container.appendChild(E.div());
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none"})]));
+            populate_list(container);
+        };
+        if (!create_word_actions_panel.__argnames__) Object.defineProperties(create_word_actions_panel, {
+            __argnames__ : {value: ["container", "word", "close_panel_func"]},
+            __module__ : {value: "read_book.word_actions"}
+        });
+
+        ρσ_modules["read_book.word_actions"].current_data = current_data;
+        ρσ_modules["read_book.word_actions"].lookup = lookup;
+        ρσ_modules["read_book.word_actions"].toggle_custom_container = toggle_custom_container;
+        ρσ_modules["read_book.word_actions"].add = add;
+        ρσ_modules["read_book.word_actions"].add_custom = add_custom;
+        ρσ_modules["read_book.word_actions"].remove = remove;
+        ρσ_modules["read_book.word_actions"].remove_custom = remove_custom;
+        ρσ_modules["read_book.word_actions"].lookup_items = lookup_items;
+        ρσ_modules["read_book.word_actions"].populate_list = populate_list;
+        ρσ_modules["read_book.word_actions"].create_word_actions_panel = create_word_actions_panel;
+    })();
+
+    (function(){
+        var __name__ = "book_list.home";
+        var CLASS_NAME, recently_read_by_user;
+        var BORDER_RADIUS = ρσ_modules["book_list.cover_grid"].BORDER_RADIUS;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+
+        CLASS_NAME = "home-page";
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var ans, sel, img_sel;
+                ans = "";
+                sel = "." + ρσ_str.format("{}", CLASS_NAME) + " ";
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, ["." + CLASS_NAME].concat([ρσ_desugar_kwargs({min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-content"].concat([ρσ_desugar_kwargs({padding: "0.75rem 1rem 1rem 1rem", max_width: "980px", width: "100%", min_width: "0", box_sizing: "border-box", margin_left: "auto", margin_right: "auto"})]));
+                ans += "\n@media (max-width: 720px) {\n  .home-page .cs-home-content { padding-left: 0.75rem; padding-right: 0.75rem; }\n}\n@media (max-width: 380px) {\n  .home-page .cs-home-content { padding-left: 0.5rem; padding-right: 0.5rem; }\n}\n";
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-section"].concat([ρσ_desugar_kwargs({margin_top: "0.95rem", padding: "1rem", border_radius: "18px", border: "var(--calibre-border-style-subtle)", background: "var(--calibre-color-surface-1)", box_shadow: "0 16px 44px rgba(0,0,0,0.10)", min_width: "0", max_width: "100%", box_sizing: "border-box", overflow_x: "hidden"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-section:first-child"].concat([ρσ_desugar_kwargs({margin_top: "0"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-section h2"].concat([ρσ_desugar_kwargs({margin: "0 0 0.85rem 0", padding: "0", font_size: "1.1em", font_weight: "800", opacity: "0.92"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-actions"].concat([ρσ_desugar_kwargs({display: "flex", flex_wrap: "wrap", gap: "0.65rem", min_width: "0", max_width: "100%"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-download-actions"].concat([ρσ_desugar_kwargs({margin_top: "0.55rem"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-actions a.calibre-push-button"].concat([ρσ_desugar_kwargs({margin: "0"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-covers"].concat([ρσ_desugar_kwargs({display: "flex", flex_wrap: "wrap", align_items: "flex-start", align_content: "flex-start", gap: "10px", row_gap: "10px", column_gap: "10px", width: "100%", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-covers > div"].concat([ρσ_desugar_kwargs({margin: "0", flex_grow: "0", flex_shrink: "1", flex_basis: "auto", min_width: "0", width: "min(118px, max(72px, calc((100% - 20px) / 3.15)))", max_width: "100%", box_sizing: "border-box"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + ".cs-home-covers > div > a"].concat([ρσ_desugar_kwargs({display: "block", width: "100%", min_width: "0", box_sizing: "border-box"})]));
+                img_sel = sel + ".recently-read img";
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, [img_sel].concat([ρσ_desugar_kwargs({width: "100%", height: "auto", aspect_ratio: "2 / 3", border_radius: "" + ρσ_str.format("{}", BORDER_RADIUS) + "px", display: "block", object_fit: "cover", border: "var(--calibre-border-style)", box_shadow: "0 10px 26px rgba(0,0,0,0.14)", transition: "box-shadow 160ms ease, filter 160ms ease"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", img_sel) + ":hover"].concat([ρσ_desugar_kwargs({box_shadow: "0 16px 44px rgba(0,0,0,0.18), 0 0 0 4px var(--calibre-color-primary-light)", filter: "brightness(1.03)"})]));
+                ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", img_sel) + ":active"].concat([ρσ_desugar_kwargs({box_shadow: "0 12px 34px rgba(0,0,0,0.18), 0 0 0 4px var(--calibre-color-primary-light-2)", filter: "brightness(1.01)"})]));
+                return ans;
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "book_list.home"}
+            });
+            return ρσ_anonfunc;
+        })());
+        recently_read_by_user = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["updated"] = false;
+            return ρσ_d;
+        }).call(this);
+        function update_book_in_recently_read_by_user_on_home_page(library_id, book_id, book_format, cfi) {
+            var item;
+            if (recently_read_by_user.items) {
+                var ρσ_Iter277 = recently_read_by_user.items;
+                ρσ_Iter277 = ((typeof ρσ_Iter277[Symbol.iterator] === "function") ? (ρσ_Iter277 instanceof Map ? ρσ_Iter277.keys() : ρσ_Iter277) : Object.keys(ρσ_Iter277));
+                for (var ρσ_Index277 of ρσ_Iter277) {
+                    item = ρσ_Index277;
+                    if (item.library_id === library_id && item.book_id === book_id && item.format === book_format) {
+                        item.cfi = cfi;
+                    }
+                }
+            }
+        };
+        if (!update_book_in_recently_read_by_user_on_home_page.__argnames__) Object.defineProperties(update_book_in_recently_read_by_user_on_home_page, {
+            __argnames__ : {value: ["library_id", "book_id", "book_format", "cfi"]},
+            __module__ : {value: "book_list.home"}
+        });
+
+        ρσ_modules["book_list.home"].CLASS_NAME = CLASS_NAME;
+        ρσ_modules["book_list.home"].recently_read_by_user = recently_read_by_user;
+        ρσ_modules["book_list.home"].update_book_in_recently_read_by_user_on_home_page = update_book_in_recently_read_by_user_on_home_page;
+    })();
+
+    (function(){
+        var __name__ = "worker";
+        var main_js = ρσ_modules["book_list.globals"].main_js;
+
+        function worker_js_url(entry_point) {
+            if (!worker_js_url.ans) {
+                worker_js_url.ans = window.URL.createObjectURL(new Blob([ main_js() ]), (function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["type"] = "text/javascript";
+                    return ρσ_d;
+                }).call(this));
+            }
+            return worker_js_url.ans + "#" + entry_point;
+        };
+        if (!worker_js_url.__argnames__) Object.defineProperties(worker_js_url, {
+            __argnames__ : {value: ["entry_point"]},
+            __module__ : {value: "worker"}
+        });
+
+        function start_worker(entry_point) {
+            return new window.Worker(worker_js_url(entry_point));
+        };
+        if (!start_worker.__argnames__) Object.defineProperties(start_worker, {
+            __argnames__ : {value: ["entry_point"]},
+            __module__ : {value: "worker"}
+        });
+
+        ρσ_modules.worker.worker_js_url = worker_js_url;
+        ρσ_modules.worker.start_worker = start_worker;
+    })();
+
+    (function(){
         var __name__ = "read_book.search_worker";
         var GET_SPINE_FAILED, CONNECT_FAILED, UNHANDLED_ERROR, DB_ERROR, _RE_ESCAPE, quote_map, qpat, spat, invisible_chars, _ESCAPED_ATOM, wc;
         var format_exception = ρσ_modules.traceback.format_exception;
@@ -38372,17 +38589,17 @@ return this.__repr__();
             if (has_leading) {
                 ans.push("\\s+");
             }
-            var ρσ_Iter276 = split_string(spat, text.strip());
-            ρσ_Iter276 = ((typeof ρσ_Iter276[Symbol.iterator] === "function") ? (ρσ_Iter276 instanceof Map ? ρσ_Iter276.keys() : ρσ_Iter276) : Object.keys(ρσ_Iter276));
-            for (var ρσ_Index276 of ρσ_Iter276) {
-                wpart = ρσ_Index276;
+            var ρσ_Iter278 = split_string(spat, text.strip());
+            ρσ_Iter278 = ((typeof ρσ_Iter278[Symbol.iterator] === "function") ? (ρσ_Iter278 instanceof Map ? ρσ_Iter278.keys() : ρσ_Iter278) : Object.keys(ρσ_Iter278));
+            for (var ρσ_Index278 of ρσ_Iter278) {
+                wpart = ρσ_Index278;
                 if (!wpart.strip()) {
                     ans.push("\\s+");
                 } else {
-                    var ρσ_Iter277 = split_string(qpat, wpart);
-                    ρσ_Iter277 = ((typeof ρσ_Iter277[Symbol.iterator] === "function") ? (ρσ_Iter277 instanceof Map ? ρσ_Iter277.keys() : ρσ_Iter277) : Object.keys(ρσ_Iter277));
-                    for (var ρσ_Index277 of ρσ_Iter277) {
-                        part = ρσ_Index277;
+                    var ρσ_Iter279 = split_string(qpat, wpart);
+                    ρσ_Iter279 = ((typeof ρσ_Iter279[Symbol.iterator] === "function") ? (ρσ_Iter279 instanceof Map ? ρσ_Iter279.keys() : ρσ_Iter279) : Object.keys(ρσ_Iter279));
+                    for (var ρσ_Index279 of ρσ_Iter279) {
+                        part = ρσ_Index279;
                         r = quote_map[(typeof part === "number" && part < 0) ? quote_map.length + part : part];
                         if (r) {
                             ans.push("[" + r + "]");
@@ -38430,10 +38647,10 @@ return this.__repr__();
             var self = this;
             var matches, q, node, ans, ancestors, parent;
             matches = [];
-            var ρσ_Iter278 = self.toc_nodes;
-            ρσ_Iter278 = ((typeof ρσ_Iter278[Symbol.iterator] === "function") ? (ρσ_Iter278 instanceof Map ? ρσ_Iter278.keys() : ρσ_Iter278) : Object.keys(ρσ_Iter278));
-            for (var ρσ_Index278 of ρσ_Iter278) {
-                node = ρσ_Index278;
+            var ρσ_Iter280 = self.toc_nodes;
+            ρσ_Iter280 = ((typeof ρσ_Iter280[Symbol.iterator] === "function") ? (ρσ_Iter280 instanceof Map ? ρσ_Iter280.keys() : ρσ_Iter280) : Object.keys(ρσ_Iter280));
+            for (var ρσ_Index280 of ρσ_Iter280) {
+                node = ρσ_Index280;
                 q = (ρσ_expr_temp = self.offset_map)[ρσ_bound_index(node.id, ρσ_expr_temp)];
                 if ((typeof q !== "undefined" && q !== null)) {
                     if (q > offset) {
@@ -38489,10 +38706,10 @@ return this.__repr__();
                 return (ρσ_expr_temp = wc.toc_offset_map_cache)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
             }
             offset_map = Object.create(null);
-            var ρσ_Iter279 = toc_nodes;
-            ρσ_Iter279 = ((typeof ρσ_Iter279[Symbol.iterator] === "function") ? (ρσ_Iter279 instanceof Map ? ρσ_Iter279.keys() : ρσ_Iter279) : Object.keys(ρσ_Iter279));
-            for (var ρσ_Index279 of ρσ_Iter279) {
-                node = ρσ_Index279;
+            var ρσ_Iter281 = toc_nodes;
+            ρσ_Iter281 = ((typeof ρσ_Iter281[Symbol.iterator] === "function") ? (ρσ_Iter281 instanceof Map ? ρσ_Iter281.keys() : ρσ_Iter281) : Object.keys(ρσ_Iter281));
+            for (var ρσ_Index281 of ρσ_Iter281) {
+                node = ρσ_Index281;
                 node_id = node.id;
                 if ((typeof node_id !== "undefined" && node_id !== null)) {
                     aid = node.frag;
@@ -38719,10 +38936,10 @@ return this.__repr__();
             if (query.mode !== "regex") {
                 if (query.mode === "word") {
                     words = [];
-                    var ρσ_Iter280 = expr.split(" ");
-                    ρσ_Iter280 = ((typeof ρσ_Iter280[Symbol.iterator] === "function") ? (ρσ_Iter280 instanceof Map ? ρσ_Iter280.keys() : ρσ_Iter280) : Object.keys(ρσ_Iter280));
-                    for (var ρσ_Index280 of ρσ_Iter280) {
-                        part = ρσ_Index280;
+                    var ρσ_Iter282 = expr.split(" ");
+                    ρσ_Iter282 = ((typeof ρσ_Iter282[Symbol.iterator] === "function") ? (ρσ_Iter282 instanceof Map ? ρσ_Iter282.keys() : ρσ_Iter282) : Object.keys(ρσ_Iter282));
+                    for (var ρσ_Index282 of ρσ_Iter282) {
+                        part = ρσ_Index282;
                         words.push("\\b" + text_to_regex(part) + "\\b");
                     }
                     expr = words.join("\\s+");
@@ -38958,10 +39175,10 @@ return this.__repr__();
                 }
                 children = node.children;
                 if (children) {
-                    var ρσ_Iter281 = children;
-                    ρσ_Iter281 = ((typeof ρσ_Iter281[Symbol.iterator] === "function") ? (ρσ_Iter281 instanceof Map ? ρσ_Iter281.keys() : ρσ_Iter281) : Object.keys(ρσ_Iter281));
-                    for (var ρσ_Index281 of ρσ_Iter281) {
-                        child = ρσ_Index281;
+                    var ρσ_Iter283 = children;
+                    ρσ_Iter283 = ((typeof ρσ_Iter283[Symbol.iterator] === "function") ? (ρσ_Iter283 instanceof Map ? ρσ_Iter283.keys() : ρσ_Iter283) : Object.keys(ρσ_Iter283));
+                    for (var ρσ_Index283 of ρσ_Iter283) {
+                        child = ρσ_Index283;
                         parent_map[ρσ_bound_index(child.id, parent_map)] = node;
                         process_node(child);
                     }
@@ -39169,10 +39386,10 @@ return this.__repr__();
             })()})])), E.div("  "), ρσ_interpolate_kwargs.call(this, create_button, [_("Return"), "chevron-left"].concat([ρσ_desugar_kwargs({action: self.return_to_original_position, tooltip: _("Go back to where you were before searching")})]))].concat([ρσ_desugar_kwargs({style: "display: flex; padding: 1rem; padding-top: 0.5rem; padding-bottom: 0; align-items: center; overflow: hidden"})])));
             c.appendChild(E.hr());
             c.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(E, E.div, [E.div(create_spinner("4em", "4em")), ρσ_interpolate_kwargs.call(E, E.div, [_("Searching, please wait…")].concat([ρσ_desugar_kwargs({style: "margin-top: 1ex"})]))].concat([ρσ_desugar_kwargs({style: "text-align: center"})])), E.div()].concat([ρσ_desugar_kwargs({style: "display: none; overflow: auto", tabindex: "0"})])));
-            var ρσ_Iter282 = c.childNodes;
-            ρσ_Iter282 = ((typeof ρσ_Iter282[Symbol.iterator] === "function") ? (ρσ_Iter282 instanceof Map ? ρσ_Iter282.keys() : ρσ_Iter282) : Object.keys(ρσ_Iter282));
-            for (var ρσ_Index282 of ρσ_Iter282) {
-                child = ρσ_Index282;
+            var ρσ_Iter284 = c.childNodes;
+            ρσ_Iter284 = ((typeof ρσ_Iter284[Symbol.iterator] === "function") ? (ρσ_Iter284 instanceof Map ? ρσ_Iter284.keys() : ρσ_Iter284) : Object.keys(ρσ_Iter284));
+            for (var ρσ_Index284 of ρσ_Iter284) {
+                child = ρσ_Index284;
                 if (child !== c.lastChild) {
                     child.style.flexShrink = "0";
                 }
@@ -39384,10 +39601,10 @@ return this.__repr__();
                     return ρσ_anonfunc;
                 })()})])), E.ul()].concat([ρσ_desugar_kwargs({data_toc_node_id: toc_node_id + "", data_spine_index: result.spine_idx + ""})]));
                 appended = false;
-                var ρσ_Iter283 = c.querySelectorAll("[data-spine-index]");
-                ρσ_Iter283 = ((typeof ρσ_Iter283[Symbol.iterator] === "function") ? (ρσ_Iter283 instanceof Map ? ρσ_Iter283.keys() : ρσ_Iter283) : Object.keys(ρσ_Iter283));
-                for (var ρσ_Index283 of ρσ_Iter283) {
-                    child = ρσ_Index283;
+                var ρσ_Iter285 = c.querySelectorAll("[data-spine-index]");
+                ρσ_Iter285 = ((typeof ρσ_Iter285[Symbol.iterator] === "function") ? (ρσ_Iter285 instanceof Map ? ρσ_Iter285.keys() : ρσ_Iter285) : Object.keys(ρσ_Iter285));
+                for (var ρσ_Index285 of ρσ_Iter285) {
+                    child = ρσ_Index285;
                     csi = parseInt(child.dataset.spineIndex);
                     if (csi > result.spine_idx) {
                         appended = true;
@@ -39403,10 +39620,10 @@ return this.__repr__();
             tt = "";
             if (result.toc_nodes.length) {
                 lines = [];
-                var ρσ_Iter284 = enumerate(result.toc_nodes);
-                ρσ_Iter284 = ((typeof ρσ_Iter284[Symbol.iterator] === "function") ? (ρσ_Iter284 instanceof Map ? ρσ_Iter284.keys() : ρσ_Iter284) : Object.keys(ρσ_Iter284));
-                for (var ρσ_Index284 of ρσ_Iter284) {
-                    ρσ_unpack = ρσ_Index284;
+                var ρσ_Iter286 = enumerate(result.toc_nodes);
+                ρσ_Iter286 = ((typeof ρσ_Iter286[Symbol.iterator] === "function") ? (ρσ_Iter286 instanceof Map ? ρσ_Iter286.keys() : ρσ_Iter286) : Object.keys(ρσ_Iter286));
+                for (var ρσ_Index286 of ρσ_Iter286) {
+                    ρσ_unpack = ρσ_Index286;
                     i = ρσ_unpack[0];
                     node_id = ρσ_unpack[1];
                     lines.push("  ".repeat(i) + "➤ " + (ρσ_exists.d((ρσ_expr_temp = self.toc_data.toc_id_map)[(typeof node_id === "number" && node_id < 0) ? ρσ_expr_temp.length + node_id : node_id]).title || _("Unknown")));
@@ -39433,10 +39650,10 @@ return this.__repr__();
             var self = this;
             var q, li;
             q = result_num + "";
-            var ρσ_Iter285 = self.container.querySelectorAll("[data-result-num]");
-            ρσ_Iter285 = ((typeof ρσ_Iter285[Symbol.iterator] === "function") ? (ρσ_Iter285 instanceof Map ? ρσ_Iter285.keys() : ρσ_Iter285) : Object.keys(ρσ_Iter285));
-            for (var ρσ_Index285 of ρσ_Iter285) {
-                li = ρσ_Index285;
+            var ρσ_Iter287 = self.container.querySelectorAll("[data-result-num]");
+            ρσ_Iter287 = ((typeof ρσ_Iter287[Symbol.iterator] === "function") ? (ρσ_Iter287 instanceof Map ? ρσ_Iter287.keys() : ρσ_Iter287) : Object.keys(ρσ_Iter287));
+            for (var ρσ_Index287 of ρσ_Iter287) {
+                li = ρσ_Index287;
                 if (li.dataset.resultNum === q) {
                     li.classList.add("current");
                     li.scrollIntoView();
@@ -39664,223 +39881,6 @@ return this.__repr__();
         ρσ_modules["read_book.search"].parse_error_msg = parse_error_msg;
         ρσ_modules["read_book.search"].get_toc_data = get_toc_data;
         ρσ_modules["read_book.search"].SearchOverlay = SearchOverlay;
-    })();
-
-    (function(){
-        var __name__ = "read_book.word_actions";
-        var current_data;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var create_item = ρσ_modules["book_list.item_list"].create_item;
-        var create_item_list = ρσ_modules["book_list.item_list"].create_item_list;
-
-        var clear = ρσ_modules.dom.clear;
-        var ensure_id = ρσ_modules.dom.ensure_id;
-
-        var error_dialog = ρσ_modules.modals.error_dialog;
-
-        var ui_operations = ρσ_modules["read_book.globals"].ui_operations;
-
-        var create_button = ρσ_modules.widgets.create_button;
-
-        function lookup(close_panel_func, url) {
-            close_panel_func();
-            ui_operations.open_url(url);
-        };
-        if (!lookup.__argnames__) Object.defineProperties(lookup, {
-            __argnames__ : {value: ["close_panel_func", "url"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function toggle_custom_container(container_id, visible) {
-            var container, c, list_container;
-            container = document.getElementById(container_id);
-            if (container) {
-                c = container.lastChild;
-                list_container = c.previousSibling;
-                list_container.style.display = (visible) ? "none" : "block";
-                c.style.display = (visible) ? "block" : "none";
-                return c;
-            }
-        };
-        if (!toggle_custom_container.__argnames__) Object.defineProperties(toggle_custom_container, {
-            __argnames__ : {value: ["container_id", "visible"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function add(container_id) {
-            var container, c, name, url, sd, actions;
-            container = document.getElementById(container_id);
-            if (!container) {
-                return;
-            }
-            c = container.lastChild;
-            name = c.querySelector("input[name=\"name\"]").value;
-            url = c.querySelector("input[name=\"url\"]").value;
-            if (!name || !url) {
-                error_dialog(_("Required fields missing"), _("You must specify both a name and a URL."));
-                return;
-            }
-            sd = get_session_data();
-            actions = sd.get("word_actions", []);
-            actions.push((function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["title"] = name;
-                ρσ_d["url"] = url;
-                return ρσ_d;
-            }).call(this));
-            sd.set("word_actions", actions);
-            toggle_custom_container(container_id, false);
-            populate_list(container);
-        };
-        if (!add.__argnames__) Object.defineProperties(add, {
-            __argnames__ : {value: ["container_id"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function add_custom(container_id) {
-            var container, do_add;
-            container = toggle_custom_container(container_id, true);
-            if (!container) {
-                return;
-            }
-            clear(container);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Enter the name and URL for a custom lookup source. The URL must contain  {0} in it, which will be replaced by the word being looked up. For example:  {1}").format("{word}", "https://google.com/search?q={word}")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-            do_add = add.bind(null, container_id);
-            container.appendChild(E.form(ρσ_interpolate_kwargs.call(E, E.button, [ρσ_desugar_kwargs({style: "display:none", onclick: do_add})]), ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Name:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "text", name: "name"})]))), E.tr(E.td(" "), E.td(" ")), E.tr(E.td(_("URL:") + " "), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "url", name: "url"})])))].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})]))));
-            container.append(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_interpolate_kwargs.call(this, create_button, [_("Add"), "plus", add.bind(null, container_id)].concat([ρσ_desugar_kwargs({highlight: true})])), " ", ρσ_interpolate_kwargs.call(this, create_button, [_("Cancel")].concat([ρσ_desugar_kwargs({action: toggle_custom_container.bind(null, container_id, false)})]))].concat([ρσ_desugar_kwargs({style: "margin: 1rem; display: flex"})])));
-            container.querySelector("input").focus();
-        };
-        if (!add_custom.__argnames__) Object.defineProperties(add_custom, {
-            __argnames__ : {value: ["container_id"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function remove(container_id, num) {
-            var container, sd, actions;
-            container = document.getElementById(container_id);
-            if (!container) {
-                return;
-            }
-            sd = get_session_data();
-            actions = sd.get("word_actions", []);
-            actions.splice(num, 1);
-            sd.set("word_actions", actions);
-            toggle_custom_container(container_id, false);
-            populate_list(container);
-        };
-        if (!remove.__argnames__) Object.defineProperties(remove, {
-            __argnames__ : {value: ["container_id", "num"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function remove_custom(container_id) {
-            var container, items, sd, actions, ρσ_unpack, i, item;
-            container = toggle_custom_container(container_id, true);
-            if (!container) {
-                return;
-            }
-            clear(container);
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [_("Choose a custom lookup to remove")].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
-            items = [ create_item(_("Cancel (no removals)"), toggle_custom_container.bind(null, container_id, false)) ];
-            sd = get_session_data();
-            actions = sd.get("word_actions", []);
-            var ρσ_Iter286 = enumerate(actions);
-            ρσ_Iter286 = ((typeof ρσ_Iter286[Symbol.iterator] === "function") ? (ρσ_Iter286 instanceof Map ? ρσ_Iter286.keys() : ρσ_Iter286) : Object.keys(ρσ_Iter286));
-            for (var ρσ_Index286 of ρσ_Iter286) {
-                ρσ_unpack = ρσ_Index286;
-                i = ρσ_unpack[0];
-                item = ρσ_unpack[1];
-                items.push(create_item(item.title, remove.bind(null, container_id, i)));
-            }
-            container.appendChild(E.div());
-            create_item_list(container.lastChild, items);
-        };
-        if (!remove_custom.__argnames__) Object.defineProperties(remove_custom, {
-            __argnames__ : {value: ["container_id"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function lookup_items(word, close_panel_func, container_id) {
-            var eword, items, custom_actions, has_custom, entry;
-            eword = encodeURIComponent(word);
-            items = [];
-            function a(title, url) {
-                items.push(create_item(title, lookup.bind(word, close_panel_func, ρσ_interpolate_kwargs.call(url, url.format, [ρσ_desugar_kwargs({word: eword})]))));
-            };
-            if (!a.__argnames__) Object.defineProperties(a, {
-                __argnames__ : {value: ["title", "url"]},
-                __module__ : {value: "read_book.word_actions"}
-            });
-
-            custom_actions = get_session_data().get("word_actions", []);
-            has_custom = custom_actions && custom_actions.length;
-            if (has_custom) {
-                var ρσ_Iter287 = custom_actions;
-                ρσ_Iter287 = ((typeof ρσ_Iter287[Symbol.iterator] === "function") ? (ρσ_Iter287 instanceof Map ? ρσ_Iter287.keys() : ρσ_Iter287) : Object.keys(ρσ_Iter287));
-                for (var ρσ_Index287 of ρσ_Iter287) {
-                    entry = ρσ_Index287;
-                    if (entry.title && entry.url) {
-                        a(entry.title, entry.url);
-                    }
-                }
-            }
-            a(_("Google dictionary"), "https://google.com/search?q=define:{word}");
-            a(_("Wordnik"), "https://www.wordnik.com/words/{word}");
-            a(_("Search the internet"), "https://google.com/search?q={word}");
-            items.push(create_item(_("Add a custom lookup"), add_custom.bind(null, container_id)));
-            if (has_custom) {
-                items.push(create_item(_("Remove a custom lookup"), remove_custom.bind(null, container_id)));
-            }
-            return items;
-        };
-        if (!lookup_items.__argnames__) Object.defineProperties(lookup_items, {
-            __argnames__ : {value: ["word", "close_panel_func", "container_id"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        current_data = null;
-        function populate_list(container) {
-            var ρσ_unpack, word, close_panel_func, list_container;
-            ρσ_unpack = current_data;
-ρσ_unpack = ρσ_unpack_asarray(2, ρσ_unpack);
-            word = ρσ_unpack[0];
-            close_panel_func = ρσ_unpack[1];
-            list_container = container.lastChild.previousSibling;
-            clear(list_container);
-            create_item_list(list_container, lookup_items(word, close_panel_func, ensure_id(container)));
-        };
-        if (!populate_list.__argnames__) Object.defineProperties(populate_list, {
-            __argnames__ : {value: ["container"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        function create_word_actions_panel(container, word, close_panel_func) {
-            word = str.replace(word, "\u00ad", "");
-            current_data = [word, close_panel_func];
-            container.appendChild(E.div());
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "display:none"})]));
-            populate_list(container);
-        };
-        if (!create_word_actions_panel.__argnames__) Object.defineProperties(create_word_actions_panel, {
-            __argnames__ : {value: ["container", "word", "close_panel_func"]},
-            __module__ : {value: "read_book.word_actions"}
-        });
-
-        ρσ_modules["read_book.word_actions"].current_data = current_data;
-        ρσ_modules["read_book.word_actions"].lookup = lookup;
-        ρσ_modules["read_book.word_actions"].toggle_custom_container = toggle_custom_container;
-        ρσ_modules["read_book.word_actions"].add = add;
-        ρσ_modules["read_book.word_actions"].add_custom = add_custom;
-        ρσ_modules["read_book.word_actions"].remove = remove;
-        ρσ_modules["read_book.word_actions"].remove_custom = remove_custom;
-        ρσ_modules["read_book.word_actions"].lookup_items = lookup_items;
-        ρσ_modules["read_book.word_actions"].populate_list = populate_list;
-        ρσ_modules["read_book.word_actions"].create_word_actions_panel = create_word_actions_panel;
     })();
 
     (function(){
@@ -40250,6 +40250,270 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "read_book.prefs.layout";
+        var CONTAINER, MARGINS, READ_MODE, FS_MODE, COLS, TEXT_AREA, develop;
+        var E = ρσ_modules.elementmaker.E;
+
+        var _ = ρσ_modules.gettext.gettext;
+
+        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
+
+        var add_extra_css = ρσ_modules.dom.add_extra_css;
+        var build_rule = ρσ_modules.dom.build_rule;
+        var element = ρσ_modules.dom.element;
+        var unique_id = ρσ_modules.dom.unique_id;
+
+        var runtime = ρσ_modules["read_book.globals"].runtime;
+
+        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
+
+        var session_defaults = ρσ_modules.session.session_defaults;
+
+        var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
+
+        CONTAINER = unique_id("reader-page-layout");
+        MARGINS = unique_id("reader-page-margins");
+        READ_MODE = unique_id("read-mode");
+        FS_MODE = unique_id("fs-mode");
+        COLS = unique_id("cols-per-screen");
+        TEXT_AREA = unique_id("text-area");
+        add_extra_css((function() {
+            var ρσ_anonfunc = function () {
+                var sel, style;
+                sel = "#" + MARGINS;
+                style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin_left: "1rem", margin_top: "-1ex"})]));
+                style += ρσ_interpolate_kwargs.call(this, build_rule, ["#{} td".format(CONTAINER)].concat([ρσ_desugar_kwargs({padding: "1ex"})]));
+                return style;
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "read_book.prefs.layout"}
+            });
+            return ρσ_anonfunc;
+        })());
+        function restore_defaults() {
+            var defaults, container, which, name;
+            defaults = session_defaults();
+            container = document.getElementById(CONTAINER);
+            var ρσ_Iter300 = "top bottom left right".split(" ");
+            ρσ_Iter300 = ((typeof ρσ_Iter300[Symbol.iterator] === "function") ? (ρσ_Iter300 instanceof Map ? ρσ_Iter300.keys() : ρσ_Iter300) : Object.keys(ρσ_Iter300));
+            for (var ρσ_Index300 of ρσ_Iter300) {
+                which = ρσ_Index300;
+                container.querySelector("input[name={}]".format(which)).value = str(defaults[ρσ_bound_index("margin_" + which, defaults)]);
+            }
+            var ρσ_Iter301 = "paged flow".split(" ");
+            ρσ_Iter301 = ((typeof ρσ_Iter301[Symbol.iterator] === "function") ? (ρσ_Iter301 instanceof Map ? ρσ_Iter301.keys() : ρσ_Iter301) : Object.keys(ρσ_Iter301));
+            for (var ρσ_Index301 of ρσ_Iter301) {
+                name = ρσ_Index301;
+                container.querySelector("#" + ρσ_str.format("{}", READ_MODE) + " input[data-name=" + ρσ_str.format("{}", name) + "]").checked = defaults.read_mode === name;
+            }
+            if (!runtime.is_standalone_viewer) {
+                container.querySelector("#" + ρσ_str.format("{}", FS_MODE) + " input[value=" + ρσ_str.format("{}", defaults.fullscreen_when_opening) + "]").checked = true;
+            }
+            var ρσ_Iter302 = "portrait landscape".split(" ");
+            ρσ_Iter302 = ((typeof ρσ_Iter302[Symbol.iterator] === "function") ? (ρσ_Iter302 instanceof Map ? ρσ_Iter302.keys() : ρσ_Iter302) : Object.keys(ρσ_Iter302));
+            for (var ρσ_Index302 of ρσ_Iter302) {
+                name = ρσ_Index302;
+                container.querySelector("input[name={}]".format(name)).value = str((ρσ_expr_temp = defaults.columns_per_screen)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
+            }
+            var ρσ_Iter303 = "width height".split(" ");
+            ρσ_Iter303 = ((typeof ρσ_Iter303[Symbol.iterator] === "function") ? (ρσ_Iter303 instanceof Map ? ρσ_Iter303.keys() : ρσ_Iter303) : Object.keys(ρσ_Iter303));
+            for (var ρσ_Index303 of ρσ_Iter303) {
+                which = ρσ_Index303;
+                container.querySelector("input[name={}]".format(which)).value = str(defaults[ρσ_bound_index("max_text_" + which, defaults)]);
+            }
+            container.querySelector("input[name=cover_preserve_aspect_ratio]").checked = defaults.cover_preserve_aspect_ratio;
+        };
+        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
+            __module__ : {value: "read_book.prefs.layout"}
+        });
+
+        function create_layout_panel(container, apply_func, cancel_func) {
+            var sd, labels, rm, cps, name, val;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
+            container = container.lastChild;
+            sd = get_session_data();
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})]));
+            safe_set_inner_html(container.lastChild, _("Current window size is: <b>{0}x{1}</b> pixels").format(window.innerWidth, window.innerHeight));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Change the page margins (in pixels) below")].concat([ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})])));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({id: MARGINS})]));
+            labels = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["top"] = _("Top:");
+                ρσ_d["bottom"] = _("Bottom:");
+                ρσ_d["left"] = _("Left:");
+                ρσ_d["right"] = _("Right:");
+                return ρσ_d;
+            }).call(this);
+            function item(which, tr) {
+                tr.appendChild(E.td(labels[(typeof which === "number" && which < 0) ? labels.length + which : which]));
+                tr.appendChild(E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", max: "9999", min: "0", step: "1", name: which, value: str(sd.get("margin_" + which))})])));
+            };
+            if (!item.__argnames__) Object.defineProperties(item, {
+                __argnames__ : {value: ["which", "tr"]},
+                __module__ : {value: "read_book.prefs.layout"}
+            });
+
+            container.lastChild.appendChild(E.tr());
+            item("left", container.lastChild.lastChild);
+            item("right", container.lastChild.lastChild);
+            container.lastChild.appendChild(E.tr());
+            item("top", container.lastChild.lastChild);
+            item("bottom", container.lastChild.lastChild);
+            function sec(text) {
+                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 2ex 1rem; padding-top:2ex; border-top: solid 1px; max-width: 50em"})])));
+            };
+            if (!sec.__argnames__) Object.defineProperties(sec, {
+                __argnames__ : {value: ["text"]},
+                __module__ : {value: "read_book.prefs.layout"}
+            });
+
+            sec(_("Choose the page layout mode. In paged mode, the text is split up into individual pages, as in a paper book. In flow mode text is presented as one long scrolling page, as in web browsers."));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: READ_MODE, style: "margin: 1ex 2rem; display: flex;"})]));
+            rm = sd.get("read_mode");
+            rm = (rm === "flow") ? "flow" : "paged";
+            function rb(name, text) {
+                var d;
+                d = container.lastChild;
+                d.appendChild(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "page-layout-mode", data_name: name, checked: rm === name})]), text));
+            };
+            if (!rb.__argnames__) Object.defineProperties(rb, {
+                __argnames__ : {value: ["name", "text"]},
+                __module__ : {value: "read_book.prefs.layout"}
+            });
+
+            rb("paged", _("Paged mode"));
+            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.span, [" "].concat([ρσ_desugar_kwargs({style: "width:3em"})])));
+            rb("flow", _("Flow mode"));
+            sec(_("In paged mode, control the number of pages per screen. A setting of zero means the number of pages is set based on the screen size."));
+            cps = sd.get("columns_per_screen");
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Portrait:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "portrait", min: "0", step: "1", max: "20", value: str(cps.portrait)})])), E.td(_("Landscape:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "landscape", min: "0", step: "1", max: "20", value: str(cps.landscape)})])))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem", id: COLS})])));
+            sec(_("Change the maximum screen area (in pixels) used to display text. A value of zero means that all available screen area is used."));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Width:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "width", min: "0", step: "10", max: "99999", value: str(sd.get("max_text_width"))})])), E.td(_("Height:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "height", min: "0", step: "10", max: "99999", value: str(sd.get("max_text_height"))})])))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem", id: TEXT_AREA})])));
+            sec(_("Miscellaneous"));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: "cover_preserve_aspect_ratio", checked: sd.get("cover_preserve_aspect_ratio")})]), _("Preserve cover aspect ratio"))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 2rem; display: flex;"})])));
+            if (!runtime.is_standalone_viewer) {
+                name = "fullscreen_when_opening";
+                val = sd.get(name);
+                if ("auto always never".split(" ").indexOf(val || "") < 0) {
+                    val = session_defaults().fullscreen_when_opening;
+                }
+                container.appendChild(E.div(ρσ_interpolate_kwargs.call(E, E.div, [_("When opening a book enter fullscreen:"), " ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: name, value: "auto", checked: val === "auto"})]), _("Auto")), " ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: name, value: "always", checked: val === "always"})]), _("Always")), " ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: name, value: "never", checked: val === "never"})]), _("Never"))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 2rem", id: FS_MODE})]))));
+            }
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(restore_defaults, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+        };
+        if (!create_layout_panel.__argnames__) Object.defineProperties(create_layout_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.layout"}
+        });
+
+        develop = create_layout_panel;
+        function commit_layout(onchange, container) {
+            var was_changed, sd, i, val, which, rm, crm, fs, cfs, cps, inp, cover_preserve_aspect_ratio;
+            was_changed = false;
+            sd = get_session_data();
+            var ρσ_Iter304 = "top bottom left right".split(" ");
+            ρσ_Iter304 = ((typeof ρσ_Iter304[Symbol.iterator] === "function") ? (ρσ_Iter304 instanceof Map ? ρσ_Iter304.keys() : ρσ_Iter304) : Object.keys(ρσ_Iter304));
+            for (var ρσ_Index304 of ρσ_Iter304) {
+                which = ρσ_Index304;
+                i = element(MARGINS, "[name={}]".format(which));
+                try {
+                    val = int(i.value);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        continue;
+                    } 
+                }
+                if (val !== sd.get("margin_" + which)) {
+                    was_changed = true;
+                    sd.set("margin_" + which, val);
+                }
+            }
+            rm = sd.get("read_mode");
+            rm = (rm === "flow") ? "flow" : "paged";
+            crm = (element(READ_MODE, "input").checked) ? "paged" : "flow";
+            if (rm !== crm) {
+                was_changed = true;
+                sd.set("read_mode", crm);
+            }
+            if (!runtime.is_standalone_viewer) {
+                fs = sd.get("fullscreen_when_opening");
+                cfs = document.querySelector("#" + ρσ_str.format("{}", FS_MODE) + " input[name=\"fullscreen_when_opening\"]:checked").value;
+                if (cfs !== fs) {
+                    was_changed = true;
+                    sd.set("fullscreen_when_opening", cfs);
+                }
+            }
+            cps = sd.get("columns_per_screen");
+            cps = (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["portrait"] = cps.portrait;
+                ρσ_d["landscape"] = cps.landscape;
+                return ρσ_d;
+            }).call(this);
+            var ρσ_Iter305 = [ "portrait", "landscape" ];
+            ρσ_Iter305 = ((typeof ρσ_Iter305[Symbol.iterator] === "function") ? (ρσ_Iter305 instanceof Map ? ρσ_Iter305.keys() : ρσ_Iter305) : Object.keys(ρσ_Iter305));
+            for (var ρσ_Index305 of ρσ_Iter305) {
+                which = ρσ_Index305;
+                inp = element(COLS, "input[name={}]".format(which));
+                try {
+                    val = int(inp.value);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        continue;
+                    } 
+                }
+                if (cps[(typeof which === "number" && which < 0) ? cps.length + which : which] !== val) {
+                    cps[(typeof which === "number" && which < 0) ? cps.length + which : which] = val;
+                    sd.set("columns_per_screen", cps);
+                    was_changed = true;
+                }
+            }
+            var ρσ_Iter306 = [ "width", "height" ];
+            ρσ_Iter306 = ((typeof ρσ_Iter306[Symbol.iterator] === "function") ? (ρσ_Iter306 instanceof Map ? ρσ_Iter306.keys() : ρσ_Iter306) : Object.keys(ρσ_Iter306));
+            for (var ρσ_Index306 of ρσ_Iter306) {
+                which = ρσ_Index306;
+                try {
+                    val = int(element(TEXT_AREA, "input[name={}]".format(which)).value);
+                } catch (ρσ_Exception) {
+                    ρσ_last_exception = ρσ_Exception;
+                    {
+                        continue;
+                    } 
+                }
+                if (val !== sd.get("max_text_" + which)) {
+                    was_changed = true;
+                    sd.set("max_text_" + which, val);
+                }
+            }
+            cover_preserve_aspect_ratio = element(CONTAINER, "input[name=cover_preserve_aspect_ratio]").checked;
+            if (cover_preserve_aspect_ratio !== sd.get("cover_preserve_aspect_ratio")) {
+                was_changed = true;
+                sd.set("cover_preserve_aspect_ratio", cover_preserve_aspect_ratio);
+            }
+            if (was_changed) {
+                onchange();
+            }
+        };
+        if (!commit_layout.__argnames__) Object.defineProperties(commit_layout, {
+            __argnames__ : {value: ["onchange", "container"]},
+            __module__ : {value: "read_book.prefs.layout"}
+        });
+
+        ρσ_modules["read_book.prefs.layout"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.layout"].MARGINS = MARGINS;
+        ρσ_modules["read_book.prefs.layout"].READ_MODE = READ_MODE;
+        ρσ_modules["read_book.prefs.layout"].FS_MODE = FS_MODE;
+        ρσ_modules["read_book.prefs.layout"].COLS = COLS;
+        ρσ_modules["read_book.prefs.layout"].TEXT_AREA = TEXT_AREA;
+        ρσ_modules["read_book.prefs.layout"].develop = develop;
+        ρσ_modules["read_book.prefs.layout"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.layout"].create_layout_panel = create_layout_panel;
+        ρσ_modules["read_book.prefs.layout"].commit_layout = commit_layout;
+    })();
+
+    (function(){
         var __name__ = "read_book.prefs.misc";
         var CONTAINER, develop;
         var E = ρσ_modules.elementmaker.E;
@@ -40273,10 +40537,10 @@ return this.__repr__();
         function restore_defaults() {
             var container, control, q;
             container = get_container();
-            var ρσ_Iter300 = Object.keys(DEFAULTS);
-            ρσ_Iter300 = ((typeof ρσ_Iter300[Symbol.iterator] === "function") ? (ρσ_Iter300 instanceof Map ? ρσ_Iter300.keys() : ρσ_Iter300) : Object.keys(ρσ_Iter300));
-            for (var ρσ_Index300 of ρσ_Iter300) {
-                q = ρσ_Index300;
+            var ρσ_Iter307 = Object.keys(DEFAULTS);
+            ρσ_Iter307 = ((typeof ρσ_Iter307[Symbol.iterator] === "function") ? (ρσ_Iter307 instanceof Map ? ρσ_Iter307.keys() : ρσ_Iter307) : Object.keys(ρσ_Iter307));
+            for (var ρσ_Index307 of ρσ_Iter307) {
+                q = ρσ_Index307;
                 control = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]");
                 if (typeof DEFAULTS[(typeof q === "number" && q < 0) ? DEFAULTS.length + q : q] === "boolean") {
                     control.checked = DEFAULTS[(typeof q === "number" && q < 0) ? DEFAULTS.length + q : q];
@@ -40343,10 +40607,10 @@ return this.__repr__();
             sd = get_session_data();
             container = get_container();
             vals = Object.create(null);
-            var ρσ_Iter301 = Object.keys(DEFAULTS);
-            ρσ_Iter301 = ((typeof ρσ_Iter301[Symbol.iterator] === "function") ? (ρσ_Iter301 instanceof Map ? ρσ_Iter301.keys() : ρσ_Iter301) : Object.keys(ρσ_Iter301));
-            for (var ρσ_Index301 of ρσ_Iter301) {
-                q = ρσ_Index301;
+            var ρσ_Iter308 = Object.keys(DEFAULTS);
+            ρσ_Iter308 = ((typeof ρσ_Iter308[Symbol.iterator] === "function") ? (ρσ_Iter308 instanceof Map ? ρσ_Iter308.keys() : ρσ_Iter308) : Object.keys(ρσ_Iter308));
+            for (var ρσ_Index308 of ρσ_Iter308) {
+                q = ρσ_Index308;
                 control = container.querySelector("[name=" + ρσ_str.format("{}", q) + "]");
                 if (typeof DEFAULTS[(typeof q === "number" && q < 0) ? DEFAULTS.length + q : q] === "boolean") {
                     val = control.checked;
@@ -40373,267 +40637,6 @@ return this.__repr__();
         ρσ_modules["read_book.prefs.misc"].get_container = get_container;
         ρσ_modules["read_book.prefs.misc"].create_misc_panel = create_misc_panel;
         ρσ_modules["read_book.prefs.misc"].commit_misc = commit_misc;
-    })();
-
-    (function(){
-        var __name__ = "read_book.prefs.touch";
-        var CONTAINER, develop;
-        var E = ρσ_modules.elementmaker.E;
-
-        var _ = ρσ_modules.gettext.gettext;
-
-        var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
-
-        var svgicon = ρσ_modules.dom.svgicon;
-
-        var unique_id = ρσ_modules.dom.unique_id;
-
-        var allowed_actions_for_flow_mode_drag = ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_drag;
-        var allowed_actions_for_flow_mode_flick = ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_flick;
-        var allowed_actions_for_paged_mode_swipe = ρσ_modules["read_book.gestures"].allowed_actions_for_paged_mode_swipe;
-        var allowed_actions_for_tap = ρσ_modules["read_book.gestures"].allowed_actions_for_tap;
-        var allowed_actions_for_two_fingers = ρσ_modules["read_book.gestures"].allowed_actions_for_two_fingers;
-        var current_action_for_gesture_type = ρσ_modules["read_book.gestures"].current_action_for_gesture_type;
-        var get_action_descriptions = ρσ_modules["read_book.gestures"].get_action_descriptions;
-
-        var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
-
-        var GESTURE = ρσ_modules["read_book.touch"].GESTURE;
-        var GESTURE_NAMES = ρσ_modules["read_book.touch"].GESTURE_NAMES;
-
-        CONTAINER = unique_id("touch-settings");
-        function restore_defaults() {
-            apply_settings_to_ui(Object.create(null));
-        };
-        if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
-            __module__ : {value: "read_book.prefs.touch"}
-        });
-
-        function get_container() {
-            return document.getElementById(CONTAINER);
-        };
-        if (!get_container.__module__) Object.defineProperties(get_container, {
-            __module__ : {value: "read_book.prefs.touch"}
-        });
-
-        function apply_settings_to_ui(overrides) {
-            var group_name, in_flow_mode, allowed_actions, option, gesture_type, current_action, select, group;
-            overrides = overrides || Object.create(null);
-            var ρσ_Iter302 = get_container().querySelectorAll("[data-group]");
-            ρσ_Iter302 = ((typeof ρσ_Iter302[Symbol.iterator] === "function") ? (ρσ_Iter302 instanceof Map ? ρσ_Iter302.keys() : ρσ_Iter302) : Object.keys(ρσ_Iter302));
-            for (var ρσ_Index302 of ρσ_Iter302) {
-                group = ρσ_Index302;
-                group_name = group.dataset.group;
-                in_flow_mode = group_name.indexOf("flow") >= 0;
-                var ρσ_Iter303 = group.querySelectorAll("select");
-                ρσ_Iter303 = ((typeof ρσ_Iter303[Symbol.iterator] === "function") ? (ρσ_Iter303 instanceof Map ? ρσ_Iter303.keys() : ρσ_Iter303) : Object.keys(ρσ_Iter303));
-                for (var ρσ_Index303 of ρσ_Iter303) {
-                    select = ρσ_Index303;
-                    allowed_actions = [];
-                    var ρσ_Iter304 = select.querySelectorAll("option");
-                    ρσ_Iter304 = ((typeof ρσ_Iter304[Symbol.iterator] === "function") ? (ρσ_Iter304 instanceof Map ? ρσ_Iter304.keys() : ρσ_Iter304) : Object.keys(ρσ_Iter304));
-                    for (var ρσ_Index304 of ρσ_Iter304) {
-                        option = ρσ_Index304;
-                        allowed_actions.push(option.value);
-                    }
-                    gesture_type = select.name;
-                    current_action = current_action_for_gesture_type(overrides, gesture_type, in_flow_mode);
-                    if (allowed_actions.indexOf(current_action) < 0) {
-                        current_action = current_action_for_gesture_type(Object.create(null), gesture_type, in_flow_mode);
-                    }
-                    if (!current_action || allowed_actions.indexOf(current_action) < 0) {
-                        current_action = "none";
-                    }
-                    select.value = current_action;
-                    select.dispatchEvent(new Event("change", (function(){
-                        var ρσ_d = Object.create(null);
-                        ρσ_d["view"] = window;
-                        ρσ_d["bubbles"] = true;
-                        return ρσ_d;
-                    }).call(this)));
-                }
-            }
-        };
-        if (!apply_settings_to_ui.__argnames__) Object.defineProperties(apply_settings_to_ui, {
-            __argnames__ : {value: ["overrides"]},
-            __module__ : {value: "read_book.prefs.touch"}
-        });
-
-        function get_overrides_from_ui() {
-            var ans, group_name, in_flow_mode, attr, val, defval, select, group, which;
-            ans = Object.create(null);
-            var ρσ_Iter305 = get_container().querySelectorAll("[data-group]");
-            ρσ_Iter305 = ((typeof ρσ_Iter305[Symbol.iterator] === "function") ? (ρσ_Iter305 instanceof Map ? ρσ_Iter305.keys() : ρσ_Iter305) : Object.keys(ρσ_Iter305));
-            for (var ρσ_Index305 of ρσ_Iter305) {
-                group = ρσ_Index305;
-                group_name = group.dataset.group;
-                in_flow_mode = group_name.indexOf("flow") >= 0;
-                if (group_name === "paged_swipe") {
-                    attr = "paged_mode";
-                } else if (group_name === "flow_swipe") {
-                    attr = "flow_mode";
-                } else {
-                    attr = "common";
-                }
-                if (!ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr]) {
-                    ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr] = Object.create(null);
-                }
-                var ρσ_Iter306 = group.querySelectorAll("select");
-                ρσ_Iter306 = ((typeof ρσ_Iter306[Symbol.iterator] === "function") ? (ρσ_Iter306 instanceof Map ? ρσ_Iter306.keys() : ρσ_Iter306) : Object.keys(ρσ_Iter306));
-                for (var ρσ_Index306 of ρσ_Iter306) {
-                    select = ρσ_Index306;
-                    val = select.value;
-                    defval = current_action_for_gesture_type(Object.create(null), select.name, in_flow_mode);
-                    if (val !== defval) {
-                        (ρσ_expr_temp = ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr])[ρσ_bound_index(select.name, ρσ_expr_temp)] = val;
-                    }
-                }
-            }
-            var ρσ_Iter307 = Object.keys(ans);
-            ρσ_Iter307 = ((typeof ρσ_Iter307[Symbol.iterator] === "function") ? (ρσ_Iter307 instanceof Map ? ρσ_Iter307.keys() : ρσ_Iter307) : Object.keys(ρσ_Iter307));
-            for (var ρσ_Index307 of ρσ_Iter307) {
-                which = ρσ_Index307;
-                if (Object.keys(ans[(typeof which === "number" && which < 0) ? ans.length + which : which]).length === 0) {
-                    delete ans[which];
-                }
-            }
-            return ans;
-        };
-        if (!get_overrides_from_ui.__module__) Object.defineProperties(get_overrides_from_ui, {
-            __module__ : {value: "read_book.prefs.touch"}
-        });
-
-        function create_touch_panel(container, apply_func, cancel_func) {
-            var sd, overrides, action_descriptions, in_flow_mode, c, aat, aap, aaf;
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
-            container = container.lastChild;
-            sd = get_session_data();
-            overrides = sd.get("gesture_overrides");
-            action_descriptions = get_action_descriptions();
-            in_flow_mode = false;
-            function on_select_change(ev) {
-                var select, ad, span;
-                select = ev.target;
-                ad = action_descriptions[ρσ_bound_index(select.value, action_descriptions)];
-                span = select.parentNode.parentNode.querySelector(".help-text");
-                span.textContent = ad.long;
-            };
-            if (!on_select_change.__argnames__) Object.defineProperties(on_select_change, {
-                __argnames__ : {value: ["ev"]},
-                __module__ : {value: "read_book.prefs.touch"}
-            });
-
-            function make_setting(gesture_type, allowed_actions) {
-                var ans, title, sid, select, ad, action, c;
-                ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex; display: flex; flex-direction: column"})]);
-                title = (ρσ_expr_temp = GESTURE_NAMES())[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type];
-                sid = unique_id(gesture_type);
-                ans.appendChild(E.h4(ρσ_interpolate_kwargs.call(E, E.label, [title].concat([ρσ_desugar_kwargs({"for": sid})]))));
-                select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: gesture_type, id: sid})]);
-                var ρσ_Iter308 = allowed_actions;
-                ρσ_Iter308 = ((typeof ρσ_Iter308[Symbol.iterator] === "function") ? (ρσ_Iter308 instanceof Map ? ρσ_Iter308.keys() : ρσ_Iter308) : Object.keys(ρσ_Iter308));
-                for (var ρσ_Index308 of ρσ_Iter308) {
-                    action = ρσ_Index308;
-                    ad = action_descriptions[(typeof action === "number" && action < 0) ? action_descriptions.length + action : action];
-                    select.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [ad.short].concat([ρσ_desugar_kwargs({value: action})])));
-                }
-                select.addEventListener("change", on_select_change);
-                c = ρσ_interpolate_kwargs.call(E, E.div, [select, E.span(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({data_component: "select"})]));
-                ans.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [c, ρσ_interpolate_kwargs.call(E, E.span, [ρσ_desugar_kwargs({class_: "help-text", style: "font-size: smaller; font-style: italic"})])].concat([ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; gap: 1ex; align-items: center"})])));
-                on_select_change((function(){
-                    var ρσ_d = Object.create(null);
-                    ρσ_d["target"] = select;
-                    return ρσ_d;
-                }).call(this));
-                return ans;
-            };
-            if (!make_setting.__argnames__) Object.defineProperties(make_setting, {
-                __argnames__ : {value: ["gesture_type", "allowed_actions"]},
-                __module__ : {value: "read_book.prefs.touch"}
-            });
-
-            container.appendChild(E.h2(_("Tapping")));
-            container.appendChild(E.div(_("There are three tap zones, depending on where on the screen you tap. When the tap is on a link, the link is followed, otherwise a configurable action based on the zone is performed.")));
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "tap"})]);
-            container.appendChild(c);
-            aat = allowed_actions_for_tap();
-            c.appendChild(make_setting(GESTURE.control_zone_tap, aat));
-            c.appendChild(make_setting(GESTURE.forward_zone_tap, aat));
-            c.appendChild(make_setting(GESTURE.back_zone_tap, aat));
-            c.appendChild(make_setting(GESTURE.long_tap, aat));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
-            container.appendChild(E.h2(_("Two finger gestures")));
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "two_finger"})]);
-            container.appendChild(c);
-            aat = allowed_actions_for_two_fingers();
-            c.appendChild(make_setting(GESTURE.two_finger_tap, aat));
-            c.appendChild(make_setting(GESTURE.pinch_in, aat));
-            c.appendChild(make_setting(GESTURE.pinch_out, aat));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
-            container.appendChild(E.h2(_("Swiping")));
-            container.appendChild(E.div(_("Swiping works differently in paged and flow mode, with different actions. For an English like language, swiping in the writing direction means swiping horizontally. For languages written vertically, it means swiping vertically. For languages written left-to-right \"going forward\" means swiping right-to-left, like turning a page with your finger.")));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Swiping in paged mode")].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "paged_swipe"})]);
-            container.appendChild(c);
-            aap = allowed_actions_for_paged_mode_swipe();
-            c.appendChild(make_setting(GESTURE.flick_block_forward, aap));
-            c.appendChild(make_setting(GESTURE.flick_block_backward, aap));
-            c.appendChild(make_setting(GESTURE.flick_inline_forward, aap));
-            c.appendChild(make_setting(GESTURE.flick_inline_backward, aap));
-            c.appendChild(make_setting(GESTURE.swipe_inline_forward_hold, aap));
-            c.appendChild(make_setting(GESTURE.swipe_inline_backward_hold, aap));
-            c.appendChild(make_setting(GESTURE.swipe_block_forward_hold, aap));
-            c.appendChild(make_setting(GESTURE.swipe_block_backward_hold, aap));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Swiping in flow mode")].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
-            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "flow_swipe"})]);
-            container.appendChild(c);
-            in_flow_mode = true;
-            in_flow_mode;
-            aaf = allowed_actions_for_flow_mode_flick();
-            c.appendChild(make_setting(GESTURE.flick_block_forward, aaf));
-            c.appendChild(make_setting(GESTURE.flick_block_backward, aaf));
-            c.appendChild(make_setting(GESTURE.flick_inline_forward, aaf));
-            c.appendChild(make_setting(GESTURE.flick_inline_backward, aaf));
-            aaf = allowed_actions_for_flow_mode_drag();
-            c.appendChild(make_setting(GESTURE.swipe_inline_backward_in_progress, aaf));
-            c.appendChild(make_setting(GESTURE.swipe_inline_forward_in_progress, aaf));
-            c.appendChild(make_setting(GESTURE.swipe_block_backward_in_progress, aaf));
-            c.appendChild(make_setting(GESTURE.swipe_block_forward_in_progress, aaf));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
-            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
-            apply_settings_to_ui(overrides);
-        };
-        if (!create_touch_panel.__argnames__) Object.defineProperties(create_touch_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.touch"}
-        });
-
-        develop = create_touch_panel;
-        function commit_touch(onchange) {
-            var sd, current_overrides, overrides, changed;
-            sd = get_session_data();
-            current_overrides = sd.get("gesture_overrides");
-            overrides = get_overrides_from_ui();
-            changed = (overrides !== current_overrides && (typeof overrides !== "object" || ρσ_not_equals(overrides, current_overrides)));
-            if (changed) {
-                sd.set("gesture_overrides", overrides);
-                onchange();
-            }
-        };
-        if (!commit_touch.__argnames__) Object.defineProperties(commit_touch, {
-            __argnames__ : {value: ["onchange"]},
-            __module__ : {value: "read_book.prefs.touch"}
-        });
-
-        ρσ_modules["read_book.prefs.touch"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.touch"].develop = develop;
-        ρσ_modules["read_book.prefs.touch"].restore_defaults = restore_defaults;
-        ρσ_modules["read_book.prefs.touch"].get_container = get_container;
-        ρσ_modules["read_book.prefs.touch"].apply_settings_to_ui = apply_settings_to_ui;
-        ρσ_modules["read_book.prefs.touch"].get_overrides_from_ui = get_overrides_from_ui;
-        ρσ_modules["read_book.prefs.touch"].create_touch_panel = create_touch_panel;
-        ρσ_modules["read_book.prefs.touch"].commit_touch = commit_touch;
     })();
 
     (function(){
@@ -41037,267 +41040,264 @@ return this.__repr__();
     })();
 
     (function(){
-        var __name__ = "read_book.prefs.layout";
-        var CONTAINER, MARGINS, READ_MODE, FS_MODE, COLS, TEXT_AREA, develop;
+        var __name__ = "read_book.prefs.touch";
+        var CONTAINER, develop;
         var E = ρσ_modules.elementmaker.E;
 
         var _ = ρσ_modules.gettext.gettext;
 
         var get_session_data = ρσ_modules["book_list.globals"].get_session_data;
 
-        var add_extra_css = ρσ_modules.dom.add_extra_css;
-        var build_rule = ρσ_modules.dom.build_rule;
-        var element = ρσ_modules.dom.element;
+        var svgicon = ρσ_modules.dom.svgicon;
+
         var unique_id = ρσ_modules.dom.unique_id;
 
-        var runtime = ρσ_modules["read_book.globals"].runtime;
+        var allowed_actions_for_flow_mode_drag = ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_drag;
+        var allowed_actions_for_flow_mode_flick = ρσ_modules["read_book.gestures"].allowed_actions_for_flow_mode_flick;
+        var allowed_actions_for_paged_mode_swipe = ρσ_modules["read_book.gestures"].allowed_actions_for_paged_mode_swipe;
+        var allowed_actions_for_tap = ρσ_modules["read_book.gestures"].allowed_actions_for_tap;
+        var allowed_actions_for_two_fingers = ρσ_modules["read_book.gestures"].allowed_actions_for_two_fingers;
+        var current_action_for_gesture_type = ρσ_modules["read_book.gestures"].current_action_for_gesture_type;
+        var get_action_descriptions = ρσ_modules["read_book.gestures"].get_action_descriptions;
 
         var create_button_box = ρσ_modules["read_book.prefs.utils"].create_button_box;
 
-        var session_defaults = ρσ_modules.session.session_defaults;
+        var GESTURE = ρσ_modules["read_book.touch"].GESTURE;
+        var GESTURE_NAMES = ρσ_modules["read_book.touch"].GESTURE_NAMES;
 
-        var safe_set_inner_html = ρσ_modules.utils.safe_set_inner_html;
-
-        CONTAINER = unique_id("reader-page-layout");
-        MARGINS = unique_id("reader-page-margins");
-        READ_MODE = unique_id("read-mode");
-        FS_MODE = unique_id("fs-mode");
-        COLS = unique_id("cols-per-screen");
-        TEXT_AREA = unique_id("text-area");
-        add_extra_css((function() {
-            var ρσ_anonfunc = function () {
-                var sel, style;
-                sel = "#" + MARGINS;
-                style = ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({margin_left: "1rem", margin_top: "-1ex"})]));
-                style += ρσ_interpolate_kwargs.call(this, build_rule, ["#{} td".format(CONTAINER)].concat([ρσ_desugar_kwargs({padding: "1ex"})]));
-                return style;
-            };
-            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
-                __module__ : {value: "read_book.prefs.layout"}
-            });
-            return ρσ_anonfunc;
-        })());
+        CONTAINER = unique_id("touch-settings");
         function restore_defaults() {
-            var defaults, container, which, name;
-            defaults = session_defaults();
-            container = document.getElementById(CONTAINER);
-            var ρσ_Iter317 = "top bottom left right".split(" ");
-            ρσ_Iter317 = ((typeof ρσ_Iter317[Symbol.iterator] === "function") ? (ρσ_Iter317 instanceof Map ? ρσ_Iter317.keys() : ρσ_Iter317) : Object.keys(ρσ_Iter317));
-            for (var ρσ_Index317 of ρσ_Iter317) {
-                which = ρσ_Index317;
-                container.querySelector("input[name={}]".format(which)).value = str(defaults[ρσ_bound_index("margin_" + which, defaults)]);
-            }
-            var ρσ_Iter318 = "paged flow".split(" ");
-            ρσ_Iter318 = ((typeof ρσ_Iter318[Symbol.iterator] === "function") ? (ρσ_Iter318 instanceof Map ? ρσ_Iter318.keys() : ρσ_Iter318) : Object.keys(ρσ_Iter318));
-            for (var ρσ_Index318 of ρσ_Iter318) {
-                name = ρσ_Index318;
-                container.querySelector("#" + ρσ_str.format("{}", READ_MODE) + " input[data-name=" + ρσ_str.format("{}", name) + "]").checked = defaults.read_mode === name;
-            }
-            if (!runtime.is_standalone_viewer) {
-                container.querySelector("#" + ρσ_str.format("{}", FS_MODE) + " input[value=" + ρσ_str.format("{}", defaults.fullscreen_when_opening) + "]").checked = true;
-            }
-            var ρσ_Iter319 = "portrait landscape".split(" ");
-            ρσ_Iter319 = ((typeof ρσ_Iter319[Symbol.iterator] === "function") ? (ρσ_Iter319 instanceof Map ? ρσ_Iter319.keys() : ρσ_Iter319) : Object.keys(ρσ_Iter319));
-            for (var ρσ_Index319 of ρσ_Iter319) {
-                name = ρσ_Index319;
-                container.querySelector("input[name={}]".format(name)).value = str((ρσ_expr_temp = defaults.columns_per_screen)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name]);
-            }
-            var ρσ_Iter320 = "width height".split(" ");
-            ρσ_Iter320 = ((typeof ρσ_Iter320[Symbol.iterator] === "function") ? (ρσ_Iter320 instanceof Map ? ρσ_Iter320.keys() : ρσ_Iter320) : Object.keys(ρσ_Iter320));
-            for (var ρσ_Index320 of ρσ_Iter320) {
-                which = ρσ_Index320;
-                container.querySelector("input[name={}]".format(which)).value = str(defaults[ρσ_bound_index("max_text_" + which, defaults)]);
-            }
-            container.querySelector("input[name=cover_preserve_aspect_ratio]").checked = defaults.cover_preserve_aspect_ratio;
+            apply_settings_to_ui(Object.create(null));
         };
         if (!restore_defaults.__module__) Object.defineProperties(restore_defaults, {
-            __module__ : {value: "read_book.prefs.layout"}
+            __module__ : {value: "read_book.prefs.touch"}
         });
 
-        function create_layout_panel(container, apply_func, cancel_func) {
-            var sd, labels, rm, cps, name, val;
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER})]));
-            container = container.lastChild;
-            sd = get_session_data();
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})]));
-            safe_set_inner_html(container.lastChild, _("Current window size is: <b>{0}x{1}</b> pixels").format(window.innerWidth, window.innerHeight));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.p, [_("Change the page margins (in pixels) below")].concat([ρσ_desugar_kwargs({style: "margin:1ex 1rem; padding: 1ex 0"})])));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [ρσ_desugar_kwargs({id: MARGINS})]));
-            labels = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["top"] = _("Top:");
-                ρσ_d["bottom"] = _("Bottom:");
-                ρσ_d["left"] = _("Left:");
-                ρσ_d["right"] = _("Right:");
-                return ρσ_d;
-            }).call(this);
-            function item(which, tr) {
-                tr.appendChild(E.td(labels[(typeof which === "number" && which < 0) ? labels.length + which : which]));
-                tr.appendChild(E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", max: "9999", min: "0", step: "1", name: which, value: str(sd.get("margin_" + which))})])));
-            };
-            if (!item.__argnames__) Object.defineProperties(item, {
-                __argnames__ : {value: ["which", "tr"]},
-                __module__ : {value: "read_book.prefs.layout"}
-            });
-
-            container.lastChild.appendChild(E.tr());
-            item("left", container.lastChild.lastChild);
-            item("right", container.lastChild.lastChild);
-            container.lastChild.appendChild(E.tr());
-            item("top", container.lastChild.lastChild);
-            item("bottom", container.lastChild.lastChild);
-            function sec(text) {
-                container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [text].concat([ρσ_desugar_kwargs({style: "margin: 2ex 1rem; padding-top:2ex; border-top: solid 1px; max-width: 50em"})])));
-            };
-            if (!sec.__argnames__) Object.defineProperties(sec, {
-                __argnames__ : {value: ["text"]},
-                __module__ : {value: "read_book.prefs.layout"}
-            });
-
-            sec(_("Choose the page layout mode. In paged mode, the text is split up into individual pages, as in a paper book. In flow mode text is presented as one long scrolling page, as in web browsers."));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: READ_MODE, style: "margin: 1ex 2rem; display: flex;"})]));
-            rm = sd.get("read_mode");
-            rm = (rm === "flow") ? "flow" : "paged";
-            function rb(name, text) {
-                var d;
-                d = container.lastChild;
-                d.appendChild(E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: "page-layout-mode", data_name: name, checked: rm === name})]), text));
-            };
-            if (!rb.__argnames__) Object.defineProperties(rb, {
-                __argnames__ : {value: ["name", "text"]},
-                __module__ : {value: "read_book.prefs.layout"}
-            });
-
-            rb("paged", _("Paged mode"));
-            container.lastChild.appendChild(ρσ_interpolate_kwargs.call(E, E.span, [" "].concat([ρσ_desugar_kwargs({style: "width:3em"})])));
-            rb("flow", _("Flow mode"));
-            sec(_("In paged mode, control the number of pages per screen. A setting of zero means the number of pages is set based on the screen size."));
-            cps = sd.get("columns_per_screen");
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Portrait:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "portrait", min: "0", step: "1", max: "20", value: str(cps.portrait)})])), E.td(_("Landscape:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "landscape", min: "0", step: "1", max: "20", value: str(cps.landscape)})])))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem", id: COLS})])));
-            sec(_("Change the maximum screen area (in pixels) used to display text. A value of zero means that all available screen area is used."));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.table, [E.tr(E.td(_("Width:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "width", min: "0", step: "10", max: "99999", value: str(sd.get("max_text_width"))})])), E.td(_("Height:")), E.td(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "number", name: "height", min: "0", step: "10", max: "99999", value: str(sd.get("max_text_height"))})])))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 1rem", id: TEXT_AREA})])));
-            sec(_("Miscellaneous"));
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "checkbox", name: "cover_preserve_aspect_ratio", checked: sd.get("cover_preserve_aspect_ratio")})]), _("Preserve cover aspect ratio"))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 2rem; display: flex;"})])));
-            if (!runtime.is_standalone_viewer) {
-                name = "fullscreen_when_opening";
-                val = sd.get(name);
-                if ("auto always never".split(" ").indexOf(val || "") < 0) {
-                    val = session_defaults().fullscreen_when_opening;
-                }
-                container.appendChild(E.div(ρσ_interpolate_kwargs.call(E, E.div, [_("When opening a book enter fullscreen:"), " ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: name, value: "auto", checked: val === "auto"})]), _("Auto")), " ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: name, value: "always", checked: val === "always"})]), _("Always")), " ", E.label(ρσ_interpolate_kwargs.call(E, E.input, [ρσ_desugar_kwargs({type: "radio", name: name, value: "never", checked: val === "never"})]), _("Never"))].concat([ρσ_desugar_kwargs({style: "margin: 1ex 2rem", id: FS_MODE})]))));
-            }
-            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [create_button_box(restore_defaults, apply_func, cancel_func)].concat([ρσ_desugar_kwargs({style: "margin: 1rem"})])));
+        function get_container() {
+            return document.getElementById(CONTAINER);
         };
-        if (!create_layout_panel.__argnames__) Object.defineProperties(create_layout_panel, {
-            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
-            __module__ : {value: "read_book.prefs.layout"}
+        if (!get_container.__module__) Object.defineProperties(get_container, {
+            __module__ : {value: "read_book.prefs.touch"}
         });
 
-        develop = create_layout_panel;
-        function commit_layout(onchange, container) {
-            var was_changed, sd, i, val, which, rm, crm, fs, cfs, cps, inp, cover_preserve_aspect_ratio;
-            was_changed = false;
-            sd = get_session_data();
-            var ρσ_Iter321 = "top bottom left right".split(" ");
-            ρσ_Iter321 = ((typeof ρσ_Iter321[Symbol.iterator] === "function") ? (ρσ_Iter321 instanceof Map ? ρσ_Iter321.keys() : ρσ_Iter321) : Object.keys(ρσ_Iter321));
-            for (var ρσ_Index321 of ρσ_Iter321) {
-                which = ρσ_Index321;
-                i = element(MARGINS, "[name={}]".format(which));
-                try {
-                    val = int(i.value);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        continue;
-                    } 
-                }
-                if (val !== sd.get("margin_" + which)) {
-                    was_changed = true;
-                    sd.set("margin_" + which, val);
+        function apply_settings_to_ui(overrides) {
+            var group_name, in_flow_mode, allowed_actions, option, gesture_type, current_action, select, group;
+            overrides = overrides || Object.create(null);
+            var ρσ_Iter317 = get_container().querySelectorAll("[data-group]");
+            ρσ_Iter317 = ((typeof ρσ_Iter317[Symbol.iterator] === "function") ? (ρσ_Iter317 instanceof Map ? ρσ_Iter317.keys() : ρσ_Iter317) : Object.keys(ρσ_Iter317));
+            for (var ρσ_Index317 of ρσ_Iter317) {
+                group = ρσ_Index317;
+                group_name = group.dataset.group;
+                in_flow_mode = group_name.indexOf("flow") >= 0;
+                var ρσ_Iter318 = group.querySelectorAll("select");
+                ρσ_Iter318 = ((typeof ρσ_Iter318[Symbol.iterator] === "function") ? (ρσ_Iter318 instanceof Map ? ρσ_Iter318.keys() : ρσ_Iter318) : Object.keys(ρσ_Iter318));
+                for (var ρσ_Index318 of ρσ_Iter318) {
+                    select = ρσ_Index318;
+                    allowed_actions = [];
+                    var ρσ_Iter319 = select.querySelectorAll("option");
+                    ρσ_Iter319 = ((typeof ρσ_Iter319[Symbol.iterator] === "function") ? (ρσ_Iter319 instanceof Map ? ρσ_Iter319.keys() : ρσ_Iter319) : Object.keys(ρσ_Iter319));
+                    for (var ρσ_Index319 of ρσ_Iter319) {
+                        option = ρσ_Index319;
+                        allowed_actions.push(option.value);
+                    }
+                    gesture_type = select.name;
+                    current_action = current_action_for_gesture_type(overrides, gesture_type, in_flow_mode);
+                    if (allowed_actions.indexOf(current_action) < 0) {
+                        current_action = current_action_for_gesture_type(Object.create(null), gesture_type, in_flow_mode);
+                    }
+                    if (!current_action || allowed_actions.indexOf(current_action) < 0) {
+                        current_action = "none";
+                    }
+                    select.value = current_action;
+                    select.dispatchEvent(new Event("change", (function(){
+                        var ρσ_d = Object.create(null);
+                        ρσ_d["view"] = window;
+                        ρσ_d["bubbles"] = true;
+                        return ρσ_d;
+                    }).call(this)));
                 }
             }
-            rm = sd.get("read_mode");
-            rm = (rm === "flow") ? "flow" : "paged";
-            crm = (element(READ_MODE, "input").checked) ? "paged" : "flow";
-            if (rm !== crm) {
-                was_changed = true;
-                sd.set("read_mode", crm);
-            }
-            if (!runtime.is_standalone_viewer) {
-                fs = sd.get("fullscreen_when_opening");
-                cfs = document.querySelector("#" + ρσ_str.format("{}", FS_MODE) + " input[name=\"fullscreen_when_opening\"]:checked").value;
-                if (cfs !== fs) {
-                    was_changed = true;
-                    sd.set("fullscreen_when_opening", cfs);
+        };
+        if (!apply_settings_to_ui.__argnames__) Object.defineProperties(apply_settings_to_ui, {
+            __argnames__ : {value: ["overrides"]},
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        function get_overrides_from_ui() {
+            var ans, group_name, in_flow_mode, attr, val, defval, select, group, which;
+            ans = Object.create(null);
+            var ρσ_Iter320 = get_container().querySelectorAll("[data-group]");
+            ρσ_Iter320 = ((typeof ρσ_Iter320[Symbol.iterator] === "function") ? (ρσ_Iter320 instanceof Map ? ρσ_Iter320.keys() : ρσ_Iter320) : Object.keys(ρσ_Iter320));
+            for (var ρσ_Index320 of ρσ_Iter320) {
+                group = ρσ_Index320;
+                group_name = group.dataset.group;
+                in_flow_mode = group_name.indexOf("flow") >= 0;
+                if (group_name === "paged_swipe") {
+                    attr = "paged_mode";
+                } else if (group_name === "flow_swipe") {
+                    attr = "flow_mode";
+                } else {
+                    attr = "common";
+                }
+                if (!ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr]) {
+                    ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr] = Object.create(null);
+                }
+                var ρσ_Iter321 = group.querySelectorAll("select");
+                ρσ_Iter321 = ((typeof ρσ_Iter321[Symbol.iterator] === "function") ? (ρσ_Iter321 instanceof Map ? ρσ_Iter321.keys() : ρσ_Iter321) : Object.keys(ρσ_Iter321));
+                for (var ρσ_Index321 of ρσ_Iter321) {
+                    select = ρσ_Index321;
+                    val = select.value;
+                    defval = current_action_for_gesture_type(Object.create(null), select.name, in_flow_mode);
+                    if (val !== defval) {
+                        (ρσ_expr_temp = ans[(typeof attr === "number" && attr < 0) ? ans.length + attr : attr])[ρσ_bound_index(select.name, ρσ_expr_temp)] = val;
+                    }
                 }
             }
-            cps = sd.get("columns_per_screen");
-            cps = (function(){
-                var ρσ_d = Object.create(null);
-                ρσ_d["portrait"] = cps.portrait;
-                ρσ_d["landscape"] = cps.landscape;
-                return ρσ_d;
-            }).call(this);
-            var ρσ_Iter322 = [ "portrait", "landscape" ];
+            var ρσ_Iter322 = Object.keys(ans);
             ρσ_Iter322 = ((typeof ρσ_Iter322[Symbol.iterator] === "function") ? (ρσ_Iter322 instanceof Map ? ρσ_Iter322.keys() : ρσ_Iter322) : Object.keys(ρσ_Iter322));
             for (var ρσ_Index322 of ρσ_Iter322) {
                 which = ρσ_Index322;
-                inp = element(COLS, "input[name={}]".format(which));
-                try {
-                    val = int(inp.value);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        continue;
-                    } 
-                }
-                if (cps[(typeof which === "number" && which < 0) ? cps.length + which : which] !== val) {
-                    cps[(typeof which === "number" && which < 0) ? cps.length + which : which] = val;
-                    sd.set("columns_per_screen", cps);
-                    was_changed = true;
+                if (Object.keys(ans[(typeof which === "number" && which < 0) ? ans.length + which : which]).length === 0) {
+                    delete ans[which];
                 }
             }
-            var ρσ_Iter323 = [ "width", "height" ];
-            ρσ_Iter323 = ((typeof ρσ_Iter323[Symbol.iterator] === "function") ? (ρσ_Iter323 instanceof Map ? ρσ_Iter323.keys() : ρσ_Iter323) : Object.keys(ρσ_Iter323));
-            for (var ρσ_Index323 of ρσ_Iter323) {
-                which = ρσ_Index323;
-                try {
-                    val = int(element(TEXT_AREA, "input[name={}]".format(which)).value);
-                } catch (ρσ_Exception) {
-                    ρσ_last_exception = ρσ_Exception;
-                    {
-                        continue;
-                    } 
+            return ans;
+        };
+        if (!get_overrides_from_ui.__module__) Object.defineProperties(get_overrides_from_ui, {
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        function create_touch_panel(container, apply_func, cancel_func) {
+            var sd, overrides, action_descriptions, in_flow_mode, c, aat, aap, aaf;
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({id: CONTAINER, style: "margin: 1rem"})]));
+            container = container.lastChild;
+            sd = get_session_data();
+            overrides = sd.get("gesture_overrides");
+            action_descriptions = get_action_descriptions();
+            in_flow_mode = false;
+            function on_select_change(ev) {
+                var select, ad, span;
+                select = ev.target;
+                ad = action_descriptions[ρσ_bound_index(select.value, action_descriptions)];
+                span = select.parentNode.parentNode.querySelector(".help-text");
+                span.textContent = ad.long;
+            };
+            if (!on_select_change.__argnames__) Object.defineProperties(on_select_change, {
+                __argnames__ : {value: ["ev"]},
+                __module__ : {value: "read_book.prefs.touch"}
+            });
+
+            function make_setting(gesture_type, allowed_actions) {
+                var ans, title, sid, select, ad, action, c;
+                ans = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({style: "margin-top: 1ex; display: flex; flex-direction: column"})]);
+                title = (ρσ_expr_temp = GESTURE_NAMES())[(typeof gesture_type === "number" && gesture_type < 0) ? ρσ_expr_temp.length + gesture_type : gesture_type];
+                sid = unique_id(gesture_type);
+                ans.appendChild(E.h4(ρσ_interpolate_kwargs.call(E, E.label, [title].concat([ρσ_desugar_kwargs({"for": sid})]))));
+                select = ρσ_interpolate_kwargs.call(E, E.select, [ρσ_desugar_kwargs({name: gesture_type, id: sid})]);
+                var ρσ_Iter323 = allowed_actions;
+                ρσ_Iter323 = ((typeof ρσ_Iter323[Symbol.iterator] === "function") ? (ρσ_Iter323 instanceof Map ? ρσ_Iter323.keys() : ρσ_Iter323) : Object.keys(ρσ_Iter323));
+                for (var ρσ_Index323 of ρσ_Iter323) {
+                    action = ρσ_Index323;
+                    ad = action_descriptions[(typeof action === "number" && action < 0) ? action_descriptions.length + action : action];
+                    select.appendChild(ρσ_interpolate_kwargs.call(E, E.option, [ad.short].concat([ρσ_desugar_kwargs({value: action})])));
                 }
-                if (val !== sd.get("max_text_" + which)) {
-                    was_changed = true;
-                    sd.set("max_text_" + which, val);
-                }
-            }
-            cover_preserve_aspect_ratio = element(CONTAINER, "input[name=cover_preserve_aspect_ratio]").checked;
-            if (cover_preserve_aspect_ratio !== sd.get("cover_preserve_aspect_ratio")) {
-                was_changed = true;
-                sd.set("cover_preserve_aspect_ratio", cover_preserve_aspect_ratio);
-            }
-            if (was_changed) {
+                select.addEventListener("change", on_select_change);
+                c = ρσ_interpolate_kwargs.call(E, E.div, [select, E.span(svgicon("angle-down"))].concat([ρσ_desugar_kwargs({data_component: "select"})]));
+                ans.appendChild(ρσ_interpolate_kwargs.call(E, E.div, [c, ρσ_interpolate_kwargs.call(E, E.span, [ρσ_desugar_kwargs({class_: "help-text", style: "font-size: smaller; font-style: italic"})])].concat([ρσ_desugar_kwargs({style: "display: flex; flex-wrap: wrap; gap: 1ex; align-items: center"})])));
+                on_select_change((function(){
+                    var ρσ_d = Object.create(null);
+                    ρσ_d["target"] = select;
+                    return ρσ_d;
+                }).call(this));
+                return ans;
+            };
+            if (!make_setting.__argnames__) Object.defineProperties(make_setting, {
+                __argnames__ : {value: ["gesture_type", "allowed_actions"]},
+                __module__ : {value: "read_book.prefs.touch"}
+            });
+
+            container.appendChild(E.h2(_("Tapping")));
+            container.appendChild(E.div(_("There are three tap zones, depending on where on the screen you tap. When the tap is on a link, the link is followed, otherwise a configurable action based on the zone is performed.")));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "tap"})]);
+            container.appendChild(c);
+            aat = allowed_actions_for_tap();
+            c.appendChild(make_setting(GESTURE.control_zone_tap, aat));
+            c.appendChild(make_setting(GESTURE.forward_zone_tap, aat));
+            c.appendChild(make_setting(GESTURE.back_zone_tap, aat));
+            c.appendChild(make_setting(GESTURE.long_tap, aat));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
+            container.appendChild(E.h2(_("Two finger gestures")));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "two_finger"})]);
+            container.appendChild(c);
+            aat = allowed_actions_for_two_fingers();
+            c.appendChild(make_setting(GESTURE.two_finger_tap, aat));
+            c.appendChild(make_setting(GESTURE.pinch_in, aat));
+            c.appendChild(make_setting(GESTURE.pinch_out, aat));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
+            container.appendChild(E.h2(_("Swiping")));
+            container.appendChild(E.div(_("Swiping works differently in paged and flow mode, with different actions. For an English like language, swiping in the writing direction means swiping horizontally. For languages written vertically, it means swiping vertically. For languages written left-to-right \"going forward\" means swiping right-to-left, like turning a page with your finger.")));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Swiping in paged mode")].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "paged_swipe"})]);
+            container.appendChild(c);
+            aap = allowed_actions_for_paged_mode_swipe();
+            c.appendChild(make_setting(GESTURE.flick_block_forward, aap));
+            c.appendChild(make_setting(GESTURE.flick_block_backward, aap));
+            c.appendChild(make_setting(GESTURE.flick_inline_forward, aap));
+            c.appendChild(make_setting(GESTURE.flick_inline_backward, aap));
+            c.appendChild(make_setting(GESTURE.swipe_inline_forward_hold, aap));
+            c.appendChild(make_setting(GESTURE.swipe_inline_backward_hold, aap));
+            c.appendChild(make_setting(GESTURE.swipe_block_forward_hold, aap));
+            c.appendChild(make_setting(GESTURE.swipe_block_backward_hold, aap));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.h3, [_("Swiping in flow mode")].concat([ρσ_desugar_kwargs({style: "padding-top: 1ex"})])));
+            c = ρσ_interpolate_kwargs.call(E, E.div, [ρσ_desugar_kwargs({"data-group": "flow_swipe"})]);
+            container.appendChild(c);
+            in_flow_mode = true;
+            in_flow_mode;
+            aaf = allowed_actions_for_flow_mode_flick();
+            c.appendChild(make_setting(GESTURE.flick_block_forward, aaf));
+            c.appendChild(make_setting(GESTURE.flick_block_backward, aaf));
+            c.appendChild(make_setting(GESTURE.flick_inline_forward, aaf));
+            c.appendChild(make_setting(GESTURE.flick_inline_backward, aaf));
+            aaf = allowed_actions_for_flow_mode_drag();
+            c.appendChild(make_setting(GESTURE.swipe_inline_backward_in_progress, aaf));
+            c.appendChild(make_setting(GESTURE.swipe_inline_forward_in_progress, aaf));
+            c.appendChild(make_setting(GESTURE.swipe_block_backward_in_progress, aaf));
+            c.appendChild(make_setting(GESTURE.swipe_block_forward_in_progress, aaf));
+            container.appendChild(ρσ_interpolate_kwargs.call(E, E.hr, [ρσ_desugar_kwargs({style: "margin-top:1ex; margin-bottom: 1ex"})]));
+            container.appendChild(create_button_box(restore_defaults, apply_func, cancel_func));
+            apply_settings_to_ui(overrides);
+        };
+        if (!create_touch_panel.__argnames__) Object.defineProperties(create_touch_panel, {
+            __argnames__ : {value: ["container", "apply_func", "cancel_func"]},
+            __module__ : {value: "read_book.prefs.touch"}
+        });
+
+        develop = create_touch_panel;
+        function commit_touch(onchange) {
+            var sd, current_overrides, overrides, changed;
+            sd = get_session_data();
+            current_overrides = sd.get("gesture_overrides");
+            overrides = get_overrides_from_ui();
+            changed = (overrides !== current_overrides && (typeof overrides !== "object" || ρσ_not_equals(overrides, current_overrides)));
+            if (changed) {
+                sd.set("gesture_overrides", overrides);
                 onchange();
             }
         };
-        if (!commit_layout.__argnames__) Object.defineProperties(commit_layout, {
-            __argnames__ : {value: ["onchange", "container"]},
-            __module__ : {value: "read_book.prefs.layout"}
+        if (!commit_touch.__argnames__) Object.defineProperties(commit_touch, {
+            __argnames__ : {value: ["onchange"]},
+            __module__ : {value: "read_book.prefs.touch"}
         });
 
-        ρσ_modules["read_book.prefs.layout"].CONTAINER = CONTAINER;
-        ρσ_modules["read_book.prefs.layout"].MARGINS = MARGINS;
-        ρσ_modules["read_book.prefs.layout"].READ_MODE = READ_MODE;
-        ρσ_modules["read_book.prefs.layout"].FS_MODE = FS_MODE;
-        ρσ_modules["read_book.prefs.layout"].COLS = COLS;
-        ρσ_modules["read_book.prefs.layout"].TEXT_AREA = TEXT_AREA;
-        ρσ_modules["read_book.prefs.layout"].develop = develop;
-        ρσ_modules["read_book.prefs.layout"].restore_defaults = restore_defaults;
-        ρσ_modules["read_book.prefs.layout"].create_layout_panel = create_layout_panel;
-        ρσ_modules["read_book.prefs.layout"].commit_layout = commit_layout;
+        ρσ_modules["read_book.prefs.touch"].CONTAINER = CONTAINER;
+        ρσ_modules["read_book.prefs.touch"].develop = develop;
+        ρσ_modules["read_book.prefs.touch"].restore_defaults = restore_defaults;
+        ρσ_modules["read_book.prefs.touch"].get_container = get_container;
+        ρσ_modules["read_book.prefs.touch"].apply_settings_to_ui = apply_settings_to_ui;
+        ρσ_modules["read_book.prefs.touch"].get_overrides_from_ui = get_overrides_from_ui;
+        ρσ_modules["read_book.prefs.touch"].create_touch_panel = create_touch_panel;
+        ρσ_modules["read_book.prefs.touch"].commit_touch = commit_touch;
     })();
 
     (function(){
@@ -41785,6 +41785,63 @@ return this.__repr__();
     })();
 
     (function(){
+        var __name__ = "book_list.details_list";
+        var DETAILS_LIST_CLASS, ITEM_CLASS, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, BORDER_RADIUS;
+        var build_rule = ρσ_modules.dom.build_rule;
+
+        DETAILS_LIST_CLASS = "book-list-details-list";
+        ITEM_CLASS = DETAILS_LIST_CLASS + "-item";
+        THUMBNAIL_MAX_WIDTH = 35 * 3;
+        THUMBNAIL_MAX_HEIGHT = int(THUMBNAIL_MAX_WIDTH * 3 / 2);
+        BORDER_RADIUS = 6;
+        function details_list_css() {
+            var ans, sel, s, top, extra_data, primary;
+            ans = "";
+            sel = "." + DETAILS_LIST_CLASS;
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({cursor: "pointer", user_select: "none", display: "flex", flex_direction: "column", gap: "0.75rem", padding_top: "0.75rem", padding_bottom: "0.75rem", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " > .book-list-item"].concat([ρσ_desugar_kwargs({min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " a:hover"].concat([ρσ_desugar_kwargs({text_decoration: "none"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > div"].concat([ρσ_desugar_kwargs({margin: "0", padding: "0", border: "none"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ""].concat([ρσ_desugar_kwargs({display: "flex", align_items: "stretch", gap: "1rem", padding: "0.85rem 1rem", border_radius: "18px", border: "var(--calibre-border-style-subtle)", background: "var(--calibre-surface-1)", box_shadow: "0 16px 44px rgba(0,0,0,0.10)", text_decoration: "none", min_width: "0", max_width: "100%", width: "100%", box_sizing: "border-box", overflow: "hidden"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ":hover"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)", border_color: "var(--calibre-color-border)", box_shadow: "0 20px 56px rgba(0,0,0,0.12), 0 0 0 4px var(--calibre-color-primary-light)"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ":active"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light-2)", transform: "translateY(0.5px)"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ":hover .details-list-left > img"].concat([ρσ_desugar_kwargs({box_shadow: "0 10px 24px rgba(0,0,0,0.14)"})]));
+            s = sel + " .details-list-left";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s].concat([ρσ_desugar_kwargs({margin_right: "1em", min_width: "" + ρσ_str.format("{}", THUMBNAIL_MAX_WIDTH) + "px", height: "" + ρσ_str.format("{}", THUMBNAIL_MAX_HEIGHT) + "px", display: "flex", align_items: "stretch"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s + " > img"].concat([ρσ_desugar_kwargs({border_radius: BORDER_RADIUS + "px", width: "" + ρσ_str.format("{}", THUMBNAIL_MAX_WIDTH) + "px", height: "" + ρσ_str.format("{}", THUMBNAIL_MAX_HEIGHT) + "px", display: "block", object_fit: "cover", border: "var(--calibre-border-style-subtle)", transition: "box-shadow 160ms ease"})]));
+            s = sel + " .details-list-right";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s].concat([ρσ_desugar_kwargs({flex_grow: "10", flex_shrink: "1", flex_basis: "0", min_width: "0", max_width: "100%", overflow_x: "hidden", overflow_y: "visible", display: "flex", flex_direction: "column", min_height: "0", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-main-head"].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", gap: "0.75rem", overflow_x: "hidden", overflow_y: "hidden", flex_shrink: "0", min_height: "0", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-head-primary"].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column", flex: "1 1 0", min_width: "0", max_width: "100%", min_height: "0", overflow: "hidden"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-title-authors"].concat([ρσ_desugar_kwargs({flex: "0 0 auto", min_width: "0", max_width: "100%", overflow: "hidden"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-title"].concat([ρσ_desugar_kwargs({display: "block", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-authors"].concat([ρσ_desugar_kwargs({display: "block", margin_top: "0.1rem", opacity: "0.88", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-comments"].concat([ρσ_desugar_kwargs({min_height: "4ex", margin_top: "0.65ex", height: "0", border: "none", flex_grow: "1"})]));
+            ans += sel + " .details-meta {\n  margin-top: 0.35ex;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start;\n  gap: 0.35rem 0.6rem;\n  opacity: 0.78;\n  font-size: 0.92em;\n  line-height: 1.25;\n  overflow: hidden;\n  flex: 0 0 auto;\n  min-width: 0;\n  max-width: 100%;\n  max-height: calc(2 * (1.25em + 0.32rem) + 0.35rem);\n}\n";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-meta:empty"].concat([ρσ_desugar_kwargs({display: "none", margin_top: "0"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-badge"].concat([ρσ_desugar_kwargs({display: "inline-flex", align_items: "center", gap: "0.25rem", padding: "0.15rem 0.45rem", border_radius: "999px", border: "var(--calibre-border-style-subtle)", background: "var(--calibre-color-surface-3)", max_width: "100%", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-series"].concat([ρσ_desugar_kwargs({display: "block", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis", max_width: "100%"})]));
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-rating"].concat([ρσ_desugar_kwargs({display: "block", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis", max_width: "100%"})]));
+            top = sel + " .details-main-head";
+            extra_data = top + " > div:last-child";
+            primary = sel + " .details-head-primary";
+            ans += ρσ_interpolate_kwargs.call(this, build_rule, [extra_data].concat([ρσ_desugar_kwargs({text_align: "right", flex: "0 3 auto", min_width: "0", max_width: "min(18rem, 48%)", overflow_x: "hidden", overflow_y: "visible", box_sizing: "border-box"})]));
+            ans += "\n@media (max-width: 640px) {\n  __TOP__ {\n    flex-direction: column;\n    align-items: stretch;\n    gap: 0.5rem;\n  }\n  __EXTRA__ {\n    text-align: left;\n    margin-top: 0.15rem;\n    align-self: stretch;\n    max-width: 100%;\n    flex: 0 3 auto;\n  }\n  __PRIMARY__ {\n    max-width: 100%;\n    flex: 0 1 auto;\n    min-height: 0;\n  }\n  __TA__ {\n    max-width: 100%;\n  }\n}\n".replace("__TOP__", top).replace("__EXTRA__", extra_data).replace("__PRIMARY__", primary).replace("__TA__", sel + " .details-title-authors");
+            return ans;
+        };
+        if (!details_list_css.__module__) Object.defineProperties(details_list_css, {
+            __module__ : {value: "book_list.details_list"}
+        });
+
+        ρσ_modules["book_list.details_list"].DETAILS_LIST_CLASS = DETAILS_LIST_CLASS;
+        ρσ_modules["book_list.details_list"].ITEM_CLASS = ITEM_CLASS;
+        ρσ_modules["book_list.details_list"].THUMBNAIL_MAX_WIDTH = THUMBNAIL_MAX_WIDTH;
+        ρσ_modules["book_list.details_list"].THUMBNAIL_MAX_HEIGHT = THUMBNAIL_MAX_HEIGHT;
+        ρσ_modules["book_list.details_list"].BORDER_RADIUS = BORDER_RADIUS;
+        ρσ_modules["book_list.details_list"].details_list_css = details_list_css;
+    })();
+
+    (function(){
         var __name__ = "book_list.delete_book";
         var E = ρσ_modules.elementmaker.E;
 
@@ -41966,63 +42023,6 @@ return this.__repr__();
         ρσ_modules["book_list.delete_book"].choose_which_delete = choose_which_delete;
         ρσ_modules["book_list.delete_book"].delete_book_stage2 = delete_book_stage2;
         ρσ_modules["book_list.delete_book"].start_delete_book = start_delete_book;
-    })();
-
-    (function(){
-        var __name__ = "book_list.details_list";
-        var DETAILS_LIST_CLASS, ITEM_CLASS, THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT, BORDER_RADIUS;
-        var build_rule = ρσ_modules.dom.build_rule;
-
-        DETAILS_LIST_CLASS = "book-list-details-list";
-        ITEM_CLASS = DETAILS_LIST_CLASS + "-item";
-        THUMBNAIL_MAX_WIDTH = 35 * 3;
-        THUMBNAIL_MAX_HEIGHT = int(THUMBNAIL_MAX_WIDTH * 3 / 2);
-        BORDER_RADIUS = 6;
-        function details_list_css() {
-            var ans, sel, s, top, extra_data, primary;
-            ans = "";
-            sel = "." + DETAILS_LIST_CLASS;
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel].concat([ρσ_desugar_kwargs({cursor: "pointer", user_select: "none", display: "flex", flex_direction: "column", gap: "0.75rem", padding_top: "0.75rem", padding_bottom: "0.75rem", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " > .book-list-item"].concat([ρσ_desugar_kwargs({min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " a:hover"].concat([ρσ_desugar_kwargs({text_decoration: "none"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " > div"].concat([ρσ_desugar_kwargs({margin: "0", padding: "0", border: "none"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ""].concat([ρσ_desugar_kwargs({display: "flex", align_items: "stretch", gap: "1rem", padding: "0.85rem 1rem", border_radius: "18px", border: "var(--calibre-border-style-subtle)", background: "var(--calibre-surface-1)", box_shadow: "0 16px 44px rgba(0,0,0,0.10)", text_decoration: "none", min_width: "0", max_width: "100%", width: "100%", box_sizing: "border-box", overflow: "hidden"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ":hover"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light)", border_color: "var(--calibre-color-border)", box_shadow: "0 20px 56px rgba(0,0,0,0.12), 0 0 0 4px var(--calibre-color-primary-light)"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ":active"].concat([ρσ_desugar_kwargs({background_color: "var(--calibre-color-primary-light-2)", transform: "translateY(0.5px)"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, ["" + ρσ_str.format("{}", sel) + " ." + ρσ_str.format("{}", ITEM_CLASS) + ":hover .details-list-left > img"].concat([ρσ_desugar_kwargs({box_shadow: "0 10px 24px rgba(0,0,0,0.14)"})]));
-            s = sel + " .details-list-left";
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s].concat([ρσ_desugar_kwargs({margin_right: "1em", min_width: "" + ρσ_str.format("{}", THUMBNAIL_MAX_WIDTH) + "px", height: "" + ρσ_str.format("{}", THUMBNAIL_MAX_HEIGHT) + "px", display: "flex", align_items: "stretch"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s + " > img"].concat([ρσ_desugar_kwargs({border_radius: BORDER_RADIUS + "px", width: "" + ρσ_str.format("{}", THUMBNAIL_MAX_WIDTH) + "px", height: "" + ρσ_str.format("{}", THUMBNAIL_MAX_HEIGHT) + "px", display: "block", object_fit: "cover", border: "var(--calibre-border-style-subtle)", transition: "box-shadow 160ms ease"})]));
-            s = sel + " .details-list-right";
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [s].concat([ρσ_desugar_kwargs({flex_grow: "10", flex_shrink: "1", flex_basis: "0", min_width: "0", max_width: "100%", overflow_x: "hidden", overflow_y: "visible", display: "flex", flex_direction: "column", min_height: "0", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-main-head"].concat([ρσ_desugar_kwargs({display: "flex", justify_content: "space-between", gap: "0.75rem", overflow_x: "hidden", overflow_y: "hidden", flex_shrink: "0", min_height: "0", min_width: "0", max_width: "100%", box_sizing: "border-box"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-head-primary"].concat([ρσ_desugar_kwargs({display: "flex", flex_direction: "column", flex: "1 1 0", min_width: "0", max_width: "100%", min_height: "0", overflow: "hidden"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-title-authors"].concat([ρσ_desugar_kwargs({flex: "0 0 auto", min_width: "0", max_width: "100%", overflow: "hidden"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-title"].concat([ρσ_desugar_kwargs({display: "block", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-authors"].concat([ρσ_desugar_kwargs({display: "block", margin_top: "0.1rem", opacity: "0.88", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-comments"].concat([ρσ_desugar_kwargs({min_height: "4ex", margin_top: "0.65ex", height: "0", border: "none", flex_grow: "1"})]));
-            ans += sel + " .details-meta {\n  margin-top: 0.35ex;\n  display: flex;\n  flex-wrap: wrap;\n  align-content: flex-start;\n  gap: 0.35rem 0.6rem;\n  opacity: 0.78;\n  font-size: 0.92em;\n  line-height: 1.25;\n  overflow: hidden;\n  flex: 0 0 auto;\n  min-width: 0;\n  max-width: 100%;\n  max-height: calc(2 * (1.25em + 0.32rem) + 0.35rem);\n}\n";
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-meta:empty"].concat([ρσ_desugar_kwargs({display: "none", margin_top: "0"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-badge"].concat([ρσ_desugar_kwargs({display: "inline-flex", align_items: "center", gap: "0.25rem", padding: "0.15rem 0.45rem", border_radius: "999px", border: "var(--calibre-border-style-subtle)", background: "var(--calibre-color-surface-3)", max_width: "100%", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-series"].concat([ρσ_desugar_kwargs({display: "block", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis", max_width: "100%"})]));
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [sel + " .details-rating"].concat([ρσ_desugar_kwargs({display: "block", white_space: "nowrap", overflow: "hidden", text_overflow: "ellipsis", max_width: "100%"})]));
-            top = sel + " .details-main-head";
-            extra_data = top + " > div:last-child";
-            primary = sel + " .details-head-primary";
-            ans += ρσ_interpolate_kwargs.call(this, build_rule, [extra_data].concat([ρσ_desugar_kwargs({text_align: "right", flex: "0 3 auto", min_width: "0", max_width: "min(18rem, 48%)", overflow_x: "hidden", overflow_y: "visible", box_sizing: "border-box"})]));
-            ans += "\n@media (max-width: 640px) {\n  __TOP__ {\n    flex-direction: column;\n    align-items: stretch;\n    gap: 0.5rem;\n  }\n  __EXTRA__ {\n    text-align: left;\n    margin-top: 0.15rem;\n    align-self: stretch;\n    max-width: 100%;\n    flex: 0 3 auto;\n  }\n  __PRIMARY__ {\n    max-width: 100%;\n    flex: 0 1 auto;\n    min-height: 0;\n  }\n  __TA__ {\n    max-width: 100%;\n  }\n}\n".replace("__TOP__", top).replace("__EXTRA__", extra_data).replace("__PRIMARY__", primary).replace("__TA__", sel + " .details-title-authors");
-            return ans;
-        };
-        if (!details_list_css.__module__) Object.defineProperties(details_list_css, {
-            __module__ : {value: "book_list.details_list"}
-        });
-
-        ρσ_modules["book_list.details_list"].DETAILS_LIST_CLASS = DETAILS_LIST_CLASS;
-        ρσ_modules["book_list.details_list"].ITEM_CLASS = ITEM_CLASS;
-        ρσ_modules["book_list.details_list"].THUMBNAIL_MAX_WIDTH = THUMBNAIL_MAX_WIDTH;
-        ρσ_modules["book_list.details_list"].THUMBNAIL_MAX_HEIGHT = THUMBNAIL_MAX_HEIGHT;
-        ρσ_modules["book_list.details_list"].BORDER_RADIUS = BORDER_RADIUS;
-        ρσ_modules["book_list.details_list"].details_list_css = details_list_css;
     })();
 
     (function(){
