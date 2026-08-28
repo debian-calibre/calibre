@@ -65,6 +65,11 @@ def cdb_run(ctx, rd, which, version):
     return {'result': result}
 
 
+def is_recipe_fmt(fmt: str) -> bool:
+    fmt = fmt.lower().removeprefix('original_')
+    return fmt in ('recipe', 'downloaded_recipe')
+
+
 @endpoint(
     '/cdb/add-book/{job_id}/{add_duplicates}/{filename}/{library_id=None}',
     needs_db_write=True,
@@ -94,7 +99,7 @@ def cdb_add_book(ctx, rd, job_id, add_duplicates, filename, library_id):
     fmt = fmt[1:] if fmt else None
     if not fmt:
         raise HTTPBadRequest('An filename with no extension is not allowed')
-    if fmt.lower() in ('recipe', 'original_recipe'):
+    if is_recipe_fmt(fmt):
         raise HTTPForbidden('Cannot use the add book interface to add recipe files, as they allow code execution')
     if isinstance(rd.request_body_file, BytesIO):
         raise HTTPBadRequest('A request body containing the file data must be specified')
@@ -237,6 +242,9 @@ def cdb_set_fields(ctx, rd, book_id, library_id):
 
             def to_lang_code(x):
                 return rmap.get(x, canonicalize_lang(x))
+
+            if isinstance(value, str):
+                value = (value,)
 
             value = list(filter(None, map(to_lang_code, value)))
         dirtied |= db.set_field(field, {book_id: value})

@@ -1486,9 +1486,9 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
     """A class that overrides some methods from QPlainTextEdit to fix handling
     of the nbsp unicode character and AltGr input method on windows."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, *, use_smarten_punctuation: bool = False):
         QPlainTextEdit.__init__(self, parent)
-        self.syntax = None
+        self.use_smarten_punctuation = use_smarten_punctuation
 
     def toPlainText(self):
         return to_plain_text(self)
@@ -1544,6 +1544,10 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
         c = self.textCursor()
         # Workaround for QTextCursor considering smart quotes as word
         # characters https://bugreports.qt.io/browse/QTBUG-101372
+        from calibre.ebooks.metadata import quote_pairs
+
+        opening_quotes = frozenset(quote_pairs)
+        closing_quotes = frozenset(ch for chars in quote_pairs.values() for ch in chars)
         changed = False
         while True:
             q = c.selectedText()
@@ -1551,11 +1555,11 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
                 break
             left = min(c.anchor(), c.position())
             right = max(c.anchor(), c.position())
-            if q[0] in '“‘':
+            if q[0] in opening_quotes:
                 changed = True
                 c.setPosition(left + 1)
                 c.setPosition(right, QTextCursor.MoveMode.KeepAnchor)
-            elif q[-1] in '’”':
+            elif q[-1] in closing_quotes:
                 changed = True
                 c.setPosition(left)
                 c.setPosition(right - 1, QTextCursor.MoveMode.KeepAnchor)
@@ -1563,6 +1567,22 @@ class PlainTextEdit(QPlainTextEdit):  # {{{
                 break
         if changed:
             self.setTextCursor(c)
+
+    def contextMenuEvent(self, e):
+        m = self.createStandardContextMenu()
+        assert m is not None
+        if self.use_smarten_punctuation:
+            m.addSeparator()
+            m.addAction(_('Smarten punctuation'), self.smarten_punctuation)
+        m.exec(e.globalPos())
+
+    def smarten_punctuation(self):
+        from calibre.ebooks.conversion.preprocess import smarten_punctuation
+
+        text = self.toPlainText().strip()
+        newtext = smarten_punctuation(text)
+        if text != newtext:
+            self.setPlainText(newtext)
 
 
 # }}}

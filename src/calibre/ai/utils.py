@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2025, Kovid Goyal <kovid at kovidgoyal.net>
 
+import base64
 import datetime
 import http
 import json
@@ -12,19 +13,26 @@ from contextlib import suppress
 from enum import Enum, auto
 from functools import lru_cache
 from threading import Thread
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from urllib.error import HTTPError, URLError
-from urllib.request import ProxyHandler, Request, build_opener
+from urllib.request import OpenerDirector, ProxyHandler, Request, build_opener
 
 from calibre import get_proxies
-from calibre.ai import ChatMessage, ChatMessageType, ChatResponse, Citation, WebLink
+from calibre.ai import ChatMessage, ChatMessageType, ChatResponse, Citation, ImageData, ImageGenerationOptions, ImageGenerationResult, WebLink
 from calibre.constants import __version__
 from calibre.customize import AIProviderPlugin
 from calibre.customize.ui import available_ai_provider_plugins
-from calibre.utils.localization import _
+from calibre.utils.localization import _, pgettext
+
+if TYPE_CHECKING:
+    from unittest.suite import TestSuite
+
+    from qt.core import QComboBox, QWidget
+else:
+    TestSuite = QWidget = QComboBox = object
 
 
-def atomic_write(path, data):
+def atomic_write(path: str, data: str | bytes) -> None:
     mode = 'w' if isinstance(data, str) else 'wb'
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with tempfile.NamedTemporaryFile(mode, delete=False, dir=os.path.dirname(path)) as f:
@@ -32,7 +40,7 @@ def atomic_write(path, data):
     os.replace(f.name, path)
 
 
-def opener(user_agent=f'calibre {__version__}'):
+def opener(user_agent: str = f'calibre {__version__}') -> OpenerDirector:
     proxies = get_proxies(debug=False)
     proxy_handler = ProxyHandler(proxies)
     ans = build_opener(proxy_handler)
@@ -75,12 +83,16 @@ def get_cached_resource(path: str, url: str, headers: Sequence[tuple[str, str]] 
 
 
 def _read_response(buffer: str) -> Iterator[dict[str, Any]]:
-    if not buffer.startswith('data: '):
+    # Parse a single Server-sent event. Ignores event: and comment lines and
+    # joins together multiple data: lines, as per the SSE specification.
+    data_lines = []
+    for line in buffer.splitlines():
+        if line.startswith('data:'):
+            data_lines.append(line[5:].strip())
+    data = '\n'.join(data_lines)
+    if not data or data == '[DONE]':
         return
-    buffer = buffer[6:].rstrip()
-    if buffer == '[DONE]':
-        return
-    yield json.loads(buffer)
+    yield json.loads(data)
 
 
 def read_streaming_response(rq: Request, provider_name: str = 'AI provider', timeout: int = 120) -> Iterator[dict[str, Any]]:
@@ -100,6 +112,72 @@ def read_streaming_response(rq: Request, provider_name: str = 'AI provider', tim
             else:
                 buffer += line
         yield from _read_response(buffer)
+
+
+def read_json_response(rq: Request, provider_name: str = 'AI provider', timeout: int = 240) -> dict[str, Any]:
+    with opener().open(rq, timeout=timeout) as response:
+        raw = response.read()
+        if response.status != http.HTTPStatus.OK:
+            details = raw.decode('utf-8', 'replace')
+            raise Exception(f'Reading from {provider_name} failed with HTTP response status: {response.status} and body: {details}')
+        return json.loads(raw)
+
+
+def encode_multipart_formdata(fields: Sequence[tuple[str, str]] = (), files: Sequence[tuple[str, str, str, bytes]] = ()) -> tuple[bytes, str]:
+    # Encode fields (name, value) and files (name, filename, mime_type, data)
+    # as multipart/form-data returning the body and the Content-Type header value.
+    boundary = '-' * 12 + os.urandom(16).hex()
+    lines: list[bytes] = []
+    for name, value in fields:
+        lines.append(f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n'.encode())
+    for name, filename, mime_type, data in files:
+        lines.append(f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"; filename="{filename}"\r\nContent-Type: {mime_type}\r\n\r\n'.encode())
+        lines.append(data)
+        lines.append(b'\r\n')
+    lines.append(f'--{boundary}--\r\n'.encode())
+    return b''.join(lines), f'multipart/form-data; boundary={boundary}'
+
+
+def image_as_data_url(img: ImageData) -> str:
+    return f'data:{img.mime_type};base64,' + base64.standard_b64encode(img.data).decode('ascii')
+
+
+def image_from_data_url(url: str) -> ImageData:
+    metadata, sep, payload = url.partition(',')
+    if not sep or not metadata.startswith('data:'):
+        raise ValueError(f'Not a valid data URL: {url[:64]!r}')
+    mime_type = metadata[len('data:') :].partition(';')[0] or 'image/png'
+    return ImageData(data=base64.standard_b64decode(payload), mime_type=mime_type)
+
+
+def image_data_from_file_path(path: str) -> ImageData:
+    import mimetypes
+
+    mime_type = mimetypes.guess_type(path)[0] or 'image/png'
+    with open(path, 'rb') as f:
+        return ImageData(data=f.read(), mime_type=mime_type)
+
+
+def image_generation_with_error_handler(func: Callable[[], ImageGenerationResult]) -> ImageGenerationResult:
+    try:
+        return func()
+    except HTTPError as e:
+        try:
+            details = e.fp.read().decode('utf-8', 'replace')
+        except Exception:
+            details = ''
+        try:
+            error_json = json.loads(details)
+            details = error_json.get('error', {}).get('message', details)
+        except Exception:
+            pass
+        return ImageGenerationResult(exception=e, error_details=details)
+    except URLError as e:
+        return ImageGenerationResult(exception=e, error_details=f'Network error: {e.reason}')
+    except Exception as e:
+        import traceback
+
+        return ImageGenerationResult(exception=e, error_details=traceback.format_exc())
 
 
 def chat_with_error_handler(it: Iterable[ChatResponse]) -> Iterator[ChatResponse]:
@@ -159,7 +237,7 @@ def add_citations(text: str, metadata: ChatResponse) -> str:
 
 
 class StreamedResponseAccumulator:
-    def __init__(self):
+    def __init__(self) -> None:
         self.all_reasoning = self.all_content = ''
         self.all_reasoning_details: list[dict[str, Any]] = []
         self.metadata = ChatResponse()
@@ -260,7 +338,7 @@ def develop_text_chat(
     text_chat: Callable[[Iterable[ChatMessage], str], Iterator[ChatResponse]],
     use_model: str = '',
     messages: Sequence[ChatMessage] = (),
-):
+) -> None:
     acc = StreamedResponseAccumulator()
     messages = messages or (
         ChatMessage(type=ChatMessageType.system, query='You are William Shakespeare.'),
@@ -293,6 +371,33 @@ def develop_text_chat(
         pprint(msg)
 
 
+def develop_image_generation(
+    generate_image: Callable[..., ImageGenerationResult],
+    prompt: str = '',
+    source_images: Sequence[ImageData] = (),
+    options: ImageGenerationOptions = ImageGenerationOptions(),
+    use_model: str = '',
+    output_path: str = '',
+) -> str:
+    prompt = prompt or 'A minimalist line drawing of a cat sitting on a pile of books'
+    res = generate_image(prompt, source_images, options, use_model)
+    if res.exception is not None:
+        raise SystemExit(str(res.exception) + (': ' + res.error_details if res.error_details else ''))
+    if res.text:
+        print(res.text)
+    if res.image is None:
+        raise SystemExit('No image was generated')
+    if not output_path:
+        # Note: not the temporary directory as calibre removes that on exit
+        ext = res.image.mime_type.partition('/')[-1] or 'png'
+        output_path = os.path.abspath(f'calibre-ai-develop-image.{ext}')
+    with open(output_path, 'wb') as f:
+        f.write(res.image.data)
+    print(f'Image ({res.image.mime_type}) of size {len(res.image.data)} bytes written to:', output_path)
+    print(f'Cost: {res.cost} {res.currency} Provider: {res.provider!r} Model: {res.model!r}')
+    return output_path
+
+
 def plugin_for_name(plugin_name: str) -> AIProviderPlugin:
     for plugin in available_ai_provider_plugins():
         if plugin.name == plugin_name:
@@ -300,7 +405,7 @@ def plugin_for_name(plugin_name: str) -> AIProviderPlugin:
     raise KeyError(f'No plugin named {plugin_name} is available')
 
 
-def configure(plugin_name: str, parent: Any = None) -> None:
+def configure(plugin_name: str, parent: QWidget | None = None) -> None:
     from qt.core import QDialog, QDialogButtonBox, QVBoxLayout
 
     from calibre.gui2 import ensure_app
@@ -310,7 +415,7 @@ def configure(plugin_name: str, parent: Any = None) -> None:
     cw = plugin.config_widget()
 
     class D(QDialog):
-        def accept(self):
+        def accept(self) -> None:
             if not cw.validate():
                 return
             super().accept()
@@ -327,14 +432,14 @@ def configure(plugin_name: str, parent: Any = None) -> None:
         plugin.save_settings(cw)
 
 
-def reasoning_strategy_config_widget(current_val: str = 'auto', parent: Any = None) -> Any:
+def reasoning_strategy_config_widget(current_val: str = 'auto', parent: QWidget | None = None) -> QComboBox:
     from qt.core import QComboBox
 
     rs = QComboBox(parent)
     rs.addItem(_('Automatic'), 'auto')
-    rs.addItem(_('Medium'), 'medium')
-    rs.addItem(_('High'), 'high')
-    rs.addItem(_('Low'), 'low')
+    rs.addItem(pgettext('reasoning effort', 'Medium'), 'medium')
+    rs.addItem(pgettext('reasoning effort', 'High'), 'high')
+    rs.addItem(pgettext('reasoning effort', 'Low'), 'low')
     rs.addItem(_('No reasoning'), 'none')
     rs.setCurrentIndex(max(0, rs.findData(current_val)))
     rs.setToolTip(
@@ -347,23 +452,242 @@ def reasoning_strategy_config_widget(current_val: str = 'auto', parent: Any = No
     return rs
 
 
-def model_choice_strategy_config_widget(current_val: str = 'medium', parent: Any = None) -> Any:
+def model_choice_strategy_config_widget(current_val: str = 'medium', parent: QWidget | None = None) -> QComboBox:
     from qt.core import QComboBox
 
     ms = QComboBox(parent)
     ms.addItem(_('Cheap and fastest'), 'low')
-    ms.addItem(_('Medium'), 'medium')
+    ms.addItem(pgettext('model choice', 'Medium'), 'medium')
     ms.addItem(_('High quality, expensive and slower'), 'high')
     ms.setCurrentIndex(max(0, ms.findData(current_val)))
     ms.setToolTip('<p>' + _('The model choice strategy controls how a model to query is chosen. Cheaper and faster models give lower quality results.'))
     return ms
 
 
-def find_tests():
+def image_quality_config_widget(current_val: str = 'auto', parent: QWidget | None = None) -> QComboBox:
+    from qt.core import QComboBox
+
+    q = QComboBox(parent)
+    q.addItem(pgettext('image quality', 'Automatic'), 'auto')
+    q.addItem(pgettext('image quality', 'Low'), 'low')
+    q.addItem(pgettext('image quality', 'Medium'), 'medium')
+    q.addItem(pgettext('image quality', 'High'), 'high')
+    q.setCurrentIndex(max(0, q.findData(current_val)))
+    q.setToolTip('<p>' + _('The quality of generated images. Higher quality images cost more and take longer to generate.'))
+    return q
+
+
+def find_tests() -> TestSuite:
     import unittest
 
     class TestAIUtils(unittest.TestCase):
-        def test_ai_response_accumulator(self):
+        def test_ai_sse_event_parsing(self) -> None:
+            def p(buffer: str) -> list[dict[str, Any]]:
+                return list(_read_response(buffer))
+
+            self.assertEqual(p('data: {"a": 1}\n'), [{'a': 1}])
+            self.assertEqual(p('event: content_block_delta\ndata: {"a": 1}\n'), [{'a': 1}])
+            self.assertEqual(p('data: {"a":\ndata: 1}\n'), [{'a': 1}])
+            self.assertEqual(p(': comment\n'), [])
+            self.assertEqual(p('data: [DONE]\n'), [])
+            self.assertEqual(p('event: ping\n'), [])
+
+        def test_ai_multipart_formdata_encoding(self) -> None:
+            from email import message_from_bytes
+            from email.message import Message
+
+            body, content_type = encode_multipart_formdata(
+                fields=(('prompt', 'a cat'), ('model', 'test-model')),
+                files=(('image[]', 'image-0.png', 'image/png', b'\x89PNG\r\n\x1a\nfake'),),
+            )
+            msg = message_from_bytes(f'Content-Type: {content_type}\r\n\r\n'.encode() + body)
+            self.assertTrue(msg.is_multipart())
+            parts = msg.get_payload()
+            assert isinstance(parts, list)
+            self.assertEqual(len(parts), 3)
+            prompt_part, model_part, image_part = parts
+            assert isinstance(prompt_part, Message)
+            assert isinstance(model_part, Message)
+            assert isinstance(image_part, Message)
+            self.assertEqual(prompt_part.get_payload(decode=True), b'a cat')
+            self.assertEqual(model_part.get_payload(decode=True), b'test-model')
+            self.assertEqual(image_part.get_payload(decode=True), b'\x89PNG\r\n\x1a\nfake')
+            self.assertEqual(image_part.get_content_type(), 'image/png')
+            self.assertEqual(image_part.get_filename(), 'image-0.png')
+
+        def test_ai_image_data_url(self) -> None:
+            img = ImageData(data=b'some image data', mime_type='image/jpeg')
+            self.assertEqual(image_from_data_url(image_as_data_url(img)), img)
+            self.assertRaises(ValueError, image_from_data_url, 'https://example.com/image.png')
+
+        def test_ai_openai_chat_response_parsing(self) -> None:
+            from calibre.ai.openai.backend import Model, as_chat_responses
+
+            model = Model(id='gpt-5', id_parts=('gpt', '5'), created=datetime.datetime.now(datetime.UTC), version=5.0)
+
+            def p(d: dict[str, Any]) -> list[ChatResponse]:
+                return list(as_chat_responses(d, model))
+
+            self.assertEqual(p({'type': 'response.created', 'response': {'id': 'resp_1'}})[0].id, 'resp_1')
+            r = p({'type': 'response.output_text.delta', 'delta': 'hello'})[0]
+            self.assertEqual(r.content, 'hello')
+            self.assertEqual(r.type, ChatMessageType.assistant)
+            self.assertEqual(p({'type': 'response.reasoning_summary_text.delta', 'delta': 'hmm'})[0].reasoning, 'hmm')
+            r = p({'type': 'response.completed', 'response': {'id': 'resp_1', 'model': 'gpt-5.2', 'usage': {}}})[0]
+            self.assertTrue(r.has_metadata)
+            self.assertEqual(r.model, 'gpt-5.2')
+            r = p({'type': 'response.incomplete', 'response': {'incomplete_details': {'reason': 'max_output_tokens'}}})[0]
+            self.assertIsNotNone(r.exception)
+            r = p({'type': 'error', 'code': 'ERR', 'message': 'something failed'})[0]
+            self.assertIn('something failed', str(r.exception))
+            self.assertEqual(p({'type': 'response.output_item.added'}), [])
+
+        def test_ai_openai_image_response_parsing(self) -> None:
+            from calibre.ai.openai.backend import image_generation_cost, parse_image_response, size_for_aspect_ratio
+
+            self.assertEqual(size_for_aspect_ratio('auto'), 'auto')
+            self.assertEqual(size_for_aspect_ratio('1:1'), '1024x1024')
+            self.assertEqual(size_for_aspect_ratio('16:9'), '1536x1024')
+            self.assertEqual(size_for_aspect_ratio('3:4'), '1024x1536')
+
+            usage = {'input_tokens': 30, 'output_tokens': 1000, 'input_tokens_details': {'text_tokens': 10, 'image_tokens': 20}}
+            cost, currency = image_generation_cost('gpt-image-1', usage)
+            self.assertEqual(currency, 'USD')
+            self.assertAlmostEqual(cost, (10 * 5 + 20 * 10 + 1000 * 40) / 1e6)
+            cost, currency = image_generation_cost('gpt-image-1-mini', usage)
+            self.assertAlmostEqual(cost, (10 * 2 + 20 * 2.5 + 1000 * 8) / 1e6)
+
+            d = {'data': [{'b64_json': base64.standard_b64encode(b'image bytes').decode()}], 'usage': usage}
+            res = parse_image_response(d, 'gpt-image-1')
+            self.assertEqual(res.image, ImageData(data=b'image bytes'))
+            self.assertEqual(res.model, 'gpt-image-1')
+            self.assertRaises(ValueError, parse_image_response, {'data': []}, 'gpt-image-1')
+
+        def test_ai_grok_chat_response_parsing(self) -> None:
+            from calibre.ai.grok.backend import Model, as_chat_responses
+
+            model = Model.from_dict({'id': 'grok-4.6', 'created': 0, 'prompt_text_token_price': 20000, 'completion_text_token_price': 100000})
+            self.assertEqual(model.family_version, 4.6)
+            self.assertFalse(model.supports_reasoning_effort)
+            self.assertTrue(Model.from_dict({'id': 'grok-4.20-0309-reasoning'}).supports_reasoning_effort)
+            self.assertFalse(Model.from_dict({'id': 'grok-4.20-0309-non-reasoning'}).supports_reasoning_effort)
+
+            def p(d: dict[str, Any]) -> list[ChatResponse]:
+                return list(as_chat_responses(d, model))
+
+            r = p({'id': 'c1', 'choices': [{'delta': {'role': 'assistant', 'content': 'Hello', 'reasoning_content': 'Think'}, 'finish_reason': None}]})[0]
+            self.assertEqual(r.content, 'Hello')
+            self.assertEqual(r.reasoning, 'Think')
+            self.assertEqual(r.id, 'c1')
+            self.assertEqual(r.type, ChatMessageType.assistant)
+            r = p({
+                'id': 'c1',
+                'model': 'grok-4.6',
+                'choices': [{'delta': {}, 'finish_reason': 'stop'}],
+                'usage': {'prompt_tokens': 1_000_000, 'completion_tokens': 1_000_000},
+                'citations': ['https://example.com'],
+            })[-1]
+            self.assertTrue(r.has_metadata)
+            self.assertEqual((r.model, r.currency), ('grok-4.6', 'USD'))
+            self.assertAlmostEqual(r.cost, 2 + 10)  # $2/M input and $10/M output tokens
+            self.assertEqual(r.web_links, (WebLink(title='https://example.com', uri='https://example.com'),))
+            r = p({'choices': [{'delta': {}, 'finish_reason': 'content_filter'}]})[0]
+            self.assertIsNotNone(r.exception)
+
+            from calibre.ai.grok.backend import for_assistant
+
+            self.assertEqual(for_assistant(ChatMessage(type=ChatMessageType.developer, query='q')), {'role': 'system', 'content': 'q'})
+            self.assertRaises(ValueError, for_assistant, ChatMessage(type=ChatMessageType.tool, query='q'))
+
+        def test_ai_grok_image_response_parsing(self) -> None:
+            from calibre.ai.grok.backend import Model, parse_image_response
+
+            model = Model.from_dict({'id': 'grok-imagine-image-2.0', 'image_price': 4}, generates_images=True)
+            self.assertTrue(model.generates_images)
+            d = {'data': [{'b64_json': base64.standard_b64encode(b'image bytes').decode(), 'mime_type': 'image/jpeg'}]}
+            res = parse_image_response(d, model)
+            self.assertEqual(res.image, ImageData(data=b'image bytes', mime_type='image/jpeg'))
+            self.assertEqual((res.cost, res.currency), (0.04, 'USD'))
+            self.assertEqual(res.model, 'grok-imagine-image-2.0')
+            self.assertRaises(ValueError, parse_image_response, {'data': []}, model)
+
+            # Grok cannot edit images, check the error is reported via the
+            # result so that the cover dialog can show it, rather than raised
+            from calibre.ai.grok.backend import generate_image
+
+            res = generate_image('a prompt', source_images=(ImageData(data=b'image bytes'),))
+            self.assertIsInstance(res.exception, ValueError)
+
+        def test_ai_google_image_response_parsing(self) -> None:
+            from calibre.ai import AICapabilities, PromptBlocked, ResultBlocked
+            from calibre.ai.google.backend import Model, parse_gemini_image_response, parse_imagen_response
+
+            def m(mid: str) -> Model:
+                name_parts = tuple(mid.split('-'))
+                return Model(
+                    name=mid,
+                    id=f'models/{mid}',
+                    slug=f'models/{mid}',
+                    description='',
+                    version='1',
+                    context_length=1000,
+                    output_token_limit=1000,
+                    capabilities=AICapabilities.text_to_image,
+                    family=name_parts[0],
+                    family_version=0,
+                    name_parts=name_parts,
+                    thinking=False,
+                    pricing=None,
+                )
+
+            img_b64 = base64.standard_b64encode(b'image bytes').decode()
+            d = {
+                'candidates': [
+                    {
+                        'finishReason': 'STOP',
+                        'content': {
+                            'parts': [
+                                {'text': 'here you go'},
+                                {'inlineData': {'mimeType': 'image/webp', 'data': img_b64}},
+                            ]
+                        },
+                    }
+                ],
+                'usageMetadata': {'promptTokenCount': 10, 'totalTokenCount': 20},
+            }
+            res = parse_gemini_image_response(d, m('gemini-2.5-flash-image'))
+            self.assertEqual(res.image, ImageData(data=b'image bytes', mime_type='image/webp'))
+            self.assertEqual(res.text, 'here you go')
+            self.assertRaises(PromptBlocked, parse_gemini_image_response, {'promptFeedback': {'blockReason': 'SAFETY'}}, m('gemini-2.5-flash-image'))
+            self.assertRaises(
+                ResultBlocked,
+                parse_gemini_image_response,
+                {'candidates': [{'finishReason': 'IMAGE_SAFETY', 'content': {'parts': []}}]},
+                m('gemini-2.5-flash-image'),
+            )
+
+            res = parse_imagen_response({'predictions': [{'bytesBase64Encoded': img_b64, 'mimeType': 'image/png'}]}, m('imagen-4.0-generate-001'))
+            self.assertEqual(res.image, ImageData(data=b'image bytes', mime_type='image/png'))
+            self.assertEqual((res.cost, res.currency), (0.04, 'USD'))
+            self.assertRaises(ResultBlocked, parse_imagen_response, {'predictions': [{'raiFilteredReason': 'unsafe'}]}, m('imagen-4.0-generate-001'))
+
+        def test_ai_open_router_image_response_parsing(self) -> None:
+            from calibre.ai.open_router.backend import parse_image_chat_response
+
+            d = {
+                'model': 'test/model',
+                'provider': 'test-provider',
+                'choices': [{'message': {'content': 'done', 'images': [{'image_url': {'url': image_as_data_url(ImageData(b'image bytes'))}}]}}],
+                'usage': {'cost': 0.5},
+            }
+            res = parse_image_chat_response(d, 'test/model')
+            self.assertEqual(res.image, ImageData(data=b'image bytes', mime_type='image/png'))
+            self.assertEqual(res.text, 'done')
+            self.assertEqual(res.cost, 0.5)
+            self.assertEqual(res.provider, 'test-provider')
+            self.assertRaises(ValueError, parse_image_chat_response, {'choices': [{'message': {'content': 'no image'}}]}, 'test/model')
+
+        def test_ai_response_accumulator(self) -> None:
             a = StreamedResponseAccumulator()
             a.accumulate(ChatResponse('an initial msg'))
             a.accumulate(ChatResponse('. more text.'))
