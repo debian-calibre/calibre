@@ -1,0 +1,22 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 18 Sep 2026 18:09:24 +0900
+Subject: Link PoDoFo private library into PoDoFo plugin
+
+Forwarded: not-needed
+---
+ setup/extensions.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup/extensions.json b/setup/extensions.json
+index d837a9d..1345b10 100644
+--- a/setup/extensions.json
++++ b/setup/extensions.json
+@@ -128,7 +128,7 @@
+         "name": "podofo",
+         "sources": "calibre/utils/podofo/utils.cpp calibre/utils/podofo/output.cpp calibre/utils/podofo/doc.cpp calibre/utils/podofo/outline.cpp calibre/utils/podofo/fonts.cpp calibre/utils/podofo/impose.cpp calibre/utils/podofo/images.cpp calibre/utils/podofo/outlines.cpp calibre/utils/podofo/podofo.cpp",
+         "headers": "calibre/utils/podofo/global.h",
+-        "libraries": "!podofo podofo_private ssl crypto fontconfig freetype xml2 png tiff jpeg z idn",
++        "libraries": "!podofo podofo_private ssl crypto fontconfig freetype xml2 png tiff jpeg z idn podofo_3rdparty podofo_private",
+         "ldflags": "-Lpodofo/src/podofo/private",
+         "lib_dirs": "!podofo_lib_dirs",
+         "inc_dirs": "!podofo_inc_dirs",
