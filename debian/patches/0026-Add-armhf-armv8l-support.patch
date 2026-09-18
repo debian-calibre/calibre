@@ -1,0 +1,30 @@
+From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+Date: Fri, 18 Sep 2026 22:08:14 +0900
+Subject: Add "armhf" (armv8l) support
+
+======================================================================
+ERROR: calibre.web.automate.test_download_deps.TestDownloadDeps.test_download_deps_camoufox_release_selection
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/build/reproducible-path/calibre-9.15.0+ds+~1.1.2/src/calibre/web/automate/test_download_deps.py", line 274, in test_download_deps_camoufox_release_selection
+    other_arch = 'i686' if dd.camoufox_arch() != 'i686' else 'arm64'
+                           ~~~~~~~~~~~~~~~~^^
+  File "/build/reproducible-path/calibre-9.15.0+ds+~1.1.2/src/calibre/web/automate/download_deps.py", line 434, in camoufox_arch
+    raise ValueError(f'The CPU architecture {machine} is not supported by camoufox')
+ValueError: The CPU architecture armv8l is not supported by camoufox
+---
+ src/calibre/web/automate/download_deps.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/calibre/web/automate/download_deps.py b/src/calibre/web/automate/download_deps.py
+index 5eab8dd..7d7da28 100644
+--- a/src/calibre/web/automate/download_deps.py
++++ b/src/calibre/web/automate/download_deps.py
+@@ -421,6 +421,7 @@ ARCH_MAP = {
+     'i386': 'i686',
+     'arm64': 'arm64',
+     'aarch64': 'arm64',
++    'armv8l': 'arm64',
+     'armv7l': 'arm64',
+     'armv6l': 'arm64',
+     'armv5l': 'arm64',
