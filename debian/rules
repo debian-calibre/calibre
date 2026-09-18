@@ -60,11 +60,12 @@ blhc-note:
 	@echo 'blhc: ignore-line-regexp: /usr/lib/qt6/libexec/moc .+\.cpp'
 
 override_dh_auto_configure:
-	env CFLAGS="$(CFLAGS) $(DEB_PODOFO_CPPFLAGS) -fPIC" CXXFLAGS="$(CXXFLAGS) $(DEB_PODOFO_CPPFLAGS) -fPIC" cmake -B podofo -S podofo -DPODOFO_BUILD_LIB_ONLY=TRUE -DPODOFO_BUILD_STATIC=TRUE
+	env CFLAGS="$(CFLAGS) $(DEB_PODOFO_CPPFLAGS) -fPIC" CXXFLAGS="$(CXXFLAGS) $(DEB_PODOFO_CPPFLAGS) -fPIC" cmake -B podofo-builder -S podofo -DPODOFO_BUILD_LIB_ONLY=TRUE -DPODOFO_BUILD_STATIC=TRUE -DCMAKE_INSTALL_PREFIX=$(TOPDIR)/podofo-dist
 
 override_dh_auto_build: blhc-note
-	cmake --build podofo --clean-first
-	env PODOFO_INC_DIR=$(TOPDIR)/podofo/src/podofo PODOFO_LIB_DIR=$(TOPDIR)/podofo/src/podofo $(SETUP) build
+	cmake --build   podofo-builder
+	cmake --install podofo-builder
+	env PODOFO_INC_DIR=$(TOPDIR)/podofo-dist/include/podofo PODOFO_LIB_DIR=$(TOPDIR)/podofo-dist/lib $(SETUP) build
 	$(SETUP) liberation_fonts --system-liberation_fonts --path-to-liberation_fonts=/usr/share/fonts/truetype/liberation
 	$(SETUP) gui
 
@@ -85,7 +86,7 @@ calibre_auto_install:
 	mkdir -p  debian/tmp/usr/share/applications
 	mkdir -p  debian/tmp/usr/share/mime/packages
 	mkdir -p  debian/tmp/usr/share/zsh/vendor-completions
-	env XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config PODOFO_INC_DIR=$(TOPDIR)/podofo/src/podofo PODOFO_LIB_DIR=$(TOPDIR)/podofo/src/podofo $(SETUP) install --root=debian/tmp/usr
+	env XDG_DATA_DIRS=$(CURDIR)/debian/tmp/usr/share CALIBRE_CONFIG_DIRECTORY=debian/tmp/config PODOFO_INC_DIR=$(TOPDIR)/podofo-dist/include/podofo PODOFO_LIB_DIR=$(TOPDIR)/podofo-dist/lib $(SETUP) install --root=debian/tmp/usr
 #
 #	# not needed
 	rm    -v debian/tmp/usr/share/calibre/calibre-portable.*
