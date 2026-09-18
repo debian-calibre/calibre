@@ -1,0 +1,43 @@
+From: Vcode2407 <vkslog69@gmail.com>
+Date: Tue, 16 Jun 2026 23:08:57 +0530
+Subject: Fix fallback uint128 bitwise not
+
+Forwarded: not-needed
+Origin: https://github.com/fmtlib/fmt/pull/4813
+
+Fix fallback uint128 bitwise not for 32-bit builds
+
+The fallback `detail::uint128` implementation is used when native
+`__int128` is unavailable, including i686 builds.
+
+`format_hexfloat` masks rounded bits with `~(inc - 1)`, but the
+fallback type did not define unary `operator~`, causing 32-bit
+builds to fail.
+
+This change restores the missing bitwise-not operator and adds
+regression coverage for the fallback `uint128` implementation.
+
+Tested:
+* x86_64 build
+* i686 build
+* `format-test --gtest_filter=uint128_test.*`
+
+Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
+---
+ podofo/3rdparty/fmtlib/fmt/format.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/podofo/3rdparty/fmtlib/fmt/format.h b/podofo/3rdparty/fmtlib/fmt/format.h
+index 5044bef..5706279 100644
+--- a/podofo/3rdparty/fmtlib/fmt/format.h
++++ b/podofo/3rdparty/fmtlib/fmt/format.h
+@@ -326,6 +326,9 @@ class uint128 {
+       -> uint128 {
+     return {lhs.hi_ & rhs.hi_, lhs.lo_ & rhs.lo_};
+   }
++  friend constexpr auto operator~(const uint128& n) -> uint128 {
++    return {~n.hi_, ~n.lo_};
++  }
+   friend FMT_CONSTEXPR auto operator+(const uint128& lhs, const uint128& rhs)
+       -> uint128 {
+     auto result = uint128(lhs);
