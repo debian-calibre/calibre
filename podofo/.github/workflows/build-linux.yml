@@ -18,26 +18,28 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
         language: [ 'cpp' ]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
       with:
           submodules: true
 
     - name: Initialize CodeQL
       if: ${{ github.event.inputs.runCodeQL }}
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
         config-file: ./.github/codeql/codeql-config.yml
 
     - name: Install deps
-      run: sudo apt-get install -y libfontconfig1-dev libfreetype-dev libxml2-dev libssl-dev libjpeg-dev libpng-dev libtiff-dev libidn11-dev
+      run: |
+         sudo apt update
+         sudo apt install -y libfontconfig1-dev libfreetype-dev libxml2-dev libssl-dev libjpeg-dev libpng-dev libtiff-dev
 
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -51,6 +53,6 @@ jobs:
 
     - name: Perform CodeQL Analysis
       if: ${{ github.event.inputs.runCodeQL }}
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v4
       with:
         category: "/language:${{matrix.language}}"

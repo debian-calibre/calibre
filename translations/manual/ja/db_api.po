@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -904,6 +904,16 @@ msgid ""
 "Return the OPF metadata backup for the book as a bytestring or None if no "
 "such backup exists."
 msgstr "本の OPF 書誌バックアップをバイト列として返します。バックアップが存在しない場合は None を返します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.refresh_format_sizes:1
+msgid ""
+"Update the database with the on-disk sizes of the specified format files. "
+"``size_map`` maps ``(book_id, fmt)`` to the size of the format file. Used to"
+" fix stored sizes that have gone stale because format files were changed "
+"outside of calibre. Returns the ids of the books whose stored sizes were "
+"changed."
+msgstr "指定されたフォーマットのディスク上のファイルサイズでデータベースを更新します。``size_map`` は ``(book_id, fmt)`` をそのフォーマットのファイルサイズに対応付けます。これは、calibre の外部でファイルが変更されたことによって異なってしまった保存済みサイズを修正するために使用されます。保存済みサイズが変更された本の ID を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1

@@ -12,23 +12,30 @@
 
 import json
 import os
+import posixpath
 import sys
 from collections.abc import Iterable, Iterator
 from contextlib import suppress
 from enum import Enum, auto
 from functools import lru_cache
+from hashlib import sha256
+from time import monotonic
 from typing import TYPE_CHECKING, Any, NamedTuple
+from urllib.parse import urlparse, urlunparse
 from urllib.request import Request
 
 if TYPE_CHECKING:
+    from unittest import TestSuite
+
     from calibre.ai.anthropic.config import ConfigWidget
 else:
-    ConfigWidget = object
+    ConfigWidget = TestSuite = object
 
 from calibre.ai import ChatMessage, ChatMessageType, ChatResponse, Citation, NoAPIKey, ResultBlocked, ResultBlockReason, StructuredOutputResult, WebLink
 from calibre.ai.anthropic import AnthropicAI
 from calibre.ai.prefs import decode_secret, pref_for_provider
 from calibre.ai.structured import (
+    OnText,
     develop_structured_output,
     messages_for_structured_output,
     strict_json_schema,
@@ -40,15 +47,51 @@ from calibre.ai.utils import chat_with_error_handler, develop_text_chat, get_cac
 from calibre.constants import cache_dir
 from calibre.utils.localization import _
 
-module_version = 2  # needed for live updates
+module_version = 6  # needed for live updates
 API_VERSION = '2023-06-01'
-API_BASE_URL = 'https://api.anthropic.com/v1'
-MODELS_URL = f'{API_BASE_URL}/models?limit=1000'
-CHAT_URL = f'{API_BASE_URL}/messages'
+DEFAULT_API_BASE_URL = 'https://api.anthropic.com/v1'
+# Maximum number of times, and maximum total time in seconds, a single
+# logical turn is resumed after the API pauses it with the pause_turn stop
+# reason
+PAUSE_TURN_CONTINUATION_LIMIT = 4
+PAUSE_TURN_TIME_LIMIT = 300
+# The web search tool to use. Deliberately the basic tool rather than the
+# newer dynamic filtering one (web_search_20260209): that one runs its
+# searches inside a code execution container and then emits no citation
+# deltas at all, so there is no way to tell the user where the parts of a
+# response came from. It also uses several times as many tokens and searches
+# for the same question.
+WEB_SEARCH_TOOL = 'web_search_20250305'
 
 
 def pref(key: str, defval: Any = None) -> Any:  # noqa: ANN401
     return pref_for_provider(AnthropicAI.name, key, defval)
+
+
+def api_url(path: str = '', use_api_url: str | None = None) -> str:
+    base = ((pref('api_url') if use_api_url is None else use_api_url) or '').strip() or DEFAULT_API_BASE_URL
+    purl = urlparse(base)
+    base_path = (purl.path or '').rstrip('/')
+    if not base_path:
+        base_path = '/v1'
+    else:
+        # be tolerant of users pasting a full endpoint URL
+        for suffix in ('/messages', '/models'):
+            if base_path.endswith(suffix):
+                base_path = base_path[: -len(suffix)]
+                break
+    if path:
+        base_path = posixpath.join(base_path, path)
+    return urlunparse(purl._replace(path=base_path, fragment=''))
+
+
+def models_url() -> str:
+    url = api_url('models')
+    return url + ('&' if urlparse(url).query else '?') + 'limit=1000'
+
+
+def chat_url() -> str:
+    return api_url('messages')
 
 
 def api_key() -> str:
@@ -124,12 +167,13 @@ class Pricing(NamedTuple):
     web_search: float = 10 / 1e3  # USD per web search request
 
     @classmethod
-    def per_million(cls, input_price: float, output_price: float) -> Pricing:
-        # Cache writes cost 1.25x and cache reads 0.1x the input token price
+    def per_million(cls, input_price: float, output_price: float, cache_read_multiplier: float = 0.1) -> Pricing:
+        # Cache writes cost 1.25x the input token price by default.
+        # Cache reads cost cache_read_multiplier × input price (0.025x on Fable/Mythos 5.1+, 0.1x otherwise).
         return Pricing(
             input_token=input_price / 1e6,
             output_token=output_price / 1e6,
-            cache_read=0.1 * input_price / 1e6,
+            cache_read=cache_read_multiplier * input_price / 1e6,
             cache_write=1.25 * input_price / 1e6,
         )
 
@@ -210,12 +254,36 @@ class Model(NamedTuple):
 @lru_cache(2)
 def builtin_models() -> dict[str, Model]:
     # The models API provides no pricing data, so model pricing must be kept
-    # up to date manually from https://docs.anthropic.com/en/docs/about-claude/pricing
+    # up to date manually from https://platform.claude.com/docs/en/about-claude/pricing
     models = (
+        Model.create(
+            'claude-fable-5-1',
+            'Claude Fable 5.1',
+            _('The most capable Claude model, for the most demanding tasks. Note that it is expensive.'),
+            context_length=1_000_000,
+            output_limit=128_000,
+            pricing=Pricing.per_million(10, 50, cache_read_multiplier=0.025),
+        ),
+        Model.create(
+            'claude-mythos-5-1',
+            'Claude Mythos 5.1',
+            _('The most capable Claude model (limited availability). For the most demanding tasks. Note that it is expensive.'),
+            context_length=1_000_000,
+            output_limit=128_000,
+            pricing=Pricing.per_million(10, 50, cache_read_multiplier=0.025),
+        ),
         Model.create(
             'claude-fable-5',
             'Claude Fable 5',
-            _('The most capable Claude model, for the most demanding tasks. Note that it is expensive.'),
+            _('An older generation of the most capable Claude model, for the most demanding tasks. Note that it is expensive.'),
+            context_length=1_000_000,
+            output_limit=128_000,
+            pricing=Pricing.per_million(10, 50),
+        ),
+        Model.create(
+            'claude-mythos-5',
+            'Claude Mythos 5',
+            _('An older generation of the most capable Claude model (limited availability). Note that it is expensive.'),
             context_length=1_000_000,
             output_limit=128_000,
             pricing=Pricing.per_million(10, 50),
@@ -253,16 +321,32 @@ def builtin_models() -> dict[str, Model]:
             pricing=Pricing.per_million(5, 25),
         ),
         Model.create(
+            'claude-opus-4-5',
+            'Claude Opus 4.5',
+            _('An older generation of the flagship Claude Opus series of models.'),
+            context_length=1_000_000,
+            output_limit=128_000,
+            pricing=Pricing.per_million(5, 25),
+        ),
+        Model.create(
             'claude-sonnet-5',
             'Claude Sonnet 5',
             _('A fast and capable model, well suited to most everyday tasks.'),
             context_length=1_000_000,
             output_limit=128_000,
-            pricing=Pricing.per_million(3, 15),
+            pricing=Pricing.per_million(2, 10),
         ),
         Model.create(
             'claude-sonnet-4-6',
             'Claude Sonnet 4.6',
+            _('An older generation of the fast and capable Claude Sonnet series of models.'),
+            context_length=1_000_000,
+            output_limit=128_000,
+            pricing=Pricing.per_million(3, 15),
+        ),
+        Model.create(
+            'claude-sonnet-4-5',
+            'Claude Sonnet 4.5',
             _('An older generation of the fast and capable Claude Sonnet series of models.'),
             context_length=1_000_000,
             output_limit=128_000,
@@ -285,10 +369,13 @@ def get_available_models() -> dict[str, Model]:
     ans = dict(builtin_models())
     if not is_ready_for_use():
         return ans
-    cache_loc = os.path.join(cache_dir(), 'ai', f'{AnthropicAI.name}-models-v1.json')
+    url = models_url()
+    # a custom endpoint gets its own cache file
+    suffix = '' if url == f'{DEFAULT_API_BASE_URL}/models?limit=1000' else '-' + sha256(url.encode('utf-8')).hexdigest()[:16]
+    cache_loc = os.path.join(cache_dir(), 'ai', f'{AnthropicAI.name}-models-v1{suffix}.json')
     headers = (('x-api-key', decoded_api_key()), ('anthropic-version', API_VERSION))
     try:
-        entries = json.loads(get_cached_resource(cache_loc, MODELS_URL, headers=headers))
+        entries = json.loads(get_cached_resource(cache_loc, url, headers=headers))
     except Exception as e:
         print(f'Failed to download the list of Anthropic models with error: {e}', file=sys.stderr)
         return ans
@@ -310,12 +397,23 @@ def config_widget() -> ConfigWidget:
 
 def save_settings(config_widget: ConfigWidget) -> None:
     config_widget.save_settings()
+    get_available_models.cache_clear()
+    models_by_strategy.cache_clear()
 
 
 def human_readable_model_name(model_id: str) -> str:
     if m := get_available_models().get(model_id):
         model_id = m.name
     return model_id
+
+
+def configured_model_name(for_image: bool = False) -> str:
+    if for_image:
+        return ''
+    try:
+        return model_choice_for_text().id
+    except Exception:
+        return ''
 
 
 @lru_cache(2)
@@ -373,7 +471,7 @@ def chat_request(data: dict[str, Any]) -> Request:
         'anthropic-version': API_VERSION,
         'Content-Type': 'application/json',
     }
-    return Request(CHAT_URL, data=json.dumps(data).encode('utf-8'), headers=headers, method='POST')
+    return Request(chat_url(), data=json.dumps(data).encode('utf-8'), headers=headers, method='POST')
 
 
 def for_assistant(m: ChatMessage) -> dict[str, Any]:
@@ -384,7 +482,7 @@ def for_assistant(m: ChatMessage) -> dict[str, Any]:
 
 def exception_for_stop_reason(stop_reason: str, delta: dict[str, Any]) -> ResultBlocked | None:
     match stop_reason:
-        case 'end_turn' | 'stop_sequence' | 'pause_turn':
+        case 'end_turn' | 'stop_sequence':
             return None
         case 'max_tokens':
             return ResultBlocked(ResultBlockReason.max_tokens)
@@ -394,69 +492,175 @@ def exception_for_stop_reason(stop_reason: str, delta: dict[str, Any]) -> Result
     return ResultBlocked(custom_message=_('Response stopped for an unknown reason: {}').format(stop_reason))
 
 
-def response_from_events(events: Iterator[dict[str, Any]], model: Model) -> Iterator[ChatResponse]:
+class StreamedMessage:
+    # Accumulates streamed events into ChatResponses, reconstructing the raw
+    # content blocks so that a turn paused by the API with the pause_turn stop
+    # reason can be resumed by sending the partial content back.
     # https://docs.anthropic.com/en/docs/build-with-claude/streaming
-    usage: dict[str, Any] = {}
-    response_id = ''
-    offset = block_start = 0
-    block_links: list[int] = []
-    citations: list[Citation] = []
-    web_links: list[WebLink] = []
-    link_idx_by_url: dict[str, int] = {}
-    for event in events:
-        match event.get('type'):
-            case 'message_start':
-                msg = event['message']
-                response_id = msg.get('id') or ''
-                usage.update(msg.get('usage') or {})
-            case 'content_block_start':
-                block_start = offset
-                block_links = []
-            case 'content_block_delta':
-                delta = event['delta']
-                match delta.get('type'):
-                    case 'text_delta':
-                        if text := delta.get('text'):
-                            offset += len(text)
-                            yield ChatResponse(content=text, type=ChatMessageType.assistant, id=response_id, plugin_name=AnthropicAI.name)
-                    case 'thinking_delta':
-                        if text := delta.get('thinking'):
-                            yield ChatResponse(reasoning=text, type=ChatMessageType.assistant, id=response_id, plugin_name=AnthropicAI.name)
-                    case 'citations_delta':
-                        c = delta.get('citation') or {}
-                        if url := c.get('url'):
-                            idx = link_idx_by_url.get(url)
-                            if idx is None:
-                                idx = link_idx_by_url[url] = len(web_links)
-                                web_links.append(WebLink(title=c.get('title') or url, uri=url))
-                            if idx not in block_links:
-                                block_links.append(idx)
-            case 'content_block_stop':
-                if block_links:
-                    citations.append(Citation(tuple(block_links), start_offset=block_start, end_offset=offset))
-                    block_links = []
-            case 'message_delta':
-                delta = event.get('delta') or {}
-                usage.update(event.get('usage') or {})
-                if (stop_reason := delta.get('stop_reason')) and (exc := exception_for_stop_reason(stop_reason, delta)) is not None:
-                    yield ChatResponse(exception=exc)
-                    return
-            case 'error':
-                e = event.get('error') or {}
-                raise Exception(f'Error from Anthropic of type: {e.get("type", "unknown")} with message: {e.get("message", "Unknown error")}')
-    cost, currency = model.pricing.get_cost(usage) if model.pricing else (0.0, '')
+
+    def __init__(self) -> None:
+        self.usages: list[dict[str, Any]] = []
+        self.response_id = ''
+        self.offset = self.block_start = 0
+        self.block_links: list[int] = []
+        self.citations: list[Citation] = []
+        self.web_links: list[WebLink] = []
+        self.link_idx_by_url: dict[str, int] = {}
+        self.content_blocks: list[dict[str, Any]] = []
+        self.partial_json = ''
+        self.stop_reason = ''
+        self.container_id = ''
+        self.errored = False
+
+    @property
+    def can_be_resumed(self) -> bool:
+        # A paused turn is resumed by sending its content back as an assistant
+        # message, which the API accepts only when that message ends with a
+        # server tool use it has still to run, the state a turn is paused in.
+        # An assistant message ending in a text or thinking block is instead
+        # rejected as a prefill, which none of the current models support.
+        return bool(self.content_blocks) and self.content_blocks[-1].get('type') == 'server_tool_use'
+
+    @property
+    def current_block(self) -> dict[str, Any]:
+        if not self.content_blocks:
+            self.content_blocks.append({})
+        return self.content_blocks[-1]
+
+    def take_content_blocks(self) -> list[dict[str, Any]]:
+        ans, self.content_blocks = self.content_blocks, []
+        return ans
+
+    def total_usage(self) -> dict[str, Any]:
+        # Sum token counts over all the requests used for this logical turn
+        def merge(dest: dict[str, Any], src: dict[str, Any]) -> None:
+            for k, v in src.items():
+                if isinstance(v, dict):
+                    merge(dest.setdefault(k, {}), v)
+                elif isinstance(v, (int, float)):
+                    dest[k] = dest.get(k, 0) + v
+
+        ans: dict[str, Any] = {}
+        for u in self.usages:
+            merge(ans, u)
+        return ans
+
+    def process(self, events: Iterator[dict[str, Any]]) -> Iterator[ChatResponse]:
+        self.stop_reason = ''
+        for event in events:
+            match event.get('type'):
+                case 'message_start':
+                    msg = event['message']
+                    self.response_id = msg.get('id') or ''
+                    self.usages.append(dict(msg.get('usage') or {}))
+                case 'content_block_start':
+                    self.block_start = self.offset
+                    self.block_links = []
+                    self.partial_json = ''
+                    self.content_blocks.append(dict(event.get('content_block') or {}))
+                case 'content_block_delta':
+                    delta = event['delta']
+                    match delta.get('type'):
+                        case 'text_delta':
+                            if text := delta.get('text'):
+                                self.offset += len(text)
+                                self.current_block['text'] = (self.current_block.get('text') or '') + text
+                                yield ChatResponse(content=text, type=ChatMessageType.assistant, id=self.response_id, plugin_name=AnthropicAI.name)
+                        case 'thinking_delta':
+                            if text := delta.get('thinking'):
+                                self.current_block['thinking'] = (self.current_block.get('thinking') or '') + text
+                                yield ChatResponse(reasoning=text, type=ChatMessageType.assistant, id=self.response_id, plugin_name=AnthropicAI.name)
+                        case 'signature_delta':
+                            if sig := delta.get('signature'):
+                                self.current_block['signature'] = (self.current_block.get('signature') or '') + sig
+                        case 'input_json_delta':
+                            self.partial_json += delta.get('partial_json') or ''
+                        case 'citations_delta':
+                            c = delta.get('citation') or {}
+                            if not self.current_block.get('citations'):
+                                self.current_block['citations'] = []
+                            self.current_block['citations'].append(c)
+                            if url := c.get('url'):
+                                idx = self.link_idx_by_url.get(url)
+                                if idx is None:
+                                    idx = self.link_idx_by_url[url] = len(self.web_links)
+                                    self.web_links.append(WebLink(title=c.get('title') or url, uri=url))
+                                if idx not in self.block_links:
+                                    self.block_links.append(idx)
+                case 'content_block_stop':
+                    if self.partial_json:
+                        with suppress(Exception):
+                            self.current_block['input'] = json.loads(self.partial_json)
+                        self.partial_json = ''
+                    if self.block_links:
+                        self.citations.append(Citation(tuple(self.block_links), start_offset=self.block_start, end_offset=self.offset))
+                        self.block_links = []
+                case 'message_delta':
+                    delta = event.get('delta') or {}
+                    if self.usages:
+                        self.usages[-1].update(event.get('usage') or {})
+                    else:
+                        self.usages.append(dict(event.get('usage') or {}))
+                    # Server tools such as web search run their code in a
+                    # container, whose id has to be repeated to resume a turn
+                    # paused while using them.
+                    if container_id := (delta.get('container') or {}).get('id'):
+                        self.container_id = container_id
+                    if stop_reason := delta.get('stop_reason'):
+                        self.stop_reason = stop_reason
+                        if stop_reason != 'pause_turn' and (exc := exception_for_stop_reason(stop_reason, delta)) is not None:
+                            self.errored = True
+                            yield ChatResponse(exception=exc)
+                            return
+                case 'error':
+                    e = event.get('error') or {}
+                    raise Exception(f'Error from Anthropic of type: {e.get("type", "unknown")} with message: {e.get("message", "Unknown error")}')
+
+
+def stream_chat(data: dict[str, Any], model: Model) -> Iterator[ChatResponse]:
+    # The API pauses long running turns with the pause_turn stop reason. Such
+    # a response is incomplete: its content must be sent back as an assistant
+    # message and the request repeated for the model to continue, otherwise
+    # the result is silently truncated. Only a turn paused with a server tool
+    # use still pending can be resumed, see StreamedMessage.can_be_resumed.
+    # Every resumption re-sends the entire turn so far, which for a turn using
+    # web search is easily hundreds of thousands of tokens, so resumption is
+    # bounded by elapsed time as well as by a number of attempts, to keep one
+    # runaway turn from appearing to hang for many minutes.
+    sm = StreamedMessage()
+    data = dict(data, messages=list(data['messages']))
+    deadline = monotonic() + PAUSE_TURN_TIME_LIMIT
+    paused = False
+    for _attempt in range(PAUSE_TURN_CONTINUATION_LIMIT + 1):
+        yield from sm.process(read_streaming_response(chat_request(data), AnthropicAI.name))
+        if sm.errored:
+            return
+        if not sm.stop_reason:
+            raise Exception('The response stream from Anthropic ended without a stop reason, the response is likely incomplete')
+        paused = sm.stop_reason == 'pause_turn'
+        if not paused or not sm.can_be_resumed or monotonic() >= deadline:
+            break
+        data['messages'].append({'role': 'assistant', 'content': sm.take_content_blocks()})
+        if sm.container_id:
+            data['container'] = sm.container_id
+    cost, currency = model.pricing.get_cost(sm.total_usage()) if model.pricing else (0.0, '')
     yield ChatResponse(
         type=ChatMessageType.assistant,
-        id=response_id,
+        id=sm.response_id,
         has_metadata=True,
         cost=cost,
         currency=currency,
         provider=AnthropicAI.name,
         model=model.id,
         plugin_name=AnthropicAI.name,
-        citations=tuple(citations),
-        web_links=tuple(web_links),
+        citations=tuple(sm.citations),
+        web_links=tuple(sm.web_links),
     )
+    if paused:
+        # The turn was still paused when we gave up resuming it, so what was
+        # generated is truncated. Report it rather than passing off a partial
+        # response as a complete one.
+        yield ChatResponse(exception=ResultBlocked(custom_message=_('The AI paused this response and it could not be resumed, so it is incomplete')))
 
 
 def model_for_use_model(use_model: str) -> Model:
@@ -483,16 +687,14 @@ def chat_data(messages: Iterable[ChatMessage], model: Model, use_tools: bool = T
     apply_reasoning_settings(data, model)
     if use_tools and pref('allow_web_searches', False):
         # https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/web-search-tool
-        tool_type = 'web_search_20260209' if model.thinking is ThinkingMode.adaptive else 'web_search_20250305'
-        data['tools'] = [{'type': tool_type, 'name': 'web_search'}]
+        data['tools'] = [{'type': WEB_SEARCH_TOOL, 'name': 'web_search'}]
     return data
 
 
 def text_chat_implementation(messages: Iterable[ChatMessage], use_model: str = '') -> Iterator[ChatResponse]:
     # https://docs.anthropic.com/en/api/messages
     model = model_for_use_model(use_model)
-    rq = chat_request(chat_data(messages, model))
-    yield from response_from_events(read_streaming_response(rq, AnthropicAI.name), model)
+    yield from stream_chat(chat_data(messages, model), model)
 
 
 def text_chat(messages: Iterable[ChatMessage], use_model: str = '') -> Iterator[ChatResponse]:
@@ -507,17 +709,18 @@ def structured_output_data(messages: Iterable[ChatMessage], model: Model, schema
     return data
 
 
-def generate_structured_output_implementation(prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
+def generate_structured_output_implementation(
+    prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None
+) -> StructuredOutputResult:
     model = model_for_use_model(use_model)
     if not model.supports_native_structured_output:
-        return structured_output_via_prompt(text_chat_implementation, prompt, schema, instructions, use_model, AnthropicAI.name)
+        return structured_output_via_prompt(text_chat_implementation, prompt, schema, instructions, use_model, AnthropicAI.name, on_text)
     data = structured_output_data(messages_for_structured_output(prompt, instructions), model, schema)
-    rq = chat_request(data)
-    return structured_output_from_chat(response_from_events(read_streaming_response(rq, AnthropicAI.name), model), schema, AnthropicAI.name)
+    return structured_output_from_chat(stream_chat(data, model), schema, AnthropicAI.name, on_text)
 
 
-def generate_structured_output(prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
-    return structured_output_with_error_handler(lambda: generate_structured_output_implementation(prompt, schema, instructions, use_model))
+def generate_structured_output(prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None) -> StructuredOutputResult:
+    return structured_output_with_error_handler(lambda: generate_structured_output_implementation(prompt, schema, instructions, use_model, on_text))
 
 
 def develop(use_model: str = '', msg: str = '') -> None:
@@ -529,6 +732,245 @@ def develop(use_model: str = '', msg: str = '') -> None:
 def develop_structured(use_model: str = '', prompt: str = '') -> None:
     # calibre-debug -c 'from calibre.ai.anthropic.backend import develop_structured; develop_structured()'
     develop_structured_output(generate_structured_output, prompt, use_model=use_model)
+
+
+def find_tests() -> TestSuite:
+    import unittest
+    from unittest.mock import patch
+
+    class TestAnthropicBackend(unittest.TestCase):
+        def test_anthropic_pause_turn_continuation(self) -> None:
+            model = Model.create('claude-sonnet-5', 'Claude Sonnet 5', pricing=Pricing.per_million(3, 15))
+            sent: list[dict[str, Any]] = []
+
+            def fake_chat_request(data: dict[str, Any]) -> dict[str, Any]:
+                sent.append(json.loads(json.dumps(data)))
+                return data
+
+            # A turn is paused with a server tool use still pending, the only
+            # state the API will resume from, and reports the id of the
+            # container the tool ran in.
+            def paused_events() -> Iterator[dict[str, Any]]:
+                yield {'type': 'message_start', 'message': {'id': 'm1', 'usage': {'input_tokens': 10, 'output_tokens': 1}}}
+                yield {'type': 'content_block_start', 'index': 0, 'content_block': {'type': 'thinking', 'thinking': '', 'signature': ''}}
+                yield {'type': 'content_block_delta', 'index': 0, 'delta': {'type': 'thinking_delta', 'thinking': 'hmm'}}
+                yield {'type': 'content_block_delta', 'index': 0, 'delta': {'type': 'signature_delta', 'signature': 'sig'}}
+                yield {'type': 'content_block_stop', 'index': 0}
+                yield {'type': 'content_block_start', 'index': 1, 'content_block': {'type': 'text', 'text': ''}}
+                yield {'type': 'content_block_delta', 'index': 1, 'delta': {'type': 'text_delta', 'text': 'Searching. '}}
+                yield {'type': 'content_block_stop', 'index': 1}
+                yield {'type': 'content_block_start', 'index': 2, 'content_block': {'type': 'server_tool_use', 'id': 's1', 'name': 'web_search', 'input': {}}}
+                yield {'type': 'content_block_delta', 'index': 2, 'delta': {'type': 'input_json_delta', 'partial_json': '{"query": "emma"}'}}
+                yield {'type': 'content_block_stop', 'index': 2}
+                yield {
+                    'type': 'message_delta',
+                    'delta': {'stop_reason': 'pause_turn', 'container': {'id': 'container_1'}},
+                    'usage': {'input_tokens': 10, 'output_tokens': 5},
+                }
+                yield {'type': 'message_stop'}
+
+            def completed_events() -> Iterator[dict[str, Any]]:
+                yield {'type': 'message_start', 'message': {'id': 'm2', 'usage': {'input_tokens': 20, 'output_tokens': 1}}}
+                yield {'type': 'content_block_start', 'index': 0, 'content_block': {'type': 'text', 'text': ''}}
+                yield {'type': 'content_block_delta', 'index': 0, 'delta': {'type': 'text_delta', 'text': 'Done.'}}
+                yield {'type': 'content_block_stop', 'index': 0}
+                yield {'type': 'message_delta', 'delta': {'stop_reason': 'end_turn'}, 'usage': {'input_tokens': 20, 'output_tokens': 3}}
+                yield {'type': 'message_stop'}
+
+            def fake_read(rq: dict[str, Any], provider_name: str = '', timeout: int = 120) -> Iterator[dict[str, Any]]:
+                yield from (paused_events() if len(sent) == 1 else completed_events())
+
+            data = {'model': model.id, 'max_tokens': 100, 'messages': [{'role': 'user', 'content': 'q'}], 'stream': True}
+            with patch.dict(stream_chat.__globals__, {'chat_request': fake_chat_request, 'read_streaming_response': fake_read}):
+                responses = list(stream_chat(data, model))
+            self.assertEqual(''.join(r.content for r in responses), 'Searching. Done.')
+            self.assertEqual(''.join(r.reasoning for r in responses), 'hmm')
+            self.assertEqual(len(sent), 2, 'a paused turn must be continued with a second request')
+            self.assertEqual(sent[1]['messages'][0], {'role': 'user', 'content': 'q'})
+            # the partial content, including thinking blocks with their
+            # signatures and the pending tool use with its accumulated input,
+            # must be sent back unchanged for the model to continue the turn
+            self.assertEqual(
+                sent[1]['messages'][1],
+                {
+                    'role': 'assistant',
+                    'content': [
+                        {'type': 'thinking', 'thinking': 'hmm', 'signature': 'sig'},
+                        {'type': 'text', 'text': 'Searching. '},
+                        {'type': 'server_tool_use', 'id': 's1', 'name': 'web_search', 'input': {'query': 'emma'}},
+                    ],
+                },
+            )
+            # the API rejects the continuation unless the container the
+            # pending server tool use ran in is repeated
+            self.assertEqual(sent[1].get('container'), 'container_1')
+            self.assertNotIn('container', sent[0])
+            m = responses[-1]
+            self.assertTrue(m.has_metadata)
+            self.assertIsNone(m.exception)
+            self.assertEqual(m.id, 'm2')
+            # usage must be summed over both requests: 30 input and 8 output tokens
+            self.assertAlmostEqual(m.cost, (30 * 3 + 8 * 15) / 1e6)
+
+        def test_anthropic_unresumable_pause_turn(self) -> None:
+            # A turn paused with no server tool use pending cannot be resumed:
+            # the API rejects an assistant message ending in a text or thinking
+            # block as a prefill, which the current models do not support. Such
+            # a response must be reported as incomplete rather than retried.
+            model = Model.create('claude-sonnet-5', 'Claude Sonnet 5', pricing=Pricing.per_million(3, 15))
+            sent: list[dict[str, Any]] = []
+
+            def fake_chat_request(data: dict[str, Any]) -> dict[str, Any]:
+                sent.append(json.loads(json.dumps(data)))
+                return data
+
+            def fake_read(rq: dict[str, Any], provider_name: str = '', timeout: int = 120) -> Iterator[dict[str, Any]]:
+                yield {'type': 'message_start', 'message': {'id': 'm1', 'usage': {'input_tokens': 10, 'output_tokens': 1}}}
+                yield {'type': 'content_block_start', 'index': 0, 'content_block': {'type': 'text', 'text': ''}}
+                yield {'type': 'content_block_delta', 'index': 0, 'delta': {'type': 'text_delta', 'text': '{"title": "Em'}}
+                yield {'type': 'content_block_stop', 'index': 0}
+                yield {'type': 'message_delta', 'delta': {'stop_reason': 'pause_turn'}, 'usage': {'output_tokens': 5}}
+                yield {'type': 'message_stop'}
+
+            data = {'model': model.id, 'max_tokens': 100, 'messages': [{'role': 'user', 'content': 'q'}], 'stream': True}
+            with patch.dict(stream_chat.__globals__, {'chat_request': fake_chat_request, 'read_streaming_response': fake_read}):
+                responses = list(stream_chat(data, model))
+            self.assertEqual(len(sent), 1, 'a pause the API cannot resume must not be retried')
+            self.assertEqual(''.join(r.content for r in responses), '{"title": "Em')
+            self.assertTrue(responses[-2].has_metadata, 'the cost of the incomplete turn must still be reported')
+            exc = responses[-1].exception
+            self.assertIsInstance(exc, ResultBlocked)
+            self.assertIn('incomplete', str(exc))
+
+        def test_anthropic_pause_turn_limit(self) -> None:
+            # A turn the model keeps pausing must stop being resumed rather
+            # than resending an ever growing conversation indefinitely.
+            model = Model.create('claude-sonnet-5', 'Claude Sonnet 5', pricing=Pricing.per_million(3, 15))
+            sent: list[dict[str, Any]] = []
+
+            def fake_chat_request(data: dict[str, Any]) -> dict[str, Any]:
+                sent.append(json.loads(json.dumps(data)))
+                return data
+
+            def fake_read(rq: dict[str, Any], provider_name: str = '', timeout: int = 120) -> Iterator[dict[str, Any]]:
+                yield {'type': 'message_start', 'message': {'id': f'm{len(sent)}', 'usage': {'input_tokens': 10, 'output_tokens': 1}}}
+                yield {'type': 'content_block_start', 'index': 0, 'content_block': {'type': 'server_tool_use', 'id': 's1', 'name': 'web_search', 'input': {}}}
+                yield {'type': 'content_block_stop', 'index': 0}
+                yield {'type': 'message_delta', 'delta': {'stop_reason': 'pause_turn'}, 'usage': {'output_tokens': 1}}
+                yield {'type': 'message_stop'}
+
+            data = {'model': model.id, 'max_tokens': 100, 'messages': [{'role': 'user', 'content': 'q'}], 'stream': True}
+            with patch.dict(stream_chat.__globals__, {'chat_request': fake_chat_request, 'read_streaming_response': fake_read}):
+                responses = list(stream_chat(data, model))
+            self.assertEqual(len(sent), PAUSE_TURN_CONTINUATION_LIMIT + 1)
+            self.assertIsInstance(responses[-1].exception, ResultBlocked)
+
+            # and the elapsed time limit stops it even before the attempt limit
+            sent.clear()
+            times = iter([0.0] + [float(PAUSE_TURN_TIME_LIMIT + 1)] * 10)
+            with patch.dict(
+                stream_chat.__globals__,
+                {'chat_request': fake_chat_request, 'read_streaming_response': fake_read, 'monotonic': lambda: next(times)},
+            ):
+                responses = list(stream_chat(data, model))
+            self.assertEqual(len(sent), 1, 'resuming must stop once the time limit is exceeded')
+            self.assertIsInstance(responses[-1].exception, ResultBlocked)
+
+        def test_anthropic_stream_without_stop_reason(self) -> None:
+            # a stream that ends without a stop reason is incomplete and must
+            # not be silently treated as a successful response
+            model = Model.create('claude-sonnet-5', 'Claude Sonnet 5', pricing=Pricing.per_million(3, 15))
+
+            def fake_chat_request(data: dict[str, Any]) -> dict[str, Any]:
+                return data
+
+            def fake_read(rq: dict[str, Any], provider_name: str = '', timeout: int = 120) -> Iterator[dict[str, Any]]:
+                yield {'type': 'message_start', 'message': {'id': 'm1', 'usage': {'input_tokens': 10}}}
+                yield {'type': 'content_block_start', 'index': 0, 'content_block': {'type': 'text', 'text': ''}}
+                yield {'type': 'content_block_delta', 'index': 0, 'delta': {'type': 'text_delta', 'text': '{"title": "Em'}}
+
+            data = {'model': model.id, 'max_tokens': 100, 'messages': [{'role': 'user', 'content': 'q'}], 'stream': True}
+            with patch.dict(stream_chat.__globals__, {'chat_request': fake_chat_request, 'read_streaming_response': fake_read}):
+                with self.assertRaisesRegex(Exception, 'without a stop reason'):
+                    list(stream_chat(data, model))
+
+        def test_anthropic_web_search_tool(self) -> None:
+            # The basic web search tool must be used for every model: the
+            # dynamic filtering tool runs its searches in a code execution
+            # container and then emits no citations, so the sources of a
+            # response cannot be shown to the user.
+            adaptive = Model.create('claude-sonnet-5', 'Claude Sonnet 5')
+            budget = Model.create('claude-sonnet-4-5', 'Claude Sonnet 4.5')
+            self.assertIs(adaptive.thinking, ThinkingMode.adaptive)
+            self.assertIs(budget.thinking, ThinkingMode.budget)
+            with patch.dict(chat_data.__globals__, {'pref': lambda key, defval=None: True if key == 'allow_web_searches' else defval}):
+                for model in (adaptive, budget):
+                    data = chat_data((ChatMessage('q'),), model)
+                    self.assertEqual(data['tools'], [{'type': 'web_search_20250305', 'name': 'web_search'}], model.id)
+                self.assertNotIn('tools', chat_data((ChatMessage('q'),), adaptive, use_tools=False))
+
+        def test_anthropic_citation_accumulation(self) -> None:
+            # Web search responses are split into one text block per cited
+            # span, with the sources of each arriving as citation deltas.
+            from calibre.ai.utils import add_citations
+
+            u1, u2 = 'https://example.com/a', 'https://example.com/b'
+
+            def cite(url: str, title: str) -> dict[str, Any]:
+                return {'type': 'citations_delta', 'citation': {'type': 'web_search_result_location', 'cited_text': 'x', 'url': url, 'title': title}}
+
+            def events() -> Iterator[dict[str, Any]]:
+                yield {'type': 'message_start', 'message': {'id': 'm1', 'usage': {'input_tokens': 1}}}
+                for i, (text, citations) in enumerate((
+                    ('A ', ()),
+                    ('big claim', (cite(u1, 'Site A'),)),
+                    (' and ', ()),
+                    ('another', (cite(u1, 'Site A'), cite(u2, 'Site B'))),
+                )):
+                    yield {'type': 'content_block_start', 'index': i, 'content_block': {'citations': [], 'type': 'text', 'text': ''}}
+                    yield {'type': 'content_block_delta', 'index': i, 'delta': {'type': 'text_delta', 'text': text}}
+                    for c in citations:
+                        yield {'type': 'content_block_delta', 'index': i, 'delta': c}
+                    yield {'type': 'content_block_stop', 'index': i}
+                yield {'type': 'message_delta', 'delta': {'stop_reason': 'end_turn'}, 'usage': {'output_tokens': 1}}
+
+            sm = StreamedMessage()
+            content = ''.join(r.content for r in sm.process(events()))
+            self.assertEqual(content, 'A big claim and another')
+            self.assertEqual(sm.web_links, [WebLink('Site A', u1), WebLink('Site B', u2)])
+            # one citation per cited block, spanning exactly that block's text
+            self.assertEqual(sm.citations, [Citation((0,), 2, 11), Citation((0, 1), 16, 23)])
+            for c in sm.citations:
+                self.assertEqual(content[c.start_offset : c.end_offset], {2: 'big claim', 16: 'another'}[c.start_offset])
+            # and the offsets let the sources be rendered inline
+            rendered = add_citations(content, ChatResponse(citations=tuple(sm.citations), web_links=tuple(sm.web_links)))
+            self.assertEqual(
+                rendered,
+                f'A [big claim]({u1} "Site A") and another<sup>[1]({u1} "Site A"), [2]({u2} "Site B")</sup>',
+            )
+
+        def test_api_url_normalization(self) -> None:
+            self.assertEqual(api_url('messages', ''), 'https://api.anthropic.com/v1/messages')
+            self.assertEqual(api_url('messages', '   '), 'https://api.anthropic.com/v1/messages')
+            self.assertEqual(api_url('models', 'http://localhost:4000'), 'http://localhost:4000/v1/models')
+            self.assertEqual(api_url('models', 'http://localhost:4000/'), 'http://localhost:4000/v1/models')
+            self.assertEqual(api_url('messages', 'http://localhost:4000/v1'), 'http://localhost:4000/v1/messages')
+            self.assertEqual(api_url('messages', 'https://example.com/anthropic/v1'), 'https://example.com/anthropic/v1/messages')
+            # tolerate a full endpoint URL being pasted in
+            self.assertEqual(api_url('messages', 'https://example.com/v1/messages'), 'https://example.com/v1/messages')
+            self.assertEqual(api_url('models', 'https://example.com/v1/messages'), 'https://example.com/v1/models')
+            self.assertEqual(api_url('messages', 'https://example.com/v1/models'), 'https://example.com/v1/messages')
+            self.assertEqual(
+                api_url('models', 'https://bedrock-mantle.us-east-1.api.aws/anthropic/v1/messages'),
+                'https://bedrock-mantle.us-east-1.api.aws/anthropic/v1/models',
+            )
+            # query parameters are preserved and fragments are discarded
+            self.assertEqual(api_url('messages', 'https://example.com/v1?a=b#c'), 'https://example.com/v1/messages?a=b')
+            with patch.dict(api_url.__globals__, {'pref': lambda key, defval=None: 'https://example.com/v1?route=anthropic'}):
+                self.assertEqual(models_url(), 'https://example.com/v1/models?route=anthropic&limit=1000')
+                self.assertEqual(chat_url(), 'https://example.com/v1/messages?route=anthropic')
+
+    return unittest.defaultTestLoader.loadTestsFromTestCase(TestAnthropicBackend)
 
 
 if __name__ == '__main__':

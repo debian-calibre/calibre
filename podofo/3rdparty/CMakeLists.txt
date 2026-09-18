@@ -1,0 +1,33 @@
+if (MSVC)
+    # Hide all warnings for 3rdparty code
+	add_compile_options(/W0)
+else()
+    # Hide all warnings for 3rdparty code
+	add_compile_options(-w)
+
+    # Fixes "relocation against hidden symbol can not
+    # be used when making a shared object"
+    add_compile_options(-fPIC)
+endif()
+
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/adobe/afdko/resource")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/adobe/afdko/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/chromium")
+
+add_source("pdfium" "${CMAKE_CURRENT_SOURCE_DIR}/chromium/pdfium" SOURCE_FILES HEADERS_FILES)
+add_source("afdko" "${CMAKE_CURRENT_SOURCE_DIR}/adobe/afdko" SOURCE_FILES HEADERS_FILES)
+
+if (NOT PODOFO_DEVENDOR_UTF8PROC)
+    add_compile_definitions(UTF8PROC_STATIC)
+    add_source("utf8proc" "${CMAKE_CURRENT_SOURCE_DIR}/utf8proc" SOURCE_FILES HEADERS_FILES)
+    list(FILTER SOURCE_FILES EXCLUDE REGEX "utf8proc_data\.c")
+endif()
+
+add_library(podofo_3rdparty STATIC ${SOURCE_FILES})
+target_link_libraries(podofo_3rdparty LibXml2::LibXml2)
+
+if (PODOFO_DEVENDOR_TCBSPAN)
+    target_link_libraries(podofo_3rdparty "$<COMPILE_ONLY:tcbspan::tcbspan>")
+else()
+    include_directories("${CMAKE_CURRENT_SOURCE_DIR}/tcbspan")
+endif()

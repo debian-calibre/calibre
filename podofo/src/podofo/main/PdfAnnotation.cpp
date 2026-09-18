@@ -1,12 +1,13 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 
 #include "PdfAnnotation.h"
+
+#include <podofo/private/PdfDrawingOperations.h>
+
 #include "PdfDocument.h"
 #include "PdfArray.h"
 #include "PdfDictionary.h"
@@ -16,19 +17,15 @@
 #include "PdfAnnotation_Types.h"
 #include "PdfMath.h"
 
-#include <podofo/private/PdfDrawingOperations.h>
-
 using namespace std;
 using namespace PoDoFo;
 
 static PdfName getAppearanceName(PdfAppearanceType appearance);
-static void setAppearanceStream(PdfDictionary& dict, const PdfObject& abObj,
-    PdfAppearanceType appearance, const PdfName& state);
 
 PdfAnnotation::PdfAnnotation(PdfPage& page, PdfAnnotationType annotType, const Rect& rect)
-    : PdfDictionaryElement(page.GetDocument(), "Annot"), m_AnnotationType(annotType), m_Page(&page)
+    : PdfDictionaryElement(page.GetDocument(), "Annot"_n), m_AnnotationType(annotType), m_Page(&page)
 {
-    const PdfName name(PoDoFo::AnnotationTypeToName(annotType));
+    const PdfName name(PoDoFo::ToString(annotType));
 
     if (name.IsNull())
         PODOFO_RAISE_ERROR(PdfErrorCode::InvalidHandle);
@@ -36,13 +33,23 @@ PdfAnnotation::PdfAnnotation(PdfPage& page, PdfAnnotationType annotType, const R
     PdfArray arr;
     rect.ToArray(arr);
 
-    GetDictionary().AddKey(PdfName::KeySubtype, name);
-    GetDictionary().AddKey(PdfName::KeyRect, arr);
-    GetDictionary().AddKey("P", page.GetObject().GetIndirectReference());
+    GetDictionary().AddKey("Subtype"_n, name);
+    GetDictionary().AddKey("Rect"_n, arr);
+    GetDictionary().AddKey("P"_n, page.GetObject().GetIndirectReference());
 
     // Default set print flag
     auto flags = GetFlags();
     SetFlags(flags | PdfAnnotationFlags::Print);
+
+    if (annotType != PdfAnnotationType::Widget
+        && (GetDocument().GetMetadata().GetPdfUALevel() != PdfUALevel::Unknown
+        || PoDoFo::IsAccessibiltyProfile(GetDocument().GetMetadata().GetPdfALevel())))
+    {
+        // Ensure PDF/UA compliance. NOTE: /Widget annotations wants
+        // a /Form structure element
+        SetContents(PdfString(string(PoDoFo::ToString(annotType)).append(" annotation")));
+        PoDoFo::CreateObjectStructElement(*this, page, "Annot"_n);
+    }
 }
 
 PdfAnnotation::PdfAnnotation(PdfObject& obj, PdfAnnotationType annotType)
@@ -50,38 +57,33 @@ PdfAnnotation::PdfAnnotation(PdfObject& obj, PdfAnnotationType annotType)
 {
 }
 
-Rect PdfAnnotation::GetRectRaw() const
+Corners PdfAnnotation::GetRectRaw() const
 {
     const PdfArray* arr;
-    if (!GetDictionary().TryFindKeyAs(PdfName::KeyRect, arr))
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Missing /Rect element");
+    if (!GetDictionary().TryFindKeyAs("Rect", arr))
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::ObjectNotFound, "Missing /Rect element");
 
-    return Rect::FromArray(*arr);
+    return Corners::FromArray(*arr);
+}
+
+void PdfAnnotation::SetRectRaw(const Corners& rect)
+{
+    PdfArray arr;
+    rect.ToArray(arr);
+    GetDictionary().AddKey("Rect"_n, arr);
 }
 
 Rect PdfAnnotation::GetRect() const
 {
-    return PoDoFo::TransformRectPage(GetRectRaw(), MustGetPage(), true);
-}
-
-void PdfAnnotation::SetRectRaw(const Rect& rect)
-{
-    PdfArray arr;
-    rect.ToArray(arr);
-    GetDictionary().AddKey(PdfName::KeyRect, arr);
+    return PoDoFo::TransformCornersPage(GetRectRaw(), MustGetPage());
 }
 
 void PdfAnnotation::SetRect(const Rect& rect)
 {
     PdfArray arr;
-    auto transformed = PoDoFo::TransformRectPage(rect, MustGetPage(), false);
+    auto transformed = PoDoFo::TransformRectPage(rect, MustGetPage());
     transformed.ToArray(arr);
-    GetDictionary().AddKey(PdfName::KeyRect, arr);
-}
-
-unique_ptr<PdfAnnotation> PdfAnnotation::Create(PdfPage& page, const type_info& typeInfo, const Rect& rect)
-{
-    return Create(page, getAnnotationType(typeInfo), rect);
+    GetDictionary().AddKey("Rect"_n, arr);
 }
 
 PdfPage& PdfAnnotation::MustGetPage()
@@ -137,7 +139,7 @@ unique_ptr<PdfAnnotation> PdfAnnotation::Create(PdfPage& page, PdfAnnotationType
         case PdfAnnotationType::Popup:
             return unique_ptr<PdfAnnotation>(new PdfAnnotationPopup(page, rect));
         case PdfAnnotationType::FileAttachement:
-            return unique_ptr<PdfAnnotation>(new PdfAnnotationFileAttachement(page, rect));
+            return unique_ptr<PdfAnnotation>(new PdfAnnotationFileAttachment(page, rect));
         case PdfAnnotationType::Sound:
             return unique_ptr<PdfAnnotation>(new PdfAnnotationSound(page, rect));
         case PdfAnnotationType::Movie:
@@ -167,39 +169,25 @@ unique_ptr<PdfAnnotation> PdfAnnotation::Create(PdfPage& page, PdfAnnotationType
     }
 }
 
-void PdfAnnotation::SetAppearanceStream(const PdfXObjectForm& xobj, PdfAppearanceType appearance, const PdfName& state)
+void PdfAnnotation::SetAppearanceStream(const PdfXObject& xobj, PdfAppearanceType appearance,
+    const PdfName& state, bool skipSelectedState)
 {
-    const PdfObject* apObj;
-    double teta;
-    if (MustGetPage().HasRotation(teta))
-    {
-        // If the page has a rotation, add a preample object that
-        // will transform the input xobject and adjust the orientation
-        auto newMat = PoDoFo::GetFrameRotationTransform(xobj.GetRect(), -teta);
-        auto actualXobj = GetDocument().CreateXObjectForm(xobj.GetRect());
-        actualXobj->GetOrCreateResources().AddResource("XObject", "XOb1", xobj.GetObject());
-        PdfStringStream sstream;
-        PoDoFo::WriteOperator_Do(sstream, "XOb1");
-        actualXobj->GetObject().GetOrCreateStream().SetData(sstream.GetString());
-        actualXobj->SetMatrix(newMat);
-        apObj = &actualXobj->GetObject();
-    }
-    else
-    {
-        apObj = &xobj.GetObject();
-    }
-
-    setAppearanceStream(GetDictionary(), *apObj, appearance, state);
+    PushAppearanceStream(xobj, appearance, state, false);
+    if (!state.IsNull() && !skipSelectedState)
+        GetDictionary().AddKey("AS"_n, state);
 }
 
-void PdfAnnotation::SetAppearanceStreamRaw(const PdfXObjectForm& xobj, PdfAppearanceType appearance, const PdfName& state)
+void PdfAnnotation::SetAppearanceStreamRaw(const PdfXObject& xobj, PdfAppearanceType appearance,
+    const PdfName& state, bool skipSelectedState)
 {
-    setAppearanceStream(GetDictionary(), xobj.GetObject(), appearance, state);
+    PushAppearanceStream(xobj, appearance, state, true);
+    if (!state.IsNull() && !skipSelectedState)
+        GetDictionary().AddKey("AS"_n, state);
 }
 
-void PdfAnnotation::GetAppearanceStreams(vector<PdfAppearanceIdentity>& streams) const
+void PdfAnnotation::GetAppearanceStreams(vector<PdfAppearanceStream>& states) const
 {
-    streams.clear();
+    states.clear();
     auto apDict = getAppearanceDictionary();
     if (apDict == nullptr)
         return;
@@ -218,19 +206,24 @@ void PdfAnnotation::GetAppearanceStreams(vector<PdfAppearanceIdentity>& streams)
             continue;
 
         PdfDictionary* apStateDict;
-        if ( pair1.second->HasStream())
+        if (pair1.second->HasStream())
         {
-            streams.push_back({ pair1.second, apType, PdfName() });
+            states.push_back({ pair1.second, apType, PdfName::Null });
         }
         else if (pair1.second->TryGetDictionary(apStateDict))
         {
             for (auto& pair2 : apStateDict->GetIndirectIterator())
             {
                 if (pair2.second->HasStream())
-                    streams.push_back({ pair2.second, apType, pair2.first });
+                    states.push_back({ pair2.second, apType, pair2.first });
             }
         }
     }
+}
+
+void PdfAnnotation::ClearAppearances()
+{
+    GetDictionary().AddKey("AP"_n, PdfDictionary());
 }
 
 PdfObject* PdfAnnotation::GetAppearanceDictionaryObject()
@@ -243,17 +236,17 @@ const PdfObject* PdfAnnotation::GetAppearanceDictionaryObject() const
     return GetDictionary().FindKey("AP");
 }
 
-PdfObject* PdfAnnotation::GetAppearanceStream(PdfAppearanceType appearance, const PdfName& state)
+PdfObject* PdfAnnotation::GetAppearanceStream(PdfAppearanceType appearance, const string_view& state)
 {
     return getAppearanceStream(appearance, state);
 }
 
-const PdfObject* PdfAnnotation::GetAppearanceStream(PdfAppearanceType appearance, const PdfName& state) const
+const PdfObject* PdfAnnotation::GetAppearanceStream(PdfAppearanceType appearance, const string_view& state) const
 {
     return getAppearanceStream(appearance, state);
 }
 
-PdfObject* PdfAnnotation::getAppearanceStream(PdfAppearanceType appearance, const PdfName& state) const
+PdfObject* PdfAnnotation::getAppearanceStream(PdfAppearanceType appearance, const string_view& state) const
 {
     auto apDict = getAppearanceDictionary();
     if (apDict == nullptr)
@@ -264,7 +257,7 @@ PdfObject* PdfAnnotation::getAppearanceStream(PdfAppearanceType appearance, cons
     if (apObjInn == nullptr)
         return nullptr;
 
-    if (state.IsNull())
+    if (state.size() == 0)
         return apObjInn;
 
     return apObjInn->GetDictionary().FindKey(state);
@@ -283,7 +276,7 @@ PdfDictionary* PdfAnnotation::getAppearanceDictionary() const
 
 void PdfAnnotation::SetFlags(PdfAnnotationFlags flags)
 {
-    GetDictionary().AddKey("F", PdfVariant(static_cast<int64_t>(flags)));
+    GetDictionary().AddKey("F"_n, PdfVariant(static_cast<int64_t>(flags)));
 }
 
 PdfAnnotationFlags PdfAnnotation::GetFlags() const
@@ -312,13 +305,13 @@ void PdfAnnotation::SetBorderStyle(double dHCorner, double dVCorner, double widt
     if (strokeStyle.size() != 0)
         values.Add(strokeStyle);
 
-    GetDictionary().AddKey("Border", values);
+    GetDictionary().AddKey("Border"_n, values);
 }
 
 void PdfAnnotation::SetTitle(nullable<const PdfString&> title)
 {
     if (title.has_value())
-        GetDictionary().AddKey("T", *title);
+        GetDictionary().AddKey("T"_n, *title);
     else
         GetDictionary().RemoveKey("T");
 }
@@ -336,7 +329,7 @@ nullable<const PdfString&> PdfAnnotation::GetTitle() const
 void PdfAnnotation::SetContents(nullable<const PdfString&> contents)
 {
     if (contents.has_value())
-        GetDictionary().AddKey("Contents", *contents);
+        GetDictionary().AddKey("Contents"_n, *contents);
     else
         GetDictionary().RemoveKey("Contents");
 }
@@ -367,7 +360,7 @@ PdfColor PdfAnnotation::GetColor() const
 void PdfAnnotation::SetColor(nullable<const PdfColor&> color)
 {
     if (color.has_value())
-        GetDictionary().AddKey("C", color->ToArray());
+        GetDictionary().AddKey("C"_n, color->ToArray());
     else
         GetDictionary().RemoveKey("C");
 }
@@ -392,9 +385,81 @@ bool PdfAnnotation::TryCreateFromObject(const PdfObject& obj, unique_ptr<const P
     return true;
 }
 
-bool PdfAnnotation::tryCreateFromObject(const PdfObject& obj, const type_info& typeInfo, PdfAnnotation*& xobj)
+void PdfAnnotation::PushAppearanceStream(const PdfXObject& xobj, PdfAppearanceType appearance, const PdfName& state, bool raw)
 {
-    return tryCreateFromObject(obj, getAnnotationType(typeInfo), xobj);
+    auto form = xobj.GetForm();
+
+    const PdfObject* apObj;
+    double teta;
+    if (raw || !MustGetPage().TryGetRotationRadians(teta))
+    {
+        if (form == nullptr)
+        {
+            // Create a preamble form that just draw the xobject
+            auto actualXobj = GetDocument().CreateXObjectForm(xobj.GetRect());
+            static_cast<PdfResourceOperations&>(actualXobj->GetOrCreateResources())
+                .AddResource(PdfResourceType::XObject, "XOb1"_n, xobj.GetObject());
+            PdfStringStream sstream;
+            PoDoFo::WriteOperator_Do(sstream, "XOb1");
+            actualXobj->GetObject().GetOrCreateStream().SetData(sstream.GetString());
+            form = actualXobj.get();
+        }
+
+        apObj = &form->GetObject();
+    }
+    else
+    {
+        // If the page has a rotation, add a preamble from that
+        // will transform the input xobject and adjust the orientation
+        unique_ptr<PdfXObjectForm> actualXobj;
+        Matrix newMat;
+        if (form == nullptr)
+        {
+            actualXobj = GetDocument().CreateXObjectForm(xobj.GetRect());
+            static_cast<PdfResourceOperations&>(actualXobj->GetOrCreateResources())
+                .AddResource(PdfResourceType::XObject, "XOb1"_n, xobj.GetObject());
+            newMat = PoDoFo::GetFrameRotationTransform(xobj.GetRect(), -teta);
+        }
+        else
+        {
+            actualXobj = GetDocument().CreateXObjectForm(form->GetRect());
+            static_cast<PdfResourceOperations&>(actualXobj->GetOrCreateResources())
+                .AddResource(PdfResourceType::XObject, "XOb1"_n, form->GetObject());
+            newMat = PoDoFo::GetFrameRotationTransform(form->GetRect(), -teta);
+        }
+
+        PdfStringStream sstream;
+        PoDoFo::WriteOperator_Do(sstream, "XOb1");
+        actualXobj->GetObject().GetOrCreateStream().SetData(sstream.GetString());
+        actualXobj->SetMatrix(newMat);
+        apObj = &actualXobj->GetObject();
+    }
+
+    PdfName name;
+    if (appearance == PdfAppearanceType::Rollover)
+        name = "R";
+    else if (appearance == PdfAppearanceType::Down)
+        name = "D";
+    else // PdfAnnotationAppearance::Normal
+        name = "N";
+
+    auto apDictObj = GetDictionary().FindKey("AP");
+    if (apDictObj == nullptr || !apDictObj->IsDictionary())
+        apDictObj = &GetDictionary().AddKey("AP"_n, PdfDictionary());
+
+    if (state.IsNull())
+    {
+        apDictObj->GetDictionary().AddKeyIndirectSafe(name, *apObj);
+    }
+    else
+    {
+        // when the state is defined, then the appearance is expected to be a dictionary
+        auto apInnerObj = apDictObj->GetDictionary().FindKey(name);
+        if (apInnerObj == nullptr || !apInnerObj->IsDictionary())
+            apInnerObj = &apDictObj->GetDictionary().AddKey(name, PdfDictionary());
+
+        apInnerObj->GetDictionary().AddKeyIndirectSafe(state, *apObj);
+    }
 }
 
 bool PdfAnnotation::tryCreateFromObject(const PdfObject& obj, PdfAnnotationType targetType, PdfAnnotation*& xobj)
@@ -457,7 +522,7 @@ bool PdfAnnotation::tryCreateFromObject(const PdfObject& obj, PdfAnnotationType 
             xobj = new PdfAnnotationPopup(const_cast<PdfObject&>(obj));
             return true;
         case PdfAnnotationType::FileAttachement:
-            xobj = new PdfAnnotationFileAttachement(const_cast<PdfObject&>(obj));
+            xobj = new PdfAnnotationFileAttachment(const_cast<PdfObject&>(obj));
             return true;
         case PdfAnnotationType::Sound:
             xobj = new PdfAnnotationSound(const_cast<PdfObject&>(obj));
@@ -496,83 +561,21 @@ bool PdfAnnotation::tryCreateFromObject(const PdfObject& obj, PdfAnnotationType 
             xobj = new PdfAnnotationProjection(const_cast<PdfObject&>(obj));
             return true;
         default:
-            PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
+            xobj = nullptr;
+            return false;
     }
-}
-
-PdfAnnotationType PdfAnnotation::getAnnotationType(const type_info& typeInfo)
-{
-    if (typeInfo == typeid(PdfAnnotationText))
-        return PdfAnnotationType::Text;
-    else if (typeInfo == typeid(PdfAnnotationLink))
-        return PdfAnnotationType::Link;
-    else if (typeInfo == typeid(PdfAnnotationFreeText))
-        return PdfAnnotationType::FreeText;
-    else if (typeInfo == typeid(PdfAnnotationLine))
-        return PdfAnnotationType::Line;
-    else if (typeInfo == typeid(PdfAnnotationSquare))
-        return PdfAnnotationType::Square;
-    else if (typeInfo == typeid(PdfAnnotationCircle))
-        return PdfAnnotationType::Circle;
-    else if (typeInfo == typeid(PdfAnnotationPolygon))
-        return PdfAnnotationType::Polygon;
-    else if (typeInfo == typeid(PdfAnnotationPolyLine))
-        return PdfAnnotationType::PolyLine;
-    else if (typeInfo == typeid(PdfAnnotationHighlight))
-        return PdfAnnotationType::Highlight;
-    else if (typeInfo == typeid(PdfAnnotationUnderline))
-        return PdfAnnotationType::Underline;
-    else if (typeInfo == typeid(PdfAnnotationSquiggly))
-        return PdfAnnotationType::Squiggly;
-    else if (typeInfo == typeid(PdfAnnotationStrikeOut))
-        return PdfAnnotationType::StrikeOut;
-    else if (typeInfo == typeid(PdfAnnotationStamp))
-        return PdfAnnotationType::Stamp;
-    else if (typeInfo == typeid(PdfAnnotationCaret))
-        return PdfAnnotationType::Caret;
-    else if (typeInfo == typeid(PdfAnnotationInk))
-        return PdfAnnotationType::Ink;
-    else if (typeInfo == typeid(PdfAnnotationPopup))
-        return PdfAnnotationType::Popup;
-    else if (typeInfo == typeid(PdfAnnotationFileAttachement))
-        return PdfAnnotationType::FileAttachement;
-    else if (typeInfo == typeid(PdfAnnotationSound))
-        return PdfAnnotationType::Sound;
-    else if (typeInfo == typeid(PdfAnnotationMovie))
-        return PdfAnnotationType::Movie;
-    else if (typeInfo == typeid(PdfAnnotationWidget))
-        return PdfAnnotationType::Widget;
-    else if (typeInfo == typeid(PdfAnnotationScreen))
-        return PdfAnnotationType::Screen;
-    else if (typeInfo == typeid(PdfAnnotationPrinterMark))
-        return PdfAnnotationType::PrinterMark;
-    else if (typeInfo == typeid(PdfAnnotationTrapNet))
-        return PdfAnnotationType::TrapNet;
-    else if (typeInfo == typeid(PdfAnnotationWatermark))
-        return PdfAnnotationType::Watermark;
-    else if (typeInfo == typeid(PdfAnnotationModel3D))
-        return PdfAnnotationType::Model3D;
-    else if (typeInfo == typeid(PdfAnnotationRichMedia))
-        return PdfAnnotationType::RichMedia;
-    else if (typeInfo == typeid(PdfAnnotationWebMedia))
-        return PdfAnnotationType::WebMedia;
-    else if (typeInfo == typeid(PdfAnnotationRedact))
-        return PdfAnnotationType::Redact;
-    else if (typeInfo == typeid(PdfAnnotationProjection))
-        return PdfAnnotationType::Projection;
-    else
-        PODOFO_RAISE_ERROR(PdfErrorCode::InternalLogic);
 }
 
 PdfAnnotationType PdfAnnotation::getAnnotationType(const PdfObject& obj)
 {
     const PdfName* name;
-    auto subTypeObj = obj.GetDictionary().FindKey(PdfName::KeySubtype);
+    auto subTypeObj = obj.GetDictionary().FindKey("Subtype");
     if (subTypeObj == nullptr || !subTypeObj->TryGetName(name))
         return PdfAnnotationType::Unknown;
 
-    auto subtype = name->GetString();
-    return PoDoFo::NameToAnnotationType(subtype);
+    PdfAnnotationType ret;
+    (void)PoDoFo::TryConvertTo(name->GetString(), ret);
+    return ret;
 }
 
 PdfName getAppearanceName(PdfAppearanceType appearance)
@@ -580,48 +583,12 @@ PdfName getAppearanceName(PdfAppearanceType appearance)
     switch (appearance)
     {
         case PdfAppearanceType::Normal:
-            return PdfName("N");
+            return "N"_n;
         case PdfAppearanceType::Rollover:
-            return PdfName("R");
+            return "R"_n;
         case PdfAppearanceType::Down:
-            return PdfName("D");
+            return "D"_n;
         default:
             PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Invalid appearance type");
-    }
-}
-
-void setAppearanceStream(PdfDictionary& dict, const PdfObject& abObj,
-    PdfAppearanceType appearance, const PdfName& state)
-{
-    PdfName name;
-    if (appearance == PdfAppearanceType::Rollover)
-        name = "R";
-    else if (appearance == PdfAppearanceType::Down)
-        name = "D";
-    else // PdfAnnotationAppearance::Normal
-        name = "N";
-
-    auto apDictObj = dict.FindKey("AP");
-    if (apDictObj == nullptr || !apDictObj->IsDictionary())
-        apDictObj = &dict.AddKey("AP", PdfDictionary());
-
-    if (state.IsNull())
-    {
-        apDictObj->GetDictionary().AddKeyIndirectSafe(name, abObj);
-    }
-    else
-    {
-        // when the state is defined, then the appearance is expected to be a dictionary
-        auto apInnerObj = apDictObj->GetDictionary().FindKey(name);
-        if (apInnerObj == nullptr || !apInnerObj->IsDictionary())
-            apInnerObj = &apDictObj->GetDictionary().AddKey(name, PdfDictionary());
-
-        apInnerObj->GetDictionary().AddKeyIndirectSafe(state, abObj);
-    }
-
-    if (!state.IsNull())
-    {
-        if (!dict.HasKey("AS"))
-            dict.AddKey("AS", state);
     }
 }

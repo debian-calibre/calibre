@@ -21,6 +21,21 @@ receive_data_methods = {'GET', 'POST'}
 conversion_jobs = {}
 cache_lock = Lock()
 
+# Conversion options that must never be honoured when they come from a remote
+# client of the content server, regardless of whether they are advertised by
+# /conversion/book-data. They either take a filesystem path or URL (which would
+# let a client read arbitrary server-side files, perform SSRF or manipulate the
+# filesystem) or deliberately weaken a security guard. cover and
+# read_metadata_from_opf are additionally set by the server itself in
+# convert_book(), so a client must never be able to override them.
+FORBIDDEN_CLIENT_OPTIONS = frozenset({
+    'cover',
+    'read_metadata_from_opf',
+    'debug_pipeline',
+    'allow_local_files_outside_root',
+    'extract_to',
+})
+
 
 class JobStatus:
     def __init__(self, job_id, book_id, tdir, library_id, pathtoebook, conversion_data):
@@ -100,10 +115,14 @@ def convert_book(path_to_ebook, opf_path, cover_path, output_fmt, recs):
     from calibre.ebooks.conversion.plumber import Plumber
     from calibre.utils.logging import Log
 
-    recs.append(('verbose', 2, OptionRecommendation.HIGH))
-    recs.append(('read_metadata_from_opf', opf_path, OptionRecommendation.HIGH))
+    # These are set by the server itself and must take precedence over anything
+    # the client requested. merge_ui_recommendations() will not override an
+    # option that has already reached the HIGH level, so these must be merged
+    # *before* the client supplied recommendations to ensure the client cannot
+    # override them by relying on the ordering of the recommendation list.
+    server_recs = [('verbose', 2, OptionRecommendation.HIGH), ('read_metadata_from_opf', opf_path, OptionRecommendation.HIGH)]
     if cover_path:
-        recs.append(('cover', cover_path, OptionRecommendation.HIGH))
+        server_recs.append(('cover', cover_path, OptionRecommendation.HIGH))
     log = Log()
     os.chdir(os.path.dirname(path_to_ebook))
     status_file = share_open('status', 'wb')
@@ -114,8 +133,29 @@ def convert_book(path_to_ebook, opf_path, cover_path, output_fmt, recs):
 
     output_path = os.path.abspath('output.' + output_fmt.lower())
     plumber = Plumber(path_to_ebook, output_path, log, report_progress=notification, override_input_metadata=True)
+    plumber.merge_ui_recommendations(server_recs)
     plumber.merge_ui_recommendations(recs)
     plumber.run()
+
+
+def sanitize_conversion_options(ctx, db, input_fmt, output_fmt, book_id, client_options):
+    """Restrict the conversion options supplied by a (remote) client to the set
+    that the server actually advertises through /conversion/book-data, and drop
+    any option that is dangerous to expose remotely. Without this a client can
+    set *any* conversion option, including ones that take a filesystem path or
+    URL (cover, read_metadata_from_opf, debug_pipeline) or that weaken a security
+    guard (allow_local_files_outside_root)."""
+    allowed = set(get_conversion_options(input_fmt, output_fmt, book_id, db)['options'])
+    ans = {}
+    for name, val in client_options.items():
+        if name in FORBIDDEN_CLIENT_OPTIONS:
+            ctx.log.warn(f'Ignoring conversion option {name!r} from client: not allowed via the network API')
+            continue
+        if name not in allowed:
+            ctx.log.warn(f'Ignoring conversion option {name!r} from client: not exposed by the conversion API')
+            continue
+        ans[name] = val
+    return ans
 
 
 def queue_job(ctx, rd, library_id, db, fmt, book_id, conversion_data):
@@ -135,7 +175,7 @@ def queue_job(ctx, rd, library_id, db, fmt, book_id, conversion_data):
     with tempfile.NamedTemporaryFile(prefix='', suffix='.opf', dir=tdir, delete=False) as opf_file:
         opf_file.write(raw)
     recs = GuiRecommendations()
-    recs.update(conversion_data['options'])
+    recs.update(sanitize_conversion_options(ctx, db, fmt, conversion_data['output_fmt'], book_id, conversion_data['options']))
     recs['gui_preferred_input_format'] = conversion_data['input_fmt'].lower()
     save_specifics(db, book_id, recs)
     recs = [(k, v, OptionRecommendation.HIGH) for k, v in recs.items()]

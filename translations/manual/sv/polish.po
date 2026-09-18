@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:07+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
-"Last-Translator: efef6ec5b435a041fce803c7f8af77d2_2341d43, 2017,2020\n"
+"Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +38,7 @@ msgid ""
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr "E-bokredigeringsverktygen består av :class:`calibre.ebooks.oeb.polish.container.Container` poster som representerar en bok som en samling av HTML + resursfiler, samt olika verktyg som kan användas för att utföra operationer på behållaren. Alla verktyg är i form av modulnivåsfunktioner i de olika ``calibre.ebooks.oeb.polish.*`` modulerna."
+msgstr "E-bokredigeringsverktygen består av ett :class:`calibre.ebooks.oeb.polish.container.Container`-objekt som representerar en bok som en samling HTML- och resursfiler, samt olika verktyg för att utföra åtgärder på behållaren. Alla verktyg är funktioner på modulnivå i de olika modulerna ``calibre.ebooks.oeb.polish.*``."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
@@ -48,7 +48,7 @@ msgstr "Du erhåller ett behållarobjekt för en bok på en sökväg så här::"
 msgid ""
 "If you are writing a plugin for the E-book editor, you get the current "
 "container for the book being edited like this::"
-msgstr "Om du skriver en insticksmodul för E-bokredigeraren, får du den aktuella behållaren för boken som redigeras så här::"
+msgstr "Om du skriver en insticksmodul för e-bokredigeraren får du den aktuella behållaren för boken som redigeras så här::"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:30
 msgid "The Container object"
@@ -66,7 +66,7 @@ msgstr "En behållare representerar en öppen e-bok som en mapp full av filer oc
 msgid ""
 "The root folder. This is the base of the e-book. All the e-books files are "
 "inside this folder or in its sub-folders."
-msgstr "Rotmappen. Detta är basen för e-boken. Alla e-böcker finns i denna mapp eller i dess undermappar."
+msgstr "Rotmappen. Detta är e-bokens basmapp. Alla filer som ingår i e-boken finns i denna mapp eller dess undermappar."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:7
@@ -75,7 +75,7 @@ msgid ""
 " always contain POSIX separators and are unquoted. They can be thought of as"
 " canonical identifiers for files in the book. Most methods on the container "
 "object work with names. Names are always in the NFC Unicode normal form."
-msgstr "Namn: Dessa är sökvägar till böckernas filer relativt rotmappen. De innehåller alltid POSIX-avskiljare och är utan citattecken. De kan ses som kanoniska identifierare för filer i boken. De flesta metoder på behållarobjektet arbetar med namn. Namn är alltid i NFC Unicode-normalformen."
+msgstr "Namn: Dessa är sökvägar till bokens filer relativt rotmappen. De innehåller alltid POSIX-avskiljare och är inte URL-kodade. De kan ses som kanoniska identifierare för filer i boken. De flesta metoder på behållarobjektet arbetar med namn. Namn är alltid i Unicode-normalformen NFC."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container:13
@@ -92,7 +92,7 @@ msgstr "Kloner: Behållarobjektet stöder effektiv kloning på disk, vilket anv�
 msgid ""
 "When converting between hrefs and names use the methods provided by this "
 "class, they assume all hrefs are quoted."
-msgstr "När du konverterar mellan hrefs och namn använd de metoder som denna klass tillhandahåller, de antar att alla hrefs är i citattecken."
+msgstr "Använd klassens metoder när du konverterar mellan href-värden och namn. Metoderna förutsätter att alla href-värden är URL-kodade."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
@@ -114,7 +114,7 @@ msgstr "Grundmappen. Som standard används roten till detta behållarobjekt."
 msgid ""
 "Add a file to this container. Entries for the file are automatically created"
 " in the OPF manifest and spine (if the file is a text document)"
-msgstr "Lägg till en fil i denna behållare. Poster för filen skapas automatiskt i OPF-manifestet och bokryggen (om filen är ett textdokument)"
+msgstr "Lägg till en fil i denna behållare. Poster för filen skapas automatiskt i OPF-manifestet och läsordningen (spine) (om filen är ett textdokument)"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_name_to_manifest:1
@@ -126,7 +126,7 @@ msgstr "Lägg till en post i manifestet för en fil med angivna namnet. Returner
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
 msgid "Add the specified properties to the manifest item identified by name."
-msgstr "Lägg specificerade egenskaperna i manifestposten som identifierats med namn."
+msgstr "Lägg till de angivna egenskaperna i manifestposten som identifieras med namnet."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.apply_unique_properties:1
@@ -134,7 +134,7 @@ msgid ""
 "Ensure that the specified properties are set on only the manifest item "
 "identified by name. You can pass None as the name to remove the property "
 "from all items."
-msgstr "Se till att de angivna egenskaperna är inställt på endast manifestposten som identifierats med ett namn. Du kan använda None som namn för att ta bort egenskapen från alla post."
+msgstr "Se till att de angivna egenskaperna endast är inställda för den manifestpost som identifieras med namnet. Du kan ange None som namn för att ta bort egenskapen från alla poster."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.book_type:1
@@ -146,7 +146,7 @@ msgstr "Typen av bok (epub för EPUB-filer och azw3 för AZW3-filer)"
 msgid ""
 "Commit all dirtied parsed objects to the filesystem and write out the e-book"
 " file at outpath."
-msgstr "Skriv alla ändrade analyserade objekt till filsystemet och skriv e-boksfilen till utsökvägen."
+msgstr "Spara alla ändrade analyserade objekt i filsystemet och skriv e-boksfilen till outpath."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit:3
@@ -159,7 +159,7 @@ msgstr "Sökvägen som den sparade e-boksfilen ska skrivas till. Om värdet är 
 #: of calibre.ebooks.oeb.polish.container.Container.commit:4
 msgid ""
 "If True the parsed representations of committed items are kept in the cache."
-msgstr "Om True kommer analyserade representationer av engagerade poster hållas i cache."
+msgstr "Om True behålls de analyserade representationerna av de sparade posterna i cachen."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.commit_item:1
@@ -167,14 +167,14 @@ msgid ""
 "Commit a parsed object to disk (it is serialized and written to the "
 "underlying file). If ``keep_parsed`` is True the parsed representation is "
 "retained in the cache. See also: :meth:`parsed`"
-msgstr "Överlämnar ett analyserat objekt till disken (det serialiseras och skrivs till den underliggande filen). Om ``keep_parsed`` är True behålls den analyserade representationen i cachen. Se även: :meth:`parsed`"
+msgstr "Spara ett analyserat objekt på disk (det serialiseras och skrivs till den underliggande filen). Om ``keep_parsed`` är True behålls den analyserade representationen i cachen. Se även: :meth:`parsed`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.dirty:1
 msgid ""
 "Mark the parsed object corresponding to name as dirty. See also: "
 ":meth:`parsed`."
-msgstr "Markera det analyserade objektet som motsvarar namnet som smutsigt. Se även: :meth:`parsed`."
+msgstr "Markera det analyserade objektet som motsvarar namnet som ändrat. Se även: :meth:`parsed`."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.exists:1
@@ -211,7 +211,7 @@ msgstr "Liknar open() förutom att den returnerar en sökväg, i stället för e
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.guide_type_map:1
 msgid "Mapping of guide type to canonical name"
-msgstr "Kartläggning av guidetyp till kanoniskt namn"
+msgstr "Mappning från guidetyp till kanoniskt namn"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.has_name:1
@@ -225,19 +225,19 @@ msgstr "Returnera True om och endast om en fil med samma kanoniska namn som ange
 msgid ""
 "Convert an href (relative to base) to a name. base must be a name or None, "
 "in which case self.root is used."
-msgstr "Konvertera en href (relativ till bas) till ett namn. basen måste vara ett namn eller None, i vilket fall self.root används."
+msgstr "Konvertera ett href-värde (relativt base) till ett namn. base måste vara ett namn eller None. Om värdet är None används self.root."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.insert_into_xml:1
 msgid ""
 "Insert item into parent (or append if index is None), fixing indentation. "
 "Only works with self closing items."
-msgstr "Infoga post i förälder (eller lägga till om index är None), fastställande indrag. Fungerar endast med självstängande post."
+msgstr "Infoga posten i det överordnade elementet (eller lägg till den sist om index är None) och justera indraget. Fungerar endast med självstängande element."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.is_dir:1
 msgid "If this container represents an unzipped book (a directory)"
-msgstr "Om denna container representerar en uppackad bok (en katalog)"
+msgstr "Om denna behållare representerar en uppackad bok (en katalog)"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.iterlinks:1
@@ -247,7 +247,7 @@ msgid ""
 "line_number at which the link occurs and offset is the number of characters "
 "from the start of the line. Note that offset could actually encompass "
 "several lines if not zero."
-msgstr "Iterera över alla länkar i namnet. Om get_line_numbers är True ger det resultat i form (länk, line_number, offset). Där line_number är line_number där länken förekommer och offset är antalet tecken från början av raden. Observera att offset kan faktiskt omfatta flera rader om inte noll."
+msgstr "Iterera över alla länkar i name. Om get_line_numbers är True returneras resultat på formen (link, line_number, offset), där line_number är radnumret där länken finns och offset är antalet tecken från radens början. Observera att offset kan sträcka sig över flera rader om värdet inte är noll."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.make_name_unique:1
@@ -264,7 +264,7 @@ msgstr "Returnera True om manifestet har en post som motsvarar namnet"
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_id_map:1
 msgid "Mapping of manifest id to canonical names"
-msgstr "Kartläggning av manifest-id till kanoniska namn"
+msgstr "Mappning från manifest-id till kanoniska namn"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_items_of_type:1
@@ -272,19 +272,19 @@ msgid ""
 "The names of all manifest items whose media-type matches predicate. "
 "`predicate` can be a set, a list, a string or a function taking a single "
 "argument, which will be called with the media-type."
-msgstr "Namnen på alla manifestposter vars medietyp matcher predikat. `predicate` kan vara en uppsättning, en lista, en sträng eller en funktion som tar ett enda argument, som kommer att anropas med medietypen."
+msgstr "Namnen på alla manifestposter vars medietyp matchar predikatet. `predicate` kan vara en mängd, en lista, en sträng eller en funktion som tar ett enda argument och anropas med medietypen."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
 #: calibre.ebooks.oeb.polish.container.Container.manifest_items_with_property:1
 msgid "All manifest items that have the specified property"
-msgstr "Alla uppenbara post som har den angivna egenskapen"
+msgstr "Alla manifestposter som har den angivna egenskapen"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_type_map:1
 msgid ""
 "Mapping of manifest media-type to list of canonical names of that media-type"
-msgstr "Kartläggning av manifest mediatyp till lista med canonical namn av den mediatypen\nKartläggning av manifest mediatyp till lista med kanoniska namn på den medietypen"
+msgstr "Mappning från medietyp i manifestet till en lista med kanoniska namn för den medietypen"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.mi:1
@@ -292,7 +292,7 @@ msgid ""
 "The metadata of this book as a Metadata object. Note that this object is "
 "constructed on the fly every time this property is requested, so use it "
 "sparingly."
-msgstr "Metadata från den här boken som ett metadataobjekt. Observera att det här objektet är konstruerad i farten varje gång den här egenskapen begärs, så använd den sparsamt."
+msgstr "Bokens metadata som ett Metadata-objekt. Observera att objektet skapas på nytt varje gång egenskapen hämtas, så använd den sparsamt."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.name_to_abspath:1
@@ -336,12 +336,12 @@ msgid ""
 "commit the file if it is dirtied and remove it from the parse cache. You "
 "must finish with this file before accessing the parsed version of it again, "
 "or bad things will happen."
-msgstr "Öppna filen som name pekar på för direkt läsning och skrivning. Observera att ändringarna sparas om filen modifieras och att filen tas bort från tolkningscachen. Du måste vara klar med filen innan du åter öppnar den tolkade versionen, annars kan fel uppstå."
+msgstr "Öppna filen som name pekar på för direkt läsning och skrivning. Om filen har markerats som ändrad sparas först ändringarna, och filen tas bort från tolkningscachen. Du måste vara klar med filen innan du åter använder den analyserade versionen, annars kan fel uppstå."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf:1
 msgid "The parsed OPF file"
-msgstr "Den analyserad OPF-filen"
+msgstr "Den analyserade OPF-filen"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_get_or_create:1
@@ -354,19 +354,19 @@ msgstr "Hjälpmetod som returnerar det första XML-elementet med det angivna nam
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
 msgid "The version set on the OPF's <package> element"
-msgstr "Den version som ställts in på OPF:s <package> elementet"
+msgstr "Versionen som anges i OPF-filens <package>-element"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version_parsed:1
 msgid "The version set on the OPF's <package> element as a tuple of integers"
-msgstr "Den version som ställts in på OPF:s <package> element som en tupel av heltal"
+msgstr "Versionen som anges i OPF-filens <package>-element, som en tupel av heltal"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_xpath:1
 msgid ""
 "Convenience method to evaluate an XPath expression on the OPF file, has the "
 "opf: and dc: namespace prefixes pre-defined."
-msgstr "Bekväm metod för att beräkna ett XPath-uttryck på OPF-filen har fördefinierade opf: och dc:namespace prefix."
+msgstr "Hjälpmetod för att utvärdera ett XPath-uttryck i OPF-filen, med fördefinierade namnrymdsprefix opf: och dc:."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.parsed:1
@@ -411,14 +411,14 @@ msgid ""
 "Remove the specified items (by canonical name) from the spine. If "
 "``remove_if_no_longer_in_spine`` is True, the items are also deleted from "
 "the book, not just from the spine."
-msgstr "Ta bort de angivna posterna (av kanoniskt namn) från bokryggen. Om ``remove_if_no_longer_in_spine`` är True tas även posten bort från boken, inte bara från bokryggen."
+msgstr "Ta bort de angivna posterna (identifierade med kanoniska namn) från läsordningen. Om ``remove_if_no_longer_in_spine`` är True tas posterna även bort från boken, inte bara från läsordningen."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_xml:1
 msgid ""
 "Removes item from parent, fixing indentation (works only with self closing "
 "items)"
-msgstr "Tar bort posten från förälder, rättar till indrag (fungerar bara med självstängande poster)"
+msgstr "Tar bort posten från det överordnade elementet och justerar indraget (fungerar endast med självstängande element)"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_item:1
@@ -426,7 +426,7 @@ msgid ""
 "Remove the item identified by name from this container. This removes all "
 "references to the item in the OPF manifest, guide and spine as well as from "
 "any internal caches."
-msgstr "Ta bort posten som identifieras med namn från den här behållaren. Detta tar bort alla referenser till posten i OPF-manifestet, guiden och ryggrraden samt från eventuella interna cacher."
+msgstr "Ta bort posten som identifieras med namnet från behållaren. Detta tar bort alla referenser till posten i OPF-manifestet, guiden och läsordningen samt i interna cacher."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.rename:1
@@ -435,7 +435,7 @@ msgid ""
 "links inside the file if the folder the file is in changes. Note however, "
 "that links are not updated in the other files that could reference this "
 "file. This is for performance, such updates should be done once, in bulk."
-msgstr "Byter namn på en fil från current_name till new_name. Den omställer automatiskt alla länkar inuti filen om den mapp filen är i ändras. Observera dock att länkar inte uppdateras i andra filer som kan referera till den här filen. Detta är för prestanda, sådana uppdateringar bör göras en gång, i grupp."
+msgstr "Byter namn på en fil från current_name till new_name. Om filen flyttas till en annan mapp anpassas alla länkar i filen automatiskt till den nya platsen. Länkar i andra filer som hänvisar till denna fil uppdateras däremot inte. Av prestandaskäl bör sådana uppdateringar göras samlat vid ett enda tillfälle."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.replace:1
@@ -468,14 +468,14 @@ msgid ""
 "Set the spine to be spine_items where spine_items is an iterable of the form"
 " (name, linear). Will raise an error if one of the names is not present in "
 "the manifest."
-msgstr "Anpassa bokryggen att vara spine_items där spine_items visas som en iterabel av formen (name, linear). Kommer ge ett felmeddelande om ett av namnen finns inte i manifestet."
+msgstr "Ersätt läsordningen med spine_items, som är ett itererbart objekt med poster på formen (name, linear). Ett fel utlöses om något av namnen saknas i manifestet."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_items:1
 msgid ""
 "An iterator yielding the path for every item in the books' spine. See also: "
 ":attr:`spine_iter` and :attr:`spine_items`."
-msgstr "En iterator som ger sökväg för varje del i bokryggar. Se även: :attr:`spine_iter` och :attr:`spine_items`."
+msgstr "En iterator som returnerar sökvägen för varje post i bokens läsordning. Se även: :attr:`spine_iter` och :attr:`spine_items`."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_iter:1
@@ -484,14 +484,14 @@ msgid ""
 "spine. item is the lxml element, name is the canonical file name and "
 "is_linear is True if the item is linear. See also: :attr:`spine_names` and "
 ":attr:`spine_items`."
-msgstr "En iterator som för varje post i bokens rygg returnerar ``item, name, is_linear``. ``item`` är lxml-elementet, ``name`` det kanoniska filnamnet och ``is_linear`` är True om posten är linjär. Se även :attr:`spine_names` och :attr:`spine_items`."
+msgstr "En iterator som för varje post i bokens läsordning returnerar ``item, name, is_linear``. ``item`` är lxml-elementet, ``name`` det kanoniska filnamnet och ``is_linear`` är True om posten är linjär. Se även :attr:`spine_names` och :attr:`spine_items`."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.spine_names:1
 msgid ""
 "An iterator yielding name and is_linear for every item in the books' spine. "
 "See also: :attr:`spine_iter` and :attr:`spine_items`."
-msgstr "En iterator som ger name och is_linear för varje post i bokens rygg. Se även: :attr:`spine_iter` och :attr:`spine_items`."
+msgstr "En iterator som returnerar name och is_linear för varje post i bokens läsordning. Se även: :attr:`spine_iter` och :attr:`spine_items`."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:36
 msgid "Managing component files in a container"
@@ -502,14 +502,14 @@ msgstr "Hantera komponentfiler i en behållare"
 msgid ""
 "Replace links to files in the container. Will iterate over all files in the "
 "container and change the specified links in them."
-msgstr "Ersätt länkar till filer i behållaren. Kommer iterera över alla filer i behållaren och ändra de angivna länkar i dem."
+msgstr "Ersätt länkar till filer i behållaren. Funktionen går igenom alla filer i behållaren och ändrar de angivna länkarna i dem."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:3
 msgid ""
 "A mapping of old canonical name to new canonical name. For example: "
 ":code:`{'images/old.png': 'images/new.png'}`"
-msgstr "En kartläggning av kanoniska namn till nya kanoniska namn. Till exempel: :code:`{'images/old.png': 'images/new.png'}`"
+msgstr "En mappning från gamla kanoniska namn till nya kanoniska namn. Till exempel: :code:`{'images/old.png': 'images/new.png'}`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:4
@@ -535,7 +535,7 @@ msgstr "Byt namn på filer i behållaren, uppdaterar automatiskt alla länkar ti
 msgid ""
 "A mapping of old canonical name to new canonical name, for example: "
 ":code:`{'text/chapter1.html': 'chapter1.html'}`."
-msgstr "En kartläggning av gammalt kanoniskt namn till nytt kanoniskt namn, till exempel: :code:`{'text/chapter1.html': 'chapter1.html'}`."
+msgstr "En mappning från gamla kanoniska namn till nya kanoniska namn, till exempel: :code:`{'text/chapter1.html': 'chapter1.html'}`."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.get_recommended_folders:1
@@ -548,61 +548,61 @@ msgstr "Returnera mapparna som rekommenderas för de givna filnamnen. Rekommenda
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:47
 msgid "Pretty printing and auto fixing parse errors"
-msgstr "Fin utskrift och automatisk reparation av tolkningsfel"
+msgstr "Formatering och automatisk rättning av tolkningsfel"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_html:1
 msgid ""
 "Fix any parsing errors in the HTML represented as a string in raw. Fixing is"
 " done using the HTML5 parsing algorithm."
-msgstr "Åtgärda eventuella tolkningsfel i HTML representeras som en råsträng. Åtgärd görs med HTML5 tolkningsalgoritmen."
+msgstr "Åtgärda eventuella tolkningsfel i HTML-koden som representeras av strängen i raw. Rättningen görs med HTML5:s tolkningsalgoritm."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.fix_all_html:1
 msgid ""
 "Fix any parsing errors in all HTML files in the container. Fixing is done "
 "using the HTML5 parsing algorithm."
-msgstr "Åtgärda eventuella tolkningsfel i alla HTML-filer i containern. Åtgärd görs med HTML5 tolkningsalgoritmen."
+msgstr "Åtgärda eventuella tolkningsfel i alla HTML-filer i behållaren. Rättningen görs med HTML5:s tolkningsalgoritm."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_html:1
 msgid "Pretty print the HTML represented as a string in raw"
-msgstr "Fin utskrift HTML representeras som en råsträng"
+msgstr "Formatera HTML-koden som representeras av strängen i raw så att den blir lättläst"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_css:1
 msgid "Pretty print the CSS represented as a string in raw"
-msgstr "Fin utskrift CSS representerad som en råsträng"
+msgstr "Formatera CSS-koden som representeras av strängen i raw så att den blir lättläst"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_xml:1
 msgid ""
 "Pretty print the XML represented as a string in raw. If ``name`` is the name"
 " of the OPF, extra OPF-specific prettying is performed."
-msgstr "Fin utskrift XML representeras som en råsträng. Om ``name`` är namnet på OPF, är extra OPF-specifik försköning utförs."
+msgstr "Formatera XML-koden som representeras av strängen i raw så att den blir lättläst. Om ``name`` är OPF-filens namn utförs även särskild formatering för OPF."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_all:1
 msgid "Pretty print all HTML/CSS/XML files in the container"
-msgstr "Fin utskrift för alla HTML/CSS/XML-filer i behållaren"
+msgstr "Formatera alla HTML-, CSS- och XML-filer i behållaren så att de blir lättlästa"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:65
 msgid "Managing book jackets"
-msgstr "Hantera bokomslag"
+msgstr "Hantera metadatasidor"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.remove_jacket:1
 msgid ""
 "Remove an existing jacket, if any. Returns False if no existing jacket was "
 "found."
-msgstr "Ta bort ett befintligt omslagsblad. Returnerar False om inget omslagsblad hittades."
+msgstr "Ta bort en befintlig metadatasida. Returnerar False om ingen metadatasida hittades."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/jacket.pydocstring
 #: of calibre.ebooks.oeb.polish.jacket.add_or_replace_jacket:1
 msgid ""
 "Either create a new jacket from the book's metadata or replace an existing "
 "jacket. Returns True if an existing jacket was replaced."
-msgstr "Skapa ett nytt omslagsblad från bokens metadata eller ersätt ett befintligt. Returnerar True om ett befintligt omslagsblad ersattes."
+msgstr "Skapa en ny metadatasida från bokens metadata eller ersätt en befintlig. Returnerar True om en befintlig metadatasida ersattes."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:74
 msgid "Splitting and merging of files"
@@ -672,11 +672,11 @@ msgstr "Listan med filer som ska slås samman"
 msgid ""
 "Which of the merged files is the *master* file, that is, the file that will "
 "remain after merging."
-msgstr "Vilken av de sammanslagna filer är *huvud*-fil, som är den fil som kommer att finnas kvar efter sammanslagning."
+msgstr "Vilken av filerna som ska slås samman som är *huvudfilen*, det vill säga den fil som blir kvar efter sammanslagningen."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:85
 msgid "Managing covers"
-msgstr "Hanterar omslag"
+msgstr "Hantera omslag"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:1
@@ -689,14 +689,14 @@ msgid ""
 "Either the absolute path to an image file or the canonical name of an image "
 "in the book. When using an image in the book, you must also set options, see"
 " below."
-msgstr "Antingen den absoluta sökvägen till en bildfil eller kanoniska namn på en bild i boken. När du använder en bild i boken måste du också ställa in alternativ, se nedan."
+msgstr "Antingen den absoluta sökvägen till en bildfil eller det kanoniska namnet på en bild i boken. När du använder en bild i boken måste du också ange alternativ, se nedan."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:6
 msgid ""
 "An optional callable that takes a single argument. It will be called with "
 "information about the tasks being processed."
-msgstr "En valfri anropningsbar som tar ett enda argument. Den kommer att anropas med information om de uppgifter som behandlas."
+msgstr "Ett valfritt anropbart objekt som tar ett enda argument. Det anropas med information om de uppgifter som behandlas."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:8
@@ -721,7 +721,7 @@ msgstr "Markera den angivna HTML-filen som titelsidan för EPUB:en."
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:3
 msgid "If True the HTML file is moved to the start of the spine"
-msgstr "Om True kommer HTML-filen flyttas till början av bokryggen"
+msgstr "Om True kommer HTML-filen flyttas till början av läsordningen"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:96
 msgid "Working with CSS"
@@ -748,7 +748,7 @@ msgstr "Ta bort alla oanvända CSS-regler från boken. En oanvänd CSS-regel är
 msgid ""
 "An optional callable that takes a single argument. It is called with "
 "information about the operations being performed."
-msgstr "En valfri anropningsbar som tar ett enda argument. Den anropas med information om de operationer som utförs."
+msgstr "Ett valfritt anropbart objekt som tar ett enda argument. Det anropas med information om de åtgärder som utförs."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.remove_unused_css:4
@@ -782,14 +782,14 @@ msgstr "Ta bort de angivna CSS-egenskaperna från alla CSS-regler i boken."
 #: of calibre.ebooks.oeb.polish.css.filter_css:3
 msgid ""
 "Set of properties to remove. For example: :code:`{'font-family', 'color'}`."
-msgstr "Uppsättning av egenskaper för att ta bort. Till exempel: :code:`{'font-family', 'color'}`."
+msgstr "En mängd med egenskaper som ska tas bort. Till exempel: :code:`{'font-family', 'color'}`."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.filter_css:4
 msgid ""
 "The files from which to remove the properties. Defaults to all HTML and CSS "
 "files in the book."
-msgstr "Filerna från vilka egenskaper ska tas bort. Standardvärden för alla HTML- och CSS-filer i boken."
+msgstr "Filerna som egenskaperna ska tas bort från. Som standard används alla HTML- och CSS-filer i boken."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:108
 msgid "Working with the Table of Contents"
@@ -802,7 +802,7 @@ msgid ""
 "expression in the list corresponds to a level of the generate ToC. For "
 "example: :code:`['//h:h1', '//h:h2', '//h:h3']` will generate a three level "
 "Table of Contents from the ``<h1>``, ``<h2>`` and ``<h3>`` tags."
-msgstr "Skapa en innehållsförteckning från en lista med XPath-uttryck. Varje uttryck i listan motsvarar en nivå av den skapade innehållsförteckningen. Till exempel: :code:`['//h:h1', '//h:h2', '//h:h3']`  kommer att skapa en trenivåers innehållsförteckning från ``<h1>``, ``<h2>`` och ``<h3>`` taggar."
+msgstr "Skapa en innehållsförteckning från en lista med XPath-uttryck. Varje uttryck motsvarar en nivå i den skapade innehållsförteckningen. Till exempel skapar :code:`['//h:h1', '//h:h2', '//h:h3']` en innehållsförteckning med tre nivåer från taggarna ``<h1>``, ``<h2>`` och ``<h3>``."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/toc.pydocstring
 #: of calibre.ebooks.oeb.polish.toc.from_links:1
@@ -835,7 +835,7 @@ msgstr "Bokredigeringsverktyg"
 msgid ""
 "The base class for individual tools in an Edit Book plugin. Useful members "
 "include:"
-msgstr "Basklass för enskilda verktyg i ett bokredigering insticksmodul. Användbara medlemmar är:"
+msgstr "Basklassen för enskilda verktyg i en insticksmodul för bokredigering. Användbara medlemmar är:"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool:3
@@ -872,31 +872,31 @@ msgstr ":meth:`register_shortcut`"
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.name:1
 msgid "Set this to a unique name it will be used as a key"
-msgstr "Ändra detta till ett unikt namn det kommer att användas som en nyckel"
+msgstr "Ange ett unikt namn som kommer att användas som nyckel"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_toolbar:1
 msgid "If True the user can choose to place this tool in the plugins toolbar"
-msgstr "Om True användaren kan välja att placera detta verktyg i insticksmodul verktygsfältet"
+msgstr "Om True kan användaren välja att placera verktyget i verktygsfältet för insticksmoduler"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.allowed_in_menu:1
 msgid "If True the user can choose to place this tool in the plugins menu"
-msgstr "Om True användaren kan välja att placera detta verktyg i insticksmodul menyn"
+msgstr "Om True kan användaren välja att placera verktyget i menyn för insticksmoduler"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.toolbar_button_popup_mode:1
 msgid ""
 "The popup mode for the menu (if any) of the toolbar button. Possible values "
 "are 'delayed', 'instant', 'button'"
-msgstr "Rullgardinsläget för menyn (om någon) på knappen i verktygsfältet. Möjliga värden är \"fördröjt\", \"snabb\", \"knappen\""
+msgstr "Öppningsläget för verktygsfältsknappens meny, om den har någon. Möjliga värden är 'delayed', 'instant' och 'button'."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.boss:1
 msgid ""
 "The :class:`calibre.gui2.tweak_book.boss.Boss` object. Used to control the "
 "user interface."
-msgstr ":class:`calibre.gui2.tweak_book.boss.Boss` objektet. Används för att anpassa användargränssnittet."
+msgstr "Objektet :class:`calibre.gui2.tweak_book.boss.Boss`. Används för att styra användargränssnittet."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.gui:1
@@ -970,7 +970,7 @@ msgstr "Metod :meth:`register_shortcut`."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:131
 msgid "Controlling the editor's user interface"
-msgstr "Anpassa redigerarens användargränssnitt"
+msgstr "Styra redigerarens användargränssnitt"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:133
 msgid ""
@@ -1009,7 +1009,7 @@ msgid ""
 "Commit any changes that the user has made to files open in editors to the "
 "container. You should call this method before performing any actions on the "
 "current container"
-msgstr "Utför eventuella ändringar som användaren har gjort i filer öppnas i redigeraren till behållaren. Du bör anropa den här metoden innan du utför några åtgärder på den aktuella behållaren"
+msgstr "Spara användarens ändringar i filer som är öppna i redigerare till behållaren. Du bör anropa denna metod innan du utför några åtgärder på den aktuella behållaren."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.currently_editing:1
@@ -1054,7 +1054,7 @@ msgstr "Namnet på en fil inne i den nyöppnade boken för att börja redigera. 
 msgid ""
 "Undo the previous creation of a restore checkpoint, useful if you create a "
 "checkpoint, then abort the operation with no changes"
-msgstr "Ångra föregående skapande en återställningskontrollpunkt, användbart om du skapar en kontrollpunkt, sedan avbryta med inga ändringar"
+msgstr "Ångra skapandet av den föregående återställningskontrollpunkten. Det är användbart om du skapar en kontrollpunkt och sedan avbryter åtgärden utan att göra några ändringar."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.save_book:1
@@ -1064,7 +1064,7 @@ msgstr "Spara boken. Sparning utförs i bakgrunden"
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.set_modified:1
 msgid "Mark the book as having been modified"
-msgstr "Markera boken som har modifierats"
+msgstr "Markera boken som ändrad"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.show_current_diff:1
@@ -1095,4 +1095,4 @@ msgstr "Visa redigeraren som redigerar filen som anges med ``name``"
 msgid ""
 "Sync the position of the preview panel to the current cursor position in the"
 " current editor"
-msgstr "Synkronisera position av förhandsgranskningspanelen till den aktuella markörpositionen i den aktuella redigeraren"
+msgstr "Synkronisera förhandsgranskningspanelens position med markörens position i den aktuella redigeraren"

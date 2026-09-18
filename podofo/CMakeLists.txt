@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
 project(PoDoFo)
 
@@ -6,9 +6,13 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.0)
         message(FATAL_ERROR "GCC version must be at least 9.0")
     endif()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
-        message(FATAL_ERROR "Clang version must be at least 7.0")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.0)
+        message(FATAL_ERROR "Clang version must be at least 9.0")
+    endif()
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11.0)
+        message(FATAL_ERROR "Apple clang version must be at least 11.0")
     endif()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "15.9")
@@ -18,11 +22,30 @@ else()
     message(WARNING "You are using an unsupported compiler!")
 endif()
 
-set(PODOFO_VERSION_MAJOR "0" CACHE STRING "Major part of podofo version number")
-set(PODOFO_VERSION_MINOR "10" CACHE STRING "Minor part of podofo version number")
-set(PODOFO_VERSION_PATCH "6" CACHE STRING "Patchlevel part of podofo version number")
-set(PODOFO_VERSION "${PODOFO_VERSION_MAJOR}.${PODOFO_VERSION_MINOR}.${PODOFO_VERSION_PATCH}")
-set(PODOFO_SOVERSION "2")
+include(PoDoFoVersion.cmake)
+set(DOXYGEN_PROJECT_NUMBER "${PODOFO_VERSION}")
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+    ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+    @ONLY
+)
+
+message("PoDoFo version: ${PODOFO_VERSION}")
+message("PoDoFo SO version: ${PODOFO_SOVERSION}")
+message("Host system: ${CMAKE_HOST_SYSTEM}")
+message("C++ compiler ID: ${CMAKE_CXX_COMPILER_ID}")
+message("C++ compiler version: ${CMAKE_CXX_COMPILER_VERSION}")
+message("CMake version: ${CMAKE_VERSION}")
+
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+    # TODO: Add doxygen target
+endif()
+
+if(PODOFO_BUILD_DOC_ONLY)
+    return()
+endif()
 
 #
 # Main includes
@@ -44,7 +67,7 @@ set(PODOFO_MAIN_CMAKELISTS_READ TRUE)
 if(PODOFO_BUILD_LIB_ONLY)
     set(PODOFO_BUILD_TEST FALSE)
     set(PODOFO_BUILD_EXAMPLES FALSE)
-    set(PODOFO_BUILD_TOOLS FALSE)
+    set(PODOFO_BUILD_UNSUPPORTED_TOOLS FALSE)
 else()
     if (NOT DEFINED PODOFO_BUILD_TEST)
         set(PODOFO_BUILD_TEST TRUE)
@@ -54,8 +77,8 @@ else()
         set(PODOFO_BUILD_EXAMPLES TRUE)
     endif()
 
-    if (NOT DEFINED PODOFO_BUILD_TOOLS)
-        set(PODOFO_BUILD_TOOLS FALSE)
+    if (NOT DEFINED PODOFO_BUILD_UNSUPPORTED_TOOLS)
+        set(PODOFO_BUILD_UNSUPPORTED_TOOLS FALSE)
     endif()
 
     # We assume a standalone build so we set output
@@ -71,6 +94,12 @@ if (DEFINED PODOFO_BUILD_SHARED)
 endif()
 
 option(PODOFO_BUILD_STATIC "Build static libraries (.a/.lib)" FALSE)
+option(PODOFO_WITH_AFDKO "Enable AFDKO support" ON)
+
+if(PODOFO_WITH_AFDKO)
+    set(PODOFO_ENABLE_AFDKO TRUE)
+endif()
+
 if(PODOFO_BUILD_STATIC)
     set(PODOFO_BUILD_SHARED FALSE)
     add_compile_definitions(PODOFO_STATIC)
@@ -94,8 +123,9 @@ if(NOT DEFINED PLATFORM_SYSTEM_LIBRARIES)
 endif()
 
 if(WIN32)
-    # We must explicitly link to the core win32 libraries
-    list(APPEND PLATFORM_SYSTEM_LIBRARIES kernel32 user32 gdi32 winspool comdlg32 advapi32 shell32 ole32 oleaut32 uuid ws2_32 Crypt32)
+    # Core win32 libraries come with CMAKE_C(XX)_IMPLICIT_LINK_LIBRARIES
+    set(PODOFO_HAVE_WIN32GDI TRUE)
+    list(APPEND PLATFORM_SYSTEM_LIBRARIES ws2_32 crypt32 Bcrypt)
 endif()
 
 # Set minimum required standard C++17, but also enforce it
@@ -108,7 +138,7 @@ set(CMAKE_CXX_EXTENSIONS ON)
 if (MSVC)
     # Set the compiler less permissive and add some warnings
     # /we4287: unsigned/negative constant mismatch
-    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/std:c++17> $<$<COMPILE_LANGUAGE:CXX>:/Zc:__cplusplus> /permissive- /utf-8 /we4287 /W4)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/std:c++17> $<$<COMPILE_LANGUAGE:CXX>:/Zc:__cplusplus> /permissive- /utf-8 /we4287 /we4552 /W4)
 
     # Microsoft deprecate certain POSIX functions that we use.
     # for now, turn off these warnings.
@@ -129,22 +159,34 @@ else()
     if(NOT WIN32)
         add_definitions(-W)
     endif()
+
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        # Silence warnings on use of typeid(*ptr)
+        # See https://stackoverflow.com/questions/46494928/clang-warning-on-expression-side-effects
+        add_compile_options(-Wno-potentially-evaluated-expression)
+    endif()
 endif()
+
+set(PODOFO_3RDPARTY_INCLUDES
+    "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/adobe"
+    "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/chromium"
+)
 
 find_package(ZLIB REQUIRED)
 message("Found zlib headers in ${ZLIB_INCLUDE_DIR}, library at ${ZLIB_LIBRARIES}")
 
 find_package(OpenSSL REQUIRED)
-message("OPENSSL_LIBRARIES: ${OPENSSL_LIBRARIES}")
+message("Found OpenSSL headers in ${OPENSSL_INCLUDE_DIR}, libraries at ${OPENSSL_LIBRARIES}")
 
-find_package(Libidn)
-
-if(LIBIDN_FOUND)
-    message("Found Libidn headers in ${LIBIDN_INCLUDE_DIR}, library at ${LIBIDN_LIBRARIES}")
-    set(PODOFO_HAVE_LIBIDN TRUE)
-    message("Libidn found. AES-256 Encryption support will be enabled")
-else()
-    message("Libidn not found. AES-256 Encryption support will be disabled")
+if (PODOFO_WITH_LCMS2)
+    find_package(LCMS2)
+    if(LCMS2_FOUND)
+        message("Found little-cms2 headers in ${LCMS2_INCLUDE_DIR}, library at ${LCMS2_LIBRARIES}")
+        set(PODOFO_HAVE_LCMS2 TRUE)
+        message("little-cms2 found. ICC profile reading support will be enabled")
+    else()
+        message("little-cms2 not found. ICC profile reading support will be disabled")
+    endif()
 endif()
 
 find_package(JPEG)
@@ -178,62 +220,152 @@ endif()
 find_package(Freetype REQUIRED)
 message("Found freetype library at ${FREETYPE_LIBRARIES}, headers ${FREETYPE_INCLUDE_DIRS}")
 
-find_package(Fontconfig)
-if(Fontconfig_FOUND)
-    set(PODOFO_HAVE_FONTCONFIG TRUE)
-    message("Found fontconfig headers in ${Fontconfig_INCLUDE_DIRS}, library at ${Fontconfig_LIBRARIES}")
-endif()
+option(PODOFO_WITH_FONTMANAGER "Enable font search mechanism" ON)
 
-if(WIN32 AND NOT PODOFO_HAVE_FONTCONFIG OR PODOFO_WANT_WIN32GDI)
-    # Fallback to GDI if FontConfig is missing in Windows
-    set(PODOFO_HAVE_WIN32GDI TRUE)
-    message("Enabled Windows GDI API")
+if(PODOFO_WITH_FONTMANAGER)
+    if(WIN32)
+        option(PODOFO_WITH_WIN32GDI_FONT_SEARCH "Enable Win32 GDI font search as alternative to FontConfig" OFF)
+    endif()
+
+    if(WIN32 AND PODOFO_WITH_WIN32GDI_FONT_SEARCH)
+        # Win32 font search enabled: FontConfig is optional
+        find_package(Fontconfig)
+        if(Fontconfig_FOUND)
+            set(PODOFO_HAVE_FONTCONFIG TRUE)
+            message("Found fontconfig headers in ${Fontconfig_INCLUDE_DIRS}, library at ${Fontconfig_LIBRARIES}")
+        else()
+            message("Fontconfig not found, using Win32 GDI font search only")
+        endif()
+        set(PODOFO_ENABLE_WIN32GDI_FONT_SEARCH TRUE)
+        message("Enabled Windows GDI font search")
+    else()
+        # FontConfig is required on all platforms
+        find_package(Fontconfig REQUIRED)
+        set(PODOFO_HAVE_FONTCONFIG TRUE)
+        message("Found fontconfig headers in ${Fontconfig_INCLUDE_DIRS}, library at ${Fontconfig_LIBRARIES}")
+    endif()
 endif()
 
 find_package(LibXml2 REQUIRED)
 message("Found libxml2 library at ${LIBXML2_LIBRARIES}, headers ${LIBXML2_INCLUDE_DIRS}")
 
+if (PODOFO_DEVENDOR_FMT_HEADER_ONLY)
+    # Implies PODOFO_DEVENDOR_FMT
+    set(PODOFO_DEVENDOR_FMT TRUE)
+endif()
+
+if (PODOFO_DEVENDOR_TCBSPAN)
+    find_package(TcbSpan REQUIRED)
+else()
+    list(APPEND PODOFO_3RDPARTY_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/tcbspan")
+endif()
+if (PODOFO_DEVENDOR_DATE)
+    find_package(date CONFIG REQUIRED)
+else()
+    list(APPEND PODOFO_3RDPARTY_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/date")
+endif()
+if (PODOFO_DEVENDOR_FASTFLOAT)
+    find_package(FastFloat CONFIG REQUIRED)
+else()
+    list(APPEND PODOFO_3RDPARTY_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/fastfloat")
+endif()
+if (PODOFO_DEVENDOR_FMT)
+    find_package(fmt CONFIG REQUIRED)
+else()
+    list(APPEND PODOFO_3RDPARTY_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/fmtlib")
+endif()
+if (PODOFO_DEVENDOR_UTF8CPP)
+    find_package(utf8cpp CONFIG REQUIRED)
+else()
+    list(APPEND PODOFO_3RDPARTY_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/utf8cpp")
+endif()
+if (PODOFO_DEVENDOR_UTF8PROC)
+    find_package(utf8proc CONFIG REQUIRED)
+else()
+    list(APPEND PODOFO_3RDPARTY_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/utf8proc")
+endif()
+
 # The podofo library needs to be linked to these libraries
 # NOTE: Be careful when adding/removing: the order may be
 # platform sensible, so don't modify the current order
 
+set(PODOFO_PKGCONFIG_REQUIRES_PRIVATE "")
 set(PODOFO_HEADERS_DEPENDS)
-set(PODOFO_LIB_DEPENDS OpenSSL::SSL)
-if(Fontconfig_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS Fontconfig::Fontconfig)
+set(PODOFO_LIB_DEPENDS)
+
+if (PODOFO_DEVENDOR_TCBSPAN)
+    list(APPEND PODOFO_LIB_DEPENDS PUBLIC $<COMPILE_ONLY:tcbspan::tcbspan>)
 endif()
-list(APPEND PODOFO_LIB_DEPENDS Freetype::Freetype)
-list(APPEND PODOFO_LIB_DEPENDS LibXml2::LibXml2)
+list(APPEND PODOFO_LIB_DEPENDS PRIVATE OpenSSL::SSL)
+string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libssl")
+if(Fontconfig_FOUND)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE Fontconfig::Fontconfig)
+    string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " fontconfig")
+endif()
+list(APPEND PODOFO_LIB_DEPENDS PRIVATE Freetype::Freetype)
+string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " freetype2")
+list(APPEND PODOFO_LIB_DEPENDS PRIVATE LibXml2::LibXml2)
+string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libxml-2.0")
 if(PNG_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS PNG::PNG)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE PNG::PNG)
+    string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libpng")
 endif()
 if(TIFF_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS TIFF::TIFF)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE TIFF::TIFF)
+    string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libtiff-4")
 endif()
 if(JPEG_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS JPEG::JPEG)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE JPEG::JPEG)
+    string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libjpeg")
 endif()
-list(APPEND PODOFO_LIB_DEPENDS ZLIB::ZLIB)
-list(APPEND PODOFO_LIB_DEPENDS ${PLATFORM_SYSTEM_LIBRARIES})
+list(APPEND PODOFO_LIB_DEPENDS PRIVATE ZLIB::ZLIB)
+string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " zlib")
+if (PODOFO_DEVENDOR_DATE)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:date::date>)
+endif()
+if (PODOFO_DEVENDOR_FASTFLOAT)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:FastFloat::fast_float>)
+endif()
+if (PODOFO_DEVENDOR_FMT)
+    if (PODOFO_DEVENDOR_FMT_HEADER_ONLY)
+        list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:fmt::fmt-header-only>)
+    else()
+        list(APPEND PODOFO_LIB_DEPENDS PRIVATE fmt::fmt)
+    endif()
+endif()
+if (PODOFO_DEVENDOR_UTF8CPP)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:utf8cpp::utf8cpp>)
+endif()
+if (PODOFO_DEVENDOR_UTF8PROC)
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE utf8proc::utf8proc)
+    string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libutf8proc")
+endif()
+list(APPEND PODOFO_LIB_DEPENDS PRIVATE ${PLATFORM_SYSTEM_LIBRARIES})
 
-if(LIBIDN_FOUND)
-    # libidn doesn't provide targets.
-    list(APPEND PODOFO_LIB_DEPENDS ${LIBIDN_LIBRARIES})
-    list(APPEND PODOFO_HEADERS_DEPENDS ${LIBIDN_INCLUDE_DIR})
+if(LCMS2_FOUND)
+    # little-cms2 doesn't provide targets.
+    list(APPEND PODOFO_LIB_DEPENDS PRIVATE ${LCMS2_LIBRARIES})
+    list(APPEND PODOFO_HEADERS_DEPENDS ${LCMS2_INCLUDE_DIR})
+    string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " lcms2")
 endif()
 
-# Create the config file. It'll be appended to as the subdirs run though
-# then dependency information will be written to it at the end of the
-# build.
-file(WRITE
-    "${PROJECT_BINARY_DIR}/podofoConfig.cmake"
-    "# CMake module for podofo\n"
-)
-file(APPEND
-    "${PROJECT_BINARY_DIR}/podofoConfig.cmake"
-    "set(PODOFO_INCLUDES ${PROJECT_SOURCE_DIR}/src)\n"
-)
+function(add_source subdir subdir_path dstsources dstheaders)
+    file(GLOB_RECURSE source_files "${subdir_path}/[^.]*")
+    # Set visual studio source group
+    source_group(${subdir} FILES ${source_files})
+    # Add subdir to source files
+    list(APPEND ${dstsources} ${source_files})
+    set(${dstsources} ${${dstsources}} PARENT_SCOPE)
 
+    # Identity the headers and do some cleanup
+    set(headers_files ${source_files})
+    list(FILTER headers_files EXCLUDE REGEX "\.cpp$")
+    list(FILTER headers_files EXCLUDE REGEX "\.in$")
+    list(APPEND ${dstheaders} ${headers_files})
+    set(${dstheaders} ${${dstheaders}} PARENT_SCOPE)
+endfunction()
+
+add_subdirectory(3rdparty)
 add_subdirectory(src/podofo)
 include_directories(${PODOFO_INCLUDE_DIRS})
 
@@ -246,7 +378,7 @@ if(PODOFO_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
-if(PODOFO_BUILD_TOOLS)
+if(PODOFO_BUILD_UNSUPPORTED_TOOLS)
     add_subdirectory(tools)
 endif()
 

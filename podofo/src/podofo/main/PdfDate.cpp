@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2005 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2005 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfDate.h"
@@ -380,7 +378,7 @@ chrono::seconds getSecondsFromEpoch()
     // Cast now() to seconds. We assume system_clock epoch is
     //  always 1970/1/1 UTC in all platforms, like in C++20
     auto now = chrono::time_point_cast<chrono::seconds>(chrono::system_clock::now());
-    // We forget about realtionship with UTC, convert to local seconds
+    // We forget about relationship with UTC, convert to local seconds
     return chrono::seconds(now.time_since_epoch());
 }
 

@@ -27,7 +27,7 @@ PdfInfoHelper::~PdfInfoHelper()
 
 void PdfInfoHelper::OutputDocumentInfo(ostream& sOutStream)
 {
-    sOutStream << "\tPDF Version: " << PoDoFo::GetPdfVersionName(m_doc->GetMetadata().GetPdfVersion()) << endl;
+    sOutStream << "\tPDF Version: " << PoDoFo::GetPdfVersionName(m_doc->GetMetadata().GetPdfVersion()).GetString() << endl;
     sOutStream << "\tPage Count: " << m_doc->GetPages().GetCount() << endl;
     sOutStream << "\tPage Size: " << GuessFormat() << endl;
     sOutStream << endl;
@@ -99,7 +99,7 @@ void PdfInfoHelper::OutputPageInfo(ostream& outstream)
 
         annotCount = curPage.GetAnnotations().GetCount();
         outstream << "\tMediaBox: " << str << endl;
-        outstream << "\tRotation: " << curPage.GetRotationRaw() << endl;
+        outstream << "\tRotation: " << curPage.GetRotation() << endl;
         outstream << "\t# of Annotations: " << annotCount << endl;
 
         for (unsigned i = 0; i < annotCount; i++)
@@ -111,7 +111,7 @@ void PdfInfoHelper::OutputPageInfo(ostream& outstream)
 
             outstream << endl;
             outstream << "\tAnnotation " << i << endl;
-            outstream << "\t\tType: " << PoDoFo::AnnotationTypeToName(curAnnot.GetType()) << endl;
+            outstream << "\t\tType: " << PoDoFo::ToString(curAnnot.GetType()) << endl;
             auto contents = curAnnot.GetContents();
             if (contents != nullptr)
                 outstream << "\t\tContents: " << contents->GetString() << endl;
@@ -124,9 +124,13 @@ void PdfInfoHelper::OutputPageInfo(ostream& outstream)
             outstream << "\t\tRect: " << str << endl;
             if (curAnnot.GetType() == PdfAnnotationType::Link)
             {
-                auto& link = static_cast<PdfAnnotationLink&>(curAnnot);
-                if (link.GetAction() != nullptr && link.GetAction()->HasURI())
-                    outstream << "\t\tAction URI: " << link.GetAction()->GetURI().GetString() << endl;
+                auto action = static_cast<PdfAnnotationLink&>(curAnnot).GetAction();
+                if (action != nullptr && action->GetType() == PdfActionType::URI)
+                {
+                    auto uri = static_cast<PdfActionURI&>(*action).GetURI();
+                    if (uri != nullptr)
+                        outstream << "\t\tAction URI: " << uri->GetString() << endl;
+                }
             }
         }
     }
@@ -174,12 +178,12 @@ void PdfInfoHelper::OutputOutlines(ostream& outstream, PdfOutlineItem* item, int
         this->OutputOutlines(outstream, item->Next(), level);
 }
 
-void PdfInfoHelper::OutputOneName(ostream& outStream, PdfNameTree& nameTree,
-    const string_view& title, const string_view& key)
+void PdfInfoHelper::OutputOneName(ostream& outStream, PdfNameTrees& names,
+    PdfKnownNameTree treeName, const string_view& title)
 {
     outStream << "\t" << title << endl;
-    PdfDictionary dict;
-    nameTree.ToDictionary(key, dict);
+    PdfStringMap<PdfObject> dict;
+    names.ToDictionary(treeName, dict);
 
     string str;
     for (auto& pair : dict)
@@ -200,9 +204,9 @@ void PdfInfoHelper::OutputNames(ostream& outStream)
     }
     else
     {
-        OutputOneName(outStream, *nameTree, "Destinations", "Dests");
-        OutputOneName(outStream, *nameTree, "JavaScripts", "JavaScript");
-        OutputOneName(outStream, *nameTree, "Embedded Files", "EmbeddedFiles");
+        OutputOneName(outStream, *nameTree, PdfKnownNameTree::Dests, "Destinations");
+        OutputOneName(outStream, *nameTree, PdfKnownNameTree::JavaScript, "JavaScripts");
+        OutputOneName(outStream, *nameTree, PdfKnownNameTree::EmbeddedFiles, "Embedded Files");
     }
 }
 

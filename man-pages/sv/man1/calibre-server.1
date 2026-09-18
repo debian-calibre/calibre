@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
@@ -40,13 +40,12 @@ calibre\-server [options] [path to library folder...]
 .UNINDENT
 .UNINDENT
 .sp
-Starta calibre\-innehållsservern. calibre\-innehållsservern exponerar
-dina calibre\-bibliotek över internet. Du kan ange sökvägen
-till biblioteksmappar som argument till \fBcalibre\-server\fP\&. Om du inte
-anger några vägar, kommer alla biblioteken som i calibre\-
-huvudprogrammet känner till att användas.
+Starta calibres innehållsserver. Innehållsservern gör dina
+calibre\-bibliotek tillgängliga via internet. Du kan ange sökvägar till
+biblioteksmappar som argument till \fBcalibre\-server\fP\&. Om du inte anger några
+sökvägar används alla bibliotek som calibres huvudprogram känner till.
 .sp
-När du skickar argument till \fBcalibre\-server\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBcalibre\-server\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -61,12 +60,12 @@ Tid (i sekunder) att vänta på ett svar från servern när förfrågningar gör
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Välj typ av autentisering att använda.      Ställ in HTTP\-autentiseringsläget som används av servern. Ställ in till \fB\(dq\fPbasic\fB\(dq\fP om du placerar den här servern bakom en SSL\-proxy. Annars lämnar du det som \fB\(dq\fPauto\fB\(dq\fP, vilket kommer att använda \fB\(dq\fPbasic\fB\(dq\fP om SSL är anpassat, annars använder det \fB\(dq\fPdigest\fB\(dq\fP\&.
+Välj typ av autentisering att använda.      Ange serverns HTTP\-autentiseringsläge. Välj ”basic” om servern ligger bakom en SSL\-proxy. Låt annars värdet vara ”auto”, vilket använder ”basic” om SSL är konfigurerat och ”digest” i annat fall.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Ladda om servern automatiskt när källkoden ändras. Användbar för utveckling. Du bör också ange ett litet värde för avstängningstiden.
+Ladda om servern automatiskt när källkoden ändras. Användbart vid utveckling. Ange också ett litet värde för tidsgränsen för avstängning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -76,7 +75,7 @@ Antal misslyckade inloggningar för uteslutningar.   Antal misslyckade inloggnin
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Uteslut IP\-adresser som har upprepade misslyckade inloggningsförsök.        Uteslut tillfälligt åtkomst för IP\-adresser som har upprepade misslyckade inloggningsförsök under det angivna antalet minuter. Användbart för att förhindra försök att gissa lösenord. Om den är inställd på noll görs ingen uteslutning.
+Uteslut IP\-adresser som har upprepade misslyckade inloggningsförsök.        Blockerar tillfälligt åtkomst från IP\-adresser med upprepade misslyckade inloggningsförsök. Blockeringen varar i det angivna antalet minuter. Detta motverkar försök att gissa lösenord. Om värdet är noll sker ingen blockering.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -86,7 +85,7 @@ Välj standardläge för boklistan.    Ställ in standardläget för boklistan s
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minsta storlek för svar att använda vid datakomprimering (i byte).
+Minsta svarsstorlek för att använda datakomprimering (i byte).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -101,12 +100,12 @@ Kör process i bakgrunden som en demon (endast Linux).
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Begränsa användardefinierade fält som ska visas.    Kommaseparerad lista med användardefinierade metadatafält som kommer att visas av innehållsservern i /opds\- och /mobila\-vyer. Om du anger det här alternativet kommer alla fält som inte finns i den här listan att inte visas. Till exempel: my_rating,my_tags
+Begränsa användardefinierade fält som ska visas.    Kommaseparerad lista över användardefinierade metadatafält som innehållsservern visar i vyerna /opds och /mobile. Om du anger detta alternativ visas inga fält som saknas i listan. Till exempel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Förallokering av socket\-anslutning, till exempel med systemd socket aktivering. Som standard är det här alternativet aktiverat.
+Förallokering av socketar, till exempel vid socketaktivering med systemd. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -116,7 +115,7 @@ Lösenordsbaserad autentisering för att komma åt servern.    Normalt är serve
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Återfall till automatiskt upptäckt gränssnitt.      Om servern av någon anledning inte kan binda till gränssnittet som anges i alternativet listen_on, kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
+Använd ett automatiskt identifierat gränssnitt som reserv.  Om servern av någon anledning inte kan binda till gränssnittet som anges i alternativet listen_on, kommer det att försöka identifiera ett gränssnitt som ansluter till omvärlden och binda till det. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -136,7 +135,7 @@ Annonsera OPDS\-flöden via BonJour.  Annonsera OPDS\-flöden via BonJour\-tjän
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Nollkopiera filöverföringar för ökad prestanda.     Det här kommer att använda nollkopiera för överföringar i kärnan när filer skickas över nätverket, vilket ökar prestandan. Det kan dock orsaka skadade filöverföringar på några brutna filsystem. Om du påträffar skadade filöverföringar, stäng av det. Som standard är det här alternativet aktiverat.
+Filöverföringar utan kopiering för högre prestanda.         Använd överföringar utan kopiering (zero\-copy) i kärnan när filer skickas över nätverket för att öka prestandan. Detta kan dock orsaka skadade filöverföringar på vissa felaktiga filsystem. Inaktivera alternativet om filer skadas vid överföring. Som standard är det här alternativet aktiverat.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -146,7 +145,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignorera användardefinierade metadatafält.  Kommaseparerad lista över användardefinierade metadatafält som inte kommer att visas av innehållsservern i /opds\- och /mobila\-vyer. Till exempel: my_rating,my_tags
+Ignorerade användardefinierade metadatafält.        Kommaseparerad lista över användardefinierade metadatafält som innehållsservern inte visar i vyerna /opds och /mobile. Till exempel: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP

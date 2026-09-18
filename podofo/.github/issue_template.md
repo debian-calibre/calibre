@@ -5,6 +5,7 @@ affects you are fixed and the features you need are checked-in is to
 [contribute](https://github.com/podofo/podofo#contributions) high-quality patches.
 
 * **I'm submitting a:**
+  - [ ] Vulnerability report -> **use the specific [form](https://github.com/podofo/podofo/security/advisories/new) instead!**
   - [ ] Bug report
   - [ ] Feature request/suggestion
 
@@ -24,4 +25,4 @@ affects you are fixed and the features you need are checked-in is to
 
 * **[Bug report/Feature request] Other information**
 
-  E.g. test documents, stacktraces, related issues, links for us to have contex, suggestions how to fix, etc.
+  E.g. sample PDF documents, stacktraces, related issues, links for us to have contex, suggestions how to fix, etc.

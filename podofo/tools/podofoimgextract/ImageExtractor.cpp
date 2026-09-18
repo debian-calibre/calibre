@@ -33,12 +33,12 @@ void ImageExtractor::Init(const string_view& input, const string_view& output)
     {
         if (obj->IsDictionary())
         {
-            PdfObject* typeObj = obj->GetDictionary().GetKey(PdfName::KeyType);
-            PdfObject* subtypeObj = obj->GetDictionary().GetKey(PdfName::KeySubtype);
+            PdfObject* typeObj = obj->GetDictionary().GetKey("Type"_n);
+            PdfObject* subtypeObj = obj->GetDictionary().GetKey("Subtype"_n);
             if ((typeObj && typeObj->IsName() && (typeObj->GetName() == "XObject")) ||
                 (subtypeObj && subtypeObj->IsName() && (subtypeObj->GetName() == "Image")))
             {
-                auto filter = obj->GetDictionary().GetKey(PdfName::KeyFilter);
+                auto filter = obj->GetDictionary().GetKey("Filter"_n);
                 if (filter != nullptr && filter->IsArray() && filter->GetArray().GetSize() == 1 &&
                     filter->GetArray()[0].IsName() && (filter->GetArray()[0].GetName() == "DCTDecode"))
                     filter = &filter->GetArray()[0];
@@ -92,8 +92,8 @@ void ImageExtractor::ExtractImage(const PdfObject& obj, bool jpeg)
         const char* ppmHeader = "P6\n# Image extracted by PoDoFo\n%u %u\n%li\n";
 
         fprintf(file, ppmHeader,
-            (unsigned)obj.GetDictionary().GetKey("Width")->GetNumber(),
-            (unsigned)obj.GetDictionary().GetKey("Height")->GetNumber(),
+            (unsigned)obj.GetDictionary().MustFindKey("Width").GetNumber(),
+            (unsigned)obj.GetDictionary().MustFindKey("Height").GetNumber(),
             255);
 
         auto buffer = obj.GetStream()->GetCopy();

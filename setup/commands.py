@@ -7,6 +7,7 @@ __docformat__ = 'restructuredtext en'
 
 __all__ = [
     'bootstrap',
+    'browser_deps',
     'build',
     'build_dep',
     'cacerts',
@@ -120,6 +121,10 @@ develop = Develop()
 install = Install()
 sdist = Sdist()
 bootstrap = Bootstrap()
+
+from setup.browser_deps import BrowserDeps
+
+browser_deps = BrowserDeps()
 
 from setup.gui import GUI
 

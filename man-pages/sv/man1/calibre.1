@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "CALIBRE" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 calibre \- calibre
 .INDENT 0.0
@@ -40,27 +40,32 @@ calibre [options] [path_to_ebook or calibre url ...]
 .UNINDENT
 .UNINDENT
 .sp
-Starta huvudanvändargränssnittet i \fBcalibre\fP och lägg till e\-boken på
-path_to_ebook till databasen. Du kan också ange URL:er i \fBcalibre\fP för att utföra olika
+Starta \fBcalibre\(gas grafiska huvudgränssnitt och lägg valfritt till e\-boken vid
+path_to_ebook i databasen. Du kan också ange :command:\(gacalibre\fP\-URL:er för att utföra andra
 åtgärder än att bara lägga till böcker. Till exempel:
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Öppnar boken med ID 1842 i EPUB\-formatet från biblioteket
+Detta öppnar boken med ID 1842 i EPUB\-format från biblioteket
 \(dqtest_library\(dq i :command:
 .nf
 \(ga
 .fi
-calibre\(gas e\-bokvisare. Biblioteksnamn är bibliotekens
-mappnamn med blanksteg ersatta med understrykningar. En fullständig beskrivning av de
+calibre\(gas e\-bokvisare. Biblioteksnamnen är bibliotekens mappnamn
+med blanksteg ersatta med understreck. En fullständig beskrivning av de
 olika URL\-baserade åtgärderna finns i användarmanualen.
 .sp
-När du skickar argument till \fBcalibre\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBcalibre\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
+.B \-\-add\-and\-delete
+Add the book at the specified path to the library and then delete it. Works only for files inside the temporary folder of the system.
+.UNINDENT
+.INDENT 0.0
+.TP
 .B \-\-detach
-Koppla från kontrollterminalen, om någon (endast Linux)
+Koppla från den styrande terminalen, om det finns någon (endast Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -70,7 +75,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-ignore\-plugins
-Ignorera anpassad insticksmodul, användbart om du har installerat en insticksmodul som hindrar calibre från att starta
+Ignorera anpassade insticksmoduler, användbart om du har installerat en insticksmodul som hindrar calibre från att starta
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -80,7 +85,7 @@ Sök inte efter uppdateringar
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Orsakar att en körande calibre\-instans avslutas, om någon körs. Observera att om det finns pågående jobb kommer de att avbrytas tyst, så använd med försiktighet.
+Avsluta en calibre\-instans som körs, om det finns någon. Observera att pågående jobb avbryts utan meddelande, så använd med försiktighet.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -90,7 +95,7 @@ Starta minimerad till systemfältet.
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Ignoreras, ska inte användas. Närvarande endast för arvsskäl
+Ignoreras, använd inte. Finns endast kvar av kompatibilitetsskäl
 .UNINDENT
 .INDENT 0.0
 .TP

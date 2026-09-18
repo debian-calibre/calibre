@@ -1,22 +1,20 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "Rect.h"
+
+#include "Corners.h"
 
 #include <podofo/main/PdfArray.h>
 #include <podofo/main/PdfVariant.h>
 #include <podofo/auxiliary/Matrix.h>
 
-static void CreateRect(double x1, double y1, double x2, double y2,
-    double& left, double& bottom, double& width, double& height);
-static void NormalizeCoordinates(double& coord1, double& coord2);
-
 using namespace std;
 using namespace PoDoFo;
+
+static Rect CreateRect(double x1, double y1, double x2, double y2);
 
 Rect::Rect() :
     X(0),
@@ -36,9 +34,17 @@ Rect::Rect(double x, double y, double width, double height) :
 
 Rect Rect::FromCorners(double x1, double y1, double x2, double y2)
 {
-    Rect rect;
-    CreateRect(x1, y1, x2, y2, rect.X, rect.Y, rect.Width, rect.Height);
-    return rect;
+    return CreateRect(x1, y1, x2, y2);
+}
+
+Rect Rect::FromCorners(const Vector2& corner1, const Vector2& corner2)
+{
+    return CreateRect(corner1.X, corner1.Y, corner2.X, corner2.Y);
+}
+
+Rect Rect::FromCorners(const Corners& corners)
+{
+    return CreateRect(corners.X1, corners.Y1, corners.X2, corners.Y2);
 }
 
 void Rect::ToArray(PdfArray& arr) const
@@ -48,6 +54,16 @@ void Rect::ToArray(PdfArray& arr) const
     arr.Add(PdfObject(Y));
     arr.Add(PdfObject((Width + X)));
     arr.Add(PdfObject((Height + Y)));
+}
+
+PdfArray Rect::ToArray() const
+{
+    PdfArray arr;
+    arr.Add(PdfObject(X));
+    arr.Add(PdfObject(Y));
+    arr.Add(PdfObject((Width + X)));
+    arr.Add(PdfObject((Height + Y)));
+    return arr;
 }
 
 string Rect::ToString() const
@@ -70,17 +86,12 @@ Rect Rect::FromArray(const PdfArray& arr)
     if (arr.size() != 4)
         PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
 
-    double x1 = arr[0].GetReal();
-    double y1 = arr[1].GetReal();
-    double x2 = arr[2].GetReal();
-    double y2 = arr[3].GetReal();
+    double x1 = arr.FindAtAsSafe<double>(0, 0);
+    double y1 = arr.FindAtAsSafe<double>(1, 0);
+    double x2 = arr.FindAtAsSafe<double>(2, 0);
+    double y2 = arr.FindAtAsSafe<double>(3, 0);
 
-    double x;
-    double y;
-    double width;
-    double height;
-    CreateRect(x1, y1, x2, y2, x, y, width, height);
-    return Rect(x, y, width, height);
+    return CreateRect(x1, y1, x2, y2);
 }
 
 double Rect::GetRight() const
@@ -137,6 +148,26 @@ void Rect::Intersect(const Rect& rect)
     }
 }
 
+bool Rect::IsValid() const
+{
+    return Width != 0 && Height != 0;
+}
+
+Corners Rect::ToCorners() const
+{
+    return Corners(X, Y, X + Width, Y + Height);
+}
+
+Vector2 Rect::GetLeftBottom() const
+{
+    return Vector2(X, Y);
+}
+
+Vector2 Rect::GetRightTop() const
+{
+    return Vector2(X + Width, Y + Height);
+}
+
 Rect Rect::operator*(const Matrix& m) const
 {
     Vector2 corner1(X, Y);
@@ -146,24 +177,14 @@ Rect Rect::operator*(const Matrix& m) const
     return Rect::FromCorners(corner1.X, corner1.Y, corner2.X, corner2.Y);
 }
 
-void CreateRect(double x1, double y1, double x2, double y2, double& left, double& bottom, double& width, double& height)
+Rect::operator Corners() const
 {
-    // See Pdf Reference 1.7, 3.8.4 Rectangles
-    NormalizeCoordinates(x1, x2);
-    NormalizeCoordinates(y1, y2);
-
-    left = x1;
-    bottom = y1;
-    width = x2 - x1;
-    height = y2 - y1;
+    return Corners(X, Y, X + Width, Y + Height);
 }
 
-void NormalizeCoordinates(double& coord1, double& coord2)
+Rect CreateRect(double x1, double y1, double x2, double y2)
 {
-    if (coord1 > coord2)
-    {
-        double temp = coord1;
-        coord1 = coord2;
-        coord2 = temp;
-    }
+    // See Pdf Reference 1.7, 3.8.4 Rectangles
+    utls::NormalizeCoordinates(x1, y1, x2, y2);
+    return Rect(x1, y1, x2 - x1, y2 - y1);
 }

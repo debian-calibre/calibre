@@ -1,4 +1,4 @@
-file(GLOB_RECURSE SOURCE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*")
+file(GLOB_RECURSE SOURCE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "[^.]*")
 
 # Set visual studio source group
 source_group("" FILES ${SOURCE_FILES})
@@ -8,6 +8,14 @@ if(NOT PODOFO_HAVE_JPEG_LIB)
     list(REMOVE_ITEM SOURCE_FILES
         JpegCommon.h
         JpegCommon.cpp
+    )
+endif()
+
+if(NOT PODOFO_ENABLE_AFDKO)
+    # Remove AFDKO source if not needed
+    list(REMOVE_ITEM SOURCE_FILES
+        FontUtilsAFDKO.h
+        FontUtilsAFDKO.cpp
     )
 endif()
 

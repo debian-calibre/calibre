@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfString.h"
@@ -11,51 +9,129 @@
 
 #include <podofo/private/PdfEncodingPrivate.h>
 
-#include "PdfEncrypt.h"
 #include "PdfPredefinedEncoding.h"
 #include "PdfEncodingFactory.h"
-#include "PdfFilter.h"
 #include "PdfTokenizer.h"
 #include <podofo/auxiliary/OutputDevice.h>
 
 using namespace std;
 using namespace PoDoFo;
 
-enum class StringEncoding
+namespace
 {
-    utf8,
-    utf16be,
-    utf16le,
-    PdfDocEncoding
-};
+    enum class StringEncoding : uint8_t
+    {
+        utf8,
+        utf16be,
+        utf16le,
+        PdfDocEncoding
+    };
+}
 
 static StringEncoding getEncoding(const string_view& view);
+static PdfStringCharset getCharSet(const string_view& view);
 
 PdfString::PdfString()
-    : m_data(new StringData{ PdfStringState::Ascii, { } }), m_isHex(false)
+    : PdfDataMember(PdfDataType::String), m_dataAllocated(false), m_isHex(false), m_Utf8View("")
 {
 }
 
 PdfString::PdfString(charbuff&& buff, bool isHex)
-    : m_data(new StringData{ PdfStringState::RawBuffer, std::move(buff) }), m_isHex(isHex)
+    : PdfDataMember(PdfDataType::String), m_dataAllocated(true), m_isHex(isHex), m_data(new StringData(std::move(buff), false))
 {
 }
 
-PdfString::PdfString(const char* str)
-    : m_isHex(false)
+PdfString::~PdfString()
 {
-    initFromUtf8String({ str, std::strlen(str) });
+    // Manually call destructor for union
+    if (m_dataAllocated)
+        m_data.~shared_ptr();
+}
+
+PdfString::PdfString(const string& str)
+    : PdfDataMember(PdfDataType::String), m_isHex(false)
+{
+    // Avoid copying an empty string
+    if (str.empty())
+    {
+        new(&m_Utf8View)string_view("");
+        m_dataAllocated = false;
+    }
+    else
+    {
+        new(&m_data)shared_ptr<StringData>(new StringData((charbuff)str, true));
+        m_dataAllocated = true;
+    }
 }
 
 PdfString::PdfString(const string_view& view)
-    : m_isHex(false)
+    : PdfDataMember(PdfDataType::String), m_isHex(false)
 {
-    initFromUtf8String(view);
+    if (view.data() == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "String is null");
+
+    // Avoid copying an empty string
+    if (view.empty())
+    {
+        new(&m_Utf8View)string_view("");
+        m_dataAllocated = false;
+    }
+    else
+    {
+        new(&m_data)shared_ptr<StringData>(new StringData((charbuff)view, true));
+        m_dataAllocated = true;
+    }
+}
+
+PdfString::PdfString(string&& str)
+    : PdfDataMember(PdfDataType::String), m_dataAllocated(true), m_isHex(false), m_data(new StringData(charbuff(std::move(str)), true))
+{
 }
 
 PdfString::PdfString(const PdfString& rhs)
+    : PdfDataMember(PdfDataType::String), m_isHex(rhs.m_isHex)
 {
-    this->operator=(rhs);
+    if (rhs.m_dataAllocated)
+    {
+        new(&m_data)shared_ptr<StringData>(rhs.m_data);
+        m_dataAllocated = true;
+    }
+    else
+    {
+        new(&m_Utf8View)string_view(rhs.m_Utf8View);
+        m_dataAllocated = false;
+    }
+}
+
+PdfString::PdfString(PdfString&& rhs) noexcept
+    : PdfDataMember(PdfDataType::String)
+{
+    moveFrom(std::move(rhs));
+}
+
+PdfString& PdfString::operator=(const PdfString& rhs)
+{
+    this->~PdfString();
+    if (rhs.m_dataAllocated)
+    {
+        new(&m_data)shared_ptr<StringData>(rhs.m_data);
+        m_dataAllocated = true;
+    }
+    else
+    {
+        new(&m_Utf8View)string_view(rhs.m_Utf8View);
+        m_dataAllocated = false;
+    }
+
+    m_isHex = rhs.m_isHex;
+    return *this;
+}
+
+PdfString& PdfString::operator=(PdfString&& rhs) noexcept
+{
+    this->~PdfString();
+    moveFrom(std::move(rhs));
+    return *this;
 }
 
 PdfString PdfString::FromRaw(const bufferview& view, bool isHex)
@@ -63,7 +139,7 @@ PdfString PdfString::FromRaw(const bufferview& view, bool isHex)
     return PdfString((charbuff)view, isHex);
 }
 
-PdfString PdfString::FromHexData(const string_view& hexView, const PdfStatefulEncrypt& encrypt)
+PdfString PdfString::FromHexData(const string_view& hexView, const PdfStatefulEncrypt* encrypt)
 {
     size_t len = hexView.size();
     charbuff buffer;
@@ -75,7 +151,7 @@ PdfString PdfString::FromHexData(const string_view& hexView, const PdfStatefulEn
     for (size_t i = 0; i < len; i++)
     {
         char ch = hexView[i];
-        if (PdfTokenizer::IsWhitespace(ch))
+        if (PoDoFo::IsCharWhitespace(ch))
             continue;
 
         (void)utls::TryGetHexValue(ch, val);
@@ -99,10 +175,10 @@ PdfString PdfString::FromHexData(const string_view& hexView, const PdfStatefulEn
         buffer.push_back(decodedChar);
     }
 
-    if (encrypt.HasEncrypt())
+    if (encrypt != nullptr)
     {
         charbuff decrypted;
-        encrypt.DecryptTo(decrypted, buffer);
+        encrypt->DecryptTo(decrypted, buffer);
         return PdfString(std::move(decrypted), true);
     }
     else
@@ -112,96 +188,154 @@ PdfString PdfString::FromHexData(const string_view& hexView, const PdfStatefulEn
     }
 }
 
-void PdfString::Write(OutputStream& device, PdfWriteFlags writeMode,
-    const PdfStatefulEncrypt& encrypt, charbuff& buffer) const
+void PdfString::Write(OutputStream& device, PdfWriteFlags writeFlags,
+    const PdfStatefulEncrypt* encrypt, charbuff& buffer) const
 {
-    (void)writeMode;
-    (void)buffer; // TODO: Just use the supplied buffer istead of the many ones below
+    (void)buffer; // TODO: Just use the supplied buffer instead of the many ones below
 
     // Strings in PDF documents may contain \0 especially if they are encrypted
     // this case has to be handled!
 
-    // We are not encrypting the empty strings (was access violation)!
-    string_view dataview;
+    string_view view;
+    bool stringEvalued;
+    if (m_dataAllocated)
+    {
+        view = m_data->Chars;
+        stringEvalued = m_data->StringEvaluated;
+    }
+    else
+    {
+        view = m_Utf8View;
+        stringEvalued = true;
+    }
+
     u16string string16;
     string pdfDocEncoded;
-    switch (m_data->State)
+    if (stringEvalued)
     {
-        case PdfStringState::RawBuffer:
-        case PdfStringState::Ascii:
+        auto charset = getCharSet(view);
+        switch (charset)
         {
-            dataview = string_view(m_data->Chars);
-            break;
-        }
-        case PdfStringState::PdfDocEncoding:
-        {
-            (void)PoDoFo::TryConvertUTF8ToPdfDocEncoding(m_data->Chars, pdfDocEncoded);
-            dataview = string_view(pdfDocEncoded);
-            break;
-        }
-        case PdfStringState::Unicode:
-        {
-            // Prepend utf-16 BE BOM
-            string16.push_back((char16_t)(0xFEFF));
-            utf8::utf8to16(m_data->Chars.data(), m_data->Chars.data() + m_data->Chars.size(), std::back_inserter(string16));
+            case PdfStringCharset::Ascii:
+            {
+                // Ascii charset can be serialized without further processing
+                break;
+            }
+            case PdfStringCharset::PdfDocEncoding:
+            {
+                (void)PoDoFo::TryConvertUTF8ToPdfDocEncoding(view, pdfDocEncoded);
+                view = string_view(pdfDocEncoded);
+                break;
+            }
+            case PdfStringCharset::Unicode:
+            {
+                // Prepend utf-16 BE BOM
+                string16.push_back((char16_t)(0xFEFF));
+                utf8::utf8to16(view.data(), view.data() + view.size(), std::back_inserter(string16));
 #ifdef PODOFO_IS_LITTLE_ENDIAN
-            // Ensure the output will be BE
-            utls::ByteSwap(string16);
+                // Ensure the output will be BE
+                utls::ByteSwap(string16);
 #endif
-            dataview = string_view((const char*)string16.data(), string16.size() * sizeof(char16_t));
-            break;
+                view = string_view((const char*)string16.data(), string16.size() * sizeof(char16_t));
+                break;
+            }
+            default:
+                PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
         }
-        default:
-            PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
     }
 
+    // NOTE: We do not encrypt empty strings (it's access violation)
     charbuff tempBuffer;
-    if (encrypt.HasEncrypt() && dataview.size() > 0)
+    if (encrypt != nullptr && view.size() > 0)
     {
         charbuff encrypted;
-        encrypt.EncryptTo(encrypted, dataview);
+        encrypt->EncryptTo(encrypted, view);
         encrypted.swap(tempBuffer);
-        dataview = string_view(tempBuffer.data(), tempBuffer.size());
+        view = string_view(tempBuffer.data(), tempBuffer.size());
     }
 
-    utls::SerializeEncodedString(device, dataview, m_isHex);
+    utls::SerializeEncodedString(device, view, m_isHex,
+        (writeFlags & PdfWriteFlags::SkipDelimiters) != PdfWriteFlags::None);
 }
 
-PdfStringState PdfString::GetState() const
+PdfStringCharset PdfString::GetCharset() const
 {
-    return m_data->State;
+    if (m_dataAllocated)
+    {
+        ensureCharsEvaluated();
+        return getCharSet(m_data->Chars);
+    }
+    else
+    {
+        return getCharSet(m_Utf8View);
+    }
 }
 
-const string& PdfString::GetString() const
+string_view PdfString::GetString() const
 {
-    evaluateString();
-    return m_data->Chars;
+    if (m_dataAllocated)
+    {
+        ensureCharsEvaluated();
+        return m_data->Chars;
+    }
+    else
+    {
+        return m_Utf8View;
+    }
 }
 
 bool PdfString::IsEmpty() const
 {
-    return m_data->Chars.empty();
+    if (m_dataAllocated)
+        return m_data->Chars.empty();
+    else
+        return m_Utf8View.empty();
 }
 
-const PdfString& PdfString::operator=(const PdfString& rhs)
+bool PdfString::IsStringEvaluated() const
 {
-    this->m_data = rhs.m_data;
-    this->m_isHex = rhs.m_isHex;
-    return *this;
+    if (m_dataAllocated)
+        return m_data->StringEvaluated;
+    else
+        return true;
 }
 
 bool PdfString::operator==(const PdfString& rhs) const
 {
-    if (this == &rhs)
-        return true;
+    if (this->m_dataAllocated)
+    {
+        if (rhs.m_dataAllocated)
+        {
+            if (this->m_data == rhs.m_data)
+                return true;
 
-    if (!canPerformComparison(*this, rhs))
-        return false;
+            if (this->m_data->StringEvaluated != this->m_data->StringEvaluated)
+                return false;
 
-    if (this->m_data == rhs.m_data)
-        return true;
+            return this->m_data->Chars == rhs.m_data->Chars;
+        }
+        else
+        {
+            if (!this->m_data->StringEvaluated)
+                return false;
 
-    return this->m_data->Chars == rhs.m_data->Chars;
+            return this->m_data->Chars == rhs.m_Utf8View;
+        }
+    }
+    else
+    {
+        if (rhs.m_dataAllocated)
+        {
+            if (!rhs.m_data->StringEvaluated)
+                return false;
+
+            return this->m_Utf8View == rhs.m_data->Chars;
+        }
+        else
+        {
+            return this->m_Utf8View == rhs.m_Utf8View;
+        }
+    }
 }
 
 bool PdfString::operator==(const char* str) const
@@ -216,24 +350,53 @@ bool PdfString::operator==(const string& str) const
 
 bool PdfString::operator==(const string_view& view) const
 {
-    if (!isValidText())
-        return false;
-
-    return m_data->Chars == view;
+    if (m_dataAllocated)
+    {
+        ensureCharsEvaluated();
+        return m_data->Chars == view;
+    }
+    else
+    {
+        return m_Utf8View == view;
+    }
 }
 
 bool PdfString::operator!=(const PdfString& rhs) const
 {
-    if (this == &rhs)
-        return false;
+    if (this->m_dataAllocated)
+    {
+        if (rhs.m_dataAllocated)
+        {
+            if (this->m_data != rhs.m_data)
+                return true;
 
-    if (!canPerformComparison(*this, rhs))
-        return true;
+            if (this->m_data->StringEvaluated != this->m_data->StringEvaluated)
+                return true;
 
-    if (this->m_data == rhs.m_data)
-        return false;
+            return this->m_data->Chars != rhs.m_data->Chars;
+        }
+        else
+        {
+            if (!this->m_data->StringEvaluated)
+                return true;
 
-    return this->m_data->Chars != rhs.m_data->Chars;
+            return this->m_data->Chars != rhs.m_Utf8View;
+        }
+    }
+    else
+    {
+        if (rhs.m_dataAllocated)
+        {
+            if (!rhs.m_data->StringEvaluated)
+                return true;
+
+            return this->m_Utf8View != rhs.m_data->Chars;
+        }
+        else
+        {
+            return this->m_Utf8View != rhs.m_Utf8View;
+        }
+    }
 }
 
 bool PdfString::operator!=(const char* str) const
@@ -248,144 +411,153 @@ bool PdfString::operator!=(const string& str) const
 
 bool PdfString::operator!=(const string_view& view) const
 {
-    if (!isValidText())
-        return true;
-
-    return m_data->Chars != view;
+    if (m_dataAllocated)
+    {
+        ensureCharsEvaluated();
+        return m_data->Chars != view;
+    }
+    else
+    {
+        return m_Utf8View != view;
+    }
 }
 
 PdfString::operator string_view() const
 {
-    evaluateString();
-    return m_data->Chars;
-}
-
-void PdfString::initFromUtf8String(const string_view& view)
-{
-    if (view.data() == nullptr)
-        throw runtime_error("String is null");
-
-    if (view.length() == 0)
+    if (m_dataAllocated)
     {
-        m_data.reset(new StringData{ PdfStringState::Ascii, { } });
-        return;
+        ensureCharsEvaluated();
+        return m_data->Chars;
     }
-
-    bool isAsciiEqual;
-    if (PoDoFo::CheckValidUTF8ToPdfDocEcondingChars(view, isAsciiEqual))
-        m_data.reset(new StringData{ isAsciiEqual ? PdfStringState::Ascii : PdfStringState::PdfDocEncoding, charbuff(view) });
     else
-        m_data.reset(new StringData{ PdfStringState::Unicode, charbuff(view) });
+    {
+        return m_Utf8View;
+    }
 }
 
-void PdfString::evaluateString() const
+void PdfString::initFromUtf8String(const char* str, size_t length, bool literal)
 {
-    switch (m_data->State)
-    {
-        case PdfStringState::Ascii:
-        case PdfStringState::PdfDocEncoding:
-        case PdfStringState::Unicode:
-            return;
-        case PdfStringState::RawBuffer:
-        {
-            auto encoding = getEncoding(m_data->Chars);
-            switch (encoding)
-            {
-                case StringEncoding::utf16be:
-                {
-                    // Remove BOM and decode utf-16 string
-                    string utf8;
-                    auto view = string_view(m_data->Chars).substr(2);
-                    utls::ReadUtf16BEString(view, utf8);
-                    utf8.swap(m_data->Chars);
-                    m_data->State = PdfStringState::Unicode;
-                    break;
-                }
-                case StringEncoding::utf16le:
-                {
-                    // Remove BOM and decode utf-16 string
-                    string utf8;
-                    auto view = string_view(m_data->Chars).substr(2);
-                    utls::ReadUtf16LEString(view, utf8);
-                    utf8.swap(m_data->Chars);
-                    m_data->State = PdfStringState::Unicode;
-                    break;
-                }
-                case StringEncoding::utf8:
-                {
-                    // Remove BOM
-                    m_data->Chars.substr(3).swap(m_data->Chars);
-                    m_data->State = PdfStringState::Unicode;
-                    break;
-                }
-                case StringEncoding::PdfDocEncoding:
-                {
-                    bool isAsciiEqual;
-                    auto utf8 = PoDoFo::ConvertPdfDocEncodingToUTF8(m_data->Chars, isAsciiEqual);
-                    utf8.swap(m_data->Chars);
-                    m_data->State = isAsciiEqual ? PdfStringState::Ascii : PdfStringState::PdfDocEncoding;
-                    break;
-                }
-                default:
-                    throw runtime_error("Unsupported");
-            }
+    if (str == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "String is null");
 
-            return;
+    if (literal)
+    {
+        new(&m_Utf8View)string_view(str, length);
+        m_dataAllocated = false;
+    }
+    else
+    {
+        if (length == 0)
+        {
+            // Avoid copying an empty string
+            new(&m_Utf8View)string_view("");
+            m_dataAllocated = false;
+        }
+        else
+        {
+            new(&m_data)shared_ptr<StringData>(new StringData(charbuff(str, length), true));
+            m_dataAllocated = true;
+        }
+    }
+}
+
+void PdfString::ensureCharsEvaluated() const
+{
+    PODOFO_INVARIANT(m_dataAllocated);
+    if (m_data->StringEvaluated)
+        return;
+
+    auto encoding = getEncoding(m_data->Chars);
+    switch (encoding)
+    {
+        case StringEncoding::utf16be:
+        {
+            // Remove BOM and decode utf-16 string
+            string utf8;
+            auto view = string_view(m_data->Chars).substr(2);
+            utls::ReadUtf16BEString(view, utf8);
+            utf8.swap(m_data->Chars);
+            break;
+        }
+        case StringEncoding::utf16le:
+        {
+            // Remove BOM and decode utf-16 string
+            string utf8;
+            auto view = string_view(m_data->Chars).substr(2);
+            utls::ReadUtf16LEString(view, utf8);
+            utf8.swap(m_data->Chars);
+            break;
+        }
+        case StringEncoding::utf8:
+        {
+            // Remove BOM
+            m_data->Chars.substr(3).swap(m_data->Chars);
+            break;
+        }
+        case StringEncoding::PdfDocEncoding:
+        {
+            bool isAsciiEqual;
+            auto utf8 = PoDoFo::ConvertPdfDocEncodingToUTF8(m_data->Chars, isAsciiEqual);
+            utf8.swap(m_data->Chars);
+            break;
         }
         default:
-            throw runtime_error("Unsupported");
+            PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Unsupported");
     }
+
+    m_data->StringEvaluated = true;
 }
 
-// Returns true only if same state or it's valid text string
-bool PdfString::canPerformComparison(const PdfString& lhs, const PdfString& rhs)
+void PdfString::moveFrom(PdfString&& rhs)
 {
-    if (lhs.m_data->State == rhs.m_data->State)
-        return true;
+    if (rhs.m_dataAllocated)
+        new(&m_data)shared_ptr<StringData>(std::move(rhs.m_data));
+    else
+        new(&m_Utf8View)string_view(rhs.m_Utf8View);
 
-    if (lhs.isValidText() || rhs.isValidText())
-        return true;
+    m_dataAllocated = rhs.m_dataAllocated;
+    m_isHex = rhs.m_isHex;
 
-    return false;
+    new(&rhs.m_Utf8View)string_view("");
+    rhs.m_dataAllocated = false;
+    rhs.m_isHex = false;
 }
 
-const string& PdfString::GetRawData() const
+string_view PdfString::GetRawData() const
 {
-    if (m_data->State != PdfStringState::RawBuffer)
-        throw runtime_error("The string buffer has been evaluated");
+    if (!m_dataAllocated || m_data->StringEvaluated)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The raw data buffer has been evaluated to a string");
 
     return m_data->Chars;
-}
-
-bool PdfString::isValidText() const
-{
-    switch (m_data->State)
-    {
-        case PdfStringState::Ascii:
-        case PdfStringState::PdfDocEncoding:
-        case PdfStringState::Unicode:
-            return true;
-        case PdfStringState::RawBuffer:
-            return false;
-        default:
-            PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
-    }
 }
 
 StringEncoding getEncoding(const string_view& view)
 {
-    const char utf16beMarker[2] = { static_cast<char>(0xFE), static_cast<char>(0xFF) };
+    constexpr char utf16beMarker[2] = { static_cast<char>(0xFE), static_cast<char>(0xFF) };
     if (view.size() >= sizeof(utf16beMarker) && memcmp(view.data(), utf16beMarker, sizeof(utf16beMarker)) == 0)
         return StringEncoding::utf16be;
 
     // NOTE: Little endian should not be officially supported
-    const char utf16leMarker[2] = { static_cast<char>(0xFF), static_cast<char>(0xFE) };
+    constexpr char utf16leMarker[2] = { static_cast<char>(0xFF), static_cast<char>(0xFE) };
     if (view.size() >= sizeof(utf16leMarker) && memcmp(view.data(), utf16leMarker, sizeof(utf16leMarker)) == 0)
         return StringEncoding::utf16le;
 
-    const char utf8Marker[3] = { static_cast<char>(0xEF), static_cast<char>(0xBB), static_cast<char>(0xBF) };
+    constexpr char utf8Marker[3] = { static_cast<char>(0xEF), static_cast<char>(0xBB), static_cast<char>(0xBF) };
     if (view.size() >= sizeof(utf8Marker) && memcmp(view.data(), utf8Marker, sizeof(utf8Marker)) == 0)
         return StringEncoding::utf8;
 
     return StringEncoding::PdfDocEncoding;
 }
+
+PdfStringCharset getCharSet(const string_view& view)
+{
+    bool isAsciiEqual;
+    if (PoDoFo::CheckValidUTF8ToPdfDocEcondingChars(view, isAsciiEqual))
+        return isAsciiEqual ? PdfStringCharset::Ascii : PdfStringCharset::PdfDocEncoding;
+    else
+        return PdfStringCharset::Unicode;
+}
+
+// Empty string constructor
+PdfString::StringData::StringData(charbuff&& buff, bool stringEvaluated)
+    : Chars(std::move(buff)), StringEvaluated(stringEvaluated) { }

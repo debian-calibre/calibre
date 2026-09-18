@@ -1,23 +1,21 @@
-/**
- * Copyright (C) 2008 by Dominik Seichter <domseichter@web.de>
- * Copyright (C) 2021 by Francesco Pretto <ceztko@gmail.com>
- *
- * Licensed under GNU Library General Public 2.0 or later.
- * Some rights reserved. See COPYING, AUTHORS.
- */
+// SPDX-FileCopyrightText: 2008 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: MIT-0
 
 #include <PdfTest.h>
 
 using namespace std;
 using namespace PoDoFo;
 
+#include <podofo/private/OpenSSLInternal.h>
+
 TEST_CASE("TestImage1")
 {
     PdfMemDocument doc;
     doc.Load(TestUtils::GetTestInputFilePath("TestImage1.pdf"));
     auto& page = doc.GetPages().GetPageAt(0);
-    auto& resources = page.MustGetResources();
-    auto imageObj = resources.GetResource("XObject", "XOb5");
+    auto& resources = page.GetResources();
+    auto imageObj = resources.GetResource(PdfResourceType::XObject, "XOb5");
     unique_ptr<PdfImage> image;
     REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(*imageObj, image));
 
@@ -28,7 +26,7 @@ TEST_CASE("TestImage1")
         PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
 
     string expectedImage;
-    TestUtils::ReadTestInputFile("ReferenceImage.ppm", expectedImage);
+    TestUtils::ReadTestInputFileTo(expectedImage, "ReferenceImage.ppm");
 
     REQUIRE(ppmbuffer == expectedImage);
 }
@@ -38,17 +36,17 @@ TEST_CASE("TestImage2")
     PdfMemDocument doc;
     doc.Load(TestUtils::GetTestInputFilePath("Hierarchies1.pdf"));
     // Try to extract jpeg image
-    auto imageObj = doc.GetObjects().GetObject(PdfReference(156, 0));
+    auto& imageObj = doc.GetObjects().MustGetObject(PdfReference(156, 0));
     charbuff buffer;
 
     // Unpacking directly the stream shall throw since it has jpeg content
-    ASSERT_THROW_WITH_ERROR_CODE(imageObj->GetStream()->CopyTo(buffer), PdfErrorCode::UnsupportedFilter);
+    ASSERT_THROW_WITH_ERROR_CODE(imageObj.MustGetStream().CopyTo(buffer), PdfErrorCode::UnsupportedFilter);
 
     // Unpacking using UnpackToSafe() should succeed
-    imageObj->GetStream()->CopyToSafe(buffer);
+    imageObj.MustGetStream().CopyToSafe(buffer);
 
     unique_ptr<PdfImage> image;
-    REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(*imageObj, image));
+    REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(imageObj, image));
 
     image->DecodeTo(buffer, PdfPixelFormat::BGRA);
     charbuff ppmbuffer;
@@ -59,7 +57,7 @@ TEST_CASE("TestImage2")
     // NOTE: The following check may file using different,
     // jpeg libraries such as libjpeg-turbo
     string expectedImage;
-    TestUtils::ReadTestInputFile("ReferenceImage.ppm", expectedImage);
+    TestUtils::ReadTestInputFileTo(expectedImage, "ReferenceImage.ppm");
 
     REQUIRE(ppmbuffer == expectedImage);
 #endif // PODOFO_PLAYGROUND
@@ -68,7 +66,7 @@ TEST_CASE("TestImage2")
 static void testReferenceImage(const PdfDocument& doc)
 {
     auto& page = doc.GetPages().GetPageAt(0);
-    auto resources = page.MustGetResources().GetResourceIterator("XObject");
+    auto resources = page.GetResources().GetResourceIterator(PdfResourceType::XObject);
     for (auto& res : resources)
     {
         unique_ptr<const PdfImage> image;
@@ -81,12 +79,13 @@ static void testReferenceImage(const PdfDocument& doc)
             PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
 
         string expectedImage;
-        TestUtils::ReadTestInputFile("ReferenceImage.ppm", expectedImage);
+        TestUtils::ReadTestInputFileTo(expectedImage, "ReferenceImage.ppm");
 
         REQUIRE(ppmbuffer == expectedImage);
-
-        break;
+        return;
     }
+
+    FAIL("Reference image not found");
 }
 
 TEST_CASE("TestImage3")
@@ -95,7 +94,7 @@ TEST_CASE("TestImage3")
     {
         PdfMemDocument doc;
         PdfPainter painter;
-        auto& page = doc.GetPages().CreatePage(PdfPage::CreateStandardPageSize(PdfPageSize::A4));
+        auto& page = doc.GetPages().CreatePage(PdfPageSize::A4);
         painter.SetCanvas(page);
         auto img = doc.CreateImage();
         img->Load(TestUtils::GetTestInputFilePath("ReferenceImage.png"));
@@ -111,13 +110,21 @@ TEST_CASE("TestImage3")
     }
 }
 
+TEST_CASE("TestImageInvalidLength")
+{
+    auto inputFile = TestUtils::GetTestInputFilePath("TestImageInvalidLength.pdf");
+    PdfMemDocument doc;
+    doc.Load(inputFile);
+    testReferenceImage(doc);
+}
+
 TEST_CASE("TestImage4")
 {
     auto outputFile = TestUtils::GetTestOutputFilePath("TestImage4.pdf");
     {
         PdfMemDocument doc;
         PdfPainter painter;
-        auto& page = doc.GetPages().CreatePage(PdfPage::CreateStandardPageSize(PdfPageSize::A4));
+        auto& page = doc.GetPages().CreatePage(PdfPageSize::A4);
         painter.SetCanvas(page);
         auto img = doc.CreateImage();
         img->Load(TestUtils::GetTestInputFilePath("ReferenceImage.jpg"));
@@ -126,7 +133,7 @@ TEST_CASE("TestImage4")
         PdfImageInfo info;
         info.Width = 128;
         info.Height = 128;
-        info.ColorSpace = PdfColorSpace::DeviceGray;
+        info.ColorSpace = PdfColorSpaceType::DeviceGray;
         info.BitsPerComponent = 8;
         alpha->SetDataRaw(alphaInput, info);
         img->SetSoftMask(*alpha);
@@ -136,7 +143,7 @@ TEST_CASE("TestImage4")
     }
 
 #ifdef PODOFO_PLAYGROUND
-    // NOTE: The following check may file using different,
+    // NOTE: The following check may fail using different,
     // jpeg libraries such as libjpeg-turbo
     {
         PdfMemDocument doc;
@@ -164,7 +171,7 @@ TEST_CASE("TestImage5")
         TestUtils::SaveFramePPM(ppmbuffer, buffer.data(),
             PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
 
-        TestUtils::WriteTestOutputFile(TestUtils::GetTestOutputFilePath("YCbCr-jpeg.ppm"), ppmbuffer);
+        TestUtils::WriteTestOutputFileTo(TestUtils::GetTestOutputFilePath("YCbCr-jpeg.ppm"), ppmbuffer);
     }
 
     {
@@ -182,28 +189,151 @@ TEST_CASE("TestImage5")
         TestUtils::SaveFramePPM(ppmbuffer, buffer.data(),
             PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
 
-        TestUtils::WriteTestOutputFile(TestUtils::GetTestOutputFilePath("YCCK-jpeg.ppm"), ppmbuffer);
+        TestUtils::WriteTestOutputFileTo(TestUtils::GetTestOutputFilePath("YCCK-jpeg.ppm"), ppmbuffer);
     }
+}
+
+TEST_CASE("TestImage6")
+{
+    PdfMemDocument doc;
+    doc.Load(TestUtils::GetTestInputFilePath("TestImage2.pdf"));
+    auto& page = doc.GetPages().GetPageAt(0);
+    auto& resources = page.GetResources();
+    auto imageObj = resources.GetResource(PdfResourceType::XObject, "X0");
+    unique_ptr<PdfImage> image;
+    REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(*imageObj, image));
+
+    charbuff buffer;
+    image->DecodeTo(buffer, PdfPixelFormat::BGRA);
+    charbuff ppmbuffer;
+    TestUtils::SaveFramePPM(ppmbuffer, buffer.data(),
+        PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
+
+    TestUtils::WriteTestOutputFileTo(TestUtils::GetTestOutputFilePath("TestImage2.ppm"), ppmbuffer);
 }
 
 TEST_CASE("TestImage7")
 {
     auto outputFile = TestUtils::GetTestOutputFilePath("TestImage7.pdf");
-    {
-        PdfMemDocument doc;
-        PdfPainter painter;
-        auto& page = doc.GetPages().CreatePage(PdfPage::CreateStandardPageSize(PdfPageSize::A4));
-        painter.SetCanvas(page);
+    PdfMemDocument doc;
+    PdfPainter painter;
+    auto& page = doc.GetPages().CreatePage(PdfPageSize::A4);
+    painter.SetCanvas(page);
 
-        auto img1 = doc.CreateImage();
-        img1->Load(TestUtils::GetTestInputFilePath("MultipleFormats.tif"));
-        painter.DrawImage(*img1, 50, 700, 0.5, 0.5);
+    auto img1 = doc.CreateImage();
+    img1->Load(TestUtils::GetTestInputFilePath("MultipleFormats.tif"));
+    painter.DrawImage(*img1, 50, 700, 0.5, 0.5);
 
-        auto img2 = doc.CreateImage();
-        img2->Load(TestUtils::GetTestInputFilePath("MultipleFormats.tif"), 8);
-        painter.DrawImage(*img2, 50, 600, 0.5, 0.5);
+    auto img2 = doc.CreateImage();
+    img2->Load(TestUtils::GetTestInputFilePath("MultipleFormats.tif"), { 8 });
+    painter.DrawImage(*img2, 50, 600, 0.5, 0.5);
 
-        painter.FinishDrawing();
-        doc.Save(outputFile);
-    }
+    painter.FinishDrawing();
+    doc.Save(outputFile);
+}
+
+TEST_CASE("TestImage8")
+{
+    auto outputFile = TestUtils::GetTestOutputFilePath("TestImage8.pdf");
+    PdfMemDocument doc;
+    PdfPainter painter;
+    auto& page = doc.GetPages().CreatePage(PdfPageSize::A4);
+    painter.SetCanvas(page);
+
+    auto img = doc.CreateImage();
+    auto metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 0 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::TopLeft);
+    painter.DrawImage(*img, 50, 650, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 1 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::TopRight);
+    painter.DrawImage(*img, 200, 650, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 2 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::BottomRight);
+    painter.DrawImage(*img, 350, 650, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 3 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::BottomLeft);
+    painter.DrawImage(*img, 50, 450, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 4 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::LeftTop);
+    painter.DrawImage(*img, 200, 450, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 5 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::RightTop);
+    painter.DrawImage(*img, 400, 450, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 6 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::RightBottom);
+    painter.DrawImage(*img, 50, 250, 0.05, 0.05);
+
+    img = doc.CreateImage();
+    metadata = img->Load(TestUtils::GetTestInputFilePath("TestRotations.tif"), { 7 });
+    REQUIRE(metadata.Orientation == PdfImageOrientation::LeftBottom);
+    painter.DrawImage(*img, 250, 250, 0.05, 0.05);
+
+    painter.FinishDrawing();
+    doc.Save(outputFile);
+}
+
+TEST_CASE("TestImage9")
+{
+    PdfMemDocument doc;
+    doc.Load(TestUtils::GetTestInputFilePath("TestIndexedRGB.pdf"));
+
+    auto& obj = doc.GetObjects().MustGetObject(PdfReference(27, 0));
+    unique_ptr<PdfImage> image;
+    REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(obj, image));
+
+    charbuff buffer;
+    image->DecodeTo(buffer, PdfPixelFormat::BGRA);
+    charbuff ppmbuffer;
+    TestUtils::SaveFramePPM(ppmbuffer, buffer.data(),
+        PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
+
+    REQUIRE(ssl::ComputeMD5Str(buffer) == "87A5BA219A8429733A1704044617F331");
+}
+
+TEST_CASE("TestImage10")
+{
+    PdfMemDocument doc;
+    doc.Load(TestUtils::GetTestInputFilePath("TestIndexedRGB_OutOfPalette.pdf"));
+
+    auto& obj = doc.GetObjects().MustGetObject(PdfReference(20, 0));
+    unique_ptr<PdfImage> image;
+    REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(obj, image));
+
+    charbuff buffer;
+    image->DecodeTo(buffer, PdfPixelFormat::BGRA);
+    charbuff ppmbuffer;
+    TestUtils::SaveFramePPM(ppmbuffer, buffer.data(),
+        PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
+
+    REQUIRE(ssl::ComputeMD5Str(buffer) == "2548A8F48BC5FC9521D689239259AC48");
+}
+
+TEST_CASE("TestBitsPerComponent1")
+{
+    PdfMemDocument doc;
+    doc.Load(TestUtils::GetTestInputFilePath("TestBitsPerComponent1.pdf"));
+
+    auto& obj = doc.GetObjects().MustGetObject(PdfReference(27, 0));
+    unique_ptr<PdfImage> image;
+    REQUIRE(PdfXObject::TryCreateFromObject<PdfImage>(obj, image));
+
+    charbuff buffer;
+    image->DecodeTo(buffer, PdfPixelFormat::BGRA);
+    charbuff ppmbuffer;
+    TestUtils::SaveFramePPM(ppmbuffer, buffer.data(),
+        PdfPixelFormat::BGRA, image->GetWidth(), image->GetHeight());
+
+    REQUIRE(ssl::ComputeMD5Str(buffer) == "C7C13471D8E5CF9E48637513D73FDCB5");
 }

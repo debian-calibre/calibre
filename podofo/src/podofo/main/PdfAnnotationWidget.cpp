@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfAnnotationWidget.h"
@@ -21,9 +18,9 @@ PdfAnnotationWidget::PdfAnnotationWidget(PdfObject& obj)
 {
 }
 
-void PdfAnnotationWidget::SetField(const shared_ptr<PdfField>& field)
+void PdfAnnotationWidget::SetField(shared_ptr<PdfField>&& field)
 {
-    m_Field = field;
+    m_Field = std::move(field);
 }
 
 const PdfField& PdfAnnotationWidget::GetField() const

@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PODOFO_BASE_TYPES_H
 #define PODOFO_BASE_TYPES_H
@@ -14,25 +11,20 @@
 
 namespace PoDoFo
 {
-    /** Convenient read-only char buffer span
-     */
+    /// Convenient read-only char buffer span
     using bufferview = cspan<char>;
 
-    /** Convenient writable char buffer span
-     */
+    /// Convenient writable char buffer span
     using bufferspan = mspan<char>;
 
-    /** Unicode code point view
-     */
+    /// Unicode code point view
     using unicodeview = cspan<char32_t>;
 
     // TODO: Optimize, maintaining string compatibility
     // Use basic_string::resize_and_overwrite in C++23
     // https://en.cppreference.com/w/cpp/string/basic_string/resize_and_overwrite
-    /**
-     * Convenient type for char array storage and/or buffer with
-     * std::string compatibility
-     */
+    /// Convenient type for char array storage and/or buffer with
+    /// std::string compatibility
     template <typename = void>
     class charbuff_t final : public std::string
     {
@@ -46,6 +38,8 @@ namespace PoDoFo
         }
         charbuff_t(std::string&& str)
             : std::string(std::move(str)) { }
+        charbuff_t(const char* str, size_t size)
+            : std::string(str, size) { }
         explicit charbuff_t(const bufferview& view)
             : std::string(view.data(), view.size()) { }
         explicit charbuff_t(const std::string_view& view)
@@ -133,10 +127,9 @@ namespace PoDoFo
 
     using charbuff = charbuff_t<>;
 
-    /** A const data provider that can hold a view to a
-     * static segments or a shared buffer
-     *
-     */
+    /// A const data provider that can hold a view to a
+    /// static segments or a shared buffer
+    ///
     template <typename = void>
     class datahandle_t final
     {
@@ -144,13 +137,21 @@ namespace PoDoFo
         datahandle_t() { }
         datahandle_t(const bufferview& view)
             : m_view(view) { }
-        datahandle_t(const std::shared_ptr<const charbuff_t<>>& buff)
-            : m_view(*buff), m_buff(buff) { }
+        datahandle_t(charbuff_t<>&& buff)
+            : m_buff(new charbuff_t<>(std::move(buff))), m_view(*m_buff) { }
+        datahandle_t(std::unique_ptr<const charbuff_t<>>&& buff)
+            : m_buff(std::move(buff)), m_view(*m_buff) { }
+        datahandle_t(std::unique_ptr<charbuff_t<>>&& buff)
+            : m_buff(std::move(buff)), m_view(*m_buff) { }
+        datahandle_t(std::shared_ptr<const charbuff_t<>> buff)
+            : m_buff(std::move(buff)), m_view(*m_buff) { }
+        datahandle_t(std::shared_ptr<charbuff_t<>> buff)
+            : m_buff(std::move(buff)), m_view(*m_buff) { }
     public:
         const bufferview& view() const { return m_view; }
     private:
-        bufferview m_view;
         std::shared_ptr<const charbuff_t<>> m_buff;
+        bufferview m_view;
     };
 
     using datahandle = datahandle_t<>;

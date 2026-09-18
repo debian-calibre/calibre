@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2005 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2005 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include "PdfDeclarationsPrivate.h"
 #include "PdfDrawingOperations.h"
@@ -33,7 +31,7 @@ void PoDoFo::WriteArcTo(PdfStringStream& stream, double x0, double y0, double x1
     double x1_2 = x2 - x1;
     double y1_2 = y2 - y1;
 
-    // Compute the tagent points
+    // Compute the tangent points
     double norm1 = std::sqrt(x1_0 * x1_0 + y1_0 * y1_0);
     double norm2 = std::sqrt(x1_2 * x1_2 + y1_2 * y1_2);
 
@@ -45,12 +43,12 @@ void PoDoFo::WriteArcTo(PdfStringStream& stream, double x0, double y0, double x1
     // Compute a two-point form -(y2–y1)*(x-x1) + (x2-x1)*(y-y1) = 0 and
     // then find the equation of perpendicular on the point (x1,y1) with b*x - a*y + a * y1 − b * x1 = 0
 
-    // Compute the coefficientes of a line passing through (x1t, y1t) and perpendicular to the arc tangent
+    // Compute the coefficients of a line passing through (x1t, y1t) and perpendicular to the arc tangent
     double a0t = x1_0;
     double b0t = y1_0;
     double c0t = -x1_0 * x1t - y1_0 * y1t;
 
-    // Compute the coefficientes of a line passing through (x2t, y2t) and perpendicular to the arc tangent
+    // Compute the coefficients of a line passing through (x2t, y2t) and perpendicular to the arc tangent
     double a2t = x1_2;
     double b2t = y1_2;
     double c2t = -x1_2 * x2t - y1_2 * y2t;
@@ -138,7 +136,7 @@ void PoDoFo::WriteEllipse(PdfStringStream& stream, double x, double y,
     double pointsY[BEZIER_POINTS];
     convertRectToBezier(x, y, width, height, pointsX, pointsY);
 
-    PoDoFo::WriteOperator_m(stream, x, y);
+    PoDoFo::WriteOperator_m(stream, pointsX[0], pointsY[0]);
     for (unsigned i = 1; i < BEZIER_POINTS; i += 3)
         PoDoFo::WriteOperator_c(stream, pointsX[i], pointsY[i], pointsX[i + 1], pointsY[i + 1], pointsX[i + 2], pointsY[i + 2]);
 
@@ -194,6 +192,16 @@ void PoDoFo::WriteOperator_l(PdfStringStream& stream, double x, double y)
 void PoDoFo::WriteOperator_c(PdfStringStream& stream, double c1x, double c1y, double c2x, double c2y, double x, double y)
 {
     stream << c1x << ' ' << c1y << ' ' << c2x << ' ' << c2y << ' ' << x << ' ' << y << " c\n";
+}
+
+void PoDoFo::WriteOperator_y(PdfStringStream& stream, double cx, double cy, double x, double y)
+{
+    stream << cx << ' ' << cy << ' ' << x << ' ' << y << " y\n";
+}
+
+void PoDoFo::WriteOperator_v(PdfStringStream& stream, double cx, double cy, double x, double y)
+{
+    stream << cx << ' ' << cy << ' ' << x << ' ' << y << " v\n";
 }
 
 void PoDoFo::WriteOperator_n(PdfStringStream& stream)
@@ -322,6 +330,11 @@ void PoDoFo::WriteOperator_Td(PdfStringStream& stream, double tx, double ty)
     stream << tx << ' ' << ty << " Td\n";
 }
 
+void PoDoFo::WriteOperator_TD(PdfStringStream& stream, double tx, double ty)
+{
+    stream << tx << ' ' << ty << " TD\n";
+}
+
 void PoDoFo::WriteOperator_Tm(PdfStringStream& stream, double a, double b, double c, double d, double e, double f)
 {
     stream << a << ' ' << b << ' ' << c << ' ' << d << ' ' << e << ' ' << f << " Tm\n";
@@ -442,48 +455,48 @@ void PoDoFo::WriteOperator_Do(PdfStringStream& stream, const string_view& xobjna
     stream << '/' << xobjname << " Do\n";
 }
 
-void PoDoFo::WriteOperator_cs(PdfStringStream& stream, PdfColorSpace colorSpace)
+void PoDoFo::WriteOperator_cs(PdfStringStream& stream, PdfColorSpaceType colorSpace)
 {
-    stream << PoDoFo::ColorSpaceToNameRaw(colorSpace) << " cs\n";
+    stream << '/' << PoDoFo::ToString(colorSpace) << " cs\n";
 }
 
 void PoDoFo::WriteOperator_cs(PdfStringStream& stream, const string_view& name)
 {
-    stream << name << " cs\n";
+    stream << '/' << name << " cs\n";
 }
 
-void PoDoFo::WriteOperator_CS(PdfStringStream& stream, PdfColorSpace colorSpace)
+void PoDoFo::WriteOperator_CS(PdfStringStream& stream, PdfColorSpaceType colorSpace)
 {
-    stream << PoDoFo::ColorSpaceToNameRaw(colorSpace) << " CS\n";
+    stream << '/' << PoDoFo::ToString(colorSpace) << " CS\n";
 }
 
 void PoDoFo::WriteOperator_CS(PdfStringStream& stream, const string_view& name)
 {
-    stream << name << " CS\n";
+    stream << '/' << name << " CS\n";
 }
 
 void PoDoFo::WriteOperator_sc(PdfStringStream& stream, const cspan<double>& components)
 {
     writeColorComponents(stream, components);
-    stream << " sc\n";
+    stream << "sc\n";
 }
 
 void PoDoFo::WriteOperator_SC(PdfStringStream& stream, const cspan<double>& components)
 {
     writeColorComponents(stream, components);
-    stream << " SC\n";
+    stream << "SC\n";
 }
 
 void PoDoFo::WriteOperator_scn(PdfStringStream& stream, const cspan<double>& components)
 {
     writeColorComponents(stream, components);
-    stream << " scn\n";
+    stream << "scn\n";
 }
 
 void PoDoFo::WriteOperator_SCN(PdfStringStream& stream, const cspan<double>& components)
 {
     writeColorComponents(stream, components);
-    stream << " SCN\n";
+    stream << "SCN\n";
 }
 
 void PoDoFo::WriteOperator_scn(PdfStringStream& stream, const cspan<double>& components, const string_view& patternName)
@@ -538,6 +551,11 @@ void PoDoFo::WriteOperator_k(PdfStringStream& stream, double cyan, double magent
     stream << cyan << ' ' << magenta << ' ' << yellow << ' ' << black << " k\n";
 }
 
+void PoDoFo::WriteOperator_sh(PdfStringStream& stream, const string_view& shadingDictName)
+{
+    stream << '/' << shadingDictName << " sh\n";
+}
+
 void PoDoFo::WriteOperator_BX(PdfStringStream& stream)
 {
     stream << "BX\n";
@@ -548,7 +566,7 @@ void PoDoFo::WriteOperator_EX(PdfStringStream& stream)
     stream << "EX\n";
 }
 
-void PoDoFo::WriteOperator_Extension(PdfStringStream& stream, const string_view& opName, const cspan<PdfObject>& operands)
+void PoDoFo::WriteOperator_Extension(PdfStringStream& stream, const string_view& opName, const cspan<PdfVariant>& operands)
 {
     charbuff buffer;
     for (unsigned i = 0; i < operands.size(); i++)
@@ -561,7 +579,7 @@ void PoDoFo::WriteOperator_Extension(PdfStringStream& stream, const string_view&
 }
 
 /*
- * Coverts a rectangle to an array of points which can be used
+ * Converts a rectangle to an array of points which can be used
  * to draw an ellipse using 4 bezier curves.
  *
  * The arrays plPointX and plPointY need space for at least 12 longs
@@ -654,14 +672,14 @@ void getArcBezierControlPoints(double xc, double yc, double x0, double y0, doubl
 
 void getControlPoint(double cx, double cy, double x0, double y0, double x2, double y2, double& x1, double& y1)
 {
-    // Compute the coefficients of the tantent to the point P0
+    // Compute the coefficients of the tangent to the point P0
     double a0 = cy - y0;
     double b0 = x0 - cx;
     double a0t = b0;
     double b0t = -a0;
     double c0t = -b0 * x0 + a0 * y0;
 
-    // Compute the coefficients of the tantent to the point P0
+    // Compute the coefficients of the tangent to the point P0
     double a2 = cy - y2;
     double b2 = x2 - cx;
     double a2t = b2;

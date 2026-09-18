@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2005 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2005 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfFont.h"
@@ -18,9 +16,7 @@
 #include "PdfEncodingFactory.h"
 #include <podofo/auxiliary/InputStream.h>
 #include "PdfObjectStream.h"
-#include "PdfWriter.h"
 #include "PdfCharCodeMap.h"
-#include "PdfEncodingShim.h"
 #include "PdfFontMetrics.h"
 #include "PdfPage.h"
 #include "PdfFontMetricsStandard14.h"
@@ -35,95 +31,119 @@ using namespace PoDoFo;
 
 static double getGlyphLength(double glyphLength, const PdfTextState& state, bool ignoreCharSpacing);
 static string_view toString(PdfFontStretch stretch);
+static double getGlyphMedianWidth(const PdfFontMetrics& metrics, unsigned maxGlyphCount);
 
-PdfFont::PdfFont(PdfDocument& doc, const PdfFontMetricsConstPtr& metrics,
+PdfFont::PdfFont(PdfDocument& doc, PdfFontType type, PdfFontMetricsConstPtr&& metrics,
         const PdfEncoding& encoding) :
-    PdfDictionaryElement(doc, "Font"),
+    PdfDictionaryElement(doc, "Font"_n),
+    m_Type(type),
     m_WordSpacingLengthRaw(-1),
-    m_Metrics(metrics)
+    m_SpaceCharLengthRaw(-1),
+    m_Metrics(std::move(metrics)),
+    m_DynamicCIDMap(nullptr),
+    m_DynamicToUnicodeMap(nullptr)
 {
-    if (metrics == nullptr)
+    if (m_Metrics == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Metrics must me not null");
 
     this->initBase(encoding);
 }
 
-PdfFont::PdfFont(PdfObject& obj, const PdfFontMetricsConstPtr& metrics,
+PdfFont::PdfFont(PdfObject& obj, PdfFontType type, PdfFontMetricsConstPtr&& metrics,
         const PdfEncoding& encoding) :
     PdfDictionaryElement(obj),
+    m_Type(type),
     m_WordSpacingLengthRaw(-1),
-    m_Metrics(metrics)
+    m_SpaceCharLengthRaw(-1),
+    m_Metrics(std::move(metrics)),
+    m_DynamicCIDMap(nullptr),
+    m_DynamicToUnicodeMap(nullptr)
 {
-    if (metrics == nullptr)
+    if (m_Metrics == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Metrics must me not null");
 
     this->initBase(encoding);
-
-    // Implementation note: the identifier is always
-    // Prefix+ObjectNo. Prefix is /Ft for fonts.
-    PdfStringStream out;
-    out << "PoDoFoFt" << this->GetObject().GetIndirectReference().ObjectNumber();
-    m_Identifier = PdfName(out.GetString());
 }
 
 PdfFont::~PdfFont() { }
 
-bool PdfFont::TryGetSubstituteFont(PdfFont*& substFont) const
+bool PdfFont::TryCreateProxyFont(PdfFont*& proxyFont) const
 {
-    return TryGetSubstituteFont(PdfFontCreateFlags::None, substFont);
+    return TryCreateProxyFont(PdfFontCreateFlags::None, proxyFont);
 }
 
-bool PdfFont::TryGetSubstituteFont(PdfFontCreateFlags initFlags, PdfFont*& substFont) const
+bool PdfFont::TryCreateProxyFont(PdfFontCreateFlags initFlags, PdfFont*& proxyFont) const
 {
-    auto encoding = GetEncoding();
-    auto& metrics = GetMetrics();
-    PdfFontMetricsConstPtr newMetrics;
-    if (metrics.HasFontFileData())
+    if (m_IsProxy)
     {
-        newMetrics = PdfFontMetricsFreetype::FromMetrics(metrics);
+        // Don't substitute already proxied fonts
+        proxyFont = nullptr;
+        return false;
+    }
+
+    auto& metrics = GetMetrics();
+    // No need to normalize the font if embedding is not enabled
+    bool skipNormalization = (initFlags & PdfFontCreateFlags::DontEmbed) != PdfFontCreateFlags::None;
+    PdfFontMetricsConstPtr proxyMetrics;
+    PdfStandard14FontType std14Font = PdfStandard14FontType::Unknown;
+    if (metrics.HasFontFileData() && !m_Metrics->IsStandard14FontMetrics(std14Font))
+    {
+        proxyMetrics = metrics.CreateMergedMetrics(skipNormalization);
     }
     else
     {
         // Early intercept Standard14 fonts
-        PdfStandard14FontType std14Font;
-        if (m_Metrics->IsStandard14FontMetrics(std14Font) ||
-            PdfFont::IsStandard14Font(metrics.GetFontNameSafe(), false, std14Font))
+        if (std14Font != PdfStandard14FontType::Unknown ||
+            PdfFont::IsStandard14Font(metrics.GetFontName(), false, std14Font))
         {
-            newMetrics = PdfFontMetricsStandard14::GetInstance(std14Font);
+            auto parsedMetrics = metrics.GetParsedWidths();
+            if (parsedMetrics == nullptr)
+                proxyMetrics = PdfFontMetricsStandard14::GetInstance(std14Font);
+            else
+                proxyMetrics = PdfFontMetricsStandard14::Create(std14Font, std::move(parsedMetrics));
         }
         else
         {
-            PdfFontSearchParams params;
-            params.Style = metrics.GetStyle();
-            // NOTE: We prefer matching the postscript name as
-            // we need to better fit the font being replaced
-            params.MatchBehavior = PdfFontMatchBehaviorFlags::MatchPostScriptName;
-            newMetrics = PdfFontManager::SearchFontMetrics(metrics.GetBaseFontNameSafe(), params);
-            if (newMetrics == nullptr)
+            if (m_Metrics->GetFontFileType() == PdfFontFileType::Type3)
             {
-                substFont = nullptr;
-                return false;
+                // We just re-use the same metrics
+                proxyMetrics = m_Metrics;
+            }
+            else
+            {
+                PdfFontSearchParams params;
+                params.Style = metrics.GetStyle();
+                params.FontFamilyPattern = metrics.GeFontFamilyNameSafe();
+                proxyMetrics = PdfFontManager::SearchFontMetrics(metrics.GetPostScriptNameRough(), params, metrics, skipNormalization);
+                if (proxyMetrics == nullptr)
+                {
+                    proxyFont = nullptr;
+                    return false;
+                }
             }
         }
     }
 
-    if (!encoding.HasValidToUnicodeMap())
+    PdfFontCreateParams params;
+    if (m_Encoding->HasValidToUnicodeMap())
     {
-        shared_ptr<PdfCMapEncoding> toUnicode = newMetrics->CreateToUnicodeMap(encoding.GetLimits());
-        encoding = PdfEncoding(encoding.GetEncodingMapPtr(), toUnicode);
+        params.Encoding = *m_Encoding;
+    }
+    else
+    {
+        shared_ptr<PdfCMapEncoding> toUnicode = proxyMetrics->CreateToUnicodeMap(m_Encoding->GetLimits());
+        params.Encoding = PdfEncoding::Create(*m_Encoding, std::move(toUnicode));
     }
 
-    PdfFontCreateParams params;
-    params.Encoding = encoding;
     params.Flags = initFlags;
-    auto newFont = PdfFont::Create(GetDocument(), newMetrics, params);
+    auto newFont = PdfFont::Create(GetDocument(), std::move(proxyMetrics), params, true);
     if (newFont == nullptr)
     {
-        substFont = nullptr;
+        proxyFont = nullptr;
         return false;
     }
 
-    substFont = GetDocument().GetFonts().AddImported(std::move(newFont));
+    proxyFont = GetDocument().GetFonts().AddImported(std::move(newFont));
     return true;
 }
 
@@ -132,29 +152,26 @@ void PdfFont::initBase(const PdfEncoding& encoding)
     m_IsEmbedded = false;
     m_EmbeddingEnabled = false;
     m_SubsettingEnabled = false;
-    m_cidToGidMap = m_Metrics->GetCIDToGIDMap();
+    m_IsProxy = false;
 
     if (encoding.IsNull())
     {
-        m_DynamicCIDMap = std::make_shared<PdfCharCodeMap>();
-        m_DynamicToUnicodeMap = std::make_shared<PdfCharCodeMap>();
-        m_Encoding.reset(new PdfDynamicEncoding(m_DynamicCIDMap, m_DynamicToUnicodeMap, *this));
+        auto dynamicCIDMap = std::make_shared<PdfCharCodeMap>();
+        auto dynamicToUnicodeMap = std::make_shared<PdfCharCodeMap>();
+        m_DynamicCIDMap = dynamicCIDMap.get();
+        m_DynamicToUnicodeMap = dynamicToUnicodeMap.get();
+        m_Encoding = PdfEncoding::CreateDynamicEncoding(std::move(dynamicCIDMap), std::move(dynamicToUnicodeMap), *this);
     }
     else
     {
-        m_Encoding.reset(new PdfEncodingShim(encoding, *this));
+        m_Encoding = PdfEncoding::CreateSchim(encoding, *this);
     }
 
-    PdfStringStream out;
-
-    // Implementation note: the identifier is always
-    // Prefix+ObjectNo. Prefix is /Ft for fonts.
-    out << "Ft" << this->GetObject().GetIndirectReference().ObjectNumber();
-    m_Identifier = PdfName(out.GetString());
+    m_fontProgCIDToGIDMap = m_Encoding->GetCIDToGIDMap();
 
     // By default ensure the font has the /BaseFont name or /FontName
     // or, the name inferred from a font file
-    m_Name = m_Metrics->GetFontNameSafe();
+    m_Name = m_Metrics->GetFontName();
 }
 
 void PdfFont::WriteStringToStream(OutputStream& stream, const string_view& str) const
@@ -167,7 +184,7 @@ void PdfFont::WriteStringToStream(OutputStream& stream, const string_view& str) 
         utls::SerializeEncodedString(stream, encoded, true);
 }
 
-void PdfFont::InitImported(bool wantEmbed, bool wantSubset)
+void PdfFont::InitImported(bool wantEmbed, bool wantSubset, bool isProxy)
 {
     PODOFO_ASSERT(!IsObjectLoaded());
 
@@ -176,57 +193,47 @@ void PdfFont::InitImported(bool wantEmbed, bool wantSubset)
     m_SubsettingEnabled = wantEmbed && wantSubset && SupportsSubsetting();
     if (m_SubsettingEnabled)
     {
+        // Init the subset maps
+        m_SubsetCIDMap.reset(new CIDSubsetMap());
+        m_subsetGIDToCIDMap.reset(new unordered_map<unsigned, unsigned>());
+    }
+
+    m_IsProxy = isProxy;
+    if (m_SubsettingEnabled && !isProxy)
+    {
+        // If it exist a glyph for the space character,
+        // add it for subsetting. NOTE: Search the GID
+        // in the font program
         unsigned gid;
         char32_t spaceCp = U' ';
-        if (TryGetGID(spaceCp, PdfGlyphAccess::Width, gid))
+        if (TryGetGID(spaceCp, PdfGlyphAccess::FontProgram, gid))
         {
-            // If it exist a glyph for space character
-            // always add it for subsetting
             unicodeview codepoints(&spaceCp, 1);
             PdfCID cid;
             (void)tryAddSubsetGID(gid, codepoints, cid);
         }
     }
 
-    string fontName;
-    if (m_Metrics->IsStandard14FontMetrics())
+    unsigned char subsetPrefixLength = m_Metrics->GetSubsetPrefixLength();
+    if (subsetPrefixLength == 0)
     {
-        fontName = m_Metrics->GetFontName();
+        if (m_SubsettingEnabled)
+        {
+            m_SubsetPrefix = GetDocument().GetFonts().GenerateSubsetPrefix();
+            m_Name = m_SubsetPrefix.append(m_Metrics->GetPostScriptNameRough());
+        }
+        else
+        {
+            m_Name = (string)m_Metrics->GetPostScriptNameRough();
+        }
     }
     else
     {
-        fontName = m_Metrics->GetBaseFontName();
-        if ((m_Metrics->GetStyle() & PdfFontStyle::Bold) == PdfFontStyle::Bold)
-        {
-            if ((m_Metrics->GetStyle() & PdfFontStyle::Italic) == PdfFontStyle::Italic)
-                fontName += ",BoldItalic";
-            else
-                fontName += ",Bold";
-        }
-        else if ((m_Metrics->GetStyle() & PdfFontStyle::Italic) == PdfFontStyle::Italic)
-        {
-            fontName += ",Italic";
-        }
+        m_Name = m_Metrics->GetFontName();
+        m_SubsetPrefix = m_Name.substr(0, subsetPrefixLength);
     }
 
-    if (m_SubsettingEnabled)
-    {
-        m_SubsetPrefix = GetDocument().GetFonts().GenerateSubsetPrefix();
-        PODOFO_ASSERT(!m_SubsetPrefix.empty());
-        fontName = m_SubsetPrefix + fontName;
-    }
-
-    m_Name = fontName;
     initImported();
-
-    if (m_EmbeddingEnabled && !m_SubsettingEnabled
-        && !m_Encoding->IsDynamicEncoding())
-    {
-        // Perform embedded immediately if subsetting is
-        // not enabled and there's no dynamic encoding
-        embedFont();
-        m_IsEmbedded = true;
-    }
 }
 
 void PdfFont::EmbedFont()
@@ -263,7 +270,7 @@ unsigned PdfFont::GetGID(char32_t codePoint, PdfGlyphAccess access) const
 
 bool PdfFont::TryGetGID(char32_t codePoint, PdfGlyphAccess access, unsigned& gid) const
 {
-    if (IsObjectLoaded() || !m_Metrics->HasUnicodeMapping())
+    if (m_Encoding->IsObjectLoaded() || !m_Metrics->HasUnicodeMapping())
     {
         PdfCharCode codeUnit;
         unsigned cid;
@@ -274,7 +281,7 @@ bool PdfFont::TryGetGID(char32_t codePoint, PdfGlyphAccess access, unsigned& gid
             return false;
         }
 
-        return TryMapCIDToGID(cid, access, gid);
+        return tryMapCIDToGID(cid, access, gid);
     }
     else
     {
@@ -293,7 +300,7 @@ double PdfFont::GetStringLength(const string_view& str, const PdfTextState& stat
 bool PdfFont::TryGetStringLength(const string_view& str, const PdfTextState& state, double& length) const
 {
     vector<unsigned> gids;
-    bool success = tryConvertToGIDs(str, PdfGlyphAccess::Width, gids);
+    bool success = tryConvertToGIDs(str, PdfGlyphAccess::ReadMetrics, gids);
     length = 0;
     for (unsigned i = 0; i < gids.size(); i++)
         length += getGlyphLength(m_Metrics->GetGlyphWidth(gids[i]), state, false);
@@ -330,20 +337,24 @@ bool PdfFont::TryScanEncodedString(const PdfString& encodedStr, const PdfTextSta
         return true;
 
     auto context = m_Encoding->StartStringScan(encodedStr);
-    vector<codepoint> codepoints;
+    CodePointSpan codepoints;
     PdfCID cid;
     bool success = true;
-    unsigned prevOffset = 0;
     double length;
     while (!context.IsEndOfString())
     {
-        if (!context.TryScan(cid, utf8str, codepoints))
+        if (!context.TryScan(cid, utf8str, positions, codepoints))
             success = false;
 
-        length = getGlyphLength(GetCIDLengthRaw(cid.Id), state, false);
+        length = getGlyphLength(GetCIDWidth(cid.Id), state, false);
+        for (unsigned i = 1; i < codepoints.GetSize(); i++)
+        {
+            // Arbitrarily prefix 0 length positions for ligatures,
+            // for the code point span size minus one
+            lengths.push_back(0);
+        }
+
         lengths.push_back(length);
-        positions.push_back(prevOffset);
-        prevOffset = (unsigned)utf8str.length();
     }
 
     return success;
@@ -351,8 +362,22 @@ bool PdfFont::TryScanEncodedString(const PdfString& encodedStr, const PdfTextSta
 
 double PdfFont::GetWordSpacingLength(const PdfTextState& state) const
 {
-    const_cast<PdfFont&>(*this).initWordSpacingLength();
-    return getGlyphLength(m_WordSpacingLengthRaw, state, false);
+    const_cast<PdfFont&>(*this).initSpacingDescriptors();
+    constexpr double WORD_SPACING_FRACTIONAL_FACTOR = 5.5;
+    return getGlyphLength(m_WordSpacingLengthRaw / WORD_SPACING_FRACTIONAL_FACTOR, state, false);
+}
+
+double PdfFont::GetHardSpacingLength(const PdfTextState& state) const
+{
+    const_cast<PdfFont&>(*this).initSpacingDescriptors();
+    constexpr double HARD_SPACING_FACTOR = 6;
+    return getGlyphLength(m_WordSpacingLengthRaw * HARD_SPACING_FACTOR, state, false);
+}
+
+double PdfFont::GetSpaceCharLength(const PdfTextState& state) const
+{
+    const_cast<PdfFont&>(*this).initSpaceCharLength();
+    return getGlyphLength(m_SpaceCharLengthRaw, state, false);
 }
 
 double PdfFont::GetCharLength(char32_t codePoint, const PdfTextState& state, bool ignoreCharSpacing) const
@@ -374,7 +399,7 @@ bool PdfFont::TryGetCharLength(char32_t codePoint, const PdfTextState& state,
     bool ignoreCharSpacing, double& length) const
 {
     unsigned gid;
-    if (TryGetGID(codePoint, PdfGlyphAccess::Width, gid))
+    if (TryGetGID(codePoint, PdfGlyphAccess::ReadMetrics, gid))
     {
         length = getGlyphLength(m_Metrics->GetGlyphWidth(gid), state, ignoreCharSpacing);
         return true;
@@ -405,15 +430,15 @@ vector<PdfSplittedString> PdfFont::SplitEncodedString(const PdfString& str) cons
 {
     (void)str;
     // TODO: retrieve space character codes with m_Encoding->GetToUnicodeMapSafe().TryGetCharCode(codePoint, codeUnit),
-    // then iterate char codes and return splitted strings
+    // then iterate char codes and return split strings
     PODOFO_RAISE_ERROR(PdfErrorCode::NotImplemented);
 }
 */
 
-double PdfFont::GetCIDLengthRaw(unsigned cid) const
+double PdfFont::GetCIDWidth(unsigned cid) const
 {
     unsigned gid;
-    if (!TryMapCIDToGID(cid, PdfGlyphAccess::Width, gid))
+    if (!tryMapCIDToGID(cid, PdfGlyphAccess::ReadMetrics, gid))
         return m_Metrics->GetDefaultWidth();
 
     return m_Metrics->GetGlyphWidth(gid);
@@ -423,15 +448,15 @@ void PdfFont::GetBoundingBox(PdfArray& arr) const
 {
     auto& matrix = m_Metrics->GetMatrix();
     arr.Clear();
-    vector<double> bbox;
-    m_Metrics->GetBoundingBox(bbox);
-    arr.Add(PdfObject(bbox[0] / matrix[0]));
-    arr.Add(PdfObject(bbox[1] / matrix[3]));
-    arr.Add(PdfObject(bbox[2] / matrix[0]));
-    arr.Add(PdfObject(bbox[3] / matrix[3]));
+    arr.Reserve(4);
+    auto bbox = m_Metrics->GetBoundingBox();
+    arr.Add(PdfObject(bbox.X1 / matrix[0]));
+    arr.Add(PdfObject(bbox.Y1 / matrix[3]));
+    arr.Add(PdfObject(bbox.X2 / matrix[0]));
+    arr.Add(PdfObject(bbox.Y2 / matrix[3]));
 }
 
-void PdfFont::FillDescriptor(PdfDictionary& dict) const
+void PdfFont::WriteDescriptors(PdfDictionary& fontDict, PdfDictionary& descriptorDict) const
 {
     // Optional values
     int weight;
@@ -444,65 +469,76 @@ void PdfFont::FillDescriptor(PdfDictionary& dict) const
     double defaultWidth;
     PdfFontStretch stretch;
 
-    dict.AddKey("FontName", PdfName(this->GetName()));
+    descriptorDict.AddKey("FontName"_n, PdfName(this->GetName()));
     if ((familyName = m_Metrics->GetFontFamilyName()).length() != 0)
-        dict.AddKey("FontFamily", PdfString(familyName));
+        descriptorDict.AddKey("FontFamily"_n, PdfString(familyName));
     if ((stretch = m_Metrics->GetFontStretch()) != PdfFontStretch::Unknown)
-        dict.AddKey("FontStretch", PdfName(toString(stretch)));
-    dict.AddKey(PdfName::KeyFlags, static_cast<int64_t>(m_Metrics->GetFlags()));
-    dict.AddKey("ItalicAngle", static_cast<int64_t>(std::round(m_Metrics->GetItalicAngle())));
-
-    PdfArray bbox;
-    GetBoundingBox(bbox);
+        descriptorDict.AddKey("FontStretch"_n, PdfName(toString(stretch)));
+    descriptorDict.AddKey("Flags"_n, static_cast<int64_t>(m_Metrics->GetFlags()));
+    descriptorDict.AddKey("ItalicAngle"_n, static_cast<int64_t>(std::round(m_Metrics->GetItalicAngle())));
 
     auto& matrix = m_Metrics->GetMatrix();
     if (GetType() == PdfFontType::Type3)
     {
         // ISO 32000-1:2008 "should be used for Type 3 fonts in Tagged PDF documents"
-        dict.AddKey("FontWeight", static_cast<int64_t>(m_Metrics->GetWeight()));
+        descriptorDict.AddKey("FontWeight"_n, static_cast<int64_t>(m_Metrics->GetWeight()));
+
+        PdfArray arr;
+        arr.Reserve(6);
+
+        for (unsigned i = 0; i < 6; i++)
+            arr.Add(PdfObject(matrix[i]));
+
+        fontDict.AddKey("FontMatrix"_n, std::move(arr));
+
+        GetBoundingBox(arr);
+        fontDict.AddKey("FontBBox"_n, std::move(arr));
     }
     else
     {
         if ((weight = m_Metrics->GetWeightRaw()) > 0)
-            dict.AddKey("FontWeight", static_cast<int64_t>(weight));
+            descriptorDict.AddKey("FontWeight"_n, static_cast<int64_t>(weight));
+
+        PdfArray bbox;
+        GetBoundingBox(bbox);
 
         // The following entries are all optional in /Type3 fonts
-        dict.AddKey("FontBBox", bbox);
-        dict.AddKey("Ascent", static_cast<int64_t>(std::round(m_Metrics->GetAscent() / matrix[3])));
-        dict.AddKey("Descent", static_cast<int64_t>(std::round(m_Metrics->GetDescent() / matrix[3])));
-        dict.AddKey("CapHeight", static_cast<int64_t>(std::round(m_Metrics->GetCapHeight() / matrix[3])));
+        descriptorDict.AddKey("FontBBox"_n, std::move(bbox));
+        descriptorDict.AddKey("Ascent"_n, static_cast<int64_t>(std::round(m_Metrics->GetAscent() / matrix[3])));
+        descriptorDict.AddKey("Descent"_n, static_cast<int64_t>(std::round(m_Metrics->GetDescent() / matrix[3])));
+        descriptorDict.AddKey("CapHeight"_n, static_cast<int64_t>(std::round(m_Metrics->GetCapHeight() / matrix[3])));
         // NOTE: StemV is measured horizontally
-        dict.AddKey("StemV", static_cast<int64_t>(std::round(m_Metrics->GetStemV() / matrix[0])));
+        descriptorDict.AddKey("StemV"_n, static_cast<int64_t>(std::round(m_Metrics->GetStemV() / matrix[0])));
 
         if ((xHeight = m_Metrics->GetXHeightRaw()) > 0)
-            dict.AddKey("XHeight", static_cast<int64_t>(std::round(xHeight / matrix[3])));
+            descriptorDict.AddKey("XHeight"_n, static_cast<int64_t>(std::round(xHeight / matrix[3])));
 
         if ((stemH = m_Metrics->GetStemHRaw()) > 0)
         {
             // NOTE: StemH is measured vertically
-            dict.AddKey("StemH", static_cast<int64_t>(std::round(stemH / matrix[3])));
+            descriptorDict.AddKey("StemH"_n, static_cast<int64_t>(std::round(stemH / matrix[3])));
         }
 
-        if (!IsCIDKeyed())
+        if (!IsCIDFont())
         {
             // Default for /MissingWidth is 0
             // NOTE: We assume CID keyed fonts to use the /DW entry
             // in the CIDFont dictionary instead. See 9.7.4.3 Glyph
             // Metrics in CIDFonts in ISO 32000-1:2008
             if ((defaultWidth = m_Metrics->GetDefaultWidthRaw()) > 0)
-                dict.AddKey("MissingWidth", static_cast<int64_t>(std::round(defaultWidth / matrix[0])));
+                descriptorDict.AddKey("MissingWidth"_n, static_cast<int64_t>(std::round(defaultWidth / matrix[0])));
         }
     }
 
     if ((leading = m_Metrics->GetLeadingRaw()) > 0)
-        dict.AddKey("Leading", static_cast<int64_t>(std::round(leading / matrix[3])));
+        descriptorDict.AddKey("Leading"_n, static_cast<int64_t>(std::round(leading / matrix[3])));
     if ((avgWidth = m_Metrics->GetAvgWidthRaw()) > 0)
-        dict.AddKey("AvgWidth", static_cast<int64_t>(std::round(avgWidth / matrix[0])));
+        descriptorDict.AddKey("AvgWidth"_n, static_cast<int64_t>(std::round(avgWidth / matrix[0])));
     if ((maxWidth = m_Metrics->GetMaxWidthRaw()) > 0)
-        dict.AddKey("MaxWidth", static_cast<int64_t>(std::round(maxWidth / matrix[0])));
+        descriptorDict.AddKey("MaxWidth"_n, static_cast<int64_t>(std::round(maxWidth / matrix[0])));
 }
 
-void PdfFont::EmbedFontFile(PdfObject& descriptor)
+void PdfFont::EmbedFontFile(PdfDictionary& descriptor) const
 {
     auto fontdata = m_Metrics->GetOrLoadFontFileData();
     if (fontdata.empty())
@@ -511,16 +547,18 @@ void PdfFont::EmbedFontFile(PdfObject& descriptor)
     switch (m_Metrics->GetFontFileType())
     {
         case PdfFontFileType::Type1:
-        case PdfFontFileType::CIDType1:
             EmbedFontFileType1(descriptor, fontdata, m_Metrics->GetFontFileLength1(), m_Metrics->GetFontFileLength2(), m_Metrics->GetFontFileLength3());
             break;
-        case PdfFontFileType::Type1CCF:
-            EmbedFontFileType1CCF(descriptor, fontdata);
+        case PdfFontFileType::Type1CFF:
+            EmbedFontFileCFF(descriptor, fontdata, false);
+            break;
+        case PdfFontFileType::CIDKeyedCFF:
+            EmbedFontFileCFF(descriptor, fontdata, true);
             break;
         case PdfFontFileType::TrueType:
             EmbedFontFileTrueType(descriptor, fontdata);
             break;
-        case PdfFontFileType::OpenType:
+        case PdfFontFileType::OpenTypeCFF:
             EmbedFontFileOpenType(descriptor, fontdata);
             break;
         default:
@@ -528,80 +566,104 @@ void PdfFont::EmbedFontFile(PdfObject& descriptor)
     }
 }
 
-void PdfFont::EmbedFontFileType1(PdfObject& descriptor, const bufferview& data, unsigned length1, unsigned length2, unsigned length3)
+void PdfFont::EmbedFontFileType1(PdfDictionary& descriptorDict, const bufferview& data, unsigned length1, unsigned length2, unsigned length3) const
 {
-    auto& contents = embedFontFileData(descriptor, "FontFile", data);
-    contents.GetDictionary().AddKey("Length1", static_cast<int64_t>(length1));
-    contents.GetDictionary().AddKey("Length2", static_cast<int64_t>(length2));
-    contents.GetDictionary().AddKey("Length3", static_cast<int64_t>(length3));
+    embedFontFileData(descriptorDict, "FontFile"_n, [length1, length2, length3](PdfDictionary& dict)
+    {
+        dict.AddKey("Length1"_n, static_cast<int64_t>(length1));
+        dict.AddKey("Length2"_n, static_cast<int64_t>(length2));
+        dict.AddKey("Length3"_n, static_cast<int64_t>(length3));
+    }, data);
 }
 
-void PdfFont::EmbedFontFileType1CCF(PdfObject& descriptor, const bufferview& data)
+void PdfFont::EmbedFontFileCFF(PdfDictionary& descriptorDict, const bufferview& data, bool cidKeyed) const
 {
-    auto& contents = embedFontFileData(descriptor, "FontFile3", data);
-    PdfName subtype;
-    if (IsCIDKeyed())
-        subtype = PdfName("CIDFontType0C");
-    else
-        subtype = PdfName("Type1C");
+    embedFontFileData(descriptorDict, "FontFile3"_n, [&](PdfDictionary& dict)
+    {
+        PdfName subtype;
+        if (cidKeyed)
+            subtype = "CIDFontType0C"_n;
+        else
+            subtype = "Type1C"_n;
 
-    contents.GetDictionary().AddKey(PdfName::KeySubtype, subtype);
+        dict.AddKey("Subtype"_n, subtype);
+    }, data);
 }
 
-void PdfFont::EmbedFontFileTrueType(PdfObject& descriptor, const bufferview& data)
+void PdfFont::EmbedFontFileTrueType(PdfDictionary& descriptor, const bufferview& data) const
 {
-    auto& contents = embedFontFileData(descriptor, "FontFile2", data);
-    contents.GetDictionary().AddKey("Length1", static_cast<int64_t>(data.size()));
+    embedFontFileData(descriptor, "FontFile2"_n, [&data](PdfDictionary& dict)
+    {
+        dict.AddKey("Length1"_n, static_cast<int64_t>(data.size()));
+    }, data);
 }
 
-void PdfFont::EmbedFontFileOpenType(PdfObject& descriptor, const bufferview& data)
+void PdfFont::EmbedFontFileOpenType(PdfDictionary& descriptor, const bufferview& data) const
 {
-    auto contents = embedFontFileData(descriptor, "FontFile3", data);
-    contents.GetDictionary().AddKey(PdfName::KeySubtype, PdfName("OpenType"));
+    embedFontFileData(descriptor, "FontFile3"_n, [](PdfDictionary& dict)
+    {
+        dict.AddKey("Subtype"_n, "OpenType"_n);
+    }, data);
 }
 
-PdfObject& PdfFont::embedFontFileData(PdfObject& descriptor, const PdfName& fontFileName, const bufferview& data)
+void PdfFont::embedFontFileData(PdfDictionary& descriptor, const PdfName& fontFileName,
+    const function<void(PdfDictionary& dict)>& dictWriter, const bufferview& data) const
 {
     auto& contents = GetDocument().GetObjects().CreateDictionaryObject();
-    descriptor.GetDictionary().AddKeyIndirect(fontFileName, contents);
+    descriptor.AddKeyIndirect(fontFileName, contents);
+    // NOTE: Access to directory is mediated by functor to not crash
+    // operations when using PdfStreamedDocument. Do not remove it
+    dictWriter(contents.GetDictionary());
     contents.GetOrCreateStream().SetData(data);
-    return contents;
 }
 
-void PdfFont::initWordSpacingLength()
+void PdfFont::initSpacingDescriptors()
 {
     if (m_WordSpacingLengthRaw >= 0)
         return;
 
-    // TODO: Maybe try looking up other characters if U' ' is missing?
-    // https://docs.microsoft.com/it-it/dotnet/api/system.char.iswhitespace
-    unsigned gid;
-    if (!TryGetGID(U' ', PdfGlyphAccess::Width, gid)
-        || !m_Metrics->TryGetGlyphWidth(gid, m_WordSpacingLengthRaw))
-    {
-#if USE_EXPERIMENTAL_SPACING_LENGTH_INFERENCE
-        // See https://stackoverflow.com/a/73420359/213871
-        double lengthsum = 0;
-        unsigned nonZeroCount = 0;
-        for (unsigned i = 0, count = m_Metrics->GetGlyphCount(); i < count; i++)
-        {
-            double length;
-            m_Metrics->TryGetGlyphWidth(i, length);
-            if (length > 0)
-            {
-                lengthsum += length;
-                nonZeroCount++;
-            }
-        }
+    // We arbitrarily take a fraction of the median of few glyphs. The
+    // factor proved to work well with a consistent tests corpus
+    // NOTE: This is very different from what Adobe Acrobat does,
+    // but there's no reference heuristic to look at, every
+    // implementation does something different
+    // https://github.com/pdf-association/pdf-issues/issues/564
+    constexpr unsigned GLYPH_MEDIAN_MAX_COUNT = 10;
+    m_WordSpacingLengthRaw = getGlyphMedianWidth(*m_Metrics, GLYPH_MEDIAN_MAX_COUNT);
+}
 
-        m_WordSpacingLengthRaw = lengthsum / nonZeroCount / 7;
-#else
-        // pdf.js seems to just ship with an hardcoded word spacing
-        // https://github.com/mozilla/pdf.js/blob/ab1297f0538c51e8e7ece037768e38a9991dcc37/src/core/evaluator.js#L2348
-        constexpr double MISSING_WORD_SPACING_LENGTH = 0.1;
-        m_WordSpacingLengthRaw = MISSING_WORD_SPACING_LENGTH;
-#endif
+void PdfFont::initSpaceCharLength()
+{
+    if (m_SpaceCharLengthRaw >= 0)
+        return;
+
+    unsigned gid;
+    if (!TryGetGID(U' ', PdfGlyphAccess::ReadMetrics, gid)
+        || !m_Metrics->TryGetGlyphWidth(gid, m_SpaceCharLengthRaw)
+        || m_SpaceCharLengthRaw <= 0)
+    {
+        constexpr unsigned GLYPH_MEDIAN_MAX_COUNT = 10;
+        m_SpaceCharLengthRaw = getGlyphMedianWidth(*m_Metrics, GLYPH_MEDIAN_MAX_COUNT);
+        constexpr double CHAR_SPACE_FRACTIONAL_FACTOR = 3;
+        if ((m_Metrics->GetFlags() & PdfFontDescriptorFlags::FixedPitch) == PdfFontDescriptorFlags::None)
+            m_SpaceCharLengthRaw /= CHAR_SPACE_FRACTIONAL_FACTOR;
     }
+}
+
+void PdfFont::pushSubsetInfo(unsigned cid, const PdfGID& gid, const PdfCharCode& code)
+{
+    auto& info = (*m_SubsetCIDMap)[cid];
+    info.Gid = gid;
+    for (unsigned i = 0; i < info.Codes.size(); i++)
+    {
+        // Check if the code is already present and skip insertion in that case
+        if (info.Codes[i] == code)
+            goto Skip;
+    }
+
+    info.Codes.push_back(code);
+Skip:
+    (*m_subsetGIDToCIDMap)[gid.Id] = cid;
 }
 
 void PdfFont::initImported()
@@ -613,7 +675,7 @@ double PdfFont::getStringLength(const vector<PdfCID>& cids, const PdfTextState& 
 {
     double length = 0;
     for (auto& cid : cids)
-        length += getGlyphLength(GetCIDLengthRaw(cid.Id), state, false);
+        length += getGlyphLength(GetCIDWidth(cid.Id), state, false);
 
     return length;
 }
@@ -657,21 +719,18 @@ double PdfFont::GetDescent(const PdfTextState& state) const
     return m_Metrics->GetDescent() * state.FontSize;
 }
 
-PdfCID PdfFont::AddSubsetGIDSafe(unsigned gid, const unicodeview& codePoints)
+bool PdfFont::TryAddSubsetGID(unsigned gid, const unicodeview& codePoints, PdfCID& cid)
 {
-    PODOFO_ASSERT(m_SubsettingEnabled && !m_IsEmbedded);
-    auto found = m_SubsetGIDs.find(gid);
-    if (found != m_SubsetGIDs.end())
-        return found->second;
-
-    PdfCID ret;
-    if (!tryAddSubsetGID(gid, codePoints, ret))
+    PODOFO_ASSERT(m_SubsettingEnabled && !m_IsEmbedded && !m_IsProxy);
+    auto found = m_subsetGIDToCIDMap->find(gid);
+    if (found != m_subsetGIDToCIDMap->end())
     {
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidFontData,
-            "The encoding doesn't support these characters or the gid is already present");
+        // NOTE: Assume the subset CID map contains a single code
+        cid = PdfCID(found->first, (*m_SubsetCIDMap)[found->second].Codes[0]);
+        return true;
     }
 
-    return ret;
+    return tryAddSubsetGID(gid, codePoints, cid);
 }
 
 PdfCharCode PdfFont::AddCharCodeSafe(unsigned gid, const unicodeview& codePoints)
@@ -680,24 +739,40 @@ PdfCharCode PdfFont::AddCharCodeSafe(unsigned gid, const unicodeview& codePoints
     // of an imported font with valid unicode mapping
     PODOFO_ASSERT(!m_SubsettingEnabled
         && m_Encoding->IsDynamicEncoding()
-        && !IsObjectLoaded()
+        && !m_Encoding->IsObjectLoaded()
         && m_Metrics->HasUnicodeMapping());
 
     PdfCharCode code;
     if (m_DynamicToUnicodeMap->TryGetCharCode(codePoints, code))
         return code;
 
-    code = PdfCharCode(m_DynamicToUnicodeMap->GetSize());
+    // Encode the code point with FSS-UTF encoding so
+    // it will be variable code size safe
+    code = PdfCharCode(utls::FSSUTFEncode((unsigned)m_DynamicToUnicodeMap->GetMappings().size()));
     // NOTE: We assume in this context cid == gid identity
     m_DynamicCIDMap->PushMapping(code, gid);
     m_DynamicToUnicodeMap->PushMapping(code, codePoints);
     return code;
 }
 
+unique_ptr<set<PdfCharCode>> PdfFont::GetCharCodeSubset() const
+{
+    if (m_SubsetCIDMap == nullptr || m_SubsetCIDMap->size() == 0)
+        return nullptr;
+
+    unique_ptr<set<PdfCharCode>> ret(new set<PdfCharCode>());
+    for (auto& pair : *m_SubsetCIDMap)
+    {
+        for (auto& code : pair.second.Codes)
+            ret->insert(code);
+    }
+    return ret;
+}
+
 bool PdfFont::tryConvertToGIDs(const std::string_view& utf8Str, PdfGlyphAccess access, std::vector<unsigned>& gids) const
 {
     bool success = true;
-    if (IsObjectLoaded() || !m_Metrics->HasUnicodeMapping())
+    if (m_Encoding->IsObjectLoaded() || !m_Metrics->HasUnicodeMapping())
     {
         // NOTE: This is a best effort strategy. It's not intended to
         // be accurate in loaded fonts
@@ -715,7 +790,7 @@ bool PdfFont::tryConvertToGIDs(const std::string_view& utf8Str, PdfGlyphAccess a
             {
                 if (m_Encoding->TryGetCIDId(codeUnit, cid))
                 {
-                    if (!TryMapCIDToGID(cid, access, gid))
+                    if (!tryMapCIDToGID(cid, access, gid))
                     {
                         // Fallback
                         gid = cid;
@@ -769,19 +844,16 @@ bool PdfFont::tryConvertToGIDs(const std::string_view& utf8Str, PdfGlyphAccess a
 bool PdfFont::tryAddSubsetGID(unsigned gid, const unicodeview& codePoints, PdfCID& cid)
 {
     (void)codePoints;
-    PODOFO_ASSERT(m_SubsettingEnabled && !IsObjectLoaded());
+    PODOFO_ASSERT(m_SubsettingEnabled && !m_IsProxy);
     if (m_Encoding->IsDynamicEncoding())
     {
         // We start numberings CIDs from 1 since CID 0
-        // is reserved for fallbacks
-        auto inserted = m_SubsetGIDs.try_emplace(gid, PdfCID((unsigned)m_SubsetGIDs.size() + 1));
-        cid = inserted.first->second;
-        if (!inserted.second)
-            return false;
+        // is reserved for fallbacks. Encode it with FSS-UTF
+        // encoding so it will be variable code size safe
 
+        cid = PdfCID((unsigned)m_SubsetCIDMap->size() + 1, PdfCharCode(utls::FSSUTFEncode((unsigned)m_SubsetCIDMap->size() + 1)));
         m_DynamicCIDMap->PushMapping(cid.Unit, cid.Id);
         m_DynamicToUnicodeMap->PushMapping(cid.Unit, codePoints);
-        return true;
     }
     else
     {
@@ -794,22 +866,17 @@ bool PdfFont::tryAddSubsetGID(unsigned gid, const unicodeview& codePoints, PdfCI
 
         // We start numberings CIDs from 1 since CID 0
         // is reserved for fallbacks
-        auto inserted = m_SubsetGIDs.try_emplace(gid, PdfCID((unsigned)m_SubsetGIDs.size() + 1, codeUnit));
-        cid = inserted.first->second;
-        return inserted.second;
+        cid = PdfCID((unsigned)m_SubsetCIDMap->size() + 1, codeUnit);
     }
+
+    pushSubsetInfo(cid.Id, PdfGID(gid), cid.Unit);
+    return true;
 }
 
-void PdfFont::AddSubsetGIDs(const PdfString& encodedStr)
+void PdfFont::AddSubsetCIDs(const PdfString& encodedStr)
 {
-    if (IsObjectLoaded())
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Can't add used GIDs to a loaded font");
-
-    if (m_Encoding->IsDynamicEncoding())
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Can't add used GIDs from an encoded string to a font with a dynamic encoding");
-
-    if (!m_SubsettingEnabled)
-        return;
+    if (!m_IsProxy)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Can't add used CIDs to a non substitute font");
 
     if (m_IsEmbedded)
     {
@@ -817,17 +884,32 @@ void PdfFont::AddSubsetGIDs(const PdfString& encodedStr)
             "Can't add more subsetting glyphs on an already embedded font");
     }
 
+    PODOFO_ASSERT(!m_Encoding->IsDynamicEncoding());
+
     vector<PdfCID> cids;
-    unsigned gid;
-    (void)GetEncoding().TryConvertToCIDs(encodedStr, cids);
-    for (auto& cid : cids)
+    PdfGID gid;
+    (void)m_Encoding->TryConvertToCIDs(encodedStr, cids);
+    unsigned glyphCount = m_Metrics->GetGlyphCount();
+    for (unsigned i = 0; i < cids.size(); i++)
     {
-        if (TryMapCIDToGID(cid.Id, PdfGlyphAccess::FontProgram, gid))
+        auto& cid = cids[i];
+        mapCIDToGID(cid.Id, gid);
+        if (gid.Id >= glyphCount)
         {
-            (void)m_SubsetGIDs.try_emplace(gid,
-                PdfCID((unsigned)m_SubsetGIDs.size() + 1, cid.Unit));
+            // Assume the font will always contain at least one glyph
+            // and add a mapping to CID 0 for the char code, but
+            // the metrics id may be correct
+            gid.Id = 0;
         }
+
+        // Ignore trying to replace existing mapping
+        pushSubsetInfo(cid.Id, gid, cid.Unit);
     }
+}
+
+bool PdfFont::HasCIDSubset() const
+{
+    return m_SubsetCIDMap != nullptr && m_SubsetCIDMap->size() != 0;
 }
 
 bool PdfFont::SupportsSubsetting() const
@@ -854,21 +936,78 @@ PdfObject& PdfFont::GetDescendantFontObject()
     return *obj;
 }
 
-bool PdfFont::TryMapCIDToGID(unsigned cid, PdfGlyphAccess access, unsigned& gid) const
+void PdfFont::mapCIDToGID(unsigned cid, PdfGID& gid) const
 {
-    if (m_cidToGidMap != nullptr && m_cidToGidMap->HasGlyphAccess(access))
-        return m_cidToGidMap->TryMapCIDToGID(cid, gid);
+    // Retrieve first the font program GID first
+    bool normalLookup = false;
+    if (m_fontProgCIDToGIDMap == nullptr)
+    {
+        (void)tryMapCIDToGIDNormal(cid, gid.Id);
+        normalLookup = true;
+    }
+    else
+    {
+        (void)m_fontProgCIDToGIDMap->TryMapCIDToGID(cid, gid.Id);
+    }
 
-    return tryMapCIDToGID(cid, gid);
+    // Secondly, retrieve PDF metrics Id
+    if (!tryMapCIDToGIDLoadedMetrics(cid, gid.MetricsId))
+    {
+        if (normalLookup) // The normal lookup just happened, no need to repeat it
+            gid.MetricsId = gid.Id;
+        else
+            (void)tryMapCIDToGIDNormal(cid, gid.MetricsId);
+    }
 }
 
-bool PdfFont::tryMapCIDToGID(unsigned cid, unsigned& gid) const
+bool PdfFont::tryMapCIDToGID(unsigned cid, PdfGlyphAccess access, unsigned& gid) const
 {
-    PODOFO_ASSERT(!IsObjectLoaded());
+    switch (access)
+    {
+        case PdfGlyphAccess::ReadMetrics:
+        {
+            if (tryMapCIDToGIDLoadedMetrics(cid, gid))
+                return true;
+            else
+                return tryMapCIDToGIDNormal(cid, gid);
+        }
+        case PdfGlyphAccess::FontProgram:
+        {
+            if (m_fontProgCIDToGIDMap != nullptr)
+                return m_fontProgCIDToGIDMap->TryMapCIDToGID(cid, gid);
+
+            return tryMapCIDToGIDNormal(cid, gid);
+        }
+        default:
+            PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
+    }
+}
+
+bool PdfFont::tryMapCIDToGIDLoadedMetrics(unsigned cid, unsigned& gid) const
+{
+    if (!m_Encoding->IsObjectLoaded() || !m_Metrics->HasParsedWidths())
+        return false;
+
+    if (m_Encoding->IsSimpleEncoding())
+    {
+        // We just convert to a GID using /FirstChar
+        gid = cid - m_Encoding->GetFirstChar().Code;
+    }
+    else
+    {
+        // Else we assume identity
+        gid = cid;
+    }
+
+    return true;
+}
+
+bool PdfFont::tryMapCIDToGIDNormal(unsigned cid, unsigned& gid) const
+{
     if (m_Encoding->IsSimpleEncoding() && m_Metrics->HasUnicodeMapping())
     {
-        // Simple encodings must retrieve the gid from the
-        // metrics using the mapped unicode code point
+        // For simple fonts, try map CID to GID using the unicode
+        // map from metrics, if available
         char32_t mappedCodePoint = m_Encoding->GetCodePoint(cid);
         if (mappedCodePoint == U'\0'
             || !m_Metrics->TryGetGID(mappedCodePoint, gid))
@@ -881,13 +1020,118 @@ bool PdfFont::tryMapCIDToGID(unsigned cid, unsigned& gid) const
     }
     else
     {
-        // The font is not loaded, hence it's imported:
-        // we assume cid == gid identity. CHECK-ME: Does it work
-        // if we font to create a substitute font of a loaded font
-        // with a /CIDToGIDMap ???
+        // We assume cid == gid identity.
         gid = cid;
         return true;
     }
+}
+
+vector<PdfCharGIDInfo> PdfFont::GetCharGIDInfos() const
+{
+    vector<PdfCharGIDInfo> ret;
+    if (m_SubsetCIDMap == nullptr)
+    {
+        PODOFO_ASSERT(!m_SubsettingEnabled);
+
+        if (m_DynamicCIDMap != nullptr)
+        {
+            // Create a cid/gid map from the dynamic mapping
+            ret.resize(m_DynamicCIDMap->GetMappings().size());
+            unsigned i = 0;
+            for (auto& pair : m_DynamicCIDMap->GetMappings())
+            {
+                ret[i] = { *pair.second, *pair.second, PdfGID(*pair.second)};
+                i++;
+            }
+            return ret;
+        }
+
+        // Create an identity cid/gid map
+        unsigned gidCount = GetMetrics().GetGlyphCount();
+        ret.resize(gidCount);
+        for (unsigned i = 0; i < gidCount; i++)
+            ret[i] = { i, i, PdfGID(i) };
+    }
+    else
+    {
+        if (m_SubsetCIDMap->size() == 0)
+        {
+            ret.push_back({ 0, 0, PdfGID(0)});
+            return ret;
+        }
+
+        ret.resize(m_SubsetCIDMap->size());
+        unsigned i = 0;
+        if (m_SubsettingEnabled)
+        {
+            for (auto& pair : *m_SubsetCIDMap)
+            {
+                // Reserve CID 0 and start numbering CIDS from 1
+                ret[i] = { i + 1, pair.first, pair.second.Gid };
+                i++;
+            }
+        }
+        else
+        {
+            for (auto& pair : *m_SubsetCIDMap)
+            {
+                ret[i] = { pair.first, pair.first, pair.second.Gid };
+                i++;
+            }
+        }
+    }
+
+    return ret;
+}
+
+bool PdfFont::TryGetSubstituteCIDEncoding(unique_ptr<PdfEncodingMap>& cidEncodingMap) const
+{
+    if (m_SubsetCIDMap == nullptr || m_SubsetCIDMap->size() == 0 || m_DynamicCIDMap != nullptr)
+    {
+        // Return if the subset map is non existing or invalid, or this font
+        // is already defining a dynamic CID mapping
+        cidEncodingMap.reset();
+        return false;
+    }
+
+    PdfCharCodeMap map;
+    if (m_SubsettingEnabled)
+    {
+        unsigned i = 0;
+        for (auto& pair : *m_SubsetCIDMap)
+        {
+            for (auto& code : pair.second.Codes)
+                map.PushMapping(code, i + 1);
+
+            i++;
+        }
+    }
+    else
+    {
+        // The identifier for the new CID encoding
+        // unconditionally becomes the found GID
+        for (auto& pair : *m_SubsetCIDMap)
+        {
+            for (auto& code : pair.second.Codes)
+                map.PushMapping(code, pair.second.Gid.Id);
+        }
+    }
+
+    cidEncodingMap.reset(new PdfCMapEncoding(std::move(map)));
+    return true;
+}
+
+PdfCIDSystemInfo PdfFont::GetCIDSystemInfo() const
+{
+    PdfCIDSystemInfo ret;
+    auto fontName = m_Name;
+    if (IsSubsettingEnabled())
+        fontName.append("-subset");
+
+    ret.Registry = PdfString(CMAP_REGISTRY_NAME);
+    ret.Ordering = PdfString(fontName);
+    ret.Supplement = 0;
+    return ret;
 }
 
 PdfObject* PdfFont::getDescendantFontObject()
@@ -911,12 +1155,12 @@ bool PdfFont::IsStandard14Font(const string_view& fontName, bool useAltNames, Pd
     return ::IsStandard14Font(fontName, useAltNames, stdFont);
 }
 
-bool PdfFont::IsCIDKeyed() const
+bool PdfFont::IsCIDFont() const
 {
     switch (GetType())
     {
         case PdfFontType::CIDTrueType:
-        case PdfFontType::CIDType1:
+        case PdfFontType::CIDCFF:
             return true;
         default:
             return false;
@@ -926,6 +1170,11 @@ bool PdfFont::IsCIDKeyed() const
 bool PdfFont::IsObjectLoaded() const
 {
     return false;
+}
+
+inline string_view PdfFont::GetSubsetPrefix() const
+{
+    return m_SubsetPrefix;
 }
 
 // TODO:
@@ -968,4 +1217,34 @@ string_view toString(PdfFontStretch stretch)
         default:
             PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
     }
+}
+
+double getGlyphMedianWidth(const PdfFontMetrics& metrics, unsigned maxGlyphCount)
+{
+    vector<double> glyphWidths;
+    double length;
+    unsigned i = 0, count = metrics.GetGlyphCount(PdfGlyphAccess::ReadMetrics);
+    while (true)
+    {
+        if (i >= count)
+            break;
+
+        // Skip some small glyph lengths
+        constexpr double GLYPH_WIDTH_THRESHOLD = 0.25;
+        if (metrics.TryGetGlyphWidth(i, length) && length > GLYPH_WIDTH_THRESHOLD)
+        {
+            glyphWidths.push_back(length);
+            if (glyphWidths.size() == maxGlyphCount)
+                break;
+        }
+
+        i++;
+    }
+
+    if (glyphWidths.size() == 0)
+        return 0;
+
+    size_t n = glyphWidths.size() / 2;
+    std::nth_element(glyphWidths.begin(), glyphWidths.begin() + n, glyphWidths.end());
+    return glyphWidths[n];
 }

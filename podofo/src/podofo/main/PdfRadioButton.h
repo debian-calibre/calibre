@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_RADIO_BUTTON_H
 #define PDF_RADIO_BUTTON_H
@@ -11,17 +9,16 @@
 
 namespace PoDoFo
 {
-    /** A radio button
-     * TODO: This is just a stub
-     */
-    class PODOFO_API PdfRadioButton : public PdfToggleButton
+    /// A radio button
+    /// TODO: This is just a stub
+    class PODOFO_API PdfRadioButton final : public PdfToggleButton
     {
         friend class PdfField;
 
     private:
-        PdfRadioButton(PdfAcroForm& acroform, const std::shared_ptr<PdfField>& parent);
+        PdfRadioButton(PdfAcroForm& acroform, std::shared_ptr<PdfField>&& parent);
 
-        PdfRadioButton(PdfAnnotationWidget& widget, const std::shared_ptr<PdfField>& parent);
+        PdfRadioButton(PdfAnnotationWidget& widget, std::shared_ptr<PdfField>&& parent);
 
         PdfRadioButton(PdfObject& obj, PdfAcroForm* acroform);
 

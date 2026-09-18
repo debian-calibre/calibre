@@ -1,13 +1,10 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_XMP_PACKET
 #define PDF_XMP_PACKET
 
-#include "PdfDeclarations.h"
+#include "PdfMetadataStore.h"
 
 extern "C"
 {
@@ -19,6 +16,28 @@ extern "C"
 
 namespace PoDoFo
 {
+    class PdfXMPPacket;
+
+    class PODOFO_API PdfXMPProperty final
+    {
+        friend class PdfXMPPacket;
+    private:
+        PdfXMPProperty();
+    public:
+        const std::string& GetName() const { return Name; }
+        const std::string& GetNamespace() const { return Namespace; }
+        const std::string& GetPrefix() const { return Prefix; }
+        std::string GetPrefixedName() const;
+        bool IsValid() const;
+        bool IsDuplicated() const;
+        bool HasInvalidPrefix() const;
+    private:
+        std::string Name;
+        std::string Namespace;
+        std::string Prefix;
+        unsigned Error;
+    };
+
     class PODOFO_API PdfXMPPacket final
     {
     public:
@@ -29,13 +48,19 @@ namespace PoDoFo
         static std::unique_ptr<PdfXMPPacket> Create(const std::string_view& xmpview);
 
     public:
+        PdfMetadataStore GetMetadata() const;
+        void GetMetadata(PdfMetadataStore& metadata) const;
+        void SetMetadata(const PdfMetadataStore& metadata);
         void ToString(std::string& str) const;
         std::string ToString() const;
-
-    public:
+        /// Remove invalid properties based on specific PDF/A level
+        void PruneAndValidate(PdfALevel level, const std::function<void(const PdfXMPProperty& prop)>& warnings = nullptr);
+#ifdef PODOFO_3RDPARTY_INTEROP_ENABLED
+        void PruneAndValidate(PdfALevel level, const std::function<void(const PdfXMPProperty& prop, xmlNodePtr)>& warnings);
         xmlDocPtr GetDoc() { return m_Doc; }
         xmlNodePtr GetOrCreateDescription();
-        xmlNodePtr GetDescription() const { return m_Description; }
+        xmlNodePtr GetDescription() { return m_Description; }
+#endif // PODOFO_3RDPARTY_INTEROP_ENABLED
 
     public:
         PdfXMPPacket& operator=(const PdfXMPPacket&) = delete;

@@ -1,10 +1,6 @@
-/**
- * Copyright (C) 2007 by Dominik Seichter <domseichter@web.de>
- * Copyright (C) 2021 by Francesco Pretto <ceztko@gmail.com>
- *
- * Licensed under GNU Library General Public 2.0 or later.
- * Some rights reserved. See COPYING, AUTHORS.
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: MIT-0
 
 #include <PdfTest.h>
 
@@ -15,7 +11,7 @@ static void Test(const string_view& buffer, PdfDataType dataType, string_view ex
 static void TestStream(const string_view& buffer, const char* tokens[]);
 static void TestStreamIsNextToken(const string_view& buffer, const char* tokens[]);
 
-TEST_CASE("testArrays")
+TEST_CASE("TestArrays")
 {
     Test("[]", PdfDataType::Array);
     Test("[ ]", PdfDataType::Array, "[]");
@@ -34,20 +30,20 @@ TEST_CASE("testArrays")
     Test("[ 27.673200 27.673200 566.256000 651.295000 ]", PdfDataType::Array, "[ 27.6732 27.6732 566.256 651.295]");
 }
 
-TEST_CASE("testBool")
+TEST_CASE("TestBool")
 {
     Test("false", PdfDataType::Bool);
     Test("true", PdfDataType::Bool);
 }
 
-TEST_CASE("testHexString")
+TEST_CASE("TestHexString")
 {
     Test("<FFEB0400A0CC>", PdfDataType::String);
     Test("<FFEB0400A0C>", PdfDataType::String, "<FFEB0400A0C0>");
     Test("<>", PdfDataType::String);
 }
 
-TEST_CASE("testName")
+TEST_CASE("TestName")
 {
     Test("/Type", PdfDataType::Name);
     Test("/Length", PdfDataType::Name);
@@ -60,7 +56,7 @@ TEST_CASE("testName")
     Test("/", PdfDataType::Name); // empty names are legal, too!
 }
 
-TEST_CASE("testName2")
+TEST_CASE("TestName2")
 {
     // Some additional tests, which cause errors for Sebastian Loch
     string_view buffer = "/CheckBox#C3#9Cbersetzungshinweis";
@@ -80,12 +76,12 @@ TEST_CASE("testName2")
     INFO(utls::Format("!!! Name2=[{}]\n", name.GetString()));
 }
 
-TEST_CASE("testNull")
+TEST_CASE("TestNull")
 {
     Test("null", PdfDataType::Null);
 }
 
-TEST_CASE("testNumbers")
+TEST_CASE("TestNumbers")
 {
     Test("145", PdfDataType::Number);
     Test("-12", PdfDataType::Number);
@@ -95,14 +91,14 @@ TEST_CASE("testNumbers")
     Test("4.", PdfDataType::Real, "4");
 }
 
-TEST_CASE("testReference")
+TEST_CASE("TestReference")
 {
     Test("2 0 R", PdfDataType::Reference);
     Test("3 0 R", PdfDataType::Reference);
     Test("4 1 R", PdfDataType::Reference);
 }
 
-TEST_CASE("testString")
+TEST_CASE("TestString")
 {
     // testing strings
     Test("(Hallo Welt!)", PdfDataType::String);
@@ -130,7 +126,7 @@ TEST_CASE("testString")
     Test("(Hallo\\fWelt!)", PdfDataType::String, "(Hallo\\fWelt!)");
 }
 
-TEST_CASE("testDictionary")
+TEST_CASE("TestDictionary")
 {
     string_view dictIn =
         "<< /CheckBox#C3#9Cbersetzungshinweis(False)/Checkbox#C3#9Cbersetzungstabelle(False) >>";
@@ -140,7 +136,7 @@ TEST_CASE("testDictionary")
     Test(dictIn, PdfDataType::Dictionary, dictOut);
 }
 
-TEST_CASE("testTokens")
+TEST_CASE("TestTokens")
 {
     const char* pszBuffer = "613 0 obj"
         "<< /Length 141 /Filter [ /ASCII85Decode /FlateDecode ] >>"
@@ -155,7 +151,7 @@ TEST_CASE("testTokens")
     TestStreamIsNextToken(pszBuffer, pszTokens);
 }
 
-TEST_CASE("testComments")
+TEST_CASE("TestComments")
 {
     const char* pszBuffer = "613 0 obj\n"
         "% A comment that should be ignored\n"
@@ -171,14 +167,158 @@ TEST_CASE("testComments")
     TestStreamIsNextToken(pszBuffer, pszTokens);
 }
 
-TEST_CASE("testLocale")
+TEST_CASE("TestLocale")
 {
-    // Test with a locale thate uses "," instead of "." for doubles 
+    // Test with a locale that uses "," instead of "." for doubles 
     char* old = setlocale(LC_ALL, "de_DE");
 
     Test("3.140000", PdfDataType::Real, "3.14");
 
     setlocale(LC_ALL, old);
+}
+
+TEST_CASE("TestInvalidRealTokenNocrash")
+{
+    // CVE-2025-9394 regression: invalid real token after a PdfName must not
+    // cause use-after-free. The bug: DetermineDataType() calls variant.~PdfVariant()
+    // (destroying the PdfName's shared_ptr), then returns Unknown WITHOUT
+    // reinitializing the union. The variant's destructor later reads stale PdfName
+    // data and calls ~shared_ptr() on freed memory.
+    //
+    // To trigger the actual vulnerability, the variant must hold a PdfName
+    // (which has a non-trivial destructor with shared_ptr) before the invalid
+    // token is parsed. A default-constructed Null variant has a trivial destructor
+    // and would not trigger the use-after-free.
+    SpanStreamDevice device("/SomeName -.");
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+
+    // Name arms the variant with a non-trivial destructor (shared_ptr in union)
+    REQUIRE(tokenizer.TryReadNextVariant(device, variant));
+    REQUIRE(variant.GetDataType() == PdfDataType::Name);
+
+    // "-." triggers the Real recovery path; without the fix, the variant's
+    // PdfName union member is destroyed but never reinitialized, so the
+    // subsequent ~PdfVariant() double-frees the shared_ptr
+    (void)tokenizer.TryReadNextVariant(device, variant);
+}
+
+TEST_CASE("TestInvalidNumberTokenNocrash")
+{
+    // CVE-2025-9394 regression: same mechanism as TestInvalidRealTokenNocrash
+    // but exercises the Number recovery path (integer overflow fails from_chars).
+    SpanStreamDevice device("/SomeName 99999999999999999999999999999999");
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+
+    // Name arms the variant with a non-trivial destructor
+    REQUIRE(tokenizer.TryReadNextVariant(device, variant));
+    REQUIRE(variant.GetDataType() == PdfDataType::Name);
+
+    // Overflow triggers the Number recovery path
+    (void)tokenizer.TryReadNextVariant(device, variant);
+}
+
+TEST_CASE("TestInvalidRealInArrayNocrash")
+{
+    // CVE-2025-9394 regression: invalid numeric values inside arrays
+    // must not cause use-after-free during array destruction.
+    // "+." fails std::from_chars but passes the character scan as Real.
+    // ReadArray internally calls ReadNextVariant (throwing), so we catch the
+    // expected exception — the important thing is no crash or ASAN violation.
+    SpanStreamDevice device("[+. ..]");
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+    try
+    {
+        (void)tokenizer.TryReadNextVariant(device, variant);
+    }
+    catch (const PdfError&)
+    {
+        // Exception is acceptable error handling — not a crash
+    }
+}
+
+TEST_CASE("TestInvalidNumberInDictionaryNocrash")
+{
+    // CVE-2025-9394 / issue #275 regression: invalid numeric values inside
+    // dictionaries must not cause use-after-free during dictionary destruction.
+    // ReadDictionary internally calls ReadNextVariant (throwing), so we catch
+    // the expected exception.
+    SpanStreamDevice device("<< /Key -. >>");
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+    try
+    {
+        (void)tokenizer.TryReadNextVariant(device, variant);
+    }
+    catch (const PdfError&)
+    {
+        // Exception is acceptable error handling — not a crash
+    }
+}
+
+TEST_CASE("TestVariantReuseAfterInvalidToken")
+{
+    // CVE-2025-9394 regression: the recovery path must leave the variant in a
+    // fully usable state, not just a non-crashing one. Verifies the variant
+    // can be reassigned and used after the fix reinitializes it as NullMember.
+    {
+        SpanStreamDevice device("/TestName -. 42");
+        PdfTokenizer tokenizer;
+        PdfVariant variant;
+
+        // Arm with Name, then trigger Real recovery path
+        REQUIRE(tokenizer.TryReadNextVariant(device, variant));
+        REQUIRE(variant.GetDataType() == PdfDataType::Name);
+        (void)tokenizer.TryReadNextVariant(device, variant);
+
+        // Reassignment must work — proves variant is in a valid state, not just
+        // that it avoided a crash during destruction
+        variant = PdfVariant(static_cast<int64_t>(42));
+        REQUIRE(variant.GetDataType() == PdfDataType::Number);
+        REQUIRE(variant.GetNumber() == 42);
+    }
+    {
+        SpanStreamDevice device("/TestName 99999999999999999999999999999999 99");
+        PdfTokenizer tokenizer;
+        PdfVariant variant;
+
+        // Arm with Name, then trigger Number recovery path
+        REQUIRE(tokenizer.TryReadNextVariant(device, variant));
+        REQUIRE(variant.GetDataType() == PdfDataType::Name);
+        (void)tokenizer.TryReadNextVariant(device, variant);
+
+        variant = PdfVariant(static_cast<int64_t>(99));
+        REQUIRE(variant.GetDataType() == PdfDataType::Number);
+        REQUIRE(variant.GetNumber() == 99);
+    }
+}
+
+TEST_CASE("TestMultipleInvalidTokenVariantsNocrash")
+{
+    // CVE-2025-9394 regression: exercises multiple distinct invalid-token patterns
+    // that all reach the recovery path. Each variant is armed with a PdfName first
+    // because the use-after-free only manifests with non-trivial union members.
+    const string_view sequences[] = {
+        "/Name1 -.",                                    // Real: sign-dot
+        "/Name2 +.",                                    // Real: sign-dot
+        "/Name3 ..",                                    // Real: double-dot
+        "/Name4 99999999999999999999999999999999"        // Number: overflow
+    };
+    for (const string_view& input : sequences)
+    {
+        SpanStreamDevice device(input);
+        PdfTokenizer tokenizer;
+        PdfVariant variant;
+
+        // Arm with Name so the destructor path is non-trivial
+        REQUIRE(tokenizer.TryReadNextVariant(device, variant));
+        REQUIRE(variant.GetDataType() == PdfDataType::Name);
+
+        // Trigger recovery; variant destruction at end of scope is the real test
+        (void)tokenizer.TryReadNextVariant(device, variant);
+    }
 }
 
 void Test(const string_view& buffer, PdfDataType dataType, string_view expected)

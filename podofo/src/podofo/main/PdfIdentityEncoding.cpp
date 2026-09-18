@@ -1,13 +1,13 @@
-/**
- * SPDX-FileCopyrightText: (C) 2010 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2010 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfIdentityEncoding.h"
 
 #include <utf8cpp/utf8.h>
+
+#include <podofo/private/PdfEncodingPrivate.h>
 
 #include "PdfDictionary.h"
 #include "PdfFont.h"
@@ -17,23 +17,24 @@ using namespace PoDoFo;
 
 static PdfEncodingLimits getLimits(unsigned char codeSpaceSize);
 
-PdfIdentityEncoding::PdfIdentityEncoding(unsigned char codeSpaceSize)
-    : PdfIdentityEncoding(PdfEncodingMapType::Indeterminate,
-        getLimits(codeSpaceSize), PdfIdentityOrientation::Unkwnown) { }
-
-// PdfIdentityEncoding represents either Identity-H/Identity-V
-// predefined CMap names
-PdfIdentityEncoding::PdfIdentityEncoding(PdfEncodingMapType type,
-        const PdfEncodingLimits& limits, PdfIdentityOrientation orientation) :
-    PdfEncodingMap(type),
-    m_Limits(limits),
-    m_orientation(orientation) { }
+PdfIdentityEncoding::PdfIdentityEncoding(PdfEncodingMapType type, unsigned char codeSpaceSize)
+    : PdfIdentityEncoding(type, getLimits(codeSpaceSize), PdfIdentityOrientation::Unkwnown) { }
 
 PdfIdentityEncoding::PdfIdentityEncoding(PdfIdentityOrientation orientation)
     : PdfIdentityEncoding(PdfEncodingMapType::CMap, getLimits(2), orientation)
 {
     if (orientation == PdfIdentityOrientation::Unkwnown)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidEnumValue, "Unsupported orientation");
+}
+
+// PdfIdentityEncoding represents either Identity-H/Identity-V
+// predefined CMap names
+PdfIdentityEncoding::PdfIdentityEncoding(PdfEncodingMapType type,
+    const PdfEncodingLimits& limits, PdfIdentityOrientation orientation) :
+    PdfEncodingMap(type),
+    m_Limits(limits),
+    m_orientation(orientation)
+{
 }
 
 bool PdfIdentityEncoding::tryGetCharCode(char32_t codePoint, PdfCharCode& codeUnit) const
@@ -49,9 +50,10 @@ bool PdfIdentityEncoding::tryGetCharCode(char32_t codePoint, PdfCharCode& codeUn
     return true;
 }
 
-bool PdfIdentityEncoding::tryGetCodePoints(const PdfCharCode& codeUnit, vector<char32_t>& codePoints) const
+bool PdfIdentityEncoding::tryGetCodePoints(const PdfCharCode& codeUnit, const unsigned* cidId, CodePointSpan& codePoints) const
 {
-    codePoints.push_back((char32_t)codeUnit.Code);
+    (void)cidId;
+    codePoints = CodePointSpan((codepoint)codeUnit.Code);
     return true;
 }
 
@@ -63,21 +65,41 @@ void PdfIdentityEncoding::getExportObject(PdfIndirectObjectList& objects, PdfNam
     switch (m_orientation)
     {
         case PdfIdentityOrientation::Horizontal:
-            name = PdfName("Identity-H");
+            name = "Identity-H"_n;
             break;
         case PdfIdentityOrientation::Vertical:
-            name = PdfName("Identity-V");
+            name = "Identity-V"_n;
             break;
         default:
-            // TODO: Implement a custom CMap that has the correct
-            // range for other identities
-            PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidEnumValue, "Unsupported");
+            // NOTE: Return no export object, assume exporting
+            // will be done by writing CMaps externally
+            break;
     }
 }
 
-void PdfIdentityEncoding::AppendToUnicodeEntries(OutputStream& stream, charbuff& temp) const
+void PdfIdentityEncoding::AppendCIDMappingEntries(OutputStream& stream, const PdfFont& font, charbuff& temp) const
 {
-    // Very easy, just do a single bfrange
+    (void)font;
+
+    // Just do a single cidrange
+    // CHECK-ME: This has not been verified for correctness
+
+    stream.Write("1 begincidrange\n");
+    m_Limits.FirstChar.WriteHexTo(temp);
+    stream.Write(temp);
+    stream.Write(" ");
+    m_Limits.LastChar.WriteHexTo(temp);
+    stream.Write(temp);
+    stream.Write(" ");
+    utls::FormatTo(temp, m_Limits.FirstChar.Code);
+    stream.Write(temp);
+    stream.Write("\nendcidrange\n");
+}
+
+void PdfIdentityEncoding::AppendToUnicodeEntries(OutputStream& stream, const PdfFont& font, charbuff& temp) const
+{
+    (void)font;
+    // Just do a single bfrange
     // Use PdfEncodingMap::AppendUTF16CodeTo
 
     u16string u16temp;
@@ -88,22 +110,25 @@ void PdfIdentityEncoding::AppendToUnicodeEntries(OutputStream& stream, charbuff&
     m_Limits.LastChar.WriteHexTo(temp);
     stream.Write(temp);
     stream.Write(" ");
-    PdfEncodingMap::AppendUTF16CodeTo(stream, m_Limits.FirstChar.Code, u16temp);
-    stream.Write("\n");
-    stream.Write("endbfrange");
-}
-
-void PdfIdentityEncoding::AppendCIDMappingEntries(OutputStream& stream, const PdfFont& font, charbuff& temp) const
-{
-    (void)stream;
-    (void)font;
-    (void)temp;
-    PODOFO_RAISE_ERROR(PdfErrorCode::NotImplemented);
+    PoDoFo::AppendUTF16CodeTo(stream, m_Limits.FirstChar.Code, u16temp);
+    stream.Write("\nendbfrange\n");
 }
 
 const PdfEncodingLimits& PdfIdentityEncoding::GetLimits() const
 {
     return m_Limits;
+}
+
+PdfPredefinedEncodingType PdfIdentityEncoding::GetPredefinedEncodingType() const
+{
+    switch (m_orientation)
+    {
+        case PdfIdentityOrientation::Horizontal:
+        case PdfIdentityOrientation::Vertical:
+            return PdfPredefinedEncodingType::IdentityCMap;
+        default:
+            return PdfPredefinedEncodingType::Indeterminate;
+    }
 }
 
 PdfEncodingLimits getLimits(unsigned char codeSpaceSize)
@@ -112,5 +137,5 @@ PdfEncodingLimits getLimits(unsigned char codeSpaceSize)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::ValueOutOfRange, "Code space size can't be zero or bigger than 4");
 
     return { codeSpaceSize, codeSpaceSize, PdfCharCode(0, codeSpaceSize),
-        PdfCharCode((unsigned)std::pow(2, codeSpaceSize * CHAR_BIT), codeSpaceSize) };
+        PdfCharCode((unsigned)std::pow(2, codeSpaceSize * CHAR_BIT) - 1, codeSpaceSize) };
 }

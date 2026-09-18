@@ -58,13 +58,13 @@ void UnCompress::UncompressObjects()
                 }
                 catch (PdfError& e)
                 {
-                    if (e.GetCode() == PdfErrorCode::Flate)
+                    if (e.GetCode() == PdfErrorCode::FlateError)
                     {
                         // Ignore ZLib errors
                         fprintf(stderr, "WARNING: ZLib error ignored for this object.\n");
                     }
                     else
-                        throw e;
+                        throw;
                 }
                 printf("-> Uncompressed Length: %zu\n", stream->GetLength());
             }
@@ -72,7 +72,7 @@ void UnCompress::UncompressObjects()
             {
                 e.PrintErrorMsg();
                 if (e.GetCode() != PdfErrorCode::UnsupportedFilter)
-                    throw e;
+                    throw;
             }
         }
     }

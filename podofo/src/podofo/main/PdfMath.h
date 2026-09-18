@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2021 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_MATH_H
 #define PDF_MATH_H
@@ -15,22 +12,18 @@ namespace PoDoFo
 {
     class PdfPage;
 
-    /**
-     * Get a rotation trasformation that aligns the rectangle to the axis after the rotation
-     */
+    /// Get a rotation transformation that aligns the rectangle to the axis after the rotation
+    /// @param teta rotation in radians
     Matrix PODOFO_API GetFrameRotationTransform(const Rect& rect, double teta);
 
-    /**
-     * Get an inverse rotation trasformation that aligns the rectangle to the axis after the rotation
-     */
+    /// Get an inverse rotation transformation that aligns the rectangle to the axis after the rotation
+    /// @param teta rotation in radians
     Matrix PODOFO_API GetFrameRotationTransformInverse(const Rect& rect, double teta);
 
-    /**
-     * Transform the given rect accordingly to the page rotation
-     * \param inputIsTransformed if true the input rectangle is already transformed,
-     *   if false the input is canonically oriented in top-right quandrant
-     */
-    Rect PODOFO_API TransformRectPage(const Rect& rect, const PdfPage& page, bool inputIsTransformed);
+    /// Transform the given rect accordingly to the page rotation
+    /// @param rect a normalized rect in the canonical PDF coordinate system
+    /// @returns a normalized rect in the canonical PDF coordinate system
+    Rect PODOFO_API TransformRectPage(const Rect& rect, const PdfPage& page);
 }
 
 #endif // PDF_MATH_H

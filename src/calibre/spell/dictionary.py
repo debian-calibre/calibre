@@ -401,7 +401,7 @@ class Dictionaries:
                     d = self.dictionary_for_locale(locale)
                     if d is not None:
                         try:
-                            ans = d.obj.recognized(word.replace('\u2010', '-'))
+                            ans = d.obj.recognized(word.replace('\u2010', '-').replace('\u2019', "'"))
                         except ValueError:
                             pass
                     else:
@@ -422,7 +422,7 @@ class Dictionaries:
 
         if d is not None:
             try:
-                ans = d.obj.suggest(str(word).replace('\u2010', '-'))
+                ans = d.obj.suggest(str(word).replace('\u2010', '-').replace('\u2019', "'"))
             except ValueError:
                 pass
             else:

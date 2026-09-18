@@ -20,7 +20,7 @@ dependencies = [
 	"feedparser == 6.0.14",
 	"Markdown == 3.10.0",
 	"html2text == 2025.4.15",
-	"soupsieve == 2.8.4",
+	"soupsieve == 2.9",
     "typing-extensions == 4.15.0",  # needed by beautifulsoup4
 	"beautifulsoup4 == 4.14.3",
 	"regex == 2025.11.3",
@@ -54,9 +54,13 @@ dependencies = [
 	"PyQt6_WebEngine == 6.10.0",
 	"MacFSEvents == 0.8.4; sys_platform == 'darwin'",
 	"xxhash == 3.6.0",
-    "tzdata == 2025.2",
-    "tzlocal == 5.3.1",
+    "tzdata == 2026.4",
+    "tzlocal == 5.4.4",
 	"pystache == 0.6.8",
+
+    "apify_fingerprint_datapoints == 0.15.0",  # needed for browserforge
+	"click == 8.5.0",  # needed for browserforge
+	"browserforge == 1.2.4",  # needed for camoufox
 ]
 
 [project.urls]
@@ -150,7 +154,10 @@ extend-select = ["ANN"]
 "src/calibre/gui2/store/stores/*" = ['UP', 'FURB188']
 "src/qt/*.py" = ['I', 'E302']
 "src/qt/*.pyi" = ['I']
-"!{src/calibre/ai/**/*.py}" = ['ANN']
+"!{src/calibre/ai/**/*.py,src/calibre/web/automate/**/*.py}" = ['ANN']
+# This module wraps a browser, whose operations can all block indefinitely on
+# the network, so every one of them takes an explicit timeout
+"src/calibre/web/automate/camoufox.py" = ['ASYNC109']
 
 [tool.ruff.lint.isort]
 detect-same-package = true

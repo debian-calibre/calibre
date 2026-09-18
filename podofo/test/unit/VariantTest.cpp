@@ -1,12 +1,9 @@
-/**
- * Copyright (C) 2008 by Dominik Seichter <domseichter@web.de>
- * Copyright (C) 2021 by Francesco Pretto <ceztko@gmail.com>
- *
- * Licensed under GNU Library General Public 2.0 or later.
- * Some rights reserved. See COPYING, AUTHORS.
- */
+// SPDX-FileCopyrightText: 2008 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: MIT-0
 
 #include <PdfTest.h>
+#include <podofo/private/PdfParserObject.h>
 
 using namespace std;
 using namespace PoDoFo;
@@ -23,14 +20,14 @@ static void TestObjectsDirty(
     const PdfObject& objVariant,
     bool testValue);
 
-TEST_CASE("testEmptyObject")
+TEST_CASE("TestEmptyObject")
 {
     auto device = std::make_shared<SpanStreamDevice>("10 0 obj\nendobj\n"sv);
     PdfParserObject parserObj(*device);
     REQUIRE(parserObj.IsNull());
 }
 
-TEST_CASE("testEmptyStream")
+TEST_CASE("TestEmptyStream")
 {
     auto device = std::make_shared<SpanStreamDevice>("10 0 obj<</Length 0>>stream\nendstream\nendobj\n"sv);
     PdfParserObject parserObj(*device);
@@ -39,7 +36,7 @@ TEST_CASE("testEmptyStream")
     REQUIRE(parserObj.GetStream()->GetLength() == 0);
 }
 
-TEST_CASE("testNameObject")
+TEST_CASE("TestNameObject")
 {
     auto device = std::make_shared<SpanStreamDevice>("10 0 obj / endobj\n"sv);
     PdfParserObject parserObj(*device);
@@ -47,7 +44,7 @@ TEST_CASE("testNameObject")
     REQUIRE(parserObj.GetName().GetString() == "");
 }
 
-TEST_CASE("testIsDirtyTrue")
+TEST_CASE("TestIsDirtyTrue")
 {
     PdfMemDocument doc;
 
@@ -120,7 +117,7 @@ TEST_CASE("testIsDirtyTrue")
     TestObjectsDirty(objBool, objNum, objReal, objStr, objRef, objArray, objDict, objStream, objVariant, false);
 }
 
-TEST_CASE("testIsDirtyFalse")
+TEST_CASE("TestIsDirtyFalse")
 {
     PdfObject objBool(true);
     PdfObject objNum(static_cast<int64_t>(1));

@@ -1,14 +1,13 @@
-/**
- * SPDX-FileCopyrightText: (C) 2021 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_GRAPHICS_STATE_H
 #define PDF_GRAPHICS_STATE_H
 
-#include "PdfColor.h"
 #include <podofo/auxiliary/Matrix.h>
+#include "PdfColorSpaceFilter.h"
+#include "PdfExtGStateDefinition.h"
+#include "PdfPatternDefinition.h"
 
 namespace PoDoFo
 {
@@ -21,8 +20,14 @@ namespace PoDoFo
         PdfLineCapStyle LineCapStyle = PdfLineCapStyle::Square;
         PdfLineJoinStyle LineJoinStyle = PdfLineJoinStyle::Miter;
         std::string RenderingIntent;
-        PdfColor FillColor;
-        PdfColor StrokeColor;
+        PdfColorRaw NonStrokingColor{ };
+        PdfColorRaw StrokingColor{ };
+        PdfColorSpaceFilterPtr NonStrokingColorSpaceFilter = PdfColorSpaceFilterFactory::GetDeviceGrayInstancePtr();
+        PdfColorSpaceFilterPtr StrokingColorSpaceFilter = PdfColorSpaceFilterFactory::GetDeviceGrayInstancePtr();
+        PdfPatternDefinitionPtr NonStrokingPattern;
+        PdfPatternDefinitionPtr StrokingPattern;
+        PdfShadingDefinitionPtr Shading;
+        PdfExtGStateDefinitionPtr ExtGState;
     };
 }
 

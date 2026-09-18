@@ -1,9 +1,5 @@
-/**
- * Copyright (C) 2006 by Dominik Seichter <domseichter@web.de>
- *
- * Licensed under GNU General Public License 2.0 or later.
- * Some rights reserved. See COPYING, AUTHORS.
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-License-Identifier: MIT-0
 
 // Include the standard headers for cout to write
 // some output to the console.
@@ -42,7 +38,7 @@ void HelloWorld(const string_view& filename)
     PdfPainter painter;
 
     // A PdfFont object is required to draw text on a PdfPage using a PdfPainter.
-    // PoDoFo will find the font using fontconfig on your system and embedd truetype
+    // PoDoFo will find the font using fontconfig on your system and embed truetype
     // fonts automatically in the PDF file.
     PdfFont* font;
 
@@ -54,13 +50,13 @@ void HelloWorld(const string_view& filename)
         // 
         // You have to pass only one argument, i.e. the page size of the page to create.
         // There are predefined enums for some common page sizes.
-        auto& page = document.GetPages().CreatePage(PdfPage::CreateStandardPageSize(PdfPageSize::A4));
+        auto& page = document.GetPages().CreatePage(PdfPageSize::A4);
 
         // If the page cannot be created because of an error (e.g. ePdfError_OutOfMemory )
         // a nullptr pointer is returned.
         // We check for a nullptr pointer here and throw an exception using the RAISE_ERROR macro.
         // The raise error macro initializes a PdfError object with a given error code and
-        // the location in the file in which the error ocurred and throws it as an exception.
+        // the location in the file in which the error occurred and throws it as an exception.
 
         // Set the page as drawing target for the PdfPainter.
         // Before the painter can draw, a page has to be set first.
@@ -91,7 +87,7 @@ void HelloWorld(const string_view& filename)
         // You could set a different color than black to draw
         // the text.
         // 
-        // painter.SetColor(1.0, 0.0, 0.0);
+        // painter.GraphicsState.SetNonStrokingColor(PdfColor(1.0, 0.0, 0.0));
 
         // Actually draw the line "Hello World!" on to the PdfPage at
         // the position 2cm,2cm from the top left corner.
@@ -113,7 +109,7 @@ void HelloWorld(const string_view& filename)
         document.Save(filename);
 
     }
-    catch (PdfError& e)
+    catch (PdfError&)
     {
         // All PoDoFo methods may throw exceptions
         // make sure that painter.FinishPage() is called
@@ -127,7 +123,7 @@ void HelloWorld(const string_view& filename)
             // Ignore errors this time
         }
 
-        throw e;
+        throw;
     }
 }
 
@@ -165,7 +161,7 @@ int main(int argc, char* argv[])
         return (int)err.GetCode();
     }
 
-    // The PDF was created sucessfully.
+    // The PDF was created successfully.
     std::cout << std::endl
         << "Created a PDF file containing the line \"Hello World!\": " << argv[1] << std::endl << std::endl;
 
@@ -205,8 +201,8 @@ const char* GetBase14FontName(unsigned i)
 void DrawRedFrame(PdfPainter& painter, double x, double y, double width, double height)
 {
     // draw red box
-    painter.GraphicsState.SetFillColor(PdfColor(1.0f, 0.0f, 0.0f));
-    painter.GraphicsState.SetStrokeColor(PdfColor(1.0f, 0.0f, 0.0f));
+    painter.GraphicsState.SetNonStrokingColor(PdfColor(1.0f, 0.0f, 0.0f));
+    painter.GraphicsState.SetStrokingColor(PdfColor(1.0f, 0.0f, 0.0f));
     painter.DrawLine(x, y, x + width, y);
     if (height > 0.0f)
     {
@@ -215,8 +211,8 @@ void DrawRedFrame(PdfPainter& painter, double x, double y, double width, double 
         painter.DrawLine(x, y + height, x + width, y + height);
     }
     // restore to black
-    painter.GraphicsState.SetFillColor(PdfColor(0.0f, 0.0f, 0.0f));
-    painter.GraphicsState.SetStrokeColor(PdfColor(0.0f, 0.0f, 0.0f));
+    painter.GraphicsState.SetNonStrokingColor(PdfColor(0.0f, 0.0f, 0.0f));
+    painter.GraphicsState.SetStrokingColor(PdfColor(0.0f, 0.0f, 0.0f));
 }
 
 void DemoBase14Fonts(PdfPainter& painter, PdfPage& page, PdfDocument& document)

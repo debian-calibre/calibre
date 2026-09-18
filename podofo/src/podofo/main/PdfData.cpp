@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfData.h"
@@ -14,13 +12,13 @@ using namespace PoDoFo;
 
 PdfData::PdfData() { }
 
-PdfData::PdfData(charbuff&& data, const shared_ptr<size_t>& writeBeacon)
-    : m_data(std::move(data)), m_writeBeacon(writeBeacon)
+PdfData::PdfData(charbuff&& data, shared_ptr<size_t> writeBeacon)
+    : m_data(std::move(data)), m_writeBeacon(std::move(writeBeacon))
 {
 }
 
-PdfData::PdfData(const bufferview& data, const shared_ptr<size_t>& writeBeacon)
-    : m_data(charbuff(data)), m_writeBeacon(writeBeacon)
+PdfData::PdfData(const bufferview& data, shared_ptr<size_t> writeBeacon)
+    : m_data(charbuff(data)), m_writeBeacon(std::move(writeBeacon))
 {
 }
 
@@ -31,7 +29,7 @@ PdfData& PdfData::operator=(const bufferview& data)
 }
 
 void PdfData::Write(OutputStream& device, PdfWriteFlags,
-    const PdfStatefulEncrypt& encrypt, charbuff& buffer) const
+    const PdfStatefulEncrypt* encrypt, charbuff& buffer) const
 {
     (void)encrypt;
     (void)buffer;

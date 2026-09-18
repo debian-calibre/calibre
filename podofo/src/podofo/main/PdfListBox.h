@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_LISTBOX_H
 #define PDF_LISTBOX_H
@@ -11,16 +9,15 @@
 
 namespace PoDoFo
 {
-    /** A list box
-     */
-    class PODOFO_API PdfListBox : public PdChoiceField
+    /// A list box
+    class PODOFO_API PdfListBox final : public PdChoiceField
     {
         friend class PdfField;
 
     private:
-        PdfListBox(PdfAcroForm& acroform, const std::shared_ptr<PdfField>& parent);
+        PdfListBox(PdfAcroForm& acroform, std::shared_ptr<PdfField>&& parent);
 
-        PdfListBox(PdfAnnotationWidget& widget, const std::shared_ptr<PdfField>& parent);
+        PdfListBox(PdfAnnotationWidget& widget, std::shared_ptr<PdfField>&& parent);
 
         PdfListBox(PdfObject& obj, PdfAcroForm* acroform);
 

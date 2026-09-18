@@ -7,23 +7,25 @@ import os
 import sys
 import tempfile
 import unittest
+from collections.abc import Sequence
+from typing import Any
 
 from calibre.constants import ismacos
 from calibre.web.automate.worker import make_request, start_server, start_worker
 
 
-def print(*a, **kw):
+def print(*a: object, **kw: Any) -> None:  # noqa: ANN401
     kw['file'] = sys.stderr
     builtins.print(*a, **kw)
 
 
 class TestAutomateWorker(unittest.TestCase):
-    def test_automate_worker(self):
+    def test_automate_worker(self) -> None:
         asyncio.run(name_collision(self))
         worker(self)
 
 
-async def name_collision(self: TestAutomateWorker):
+async def name_collision(self: TestAutomateWorker) -> None:
     path1, srv1 = await start_server(random_suffix='test')
     q = '-test.sock' if ismacos else '-test'
     self.assertEndsWith(path1, q)
@@ -39,15 +41,15 @@ async def name_collision(self: TestAutomateWorker):
     await srv3.wait_closed()
 
 
-delayed_setup_items = []
-handler_items = []
+delayed_setup_items: list[Any] = []
+handler_items: list[tuple[Any, Any]] = []
 
 
-async def delayed_setup_for_test(x=None):
+async def delayed_setup_for_test(x: Any = None) -> None:  # noqa: ANN401
     delayed_setup_items.append(x)
 
 
-async def handler_for_test(*args):
+async def handler_for_test(*args: Any) -> dict[str, Any]:  # noqa: ANN401
     if len(args) == 1:
         x, input_data = args[0], None
     else:
@@ -58,12 +60,12 @@ async def handler_for_test(*args):
     return {'arg': x, 'delayed_setup_items': delayed_setup_items}
 
 
-def finalize(x=None):
+def finalize(x: Sequence[str] | None = None) -> None:
     if x:
         os.remove(x[0])
 
 
-def worker(self: TestAutomateWorker):
+def worker(self: TestAutomateWorker) -> None:
     tf = tempfile.NamedTemporaryFile(delete=False)
     tf.close()
     for input_data in (None, [tf.name]):
@@ -90,5 +92,5 @@ def worker(self: TestAutomateWorker):
             self.assertTrue(os.path.exists(tf.name))
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     return unittest.defaultTestLoader.loadTestsFromTestCase(TestAutomateWorker)

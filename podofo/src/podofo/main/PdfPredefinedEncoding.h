@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_SIMPLE_ENCODING_H
 #define PDF_SIMPLE_ENCODING_H
@@ -11,43 +9,46 @@
 
 namespace PoDoFo
 {
-    /**
-     * A common base class for Pdf defined predefined encodings which are
-     * known by name.
-     *
-     *  - WinAnsiEncoding
-     *  - MacRomanEncoding
-     *  - MacExpertEncoding
-     *
-     *  \see PdfWinAnsiEncoding
-     *  \see PdfMacRomanEncoding
-     *  \see PdfMacExportEncoding
-     */
+    /// A common base class for Pdf defined predefined encodings which are
+    /// known by name.
+    ///
+    /// - WinAnsiEncoding
+    /// - MacRomanEncoding
+    /// - MacExpertEncoding
+    ///
+    /// @see PdfWinAnsiEncoding
+    /// @see PdfMacRomanEncoding
+    /// @see PdfMacExportEncoding
     class PODOFO_API PdfPredefinedEncoding : public PdfBuiltInEncoding
     {
-    protected:
+        friend class PdfWinAnsiEncoding;
+        friend class PdfMacRomanEncoding;
+        friend class PdfMacExpertEncoding;
+
+    private:
         PdfPredefinedEncoding(const PdfName& name);
+
+        PdfPredefinedEncodingType GetPredefinedEncodingType() const override;
+
+    public:
+        /// Try get a latin text character name from a codepoint,
+        /// as listed by ISO 32000-2:2020 Table D.1 "Latin-text encodings"
+        static bool TryGetCharNameFromCodePoint(char32_t codepoint, const PdfName*& name);
 
     protected:
         void getExportObject(PdfIndirectObjectList& objects, PdfName& name, PdfObject*& obj) const override;
     };
 
-    /**
-     * The WinAnsiEncoding is the default encoding in PoDoFo for
-     * contents on PDF pages.
-     *
-     * It is also called CP-1252 encoding.
-     * This class may be used as base for derived encodings.
-     *
-     * \see PdfWin1250Encoding
-     *
-     * \see PdfFont::WinAnsiEncoding
-     */
-    class PODOFO_API PdfWinAnsiEncoding : public PdfPredefinedEncoding
+    /// The WinAnsiEncoding is the default encoding in PoDoFo for
+    /// contents on PDF pages.
+    ///
+    /// It is also called CP-1252 encoding.
+    /// This class may be used as base for derived encodings.
+    ///
+    /// @see PdfFont::WinAnsiEncoding
+    class PODOFO_API PdfWinAnsiEncoding final : public PdfPredefinedEncoding
     {
         friend class PdfEncodingMapFactory;
-        friend class PdfWin1250Encoding;
-        friend class PdfIso88592Encoding;
 
     private:
         PdfWinAnsiEncoding();
@@ -60,9 +61,12 @@ namespace PoDoFo
 
     };
 
-    /**
-     * MacRomanEncoding 
-     */
+    /// MacRomanEncoding
+    ///
+    /// The encoding here also defines the entries specified in
+    /// ISO 32000-2:2020 "Table 113 — Additional entries in Mac OS Roman
+    /// encoding not in MacRomanEncoding", other than the ones specified
+    /// in "Table D.2 — Latin character set and encodings"
     class PODOFO_API PdfMacRomanEncoding final : public PdfPredefinedEncoding
     {
         friend class PdfEncodingMapFactory;
@@ -77,9 +81,7 @@ namespace PoDoFo
         static const char32_t s_cEncoding[256]; // conversion table from MacRomanEncoding to UTF16
     };
 
-    /**
-     * MacExpertEncoding
-     */
+    /// MacExpertEncoding
     class PODOFO_API PdfMacExpertEncoding final : public PdfPredefinedEncoding
     {
         friend class PdfEncodingMapFactory;
@@ -94,9 +96,7 @@ namespace PoDoFo
         static const char32_t s_cEncoding[256]; // conversion table from MacExpertEncoding to UTF16
     };
 
-    /**
-     * StandardEncoding
-     */
+    /// StandardEncoding
     class PODOFO_API PdfStandardEncoding final : public PdfBuiltInEncoding
     {
         friend class PdfEncodingMapFactory;
@@ -111,9 +111,7 @@ namespace PoDoFo
         static const char32_t s_cEncoding[256]; // conversion table from StandardEncoding to UTF16
     };
 
-    /**
-     * Symbol Encoding
-     */
+    /// Symbol Encoding
     class PODOFO_API PdfSymbolEncoding final : public PdfBuiltInEncoding
     {
         friend class PdfEncodingMapFactory;
@@ -128,9 +126,7 @@ namespace PoDoFo
         static const char32_t s_cEncoding[256]; // conversion table from SymbolEncoding to UTF16
     };
 
-    /**
-     * ZapfDingbats encoding
-     */
+    /// ZapfDingbats encoding
     class PODOFO_API PdfZapfDingbatsEncoding final : public PdfBuiltInEncoding
     {
         friend class PdfEncodingMapFactory;

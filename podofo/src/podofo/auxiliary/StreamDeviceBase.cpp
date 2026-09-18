@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "StreamDeviceBase.h"
@@ -20,7 +18,7 @@ StreamDeviceBase::StreamDeviceBase()
 void StreamDeviceBase::Seek(size_t offset)
 {
     if (!CanSeek())
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidDeviceOperation, "Tried to seek an unseekable input device");
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::IOError, "Tried to seek an unseekable input device");
 
     seek((ssize_t)offset, SeekDirection::Begin);
 }
@@ -28,7 +26,7 @@ void StreamDeviceBase::Seek(size_t offset)
 void StreamDeviceBase::Seek(ssize_t offset, SeekDirection direction)
 {
     if (!CanSeek())
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidDeviceOperation, "Tried to seek an unseekable input device");
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::IOError, "Tried to seek an unseekable input device");
 
     seek(offset, direction);
 }

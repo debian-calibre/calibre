@@ -1,16 +1,13 @@
-/**
- * SPDX-FileCopyrightText: (C) 2008 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2008 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfDifferenceEncoding.h"
 
-#include <algorithm>
-
 #include <utf8cpp/utf8.h>
-#include <podofo/private/charconv_compat.h>
+#include <podofo/private/PdfEncodingPrivate.h>
+#include <podofo/private/PdfFilterFactory.h>
 
 #include "PdfArray.h"
 #include "PdfDictionary.h"
@@ -22,2398 +19,115 @@
 using namespace std;
 using namespace PoDoFo;
 
-// TODO: The AGL handling is very bad. Read the actual
-// specification and attempt to implement it better
-// https://github.com/adobe-type-tools/agl-specification
-// https://github.com/adobe-type-tools/agl-aglfn/
-static struct
+namespace
 {
-    char32_t u;
-    const char* name;
-} nameToUnicodeTab[] = {
-  {0x0021, "!"},
-  {0x0023, "#"},
-  {0x0024, "$"},
-  {0x0025, "%"},
-  {0x0026, "&"},
-  {0x0027, "'"},
-  {0x0028, "("},
-  {0x0029, ")"},
-  {0x002a, "*"},
-  {0x002b, "+"},
-  {0x002c, ","},
-  {0x002d, "-"},
-  {0x002e, "."},
-  {0x002f, "/"},
-  {0x0030, "0"},
-  {0x0031, "1"},
-  {0x0032, "2"},
-  {0x0033, "3"},
-  {0x0034, "4"},
-  {0x0035, "5"},
-  {0x0036, "6"},
-  {0x0037, "7"},
-  {0x0038, "8"},
-  {0x0039, "9"},
-  {0x003a, ":"},
-  {0x003b, ";"},
-  {0x003c, "<"},
-  {0x003d, "="},
-  {0x003e, ">"},
-  {0x003f, "?"},
-  {0x0040, "@"},
-  {0x0041, "A"},
-  {0x00c6, "AE"},
-  {0x01fc, "AEacute"},
-  {0x00c6, "AEsmall"},
-  {0x00c1, "Aacute"},
-  {0x00c1, "Aacutesmall"},
-  {0x0102, "Abreve"},
-  {0x00c2, "Acircumflex"},
-  {0x00c2, "Acircumflexsmall"},
-  {0xf6c9, "Acute"},
-  {0xf6c9, "Acutesmall"},
-  {0x00c4, "Adieresis"},
-  {0x00c4, "Adieresissmall"},
-  {0x00c0, "Agrave"},
-  {0x00c0, "Agravesmall"},
-  {0x0391, "Alpha"},
-  {0x0386, "Alphatonos"},
-  {0x0100, "Amacron"},
-  {0x0104, "Aogonek"},
-  {0x00c5, "Aring"},
-  {0x01fa, "Aringacute"},
-  {0x00c5, "Aringsmall"},
-  {0x0041, "Asmall"},
-  {0x00c3, "Atilde"},
-  {0x00c3, "Atildesmall"},
-  {0x0042, "B"},
-  {0x0392, "Beta"},
-  {0xf6f4, "Brevesmall"},
-  {0x0042, "Bsmall"},
-  {0x0043, "C"},
-  {0x0106, "Cacute"},
-  {0xf6ca, "Caron"},
-  {0xf6ca, "Caronsmall"},
-  {0x010c, "Ccaron"},
-  {0x00c7, "Ccedilla"},
-  {0x00c7, "Ccedillasmall"},
-  {0x0108, "Ccircumflex"},
-  {0x010a, "Cdotaccent"},
-  {0xf7b8, "Cedillasmall"},
-  {0x03a7, "Chi"},
-  {0xf6f6, "Circumflexsmall"},
-  {0x0043, "Csmall"},
-  {0x0044, "D"},
-  {0x010e, "Dcaron"},
-  {0x0110, "Dcroat"},
-  {0x2206, "Delta"},
-  {0xf6cb, "Dieresis"},
-  {0xf6cc, "DieresisAcute"},
-  {0xf6cd, "DieresisGrave"},
-  {0xf6cb, "Dieresissmall"},
-  {0xf6f7, "Dotaccentsmall"},
-  {0x0044, "Dsmall"},
-  {0x0045, "E"},
-  {0x00c9, "Eacute"},
-  {0x00c9, "Eacutesmall"},
-  {0x0114, "Ebreve"},
-  {0x011a, "Ecaron"},
-  {0x00ca, "Ecircumflex"},
-  {0x00ca, "Ecircumflexsmall"},
-  {0x00cb, "Edieresis"},
-  {0x00cb, "Edieresissmall"},
-  {0x0116, "Edotaccent"},
-  {0x00c8, "Egrave"},
-  {0x00c8, "Egravesmall"},
-  {0x0112, "Emacron"},
-  {0x014a, "Eng"},
-  {0x0118, "Eogonek"},
-  {0x0395, "Epsilon"},
-  {0x0388, "Epsilontonos"},
-  {0x0045, "Esmall"},
-  {0x0397, "Eta"},
-  {0x0389, "Etatonos"},
-  {0x00d0, "Eth"},
-  {0x00d0, "Ethsmall"},
-  {0x20ac, "Euro"},
-  {0x0046, "F"},
-  {0x0046, "Fsmall"},
-  {0x0047, "G"},
-  {0x0393, "Gamma"},
-  {0x011e, "Gbreve"},
-  {0x01e6, "Gcaron"},
-  {0x011c, "Gcircumflex"},
-  {0x0122, "Gcommaaccent"},
-  {0x0120, "Gdotaccent"},
-  {0xf6ce, "Grave"},
-  {0xf6ce, "Gravesmall"},
-  {0x0047, "Gsmall"},
-  {0x0048, "H"},
-  {0x25cf, "H18533"},
-  {0x25aa, "H18543"},
-  {0x25ab, "H18551"},
-  {0x25a1, "H22073"},
-  {0x0126, "Hbar"},
-  {0x0124, "Hcircumflex"},
-  {0x0048, "Hsmall"},
-  {0xf6cf, "Hungarumlaut"},
-  {0xf6cf, "Hungarumlautsmall"},
-  {0x0049, "I"},
-  {0x0132, "IJ"},
-  {0x00cd, "Iacute"},
-  {0x00cd, "Iacutesmall"},
-  {0x012c, "Ibreve"},
-  {0x00ce, "Icircumflex"},
-  {0x00ce, "Icircumflexsmall"},
-  {0x00cf, "Idieresis"},
-  {0x00cf, "Idieresissmall"},
-  {0x0130, "Idotaccent"},
-  {0x2111, "Ifraktur"},
-  {0x00cc, "Igrave"},
-  {0x00cc, "Igravesmall"},
-  {0x012a, "Imacron"},
-  {0x012e, "Iogonek"},
-  {0x0399, "Iota"},
-  {0x03aa, "Iotadieresis"},
-  {0x038a, "Iotatonos"},
-  {0x0049, "Ismall"},
-  {0x0128, "Itilde"},
-  {0x004a, "J"},
-  {0x0134, "Jcircumflex"},
-  {0x004a, "Jsmall"},
-  {0x004b, "K"},
-  {0x039a, "Kappa"},
-  {0x0136, "Kcommaaccent"},
-  {0x004b, "Ksmall"},
-  {0x004c, "L"},
-  {0xf6bf, "LL"},
-  {0x0139, "Lacute"},
-  {0x039b, "Lambda"},
-  {0x013d, "Lcaron"},
-  {0x013b, "Lcommaaccent"},
-  {0x013f, "Ldot"},
-  {0x0141, "Lslash"},
-  {0x0141, "Lslashsmall"},
-  {0x004c, "Lsmall"},
-  {0x004d, "M"},
-  {0xf6d0, "Macron"},
-  {0xf6d0, "Macronsmall"},
-  {0x004d, "Msmall"},
-  {0x039c, "Mu"},
-  {0x004e, "N"},
-  {0x0143, "Nacute"},
-  {0x0147, "Ncaron"},
-  {0x0145, "Ncommaaccent"},
-  {0x004e, "Nsmall"},
-  {0x00d1, "Ntilde"},
-  {0x00d1, "Ntildesmall"},
-  {0x039d, "Nu"},
-  {0x004f, "O"},
-  {0x0152, "OE"},
-  {0x0152, "OEsmall"},
-  {0x00d3, "Oacute"},
-  {0x00d3, "Oacutesmall"},
-  {0x014e, "Obreve"},
-  {0x00d4, "Ocircumflex"},
-  {0x00d4, "Ocircumflexsmall"},
-  {0x00d6, "Odieresis"},
-  {0x00d6, "Odieresissmall"},
-  {0xf6fb, "Ogoneksmall"},
-  {0x00d2, "Ograve"},
-  {0x00d2, "Ogravesmall"},
-  {0x01a0, "Ohorn"},
-  {0x0150, "Ohungarumlaut"},
-  {0x014c, "Omacron"},
-  {0x2126, "Omega"},
-  {0x038f, "Omegatonos"},
-  {0x039f, "Omicron"},
-  {0x038c, "Omicrontonos"},
-  {0x00d8, "Oslash"},
-  {0x01fe, "Oslashacute"},
-  {0x00d8, "Oslashsmall"},
-  {0x004f, "Osmall"},
-  {0x00d5, "Otilde"},
-  {0x00d5, "Otildesmall"},
-  {0x0050, "P"},
-  {0x03a6, "Phi"},
-  {0x03a0, "Pi"},
-  {0x03a8, "Psi"},
-  {0x0050, "Psmall"},
-  {0x0051, "Q"},
-  {0x0051, "Qsmall"},
-  {0x0052, "R"},
-  {0x0154, "Racute"},
-  {0x0158, "Rcaron"},
-  {0x0156, "Rcommaaccent"},
-  {0x211c, "Rfraktur"},
-  {0x03a1, "Rho"},
-  {0xf6fc, "Ringsmall"},
-  {0x0052, "Rsmall"},
-  {0x0053, "S"},
-  {0x250c, "SF010000"},
-  {0x2514, "SF020000"},
-  {0x2510, "SF030000"},
-  {0x2518, "SF040000"},
-  {0x253c, "SF050000"},
-  {0x252c, "SF060000"},
-  {0x2534, "SF070000"},
-  {0x251c, "SF080000"},
-  {0x2524, "SF090000"},
-  {0x2500, "SF100000"},
-  {0x2502, "SF110000"},
-  {0x2561, "SF190000"},
-  {0x2562, "SF200000"},
-  {0x2556, "SF210000"},
-  {0x2555, "SF220000"},
-  {0x2563, "SF230000"},
-  {0x2551, "SF240000"},
-  {0x2557, "SF250000"},
-  {0x255d, "SF260000"},
-  {0x255c, "SF270000"},
-  {0x255b, "SF280000"},
-  {0x255e, "SF360000"},
-  {0x255f, "SF370000"},
-  {0x255a, "SF380000"},
-  {0x2554, "SF390000"},
-  {0x2569, "SF400000"},
-  {0x2566, "SF410000"},
-  {0x2560, "SF420000"},
-  {0x2550, "SF430000"},
-  {0x256c, "SF440000"},
-  {0x2567, "SF450000"},
-  {0x2568, "SF460000"},
-  {0x2564, "SF470000"},
-  {0x2565, "SF480000"},
-  {0x2559, "SF490000"},
-  {0x2558, "SF500000"},
-  {0x2552, "SF510000"},
-  {0x2553, "SF520000"},
-  {0x256b, "SF530000"},
-  {0x256a, "SF540000"},
-  {0x015a, "Sacute"},
-  {0x0160, "Scaron"},
-  {0x0160, "Scaronsmall"},
-  {0x015e, "Scedilla"},
-  {0x015c, "Scircumflex"},
-  {0x0218, "Scommaaccent"},
-  {0x03a3, "Sigma"},
-  {0x0053, "Ssmall"},
-  {0x0054, "T"},
-  {0x03a4, "Tau"},
-  {0x0166, "Tbar"},
-  {0x0164, "Tcaron"},
-  {0x0162, "Tcommaaccent"},
-  {0x0398, "Theta"},
-  {0x00de, "Thorn"},
-  {0x00de, "Thornsmall"},
-  {0xf6fe, "Tildesmall"},
-  {0x0054, "Tsmall"},
-  {0x0055, "U"},
-  {0x00da, "Uacute"},
-  {0x00da, "Uacutesmall"},
-  {0x016c, "Ubreve"},
-  {0x00db, "Ucircumflex"},
-  {0x00db, "Ucircumflexsmall"},
-  {0x00dc, "Udieresis"},
-  {0x00dc, "Udieresissmall"},
-  {0x00d9, "Ugrave"},
-  {0x00d9, "Ugravesmall"},
-  {0x01af, "Uhorn"},
-  {0x0170, "Uhungarumlaut"},
-  {0x016a, "Umacron"},
-  {0x0172, "Uogonek"},
-  {0x03a5, "Upsilon"},
-  {0x03d2, "Upsilon1"},
-  {0x03ab, "Upsilondieresis"},
-  {0x038e, "Upsilontonos"},
-  {0x016e, "Uring"},
-  {0x0055, "Usmall"},
-  {0x0168, "Utilde"},
-  {0x0056, "V"},
-  {0x0056, "Vsmall"},
-  {0x0057, "W"},
-  {0x1e82, "Wacute"},
-  {0x0174, "Wcircumflex"},
-  {0x1e84, "Wdieresis"},
-  {0x1e80, "Wgrave"},
-  {0x0057, "Wsmall"},
-  {0x0058, "X"},
-  {0x039e, "Xi"},
-  {0x0058, "Xsmall"},
-  {0x0059, "Y"},
-  {0x00dd, "Yacute"},
-  {0x00dd, "Yacutesmall"},
-  {0x0176, "Ycircumflex"},
-  {0x0178, "Ydieresis"},
-  {0x0178, "Ydieresissmall"},
-  {0x1ef2, "Ygrave"},
-  {0x0059, "Ysmall"},
-  {0x005a, "Z"},
-  {0x0179, "Zacute"},
-  {0x017d, "Zcaron"},
-  {0x017d, "Zcaronsmall"},
-  {0x017b, "Zdotaccent"},
-  {0x0396, "Zeta"},
-  {0x005a, "Zsmall"},
-  {0x0022, "\""},
-  {0x005c, "\\"},
-  {0x005d, "]"},
-  {0x005e, "^"},
-  {0x005f, "_"},
-  {0x0060, "`"},
-  {0x0061, "a"},
-  {0x00e1, "aacute"},
-  {0x0103, "abreve"},
-  {0x00e2, "acircumflex"},
-  {0x00b4, "acute"},
-  {0x0301, "acutecomb"},
-  {0x00e4, "adieresis"},
-  {0x00e6, "ae"},
-  {0x01fd, "aeacute"},
-  {0x2015, "afii00208"},
-  {0x0410, "afii10017"},
-  {0x0411, "afii10018"},
-  {0x0412, "afii10019"},
-  {0x0413, "afii10020"},
-  {0x0414, "afii10021"},
-  {0x0415, "afii10022"},
-  {0x0401, "afii10023"},
-  {0x0416, "afii10024"},
-  {0x0417, "afii10025"},
-  {0x0418, "afii10026"},
-  {0x0419, "afii10027"},
-  {0x041a, "afii10028"},
-  {0x041b, "afii10029"},
-  {0x041c, "afii10030"},
-  {0x041d, "afii10031"},
-  {0x041e, "afii10032"},
-  {0x041f, "afii10033"},
-  {0x0420, "afii10034"},
-  {0x0421, "afii10035"},
-  {0x0422, "afii10036"},
-  {0x0423, "afii10037"},
-  {0x0424, "afii10038"},
-  {0x0425, "afii10039"},
-  {0x0426, "afii10040"},
-  {0x0427, "afii10041"},
-  {0x0428, "afii10042"},
-  {0x0429, "afii10043"},
-  {0x042a, "afii10044"},
-  {0x042b, "afii10045"},
-  {0x042c, "afii10046"},
-  {0x042d, "afii10047"},
-  {0x042e, "afii10048"},
-  {0x042f, "afii10049"},
-  {0x0490, "afii10050"},
-  {0x0402, "afii10051"},
-  {0x0403, "afii10052"},
-  {0x0404, "afii10053"},
-  {0x0405, "afii10054"},
-  {0x0406, "afii10055"},
-  {0x0407, "afii10056"},
-  {0x0408, "afii10057"},
-  {0x0409, "afii10058"},
-  {0x040a, "afii10059"},
-  {0x040b, "afii10060"},
-  {0x040c, "afii10061"},
-  {0x040e, "afii10062"},
-  {0xf6c4, "afii10063"},
-  {0xf6c5, "afii10064"},
-  {0x0430, "afii10065"},
-  {0x0431, "afii10066"},
-  {0x0432, "afii10067"},
-  {0x0433, "afii10068"},
-  {0x0434, "afii10069"},
-  {0x0435, "afii10070"},
-  {0x0451, "afii10071"},
-  {0x0436, "afii10072"},
-  {0x0437, "afii10073"},
-  {0x0438, "afii10074"},
-  {0x0439, "afii10075"},
-  {0x043a, "afii10076"},
-  {0x043b, "afii10077"},
-  {0x043c, "afii10078"},
-  {0x043d, "afii10079"},
-  {0x043e, "afii10080"},
-  {0x043f, "afii10081"},
-  {0x0440, "afii10082"},
-  {0x0441, "afii10083"},
-  {0x0442, "afii10084"},
-  {0x0443, "afii10085"},
-  {0x0444, "afii10086"},
-  {0x0445, "afii10087"},
-  {0x0446, "afii10088"},
-  {0x0447, "afii10089"},
-  {0x0448, "afii10090"},
-  {0x0449, "afii10091"},
-  {0x044a, "afii10092"},
-  {0x044b, "afii10093"},
-  {0x044c, "afii10094"},
-  {0x044d, "afii10095"},
-  {0x044e, "afii10096"},
-  {0x044f, "afii10097"},
-  {0x0491, "afii10098"},
-  {0x0452, "afii10099"},
-  {0x0453, "afii10100"},
-  {0x0454, "afii10101"},
-  {0x0455, "afii10102"},
-  {0x0456, "afii10103"},
-  {0x0457, "afii10104"},
-  {0x0458, "afii10105"},
-  {0x0459, "afii10106"},
-  {0x045a, "afii10107"},
-  {0x045b, "afii10108"},
-  {0x045c, "afii10109"},
-  {0x045e, "afii10110"},
-  {0x040f, "afii10145"},
-  {0x0462, "afii10146"},
-  {0x0472, "afii10147"},
-  {0x0474, "afii10148"},
-  {0xf6c6, "afii10192"},
-  {0x045f, "afii10193"},
-  {0x0463, "afii10194"},
-  {0x0473, "afii10195"},
-  {0x0475, "afii10196"},
-  {0xf6c7, "afii10831"},
-  {0xf6c8, "afii10832"},
-  {0x04d9, "afii10846"},
-  {0x200e, "afii299"},
-  {0x200f, "afii300"},
-  {0x200d, "afii301"},
-  {0x066a, "afii57381"},
-  {0x060c, "afii57388"},
-  {0x0660, "afii57392"},
-  {0x0661, "afii57393"},
-  {0x0662, "afii57394"},
-  {0x0663, "afii57395"},
-  {0x0664, "afii57396"},
-  {0x0665, "afii57397"},
-  {0x0666, "afii57398"},
-  {0x0667, "afii57399"},
-  {0x0668, "afii57400"},
-  {0x0669, "afii57401"},
-  {0x061b, "afii57403"},
-  {0x061f, "afii57407"},
-  {0x0621, "afii57409"},
-  {0x0622, "afii57410"},
-  {0x0623, "afii57411"},
-  {0x0624, "afii57412"},
-  {0x0625, "afii57413"},
-  {0x0626, "afii57414"},
-  {0x0627, "afii57415"},
-  {0x0628, "afii57416"},
-  {0x0629, "afii57417"},
-  {0x062a, "afii57418"},
-  {0x062b, "afii57419"},
-  {0x062c, "afii57420"},
-  {0x062d, "afii57421"},
-  {0x062e, "afii57422"},
-  {0x062f, "afii57423"},
-  {0x0630, "afii57424"},
-  {0x0631, "afii57425"},
-  {0x0632, "afii57426"},
-  {0x0633, "afii57427"},
-  {0x0634, "afii57428"},
-  {0x0635, "afii57429"},
-  {0x0636, "afii57430"},
-  {0x0637, "afii57431"},
-  {0x0638, "afii57432"},
-  {0x0639, "afii57433"},
-  {0x063a, "afii57434"},
-  {0x0640, "afii57440"},
-  {0x0641, "afii57441"},
-  {0x0642, "afii57442"},
-  {0x0643, "afii57443"},
-  {0x0644, "afii57444"},
-  {0x0645, "afii57445"},
-  {0x0646, "afii57446"},
-  {0x0648, "afii57448"},
-  {0x0649, "afii57449"},
-  {0x064a, "afii57450"},
-  {0x064b, "afii57451"},
-  {0x064c, "afii57452"},
-  {0x064d, "afii57453"},
-  {0x064e, "afii57454"},
-  {0x064f, "afii57455"},
-  {0x0650, "afii57456"},
-  {0x0651, "afii57457"},
-  {0x0652, "afii57458"},
-  {0x0647, "afii57470"},
-  {0x06a4, "afii57505"},
-  {0x067e, "afii57506"},
-  {0x0686, "afii57507"},
-  {0x0698, "afii57508"},
-  {0x06af, "afii57509"},
-  {0x0679, "afii57511"},
-  {0x0688, "afii57512"},
-  {0x0691, "afii57513"},
-  {0x06ba, "afii57514"},
-  {0x06d2, "afii57519"},
-  {0x06d5, "afii57534"},
-  {0x20aa, "afii57636"},
-  {0x05be, "afii57645"},
-  {0x05c3, "afii57658"},
-  {0x05d0, "afii57664"},
-  {0x05d1, "afii57665"},
-  {0x05d2, "afii57666"},
-  {0x05d3, "afii57667"},
-  {0x05d4, "afii57668"},
-  {0x05d5, "afii57669"},
-  {0x05d6, "afii57670"},
-  {0x05d7, "afii57671"},
-  {0x05d8, "afii57672"},
-  {0x05d9, "afii57673"},
-  {0x05da, "afii57674"},
-  {0x05db, "afii57675"},
-  {0x05dc, "afii57676"},
-  {0x05dd, "afii57677"},
-  {0x05de, "afii57678"},
-  {0x05df, "afii57679"},
-  {0x05e0, "afii57680"},
-  {0x05e1, "afii57681"},
-  {0x05e2, "afii57682"},
-  {0x05e3, "afii57683"},
-  {0x05e4, "afii57684"},
-  {0x05e5, "afii57685"},
-  {0x05e6, "afii57686"},
-  {0x05e7, "afii57687"},
-  {0x05e8, "afii57688"},
-  {0x05e9, "afii57689"},
-  {0x05ea, "afii57690"},
-  {0xfb2a, "afii57694"},
-  {0xfb2b, "afii57695"},
-  {0xfb4b, "afii57700"},
-  {0xfb1f, "afii57705"},
-  {0x05f0, "afii57716"},
-  {0x05f1, "afii57717"},
-  {0x05f2, "afii57718"},
-  {0xfb35, "afii57723"},
-  {0x05b4, "afii57793"},
-  {0x05b5, "afii57794"},
-  {0x05b6, "afii57795"},
-  {0x05bb, "afii57796"},
-  {0x05b8, "afii57797"},
-  {0x05b7, "afii57798"},
-  {0x05b0, "afii57799"},
-  {0x05b2, "afii57800"},
-  {0x05b1, "afii57801"},
-  {0x05b3, "afii57802"},
-  {0x05c2, "afii57803"},
-  {0x05c1, "afii57804"},
-  {0x05b9, "afii57806"},
-  {0x05bc, "afii57807"},
-  {0x05bd, "afii57839"},
-  {0x05bf, "afii57841"},
-  {0x05c0, "afii57842"},
-  {0x02bc, "afii57929"},
-  {0x2105, "afii61248"},
-  {0x2113, "afii61289"},
-  {0x2116, "afii61352"},
-  {0x202c, "afii61573"},
-  {0x202d, "afii61574"},
-  {0x202e, "afii61575"},
-  {0x200c, "afii61664"},
-  {0x066d, "afii63167"},
-  {0x02bd, "afii64937"},
-  {0x00e0, "agrave"},
-  {0x2135, "aleph"},
-  {0x03b1, "alpha"},
-  {0x03ac, "alphatonos"},
-  {0x0101, "amacron"},
-  {0x0026, "ampersand"},
-  {0x0026, "ampersandsmall"},
-  {0x2220, "angle"},
-  {0x2329, "angleleft"},
-  {0x232a, "angleright"},
-  {0x0387, "anoteleia"},
-  {0x0105, "aogonek"},
-  {0x2248, "approxequal"},
-  {0x00e5, "aring"},
-  {0x01fb, "aringacute"},
-  {0x2194, "arrowboth"},
-  {0x21d4, "arrowdblboth"},
-  {0x21d3, "arrowdbldown"},
-  {0x21d0, "arrowdblleft"},
-  {0x21d2, "arrowdblright"},
-  {0x21d1, "arrowdblup"},
-  {0x2193, "arrowdown"},
-  {0xf8e7, "arrowhorizex"},
-  {0x2190, "arrowleft"},
-  {0x2192, "arrowright"},
-  {0x2191, "arrowup"},
-  {0x2195, "arrowupdn"},
-  {0x21a8, "arrowupdnbse"},
-  {0xf8e6, "arrowvertex"},
-  {0x005e, "asciicircum"},
-  {0x007e, "asciitilde"},
-  {0x002a, "asterisk"},
-  {0x2217, "asteriskmath"},
-  {0xf6e9, "asuperior"},
-  {0x0040, "at"},
-  {0x00e3, "atilde"},
-  {0x0062, "b"},
-  {0x005c, "backslash"},
-  {0x007c, "bar"},
-  {0x03b2, "beta"},
-  {0x2588, "block"},
-  {0xf8f4, "braceex"},
-  {0x007b, "braceleft"},
-  {0xf8f3, "braceleftbt"},
-  {0xf8f2, "braceleftmid"},
-  {0xf8f1, "bracelefttp"},
-  {0x007d, "braceright"},
-  {0xf8fe, "bracerightbt"},
-  {0xf8fd, "bracerightmid"},
-  {0xf8fc, "bracerighttp"},
-  {0x005b, "bracketleft"},
-  {0xf8f0, "bracketleftbt"},
-  {0xf8ef, "bracketleftex"},
-  {0xf8ee, "bracketlefttp"},
-  {0x005d, "bracketright"},
-  {0xf8fb, "bracketrightbt"},
-  {0xf8fa, "bracketrightex"},
-  {0xf8f9, "bracketrighttp"},
-  {0x02d8, "breve"},
-  {0x00a6, "brokenbar"},
-  {0xf6ea, "bsuperior"},
-  {0x2022, "bullet"},
-  {0x0063, "c"},
-  {0x0107, "cacute"},
-  {0x02c7, "caron"},
-  {0x21b5, "carriagereturn"},
-  {0x010d, "ccaron"},
-  {0x00e7, "ccedilla"},
-  {0x0109, "ccircumflex"},
-  {0x010b, "cdotaccent"},
-  {0x00b8, "cedilla"},
-  {0x00a2, "cent"},
-  {0xf6df, "centinferior"},
-  {0x00a2, "centoldstyle"},
-  {0xf6e0, "centsuperior"},
-  {0x03c7, "chi"},
-  {0x25cb, "circle"},
-  {0x2297, "circlemultiply"},
-  {0x2295, "circleplus"},
-  {0x02c6, "circumflex"},
-  {0x2663, "club"},
-  {0x003a, "colon"},
-  {0x20a1, "colonmonetary"},
-  {0x002c, "comma"},
-  {0xf6c3, "commaaccent"},
-  {0xf6e1, "commainferior"},
-  {0xf6e2, "commasuperior"},
-  {0x2245, "congruent"},
-  {0x00a9, "copyright"},
-  {0x00a9, "copyrightsans"},
-  {0x00a9, "copyrightserif"},
-  {0x00a4, "currency"},
-  {0xf6d1, "cyrBreve"},
-  {0xf6d2, "cyrFlex"},
-  {0xf6d4, "cyrbreve"},
-  {0xf6d5, "cyrflex"},
-  {0x0064, "d"},
-  {0x2020, "dagger"},
-  {0x2021, "daggerdbl"},
-  {0xf6d3, "dblGrave"},
-  {0xf6d6, "dblgrave"},
-  {0x010f, "dcaron"},
-  {0x0111, "dcroat"},
-  {0x00b0, "degree"},
-  {0x03b4, "delta"},
-  {0x2666, "diamond"},
-  {0x00a8, "dieresis"},
-  {0xf6d7, "dieresisacute"},
-  {0xf6d8, "dieresisgrave"},
-  {0x0385, "dieresistonos"},
-  {0x00f7, "divide"},
-  {0x2593, "dkshade"},
-  {0x2584, "dnblock"},
-  {0x0024, "dollar"},
-  {0xf6e3, "dollarinferior"},
-  {0x0024, "dollaroldstyle"},
-  {0xf6e4, "dollarsuperior"},
-  {0x20ab, "dong"},
-  {0x02d9, "dotaccent"},
-  {0x0323, "dotbelowcomb"},
-  {0x0131, "dotlessi"},
-  {0xf6be, "dotlessj"},
-  {0x22c5, "dotmath"},
-  {0xf6eb, "dsuperior"},
-  {0x0065, "e"},
-  {0x00e9, "eacute"},
-  {0x0115, "ebreve"},
-  {0x011b, "ecaron"},
-  {0x00ea, "ecircumflex"},
-  {0x00eb, "edieresis"},
-  {0x0117, "edotaccent"},
-  {0x00e8, "egrave"},
-  {0x0038, "eight"},
-  {0x2088, "eightinferior"},
-  {0x0038, "eightoldstyle"},
-  {0x2078, "eightsuperior"},
-  {0x2208, "element"},
-  {0x2026, "ellipsis"},
-  {0x0113, "emacron"},
-  {0x2014, "emdash"},
-  {0x2205, "emptyset"},
-  {0x2013, "endash"},
-  {0x014b, "eng"},
-  {0x0119, "eogonek"},
-  {0x03b5, "epsilon"},
-  {0x03ad, "epsilontonos"},
-  {0x003d, "equal"},
-  {0x2261, "equivalence"},
-  {0x212e, "estimated"},
-  {0xf6ec, "esuperior"},
-  {0x03b7, "eta"},
-  {0x03ae, "etatonos"},
-  {0x00f0, "eth"},
-  {0x0021, "exclam"},
-  {0x203c, "exclamdbl"},
-  {0x00a1, "exclamdown"},
-  {0x00a1, "exclamdownsmall"},
-  {0x0021, "exclamleft"},
-  {0x0021, "exclamsmall"},
-  {0x2203, "existential"},
-  {0x0066, "f"},
-  {0xfb00, "ff"},
-  {0xfb03, "ffi"},
-  {0xfb04, "ffl"},
-  {0xfb01, "fi"},
-  {0xfb00, "f_f"},
-  {0xfb03, "f_f_i"},
-  {0xfb04, "f_f_l"},
-  {0xfb01, "f_i"},
-  {0x2640, "female"},
-  {0x2012, "figuredash"},
-  {0x25a0, "filledbox"},
-  {0x25ac, "filledrect"},
-  {0x0035, "five"},
-  {0x215d, "fiveeighths"},
-  {0x2085, "fiveinferior"},
-  {0x0035, "fiveoldstyle"},
-  {0x2075, "fivesuperior"},
-  {0xfb02, "fl"},
-  {0xfb02, "f_l"},
-  {0x0192, "florin"},
-  {0x0034, "four"},
-  {0x2084, "fourinferior"},
-  {0x0034, "fouroldstyle"},
-  {0x2074, "foursuperior"},
-  {0x2044, "fraction"},
-  {0x20a3, "franc"},
-  {0x0067, "g"},
-  {0x03b3, "gamma"},
-  {0x011f, "gbreve"},
-  {0x01e7, "gcaron"},
-  {0x011d, "gcircumflex"},
-  {0x0123, "gcommaaccent"},
-  {0x0121, "gdotaccent"},
-  {0x00df, "germandbls"},
-  {0x2207, "gradient"},
-  {0x0060, "grave"},
-  {0x0300, "gravecomb"},
-  {0x003e, "greater"},
-  {0x2265, "greaterequal"},
-  {0x00ab, "guillemotleft"},
-  {0x00bb, "guillemotright"},
-  {0x2039, "guilsinglleft"},
-  {0x203a, "guilsinglright"},
-  {0x0068, "h"},
-  {0x0127, "hbar"},
-  {0x0125, "hcircumflex"},
-  {0x2665, "heart"},
-  {0x0309, "hookabovecomb"},
-  {0x2302, "house"},
-  {0x02dd, "hungarumlaut"},
-  {0x002d, "hyphen"},
-  {0xf6e5, "hypheninferior"},
-  {0xf6e6, "hyphensuperior"},
-  {0x0069, "i"},
-  {0x00ed, "iacute"},
-  {0x012d, "ibreve"},
-  {0x00ee, "icircumflex"},
-  {0x00ef, "idieresis"},
-  {0x00ec, "igrave"},
-  {0x0133, "ij"},
-  {0x012b, "imacron"},
-  {0x221e, "infinity"},
-  {0x222b, "integral"},
-  {0x2321, "integralbt"},
-  {0xf8f5, "integralex"},
-  {0x2320, "integraltp"},
-  {0x2229, "intersection"},
-  {0x25d8, "invbullet"},
-  {0x25d9, "invcircle"},
-  {0x263b, "invsmileface"},
-  {0x012f, "iogonek"},
-  {0x03b9, "iota"},
-  {0x03ca, "iotadieresis"},
-  {0x0390, "iotadieresistonos"},
-  {0x03af, "iotatonos"},
-  {0xf6ed, "isuperior"},
-  {0x0129, "itilde"},
-  {0x006a, "j"},
-  {0x0135, "jcircumflex"},
-  {0x006b, "k"},
-  {0x03ba, "kappa"},
-  {0x0137, "kcommaaccent"},
-  {0x0138, "kgreenlandic"},
-  {0x006c, "l"},
-  {0x013a, "lacute"},
-  {0x03bb, "lambda"},
-  {0x013e, "lcaron"},
-  {0x013c, "lcommaaccent"},
-  {0x0140, "ldot"},
-  {0x003c, "less"},
-  {0x2264, "lessequal"},
-  {0x258c, "lfblock"},
-  {0x20a4, "lira"},
-  {0xf6c0, "ll"},
-  {0x2227, "logicaland"},
-  {0x00ac, "logicalnot"},
-  {0x2228, "logicalor"},
-  {0x017f, "longs"},
-  {0x25ca, "lozenge"},
-  {0x0142, "lslash"},
-  {0xf6ee, "lsuperior"},
-  {0x2591, "ltshade"},
-  {0x006d, "m"},
-  {0x00af, "macron"},
-  {0x2642, "male"},
-  {0x2212, "minus"},
-  {0x2032, "minute"},
-  {0xf6ef, "msuperior"},
-  {0x00b5, "mu"},
-  {0x00d7, "multiply"},
-  {0x266a, "musicalnote"},
-  {0x266b, "musicalnotedbl"},
-  {0x006e, "n"},
-  {0x0144, "nacute"},
-  {0x0149, "napostrophe"},
-  {0x00a0, "nbspace"},
-  {0x0148, "ncaron"},
-  {0x0146, "ncommaaccent"},
-  {0x0039, "nine"},
-  {0x2089, "nineinferior"},
-  {0x0039, "nineoldstyle"},
-  {0x2079, "ninesuperior"},
-  {0x00a0, "nonbreakingspace"},
-  {0x2209, "notelement"},
-  {0x2260, "notequal"},
-  {0x2284, "notsubset"},
-  {0x207f, "nsuperior"},
-  {0x00f1, "ntilde"},
-  {0x03bd, "nu"},
-  {0x0023, "numbersign"},
-  {0x006f, "o"},
-  {0x00f3, "oacute"},
-  {0x014f, "obreve"},
-  {0x00f4, "ocircumflex"},
-  {0x00f6, "odieresis"},
-  {0x0153, "oe"},
-  {0x02db, "ogonek"},
-  {0x00f2, "ograve"},
-  {0x01a1, "ohorn"},
-  {0x0151, "ohungarumlaut"},
-  {0x014d, "omacron"},
-  {0x03c9, "omega"},
-  {0x03d6, "omega1"},
-  {0x03ce, "omegatonos"},
-  {0x03bf, "omicron"},
-  {0x03cc, "omicrontonos"},
-  {0x0031, "one"},
-  {0x2024, "onedotenleader"},
-  {0x215b, "oneeighth"},
-  {0xf6dc, "onefitted"},
-  {0x00bd, "onehalf"},
-  {0x2081, "oneinferior"},
-  {0x0031, "oneoldstyle"},
-  {0x00bc, "onequarter"},
-  {0x00b9, "onesuperior"},
-  {0x2153, "onethird"},
-  {0x25e6, "openbullet"},
-  {0x00aa, "ordfeminine"},
-  {0x00ba, "ordmasculine"},
-  {0x221f, "orthogonal"},
-  {0x00f8, "oslash"},
-  {0x01ff, "oslashacute"},
-  {0xf6f0, "osuperior"},
-  {0x00f5, "otilde"},
-  {0x0070, "p"},
-  {0x00b6, "paragraph"},
-  {0x0028, "parenleft"},
-  {0xf8ed, "parenleftbt"},
-  {0xf8ec, "parenleftex"},
-  {0x208d, "parenleftinferior"},
-  {0x207d, "parenleftsuperior"},
-  {0xf8eb, "parenlefttp"},
-  {0x0029, "parenright"},
-  {0xf8f8, "parenrightbt"},
-  {0xf8f7, "parenrightex"},
-  {0x208e, "parenrightinferior"},
-  {0x207e, "parenrightsuperior"},
-  {0xf8f6, "parenrighttp"},
-  {0x2202, "partialdiff"},
-  {0x0025, "percent"},
-  {0x002e, "period"},
-  {0x00b7, "periodcentered"},
-  {0xf6e7, "periodinferior"},
-  {0xf6e8, "periodsuperior"},
-  {0x22a5, "perpendicular"},
-  {0x2030, "perthousand"},
-  {0x20a7, "peseta"},
-  {0x03c6, "phi"},
-  {0x03d5, "phi1"},
-  {0x03c0, "pi"},
-  {0x002b, "plus"},
-  {0x00b1, "plusminus"},
-  {0x211e, "prescription"},
-  {0x220f, "product"},
-  {0x2282, "propersubset"},
-  {0x2283, "propersuperset"},
-  {0x221d, "proportional"},
-  {0x03c8, "psi"},
-  {0x0071, "q"},
-  {0x003f, "question"},
-  {0x00bf, "questiondown"},
-  {0x00bf, "questiondownsmall"},
-  {0x003f, "questionsmall"},
-  {0x0022, "quotedbl"},
-  {0x201e, "quotedblbase"},
-  {0x201c, "quotedblleft"},
-  {0x201d, "quotedblright"},
-  {0x2018, "quoteleft"},
-  {0x201b, "quotereversed"},
-  {0x2019, "quoteright"},
-  {0x201a, "quotesinglbase"},
-  {0x0027, "quotesingle"},
-  {0x0072, "r"},
-  {0x0155, "racute"},
-  {0x221a, "radical"},
-  {0xf8e5, "radicalex"},
-  {0x0159, "rcaron"},
-  {0x0157, "rcommaaccent"},
-  {0x2286, "reflexsubset"},
-  {0x2287, "reflexsuperset"},
-  {0x00ae, "registered"},
-  {0x00ae, "registersans"},
-  {0x00ae, "registerserif"},
-  {0x2310, "revlogicalnot"},
-  {0x03c1, "rho"},
-  {0x02da, "ring"},
-  {0xf6f1, "rsuperior"},
-  {0x2590, "rtblock"},
-  {0xf6dd, "rupiah"},
-  {0x0073, "s"},
-  {0x015b, "sacute"},
-  {0x0161, "scaron"},
-  {0x015f, "scedilla"},
-  {0x015d, "scircumflex"},
-  {0x0219, "scommaaccent"},
-  {0x2033, "second"},
-  {0x00a7, "section"},
-  {0x003b, "semicolon"},
-  {0x0037, "seven"},
-  {0x215e, "seveneighths"},
-  {0x2087, "seveninferior"},
-  {0x0037, "sevenoldstyle"},
-  {0x2077, "sevensuperior"},
-  {0x2592, "shade"},
-  {0x03c3, "sigma"},
-  {0x03c2, "sigma1"},
-  {0x223c, "similar"},
-  {0x0036, "six"},
-  {0x2086, "sixinferior"},
-  {0x0036, "sixoldstyle"},
-  {0x2076, "sixsuperior"},
-  {0x002f, "slash"},
-  {0x263a, "smileface"},
-  {0x0020, "space"},
-  {0x2660, "spade"},
-  {0xf6f2, "ssuperior"},
-  {0x00a3, "sterling"},
-  {0x220b, "suchthat"},
-  {0x2211, "summation"},
-  {0x263c, "sun"},
-  {0x0074, "t"},
-  {0x03c4, "tau"},
-  {0x0167, "tbar"},
-  {0x0165, "tcaron"},
-  {0x0163, "tcommaaccent"},
-  {0x2234, "therefore"},
-  {0x03b8, "theta"},
-  {0x03d1, "theta1"},
-  {0x00fe, "thorn"},
-  {0x0033, "three"},
-  {0x215c, "threeeighths"},
-  {0x2083, "threeinferior"},
-  {0x0033, "threeoldstyle"},
-  {0x00be, "threequarters"},
-  {0xf6de, "threequartersemdash"},
-  {0x00b3, "threesuperior"},
-  {0x02dc, "tilde"},
-  {0x0303, "tildecomb"},
-  {0x0384, "tonos"},
-  {0x2122, "trademark"},
-  {0x2122, "trademarksans"},
-  {0x2122, "trademarkserif"},
-  {0x25bc, "triagdn"},
-  {0x25c4, "triaglf"},
-  {0x25ba, "triagrt"},
-  {0x25b2, "triagup"},
-  {0xf6f3, "tsuperior"},
-  {0x0032, "two"},
-  {0x2025, "twodotenleader"},
-  {0x2082, "twoinferior"},
-  {0x0032, "twooldstyle"},
-  {0x00b2, "twosuperior"},
-  {0x2154, "twothirds"},
-  {0x0075, "u"},
-  {0x00fa, "uacute"},
-  {0x016d, "ubreve"},
-  {0x00fb, "ucircumflex"},
-  {0x00fc, "udieresis"},
-  {0x00f9, "ugrave"},
-  {0x01b0, "uhorn"},
-  {0x0171, "uhungarumlaut"},
-  {0x016b, "umacron"},
-  {0x005f, "underscore"},
-  {0x2017, "underscoredbl"},
-  {0x222a, "union"},
-  {0x2200, "universal"},
-  {0x0173, "uogonek"},
-  {0x2580, "upblock"},
-  {0x03c5, "upsilon"},
-  {0x03cb, "upsilondieresis"},
-  {0x03b0, "upsilondieresistonos"},
-  {0x03cd, "upsilontonos"},
-  {0x016f, "uring"},
-  {0x0169, "utilde"},
-  {0x0076, "v"},
-  {0x0077, "w"},
-  {0x1e83, "wacute"},
-  {0x0175, "wcircumflex"},
-  {0x1e85, "wdieresis"},
-  {0x2118, "weierstrass"},
-  {0x1e81, "wgrave"},
-  {0x0078, "x"},
-  {0x03be, "xi"},
-  {0x0079, "y"},
-  {0x00fd, "yacute"},
-  {0x0177, "ycircumflex"},
-  {0x00ff, "ydieresis"},
-  {0x00a5, "yen"},
-  {0x1ef3, "ygrave"},
-  {0x007a, "z"},
-  {0x017a, "zacute"},
-  {0x017e, "zcaron"},
-  {0x017c, "zdotaccent"},
-  {0x0030, "zero"},
-  {0x2080, "zeroinferior"},
-  {0x0030, "zerooldstyle"},
-  {0x2070, "zerosuperior"},
-  {0x03b6, "zeta"},
-  {0x007b, "{"},
-  {0x007c, "|"},
-  {0x007d, "}"},
-  {0x007e, "~"},
-  // https://github.com/adobe-type-tools/agl-aglfn/blob/master/zapfdingbats.txt
-  {0x275E, "a100"},
-  {0x2761, "a101"},
-  {0x2762, "a102"},
-  {0x2763, "a103"},
-  {0x2764, "a104"},
-  {0x2710, "a105"},
-  {0x2765, "a106"},
-  {0x2766, "a107"},
-  {0x2767, "a108"},
-  {0x2660, "a109"},
-  {0x2721, "a10"},
-  {0x2665, "a110"},
-  {0x2666, "a111"},
-  {0x2663, "a112"},
-  {0x2709, "a117"},
-  {0x2708, "a118"},
-  {0x2707, "a119"},
-  {0x261B, "a11"},
-  {0x2460, "a120"},
-  {0x2461, "a121"},
-  {0x2462, "a122"},
-  {0x2463, "a123"},
-  {0x2464, "a124"},
-  {0x2465, "a125"},
-  {0x2466, "a126"},
-  {0x2467, "a127"},
-  {0x2468, "a128"},
-  {0x2469, "a129"},
-  {0x261E, "a12"},
-  {0x2776, "a130"},
-  {0x2777, "a131"},
-  {0x2778, "a132"},
-  {0x2779, "a133"},
-  {0x277A, "a134"},
-  {0x277B, "a135"},
-  {0x277C, "a136"},
-  {0x277D, "a137"},
-  {0x277E, "a138"},
-  {0x277F, "a139"},
-  {0x270C, "a13"},
-  {0x2780, "a140"},
-  {0x2781, "a141"},
-  {0x2782, "a142"},
-  {0x2783, "a143"},
-  {0x2784, "a144"},
-  {0x2785, "a145"},
-  {0x2786, "a146"},
-  {0x2787, "a147"},
-  {0x2788, "a148"},
-  {0x2789, "a149"},
-  {0x270D, "a14"},
-  {0x278A, "a150"},
-  {0x278B, "a151"},
-  {0x278C, "a152"},
-  {0x278D, "a153"},
-  {0x278E, "a154"},
-  {0x278F, "a155"},
-  {0x2790, "a156"},
-  {0x2791, "a157"},
-  {0x2792, "a158"},
-  {0x2793, "a159"},
-  {0x270E, "a15"},
-  {0x2794, "a160"},
-  {0x2192, "a161"},
-  {0x27A3, "a162"},
-  {0x2194, "a163"},
-  {0x2195, "a164"},
-  {0x2799, "a165"},
-  {0x279B, "a166"},
-  {0x279C, "a167"},
-  {0x279D, "a168"},
-  {0x279E, "a169"},
-  {0x270F, "a16"},
-  {0x279F, "a170"},
-  {0x27A0, "a171"},
-  {0x27A1, "a172"},
-  {0x27A2, "a173"},
-  {0x27A4, "a174"},
-  {0x27A5, "a175"},
-  {0x27A6, "a176"},
-  {0x27A7, "a177"},
-  {0x27A8, "a178"},
-  {0x27A9, "a179"},
-  {0x2711, "a17"},
-  {0x27AB, "a180"},
-  {0x27AD, "a181"},
-  {0x27AF, "a182"},
-  {0x27B2, "a183"},
-  {0x27B3, "a184"},
-  {0x27B5, "a185"},
-  {0x27B8, "a186"},
-  {0x27BA, "a187"},
-  {0x27BB, "a188"},
-  {0x27BC, "a189"},
-  {0x2712, "a18"},
-  {0x27BD, "a190"},
-  {0x27BE, "a191"},
-  {0x279A, "a192"},
-  {0x27AA, "a193"},
-  {0x27B6, "a194"},
-  {0x27B9, "a195"},
-  {0x2798, "a196"},
-  {0x27B4, "a197"},
-  {0x27B7, "a198"},
-  {0x27AC, "a199"},
-  {0x2713, "a19"},
-  {0x2701, "a1"},
-  {0x27AE, "a200"},
-  {0x27B1, "a201"},
-  {0x2703, "a202"},
-  {0x2750, "a203"},
-  {0x2752, "a204"},
-  {0x276E, "a205"},
-  {0x2770, "a206"},
-  {0x2714, "a20"},
-  {0x2715, "a21"},
-  {0x2716, "a22"},
-  {0x2717, "a23"},
-  {0x2718, "a24"},
-  {0x2719, "a25"},
-  {0x271A, "a26"},
-  {0x271B, "a27"},
-  {0x271C, "a28"},
-  {0x2722, "a29"},
-  {0x2702, "a2"},
-  {0x2723, "a30"},
-  {0x2724, "a31"},
-  {0x2725, "a32"},
-  {0x2726, "a33"},
-  {0x2727, "a34"},
-  {0x2605, "a35"},
-  {0x2729, "a36"},
-  {0x272A, "a37"},
-  {0x272B, "a38"},
-  {0x272C, "a39"},
-  {0x2704, "a3"},
-  {0x272D, "a40"},
-  {0x272E, "a41"},
-  {0x272F, "a42"},
-  {0x2730, "a43"},
-  {0x2731, "a44"},
-  {0x2732, "a45"},
-  {0x2733, "a46"},
-  {0x2734, "a47"},
-  {0x2735, "a48"},
-  {0x2736, "a49"},
-  {0x260E, "a4"},
-  {0x2737, "a50"},
-  {0x2738, "a51"},
-  {0x2739, "a52"},
-  {0x273A, "a53"},
-  {0x273B, "a54"},
-  {0x273C, "a55"},
-  {0x273D, "a56"},
-  {0x273E, "a57"},
-  {0x273F, "a58"},
-  {0x2740, "a59"},
-  {0x2706, "a5"},
-  {0x2741, "a60"},
-  {0x2742, "a61"},
-  {0x2743, "a62"},
-  {0x2744, "a63"},
-  {0x2745, "a64"},
-  {0x2746, "a65"},
-  {0x2747, "a66"},
-  {0x2748, "a67"},
-  {0x2749, "a68"},
-  {0x274A, "a69"},
-  {0x271D, "a6"},
-  {0x274B, "a70"},
-  {0x25CF, "a71"},
-  {0x274D, "a72"},
-  {0x25A0, "a73"},
-  {0x274F, "a74"},
-  {0x2751, "a75"},
-  {0x25B2, "a76"},
-  {0x25BC, "a77"},
-  {0x25C6, "a78"},
-  {0x2756, "a79"},
-  {0x271E, "a7"},
-  {0x25D7, "a81"},
-  {0x2758, "a82"},
-  {0x2759, "a83"},
-  {0x275A, "a84"},
-  {0x276F, "a85"},
-  {0x2771, "a86"},
-  {0x2772, "a87"},
-  {0x2773, "a88"},
-  {0x2768, "a89"},
-  {0x271F, "a8"},
-  {0x2769, "a90"},
-  {0x276C, "a91"},
-  {0x276D, "a92"},
-  {0x276A, "a93"},
-  {0x276B, "a94"},
-  {0x2774, "a95"},
-  {0x2775, "a96"},
-  {0x275B, "a97"},
-  {0x275C, "a98"},
-  {0x275D, "a99"},
-  {0x2720, "a9"},
-  { 0, nullptr }
-};
+    enum class AglMapType : uint8_t
+    {
+        None = 0,
+        AdobeGlyphList = 1,
+        AdobeGlyphListNewFonts = 2,
+        ZapfDingbatsGlyphList = 4,
+        LatinTextEncodings = 8,         ///< Characters here are also inside ISO 32000-2:2020 Table D.1 "Latin-text encodings"
+    };
 
-static struct {
-    char32_t u;
-    const char* name;
-} UnicodeToNameTab[] = {
-    {0x0000, ".notdef"},
-    {0x0020, "space"},
-    {0x0021, "exclam"},
-    {0x0022, "quotedbl"},
-    {0x0023, "numbersign"},
-    {0x0024, "dollar"},
-    {0x0025, "percent"},
-    {0x0026, "ampersand"},
-    {0x0027, "quotesingle"},
-    {0x0028, "parenleft"},
-    {0x0029, "parenright"},
-    {0x002A, "asterisk"},
-    {0x002B, "plus"},
-    {0x002C, "comma"},
-    {0x002D, "hyphen"},
-    {0x002E, "period"},
-    {0x002F, "slash"},
-    {0x0030, "zero"},
-    {0x0031, "one"},
-    {0x0032, "two"},
-    {0x0033, "three"},
-    {0x0034, "four"},
-    {0x0035, "five"},
-    {0x0036, "six"},
-    {0x0037, "seven"},
-    {0x0038, "eight"},
-    {0x0039, "nine"},
-    {0x003A, "colon"},
-    {0x003B, "semicolon"},
-    {0x003C, "less"},
-    {0x003D, "equal"},
-    {0x003E, "greater"},
-    {0x003F, "question"},
-    {0x0040, "at"},
-    {0x0041, "A"},
-    {0x0042, "B"},
-    {0x0043, "C"},
-    {0x0044, "D"},
-    {0x0045, "E"},
-    {0x0046, "F"},
-    {0x0047, "G"},
-    {0x0048, "H"},
-    {0x0049, "I"},
-    {0x004A, "J"},
-    {0x004B, "K"},
-    {0x004C, "L"},
-    {0x004D, "M"},
-    {0x004E, "N"},
-    {0x004F, "O"},
-    {0x0050, "P"},
-    {0x0051, "Q"},
-    {0x0052, "R"},
-    {0x0053, "S"},
-    {0x0054, "T"},
-    {0x0055, "U"},
-    {0x0056, "V"},
-    {0x0057, "W"},
-    {0x0058, "X"},
-    {0x0059, "Y"},
-    {0x005A, "Z"},
-    {0x005B, "bracketleft"},
-    {0x005C, "backslash"},
-    {0x005D, "bracketright"},
-    {0x005E, "asciicircum"},
-    {0x005F, "underscore"},
-    {0x0060, "grave"},
-    {0x0061, "a"},
-    {0x0062, "b"},
-    {0x0063, "c"},
-    {0x0064, "d"},
-    {0x0065, "e"},
-    {0x0066, "f"},
-    {0x0067, "g"},
-    {0x0068, "h"},
-    {0x0069, "i"},
-    {0x006A, "j"},
-    {0x006B, "k"},
-    {0x006C, "l"},
-    {0x006D, "m"},
-    {0x006E, "n"},
-    {0x006F, "o"},
-    {0x0070, "p"},
-    {0x0071, "q"},
-    {0x0072, "r"},
-    {0x0073, "s"},
-    {0x0074, "t"},
-    {0x0075, "u"},
-    {0x0076, "v"},
-    {0x0077, "w"},
-    {0x0078, "x"},
-    {0x0079, "y"},
-    {0x007A, "z"},
-    {0x007B, "braceleft"},
-    {0x007C, "bar"},
-    {0x007D, "braceright"},
-    {0x007E, "asciitilde"},
-    {0x00A0, "space"},
-    {0x00A1, "exclamdown"},
-    {0x00A2, "cent"},
-    {0x00A3, "sterling"},
-    {0x00A4, "currency"},
-    {0x00A5, "yen"},
-    {0x00A6, "brokenbar"},
-    {0x00A7, "section"},
-    {0x00A8, "dieresis"},
-    {0x00A9, "copyright"},
-    {0x00AA, "ordfeminine"},
-    {0x00AB, "guillemotleft"},
-    {0x00AC, "logicalnot"},
-    {0x00AD, "hyphen"},
-    {0x00AE, "registered"},
-    {0x00AF, "macron"},
-    {0x00B0, "degree"},
-    {0x00B1, "plusminus"},
-    {0x00B2, "twosuperior"},
-    {0x00B3, "threesuperior"},
-    {0x00B4, "acute"},
-    {0x00B5, "mu"},
-    {0x00B6, "paragraph"},
-    {0x00B7, "periodcentered"},
-    {0x00B8, "cedilla"},
-    {0x00B9, "onesuperior"},
-    {0x00BA, "ordmasculine"},
-    {0x00BB, "guillemotright"},
-    {0x00BC, "onequarter"},
-    {0x00BD, "onehalf"},
-    {0x00BE, "threequarters"},
-    {0x00BF, "questiondown"},
-    {0x00C0, "Agrave"},
-    {0x00C1, "Aacute"},
-    {0x00C2, "Acircumflex"},
-    {0x00C3, "Atilde"},
-    {0x00C4, "Adieresis"},
-    {0x00C5, "Aring"},
-    {0x00C6, "AE"},
-    {0x00C7, "Ccedilla"},
-    {0x00C8, "Egrave"},
-    {0x00C9, "Eacute"},
-    {0x00CA, "Ecircumflex"},
-    {0x00CB, "Edieresis"},
-    {0x00CC, "Igrave"},
-    {0x00CD, "Iacute"},
-    {0x00CE, "Icircumflex"},
-    {0x00CF, "Idieresis"},
-    {0x00D0, "Eth"},
-    {0x00D1, "Ntilde"},
-    {0x00D2, "Ograve"},
-    {0x00D3, "Oacute"},
-    {0x00D4, "Ocircumflex"},
-    {0x00D5, "Otilde"},
-    {0x00D6, "Odieresis"},
-    {0x00D7, "multiply"},
-    {0x00D8, "Oslash"},
-    {0x00D9, "Ugrave"},
-    {0x00DA, "Uacute"},
-    {0x00DB, "Ucircumflex"},
-    {0x00DC, "Udieresis"},
-    {0x00DD, "Yacute"},
-    {0x00DE, "Thorn"},
-    {0x00DF, "germandbls"},
-    {0x00E0, "agrave"},
-    {0x00E1, "aacute"},
-    {0x00E2, "acircumflex"},
-    {0x00E3, "atilde"},
-    {0x00E4, "adieresis"},
-    {0x00E5, "aring"},
-    {0x00E6, "ae"},
-    {0x00E7, "ccedilla"},
-    {0x00E8, "egrave"},
-    {0x00E9, "eacute"},
-    {0x00EA, "ecircumflex"},
-    {0x00EB, "edieresis"},
-    {0x00EC, "igrave"},
-    {0x00ED, "iacute"},
-    {0x00EE, "icircumflex"},
-    {0x00EF, "idieresis"},
-    {0x00F0, "eth"},
-    {0x00F1, "ntilde"},
-    {0x00F2, "ograve"},
-    {0x00F3, "oacute"},
-    {0x00F4, "ocircumflex"},
-    {0x00F5, "otilde"},
-    {0x00F6, "odieresis"},
-    {0x00F7, "divide"},
-    {0x00F8, "oslash"},
-    {0x00F9, "ugrave"},
-    {0x00FA, "uacute"},
-    {0x00FB, "ucircumflex"},
-    {0x00FC, "udieresis"},
-    {0x00FD, "yacute"},
-    {0x00FE, "thorn"},
-    {0x00FF, "ydieresis"},
-    {0x0100, "Amacron"},
-    {0x0101, "amacron"},
-    {0x0102, "Abreve"},
-    {0x0103, "abreve"},
-    {0x0104, "Aogonek"},
-    {0x0105, "aogonek"},
-    {0x0106, "Cacute"},
-    {0x0107, "cacute"},
-    {0x0108, "Ccircumflex"},
-    {0x0109, "ccircumflex"},
-    {0x010A, "Cdotaccent"},
-    {0x010B, "cdotaccent"},
-    {0x010C, "Ccaron"},
-    {0x010D, "ccaron"},
-    {0x010E, "Dcaron"},
-    {0x010F, "dcaron"},
-    {0x0110, "Dcroat"},
-    {0x0111, "dcroat"},
-    {0x0112, "Emacron"},
-    {0x0113, "emacron"},
-    {0x0114, "Ebreve"},
-    {0x0115, "ebreve"},
-    {0x0116, "Edotaccent"},
-    {0x0117, "edotaccent"},
-    {0x0118, "Eogonek"},
-    {0x0119, "eogonek"},
-    {0x011A, "Ecaron"},
-    {0x011B, "ecaron"},
-    {0x011C, "Gcircumflex"},
-    {0x011D, "gcircumflex"},
-    {0x011E, "Gbreve"},
-    {0x011F, "gbreve"},
-    {0x0120, "Gdotaccent"},
-    {0x0121, "gdotaccent"},
-    {0x0122, "Gcommaaccent"},
-    {0x0123, "gcommaaccent"},
-    {0x0124, "Hcircumflex"},
-    {0x0125, "hcircumflex"},
-    {0x0126, "Hbar"},
-    {0x0127, "hbar"},
-    {0x0128, "Itilde"},
-    {0x0129, "itilde"},
-    {0x012A, "Imacron"},
-    {0x012B, "imacron"},
-    {0x012C, "Ibreve"},
-    {0x012D, "ibreve"},
-    {0x012E, "Iogonek"},
-    {0x012F, "iogonek"},
-    {0x0130, "Idotaccent"},
-    {0x0131, "dotlessi"},
-    {0x0132, "IJ"},
-    {0x0133, "ij"},
-    {0x0134, "Jcircumflex"},
-    {0x0135, "jcircumflex"},
-    {0x0136, "Kcommaaccent"},
-    {0x0137, "kcommaaccent"},
-    {0x0138, "kgreenlandic"},
-    {0x0139, "Lacute"},
-    {0x013A, "lacute"},
-    {0x013B, "Lcommaaccent"},
-    {0x013C, "lcommaaccent"},
-    {0x013D, "Lcaron"},
-    {0x013E, "lcaron"},
-    {0x013F, "Ldot"},
-    {0x0140, "ldot"},
-    {0x0141, "Lslash"},
-    {0x0142, "lslash"},
-    {0x0143, "Nacute"},
-    {0x0144, "nacute"},
-    {0x0145, "Ncommaaccent"},
-    {0x0146, "ncommaaccent"},
-    {0x0147, "Ncaron"},
-    {0x0148, "ncaron"},
-    {0x0149, "napostrophe"},
-    {0x014A, "Eng"},
-    {0x014B, "eng"},
-    {0x014C, "Omacron"},
-    {0x014D, "omacron"},
-    {0x014E, "Obreve"},
-    {0x014F, "obreve"},
-    {0x0150, "Ohungarumlaut"},
-    {0x0151, "ohungarumlaut"},
-    {0x0152, "OE"},
-    {0x0153, "oe"},
-    {0x0154, "Racute"},
-    {0x0155, "racute"},
-    {0x0156, "Rcommaaccent"},
-    {0x0157, "rcommaaccent"},
-    {0x0158, "Rcaron"},
-    {0x0159, "rcaron"},
-    {0x015A, "Sacute"},
-    {0x015B, "sacute"},
-    {0x015C, "Scircumflex"},
-    {0x015D, "scircumflex"},
-    {0x015E, "Scedilla"},
-    {0x015F, "scedilla"},
-    {0x0160, "Scaron"},
-    {0x0161, "scaron"},
-    {0x0162, "Tcommaaccent"},
-    {0x0163, "tcommaaccent"},
-    {0x0164, "Tcaron"},
-    {0x0165, "tcaron"},
-    {0x0166, "Tbar"},
-    {0x0167, "tbar"},
-    {0x0168, "Utilde"},
-    {0x0169, "utilde"},
-    {0x016A, "Umacron"},
-    {0x016B, "umacron"},
-    {0x016C, "Ubreve"},
-    {0x016D, "ubreve"},
-    {0x016E, "Uring"},
-    {0x016F, "uring"},
-    {0x0170, "Uhungarumlaut"},
-    {0x0171, "uhungarumlaut"},
-    {0x0172, "Uogonek"},
-    {0x0173, "uogonek"},
-    {0x0174, "Wcircumflex"},
-    {0x0175, "wcircumflex"},
-    {0x0176, "Ycircumflex"},
-    {0x0177, "ycircumflex"},
-    {0x0178, "Ydieresis"},
-    {0x0179, "Zacute"},
-    {0x017A, "zacute"},
-    {0x017B, "Zdotaccent"},
-    {0x017C, "zdotaccent"},
-    {0x017D, "Zcaron"},
-    {0x017E, "zcaron"},
-    {0x017F, "longs"},
-    {0x0192, "florin"},
-    {0x01A0, "Ohorn"},
-    {0x01A1, "ohorn"},
-    {0x01AF, "Uhorn"},
-    {0x01B0, "uhorn"},
-    {0x01E6, "Gcaron"},
-    {0x01E7, "gcaron"},
-    {0x01FA, "Aringacute"},
-    {0x01FB, "aringacute"},
-    {0x01FC, "AEacute"},
-    {0x01FD, "aeacute"},
-    {0x01FE, "Oslashacute"},
-    {0x01FF, "oslashacute"},
-    {0x0218, "Scommaaccent"},
-    {0x0219, "scommaaccent"},
-    {0x021A, "Tcommaaccent"},
-    {0x021B, "tcommaaccent"},
-    {0x02BC, "afii57929"},
-    {0x02BD, "afii64937"},
-    {0x02C6, "circumflex"},
-    {0x02C7, "caron"},
-    {0x02C9, "macron"},
-    {0x02D8, "breve"},
-    {0x02D9, "dotaccent"},
-    {0x02DA, "ring"},
-    {0x02DB, "ogonek"},
-    {0x02DC, "tilde"},
-    {0x02DD, "hungarumlaut"},
-    {0x0300, "gravecomb"},
-    {0x0301, "acutecomb"},
-    {0x0303, "tildecomb"},
-    {0x0309, "hookabovecomb"},
-    {0x0323, "dotbelowcomb"},
-    {0x0384, "tonos"},
-    {0x0385, "dieresistonos"},
-    {0x0386, "Alphatonos"},
-    {0x0387, "anoteleia"},
-    {0x0388, "Epsilontonos"},
-    {0x0389, "Etatonos"},
-    {0x038A, "Iotatonos"},
-    {0x038C, "Omicrontonos"},
-    {0x038E, "Upsilontonos"},
-    {0x038F, "Omegatonos"},
-    {0x0390, "iotadieresistonos"},
-    {0x0391, "Alpha"},
-    {0x0392, "Beta"},
-    {0x0393, "Gamma"},
-    {0x0394, "Delta"},
-    {0x0395, "Epsilon"},
-    {0x0396, "Zeta"},
-    {0x0397, "Eta"},
-    {0x0398, "Theta"},
-    {0x0399, "Iota"},
-    {0x039A, "Kappa"},
-    {0x039B, "Lambda"},
-    {0x039C, "Mu"},
-    {0x039D, "Nu"},
-    {0x039E, "Xi"},
-    {0x039F, "Omicron"},
-    {0x03A0, "Pi"},
-    {0x03A1, "Rho"},
-    {0x03A3, "Sigma"},
-    {0x03A4, "Tau"},
-    {0x03A5, "Upsilon"},
-    {0x03A6, "Phi"},
-    {0x03A7, "Chi"},
-    {0x03A8, "Psi"},
-    {0x03A9, "Omega"},
-    {0x03AA, "Iotadieresis"},
-    {0x03AB, "Upsilondieresis"},
-    {0x03AC, "alphatonos"},
-    {0x03AD, "epsilontonos"},
-    {0x03AE, "etatonos"},
-    {0x03AF, "iotatonos"},
-    {0x03B0, "upsilondieresistonos"},
-    {0x03B1, "alpha"},
-    {0x03B2, "beta"},
-    {0x03B3, "gamma"},
-    {0x03B4, "delta"},
-    {0x03B5, "epsilon"},
-    {0x03B6, "zeta"},
-    {0x03B7, "eta"},
-    {0x03B8, "theta"},
-    {0x03B9, "iota"},
-    {0x03BA, "kappa"},
-    {0x03BB, "lambda"},
-    {0x03BC, "mu"},
-    {0x03BD, "nu"},
-    {0x03BE, "xi"},
-    {0x03BF, "omicron"},
-    {0x03C0, "pi"},
-    {0x03C1, "rho"},
-    {0x03C2, "sigma1"},
-    {0x03C3, "sigma"},
-    {0x03C4, "tau"},
-    {0x03C5, "upsilon"},
-    {0x03C6, "phi"},
-    {0x03C7, "chi"},
-    {0x03C8, "psi"},
-    {0x03C9, "omega"},
-    {0x03CA, "iotadieresis"},
-    {0x03CB, "upsilondieresis"},
-    {0x03CC, "omicrontonos"},
-    {0x03CD, "upsilontonos"},
-    {0x03CE, "omegatonos"},
-    {0x03D1, "theta1"},
-    {0x03D2, "Upsilon1"},
-    {0x03D5, "phi1"},
-    {0x03D6, "omega1"},
-    {0x0401, "afii10023"},
-    {0x0402, "afii10051"},
-    {0x0403, "afii10052"},
-    {0x0404, "afii10053"},
-    {0x0405, "afii10054"},
-    {0x0406, "afii10055"},
-    {0x0407, "afii10056"},
-    {0x0408, "afii10057"},
-    {0x0409, "afii10058"},
-    {0x040A, "afii10059"},
-    {0x040B, "afii10060"},
-    {0x040C, "afii10061"},
-    {0x040E, "afii10062"},
-    {0x040F, "afii10145"},
-    {0x0410, "afii10017"},
-    {0x0411, "afii10018"},
-    {0x0412, "afii10019"},
-    {0x0413, "afii10020"},
-    {0x0414, "afii10021"},
-    {0x0415, "afii10022"},
-    {0x0416, "afii10024"},
-    {0x0417, "afii10025"},
-    {0x0418, "afii10026"},
-    {0x0419, "afii10027"},
-    {0x041A, "afii10028"},
-    {0x041B, "afii10029"},
-    {0x041C, "afii10030"},
-    {0x041D, "afii10031"},
-    {0x041E, "afii10032"},
-    {0x041F, "afii10033"},
-    {0x0420, "afii10034"},
-    {0x0421, "afii10035"},
-    {0x0422, "afii10036"},
-    {0x0423, "afii10037"},
-    {0x0424, "afii10038"},
-    {0x0425, "afii10039"},
-    {0x0426, "afii10040"},
-    {0x0427, "afii10041"},
-    {0x0428, "afii10042"},
-    {0x0429, "afii10043"},
-    {0x042A, "afii10044"},
-    {0x042B, "afii10045"},
-    {0x042C, "afii10046"},
-    {0x042D, "afii10047"},
-    {0x042E, "afii10048"},
-    {0x042F, "afii10049"},
-    {0x0430, "afii10065"},
-    {0x0431, "afii10066"},
-    {0x0432, "afii10067"},
-    {0x0433, "afii10068"},
-    {0x0434, "afii10069"},
-    {0x0435, "afii10070"},
-    {0x0436, "afii10072"},
-    {0x0437, "afii10073"},
-    {0x0438, "afii10074"},
-    {0x0439, "afii10075"},
-    {0x043A, "afii10076"},
-    {0x043B, "afii10077"},
-    {0x043C, "afii10078"},
-    {0x043D, "afii10079"},
-    {0x043E, "afii10080"},
-    {0x043F, "afii10081"},
-    {0x0440, "afii10082"},
-    {0x0441, "afii10083"},
-    {0x0442, "afii10084"},
-    {0x0443, "afii10085"},
-    {0x0444, "afii10086"},
-    {0x0445, "afii10087"},
-    {0x0446, "afii10088"},
-    {0x0447, "afii10089"},
-    {0x0448, "afii10090"},
-    {0x0449, "afii10091"},
-    {0x044A, "afii10092"},
-    {0x044B, "afii10093"},
-    {0x044C, "afii10094"},
-    {0x044D, "afii10095"},
-    {0x044E, "afii10096"},
-    {0x044F, "afii10097"},
-    {0x0451, "afii10071"},
-    {0x0452, "afii10099"},
-    {0x0453, "afii10100"},
-    {0x0454, "afii10101"},
-    {0x0455, "afii10102"},
-    {0x0456, "afii10103"},
-    {0x0457, "afii10104"},
-    {0x0458, "afii10105"},
-    {0x0459, "afii10106"},
-    {0x045A, "afii10107"},
-    {0x045B, "afii10108"},
-    {0x045C, "afii10109"},
-    {0x045E, "afii10110"},
-    {0x045F, "afii10193"},
-    {0x0462, "afii10146"},
-    {0x0463, "afii10194"},
-    {0x0472, "afii10147"},
-    {0x0473, "afii10195"},
-    {0x0474, "afii10148"},
-    {0x0475, "afii10196"},
-    {0x0490, "afii10050"},
-    {0x0491, "afii10098"},
-    {0x04D9, "afii10846"},
-    {0x05B0, "afii57799"},
-    {0x05B1, "afii57801"},
-    {0x05B2, "afii57800"},
-    {0x05B3, "afii57802"},
-    {0x05B4, "afii57793"},
-    {0x05B5, "afii57794"},
-    {0x05B6, "afii57795"},
-    {0x05B7, "afii57798"},
-    {0x05B8, "afii57797"},
-    {0x05B9, "afii57806"},
-    {0x05BB, "afii57796"},
-    {0x05BC, "afii57807"},
-    {0x05BD, "afii57839"},
-    {0x05BE, "afii57645"},
-    {0x05BF, "afii57841"},
-    {0x05C0, "afii57842"},
-    {0x05C1, "afii57804"},
-    {0x05C2, "afii57803"},
-    {0x05C3, "afii57658"},
-    {0x05D0, "afii57664"},
-    {0x05D1, "afii57665"},
-    {0x05D2, "afii57666"},
-    {0x05D3, "afii57667"},
-    {0x05D4, "afii57668"},
-    {0x05D5, "afii57669"},
-    {0x05D6, "afii57670"},
-    {0x05D7, "afii57671"},
-    {0x05D8, "afii57672"},
-    {0x05D9, "afii57673"},
-    {0x05DA, "afii57674"},
-    {0x05DB, "afii57675"},
-    {0x05DC, "afii57676"},
-    {0x05DD, "afii57677"},
-    {0x05DE, "afii57678"},
-    {0x05DF, "afii57679"},
-    {0x05E0, "afii57680"},
-    {0x05E1, "afii57681"},
-    {0x05E2, "afii57682"},
-    {0x05E3, "afii57683"},
-    {0x05E4, "afii57684"},
-    {0x05E5, "afii57685"},
-    {0x05E6, "afii57686"},
-    {0x05E7, "afii57687"},
-    {0x05E8, "afii57688"},
-    {0x05E9, "afii57689"},
-    {0x05EA, "afii57690"},
-    {0x05F0, "afii57716"},
-    {0x05F1, "afii57717"},
-    {0x05F2, "afii57718"},
-    {0x060C, "afii57388"},
-    {0x061B, "afii57403"},
-    {0x061F, "afii57407"},
-    {0x0621, "afii57409"},
-    {0x0622, "afii57410"},
-    {0x0623, "afii57411"},
-    {0x0624, "afii57412"},
-    {0x0625, "afii57413"},
-    {0x0626, "afii57414"},
-    {0x0627, "afii57415"},
-    {0x0628, "afii57416"},
-    {0x0629, "afii57417"},
-    {0x062A, "afii57418"},
-    {0x062B, "afii57419"},
-    {0x062C, "afii57420"},
-    {0x062D, "afii57421"},
-    {0x062E, "afii57422"},
-    {0x062F, "afii57423"},
-    {0x0630, "afii57424"},
-    {0x0631, "afii57425"},
-    {0x0632, "afii57426"},
-    {0x0633, "afii57427"},
-    {0x0634, "afii57428"},
-    {0x0635, "afii57429"},
-    {0x0636, "afii57430"},
-    {0x0637, "afii57431"},
-    {0x0638, "afii57432"},
-    {0x0639, "afii57433"},
-    {0x063A, "afii57434"},
-    {0x0640, "afii57440"},
-    {0x0641, "afii57441"},
-    {0x0642, "afii57442"},
-    {0x0643, "afii57443"},
-    {0x0644, "afii57444"},
-    {0x0645, "afii57445"},
-    {0x0646, "afii57446"},
-    {0x0647, "afii57470"},
-    {0x0648, "afii57448"},
-    {0x0649, "afii57449"},
-    {0x064A, "afii57450"},
-    {0x064B, "afii57451"},
-    {0x064C, "afii57452"},
-    {0x064D, "afii57453"},
-    {0x064E, "afii57454"},
-    {0x064F, "afii57455"},
-    {0x0650, "afii57456"},
-    {0x0651, "afii57457"},
-    {0x0652, "afii57458"},
-    {0x0660, "afii57392"},
-    {0x0661, "afii57393"},
-    {0x0662, "afii57394"},
-    {0x0663, "afii57395"},
-    {0x0664, "afii57396"},
-    {0x0665, "afii57397"},
-    {0x0666, "afii57398"},
-    {0x0667, "afii57399"},
-    {0x0668, "afii57400"},
-    {0x0669, "afii57401"},
-    {0x066A, "afii57381"},
-    {0x066D, "afii63167"},
-    {0x0679, "afii57511"},
-    {0x067E, "afii57506"},
-    {0x0686, "afii57507"},
-    {0x0688, "afii57512"},
-    {0x0691, "afii57513"},
-    {0x0698, "afii57508"},
-    {0x06A4, "afii57505"},
-    {0x06AF, "afii57509"},
-    {0x06BA, "afii57514"},
-    {0x06D2, "afii57519"},
-    {0x06D5, "afii57534"},
-    {0x1E80, "Wgrave"},
-    {0x1E81, "wgrave"},
-    {0x1E82, "Wacute"},
-    {0x1E83, "wacute"},
-    {0x1E84, "Wdieresis"},
-    {0x1E85, "wdieresis"},
-    {0x1EF2, "Ygrave"},
-    {0x1EF3, "ygrave"},
-    {0x200C, "afii61664"},
-    {0x200D, "afii301"},
-    {0x200E, "afii299"},
-    {0x200F, "afii300"},
-    {0x2012, "figuredash"},
-    {0x2013, "endash"},
-    {0x2014, "emdash"},
-    {0x2015, "afii00208"},
-    {0x2017, "underscoredbl"},
-    {0x2018, "quoteleft"},
-    {0x2019, "quoteright"},
-    {0x201A, "quotesinglbase"},
-    {0x201B, "quotereversed"},
-    {0x201C, "quotedblleft"},
-    {0x201D, "quotedblright"},
-    {0x201E, "quotedblbase"},
-    {0x2020, "dagger"},
-    {0x2021, "daggerdbl"},
-    {0x2022, "bullet"},
-    {0x2024, "onedotenleader"},
-    {0x2025, "twodotenleader"},
-    {0x2026, "ellipsis"},
-    {0x202C, "afii61573"},
-    {0x202D, "afii61574"},
-    {0x202E, "afii61575"},
-    {0x2030, "perthousand"},
-    {0x2032, "minute"},
-    {0x2033, "second"},
-    {0x2039, "guilsinglleft"},
-    {0x203A, "guilsinglright"},
-    {0x203C, "exclamdbl"},
-    {0x2044, "fraction"},
-    {0x2070, "zerosuperior"},
-    {0x2074, "foursuperior"},
-    {0x2075, "fivesuperior"},
-    {0x2076, "sixsuperior"},
-    {0x2077, "sevensuperior"},
-    {0x2078, "eightsuperior"},
-    {0x2079, "ninesuperior"},
-    {0x207D, "parenleftsuperior"},
-    {0x207E, "parenrightsuperior"},
-    {0x207F, "nsuperior"},
-    {0x2080, "zeroinferior"},
-    {0x2081, "oneinferior"},
-    {0x2082, "twoinferior"},
-    {0x2083, "threeinferior"},
-    {0x2084, "fourinferior"},
-    {0x2085, "fiveinferior"},
-    {0x2086, "sixinferior"},
-    {0x2087, "seveninferior"},
-    {0x2088, "eightinferior"},
-    {0x2089, "nineinferior"},
-    {0x208D, "parenleftinferior"},
-    {0x208E, "parenrightinferior"},
-    {0x20A1, "colonmonetary"},
-    {0x20A3, "franc"},
-    {0x20A4, "lira"},
-    {0x20A7, "peseta"},
-    {0x20AA, "afii57636"},
-    {0x20AB, "dong"},
-    {0x20AC, "Euro"},
-    {0x2105, "afii61248"},
-    {0x2111, "Ifraktur"},
-    {0x2113, "afii61289"},
-    {0x2116, "afii61352"},
-    {0x2118, "weierstrass"},
-    {0x211C, "Rfraktur"},
-    {0x211E, "prescription"},
-    {0x2122, "trademark"},
-    {0x2126, "Omega"},
-    {0x212E, "estimated"},
-    {0x2135, "aleph"},
-    {0x2153, "onethird"},
-    {0x2154, "twothirds"},
-    {0x215B, "oneeighth"},
-    {0x215C, "threeeighths"},
-    {0x215D, "fiveeighths"},
-    {0x215E, "seveneighths"},
-    {0x2190, "arrowleft"},
-    {0x2191, "arrowup"},
-    {0x2192, "arrowright"},
-    {0x2193, "arrowdown"},
-    {0x2194, "arrowboth"},
-    {0x2195, "arrowupdn"},
-    {0x21A8, "arrowupdnbse"},
-    {0x21B5, "carriagereturn"},
-    {0x21D0, "arrowdblleft"},
-    {0x21D1, "arrowdblup"},
-    {0x21D2, "arrowdblright"},
-    {0x21D3, "arrowdbldown"},
-    {0x21D4, "arrowdblboth"},
-    {0x2200, "universal"},
-    {0x2202, "partialdiff"},
-    {0x2203, "existential"},
-    {0x2205, "emptyset"},
-    {0x2206, "Delta"},
-    {0x2207, "gradient"},
-    {0x2208, "element"},
-    {0x2209, "notelement"},
-    {0x220B, "suchthat"},
-    {0x220F, "product"},
-    {0x2211, "summation"},
-    {0x2212, "minus"},
-    {0x2215, "fraction"},
-    {0x2217, "asteriskmath"},
-    {0x2219, "periodcentered"},
-    {0x221A, "radical"},
-    {0x221D, "proportional"},
-    {0x221E, "infinity"},
-    {0x221F, "orthogonal"},
-    {0x2220, "angle"},
-    {0x2227, "logicaland"},
-    {0x2228, "logicalor"},
-    {0x2229, "intersection"},
-    {0x222A, "union"},
-    {0x222B, "integral"},
-    {0x2234, "therefore"},
-    {0x223C, "similar"},
-    {0x2245, "congruent"},
-    {0x2248, "approxequal"},
-    {0x2260, "notequal"},
-    {0x2261, "equivalence"},
-    {0x2264, "lessequal"},
-    {0x2265, "greaterequal"},
-    {0x2282, "propersubset"},
-    {0x2283, "propersuperset"},
-    {0x2284, "notsubset"},
-    {0x2286, "reflexsubset"},
-    {0x2287, "reflexsuperset"},
-    {0x2295, "circleplus"},
-    {0x2297, "circlemultiply"},
-    {0x22A5, "perpendicular"},
-    {0x22C5, "dotmath"},
-    {0x2302, "house"},
-    {0x2310, "revlogicalnot"},
-    {0x2320, "integraltp"},
-    {0x2321, "integralbt"},
-    {0x2329, "angleleft"},
-    {0x232A, "angleright"},
-    {0x2500, "SF100000"},
-    {0x2502, "SF110000"},
-    {0x250C, "SF010000"},
-    {0x2510, "SF030000"},
-    {0x2514, "SF020000"},
-    {0x2518, "SF040000"},
-    {0x251C, "SF080000"},
-    {0x2524, "SF090000"},
-    {0x252C, "SF060000"},
-    {0x2534, "SF070000"},
-    {0x253C, "SF050000"},
-    {0x2550, "SF430000"},
-    {0x2551, "SF240000"},
-    {0x2552, "SF510000"},
-    {0x2553, "SF520000"},
-    {0x2554, "SF390000"},
-    {0x2555, "SF220000"},
-    {0x2556, "SF210000"},
-    {0x2557, "SF250000"},
-    {0x2558, "SF500000"},
-    {0x2559, "SF490000"},
-    {0x255A, "SF380000"},
-    {0x255B, "SF280000"},
-    {0x255C, "SF270000"},
-    {0x255D, "SF260000"},
-    {0x255E, "SF360000"},
-    {0x255F, "SF370000"},
-    {0x2560, "SF420000"},
-    {0x2561, "SF190000"},
-    {0x2562, "SF200000"},
-    {0x2563, "SF230000"},
-    {0x2564, "SF470000"},
-    {0x2565, "SF480000"},
-    {0x2566, "SF410000"},
-    {0x2567, "SF450000"},
-    {0x2568, "SF460000"},
-    {0x2569, "SF400000"},
-    {0x256A, "SF540000"},
-    {0x256B, "SF530000"},
-    {0x256C, "SF440000"},
-    {0x2580, "upblock"},
-    {0x2584, "dnblock"},
-    {0x2588, "block"},
-    {0x258C, "lfblock"},
-    {0x2590, "rtblock"},
-    {0x2591, "ltshade"},
-    {0x2592, "shade"},
-    {0x2593, "dkshade"},
-    {0x25A0, "filledbox"},
-    {0x25A1, "H22073"},
-    {0x25AA, "H18543"},
-    {0x25AB, "H18551"},
-    {0x25AC, "filledrect"},
-    {0x25B2, "triagup"},
-    {0x25BA, "triagrt"},
-    {0x25BC, "triagdn"},
-    {0x25C4, "triaglf"},
-    {0x25CA, "lozenge"},
-    {0x25CB, "circle"},
-    {0x25CF, "H18533"},
-    {0x25D8, "invbullet"},
-    {0x25D9, "invcircle"},
-    {0x25E6, "openbullet"},
-    {0x263A, "smileface"},
-    {0x263B, "invsmileface"},
-    {0x263C, "sun"},
-    {0x2640, "female"},
-    {0x2642, "male"},
-    {0x2660, "spade"},
-    {0x2663, "club"},
-    {0x2665, "heart"},
-    {0x2666, "diamond"},
-    {0x266A, "musicalnote"},
-    {0x266B, "musicalnotedbl"},
-    {0xF6BE, "dotlessj"},
-    {0xF6BF, "LL"},
-    {0xF6C0, "ll"},
-    {0xF6C1, "Scedilla"},
-    {0xF6C2, "scedilla"},
-    {0xF6C3, "commaaccent"},
-    {0xF6C4, "afii10063"},
-    {0xF6C5, "afii10064"},
-    {0xF6C6, "afii10192"},
-    {0xF6C7, "afii10831"},
-    {0xF6C8, "afii10832"},
-    {0xF6C9, "Acute"},
-    {0xF6CA, "Caron"},
-    {0xF6CB, "Dieresis"},
-    {0xF6CC, "DieresisAcute"},
-    {0xF6CD, "DieresisGrave"},
-    {0xF6CE, "Grave"},
-    {0xF6CF, "Hungarumlaut"},
-    {0xF6D0, "Macron"},
-    {0xF6D1, "cyrBreve"},
-    {0xF6D2, "cyrFlex"},
-    {0xF6D3, "dblGrave"},
-    {0xF6D4, "cyrbreve"},
-    {0xF6D5, "cyrflex"},
-    {0xF6D6, "dblgrave"},
-    {0xF6D7, "dieresisacute"},
-    {0xF6D8, "dieresisgrave"},
-    {0xF6D9, "copyrightserif"},
-    {0xF6DA, "registerserif"},
-    {0xF6DB, "trademarkserif"},
-    {0xF6DC, "onefitted"},
-    {0xF6DD, "rupiah"},
-    {0xF6DE, "threequartersemdash"},
-    {0xF6DF, "centinferior"},
-    {0xF6E0, "centsuperior"},
-    {0xF6E1, "commainferior"},
-    {0xF6E2, "commasuperior"},
-    {0xF6E3, "dollarinferior"},
-    {0xF6E4, "dollarsuperior"},
-    {0xF6E5, "hypheninferior"},
-    {0xF6E6, "hyphensuperior"},
-    {0xF6E7, "periodinferior"},
-    {0xF6E8, "periodsuperior"},
-    {0xF6E9, "asuperior"},
-    {0xF6EA, "bsuperior"},
-    {0xF6EB, "dsuperior"},
-    {0xF6EC, "esuperior"},
-    {0xF6ED, "isuperior"},
-    {0xF6EE, "lsuperior"},
-    {0xF6EF, "msuperior"},
-    {0xF6F0, "osuperior"},
-    {0xF6F1, "rsuperior"},
-    {0xF6F2, "ssuperior"},
-    {0xF6F3, "tsuperior"},
-    {0xF6F4, "Brevesmall"},
-    {0xF6F5, "Caronsmall"},
-    {0xF6F6, "Circumflexsmall"},
-    {0xF6F7, "Dotaccentsmall"},
-    {0xF6F8, "Hungarumlautsmall"},
-    {0xF6F9, "Lslashsmall"},
-    {0xF6FA, "OEsmall"},
-    {0xF6FB, "Ogoneksmall"},
-    {0xF6FC, "Ringsmall"},
-    {0xF6FD, "Scaronsmall"},
-    {0xF6FE, "Tildesmall"},
-    {0xF6FF, "Zcaronsmall"},
-    {0xF721, "exclamsmall"},
-    {0xF724, "dollaroldstyle"},
-    {0xF726, "ampersandsmall"},
-    {0xF730, "zerooldstyle"},
-    {0xF731, "oneoldstyle"},
-    {0xF732, "twooldstyle"},
-    {0xF733, "threeoldstyle"},
-    {0xF734, "fouroldstyle"},
-    {0xF735, "fiveoldstyle"},
-    {0xF736, "sixoldstyle"},
-    {0xF737, "sevenoldstyle"},
-    {0xF738, "eightoldstyle"},
-    {0xF739, "nineoldstyle"},
-    {0xF73F, "questionsmall"},
-    {0xF760, "Gravesmall"},
-    {0xF761, "Asmall"},
-    {0xF762, "Bsmall"},
-    {0xF763, "Csmall"},
-    {0xF764, "Dsmall"},
-    {0xF765, "Esmall"},
-    {0xF766, "Fsmall"},
-    {0xF767, "Gsmall"},
-    {0xF768, "Hsmall"},
-    {0xF769, "Ismall"},
-    {0xF76A, "Jsmall"},
-    {0xF76B, "Ksmall"},
-    {0xF76C, "Lsmall"},
-    {0xF76D, "Msmall"},
-    {0xF76E, "Nsmall"},
-    {0xF76F, "Osmall"},
-    {0xF770, "Psmall"},
-    {0xF771, "Qsmall"},
-    {0xF772, "Rsmall"},
-    {0xF773, "Ssmall"},
-    {0xF774, "Tsmall"},
-    {0xF775, "Usmall"},
-    {0xF776, "Vsmall"},
-    {0xF777, "Wsmall"},
-    {0xF778, "Xsmall"},
-    {0xF779, "Ysmall"},
-    {0xF77A, "Zsmall"},
-    {0xF7A1, "exclamdownsmall"},
-    {0xF7A2, "centoldstyle"},
-    {0xF7A8, "Dieresissmall"},
-    {0xF7AF, "Macronsmall"},
-    {0xF7B4, "Acutesmall"},
-    {0xF7B8, "Cedillasmall"},
-    {0xF7BF, "questiondownsmall"},
-    {0xF7E0, "Agravesmall"},
-    {0xF7E1, "Aacutesmall"},
-    {0xF7E2, "Acircumflexsmall"},
-    {0xF7E3, "Atildesmall"},
-    {0xF7E4, "Adieresissmall"},
-    {0xF7E5, "Aringsmall"},
-    {0xF7E6, "AEsmall"},
-    {0xF7E7, "Ccedillasmall"},
-    {0xF7E8, "Egravesmall"},
-    {0xF7E9, "Eacutesmall"},
-    {0xF7EA, "Ecircumflexsmall"},
-    {0xF7EB, "Edieresissmall"},
-    {0xF7EC, "Igravesmall"},
-    {0xF7ED, "Iacutesmall"},
-    {0xF7EE, "Icircumflexsmall"},
-    {0xF7EF, "Idieresissmall"},
-    {0xF7F0, "Ethsmall"},
-    {0xF7F1, "Ntildesmall"},
-    {0xF7F2, "Ogravesmall"},
-    {0xF7F3, "Oacutesmall"},
-    {0xF7F4, "Ocircumflexsmall"},
-    {0xF7F5, "Otildesmall"},
-    {0xF7F6, "Odieresissmall"},
-    {0xF7F8, "Oslashsmall"},
-    {0xF7F9, "Ugravesmall"},
-    {0xF7FA, "Uacutesmall"},
-    {0xF7FB, "Ucircumflexsmall"},
-    {0xF7FC, "Udieresissmall"},
-    {0xF7FD, "Yacutesmall"},
-    {0xF7FE, "Thornsmall"},
-    {0xF7FF, "Ydieresissmall"},
-    {0xF8E5, "radicalex"},
-    {0xF8E6, "arrowvertex"},
-    {0xF8E7, "arrowhorizex"},
-    {0xF8E8, "registersans"},
-    {0xF8E9, "copyrightsans"},
-    {0xF8EA, "trademarksans"},
-    {0xF8EB, "parenlefttp"},
-    {0xF8EC, "parenleftex"},
-    {0xF8ED, "parenleftbt"},
-    {0xF8EE, "bracketlefttp"},
-    {0xF8EF, "bracketleftex"},
-    {0xF8F0, "bracketleftbt"},
-    {0xF8F1, "bracelefttp"},
-    {0xF8F2, "braceleftmid"},
-    {0xF8F3, "braceleftbt"},
-    {0xF8F4, "braceex"},
-    {0xF8F5, "integralex"},
-    {0xF8F6, "parenrighttp"},
-    {0xF8F7, "parenrightex"},
-    {0xF8F8, "parenrightbt"},
-    {0xF8F9, "bracketrighttp"},
-    {0xF8FA, "bracketrightex"},
-    {0xF8FB, "bracketrightbt"},
-    {0xF8FC, "bracerighttp"},
-    {0xF8FD, "bracerightmid"},
-    {0xF8FE, "bracerightbt"},
-    {0xFB00, "ff"},
-    {0xFB01, "fi"},
-    {0xFB02, "fl"},
-    {0xFB03, "ffi"},
-    {0xFB04, "ffl"},
-    {0xFB1F, "afii57705"},
-    {0xFB2A, "afii57694"},
-    {0xFB2B, "afii57695"},
-    {0xFB35, "afii57723"},
-    {0xFB4B, "afii57700"},
-    {0xFFFF, nullptr}
-};
+    struct AglMapping
+    {
+        AglMapType Type;                ///< The mapping may belong to multiple maps
+        unsigned char CodePointCount;
+        unsigned short Code;            ///< The unicode code point of the character, or the index in the ligatures lists
+    };
 
-PdfDifferenceList::PdfDifferenceList() { }
+    struct AglLigatureInfo
+    {
+        AglLigatureInfo(const PdfName& name, codepointview codePoints)
+            : Name(&name), CodePoints(codePoints) {
+        }
 
-void PdfDifferenceList::AddDifference(unsigned char code, char32_t codePoint)
-{
-    this->addDifference(code, codePoint, PdfDifferenceEncoding::CodePointToName(codePoint));
+        const PdfName* Name;
+        CodePointSpan CodePoints;
+    };
 }
 
-void PdfDifferenceList::AddDifference(unsigned char code, const PdfName& name, bool explicitNames)
+static unique_ptr<const PdfNameHashMap<AglMapping>> s_aglMap;
+static unique_ptr<const vector<AglLigatureInfo>> s_ligatures;
+
+static const PdfName* getFromReverseAGLFNMap(unsigned short);
+static void ensureAglMapInitialized();
+static CodePointSpan fetchCodePoints(const AglMapping& mapping);
+static bool tryGetCodePointsFromCharNameLigatures(string_view charName, size_t componentDelim, CodePointSpan& codepoints);
+static bool tryGetCodePointsFromUnicodeHexLigatures(string_view charName, CodePointSpan& codepoints);
+static bool tryFetchCodePoints(string_view charName, CodePointSpan& codepoints, const PdfName*& actualName);
+
+ENABLE_BITMASK_OPERATORS(AglMapType);
+
+PdfDifferenceMap::PdfDifferenceMap() { }
+
+void PdfDifferenceMap::AddDifference(unsigned char code, char32_t codePoint)
+{
+    const PdfName* found;
+    if (codePoint > 0xFFFFU || (found = getFromReverseAGLFNMap((unsigned short)codePoint)) == nullptr)
+        addDifference(code, codepointview(&codePoint, 1), PdfName(utls::Format("u{:04X}", (uint32_t)codePoint)));
+    else
+        addDifference(code, codepointview(&codePoint, 1), *found);
+}
+
+void PdfDifferenceMap::AddDifference(unsigned char code, const codepointview& codepoints)
+{
+    if (codepoints.size() == 0)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidInput, "Invalid empty code point span");
+
+    if (codepoints.size() == 1)
+    {
+        AddDifference(code, codepoints[0]);
+        return;
+    }
+
+    string composed;
+    unsigned i = 0;
+    const PdfName* found;
+    while (true)
+    {
+        if (codepoints[i] > 0xFFFFU || (found = getFromReverseAGLFNMap((unsigned short)codepoints[i])) == nullptr)
+            composed.append(utls::Format("u{:04X}", (uint32_t)codepoints[i]));
+        else
+            composed.append(*found);
+
+        if (++i == codepoints.size())
+            break;
+
+        // "Split the remaining string into a sequence of components, using underscore (U+005F LOW LINE) as the delimiter"
+        composed.push_back('_');
+    }
+
+    addDifference(code, codepoints, composed);
+}
+
+void PdfDifferenceMap::AddDifference(unsigned char code, const string_view& name)
 {
     // In type3 fonts, glyph names are explicit keys from the font's CharProcs
-    // dictionary, therefore they have no meaning.
-    // By setting unicodeValue to nCode, we keep PdfEncodingDifference::Contains
-    // from calling PdfDifferenceEncoding::NameToUnicodeID, which would return 0
-    // after looking it up in the unicode tables. This allows us, provided the
-    // font's encoding is unicode-compatible, to preserve the characters' codes
-    // in the process. This seems to be Adobe Reader's behaviour as well.
-    if (explicitNames)
-        addDifference(code, code, name);
+    // dictionary, therefore they have no meaning
+    CodePointSpan codepoints;
+    const PdfName* actualName;
+    if (PdfDifferenceEncoding::TryGetCodePointsFromCharName(name, codepoints, actualName))
+    {
+        addDifference(code, codepoints, actualName == nullptr ? PdfName(name) : *actualName);
+    }
     else
-        addDifference(code, PdfDifferenceEncoding::NameToCodePoint(name), name);
+    {
+        char32_t cp = code;
+        addDifference(code, codepointview(&cp, 1), name);
+    }
 }
 
-void PdfDifferenceList::addDifference(unsigned char code, char32_t codePoint, const PdfName& name)
+void PdfDifferenceMap::addDifference(unsigned char code, const codepointview& codepoints, const PdfName& name)
 {
-    Difference diff;
+    PdfDifferenceMapping diff;
     diff.Code = code;
     diff.Name = name;
-    diff.MappedCodePoint = codePoint;
+    diff.CodePoints = codepoints;
 
-    pair<iterator, iterator> it =
-        std::equal_range(m_differences.begin(), m_differences.end(), diff, DifferenceComparatorPredicate());
+    auto it = std::equal_range(m_differences.begin(), m_differences.end(),
+        diff, DifferenceComparatorPredicate());
 
     if (it.first != it.second)
     {
@@ -2426,37 +140,33 @@ void PdfDifferenceList::addDifference(unsigned char code, char32_t codePoint, co
     }
 }
 
-bool PdfDifferenceList::TryGetMappedName(unsigned char code, const PdfName*& name) const
+bool PdfDifferenceMap::TryGetMappedName(unsigned char code, const PdfName*& name) const
 {
-    char32_t codePoint;
-    return const_cast<PdfDifferenceList&>(*this).contains(code, name, codePoint);
+    CodePointSpan codePoints;
+    return TryGetMappedName(code, name, codePoints);
 }
 
-bool PdfDifferenceList::TryGetMappedName(unsigned char code, const PdfName*& name, char32_t& codePoint) const
+bool PdfDifferenceMap::TryGetMappedName(unsigned char code, const PdfName*& name, CodePointSpan& codePoints) const
 {
-    return const_cast<PdfDifferenceList&>(*this).contains(code, name, codePoint);
-}
-
-bool PdfDifferenceList::contains(unsigned char code, const PdfName*& name, char32_t& codePoint)
-{
-    Difference diff;
+    PdfDifferenceMapping diff;
     diff.Code = code;
 
-    pair<iterator, iterator> it =
-        std::equal_range(m_differences.begin(), m_differences.end(),
-            diff, DifferenceComparatorPredicate());
+    auto it = std::equal_range(m_differences.begin(), m_differences.end(),
+        diff, DifferenceComparatorPredicate());
 
     if (it.first != it.second)
     {
         name = &it.first->Name;
-        codePoint = it.first->MappedCodePoint;
+        codePoints = it.first->CodePoints;
         return true;
     }
 
+    name = nullptr;
+    codePoints = CodePointSpan();
     return false;
 }
 
-void PdfDifferenceList::ToArray(PdfArray& arr) const
+void PdfDifferenceMap::ToArray(PdfArray& arr) const
 {
     int64_t lastCode = -2;
     arr.Clear();
@@ -2477,77 +187,112 @@ void PdfDifferenceList::ToArray(PdfArray& arr) const
     }
 }
 
-size_t PdfDifferenceList::GetCount() const
+unsigned PdfDifferenceMap::GetCount() const
 {
-    return m_differences.size();
+    return (unsigned)m_differences.size();
 }
 
-PdfDifferenceEncoding::PdfDifferenceEncoding(const PdfDifferenceList& difference,
-    const PdfEncodingMapConstPtr& baseEncoding) :
-    PdfEncodingMapOneByte({ 1, 1, PdfCharCode(0), PdfCharCode(0xFF) }),
-    m_differences(difference),
-    m_baseEncoding(baseEncoding),
-    m_reverseMapBuilt(false)
+PdfDifferenceEncoding::PdfDifferenceEncoding(PdfEncodingMapConstPtr baseEncoding,
+    PdfDifferenceMap differences) :
+    PdfEncodingMapSimple({ 1, 1, PdfCharCode(0), PdfCharCode(0xFF) }),
+    m_baseEncoding(std::move(baseEncoding)),
+    m_differences(std::move(differences)),
+    m_reverseMap(nullptr)
 {
-    if (baseEncoding == nullptr)
+    // CHECK-ME: Validate base encoding
+    if (m_baseEncoding == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Base encoding must be non null");
 }
 
-unique_ptr<PdfDifferenceEncoding> PdfDifferenceEncoding::Create(
-    const PdfObject& obj, const PdfFontMetrics& metrics)
+PdfDifferenceEncoding::~PdfDifferenceEncoding()
 {
-    bool explicitNames = false;
-    if (metrics.GetFontFileType() == PdfFontFileType::Type3)
-        explicitNames = true;
+    PoDoFo::DeleteNodeReverseMap(m_reverseMap);
+}
+
+unique_ptr<PdfDifferenceEncoding> PdfDifferenceEncoding::CreateFromObject(const PdfObject& obj, const PdfFontMetrics& metrics)
+{
+    unique_ptr<PdfDifferenceEncoding> ret;
+    if (!TryCreateFromObject(obj, metrics, ret))
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidFontData, "Unable to parse a valid difference encoding");
+
+    return ret;
+}
+
+bool PdfDifferenceEncoding::TryCreateFromObject(const PdfObject& obj,
+    const PdfFontMetrics& metrics, std::unique_ptr<PdfDifferenceEncoding>& encoding)
+{
+    ensureAglMapInitialized();
+
+    const PdfDictionary* dict;
+    if (!obj.TryGetDictionary(dict))
+    {
+        encoding.reset();
+        return false;
+    }
 
     // See Table 5.11 PdfRefence 1.7.
     PdfEncodingMapConstPtr baseEncoding;
-    auto baseEncodingObj = obj.GetDictionary().FindKey("BaseEncoding");
+    auto baseEncodingObj = dict->FindKey("BaseEncoding");
     if (baseEncodingObj != nullptr)
     {
         const PdfName& baseEncodingName = baseEncodingObj->GetName();
         if (baseEncodingName == "WinAnsiEncoding")
-            baseEncoding = PdfEncodingMapFactory::WinAnsiEncodingInstance();
+            baseEncoding = PdfEncodingMapFactory::GetWinAnsiEncodingInstancePtr();
         else if (baseEncodingName == "MacRomanEncoding")
-            baseEncoding = PdfEncodingMapFactory::MacRomanEncodingInstance();
+            baseEncoding = PdfEncodingMapFactory::GetMacRomanEncodingInstancePtr();
         else if (baseEncodingName == "MacExpertEncoding")
-            baseEncoding = PdfEncodingMapFactory::MacExpertEncodingInstance();
+            baseEncoding = PdfEncodingMapFactory::GetMacExpertEncodingInstancePtr();
         else if (baseEncodingName == "StandardEncoding")
-            baseEncoding = PdfEncodingMapFactory::StandardEncodingInstance();
+            baseEncoding = PdfEncodingMapFactory::GetStandardEncodingInstancePtr();
         else
-            PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidFontData, "Invalid /BaseEncoding {}", baseEncodingName.GetString());;
+        {
+            PoDoFo::LogMessage(PdfLogSeverity::Warning, "Invalid /BaseEncoding {}", baseEncodingName.GetString());
+            encoding.reset();
+            return false;
+        }
     }
 
-    PdfEncodingMapConstPtr implicitEncoding;
     if (baseEncoding == nullptr)
     {
-        if (metrics.TryGetImplicitEncoding(implicitEncoding))
-            baseEncoding = implicitEncoding;
-        else // Assume StandardEncoding in case nothing else works
-            baseEncoding = PdfEncodingMapFactory::StandardEncodingInstance();
+        baseEncoding = metrics.GetDefaultEncoding();
+        if (baseEncoding == nullptr)
+        {
+            // Assume StandardEncoding in case nothing else works
+            baseEncoding = PdfEncodingMapFactory::GetStandardEncodingInstancePtr();
+        }
     }
 
     // Read the differences key
-    PdfDifferenceList difference;
-    if (obj.GetDictionary().HasKey("Differences"))
+    PdfDifferenceMap difference;
+    auto differencesObj = dict->FindKey("Differences");
+    if (differencesObj != nullptr)
     {
-        auto& differences = obj.GetDictionary().MustFindKey("Differences").GetArray();
+        auto& differences = differencesObj->GetArray();
         int64_t curCode = -1;
-        for (auto& diff : differences)
+        for (auto diff : differences.GetIndirectIterator())
         {
-            if (diff.IsNumber())
+            if (diff->IsNumber())
             {
-                curCode = diff.GetNumber();
+                curCode = diff->GetNumber();
             }
-            else if (diff.IsName())
+            else if (diff->IsName())
             {
-                difference.AddDifference(static_cast<unsigned char>(curCode), diff.GetName(), explicitNames);
+                difference.AddDifference(static_cast<unsigned char>(curCode), diff->GetName());
                 curCode++;
             }
         }
     }
 
-    return unique_ptr<PdfDifferenceEncoding>(new PdfDifferenceEncoding(difference, baseEncoding));
+    // CHECK-ME: should we verify it actually have a /Differences?
+
+    encoding.reset(new PdfDifferenceEncoding(baseEncoding, std::move(difference)));
+    return true;
+}
+
+void PdfDifferenceEncoding::GetBaseEncoding(const PdfEncodingMap*& baseEncoding, const PdfDifferenceMap*& differences) const
+{
+    baseEncoding = m_baseEncoding.get();
+    differences = &m_differences;
 }
 
 void PdfDifferenceEncoding::getExportObject(PdfIndirectObjectList& objects, PdfName& name, PdfObject*& obj) const
@@ -2566,67 +311,67 @@ void PdfDifferenceEncoding::getExportObject(PdfIndirectObjectList& objects, PdfN
                 "Unexpected non null base export object at this stage");
         }
 
-        dict.AddKey("BaseEncoding", baseExportName);
+        dict.AddKey("BaseEncoding"_n, baseExportName);
     }
 
     if (m_differences.GetCount() != 0)
     {
         PdfArray differences;
         m_differences.ToArray(differences);
-        dict.AddKey("Differences", differences);
+        dict.AddKey("Differences"_n, differences);
     }
 }
 
 bool PdfDifferenceEncoding::tryGetCharCode(char32_t codePoint, PdfCharCode& codeUnit) const
 {
     const_cast<PdfDifferenceEncoding&>(*this).buildReverseMap();
-    auto found = m_reverseMap.find(codePoint);
-    if (found == m_reverseMap.end())
-    {
-        codeUnit = { };
-        return false;
-    }
-
-    codeUnit = PdfCharCode(found->second);
-    return true;
+    return PoDoFo::TryGetCodeReverseMap(m_reverseMap, codePoint, codeUnit);
 }
 
-bool PdfDifferenceEncoding::tryGetCodePoints(const PdfCharCode& codeUnit, vector<char32_t>& codePoints) const
+bool PdfDifferenceEncoding::tryGetCharCodeSpan(const unicodeview& codePoints, PdfCharCode& codeUnit) const
 {
+    const_cast<PdfDifferenceEncoding&>(*this).buildReverseMap();
+    return PoDoFo::TryGetCodeReverseMap(m_reverseMap, codePoints, codeUnit);
+}
+
+bool PdfDifferenceEncoding::tryGetNextCharCode(string_view::iterator& it, const string_view::iterator& end, PdfCharCode& codeUnit) const
+{
+    const_cast<PdfDifferenceEncoding&>(*this).buildReverseMap();
+    return PoDoFo::TryGetCodeReverseMap(m_reverseMap, it, end, codeUnit);
+}
+
+bool PdfDifferenceEncoding::tryGetCodePoints(const PdfCharCode& codeUnit, const unsigned* cidId, CodePointSpan& codePoints) const
+{
+    (void)cidId;
     if (codeUnit.Code >= 256)
         return false;
 
     const PdfName* name;
-    char32_t codePoint;
-    if (m_differences.TryGetMappedName((unsigned char)codeUnit.Code, name, codePoint))
-    {
-        codePoints.push_back(codePoint);
+    if (m_differences.TryGetMappedName((unsigned char)codeUnit.Code, name, codePoints))
         return true;
-    }
-    else
-    {
-        return m_baseEncoding->TryGetCodePoints(codeUnit, codePoints);
-    }
+
+    return m_baseEncoding->TryGetCodePoints(codeUnit, codePoints);
 }
 
 void PdfDifferenceEncoding::buildReverseMap()
 {
-    if (m_reverseMapBuilt)
+    if (m_reverseMap != nullptr)
         return;
 
     auto& limits = m_baseEncoding->GetLimits();
-    vector<char32_t> codePoints;
-    const PdfName* name;
 
-    for (unsigned code = limits.FirstChar.Code, last = limits.LastChar.Code; code <= last; code++)
+    // Iterate all the codes of the encoding
+    const PdfName* name;
+    CodePointSpan codePoints;
+    // NOTE: It's safe to assume the base encoding is a one byte encoding
+    unsigned code = std::min(limits.FirstChar.Code, 0xFFU);
+    unsigned last = std::min(limits.LastChar.Code, 0xFFU);
+    for (; code <= last; code++)
     {
-        // Iterate all the codes of the encoding. NOTE: It's safe to assume
-        // the base encoding is a one byte encoding
-        codePoints.resize(1);
-        if (m_differences.TryGetMappedName((unsigned char)code, name, codePoints[0]))
+        if (m_differences.TryGetMappedName((unsigned char)code, name, codePoints))
         {
             // If there's a difference, use that instead
-            m_reverseMap[codePoints[0]] = (unsigned char)code;
+            PoDoFo::PushMappingReverseMap(m_reverseMap, codePoints, PdfCharCode((unsigned char)code, 1));
             continue;
         }
 
@@ -2638,59 +383,5990 @@ void PdfDifferenceEncoding::buildReverseMap()
         }
 
         // NOTE: It's safe to assume the base encoding maps to single code point
-        m_reverseMap[codePoints[0]] = (unsigned char)code;
+        PoDoFo::PushMappingReverseMap(m_reverseMap, codePoints, PdfCharCode((unsigned char)code, 1));
     }
-
-    m_reverseMapBuilt = true;
 }
 
-char32_t PdfDifferenceEncoding::NameToCodePoint(const PdfName& name)
+bool PdfDifferenceEncoding::TryGetCodePointsFromCharName(const string_view& name, CodePointSpan& codepoints)
 {
-    return NameToCodePoint((string_view)name.GetString());
+    ensureAglMapInitialized();
+    const PdfName* actualName;
+    return TryGetCodePointsFromCharName(name, codepoints, actualName);
 }
 
-char32_t PdfDifferenceEncoding::NameToCodePoint(const string_view& name)
+bool PdfDifferenceEncoding::TryGetCodePointsFromCharName(string_view charName, CodePointSpan& codepoints, const PdfName*& actualName)
 {
-    for (unsigned i = 0; nameToUnicodeTab[i].name != nullptr; i++)
+    PODOFO_INVARIANT(s_aglMap != nullptr);
+
+    // https://github.com/adobe-type-tools/agl-specification
+    size_t pos = charName.find('.');
+    if (pos != string_view::npos)
     {
-        if (nameToUnicodeTab[i].name == name)
-            return nameToUnicodeTab[i].u;
+        // "Drop all the characters from the glyph name starting with the first occurrence of a period (U+002E FULL STOP), if any."
+        charName = charName.substr(pos + 1);
     }
 
-    // if we get here, then we might be looking up an undefined codepoint
-    // so try looking for our special format..
-    if (name.substr(0, 3) == "uni")
+    pos = charName.find('_');
+    if (pos != string_view::npos)
     {
-        auto code = name.substr(3);
-        // force base16 IF it's 4 characters line
-        unsigned val;
-        if (std::from_chars(code.data(), name.data() + name.length(), val, code.length() == 4 ? 16 : 10).ec != std::errc())
-            PODOFO_RAISE_ERROR_INFO(PdfErrorCode::NoNumber, "Could not read number");
-
-        return (char32_t)val;
+        // "Split the remaining string into a sequence of components, using underscore (U+005F LOW LINE) as the delimiter"
+        actualName = nullptr;
+        return tryGetCodePointsFromCharNameLigatures(charName, pos, codepoints);
     }
 
-    return U'\0';
+    return tryFetchCodePoints(charName, codepoints, actualName);
 }
 
-PdfName PdfDifferenceEncoding::CodePointToName(char32_t inCodePoint)
+// "Split the remaining string into a sequence of components, using underscore (U+005F LOW LINE) as the delimiter"
+bool tryGetCodePointsFromCharNameLigatures(string_view charName, size_t componentDelim, CodePointSpan& codepoints)
 {
-    for (unsigned i = 0; UnicodeToNameTab[i].name; i++)
+    PODOFO_INVARIANT(componentDelim != string_view::npos);
+    vector<codepoint> ret;
+    string_view component;
+    CodePointSpan temp;
+    const PdfName* discard;
+    while (true)
     {
-        if (UnicodeToNameTab[i].u == inCodePoint)
-            return PdfName(UnicodeToNameTab[i].name);
+        component = charName.substr(0, componentDelim);
+        if (!tryFetchCodePoints(component, temp, discard))
+        {
+            // Unconditionally fail if the component is not found 
+            codepoints = CodePointSpan();
+            return false;
+        }
+
+        ret.push_back(*temp);
+        if (componentDelim == string_view::npos)
+            break;
+
+        charName = charName.substr(componentDelim + 1);
+        componentDelim = charName.find('_');
     }
 
-    // if we can't find in the canonical list, look in the complete list
-    for (unsigned i = 0; nameToUnicodeTab[i].name; i++)
+    codepoints = CodePointSpan(ret);
+    return true;
+}
+
+bool tryFetchCodePoints(string_view charName, CodePointSpan& codepoints, const PdfName*& actualName)
+{
+    if (charName.size() == 0)
     {
-        if (nameToUnicodeTab[i].u == inCodePoint)
-            return PdfName(nameToUnicodeTab[i].name);
+    Fail:
+        codepoints = CodePointSpan();
+        return false;
     }
 
-    // if we get here, then we are looking up an undefined codepoint
-    // so we'll just give it an arbitrary name..
-    string buffer;
-    utls::FormatTo(buffer, "uni{:04x}", (unsigned)inCodePoint);
-    return PdfName(buffer);
+    // "Otherwise, if the component is in AGL, then map it to the corresponding character in that list"
+    auto found = s_aglMap->find(charName);
+    if (found != s_aglMap->end())
+    {
+        codepoints = fetchCodePoints(found->second);
+        actualName = &found->first;
+        return true;
+    }
+
+    actualName = nullptr;
+    if (charName.size() > 3 && charName[0] == 'u' && charName[1] == 'n' && charName[2] == 'i')
+    {
+        // "Otherwise, if the component is of the form ‘uni’ (U+0075, U+006E, and U+0069)
+        // followed by a sequence of uppercase hexadecimal digits (0–9 and A–F, meaning
+        // U+0030 through U+0039 and U+0041 through U+0046), if the length of that
+        // sequence is a multiple of four, and if each group of four digits represents
+        // a value in the ranges 0000 through D7FF or E000 through FFFF, then interpret
+        // each as a Unicode scalar value and map the component to the string made of
+        // those scalar values. Note that the range and digit-length restrictions mean
+        // that the ‘uni’ glyph name prefix can be used only with UVs in the Basic
+        // Multilingual Plane (BMP)"
+
+        charName = charName.substr(3);
+        if (charName.length() % 4 == 0)
+            return tryGetCodePointsFromUnicodeHexLigatures(charName, codepoints);
+
+        uint32_t val;
+        if (!utls::TryParse(charName, val))
+            goto Fail;
+
+        codepoints = CodePointSpan(val);
+        return true;
+    }
+    else if (charName.size() > 1 && charName[0] == 'u')
+    {
+        // "Otherwise, if the component is of the form ‘u’ (U+0075) followed by a sequence
+        // of four to six uppercase hexadecimal digits (0–9 and A–F, meaning U+0030 through
+        // U+0039 and U+0041 through U+0046), and those digits represents a value in the
+        // ranges 0000 through D7FF or E000 through 10FFFF, then interpret it as a Unicode
+        // scalar value and map the component to the string made of this scalar value"
+        charName = charName.substr(1);
+        uint32_t val;
+        if (!utls::TryParse(charName, val, 16))
+            goto Fail;
+
+        codepoints = CodePointSpan(val);
+        return true;
+    }
+
+    // "Otherwise, map the component to an empty string"
+    goto Fail;
+}
+
+bool tryGetCodePointsFromUnicodeHexLigatures(string_view charName, CodePointSpan& codepoints)
+{
+    PODOFO_INVARIANT(charName.size() != 0 && charName.size() % 4 == 0);
+    vector<codepoint> ret;
+    string_view current;
+    uint32_t val;
+    while (true)
+    {
+        current = charName.substr(0, 4);
+        if (!utls::TryParse(current, val, 16))
+        {
+            // Unconditionally fail if the component is not valid 
+            codepoints = CodePointSpan();
+            return false;
+        }
+
+        ret.push_back(val);
+        if (charName.size() == 4)
+            break;
+
+        charName = charName.substr(4);
+    }
+
+    codepoints = CodePointSpan(ret);
+    return true;
+}
+
+CodePointSpan fetchCodePoints(const AglMapping& mapping)
+{
+    PODOFO_INVARIANT(mapping.CodePointCount != 0);
+    if (mapping.CodePointCount > 1)
+        return (*s_ligatures)[mapping.Code].CodePoints;
+    else
+        return CodePointSpan(mapping.Code);
+}
+
+static string_view s_aglNames[] = {
+    "A"sv,
+    "AE"sv,
+    "AEacute"sv,
+    "AEmacron"sv,
+    "AEsmall"sv,
+    "Aacute"sv,
+    "Aacutesmall"sv,
+    "Abreve"sv,
+    "Abreveacute"sv,
+    "Abrevecyrillic"sv,
+    "Abrevedotbelow"sv,
+    "Abrevegrave"sv,
+    "Abrevehookabove"sv,
+    "Abrevetilde"sv,
+    "Acaron"sv,
+    "Acircle"sv,
+    "Acircumflex"sv,
+    "Acircumflexacute"sv,
+    "Acircumflexdotbelow"sv,
+    "Acircumflexgrave"sv,
+    "Acircumflexhookabove"sv,
+    "Acircumflexsmall"sv,
+    "Acircumflextilde"sv,
+    "Acute"sv,
+    "Acutesmall"sv,
+    "Acyrillic"sv,
+    "Adblgrave"sv,
+    "Adieresis"sv,
+    "Adieresiscyrillic"sv,
+    "Adieresismacron"sv,
+    "Adieresissmall"sv,
+    "Adotbelow"sv,
+    "Adotmacron"sv,
+    "Agrave"sv,
+    "Agravesmall"sv,
+    "Ahookabove"sv,
+    "Aiecyrillic"sv,
+    "Ainvertedbreve"sv,
+    "Alpha"sv,
+    "Alphatonos"sv,
+    "Amacron"sv,
+    "Amonospace"sv,
+    "Aogonek"sv,
+    "Aring"sv,
+    "Aringacute"sv,
+    "Aringbelow"sv,
+    "Aringsmall"sv,
+    "Asmall"sv,
+    "Atilde"sv,
+    "Atildesmall"sv,
+    "Aybarmenian"sv,
+    "B"sv,
+    "Bcircle"sv,
+    "Bdotaccent"sv,
+    "Bdotbelow"sv,
+    "Becyrillic"sv,
+    "Benarmenian"sv,
+    "Beta"sv,
+    "Bhook"sv,
+    "Blinebelow"sv,
+    "Bmonospace"sv,
+    "Brevesmall"sv,
+    "Bsmall"sv,
+    "Btopbar"sv,
+    "C"sv,
+    "Caarmenian"sv,
+    "Cacute"sv,
+    "Caron"sv,
+    "Caronsmall"sv,
+    "Ccaron"sv,
+    "Ccedilla"sv,
+    "Ccedillaacute"sv,
+    "Ccedillasmall"sv,
+    "Ccircle"sv,
+    "Ccircumflex"sv,
+    "Cdot"sv,
+    "Cdotaccent"sv,
+    "Cedillasmall"sv,
+    "Chaarmenian"sv,
+    "Cheabkhasiancyrillic"sv,
+    "Checyrillic"sv,
+    "Chedescenderabkhasiancyrillic"sv,
+    "Chedescendercyrillic"sv,
+    "Chedieresiscyrillic"sv,
+    "Cheharmenian"sv,
+    "Chekhakassiancyrillic"sv,
+    "Cheverticalstrokecyrillic"sv,
+    "Chi"sv,
+    "Chook"sv,
+    "Circumflexsmall"sv,
+    "Cmonospace"sv,
+    "Coarmenian"sv,
+    "Csmall"sv,
+    "D"sv,
+    "DZ"sv,
+    "DZcaron"sv,
+    "Daarmenian"sv,
+    "Dafrican"sv,
+    "Dcaron"sv,
+    "Dcedilla"sv,
+    "Dcircle"sv,
+    "Dcircumflexbelow"sv,
+    "Dcroat"sv,
+    "Ddotaccent"sv,
+    "Ddotbelow"sv,
+    "Decyrillic"sv,
+    "Deicoptic"sv,
+    "Delta"sv,
+    "Deltagreek"sv,
+    "Dhook"sv,
+    "Dieresis"sv,
+    "DieresisAcute"sv,
+    "DieresisGrave"sv,
+    "Dieresissmall"sv,
+    "Digammagreek"sv,
+    "Djecyrillic"sv,
+    "Dlinebelow"sv,
+    "Dmonospace"sv,
+    "Dotaccentsmall"sv,
+    "Dslash"sv,
+    "Dsmall"sv,
+    "Dtopbar"sv,
+    "Dz"sv,
+    "Dzcaron"sv,
+    "Dzeabkhasiancyrillic"sv,
+    "Dzecyrillic"sv,
+    "Dzhecyrillic"sv,
+    "E"sv,
+    "Eacute"sv,
+    "Eacutesmall"sv,
+    "Ebreve"sv,
+    "Ecaron"sv,
+    "Ecedillabreve"sv,
+    "Echarmenian"sv,
+    "Ecircle"sv,
+    "Ecircumflex"sv,
+    "Ecircumflexacute"sv,
+    "Ecircumflexbelow"sv,
+    "Ecircumflexdotbelow"sv,
+    "Ecircumflexgrave"sv,
+    "Ecircumflexhookabove"sv,
+    "Ecircumflexsmall"sv,
+    "Ecircumflextilde"sv,
+    "Ecyrillic"sv,
+    "Edblgrave"sv,
+    "Edieresis"sv,
+    "Edieresissmall"sv,
+    "Edot"sv,
+    "Edotaccent"sv,
+    "Edotbelow"sv,
+    "Efcyrillic"sv,
+    "Egrave"sv,
+    "Egravesmall"sv,
+    "Eharmenian"sv,
+    "Ehookabove"sv,
+    "Eightroman"sv,
+    "Einvertedbreve"sv,
+    "Eiotifiedcyrillic"sv,
+    "Elcyrillic"sv,
+    "Elevenroman"sv,
+    "Emacron"sv,
+    "Emacronacute"sv,
+    "Emacrongrave"sv,
+    "Emcyrillic"sv,
+    "Emonospace"sv,
+    "Encyrillic"sv,
+    "Endescendercyrillic"sv,
+    "Eng"sv,
+    "Enghecyrillic"sv,
+    "Enhookcyrillic"sv,
+    "Eogonek"sv,
+    "Eopen"sv,
+    "Epsilon"sv,
+    "Epsilontonos"sv,
+    "Ercyrillic"sv,
+    "Ereversed"sv,
+    "Ereversedcyrillic"sv,
+    "Escyrillic"sv,
+    "Esdescendercyrillic"sv,
+    "Esh"sv,
+    "Esmall"sv,
+    "Eta"sv,
+    "Etarmenian"sv,
+    "Etatonos"sv,
+    "Eth"sv,
+    "Ethsmall"sv,
+    "Etilde"sv,
+    "Etildebelow"sv,
+    "Euro"sv,
+    "Ezh"sv,
+    "Ezhcaron"sv,
+    "Ezhreversed"sv,
+    "F"sv,
+    "Fcircle"sv,
+    "Fdotaccent"sv,
+    "Feharmenian"sv,
+    "Feicoptic"sv,
+    "Fhook"sv,
+    "Fitacyrillic"sv,
+    "Fiveroman"sv,
+    "Fmonospace"sv,
+    "Fourroman"sv,
+    "Fsmall"sv,
+    "G"sv,
+    "GBsquare"sv,
+    "Gacute"sv,
+    "Gamma"sv,
+    "Gammaafrican"sv,
+    "Gangiacoptic"sv,
+    "Gbreve"sv,
+    "Gcaron"sv,
+    "Gcedilla"sv,
+    "Gcircle"sv,
+    "Gcircumflex"sv,
+    "Gcommaaccent"sv,
+    "Gdot"sv,
+    "Gdotaccent"sv,
+    "Gecyrillic"sv,
+    "Ghadarmenian"sv,
+    "Ghemiddlehookcyrillic"sv,
+    "Ghestrokecyrillic"sv,
+    "Gheupturncyrillic"sv,
+    "Ghook"sv,
+    "Gimarmenian"sv,
+    "Gjecyrillic"sv,
+    "Gmacron"sv,
+    "Gmonospace"sv,
+    "Grave"sv,
+    "Gravesmall"sv,
+    "Gsmall"sv,
+    "Gsmallhook"sv,
+    "Gstroke"sv,
+    "H"sv,
+    "H18533"sv,
+    "H18543"sv,
+    "H18551"sv,
+    "H22073"sv,
+    "HPsquare"sv,
+    "Haabkhasiancyrillic"sv,
+    "Hadescendercyrillic"sv,
+    "Hardsigncyrillic"sv,
+    "Hbar"sv,
+    "Hbrevebelow"sv,
+    "Hcedilla"sv,
+    "Hcircle"sv,
+    "Hcircumflex"sv,
+    "Hdieresis"sv,
+    "Hdotaccent"sv,
+    "Hdotbelow"sv,
+    "Hmonospace"sv,
+    "Hoarmenian"sv,
+    "Horicoptic"sv,
+    "Hsmall"sv,
+    "Hungarumlaut"sv,
+    "Hungarumlautsmall"sv,
+    "Hzsquare"sv,
+    "I"sv,
+    "IAcyrillic"sv,
+    "IJ"sv,
+    "IUcyrillic"sv,
+    "Iacute"sv,
+    "Iacutesmall"sv,
+    "Ibreve"sv,
+    "Icaron"sv,
+    "Icircle"sv,
+    "Icircumflex"sv,
+    "Icircumflexsmall"sv,
+    "Icyrillic"sv,
+    "Idblgrave"sv,
+    "Idieresis"sv,
+    "Idieresisacute"sv,
+    "Idieresiscyrillic"sv,
+    "Idieresissmall"sv,
+    "Idot"sv,
+    "Idotaccent"sv,
+    "Idotbelow"sv,
+    "Iebrevecyrillic"sv,
+    "Iecyrillic"sv,
+    "Ifraktur"sv,
+    "Igrave"sv,
+    "Igravesmall"sv,
+    "Ihookabove"sv,
+    "Iicyrillic"sv,
+    "Iinvertedbreve"sv,
+    "Iishortcyrillic"sv,
+    "Imacron"sv,
+    "Imacroncyrillic"sv,
+    "Imonospace"sv,
+    "Iniarmenian"sv,
+    "Iocyrillic"sv,
+    "Iogonek"sv,
+    "Iota"sv,
+    "Iotaafrican"sv,
+    "Iotadieresis"sv,
+    "Iotatonos"sv,
+    "Ismall"sv,
+    "Istroke"sv,
+    "Itilde"sv,
+    "Itildebelow"sv,
+    "Izhitsacyrillic"sv,
+    "Izhitsadblgravecyrillic"sv,
+    "J"sv,
+    "Jaarmenian"sv,
+    "Jcircle"sv,
+    "Jcircumflex"sv,
+    "Jecyrillic"sv,
+    "Jheharmenian"sv,
+    "Jmonospace"sv,
+    "Jsmall"sv,
+    "K"sv,
+    "KBsquare"sv,
+    "KKsquare"sv,
+    "Kabashkircyrillic"sv,
+    "Kacute"sv,
+    "Kacyrillic"sv,
+    "Kadescendercyrillic"sv,
+    "Kahookcyrillic"sv,
+    "Kappa"sv,
+    "Kastrokecyrillic"sv,
+    "Kaverticalstrokecyrillic"sv,
+    "Kcaron"sv,
+    "Kcedilla"sv,
+    "Kcircle"sv,
+    "Kcommaaccent"sv,
+    "Kdotbelow"sv,
+    "Keharmenian"sv,
+    "Kenarmenian"sv,
+    "Khacyrillic"sv,
+    "Kheicoptic"sv,
+    "Khook"sv,
+    "Kjecyrillic"sv,
+    "Klinebelow"sv,
+    "Kmonospace"sv,
+    "Koppacyrillic"sv,
+    "Koppagreek"sv,
+    "Ksicyrillic"sv,
+    "Ksmall"sv,
+    "L"sv,
+    "LJ"sv,
+    "LL"sv,
+    "Lacute"sv,
+    "Lambda"sv,
+    "Lcaron"sv,
+    "Lcedilla"sv,
+    "Lcircle"sv,
+    "Lcircumflexbelow"sv,
+    "Lcommaaccent"sv,
+    "Ldot"sv,
+    "Ldotaccent"sv,
+    "Ldotbelow"sv,
+    "Ldotbelowmacron"sv,
+    "Liwnarmenian"sv,
+    "Lj"sv,
+    "Ljecyrillic"sv,
+    "Llinebelow"sv,
+    "Lmonospace"sv,
+    "Lslash"sv,
+    "Lslashsmall"sv,
+    "Lsmall"sv,
+    "M"sv,
+    "MBsquare"sv,
+    "Macron"sv,
+    "Macronsmall"sv,
+    "Macute"sv,
+    "Mcircle"sv,
+    "Mdotaccent"sv,
+    "Mdotbelow"sv,
+    "Menarmenian"sv,
+    "Mmonospace"sv,
+    "Msmall"sv,
+    "Mturned"sv,
+    "Mu"sv,
+    "N"sv,
+    "NJ"sv,
+    "Nacute"sv,
+    "Ncaron"sv,
+    "Ncedilla"sv,
+    "Ncircle"sv,
+    "Ncircumflexbelow"sv,
+    "Ncommaaccent"sv,
+    "Ndotaccent"sv,
+    "Ndotbelow"sv,
+    "Nhookleft"sv,
+    "Nineroman"sv,
+    "Nj"sv,
+    "Njecyrillic"sv,
+    "Nlinebelow"sv,
+    "Nmonospace"sv,
+    "Nowarmenian"sv,
+    "Nsmall"sv,
+    "Ntilde"sv,
+    "Ntildesmall"sv,
+    "Nu"sv,
+    "O"sv,
+    "OE"sv,
+    "OEsmall"sv,
+    "Oacute"sv,
+    "Oacutesmall"sv,
+    "Obarredcyrillic"sv,
+    "Obarreddieresiscyrillic"sv,
+    "Obreve"sv,
+    "Ocaron"sv,
+    "Ocenteredtilde"sv,
+    "Ocircle"sv,
+    "Ocircumflex"sv,
+    "Ocircumflexacute"sv,
+    "Ocircumflexdotbelow"sv,
+    "Ocircumflexgrave"sv,
+    "Ocircumflexhookabove"sv,
+    "Ocircumflexsmall"sv,
+    "Ocircumflextilde"sv,
+    "Ocyrillic"sv,
+    "Odblacute"sv,
+    "Odblgrave"sv,
+    "Odieresis"sv,
+    "Odieresiscyrillic"sv,
+    "Odieresissmall"sv,
+    "Odotbelow"sv,
+    "Ogoneksmall"sv,
+    "Ograve"sv,
+    "Ogravesmall"sv,
+    "Oharmenian"sv,
+    "Ohm"sv,
+    "Ohookabove"sv,
+    "Ohorn"sv,
+    "Ohornacute"sv,
+    "Ohorndotbelow"sv,
+    "Ohorngrave"sv,
+    "Ohornhookabove"sv,
+    "Ohorntilde"sv,
+    "Ohungarumlaut"sv,
+    "Oi"sv,
+    "Oinvertedbreve"sv,
+    "Omacron"sv,
+    "Omacronacute"sv,
+    "Omacrongrave"sv,
+    "Omega"sv,
+    "Omegacyrillic"sv,
+    "Omegagreek"sv,
+    "Omegaroundcyrillic"sv,
+    "Omegatitlocyrillic"sv,
+    "Omegatonos"sv,
+    "Omicron"sv,
+    "Omicrontonos"sv,
+    "Omonospace"sv,
+    "Oneroman"sv,
+    "Oogonek"sv,
+    "Oogonekmacron"sv,
+    "Oopen"sv,
+    "Oslash"sv,
+    "Oslashacute"sv,
+    "Oslashsmall"sv,
+    "Osmall"sv,
+    "Ostrokeacute"sv,
+    "Otcyrillic"sv,
+    "Otilde"sv,
+    "Otildeacute"sv,
+    "Otildedieresis"sv,
+    "Otildesmall"sv,
+    "P"sv,
+    "Pacute"sv,
+    "Pcircle"sv,
+    "Pdotaccent"sv,
+    "Pecyrillic"sv,
+    "Peharmenian"sv,
+    "Pemiddlehookcyrillic"sv,
+    "Phi"sv,
+    "Phook"sv,
+    "Pi"sv,
+    "Piwrarmenian"sv,
+    "Pmonospace"sv,
+    "Psi"sv,
+    "Psicyrillic"sv,
+    "Psmall"sv,
+    "Q"sv,
+    "Qcircle"sv,
+    "Qmonospace"sv,
+    "Qsmall"sv,
+    "R"sv,
+    "Raarmenian"sv,
+    "Racute"sv,
+    "Rcaron"sv,
+    "Rcedilla"sv,
+    "Rcircle"sv,
+    "Rcommaaccent"sv,
+    "Rdblgrave"sv,
+    "Rdotaccent"sv,
+    "Rdotbelow"sv,
+    "Rdotbelowmacron"sv,
+    "Reharmenian"sv,
+    "Rfraktur"sv,
+    "Rho"sv,
+    "Ringsmall"sv,
+    "Rinvertedbreve"sv,
+    "Rlinebelow"sv,
+    "Rmonospace"sv,
+    "Rsmall"sv,
+    "Rsmallinverted"sv,
+    "Rsmallinvertedsuperior"sv,
+    "S"sv,
+    "SF010000"sv,
+    "SF020000"sv,
+    "SF030000"sv,
+    "SF040000"sv,
+    "SF050000"sv,
+    "SF060000"sv,
+    "SF070000"sv,
+    "SF080000"sv,
+    "SF090000"sv,
+    "SF100000"sv,
+    "SF110000"sv,
+    "SF190000"sv,
+    "SF200000"sv,
+    "SF210000"sv,
+    "SF220000"sv,
+    "SF230000"sv,
+    "SF240000"sv,
+    "SF250000"sv,
+    "SF260000"sv,
+    "SF270000"sv,
+    "SF280000"sv,
+    "SF360000"sv,
+    "SF370000"sv,
+    "SF380000"sv,
+    "SF390000"sv,
+    "SF400000"sv,
+    "SF410000"sv,
+    "SF420000"sv,
+    "SF430000"sv,
+    "SF440000"sv,
+    "SF450000"sv,
+    "SF460000"sv,
+    "SF470000"sv,
+    "SF480000"sv,
+    "SF490000"sv,
+    "SF500000"sv,
+    "SF510000"sv,
+    "SF520000"sv,
+    "SF530000"sv,
+    "SF540000"sv,
+    "Sacute"sv,
+    "Sacutedotaccent"sv,
+    "Sampigreek"sv,
+    "Scaron"sv,
+    "Scarondotaccent"sv,
+    "Scaronsmall"sv,
+    "Scedilla"sv,
+    "Schwa"sv,
+    "Schwacyrillic"sv,
+    "Schwadieresiscyrillic"sv,
+    "Scircle"sv,
+    "Scircumflex"sv,
+    "Scommaaccent"sv,
+    "Sdotaccent"sv,
+    "Sdotbelow"sv,
+    "Sdotbelowdotaccent"sv,
+    "Seharmenian"sv,
+    "Sevenroman"sv,
+    "Shaarmenian"sv,
+    "Shacyrillic"sv,
+    "Shchacyrillic"sv,
+    "Sheicoptic"sv,
+    "Shhacyrillic"sv,
+    "Shimacoptic"sv,
+    "Sigma"sv,
+    "Sixroman"sv,
+    "Smonospace"sv,
+    "Softsigncyrillic"sv,
+    "Ssmall"sv,
+    "Stigmagreek"sv,
+    "T"sv,
+    "Tau"sv,
+    "Tbar"sv,
+    "Tcaron"sv,
+    "Tcedilla"sv,
+    "Tcircle"sv,
+    "Tcircumflexbelow"sv,
+    "Tcommaaccent"sv,
+    "Tdotaccent"sv,
+    "Tdotbelow"sv,
+    "Tecyrillic"sv,
+    "Tedescendercyrillic"sv,
+    "Tenroman"sv,
+    "Tetsecyrillic"sv,
+    "Theta"sv,
+    "Thook"sv,
+    "Thorn"sv,
+    "Thornsmall"sv,
+    "Threeroman"sv,
+    "Tildesmall"sv,
+    "Tiwnarmenian"sv,
+    "Tlinebelow"sv,
+    "Tmonospace"sv,
+    "Toarmenian"sv,
+    "Tonefive"sv,
+    "Tonesix"sv,
+    "Tonetwo"sv,
+    "Tretroflexhook"sv,
+    "Tsecyrillic"sv,
+    "Tshecyrillic"sv,
+    "Tsmall"sv,
+    "Twelveroman"sv,
+    "Tworoman"sv,
+    "U"sv,
+    "Uacute"sv,
+    "Uacutesmall"sv,
+    "Ubreve"sv,
+    "Ucaron"sv,
+    "Ucircle"sv,
+    "Ucircumflex"sv,
+    "Ucircumflexbelow"sv,
+    "Ucircumflexsmall"sv,
+    "Ucyrillic"sv,
+    "Udblacute"sv,
+    "Udblgrave"sv,
+    "Udieresis"sv,
+    "Udieresisacute"sv,
+    "Udieresisbelow"sv,
+    "Udieresiscaron"sv,
+    "Udieresiscyrillic"sv,
+    "Udieresisgrave"sv,
+    "Udieresismacron"sv,
+    "Udieresissmall"sv,
+    "Udotbelow"sv,
+    "Ugrave"sv,
+    "Ugravesmall"sv,
+    "Uhookabove"sv,
+    "Uhorn"sv,
+    "Uhornacute"sv,
+    "Uhorndotbelow"sv,
+    "Uhorngrave"sv,
+    "Uhornhookabove"sv,
+    "Uhorntilde"sv,
+    "Uhungarumlaut"sv,
+    "Uhungarumlautcyrillic"sv,
+    "Uinvertedbreve"sv,
+    "Ukcyrillic"sv,
+    "Umacron"sv,
+    "Umacroncyrillic"sv,
+    "Umacrondieresis"sv,
+    "Umonospace"sv,
+    "Uogonek"sv,
+    "Upsilon"sv,
+    "Upsilon1"sv,
+    "Upsilonacutehooksymbolgreek"sv,
+    "Upsilonafrican"sv,
+    "Upsilondieresis"sv,
+    "Upsilondieresishooksymbolgreek"sv,
+    "Upsilonhooksymbol"sv,
+    "Upsilontonos"sv,
+    "Uring"sv,
+    "Ushortcyrillic"sv,
+    "Usmall"sv,
+    "Ustraightcyrillic"sv,
+    "Ustraightstrokecyrillic"sv,
+    "Utilde"sv,
+    "Utildeacute"sv,
+    "Utildebelow"sv,
+    "V"sv,
+    "Vcircle"sv,
+    "Vdotbelow"sv,
+    "Vecyrillic"sv,
+    "Vewarmenian"sv,
+    "Vhook"sv,
+    "Vmonospace"sv,
+    "Voarmenian"sv,
+    "Vsmall"sv,
+    "Vtilde"sv,
+    "W"sv,
+    "Wacute"sv,
+    "Wcircle"sv,
+    "Wcircumflex"sv,
+    "Wdieresis"sv,
+    "Wdotaccent"sv,
+    "Wdotbelow"sv,
+    "Wgrave"sv,
+    "Wmonospace"sv,
+    "Wsmall"sv,
+    "X"sv,
+    "Xcircle"sv,
+    "Xdieresis"sv,
+    "Xdotaccent"sv,
+    "Xeharmenian"sv,
+    "Xi"sv,
+    "Xmonospace"sv,
+    "Xsmall"sv,
+    "Y"sv,
+    "Yacute"sv,
+    "Yacutesmall"sv,
+    "Yatcyrillic"sv,
+    "Ycircle"sv,
+    "Ycircumflex"sv,
+    "Ydieresis"sv,
+    "Ydieresissmall"sv,
+    "Ydotaccent"sv,
+    "Ydotbelow"sv,
+    "Yericyrillic"sv,
+    "Yerudieresiscyrillic"sv,
+    "Ygrave"sv,
+    "Yhook"sv,
+    "Yhookabove"sv,
+    "Yiarmenian"sv,
+    "Yicyrillic"sv,
+    "Yiwnarmenian"sv,
+    "Ymonospace"sv,
+    "Ysmall"sv,
+    "Ytilde"sv,
+    "Yusbigcyrillic"sv,
+    "Yusbigiotifiedcyrillic"sv,
+    "Yuslittlecyrillic"sv,
+    "Yuslittleiotifiedcyrillic"sv,
+    "Z"sv,
+    "Zaarmenian"sv,
+    "Zacute"sv,
+    "Zcaron"sv,
+    "Zcaronsmall"sv,
+    "Zcircle"sv,
+    "Zcircumflex"sv,
+    "Zdot"sv,
+    "Zdotaccent"sv,
+    "Zdotbelow"sv,
+    "Zecyrillic"sv,
+    "Zedescendercyrillic"sv,
+    "Zedieresiscyrillic"sv,
+    "Zeta"sv,
+    "Zhearmenian"sv,
+    "Zhebrevecyrillic"sv,
+    "Zhecyrillic"sv,
+    "Zhedescendercyrillic"sv,
+    "Zhedieresiscyrillic"sv,
+    "Zlinebelow"sv,
+    "Zmonospace"sv,
+    "Zsmall"sv,
+    "Zstroke"sv,
+    "a"sv,
+    "aabengali"sv,
+    "aacute"sv,
+    "aadeva"sv,
+    "aagujarati"sv,
+    "aagurmukhi"sv,
+    "aamatragurmukhi"sv,
+    "aarusquare"sv,
+    "aavowelsignbengali"sv,
+    "aavowelsigndeva"sv,
+    "aavowelsigngujarati"sv,
+    "abbreviationmarkarmenian"sv,
+    "abbreviationsigndeva"sv,
+    "abengali"sv,
+    "abopomofo"sv,
+    "abreve"sv,
+    "abreveacute"sv,
+    "abrevecyrillic"sv,
+    "abrevedotbelow"sv,
+    "abrevegrave"sv,
+    "abrevehookabove"sv,
+    "abrevetilde"sv,
+    "acaron"sv,
+    "acircle"sv,
+    "acircumflex"sv,
+    "acircumflexacute"sv,
+    "acircumflexdotbelow"sv,
+    "acircumflexgrave"sv,
+    "acircumflexhookabove"sv,
+    "acircumflextilde"sv,
+    "acute"sv,
+    "acutebelowcmb"sv,
+    "acutecmb"sv,
+    "acutecomb"sv,
+    "acutedeva"sv,
+    "acutelowmod"sv,
+    "acutetonecmb"sv,
+    "acyrillic"sv,
+    "adblgrave"sv,
+    "addakgurmukhi"sv,
+    "adeva"sv,
+    "adieresis"sv,
+    "adieresiscyrillic"sv,
+    "adieresismacron"sv,
+    "adotbelow"sv,
+    "adotmacron"sv,
+    "ae"sv,
+    "aeacute"sv,
+    "aekorean"sv,
+    "aemacron"sv,
+    "afii00208"sv,
+    "afii08941"sv,
+    "afii10017"sv,
+    "afii10018"sv,
+    "afii10019"sv,
+    "afii10020"sv,
+    "afii10021"sv,
+    "afii10022"sv,
+    "afii10023"sv,
+    "afii10024"sv,
+    "afii10025"sv,
+    "afii10026"sv,
+    "afii10027"sv,
+    "afii10028"sv,
+    "afii10029"sv,
+    "afii10030"sv,
+    "afii10031"sv,
+    "afii10032"sv,
+    "afii10033"sv,
+    "afii10034"sv,
+    "afii10035"sv,
+    "afii10036"sv,
+    "afii10037"sv,
+    "afii10038"sv,
+    "afii10039"sv,
+    "afii10040"sv,
+    "afii10041"sv,
+    "afii10042"sv,
+    "afii10043"sv,
+    "afii10044"sv,
+    "afii10045"sv,
+    "afii10046"sv,
+    "afii10047"sv,
+    "afii10048"sv,
+    "afii10049"sv,
+    "afii10050"sv,
+    "afii10051"sv,
+    "afii10052"sv,
+    "afii10053"sv,
+    "afii10054"sv,
+    "afii10055"sv,
+    "afii10056"sv,
+    "afii10057"sv,
+    "afii10058"sv,
+    "afii10059"sv,
+    "afii10060"sv,
+    "afii10061"sv,
+    "afii10062"sv,
+    "afii10063"sv,
+    "afii10064"sv,
+    "afii10065"sv,
+    "afii10066"sv,
+    "afii10067"sv,
+    "afii10068"sv,
+    "afii10069"sv,
+    "afii10070"sv,
+    "afii10071"sv,
+    "afii10072"sv,
+    "afii10073"sv,
+    "afii10074"sv,
+    "afii10075"sv,
+    "afii10076"sv,
+    "afii10077"sv,
+    "afii10078"sv,
+    "afii10079"sv,
+    "afii10080"sv,
+    "afii10081"sv,
+    "afii10082"sv,
+    "afii10083"sv,
+    "afii10084"sv,
+    "afii10085"sv,
+    "afii10086"sv,
+    "afii10087"sv,
+    "afii10088"sv,
+    "afii10089"sv,
+    "afii10090"sv,
+    "afii10091"sv,
+    "afii10092"sv,
+    "afii10093"sv,
+    "afii10094"sv,
+    "afii10095"sv,
+    "afii10096"sv,
+    "afii10097"sv,
+    "afii10098"sv,
+    "afii10099"sv,
+    "afii10100"sv,
+    "afii10101"sv,
+    "afii10102"sv,
+    "afii10103"sv,
+    "afii10104"sv,
+    "afii10105"sv,
+    "afii10106"sv,
+    "afii10107"sv,
+    "afii10108"sv,
+    "afii10109"sv,
+    "afii10110"sv,
+    "afii10145"sv,
+    "afii10146"sv,
+    "afii10147"sv,
+    "afii10148"sv,
+    "afii10192"sv,
+    "afii10193"sv,
+    "afii10194"sv,
+    "afii10195"sv,
+    "afii10196"sv,
+    "afii10831"sv,
+    "afii10832"sv,
+    "afii10846"sv,
+    "afii299"sv,
+    "afii300"sv,
+    "afii301"sv,
+    "afii57381"sv,
+    "afii57388"sv,
+    "afii57392"sv,
+    "afii57393"sv,
+    "afii57394"sv,
+    "afii57395"sv,
+    "afii57396"sv,
+    "afii57397"sv,
+    "afii57398"sv,
+    "afii57399"sv,
+    "afii57400"sv,
+    "afii57401"sv,
+    "afii57403"sv,
+    "afii57407"sv,
+    "afii57409"sv,
+    "afii57410"sv,
+    "afii57411"sv,
+    "afii57412"sv,
+    "afii57413"sv,
+    "afii57414"sv,
+    "afii57415"sv,
+    "afii57416"sv,
+    "afii57417"sv,
+    "afii57418"sv,
+    "afii57419"sv,
+    "afii57420"sv,
+    "afii57421"sv,
+    "afii57422"sv,
+    "afii57423"sv,
+    "afii57424"sv,
+    "afii57425"sv,
+    "afii57426"sv,
+    "afii57427"sv,
+    "afii57428"sv,
+    "afii57429"sv,
+    "afii57430"sv,
+    "afii57431"sv,
+    "afii57432"sv,
+    "afii57433"sv,
+    "afii57434"sv,
+    "afii57440"sv,
+    "afii57441"sv,
+    "afii57442"sv,
+    "afii57443"sv,
+    "afii57444"sv,
+    "afii57445"sv,
+    "afii57446"sv,
+    "afii57448"sv,
+    "afii57449"sv,
+    "afii57450"sv,
+    "afii57451"sv,
+    "afii57452"sv,
+    "afii57453"sv,
+    "afii57454"sv,
+    "afii57455"sv,
+    "afii57456"sv,
+    "afii57457"sv,
+    "afii57458"sv,
+    "afii57470"sv,
+    "afii57505"sv,
+    "afii57506"sv,
+    "afii57507"sv,
+    "afii57508"sv,
+    "afii57509"sv,
+    "afii57511"sv,
+    "afii57512"sv,
+    "afii57513"sv,
+    "afii57514"sv,
+    "afii57519"sv,
+    "afii57534"sv,
+    "afii57636"sv,
+    "afii57645"sv,
+    "afii57658"sv,
+    "afii57664"sv,
+    "afii57665"sv,
+    "afii57666"sv,
+    "afii57667"sv,
+    "afii57668"sv,
+    "afii57669"sv,
+    "afii57670"sv,
+    "afii57671"sv,
+    "afii57672"sv,
+    "afii57673"sv,
+    "afii57674"sv,
+    "afii57675"sv,
+    "afii57676"sv,
+    "afii57677"sv,
+    "afii57678"sv,
+    "afii57679"sv,
+    "afii57680"sv,
+    "afii57681"sv,
+    "afii57682"sv,
+    "afii57683"sv,
+    "afii57684"sv,
+    "afii57685"sv,
+    "afii57686"sv,
+    "afii57687"sv,
+    "afii57688"sv,
+    "afii57689"sv,
+    "afii57690"sv,
+    "afii57694"sv,
+    "afii57695"sv,
+    "afii57700"sv,
+    "afii57705"sv,
+    "afii57716"sv,
+    "afii57717"sv,
+    "afii57718"sv,
+    "afii57723"sv,
+    "afii57793"sv,
+    "afii57794"sv,
+    "afii57795"sv,
+    "afii57796"sv,
+    "afii57797"sv,
+    "afii57798"sv,
+    "afii57799"sv,
+    "afii57800"sv,
+    "afii57801"sv,
+    "afii57802"sv,
+    "afii57803"sv,
+    "afii57804"sv,
+    "afii57806"sv,
+    "afii57807"sv,
+    "afii57839"sv,
+    "afii57841"sv,
+    "afii57842"sv,
+    "afii57929"sv,
+    "afii61248"sv,
+    "afii61289"sv,
+    "afii61352"sv,
+    "afii61573"sv,
+    "afii61574"sv,
+    "afii61575"sv,
+    "afii61664"sv,
+    "afii63167"sv,
+    "afii64937"sv,
+    "agrave"sv,
+    "agujarati"sv,
+    "agurmukhi"sv,
+    "ahiragana"sv,
+    "ahookabove"sv,
+    "aibengali"sv,
+    "aibopomofo"sv,
+    "aideva"sv,
+    "aiecyrillic"sv,
+    "aigujarati"sv,
+    "aigurmukhi"sv,
+    "aimatragurmukhi"sv,
+    "ainarabic"sv,
+    "ainfinalarabic"sv,
+    "aininitialarabic"sv,
+    "ainmedialarabic"sv,
+    "ainvertedbreve"sv,
+    "aivowelsignbengali"sv,
+    "aivowelsigndeva"sv,
+    "aivowelsigngujarati"sv,
+    "akatakana"sv,
+    "akatakanahalfwidth"sv,
+    "akorean"sv,
+    "alef"sv,
+    "alefarabic"sv,
+    "alefdageshhebrew"sv,
+    "aleffinalarabic"sv,
+    "alefhamzaabovearabic"sv,
+    "alefhamzaabovefinalarabic"sv,
+    "alefhamzabelowarabic"sv,
+    "alefhamzabelowfinalarabic"sv,
+    "alefhebrew"sv,
+    "aleflamedhebrew"sv,
+    "alefmaddaabovearabic"sv,
+    "alefmaddaabovefinalarabic"sv,
+    "alefmaksuraarabic"sv,
+    "alefmaksurafinalarabic"sv,
+    "alefmaksurainitialarabic"sv,
+    "alefmaksuramedialarabic"sv,
+    "alefpatahhebrew"sv,
+    "alefqamatshebrew"sv,
+    "aleph"sv,
+    "allequal"sv,
+    "alpha"sv,
+    "alphatonos"sv,
+    "amacron"sv,
+    "amonospace"sv,
+    "ampersand"sv,
+    "ampersandmonospace"sv,
+    "ampersandsmall"sv,
+    "amsquare"sv,
+    "anbopomofo"sv,
+    "angbopomofo"sv,
+    "angkhankhuthai"sv,
+    "angle"sv,
+    "anglebracketleft"sv,
+    "anglebracketleftvertical"sv,
+    "anglebracketright"sv,
+    "anglebracketrightvertical"sv,
+    "angleleft"sv,
+    "angleright"sv,
+    "angstrom"sv,
+    "anoteleia"sv,
+    "anudattadeva"sv,
+    "anusvarabengali"sv,
+    "anusvaradeva"sv,
+    "anusvaragujarati"sv,
+    "aogonek"sv,
+    "apaatosquare"sv,
+    "aparen"sv,
+    "apostrophearmenian"sv,
+    "apostrophemod"sv,
+    "apple"sv,
+    "approaches"sv,
+    "approxequal"sv,
+    "approxequalorimage"sv,
+    "approximatelyequal"sv,
+    "araeaekorean"sv,
+    "araeakorean"sv,
+    "arc"sv,
+    "arighthalfring"sv,
+    "aring"sv,
+    "aringacute"sv,
+    "aringbelow"sv,
+    "arrowboth"sv,
+    "arrowdashdown"sv,
+    "arrowdashleft"sv,
+    "arrowdashright"sv,
+    "arrowdashup"sv,
+    "arrowdblboth"sv,
+    "arrowdbldown"sv,
+    "arrowdblleft"sv,
+    "arrowdblright"sv,
+    "arrowdblup"sv,
+    "arrowdown"sv,
+    "arrowdownleft"sv,
+    "arrowdownright"sv,
+    "arrowdownwhite"sv,
+    "arrowheaddownmod"sv,
+    "arrowheadleftmod"sv,
+    "arrowheadrightmod"sv,
+    "arrowheadupmod"sv,
+    "arrowhorizex"sv,
+    "arrowleft"sv,
+    "arrowleftdbl"sv,
+    "arrowleftdblstroke"sv,
+    "arrowleftoverright"sv,
+    "arrowleftwhite"sv,
+    "arrowright"sv,
+    "arrowrightdblstroke"sv,
+    "arrowrightheavy"sv,
+    "arrowrightoverleft"sv,
+    "arrowrightwhite"sv,
+    "arrowtableft"sv,
+    "arrowtabright"sv,
+    "arrowup"sv,
+    "arrowupdn"sv,
+    "arrowupdnbse"sv,
+    "arrowupdownbase"sv,
+    "arrowupleft"sv,
+    "arrowupleftofdown"sv,
+    "arrowupright"sv,
+    "arrowupwhite"sv,
+    "arrowvertex"sv,
+    "asciicircum"sv,
+    "asciicircummonospace"sv,
+    "asciitilde"sv,
+    "asciitildemonospace"sv,
+    "ascript"sv,
+    "ascriptturned"sv,
+    "asmallhiragana"sv,
+    "asmallkatakana"sv,
+    "asmallkatakanahalfwidth"sv,
+    "asterisk"sv,
+    "asteriskaltonearabic"sv,
+    "asteriskarabic"sv,
+    "asteriskmath"sv,
+    "asteriskmonospace"sv,
+    "asterisksmall"sv,
+    "asterism"sv,
+    "asuperior"sv,
+    "asymptoticallyequal"sv,
+    "at"sv,
+    "atilde"sv,
+    "atmonospace"sv,
+    "atsmall"sv,
+    "aturned"sv,
+    "aubengali"sv,
+    "aubopomofo"sv,
+    "audeva"sv,
+    "augujarati"sv,
+    "augurmukhi"sv,
+    "aulengthmarkbengali"sv,
+    "aumatragurmukhi"sv,
+    "auvowelsignbengali"sv,
+    "auvowelsigndeva"sv,
+    "auvowelsigngujarati"sv,
+    "avagrahadeva"sv,
+    "aybarmenian"sv,
+    "ayin"sv,
+    "ayinaltonehebrew"sv,
+    "ayinhebrew"sv,
+    "b"sv,
+    "babengali"sv,
+    "backslash"sv,
+    "backslashmonospace"sv,
+    "badeva"sv,
+    "bagujarati"sv,
+    "bagurmukhi"sv,
+    "bahiragana"sv,
+    "bahtthai"sv,
+    "bakatakana"sv,
+    "bar"sv,
+    "barmonospace"sv,
+    "bbopomofo"sv,
+    "bcircle"sv,
+    "bdotaccent"sv,
+    "bdotbelow"sv,
+    "beamedsixteenthnotes"sv,
+    "because"sv,
+    "becyrillic"sv,
+    "beharabic"sv,
+    "behfinalarabic"sv,
+    "behinitialarabic"sv,
+    "behiragana"sv,
+    "behmedialarabic"sv,
+    "behmeeminitialarabic"sv,
+    "behmeemisolatedarabic"sv,
+    "behnoonfinalarabic"sv,
+    "bekatakana"sv,
+    "benarmenian"sv,
+    "bet"sv,
+    "beta"sv,
+    "betasymbolgreek"sv,
+    "betdagesh"sv,
+    "betdageshhebrew"sv,
+    "bethebrew"sv,
+    "betrafehebrew"sv,
+    "bhabengali"sv,
+    "bhadeva"sv,
+    "bhagujarati"sv,
+    "bhagurmukhi"sv,
+    "bhook"sv,
+    "bihiragana"sv,
+    "bikatakana"sv,
+    "bilabialclick"sv,
+    "bindigurmukhi"sv,
+    "birusquare"sv,
+    "blackcircle"sv,
+    "blackdiamond"sv,
+    "blackdownpointingtriangle"sv,
+    "blackleftpointingpointer"sv,
+    "blackleftpointingtriangle"sv,
+    "blacklenticularbracketleft"sv,
+    "blacklenticularbracketleftvertical"sv,
+    "blacklenticularbracketright"sv,
+    "blacklenticularbracketrightvertical"sv,
+    "blacklowerlefttriangle"sv,
+    "blacklowerrighttriangle"sv,
+    "blackrectangle"sv,
+    "blackrightpointingpointer"sv,
+    "blackrightpointingtriangle"sv,
+    "blacksmallsquare"sv,
+    "blacksmilingface"sv,
+    "blacksquare"sv,
+    "blackstar"sv,
+    "blackupperlefttriangle"sv,
+    "blackupperrighttriangle"sv,
+    "blackuppointingsmalltriangle"sv,
+    "blackuppointingtriangle"sv,
+    "blank"sv,
+    "blinebelow"sv,
+    "block"sv,
+    "bmonospace"sv,
+    "bobaimaithai"sv,
+    "bohiragana"sv,
+    "bokatakana"sv,
+    "bparen"sv,
+    "bqsquare"sv,
+    "braceex"sv,
+    "braceleft"sv,
+    "braceleftbt"sv,
+    "braceleftmid"sv,
+    "braceleftmonospace"sv,
+    "braceleftsmall"sv,
+    "bracelefttp"sv,
+    "braceleftvertical"sv,
+    "braceright"sv,
+    "bracerightbt"sv,
+    "bracerightmid"sv,
+    "bracerightmonospace"sv,
+    "bracerightsmall"sv,
+    "bracerighttp"sv,
+    "bracerightvertical"sv,
+    "bracketleft"sv,
+    "bracketleftbt"sv,
+    "bracketleftex"sv,
+    "bracketleftmonospace"sv,
+    "bracketlefttp"sv,
+    "bracketright"sv,
+    "bracketrightbt"sv,
+    "bracketrightex"sv,
+    "bracketrightmonospace"sv,
+    "bracketrighttp"sv,
+    "breve"sv,
+    "brevebelowcmb"sv,
+    "brevecmb"sv,
+    "breveinvertedbelowcmb"sv,
+    "breveinvertedcmb"sv,
+    "breveinverteddoublecmb"sv,
+    "bridgebelowcmb"sv,
+    "bridgeinvertedbelowcmb"sv,
+    "brokenbar"sv,
+    "bstroke"sv,
+    "bsuperior"sv,
+    "btopbar"sv,
+    "buhiragana"sv,
+    "bukatakana"sv,
+    "bullet"sv,
+    "bulletinverse"sv,
+    "bulletoperator"sv,
+    "bullseye"sv,
+    "c"sv,
+    "caarmenian"sv,
+    "cabengali"sv,
+    "cacute"sv,
+    "cadeva"sv,
+    "cagujarati"sv,
+    "cagurmukhi"sv,
+    "calsquare"sv,
+    "candrabindubengali"sv,
+    "candrabinducmb"sv,
+    "candrabindudeva"sv,
+    "candrabindugujarati"sv,
+    "capslock"sv,
+    "careof"sv,
+    "caron"sv,
+    "caronbelowcmb"sv,
+    "caroncmb"sv,
+    "carriagereturn"sv,
+    "cbopomofo"sv,
+    "ccaron"sv,
+    "ccedilla"sv,
+    "ccedillaacute"sv,
+    "ccircle"sv,
+    "ccircumflex"sv,
+    "ccurl"sv,
+    "cdot"sv,
+    "cdotaccent"sv,
+    "cdsquare"sv,
+    "cedilla"sv,
+    "cedillacmb"sv,
+    "cent"sv,
+    "centigrade"sv,
+    "centinferior"sv,
+    "centmonospace"sv,
+    "centoldstyle"sv,
+    "centsuperior"sv,
+    "chaarmenian"sv,
+    "chabengali"sv,
+    "chadeva"sv,
+    "chagujarati"sv,
+    "chagurmukhi"sv,
+    "chbopomofo"sv,
+    "cheabkhasiancyrillic"sv,
+    "checkmark"sv,
+    "checyrillic"sv,
+    "chedescenderabkhasiancyrillic"sv,
+    "chedescendercyrillic"sv,
+    "chedieresiscyrillic"sv,
+    "cheharmenian"sv,
+    "chekhakassiancyrillic"sv,
+    "cheverticalstrokecyrillic"sv,
+    "chi"sv,
+    "chieuchacirclekorean"sv,
+    "chieuchaparenkorean"sv,
+    "chieuchcirclekorean"sv,
+    "chieuchkorean"sv,
+    "chieuchparenkorean"sv,
+    "chochangthai"sv,
+    "chochanthai"sv,
+    "chochingthai"sv,
+    "chochoethai"sv,
+    "chook"sv,
+    "cieucacirclekorean"sv,
+    "cieucaparenkorean"sv,
+    "cieuccirclekorean"sv,
+    "cieuckorean"sv,
+    "cieucparenkorean"sv,
+    "cieucuparenkorean"sv,
+    "circle"sv,
+    "circlemultiply"sv,
+    "circleot"sv,
+    "circleplus"sv,
+    "circlepostalmark"sv,
+    "circlewithlefthalfblack"sv,
+    "circlewithrighthalfblack"sv,
+    "circumflex"sv,
+    "circumflexbelowcmb"sv,
+    "circumflexcmb"sv,
+    "clear"sv,
+    "clickalveolar"sv,
+    "clickdental"sv,
+    "clicklateral"sv,
+    "clickretroflex"sv,
+    "club"sv,
+    "clubsuitblack"sv,
+    "clubsuitwhite"sv,
+    "cmcubedsquare"sv,
+    "cmonospace"sv,
+    "cmsquaredsquare"sv,
+    "coarmenian"sv,
+    "colon"sv,
+    "colonmonetary"sv,
+    "colonmonospace"sv,
+    "colonsign"sv,
+    "colonsmall"sv,
+    "colontriangularhalfmod"sv,
+    "colontriangularmod"sv,
+    "comma"sv,
+    "commaabovecmb"sv,
+    "commaaboverightcmb"sv,
+    "commaaccent"sv,
+    "commaarabic"sv,
+    "commaarmenian"sv,
+    "commainferior"sv,
+    "commamonospace"sv,
+    "commareversedabovecmb"sv,
+    "commareversedmod"sv,
+    "commasmall"sv,
+    "commasuperior"sv,
+    "commaturnedabovecmb"sv,
+    "commaturnedmod"sv,
+    "compass"sv,
+    "congruent"sv,
+    "contourintegral"sv,
+    "control"sv,
+    "controlACK"sv,
+    "controlBEL"sv,
+    "controlBS"sv,
+    "controlCAN"sv,
+    "controlCR"sv,
+    "controlDC1"sv,
+    "controlDC2"sv,
+    "controlDC3"sv,
+    "controlDC4"sv,
+    "controlDEL"sv,
+    "controlDLE"sv,
+    "controlEM"sv,
+    "controlENQ"sv,
+    "controlEOT"sv,
+    "controlESC"sv,
+    "controlETB"sv,
+    "controlETX"sv,
+    "controlFF"sv,
+    "controlFS"sv,
+    "controlGS"sv,
+    "controlHT"sv,
+    "controlLF"sv,
+    "controlNAK"sv,
+    "controlRS"sv,
+    "controlSI"sv,
+    "controlSO"sv,
+    "controlSOT"sv,
+    "controlSTX"sv,
+    "controlSUB"sv,
+    "controlSYN"sv,
+    "controlUS"sv,
+    "controlVT"sv,
+    "copyright"sv,
+    "copyrightsans"sv,
+    "copyrightserif"sv,
+    "cornerbracketleft"sv,
+    "cornerbracketlefthalfwidth"sv,
+    "cornerbracketleftvertical"sv,
+    "cornerbracketright"sv,
+    "cornerbracketrighthalfwidth"sv,
+    "cornerbracketrightvertical"sv,
+    "corporationsquare"sv,
+    "cosquare"sv,
+    "coverkgsquare"sv,
+    "cparen"sv,
+    "cruzeiro"sv,
+    "cstretched"sv,
+    "curlyand"sv,
+    "curlyor"sv,
+    "currency"sv,
+    "cyrBreve"sv,
+    "cyrFlex"sv,
+    "cyrbreve"sv,
+    "cyrflex"sv,
+    "d"sv,
+    "daarmenian"sv,
+    "dabengali"sv,
+    "dadarabic"sv,
+    "dadeva"sv,
+    "dadfinalarabic"sv,
+    "dadinitialarabic"sv,
+    "dadmedialarabic"sv,
+    "dagesh"sv,
+    "dageshhebrew"sv,
+    "dagger"sv,
+    "daggerdbl"sv,
+    "dagujarati"sv,
+    "dagurmukhi"sv,
+    "dahiragana"sv,
+    "dakatakana"sv,
+    "dalarabic"sv,
+    "dalet"sv,
+    "daletdagesh"sv,
+    "daletdageshhebrew"sv,
+    "dalethatafpatah"sv,
+    "dalethatafpatahhebrew"sv,
+    "dalethatafsegol"sv,
+    "dalethatafsegolhebrew"sv,
+    "dalethebrew"sv,
+    "dalethiriq"sv,
+    "dalethiriqhebrew"sv,
+    "daletholam"sv,
+    "daletholamhebrew"sv,
+    "daletpatah"sv,
+    "daletpatahhebrew"sv,
+    "daletqamats"sv,
+    "daletqamatshebrew"sv,
+    "daletqubuts"sv,
+    "daletqubutshebrew"sv,
+    "daletsegol"sv,
+    "daletsegolhebrew"sv,
+    "daletsheva"sv,
+    "daletshevahebrew"sv,
+    "dalettsere"sv,
+    "dalettserehebrew"sv,
+    "dalfinalarabic"sv,
+    "dammaarabic"sv,
+    "dammalowarabic"sv,
+    "dammatanaltonearabic"sv,
+    "dammatanarabic"sv,
+    "danda"sv,
+    "dargahebrew"sv,
+    "dargalefthebrew"sv,
+    "dasiapneumatacyrilliccmb"sv,
+    "dblGrave"sv,
+    "dblanglebracketleft"sv,
+    "dblanglebracketleftvertical"sv,
+    "dblanglebracketright"sv,
+    "dblanglebracketrightvertical"sv,
+    "dblarchinvertedbelowcmb"sv,
+    "dblarrowleft"sv,
+    "dblarrowright"sv,
+    "dbldanda"sv,
+    "dblgrave"sv,
+    "dblgravecmb"sv,
+    "dblintegral"sv,
+    "dbllowline"sv,
+    "dbllowlinecmb"sv,
+    "dbloverlinecmb"sv,
+    "dblprimemod"sv,
+    "dblverticalbar"sv,
+    "dblverticallineabovecmb"sv,
+    "dbopomofo"sv,
+    "dbsquare"sv,
+    "dcaron"sv,
+    "dcedilla"sv,
+    "dcircle"sv,
+    "dcircumflexbelow"sv,
+    "dcroat"sv,
+    "ddabengali"sv,
+    "ddadeva"sv,
+    "ddagujarati"sv,
+    "ddagurmukhi"sv,
+    "ddalarabic"sv,
+    "ddalfinalarabic"sv,
+    "dddhadeva"sv,
+    "ddhabengali"sv,
+    "ddhadeva"sv,
+    "ddhagujarati"sv,
+    "ddhagurmukhi"sv,
+    "ddotaccent"sv,
+    "ddotbelow"sv,
+    "decimalseparatorarabic"sv,
+    "decimalseparatorpersian"sv,
+    "decyrillic"sv,
+    "degree"sv,
+    "dehihebrew"sv,
+    "dehiragana"sv,
+    "deicoptic"sv,
+    "dekatakana"sv,
+    "deleteleft"sv,
+    "deleteright"sv,
+    "delta"sv,
+    "deltaturned"sv,
+    "denominatorminusonenumeratorbengali"sv,
+    "dezh"sv,
+    "dhabengali"sv,
+    "dhadeva"sv,
+    "dhagujarati"sv,
+    "dhagurmukhi"sv,
+    "dhook"sv,
+    "dialytikatonos"sv,
+    "dialytikatonoscmb"sv,
+    "diamond"sv,
+    "diamondsuitwhite"sv,
+    "dieresis"sv,
+    "dieresisacute"sv,
+    "dieresisbelowcmb"sv,
+    "dieresiscmb"sv,
+    "dieresisgrave"sv,
+    "dieresistonos"sv,
+    "dihiragana"sv,
+    "dikatakana"sv,
+    "dittomark"sv,
+    "divide"sv,
+    "divides"sv,
+    "divisionslash"sv,
+    "djecyrillic"sv,
+    "dkshade"sv,
+    "dlinebelow"sv,
+    "dlsquare"sv,
+    "dmacron"sv,
+    "dmonospace"sv,
+    "dnblock"sv,
+    "dochadathai"sv,
+    "dodekthai"sv,
+    "dohiragana"sv,
+    "dokatakana"sv,
+    "dollar"sv,
+    "dollarinferior"sv,
+    "dollarmonospace"sv,
+    "dollaroldstyle"sv,
+    "dollarsmall"sv,
+    "dollarsuperior"sv,
+    "dong"sv,
+    "dorusquare"sv,
+    "dotaccent"sv,
+    "dotaccentcmb"sv,
+    "dotbelowcmb"sv,
+    "dotbelowcomb"sv,
+    "dotkatakana"sv,
+    "dotlessi"sv,
+    "dotlessj"sv,
+    "dotlessjstrokehook"sv,
+    "dotmath"sv,
+    "dottedcircle"sv,
+    "doubleyodpatah"sv,
+    "doubleyodpatahhebrew"sv,
+    "downtackbelowcmb"sv,
+    "downtackmod"sv,
+    "dparen"sv,
+    "dsuperior"sv,
+    "dtail"sv,
+    "dtopbar"sv,
+    "duhiragana"sv,
+    "dukatakana"sv,
+    "dz"sv,
+    "dzaltone"sv,
+    "dzcaron"sv,
+    "dzcurl"sv,
+    "dzeabkhasiancyrillic"sv,
+    "dzecyrillic"sv,
+    "dzhecyrillic"sv,
+    "e"sv,
+    "eacute"sv,
+    "earth"sv,
+    "ebengali"sv,
+    "ebopomofo"sv,
+    "ebreve"sv,
+    "ecandradeva"sv,
+    "ecandragujarati"sv,
+    "ecandravowelsigndeva"sv,
+    "ecandravowelsigngujarati"sv,
+    "ecaron"sv,
+    "ecedillabreve"sv,
+    "echarmenian"sv,
+    "echyiwnarmenian"sv,
+    "ecircle"sv,
+    "ecircumflex"sv,
+    "ecircumflexacute"sv,
+    "ecircumflexbelow"sv,
+    "ecircumflexdotbelow"sv,
+    "ecircumflexgrave"sv,
+    "ecircumflexhookabove"sv,
+    "ecircumflextilde"sv,
+    "ecyrillic"sv,
+    "edblgrave"sv,
+    "edeva"sv,
+    "edieresis"sv,
+    "edot"sv,
+    "edotaccent"sv,
+    "edotbelow"sv,
+    "eegurmukhi"sv,
+    "eematragurmukhi"sv,
+    "efcyrillic"sv,
+    "egrave"sv,
+    "egujarati"sv,
+    "eharmenian"sv,
+    "ehbopomofo"sv,
+    "ehiragana"sv,
+    "ehookabove"sv,
+    "eibopomofo"sv,
+    "eight"sv,
+    "eightarabic"sv,
+    "eightbengali"sv,
+    "eightcircle"sv,
+    "eightcircleinversesansserif"sv,
+    "eightdeva"sv,
+    "eighteencircle"sv,
+    "eighteenparen"sv,
+    "eighteenperiod"sv,
+    "eightgujarati"sv,
+    "eightgurmukhi"sv,
+    "eighthackarabic"sv,
+    "eighthangzhou"sv,
+    "eighthnotebeamed"sv,
+    "eightideographicparen"sv,
+    "eightinferior"sv,
+    "eightmonospace"sv,
+    "eightoldstyle"sv,
+    "eightparen"sv,
+    "eightperiod"sv,
+    "eightpersian"sv,
+    "eightroman"sv,
+    "eightsuperior"sv,
+    "eightthai"sv,
+    "einvertedbreve"sv,
+    "eiotifiedcyrillic"sv,
+    "ekatakana"sv,
+    "ekatakanahalfwidth"sv,
+    "ekonkargurmukhi"sv,
+    "ekorean"sv,
+    "elcyrillic"sv,
+    "element"sv,
+    "elevencircle"sv,
+    "elevenparen"sv,
+    "elevenperiod"sv,
+    "elevenroman"sv,
+    "ellipsis"sv,
+    "ellipsisvertical"sv,
+    "emacron"sv,
+    "emacronacute"sv,
+    "emacrongrave"sv,
+    "emcyrillic"sv,
+    "emdash"sv,
+    "emdashvertical"sv,
+    "emonospace"sv,
+    "emphasismarkarmenian"sv,
+    "emptyset"sv,
+    "enbopomofo"sv,
+    "encyrillic"sv,
+    "endash"sv,
+    "endashvertical"sv,
+    "endescendercyrillic"sv,
+    "eng"sv,
+    "engbopomofo"sv,
+    "enghecyrillic"sv,
+    "enhookcyrillic"sv,
+    "enspace"sv,
+    "eogonek"sv,
+    "eokorean"sv,
+    "eopen"sv,
+    "eopenclosed"sv,
+    "eopenreversed"sv,
+    "eopenreversedclosed"sv,
+    "eopenreversedhook"sv,
+    "eparen"sv,
+    "epsilon"sv,
+    "epsilontonos"sv,
+    "equal"sv,
+    "equalmonospace"sv,
+    "equalsmall"sv,
+    "equalsuperior"sv,
+    "equivalence"sv,
+    "erbopomofo"sv,
+    "ercyrillic"sv,
+    "ereversed"sv,
+    "ereversedcyrillic"sv,
+    "escyrillic"sv,
+    "esdescendercyrillic"sv,
+    "esh"sv,
+    "eshcurl"sv,
+    "eshortdeva"sv,
+    "eshortvowelsigndeva"sv,
+    "eshreversedloop"sv,
+    "eshsquatreversed"sv,
+    "esmallhiragana"sv,
+    "esmallkatakana"sv,
+    "esmallkatakanahalfwidth"sv,
+    "estimated"sv,
+    "esuperior"sv,
+    "eta"sv,
+    "etarmenian"sv,
+    "etatonos"sv,
+    "eth"sv,
+    "etilde"sv,
+    "etildebelow"sv,
+    "etnahtafoukhhebrew"sv,
+    "etnahtafoukhlefthebrew"sv,
+    "etnahtahebrew"sv,
+    "etnahtalefthebrew"sv,
+    "eturned"sv,
+    "eukorean"sv,
+    "euro"sv,
+    "evowelsignbengali"sv,
+    "evowelsigndeva"sv,
+    "evowelsigngujarati"sv,
+    "exclam"sv,
+    "exclamarmenian"sv,
+    "exclamdbl"sv,
+    "exclamdown"sv,
+    "exclamdownsmall"sv,
+    "exclammonospace"sv,
+    "exclamsmall"sv,
+    "existential"sv,
+    "ezh"sv,
+    "ezhcaron"sv,
+    "ezhcurl"sv,
+    "ezhreversed"sv,
+    "ezhtail"sv,
+    "f"sv,
+    "fadeva"sv,
+    "fagurmukhi"sv,
+    "fahrenheit"sv,
+    "fathaarabic"sv,
+    "fathalowarabic"sv,
+    "fathatanarabic"sv,
+    "fbopomofo"sv,
+    "fcircle"sv,
+    "fdotaccent"sv,
+    "feharabic"sv,
+    "feharmenian"sv,
+    "fehfinalarabic"sv,
+    "fehinitialarabic"sv,
+    "fehmedialarabic"sv,
+    "feicoptic"sv,
+    "female"sv,
+    "ff"sv,
+    "ffi"sv,
+    "ffl"sv,
+    "fi"sv,
+    "fifteencircle"sv,
+    "fifteenparen"sv,
+    "fifteenperiod"sv,
+    "figuredash"sv,
+    "filledbox"sv,
+    "filledrect"sv,
+    "finalkaf"sv,
+    "finalkafdagesh"sv,
+    "finalkafdageshhebrew"sv,
+    "finalkafhebrew"sv,
+    "finalkafqamats"sv,
+    "finalkafqamatshebrew"sv,
+    "finalkafsheva"sv,
+    "finalkafshevahebrew"sv,
+    "finalmem"sv,
+    "finalmemhebrew"sv,
+    "finalnun"sv,
+    "finalnunhebrew"sv,
+    "finalpe"sv,
+    "finalpehebrew"sv,
+    "finaltsadi"sv,
+    "finaltsadihebrew"sv,
+    "firsttonechinese"sv,
+    "fisheye"sv,
+    "fitacyrillic"sv,
+    "five"sv,
+    "fivearabic"sv,
+    "fivebengali"sv,
+    "fivecircle"sv,
+    "fivecircleinversesansserif"sv,
+    "fivedeva"sv,
+    "fiveeighths"sv,
+    "fivegujarati"sv,
+    "fivegurmukhi"sv,
+    "fivehackarabic"sv,
+    "fivehangzhou"sv,
+    "fiveideographicparen"sv,
+    "fiveinferior"sv,
+    "fivemonospace"sv,
+    "fiveoldstyle"sv,
+    "fiveparen"sv,
+    "fiveperiod"sv,
+    "fivepersian"sv,
+    "fiveroman"sv,
+    "fivesuperior"sv,
+    "fivethai"sv,
+    "fl"sv,
+    "florin"sv,
+    "fmonospace"sv,
+    "fmsquare"sv,
+    "fofanthai"sv,
+    "fofathai"sv,
+    "fongmanthai"sv,
+    "forall"sv,
+    "four"sv,
+    "fourarabic"sv,
+    "fourbengali"sv,
+    "fourcircle"sv,
+    "fourcircleinversesansserif"sv,
+    "fourdeva"sv,
+    "fourgujarati"sv,
+    "fourgurmukhi"sv,
+    "fourhackarabic"sv,
+    "fourhangzhou"sv,
+    "fourideographicparen"sv,
+    "fourinferior"sv,
+    "fourmonospace"sv,
+    "fournumeratorbengali"sv,
+    "fouroldstyle"sv,
+    "fourparen"sv,
+    "fourperiod"sv,
+    "fourpersian"sv,
+    "fourroman"sv,
+    "foursuperior"sv,
+    "fourteencircle"sv,
+    "fourteenparen"sv,
+    "fourteenperiod"sv,
+    "fourthai"sv,
+    "fourthtonechinese"sv,
+    "fparen"sv,
+    "fraction"sv,
+    "franc"sv,
+    "g"sv,
+    "gabengali"sv,
+    "gacute"sv,
+    "gadeva"sv,
+    "gafarabic"sv,
+    "gaffinalarabic"sv,
+    "gafinitialarabic"sv,
+    "gafmedialarabic"sv,
+    "gagujarati"sv,
+    "gagurmukhi"sv,
+    "gahiragana"sv,
+    "gakatakana"sv,
+    "gamma"sv,
+    "gammalatinsmall"sv,
+    "gammasuperior"sv,
+    "gangiacoptic"sv,
+    "gbopomofo"sv,
+    "gbreve"sv,
+    "gcaron"sv,
+    "gcedilla"sv,
+    "gcircle"sv,
+    "gcircumflex"sv,
+    "gcommaaccent"sv,
+    "gdot"sv,
+    "gdotaccent"sv,
+    "gecyrillic"sv,
+    "gehiragana"sv,
+    "gekatakana"sv,
+    "geometricallyequal"sv,
+    "gereshaccenthebrew"sv,
+    "gereshhebrew"sv,
+    "gereshmuqdamhebrew"sv,
+    "germandbls"sv,
+    "gershayimaccenthebrew"sv,
+    "gershayimhebrew"sv,
+    "getamark"sv,
+    "ghabengali"sv,
+    "ghadarmenian"sv,
+    "ghadeva"sv,
+    "ghagujarati"sv,
+    "ghagurmukhi"sv,
+    "ghainarabic"sv,
+    "ghainfinalarabic"sv,
+    "ghaininitialarabic"sv,
+    "ghainmedialarabic"sv,
+    "ghemiddlehookcyrillic"sv,
+    "ghestrokecyrillic"sv,
+    "gheupturncyrillic"sv,
+    "ghhadeva"sv,
+    "ghhagurmukhi"sv,
+    "ghook"sv,
+    "ghzsquare"sv,
+    "gihiragana"sv,
+    "gikatakana"sv,
+    "gimarmenian"sv,
+    "gimel"sv,
+    "gimeldagesh"sv,
+    "gimeldageshhebrew"sv,
+    "gimelhebrew"sv,
+    "gjecyrillic"sv,
+    "glottalinvertedstroke"sv,
+    "glottalstop"sv,
+    "glottalstopinverted"sv,
+    "glottalstopmod"sv,
+    "glottalstopreversed"sv,
+    "glottalstopreversedmod"sv,
+    "glottalstopreversedsuperior"sv,
+    "glottalstopstroke"sv,
+    "glottalstopstrokereversed"sv,
+    "gmacron"sv,
+    "gmonospace"sv,
+    "gohiragana"sv,
+    "gokatakana"sv,
+    "gparen"sv,
+    "gpasquare"sv,
+    "gradient"sv,
+    "grave"sv,
+    "gravebelowcmb"sv,
+    "gravecmb"sv,
+    "gravecomb"sv,
+    "gravedeva"sv,
+    "gravelowmod"sv,
+    "gravemonospace"sv,
+    "gravetonecmb"sv,
+    "greater"sv,
+    "greaterequal"sv,
+    "greaterequalorless"sv,
+    "greatermonospace"sv,
+    "greaterorequivalent"sv,
+    "greaterorless"sv,
+    "greateroverequal"sv,
+    "greatersmall"sv,
+    "gscript"sv,
+    "gstroke"sv,
+    "guhiragana"sv,
+    "guillemotleft"sv,
+    "guillemotright"sv,
+    "guilsinglleft"sv,
+    "guilsinglright"sv,
+    "gukatakana"sv,
+    "guramusquare"sv,
+    "gysquare"sv,
+    "h"sv,
+    "haabkhasiancyrillic"sv,
+    "haaltonearabic"sv,
+    "habengali"sv,
+    "hadescendercyrillic"sv,
+    "hadeva"sv,
+    "hagujarati"sv,
+    "hagurmukhi"sv,
+    "haharabic"sv,
+    "hahfinalarabic"sv,
+    "hahinitialarabic"sv,
+    "hahiragana"sv,
+    "hahmedialarabic"sv,
+    "haitusquare"sv,
+    "hakatakana"sv,
+    "hakatakanahalfwidth"sv,
+    "halantgurmukhi"sv,
+    "hamzaarabic"sv,
+    "hamzadammaarabic"sv,
+    "hamzadammatanarabic"sv,
+    "hamzafathaarabic"sv,
+    "hamzafathatanarabic"sv,
+    "hamzalowarabic"sv,
+    "hamzalowkasraarabic"sv,
+    "hamzalowkasratanarabic"sv,
+    "hamzasukunarabic"sv,
+    "hangulfiller"sv,
+    "hardsigncyrillic"sv,
+    "harpoonleftbarbup"sv,
+    "harpoonrightbarbup"sv,
+    "hasquare"sv,
+    "hatafpatah"sv,
+    "hatafpatah16"sv,
+    "hatafpatah23"sv,
+    "hatafpatah2f"sv,
+    "hatafpatahhebrew"sv,
+    "hatafpatahnarrowhebrew"sv,
+    "hatafpatahquarterhebrew"sv,
+    "hatafpatahwidehebrew"sv,
+    "hatafqamats"sv,
+    "hatafqamats1b"sv,
+    "hatafqamats28"sv,
+    "hatafqamats34"sv,
+    "hatafqamatshebrew"sv,
+    "hatafqamatsnarrowhebrew"sv,
+    "hatafqamatsquarterhebrew"sv,
+    "hatafqamatswidehebrew"sv,
+    "hatafsegol"sv,
+    "hatafsegol17"sv,
+    "hatafsegol24"sv,
+    "hatafsegol30"sv,
+    "hatafsegolhebrew"sv,
+    "hatafsegolnarrowhebrew"sv,
+    "hatafsegolquarterhebrew"sv,
+    "hatafsegolwidehebrew"sv,
+    "hbar"sv,
+    "hbopomofo"sv,
+    "hbrevebelow"sv,
+    "hcedilla"sv,
+    "hcircle"sv,
+    "hcircumflex"sv,
+    "hdieresis"sv,
+    "hdotaccent"sv,
+    "hdotbelow"sv,
+    "he"sv,
+    "heart"sv,
+    "heartsuitblack"sv,
+    "heartsuitwhite"sv,
+    "hedagesh"sv,
+    "hedageshhebrew"sv,
+    "hehaltonearabic"sv,
+    "heharabic"sv,
+    "hehebrew"sv,
+    "hehfinalaltonearabic"sv,
+    "hehfinalalttwoarabic"sv,
+    "hehfinalarabic"sv,
+    "hehhamzaabovefinalarabic"sv,
+    "hehhamzaaboveisolatedarabic"sv,
+    "hehinitialaltonearabic"sv,
+    "hehinitialarabic"sv,
+    "hehiragana"sv,
+    "hehmedialaltonearabic"sv,
+    "hehmedialarabic"sv,
+    "heiseierasquare"sv,
+    "hekatakana"sv,
+    "hekatakanahalfwidth"sv,
+    "hekutaarusquare"sv,
+    "henghook"sv,
+    "herutusquare"sv,
+    "het"sv,
+    "hethebrew"sv,
+    "hhook"sv,
+    "hhooksuperior"sv,
+    "hieuhacirclekorean"sv,
+    "hieuhaparenkorean"sv,
+    "hieuhcirclekorean"sv,
+    "hieuhkorean"sv,
+    "hieuhparenkorean"sv,
+    "hihiragana"sv,
+    "hikatakana"sv,
+    "hikatakanahalfwidth"sv,
+    "hiriq"sv,
+    "hiriq14"sv,
+    "hiriq21"sv,
+    "hiriq2d"sv,
+    "hiriqhebrew"sv,
+    "hiriqnarrowhebrew"sv,
+    "hiriqquarterhebrew"sv,
+    "hiriqwidehebrew"sv,
+    "hlinebelow"sv,
+    "hmonospace"sv,
+    "hoarmenian"sv,
+    "hohipthai"sv,
+    "hohiragana"sv,
+    "hokatakana"sv,
+    "hokatakanahalfwidth"sv,
+    "holam"sv,
+    "holam19"sv,
+    "holam26"sv,
+    "holam32"sv,
+    "holamhebrew"sv,
+    "holamnarrowhebrew"sv,
+    "holamquarterhebrew"sv,
+    "holamwidehebrew"sv,
+    "honokhukthai"sv,
+    "hookabovecomb"sv,
+    "hookcmb"sv,
+    "hookpalatalizedbelowcmb"sv,
+    "hookretroflexbelowcmb"sv,
+    "hoonsquare"sv,
+    "horicoptic"sv,
+    "horizontalbar"sv,
+    "horncmb"sv,
+    "hotsprings"sv,
+    "house"sv,
+    "hparen"sv,
+    "hsuperior"sv,
+    "hturned"sv,
+    "huhiragana"sv,
+    "huiitosquare"sv,
+    "hukatakana"sv,
+    "hukatakanahalfwidth"sv,
+    "hungarumlaut"sv,
+    "hungarumlautcmb"sv,
+    "hv"sv,
+    "hyphen"sv,
+    "hypheninferior"sv,
+    "hyphenmonospace"sv,
+    "hyphensmall"sv,
+    "hyphensuperior"sv,
+    "hyphentwo"sv,
+    "i"sv,
+    "iacute"sv,
+    "iacyrillic"sv,
+    "ibengali"sv,
+    "ibopomofo"sv,
+    "ibreve"sv,
+    "icaron"sv,
+    "icircle"sv,
+    "icircumflex"sv,
+    "icyrillic"sv,
+    "idblgrave"sv,
+    "ideographearthcircle"sv,
+    "ideographfirecircle"sv,
+    "ideographicallianceparen"sv,
+    "ideographiccallparen"sv,
+    "ideographiccentrecircle"sv,
+    "ideographicclose"sv,
+    "ideographiccomma"sv,
+    "ideographiccommaleft"sv,
+    "ideographiccongratulationparen"sv,
+    "ideographiccorrectcircle"sv,
+    "ideographicearthparen"sv,
+    "ideographicenterpriseparen"sv,
+    "ideographicexcellentcircle"sv,
+    "ideographicfestivalparen"sv,
+    "ideographicfinancialcircle"sv,
+    "ideographicfinancialparen"sv,
+    "ideographicfireparen"sv,
+    "ideographichaveparen"sv,
+    "ideographichighcircle"sv,
+    "ideographiciterationmark"sv,
+    "ideographiclaborcircle"sv,
+    "ideographiclaborparen"sv,
+    "ideographicleftcircle"sv,
+    "ideographiclowcircle"sv,
+    "ideographicmedicinecircle"sv,
+    "ideographicmetalparen"sv,
+    "ideographicmoonparen"sv,
+    "ideographicnameparen"sv,
+    "ideographicperiod"sv,
+    "ideographicprintcircle"sv,
+    "ideographicreachparen"sv,
+    "ideographicrepresentparen"sv,
+    "ideographicresourceparen"sv,
+    "ideographicrightcircle"sv,
+    "ideographicsecretcircle"sv,
+    "ideographicselfparen"sv,
+    "ideographicsocietyparen"sv,
+    "ideographicspace"sv,
+    "ideographicspecialparen"sv,
+    "ideographicstockparen"sv,
+    "ideographicstudyparen"sv,
+    "ideographicsunparen"sv,
+    "ideographicsuperviseparen"sv,
+    "ideographicwaterparen"sv,
+    "ideographicwoodparen"sv,
+    "ideographiczero"sv,
+    "ideographmetalcircle"sv,
+    "ideographmooncircle"sv,
+    "ideographnamecircle"sv,
+    "ideographsuncircle"sv,
+    "ideographwatercircle"sv,
+    "ideographwoodcircle"sv,
+    "ideva"sv,
+    "idieresis"sv,
+    "idieresisacute"sv,
+    "idieresiscyrillic"sv,
+    "idotbelow"sv,
+    "iebrevecyrillic"sv,
+    "iecyrillic"sv,
+    "ieungacirclekorean"sv,
+    "ieungaparenkorean"sv,
+    "ieungcirclekorean"sv,
+    "ieungkorean"sv,
+    "ieungparenkorean"sv,
+    "igrave"sv,
+    "igujarati"sv,
+    "igurmukhi"sv,
+    "ihiragana"sv,
+    "ihookabove"sv,
+    "iibengali"sv,
+    "iicyrillic"sv,
+    "iideva"sv,
+    "iigujarati"sv,
+    "iigurmukhi"sv,
+    "iimatragurmukhi"sv,
+    "iinvertedbreve"sv,
+    "iishortcyrillic"sv,
+    "iivowelsignbengali"sv,
+    "iivowelsigndeva"sv,
+    "iivowelsigngujarati"sv,
+    "ij"sv,
+    "ikatakana"sv,
+    "ikatakanahalfwidth"sv,
+    "ikorean"sv,
+    "ilde"sv,
+    "iluyhebrew"sv,
+    "imacron"sv,
+    "imacroncyrillic"sv,
+    "imageorapproximatelyequal"sv,
+    "imatragurmukhi"sv,
+    "imonospace"sv,
+    "increment"sv,
+    "infinity"sv,
+    "iniarmenian"sv,
+    "integral"sv,
+    "integralbottom"sv,
+    "integralbt"sv,
+    "integralex"sv,
+    "integraltop"sv,
+    "integraltp"sv,
+    "intersection"sv,
+    "intisquare"sv,
+    "invbullet"sv,
+    "invcircle"sv,
+    "invsmileface"sv,
+    "iocyrillic"sv,
+    "iogonek"sv,
+    "iota"sv,
+    "iotadieresis"sv,
+    "iotadieresistonos"sv,
+    "iotalatin"sv,
+    "iotatonos"sv,
+    "iparen"sv,
+    "irigurmukhi"sv,
+    "ismallhiragana"sv,
+    "ismallkatakana"sv,
+    "ismallkatakanahalfwidth"sv,
+    "issharbengali"sv,
+    "istroke"sv,
+    "isuperior"sv,
+    "iterationhiragana"sv,
+    "iterationkatakana"sv,
+    "itilde"sv,
+    "itildebelow"sv,
+    "iubopomofo"sv,
+    "iucyrillic"sv,
+    "ivowelsignbengali"sv,
+    "ivowelsigndeva"sv,
+    "ivowelsigngujarati"sv,
+    "izhitsacyrillic"sv,
+    "izhitsadblgravecyrillic"sv,
+    "j"sv,
+    "jaarmenian"sv,
+    "jabengali"sv,
+    "jadeva"sv,
+    "jagujarati"sv,
+    "jagurmukhi"sv,
+    "jbopomofo"sv,
+    "jcaron"sv,
+    "jcircle"sv,
+    "jcircumflex"sv,
+    "jcrossedtail"sv,
+    "jdotlessstroke"sv,
+    "jecyrillic"sv,
+    "jeemarabic"sv,
+    "jeemfinalarabic"sv,
+    "jeeminitialarabic"sv,
+    "jeemmedialarabic"sv,
+    "jeharabic"sv,
+    "jehfinalarabic"sv,
+    "jhabengali"sv,
+    "jhadeva"sv,
+    "jhagujarati"sv,
+    "jhagurmukhi"sv,
+    "jheharmenian"sv,
+    "jis"sv,
+    "jmonospace"sv,
+    "jparen"sv,
+    "jsuperior"sv,
+    "k"sv,
+    "kabashkircyrillic"sv,
+    "kabengali"sv,
+    "kacute"sv,
+    "kacyrillic"sv,
+    "kadescendercyrillic"sv,
+    "kadeva"sv,
+    "kaf"sv,
+    "kafarabic"sv,
+    "kafdagesh"sv,
+    "kafdageshhebrew"sv,
+    "kaffinalarabic"sv,
+    "kafhebrew"sv,
+    "kafinitialarabic"sv,
+    "kafmedialarabic"sv,
+    "kafrafehebrew"sv,
+    "kagujarati"sv,
+    "kagurmukhi"sv,
+    "kahiragana"sv,
+    "kahookcyrillic"sv,
+    "kakatakana"sv,
+    "kakatakanahalfwidth"sv,
+    "kappa"sv,
+    "kappasymbolgreek"sv,
+    "kapyeounmieumkorean"sv,
+    "kapyeounphieuphkorean"sv,
+    "kapyeounpieupkorean"sv,
+    "kapyeounssangpieupkorean"sv,
+    "karoriisquare"sv,
+    "kashidaautoarabic"sv,
+    "kashidaautonosidebearingarabic"sv,
+    "kasmallkatakana"sv,
+    "kasquare"sv,
+    "kasraarabic"sv,
+    "kasratanarabic"sv,
+    "kastrokecyrillic"sv,
+    "katahiraprolongmarkhalfwidth"sv,
+    "kaverticalstrokecyrillic"sv,
+    "kbopomofo"sv,
+    "kcalsquare"sv,
+    "kcaron"sv,
+    "kcedilla"sv,
+    "kcircle"sv,
+    "kcommaaccent"sv,
+    "kdotbelow"sv,
+    "keharmenian"sv,
+    "kehiragana"sv,
+    "kekatakana"sv,
+    "kekatakanahalfwidth"sv,
+    "kenarmenian"sv,
+    "kesmallkatakana"sv,
+    "kgreenlandic"sv,
+    "khabengali"sv,
+    "khacyrillic"sv,
+    "khadeva"sv,
+    "khagujarati"sv,
+    "khagurmukhi"sv,
+    "khaharabic"sv,
+    "khahfinalarabic"sv,
+    "khahinitialarabic"sv,
+    "khahmedialarabic"sv,
+    "kheicoptic"sv,
+    "khhadeva"sv,
+    "khhagurmukhi"sv,
+    "khieukhacirclekorean"sv,
+    "khieukhaparenkorean"sv,
+    "khieukhcirclekorean"sv,
+    "khieukhkorean"sv,
+    "khieukhparenkorean"sv,
+    "khokhaithai"sv,
+    "khokhonthai"sv,
+    "khokhuatthai"sv,
+    "khokhwaithai"sv,
+    "khomutthai"sv,
+    "khook"sv,
+    "khorakhangthai"sv,
+    "khzsquare"sv,
+    "kihiragana"sv,
+    "kikatakana"sv,
+    "kikatakanahalfwidth"sv,
+    "kiroguramusquare"sv,
+    "kiromeetorusquare"sv,
+    "kirosquare"sv,
+    "kiyeokacirclekorean"sv,
+    "kiyeokaparenkorean"sv,
+    "kiyeokcirclekorean"sv,
+    "kiyeokkorean"sv,
+    "kiyeokparenkorean"sv,
+    "kiyeoksioskorean"sv,
+    "kjecyrillic"sv,
+    "klinebelow"sv,
+    "klsquare"sv,
+    "kmcubedsquare"sv,
+    "kmonospace"sv,
+    "kmsquaredsquare"sv,
+    "kohiragana"sv,
+    "kohmsquare"sv,
+    "kokaithai"sv,
+    "kokatakana"sv,
+    "kokatakanahalfwidth"sv,
+    "kooposquare"sv,
+    "koppacyrillic"sv,
+    "koreanstandardsymbol"sv,
+    "koroniscmb"sv,
+    "kparen"sv,
+    "kpasquare"sv,
+    "ksicyrillic"sv,
+    "ktsquare"sv,
+    "kturned"sv,
+    "kuhiragana"sv,
+    "kukatakana"sv,
+    "kukatakanahalfwidth"sv,
+    "kvsquare"sv,
+    "kwsquare"sv,
+    "l"sv,
+    "labengali"sv,
+    "lacute"sv,
+    "ladeva"sv,
+    "lagujarati"sv,
+    "lagurmukhi"sv,
+    "lakkhangyaothai"sv,
+    "lamaleffinalarabic"sv,
+    "lamalefhamzaabovefinalarabic"sv,
+    "lamalefhamzaaboveisolatedarabic"sv,
+    "lamalefhamzabelowfinalarabic"sv,
+    "lamalefhamzabelowisolatedarabic"sv,
+    "lamalefisolatedarabic"sv,
+    "lamalefmaddaabovefinalarabic"sv,
+    "lamalefmaddaaboveisolatedarabic"sv,
+    "lamarabic"sv,
+    "lambda"sv,
+    "lambdastroke"sv,
+    "lamed"sv,
+    "lameddagesh"sv,
+    "lameddageshhebrew"sv,
+    "lamedhebrew"sv,
+    "lamedholam"sv,
+    "lamedholamdagesh"sv,
+    "lamedholamdageshhebrew"sv,
+    "lamedholamhebrew"sv,
+    "lamfinalarabic"sv,
+    "lamhahinitialarabic"sv,
+    "laminitialarabic"sv,
+    "lamjeeminitialarabic"sv,
+    "lamkhahinitialarabic"sv,
+    "lamlamhehisolatedarabic"sv,
+    "lammedialarabic"sv,
+    "lammeemhahinitialarabic"sv,
+    "lammeeminitialarabic"sv,
+    "lammeemjeeminitialarabic"sv,
+    "lammeemkhahinitialarabic"sv,
+    "largecircle"sv,
+    "lbar"sv,
+    "lbelt"sv,
+    "lbopomofo"sv,
+    "lcaron"sv,
+    "lcedilla"sv,
+    "lcircle"sv,
+    "lcircumflexbelow"sv,
+    "lcommaaccent"sv,
+    "ldot"sv,
+    "ldotaccent"sv,
+    "ldotbelow"sv,
+    "ldotbelowmacron"sv,
+    "leftangleabovecmb"sv,
+    "lefttackbelowcmb"sv,
+    "less"sv,
+    "lessequal"sv,
+    "lessequalorgreater"sv,
+    "lessmonospace"sv,
+    "lessorequivalent"sv,
+    "lessorgreater"sv,
+    "lessoverequal"sv,
+    "lesssmall"sv,
+    "lezh"sv,
+    "lfblock"sv,
+    "lhookretroflex"sv,
+    "lira"sv,
+    "liwnarmenian"sv,
+    "lj"sv,
+    "ljecyrillic"sv,
+    "ll"sv,
+    "lladeva"sv,
+    "llagujarati"sv,
+    "llinebelow"sv,
+    "llladeva"sv,
+    "llvocalicbengali"sv,
+    "llvocalicdeva"sv,
+    "llvocalicvowelsignbengali"sv,
+    "llvocalicvowelsigndeva"sv,
+    "lmiddletilde"sv,
+    "lmonospace"sv,
+    "lmsquare"sv,
+    "lochulathai"sv,
+    "logicaland"sv,
+    "logicalnot"sv,
+    "logicalnotreversed"sv,
+    "logicalor"sv,
+    "lolingthai"sv,
+    "longs"sv,
+    "lowlinecenterline"sv,
+    "lowlinecmb"sv,
+    "lowlinedashed"sv,
+    "lozenge"sv,
+    "lparen"sv,
+    "lslash"sv,
+    "lsquare"sv,
+    "lsuperior"sv,
+    "ltshade"sv,
+    "luthai"sv,
+    "lvocalicbengali"sv,
+    "lvocalicdeva"sv,
+    "lvocalicvowelsignbengali"sv,
+    "lvocalicvowelsigndeva"sv,
+    "lxsquare"sv,
+    "m"sv,
+    "mabengali"sv,
+    "macron"sv,
+    "macronbelowcmb"sv,
+    "macroncmb"sv,
+    "macronlowmod"sv,
+    "macronmonospace"sv,
+    "macute"sv,
+    "madeva"sv,
+    "magujarati"sv,
+    "magurmukhi"sv,
+    "mahapakhhebrew"sv,
+    "mahapakhlefthebrew"sv,
+    "mahiragana"sv,
+    "maichattawalowleftthai"sv,
+    "maichattawalowrightthai"sv,
+    "maichattawathai"sv,
+    "maichattawaupperleftthai"sv,
+    "maieklowleftthai"sv,
+    "maieklowrightthai"sv,
+    "maiekthai"sv,
+    "maiekupperleftthai"sv,
+    "maihanakatleftthai"sv,
+    "maihanakatthai"sv,
+    "maitaikhuleftthai"sv,
+    "maitaikhuthai"sv,
+    "maitholowleftthai"sv,
+    "maitholowrightthai"sv,
+    "maithothai"sv,
+    "maithoupperleftthai"sv,
+    "maitrilowleftthai"sv,
+    "maitrilowrightthai"sv,
+    "maitrithai"sv,
+    "maitriupperleftthai"sv,
+    "maiyamokthai"sv,
+    "makatakana"sv,
+    "makatakanahalfwidth"sv,
+    "male"sv,
+    "mansyonsquare"sv,
+    "maqafhebrew"sv,
+    "mars"sv,
+    "masoracirclehebrew"sv,
+    "masquare"sv,
+    "mbopomofo"sv,
+    "mbsquare"sv,
+    "mcircle"sv,
+    "mcubedsquare"sv,
+    "mdotaccent"sv,
+    "mdotbelow"sv,
+    "meemarabic"sv,
+    "meemfinalarabic"sv,
+    "meeminitialarabic"sv,
+    "meemmedialarabic"sv,
+    "meemmeeminitialarabic"sv,
+    "meemmeemisolatedarabic"sv,
+    "meetorusquare"sv,
+    "mehiragana"sv,
+    "meizierasquare"sv,
+    "mekatakana"sv,
+    "mekatakanahalfwidth"sv,
+    "mem"sv,
+    "memdagesh"sv,
+    "memdageshhebrew"sv,
+    "memhebrew"sv,
+    "menarmenian"sv,
+    "merkhahebrew"sv,
+    "merkhakefulahebrew"sv,
+    "merkhakefulalefthebrew"sv,
+    "merkhalefthebrew"sv,
+    "mhook"sv,
+    "mhzsquare"sv,
+    "middledotkatakanahalfwidth"sv,
+    "middot"sv,
+    "mieumacirclekorean"sv,
+    "mieumaparenkorean"sv,
+    "mieumcirclekorean"sv,
+    "mieumkorean"sv,
+    "mieumpansioskorean"sv,
+    "mieumparenkorean"sv,
+    "mieumpieupkorean"sv,
+    "mieumsioskorean"sv,
+    "mihiragana"sv,
+    "mikatakana"sv,
+    "mikatakanahalfwidth"sv,
+    "minus"sv,
+    "minusbelowcmb"sv,
+    "minuscircle"sv,
+    "minusmod"sv,
+    "minusplus"sv,
+    "minute"sv,
+    "miribaarusquare"sv,
+    "mirisquare"sv,
+    "mlonglegturned"sv,
+    "mlsquare"sv,
+    "mmcubedsquare"sv,
+    "mmonospace"sv,
+    "mmsquaredsquare"sv,
+    "mohiragana"sv,
+    "mohmsquare"sv,
+    "mokatakana"sv,
+    "mokatakanahalfwidth"sv,
+    "molsquare"sv,
+    "momathai"sv,
+    "moverssquare"sv,
+    "moverssquaredsquare"sv,
+    "mparen"sv,
+    "mpasquare"sv,
+    "mssquare"sv,
+    "msuperior"sv,
+    "mturned"sv,
+    "mu"sv,
+    "mu1"sv,
+    "muasquare"sv,
+    "muchgreater"sv,
+    "muchless"sv,
+    "mufsquare"sv,
+    "mugreek"sv,
+    "mugsquare"sv,
+    "muhiragana"sv,
+    "mukatakana"sv,
+    "mukatakanahalfwidth"sv,
+    "mulsquare"sv,
+    "multiply"sv,
+    "mumsquare"sv,
+    "munahhebrew"sv,
+    "munahlefthebrew"sv,
+    "musicalnote"sv,
+    "musicalnotedbl"sv,
+    "musicflatsign"sv,
+    "musicsharpsign"sv,
+    "mussquare"sv,
+    "muvsquare"sv,
+    "muwsquare"sv,
+    "mvmegasquare"sv,
+    "mvsquare"sv,
+    "mwmegasquare"sv,
+    "mwsquare"sv,
+    "n"sv,
+    "nabengali"sv,
+    "nabla"sv,
+    "nacute"sv,
+    "nadeva"sv,
+    "nagujarati"sv,
+    "nagurmukhi"sv,
+    "nahiragana"sv,
+    "nakatakana"sv,
+    "nakatakanahalfwidth"sv,
+    "napostrophe"sv,
+    "nasquare"sv,
+    "nbopomofo"sv,
+    "nbspace"sv,
+    "ncaron"sv,
+    "ncedilla"sv,
+    "ncircle"sv,
+    "ncircumflexbelow"sv,
+    "ncommaaccent"sv,
+    "ndotaccent"sv,
+    "ndotbelow"sv,
+    "nehiragana"sv,
+    "nekatakana"sv,
+    "nekatakanahalfwidth"sv,
+    "newsheqelsign"sv,
+    "nfsquare"sv,
+    "ngabengali"sv,
+    "ngadeva"sv,
+    "ngagujarati"sv,
+    "ngagurmukhi"sv,
+    "ngonguthai"sv,
+    "nhiragana"sv,
+    "nhookleft"sv,
+    "nhookretroflex"sv,
+    "nieunacirclekorean"sv,
+    "nieunaparenkorean"sv,
+    "nieuncieuckorean"sv,
+    "nieuncirclekorean"sv,
+    "nieunhieuhkorean"sv,
+    "nieunkorean"sv,
+    "nieunpansioskorean"sv,
+    "nieunparenkorean"sv,
+    "nieunsioskorean"sv,
+    "nieuntikeutkorean"sv,
+    "nihiragana"sv,
+    "nikatakana"sv,
+    "nikatakanahalfwidth"sv,
+    "nikhahitleftthai"sv,
+    "nikhahitthai"sv,
+    "nine"sv,
+    "ninearabic"sv,
+    "ninebengali"sv,
+    "ninecircle"sv,
+    "ninecircleinversesansserif"sv,
+    "ninedeva"sv,
+    "ninegujarati"sv,
+    "ninegurmukhi"sv,
+    "ninehackarabic"sv,
+    "ninehangzhou"sv,
+    "nineideographicparen"sv,
+    "nineinferior"sv,
+    "ninemonospace"sv,
+    "nineoldstyle"sv,
+    "nineparen"sv,
+    "nineperiod"sv,
+    "ninepersian"sv,
+    "nineroman"sv,
+    "ninesuperior"sv,
+    "nineteencircle"sv,
+    "nineteenparen"sv,
+    "nineteenperiod"sv,
+    "ninethai"sv,
+    "nj"sv,
+    "njecyrillic"sv,
+    "nkatakana"sv,
+    "nkatakanahalfwidth"sv,
+    "nlegrightlong"sv,
+    "nlinebelow"sv,
+    "nmonospace"sv,
+    "nmsquare"sv,
+    "nnabengali"sv,
+    "nnadeva"sv,
+    "nnagujarati"sv,
+    "nnagurmukhi"sv,
+    "nnnadeva"sv,
+    "nohiragana"sv,
+    "nokatakana"sv,
+    "nokatakanahalfwidth"sv,
+    "nonbreakingspace"sv,
+    "nonenthai"sv,
+    "nonuthai"sv,
+    "noonarabic"sv,
+    "noonfinalarabic"sv,
+    "noonghunnaarabic"sv,
+    "noonghunnafinalarabic"sv,
+    "noonhehinitialarabic"sv,
+    "nooninitialarabic"sv,
+    "noonjeeminitialarabic"sv,
+    "noonjeemisolatedarabic"sv,
+    "noonmedialarabic"sv,
+    "noonmeeminitialarabic"sv,
+    "noonmeemisolatedarabic"sv,
+    "noonnoonfinalarabic"sv,
+    "notcontains"sv,
+    "notelement"sv,
+    "notelementof"sv,
+    "notequal"sv,
+    "notgreater"sv,
+    "notgreaternorequal"sv,
+    "notgreaternorless"sv,
+    "notidentical"sv,
+    "notless"sv,
+    "notlessnorequal"sv,
+    "notparallel"sv,
+    "notprecedes"sv,
+    "notsubset"sv,
+    "notsucceeds"sv,
+    "notsuperset"sv,
+    "nowarmenian"sv,
+    "nparen"sv,
+    "nssquare"sv,
+    "nsuperior"sv,
+    "ntilde"sv,
+    "nu"sv,
+    "nuhiragana"sv,
+    "nukatakana"sv,
+    "nukatakanahalfwidth"sv,
+    "nuktabengali"sv,
+    "nuktadeva"sv,
+    "nuktagujarati"sv,
+    "nuktagurmukhi"sv,
+    "numbersign"sv,
+    "numbersignmonospace"sv,
+    "numbersignsmall"sv,
+    "numeralsigngreek"sv,
+    "numeralsignlowergreek"sv,
+    "numero"sv,
+    "nun"sv,
+    "nundagesh"sv,
+    "nundageshhebrew"sv,
+    "nunhebrew"sv,
+    "nvsquare"sv,
+    "nwsquare"sv,
+    "nyabengali"sv,
+    "nyadeva"sv,
+    "nyagujarati"sv,
+    "nyagurmukhi"sv,
+    "o"sv,
+    "oacute"sv,
+    "oangthai"sv,
+    "obarred"sv,
+    "obarredcyrillic"sv,
+    "obarreddieresiscyrillic"sv,
+    "obengali"sv,
+    "obopomofo"sv,
+    "obreve"sv,
+    "ocandradeva"sv,
+    "ocandragujarati"sv,
+    "ocandravowelsigndeva"sv,
+    "ocandravowelsigngujarati"sv,
+    "ocaron"sv,
+    "ocircle"sv,
+    "ocircumflex"sv,
+    "ocircumflexacute"sv,
+    "ocircumflexdotbelow"sv,
+    "ocircumflexgrave"sv,
+    "ocircumflexhookabove"sv,
+    "ocircumflextilde"sv,
+    "ocyrillic"sv,
+    "odblacute"sv,
+    "odblgrave"sv,
+    "odeva"sv,
+    "odieresis"sv,
+    "odieresiscyrillic"sv,
+    "odotbelow"sv,
+    "oe"sv,
+    "oekorean"sv,
+    "ogonek"sv,
+    "ogonekcmb"sv,
+    "ograve"sv,
+    "ogujarati"sv,
+    "oharmenian"sv,
+    "ohiragana"sv,
+    "ohookabove"sv,
+    "ohorn"sv,
+    "ohornacute"sv,
+    "ohorndotbelow"sv,
+    "ohorngrave"sv,
+    "ohornhookabove"sv,
+    "ohorntilde"sv,
+    "ohungarumlaut"sv,
+    "oi"sv,
+    "oinvertedbreve"sv,
+    "okatakana"sv,
+    "okatakanahalfwidth"sv,
+    "okorean"sv,
+    "olehebrew"sv,
+    "omacron"sv,
+    "omacronacute"sv,
+    "omacrongrave"sv,
+    "omdeva"sv,
+    "omega"sv,
+    "omega1"sv,
+    "omegacyrillic"sv,
+    "omegalatinclosed"sv,
+    "omegaroundcyrillic"sv,
+    "omegatitlocyrillic"sv,
+    "omegatonos"sv,
+    "omgujarati"sv,
+    "omicron"sv,
+    "omicrontonos"sv,
+    "omonospace"sv,
+    "one"sv,
+    "onearabic"sv,
+    "onebengali"sv,
+    "onecircle"sv,
+    "onecircleinversesansserif"sv,
+    "onedeva"sv,
+    "onedotenleader"sv,
+    "oneeighth"sv,
+    "onefitted"sv,
+    "onegujarati"sv,
+    "onegurmukhi"sv,
+    "onehackarabic"sv,
+    "onehalf"sv,
+    "onehangzhou"sv,
+    "oneideographicparen"sv,
+    "oneinferior"sv,
+    "onemonospace"sv,
+    "onenumeratorbengali"sv,
+    "oneoldstyle"sv,
+    "oneparen"sv,
+    "oneperiod"sv,
+    "onepersian"sv,
+    "onequarter"sv,
+    "oneroman"sv,
+    "onesuperior"sv,
+    "onethai"sv,
+    "onethird"sv,
+    "oogonek"sv,
+    "oogonekmacron"sv,
+    "oogurmukhi"sv,
+    "oomatragurmukhi"sv,
+    "oopen"sv,
+    "oparen"sv,
+    "openbullet"sv,
+    "option"sv,
+    "ordfeminine"sv,
+    "ordmasculine"sv,
+    "orthogonal"sv,
+    "oshortdeva"sv,
+    "oshortvowelsigndeva"sv,
+    "oslash"sv,
+    "oslashacute"sv,
+    "osmallhiragana"sv,
+    "osmallkatakana"sv,
+    "osmallkatakanahalfwidth"sv,
+    "ostrokeacute"sv,
+    "osuperior"sv,
+    "otcyrillic"sv,
+    "otilde"sv,
+    "otildeacute"sv,
+    "otildedieresis"sv,
+    "oubopomofo"sv,
+    "overline"sv,
+    "overlinecenterline"sv,
+    "overlinecmb"sv,
+    "overlinedashed"sv,
+    "overlinedblwavy"sv,
+    "overlinewavy"sv,
+    "overscore"sv,
+    "ovowelsignbengali"sv,
+    "ovowelsigndeva"sv,
+    "ovowelsigngujarati"sv,
+    "p"sv,
+    "paampssquare"sv,
+    "paasentosquare"sv,
+    "pabengali"sv,
+    "pacute"sv,
+    "padeva"sv,
+    "pagedown"sv,
+    "pageup"sv,
+    "pagujarati"sv,
+    "pagurmukhi"sv,
+    "pahiragana"sv,
+    "paiyannoithai"sv,
+    "pakatakana"sv,
+    "palatalizationcyrilliccmb"sv,
+    "palochkacyrillic"sv,
+    "pansioskorean"sv,
+    "paragraph"sv,
+    "parallel"sv,
+    "parenleft"sv,
+    "parenleftaltonearabic"sv,
+    "parenleftbt"sv,
+    "parenleftex"sv,
+    "parenleftinferior"sv,
+    "parenleftmonospace"sv,
+    "parenleftsmall"sv,
+    "parenleftsuperior"sv,
+    "parenlefttp"sv,
+    "parenleftvertical"sv,
+    "parenright"sv,
+    "parenrightaltonearabic"sv,
+    "parenrightbt"sv,
+    "parenrightex"sv,
+    "parenrightinferior"sv,
+    "parenrightmonospace"sv,
+    "parenrightsmall"sv,
+    "parenrightsuperior"sv,
+    "parenrighttp"sv,
+    "parenrightvertical"sv,
+    "partialdiff"sv,
+    "paseqhebrew"sv,
+    "pashtahebrew"sv,
+    "pasquare"sv,
+    "patah"sv,
+    "patah11"sv,
+    "patah1d"sv,
+    "patah2a"sv,
+    "patahhebrew"sv,
+    "patahnarrowhebrew"sv,
+    "patahquarterhebrew"sv,
+    "patahwidehebrew"sv,
+    "pazerhebrew"sv,
+    "pbopomofo"sv,
+    "pcircle"sv,
+    "pdotaccent"sv,
+    "pe"sv,
+    "pecyrillic"sv,
+    "pedagesh"sv,
+    "pedageshhebrew"sv,
+    "peezisquare"sv,
+    "pefinaldageshhebrew"sv,
+    "peharabic"sv,
+    "peharmenian"sv,
+    "pehebrew"sv,
+    "pehfinalarabic"sv,
+    "pehinitialarabic"sv,
+    "pehiragana"sv,
+    "pehmedialarabic"sv,
+    "pekatakana"sv,
+    "pemiddlehookcyrillic"sv,
+    "perafehebrew"sv,
+    "percent"sv,
+    "percentarabic"sv,
+    "percentmonospace"sv,
+    "percentsmall"sv,
+    "period"sv,
+    "periodarmenian"sv,
+    "periodcentered"sv,
+    "periodhalfwidth"sv,
+    "periodinferior"sv,
+    "periodmonospace"sv,
+    "periodsmall"sv,
+    "periodsuperior"sv,
+    "perispomenigreekcmb"sv,
+    "perpendicular"sv,
+    "perthousand"sv,
+    "peseta"sv,
+    "pfsquare"sv,
+    "phabengali"sv,
+    "phadeva"sv,
+    "phagujarati"sv,
+    "phagurmukhi"sv,
+    "phi"sv,
+    "phi1"sv,
+    "phieuphacirclekorean"sv,
+    "phieuphaparenkorean"sv,
+    "phieuphcirclekorean"sv,
+    "phieuphkorean"sv,
+    "phieuphparenkorean"sv,
+    "philatin"sv,
+    "phinthuthai"sv,
+    "phisymbolgreek"sv,
+    "phook"sv,
+    "phophanthai"sv,
+    "phophungthai"sv,
+    "phosamphaothai"sv,
+    "pi"sv,
+    "pieupacirclekorean"sv,
+    "pieupaparenkorean"sv,
+    "pieupcieuckorean"sv,
+    "pieupcirclekorean"sv,
+    "pieupkiyeokkorean"sv,
+    "pieupkorean"sv,
+    "pieupparenkorean"sv,
+    "pieupsioskiyeokkorean"sv,
+    "pieupsioskorean"sv,
+    "pieupsiostikeutkorean"sv,
+    "pieupthieuthkorean"sv,
+    "pieuptikeutkorean"sv,
+    "pihiragana"sv,
+    "pikatakana"sv,
+    "pisymbolgreek"sv,
+    "piwrarmenian"sv,
+    "plus"sv,
+    "plusbelowcmb"sv,
+    "pluscircle"sv,
+    "plusminus"sv,
+    "plusmod"sv,
+    "plusmonospace"sv,
+    "plussmall"sv,
+    "plussuperior"sv,
+    "pmonospace"sv,
+    "pmsquare"sv,
+    "pohiragana"sv,
+    "pointingindexdownwhite"sv,
+    "pointingindexleftwhite"sv,
+    "pointingindexrightwhite"sv,
+    "pointingindexupwhite"sv,
+    "pokatakana"sv,
+    "poplathai"sv,
+    "postalmark"sv,
+    "postalmarkface"sv,
+    "pparen"sv,
+    "precedes"sv,
+    "prescription"sv,
+    "primemod"sv,
+    "primereversed"sv,
+    "product"sv,
+    "projective"sv,
+    "prolongedkana"sv,
+    "propellor"sv,
+    "propersubset"sv,
+    "propersuperset"sv,
+    "proportion"sv,
+    "proportional"sv,
+    "psi"sv,
+    "psicyrillic"sv,
+    "psilipneumatacyrilliccmb"sv,
+    "pssquare"sv,
+    "puhiragana"sv,
+    "pukatakana"sv,
+    "pvsquare"sv,
+    "pwsquare"sv,
+    "q"sv,
+    "qadeva"sv,
+    "qadmahebrew"sv,
+    "qafarabic"sv,
+    "qaffinalarabic"sv,
+    "qafinitialarabic"sv,
+    "qafmedialarabic"sv,
+    "qamats"sv,
+    "qamats10"sv,
+    "qamats1a"sv,
+    "qamats1c"sv,
+    "qamats27"sv,
+    "qamats29"sv,
+    "qamats33"sv,
+    "qamatsde"sv,
+    "qamatshebrew"sv,
+    "qamatsnarrowhebrew"sv,
+    "qamatsqatanhebrew"sv,
+    "qamatsqatannarrowhebrew"sv,
+    "qamatsqatanquarterhebrew"sv,
+    "qamatsqatanwidehebrew"sv,
+    "qamatsquarterhebrew"sv,
+    "qamatswidehebrew"sv,
+    "qarneyparahebrew"sv,
+    "qbopomofo"sv,
+    "qcircle"sv,
+    "qhook"sv,
+    "qmonospace"sv,
+    "qof"sv,
+    "qofdagesh"sv,
+    "qofdageshhebrew"sv,
+    "qofhatafpatah"sv,
+    "qofhatafpatahhebrew"sv,
+    "qofhatafsegol"sv,
+    "qofhatafsegolhebrew"sv,
+    "qofhebrew"sv,
+    "qofhiriq"sv,
+    "qofhiriqhebrew"sv,
+    "qofholam"sv,
+    "qofholamhebrew"sv,
+    "qofpatah"sv,
+    "qofpatahhebrew"sv,
+    "qofqamats"sv,
+    "qofqamatshebrew"sv,
+    "qofqubuts"sv,
+    "qofqubutshebrew"sv,
+    "qofsegol"sv,
+    "qofsegolhebrew"sv,
+    "qofsheva"sv,
+    "qofshevahebrew"sv,
+    "qoftsere"sv,
+    "qoftserehebrew"sv,
+    "qparen"sv,
+    "quarternote"sv,
+    "qubuts"sv,
+    "qubuts18"sv,
+    "qubuts25"sv,
+    "qubuts31"sv,
+    "qubutshebrew"sv,
+    "qubutsnarrowhebrew"sv,
+    "qubutsquarterhebrew"sv,
+    "qubutswidehebrew"sv,
+    "question"sv,
+    "questionarabic"sv,
+    "questionarmenian"sv,
+    "questiondown"sv,
+    "questiondownsmall"sv,
+    "questiongreek"sv,
+    "questionmonospace"sv,
+    "questionsmall"sv,
+    "quotedbl"sv,
+    "quotedblbase"sv,
+    "quotedblleft"sv,
+    "quotedblmonospace"sv,
+    "quotedblprime"sv,
+    "quotedblprimereversed"sv,
+    "quotedblright"sv,
+    "quoteleft"sv,
+    "quoteleftreversed"sv,
+    "quotereversed"sv,
+    "quoteright"sv,
+    "quoterightn"sv,
+    "quotesinglbase"sv,
+    "quotesingle"sv,
+    "quotesinglemonospace"sv,
+    "r"sv,
+    "raarmenian"sv,
+    "rabengali"sv,
+    "racute"sv,
+    "radeva"sv,
+    "radical"sv,
+    "radicalex"sv,
+    "radoverssquare"sv,
+    "radoverssquaredsquare"sv,
+    "radsquare"sv,
+    "rafe"sv,
+    "rafehebrew"sv,
+    "ragujarati"sv,
+    "ragurmukhi"sv,
+    "rahiragana"sv,
+    "rakatakana"sv,
+    "rakatakanahalfwidth"sv,
+    "ralowerdiagonalbengali"sv,
+    "ramiddlediagonalbengali"sv,
+    "ramshorn"sv,
+    "ratio"sv,
+    "rbopomofo"sv,
+    "rcaron"sv,
+    "rcedilla"sv,
+    "rcircle"sv,
+    "rcommaaccent"sv,
+    "rdblgrave"sv,
+    "rdotaccent"sv,
+    "rdotbelow"sv,
+    "rdotbelowmacron"sv,
+    "referencemark"sv,
+    "reflexsubset"sv,
+    "reflexsuperset"sv,
+    "registered"sv,
+    "registersans"sv,
+    "registerserif"sv,
+    "reharabic"sv,
+    "reharmenian"sv,
+    "rehfinalarabic"sv,
+    "rehiragana"sv,
+    "rehyehaleflamarabic"sv,
+    "rekatakana"sv,
+    "rekatakanahalfwidth"sv,
+    "resh"sv,
+    "reshdageshhebrew"sv,
+    "reshhatafpatah"sv,
+    "reshhatafpatahhebrew"sv,
+    "reshhatafsegol"sv,
+    "reshhatafsegolhebrew"sv,
+    "reshhebrew"sv,
+    "reshhiriq"sv,
+    "reshhiriqhebrew"sv,
+    "reshholam"sv,
+    "reshholamhebrew"sv,
+    "reshpatah"sv,
+    "reshpatahhebrew"sv,
+    "reshqamats"sv,
+    "reshqamatshebrew"sv,
+    "reshqubuts"sv,
+    "reshqubutshebrew"sv,
+    "reshsegol"sv,
+    "reshsegolhebrew"sv,
+    "reshsheva"sv,
+    "reshshevahebrew"sv,
+    "reshtsere"sv,
+    "reshtserehebrew"sv,
+    "reversedtilde"sv,
+    "reviahebrew"sv,
+    "reviamugrashhebrew"sv,
+    "revlogicalnot"sv,
+    "rfishhook"sv,
+    "rfishhookreversed"sv,
+    "rhabengali"sv,
+    "rhadeva"sv,
+    "rho"sv,
+    "rhook"sv,
+    "rhookturned"sv,
+    "rhookturnedsuperior"sv,
+    "rhosymbolgreek"sv,
+    "rhotichookmod"sv,
+    "rieulacirclekorean"sv,
+    "rieulaparenkorean"sv,
+    "rieulcirclekorean"sv,
+    "rieulhieuhkorean"sv,
+    "rieulkiyeokkorean"sv,
+    "rieulkiyeoksioskorean"sv,
+    "rieulkorean"sv,
+    "rieulmieumkorean"sv,
+    "rieulpansioskorean"sv,
+    "rieulparenkorean"sv,
+    "rieulphieuphkorean"sv,
+    "rieulpieupkorean"sv,
+    "rieulpieupsioskorean"sv,
+    "rieulsioskorean"sv,
+    "rieulthieuthkorean"sv,
+    "rieultikeutkorean"sv,
+    "rieulyeorinhieuhkorean"sv,
+    "rightangle"sv,
+    "righttackbelowcmb"sv,
+    "righttriangle"sv,
+    "rihiragana"sv,
+    "rikatakana"sv,
+    "rikatakanahalfwidth"sv,
+    "ring"sv,
+    "ringbelowcmb"sv,
+    "ringcmb"sv,
+    "ringhalfleft"sv,
+    "ringhalfleftarmenian"sv,
+    "ringhalfleftbelowcmb"sv,
+    "ringhalfleftcentered"sv,
+    "ringhalfright"sv,
+    "ringhalfrightbelowcmb"sv,
+    "ringhalfrightcentered"sv,
+    "rinvertedbreve"sv,
+    "rittorusquare"sv,
+    "rlinebelow"sv,
+    "rlongleg"sv,
+    "rlonglegturned"sv,
+    "rmonospace"sv,
+    "rohiragana"sv,
+    "rokatakana"sv,
+    "rokatakanahalfwidth"sv,
+    "roruathai"sv,
+    "rparen"sv,
+    "rrabengali"sv,
+    "rradeva"sv,
+    "rragurmukhi"sv,
+    "rreharabic"sv,
+    "rrehfinalarabic"sv,
+    "rrvocalicbengali"sv,
+    "rrvocalicdeva"sv,
+    "rrvocalicgujarati"sv,
+    "rrvocalicvowelsignbengali"sv,
+    "rrvocalicvowelsigndeva"sv,
+    "rrvocalicvowelsigngujarati"sv,
+    "rsuperior"sv,
+    "rtblock"sv,
+    "rturned"sv,
+    "rturnedsuperior"sv,
+    "ruhiragana"sv,
+    "rukatakana"sv,
+    "rukatakanahalfwidth"sv,
+    "rupeemarkbengali"sv,
+    "rupeesignbengali"sv,
+    "rupiah"sv,
+    "ruthai"sv,
+    "rvocalicbengali"sv,
+    "rvocalicdeva"sv,
+    "rvocalicgujarati"sv,
+    "rvocalicvowelsignbengali"sv,
+    "rvocalicvowelsigndeva"sv,
+    "rvocalicvowelsigngujarati"sv,
+    "s"sv,
+    "sabengali"sv,
+    "sacute"sv,
+    "sacutedotaccent"sv,
+    "sadarabic"sv,
+    "sadeva"sv,
+    "sadfinalarabic"sv,
+    "sadinitialarabic"sv,
+    "sadmedialarabic"sv,
+    "sagujarati"sv,
+    "sagurmukhi"sv,
+    "sahiragana"sv,
+    "sakatakana"sv,
+    "sakatakanahalfwidth"sv,
+    "sallallahoualayhewasallamarabic"sv,
+    "samekh"sv,
+    "samekhdagesh"sv,
+    "samekhdageshhebrew"sv,
+    "samekhhebrew"sv,
+    "saraaathai"sv,
+    "saraaethai"sv,
+    "saraaimaimalaithai"sv,
+    "saraaimaimuanthai"sv,
+    "saraamthai"sv,
+    "saraathai"sv,
+    "saraethai"sv,
+    "saraiileftthai"sv,
+    "saraiithai"sv,
+    "saraileftthai"sv,
+    "saraithai"sv,
+    "saraothai"sv,
+    "saraueeleftthai"sv,
+    "saraueethai"sv,
+    "saraueleftthai"sv,
+    "sarauethai"sv,
+    "sarauthai"sv,
+    "sarauuthai"sv,
+    "sbopomofo"sv,
+    "scaron"sv,
+    "scarondotaccent"sv,
+    "scedilla"sv,
+    "schwa"sv,
+    "schwacyrillic"sv,
+    "schwadieresiscyrillic"sv,
+    "schwahook"sv,
+    "scircle"sv,
+    "scircumflex"sv,
+    "scommaaccent"sv,
+    "sdotaccent"sv,
+    "sdotbelow"sv,
+    "sdotbelowdotaccent"sv,
+    "seagullbelowcmb"sv,
+    "second"sv,
+    "secondtonechinese"sv,
+    "section"sv,
+    "seenarabic"sv,
+    "seenfinalarabic"sv,
+    "seeninitialarabic"sv,
+    "seenmedialarabic"sv,
+    "segol"sv,
+    "segol13"sv,
+    "segol1f"sv,
+    "segol2c"sv,
+    "segolhebrew"sv,
+    "segolnarrowhebrew"sv,
+    "segolquarterhebrew"sv,
+    "segoltahebrew"sv,
+    "segolwidehebrew"sv,
+    "seharmenian"sv,
+    "sehiragana"sv,
+    "sekatakana"sv,
+    "sekatakanahalfwidth"sv,
+    "semicolon"sv,
+    "semicolonarabic"sv,
+    "semicolonmonospace"sv,
+    "semicolonsmall"sv,
+    "semivoicedmarkkana"sv,
+    "semivoicedmarkkanahalfwidth"sv,
+    "sentisquare"sv,
+    "sentosquare"sv,
+    "seven"sv,
+    "sevenarabic"sv,
+    "sevenbengali"sv,
+    "sevencircle"sv,
+    "sevencircleinversesansserif"sv,
+    "sevendeva"sv,
+    "seveneighths"sv,
+    "sevengujarati"sv,
+    "sevengurmukhi"sv,
+    "sevenhackarabic"sv,
+    "sevenhangzhou"sv,
+    "sevenideographicparen"sv,
+    "seveninferior"sv,
+    "sevenmonospace"sv,
+    "sevenoldstyle"sv,
+    "sevenparen"sv,
+    "sevenperiod"sv,
+    "sevenpersian"sv,
+    "sevenroman"sv,
+    "sevensuperior"sv,
+    "seventeencircle"sv,
+    "seventeenparen"sv,
+    "seventeenperiod"sv,
+    "seventhai"sv,
+    "sfthyphen"sv,
+    "shaarmenian"sv,
+    "shabengali"sv,
+    "shacyrillic"sv,
+    "shaddaarabic"sv,
+    "shaddadammaarabic"sv,
+    "shaddadammatanarabic"sv,
+    "shaddafathaarabic"sv,
+    "shaddafathatanarabic"sv,
+    "shaddakasraarabic"sv,
+    "shaddakasratanarabic"sv,
+    "shade"sv,
+    "shadedark"sv,
+    "shadelight"sv,
+    "shademedium"sv,
+    "shadeva"sv,
+    "shagujarati"sv,
+    "shagurmukhi"sv,
+    "shalshelethebrew"sv,
+    "shbopomofo"sv,
+    "shchacyrillic"sv,
+    "sheenarabic"sv,
+    "sheenfinalarabic"sv,
+    "sheeninitialarabic"sv,
+    "sheenmedialarabic"sv,
+    "sheicoptic"sv,
+    "sheqel"sv,
+    "sheqelhebrew"sv,
+    "sheva"sv,
+    "sheva115"sv,
+    "sheva15"sv,
+    "sheva22"sv,
+    "sheva2e"sv,
+    "shevahebrew"sv,
+    "shevanarrowhebrew"sv,
+    "shevaquarterhebrew"sv,
+    "shevawidehebrew"sv,
+    "shhacyrillic"sv,
+    "shimacoptic"sv,
+    "shin"sv,
+    "shindagesh"sv,
+    "shindageshhebrew"sv,
+    "shindageshshindot"sv,
+    "shindageshshindothebrew"sv,
+    "shindageshsindot"sv,
+    "shindageshsindothebrew"sv,
+    "shindothebrew"sv,
+    "shinhebrew"sv,
+    "shinshindot"sv,
+    "shinshindothebrew"sv,
+    "shinsindot"sv,
+    "shinsindothebrew"sv,
+    "shook"sv,
+    "sigma"sv,
+    "sigma1"sv,
+    "sigmafinal"sv,
+    "sigmalunatesymbolgreek"sv,
+    "sihiragana"sv,
+    "sikatakana"sv,
+    "sikatakanahalfwidth"sv,
+    "siluqhebrew"sv,
+    "siluqlefthebrew"sv,
+    "similar"sv,
+    "sindothebrew"sv,
+    "siosacirclekorean"sv,
+    "siosaparenkorean"sv,
+    "sioscieuckorean"sv,
+    "sioscirclekorean"sv,
+    "sioskiyeokkorean"sv,
+    "sioskorean"sv,
+    "siosnieunkorean"sv,
+    "siosparenkorean"sv,
+    "siospieupkorean"sv,
+    "siostikeutkorean"sv,
+    "six"sv,
+    "sixarabic"sv,
+    "sixbengali"sv,
+    "sixcircle"sv,
+    "sixcircleinversesansserif"sv,
+    "sixdeva"sv,
+    "sixgujarati"sv,
+    "sixgurmukhi"sv,
+    "sixhackarabic"sv,
+    "sixhangzhou"sv,
+    "sixideographicparen"sv,
+    "sixinferior"sv,
+    "sixmonospace"sv,
+    "sixoldstyle"sv,
+    "sixparen"sv,
+    "sixperiod"sv,
+    "sixpersian"sv,
+    "sixroman"sv,
+    "sixsuperior"sv,
+    "sixteencircle"sv,
+    "sixteencurrencydenominatorbengali"sv,
+    "sixteenparen"sv,
+    "sixteenperiod"sv,
+    "sixthai"sv,
+    "slash"sv,
+    "slashmonospace"sv,
+    "slong"sv,
+    "slongdotaccent"sv,
+    "smileface"sv,
+    "smonospace"sv,
+    "sofpasuqhebrew"sv,
+    "softhyphen"sv,
+    "softsigncyrillic"sv,
+    "sohiragana"sv,
+    "sokatakana"sv,
+    "sokatakanahalfwidth"sv,
+    "soliduslongoverlaycmb"sv,
+    "solidusshortoverlaycmb"sv,
+    "sorusithai"sv,
+    "sosalathai"sv,
+    "sosothai"sv,
+    "sosuathai"sv,
+    "space"sv,
+    "spacehackarabic"sv,
+    "spade"sv,
+    "spadesuitblack"sv,
+    "spadesuitwhite"sv,
+    "sparen"sv,
+    "squarebelowcmb"sv,
+    "squarecc"sv,
+    "squarecm"sv,
+    "squarediagonalcrosshatchfill"sv,
+    "squarehorizontalfill"sv,
+    "squarekg"sv,
+    "squarekm"sv,
+    "squarekmcapital"sv,
+    "squareln"sv,
+    "squarelog"sv,
+    "squaremg"sv,
+    "squaremil"sv,
+    "squaremm"sv,
+    "squaremsquared"sv,
+    "squareorthogonalcrosshatchfill"sv,
+    "squareupperlefttolowerrightfill"sv,
+    "squareupperrighttolowerleftfill"sv,
+    "squareverticalfill"sv,
+    "squarewhitewithsmallblack"sv,
+    "srsquare"sv,
+    "ssabengali"sv,
+    "ssadeva"sv,
+    "ssagujarati"sv,
+    "ssangcieuckorean"sv,
+    "ssanghieuhkorean"sv,
+    "ssangieungkorean"sv,
+    "ssangkiyeokkorean"sv,
+    "ssangnieunkorean"sv,
+    "ssangpieupkorean"sv,
+    "ssangsioskorean"sv,
+    "ssangtikeutkorean"sv,
+    "ssuperior"sv,
+    "sterling"sv,
+    "sterlingmonospace"sv,
+    "strokelongoverlaycmb"sv,
+    "strokeshortoverlaycmb"sv,
+    "subset"sv,
+    "subsetnotequal"sv,
+    "subsetorequal"sv,
+    "succeeds"sv,
+    "suchthat"sv,
+    "suhiragana"sv,
+    "sukatakana"sv,
+    "sukatakanahalfwidth"sv,
+    "sukunarabic"sv,
+    "summation"sv,
+    "sun"sv,
+    "superset"sv,
+    "supersetnotequal"sv,
+    "supersetorequal"sv,
+    "svsquare"sv,
+    "syouwaerasquare"sv,
+    "t"sv,
+    "tabengali"sv,
+    "tackdown"sv,
+    "tackleft"sv,
+    "tadeva"sv,
+    "tagujarati"sv,
+    "tagurmukhi"sv,
+    "taharabic"sv,
+    "tahfinalarabic"sv,
+    "tahinitialarabic"sv,
+    "tahiragana"sv,
+    "tahmedialarabic"sv,
+    "taisyouerasquare"sv,
+    "takatakana"sv,
+    "takatakanahalfwidth"sv,
+    "tatweelarabic"sv,
+    "tau"sv,
+    "tav"sv,
+    "tavdages"sv,
+    "tavdagesh"sv,
+    "tavdageshhebrew"sv,
+    "tavhebrew"sv,
+    "tbar"sv,
+    "tbopomofo"sv,
+    "tcaron"sv,
+    "tccurl"sv,
+    "tcedilla"sv,
+    "tcheharabic"sv,
+    "tchehfinalarabic"sv,
+    "tchehinitialarabic"sv,
+    "tchehmedialarabic"sv,
+    "tchehmeeminitialarabic"sv,
+    "tcircle"sv,
+    "tcircumflexbelow"sv,
+    "tcommaaccent"sv,
+    "tdieresis"sv,
+    "tdotaccent"sv,
+    "tdotbelow"sv,
+    "tecyrillic"sv,
+    "tedescendercyrillic"sv,
+    "teharabic"sv,
+    "tehfinalarabic"sv,
+    "tehhahinitialarabic"sv,
+    "tehhahisolatedarabic"sv,
+    "tehinitialarabic"sv,
+    "tehiragana"sv,
+    "tehjeeminitialarabic"sv,
+    "tehjeemisolatedarabic"sv,
+    "tehmarbutaarabic"sv,
+    "tehmarbutafinalarabic"sv,
+    "tehmedialarabic"sv,
+    "tehmeeminitialarabic"sv,
+    "tehmeemisolatedarabic"sv,
+    "tehnoonfinalarabic"sv,
+    "tekatakana"sv,
+    "tekatakanahalfwidth"sv,
+    "telephone"sv,
+    "telephoneblack"sv,
+    "telishagedolahebrew"sv,
+    "telishaqetanahebrew"sv,
+    "tencircle"sv,
+    "tenideographicparen"sv,
+    "tenparen"sv,
+    "tenperiod"sv,
+    "tenroman"sv,
+    "tesh"sv,
+    "tet"sv,
+    "tetdagesh"sv,
+    "tetdageshhebrew"sv,
+    "tethebrew"sv,
+    "tetsecyrillic"sv,
+    "tevirhebrew"sv,
+    "tevirlefthebrew"sv,
+    "thabengali"sv,
+    "thadeva"sv,
+    "thagujarati"sv,
+    "thagurmukhi"sv,
+    "thalarabic"sv,
+    "thalfinalarabic"sv,
+    "thanthakhatlowleftthai"sv,
+    "thanthakhatlowrightthai"sv,
+    "thanthakhatthai"sv,
+    "thanthakhatupperleftthai"sv,
+    "theharabic"sv,
+    "thehfinalarabic"sv,
+    "thehinitialarabic"sv,
+    "thehmedialarabic"sv,
+    "thereexists"sv,
+    "therefore"sv,
+    "theta"sv,
+    "theta1"sv,
+    "thetasymbolgreek"sv,
+    "thieuthacirclekorean"sv,
+    "thieuthaparenkorean"sv,
+    "thieuthcirclekorean"sv,
+    "thieuthkorean"sv,
+    "thieuthparenkorean"sv,
+    "thirteencircle"sv,
+    "thirteenparen"sv,
+    "thirteenperiod"sv,
+    "thonangmonthothai"sv,
+    "thook"sv,
+    "thophuthaothai"sv,
+    "thorn"sv,
+    "thothahanthai"sv,
+    "thothanthai"sv,
+    "thothongthai"sv,
+    "thothungthai"sv,
+    "thousandcyrillic"sv,
+    "thousandsseparatorarabic"sv,
+    "thousandsseparatorpersian"sv,
+    "three"sv,
+    "threearabic"sv,
+    "threebengali"sv,
+    "threecircle"sv,
+    "threecircleinversesansserif"sv,
+    "threedeva"sv,
+    "threeeighths"sv,
+    "threegujarati"sv,
+    "threegurmukhi"sv,
+    "threehackarabic"sv,
+    "threehangzhou"sv,
+    "threeideographicparen"sv,
+    "threeinferior"sv,
+    "threemonospace"sv,
+    "threenumeratorbengali"sv,
+    "threeoldstyle"sv,
+    "threeparen"sv,
+    "threeperiod"sv,
+    "threepersian"sv,
+    "threequarters"sv,
+    "threequartersemdash"sv,
+    "threeroman"sv,
+    "threesuperior"sv,
+    "threethai"sv,
+    "thzsquare"sv,
+    "tihiragana"sv,
+    "tikatakana"sv,
+    "tikatakanahalfwidth"sv,
+    "tikeutacirclekorean"sv,
+    "tikeutaparenkorean"sv,
+    "tikeutcirclekorean"sv,
+    "tikeutkorean"sv,
+    "tikeutparenkorean"sv,
+    "tilde"sv,
+    "tildebelowcmb"sv,
+    "tildecmb"sv,
+    "tildecomb"sv,
+    "tildedoublecmb"sv,
+    "tildeoperator"sv,
+    "tildeoverlaycmb"sv,
+    "tildeverticalcmb"sv,
+    "timescircle"sv,
+    "tipehahebrew"sv,
+    "tipehalefthebrew"sv,
+    "tippigurmukhi"sv,
+    "titlocyrilliccmb"sv,
+    "tiwnarmenian"sv,
+    "tlinebelow"sv,
+    "tmonospace"sv,
+    "toarmenian"sv,
+    "tohiragana"sv,
+    "tokatakana"sv,
+    "tokatakanahalfwidth"sv,
+    "tonebarextrahighmod"sv,
+    "tonebarextralowmod"sv,
+    "tonebarhighmod"sv,
+    "tonebarlowmod"sv,
+    "tonebarmidmod"sv,
+    "tonefive"sv,
+    "tonesix"sv,
+    "tonetwo"sv,
+    "tonos"sv,
+    "tonsquare"sv,
+    "topatakthai"sv,
+    "tortoiseshellbracketleft"sv,
+    "tortoiseshellbracketleftsmall"sv,
+    "tortoiseshellbracketleftvertical"sv,
+    "tortoiseshellbracketright"sv,
+    "tortoiseshellbracketrightsmall"sv,
+    "tortoiseshellbracketrightvertical"sv,
+    "totaothai"sv,
+    "tpalatalhook"sv,
+    "tparen"sv,
+    "trademark"sv,
+    "trademarksans"sv,
+    "trademarkserif"sv,
+    "tretroflexhook"sv,
+    "triagdn"sv,
+    "triaglf"sv,
+    "triagrt"sv,
+    "triagup"sv,
+    "ts"sv,
+    "tsadi"sv,
+    "tsadidagesh"sv,
+    "tsadidageshhebrew"sv,
+    "tsadihebrew"sv,
+    "tsecyrillic"sv,
+    "tsere"sv,
+    "tsere12"sv,
+    "tsere1e"sv,
+    "tsere2b"sv,
+    "tserehebrew"sv,
+    "tserenarrowhebrew"sv,
+    "tserequarterhebrew"sv,
+    "tserewidehebrew"sv,
+    "tshecyrillic"sv,
+    "tsuperior"sv,
+    "ttabengali"sv,
+    "ttadeva"sv,
+    "ttagujarati"sv,
+    "ttagurmukhi"sv,
+    "tteharabic"sv,
+    "ttehfinalarabic"sv,
+    "ttehinitialarabic"sv,
+    "ttehmedialarabic"sv,
+    "tthabengali"sv,
+    "tthadeva"sv,
+    "tthagujarati"sv,
+    "tthagurmukhi"sv,
+    "tturned"sv,
+    "tuhiragana"sv,
+    "tukatakana"sv,
+    "tukatakanahalfwidth"sv,
+    "tusmallhiragana"sv,
+    "tusmallkatakana"sv,
+    "tusmallkatakanahalfwidth"sv,
+    "twelvecircle"sv,
+    "twelveparen"sv,
+    "twelveperiod"sv,
+    "twelveroman"sv,
+    "twentycircle"sv,
+    "twentyhangzhou"sv,
+    "twentyparen"sv,
+    "twentyperiod"sv,
+    "two"sv,
+    "twoarabic"sv,
+    "twobengali"sv,
+    "twocircle"sv,
+    "twocircleinversesansserif"sv,
+    "twodeva"sv,
+    "twodotenleader"sv,
+    "twodotleader"sv,
+    "twodotleadervertical"sv,
+    "twogujarati"sv,
+    "twogurmukhi"sv,
+    "twohackarabic"sv,
+    "twohangzhou"sv,
+    "twoideographicparen"sv,
+    "twoinferior"sv,
+    "twomonospace"sv,
+    "twonumeratorbengali"sv,
+    "twooldstyle"sv,
+    "twoparen"sv,
+    "twoperiod"sv,
+    "twopersian"sv,
+    "tworoman"sv,
+    "twostroke"sv,
+    "twosuperior"sv,
+    "twothai"sv,
+    "twothirds"sv,
+    "u"sv,
+    "uacute"sv,
+    "ubar"sv,
+    "ubengali"sv,
+    "ubopomofo"sv,
+    "ubreve"sv,
+    "ucaron"sv,
+    "ucircle"sv,
+    "ucircumflex"sv,
+    "ucircumflexbelow"sv,
+    "ucyrillic"sv,
+    "udattadeva"sv,
+    "udblacute"sv,
+    "udblgrave"sv,
+    "udeva"sv,
+    "udieresis"sv,
+    "udieresisacute"sv,
+    "udieresisbelow"sv,
+    "udieresiscaron"sv,
+    "udieresiscyrillic"sv,
+    "udieresisgrave"sv,
+    "udieresismacron"sv,
+    "udotbelow"sv,
+    "ugrave"sv,
+    "ugujarati"sv,
+    "ugurmukhi"sv,
+    "uhiragana"sv,
+    "uhookabove"sv,
+    "uhorn"sv,
+    "uhornacute"sv,
+    "uhorndotbelow"sv,
+    "uhorngrave"sv,
+    "uhornhookabove"sv,
+    "uhorntilde"sv,
+    "uhungarumlaut"sv,
+    "uhungarumlautcyrillic"sv,
+    "uinvertedbreve"sv,
+    "ukatakana"sv,
+    "ukatakanahalfwidth"sv,
+    "ukcyrillic"sv,
+    "ukorean"sv,
+    "umacron"sv,
+    "umacroncyrillic"sv,
+    "umacrondieresis"sv,
+    "umatragurmukhi"sv,
+    "umonospace"sv,
+    "underscore"sv,
+    "underscoredbl"sv,
+    "underscoremonospace"sv,
+    "underscorevertical"sv,
+    "underscorewavy"sv,
+    "union"sv,
+    "universal"sv,
+    "uogonek"sv,
+    "uparen"sv,
+    "upblock"sv,
+    "upperdothebrew"sv,
+    "upsilon"sv,
+    "upsilondieresis"sv,
+    "upsilondieresistonos"sv,
+    "upsilonlatin"sv,
+    "upsilontonos"sv,
+    "uptackbelowcmb"sv,
+    "uptackmod"sv,
+    "uragurmukhi"sv,
+    "uring"sv,
+    "ushortcyrillic"sv,
+    "usmallhiragana"sv,
+    "usmallkatakana"sv,
+    "usmallkatakanahalfwidth"sv,
+    "ustraightcyrillic"sv,
+    "ustraightstrokecyrillic"sv,
+    "utilde"sv,
+    "utildeacute"sv,
+    "utildebelow"sv,
+    "uubengali"sv,
+    "uudeva"sv,
+    "uugujarati"sv,
+    "uugurmukhi"sv,
+    "uumatragurmukhi"sv,
+    "uuvowelsignbengali"sv,
+    "uuvowelsigndeva"sv,
+    "uuvowelsigngujarati"sv,
+    "uvowelsignbengali"sv,
+    "uvowelsigndeva"sv,
+    "uvowelsigngujarati"sv,
+    "v"sv,
+    "vadeva"sv,
+    "vagujarati"sv,
+    "vagurmukhi"sv,
+    "vakatakana"sv,
+    "vav"sv,
+    "vavdagesh"sv,
+    "vavdagesh65"sv,
+    "vavdageshhebrew"sv,
+    "vavhebrew"sv,
+    "vavholam"sv,
+    "vavholamhebrew"sv,
+    "vavvavhebrew"sv,
+    "vavyodhebrew"sv,
+    "vcircle"sv,
+    "vdotbelow"sv,
+    "vecyrillic"sv,
+    "veharabic"sv,
+    "vehfinalarabic"sv,
+    "vehinitialarabic"sv,
+    "vehmedialarabic"sv,
+    "vekatakana"sv,
+    "venus"sv,
+    "verticalbar"sv,
+    "verticallineabovecmb"sv,
+    "verticallinebelowcmb"sv,
+    "verticallinelowmod"sv,
+    "verticallinemod"sv,
+    "vewarmenian"sv,
+    "vhook"sv,
+    "vikatakana"sv,
+    "viramabengali"sv,
+    "viramadeva"sv,
+    "viramagujarati"sv,
+    "visargabengali"sv,
+    "visargadeva"sv,
+    "visargagujarati"sv,
+    "vmonospace"sv,
+    "voarmenian"sv,
+    "voicediterationhiragana"sv,
+    "voicediterationkatakana"sv,
+    "voicedmarkkana"sv,
+    "voicedmarkkanahalfwidth"sv,
+    "vokatakana"sv,
+    "vparen"sv,
+    "vtilde"sv,
+    "vturned"sv,
+    "vuhiragana"sv,
+    "vukatakana"sv,
+    "w"sv,
+    "wacute"sv,
+    "waekorean"sv,
+    "wahiragana"sv,
+    "wakatakana"sv,
+    "wakatakanahalfwidth"sv,
+    "wakorean"sv,
+    "wasmallhiragana"sv,
+    "wasmallkatakana"sv,
+    "wattosquare"sv,
+    "wavedash"sv,
+    "wavyunderscorevertical"sv,
+    "wawarabic"sv,
+    "wawfinalarabic"sv,
+    "wawhamzaabovearabic"sv,
+    "wawhamzaabovefinalarabic"sv,
+    "wbsquare"sv,
+    "wcircle"sv,
+    "wcircumflex"sv,
+    "wdieresis"sv,
+    "wdotaccent"sv,
+    "wdotbelow"sv,
+    "wehiragana"sv,
+    "weierstrass"sv,
+    "wekatakana"sv,
+    "wekorean"sv,
+    "weokorean"sv,
+    "wgrave"sv,
+    "whitebullet"sv,
+    "whitecircle"sv,
+    "whitecircleinverse"sv,
+    "whitecornerbracketleft"sv,
+    "whitecornerbracketleftvertical"sv,
+    "whitecornerbracketright"sv,
+    "whitecornerbracketrightvertical"sv,
+    "whitediamond"sv,
+    "whitediamondcontainingblacksmalldiamond"sv,
+    "whitedownpointingsmalltriangle"sv,
+    "whitedownpointingtriangle"sv,
+    "whiteleftpointingsmalltriangle"sv,
+    "whiteleftpointingtriangle"sv,
+    "whitelenticularbracketleft"sv,
+    "whitelenticularbracketright"sv,
+    "whiterightpointingsmalltriangle"sv,
+    "whiterightpointingtriangle"sv,
+    "whitesmallsquare"sv,
+    "whitesmilingface"sv,
+    "whitesquare"sv,
+    "whitestar"sv,
+    "whitetelephone"sv,
+    "whitetortoiseshellbracketleft"sv,
+    "whitetortoiseshellbracketright"sv,
+    "whiteuppointingsmalltriangle"sv,
+    "whiteuppointingtriangle"sv,
+    "wihiragana"sv,
+    "wikatakana"sv,
+    "wikorean"sv,
+    "wmonospace"sv,
+    "wohiragana"sv,
+    "wokatakana"sv,
+    "wokatakanahalfwidth"sv,
+    "won"sv,
+    "wonmonospace"sv,
+    "wowaenthai"sv,
+    "wparen"sv,
+    "wring"sv,
+    "wsuperior"sv,
+    "wturned"sv,
+    "wynn"sv,
+    "x"sv,
+    "xabovecmb"sv,
+    "xbopomofo"sv,
+    "xcircle"sv,
+    "xdieresis"sv,
+    "xdotaccent"sv,
+    "xeharmenian"sv,
+    "xi"sv,
+    "xmonospace"sv,
+    "xparen"sv,
+    "xsuperior"sv,
+    "y"sv,
+    "yaadosquare"sv,
+    "yabengali"sv,
+    "yacute"sv,
+    "yadeva"sv,
+    "yaekorean"sv,
+    "yagujarati"sv,
+    "yagurmukhi"sv,
+    "yahiragana"sv,
+    "yakatakana"sv,
+    "yakatakanahalfwidth"sv,
+    "yakorean"sv,
+    "yamakkanthai"sv,
+    "yasmallhiragana"sv,
+    "yasmallkatakana"sv,
+    "yasmallkatakanahalfwidth"sv,
+    "yatcyrillic"sv,
+    "ycircle"sv,
+    "ycircumflex"sv,
+    "ydieresis"sv,
+    "ydotaccent"sv,
+    "ydotbelow"sv,
+    "yeharabic"sv,
+    "yehbarreearabic"sv,
+    "yehbarreefinalarabic"sv,
+    "yehfinalarabic"sv,
+    "yehhamzaabovearabic"sv,
+    "yehhamzaabovefinalarabic"sv,
+    "yehhamzaaboveinitialarabic"sv,
+    "yehhamzaabovemedialarabic"sv,
+    "yehinitialarabic"sv,
+    "yehmedialarabic"sv,
+    "yehmeeminitialarabic"sv,
+    "yehmeemisolatedarabic"sv,
+    "yehnoonfinalarabic"sv,
+    "yehthreedotsbelowarabic"sv,
+    "yekorean"sv,
+    "yen"sv,
+    "yenmonospace"sv,
+    "yeokorean"sv,
+    "yeorinhieuhkorean"sv,
+    "yerahbenyomohebrew"sv,
+    "yerahbenyomolefthebrew"sv,
+    "yericyrillic"sv,
+    "yerudieresiscyrillic"sv,
+    "yesieungkorean"sv,
+    "yesieungpansioskorean"sv,
+    "yesieungsioskorean"sv,
+    "yetivhebrew"sv,
+    "ygrave"sv,
+    "yhook"sv,
+    "yhookabove"sv,
+    "yiarmenian"sv,
+    "yicyrillic"sv,
+    "yikorean"sv,
+    "yinyang"sv,
+    "yiwnarmenian"sv,
+    "ymonospace"sv,
+    "yod"sv,
+    "yoddagesh"sv,
+    "yoddageshhebrew"sv,
+    "yodhebrew"sv,
+    "yodyodhebrew"sv,
+    "yodyodpatahhebrew"sv,
+    "yohiragana"sv,
+    "yoikorean"sv,
+    "yokatakana"sv,
+    "yokatakanahalfwidth"sv,
+    "yokorean"sv,
+    "yosmallhiragana"sv,
+    "yosmallkatakana"sv,
+    "yosmallkatakanahalfwidth"sv,
+    "yotgreek"sv,
+    "yoyaekorean"sv,
+    "yoyakorean"sv,
+    "yoyakthai"sv,
+    "yoyingthai"sv,
+    "yparen"sv,
+    "ypogegrammeni"sv,
+    "ypogegrammenigreekcmb"sv,
+    "yr"sv,
+    "yring"sv,
+    "ysuperior"sv,
+    "ytilde"sv,
+    "yturned"sv,
+    "yuhiragana"sv,
+    "yuikorean"sv,
+    "yukatakana"sv,
+    "yukatakanahalfwidth"sv,
+    "yukorean"sv,
+    "yusbigcyrillic"sv,
+    "yusbigiotifiedcyrillic"sv,
+    "yuslittlecyrillic"sv,
+    "yuslittleiotifiedcyrillic"sv,
+    "yusmallhiragana"sv,
+    "yusmallkatakana"sv,
+    "yusmallkatakanahalfwidth"sv,
+    "yuyekorean"sv,
+    "yuyeokorean"sv,
+    "yyabengali"sv,
+    "yyadeva"sv,
+    "z"sv,
+    "zaarmenian"sv,
+    "zacute"sv,
+    "zadeva"sv,
+    "zagurmukhi"sv,
+    "zaharabic"sv,
+    "zahfinalarabic"sv,
+    "zahinitialarabic"sv,
+    "zahiragana"sv,
+    "zahmedialarabic"sv,
+    "zainarabic"sv,
+    "zainfinalarabic"sv,
+    "zakatakana"sv,
+    "zaqefgadolhebrew"sv,
+    "zaqefqatanhebrew"sv,
+    "zarqahebrew"sv,
+    "zayin"sv,
+    "zayindagesh"sv,
+    "zayindageshhebrew"sv,
+    "zayinhebrew"sv,
+    "zbopomofo"sv,
+    "zcaron"sv,
+    "zcircle"sv,
+    "zcircumflex"sv,
+    "zcurl"sv,
+    "zdot"sv,
+    "zdotaccent"sv,
+    "zdotbelow"sv,
+    "zecyrillic"sv,
+    "zedescendercyrillic"sv,
+    "zedieresiscyrillic"sv,
+    "zehiragana"sv,
+    "zekatakana"sv,
+    "zero"sv,
+    "zeroarabic"sv,
+    "zerobengali"sv,
+    "zerodeva"sv,
+    "zerogujarati"sv,
+    "zerogurmukhi"sv,
+    "zerohackarabic"sv,
+    "zeroinferior"sv,
+    "zeromonospace"sv,
+    "zerooldstyle"sv,
+    "zeropersian"sv,
+    "zerosuperior"sv,
+    "zerothai"sv,
+    "zerowidthjoiner"sv,
+    "zerowidthnonjoiner"sv,
+    "zerowidthspace"sv,
+    "zeta"sv,
+    "zhbopomofo"sv,
+    "zhearmenian"sv,
+    "zhebrevecyrillic"sv,
+    "zhecyrillic"sv,
+    "zhedescendercyrillic"sv,
+    "zhedieresiscyrillic"sv,
+    "zihiragana"sv,
+    "zikatakana"sv,
+    "zinorhebrew"sv,
+    "zlinebelow"sv,
+    "zmonospace"sv,
+    "zohiragana"sv,
+    "zokatakana"sv,
+    "zparen"sv,
+    "zretroflexhook"sv,
+    "zstroke"sv,
+    "zuhiragana"sv,
+    "zukatakana"sv,
+    "a100"sv,
+    "a101"sv,
+    "a102"sv,
+    "a103"sv,
+    "a104"sv,
+    "a105"sv,
+    "a106"sv,
+    "a107"sv,
+    "a108"sv,
+    "a109"sv,
+    "a10"sv,
+    "a110"sv,
+    "a111"sv,
+    "a112"sv,
+    "a117"sv,
+    "a118"sv,
+    "a119"sv,
+    "a11"sv,
+    "a120"sv,
+    "a121"sv,
+    "a122"sv,
+    "a123"sv,
+    "a124"sv,
+    "a125"sv,
+    "a126"sv,
+    "a127"sv,
+    "a128"sv,
+    "a129"sv,
+    "a12"sv,
+    "a130"sv,
+    "a131"sv,
+    "a132"sv,
+    "a133"sv,
+    "a134"sv,
+    "a135"sv,
+    "a136"sv,
+    "a137"sv,
+    "a138"sv,
+    "a139"sv,
+    "a13"sv,
+    "a140"sv,
+    "a141"sv,
+    "a142"sv,
+    "a143"sv,
+    "a144"sv,
+    "a145"sv,
+    "a146"sv,
+    "a147"sv,
+    "a148"sv,
+    "a149"sv,
+    "a14"sv,
+    "a150"sv,
+    "a151"sv,
+    "a152"sv,
+    "a153"sv,
+    "a154"sv,
+    "a155"sv,
+    "a156"sv,
+    "a157"sv,
+    "a158"sv,
+    "a159"sv,
+    "a15"sv,
+    "a160"sv,
+    "a161"sv,
+    "a162"sv,
+    "a163"sv,
+    "a164"sv,
+    "a165"sv,
+    "a166"sv,
+    "a167"sv,
+    "a168"sv,
+    "a169"sv,
+    "a16"sv,
+    "a170"sv,
+    "a171"sv,
+    "a172"sv,
+    "a173"sv,
+    "a174"sv,
+    "a175"sv,
+    "a176"sv,
+    "a177"sv,
+    "a178"sv,
+    "a179"sv,
+    "a17"sv,
+    "a180"sv,
+    "a181"sv,
+    "a182"sv,
+    "a183"sv,
+    "a184"sv,
+    "a185"sv,
+    "a186"sv,
+    "a187"sv,
+    "a188"sv,
+    "a189"sv,
+    "a18"sv,
+    "a190"sv,
+    "a191"sv,
+    "a192"sv,
+    "a193"sv,
+    "a194"sv,
+    "a195"sv,
+    "a196"sv,
+    "a197"sv,
+    "a198"sv,
+    "a199"sv,
+    "a19"sv,
+    "a1"sv,
+    "a200"sv,
+    "a201"sv,
+    "a202"sv,
+    "a203"sv,
+    "a204"sv,
+    "a205"sv,
+    "a206"sv,
+    "a20"sv,
+    "a21"sv,
+    "a22"sv,
+    "a23"sv,
+    "a24"sv,
+    "a25"sv,
+    "a26"sv,
+    "a27"sv,
+    "a28"sv,
+    "a29"sv,
+    "a2"sv,
+    "a30"sv,
+    "a31"sv,
+    "a32"sv,
+    "a33"sv,
+    "a34"sv,
+    "a35"sv,
+    "a36"sv,
+    "a37"sv,
+    "a38"sv,
+    "a39"sv,
+    "a3"sv,
+    "a40"sv,
+    "a41"sv,
+    "a42"sv,
+    "a43"sv,
+    "a44"sv,
+    "a45"sv,
+    "a46"sv,
+    "a47"sv,
+    "a48"sv,
+    "a49"sv,
+    "a4"sv,
+    "a50"sv,
+    "a51"sv,
+    "a52"sv,
+    "a53"sv,
+    "a54"sv,
+    "a55"sv,
+    "a56"sv,
+    "a57"sv,
+    "a58"sv,
+    "a59"sv,
+    "a5"sv,
+    "a60"sv,
+    "a61"sv,
+    "a62"sv,
+    "a63"sv,
+    "a64"sv,
+    "a65"sv,
+    "a66"sv,
+    "a67"sv,
+    "a68"sv,
+    "a69"sv,
+    "a6"sv,
+    "a70"sv,
+    "a71"sv,
+    "a72"sv,
+    "a73"sv,
+    "a74"sv,
+    "a75"sv,
+    "a76"sv,
+    "a77"sv,
+    "a78"sv,
+    "a79"sv,
+    "a7"sv,
+    "a81"sv,
+    "a82"sv,
+    "a83"sv,
+    "a84"sv,
+    "a85"sv,
+    "a86"sv,
+    "a87"sv,
+    "a88"sv,
+    "a89"sv,
+    "a8"sv,
+    "a90"sv,
+    "a91"sv,
+    "a92"sv,
+    "a93"sv,
+    "a94"sv,
+    "a95"sv,
+    "a96"sv,
+    "a97"sv,
+    "a98"sv,
+    "a99"sv,
+    "a9"sv,
+};
+
+const PdfName* getFromReverseAGLFNMap(unsigned short codepoint)
+{
+    static struct Init
+    {
+        Init()
+        {
+            ensureAglMapInitialized();
+            for (auto& pair : *s_aglMap)
+            {
+                // NOTE: Chars here consists of a single code point
+                if ((pair.second.Type & AglMapType::AdobeGlyphListNewFonts) != AglMapType::None)
+                    m_reverseAGLFNMap[pair.second.Code] = &pair.first;
+            }
+        }
+        unordered_map<unsigned short, const PdfName*> m_reverseAGLFNMap;
+    } s_init;
+
+    auto found = s_init.m_reverseAGLFNMap.find(codepoint);
+    if (found == s_init.m_reverseAGLFNMap.end())
+        return nullptr;
+
+    return found->second;
+}
+
+void ensureAglMapInitialized()
+{
+    static struct Init
+    {
+        Init()
+        {
+            // NOTE: This map was generated using the
+            // "staging/BuildAglMapsBinary.cpp" script
+            static constexpr const char CompressedMaps[] =
+"\170\234\034\334\005\224\033\125\033\306\361\271\167\364\216\247"
+"\205\266\130\330\335\146\267\024\051\221\172\013\324\240\305\241"
+"\270\327\205\122\334\135\213\113\161\267\026\167\267\342\305\335"
+"\035\212\025\167\330\135\276\055\311\367\177\163\172\316\163\346"
+"\114\046\223\331\154\366\327\047\167\356\114\341\104\313\212\224"
+"\065\326\122\344\363\226\266\225\132\141\021\352\053\313\121\252"
+"\153\271\345\262\376\151\313\143\371\113\313\347\001\155\005\112"
+"\025\357\264\214\122\316\233\126\310\362\203\354\100\025\357\266"
+"\142\362\136\053\041\357\267\122\366\360\232\225\051\125\172\320"
+"\312\331\303\063\126\201\365\213\255\136\344\355\126\157\362\106"
+"\153\045\362\146\153\145\366\374\225\325\207\345\133\255\276\112"
+"\165\276\144\365\143\315\375\326\052\354\077\267\126\225\027\264"
+"\126\143\017\113\255\325\131\363\266\265\006\173\376\334\052\262"
+"\315\067\326\232\074\353\132\253\205\065\313\254\126\266\171\312"
+"\152\143\375\062\253\077\353\257\267\112\154\377\256\325\316\036"
+"\264\325\141\053\173\241\065\200\134\140\255\305\117\141\131\003"
+"\225\152\264\132\153\263\354\130\353\360\334\347\254\165\131\376"
+"\237\265\036\317\265\254\101\354\347\133\153\175\162\252\125\346"
+"\321\147\255\012\313\137\133\125\245\334\212\125\143\315\070\153"
+"\060\077\335\103\326\020\266\327\326\120\322\261\206\261\263\202"
+"\065\234\155\252\326\010\136\353\174\153\044\307\166\202\065\212"
+"\107\075\153\064\257\330\146\155\300\317\370\267\265\041\173\233"
+"\146\155\304\243\047\132\143\330\333\170\153\054\317\332\320\032"
+"\307\061\170\326\170\266\171\331\232\100\376\143\155\314\232\330"
+"\332\204\155\136\260\046\262\237\300\232\304\163\277\263\066\345"
+"\325\037\266\066\343\321\300\332\234\375\204\326\026\266\344\226"
+"\074\372\260\265\025\173\333\324\332\232\343\131\142\155\103\016"
+"\260\266\045\237\260\046\223\017\132\333\221\177\133\333\263\315"
+"\170\153\007\226\137\261\166\044\037\266\166\342\230\157\262\166"
+"\146\157\247\132\273\360\352\235\326\256\034\163\177\153\067\266"
+"\334\326\332\235\075\117\267\366\340\110\046\130\173\262\315\037"
+"\326\136\344\122\153\012\217\016\266\246\262\174\272\065\215\143"
+"\110\255\351\034\147\156\315\340\010\037\261\146\262\334\313\232"
+"\305\372\334\232\315\162\150\315\041\143\153\056\257\270\222\265"
+"\267\122\366\257\326\074\133\265\171\326\076\054\137\150\315\147"
+"\077\147\130\373\362\352\257\130\373\221\257\132\373\223\257\131"
+"\007\360\352\067\133\007\262\315\247\326\101\074\127\133\007\263"
+"\237\324\072\204\043\054\131\207\262\115\227\165\230\222\127\071"
+"\234\055\147\130\107\260\174\246\165\044\371\247\165\024\371\234"
+"\165\064\317\132\146\035\103\272\326\261\144\146\035\307\317\262"
+"\261\165\074\371\222\165\002\317\372\301\072\221\343\134\311\072"
+"\211\134\325\072\231\375\257\156\235\302\117\067\304\132\300\317"
+"\362\250\165\052\133\276\154\235\306\372\047\254\323\311\176\326"
+"\031\344\363\326\231\344\123\326\131\344\063\326\331\354\347\107"
+"\353\034\226\227\132\347\362\052\216\165\036\237\100\307\132\310"
+"\163\137\261\316\347\321\237\254\013\070\236\076\326\205\266\344"
+"\105\154\371\260\165\061\133\226\254\113\330\346\105\353\122\266"
+"\371\336\272\214\327\035\146\135\316\243\217\132\127\050\325\072"
+"\333\272\222\375\170\326\125\154\071\303\272\232\134\315\272\206"
+"\365\173\133\327\262\237\136\326\165\154\331\307\272\236\134\311"
+"\132\304\243\253\133\213\171\147\332\255\033\130\136\303\272\221"
+"\274\336\272\211\055\067\263\156\146\171\261\165\013\371\202\165"
+"\053\153\372\131\267\161\074\347\131\267\363\333\277\310\272\203"
+"\074\315\272\223\107\133\254\273\130\177\216\165\067\313\353\131"
+"\367\220\255\326\275\344\255\326\175\254\277\305\272\237\343\234"
+"\151\075\300\366\227\130\017\162\264\303\255\207\130\076\335\172"
+"\230\237\342\115\353\021\036\375\335\172\224\343\131\142\075\106"
+"\256\152\055\211\124\313\355\326\343\074\367\041\353\011\362\127"
+"\353\111\362\141\353\051\266\337\304\172\232\167\370\061\353\031"
+"\266\054\132\317\262\267\035\255\245\374\256\277\261\236\143\233"
+"\205\326\363\274\356\201\326\013\374\274\063\254\027\371\271\072"
+"\254\227\130\236\156\275\314\253\314\262\136\141\017\023\255\127"
+"\225\252\235\152\275\306\366\177\133\257\163\044\027\130\157\260"
+"\174\241\365\046\373\371\321\172\313\226\077\354\267\311\345\326"
+"\073\254\157\263\336\345\025\227\130\357\261\146\165\353\375\346"
+"\232\017\310\026\353\103\133\362\043\136\261\267\365\061\107\062"
+"\316\372\204\345\013\255\117\311\363\255\317\310\363\254\317\331"
+"\362\002\353\013\036\255\131\313\130\143\133\137\262\373\026\353"
+"\053\216\155\200\365\065\237\306\327\255\157\070\266\051\326\267"
+"\344\154\153\071\277\273\053\254\357\170\326\067\326\367\034\355"
+"\044\353\007\133\265\277\141\375\110\336\152\375\104\336\146\375"
+"\114\136\147\375\302\117\361\212\365\053\373\274\331\372\215\274"
+"\327\372\235\134\333\372\203\243\352\260\376\344\125\326\266\376"
+"\042\327\262\376\346\370\037\267\376\141\175\311\352\144\115\207"
+"\325\105\266\131\335\144\311\372\227\043\131\313\372\037\107\070"
+"\306\352\341\035\370\336\132\301\221\314\261\376\343\330\336\260"
+"\352\144\267\325\340\265\316\123\342\077\232\360\052\353\053\361"
+"\277\252\004\305\101\312\141\375\153\312\345\131\277\050\217\125"
+"\353\052\237\215\336\120\370\137\172\102\031\036\175\135\341\177"
+"\327\257\374\327\241\034\117\341\277\016\124\302\372\067\024\376"
+"\027\007\051\374\167\276\121\071\333\374\246\360\137\225\125\057"
+"\133\122\374\177\131\341\277\363\276\302\177\147\145\325\307\126"
+"\255\005\325\227\347\276\252\304\377\237\025\376\027\137\124\370"
+"\357\364\123\253\261\347\120\211\377\253\250\065\330\303\332\012"
+"\377\235\257\024\376\067\006\052\374\167\107\251\126\326\360\073"
+"\344\321\101\252\077\277\375\313\024\376\253\213\125\073\313\267"
+"\052\361\377\014\065\200\075\317\125\153\261\376\022\065\220\055"
+"\327\142\117\252\270\256\132\207\347\036\314\317\247\234\103\325"
+"\172\034\303\146\354\103\271\143\025\376\227\236\124\145\266\034"
+"\254\360\337\011\224\370\277\271\252\361\272\153\263\116\165\355"
+"\255\206\260\375\346\012\377\153\247\050\374\257\275\246\360\337"
+"\271\126\215\140\317\145\205\377\316\252\012\377\235\313\025\376"
+"\073\317\252\015\070\222\313\025\376\073\127\053\374\167\256\124"
+"\143\070\236\357\025\376\263\227\161\274\342\123\152\174\163\031"
+"\377\213\125\265\061\257\270\275\332\204\334\110\341\277\323\256"
+"\360\337\136\256\344\067\166\251\332\214\065\261\302\377\342\140"
+"\265\005\107\265\216\302\177\347\170\205\377\366\347\112\374\337"
+"\127\341\177\327\074\265\055\307\271\205\302\177\365\202\302\377"
+"\316\047\325\366\374\134\043\324\016\034\317\025\152\107\226\067"
+"\120\073\361\350\050\205\377\245\247\025\376\027\107\253\135\233"
+"\153\166\343\321\215\024\376\223\173\260\176\250\302\377\342\160"
+"\205\377\356\150\205\377\352\105\205\377\216\121\323\130\077\122"
+"\341\177\143\135\065\203\217\305\130\205\377\235\377\252\131\034"
+"\303\076\152\066\307\260\245\302\377\332\002\205\377\235\157\052"
+"\374\357\272\113\315\343\131\033\052\374\057\075\243\360\277\070"
+"\106\341\177\161\234\302\177\167\202\302\377\306\172\112\374\237"
+"\257\360\137\135\251\016\342\230\257\124\007\263\267\255\024\376"
+"\253\227\325\241\034\341\170\165\030\071\121\341\077\357\032\376"
+"\227\236\125\370\137\334\114\035\325\134\203\377\305\011\012\377"
+"\213\233\050\374\127\127\251\343\060\144\216\072\236\345\127\024"
+"\376\073\241\072\221\107\047\251\223\170\305\101\012\377\335\115"
+"\024\376\167\355\253\026\360\132\157\251\123\131\376\103\235\306"
+"\253\137\245\116\147\315\326\352\014\176\306\311\012\377\073\377"
+"\247\316\142\315\073\112\374\377\113\341\277\363\275\022\377\177"
+"\124\347\161\124\133\251\205\274\312\133\012\377\325\065\012\377"
+"\113\113\325\205\154\377\256\022\377\337\344\163\252\212\037\362"
+"\251\124\305\267\371\255\252\342\273\012\377\273\376\126\342\377"
+"\373\012\377\235\042\077\267\342\167\211\377\072\126\127\363\334"
+"\367\331\223\162\226\253\153\331\262\123\211\377\257\052\374\357"
+"\354\121\213\170\364\155\205\377\135\177\052\374\167\167\120\370"
+"\337\332\241\156\142\233\327\325\315\034\317\265\012\377\213\037"
+"\253\133\311\257\024\376\027\077\125\267\223\237\253\073\310\145"
+"\352\116\133\136\113\374\277\136\341\277\116\325\075\254\331\102"
+"\341\177\161\262\302\377\342\066\352\176\133\366\371\000\307\060"
+"\105\341\277\175\213\172\210\345\043\325\303\344\321\352\021\336"
+"\245\163\325\243\344\065\352\061\362\054\265\204\167\165\175\205"
+"\377\255\123\224\370\377\243\022\377\177\126\117\221\013\324\323"
+"\034\363\207\352\031\136\245\256\360\277\253\133\341\177\327\176"
+"\112\374\257\053\361\377\130\365\002\333\274\307\147\115\025\267"
+"\120\370\137\334\112\211\377\377\050\361\177\033\205\377\305\355"
+"\025\376\227\236\123\257\263\274\043\126\051\147\115\205\377\356"
+"\146\274\367\312\271\121\341\277\175\243\022\377\027\253\167\131"
+"\276\126\275\307\243\333\051\374\157\224\325\007\254\271\131\175"
+"\310\226\373\053\374\357\332\137\175\314\236\267\125\370\137\172"
+"\136\341\177\243\242\360\277\353\000\365\071\353\047\053\361\177"
+"\013\265\214\143\336\136\175\111\356\254\360\137\355\250\360\277"
+"\364\202\372\246\271\214\377\072\127\370\137\334\131\341\177\161"
+"\127\376\326\125\161\167\365\003\317\335\106\341\177\353\352\012"
+"\377\355\353\170\047\124\347\012\205\377\272\227\302\377\342\236"
+"\012\377\033\125\205\377\135\007\252\077\130\177\202\302\177\375"
+"\240\372\213\127\337\116\375\315\377\027\261\302\377\366\225\124"
+"\047\231\253\056\262\237\352\046\107\253\177\311\165\325\377\310"
+"\301\252\207\134\135\255\040\113\352\077\322\122\165\122\253\006"
+"\071\125\123\367\333\247\151\320\157\337\121\343\177\373\016\332"
+"\046\247\153\207\334\126\273\344\116\032\377\333\367\320\364\377"
+"\366\335\165\100\356\246\015\271\247\016\311\275\164\104\356\252"
+"\143\162\173\235\220\163\165\112\316\322\031\071\105\347\344\066"
+"\272\100\356\243\361\277\175\266\356\115\316\321\053\221\063\364"
+"\312\344\114\215\377\355\273\350\276\344\316\272\037\071\131\257"
+"\102\156\247\127\045\347\351\325\310\275\365\352\274\303\273\152"
+"\372\177\161\206\306\177\173\231\136\223\277\276\051\032\377\213"
+"\263\064\376\167\376\247\305\377\075\065\375\137\235\253\245\377"
+"\177\250\351\377\316\307\272\203\337\310\213\232\376\257\166\327"
+"\370\257\373\151\372\177\161\212\026\377\247\151\374\057\316\321"
+"\370\357\156\251\351\377\255\263\264\370\077\121\343\277\263\226"
+"\056\223\003\065\376\333\137\151\374\167\036\325\370\157\377\254"
+"\007\363\133\133\244\351\377\255\063\065\376\067\152\132\372\377"
+"\272\032\377\273\016\322\370\157\177\254\107\362\233\332\136\217"
+"\142\313\305\172\064\257\076\113\343\277\232\241\361\137\115\323"
+"\370\137\172\111\343\177\161\177\075\266\271\006\377\213\173\153"
+"\374\057\356\243\361\337\151\323\370\357\334\256\361\277\165\256"
+"\026\377\357\327\223\330\333\245\132\374\277\135\157\306\376\077"
+"\327\370\337\125\327\370\337\072\115\343\177\147\135\113\377\337"
+"\132\343\177\161\137\215\377\215\301\232\376\357\216\320\342\377"
+"\022\215\377\352\144\115\377\127\067\151\372\277\272\123\113\377"
+"\357\320\370\357\104\032\377\273\016\326\370\337\072\117\343\177"
+"\353\124\275\033\257\262\203\336\235\374\130\343\177\327\377\364"
+"\236\374\024\373\150\351\377\357\150\374\057\275\254\247\362\350"
+"\047\132\374\077\124\343\177\127\217\246\377\073\375\065\376\253"
+"\375\065\376\353\225\264\370\377\251\306\177\365\201\306\377\342"
+"\201\032\377\325\107\032\377\235\337\065\376\253\117\264\364\377"
+"\367\064\376\167\255\320\370\137\374\106\357\317\263\076\322\342"
+"\377\277\032\377\213\313\065\376\253\273\264\364\377\357\065\376"
+"\027\177\327\364\377\342\217\232\376\137\374\131\343\177\361\127"
+"\175\204\055\257\213\377\316\237\032\377\165\037\055\375\377\160"
+"\175\014\353\367\326\322\377\177\325\370\137\074\122\343\177\143"
+"\210\076\201\365\007\152\372\277\175\203\246\377\333\157\153\374"
+"\267\337\321\370\257\356\321\013\130\163\233\306\177\373\135\115"
+"\377\347\321\323\131\163\216\076\203\147\355\253\361\337\111\065"
+"\375\277\353\020\215\377\316\235\132\374\277\133\237\313\243\163"
+"\064\375\277\170\270\306\377\342\301\372\174\176\226\035\265\370"
+"\377\212\276\220\065\307\152\374\167\172\151\374\167\267\322\370"
+"\257\356\325\370\337\030\252\245\377\117\322\370\337\165\250\306"
+"\377\342\321\372\112\236\273\223\276\312\126\305\023\065\375\277"
+"\364\252\276\206\375\037\254\351\377\305\223\265\370\277\100\113"
+"\377\077\115\057\142\315\361\132\372\377\060\215\377\135\207\351"
+"\033\171\356\316\032\377\113\257\151\372\177\361\054\055\376\237"
+"\241\361\337\335\100\337\306\317\162\265\306\377\306\160\215\377"
+"\135\207\353\073\331\176\027\175\027\371\231\306\377\256\377\264"
+"\364\377\151\032\377\113\257\353\373\170\335\103\365\375\374\365"
+"\035\256\361\277\253\201\111\252\170\216\306\377\342\337\132\374"
+"\137\107\323\377\235\156\215\377\305\077\065\375\137\335\247\361"
+"\277\330\251\361\337\335\130\343\277\343\153\374\167\047\153\374"
+"\157\214\320\364\377\256\043\264\364\377\156\215\377\316\336\032"
+"\377\235\175\064\376\073\263\264\370\077\107\213\377\273\152\374"
+"\167\207\352\227\070\206\043\364\313\034\303\061\372\025\076\363"
+"\015\215\377\245\067\064\376\027\317\323\370\257\216\322\157\330"
+"\222\370\137\074\137\213\377\175\365\333\344\245\032\377\235\317"
+"\265\370\177\261\026\377\107\152\374\167\236\326\364\177\247\217"
+"\026\377\057\326\322\377\077\325\364\377\342\205\032\377\033\043"
+"\065\376\167\035\251\361\137\075\240\305\377\251\032\377\315\002"
+"\275\214\345\057\065\375\337\170\032\377\303\005\032\377\103\117"
+"\343\177\270\241\306\377\232\255\361\337\074\241\361\337\154\250"
+"\361\077\174\102\213\377\173\351\037\131\263\277\376\211\074\105"
+"\343\177\145\125\375\013\307\154\153\361\377\056\055\375\377\055"
+"\215\377\305\207\064\376\027\357\321\322\377\357\323\322\377\037"
+"\320\364\177\365\272\376\207\237\372\115\335\311\061\174\245\245"
+"\377\337\240\245\377\337\241\351\377\305\233\064\375\277\170\213"
+"\246\377\027\157\323\053\330\346\176\115\377\267\373\152\372\277"
+"\255\064\376\363\317\342\325\245\013\052\336\057\315\372\261\266"
+"\364\377\262\115\235\346\177\005\372\177\170\200\355\261\215\153"
+"\373\354\341\033\233\376\357\274\143\033\236\360\205\055\343\077"
+"\327\331\374\022\370\377\057\346\321\345\066\376\363\177\014\375"
+"\277\262\215\115\377\127\137\333\364\377\226\225\155\372\177\313"
+"\142\273\227\214\352\330\275\145\234\304\226\376\337\313\226\376"
+"\337\333\356\043\243\001\166\137\371\056\140\367\223\046\157\313"
+"\370\117\037\133\372\177\137\173\065\371\026\140\067\373\277\275"
+"\206\064\152\133\372\377\152\366\232\362\075\327\156\221\157\270"
+"\266\364\377\242\335\046\377\343\333\375\345\333\253\055\376\267"
+"\332\342\177\233\335\041\026\331\003\344\133\266\275\226\264\150"
+"\173\240\210\147\343\277\063\300\226\376\277\226\055\375\177\240"
+"\275\236\174\333\262\007\311\147\330\026\377\327\265\305\377\365"
+"\154\351\377\203\154\361\177\175\273\046\337\001\155\372\277\243"
+"\355\041\362\355\317\306\177\307\261\305\177\327\226\376\357\331"
+"\043\344\023\156\113\377\017\154\351\377\306\226\376\037\332\033"
+"\210\261\266\364\377\330\226\376\237\332\370\337\271\324\306\377"
+"\316\347\354\161\315\167\036\377\235\212\055\376\127\155\361\277"
+"\146\343\277\063\330\026\377\207\330\364\177\147\133\033\377\235"
+"\241\266\364\377\141\066\376\073\303\155\374\167\106\330\322\377"
+"\107\332\370\357\214\262\245\377\217\266\145\374\147\003\133\306"
+"\177\066\264\145\374\147\043\133\306\177\306\330\370\357\214\265"
+"\145\374\147\234\055\376\217\267\305\377\011\066\376\073\033\333"
+"\370\357\154\142\343\277\063\321\336\215\234\144\323\377\235\115"
+"\155\374\167\066\263\351\377\316\346\066\376\073\133\330\370\357"
+"\154\151\113\377\337\312\306\177\147\153\033\377\235\205\266\370"
+"\077\331\306\177\147\073\033\377\235\355\355\331\344\016\066\376"
+"\073\073\332\062\376\263\223\215\377\316\316\266\370\277\213\215"
+"\377\316\256\066\376\073\273\331\370\357\354\156\343\277\263\247"
+"\115\377\167\062\373\000\361\307\306\177\347\100\133\306\177\016"
+"\266\361\277\363\171\033\377\235\275\154\374\167\246\333\370\357"
+"\034\144\343\277\163\210\115\377\357\174\301\306\377\316\027\155"
+"\374\167\076\262\361\277\045\265\351\377\055\231\215\377\055\211"
+"\215\377\336\336\066\376\173\261\115\377\367\246\330\364\177\157"
+"\252\115\377\367\246\331\370\357\115\267\361\337\233\141\057\040"
+"\147\332\370\357\315\262\361\337\233\155\237\116\316\341\073\245"
+"\362\346\332\370\357\255\106\303\125\336\232\066\376\173\255\066"
+"\376\173\155\364\137\345\365\267\361\337\053\331\370\357\265\333"
+"\364\177\257\303\306\177\157\200\215\377\336\132\066\376\173\003"
+"\155\374\367\326\266\361\337\133\307\306\177\157\135\276\277\052"
+"\157\075\276\051\052\157\020\337\317\224\267\076\337\170\224\127"
+"\346\233\207\362\052\066\376\173\125\232\265\362\152\164\130\345"
+"\015\246\077\052\157\210\215\377\336\120\173\021\071\314\306\177"
+"\157\270\215\377\336\010\072\257\362\106\332\370\357\215\241\341"
+"\052\157\054\155\135\171\343\370\146\254\274\361\066\375\337\233"
+"\140\343\277\267\261\215\377\336\046\366\235\344\044\233\376\357"
+"\155\152\343\277\267\231\215\377\336\346\066\376\173\133\330\364"
+"\177\157\113\373\176\162\053\033\377\275\255\155\374\367\266\261"
+"\361\337\333\326\306\177\157\262\215\377\336\104\373\121\162\261"
+"\215\377\336\261\066\376\173\013\154\374\367\056\265\361\337\273"
+"\313\306\177\357\010\033\377\275\323\154\374\367\026\332\370\357"
+"\075\152\343\277\367\266\215\377\336\173\066\376\267\334\152\343"
+"\277\373\204\375\002\371\254\055\376\277\151\323\377\335\267\154"
+"\372\277\373\266\215\377\356\073\066\376\273\357\332\370\357\276"
+"\147\343\277\373\276\115\377\167\077\260\245\377\177\150\343\277"
+"\373\221\215\377\356\307\066\376\273\237\330\357\222\237\332\342"
+"\377\147\066\376\273\237\333\370\357\176\141\343\277\273\314\306"
+"\177\367\113\133\306\177\276\262\361\337\375\332\306\177\367\033"
+"\033\377\335\157\371\156\255\334\345\266\364\377\357\354\145\344"
+"\367\066\376\273\077\330\370\357\376\150\343\177\317\332\066\376"
+"\367\254\143\343\177\317\346\174\137\127\075\153\332\370\357\376"
+"\156\343\277\373\207\055\376\377\151\343\177\317\020\033\377\335"
+"\373\155\374\167\037\260\351\377\356\203\066\376\273\217\331\370"
+"\357\076\154\343\277\373\220\215\377\356\335\066\376\273\367\332"
+"\370\357\336\143\343\277\173\237\215\377\356\063\166\047\371\264"
+"\215\377\356\043\066\376\273\113\154\374\167\037\267\145\374\347"
+"\111\033\377\335\247\354\025\170\276\304\306\377\126\327\306\377"
+"\326\336\166\203\354\343\340\177\313\272\216\014\175\255\347\340"
+"\177\313\040\107\006\300\142\207\125\336\174\007\377\365\343\216"
+"\207\355\313\034\237\377\013\116\161\360\077\164\371\256\257\312"
+"\343\034\361\177\221\203\377\346\074\047\306\374\242\223\260\234"
+"\073\370\357\274\347\340\177\170\236\203\377\141\356\340\177\070"
+"\311\351\045\237\106\007\377\353\057\073\370\137\177\305\301\377"
+"\372\253\016\376\153\333\301\177\363\242\203\377\146\222\203\377"
+"\341\213\016\376\227\257\167\360\277\161\200\203\377\225\255\235"
+"\065\344\267\317\267\141\376\202\370\156\247\172\312\016\376\327"
+"\317\161\132\345\157\315\301\377\372\311\116\177\371\133\163\360"
+"\277\176\232\323\336\334\036\377\173\266\166\006\310\137\245\203"
+"\377\365\023\235\201\362\331\166\360\277\376\273\203\377\365\277"
+"\034\374\257\377\355\340\177\317\040\007\377\173\326\107\172\325"
+"\072\304\301\377\266\055\360\130\331\367\340\261\262\157\307\143"
+"\031\055\303\377\306\130\107\306\177\072\034\351\377\236\203\377"
+"\135\035\016\376\327\236\161\360\277\322\346\340\177\245\344\340"
+"\177\272\053\022\253\266\026\007\377\313\201\203\377\365\215\034"
+"\374\057\033\007\377\353\143\220\130\365\037\210\304\252\377\332"
+"\016\376\267\256\203\304\312\076\325\301\177\063\331\301\177\163"
+"\242\203\377\106\073\370\037\236\210\304\374\140\016\376\327\054"
+"\007\377\113\127\072\370\357\356\352\154\051\277\145\007\377\273"
+"\033\016\376\267\155\343\154\303\353\116\162\360\277\155\262\203"
+"\377\155\033\073\370\137\071\307\301\377\312\331\016\376\367\357"
+"\345\340\177\361\162\147\047\176\226\157\361\230\037\336\221\361"
+"\037\361\130\265\136\350\340\177\353\327\016\376\267\056\163\360"
+"\277\365\053\007\377\133\277\304\135\325\372\256\063\205\174\307"
+"\231\112\276\211\320\252\365\155\044\126\255\157\071\063\310\013"
+"\034\374\157\275\314\301\377\326\113\035\374\157\375\301\301\177"
+"\375\234\203\377\372\031\007\377\365\263\016\376\353\245\016\376"
+"\167\177\347\314\347\131\347\071\370\317\336\360\277\365\065\276"
+"\213\253\326\347\035\374\157\135\216\375\252\365\174\007\377\133"
+"\337\160\360\177\300\325\016\376\267\056\165\360\277\365\173\007"
+"\377\133\277\161\360\277\365\133\207\376\337\272\320\071\222\274"
+"\310\071\212\274\331\301\177\022\377\133\057\166\360\277\365\071"
+"\107\306\177\056\161\360\277\365\073\007\377\273\227\073\047\362"
+"\016\354\351\310\370\317\206\316\311\054\037\353\340\177\143\117"
+"\007\377\365\266\016\376\353\311\016\376\227\307\072\370\137\276"
+"\316\301\377\306\154\347\114\266\134\333\071\253\371\367\162\166"
+"\063\317\341\075\357\353\340\177\043\164\360\277\076\325\301\377"
+"\226\161\016\376\167\376\340\340\177\333\170\107\306\177\306\070"
+"\027\221\137\073\370\337\150\161\360\277\076\317\301\177\275\215"
+"\203\377\346\102\007\377\053\055\016\376\233\225\034\374\017\057"
+"\164\360\077\134\311\301\177\363\201\203\377\341\026\016\376\233"
+"\127\035\374\067\133\070\370\037\276\352\340\277\331\300\301\177"
+"\167\252\043\343\077\137\071\370\337\323\342\334\324\134\276\231"
+"\127\234\346\340\277\271\335\271\225\345\335\035\374\157\214\166"
+"\360\337\254\353\340\177\170\273\203\377\341\272\016\376\227\367"
+"\167\360\077\335\310\301\377\362\233\316\275\154\177\264\203\377"
+"\215\335\035\374\257\270\016\376\227\336\162\244\377\333\216\364"
+"\177\327\301\377\216\175\034\374\157\033\342\074\052\115\306\021"
+"\377\327\162\360\277\176\236\203\377\365\205\016\376\227\217\160"
+"\360\277\176\276\203\377\053\256\161\360\177\105\340\340\377\212"
+"\371\016\376\227\077\162\360\337\235\346\074\047\316\073\317\363"
+"\267\160\257\203\377\366\233\016\376\367\124\234\227\232\371\162"
+"\363\121\374\357\331\302\301\177\163\207\203\377\146\075\007\377"
+"\303\073\034\374\017\327\163\360\137\157\347\340\177\371\040\007"
+"\377\313\357\070\370\257\057\165\360\077\324\016\376\327\052\016"
+"\376\267\277\341\340\177\373\363\016\376\267\057\161\360\277\175"
+"\251\203\377\355\117\071\370\137\316\035\374\257\217\162\360\277"
+"\134\160\360\277\076\332\301\377\366\257\035\374\157\377\312\301"
+"\377\366\333\035\374\157\177\324\301\377\366\007\035\374\157\277"
+"\325\301\377\216\121\016\376\267\137\353\340\177\207\353\340\177"
+"\373\067\016\376\267\177\353\340\177\373\375\016\376\267\337\353"
+"\340\177\251\277\203\377\105\337\371\325\126\355\247\071\062\376"
+"\063\316\301\377\164\125\007\377\313\107\073\370\137\376\324\301"
+"\377\322\125\016\376\327\236\165\360\277\373\157\107\372\377\121"
+"\016\376\167\377\345\340\177\367\237\216\214\377\357\346\340\177"
+"\175\067\007\377\273\377\160\360\277\076\314\371\217\055\217\161"
+"\360\277\273\356\340\177\367\177\056\376\067\366\160\145\230\155"
+"\167\027\377\273\127\270\062\010\067\334\225\361\377\335\134\036"
+"\350\376\335\245\377\167\377\346\342\177\143\224\213\377\335\277"
+"\272\062\376\277\207\213\377\335\075\056\376\167\377\317\305\377"
+"\306\006\056\376\167\377\353\246\221\322\037\272\370\157\017\162"
+"\361\337\366\134\374\267\327\167\361\337\056\270\370\157\117\165"
+"\361\337\136\333\305\177\173\244\333\207\275\335\350\342\277\072"
+"\336\305\377\316\037\135\374\127\047\271\342\377\241\056\376\227"
+"\337\167\127\217\124\113\233\213\377\355\037\272\370\337\266\212"
+"\213\377\355\257\273\055\074\167\272\213\377\356\276\056\376\233"
+"\313\335\376\374\000\276\213\377\146\125\027\377\303\313\135\374"
+"\017\127\165\361\277\166\232\213\377\346\004\027\377\355\334\305"
+"\177\243\134\374\017\117\160\361\277\365\107\127\306\177\134\167"
+"\020\307\377\202\113\377\267\327\165\361\337\216\135\374\157\175"
+"\300\245\377\127\372\271\342\177\342\016\346\165\277\163\345\374"
+"\257\161\361\277\364\266\073\314\226\257\111\370\257\167\160\361"
+"\137\105\356\110\133\022\377\153\317\271\243\331\376\141\027\377"
+"\355\001\356\206\054\137\357\342\177\253\355\112\377\377\302\245"
+"\377\067\226\271\364\377\256\353\135\071\377\273\314\245\377\273"
+"\107\270\342\377\025\256\370\277\232\213\377\341\025\256\370\277"
+"\232\113\377\257\254\344\112\377\177\334\305\377\001\275\135\351"
+"\377\023\135\351\377\117\272\322\377\037\162\245\377\377\343\322"
+"\377\335\203\134\351\377\257\272\322\377\037\161\267\343\257\351"
+"\005\027\377\253\207\271\370\137\355\353\342\177\165\256\113\377"
+"\257\154\346\322\377\253\306\305\377\064\164\351\377\151\340\342"
+"\177\152\134\374\117\143\027\377\325\151\056\376\127\017\165\351"
+"\377\325\076\056\375\277\072\307\245\377\127\046\271\364\377\152"
+"\340\322\377\253\253\273\370\337\376\212\073\023\011\057\161\361"
+"\277\355\062\167\066\313\027\271\370\137\036\352\342\177\373\233"
+"\056\376\267\277\345\316\343\335\176\336\225\363\277\353\271\363"
+"\345\353\257\213\377\375\007\270\370\257\236\161\361\137\075\345"
+"\342\277\172\332\225\361\377\147\335\203\154\325\061\335\305\177"
+"\022\377\073\146\273\370\137\133\354\342\177\143\274\213\377\265"
+"\153\135\372\277\173\202\173\044\357\363\110\027\377\133\256\163"
+"\361\277\261\252\053\375\377\072\027\377\353\073\270\370\257\337"
+"\162\361\137\277\351\236\300\226\353\272\364\177\273\267\213\377"
+"\366\312\056\375\277\363\131\127\372\177\354\342\277\273\207\213"
+"\377\235\137\272\370\337\210\135\374\267\127\162\317\220\166\344"
+"\322\377\353\333\270\370\337\371\225\213\377\166\057\227\376\257"
+"\037\163\361\277\143\264\173\036\077\365\306\056\376\267\015\162"
+"\361\277\277\355\342\277\345\271\364\177\313\167\351\377\126\340"
+"\342\277\325\317\305\177\053\161\361\337\052\270\370\157\365\162"
+"\361\337\352\355\342\277\265\222\213\377\326\161\056\376\133\271"
+"\213\377\326\052\056\376\133\256\213\377\226\343\342\277\265\232"
+"\213\377\126\137\027\377\055\333\305\177\053\166\361\337\132\335"
+"\305\177\153\015\027\377\055\343\322\377\255\320\305\177\153\145"
+"\227\376\157\025\135\374\267\062\027\377\255\324\305\177\113\273"
+"\370\157\051\027\377\255\125\135\374\267\372\270\370\157\255\351"
+"\322\377\255\310\275\217\367\352\026\027\377\273\177\160\361\277"
+"\363\043\027\377\313\261\213\377\215\151\056\376\327\307\272\370"
+"\137\116\134\374\157\114\167\361\277\076\316\305\377\332\161\056"
+"\376\327\136\160\361\277\366\274\213\377\245\253\135\374\157\271"
+"\336\305\177\175\211\213\377\155\157\270\370\337\366\272\273\224"
+"\127\131\354\342\177\347\133\056\375\277\363\155\027\377\073\337"
+"\165\361\277\363\075\367\045\036\235\341\212\377\063\134\374\067"
+"\067\272\257\312\167\037\127\374\357\160\361\277\376\204\213\377"
+"\365\047\135\374\257\077\345\112\377\137\342\276\335\314\167\220"
+"\244\305\175\227\154\165\361\077\274\321\305\377\260\303\305\377"
+"\362\024\027\377\313\117\271\037\311\167\056\127\372\377\073\056"
+"\376\367\324\334\117\233\371\231\114\110\161\077\047\371\256\100"
+"\152\167\031\151\273\137\066\267\374\212\145\307\375\232\164\335"
+"\157\110\317\375\226\364\335\345\062\157\306\375\216\064\356\367"
+"\144\350\376\100\106\356\217\144\354\376\104\046\356\317\144\352"
+"\376\102\146\356\257\144\356\376\106\026\334\337\311\136\356\037"
+"\144\157\027\377\353\267\272\177\311\167\056\367\357\146\376\043"
+"\337\310\334\316\146\342\277\231\341\112\377\277\311\375\267\231"
+"\370\357\234\342\342\177\347\073\056\376\227\103\227\376\137\337"
+"\300\305\377\162\344\342\177\175\103\017\377\355\165\000\236\056"
+"\347\341\177\353\333\162\262\327\314\364\350\377\235\357\173\370"
+"\157\147\036\017\267\255\353\341\177\113\137\017\377\355\232\107"
+"\377\267\067\362\360\137\077\312\227\003\325\322\307\303\177\073"
+"\365\360\277\142\074\372\177\355\105\057\143\107\231\207\377\305"
+"\202\207\377\245\167\074\231\377\323\333\353\315\372\202\207\377"
+"\346\072\017\377\115\253\107\377\017\257\363\360\077\154\365\372"
+"\311\367\101\017\377\173\116\367\360\337\354\356\341\277\271\336"
+"\243\377\233\066\017\377\303\353\075\374\017\333\074\231\377\023"
+"\171\062\376\237\170\322\377\347\171\155\315\224\361\237\301\136"
+"\211\117\310\335\236\364\377\073\074\374\057\317\366\360\337\376"
+"\315\303\377\362\013\036\376\367\137\307\303\377\376\035\174\347"
+"\126\366\375\036\376\253\263\075\374\067\335\036\375\137\057\366"
+"\360\337\334\344\341\277\031\340\125\170\305\233\074\374\017\007"
+"\170\065\036\335\311\243\377\333\247\170\370\157\117\340\073\267"
+"\352\230\345\321\377\073\246\171\303\171\335\233\075\374\357\374"
+"\300\243\377\333\045\017\377\355\300\033\315\232\017\075\071\377"
+"\173\212\107\377\057\117\363\244\377\077\343\341\177\331\366\306"
+"\362\254\056\017\377\333\372\173\370\337\266\262\047\343\077\223"
+"\371\106\256\332\057\360\360\277\230\171\370\137\273\304\303\177"
+"\336\075\374\157\114\340\173\271\152\077\331\303\377\064\365\360"
+"\077\135\311\303\377\362\134\017\377\313\057\171\133\263\317\222"
+"\207\377\235\137\173\370\337\160\074\374\357\052\171\364\377\372"
+"\134\017\377\073\277\361\166\300\306\333\074\374\257\165\170\364"
+"\177\375\221\207\377\266\357\341\277\335\337\243\377\223\370\137"
+"\356\361\166\347\327\134\361\360\277\363\011\017\377\365\311\036"
+"\375\277\355\071\017\377\333\137\365\246\312\067\134\157\132\063"
+"\361\337\056\172\063\330\346\075\217\376\137\272\306\303\377\316"
+"\237\074\372\277\336\321\223\361\377\263\074\374\057\317\364\360"
+"\277\374\234\107\377\127\177\171\370\257\027\171\062\376\377\274"
+"\207\377\372\006\117\306\177\276\364\144\374\147\007\117\306\177"
+"\366\362\016\344\047\232\351\035\104\376\340\211\377\143\075\374"
+"\067\347\172\370\137\131\335\223\363\277\053\173\370\157\022\017"
+"\377\303\263\275\043\131\336\330\073\212\345\347\274\243\171\164"
+"\065\117\316\377\256\341\341\277\073\323\303\177\367\124\017\377"
+"\113\357\172\342\377\217\236\234\377\175\322\303\377\342\052\236"
+"\314\377\171\301\303\377\342\323\036\376\027\237\365\360\277\370"
+"\234\167\232\214\145\171\370\257\135\017\377\115\346\111\377\377"
+"\311\303\177\325\327\073\333\226\224\371\077\217\170\370\037\146"
+"\036\375\077\234\350\055\224\261\065\117\306\377\277\367\360\077"
+"\074\327\303\177\167\266\207\377\225\065\074\374\057\117\362\344"
+"\374\357\143\036\376\127\326\364\056\143\313\341\236\214\377\314"
+"\361\244\377\377\352\341\177\151\266\207\377\003\026\172\322\377"
+"\367\365\360\277\164\200\207\377\245\123\074\374\057\135\346\111"
+"\377\377\325\303\377\160\137\157\161\363\271\370\137\136\313\303"
+"\377\216\171\036\376\127\007\170\370\337\162\232\207\377\215\176"
+"\036\376\167\015\367\360\277\164\224\207\377\245\163\075\031\377"
+"\351\366\360\277\365\060\017\377\133\016\367\244\377\357\354\341"
+"\277\366\075\231\377\063\323\243\377\227\157\366\360\277\161\260"
+"\207\377\341\301\036\376\127\266\367\344\374\357\050\357\141\076"
+"\025\201\207\377\245\275\075\374\057\035\353\341\177\351\174\017"
+"\377\133\217\364\036\107\335\016\017\377\333\176\365\236\344\275"
+"\352\355\341\177\261\257\207\377\305\225\275\147\144\304\322\173"
+"\226\155\126\362\350\377\365\212\207\377\215\215\075\031\377\331"
+"\315\173\201\075\273\036\376\127\372\173\057\311\250\246\367\062"
+"\133\366\366\360\277\136\365\360\337\131\344\275\306\076\067\367"
+"\360\277\322\356\311\371\337\033\074\374\167\136\364\360\277\105"
+"\173\062\377\147\025\217\376\137\331\316\243\377\353\335\074\374"
+"\327\227\173\370\257\167\367\360\137\357\351\341\277\336\303\303"
+"\377\322\265\336\307\174\376\037\360\076\041\357\360\076\345\067"
+"\262\201\107\377\157\254\341\111\377\237\345\321\377\133\216\366"
+"\226\161\124\123\075\374\257\164\170\137\311\310\252\107\377\327"
+"\073\173\337\310\270\250\367\255\214\262\172\364\177\347\066\217"
+"\376\257\117\362\350\377\172\201\107\377\067\251\047\343\377\233"
+"\170\364\177\165\253\107\377\327\247\170\364\377\362\104\357\127"
+"\362\046\117\372\377\336\336\357\064\317\101\036\375\277\363\147"
+"\357\117\216\344\041\117\306\177\346\170\177\263\174\247\367\017"
+"\107\365\273\047\363\177\036\367\144\374\177\065\117\374\137\350"
+"\375\333\314\377\065\263\247\231\370\257\076\363\360\277\062\325"
+"\303\377\226\333\075\374\067\057\370\062\376\077\121\246\366\204"
+"\057\370\232\275\265\312\064\117\167\167\337\101\206\321\276\314"
+"\377\274\316\227\371\237\327\371\322\377\225\217\377\135\255\276"
+"\341\247\266\175\361\377\174\137\306\377\177\363\145\376\317\005"
+"\076\376\253\107\174\231\377\371\250\237\361\334\131\076\376\233"
+"\075\175\031\377\331\323\307\377\126\343\367\226\221\103\177\245"
+"\146\256\054\343\212\076\376\127\002\037\377\113\357\371\370\137"
+"\134\323\137\105\106\051\175\374\167\027\370\370\137\177\333\307"
+"\377\372\073\076\376\327\337\365\345\374\357\267\376\232\250\073"
+"\306\307\377\036\313\307\377\036\333\157\223\241\013\277\277\121"
+"\075\312\247\377\227\366\365\361\277\164\242\057\347\177\057\366"
+"\007\360\023\365\362\327\302\314\153\375\201\344\355\376\332\062"
+"\036\350\323\377\173\106\372\353\066\163\275\346\232\101\374\157"
+"\273\222\277\076\271\262\137\046\373\370\025\262\257\057\363\177"
+"\076\363\153\315\034\054\243\205\376\220\146\016\225\021\102\177"
+"\130\063\145\376\347\267\376\210\146\342\277\176\311\307\377\366"
+"\227\174\031\377\077\310\337\200\367\144\210\277\241\214\047\373"
+"\370\157\176\362\361\277\064\303\247\377\017\070\307\307\177\063"
+"\317\037\317\157\174\017\037\377\303\237\174\372\177\070\317\337"
+"\244\271\075\376\227\333\175\374\257\226\174\374\157\071\305\247"
+"\377\067\126\366\345\374\357\020\037\377\113\207\373\370\137\072"
+"\313\307\177\357\037\237\376\337\172\260\217\377\055\207\370\370"
+"\237\356\340\117\346\235\321\376\166\374\302\316\367\361\277\261"
+"\211\117\377\257\135\346\343\177\272\246\117\377\117\327\360\361"
+"\077\335\332\337\105\046\304\371\273\162\264\203\375\335\144\014"
+"\334\247\377\233\037\175\374\057\115\367\361\177\300\331\076\375"
+"\337\354\355\343\177\370\243\217\377\341\336\376\264\346\226\370"
+"\137\056\371\370\137\355\357\343\177\313\311\076\376\067\126\362"
+"\361\337\164\371\370\337\065\330\307\377\322\141\076\376\227\316"
+"\364\361\337\373\333\307\377\326\203\174\374\157\071\330\307\377"
+"\322\174\037\377\113\047\370\370\137\272\310\307\377\164\173\237"
+"\376\257\137\361\017\142\315\165\376\301\374\355\117\360\017\341"
+"\167\272\310\077\224\343\234\355\323\377\315\045\276\314\377\371"
+"\307\307\177\323\327\077\122\306\231\175\374\357\271\300\247\377"
+"\367\134\350\343\177\317\105\076\376\207\227\370\370\037\366\365"
+"\361\277\274\205\177\002\171\273\057\347\177\357\363\361\137\117"
+"\367\361\137\057\363\361\337\376\311\307\377\112\342\237\312\037"
+"\306\232\376\151\344\167\076\376\253\376\076\376\227\336\367\317"
+"\144\315\032\376\131\315\065\147\113\221\362\317\261\045\145\376"
+"\117\315\307\377\362\144\037\377\313\367\372\364\377\266\155\175"
+"\374\167\257\364\305\377\277\174\374\167\257\362\057\346\370\277"
+"\360\361\337\275\332\307\177\367\157\237\376\137\356\355\343\277"
+"\271\324\307\177\367\100\037\377\115\077\137\306\177\056\365\361"
+"\077\354\347\313\370\377\110\037\377\353\257\373\370\137\177\303"
+"\307\377\372\233\276\314\377\274\310\307\177\347\002\137\346\177"
+"\056\364\361\337\354\352\343\177\270\253\217\377\172\212\217\377"
+"\265\013\174\374\057\157\345\343\177\371\116\037\377\335\351\376"
+"\035\062\242\356\343\177\117\325\277\253\231\167\067\327\310\371"
+"\337\355\174\374\127\117\370\370\257\057\364\361\137\137\354\343"
+"\277\176\312\307\177\175\221\217\377\372\151\237\376\257\277\361"
+"\361\137\137\347\343\277\276\336\227\371\237\255\276\314\377\231"
+"\350\323\377\313\333\373\062\376\163\277\057\375\377\172\037\377"
+"\153\267\373\117\343\211\357\077\303\373\060\305\247\377\333\175"
+"\174\231\377\151\371\317\311\031\112\037\377\315\166\076\375\137"
+"\277\356\313\374\317\061\076\376\333\143\174\374\267\066\364\137"
+"\341\271\063\175\374\157\373\304\247\377\067\212\076\376\267\035"
+"\344\343\177\333\141\076\376\267\315\366\361\277\076\323\247\377"
+"\353\251\276\314\377\371\326\307\377\362\066\376\173\354\341\066"
+"\377\175\362\061\377\003\076\121\043\374\017\311\221\076\376\227"
+"\357\366\351\377\265\176\076\375\277\366\222\057\376\317\361\145"
+"\376\347\055\076\376\173\117\373\162\376\367\021\137\346\177\336"
+"\347\313\371\337\021\276\234\377\175\304\227\363\277\043\374\157"
+"\344\014\216\217\377\365\353\175\374\257\057\362\361\277\274\237"
+"\217\377\365\305\076\376\327\326\366\361\277\374\206\217\377\215"
+"\063\174\374\017\267\364\177\221\363\107\276\364\377\176\276\364"
+"\377\125\174\351\377\253\372\322\377\127\363\377\154\076\372\027"
+"\313\253\373\177\223\153\370\377\220\105\037\377\053\063\374\056"
+"\071\067\347\343\177\353\022\037\377\133\237\362\361\277\366\262"
+"\057\376\337\353\257\150\346\177\315\254\067\263\041\031\130\315"
+"\124\315\324\315\024\377\357\013\234\146\272\315\364\232\351\067"
+"\063\150\246\151\146\330\314\110\316\107\004\161\063\223\146\246"
+"\315\314\232\231\067\263\320\314\136\315\224\376\077\040\300\377"
+"\112\026\340\177\161\235\100\346\377\017\014\304\377\017\202\176"
+"\074\332\036\310\374\317\001\001\376\027\373\007\370\137\154\017"
+"\126\227\363\073\301\032\230\077\063\300\177\222\376\337\061\065"
+"\020\377\007\007\255\315\224\376\377\164\040\343\377\023\203\122"
+"\163\173\374\357\271\051\300\377\372\217\301\200\146\322\377\173"
+"\156\010\350\377\075\213\003\374\357\271\071\220\361\377\237\002"
+"\374\057\037\036\310\370\377\055\001\375\277\376\163\100\377\257"
+"\035\025\320\377\313\037\006\364\377\306\331\001\376\327\206\006"
+"\322\377\147\007\370\137\033\021\210\377\037\004\103\233\211\377"
+"\172\126\040\343\077\367\004\370\137\075\052\300\377\352\152\001"
+"\376\127\347\007\370\137\331\052\330\200\345\044\220\376\177\140"
+"\040\375\377\355\000\377\033\147\006\143\345\034\120\060\256\231"
+"\343\233\071\241\231\033\067\163\223\146\116\154\346\244\146\342"
+"\177\361\342\100\374\237\024\340\277\273\177\040\375\177\235\100"
+"\372\377\121\201\364\377\117\002\374\157\234\023\310\370\317\043"
+"\301\266\315\234\334\314\355\232\271\175\063\167\150\346\216\315"
+"\334\251\231\342\377\240\140\027\376\356\114\260\253\222\304\177"
+"\273\065\300\177\273\055\300\377\332\270\000\377\355\037\202\275"
+"\344\314\176\200\377\366\152\001\376\167\314\011\246\331\252\277"
+"\016\360\277\264\050\220\376\177\167\200\377\172\146\200\377\345"
+"\103\002\374\257\325\002\031\377\171\057\300\377\306\131\301\336"
+"\174\343\370\054\300\177\073\012\144\376\317\105\301\174\376\312"
+"\326\013\144\376\377\267\001\376\067\222\000\377\353\323\003\374"
+"\357\134\036\340\177\113\036\110\377\237\033\310\374\317\137\002"
+"\071\377\273\165\100\377\067\247\006\370\137\031\020\034\316\347"
+"\147\275\100\346\377\277\031\340\177\351\303\340\050\266\374\065"
+"\220\371\077\073\006\370\257\115\200\377\325\163\003\374\257\236"
+"\031\340\177\165\243\000\377\253\043\003\372\177\365\206\000\377"
+"\313\136\160\262\114\125\016\144\374\177\106\200\377\325\141\001"
+"\375\277\272\050\240\377\127\327\017\360\277\272\101\200\377\325"
+"\253\202\063\311\061\001\376\127\057\016\360\277\072\064\240\377"
+"\127\327\011\360\277\132\015\360\277\272\070\020\377\335\000\377"
+"\253\227\006\370\137\035\036\340\177\365\246\000\377\253\067\006"
+"\364\377\352\055\001\376\127\007\005\370\137\135\073\300\377\352"
+"\340\000\377\313\072\300\377\352\325\001\376\127\307\007\370\137"
+"\035\021\340\177\165\303\000\377\253\067\007\370\137\275\054\300"
+"\377\352\270\000\377\253\265\000\377\313\126\200\377\325\041\001"
+"\376\127\053\001\376\127\107\005\322\377\313\001\376\127\107\007"
+"\370\137\135\067\300\377\352\172\201\370\357\007\370\137\075\047"
+"\300\377\352\031\001\376\127\057\014\360\277\172\136\200\377\325"
+"\263\002\374\257\236\035\340\277\361\003\031\377\371\055\300\377"
+"\342\372\201\314\377\374\066\220\361\377\127\002\351\377\037\004"
+"\062\377\147\110\200\377\325\103\002\374\257\256\034\340\177\165"
+"\166\200\377\225\211\001\376\127\375\340\011\366\360\163\200\377"
+"\341\251\001\376\207\176\100\377\057\117\010\144\376\317\113\001"
+"\376\233\323\002\231\377\063\074\240\377\233\040\300\377\360\264"
+"\000\377\303\040\300\377\160\114\200\377\072\012\136\226\071\017"
+"\201\214\377\074\025\310\370\377\230\000\377\303\247\202\327\371"
+"\014\324\002\374\057\057\016\360\277\161\140\200\377\225\351\201"
+"\370\377\151\040\347\177\157\017\336\145\233\165\002\372\277\363"
+"\165\100\377\157\333\056\240\377\207\033\005\364\377\306\246\001"
+"\376\267\171\001\375\277\255\030\310\371\337\171\301\247\054\257"
+"\023\340\177\377\326\340\163\133\022\377\273\377\011\360\277\177"
+"\113\360\245\055\371\025\333\014\014\360\277\346\006\337\320\060"
+"\077\014\276\045\077\012\226\243\326\250\340\073\231\271\021\174"
+"\317\353\256\037\374\300\337\327\043\301\217\344\313\201\314\377"
+"\074\057\220\376\077\067\370\205\345\273\002\372\177\151\161\100"
+"\377\017\017\014\176\347\247\030\037\310\370\377\242\000\377\033"
+"\163\002\372\277\371\137\360\067\333\317\011\376\341\357\342\227"
+"\000\377\313\127\005\370\137\376\057\350\146\377\003\003\231\377"
+"\263\136\200\377\225\201\101\217\314\315\010\360\337\074\031\340"
+"\277\331\050\300\377\360\311\240\041\063\045\014\376\073\207\031"
+"\271\376\153\157\043\376\037\140\144\374\347\112\203\377\146\165"
+"\043\363\177\256\064\370\037\256\156\360\277\222\033\371\257\342"
+"\167\203\377\245\217\114\310\246\103\014\376\353\253\214\364\377"
+"\275\114\042\063\072\114\052\163\030\014\376\327\257\066\370\137"
+"\277\306\340\177\375\132\043\347\177\057\065\364\377\236\063\215"
+"\214\377\134\145\144\374\147\015\043\343\077\127\031\031\377\131"
+"\303\320\377\335\243\014\376\227\035\203\377\215\315\014\376\227"
+"\156\060\370\257\357\065\153\160\234\363\214\314\377\271\316\340"
+"\277\271\310\310\370\117\305\310\374\237\221\106\346\377\134\141"
+"\360\337\254\154\304\377\117\114\273\314\160\060\162\376\167\224"
+"\031\320\114\071\377\373\261\031\330\174\124\316\377\176\142\304"
+"\377\117\215\364\377\055\015\376\207\027\031\374\017\127\066\370"
+"\137\336\334\310\374\237\245\006\377\313\267\031\374\157\034\152"
+"\152\374\216\036\065\062\376\363\273\301\377\312\001\006\377\053"
+"\047\033\374\257\034\156\360\277\162\204\301\377\132\142\106\312"
+"\214\013\063\252\231\370\137\376\307\340\177\355\144\043\375\177"
+"\033\263\221\314\243\060\370\357\134\143\144\374\177\177\043\363"
+"\177\256\062\370\137\111\015\376\327\116\067\370\257\176\060\370"
+"\257\206\031\374\057\175\154\046\065\227\305\377\232\301\177\367"
+"\144\203\377\345\155\015\376\227\357\061\370\337\070\302\310\374"
+"\317\375\014\376\227\073\315\066\374\216\206\033\374\067\027\033"
+"\031\377\337\330\340\277\351\143\360\077\274\330\340\177\330\307"
+"\354\050\363\114\014\376\327\157\064\370\137\277\311\320\377\353"
+"\067\033\361\377\073\203\377\146\027\203\377\341\056\006\377\253"
+"\207\033\031\377\357\147\144\374\177\157\203\377\225\315\015\376"
+"\127\103\103\377\117\265\301\377\324\065\370\237\332\006\377\123"
+"\307\340\177\272\233\301\177\165\231\301\377\324\063\370\137\133"
+"\150\144\374\147\113\203\377\345\073\014\376\067\016\063\364\377"
+"\332\312\006\377\153\175\014\376\327\126\062\370\137\335\327\340"
+"\177\065\065\370\137\235\142\350\377\225\212\071\230\145\313\340"
+"\177\245\146\144\376\317\356\106\346\177\016\061\062\376\177\251"
+"\301\377\332\215\006\377\033\233\033\372\177\355\172\203\377\345"
+"\355\014\376\327\236\062\370\237\052\203\377\345\373\214\314\377"
+"\074\322\340\177\255\150\360\337\071\301\340\177\365\070\043\363"
+"\077\307\033\374\057\335\150\360\277\166\253\301\177\147\077\203"
+"\377\265\067\214\214\377\134\155\360\277\274\265\301\377\362\135"
+"\006\377\033\207\033\374\257\075\154\360\277\366\204\071\227\317"
+"\352\076\006\377\315\275\146\041\277\205\221\006\377\115\325\310"
+"\370\317\275\006\377\303\252\301\377\164\143\203\377\365\025\106"
+"\316\377\166\033\374\257\167\031\374\257\377\317\340\177\375\137"
+"\203\377\365\036\203\377\365\116\203\377\365\177\214\314\377\231"
+"\140\256\341\163\370\230\301\177\165\205\301\177\367\123\203\377"
+"\075\243\315\242\146\056\156\256\271\201\176\270\246\271\221\022"
+"\335\142\156\042\133\315\315\254\151\063\370\137\377\334\340\377"
+"\212\227\015\376\327\277\060\370\277\342\045\203\377\053\136\061"
+"\370\377\337\237\006\377\353\313\014\376\377\167\232\301\377\025"
+"\257\232\173\331\103\177\163\037\131\062\370\337\376\233\301\177"
+"\165\271\221\376\277\217\301\377\112\154\036\346\047\335\320\340"
+"\277\032\155\144\374\347\023\043\375\177\003\263\244\271\346\161"
+"\036\035\143\144\376\377\030\203\377\305\141\106\306\177\106\030"
+"\374\267\127\065\370\157\367\063\317\362\276\215\066\113\261\164"
+"\206\301\377\266\217\015\376\067\126\067\370\337\166\240\301\377"
+"\266\103\015\376\267\315\062\370\137\237\141\360\137\357\153\136"
+"\105\332\263\014\376\353\371\006\377\133\026\033\231\377\263\217"
+"\301\177\365\222\221\371\237\273\030\374\357\174\312\340\277\251"
+"\031\071\377\173\237\301\377\342\050\203\377\146\260\301\177\363"
+"\245\301\177\063\325\340\277\371\332\320\377\315\164\203\377\172"
+"\236\221\371\377\133\030\374\257\275\151\350\377\351\272\346\013"
+"\216\160\200\221\371\237\267\033\372\177\377\334\210\377\153\031"
+"\374\117\333\015\376\253\343\214\364\377\255\014\375\337\256\032"
+"\374\257\157\151\360\277\375\145\103\377\057\335\144\176\204\316"
+"\161\346\047\231\215\143\144\376\377\257\006\377\333\027\032\374"
+"\117\073\014\376\233\263\014\376\233\330\340\277\371\312\340\277"
+"\231\146\360\277\366\216\371\233\327\235\157\360\337\334\151\344"
+"\374\357\135\006\377\355\212\241\377\333\216\301\177\375\232\301"
+"\377\306\327\106\346\177\156\144\304\377\101\006\377\303\073\215"
+"\370\077\310\110\377\137\034\132\315\344\115\052\037\033\312\371"
+"\337\213\004\365\356\013\103\374\117\067\017\345\374\357\005\241"
+"\234\377\075\053\304\377\356\063\103\374\117\047\205\370\337\175"
+"\106\050\347\177\117\016\371\041\322\112\210\377\335\247\207\370"
+"\237\116\014\361\277\373\334\020\377\273\317\011\361\077\335\064"
+"\304\377\356\263\103\374\357\076\077\304\377\356\205\041\376\247"
+"\233\205\370\337\175\136\210\377\351\046\041\376\227\077\017\361"
+"\277\161\156\270\012\377\143\216\013\361\277\066\061\304\177\367"
+"\211\020\377\131\043\363\177\356\012\361\277\166\122\210\377\025"
+"\077\304\377\332\273\041\376\227\076\015\361\277\166\103\210\377"
+"\305\261\041\376\027\307\207\342\377\306\241\364\377\257\102\351"
+"\377\137\207\342\377\067\041\376\257\170\053\304\377\025\223\102"
+"\374\257\155\031\112\377\077\041\304\377\332\261\041\376\227\277"
+"\014\361\277\161\176\210\377\356\347\041\376\367\154\030\126\233"
+"\131\153\256\221\361\237\203\103\351\377\067\204\322\377\157\014"
+"\207\065\163\170\163\015\376\353\003\102\374\257\235\037\342\177"
+"\143\146\210\377\326\103\241\364\377\003\103\374\257\366\012\361"
+"\277\072\043\304\377\312\330\020\377\053\373\207\370\137\165\102"
+"\361\177\337\020\377\053\373\205\370\137\076\056\304\377\362\027"
+"\041\376\067\316\013\047\105\252\255\127\210\377\166\113\210\377"
+"\155\027\207\370\257\077\010\361\277\255\167\270\045\237\374\152"
+"\210\377\265\315\102\374\257\155\032\322\377\365\376\041\376\327"
+"\056\016\361\277\266\050\304\377\306\226\041\376\327\256\011\361"
+"\277\174\142\050\343\377\117\207\370\137\376\052\304\377\306\005"
+"\041\376\327\336\017\345\374\157\153\210\377\265\233\102\374\257"
+"\335\034\312\370\317\315\041\376\327\156\013\361\277\166\137\210"
+"\377\235\277\205\370\257\367\013\247\361\071\174\040\304\177\022"
+"\377\153\047\206\370\337\066\057\224\363\277\173\207\322\377\317"
+"\012\361\337\136\022\212\377\147\207\342\377\361\241\370\277\054"
+"\024\377\027\206\342\377\105\341\276\354\347\203\120\374\277\042"
+"\304\177\167\121\170\100\063\017\344\123\261\167\050\347\177\347"
+"\205\062\376\077\077\224\363\277\373\205\162\376\367\336\020\377"
+"\153\017\206\342\377\222\120\374\177\044\304\377\332\103\241\370"
+"\377\144\210\377\265\307\303\143\330\363\276\041\376\233\233\103"
+"\374\157\363\303\343\371\270\117\010\361\337\254\025\342\177\170"
+"\163\210\377\341\132\241\364\377\275\103\374\057\277\034\342\177"
+"\343\224\120\306\177\066\015\305\377\023\102\374\257\104\041\376"
+"\133\327\206\062\376\063\051\224\361\237\115\102\374\057\175\026"
+"\312\370\377\346\341\271\315\065\062\377\177\343\120\346\377\117"
+"\014\361\277\074\077\304\377\362\153\041\376\067\116\013\057\222"
+"\371\215\041\376\327\316\014\361\337\134\026\342\277\131\045\304"
+"\377\360\262\020\377\303\125\102\374\117\375\020\377\313\027\204"
+"\162\375\327\201\041\376\353\203\102\351\377\373\205\322\377\263"
+"\020\377\053\103\102\351\377\123\103\374\257\014\015\361\277\062"
+"\070\244\377\127\346\204\322\377\125\110\377\257\314\016\351\377"
+"\225\131\041\376\227\347\205\062\376\363\112\050\363\177\026\204"
+"\370\337\175\131\210\377\351\226\241\314\377\037\021\312\374\317"
+"\271\041\376\233\337\102\374\057\315\011\351\377\003\316\017\357"
+"\143\315\176\041\376\207\277\205\062\376\277\137\370\140\163\113"
+"\374\057\017\014\351\377\325\265\102\374\157\071\075\224\363\277"
+"\253\204\370\337\065\042\304\377\322\321\041\375\277\164\136\050"
+"\363\077\377\015\361\277\365\360\120\316\377\036\021\342\177\351"
+"\300\020\377\113\013\102\372\177\351\362\220\376\237\356\022\312"
+"\365\137\257\206\062\377\177\327\020\377\313\177\205\062\376\163"
+"\125\210\377\352\352\020\377\213\233\206\370\337\330\052\224\353"
+"\177\057\017\345\374\357\242\360\165\262\177\050\363\177\026\205"
+"\370\037\366\017\361\337\014\014\145\376\317\276\041\376\227\137"
+"\017\361\277\161\172\370\136\363\067\210\377\151\357\020\377\323"
+"\125\302\017\145\006\154\210\377\365\345\341\307\062\037\065\224"
+"\363\277\327\204\237\362\377\146\173\210\377\365\357\102\374\137"
+"\361\166\110\377\137\261\171\110\377\257\177\037\342\377\212\367"
+"\302\257\310\255\102\374\137\161\166\370\015\237\256\070\244\377"
+"\267\231\020\377\311\357\130\236\022\176\317\362\176\041\376\267"
+"\035\020\376\110\036\021\342\177\333\264\020\377\333\366\015\177"
+"\041\367\017\361\277\255\043\304\377\266\343\303\337\171\326\311"
+"\041\376\267\235\020\342\177\333\051\241\214\377\037\032\312\365"
+"\277\267\204\370\137\273\047\244\377\267\034\027\166\361\133\373"
+"\043\244\377\333\217\207\370\137\336\047\304\377\362\253\041\376"
+"\067\116\015\305\377\045\241\364\377\321\241\370\277\044\304\377"
+"\160\164\044\327\377\366\227\041\374\206\035\341\177\175\257\110"
+"\056\101\070\070\302\177\373\220\310\225\071\242\221\214\377\054"
+"\213\360\277\147\114\024\064\323\064\327\340\177\355\201\210\047"
+"\327\036\213\360\337\134\035\311\374\317\142\204\377\341\325\221"
+"\314\377\054\106\162\377\207\375\242\002\371\127\204\377\351\172"
+"\021\376\353\103\042\231\377\377\103\044\363\377\177\212\360\337"
+"\134\020\341\177\145\265\110\306\177\266\216\350\377\246\020\341"
+"\177\270\060\222\363\277\233\106\370\037\276\024\311\375\037\336"
+"\216\360\277\364\171\264\046\373\374\073\222\376\377\126\204\377"
+"\305\217\042\374\057\276\023\211\377\357\105\342\377\007\221\314"
+"\377\337\060\302\177\265\155\204\377\072\211\144\376\117\357\150"
+"\040\317\355\214\144\376\377\167\221\134\377\365\132\264\056\077"
+"\306\166\021\376\127\166\215\144\376\317\047\221\314\377\131\053"
+"\222\373\077\374\031\311\371\337\013\042\031\377\077\045\302\377"
+"\362\146\021\376\027\337\210\206\160\264\327\105\162\377\207\117"
+"\042\374\057\176\035\341\177\361\263\110\256\377\375\042\302\377"
+"\342\227\321\050\133\136\035\377\325\242\010\377\165\026\311\370"
+"\317\255\021\376\067\016\211\304\377\235\042\031\377\271\055\222"
+"\373\077\154\031\311\365\137\333\105\162\375\357\266\221\314\377"
+"\331\046\332\204\337\351\113\321\104\362\375\110\346\377\117\215"
+"\360\137\037\026\311\374\237\243\042\231\377\177\114\264\005\217"
+"\276\036\321\377\303\067\243\255\130\176\062\332\232\174\065\222"
+"\353\277\266\216\344\372\337\112\064\131\346\267\107\322\377\277"
+"\213\360\277\064\045\302\377\001\147\104\370\157\146\107\073\361"
+"\177\107\051\332\331\126\255\273\105\162\377\207\117\043\374\017"
+"\277\213\360\077\234\035\355\336\174\256\334\377\341\361\010\377"
+"\313\255\221\364\377\226\010\377\133\116\210\360\277\121\210\350"
+"\377\364\022\271\376\253\022\311\375\037\016\216\344\374\357\151"
+"\021\376\173\177\104\162\375\327\222\010\377\133\367\217\346\032"
+"\145\075\022\341\177\272\155\064\217\127\334\056\222\361\237\237"
+"\042\071\377\373\113\104\377\017\173\107\370\037\156\036\341\277"
+"\336\076\302\377\322\255\021\376\267\057\217\350\377\375\333\043"
+"\031\377\271\065\072\204\174\064\072\224\277\221\065\043\031\377"
+"\357\025\311\371\337\315\242\043\130\337\035\035\311\373\331\210"
+"\360\277\274\151\044\375\377\226\210\376\337\230\027\311\365\277"
+"\215\010\377\073\177\217\350\377\316\161\221\234\377\375\047\222"
+"\363\277\133\106\162\376\167\353\010\377\053\255\021\376\267\154"
+"\030\341\177\175\263\110\256\377\162\043\374\257\157\032\341\177"
+"\175\213\010\377\353\233\107\364\177\353\256\010\377\315\053\021"
+"\376\233\315\043\374\017\137\211\244\377\357\037\341\177\355\370"
+"\010\377\153\353\104\322\377\157\215\360\277\270\103\204\377\146"
+"\355\010\377\133\277\210\360\277\365\363\010\377\303\133\043\374"
+"\017\327\216\144\374\377\200\010\377\323\365\043\374\057\277\025"
+"\341\277\163\162\044\367\177\170\052\302\377\312\161\321\065\354"
+"\377\301\010\377\333\332\243\353\130\136\053\302\377\377\066\214"
+"\360\277\373\227\010\377\273\177\216\360\277\345\354\010\377\033"
+"\101\204\377\365\135\042\071\377\173\114\204\377\335\077\105\370"
+"\137\037\022\335\306\163\007\106\370\377\337\106\021\376\167\167"
+"\107\364\377\356\256\110\316\377\236\023\341\177\303\104\370\137"
+"\337\065\302\377\226\143\043\374\357\356\214\360\277\076\064\172"
+"\200\167\136\107\162\377\207\247\042\374\167\057\213\360\277\166"
+"\113\204\377\356\103\321\243\315\174\254\231\113\232\371\170\063"
+"\237\150\346\223\315\174\252\231\370\357\136\027\075\043\123\014"
+"\042\361\377\213\010\377\213\073\105\062\377\363\233\110\374\337"
+"\050\302\377\236\011\321\213\315\304\377\332\250\010\377\173\306"
+"\107\257\310\365\005\221\314\377\077\062\172\255\271\075\376\367"
+"\354\024\341\177\317\316\021\376\227\217\214\360\277\147\227\110"
+"\374\377\070\222\353\277\156\212\360\277\147\253\110\306\377\333"
+"\043\374\367\366\216\360\277\341\106\370\137\337\073\372\210\365"
+"\203\042\231\377\163\172\364\011\313\017\105\322\377\247\106\370"
+"\337\371\135\204\377\215\064\302\377\372\344\010\377\073\277\217"
+"\360\337\036\027\111\377\277\041\372\072\122\055\345\210\376\337"
+"\162\123\044\327\177\235\021\311\365\137\267\105\162\375\327\072"
+"\221\134\377\165\133\204\377\341\072\221\214\377\074\037\311\370"
+"\317\173\021\376\127\217\214\360\277\272\152\204\377\325\175\042"
+"\374\257\154\031\321\377\253\161\044\327\377\036\036\341\177\072"
+"\062\302\177\266\227\353\277\156\210\360\077\055\106\370\237\256"
+"\036\321\377\323\226\110\374\177\052\302\377\352\101\021\376\127"
+"\173\107\370\137\071\064\302\377\352\314\110\316\377\036\030\341"
+"\177\145\134\204\377\125\067\246\377\127\016\006\157\125\231\020"
+"\343\177\345\220\230\077\232\312\141\061\376\127\016\212\361\277"
+"\174\160\214\377\345\167\143\374\267\337\217\145\374\377\244\130"
+"\346\177\256\023\343\277\275\146\014\234\155\027\305\162\375\327"
+"\075\061\376\353\367\343\124\376\274\142\031\377\231\026\313\365"
+"\137\107\306\364\377\306\066\061\376\327\076\214\361\277\174\114"
+"\214\377\035\153\306\370\337\261\172\214\377\035\305\030\377\073"
+"\326\210\351\377\345\317\142\374\117\127\213\145\376\147\257\130"
+"\346\177\266\304\370\137\272\055\306\377\266\043\343\042\142\024"
+"\143\372\277\176\044\306\377\226\041\161\053\357\174\026\343\177"
+"\177\067\306\377\362\212\030\377\373\367\213\333\131\177\142\334"
+"\101\236\024\343\177\333\260\170\055\226\327\210\007\362\056\275"
+"\030\213\377\007\304\162\375\327\202\230\376\137\273\073\306\377"
+"\362\141\261\364\377\017\142\031\377\277\077\246\377\327\036\215"
+"\053\374\164\007\304\370\157\166\216\245\377\337\034\017\226\053"
+"\150\142\372\177\375\375\030\377\353\037\304\370\137\377\060\226"
+"\376\377\160\074\242\231\043\233\071\252\231\243\233\271\101\063"
+"\067\154\346\106\315\034\323\314\261\315\034\327\314\361\315\234"
+"\320\314\215\233\271\111\063\047\066\123\306\377\257\211\145\376"
+"\147\041\306\377\322\262\130\372\377\265\261\334\377\141\333\030"
+"\377\335\357\142\372\177\317\304\170\353\146\156\103\157\351\210"
+"\267\045\007\304\223\311\265\342\355\310\201\361\366\315\055\167"
+"\140\171\355\170\107\162\235\170\047\162\335\170\147\162\275\170"
+"\027\162\120\274\053\271\176\274\033\131\216\167\047\053\361\036"
+"\144\065\336\223\254\305\173\221\203\343\051\344\220\170\052\071"
+"\064\236\106\016\213\247\223\303\343\031\344\210\130\374\277\075"
+"\306\377\216\271\061\375\337\175\054\236\323\314\271\315\334\273"
+"\231\363\232\271\117\063\347\067\163\337\146\356\307\173\276\121"
+"\274\277\134\127\025\113\377\337\063\226\371\077\117\306\370\337"
+"\365\144\114\377\267\217\215\345\376\077\153\306\364\377\256\215"
+"\342\303\170\264\055\076\234\277\276\142\214\377\055\253\307\062"
+"\376\243\143\361\277\030\213\377\153\304\364\377\226\065\342\143"
+"\311\176\061\376\267\254\026\323\377\111\374\157\131\045\306\177"
+"\265\151\174\022\313\253\306\062\377\177\100\054\343\377\176\054"
+"\367\177\070\060\306\177\367\350\030\377\315\335\361\351\374\221"
+"\354\020\313\374\237\162\114\377\157\133\065\306\377\356\157\143"
+"\031\377\271\063\226\361\237\273\142\372\177\355\216\030\377\335"
+"\047\343\205\315\304\377\360\356\130\306\177\312\061\376\227\117"
+"\217\361\277\374\103\054\363\377\057\211\245\377\377\021\113\377"
+"\377\075\306\177\075\043\306\377\266\241\061\376\127\372\304\127"
+"\362\212\273\304\370\257\166\212\345\372\337\057\343\153\232\313"
+"\370\257\013\061\375\277\270\113\054\327\377\356\026\343\177\161"
+"\217\030\377\133\106\305\067\160\154\013\342\033\311\123\343\233"
+"\370\051\356\214\361\277\373\373\030\377\073\077\216\345\372\257"
+"\112\114\377\167\217\217\361\277\176\147\214\377\345\263\342\073"
+"\225\143\215\214\145\376\377\317\261\370\177\171\214\377\356\367"
+"\061\376\367\114\212\357\343\067\073\052\276\237\034\035\077\100"
+"\156\020\077\110\156\030\077\324\334\346\141\226\067\212\037\041"
+"\307\304\217\222\143\343\307\310\161\361\022\162\174\374\070\071"
+"\041\176\202\334\070\176\222\334\044\176\212\234\030\077\115\116"
+"\212\237\041\067\215\237\045\067\213\227\222\233\307\317\221\133"
+"\304\317\223\133\306\057\220\133\305\062\376\263\101\054\327\177"
+"\135\022\277\334\314\127\154\325\077\217\361\137\037\033\313\370"
+"\317\161\261\364\377\317\142\374\067\173\304\157\362\227\376\164"
+"\214\377\372\230\130\306\377\217\212\145\376\377\003\061\376\333"
+"\177\304\062\377\347\363\030\377\253\007\304\370\137\055\304\370"
+"\137\235\036\323\377\053\143\142\374\257\214\214\351\377\225\271"
+"\061\376\127\106\304\370\137\031\025\343\177\145\237\030\377\253"
+"\166\214\377\225\215\142\231\377\063\072\246\377\127\346\305\364"
+"\377\312\006\061\375\277\262\141\214\377\225\275\143\374\257\314"
+"\217\361\277\155\315\030\377\355\125\142\351\377\117\306\162\376"
+"\367\214\230\376\137\376\061\306\377\306\245\361\057\064\317\217"
+"\143\374\267\333\143\374\267\303\030\377\365\223\261\134\377\265"
+"\113\214\377\366\352\061\376\353\167\142\031\377\177\042\306\177"
+"\173\104\214\377\372\355\030\377\165\357\270\233\117\335\266\261"
+"\214\377\357\025\343\277\076\072\306\177\175\144\214\377\215\311"
+"\061\376\227\317\216\145\376\347\057\061\376\067\256\110\360\077"
+"\355\057\323\166\112\167\044\370\157\076\225\113\170\115\045\301"
+"\377\160\367\304\225\353\362\022\374\357\071\073\301\177\263\054"
+"\301\177\063\045\241\377\207\313\022\374\067\113\023\271\376\153"
+"\102\302\177\041\341\322\204\035\165\376\221\310\375\037\316\113"
+"\360\137\037\221\340\277\276\077\301\377\362\231\011\376\227\177"
+"\112\360\277\161\131\042\343\377\177\046\062\376\377\127\202\377"
+"\235\237\045\370\237\226\022\271\376\353\314\104\372\177\224\110"
+"\377\077\063\221\376\377\154\042\363\077\307\047\062\377\363\331"
+"\244\310\047\371\240\104\306\377\037\116\132\070\334\335\022\351"
+"\377\063\023\071\377\073\044\221\361\377\341\211\134\377\365\150"
+"\102\377\257\077\226\310\370\317\222\004\377\303\207\023\372\177"
+"\070\074\031\310\221\354\220\340\177\371\201\004\377\033\107\045"
+"\370\377\337\377\022\231\377\363\145\042\327\177\215\115\326\157"
+"\146\271\271\206\376\237\126\023\374\117\307\046\370\237\116\110"
+"\360\077\035\237\340\177\132\113\360\077\055\047\370\237\216\111"
+"\360\277\173\101\202\377\351\220\004\377\273\117\111\344\372\257"
+"\301\011\376\247\343\022\374\357\076\055\301\377\164\130\202\377"
+"\335\247\046\370\237\016\115\360\077\035\236\340\177\072\042\221"
+"\361\237\125\222\011\274\255\123\023\374\057\316\116\350\377\152"
+"\257\004\377\365\056\211\364\377\217\022\271\376\367\223\004\377"
+"\365\256\211\134\377\365\125\042\367\177\333\043\221\353\277\126"
+"\111\360\277\070\065\221\373\077\114\117\350\377\305\271\311\266"
+"\174\116\106\047\223\261\256\226\320\377\365\313\311\366\274\207"
+"\067\045\073\310\065\244\011\375\277\176\157\042\343\377\367\045"
+"\062\376\177\177\102\377\167\037\114\166\155\346\156\315\334\275"
+"\231\173\064\163\317\146\356\325\114\271\377\333\371\311\324\346"
+"\062\375\337\075\046\221\371\077\273\045\364\377\362\143\011\376"
+"\067\216\115\146\361\132\243\022\374\367\126\113\360\277\261\132"
+"\202\377\365\355\023\031\377\271\062\301\377\306\065\011\376\327"
+"\332\022\031\377\351\237\310\370\317\260\204\376\357\315\116\360"
+"\337\374\222\110\377\237\225\034\310\267\225\363\022\374\067\363"
+"\223\203\351\000\173\046\370\037\376\222\340\177\070\077\071\254"
+"\271\075\375\277\074\040\071\202\277\315\216\004\377\133\116\115"
+"\360\277\321\067\301\377\256\141\011\375\277\164\144\102\377\057"
+"\235\223\310\365\277\135\211\134\377\165\150\162\002\133\036\226"
+"\340\177\151\377\204\376\137\072\071\241\377\227\056\115\360\077"
+"\335\051\241\377\133\167\044\342\377\141\211\370\377\140\162\272"
+"\134\023\235\310\365\277\333\046\364\377\025\123\023\374\137\261"
+"\147\202\377\053\246\044\347\040\325\326\011\376\257\230\226\340"
+"\377\212\275\222\205\374\105\234\237\340\177\373\005\011\376\267"
+"\057\114\360\237\065\370\157\206\046\370\037\076\230\110\377\037"
+"\232\310\374\237\013\022\374\257\254\234\134\056\327\134\047\162"
+"\375\357\340\104\306\377\037\114\144\374\377\241\004\377\353\017"
+"\047\370\157\177\235\134\053\043\110\311\165\315\304\177\367\356"
+"\144\121\063\027\067\363\206\146\336\330\314\233\232\171\163\063"
+"\157\151\346\255\315\304\177\347\261\004\377\355\137\022\231\377"
+"\363\103\042\363\177\066\115\356\152\046\376\367\254\233\334\323"
+"\114\361\177\275\344\276\146\322\377\335\247\223\007\232\333\077"
+"\050\127\274\046\017\065\363\141\271\356\065\171\244\231\062\377"
+"\347\304\104\356\377\363\154\262\204\174\046\241\377\223\364\177"
+"\373\317\204\376\137\336\051\241\377\227\037\112\350\377\215\243"
+"\023\372\277\373\170\362\154\063\145\374\177\164\042\375\377\231"
+"\204\376\137\075\070\241\377\127\127\112\144\376\347\261\011\376"
+"\127\147\045\370\137\071\062\241\377\127\066\116\360\277\162\124"
+"\202\377\125\057\221\371\237\307\044\370\137\071\072\171\223\317"
+"\322\320\004\377\275\131\011\376\233\237\023\374\057\315\114\360"
+"\177\300\271\011\376\233\175\022\231\377\377\163\042\347\177\367"
+"\111\076\154\156\051\363\177\072\022\374\257\266\047\370\337\262"
+"\040\221\376\337\047\221\373\377\014\115\360\277\164\104\202\377"
+"\245\263\023\374\367\072\023\374\157\075\044\301\377\226\103\023"
+"\374\057\355\227\340\277\371\067\301\377\322\111\011\376\227\056"
+"\111\360\077\335\061\221\373\277\255\237\340\177\043\113\360\137"
+"\035\227\340\177\361\212\344\147\133\165\214\114\350\377\215\355"
+"\022\271\376\367\331\344\267\346\247\116\356\377\266\105\042\347"
+"\177\367\110\344\372\257\307\023\374\157\034\227\340\277\075\074"
+"\021\377\207\045\322\377\007\046\322\377\327\112\360\077\215\022"
+"\374\117\327\116\376\307\153\265\044\370\117\256\140\377\123\022"
+"\374\047\361\277\143\106\202\377\245\073\123\231\377\077\112\046"
+"\154\326\226\246\370\137\273\052\225\011\070\267\244\370\337\276"
+"\070\305\377\332\271\051\376\327\256\116\361\277\366\172\212\377"
+"\265\267\122\374\257\275\235\312\370\317\071\251\214\377\274\227"
+"\342\177\355\312\024\377\153\327\245\354\256\375\306\024\377\333"
+"\157\112\361\277\375\346\024\377\333\157\110\361\277\175\121\212"
+"\377\265\117\122\361\377\241\124\374\037\226\312\371\337\207\122"
+"\031\377\331\064\305\377\312\051\051\376\127\216\117\361\277\122"
+"\115\361\277\062\063\225\353\177\307\247\370\137\331\044\055\222"
+"\303\123\374\357\374\063\225\353\277\026\245\370\337\370\062\305"
+"\177\173\150\212\377\366\220\024\377\333\116\114\361\277\355\214"
+"\024\377\333\026\244\322\377\217\112\245\377\107\251\370\277\113"
+"\052\376\077\222\212\377\307\244\353\312\165\353\351\172\074\132"
+"\110\007\361\136\215\116\361\277\355\244\124\256\377\075\063\305"
+"\377\266\123\123\231\377\363\151\212\377\265\243\123\271\376\353"
+"\340\024\377\315\342\024\377\333\026\247\370\337\266\050\305\177"
+"\123\112\361\077\134\234\342\177\130\112\345\374\357\260\024\377"
+"\353\317\244\370\137\177\066\225\361\237\275\122\374\257\057\115"
+"\361\277\166\114\212\377\345\047\123\374\157\034\237\216\227\363"
+"\305\251\134\377\273\064\225\376\377\143\112\377\357\331\054\235"
+"\330\314\111\315\334\264\271\136\356\377\071\073\305\377\112\230"
+"\212\377\063\123\361\377\346\024\377\325\364\164\153\271\342\076"
+"\305\377\236\243\122\374\357\071\072\235\114\036\223\112\377\337"
+"\046\225\361\237\257\123\374\057\036\220\356\330\334\036\377\213"
+"\227\244\370\137\234\227\312\365\277\363\123\271\377\303\270\124"
+"\356\377\160\107\052\343\077\153\247\370\137\277\070\305\377\025"
+"\327\247\370\277\042\116\361\277\176\111\212\377\345\131\051\376"
+"\257\270\056\305\377\025\121\212\377\336\300\024\377\353\027\246"
+"\364\377\372\245\051\376\257\130\234\342\377\212\064\305\377\025"
+"\007\245\342\377\363\251\370\177\122\052\363\077\133\123\374\357"
+"\110\123\351\377\327\246\162\377\267\133\122\231\377\071\067\225"
+"\363\277\003\123\374\057\035\223\312\374\317\205\051\375\277\365"
+"\210\024\377\365\115\051\376\273\037\246\370\337\063\074\075\274"
+"\231\107\064\327\310\375\177\036\110\361\337\275\042\075\272\231"
+"\370\157\156\110\145\374\277\075\225\371\237\067\244\370\037\266"
+"\247\047\310\335\025\122\374\257\337\236\342\177\367\245\051\376"
+"\167\137\222\212\377\133\244\370\337\175\161\052\367\177\130\047"
+"\225\361\237\313\123\031\377\271\042\225\361\237\053\323\063\345"
+"\306\203\351\131\174\162\006\247\147\363\133\173\070\075\207\174"
+"\053\305\177\122\346\377\034\221\322\377\253\253\244\062\377\147"
+"\136\212\377\225\055\122\231\377\023\245\370\137\332\047\305\377"
+"\322\361\051\376\227\056\114\361\077\055\244\370\257\356\110\145"
+"\374\247\127\172\005\237\264\172\212\377\151\337\024\377\323\074"
+"\305\377\264\137\212\377\151\237\024\377\235\023\123\374\367\366"
+"\111\257\157\246\334\377\255\226\312\374\377\351\051\376\233\037"
+"\122\374\057\115\113\361\177\300\131\051\376\233\271\351\055\374"
+"\357\271\173\212\377\341\017\051\376\207\163\323\333\233\333\113"
+"\377\357\237\312\374\237\266\124\306\177\116\112\245\377\367\116"
+"\361\337\164\246\370\337\125\113\361\277\164\150\212\377\245\063"
+"\122\271\377\303\137\351\203\274\342\023\051\376\167\176\236\342"
+"\177\353\201\351\043\106\131\367\245\370\237\156\227\076\306\047"
+"\374\302\164\011\173\236\232\312\374\317\247\123\374\157\234\220"
+"\342\177\165\377\024\377\253\171\212\377\325\151\251\214\377\014"
+"\113\361\277\252\323\245\064\341\117\123\374\267\313\051\376\333"
+"\166\372\202\055\211\377\366\224\124\316\377\216\116\361\337\036"
+"\234\342\277\275\141\052\363\077\057\111\145\374\347\342\364\365"
+"\146\312\370\377\376\251\314\377\077\051\225\353\277\216\113\361"
+"\277\270\137\212\377\215\355\123\271\377\303\334\024\377\313\163"
+"\122\374\057\277\230\312\370\317\311\251\314\377\377\066\305\177"
+"\375\103\212\377\172\171\052\347\177\277\117\361\137\177\227\312"
+"\375\177\036\117\345\376\237\247\244\370\257\156\116\227\161\124"
+"\047\247\370\137\033\220\342\177\232\245\370\137\136\051\305\377"
+"\372\036\251\234\377\035\221\342\177\171\345\124\316\377\356\231"
+"\312\374\317\221\051\376\247\053\247\342\377\155\051\376\227\356"
+"\112\177\216\124\153\133\212\377\335\077\246\370\337\371\111\212"
+"\377\372\264\364\167\232\303\222\364\017\162\151\372\047\371\150"
+"\372\027\171\157\052\375\377\306\124\356\377\260\074\305\377\236"
+"\115\322\256\146\166\067\327\374\053\367\157\111\145\376\377\003"
+"\151\117\063\127\064\363\277\146\326\233\051\347\177\037\310\254"
+"\146\252\146\152\271\373\212\134\266\325\371\127\046\363\177\256"
+"\311\360\337\254\231\311\374\237\153\062\271\377\303\232\131\040"
+"\167\355\310\360\277\147\166\206\377\075\163\062\374\357\231\233"
+"\311\370\377\265\231\214\377\267\144\062\376\177\155\046\343\377"
+"\055\231\364\377\123\063\351\377\063\062\351\377\113\063\351\377"
+"\047\146\370\137\236\236\341\177\371\331\014\377\033\373\145\062"
+"\377\163\136\206\377\245\343\062\374\057\135\220\341\177\353\121"
+"\231\314\377\071\050\303\377\355\046\144\370\137\072\065\223\361"
+"\377\053\062\031\377\257\146\055\034\317\264\014\377\315\367\031"
+"\376\227\246\146\370\077\340\314\114\256\377\235\223\265\323\170"
+"\333\063\374\047\345\374\157\071\223\376\377\175\206\377\341\234"
+"\154\355\346\163\361\277\334\226\341\177\265\065\243\377\267\234"
+"\230\321\377\033\275\062\271\376\353\237\014\377\273\252\031\376"
+"\227\016\311\360\277\164\172\206\377\336\237\031\375\277\365\200"
+"\014\377\325\143\331\120\076\355\367\146\322\377\047\147\303\371"
+"\313\332\076\033\301\261\035\222\311\375\337\376\227\341\277\076"
+"\075\303\177\163\172\206\377\225\265\262\015\171\213\347\147\162"
+"\377\347\167\063\231\377\377\115\046\327\177\365\144\162\377\267"
+"\303\062\374\167\306\147\023\330\176\333\114\346\377\034\220\341"
+"\277\136\071\223\373\077\230\154\022\133\256\310\344\376\157\037"
+"\146\364\377\342\101\231\334\377\371\343\114\256\377\375\043\303"
+"\177\365\151\046\376\277\237\111\377\377\066\333\206\355\377\315"
+"\360\077\074\075\303\377\320\144\364\377\362\046\031\376\027\277"
+"\313\166\340\110\356\316\344\376\017\077\144\342\377\037\231\370"
+"\377\123\046\376\377\222\341\177\361\267\114\356\377\171\100\046"
+"\367\377\371\053\303\177\335\067\223\361\377\033\063\374\157\034"
+"\224\311\375\177\216\310\360\277\262\173\046\367\177\236\227\341"
+"\277\363\133\206\377\305\243\062\374\017\307\146\062\377\177\207"
+"\114\306\377\367\312\346\360\033\351\233\311\374\317\215\062\374"
+"\257\327\062\374\257\157\235\355\203\237\153\147\363\111\053\333"
+"\227\375\034\224\311\374\377\273\263\375\371\264\037\237\311\370"
+"\317\322\354\100\376\326\236\313\344\376\237\257\144\364\177\373"
+"\356\114\374\077\043\073\224\345\327\062\374\267\327\310\360\137"
+"\277\233\311\365\137\007\145\062\376\277\137\046\367\377\331\063"
+"\223\361\237\215\063\374\057\337\220\341\177\143\156\206\377\316"
+"\135\231\214\377\337\223\311\375\337\346\146\062\376\177\104\046"
+"\343\377\207\144\370\157\316\310\360\337\204\031\376\207\147\144"
+"\370\037\206\031\376\207\343\062\374\067\317\144\062\376\063\056"
+"\303\377\360\231\114\306\377\237\316\144\374\177\154\046\343\377"
+"\117\147\062\376\177\150\046\363\177\206\144\370\037\076\220\311"
+"\370\317\220\114\316\377\166\145\062\377\377\275\354\042\271\003"
+"\114\166\161\063\057\151\346\245\315\365\227\311\175\143\262\313"
+"\233\051\363\377\177\317\360\337\375\043\303\377\322\267\031\376"
+"\027\217\313\344\376\237\325\114\356\377\263\070\303\377\236\171"
+"\231\314\377\331\047\223\371\077\363\063\374\057\377\233\341\177"
+"\307\230\114\256\377\075\072\303\177\073\311\360\337\036\230\321"
+"\377\365\253\031\376\353\027\063\031\377\071\066\303\177\175\146"
+"\046\376\167\147\370\157\136\313\360\337\154\231\341\177\370\132"
+"\046\376\237\224\311\374\117\073\303\377\360\244\114\256\377\332"
+"\061\223\376\177\170\046\327\377\136\235\311\371\337\172\206\377"
+"\345\053\062\372\177\343\352\014\377\313\377\313\344\372\257\173"
+"\062\271\377\333\061\031\376\353\263\062\231\377\177\141\046\375"
+"\377\357\114\356\377\174\130\366\264\255\212\047\145\342\377\056"
+"\031\376\227\317\315\226\222\277\145\162\375\327\225\031\376\127"
+"\166\316\344\374\357\071\031\376\227\177\315\144\374\177\247\014"
+"\377\313\253\147\162\375\327\340\114\256\377\235\224\341\177\375"
+"\327\014\377\275\122\046\327\377\056\310\360\277\366\131\206\377"
+"\245\345\231\134\377\165\110\366\016\257\165\112\206\377\305\123"
+"\063\231\377\163\172\046\376\057\314\076\340\057\267\137\046\327"
+"\377\376\221\311\370\317\236\231\214\377\354\221\175\302\366\047"
+"\144\370\337\276\074\303\377\366\127\062\374\157\377\050\303\377"
+"\162\232\311\371\337\361\031\376\227\263\014\377\353\023\062\374"
+"\157\177\041\223\373\077\274\230\341\177\373\223\231\334\377\341"
+"\361\014\377\333\237\315\344\376\017\117\147\370\137\356\223\311"
+"\370\117\337\114\356\377\360\110\366\063\371\120\206\377\355\267"
+"\145\370\337\061\062\303\377\366\353\062\372\177\207\227\321\377"
+"\073\262\114\372\177\277\214\376\137\136\045\303\377\366\007\062"
+"\374\157\277\057\223\371\237\347\145\062\377\363\367\014\377\053"
+"\173\145\162\377\207\235\062\071\377\173\176\206\377\345\077\063"
+"\031\377\231\225\341\177\313\055\031\376\067\226\147\370\237\016"
+"\310\361\277\164\057\110\253\342\245\071\376\353\207\162\336\044"
+"\175\166\056\267\004\172\062\227\353\277\016\317\361\337\336\040"
+"\227\371\237\275\162\271\377\363\167\071\376\027\317\316\345\376"
+"\077\147\346\062\377\177\176\036\363\067\370\104\216\377\215\235"
+"\163\374\057\335\227\313\370\317\327\271\234\377\075\042\307\377"
+"\332\126\071\376\233\273\362\336\254\371\057\227\376\277\176\216"
+"\377\225\311\271\364\377\273\162\231\377\271\176\056\343\377\047"
+"\347\062\377\363\233\134\346\177\136\230\113\377\337\066\307\377"
+"\164\253\034\377\313\047\345\370\137\376\072\227\373\077\357\223"
+"\313\375\337\246\347\062\377\347\373\134\356\377\171\130\336\237"
+"\375\067\162\071\377\173\156\116\377\057\376\223\167\310\075\254"
+"\162\271\377\317\333\271\314\377\277\053\307\377\372\237\271\370"
+"\337\221\313\374\317\063\162\271\377\317\231\071\376\327\317\312"
+"\145\376\377\137\071\376\327\377\316\361\177\305\147\071\376\257"
+"\330\071\307\377\025\027\346\342\377\133\071\376\127\166\314\345"
+"\376\077\067\344\162\377\237\157\163\231\377\271\103\056\363\077"
+"\027\344\062\376\177\153\076\262\231\162\377\267\315\163\271\376"
+"\353\337\134\374\077\041\247\377\127\116\312\361\277\162\142\056"
+"\343\377\227\347\143\371\214\375\225\343\277\272\077\227\363\277"
+"\135\271\214\377\037\222\313\375\337\166\312\361\277\062\055\307"
+"\377\216\365\163\031\377\077\061\227\353\177\167\311\145\376\347"
+"\107\071\376\367\214\310\267\150\346\226\315\065\062\377\363\317"
+"\134\306\377\327\314\351\377\345\323\162\374\257\234\236\343\177"
+"\371\373\134\346\377\134\234\313\375\177\166\313\145\376\317\251"
+"\071\376\227\277\313\361\277\261\157\056\327\377\376\225\343\177"
+"\345\264\034\377\053\247\346\162\377\207\266\134\356\377\220\344"
+"\062\377\347\376\134\346\377\037\231\343\277\275\161\056\367\177"
+"\276\061\307\377\342\145\071\375\137\077\234\343\177\361\337\134"
+"\346\377\237\223\343\177\171\101\216\377\225\263\162\372\177\171"
+"\171\056\343\077\027\345\370\137\231\222\313\375\337\346\345\162"
+"\377\267\371\271\334\377\155\166\056\367\177\233\233\323\377\313"
+"\247\344\370\137\376\066\227\373\077\317\317\361\277\162\146\116"
+"\377\257\234\221\313\370\317\027\071\375\337\354\225\313\371\337"
+"\043\163\351\377\263\162\271\376\367\310\134\316\377\356\226\213"
+"\377\273\345\162\375\327\360\034\377\353\317\347\370\137\177\041"
+"\027\377\167\314\345\376\017\057\346\062\376\123\315\361\277\176"
+"\167\056\327\177\075\230\343\277\173\121\216\377\356\205\271\334"
+"\377\371\322\134\356\377\377\176\216\377\075\103\363\123\233\171"
+"\132\163\215\314\377\351\233\313\375\237\217\315\361\277\364\103"
+"\056\367\377\137\230\343\277\136\230\343\277\072\072\227\373\177"
+"\036\235\313\374\237\013\162\271\376\167\130\216\377\316\145\071"
+"\376\073\137\344\062\376\277\173\056\343\377\113\162\271\376\253"
+"\234\313\375\337\246\344\062\376\277\074\227\373\377\314\312\145"
+"\376\317\362\034\377\303\131\371\225\315\107\361\277\345\370\034"
+"\377\033\171\216\377\135\345\134\374\377\075\227\361\237\375\163"
+"\374\117\267\311\361\277\336\310\145\374\077\316\345\374\157\224"
+"\337\310\337\346\203\271\314\377\351\235\313\370\317\336\271\334"
+"\377\377\231\034\377\235\241\271\214\377\134\222\343\277\363\131"
+"\056\376\357\234\343\177\371\341\034\377\335\073\163\374\057\136"
+"\224\343\177\143\327\034\377\313\173\346\162\375\357\023\271\364"
+"\377\007\162\271\376\353\274\034\377\325\203\271\370\277\153\056"
+"\376\077\232\077\342\250\001\173\346\217\222\123\363\307\310\151"
+"\371\022\162\172\376\070\071\043\177\202\314\363\047\311\231\371"
+"\123\344\254\374\151\162\166\376\214\243\072\246\344\317\262\334"
+"\232\057\145\171\146\376\034\071\053\177\236\234\236\277\300\172"
+"\223\277\110\006\371\113\244\237\277\314\372\325\362\127\034\125"
+"\232\222\277\112\116\315\137\043\247\345\257\223\323\363\067\310"
+"\031\371\233\344\314\374\055\162\126\376\066\071\073\177\207\234"
+"\223\277\113\316\315\337\143\017\305\374\175\366\166\150\376\001"
+"\171\130\376\041\171\170\376\021\171\104\376\061\171\144\376\011"
+"\171\124\376\051\171\164\376\031\171\114\376\071\171\154\376\005"
+"\171\134\276\214\214\363\057\311\343\363\257\310\023\362\257\311"
+"\023\363\157\310\223\362\157\311\223\363\345\344\051\371\167\344"
+"\202\374\173\362\324\374\007\362\264\374\107\362\364\374\047\062"
+"\311\177\046\317\310\177\041\317\314\177\045\317\312\177\043\317"
+"\316\177\047\317\311\377\040\317\315\377\044\317\313\377\042\027"
+"\346\177\223\347\347\377\220\027\344\235\144\232\167\221\027\346"
+"\335\216\152\075\077\377\227\345\105\371\377\130\276\060\357\041"
+"\057\312\127\260\346\262\374\077\362\212\274\116\136\231\067\310"
+"\253\012\026\171\165\101\221\131\101\223\327\024\154\362\332\202"
+"\103\136\127\160\311\353\013\036\271\270\340\223\067\024\002\362"
+"\306\202\041\157\052\204\344\315\205\210\274\245\020\223\205\102"
+"\102\336\126\110\311\073\012\174\205\030\160\127\201\377\110\006"
+"\334\133\050\220\367\025\172\221\017\024\172\223\017\027\126\042"
+"\037\055\254\114\076\126\350\103\056\051\364\045\173\025\372\221"
+"\217\027\126\041\237\050\254\112\136\136\130\215\274\265\260\072"
+"\371\140\141\015\362\221\102\221\274\264\260\046\171\177\241\205"
+"\174\250\320\112\336\136\150\043\173\027\372\223\252\120\042\357"
+"\054\264\223\367\024\072\110\273\060\200\334\246\260\026\071\271"
+"\060\220\334\267\260\066\271\177\141\035\162\245\302\272\344\312"
+"\205\365\310\076\205\101\144\337\302\372\144\277\102\231\134\245"
+"\120\041\127\055\124\311\325\012\065\162\365\302\140\262\255\060"
+"\204\324\205\241\144\377\302\060\262\124\030\116\266\027\106\220"
+"\035\205\221\344\200\302\050\076\143\156\141\064\313\003\013\033"
+"\220\153\027\066\044\327\051\154\104\256\133\030\103\072\205\261"
+"\344\172\205\161\344\240\302\170\162\375\302\004\262\134\330\230"
+"\254\024\066\041\253\205\211\144\255\060\211\034\134\330\224\034"
+"\122\330\214\034\132\330\234\375\247\205\055\130\036\126\330\222"
+"\034\136\330\212\034\121\330\232\034\131\330\206\034\125\330\226"
+"\034\135\230\114\156\120\330\216\334\260\260\075\271\121\141\007"
+"\162\114\141\107\322\053\354\104\216\055\354\114\216\053\354\102"
+"\216\057\354\112\116\050\354\106\156\134\330\235\334\244\260\007"
+"\071\261\260\047\071\251\260\027\271\151\141\012\271\131\141\052"
+"\271\106\141\032\271\171\141\272\243\332\337\050\314\140\371\377"
+"\065\316\111\116\124\121\024\306\161\163\341\274\233\042\107\223"
+"\263\001\233\015\210\354\301\031\042\024\104\244\265\157\150\105"
+"\072\133\024\334\000\153\140\102\063\062\125\105\065\357\131\145"
+"\257\270\000\007\046\006\304\150\151\001\042\115\220\221\311\213"
+"\347\343\304\311\377\367\345\334\311\155\220\353\272\147\344\206"
+"\356\106\271\251\115\112\217\136\062\322\253\055\111\237\166\111"
+"\372\365\336\052\003\332\243\062\250\227\117\162\113\167\233\014"
+"\151\333\345\266\266\103\206\265\103\062\242\035\226\121\355\210"
+"\214\151\107\145\134\333\043\167\264\307\344\256\266\127\356\151"
+"\007\344\276\166\120\036\150\373\344\241\266\137\046\264\143\362"
+"\110\073\056\217\265\235\062\251\355\222\051\155\267\074\321\036"
+"\077\224\244\025\107\037\051\103\137\214\125\220\246\257\306\067"
+"\220\245\357\106\031\104\364\303\370\011\012\124\061\326\100\110"
+"\353\306\006\050\322\057\143\023\344\351\267\261\005\122\264\155"
+"\354\200\034\355\036\340\117\072\372\114\241\257\065\116\201\224"
+"\257\063\266\134\160\042\150\364\333\340\214\337\001\147\375\056"
+"\250\367\173\240\311\377\001\015\176\037\064\047\146\035\055\123"
+"\224\230\253\002\124\112\314\377\037\013\366\220\251\212\127\343"
+"\162\074\223\130\264\261\120\263\354\342\112\274\311\115\216\052"
+"\224\341\244\321\014\322\334\142\234\003\131\156\065\316\203\210"
+"\333\214\166\120\340\016\243\023\204\334\145\164\203\042\137\060"
+"\056\202\074\137\062\056\203\024\137\061\256\202\034\137\063\236"
+"\126\007\165\361\136\074\035\234\346\105\107\153\372\237\254\221"
+"\003\151\316\033\041\310\162\144\074\003\021\027\215\022\050\360"
+"\163\343\005\010\371\245\361\012\024\371\265\361\006\344\371\255"
+"\361\016\244\370\275\261\004\162\374\341\200\303\323\056\110\006"
+"\365\107\132\334\337\211\270\374\017\306\153\314\011"
+;
+
+            // NOTE: The map is build with all the known AGL lists: "Adobe Glyph List",
+            // "Adobe Glyph List For New Fonts" and "ITC Zapf Dingbats Glyph List".
+            // The lists may have duplicates but they are unambiguous in their mapping
+            // to unicode code points
+            // CHECK-ME: "Zapf Dingbats" list should be used for the /Encoding
+            // of a "Zapf Dingbats" font only
+            // References:
+            // https://github.com/adobe-type-tools/agl-aglfn/
+            // https://github.com/adobe-type-tools/agl-specification
+
+            unique_ptr<PdfNameHashMap<AglMapping>> aglMap(new PdfNameHashMap<AglMapping>());
+            unique_ptr<vector<AglLigatureInfo>> ligatures(new vector<AglLigatureInfo>());
+
+            auto filter = PdfFilterFactory::Create(PdfFilterType::FlateDecode);
+            charbuff serialized;
+            filter->DecodeTo(serialized, CompressedMaps);
+
+            SpanStreamDevice stream(serialized);
+
+            // Read AGL map
+            uint16_t size;
+            uint16_t temp;
+            utls::ReadUInt16BE(stream, size);
+            string_view name;
+            AglMapping mapping;
+            for (unsigned short i = 0; i < size; i++)
+            {
+                utls::ReadUInt16BE(stream, temp);
+                name = s_aglNames[temp];
+                mapping.Type = (AglMapType)stream.ReadChar();
+                mapping.CodePointCount = (unsigned char)stream.ReadChar();
+                utls::ReadUInt16BE(stream, temp);
+                mapping.Code = temp;
+                aglMap->emplace(PdfName(*name.data(), name.size()), mapping);
+            }
+
+            // Read AGL ligatures
+            vector<char32_t> codepoints;
+            codepoints.reserve(4);
+            unsigned char cpSize;
+            utls::ReadUInt16BE(stream, size);
+            for (unsigned short i1 = 0; i1 < size; i1++)
+            {
+                utls::ReadUInt16BE(stream, temp);
+                name = s_aglNames[temp];
+                cpSize = (unsigned char)stream.ReadChar();
+                codepoints.clear();
+                for (unsigned char i2 = 0; i2 < cpSize; i2++)
+                {
+                    utls::ReadUInt16BE(stream, temp);
+                    codepoints.push_back(temp);
+                }
+                ligatures->emplace_back(aglMap->find(name)->first, codepoints);
+            }
+
+            s_aglMap = std::move(aglMap);
+            s_ligatures = std::move(ligatures);
+        }
+    } s_init;
+}
+
+bool PdfPredefinedEncoding::TryGetCharNameFromCodePoint(char32_t codepoint, const PdfName*& name)
+{
+    ensureAglMapInitialized();
+    static struct Init
+    {
+        Init()
+        {
+            for (auto& pair : *s_aglMap)
+            {
+                // NOTE: Chars here consists of a single code point
+                if ((pair.second.Type & AglMapType::LatinTextEncodings) != AglMapType::None)
+                    reverseLatinCharMap[pair.second.Code] = &pair.first;
+            }
+        }
+
+        unordered_map<unsigned short, const PdfName*> reverseLatinCharMap;
+    } s_init;
+
+    if (codepoint > 0xFFFFU)
+    {
+    NotFound:
+        name = nullptr;
+        return false;
+    }
+
+    auto found = s_init.reverseLatinCharMap.find((unsigned short)codepoint);
+    if (found == s_init.reverseLatinCharMap.end())
+        goto NotFound;
+
+    name = found->second;
+    return true;
 }

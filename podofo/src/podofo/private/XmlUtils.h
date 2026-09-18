@@ -1,12 +1,10 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #pragma once
 
 #include <string>
+#include <functional>
 #include <libxml/tree.h>
 #include <libxml/xmlerror.h>
 #include <libxml/parser.h>
@@ -20,24 +18,34 @@
 {\
     const xmlError* error_ = xmlGetLastError();\
     if (error_ == nullptr)\
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::XmpMetadata, msg);\
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::XmpMetadataError, msg);\
     else\
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::XmpMetadata, "{}, internal error: {}", msg, error_->message);\
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::XmpMetadataError, "{}, internal error: {}", msg, error_->message);\
 }
 
 namespace utls
 {
     void InitXml();
+    bool TrySerializeXmlDocTo(std::string& str, xmlDocPtr doc);
+    xmlNodePtr FindDescendantElement(xmlNodePtr element, const std::string_view& name);
+    xmlNodePtr FindDescendantElement(xmlNodePtr element, const std::string_view& ns, const std::string_view& name);
     xmlNodePtr FindChildElement(xmlNodePtr element, const std::string_view& name);
-    xmlNodePtr FindChildElement(xmlNodePtr element, const std::string_view& prefix, const std::string_view& name);
-    xmlNodePtr FindSiblingNode(xmlNodePtr element, const std::string_view& name);
-    xmlNodePtr FindSiblingNode(xmlNodePtr element, const std::string_view& prefix, const std::string_view& name);
+    xmlNodePtr FindChildElement(xmlNodePtr element, const std::string_view& ns, const std::string_view& name);
+    xmlNodePtr FindSiblingElement(xmlNodePtr element, const std::string_view& name);
+    xmlNodePtr FindSiblingElement(xmlNodePtr element, const std::string_view& ns, const std::string_view& name);
+    void NavigateDescendantElements(xmlNodePtr element, const std::string_view& name,
+        const std::function<void(xmlNodePtr)>& action);
+    void NavigateDescendantElements(xmlNodePtr element, const std::string_view& ns,
+        const std::string_view& name, const std::function<void(xmlNodePtr)>& action);
     PoDoFo::nullable<std::string> FindAttribute(xmlNodePtr element, const std::string_view& name);
-    PoDoFo::nullable<std::string> FindAttribute(xmlNodePtr element, const std::string_view& prefix, const std::string_view& name);
+    PoDoFo::nullable<std::string> FindAttribute(xmlNodePtr element, const std::string_view& ns, const std::string_view& name);
     PoDoFo::nullable<std::string> FindAttribute(xmlNodePtr element, const std::string_view& name, xmlAttrPtr& ptr);
-    PoDoFo::nullable<std::string> FindAttribute(xmlNodePtr element, const std::string_view& prefix, const std::string_view& name, xmlAttrPtr& ptr);
+    PoDoFo::nullable<std::string> FindAttribute(xmlNodePtr element, const std::string_view& ns, const std::string_view& name, xmlAttrPtr& ptr);
     PoDoFo::nullable<std::string> GetNodeContent(xmlNodePtr element);
     std::string GetAttributeValue(const xmlAttrPtr attr);
-    std::string GetNodeName(xmlNodePtr node);
+    std::string GetNodePrefixedName(xmlNodePtr node);
+    std::string_view GetNodeName(xmlNodePtr node);
+    std::string_view GetNodePrefix(xmlNodePtr node);
+    std::string_view GetNodeNamespace(xmlNodePtr node);
     std::string GetAttributeName(xmlAttrPtr attr);
 }

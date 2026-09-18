@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_ANNOTATION_ACTION_BASE_H
 #define PDF_ANNOTATION_ACTION_BASE_H
@@ -13,7 +10,7 @@
 
 namespace PoDoFo {
 
-    class PODOFO_API PdfAppearanceCharacteristics : public PdfDictionaryElement
+    class PODOFO_API PdfAppearanceCharacteristics final : public PdfDictionaryElement
     {
         template<typename T>
         friend class PdfAppearanceCharacteristicsProvider;
@@ -66,7 +63,7 @@ namespace PoDoFo {
             {
                 auto& ref = static_cast<T&>(*this);
                 m_AppearanceCharacteristics.reset(new PdfAppearanceCharacteristics(ref.GetDocument()));
-                ref.GetDictionary().AddKeyIndirect("MK", m_AppearanceCharacteristics->GetObject());
+                ref.GetDictionary().AddKeyIndirect("MK"_n, m_AppearanceCharacteristics->GetObject());
             }
 
             return *m_AppearanceCharacteristics;
@@ -97,26 +94,29 @@ namespace PoDoFo {
         PdfAnnotationActionBase(PdfObject& obj, PdfAnnotationType annotType);
 
     public:
-        /** Set the action that is executed for this annotation
-         *  \param action an action object
-         *
-         *  \see GetAction
-         */
-        void SetAction(const std::shared_ptr<PdfAction>& action);
+        /// Set the action that is executed for this annotation
+        /// @param action an action object
+        ///
+        /// @see GetAction
+        void SetAction(nullable<const PdfAction&> action);
 
-        /** Get the action that is executed for this annotation
-         *  \returns an action object. The action object is owned
-         *           by the PdfAnnotation.
-         *
-         *  \see SetAction
-         */
-        std::shared_ptr<PdfAction> GetAction() const;
+        /// Get the action that is executed for this annotation
+        /// @returns an action object. The action object is owned
+        ///           by the PdfAnnotation.
+        ///
+        /// @see SetAction
+        nullable<PdfAction&> GetAction();
+        nullable<const PdfAction&> GetAction() const;
+
+    protected:
+        virtual void onActionSet();
+        void ResetAction();
 
     private:
-        std::shared_ptr<PdfAction> getAction();
+        nullable<PdfAction&> getAction();
 
     private:
-        std::shared_ptr<PdfAction> m_Action;
+        nullable<std::unique_ptr<PdfAction>> m_Action;
     };
 }
 

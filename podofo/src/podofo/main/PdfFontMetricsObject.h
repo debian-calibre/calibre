@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2010 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2010 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_FONT_METRICS_OBJECT_H
 #define PDF_FONT_METRICS_OBJECT_H
@@ -19,30 +17,38 @@
 
 namespace PoDoFo {
 
-class PdfArray;
-class PdfObject;
-class PdfVariant;
-
 class PODOFO_API PdfFontMetricsObject final : public PdfFontMetricsBase
 {
+    friend class PdfFont;
+
 private:
-    /** Create a font metrics object based on an existing PdfObject
-     *
-     *  \param obj an existing font descriptor object
-     *  \param pEncoding a PdfEncoding which will NOT be owned by PdfFontMetricsObject
-     */
-    PdfFontMetricsObject(const PdfObject& font, const PdfObject* descriptor);
+    /// Create a font metrics object based on an existing PdfObject
+    ///
+    /// @param fontDict an existing font descriptor object
+    PdfFontMetricsObject(const PdfDictionary& fontDict, const PdfReference& fontRef, const PdfDictionary* descriptorDict);
 
 public:
-    static std::unique_ptr<PdfFontMetricsObject> Create(const PdfObject& font, const PdfObject* descriptor = nullptr);
+    ~PdfFontMetricsObject();
 
-    unsigned GetGlyphCount() const override;
-
-    bool TryGetGlyphWidth(unsigned gid, double& width) const override;
+    static std::unique_ptr<const PdfFontMetricsObject> Create(const PdfObject& font);
 
     bool HasUnicodeMapping() const override;
 
     bool TryGetGID(char32_t codePoint, unsigned& gid) const override;
+
+    bool TryGetFlags(PdfFontDescriptorFlags& value) const override;
+
+    bool TryGetBoundingBox(Corners& value) const override;
+
+    bool TryGetItalicAngle(double& value) const override;
+
+    bool TryGetAscent(double& value) const override;
+
+    bool TryGetDescent(double& value) const override;
+
+    bool TryGetCapHeight(double& value) const override;
+
+    bool TryGetStemV(double& value) const override;
 
     double GetDefaultWidthRaw() const override;
 
@@ -60,31 +66,17 @@ public:
 
     std::string_view GetFontNameRaw() const override;
 
-    std::string_view GetBaseFontName() const override;
-
     std::string_view GetFontFamilyName() const override;
 
+    unsigned char GetSubsetPrefixLength() const override;
+
     PdfFontStretch GetFontStretch() const override;
-
-    PdfFontDescriptorFlags GetFlags() const override;
-
-    void GetBoundingBox(std::vector<double>& bbox) const override;
-
-    double GetItalicAngle() const override;
-
-    double GetAscent() const override;
-
-    double GetDescent() const override;
 
     double GetLeadingRaw() const override;
 
     int GetWeightRaw() const override;
 
-    double GetCapHeight() const override;
-
     double GetXHeightRaw() const override;
-
-    double GetStemV() const override;
 
     double GetStemHRaw() const override;
 
@@ -102,38 +94,52 @@ public:
 
     unsigned GetFontFileLength3() const override;
 
-    const Matrix2D& GetMatrix() const override;
+    const Matrix& GetMatrix() const override;
+
+    bool IsObjectLoaded() const override;
 
 protected:
+    void ExportType3GlyphData(PdfDictionary& fontDict, cspan<std::string_view> glyphs) const override;
+
+    unsigned GetGlyphCountFontProgram() const override;
+
+    std::string_view GetBaseFontName() const override;
+
+    PdfFontType GetFontType() const override;
+
     bool getIsBoldHint() const override;
 
     bool getIsItalicHint() const override;
 
     datahandle getFontFileDataHandle() const override;
 
-    const PdfCIDToGIDMapConstPtr& getCIDToGIDMap() const override;
+private:
+    static std::unique_ptr<const PdfFontMetricsObject> Create(const PdfObject& font, const PdfDictionary* descriptor);
+
+    void processFontName();
+
+    Corners getBBox(const PdfObject& obj);
 
 private:
-    void extractFontHints();
+    struct Type3FontData;
 
-    std::vector<double> getBBox(const PdfObject& obj);
-
-    void tryLoadBuiltinCIDToGIDMap();
-
-private:
     std::shared_ptr<charbuff> m_Data;
     PdfCIDToGIDMapConstPtr m_CIDToGIDMap;
-    std::vector<double> m_BBox;
-    Matrix2D m_Matrix;
-    std::vector<double> m_Widths;
+    Matrix m_Matrix;
 
     std::string m_FontName;
     std::string m_FontNameRaw;
     std::string m_FontBaseName;
     std::string m_FontFamilyName;
+    unsigned char m_SubsetPrefixLength;
+    bool m_IsItalicHint;
+    bool m_IsBoldHint;
+    bool m_HasBBox;
     PdfFontStretch m_FontStretch;
-    int m_Weight;
-    PdfFontDescriptorFlags m_Flags;
+    short m_Weight;
+
+    nullable<PdfFontDescriptorFlags> m_Flags;
+    Corners m_BBox;
     double m_ItalicAngle;
     double m_Ascent;
     double m_Descent;
@@ -147,7 +153,9 @@ private:
     double m_DefaultWidth;
 
     const PdfObject* m_FontFileObject;
-    PdfFontFileType m_FontFileType;
+    PdfFontType m_FontType;
+    Type3FontData* m_Type3FontData;
+    nullable<PdfFontFileType> m_FontFileType;
 
     unsigned m_Length1;
     unsigned m_Length2;
@@ -158,9 +166,6 @@ private:
     double m_UnderlinePosition;
     double m_StrikeThroughThickness;
     double m_StrikeThroughPosition;
-
-    bool m_IsItalicHint;
-    bool m_IsBoldHint;
 };
 
 };

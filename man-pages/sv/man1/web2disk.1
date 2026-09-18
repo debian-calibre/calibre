@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "WEB2DISK" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "WEB2DISK" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 web2disk \- web2disk
 .INDENT 0.0
@@ -42,7 +42,7 @@ web2disk URL
 .sp
 Där URL till exempel är: \%<https://\:google\:.com>
 .sp
-När du skickar argument till \fBweb2disk\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBweb2disk\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -62,12 +62,12 @@ Hämta inte CSS\-stilmallar.
 .INDENT 0.0
 .TP
 .B \-\-encoding
-Teckenkodningen för de webbplatser du försöker hända. Standard är att försöka gissa kodningen.
+Teckenkodningen för de webbplatser du försöker hämta. Som standard försöker programmet gissa kodningen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-filter\-regexp
-Varje länk som matchar detta reguljära uttryck kommer att ignoreras. Det här alternativet kan anges flera gånger, i vilket fall så länge någon regexp matchar en länk, kommer det att ignoreras. Som standard ignoreras inga länkar. Om både filtrera regexp och matchar regexp specificeras, då används filtrera regexp först.
+Länkar som matchar detta reguljära uttryck ignoreras. Alternativet kan anges flera gånger. Då ignoreras en länk om den matchar minst ett av uttrycken. Som standard ignoreras inga länkar. Om både filtreringsuttryck och matchningsuttryck anges tillämpas filtreringsuttrycken först.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -77,7 +77,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-match\-regexp
-Endast länkar som matchar det reguljära uttrycket kommer att följas. Det här alternativet kan anges flera gånger, då kommer länkar att följas så länge de matchar det reguljära uttrycket. Som standard följs alla länkar.
+Endast länkar som matchar detta reguljära uttryck följs. Alternativet kan anges flera gånger. Då följs en länk om den matchar minst ett av uttrycken. Som standard följs alla länkar.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -87,12 +87,12 @@ Högsta antalet filer att hämta. Endast för filer med <a href> taggar. Standar
 .INDENT 0.0
 .TP
 .B \-\-max\-recursions, \-r
-Högst antal nivåer som ska återkomma, dvs. djupet på länkar som ska följas. Standard 1
+Maximalt antal rekursionsnivåer, dvs. hur många länknivåer som ska följas. Standard: 1
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Tidsgräns i sekunder att vänta på ett svar från servern. Standard: 10.0
+Tidsgräns i sekunder för att vänta på svar från servern. Standard: 10.0 s
 .UNINDENT
 .INDENT 0.0
 .TP

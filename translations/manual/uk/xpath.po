@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2017,2020,2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -111,52 +111,64 @@ msgid ""
 "matching on attribute values."
 msgstr "Тут оператор ``@`` посилається на атрибути теґу. Ви можете скористатися деякими з `вбудованих функцій XPath`_ для встановлення складних відповідностей із значеннями атрибутів."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:75
+msgid ""
+"When XPath expressions are used for conversion options such as chapter "
+"detection or the start reading at position, they are evaluated against the "
+"*input* document, before calibre flattens the CSS. CSS flattening rewrites "
+"class names, so the class names you see in the converted output (things like"
+" ``calibre1``) do not exist yet when your expression runs. Copy class names "
+"from the input document, not from the converted book. If in doubt, match on "
+"tag names and text content instead, as these are not changed by the "
+"conversion."
+msgstr "Коли вирази XPath використовуються для таких параметрів перетворення, як визначення розділів або початкова позиція читання, вони застосовуються до *вхідного* документа — ще до того, як calibre виконає спрощення CSS. Процес спрощення CSS змінює назви класів, тому назви, які ви бачите у вже перетвореному файлі (наприклад, `calibre1`), на момент виконання вашого виразу ще не існують. Копіюйте назви класів із вхідного документа, а не з перетвореної книги. Якщо маєте сумніви, орієнтуйтеся на назви тегів і текстовий вміст, оскільки вони не змінюються під час перетворення."
+
+#: ../../../__w/calibre/calibre/manual/xpath.rst:86
 msgid "Selecting by tag content"
 msgstr "Вибір за вмістом теґу"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:88
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "За допомогою XPath ви навіть можете вибирати теґи на основі тексту, який у них міститься. Найкращим способом це зробити є використання потужності *формальних виразів*, тобто вбудованої функції :term:`re:test()`::"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:94
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "Тут оператор ``.`` посилається на вміст теґу, так само, як оператор ``@`` посилається на його атрибути."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:100
 msgid "Sample e-book"
 msgstr "Зразок книги"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:106
 msgid "XPath built-in functions"
 msgstr "Вбудовані функції XPath"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:109
 msgid "name()"
 msgstr "name()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:111
 msgid "The name of the current tag."
 msgstr "Назва поточного теґу."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:112
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:114
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "``contains(s1, s2)`` повертає «true», якщо s1 містить s2."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:115
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:117
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "

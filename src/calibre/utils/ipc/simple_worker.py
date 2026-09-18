@@ -22,6 +22,11 @@ else:
     from multiprocessing.connection import Connection
 
 
+# Time to wait for the thread reading the worker's response to finish, once the
+# worker process itself has exited
+WORKER_RESPONSE_TIMEOUT = 5  # seconds
+
+
 class WorkerError(Exception):
     def __init__(self, msg, orig_tb='', log_path=None):
         Exception.__init__(self, msg)
@@ -107,6 +112,13 @@ def communicate(ans, worker, conn, args, timeout=300, heartbeat=None, abort=None
         if abort is not None and abort.is_set():
             # The worker process will be killed by fork_job, after we return
             return
+
+    # The worker process exits as soon as it has sent its response, which can
+    # happen before the thread that reads the response has had a chance to store
+    # it, so give that thread time to finish, otherwise a successful job is
+    # intermittently reported as a worker that died. If the worker really did
+    # die, the read fails at once with EOF, so genuine failures are not delayed.
+    cw.join(WORKER_RESPONSE_TIMEOUT)
 
     if not cw.accepted:
         if not cw.tb:

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "EBOOK-POLISH" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
@@ -40,32 +40,35 @@ ebook\-polish [options] input_file [output_file]
 .UNINDENT
 .UNINDENT
 .sp
-Polera böcker handlar om att sätta glans av perfektion på
-dina noggrant utformade e\-böcker.
+Polera böcker handlar om att ge dina noggrant utformade
+e\-böcker den sista finslipningen.
 .sp
-Polering försöker minimera ändringarna i den interna koden av din e\-bok.
-Till skillnad från konvertering, plattar den inte ut CSS, byter namn på filer, ändrar teckensnittsstorlekar, justerar marginaler etc. Varje åtgärd utför endast minsta uppsättning av ändringar som krävs för önskad effekt.
+Polering försöker minimera ändringarna i e\-bokens interna kod.
+Till skillnad från konvertering plattar polering inte ut CSS, byter inte namn på filer
+och ändrar inte teckenstorlekar, marginaler etc. Varje åtgärd utför
+endast de ändringar som krävs för att uppnå
+önskad effekt.
 .sp
-Du bör använda det här verktyget som det sista steget i din e\-bokskaparprocess.
+Du bör använda det här verktyget som sista steg när du skapar en e\-bok.
 .sp
-Observera att polering endast fungerar på filer av formaten AZW3 eller EPUB eller KEPUB.
+Observera att polering endast fungerar på filer i formaten AZW3 eller EPUB eller KEPUB.
 .sp
-När du skickar argument till \fBebook\-polish\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBebook\-polish\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
 .B \-\-add\-soft\-hyphens, \-H
-Lägg till mjuka bindestreck till alla ord i boken. Det här gör att boken kan renderas bättre när texten är justerad, hos läsenheter som inte stöder avstavning.
+Lägg till mjuka bindestreck i alla ord i boken. Detta gör att boken kan visas bättre med marginaljusterad text på läsenheter som inte stöder avstavning.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-images, \-i
-Komprimerar förlustfritt bilder i boken, för att minska filstorleken, utan att påverka bildkvaliteten.
+Komprimera bilderna i boken förlustfritt för att minska filstorleken utan att påverka bildkvaliteten.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Sökvägen till en omslagsbild. Ändrar omslaget som anges i e\-boken. Om inget omslag finns, eller omslaget inte är korrekt identifierade, infogas ett nytt omslag.
+Sökvägen till en omslagsbild. Ändrar omslaget som anges i e\-boken. Om inget omslag finns, eller omslaget inte är korrekt identifierat, infogas ett nytt omslag.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -85,7 +88,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Infoga en \fB\(dq\fPbokjacka\fB\(dq\fP i början av boken som innehåller all metadata för boken, t.ex. titel, taggar, författare, serier och kommentarer. Alla tidigare bokjackor kommer att ersättas.
+Infoga en metadatasida i början av boken med alla bokens metadata, såsom titel, taggar, författare, serie och kommentarer. En eventuell tidigare metadatasida ersätts.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -95,7 +98,7 @@ Sökväg till en OPF\-fil. Metadata i boken uppdateras från OPF\-filen.
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Ta bort tidigare infogad bokjacka.
+Ta bort en tidigare infogad metadatasida.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -110,7 +113,7 @@ Ta bort alla oanvända CSS\-regler från stilmallar och <style>\-taggar. Vissa b
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Konvertera bindestreck, ellipser, citattecken, flertal bindestreck etc. till deras typografiskt korrekta motsvarigheter. Observera att algoritmen ibland kan skapa felaktiga resultat, särskilt när enkla citattecken i början av sammandragningar är inblandade.
+Konvertera bindestreck, ellipser, citattecken, flera bindestreck i följd etc. till deras typografiskt korrekta motsvarigheter. Observera att algoritmen ibland kan skapa felaktiga resultat, särskilt när enkla citattecken i början av sammandragningar är inblandade.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -120,12 +123,12 @@ Att skapa delmängder av teckensnitt innebär att man reducerar ett inbäddat te
 .INDENT 0.0
 .TP
 .B \-\-upgrade\-book, \-U
-Uppgradera bokens interna strukturer, om möjligt. Till exempel uppgraderar EPUB 2 böcker till EPUB 3 böcker.
+Uppgradera bokens interna strukturer om möjligt. Exempelvis uppgraderas EPUB 2\-böcker till EPUB 3\-böcker.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Producera mera utförligt utmatning, användbart för felsökning.
+Ge mer utförlig utmatning, användbart för felsökning.
 .UNINDENT
 .INDENT 0.0
 .TP

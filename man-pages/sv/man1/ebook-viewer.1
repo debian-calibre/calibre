@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-VIEWER" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .INDENT 0.0
@@ -42,7 +42,7 @@ ebook\-viewer [options] file
 .sp
 Visa en e\-bok.
 .sp
-När du skickar argument till \fBebook\-viewer\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBebook\-viewer\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -52,7 +52,7 @@ Fortsätt läsa den senast öppnade boken
 .INDENT 0.0
 .TP
 .B \-\-detach
-Koppla från kontrollterminalen, om någon (endast Linux)
+Koppla från den styrande terminalen, om det finns någon (endast Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -77,7 +77,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-Den position där den angivna boken ska öppnas. Positionen är en plats eller position som du kan få genom att använda åtgärden Gå till\->Plats i visningskontrollerna. Alternativt kan du använda formuläret toc:något och det öppnas på platsen för den första innehållsförteckningsposten som innehåller strängen \fB\(dq\fPnågot\fB\(dq\fP\&. Formen toc\-href:något kommer att matcha href (intern länkdestination) för toc\-noder. Matchningen är exakt. Om du vill matcha en delsträng använder du formen toc\-href\-contains:något. Formen ref:något kommer att använda referenslägesreferenser. Formuläret sök:något kommer att söka efter något efter att ha öppnat boken. Formen regex:något kommer att söka efter det reguljära uttrycket något efter att ha öppnat boken.
+Positionen där den angivna boken ska öppnas. Du kan få en plats eller position genom åtgärden Gå till\->Plats i visarens kontroller. Du kan också använda formen toc:something för att öppna boken vid den första innehållsförteckningspost som innehåller strängen ”something”. Formen toc\-href:something matchar href (det interna länkmålet) för innehållsförteckningens noder. Matchningen är exakt. Använd formen toc\-href\-contains:something för att matcha en delsträng. Formen ref:something använder referenser från referensläget. Formen search:something söker efter ”something” när boken har öppnats. Formen regex:something söker efter det reguljära uttrycket ”something” när boken har öppnats.
 .UNINDENT
 .INDENT 0.0
 .TP

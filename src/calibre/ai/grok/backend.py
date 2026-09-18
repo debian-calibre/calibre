@@ -40,6 +40,7 @@ from calibre.ai import (
 from calibre.ai.grok import GrokAI
 from calibre.ai.prefs import decode_secret, pref_for_provider
 from calibre.ai.structured import (
+    OnText,
     develop_structured_output,
     messages_for_structured_output,
     strict_json_schema,
@@ -58,15 +59,19 @@ from calibre.ai.utils import (
 from calibre.constants import cache_dir
 from calibre.utils.localization import _
 
-module_version = 1  # needed for live updates
+module_version = 3  # needed for live updates
 API_BASE_URL = 'https://api.x.ai/v1'
 TEXT_MODELS_URL = f'{API_BASE_URL}/language-models'
 IMAGE_MODELS_URL = f'{API_BASE_URL}/image-generation-models'
 CHAT_URL = f'{API_BASE_URL}/chat/completions'
 IMAGE_GENERATIONS_URL = f'{API_BASE_URL}/images/generations'
 DEFAULT_IMAGE_MODEL = 'grok-imagine-image-2.0'
-# Token prices in the models list APIs are in USD cents per hundred million tokens
-PRICE_UNIT_TO_USD_PER_TOKEN = 1 / (100 * 1e8)
+# Prices in the models list APIs are in hundred-millionths of a USD cent:
+# token prices are USD cents per hundred million tokens and image prices,
+# despite the API documentation describing image_price as plain USD cents,
+# use the same unit per image, e.g. grok-imagine-image has an image_price of
+# 200,000,000 and costs 0.02 USD per generated image.
+PRICE_UNIT_TO_USD = 1 / (100 * 1e8)
 
 
 def pref(key: str, defval: Any = None) -> Any:  # noqa: ANN401
@@ -120,9 +125,9 @@ class Model(NamedTuple):
             created=datetime.datetime.fromtimestamp(x.get('created') or 0, datetime.UTC),
             family_version=version,
             context_length=int(x.get('context_length') or 0),
-            input_price=(x.get('prompt_text_token_price') or 0) * PRICE_UNIT_TO_USD_PER_TOKEN,
-            output_price=(x.get('completion_text_token_price') or 0) * PRICE_UNIT_TO_USD_PER_TOKEN,
-            image_price=(x.get('image_price') or 0) / 100,  # USD cents per image
+            input_price=(x.get('prompt_text_token_price') or 0) * PRICE_UNIT_TO_USD,
+            output_price=(x.get('completion_text_token_price') or 0) * PRICE_UNIT_TO_USD,
+            image_price=(x.get('image_price') or 0) * PRICE_UNIT_TO_USD,
             generates_images=generates_images or 'image' in (x.get('output_modalities') or ()),
         )
 
@@ -166,22 +171,41 @@ def config_widget() -> ConfigWidget:
 
 def save_settings(config_widget: ConfigWidget) -> None:
     config_widget.save_settings()
+    # the API key may have changed, and with it the list of available models
+    headers.cache_clear()
+    get_available_models.cache_clear()
+    models_by_strategy.cache_clear()
 
 
 def human_readable_model_name(model_id: str) -> str:
     return model_id
 
 
+def configured_model_name(for_image: bool = False) -> str:
+    try:
+        if for_image:
+            return model_choice_for_images().id
+        return model_choice_for_text().id
+    except Exception:
+        return ''
+
+
 _SPECIALIZED_MODEL_TYPES = frozenset({'image', 'video', 'voice', 'imagine', 'code', 'build', 'embedding'})
+
+
+def is_text_model(model: Model) -> bool:
+    return model.id_parts[0] == 'grok' and not (_SPECIALIZED_MODEL_TYPES & set(model.id_parts)) and not model.generates_images
+
+
+def is_image_model(model: Model) -> bool:
+    return model.generates_images
 
 
 @lru_cache(2)
 def models_by_strategy() -> dict[str, Model]:
-    candidates = [
-        m
-        for m in get_available_models().values()
-        if m.id_parts[0] == 'grok' and m.family_version > 0 and not (_SPECIALIZED_MODEL_TYPES & set(m.id_parts)) and not m.generates_images
-    ]
+    # models with no version number in their id, such as the grok-beta alias,
+    # are not used for automatic choice as they cannot be ranked by recency
+    candidates = [m for m in get_available_models().values() if is_text_model(m) and m.family_version > 0]
     if not candidates:
         raise ValueError('No Grok models found for automatic model choice')
     candidates.sort(key=attrgetter('family_version', 'created'), reverse=True)
@@ -194,6 +218,9 @@ def models_by_strategy() -> dict[str, Model]:
 
 
 def model_choice_for_text() -> Model:
+    if model_id := pref('text_model', ''):
+        if m := get_available_models().get(model_id):
+            return m
     m = models_by_strategy()
     return m.get(pref('model_choice_strategy', 'medium')) or m['medium']
 
@@ -220,6 +247,9 @@ def chat_data(messages: Iterable[ChatMessage], model: Model, use_tools: bool = T
         'model': model.id,
         'messages': [for_assistant(m) for m in messages],
         'stream': True,
+        # usage is null in streamed chunks unless explicitly requested, and
+        # without it responses have no cost or model metadata
+        'stream_options': {'include_usage': True},
     }
     strategy = pref('reasoning_strategy', 'auto')
     if strategy != 'auto' and model.supports_reasoning_effort:
@@ -296,24 +326,34 @@ def structured_output_data(messages: Iterable[ChatMessage], model: Model, schema
     return data
 
 
-def generate_structured_output_implementation(prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
+def generate_structured_output_implementation(
+    prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None
+) -> StructuredOutputResult:
     model = model_for_use_model(use_model)
     data = structured_output_data(messages_for_structured_output(prompt, instructions), model, schema)
     rq = chat_request(data)
 
     def responses() -> Iterator[ChatResponse]:
+        seen_metadata = False
         for datum in read_streaming_response(rq, GrokAI.name):
-            yield from as_chat_responses(datum, model)
+            for res in as_chat_responses(datum, model):
+                seen_metadata = seen_metadata or res.has_metadata
+                yield res
+        if not seen_metadata:  # at least report the model used
+            yield ChatResponse(has_metadata=True, provider=GrokAI.name, model=model.id, plugin_name=GrokAI.name)
 
-    return structured_output_from_chat(responses(), schema, GrokAI.name)
+    return structured_output_from_chat(responses(), schema, GrokAI.name, on_text)
 
 
-def generate_structured_output(prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
-    return structured_output_with_error_handler(lambda: generate_structured_output_implementation(prompt, schema, instructions, use_model))
+def generate_structured_output(prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None) -> StructuredOutputResult:
+    return structured_output_with_error_handler(lambda: generate_structured_output_implementation(prompt, schema, instructions, use_model, on_text))
 
 
 def model_choice_for_images() -> Model:
-    candidates = [m for m in get_available_models().values() if m.generates_images]
+    if model_id := pref('text_to_image_model', ''):
+        if m := get_available_models().get(model_id):
+            return m
+    candidates = [m for m in get_available_models().values() if is_image_model(m)]
     if not candidates:
         return Model.from_dict({'id': DEFAULT_IMAGE_MODEL}, generates_images=True)
     return max(candidates, key=attrgetter('created'))

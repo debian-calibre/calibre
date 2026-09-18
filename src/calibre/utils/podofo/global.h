@@ -26,6 +26,7 @@ typedef struct {
         /* Type-specific fields go here. */
         PdfMemDocument *doc;
     PyObject *load_buffer_ref;
+    bool uncompressed;
 
 } PDFDoc;
 
@@ -42,7 +43,7 @@ extern PyObject *Error;
 void podofo_set_exception(const PdfError &err);
 PyObject *podofo_convert_pdfstring(const PdfString &s);
 const PdfString podofo_convert_pystring(PyObject *py);
-PyObject *write_doc(PdfMemDocument *doc, PyObject *f);
+PyObject *write_doc(PdfMemDocument *doc, PyObject *f, PdfSaveOptions options);
 
 struct PyObjectDeleter {
     void
@@ -74,11 +75,11 @@ class PyBytesOutputStream : public OutputStream {
     writeBuffer(const char *buf, size_t sz) {
         if (!bytes) {
             bytes.reset(PyBytes_FromStringAndSize(buf, sz));
-            if (!bytes) throw PdfError(PdfErrorCode::OutOfMemory, __FILE__, __LINE__, NULL);
+            if (!bytes) throw PdfError(PdfErrorCode::OutOfMemory, __FILE__, __LINE__);
         } else {
             size_t old_sz = PyBytes_GET_SIZE(bytes.get());
             PyObject *old = bytes.release();
-            if (_PyBytes_Resize(&old, old_sz + sz) != 0) throw PdfError(PdfErrorCode::OutOfMemory, __FILE__, __LINE__, NULL);
+            if (_PyBytes_Resize(&old, old_sz + sz) != 0) throw PdfError(PdfErrorCode::OutOfMemory, __FILE__, __LINE__);
             memcpy(PyBytes_AS_STRING(old) + old_sz, buf, sz);
             bytes.reset(old);
         }
@@ -126,6 +127,11 @@ get_page(PdfDocument *doc, const unsigned num) {
     return nullptr;
 }
 
+// PdfIndirectObjectList::RemoveObject() is private in PoDoFo >= 1.0. Instead,
+// PoDoFo garbage collects unreferenced objects when saving (as long as
+// PdfSaveOptions::NoCollectGarbage is not used), so to remove an object it is
+// sufficient to remove all references to it from the document tree.
+
 static inline PdfReference
 object_as_reference(const PdfObject &o) {
     return o.IsReference() ? o.GetReference() : o.GetIndirectReference();
@@ -138,6 +144,13 @@ object_as_reference(const PdfObject *o) {
 
 // NoMetadataUpdate needed to avoid PoDoFo clobbering the /Info and XMP metadata with its own nonsense
 static const PdfSaveOptions save_options = PdfSaveOptions::NoMetadataUpdate;
+
+// PoDoFo >= 1.0 flate compresses uncompressed streams when saving, unless told not to,
+// which would silently undo a call to uncompress()
+static inline PdfSaveOptions
+save_options_for(const PDFDoc *self) {
+    return self->uncompressed ? save_options | PdfSaveOptions::NoFlateCompress : save_options;
+}
 
 class PdfReferenceHasher {
   public:

@@ -1,137 +1,104 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2024 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
-#ifndef PDF_NAMES_TREE_H
-#define PDF_NAMES_TREE_H
-
-#include "PdfDeclarations.h"
+#ifndef PDF_NAME_TREE_H
+#define PDF_NAME_TREE_H
 
 #include "PdfElement.h"
 
 namespace PoDoFo {
 
-class PdfDictionary;
-class PdfName;
-class PdfObject;
-class PdfString;
-class PdfIndirectObjectList;
+class PdfDocument;
+class PdfFileSpec;
+class PdfDestination;
 
-enum class PdfNameLimits
+class PODOFO_API PdfNameTreeBase : public PdfDictionaryElement
 {
-    Before,
-    Inside,
-    After
-};
-
-class PODOFO_API PdfNameTree final : public PdfDictionaryElement
-{
-public:
-    /** Create a new PdfNameTree object
-     *  \param parent parent of this action
-     */
-    PdfNameTree(PdfDocument& doc);
-
-    /** Create a PdfNameTree object from an existing PdfObject
-     *	\param obj the object to create from
-     *  \param pCatalog the Catalog dictionary of the owning PDF
-     */
-    PdfNameTree(PdfObject& obj);
-
-    /** Insert a key and value in one of the dictionaries of the name tree.
-     *  \param tree name of the tree to search for the key.
-     *  \param key the key to insert. If it exists, it will be overwritten.
-     *  \param value the value to insert.
-     */
-    void AddValue(const PdfName& tree, const PdfString& key, const PdfObject& value);
-
-    /** Get the object referenced by a string key in one of the dictionaries
-     *  of the name tree.
-     *  \param tree name of the tree to search for the key.
-     *  \param key the key to search for
-     *  \returns the value of the key or nullptr if the key was not found.
-     *           if the value is a reference, the object referenced by
-     *           this reference is returned.
-     */
-    PdfObject* GetValue(const PdfName& tree, const PdfString& key) const;
-
-    /** Tests whether a certain nametree has a value.
-     *
-     *  It is generally faster to use GetValue and check for nullptr
-     *  as return value.
-     *
-     *  \param tree name of the tree to search for the key.
-     *  \param key name of the key to look for
-     *  \returns true if the dictionary has such a key.
-     */
-    bool HasValue(const PdfName& tree, const PdfString& key) const;
-
-    /** Tests whether a key is in the range of a limits entry of a name tree node
-     *  \returns PdfNameLimits::Inside if the key is inside of the range
-     *  \returns PdfNameLimits::After if the key is greater than the specified range
-     *  \returns PdfNameLimits::Before if the key is smalelr than the specified range
-     *
-     *  Internal use only.
-     */
-    static PdfNameLimits CheckLimits(const PdfObject& obj, const PdfString& key);
-
-    /**
-     * Adds all keys and values from a name tree to a dictionary.
-     * Removes all keys that have been previously in the dictionary.
-     *
-     * \param tree the name of the tree to convert into a dictionary
-     * \param dict add all keys and values to this dictionary
-     */
-    void ToDictionary(const PdfName& dictionary, PdfDictionary& dict);
-
-    /**
-     * I have made it for access to "JavaScript" dictonary. This is "document-level javascript storage"
-     *  \param create if true the javascript node is created if it does not exists.
-     */
-    PdfObject* GetJavaScriptNode(bool create = false) const;
-
-    /**
-     * I have made it for access to "Dest" dictionary. This is "document-level named destination storage"
-     *  \param create if true the dests node is created if it does not exists.
-     */
-    PdfObject* GetDestsNode(bool create = false) const;
+    template <typename TElement>
+    friend class PdfNameTree;
 
 private:
-    /** Get a PdfNameTrees root node for a certain name.
-     *  \param name that identifies a specific name tree.
-     *         Valid names are:
-     *            - Dests
-     *            - AP
-     *            - JavaScript
-     *            - Pages
-     *            - Templates
-     *            - IDS
-     *            - URLS
-     *            - EmbeddedFiles
-     *            - AlternatePresentations
-     *            - Renditions
-     *
-     *  \param create if true the root node is created if it does not exists.
-     *  \returns the root node of the tree or nullptr if it does not exists
-     */
-    PdfObject* GetRootNode(const PdfName& name, bool create = false) const;
+    PdfNameTreeBase(PdfDocument& doc);
+    PdfNameTreeBase(PdfObject& obj);
 
-    /** Recursively walk through the name tree and find the value for key.
-     *  \param obj the name tree
-     *  \param key the key to find a value for
-     *  \return the value for the key or nullptr if it was not found
-     */
-    PdfObject* GetKeyValue(PdfObject& obj, const PdfString& key) const;
+public:
+    bool HasKey(const std::string_view& key) const;
 
-    /**
-     *  Add all keys and values from an object and its children to a dictionary.
-     *  \param obj a pdf name tree node
-     *  \param dict a dictionary
-     */
-    void AddToDictionary(PdfObject& obj, PdfDictionary& dict);
+protected:
+    void AddValue(const PdfString& key, std::shared_ptr<PdfElement>&& value);
+
+    PdfElement* GetValue(const std::string_view& key) const;
+
+    void ToDictionary(PdfStringMap<std::shared_ptr<PdfElement>>& dict, bool skipClear);
+
+    virtual PdfKnownNameTree GetType() const = 0;
+
+private:
+    std::unique_ptr<PdfElement> createElement(PdfObject& obj) const;
+
+private:
+    PdfStringHashMap<std::shared_ptr<PdfElement>> m_cache;
 };
 
+template <typename TElement>
+class PdfNameTree final : public PdfNameTreeBase
+{
+    friend class PdfNameTrees;
+
+private:
+    PdfNameTree(PdfDocument& doc)
+        : PdfNameTreeBase(doc) { }
+
+    PdfNameTree(PdfObject& obj)
+        : PdfNameTreeBase(obj) { }
+
+public:
+    using Map = PdfStringMap<std::shared_ptr<TElement>>;
+
+public:
+    void AddValue(const PdfString& key, std::shared_ptr<TElement> value)
+    {
+        PdfNameTreeBase::AddValue(key, std::move(reinterpret_cast<std::shared_ptr<PdfElement>&>(value)));
+    }
+
+    TElement* GetValue(const std::string_view& key)
+    {
+        return static_cast<TElement*>(PdfNameTreeBase::GetValue(key));
+    }
+
+    const TElement* GetValue(const std::string_view& key) const
+    {
+        return static_cast<const TElement*>(PdfNameTreeBase::GetValue(key));
+    }
+
+    void ToDictionary(Map& dict, bool skipClear = false)
+    {
+        PdfNameTreeBase::ToDictionary(reinterpret_cast<PdfStringMap<std::shared_ptr<PdfElement>>&>(dict), skipClear);
+    }
+
+protected:
+    PdfKnownNameTree GetType() const override
+    {
+        return getType();
+    }
+
+private:
+    static constexpr PdfKnownNameTree getType()
+    {
+        if (std::is_same_v<TElement, PdfFileSpec>)
+            return PdfKnownNameTree::EmbeddedFiles;
+        else if (std::is_same_v<TElement, PdfDestination>)
+            return PdfKnownNameTree::Dests;
+        else
+            return PdfKnownNameTree::Unknown;
+    }
 };
 
-#endif // PDF_NAMES_TREE_H
+// TODO: Add more trees
+using PdfDestinations = PdfNameTree<PdfDestination>;
+using PdfEmbeddedFiles = PdfNameTree<PdfFileSpec>;
+
+};
+
+#endif // PDF_NAME_TREE_H

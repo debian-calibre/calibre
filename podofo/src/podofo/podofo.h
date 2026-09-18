@@ -1,17 +1,13 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2021 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PODOFO_H
 #define PODOFO_H
 
-/**
- * This file can be used in client applications to include
- * all files required by podofo at once.
- */
+/// @file podofo.h
+/// This file can be used in client applications to include
+/// all files required by podofo at once.
 
  // Auxiliary headers
 #include "auxiliary/StreamDeviceBase.h"
@@ -30,18 +26,20 @@
 #include "main/PdfError.h"
 #include "main/PdfCommon.h"
 #include "main/PdfMath.h"
-#include "main/PdfOperatorUtils.h"
 #include "main/PdfArray.h"
 #include "main/PdfCanvas.h"
+#include "main/PdfColorSpace.h"
+#include "main/PdfPattern.h"
+#include "main/PdfFunction.h"
 #include "main/PdfColor.h"
 #include "main/PdfContentStreamReader.h"
 #include "main/PdfPostScriptTokenizer.h"
 #include "main/PdfData.h"
-#include "main/PdfDataProvider.h"
 #include "main/PdfDate.h"
 #include "main/PdfDictionary.h"
 #include "main/PdfEncoding.h"
 #include "main/PdfCMapEncoding.h"
+#include "main/PdfPredefinedToUnicodeCMap.h"
 #include "main/PdfEncodingFactory.h"
 #include "main/PdfEncodingMapFactory.h"
 #include "main/PdfDifferenceEncoding.h"
@@ -49,27 +47,19 @@
 #include "main/PdfPredefinedEncoding.h"
 #include "main/PdfEncrypt.h"
 #include "main/PdfExtension.h"
-#include "main/PdfStreamedObjectStream.h"
-#include "main/PdfFilter.h"
 #include "main/PdfCanvasInputDevice.h"
-#include "main/PdfImmediateWriter.h"
 #include "main/PdfMemoryObjectStream.h"
 #include "main/PdfName.h"
 #include "main/PdfObject.h"
-#include "main/PdfObjectStreamParser.h"
-#include "main/PdfParser.h"
-#include "main/PdfParserObject.h"
-#include "main/PdfXRefStreamParserObject.h"
 #include "main/PdfReference.h"
 #include "main/PdfSigner.h"
+#include "main/PdfSignerCms.h"
+#include "main/PdfSigningContext.h"
 #include "main/PdfObjectStream.h"
 #include "main/PdfString.h"
 #include "main/PdfTokenizer.h"
 #include "main/PdfVariant.h"
 #include "main/PdfIndirectObjectList.h"
-#include "main/PdfWriter.h"
-#include "main/PdfXRef.h"
-#include "main/PdfXRefStream.h"
 #include "main/PdfAcroForm.h"
 #include "main/PdfAction.h"
 #include "main/PdfAnnotation.h"
@@ -84,9 +74,7 @@
 #include "main/PdfTextBox.h"
 #include "main/PdfButton.h"
 #include "main/PdfCheckBox.h"
-#include "main/PdfButton.h"
 #include "main/PdfPushButton.h"
-#include "main/PdfCheckBox.h"
 #include "main/PdfRadioButton.h"
 #include "main/PdfChoiceField.h"
 #include "main/PdfComboBox.h"
@@ -102,13 +90,12 @@
 #include "main/PdfFontMetricsObject.h"
 #include "main/PdfFontSimple.h"
 #include "main/PdfFontTrueType.h"
-#include "main/PdfFontTrueTypeSubset.h"
 #include "main/PdfFontType1.h"
 #include "main/PdfFontType3.h"
 #include "main/PdfImage.h"
 #include "main/PdfInfo.h"
 #include "main/PdfMemDocument.h"
-#include "main/PdfNameTree.h"
+#include "main/PdfNameTrees.h"
 #include "main/PdfOutlines.h"
 #include "main/PdfPage.h"
 #include "main/PdfPageCollection.h"
@@ -119,11 +106,5 @@
 #include "main/PdfXObject.h"
 #include "main/PdfXObjectForm.h"
 #include "main/PdfXObjectPostScript.h"
-
-// Staging headers
-#include "staging/PdfFunction.h"
-#include "staging/PdfShadingPattern.h"
-#include "staging/PdfTilingPattern.h"
-#include "staging/PdfPainterExtensions.h"
 
 #endif // PODOFO_H
