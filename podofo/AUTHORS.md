@@ -1,14 +1,34 @@
-## Authors
+# Authors
 
-* Dominik Seichter <domseichter@web.de>
-* Leonard Rosenthol <leonardr@pdfsages.com>
-* Craig Ringer <craig@postnewspapers.com.au>
-* Petr Petrov
-* Francesco Pretto <ceztko@gmail.com>
-* Petr Pytelka (PdfSignature)
-* Kaushik ??? (Standard 14 Fonts related work)
-* Takeshi Kanno ??? (Libharu)
-* Raph Levien
-* Ulrich Arnold
+- Francesco Pretto:           main developer and maintainer since 2023
+- Christopher Creutzig:       patch review, security and generic maintenance
+- Pull-Request [contributors](https://github.com/podofo/podofo/graphs/contributors)
 
-Work on revamp authors file is tracked in [this](https://github.com/podofo/podofo/issues/26) issue.
+### Past authors (until 2022)
+- Dominik Seichter:           main developer and mantainer, tools
+- Leonard Rosenthol:          initial Windows port, early maintenance, tools
+- Craig Ringer:               early maintenance
+- Ulrich Arnold:              encoding, page append
+- Reinhard Mitteregger:       page append, Tiff decoding
+- Ian Curington:              AES, crypto refactor
+- Radoslaw Golebiewski:       Painter draw text, PdfColor tweaks, string handling
+- Mark Rogers:                security infrastructure/fixes
+- Ulrich Telle:               merged wxPdf code
+- Petr Pytelka:               initial Pdf signing
+- James McGill:               page append, Windows fonts fetch
+- Nenad Novak:                oneliners, PNG load, CID width, TrueType subset
+- Palmer Zent:                AES 128/256, crypto refactor
+- M.C. (zyx):                 Pdf signing, painting, patterns, maintenance, podofosign
+- Michal Sudolsky:            small internals fixes and features
+- Andreas Brzesowsky:         AES2/AES3 crypto
+- Matthias Brinke:            maintenance, security fixes
+- Josef Rokos:                encodings
+- John Senneker:              PNG Paeth filter
+
+### Tools contributions
+- Pierre Marchand: podofoimpose, podofobox, pdfinfo
+- Chris B.: podofoimpose fixes
+- Ian Ashley: podofoxmp
+- Ivan Romanov: podofonooc
+- John Denker: podofoimpose plans
+- Stefan Huber: podofocolor examples

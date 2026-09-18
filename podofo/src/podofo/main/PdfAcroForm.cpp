@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 
@@ -21,7 +19,7 @@ PdfAcroForm::PdfAcroForm(PdfDocument& doc, PdfAcroFormDefaulAppearance defaultAp
     : PdfDictionaryElement(doc), m_fieldArray(nullptr)
 {
     // Initialize with an empty fields array
-    this->GetDictionary().AddKey("Fields", PdfArray());
+    this->GetDictionary().AddKey("Fields"_n, PdfArray());
     init(defaultAppearance);
 }
 
@@ -35,7 +33,7 @@ void PdfAcroForm::init(PdfAcroFormDefaulAppearance defaultAppearance)
     // Add default appearance: black text, 12pt times 
     // -> only if we do not have a DA key yet
 
-    if (defaultAppearance == PdfAcroFormDefaulAppearance::BlackText12pt)
+    if (defaultAppearance == PdfAcroFormDefaulAppearance::ArialBlack)
     {
         PdfFontCreateParams createParams;
         PdfFontSearchParams searchParams;
@@ -43,31 +41,21 @@ void PdfAcroForm::init(PdfAcroFormDefaulAppearance defaultAppearance)
         auto font = GetDocument().GetFonts().SearchFont("Helvetica", searchParams, createParams);
 
         // Create DR key
-        if (!this->GetDictionary().HasKey("DR"))
-            this->GetDictionary().AddKey("DR", PdfDictionary());
-        auto& resource = this->GetDictionary().MustFindKey("DR");
-
-        if (!resource.GetDictionary().HasKey("Font"))
-            resource.GetDictionary().AddKey("Font", PdfDictionary());
-
-        auto& fontDict = resource.GetDictionary().MustFindKey("Font");
-        fontDict.GetDictionary().AddKey(font->GetIdentifier(), font->GetObject().GetIndirectReference());
+        auto drObj = GetDictionary().FindKey("DR");
+        unique_ptr<PdfResources> resx;
+        if (drObj == nullptr || !PdfResources::TryCreateFromObject(*drObj, resx))
+            resx.reset(new PdfResources(GetDocument()));
 
         // Create DA key
         PdfStringStream ss;
-        ss << "0 0 0 rg /" << font->GetIdentifier().GetString() << " 12 Tf";
-        this->GetDictionary().AddKey("DA", PdfString(ss.GetString()));
+        ss << "0 0 0 rg 0 g /" << resx->AddResource(PdfResourceType::Font, font->GetObject()).GetString() << " 0 Tf";
+        this->GetDictionary().AddKey("DA"_n, PdfString(ss.GetString()));
     }
 }
 
 PdfField& PdfAcroForm::CreateField(const string_view& name, PdfFieldType fieldType)
 {
     return AddField(PdfField::Create(name, *this, fieldType));
-}
-
-PdfField& PdfAcroForm::createField(const string_view& name, const type_info& typeInfo)
-{
-    return AddField(PdfField::Create(name, *this, typeInfo));
 }
 
 PdfField& PdfAcroForm::GetFieldAt(unsigned index)
@@ -150,21 +138,25 @@ unsigned PdfAcroForm::GetFieldCount() const
 
 PdfAcroForm::iterator PdfAcroForm::begin()
 {
+    initFields();
     return iterator(m_Fields.begin());
 }
 
 PdfAcroForm::iterator PdfAcroForm::end()
 {
+    initFields();
     return iterator(m_Fields.end());
 }
 
 PdfAcroForm::const_iterator PdfAcroForm::begin() const
 {
+    const_cast<PdfAcroForm&>(*this).initFields();
     return const_iterator(m_Fields.begin());
 }
 
 PdfAcroForm::const_iterator PdfAcroForm::end() const
 {
+    const_cast<PdfAcroForm&>(*this).initFields();
     return const_iterator(m_Fields.end());
 }
 
@@ -177,7 +169,7 @@ PdfField& PdfAcroForm::AddField(unique_ptr<PdfField>&& field)
 {
     initFields();
     if (m_fieldArray == nullptr)
-        m_fieldArray = &GetDictionary().AddKey("Fields", PdfArray()).GetArray();
+        m_fieldArray = &GetDictionary().AddKey("Fields"_n, PdfArray()).GetArray();
 
     (*m_fieldMap)[field->GetObject().GetIndirectReference()] = m_fieldArray->GetSize();
     m_fieldArray->AddIndirectSafe(field->GetObject());
@@ -193,12 +185,26 @@ shared_ptr<PdfField> PdfAcroForm::GetFieldPtr(const PdfReference& ref)
 
 void PdfAcroForm::SetNeedAppearances(bool needAppearances)
 {
-    this->GetDictionary().AddKey("NeedAppearances", PdfVariant(needAppearances));
+    this->GetDictionary().AddKey("NeedAppearances"_n, PdfVariant(needAppearances));
 }
 
 bool PdfAcroForm::GetNeedAppearances() const
 {
-    return this->GetDictionary().FindKeyAs<bool>("NeedAppearances", false);
+    return this->GetDictionary().FindKeyAsSafe<bool>("NeedAppearances", false);
+}
+
+PdfAcroFormSigFlags PdfAcroForm::GetSigFlags() const
+{
+    int64_t num;
+    if (!GetDictionary().TryFindKeyAs("SigFlags", num))
+        return PdfAcroFormSigFlags::None;
+
+    return (PdfAcroFormSigFlags)num;
+}
+
+void PdfAcroForm::SetSigFlags(PdfAcroFormSigFlags flags)
+{
+    GetDictionary().AddKey("SigFlags"_n, (int64_t)flags);
 }
 
 PdfArray* PdfAcroForm::getFieldArray() const
@@ -228,9 +234,14 @@ void PdfAcroForm::initFields()
         (*m_fieldMap)[obj->GetIndirectReference()] = i;
         // The field may be invalid. In that case we push a placeholder
         if (PdfField::TryCreateFromObject(*obj, field))
+        {
+            field->SetAcroForm(*this);
             m_Fields.push_back(std::move(field));
+        }
         else
+        {
             m_Fields.push_back(nullptr);
+        }
 
         i++;
     }

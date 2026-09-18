@@ -13,7 +13,7 @@ using namespace PoDoFo;
 
 void encrypt(const string_view& inputPath, const string_view& outputPath,
     const string_view& userPass, const string_view& ownerPass,
-    const PdfEncryptAlgorithm algorithm, PdfPermissions permissions)
+    const PdfEncryptionAlgorithm algorithm, PdfPermissions permissions)
 {
     PdfMemDocument doc;
     doc.Load(inputPath);
@@ -23,21 +23,19 @@ void encrypt(const string_view& inputPath, const string_view& outputPath,
     switch (algorithm)
     {
 #ifndef PODOFO_HAVE_OPENSSL_NO_RC4
-        case PdfEncryptAlgorithm::RC4V1:
+        case PdfEncryptionAlgorithm::RC4V1:
             keyLength = PdfKeyLength::L40;
             version = PdfVersion::V1_3;
             break;
 #endif // PODOFO_HAVE_OPENSSL_NO_RC4
-#ifdef PODOFO_HAVE_LIBIDN
-        case PdfEncryptAlgorithm::AESV3:;
+        case PdfEncryptionAlgorithm::AESV3R5:;
             keyLength = PdfKeyLength::L256;
             version = PdfVersion::V1_3;
             break;
-#endif // PODOFO_HAVE_LIBIDN
 #ifndef PODOFO_HAVE_OPENSSL_NO_RC4
-        case PdfEncryptAlgorithm::RC4V2:
+        case PdfEncryptionAlgorithm::RC4V2:
 #endif // PODOFO_HAVE_OPENSSL_NO_RC4
-        case PdfEncryptAlgorithm::AESV2:
+        case PdfEncryptionAlgorithm::AESV2:
         default:
             keyLength = PdfKeyLength::L128;
             version = PdfVersion::V1_5;
@@ -67,7 +65,7 @@ void print_help()
     printf("       --print       Allow printing the document\n");
     printf("       --edit        Allow modifying the document besides annotations, form fields or changing pages\n");
     printf("       --copy        Allow text and graphic extraction\n");
-    printf("       --editnotes   Add or modify text annoations or form fields (if PdfPermissions::Edit is set also allow the creation interactive form fields including signature)\n");
+    printf("       --editnotes   Add or modify text annotations or form fields (if PdfPermissions::Edit is set also allow the creation interactive form fields including signature)\n");
     printf("       --fillandsign Fill in existing form or signature fields\n");
     printf("       --accessible  Extract text and graphics to support user with disabillities\n");
     printf("       --assemble    Assemble the document: insert, create, rotate delete pages or add bookmarks\n");
@@ -79,7 +77,7 @@ void Main(const cspan<string_view>& args)
 {
     string_view inputPath;
     string_view outputPath;
-    PdfEncryptAlgorithm algorithm = PdfEncryptAlgorithm::AESV2;
+    PdfEncryptionAlgorithm algorithm = PdfEncryptionAlgorithm::AESV2;
     PdfPermissions permissions = PdfPermissions::None;
     string userPass;
     string ownerPass;
@@ -97,17 +95,15 @@ void Main(const cspan<string_view>& args)
         {
 #ifndef PODOFO_HAVE_OPENSSL_NO_RC4
             if (args[i] == "--rc4v1")
-                algorithm = PdfEncryptAlgorithm::RC4V1;
+                algorithm = PdfEncryptionAlgorithm::RC4V1;
             else if (args[i] == "--rc4v2")
-                algorithm = PdfEncryptAlgorithm::RC4V2;
+                algorithm = PdfEncryptionAlgorithm::RC4V2;
             else
 #endif // PODOFO_HAVE_OPENSSL_NO_RC4
                 if (args[i] == "--aesv2")
-                    algorithm = PdfEncryptAlgorithm::AESV2;
-#ifdef PODOFO_HAVE_LIBIDN
+                    algorithm = PdfEncryptionAlgorithm::AESV2;
                 else if (args[i] == "--aesv3")
-                    algorithm = PdfEncryptAlgorithm::AESV3;
-#endif // PODOFO_HAVE_LIBIDN
+                    algorithm = PdfEncryptionAlgorithm::AESV3R5;
                 else if (args[i] == "-u")
                 {
                     i++;

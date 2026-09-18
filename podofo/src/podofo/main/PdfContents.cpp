@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfContents.h"
@@ -28,21 +26,9 @@ PdfContents::PdfContents(PdfPage &parent)
     reset();
 }
 
-void PdfContents::Reset(PdfObject* obj)
+void PdfContents::Reset()
 {
-    if (obj == nullptr)
-    {
-        m_object = &m_parent->GetDocument().GetObjects().CreateArrayObject();
-    }
-    else
-    {
-        PdfDataType type = obj->GetDataType();
-        if (!(type == PdfDataType::Array || type == PdfDataType::Dictionary))
-            PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The object is neither a Dictionary or an Array");
-
-        m_object = obj;
-    }
-
+    m_object = &m_parent->GetDocument().GetObjects().CreateArrayObject();
     reset();
 }
 
@@ -55,6 +41,7 @@ charbuff PdfContents::GetCopy() const
 
 void PdfContents::CopyTo(charbuff& buffer) const
 {
+    buffer.clear();
     BufferStreamDevice stream(buffer);
     CopyTo(stream);
 }
@@ -78,7 +65,7 @@ void PdfContents::CopyTo(OutputStream& stream) const
     }
 }
 
-PdfObjectStream & PdfContents::GetStreamForAppending(PdfStreamAppendFlags flags)
+PdfObjectStream & PdfContents::CreateStreamForAppending(PdfStreamAppendFlags flags)
 {
     PdfArray *arr;
     if (m_object->IsArray())
@@ -89,7 +76,7 @@ PdfObjectStream & PdfContents::GetStreamForAppending(PdfStreamAppendFlags flags)
     {
         // Create a /Contents array and put the current stream into it
         auto& newObjArray = m_parent->GetDocument().GetObjects().CreateArrayObject();
-        m_parent->GetObject().GetDictionary().AddKeyIndirect("Contents", newObjArray);
+        m_parent->GetDictionary().AddKeyIndirect("Contents"_n, newObjArray);
         arr = &newObjArray.GetArray();
         arr->AddIndirect(*m_object);
         m_object = &newObjArray;
@@ -99,10 +86,10 @@ PdfObjectStream & PdfContents::GetStreamForAppending(PdfStreamAppendFlags flags)
         PODOFO_RAISE_ERROR(PdfErrorCode::InvalidDataType);
     }
 
-    if ((flags & PdfStreamAppendFlags::NoSaveRestorePrior) == PdfStreamAppendFlags::None)
+    if (arr->GetSize() != 0 && (flags & PdfStreamAppendFlags::NoSaveRestorePrior) == PdfStreamAppendFlags::None)
     {
         // Record all content and readd into a new stream that
-        // substitue all the previous streams
+        // substitute all the previous streams
         charbuff buffer;
         BufferStreamDevice device(buffer);
         copyTo(device, *arr);
@@ -116,7 +103,7 @@ PdfObjectStream & PdfContents::GetStreamForAppending(PdfStreamAppendFlags flags)
             auto output = stream.GetOutputStream();
             output.Write("q\n");
             output.Write(buffer);
-            // TODO: Avoid adding unuseful \n prior Q
+            // TODO: Avoid adding useless \n prior Q
             output.Write("\nQ");
         }
     }
@@ -146,5 +133,5 @@ void PdfContents::copyTo(OutputStream& stream, const PdfArray& arr) const
 
 void PdfContents::reset()
 {
-    m_parent->GetObject().GetDictionary().AddKeyIndirect("Contents", *m_object);
+    m_parent->GetDictionary().AddKeyIndirect("Contents"_n, *m_object);
 }

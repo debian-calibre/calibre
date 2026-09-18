@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.23)
 
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE "Release")
@@ -14,9 +14,25 @@ enable_testing() # Needed to enable "make test" from binary dir
 # An useful variable to check if we are running from playground
 set(PODOFO_PLAYGROUND TRUE)
 
-if ("${ARCH}" STREQUAL "")
-    message(FATAL_ERROR "ARCH is not set. Run the boostrap scripts")
+# Always build unsupported tools in the playground
+option(PODOFO_BUILD_UNSUPPORTED_TOOLS "Build unsupported tools" TRUE)
+
+# Enable Win32 GDI font search on Windows
+if(WIN32)
+    option(PODOFO_WITH_WIN32GDI_FONT_SEARCH "Use Win32 GDI for font search" ON)
 endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(ARCH "Win64")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    execute_process(COMMAND uname -m OUTPUT_VARIABLE UNAME_M OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(ARCH "macos-${UNAME_M}")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(ARCH "linux-x86_64")
+else()
+    message(FATAL_ERROR "Unsupported operating system ${CMAKE_SYSTEM_NAME}")
+endif()
+set(ARCH "${ARCH}" CACHE STRING "" FORCE)
 
 if ("${PODOFO_DIR}" STREQUAL "")
     get_filename_component(PODOFO_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
@@ -57,7 +73,7 @@ list(APPEND CMAKE_INCLUDE_PATH
     "${DEPS_PATH}/libjpeg/include"
     "${DEPS_PATH}/libtiff/include"
     "${DEPS_PATH}/openssl/include"
-    "${DEPS_PATH}/libidn/include"
+    "${DEPS_PATH}/lcms2/include"
 )
 
 # Set library folders for find_package()
@@ -70,13 +86,21 @@ list(APPEND CMAKE_LIBRARY_PATH
     "${DEPS_PATH}/libjpeg/lib/${ARCH}"
     "${DEPS_PATH}/libtiff/lib/${ARCH}"
     "${DEPS_PATH}/openssl/lib/${ARCH}"
-    "${DEPS_PATH}/libidn/lib/${ARCH}"
+    "${DEPS_PATH}/lcms2/lib/${ARCH}"
 )
 
 # Set use libxml2 static for fontconfig
 add_compile_definitions(LIBXML_STATIC)
-# Set use libidn static
-add_compile_definitions(LIBIDN_STATIC)
+
+# Enable GPL2 only tests
+# TODO: Remove me
+add_compile_definitions(PODOFO_ENABLE_GPL2_TESTS)
+
+# Don't search dependencies in sysroot. This avoid
+# potential mismatches
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE NEVER)
 
 if(WIN32)
     if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -97,12 +121,6 @@ if(WIN32)
     # Fontconfig
     set(Fontconfig_LIBRARY "${DEPS_PATH}/fontconfig/lib/${ARCH}/fontconfig${LIB_SUFFIX}.lib" CACHE FILEPATH "" FORCE)
 else()
-    # Freetype
-    set(FREETYPE_INCLUDE_DIR_ft2build "${DEPS_PATH}/freetype/include/freetype2" CACHE PATH "" FORCE)
-    set(FREETYPE_INCLUDE_DIR_freetype2 "${DEPS_PATH}/freetype/include" CACHE PATH "" FORCE)
-    set(FREETYPE_LIBRARY_RELEASE "${DEPS_PATH}/freetype/lib/${ARCH}/libfreetype.a" CACHE FILEPATH "" FORCE)
-    # Fontconfig
-    set(Fontconfig_LIBRARY "${DEPS_PATH}/fontconfig/lib/${ARCH}/libfontconfig.a" CACHE FILEPATH "" FORCE)
     set(PLATFORM_SYSTEM_LIBRARIES "${DEPS_PATH}/bzip2/lib/${ARCH}/libbz2.a" "${DEPS_PATH}/libuuid/lib/${ARCH}/libuuid.a")
 endif()
 

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "augustus 28, 2026" "9.14.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -44,7 +44,7 @@ Converteer een e\-boek van het ene naar het andere formaat.
 .sp
 input_file is de invoer en output_file is de uitvoer. Beiden moeten gespecificeerd worden als de eerste twee argumenten bij het commando.
 .sp
-Het e\-boek uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een \(dqopen e\-boek\(dq (OEB) bestaande uit HTML bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
+Het e\-boek uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een \(dqopen e\-boek\(dq (OEB) bestaande uit HTML\-bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
 .sp
 Na specificatie van het invoer\- en uitvoerbestand kan u de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp specificeer het invoer\- en uitvoerbestand en gebruik dan de \-h optie.
 .sp
@@ -207,17 +207,17 @@ Geen herschaling van lettergrootte.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Alle lettertypes invoegen waaraan in het input\-document wordt gerefereerd maar nog niet ingevoegd. Dit zal uw systeem doorzoeken naar de lettertypes, en indien gevonden, zullen ze ingevoegd worden. Invoegen zal alleen werken als het formaat waarnaar u converteert ingebouwde fonts ondersteunt, zoals EPUB, AZW3, DOCX of PDF. Let aub op dat u de nodige licentie bezit om de in dit document gebruikte lettertypes in te voegen.
+Alle lettertypen invoegen waaraan in het input\-document wordt gerefereerd maar nog niet ingevoegd. Dit zal uw systeem doorzoeken naar de lettertypen, en indien gevonden, zullen ze ingevoegd worden. Invoegen zal alleen werken als het formaat waarnaar u converteert ingebouwde fonts ondersteunt, zoals EPUB, AZW3, DOCX of PDF. Let aub op dat u de nodige licentie bezit om de in dit document gebruikte lettertypen in te voegen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Het gespecificeerde lettertype inbedden in het boek. Dit specificeert het \fB\(dq\fPbasis\fB\(dq\fP lettertype voor het boek. Als het invoer document eigen lettertypes specificeert, kunnen deze het basis lettertype negeren. U kunt de filter stijlinformatie optie gebruiken om lettertypes uit het invoer document te verwijderen. Merk op: inbedden van lettertypes werkt alleen met bepaalde uitvoer indelingen, voornamelijk EPUB, AZW3 en DOCX.
+Het gespecificeerde lettertype inbedden in het boek. Dit specificeert het \fB\(dq\fPbasis\fB\(dq\fP\-lettertype voor het boek. Als het invoerdocument eigen lettertypen specificeert, kunnen deze het basis\-lettertype negeren. U kunt de filter stijlinformatie\-optie gebruiken om lettertypen uit het invoerdocument te verwijderen. Merk op: inbedden van lettertypen werkt alleen met bepaalde uitvoerindelingen, voornamelijk EPUB, AZW3 en DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-Standaard gebruikt calibre het verkorte formaat voor verschillende CSS\-eigenschappen zoals marges, padding, rand, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Merk op dat CSS altijd wordt uitgebreid bij genereren van EPUB bestanden met als uitvoerprofiel een van de Nook profielen daar de Nook geen verkorte CSS kan verwerken.
+Standaard gebruikt calibre het verkorte formaat voor verschillende CSS\-eigenschappen zoals marges, padding, rand, enz. Deze optie zorgt ervoor dat het in plaats daarvan het volledige formaat gebruikt. Merk op dat CSS altijd wordt uitgebreid bij genereren van EPUB\-bestanden met als uitvoerprofiel een van de Nook profielen daar de Nook geen verkorte CSS kan verwerken.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -227,7 +227,7 @@ Het pad naar een CSS stijlblad of rauwe CSS. Deze CSS wordt toegevoegd aan de st
 .INDENT 0.0
 .TP
 .B \-\-filter\-css
-Een door komma\fB\(aq\fPs gescheiden lijst van CSS\-eigenschappen die zullen worden verwijderd uit alle CSS\-stijlregels. Dit is handig als de aanwezigheid van enkele stijl informatie voorkomt dat het wordt overschreven op uw toestel. Bijvoorbeeld: font\-family, kleur, margin\-left, margin\-right
+Een door komma\fB\(aq\fPs gescheiden lijst van CSS\-eigenschappen die zullen worden verwijderd uit alle CSS\-stijlregels. Dit is handig als de aanwezigheid van enkele stijlinformatie voorkomt dat het wordt overschreven op uw toestel. Bijvoorbeeld: font\-family, kleur, margin\-left, margin\-right
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -247,7 +247,7 @@ Stel de hoogte van de ingevoegde blanco regels in (in em). De hoogte van de rege
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Behoud ligaturen in het invoerdocument. Een ligatuur is een gecombineerd teken van een paar tekens zoals ff, fi, fl enzovoort. De meeste lezers hebben geen ondersteuning voor ligaturen in hun standaard lettertypen, dus het is onwaarschijnlijk dat ze correct worden weergegeven. Standaard zal calibre een ligatuur omzetten in het corresponderende paar normale tekens. Let op dat met ligaturen hier alleen unicode ligaturen worden bedoeld, geen ligaturen die zijn aangemaakt via CSS of lettertypestijlen. Deze optie zal ze in plaats daarvan behouden.
+Behoud ligaturen in het invoerdocument. Een ligatuur is een gecombineerd teken van een paar tekens zoals ff, fi, fl enzovoort. De meeste lezers hebben geen ondersteuning voor ligaturen in hun standaard\-lettertypen, dus het is onwaarschijnlijk dat ze correct worden weergegeven. Standaard zal calibre een ligatuur omzetten in het corresponderende paar normale tekens. Let op dat met ligaturen hier alleen unicode\-ligaturen worden bedoeld, geen ligaturen die zijn aangemaakt via CSS of lettertypestijlen. Deze optie zal ze in plaats daarvan behouden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -302,7 +302,7 @@ Zet gewone aanhalingstekens, streepjes en ellipsen om in hun typografisch correc
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Uitdunnen van alle ingebedde lettertypes. Elk ingebed lettertype is beperkt tot de tekens gebruikt in dit document. Dit beperkt de omvang van de lettertypebestanden. Bruikbaar wanneer u een zeer uitgebreid lettertype wilt insluiten met veel ongebruikte tekens.
+Uitdunnen van alle ingebedde lettertypen. Elk ingebed lettertype is beperkt tot de tekens gebruikt in dit document. Dit beperkt de omvang van de lettertypebestanden. Bruikbaar wanneer u een zeer uitgebreid lettertype wilt insluiten met veel ongebruikte tekens.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -567,7 +567,7 @@ Waardering geven. Moet een getal tussen de 1 en 5 zijn.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Lees metadata uit het opgegeven OPF bestand. Metadata die hieruit worden gelezen negeren metadata in het bronbestand.
+Lees metadata uit het opgegeven OPF\-bestand. Metadata die hieruit worden gelezen negeren metadata in het bronbestand.
 .UNINDENT
 .INDENT 0.0
 .TP

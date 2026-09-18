@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2010 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2010 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfFontMetricsStandard14.h"
@@ -17,34 +15,36 @@ using namespace PoDoFo;
 
 PdfFontMetricsStandard14::PdfFontMetricsStandard14(
         PdfStandard14FontType fontType, const Standard14FontData& data,
-        std::unique_ptr<std::vector<double>> parsedWidths) :
+    GlyphMetricsListConstPtr parsedWidths) :
     m_Std14FontType(fontType),
-    m_data(data),
-    m_parsedWidths(std::move(parsedWidths))
+    m_data(data)
 {
-    m_LineSpacing = 0.0;
     m_UnderlineThickness = 0.05;
     m_StrikeThroughThickness = m_UnderlineThickness;
-    m_Ascent = data.Ascent / 1000.0;
-    m_Descent = data.Descent / 1000.0;
-
-    m_UnderlinePosition = data.UnderlinePos / 1000.0;
-    m_StrikeThroughPosition = data.StrikeThroughPos / 1000.0;
 
     // calculate the line spacing now, as it changes only with the font size
     m_LineSpacing = (data.Ascent + abs(data.Descent)) / 1000.0;
+
+    SetParsedWidths(std::move(parsedWidths));
 }
 
-unique_ptr<PdfFontMetricsStandard14> PdfFontMetricsStandard14::Create(
+unique_ptr<const PdfFontMetricsStandard14> PdfFontMetricsStandard14::Create(
     PdfStandard14FontType fontType)
 {
     return create(fontType, nullptr);
 }
 
-unique_ptr<PdfFontMetricsStandard14> PdfFontMetricsStandard14::Create(
+unique_ptr<const PdfFontMetricsStandard14> PdfFontMetricsStandard14::Create(
     PdfStandard14FontType fontType, const PdfObject& fontObj)
 {
     return create(fontType, &fontObj);
+}
+
+std::unique_ptr<const PdfFontMetricsStandard14> PdfFontMetricsStandard14::Create(
+    PdfStandard14FontType fontType, GlyphMetricsListConstPtr&& parsedWidths)
+{
+    return unique_ptr<const PdfFontMetricsStandard14>(new PdfFontMetricsStandard14(
+        fontType, GetInstance(fontType)->GetRawData(), std::move(parsedWidths)));
 }
 
 unique_ptr<PdfFontMetricsStandard14> PdfFontMetricsStandard14::create(
@@ -64,7 +64,7 @@ unique_ptr<PdfFontMetricsStandard14> PdfFontMetricsStandard14::create(
             // be measured in units in which 1000 units correspond to 1
             // unit in text space"
             for (unsigned i = 0; i < arrWidths.GetSize(); i++)
-                (*parsedWidths)[i] = arrWidths[i].GetReal() / 1000;
+                (*parsedWidths)[i] = arrWidths.FindAtAsSafe<double>(i, 0) / 1000;
         }
     }
 
@@ -72,38 +72,27 @@ unique_ptr<PdfFontMetricsStandard14> PdfFontMetricsStandard14::create(
         fontType, GetInstance(fontType)->GetRawData(), std::move(parsedWidths)));
 }
 
-unsigned PdfFontMetricsStandard14::GetGlyphCount() const
+unsigned PdfFontMetricsStandard14::GetGlyphCountFontProgram() const
 {
-    if (m_parsedWidths == nullptr)
-        return m_data.WidthsSize;
-    else
-        return (unsigned)m_parsedWidths->size();
+    return m_data.WidthsSize;
 }
 
-bool PdfFontMetricsStandard14::TryGetGlyphWidth(unsigned gid, double& width) const
+bool PdfFontMetricsStandard14::TryGetGlyphWidthFontProgram(unsigned gid, double& width) const
 {
-    if (m_parsedWidths == nullptr)
+    if (gid >= m_data.WidthsSize)
     {
-        if (gid >= m_data.WidthsSize)
-        {
-            width = -1;
-            return false;
-        }
-
-        width = m_data.Widths[gid] / 1000.0; // Convert to PDF units
-        return true;
+        width = -1;
+        return false;
     }
-    else
-    {
-        if (gid >= m_parsedWidths->size())
-        {
-            width = -1;
-            return false;
-        }
 
-        width = (*m_parsedWidths)[gid];
-        return true;
-    }
+    width = m_data.Widths[gid] / 1000.0; // Convert to PDF units
+    return true;
+}
+
+PdfFontType PdfFontMetricsStandard14::GetFontType() const
+{
+    // Arbitrarily determine this metrics will be used in a /Type1 font
+    return PdfFontType::Type1;
 }
 
 bool PdfFontMetricsStandard14::HasUnicodeMapping() const
@@ -131,9 +120,52 @@ bool PdfFontMetricsStandard14::TryGetGID(char32_t codePoint, unsigned& gid) cons
     return true;
 }
 
-PdfFontDescriptorFlags PdfFontMetricsStandard14::GetFlags() const
+bool PdfFontMetricsStandard14::TryGetFlags(PdfFontDescriptorFlags& value) const
 {
-    return m_data.Flags;
+    value = m_data.Flags;
+    return true;
+}
+
+bool PdfFontMetricsStandard14::TryGetBoundingBox(Corners& value) const
+{
+    // Convert to PDF units
+    value = Corners(
+        m_data.BBox.X1 / 1000.0,
+        m_data.BBox.Y1 / 1000.0,
+        m_data.BBox.X2 / 1000.0,
+        m_data.BBox.Y2 / 1000.0
+    );
+    return true;
+}
+
+bool PdfFontMetricsStandard14::TryGetItalicAngle(double& value) const
+{
+    value = m_data.ItalicAngle;
+    return true;
+}
+
+bool PdfFontMetricsStandard14::TryGetAscent(double& value) const
+{
+    value = m_data.Ascent / 1000.0;
+    return true;
+}
+
+bool PdfFontMetricsStandard14::TryGetDescent(double& value) const
+{
+    value = m_data.Descent / 1000.0;
+    return true;
+}
+
+bool PdfFontMetricsStandard14::TryGetCapHeight(double& value) const
+{
+    value = m_data.CapHeight / 1000.0;
+    return true;
+}
+
+bool PdfFontMetricsStandard14::TryGetStemV(double& value) const
+{
+    value = m_data.StemV / 1000.0;
+    return true;
 }
 
 double PdfFontMetricsStandard14::GetDefaultWidthRaw() const
@@ -153,27 +185,17 @@ double PdfFontMetricsStandard14::GetUnderlineThickness() const
 
 double PdfFontMetricsStandard14::GetUnderlinePosition() const
 {
-    return m_UnderlinePosition;
+    return m_data.UnderlinePos / 1000.0;
 }
 
 double PdfFontMetricsStandard14::GetStrikeThroughPosition() const
 {
-    return m_StrikeThroughPosition;
+    return m_data.StrikeThroughPos / 1000.0;
 }
 
 double PdfFontMetricsStandard14::GetStrikeThroughThickness() const
 {
     return m_StrikeThroughThickness;
-}
-
-double PdfFontMetricsStandard14::GetAscent() const
-{
-    return m_Ascent;
-}
-
-double PdfFontMetricsStandard14::GetDescent() const
-{
-    return m_Descent;
 }
 
 double PdfFontMetricsStandard14::GetLeadingRaw() const
@@ -206,19 +228,9 @@ int PdfFontMetricsStandard14::GetWeightRaw() const
     return m_data.Weight;
 }
 
-double PdfFontMetricsStandard14::GetCapHeight() const
-{
-    return m_data.CapHeight / 1000.0;
-}
-
 double PdfFontMetricsStandard14::GetXHeightRaw() const
 {
     return m_data.XHeight / 1000.0;
-}
-
-double PdfFontMetricsStandard14::GetStemV() const
-{
-    return m_data.StemV / 1000.0;
 }
 
 double PdfFontMetricsStandard14::GetStemHRaw() const
@@ -236,30 +248,15 @@ double PdfFontMetricsStandard14::GetMaxWidthRaw() const
     return -1;
 }
 
-double PdfFontMetricsStandard14::GetItalicAngle() const
-{
-    return m_data.ItalicAngle;
-}
-
 PdfFontFileType PdfFontMetricsStandard14::GetFontFileType() const
 {
-    return PdfFontFileType::Type1CCF;
+    return m_data.FileType;
 }
 
 bool PdfFontMetricsStandard14::IsStandard14FontMetrics(PdfStandard14FontType& std14Font) const
 {
     std14Font = m_Std14FontType;
     return true;
-}
-
-void PdfFontMetricsStandard14::GetBoundingBox(std::vector<double>& bbox) const
-{
-    // Convert to PDF units
-    bbox.clear();
-    bbox.push_back(m_data.BBox.X / 1000.0);
-    bbox.push_back(m_data.BBox.Y / 1000.0);
-    bbox.push_back(m_data.BBox.Width / 1000.0);
-    bbox.push_back(m_data.BBox.Height / 1000.0);
 }
 
 datahandle PdfFontMetricsStandard14::getFontFileDataHandle() const

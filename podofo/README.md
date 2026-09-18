@@ -1,85 +1,103 @@
 # PoDoFo [![build-linux](https://github.com/podofo/podofo/actions/workflows/build-linux.yml/badge.svg)](https://github.com/podofo/podofo/actions/workflows/build-linux.yml) [![build-mac](https://github.com/podofo/podofo/actions/workflows/build-mac.yml/badge.svg)](https://github.com/podofo/podofo/actions/workflows/build-mac.yml) [![build-win](https://github.com/podofo/podofo/actions/workflows/build-win.yml/badge.svg)](https://github.com/podofo/podofo/actions/workflows/build-win.yml)
 
 1.  [What is PoDoFo?](#what-is-podofo)
-2.  [Requirements](#requirements)
-3.  [Licensing](#licensing)
-4.  [Development quickstart](#development-quickstart)
-5.  [String encoding and buffer conventions](#string-encoding-and-buffer-conventions)
-6.  [API Stability](#api-stability)
-7.  [PoDoFo tools](#podofo-tools)
-8.  [TODO](#todo)
-9.  [FAQ](#faq)
-10.  [No warranty](#no-warranty)
-11.  [Contributions](#contributions)
-12.  [Authors](#authors)
+2.  [Features](#features)
+3.  [Requirements](#requirements)
+4.  [Licensing](#licensing)
+5.  [Development quickstart](#development-quickstart)
+6.  [Doxygen Documentation](#doxygen-documentation)
+7.  [Software life cycle and API stability](#software-life-cycle-and-api-stability)
+8.  [String encoding and buffer conventions](#string-encoding-and-buffer-conventions)
+9.  [Thread safety](#thread-safety)
+11.  [PoDoFo tools](#podofo-tools)
+12.  [TODO](#todo)
+13.  [FAQ](#faq)
+14.  [No warranty](#no-warranty)
+15.  [Contributions](#contributions)
+16.  [Authors](#authors)
 
 ## What is PoDoFo?
 
-PoDoFo is a s a free portable C++ library to work with the PDF file format.
+PoDoFo is a free portable C++ library to work with the PDF file format.
 
-PoDoFo provides classes to parse a PDF file and modify its content
-into memory. The changes can be written back to disk easily.
-Besides PDF parsing PoDoFo also provides facilities to create your
-own PDF files from scratch. It currently does not
-support rendering PDF content.
+PoDoFo provides classes to parse a PDF file and modify its content, allowing to write
+it back to disk easily. Besides PDF parsing and manipulation PoDoFo also provides
+facilities to create your own PDF files from scratch.
+
+## Features
+
+PoDoFo has a modern and user-friendly C++17 API that features:
+
+- PDF parsing with high-level entity inspection (annotations, form fields and others)
+- PDF writing with support for incremental updates
+- PDF signing with [PAdES-B](https://en.wikipedia.org/wiki/PAdES) compliance,
+  RSA/ECDSA encryption and asynchronous/deferred signing
+- Text drawing with automatic CID encoding generation and font subsetting
+- Full-featured low-level Unicode text extraction
+- Advanced CJK language support (text extraction and automatic multi-byte encoding)
+- PDF/A compliance preservation (e.g., font embedding, simultaneous PDF/A and PDF/UA compliance)
+- PDF/UA compliance preservation (e.g., when adding annotations/form fields)
+- Deferred font file data embedding
+
+PoDoFo  does not support rendering PDF content yet. Text writing
+is also limited as it currently does not perform proper text shaping/kerning.
 
 ## Requirements
 
 To build PoDoFo lib you'll need a c++17 compiler,
-CMake 3.16 and the following libraries:
+CMake 3.23 and the following libraries (tentative minimum versions indicated):
 
-* freetype2
-* fontconfig (required for Unix platforms, optional for Windows)
+* freetype2 (2.11)
+* fontconfig (2.13.94, required for Unix platforms, optional for Windows)
 * OpenSSL (1.1 and 3.0 are supported)
-* LibXml2
+* LibXml2 (2.9.12)
 * zlib
-* libjpeg (optional)
-* libtiff (optional)
-* libpng (optional)
-* libidn (optional)
+* libjpeg (9d, optional)
+* libtiff (4.0.10, optional)
+* libpng (1.6.37, optional)
 
-For the most polular toolchains, PoDoFo requires the following
+For the most popular toolchains, PoDoFo requires the following
 minimum versions:
 
 * msvc++ 14.16 (VS 2017 15.9)
-* gcc 8.1
-* clang/llvm 7.0
+* gcc 9.0
+* clang/llvm 9.0
+* XCode 11.0
 
 It is regularly tested with the following IDE/toolchains versions:
 
-* Visual Studio 2017 15.9
-* Visual Studio 2019 16.11
-* Visual Studio 2022 17.3
+* Visual Studio 2022 17.14
 * gcc 9.3.1
-* XCode 13.3
-* NDK r23b
-
-GCC 8.1 support [broke](https://github.com/podofo/podofo/issues/116), but it could be reinstanced.
+* XCode 15.4
+* NDK r28
 
 ## Licensing
 
-PoDoFo library is licensed under the [LGPL 2.0](https://spdx.org/licenses/LGPL-2.0-or-later.html) or later terms.
-PoDoFo tools are licensed under the [GPL 2.0](https://spdx.org/licenses/GPL-2.0-or-later.html) or later terms.
+The PoDoFo library is licensed under the [LGPL 2.0 or later](https://spdx.org/licenses/LGPL-2.0-or-later.html) terms or, at your option, [MPL 2.0](https://spdx.org/licenses/MPL-2.0.html).
+
+PoDoFo tools are licensed under the [GPL 2.0 or later](https://spdx.org/licenses/GPL-2.0-or-later.html) terms.
+
+Please refer to the [NOTICE](https://github.com/podofo/podofo/blob/master/NOTICE) file for the use of 3rd party components. Consider disabling the [AFDKO](https://github.com/adobe-type-tools/afdko) integration if you plan to distribute the PoDoFo library with [GPL 2.0-only](https://spdx.org/licenses/GPL-2.0-only.html) projects.
 
 ## Development quickstart
 
-PoDoFo is known to compile through a multitude of package managers (including `apt-get`, [brew](https://brew.sh/), [vcpkg](https://vcpkg.io/), [Conan](https://conan.io/)), and has public continous integration working in [Ubuntu Linux](https://github.com/podofo/podofo/blob/master/.github/workflows/build-linux.yml), [MacOS](https://github.com/podofo/podofo/blob/master/.github/workflows/build-linux.yml) and
+PoDoFo is known to compile through a multitude of package managers (including [APT](https://en.wikipedia.org/wiki/APT_(software)), [brew](https://brew.sh/), [vcpkg](https://vcpkg.io/), [Conan](https://conan.io/)), and has public continuous integration working in [Ubuntu Linux](https://github.com/podofo/podofo/blob/master/.github/workflows/build-linux.yml), [MacOS](https://github.com/podofo/podofo/blob/master/.github/workflows/build-linux.yml) and
 [Windows](https://github.com/podofo/podofo/blob/master/.github/workflows/build-win.yml), bootstrapping the CMake project, building and testing the library. It's highly recommended to build PoDoFo using such package managers. 
 
 There's also a playground area in the repository where you can have
-access to pre-build dependencies for some popular architectures/operating systems:
+access to pre-built dependencies for some popular architectures/operating systems:
 the playground is the recommended setting to develop the library and reproduce bugs,
 while it's not recommended for the deployment of your application using PoDoFo.
 Have a look to the [Readme](https://github.com/podofo/podofo/tree/master/playground) there.
 
 > **Warning**: PoDoFo is known to be working in cross-compilation toolchains (eg. Android/iOS development), but support may not provided in such scenarios. If you decide to manually build dependencies you are assumed to know how to identity possible library clashes/mismatches and how to deal with compilation/linking problems that can arise in your system.
 
-### Build with apt-get
+### Build with APT
 
 From the source root run:
 
 ```
-sudo apt-get install -y libfontconfig1-dev libfreetype-dev libxml2-dev libssl-dev libjpeg-dev libpng-dev libtiff-dev libidn11-dev
+sudo apt install -y libfontconfig1-dev libfreetype-dev libxml2-dev libssl-dev libjpeg-dev libpng-dev libtiff-dev
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
@@ -91,10 +109,10 @@ cmake --build . --config Debug
 Install [brew](https://brew.sh/), then from the source root run:
 
 ```
-brew install fontconfig freetype openssl libxml2 jpeg-turbo libpng libtiff libidn
+brew install fontconfig freetype openssl libxml2 jpeg-turbo libpng libtiff cmake
 mkdir build
 cd build
-cmake  -DCMAKE_BUILD_TYPE=Debug -DCMAKE_FIND_FRAMEWORK=NEVER -DCMAKE_PREFIX_PATH=`brew --prefix` -DFontconfig_INCLUDE_DIR=`brew --prefix fontconfig`/include -DOPENSSL_ROOT_DIR=`brew --prefix openssl@3` ..
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_FIND_FRAMEWORK=NEVER -DCMAKE_PREFIX_PATH=`brew --prefix` -DFontconfig_INCLUDE_DIR=`brew --prefix fontconfig`/include -DOPENSSL_ROOT_DIR=`brew --prefix openssl@3` ..
 cmake --build . --config Debug
 ```
 
@@ -113,17 +131,44 @@ cmake --build . --config Debug
 ### Build with vcpkg
 
 Follow the vcpkg [quickstart](https://vcpkg.io/en/getting-started.html) guide to setup the package manager repository first.
-In Windows, it may be also useful to set the enviroment variable `VCPKG_DEFAULT_TRIPLET` to `x64-windows` to default installing 64 bit dependencies
-and define a `VCPKG_INSTALLATION_ROOT` variable with the location of the repository as created in the quickstart.
+In Windows, it may be also useful to set the environment variable `VCPKG_DEFAULT_TRIPLET` to `x64-windows` to default installing 64 bit dependencies
+and define a `VCPKG_ROOT` variable with the location of the repository as created in the quickstart.
 
 Then from source root run:
 
 ```
-vcpkg install fontconfig freetype libxml2 openssl libjpeg-turbo libpng tiff zlib
+vcpkg install
 mkdir build
-cd build
-cmake -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug ..
-cmake --build . --config Debug
+cmake "-DCMAKE_TOOLCHAIN_FILE=vcpkg.cmake" -DCMAKE_BUILD_TYPE=Debug -B build
+cmake --build build --config Debug
+```
+
+### Consume PoDoFo from package managers with CMake
+
+Starting with version 1.0, PoDoFo has a quite advanced CMake integration and can be consumed
+as a [CMake package](https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html).
+As soon as it's correctly integrated in your favorite package manager (APT, vcpkg, Conan,
+...), you will be able to locate PoDoFo and compile your application with the following
+`CMakeLists.txt`:
+
+```
+cmake_minimum_required(VERSION 3.23)
+
+project(PoDoFoSample)
+
+# PoDoFo public header requires at least C++17,
+# but it can be used with higher standards
+set(CMAKE_CXX_STANDARD 23)
+
+# If you are not using a package manager and/or you
+# are installing PoDoFo to a non-standard path
+#list(APPEND CMAKE_PREFIX_PATH "/path/to/podofo_install_dir")
+
+find_package(PoDoFo 1.0.0 REQUIRED)
+message(STATUS "Found PoDoFo: ${PoDoFo_VERSION}")
+
+add_executable(helloworld main.cpp)
+target_link_libraries(helloworld podofo::podofo)
 ```
 
 ### CMake switches
@@ -132,35 +177,97 @@ cmake --build . --config Debug
 
 - `PODOFO_BUILD_EXAMPLES`: Build the examples, defaults to TRUE;
 
-- `PODOFO_BUILD_TOOLS`: Build the PoDoFo tools, defaults to FALSE. See
+- `PODOFO_BUILD_UNSUPPORTED_TOOLS`: Build the PoDoFo tools, defaults to FALSE. See
 the relevant [section](https://github.com/podofo/podofo/#podofo-tools) in the Readme;
 
 - `PODOFO_BUILD_LIB_ONLY`: If TRUE, it will build only the library component.
 This unconditionally disable building tests, examples and tools;
 
 - `PODOFO_BUILD_STATIC`: If TRUE, build the library as a static object and use it in tests,
-examples and tools. By default a shared library is built.
+examples and tools. By default a shared library is built;
+
+- `PODOFO_WITH_FONTMANAGER`: Enable search of fonts in the system. It generally requires Fontconfig, unless specific platforms fallbacks are enabled. Defaults to ON;
+
+- `PODOFO_WITH_WIN32GDI_FONT_SEARCH`: In Windows, enable use of Win32 GDI for font search (Fontconfig is always prefered, if available), defaults to OFF;
+
+- `PODOFO_WITH_AFDKO`: Enable the [Adobe Font Development Kit for OpenType](https://github.com/adobe-type-tools/afdko) integration (used in Type1/OpenType font subsetting), defaults to ON;
+
+- `PODOFO_DEVENDOR_TCBSPAN`: If TRUE, the [`tcb::span`](https://github.com/tcbrindle/span) library will be devendored;
+
+- `PODOFO_DEVENDOR_DATE`: If TRUE, the [`date`](https://github.com/howardhinnant/date) library will be devendored;
+
+- `PODOFO_DEVENDOR_FASTFLOAT`: If TRUE, the [`fast_float`](https://github.com/fastfloat/fast_float) library will be devendored;
+
+- `PODOFO_DEVENDOR_FMT`: If TRUE, the [`fmt`](https://github.com/fmtlib/fmt) library will be devendored;
+
+- `PODOFO_DEVENDOR_FMT_HEADER_ONLY`: Implies `PODOFO_DEVENDOR_FMT`, but uses the `fmt::fmt-header-only` library flavour;
+
+- `PODOFO_DEVENDOR_UTF8CPP`: If TRUE, the [`utf8cpp`](https://github.com/nemtrif/utfcpp) library will be devendored;
+
+- `PODOFO_DEVENDOR_UTF8PROC`: If TRUE, the [`utf8proc`](https://juliastrings.github.io/utf8proc/) library will be devendored.
+
+### Static linking
+
+If you want to use a static build of PoDoFo and you are including the PoDoFo cmake project it's very simple. Do something like the following in your CMake project:
+
+```
+set(PODOFO_BUILD_LIB_ONLY TRUE CACHE BOOL "" FORCE)
+set(PODOFO_BUILD_STATIC TRUE CACHE BOOL "" FORCE)
+add_subdirectory(podofo)
+# ...
+target_link_libraries(MyTarget podofo::podofo)
+```
+
+If you are linking against a precompiled static build of PoDoFo this is a scenario where the support is limited, as you are really supposed to be able to identify and fix linking errors. The general steps are:
+* Add `PODOFO_STATIC` compilation definition to your project, or before including `podofo.h`;
+* Link the libraries `podofo.a`, `podofo_private.a`, `podofo_3rdparty.a` (`podofo.lib`, `podofo_private.lib`, `podofo_3rdparty.lib` in MSVC) and all the [dependent](https://github.com/podofo/podofo/blob/5a07b90f24747a5aafe6f6fd062ee81f4783ab22/CMakeLists.txt#L203C5-L203C24) libraries.
+
+## Doxygen Documentation
+
+The API documentation can be found at https://podofo.github.io/podofo/documentation/ .
+
+### Generate the doxygen documentation
+
+1. **Prerequisite**: Ensure you have Doxygen installed on your machine. If not, visit [Doxygen's official website](http://www.doxygen.nl/) to download and install it.
+
+2. **Generating Documentation**: After completing the build process detailed in the [Development quickstart](#development-quickstart) chapter, navigate to the root directory of PoDoFo's source code.
+Open a terminal or command prompt and run the following command:
+    ```bash
+    doxygen build/Doxyfile
+    ```
+
+3. **Viewing the Documentation**: Once the documentation generation completes, you'll find a `documentation` directory that contains the generated documentation. Open `index.html` in your favorite web browser to view the API documentation.
+    ```bash
+    cd build/doxygen/documentation
+    open index.html
+    ```
+## Software life cycle and API stability
+
+Refer to the main article in the [Wiki](https://github.com/podofo/podofo/wiki/Home). 
+At this [page](https://github.com/podofo/podofo/blob/master/API-MIGRATION.md) you can find an incomplete guide on migrating 0.9.8 code to 0.10.x, and from 0.10.x to 1.0.
 
 ## String encoding and buffer conventions
 
 All `std::strings` or `std::string_view` in the library are intended
 to hold UTF-8 encoded string content. `PdfString` and `PdfName` constructors
 accept UTF-8 encoded strings by default (`PdfName` accept only characters in the
-`PdfDocEncoding` char set, though). `charbuff` abd `bufferview`
+`PdfDocEncoding` char set, though). `charbuff` and `bufferview`
 instead represent a generic octet buffer.
 
-## API migration
+## Thread safety
 
-PoDoFo has an unstable API that is the result of an extensive API review of PoDoFo 0.9.x. At this [link](https://github.com/podofo/podofo/wiki/PoDoFo-API-migration-guide/#098---0100) you can find an incomplete guide on migrating 0.9.8 code to 0.10.0. It is expected PoDoFo will converge to a stable API as soon as the review process is completed. See [API Stability](https://github.com/podofo/podofo/wiki/API-Stability) for more details.
+For the most part PoDoFo is not a thread safe library. As a general rule: use any object on the same thread it was created on.
+Alternatively: guard access to objects obtained through a `PdfDocument` using a mutex. Explicit support is provided for freeing
+object instances in different threads, as is done in modern garbage collected languages.
 
 ## PoDoFo Tools
 
-> **Warning**: Tools are currently **untested** and **unmaintained**.
+> **Warning**: Tools are currently **unsupported**, **untested** and **unmaintained**.
 
 PoDoFo tools are still available in the source [tree](https://github.com/podofo/podofo/)
 but their compilation is disabled by default because they are unsted/unmaintained,
 and will not receive support until their status is cleared. It's not recommended to include them in software distributions.
-If you want to build them make sure to bootstrap the CMake project with ```-DPODOFO_BUILD_TOOLS=TRUE```.
+If you want to build them make sure to bootstrap the CMake project with ```-DPODOFO_BUILD_UNSUPPORTED_TOOLS=TRUE```.
 Tools are conveniently enabled in the [playground](https://github.com/podofo/podofo/tree/master/playground)
 at least to ensure library changes won't break their compilation.
 
@@ -171,14 +278,49 @@ at the [issue](https://github.com/podofo/podofo/issues) tracker.
 
 ## FAQ
 
-**Q: How do I sign a document?**
+**Q: PoDoFo compilation requires a CMake version higher than what is present in my system, can you lower the requirement?<a id='faq-cmake'></a>**
 
-**A:** The signing procedure is still as low level as it was before the
-ongoing source changes. This is going to change, soon!, with a new high-level
-API for signing being worked on, which will be fully unit tested. For now you
-should check the `podofosign` tool (**WARNING**: untested) which should give
-you the idea how to sign documents creating a *CMS* structure directly with
-OpenSSL.
+**A:** No, CMake 2.23 introduced a functionality that makes it very easy to create [CMake packages](https://cmake.org/cmake/help/latest/manual/cmake-packages.7.html) that
+is too convenient to ignore. In Windows it's easy to upgrade the CMake version to latest, while in MacOS it's the same thanks to the official KitWare installer or `brew`.
+In a linux system it's also quite easy to install an upgraded parallel CMake installation. Just run the following script:
+
+```
+export CMAKE_VERSION=3.31.7 \
+    && wget -nv https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh \
+    && chmod +x cmake-${CMAKE_VERSION}-Linux-x86_64.sh \
+    && ./cmake-${CMAKE_VERSION}-Linux-x86_64.sh --prefix=/usr/local --skip-license \
+    && rm cmake-${CMAKE_VERSION}-Linux-x86_64.sh \
+    && cmake --version
+```
+
+**Q: How do I sign a document?<a id='faq-sign'></a>**
+
+**A:** PoDoFo HEAD now supplies a high level signing procedure which is very powerful
+and that allows to sign a document without having to supply a *CMS* structure manually.
+By default, it supports signing a document with the modern [`PAdES-B`](https://en.wikipedia.org/wiki/PAdES)
+compliance profiles, but there's also a support for the legacy PKCS7 signatures.
+Providing you have both ASN.1 encoded X509 certificate and RSA private key, you
+can sign a document with the following code:
+
+```cpp
+auto inputOutput = std::make_shared<FileStreamDevice>(filepath, FileMode::Open);
+
+PdfMemDocument doc;
+doc.Load(inputOutput);
+
+auto& page = doc.GetPages().GetPageAt(0);
+auto& signature = page.CreateField<PdfSignature>("Signature", Rect());
+
+auto signer = PdfSignerCms(x509certbuffer, pkeybuffer);
+PoDoFo::SignDocument(doc, *inputOutput, signer, signature);
+```
+
+There's also a support for external signing services and/or signing the document
+in memory buffers. See the various signing examples in the unit [tests](https://github.com/podofo/podofo/blob/master/test/unit/SignatureTest.cpp).
+
+**Q: Can I still use an event based procedure to sign the document?<a id='faq-sign-event-based'></a>**
+
+**A:** Yes, the old low level procedure hasn't changed and it's still available.
 To describe the procedure briefly, one has to fully Implement a `PdfSigner`,
 retrieve or create a `PdfSignature` field, create an output device (see next question)
 and use `PoDoFo::SignDocument(doc, device, signer, signature)`. When signing,
@@ -193,83 +335,81 @@ the `dryrun` parameter set to `false`. The buffer on this call is cleared (capac
 is not altered) or not accordingly to the value of `PdfSigner::SkipBufferClear()`.
 
 
-**Q: `PdfMemDocument::SaveUpdate()` or `PoDoFo::SignDocument()` write only a partial
-file: why so and why there's no mechanism to seamlessly handle the incremental
-update as it was in PoDoFo? What should be done to correctly update/sign the
-document?**
+**Q: `PdfMemDocument::SaveUpdate()` or `PoDoFo::SignDocument()` write only a
+partial file: why there's no mechanism to seamlessly handle the incremental
+update as it was in PoDoFo 0.9.x? What should be done to correctly update/sign
+the document?<a id='faq-manual-update'></a>**
 
-**A:** The previous mechanism in PoDoFo required enablement of document for
-incremental updates, which is a decision step which I believe should be not
-be necessary. Also:
+**A:** The previous mechanism in PoDoFo 0.9.x required enablement of document
+for incremental updates, which is a decision step which I believe should be
+unnecessary. Also:
 1. In case of file loaded document it still required to perform the update in
 the same file, and the check was performed on the path of the files being
 operated to, which is unsafe;
 2. In case of buffers worked for one update/signing operation but didn't work
-for following operations.
+for following operations, meaning the mechanism was bugged/unreliable.
 
-The idea is to implement a more explicit mechanism that makes more clear
-and/or enforces the fact that the incremental update must be performed on the
-same file in case of file loaded documents or that underlying buffer will grow
-following subsequent operations in case of buffer loaded documents.
-Before that, as a workaround, a couple of examples showing the correct operation
-to either update or sign a document (file or buffer loaded) are presented.
-Save an update on a file loaded document, by copying the source to another
-destination:
+An alternative strategy that makes clearer the fact that the incremental update
+must be performed on the same file from where the document was loaded, or that underlying
+buffer will grow its memory consumption following subsequent operations in case of
+buffer loaded documents, is available. It follows a couple of examples showing the
+correct operations to update a document, loaded from file or buffer:
 
-```
-    string inputPath;
-    string outputPath;
-    auto input = std::make_shared<FileStreamDevice>(inputPath);
-    FileStreamDevice output(outputPath, FileMode::Create);
-    input->CopyTo(output);
+1. Save an update on a file loaded document, by loading and saving the document on the same location:
 
-    PdfMemDocument doc;
-    doc.LoadFromDevice(input);
+```cpp
+auto inputOutput = std::make_shared<FileStreamDevice>(filename, FileMode::Open);
 
-    doc.SaveUpdate(output);
+PdfMemDocument doc;
+doc.Load(inputOutput);
+
+doc.SaveUpdate(*inputOutput);
 ```
 
-Sign a buffer loaded document:
+2. Save an update on a buffer, by copying the source first to the buffer
+that will be also used to load the document:
 
+```cpp
+charbuff outputBuffer;
+FileStreamDevice input(filepath);
+auto inputOutput = std::make_shared<BufferStreamDevice>(outputBuffer);
+input.CopyTo(*inputOutput);
+
+PdfMemDocument doc;
+doc.Load(inputOutput);
+
+doc.SaveUpdate(*inputOutput);
 ```
-    bufferview inputBuffer;
-    charbuff outputBuffer;
-    auto input = std::make_shared<SpanStreamDevice>(inputBuffer);
-    BufferStreamDevice output(outputBuffer);
-    input->CopyTo(output);
 
-    PdfMemDocument doc;
-    doc.LoadFromDevice(input);
-    // Retrieve/create the signature, create the signer, ...
-    PoDoFo::SignDocument(doc, output, signer, signature);
-```
+Signing documents can be done with same technique, read the other questions for more examples.
 
-**Q: Can I sign a document a second time?**
+**Q: Can I sign a document a second time?<a id='faq-sign-second'></a>**
 
 **A:** Yes, this is tested, but to make sure this will work you'll to re-parse the document a second time,
-as re-using the already loaded document is still untested (this may change later). For example do as it follows:
+as reusing the already loaded document is still untested (this may change later). For example you can
+do as it follows:
 
-```
-    bufferview inputBuffer;
-    charbuff outputBuffer;
-    auto input = std::make_shared<SpanStreamDevice>(inputBuffer);
-    BufferStreamDevice output(outputBuffer);
-    input->CopyTo(output);
+```cpp
+auto inputOutput = std::make_shared<FileStreamDevice>(filepath, FileMode::Open);
 
-    {
-        PdfMemDocument doc;
-        doc.LoadFromDevice(input);
-        // Retrieve/create the signature, create the signer, ...
-        PoDoFo::SignDocument(doc, output, signer, signature);
-    }
+{
+    PdfMemDocument doc;
+    doc.Load(inputOutput);
+    auto& page = doc.GetPages().GetPageAt(0);
+    auto& signature = page.CreateField<PdfSignature>("Signature1", Rect());
 
-    input = std::make_shared<SpanStreamDevice>(output);
-    {
-        PdfMemDocument doc;
-        doc.LoadFromDevice(input);
-        // Retrieve/create the signature, create the signer, ...
-        PoDoFo::SignDocument(doc, output, signer, signature);
-    }
+    PdfSignerCms signer(x509certbuffer, pkeybuffer);
+    PoDoFo::SignDocument(doc, *inputOutput, signer, signature);
+}
+
+{
+    PdfMemDocument doc;
+    doc.Load(inputOutput);
+    auto& page = doc.GetPages().GetPageAt(0);
+    auto& signature = page.CreateField<PdfSignature>("Signature2", Rect());
+    PdfSignerCms signer(x509certbuffer, pkeybuffer);
+    PoDoFo::SignDocument(doc, *inputOutput, signer, signature);
+}
 ```
 
 ## No warranty
@@ -287,7 +427,7 @@ high-quality patches.
 
 Please subscribe to the project mailing [list](https://sourceforge.net/projects/podofo/lists/podofo-users)
 which is still followed by several of the original developers of PoDoFo.
-A gitter [community](https://gitter.im/podofo/community) has also been created to ease some more informal chatter.
+A Discord [server](https://discord.gg/t9xX77ZrHr) has also been created to ease some more informal chatter.
 If you find a bug and know how to fix it, or you want to add a small feature, you're welcome to send a [pull request](https://github.com/podofo/podofo/pulls),
 providing it follows the [coding style](https://github.com/podofo/podofo/blob/master/CODING-STYLE.md)
 of the project. As a minimum requisite, any contribution should be:

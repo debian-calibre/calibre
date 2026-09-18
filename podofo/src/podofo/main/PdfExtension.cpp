@@ -1,12 +1,20 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include "PdfExtension.h"
 
 using namespace std;
 using namespace PoDoFo;
 
-PdfExtension::PdfExtension(const std::string_view& ns, PdfVersion baseVersion, int64_t level) :
-    m_Ns(ns), m_BaseVersion(baseVersion), m_Level(level) { }
+PdfExtension::PdfExtension(const PdfName& ns, int64_t level, PdfVersion baseVersion,
+        nullable<const PdfString&> url, nullable<const PdfString&> extensionRevision) :
+    m_BaseVersion(baseVersion),
+    m_Namespace(ns),
+    m_Level(level)
+{
+    if (url != nullptr)
+        m_Url = *url;
+
+    if (extensionRevision != nullptr)
+        m_ExtensionRevision = *extensionRevision;
+}

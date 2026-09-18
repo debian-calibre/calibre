@@ -69,6 +69,15 @@ def build():
     raise SystemExit(p.wait())
 
 
+def browser_deps():
+    sanitize_path()
+    cmd = [python_exe(), 'setup.py', 'browser_deps']
+    printf(*cmd)
+    p = subprocess.Popen(cmd)
+    if p.wait() != 0:
+        raise SystemExit(p.returncode)
+
+
 def test():
     sanitize_path()
     # test_rs is flaky in CI because webengine is flaky in CI
@@ -97,13 +106,15 @@ def main():
     if q == 'bootstrap':
         subprocess.check_call(['rapydscript.exe', '--version'])
         build()
+    elif q == 'browser-deps':
+        browser_deps()
     elif q == 'test':
         test()
     elif q == 'install':
         sw()
     else:
         if len(sys.argv) == 1:
-            raise SystemExit('Usage: win-ci.py sw|build|test')
+            raise SystemExit('Usage: win-ci.py install|bootstrap|browser-deps|test')
         raise SystemExit(f'{sys.argv[-1]!r} is not a valid action')
 
 

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-META" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "EBOOK-META" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .INDENT 0.0
@@ -40,17 +40,17 @@ ebook\-meta ebook_file [options]
 .UNINDENT
 .UNINDENT
 .sp
-Läs/skriv metadata från/till e\-bokfil.
+Läs/skriv metadata från/till e\-boksfiler.
 .sp
-Stödda format för läsning av metadata: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Format som stöds för läsning av metadata: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Stödda format för skrivning av metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+Format som stöds för skrivning av metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Olika filtyper stöder olika sorters metadata. Om du försöker ställa in
-några metadata för en filtyp som inte stöder den kommer metadata
-att ignoreras.
+Olika filtyper stöder olika slags metadata. Om du försöker ange
+metadata för en filtyp som inte stöder dem ignoreras dessa metadata
+utan något meddelande.
 .sp
-När du skickar argument till \fBebook\-meta\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBebook\-meta\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -75,7 +75,7 @@ Ange bokens kategori.
 .INDENT 0.0
 .TP
 .B \-\-comments, \-c
-Ange e\-bokbeskrivning.
+Ange e\-bokens beskrivning.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -90,7 +90,7 @@ Ange publiceringsdatumet.
 .INDENT 0.0
 .TP
 .B \-\-disallow\-rendered\-cover
-För format som EPUB som använder ett \fB\(dq\fPstandardomslag\fB\(dq\fP på den första sidan som renderas, tillåt inte sådana standardomslag
+Tillåt inte standardomslag som skapas genom att återge den första sidan, vilket används i format som EPUB
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -135,12 +135,12 @@ Ange BookID i LRF\-filer
 .INDENT 0.0
 .TP
 .B \-\-publisher, \-p
-Ange e\-bokutgivare.
+Ange e\-bokens utgivare.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-rating, \-r
-Ange betyg. Bör vara ett nummer mellan 1 och 5.
+Ange betyget. Ska vara ett tal mellan 1 och 5.
 .UNINDENT
 .INDENT 0.0
 .TP

@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from qt.core import QCheckBox, QComboBox, QFormLayout, QLabel, QLineEdit, QWidget
 
+from calibre.ai import AICapabilities
 from calibre.ai.anthropic import AnthropicAI
 
 if TYPE_CHECKING:
@@ -42,10 +43,23 @@ class ConfigWidget(QWidget):
         l.addRow(la)
 
         self.api_key_edit = a = QLineEdit(self)
+        a.setClearButtonEnabled(True)
         a.setPlaceholderText(_('An API key is required to use Anthropic AI'))
         l.addRow(_('API &key:'), a)
         if key := pref('api_key'):
             a.setText(decode_secret(key))
+        self.api_url_edit = au = QLineEdit(self)
+        au.setClearButtonEnabled(True)
+        au.setPlaceholderText(_('Optional. Defaults to: {}').format('https://api.anthropic.com/v1'))
+        au.setToolTip(
+            '<p>'
+            + _(
+                'The base URL of an Anthropic compatible API endpoint, for example a gateway or a'
+                ' proxy that implements the Anthropic Messages API. Leave empty to use the official Anthropic API.'
+            )
+        )
+        au.setText(pref('api_url') or '')
+        l.addRow(_('API &URL:'), au)
         self.model_strategy = ms = model_choice_strategy_config_widget(pref('model_choice_strategy', 'medium'), self)
         l.addRow(_('Model &choice strategy:'), ms)
         self.model_choice = mc = QComboBox(self)
@@ -82,9 +96,24 @@ class ConfigWidget(QWidget):
             raise ValueError(f'Could not find the {AnthropicAI.name} plugin')
         return tuple(sorted(backend.get_available_models().values(), key=lambda m: (-m.family_version, primary_sort_key(m.name))))
 
+    def set_model(self, model_id: str, purpose: AICapabilities) -> bool:
+        # Make the specified model be used, returning False if Anthropic
+        # does not offer it. Anthropic AI can only generate text.
+        if not purpose.supports_text_to_text:
+            return False
+        idx = self.model_choice.findData(model_id)
+        if idx < 1:  # index zero is the automatic choice, not a model
+            return False
+        self.model_choice.setCurrentIndex(idx)
+        return True
+
     @property
     def api_key(self) -> str:
         return self.api_key_edit.text().strip()
+
+    @property
+    def api_url(self) -> str:
+        return self.api_url_edit.text().strip()
 
     @property
     def model_choice_strategy(self) -> str:
@@ -106,6 +135,7 @@ class ConfigWidget(QWidget):
     def settings(self) -> dict[str, str | bool]:
         return {
             'api_key': encode_secret(self.api_key),
+            'api_url': self.api_url,
             'model_choice_strategy': self.model_choice_strategy,
             'model': self.model,
             'reasoning_strategy': self.reasoning_strategy,

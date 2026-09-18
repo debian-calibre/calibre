@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfAnnotationCollection.h"
@@ -17,12 +14,9 @@ PdfAnnotationCollection::PdfAnnotationCollection(PdfPage& page)
 {
 }
 
-PdfAnnotation& PdfAnnotationCollection::CreateAnnot(PdfAnnotationType annotType, const Rect& rect, bool rawRect)
+PdfAnnotation& PdfAnnotationCollection::CreateAnnot(PdfAnnotationType annotType, const Rect& rect)
 {
-    Rect actualRect = rect;
-    if (!rawRect)
-        actualRect = PoDoFo::TransformRectPage(actualRect, *m_Page, false);
-
+    Rect actualRect = PoDoFo::TransformRectPage(rect, *m_Page);
     return addAnnotation(PdfAnnotation::Create(*m_Page, annotType, actualRect));
 }
 
@@ -91,38 +85,33 @@ unsigned PdfAnnotationCollection::GetCount() const
 
 PdfAnnotationCollection::iterator PdfAnnotationCollection::begin()
 {
+    initAnnotations();
     return m_Annots.begin();
 }
 
 PdfAnnotationCollection::iterator PdfAnnotationCollection::end()
 {
+    initAnnotations();
     return m_Annots.end();
 }
 
 PdfAnnotationCollection::const_iterator PdfAnnotationCollection::begin() const
 {
+    const_cast<PdfAnnotationCollection&>(*this).initAnnotations();
     return m_Annots.begin();
 }
 
 PdfAnnotationCollection::const_iterator PdfAnnotationCollection::end() const
 {
+    const_cast<PdfAnnotationCollection&>(*this).initAnnotations();
     return m_Annots.end();
-}
-
-PdfAnnotation& PdfAnnotationCollection::createAnnotation(const type_info& typeInfo, const Rect& rect, bool rawRect)
-{
-    Rect actualRect = rect;
-    if (!rawRect)
-        actualRect = PoDoFo::TransformRectPage(actualRect, *m_Page, false);
-
-    return addAnnotation(PdfAnnotation::Create(*m_Page, typeInfo, actualRect));
 }
 
 PdfAnnotation& PdfAnnotationCollection::addAnnotation(unique_ptr<PdfAnnotation>&& annot)
 {
     initAnnotations();
     if (m_annotArray == nullptr)
-        m_annotArray = &m_Page->GetDictionary().AddKey("Annots", PdfArray()).GetArray();
+        m_annotArray = &m_Page->GetDictionary().AddKey("Annots"_n, PdfArray()).GetArray();
 
     (*m_annotMap)[annot->GetObject().GetIndirectReference()] = m_annotArray->GetSize();
     m_annotArray->AddIndirectSafe(annot->GetObject());
@@ -146,13 +135,22 @@ PdfAnnotation& PdfAnnotationCollection::getAnnotAt(unsigned index) const
     if (index >= m_Annots.size())
         PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
 
-    return *m_Annots[index];
+    auto ret = m_Annots[index].get();
+    if (ret == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The exception at index {} is invalid", index);
+
+    return *ret;
 }
 
 PdfAnnotation& PdfAnnotationCollection::getAnnot(const PdfReference& ref) const
 {
     const_cast<PdfAnnotationCollection&>(*this).initAnnotations();
-    return *m_Annots[(*m_annotMap).at(ref)];
+    unsigned index = (*m_annotMap).at(ref);
+    auto ret = m_Annots[index].get();
+    if (ret == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The exception at index {} is invalid", index);
+
+    return *ret;
 }
 
 void PdfAnnotationCollection::initAnnotations()

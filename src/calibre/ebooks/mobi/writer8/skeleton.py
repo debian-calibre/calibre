@@ -114,18 +114,14 @@ def node_from_path(root, path):
     return parent
 
 
-def tostring(raw, **kwargs):
+def tostring(raw, xml_declaration: bool = False, encoding: str = 'UTF-8', with_tail: bool = True) -> bytes:
     """lxml *sometimes* represents non-ascii characters as hex entities in
     attribute values. I can't figure out exactly what circumstances cause it.
     It seems to happen when serializing a part of a larger tree. Since we need
     serialization to be the same when serializing full and partial trees, we
     manually replace all hex entities with their unicode codepoints."""
 
-    xml_declaration = kwargs.pop('xml_declaration', False)
-    encoding = kwargs.pop('encoding', 'UTF-8')
-    kwargs['encoding'] = str
-    kwargs['xml_declaration'] = False
-    ans = etree.tostring(raw, **kwargs)
+    ans = etree.tostring(raw, encoding=str, with_tail=with_tail)
     if xml_declaration:
         ans = f'<?xml version="1.0" encoding="{encoding}"?>\n' + ans
     return re.sub(r'&#x([0-9A-Fa-f]+);', lambda m: my_unichr(int(m.group(1), 16)), ans).encode(encoding)
@@ -244,7 +240,7 @@ class Chunker:
             # for all chunks
             self.skeletons.append(Skeleton(i, item, root, chunks))
 
-        if orig_dumps:
+        if orig_dumps:  # ty: ignore[redundant-condition]
             self.dump(orig_dumps)
 
         # Create the SKEL and Chunk tables

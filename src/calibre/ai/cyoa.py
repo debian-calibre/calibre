@@ -3,42 +3,80 @@
 
 # Backend for an AI driven "Create Your Own Adventure" game. The game has two
 # phases: world generation, where a brief description from the player is
-# expanded by the AI into a full world with playable characters and a win
-# condition, and the turn-by-turn game itself. Every turn the AI narrates what
-# happens, suggests three quick actions, describes the current scene for an
-# image generation AI, updates a running summary of the story and reports
-# whether a new chapter starts or the win condition is met. The AI is sent the
-# story summary and the transcript of only the current chapter, so the context
-# stays bounded no matter how long the game runs. A full log of everything
-# sent to and received from the AI is kept, turn by turn, so games can be
-# rewound and saved/loaded.
+# expanded by the AI into a full world with playable characters, and the
+# turn-by-turn game itself. Every turn the AI narrates what happens, suggests
+# three quick actions of deliberately different kinds, see QuickActionKind,
+# describes the current scene for an image generation AI,
+# reports whether a new chapter starts and sends the changes the passage makes
+# to a running summary of the story, which Python, not the AI, maintains. The
+# AI is sent the story summary and the transcript of only the current chapter,
+# plus the closing passages of the previous one as a bridge while a chapter is
+# young, so the context stays bounded no matter how long the game runs. The AI's
+# response to every turn is kept, turn by turn, so games can be rewound and
+# saved/loaded. What was sent to the AI is not kept, as it is reconstructable
+# from the game state, see STORE_PROMPTS_IN_TURN_RECORDS.
 
 import json
 import textwrap
+from collections.abc import Container, Iterable, Sequence
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import TYPE_CHECKING, Annotated, Any, NamedTuple, Protocol
 
 from calibre.ai import AICapabilities, StructuredOutputResult
-from calibre.ai.structured import Doc, Kind, TypeSpec, instantiate, spec_for_class
-from calibre.utils.localization import _
+from calibre.ai.structured import Doc, Kind, OnText, StreamingStringField, TypeSpec, instantiate, spec_for_class
+from calibre.utils.localization import _, pgettext
 
 if TYPE_CHECKING:
     from unittest.suite import TestSuite
 else:
     TestSuite = object
 
-GAME_SERIALIZATION_VERSION = 1
+# Games serialized by older versions are migrated up to this version on load,
+# see migrated_game(), so bumping it does not orphan existing saves.
+GAME_SERIALIZATION_VERSION = 4
+
+# The id of the CharacterState of the character the player plays. It is fixed
+# so that their entry in the story summary and their portrait can be found
+# without matching on their name, which both the player and the AI can change.
+PROTAGONIST_ID = 'protagonist'
+
+
+def character_id_for_name(name: str) -> str:
+    # A stable id derived from a character's name, for characters that have
+    # none, either because the AI failed to invent one or because they come
+    # from a game saved before ids existed.
+    words = ''.join(c if c.isalnum() else ' ' for c in name.casefold()).split()
+    return '-'.join(words)[:32].rstrip('-') or 'character'
+
+
+def unique_character_id(cid: str, taken: Container[str]) -> str:
+    # An id like cid that is not already in taken, as two characters sharing
+    # an id would be merged into one by updated_characters().
+    if cid not in taken:
+        return cid
+    base, n = cid, 2
+    while cid in taken:
+        cid, n = f'{base}-{n}', n + 1
+    return cid
 
 
 class AIProvider(Protocol):
     # The subset of calibre.customize.AIProviderPlugin used by this module,
     # expressed as a Protocol so that tests and alternative implementations
     # can be substituted for actual plugins.
-    def generate_structured_output(self, prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult: ...
+    def generate_structured_output(
+        self, prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None
+    ) -> StructuredOutputResult: ...
 
 
 # Schema classes describing what the AI must generate {{{
+
+
+# The NPCs generated with the world are all put into the story summary, which
+# is sent to the AI in full on every turn, so their number is capped: the AI
+# introduces more of them as the story needs them, see updated_characters().
+MAX_GENERATED_NPCS = 8
 
 
 class PlayerCharacter(NamedTuple):
@@ -48,46 +86,263 @@ class PlayerCharacter(NamedTuple):
     backstory: Annotated[str, "The character's backstory and motivations"]
 
 
+class NonPlayerCharacter(NamedTuple):
+    doc = Doc('A character who lives in the world and whom the player will meet, but cannot play as')
+    name: str
+    description: Annotated[str, 'Short third person description of the character']
+    backstory: Annotated[str, "The character's backstory and motivations"]
+    relationships: Annotated[str, 'Their place in the world: their relationships with the other characters and, if they have one already, with the protagonist']
+
+
+class WorldOutline(NamedTuple):
+    # What the AI is asked for in the first phase of world creation. The cast
+    # is generated separately, in a second call, so that it matches the world
+    # as the player edited it rather than the world as first generated, see
+    # generate_cast().
+    doc = Doc('A detailed game world generated from a brief description')
+    title: Annotated[str, 'A short, evocative title for this adventure']
+    world_description: Annotated[str, 'Detailed description of the world: its geography, factions, atmosphere, central conflict and stakes']
+
+
+class GeneratedCast(NamedTuple):
+    doc = Doc('The cast of characters of an adventure set in a world')
+    characters: Annotated[
+        tuple[PlayerCharacter, ...],
+        'Between three and five distinct characters or character variants the player can choose to play as, with physical descriptions and brief back stories',
+    ]
+    npcs: Annotated[
+        tuple[NonPlayerCharacter, ...],
+        f'Between three and {MAX_GENERATED_NPCS} other characters who live in this world and whom the player will meet as the story unfolds,'
+        ' whoever the player chooses to play as',
+    ]
+
+
 class GeneratedWorld(NamedTuple):
+    # The world a game is played in: what the AI generated, as the player
+    # edited it. It is not itself generated in one piece, hence the defaulted
+    # cast, see WorldOutline and GeneratedCast.
     doc = Doc('A detailed game world generated from a brief description')
     title: Annotated[str, 'A short, evocative title for this adventure']
     world_description: Annotated[str, 'Detailed description of the world: its geography, factions, atmosphere, central conflict and stakes']
     characters: Annotated[
         tuple[PlayerCharacter, ...],
         'Between three and five distinct characters or character variants the player can choose to play as, with physical descriptions and brief back stories',
-    ]
-    win_condition: Annotated[str, 'The single concrete goal the player must achieve to win the adventure']
+    ] = ()
+    # Trailing and defaulted so that worlds and games serialized before the
+    # cast was generated separately still deserialize, see instantiate().
+    npcs: Annotated[tuple[NonPlayerCharacter, ...], 'Other characters who live in this world and whom the player will meet as the story unfolds'] = ()
 
 
 class CharacterState(NamedTuple):
     doc = Doc('The current state of a significant character in the story')
+    # Never generated directly by the AI: every turn it sends a
+    # CharacterDelta for each character it changes and updated_characters()
+    # merges those into the cast of the previous summary.
     name: str
-    description: Annotated[str, 'Who this character is and their current status']
-    relationships: Annotated[str, 'Their relationships with the player and the other characters']
+    description: Annotated[str, 'The durable physical appearance and nature of the character, doubling as the prompt used to draw them']
+    backstory: Annotated[str, "The character's brief backstory: who they are and how they came to be part of the story"]
+    relationships: Annotated[str, 'Their relationships with the player and the other characters, and how those have changed']
+    # Trailing and defaulted so that games serialized before these fields
+    # existed still deserialize, see instantiate().
+    current_state: Annotated[
+        str,
+        'Everything that is true of this character only right now: where they are, what they are doing,'
+        ' their physical condition and any injuries, their mood, what they are carrying and what they intend to do next',
+    ] = ''
+    id: Annotated[
+        str,
+        "A short, permanent, lowercase identifier for this character, such as 'marlo'."
+        ' It is the identity of the character, not their name, so it survives them being renamed.',
+    ] = ''
+
+
+# The summary is sent to the AI in full on every turn, so the list of major
+# events has to be bounded or it grows without limit as a game goes on. The AI
+# is asked to condense the older events into single lines as the list
+# approaches this cap, see SummaryUpdate.consolidated_major_events, and the
+# oldest are dropped if it does not.
+MAX_MAJOR_EVENTS = 30
 
 
 class StorySummary(NamedTuple):
     doc = Doc('A summary of the story so far, serving as memory for continuing it')
+    # Maintained by Python, not by the AI: every turn the AI sends only a
+    # SummaryUpdate and updated_summary() merges it into the previous summary.
     world: Annotated[str, 'Description of the world and its current state']
-    major_events: Annotated[tuple[str, ...], 'The major events of the story so far, in chronological order']
-    characters: Annotated[tuple[CharacterState, ...], 'All significant characters in the story and their relationships']
+    major_events: Annotated[tuple[str, ...], f'The major events of the story so far, in chronological order, at most {MAX_MAJOR_EVENTS} of them']
+    characters: Annotated[
+        tuple[CharacterState, ...],
+        'All significant named characters in the story, each with a description, brief backstory, their relationships and their current state',
+    ]
     current_situation: Annotated[str, 'Where the player currently is and what is happening']
     upcoming_events: Annotated[tuple[str, ...], 'Foreshadowed or planned future events and unresolved plot threads']
 
 
+class CharacterDelta(NamedTuple):
+    doc = Doc(
+        'A change to one character of the story summary. Only what changed this turn need be filled in:'
+        ' every field left empty keeps the value the character already has in the summary.'
+    )
+    id: Annotated[
+        str,
+        "The short, permanent, lowercase identifier of the character this updates, such as 'marlo'."
+        ' It is the identity of the character, not their name: reproduce the id from the summary verbatim,'
+        ' even when you rename the character or reveal their true identity.'
+        ' Invent a new one, based on their name, only for a character you are adding to the summary for the first time.',
+    ]
+    current_state: Annotated[
+        str,
+        'Everything that is true of this character only right now: where they are, what they are doing,'
+        ' their physical condition and any injuries, their mood, what they are carrying and what they intend to do next.'
+        ' Always fill this in: it replaces whatever the summary currently says about them.',
+    ]
+    name: Annotated[
+        str,
+        'The name of the character. Fill this in only when you are adding them to the summary or the story renames them;'
+        ' leave it empty to keep the name they already have.',
+    ] = ''
+    description: Annotated[
+        str,
+        'The physical appearance and nature of the character: their looks, age, distinguishing features,'
+        ' the kind of clothes they wear and their temperament. This doubles as the prompt used to draw them.'
+        ' Leave it empty unless you are adding them to the summary, or their appearance or nature has permanently'
+        ' changed, for example a new scar, the loss of a limb or aging, in which case give the full new description.'
+        ' Never record events, mood, injuries, location or plot developments here, they belong in current_state.',
+    ] = ''
+    backstory: Annotated[
+        str,
+        "The character's brief backstory: who they are and how they came to be part of the story."
+        ' Leave it empty unless you are adding them to the summary, or the story has just revealed something new'
+        ' about their past, in which case give the full extended backstory.',
+    ] = ''
+    relationships: Annotated[
+        str,
+        'How this character stands with the protagonist and the other characters.'
+        ' Leave it empty unless their relationships changed this turn, in which case give them in full.',
+    ] = ''
+
+
+class SummaryUpdate(NamedTuple):
+    doc = Doc('The changes a passage of the story makes to the running summary of the story')
+    current_situation: Annotated[str, 'Where the protagonist is and what is happening as this passage ends. This replaces the previous situation.']
+    character_updates: Annotated[
+        tuple[CharacterDelta, ...],
+        'One entry for every character this passage changes and every new named character it introduces.'
+        ' Leave out the characters it does not touch: they keep the state they already have in the summary.',
+    ]
+    new_major_events: Annotated[
+        tuple[str, ...],
+        'The events of this passage that matter to the rest of the story, one short line each, in chronological order.'
+        ' They are appended to the major events already in the summary, so never repeat one that is already there.'
+        ' Leave this empty when nothing of lasting importance happened.',
+    ]
+    upcoming_events: Annotated[
+        tuple[str, ...] | None,
+        'The foreshadowed or planned future events and unresolved plot threads of the story.'
+        ' Send null, as most passages must, unless this passage opens a new thread or resolves one the summary already holds.'
+        ' When one does change, this field replaces the previous list rather than adding to it: give the complete list of threads'
+        ' as it now stands, repeating every one that is still open, or an empty list when this passage resolves the last of them.',
+    ] = None
+    world: Annotated[
+        str,
+        'The description of the world. Leave it empty unless the state of the world itself has changed, in which case give the full new description.',
+    ] = ''
+    consolidated_major_events: Annotated[
+        tuple[str, ...],
+        'A condensed rewrite of the major events that were already in the summary, replacing them.'
+        f' Leave this empty except when the summary is nearing its limit of {MAX_MAJOR_EVENTS} major events:'
+        ' then merge the older ones into fewer single lines, each covering several events,'
+        ' keeping every development the rest of the story still depends on.',
+    ] = ()
+
+
+# Asking the AI for three "short, distinct actions the player could plausibly
+# take next" reliably gets three variations on the single obvious move. Asking
+# for one action of each kind instead costs nothing and gets three choices that
+# actually differ, so every action the AI suggests comes tagged with its kind,
+# taken from this fixed vocabulary.
+class QuickActionKind(Enum):
+    doc = Doc(
+        'The kind of approach a suggested action takes. The actions offered to the player must differ in kind,'
+        ' so that they are genuinely different choices rather than variations on a single idea.'
+    )
+    cautious = 'cautious'
+    bold = 'bold'
+    social = 'social'
+    investigate = 'investigate'
+    # The catch-all for an action that fits none of the above. Also what an
+    # action of a game saved before the kinds existed becomes, see
+    # migrated_game_v3_to_v4().
+    other = 'other'
+
+
+# What each kind of action means, sent to the AI as part of the instructions
+# so that the vocabulary is defined in exactly one place. Deliberately not
+# translated, as AI models work best with English instructions.
+QUICK_ACTION_KIND_DESCRIPTIONS: dict[QuickActionKind, str] = {
+    QuickActionKind.cautious: 'hold back, defend, hide, retreat, prepare or take the careful option',
+    QuickActionKind.bold: 'act directly and decisively: confront someone, force the issue or take the physical risk',
+    QuickActionKind.social: 'engage another character: persuade, deceive, plead, bargain, provoke or simply ask',
+    QuickActionKind.investigate: 'find something out: look closer, search, follow, eavesdrop or examine',
+    QuickActionKind.other: 'an action that fits none of the other kinds',
+}
+
+# The kinds of action the AI is asked for, one per entry, in this order. Each
+# entry the AI may satisfy with any one of its kinds, so that a scene with
+# nobody to talk to can still offer a third action worth taking.
+REQUESTED_QUICK_ACTION_KINDS: tuple[tuple[QuickActionKind, ...], ...] = (
+    (QuickActionKind.cautious,),
+    (QuickActionKind.bold,),
+    (QuickActionKind.social, QuickActionKind.investigate),
+)
+
+
+def quick_action_kind_name(kind: QuickActionKind) -> str:
+    # A short, translated name for the kind of an action, shown to the player
+    # next to the action. Empty for the catch-all kind, which says nothing
+    # worth taking up space in the UI for.
+    return {
+        QuickActionKind.cautious: _('Cautious'),
+        QuickActionKind.bold: pgettext('CYOA quick action kind', 'Bold'),
+        QuickActionKind.social: _('Social'),
+        QuickActionKind.investigate: _('Investigate'),
+    }.get(kind, '')
+
+
+class QuickAction(NamedTuple):
+    doc = Doc('One action suggested to the player, with the kind of approach it takes')
+    text: Annotated[str, 'The action itself, as a short imperative phrase, such as "Follow the stranger into the alley"']
+    # Trailing and defaulted so that a response that omits it, and a game
+    # serialized before the kinds existed, are still usable.
+    kind: Annotated[QuickActionKind, 'Which kind of approach this action takes'] = QuickActionKind.other
+
+
 class StoryTurn(NamedTuple):
     doc = Doc('One turn of the adventure')
-    narrative: Annotated[str, 'The narrative text describing what happens in this turn']
-    quick_actions: Annotated[tuple[str, ...], 'Exactly three short, distinct actions the player could plausibly take next']
+    # How the passage must read: its length, point of view, tense, tone and
+    # formatting, is stated once, in the instructions, see prose_contract().
+    # Restating any of it here would put it in the JSON schema as well, where
+    # it could drift out of step with the instructions sent alongside it.
+    narrative: Annotated[
+        str,
+        'The next passage of the novel, continuing seamlessly from the prose written so far without repeating any of it,'
+        ' written to the contract for the prose given in the instructions',
+    ]
+    quick_actions: Annotated[
+        tuple[QuickAction, ...],
+        'Exactly three actions the player could plausibly take next, one of each kind requested in the instructions:'
+        ' a cautious one, a bold one and one that engages another character or investigates something.'
+        ' They must be three genuinely different approaches to the situation, not three phrasings of the obvious next step.',
+    ]
     scene_description: Annotated[
         str,
         'A self-contained visual description of the current scene,'
-        ' suitable as a prompt for an image generation AI, that does not rely on knowledge of the story',
+        ' suitable as a prompt for an image generation AI, that does not rely on knowledge of the story.'
+        ' Describe the current physical state of the characters, their clothing and emotional state.',
     ]
-    updated_summary: Annotated[StorySummary, 'The story summary updated to include the events of this turn']
+    summary_update: Annotated[SummaryUpdate, 'The changes this passage makes to the running summary of the story']
     starts_new_chapter: Annotated[bool, 'True only when this turn begins a major new phase of the story, suitable as the start of a new chapter']
     chapter_title: Annotated[str | None, 'A title for the new chapter when starts_new_chapter is true, null otherwise']
-    win_condition_met: Annotated[bool, 'True once the player has achieved the win condition']
 
 
 # }}}
@@ -96,40 +351,143 @@ class StoryTurn(NamedTuple):
 # Game state and log of AI exchanges {{{
 
 
+# Set this to True to record the exact instructions and prompt sent to the AI
+# in every turn record. Both are reconstructable from the game state via
+# turn_instructions() and turn_prompt(), and the prompt embeds the transcript
+# of the chapter so far, so storing them makes a saved game grow
+# quadratically with the length of a chapter. For debugging only.
+STORE_PROMPTS_IN_TURN_RECORDS = False
+
+
 class TurnRecord(NamedTuple):
-    # The full log of a single exchange with the AI, sufficient to replay or
-    # rewind the game and to audit exactly what was sent and received.
+    # The log of a single exchange with the AI, sufficient to replay or rewind
+    # the game and to audit what the AI returned. What was sent to the AI is
+    # not recorded, see STORE_PROMPTS_IN_TURN_RECORDS.
     player_input: str  # what the player typed or chose, empty for the opening turn
-    instructions: str  # the system prompt sent to the AI
-    prompt: str  # the full user prompt sent to the AI
     raw_response: str  # the raw JSON text returned by the AI
     turn: StoryTurn  # the parsed response
+    # The story summary as it stands after this turn: the summary of the
+    # previous turn with the turn's SummaryUpdate merged into it. Stored
+    # rather than recomputed by replaying the updates so that rewinding a
+    # game stays a matter of dropping turn records.
+    summary: StorySummary
     chapter: int  # zero based chapter number this turn belongs to
     cost: float = 0
     currency: str = ''
     provider: str = ''
     model: str = ''
+    # The system prompt and the user prompt sent to the AI, empty unless
+    # STORE_PROMPTS_IN_TURN_RECORDS was on when the turn was played.
+    instructions: str = ''
+    prompt: str = ''
+
+
+# The state the non player characters generated with the world start in: they
+# exist in the world but the story has not reached them yet.
+NPC_NOT_YET_MET = 'Has not yet appeared in the story.'
+
+
+def npc_character_ids(npcs: Sequence[NonPlayerCharacter]) -> tuple[str, ...]:
+    # The ids the non player characters generated with a world are given in
+    # the story summary of the game played in it, see initial_summary(). The
+    # portraits generated for them while the world was being created are
+    # stored under these ids, so this is what maps the two together.
+    ans: list[str] = []
+    taken = {PROTAGONIST_ID}
+    for npc in npcs:
+        cid = unique_character_id(character_id_for_name(npc.name), taken)
+        taken.add(cid)
+        ans.append(cid)
+    return tuple(ans)
 
 
 def initial_summary(world: GeneratedWorld, character: PlayerCharacter) -> StorySummary:
+    # The cast the story starts with: the character the player chose and the
+    # non player characters generated with the world, which is what tells the
+    # AI who is in this world from the very first turn.
+    characters = [CharacterState(name=character.name, description=character.description, backstory=character.backstory, relationships='', id=PROTAGONIST_ID)]
+    for npc, cid in zip(world.npcs, npc_character_ids(world.npcs)):
+        characters.append(
+            CharacterState(
+                name=npc.name,
+                description=npc.description,
+                backstory=npc.backstory,
+                relationships=npc.relationships,
+                # So that the AI knows these are people the world holds, not
+                # people already in the scene the story opens on.
+                current_state=NPC_NOT_YET_MET,
+                id=cid,
+            )
+        )
     return StorySummary(
         world=world.world_description,
         major_events=(),
-        characters=(CharacterState(name=character.name, description=character.description, relationships=''),),
+        characters=tuple(characters),
         current_situation='The adventure has not yet begun.',
         upcoming_events=(),
     )
+
+
+# The prose sent to the AI is that of the current chapter, which collapses to
+# a single passage the moment the AI starts a new chapter, taking the ground
+# out from under the instruction to continue seamlessly from where the
+# chapter's prose ends. So the closing passages of the previous chapter are
+# sent as well, as a bridge, until the new chapter holds this many turns of
+# its own, see GameState.prose_context.
+MIN_PROSE_CONTEXT_TURNS = 3
+
+
+class StoryStyle(NamedTuple):
+    # The style choices for a game: how its pictures look and how its prose
+    # reads, each the key of an entry in the matching table of styles, see
+    # ART_STYLES, PACES, TONES and NARRATION_STYLES. They are bundled only to
+    # be passed around as one; a game stores them as individual fields, see
+    # GameState. The empty string means the first entry of the table, which is
+    # the default, so a game saved before a style existed keeps the prose it
+    # was written with, see style_for_key().
+    art_style: str = ''
+    pace: str = ''
+    tone: str = ''
+    narration: str = ''
 
 
 @dataclass
 class GameState:
     # The complete state of a game. Everything except the turn log is
     # derived, which keeps rewinding trivial: dropping turn records restores
-    # the summary, chapter position and victory status automatically.
+    # the summary and chapter position automatically.
     brief: str  # the player's original brief description of the world
     world: GeneratedWorld
-    character: PlayerCharacter  # the character the player chose
+    # The index in world.characters of the character the player chose. Only
+    # the index is stored, so that there is a single copy of the played
+    # character to edit, see the character property.
+    character_index: int
     turns: list[TurnRecord] = field(default_factory=list)
+    # The style of the game, stored as individual fields so that adding one
+    # neither changes the shape of an already serialized game nor needs a
+    # migration: instantiate() fills in a missing field from its default, see
+    # StoryStyle for what the keys and the empty string mean.
+    art_style: str = ''
+    pace: str = ''
+    tone: str = ''
+    narration: str = ''
+
+    @property
+    def style(self) -> StoryStyle:
+        return StoryStyle(art_style=self.art_style, pace=self.pace, tone=self.tone, narration=self.narration)
+
+    @style.setter
+    def style(self, style: StoryStyle) -> None:
+        # Changing the style mid-game affects only the turns played from now
+        # on: every turn's instructions are built from the state as it stands
+        # when the turn is played, see turn_instructions().
+        self.art_style, self.pace, self.tone, self.narration = style
+
+    @property
+    def character(self) -> PlayerCharacter:
+        # Always in range: deserialize_game() and start_game() reject an
+        # out of range index and nothing removes characters from a world.
+        return self.world.characters[self.character_index]
 
     @property
     def current_chapter(self) -> int:
@@ -141,14 +499,19 @@ class GameState:
         return tuple(t for t in self.turns if t.chapter == c)
 
     @property
-    def current_summary(self) -> StorySummary:
-        return self.turns[-1].turn.updated_summary if self.turns else initial_summary(self.world, self.character)
+    def prose_context(self) -> tuple[tuple[TurnRecord, ...], tuple[TurnRecord, ...]]:
+        # The prose to send to the AI, as (bridge, current chapter): the turns
+        # of the current chapter, and the turns of earlier chapters needed to
+        # bring the prose in context up to MIN_PROSE_CONTEXT_TURNS turns,
+        # which is empty once the current chapter is long enough to stand on
+        # its own. Only the summary carries the story before that.
+        current = self.current_chapter_turns
+        bridge = tuple(t for t in self.turns[-MIN_PROSE_CONTEXT_TURNS:] if t.chapter != self.current_chapter)
+        return bridge, current
 
     @property
-    def victory_achieved(self) -> bool:
-        # Latched: once the win condition is met it stays met, even if the
-        # player keeps playing and the AI stops reporting it.
-        return any(t.turn.win_condition_met for t in self.turns)
+    def current_summary(self) -> StorySummary:
+        return self.turns[-1].summary if self.turns else initial_summary(self.world, self.character)
 
     @property
     def chapter_titles(self) -> tuple[str, ...]:
@@ -159,13 +522,19 @@ class GameState:
         return tuple(titles)
 
 
-def start_game(brief: str, world: GeneratedWorld, character: PlayerCharacter) -> GameState:
-    return GameState(brief=brief, world=world, character=character)
+def start_game(brief: str, world: GeneratedWorld, character_index: int = 0, style: StoryStyle = StoryStyle()) -> GameState:
+    # character_index is the index in world.characters of the character the
+    # player chose to play as.
+    if not 0 <= character_index < len(world.characters):
+        raise ValueError(f'{character_index} is not the index of a character in a world with {len(world.characters)} characters')
+    ans = GameState(brief=brief, world=world, character_index=character_index)
+    ans.style = style
+    return ans
 
 
 def rewind(state: GameState, num_of_turns: int = 1) -> None:
-    # Undo the last num_of_turns turns. The summary, current chapter and
-    # victory status are all derived from the remaining turn records.
+    # Undo the last num_of_turns turns. The summary and current chapter are
+    # derived from the remaining turn records.
     if not 0 < num_of_turns <= len(state.turns):
         raise ValueError(f'Cannot rewind {num_of_turns} turns in a game with {len(state.turns)} turns')
     del state.turns[-num_of_turns:]
@@ -197,13 +566,295 @@ def serialize_game(state: GameState) -> str:
     return json.dumps({'version': GAME_SERIALIZATION_VERSION, 'game': as_jsonable(state, spec_for_class(GameState))}, ensure_ascii=False)
 
 
+def migrated_game_v1_to_v2(game: dict[str, Any]) -> dict[str, Any]:
+    # Version 1 stored a copy of the played character rather than its index in
+    # world.characters, had no stable ids for the characters of the story
+    # summary, and recorded the instructions and prompt of every turn, which
+    # are reconstructable from the state, see STORE_PROMPTS_IN_TURN_RECORDS.
+    game = dict(game)
+    world = dict(game.get('world') or {})
+    characters = list(world.get('characters') or ())
+    played = game.pop('character', None)
+    protagonist, idx = '', -1
+    if isinstance(played, dict):
+        protagonist = str(played.get('name') or '')
+        try:
+            idx = characters.index(played)
+        except ValueError:
+            idx = next((i for i, c in enumerate(characters) if isinstance(c, dict) and c.get('name') == protagonist), -1)
+        if idx < 0 and protagonist:
+            # the played character was edited until it no longer matched any
+            # character of the world, so add them back rather than lose them
+            characters.append(played)
+            idx = len(characters) - 1
+    world['characters'] = characters
+    game['world'] = world
+    game['character_index'] = max(0, idx)
+    turns: list[Any] = []
+    for record in game.get('turns') or ():
+        if isinstance(record, dict):
+            record = {k: v for k, v in record.items() if k not in ('instructions', 'prompt')}
+            turn = dict(record.get('turn') or {})
+            summary = dict(turn.get('updated_summary') or {})
+            summary['characters'] = [migrated_character_v1_to_v2(c, protagonist) for c in summary.get('characters') or ()]
+            turn['updated_summary'] = summary
+            record['turn'] = turn
+        turns.append(record)
+    game['turns'] = turns
+    return game
+
+
+def migrated_character_v1_to_v2(character: Any, protagonist: str) -> Any:  # noqa: ANN401
+    if not isinstance(character, dict) or character.get('id'):
+        return character
+    name = str(character.get('name') or '')
+    cid = PROTAGONIST_ID if name.strip() and name.strip().casefold() == protagonist.strip().casefold() else character_id_for_name(name)
+    return dict(character, id=cid)
+
+
+def migrated_game_v2_to_v3(game: dict[str, Any]) -> dict[str, Any]:
+    # Version 2 had the AI return the whole story summary every turn, stored
+    # as updated_summary inside the turn. It now returns only what changed,
+    # which Python merges into the summary of the previous turn, so the
+    # summary moves onto the turn record and the turn keeps the update the AI
+    # sent. There is no record of what the AI actually changed in an old game,
+    # so the update is synthesized as one that replaces everything, which
+    # merges to exactly the summary that was stored.
+    game = dict(game)
+    turns: list[Any] = []
+    for record in game.get('turns') or ():
+        if isinstance(record, dict):
+            record = dict(record)
+            turn = dict(record.get('turn') or {})
+            summary = dict(turn.pop('updated_summary', None) or {})
+            record['summary'] = summary
+            turn['summary_update'] = {
+                'world': summary.get('world') or '',
+                'current_situation': summary.get('current_situation') or '',
+                'character_updates': [
+                    {
+                        'id': c.get('id') or '',
+                        'name': c.get('name') or '',
+                        'description': c.get('description') or '',
+                        'backstory': c.get('backstory') or '',
+                        'relationships': c.get('relationships') or '',
+                        'current_state': c.get('current_state') or '',
+                    }
+                    for c in summary.get('characters') or ()
+                    if isinstance(c, dict)
+                ],
+                'new_major_events': [],
+                'consolidated_major_events': list(summary.get('major_events') or ()),
+                'upcoming_events': list(summary.get('upcoming_events') or ()),
+            }
+            record['turn'] = turn
+        turns.append(record)
+    game['turns'] = turns
+    return game
+
+
+def migrated_game_v3_to_v4(game: dict[str, Any]) -> dict[str, Any]:
+    # Version 3 had the AI return the quick actions as bare strings. Every
+    # action now comes with the kind of approach it takes, chosen from a fixed
+    # vocabulary, so that the three actions offered differ in kind instead of
+    # being three variations on the obvious. Nothing records what kind the
+    # actions of an old game were, so they all become the catch-all kind,
+    # which the UI shows no label for.
+    game = dict(game)
+    turns: list[Any] = []
+    for record in game.get('turns') or ():
+        if isinstance(record, dict):
+            record = dict(record)
+            turn = dict(record.get('turn') or {})
+            turn['quick_actions'] = [{'text': a, 'kind': QuickActionKind.other.value} if isinstance(a, str) else a for a in turn.get('quick_actions') or ()]
+            record['turn'] = turn
+        turns.append(record)
+    game['turns'] = turns
+    return game
+
+
+def migrated_game(game: dict[str, Any], version: int) -> dict[str, Any]:
+    # Bring the JSON of a game serialized by an older version of calibre up to
+    # GAME_SERIALIZATION_VERSION, so that changing the format does not orphan
+    # existing saves. Keys that no longer exist are ignored by instantiate()
+    # and missing keys with a default are filled in by it, so only renamed and
+    # newly required fields need handling here.
+    if version < 2:
+        game = migrated_game_v1_to_v2(game)
+    if version < 3:
+        game = migrated_game_v2_to_v3(game)
+    if version < 4:
+        game = migrated_game_v3_to_v4(game)
+    return game
+
+
 def deserialize_game(raw: str) -> GameState:
     data = json.loads(raw)
-    if not isinstance(data, dict) or data.get('version') != GAME_SERIALIZATION_VERSION:
+    if not isinstance(data, dict) or not isinstance(data.get('game'), dict):
         raise ValueError('Not a valid serialized CYOA game')
-    ans = instantiate(data['game'], spec_for_class(GameState), GameState.__name__)
+    version = data.get('version')
+    if not isinstance(version, int) or version < 1:
+        raise ValueError(f'Not a valid serialized CYOA game: {version!r} is not a serialization version')
+    if version > GAME_SERIALIZATION_VERSION:
+        raise ValueError(f'This game was saved in the version {version} format, which this version of calibre cannot read')
+    ans = instantiate(migrated_game(data['game'], version), spec_for_class(GameState), GameState.__name__)
     assert isinstance(ans, GameState)
+    if not 0 <= ans.character_index < len(ans.world.characters):
+        raise ValueError(f'{ans.character_index} is not the index of a character in a world with {len(ans.world.characters)} characters')
     return ans
+
+
+# }}}
+
+
+# Styles for the generated images and prose {{{
+# Every style is a table of entries with a stable key, a translated name for
+# the UI and the English text added to the prompt for it, and every table has
+# its default as its first entry, which is what an unknown or empty key
+# resolves to, see style_for_key(). Adding an entry to a table is therefore
+# all it takes to offer the player another choice.
+
+
+class ArtStyle(NamedTuple):
+    key: str  # stable key used in settings and serialized data
+    name: str  # human readable, translated name for display in the UI
+    # What to add to image generation prompts for this style, deliberately
+    # not translated as AI models work best with English instructions. Empty
+    # for the default style, which leaves the choice to the AI.
+    prompt: str
+
+
+ART_STYLES: tuple[ArtStyle, ...] = (
+    ArtStyle('default', _('Let the AI decide'), ''),
+    ArtStyle('anime', _('Anime'), 'Render in a vibrant anime style: clean line art, cel shading, expressive features.'),
+    ArtStyle('photorealistic', _('Photo realistic'), 'Render as a photorealistic photograph: natural lighting, shallow depth of field, fine detail.'),
+    ArtStyle('digital-painting', _('Fantasy painting'), 'Render as an epic fantasy digital painting: rich colors, dramatic lighting, painterly brushwork.'),
+    ArtStyle('comic', _('Comic book'), 'Render in a comic book style: bold ink outlines, flat colors, dynamic halftone shading.'),
+    ArtStyle('watercolor', _('Watercolor'), 'Render as a delicate watercolor painting: soft washes of color, visible paper texture, loose expressive strokes.'),
+    ArtStyle('pixel-art', _('Pixel art'), 'Render as detailed retro pixel art: limited color palette, crisp pixels, 16-bit video game aesthetic.'),
+    ArtStyle('noir', _('Film noir'), 'Render in a film noir style: moody high contrast black and white, deep shadows, dramatic lighting.'),
+)
+
+
+class Pace(NamedTuple):
+    key: str
+    name: str
+    # How much room one passage of the story gets, as an instruction to the
+    # AI. Never empty: the length of a passage is always specified, and the
+    # first entry is the length the game was written to before the player
+    # could choose.
+    prompt: str
+
+
+PACES: tuple[Pace, ...] = (
+    Pace(
+        'long',
+        _('Long (about 400-800 words)'),
+        'Write each passage as rich long form fiction of several substantial paragraphs, typically 400-800 words,'
+        ' the way a skilled novelist would: let scenes breathe and unfold rather than summarizing events.',
+    ),
+    Pace(
+        'medium',
+        _('Medium (about 250-450 words)'),
+        'Write each passage as a few brisk paragraphs, typically 250-450 words: room enough for the scene to land,'
+        ' but keep the story moving and leave out what the reader can infer.',
+    ),
+    Pace(
+        'short',
+        _('Short (about 120-250 words)'),
+        'Write each passage as a tight, fast moving scene of two or three lean paragraphs, typically 120-250 words,'
+        ' in the manner of pulp fiction: cut straight to what happens and stop as soon as it has happened.',
+    ),
+)
+
+
+class Tone(NamedTuple):
+    key: str
+    name: str
+    # The register the story is told in. Empty for the default tone, which
+    # leaves the choice to the AI, which then follows the world description.
+    prompt: str
+
+
+TONES: tuple[Tone, ...] = (
+    Tone('default', _('Let the AI decide'), ''),
+    Tone(
+        'grimdark',
+        _('Grimdark'),
+        'Tell the story in a grimdark register: a harsh, morally grey world where every victory costs something,'
+        ' hope is scarce and violence has weight. Do not flinch from bleakness, but do not wallow in it either.',
+    ),
+    Tone(
+        'heroic',
+        _('Heroic'),
+        'Tell the story in a heroic register: courage, loyalty and sacrifice matter, the stakes are grand'
+        ' and the prose has a sweep to it, even when the protagonist loses.',
+    ),
+    Tone(
+        'comedic',
+        _('Comedic'),
+        'Tell the story in a comedic register: wry, quick witted and absurd, with characters whose plans go amusingly wrong.'
+        ' Keep the humor in the situations and the dialogue rather than in asides to the reader.',
+    ),
+    Tone(
+        'cozy',
+        _('Cozy'),
+        'Tell the story in a cozy register: low stakes, warm company, small pleasures and gentle problems solved with kindness.'
+        ' Trouble, when it comes, stays mild and is never cruel.',
+    ),
+    Tone(
+        'romance',
+        _('Romance'),
+        'Tell the story in a romantic register: attraction, longing and the shifting charge between characters drive it,'
+        ' and the emotional stakes of a scene are drawn as clearly as its practical ones.',
+    ),
+)
+
+
+class Narration(NamedTuple):
+    key: str
+    name: str
+    # The point of view and tense, phrased to follow "Write it", so that the
+    # prose contract can state it in one clause, see prose_contract().
+    prompt: str
+
+
+NARRATION_STYLES: tuple[Narration, ...] = (
+    Narration('second-present', _('Second person, present tense'), 'in second person present tense, addressing the reader as "you"'),
+    Narration('third-past', _('Third person, past tense'), 'in third person past tense, referring to the protagonist by name'),
+    Narration('first-past', _('First person, past tense'), "in first person past tense, in the protagonist's own voice"),
+    Narration('third-present', _('Third person, present tense'), 'in third person present tense, referring to the protagonist by name'),
+)
+
+
+# The tables have no common base class, only the same shape, so the lookup is
+# generic over them rather than repeated once per table.
+def style_for_key[StyleT: (ArtStyle, Pace, Tone, Narration)](styles: Sequence[StyleT], key: str) -> StyleT:
+    # The entry of styles with the specified key, falling back to the default,
+    # which is the first entry, for the empty string and for a key from a
+    # newer version of calibre that no longer exists.
+    for s in styles:
+        if s.key == key:
+            return s
+    return styles[0]
+
+
+def character_portrait_prompt(character: PlayerCharacter, style_key: str = '', world_description: str = '') -> str:
+    parts = [f'A portrait of {character.name}, a character in an adventure story.', character.description]
+    if world_description:
+        parts.append(f'The world they inhabit: {world_description}')
+    if style := style_for_key(ART_STYLES, style_key).prompt:
+        parts.append(style)
+    parts.append('Do not include any text in the image you generate.')
+    return '\n'.join(parts)
+
+
+def scene_image_prompt(scene_description: str, style_key: str = '') -> str:
+    parts = [scene_description]
+    if style := style_for_key(ART_STYLES, style_key).prompt:
+        parts.append(style)
+    parts.append('Do not include any text in the image you generate.')
+    return '\n'.join(parts)
 
 
 # }}}
@@ -212,18 +863,26 @@ def deserialize_game(raw: str) -> GameState:
 # Prompt construction {{{
 # Deliberately not translated as AI models work best with English instructions.
 
+
+def markdown_instructions(what: str) -> str:
+    # The Markdown rules for the text the AI writes. They are the same for
+    # world generation and for the prose of every turn, so they are stated in
+    # one place rather than restated, with small differences, in each.
+    return (
+        f'Format {what} using Markdown: use **bold** for emphasis and important moments,'
+        ' *italics* for atmosphere and inner thoughts, and blank lines to separate paragraphs.'
+        ' Do not use headers or bullet lists.'
+    )
+
+
+DESIGNER_ROLE = 'You are a creative designer of interactive "choose your own adventure" fiction.'
+
 WORLD_GENERATION_INSTRUCTIONS = (
-    'You are a creative designer of interactive "choose your own adventure" fiction.'
-    ' Given a brief description of a world, flesh it out into a rich, internally consistent game world,'
+    DESIGNER_ROLE + ' Given a brief description of a world, flesh it out into a rich, internally consistent game world,'
     ' inventing concrete details: places, factions, conflicts and atmosphere.'
-    ' Create between three and five distinct playable characters, each with a different perspective'
-    " on the world's central conflict, and a single concrete, achievable win condition for the adventure."
-    ' Include physical descriptions and a little back story for the characters.'
-    ' If the world description mentions a central character, then have the playable characters all be'
-    ' variants of that person with different descriptions and back stories.'
-    ' Format all descriptive text fields (world_description, character descriptions, backstories, win_condition)'
-    ' using Markdown: use **bold** for emphasis, *italics* for atmosphere, and newlines to separate paragraphs.'
-    ' Do not use headers or bullet lists in these fields.'
+    ' Write about the world itself, not about any of the people in it: the characters of the story'
+    ' are created separately, once the player is happy with the world.'
+    ' ' + markdown_instructions('the world description')
 )
 
 
@@ -231,70 +890,204 @@ def world_generation_prompt(brief: str) -> str:
     return f'Create the world for an adventure game based on this description:\n\n{brief}'
 
 
+CAST_GENERATION_INSTRUCTIONS = (
+    DESIGNER_ROLE + ' Given the world of an adventure game, invent the cast of characters for it.'
+    ' Create between three and five distinct playable characters, each with a different perspective'
+    " on the world's central conflict."
+    ' If the world description mentions a central character, then have the playable characters all be'
+    ' variants of that person with different descriptions and back stories.'
+    f' Create between three and {MAX_GENERATED_NPCS} other characters who live in this world and whom the player'
+    ' will meet as the story unfolds: allies, rivals, authorities, and ordinary people caught up in the conflict.'
+    ' These must work as characters the story can use whichever of the playable characters the player chooses,'
+    ' so do not make any of them a duplicate of a playable character.'
+    ' Include physical descriptions and a little back story for every character.'
+    " Make each character's physical description detailed enough to be used, as a prompt for"
+    ' an image generation AI: cover their appearance, age and distinguishing features without'
+    ' relying on the rest of the world description. Describe the kind of clothes the character'
+    ' typically wears but not an individual outfit, let the image generation AI choose that.'
+    ' ' + markdown_instructions('all descriptive text fields (character descriptions, backstories and relationships)')
+)
+
+
+def cast_generation_prompt(brief: str, world: GeneratedWorld) -> str:
+    # The world as the player edited it, which is what the cast must fit,
+    # with the brief they started from for the flavour it carries.
+    return (
+        f'Create the cast of characters for an adventure game set in this world:\n\n# {world.title}\n\n{world.world_description}'
+        f'\n\nThe player described the world they wanted as: {brief}'
+    )
+
+
 def summary_as_json(summary: StorySummary) -> str:
     return json.dumps(as_jsonable(summary, spec_for_class(StorySummary)), ensure_ascii=False, indent=2)
+
+
+def quick_action_instructions() -> str:
+    # The part of the turn instructions that asks for the quick actions, built
+    # from the vocabulary of kinds so that the AI is told what each kind it
+    # can tag an action with means, see QuickActionKind.
+    parts = [
+        (
+            '- quick_actions: exactly three actions the reader could have the protagonist take next, each a short imperative'
+            ' phrase and each tagged with the kind of approach it takes. They must be three genuinely different approaches to'
+            ' the situation, not three phrasings of the obvious next step, so give one action of each of these kinds, in this order:'
+        )
+    ]
+    for group in REQUESTED_QUICK_ACTION_KINDS:
+        kinds = ' or '.join(f'"{k.value}"' for k in group)
+        meanings = '; or '.join(QUICK_ACTION_KIND_DESCRIPTIONS[k] for k in group)
+        parts.append(f'  * {kinds}: {meanings}.')
+    parts.append(
+        f'  Use whichever kind of the last group the scene affords. Use "{QuickActionKind.other.value}" only for an action that'
+        ' genuinely fits none of the kinds. Every action must be something the protagonist can actually do from where they are'
+        ' right now, and must follow from the passage you have just written rather than from the story in general.'
+    )
+    return '\n'.join(parts)
+
+
+def prose_contract(style: StoryStyle) -> str:
+    # How the prose of every passage must read: how much room it gets, its
+    # point of view and tense, the register it is told in and how it is
+    # formatted. The player chooses the first three, see StoryStyle. This is
+    # the only place any of it is stated: the annotations of StoryTurn, which
+    # become the JSON schema sent with these instructions, deliberately defer
+    # to it rather than restating it, see StoryTurn.narrative.
+    parts = [
+        style_for_key(PACES, style.pace).prompt,
+        f'Write it {style_for_key(NARRATION_STYLES, style.narration).prompt}, and keep to that throughout.',
+    ]
+    if tone := style_for_key(TONES, style.tone).prompt:
+        parts.append(tone)
+    parts.append(
+        'Bring the characters to life with spoken dialogue, quoting their words directly in their own distinct voices,'
+        ' and show their expressions, gestures, body language and emotional reactions as they speak and act.'
+        ' When the story enters a new location or the mood shifts, ground the scene with sensory detail:'
+        ' sights, sounds, smells and atmosphere.'
+    )
+    parts.append(markdown_instructions('all narrative and descriptive text'))
+    return ' '.join(parts)
 
 
 def turn_instructions(state: GameState) -> str:
     w, c = state.world, state.character
     parts = [
         (
-            'You are the game master of an interactive "choose your own adventure" game.'
-            " Continue the story based on the story summary, the transcript of the current chapter and the player's latest action."
-            ' Format all narrative and descriptive text using Markdown:'
-            ' use **bold** for emphasis and important moments, *italics* for atmosphere and inner thoughts,'
-            ' and blank lines to separate paragraphs. Do not use headers or bullet lists in narrative text.'
+            'You are a novelist writing an interactive novel in collaboration with your reader.'
+            f" You write the novel's prose; the reader directs the actions of the protagonist, {c.name}, between passages."
+            ' Write the next passage based on the story summary, the prose of the current chapter so far'
+            " and the reader's latest direction."
+            ' Each passage you write must continue seamlessly from exactly where the previous passage ended,'
+            ' as if it were the next paragraphs of the same chapter.'
+            ' Never repeat, summarize or rephrase prose that has already been written: the reader has just read it.'
+            " Have the characters react to the protagonist's actions and the world in realistic and consistent ways."
         ),
+        prose_contract(state.style),
         'Rules for the fields of your response:',
         (
-            '- narrative: describe what happens next in second person present tense, addressing the player as "you".'
-            ' Stop at a point where the player must decide what to do next.'
-            ' Use Markdown formatting as instructed above.'
+            '- narrative: the next passage of the novel, written to the contract for the prose given above.'
+            " It must pick up exactly where the chapter's prose left off, without repeating or recapping anything already written."
+            ' Weave together action, dialogue from the characters, their expressions and reactions, and scene description'
+            ' where needed, never a terse summary of events.'
+            ' End at a point where the reader must decide what the protagonist does next.'
         ),
-        '- quick_actions: exactly three short, distinct actions the player could plausibly take next.',
+        quick_action_instructions(),
         (
             '- scene_description: a self-contained visual description of the current scene for an image generation AI.'
             ' It must make sense without any knowledge of the story.'
         ),
         (
-            "- updated_summary: the story summary updated with this turn's events."
-            ' Preserve all information that is still relevant, including characters, relationships and unresolved plot threads, and keep it concise.'
+            '- summary_update: how this passage changes the story summary, which is your only memory of everything'
+            ' that happened before the current chapter. Send only what changed. Every field you leave empty keeps the'
+            ' value it already has in the summary, so there is never any need to copy text out of the summary and back.'
         ),
-        '- starts_new_chapter: true only when this turn begins a major new phase of the story, with chapter_title naming the new chapter.',
-        '- win_condition_met: true once the player has achieved the win condition.',
+        (
+            '- character_updates: one entry for every character this passage changes, and one for every new named character it introduces.'
+            ' Leave out the characters the passage does not touch. Fill in current_state, which is everything that is only true of them'
+            ' right now: where they are, what they are doing, their physical condition and injuries, their mood, what they carry and what'
+            ' they intend next. Leave description, backstory and relationships empty unless this passage changed them: description only when'
+            ' their appearance or nature has permanently changed, backstory only when the story reveals something new about their past,'
+            ' relationships only when how they stand with someone has shifted. Never put events, mood, injuries or location into description,'
+            ' which is also used as the prompt to draw them.'
+            ' A character you are introducing needs a name, a short description and a brief backstory as well as their current state.'
+        ),
+        (
+            "- Each entry of character_updates names its character by id, which is that character's permanent identity, not their name."
+            ' Reproduce the id from the summary verbatim, even when you rename them:'
+            ' when "the stranger" turns out to be Marlo, put the new name in name and leave the id untouched.'
+            ' Never change, swap or re-use an id and never send two entries for the same character.'
+            ' Invent a new short lowercase id, based on their name, only for a character you are adding to the summary for the first time.'
+        ),
+        (
+            '- new_major_events: the events of this passage that matter to the rest of the story, one short line each.'
+            ' They are added to the major events already in the summary, so never repeat one that is already there,'
+            ' and leave the field empty when nothing of lasting importance happened.'
+            f' The summary holds at most {MAX_MAJOR_EVENTS} major events: as it nears that many, use consolidated_major_events to'
+            ' replace the events already in the summary with a shorter list that merges the older ones into single lines.'
+        ),
+        (
+            '- upcoming_events: null on most passages. Leave it null unless this passage opens a new unresolved plot thread or resolves one'
+            ' the summary already holds. When one of them does change, this is the one field that replaces rather than adds to what the summary'
+            ' holds: give the whole list of unresolved threads as it now stands, repeating those still open and dropping those this passage'
+            ' resolved, or an empty list when it resolved the last of them.'
+        ),
+        '- current_situation: where the protagonist is and what is happening as this passage ends.',
+        '- starts_new_chapter: true only when this passage begins a major new phase of the story, with chapter_title naming the new chapter.',
         '',
         f'The world, titled {w.title!r}, is described as:',
         w.world_description,
         '',
-        f'The player plays {c.name}: {c.description}',
+        f'The protagonist, {c.name}, is {c.description}',
         c.backstory,
-        '',
-        f'The win condition for the player is: {w.win_condition}',
     ]
-    if state.victory_achieved:
-        parts.append(
-            'The player has already achieved the win condition and has chosen to keep playing.'
-            ' Ignore the win condition from now on and continue the story wherever the player takes it.'
-        )
     return '\n'.join(parts)
 
 
-def turn_prompt(state: GameState, player_input: str = '') -> str:
+def turn_prompt(state: GameState, player_input: str = '', interesting_event: bool = False) -> str:
     parts = ['The summary of the story so far, as JSON:', summary_as_json(state.current_summary), '']
-    if transcript := state.current_chapter_turns:
-        parts.append('The transcript of the current chapter:')
-        for t in transcript:
+
+    def add_prose(turns: Iterable[TurnRecord]) -> None:
+        for t in turns:
             if t.player_input:
-                parts.append(f'Player: {t.player_input}')
-            parts.append(f'Narrator: {t.turn.narrative}')
+                parts.append(f'[The reader directs: {t.player_input}]')
+                parts.append('')
+            parts.append(t.turn.narrative)
+            parts.append('')
+
+    bridge, transcript = state.prose_context
+    if bridge:
+        # A chapter that has only just started has almost no prose of its own,
+        # so the passages leading up to it come along to bridge the gap. They
+        # are labelled as belonging to the previous chapter, so that the AI
+        # continues from the end of the current chapter, not from these.
+        parts.append('The closing prose of the previous chapter, for continuity. The reader has read it and the story has moved past it:')
         parts.append('')
+        add_prose(bridge)
+    if transcript:
+        parts.append('The prose of the current chapter so far, which the reader has already read:')
+        parts.append('')
+        add_prose(transcript)
     if state.turns:
-        parts.append(f'The player responds: {player_input}' if player_input else 'The player says nothing.')
-        parts.append('Generate the next turn of the story.')
+        if interesting_event:
+            parts.append(
+                'The reader waits to see what happens next. Have something unexpected and interesting happen, taking the story in a surprising new direction.'
+            )
+            if threads := state.current_summary.upcoming_events:
+                # The summary already lists the threads the AI itself
+                # foreshadowed, so a surprise that pays one of them off beats
+                # one invented from nothing, which leaves them dangling.
+                parts.append(
+                    'Do it, if you can, by paying off one of these unresolved threads from upcoming_events,'
+                    ' bringing it to the surface now rather than leaving it for later:'
+                )
+                parts.extend(f'- {t}' for t in threads)
+                parts.append('Invent something unrelated only if none of them can plausibly surface in this moment.')
+        else:
+            parts.append(f'The reader directs: {player_input}' if player_input else 'The reader offers no direction.')
+        parts.append("Write the next passage of the novel, continuing seamlessly from where the chapter's prose ends.")
     else:
         if player_input:
-            parts.append(f'The player asks for the story to begin as follows: {player_input}')
-        parts.append('Begin the adventure with an opening scene that introduces the player character and their situation.')
+            parts.append(f'The reader asks for the novel to begin as follows: {player_input}')
+        parts.append('Begin the novel with an opening scene that introduces the protagonist and their situation.')
     return '\n'.join(parts)
 
 
@@ -315,50 +1108,368 @@ def no_provider_error() -> StructuredOutputResult:
     return StructuredOutputResult(exception=ValueError(msg), error_details=msg)
 
 
+class InvalidAIResponse(ValueError):
+    # Raised when the AI returns a response that matches the schema, so the
+    # provider plugin reports no error, but that is not actually usable, for
+    # example an empty passage of prose or too few quick actions.
+    pass
+
+
+def validation_error(res: StructuredOutputResult, e: InvalidAIResponse) -> StructuredOutputResult:
+    # Report an unusable response the same way as an error from the provider,
+    # keeping the raw response so the player can see what the AI actually said.
+    return res._replace(data=None, exception=e, error_details=res.error_details or res.raw)
+
+
+# The player chooses who to play as, so a world with only one character defeats
+# the point of the phase. The AI is asked for three to five, but rejecting an
+# otherwise usable world costs the player a full regeneration, so fewer are
+# accepted as long as there is a choice.
+MIN_PLAYER_CHARACTERS = 2
+
+
+def validated_player_characters(characters: Iterable[PlayerCharacter]) -> tuple[PlayerCharacter, ...]:
+    # Unlike the characters of a story summary there is no previous state to
+    # repair these from, and every field is either shown to the player or used
+    # to generate their portrait, so incomplete characters are discarded.
+    ans: list[PlayerCharacter] = []
+    seen: set[str] = set()
+    for c in characters:
+        name, description, backstory = c.name.strip(), c.description.strip(), c.backstory.strip()
+        key = name.casefold()
+        if not name or not description or not backstory or key in seen:
+            continue
+        seen.add(key)
+        ans.append(PlayerCharacter(name=name, description=description, backstory=backstory))
+    return tuple(ans)
+
+
+def validated_npcs(npcs: Iterable[NonPlayerCharacter], playable: Iterable[PlayerCharacter] = ()) -> tuple[NonPlayerCharacter, ...]:
+    # As for the playable characters, an NPC missing a field cannot be
+    # repaired, and each of them costs context in the story summary of every
+    # turn, so incomplete, duplicate and surplus ones are dropped. An NPC
+    # sharing a name with a playable character would be the player meeting
+    # themselves, so they go too. Unlike the playable characters there is no
+    # minimum: a world can perfectly well start with nobody else in it.
+    ans: list[NonPlayerCharacter] = []
+    seen = {c.name.strip().casefold() for c in playable}
+    for c in npcs:
+        name, description, backstory = c.name.strip(), c.description.strip(), c.backstory.strip()
+        key = name.casefold()
+        if not name or not description or not backstory or key in seen:
+            continue
+        seen.add(key)
+        ans.append(NonPlayerCharacter(name=name, description=description, backstory=backstory, relationships=c.relationships.strip()))
+        if len(ans) >= MAX_GENERATED_NPCS:
+            break
+    return tuple(ans)
+
+
+def validated_world(world: WorldOutline) -> WorldOutline:
+    # Nothing here can be repaired from previous state, as the world is the
+    # start of the game, but generating it again loses the player nothing that
+    # has been written, so an incomplete world is rejected rather than patched
+    # up: the title and description are used for the rest of the game.
+    title = world.title.strip()
+    if not title:
+        raise InvalidAIResponse('The AI returned a world with no title')
+    description = world.world_description.strip()
+    if not description:
+        raise InvalidAIResponse('The AI returned a world with no description')
+    return WorldOutline(title=title, world_description=description)
+
+
+def validated_cast(cast: GeneratedCast) -> GeneratedCast:
+    characters = validated_player_characters(cast.characters)
+    if len(characters) < MIN_PLAYER_CHARACTERS:
+        raise InvalidAIResponse(f'The AI returned {len(characters)} usable playable characters, at least {MIN_PLAYER_CHARACTERS} are needed')
+    return GeneratedCast(characters=characters, npcs=validated_npcs(cast.npcs, characters))
+
+
 def generate_world(brief: str, plugin: AIProvider | None = None, use_model: str = '') -> StructuredOutputResult:
     # The world generation phase: expand the player's brief description into
-    # a GeneratedWorld, available as the data field of the returned result.
-    # Errors are reported via the exception field, not raised.
+    # a GeneratedWorld with no cast yet, available as the data field of the
+    # returned result. The characters are generated separately, after the
+    # player has edited the world, see generate_cast(). The response is
+    # validated and normalized by validated_world() before being returned.
+    # Errors, including an unusable response, are reported via the exception
+    # field, not raised.
     plugin = plugin or default_provider()
     if plugin is None:
         return no_provider_error()
-    return plugin.generate_structured_output(world_generation_prompt(brief), GeneratedWorld, WORLD_GENERATION_INSTRUCTIONS, use_model)
+    res = plugin.generate_structured_output(world_generation_prompt(brief), WorldOutline, WORLD_GENERATION_INSTRUCTIONS, use_model)
+    if res.exception is not None:
+        return res
+    world = res.data
+    try:
+        if not isinstance(world, WorldOutline):
+            raise InvalidAIResponse(f'The AI returned {type(world).__name__} instead of a world')
+        world = validated_world(world)
+    except InvalidAIResponse as e:
+        return validation_error(res, e)
+    return res._replace(data=GeneratedWorld(title=world.title, world_description=world.world_description))
 
 
-def next_turn(state: GameState, player_input: str = '', plugin: AIProvider | None = None, use_model: str = '') -> StructuredOutputResult:
-    # Play one turn: send the AI the story summary, the transcript of the
-    # current chapter and the player's input, returning a result whose data
-    # field is a StoryTurn. On success the turn is appended to the game log,
-    # starting a new chapter when the AI indicates one. On error the state is
-    # left unmodified and the error is reported via the exception field of
-    # the result, not raised. For the opening turn of the game player_input
-    # may be empty.
+def generate_cast(brief: str, world: GeneratedWorld, plugin: AIProvider | None = None, use_model: str = '') -> StructuredOutputResult:
+    # The character generation phase: invent the cast for the world, as the
+    # player has edited it, so that the characters actually fit the world that
+    # will be played in. The data field of the returned result is a
+    # GeneratedCast, validated by validated_cast(); errors, including an
+    # unusable response, are reported via the exception field, not raised.
     plugin = plugin or default_provider()
     if plugin is None:
         return no_provider_error()
-    instructions = turn_instructions(state)
-    prompt = turn_prompt(state, player_input)
-    res = plugin.generate_structured_output(prompt, StoryTurn, instructions, use_model)
-    turn = res.data
-    if res.exception is None and isinstance(turn, StoryTurn):
-        chapter = state.current_chapter
-        if state.turns and turn.starts_new_chapter:
-            chapter += 1
-        state.turns.append(
-            TurnRecord(
-                player_input=player_input,
-                instructions=instructions,
-                prompt=prompt,
-                raw_response=res.raw,
-                turn=turn,
-                chapter=chapter,
-                cost=res.cost,
-                currency=res.currency,
-                provider=res.provider,
-                model=res.model,
+    res = plugin.generate_structured_output(cast_generation_prompt(brief, world), GeneratedCast, CAST_GENERATION_INSTRUCTIONS, use_model)
+    if res.exception is not None:
+        return res
+    cast = res.data
+    try:
+        if not isinstance(cast, GeneratedCast):
+            raise InvalidAIResponse(f'The AI returned {type(cast).__name__} instead of a cast of characters')
+        cast = validated_cast(cast)
+    except InvalidAIResponse as e:
+        return validation_error(res, e)
+    return res._replace(data=cast)
+
+
+# The AI is asked for one quick action of each requested kind, but they are
+# only a convenience: the player can always type an action of their own.
+# Throwing away a passage of prose the player has already paid for because the
+# AI repeated itself and one of the three was deduplicated away would be a far
+# worse trade than rendering the two that survived, so any at all are accepted.
+NUM_QUICK_ACTIONS = len(REQUESTED_QUICK_ACTION_KINDS)
+
+
+def selected_quick_actions(actions: Iterable[QuickAction]) -> tuple[QuickAction, ...]:
+    # Normalize the actions the AI suggests: strip them, discard the blank and
+    # duplicate ones and keep at most NUM_QUICK_ACTIONS. When the AI offers
+    # more than that, one action of each kind is preferred over simply taking
+    # the first few, as three actions that differ in kind is the whole point
+    # of asking for kinds. The order the AI put them in is kept, as it is
+    # asked for them in the order the kinds are requested.
+    unique: list[QuickAction] = []
+    seen: set[str] = set()
+    for a in actions:
+        text = a.text.strip()
+        if text and (key := text.casefold()) not in seen:
+            seen.add(key)
+            unique.append(a._replace(text=text))
+    if len(unique) <= NUM_QUICK_ACTIONS:
+        return tuple(unique)
+    of_kind: dict[QuickActionKind, QuickAction] = {}
+    for a in unique:
+        of_kind.setdefault(a.kind, a)
+    chosen = list(of_kind.values())[:NUM_QUICK_ACTIONS]
+    if len(chosen) < NUM_QUICK_ACTIONS:  # fewer kinds than actions to show, so fill up with the rest
+        picked = {a.text for a in chosen}
+        chosen += [a for a in unique if a.text not in picked][: NUM_QUICK_ACTIONS - len(chosen)]
+    position = {a.text: i for i, a in enumerate(unique)}
+    return tuple(sorted(chosen, key=lambda a: position[a.text]))
+
+
+def clean_text_list(items: Iterable[str]) -> tuple[str, ...]:
+    # Strip whitespace and discard blank and duplicate entries, preserving order.
+    ans: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        text = item.strip()
+        if text and (key := text.casefold()) not in seen:
+            seen.add(key)
+            ans.append(text)
+    return tuple(ans)
+
+
+def updated_characters(updates: Iterable[CharacterDelta], previous: StorySummary) -> tuple[CharacterState, ...]:
+    # Merge the AI's per character updates into the cast of the previous
+    # summary. Every field an update leaves blank keeps the value the
+    # character already has, and a character the AI says nothing about this
+    # turn is left exactly as they were, so "unchanged" is the default rather
+    # than something the AI has to achieve by retyping text it was sent.
+    # A character is identified by their id rather than their name, so that
+    # renaming one, which fiction does constantly as "the stranger" turns out
+    # to be Marlo, updates their entry instead of forking it in two. The AI is
+    # told to carry ids forward but cannot be relied on to always do so, hence
+    # the fallback to matching by name and the invented ids.
+    ans = list(previous.characters)
+    by_id = {c.id: i for i, c in enumerate(ans) if c.id}
+    by_name = {c.name.strip().casefold(): i for i, c in enumerate(ans) if c.name.strip()}
+    updated: set[int] = set()
+    for u in updates:
+        uid, name = u.id.strip(), u.name.strip()
+        idx = by_id.get(uid, -1) if uid else -1
+        if idx < 0 and name:
+            idx = by_name.get(name.casefold(), -1)
+        if idx >= 0:
+            if idx in updated:
+                continue  # a second update for a character already updated this turn
+            updated.add(idx)
+            c = ans[idx]
+            ans[idx] = c._replace(
+                name=name or c.name,
+                description=u.description.strip() or c.description,
+                backstory=u.backstory.strip() or c.backstory,
+                relationships=u.relationships.strip() or c.relationships,
+                current_state=u.current_state.strip() or c.current_state,
+            )
+            if name:
+                by_name[name.casefold()] = idx
+            continue
+        # A character not already in the summary. Without a name they can
+        # neither be matched with a later update nor be referred to by the AI
+        # or the player, and without a description or a backstory nothing is
+        # known about them that outlives this turn, so they are dropped and a
+        # later turn can re-introduce them if they matter.
+        description, backstory = u.description.strip(), u.backstory.strip()
+        if not name or not (description or backstory):
+            continue
+        # The AI can invent an id that is already in use, which would merge
+        # two characters into one, so it is made unique here.
+        cid = unique_character_id(uid or character_id_for_name(name), by_id)
+        ans.append(
+            CharacterState(
+                name=name, description=description, backstory=backstory, relationships=u.relationships.strip(), current_state=u.current_state.strip(), id=cid
             )
         )
-    return res
+        by_id[cid] = by_name[name.casefold()] = len(ans) - 1
+        updated.add(len(ans) - 1)
+    return tuple(ans)
+
+
+def updated_summary(update: SummaryUpdate, previous: StorySummary) -> StorySummary:
+    # The summary is the only memory the AI has of the story beyond the
+    # current chapter, so it is maintained here rather than by the AI: the AI
+    # sends only what this turn changed and everything else is carried over
+    # from the previous summary, which cannot silently lose the plot the way
+    # asking the AI to re-emit the whole summary every turn does.
+    world = update.world.strip() or previous.world
+    if not world:
+        raise InvalidAIResponse('The AI returned a story summary with no description of the world')
+    current_situation = update.current_situation.strip() or previous.current_situation
+    if not current_situation:
+        raise InvalidAIResponse('The AI returned a story summary with no description of the current situation')
+    characters = updated_characters(update.character_updates, previous)
+    if not characters:
+        raise InvalidAIResponse('The AI returned a story summary with no characters')
+    # The AI is asked to condense the older events as the list approaches
+    # MAX_MAJOR_EVENTS; dropping the oldest is the backstop for when it does
+    # not, which keeps the summary, and so the prompt, bounded.
+    events = clean_text_list(update.consolidated_major_events) or previous.major_events
+    return StorySummary(
+        world=world,
+        major_events=clean_text_list(events + tuple(update.new_major_events))[-MAX_MAJOR_EVENTS:],
+        characters=characters,
+        current_situation=current_situation,
+        # Deliberately the one field that is replaced rather than merged: a
+        # plot thread the story has resolved has to be able to leave the
+        # summary, and there is no way to say "drop this one" in a list of
+        # bare strings. Most passages neither open nor resolve a thread, so
+        # re-sending the whole list every turn is wasted output: the AI sends
+        # null for those turns and the list is carried over untouched. An
+        # empty list is a real change, this passage resolving the last thread.
+        upcoming_events=previous.upcoming_events if update.upcoming_events is None else clean_text_list(update.upcoming_events),
+    )
+
+
+def validated_turn(turn: StoryTurn) -> StoryTurn:
+    # Responses are checked against the schema before they get here, but that
+    # only guarantees that the fields are present and of the right type.
+    # Normalize what can be normalized and reject turns that are not usable,
+    # so that a bad response is reported to the player as a failed turn they
+    # can retry rather than being added to the game. The summary update is not
+    # touched here, updated_summary() repairs it against the previous summary.
+    narrative = turn.narrative.strip()
+    if not narrative:
+        raise InvalidAIResponse('The AI returned an empty passage of prose')
+    quick_actions = selected_quick_actions(turn.quick_actions)
+    if not quick_actions:
+        raise InvalidAIResponse('The AI returned no usable quick actions')
+    return StoryTurn(
+        narrative=narrative,
+        quick_actions=quick_actions,
+        # A missing scene description only means no image can be generated for
+        # this turn, which is not worth failing an otherwise good turn for.
+        scene_description=turn.scene_description.strip(),
+        summary_update=turn.summary_update,
+        starts_new_chapter=turn.starts_new_chapter,
+        chapter_title=(turn.chapter_title or '').strip() or None,
+    )
+
+
+def narrative_streamer(on_narrative: OnText) -> OnText:
+    # Adapt a callback wanting the prose of a turn as it is written into one
+    # taking the fragments of raw JSON a provider reports. The prose is the
+    # first field of StoryTurn precisely so that it can be shown to the player
+    # while the AI is still writing the rest of the turn.
+    field = StreamingStringField(StoryTurn._fields[0])
+
+    def on_text(text: str) -> None:
+        if prose := field.feed(text):
+            on_narrative(prose)
+
+    return on_text
+
+
+def next_turn(
+    state: GameState,
+    player_input: str = '',
+    plugin: AIProvider | None = None,
+    use_model: str = '',
+    interesting_event: bool = False,
+    on_narrative: OnText | None = None,
+) -> StructuredOutputResult:
+    # Play one turn: send the AI the story summary, the transcript of the
+    # current chapter and the player's input, returning a result whose data
+    # field is a StoryTurn. The response is validated and normalized by
+    # validated_turn() and its summary update merged into the story summary by
+    # updated_summary() before being used. On success the turn is appended to
+    # the game log, starting a new chapter when the AI indicates one. On error,
+    # including an unusable response, the state is left unmodified and the
+    # error is reported via the exception field of the result, not raised.
+    # For the opening turn of the game player_input may be empty. When
+    # interesting_event is true the player's input is ignored and the AI is
+    # asked to have something unexpected happen instead. on_narrative is
+    # called, on this thread, with each new fragment of the prose of the turn
+    # as the AI writes it, before the response is complete: the prose so far
+    # is all that is shown to the player until the turn has been validated,
+    # and it is not stripped or normalized the way the final turn is.
+    plugin = plugin or default_provider()
+    if plugin is None:
+        return no_provider_error()
+    if interesting_event:
+        player_input = ''
+    instructions = turn_instructions(state)
+    prompt = turn_prompt(state, player_input, interesting_event)
+    on_text = narrative_streamer(on_narrative) if on_narrative is not None else None
+    res = plugin.generate_structured_output(prompt, StoryTurn, instructions, use_model, on_text)
+    if res.exception is not None:
+        return res
+    turn = res.data
+    try:
+        if not isinstance(turn, StoryTurn):
+            raise InvalidAIResponse(f'The AI returned {type(turn).__name__} instead of a story turn')
+        turn = validated_turn(turn)
+        summary = updated_summary(turn.summary_update, state.current_summary)
+    except InvalidAIResponse as e:
+        return validation_error(res, e)
+    chapter = state.current_chapter
+    if state.turns and turn.starts_new_chapter:
+        chapter += 1
+    state.turns.append(
+        TurnRecord(
+            player_input=player_input,
+            raw_response=res.raw,
+            turn=turn,
+            summary=summary,
+            chapter=chapter,
+            cost=res.cost,
+            currency=res.currency,
+            provider=res.provider,
+            model=res.model,
+            instructions=instructions if STORE_PROMPTS_IN_TURN_RECORDS else '',
+            prompt=prompt if STORE_PROMPTS_IN_TURN_RECORDS else '',
+        )
+    )
+    return res._replace(data=turn)
 
 
 # }}}
@@ -379,15 +1490,26 @@ def develop(use_model: str = '') -> None:  # {{{
     brief = input('Describe the world for your adventure: ')
     world = unwrap(generate_world(brief, plugin, use_model))
     assert isinstance(world, GeneratedWorld)
-    print(f'\n=== {world.title} ===\n\n{world.world_description}\n\nWin condition: {world.win_condition}\n')
+    print(f'\n=== {world.title} ===\n\n{world.world_description}\n')
+    # The cast is generated from the world, in a second call, as it is in the
+    # game, where the player gets to edit the world in between.
+    cast = unwrap(generate_cast(brief, world, plugin, use_model))
+    assert isinstance(cast, GeneratedCast)
+    world = world._replace(characters=cast.characters, npcs=cast.npcs)
     for i, c in enumerate(world.characters):
         print(f'{i + 1}) {c.name}: {c.description}')
         bs = textwrap.indent(textwrap.fill(c.backstory), '\t')
         print(bs)
         print()
+    if world.npcs:
+        print('--- Other characters in this world ---\n')
+        for npc in world.npcs:
+            print(f'{npc.name}: {npc.description}')
+            print(textwrap.indent(textwrap.fill(npc.backstory), '\t'))
+            print()
     num = input(f'\nChoose your character [1-{len(world.characters)}]: ')
-    state = start_game(brief, world, world.characters[int(num) - 1])
-    player_input, victory_reported = '', False
+    state = start_game(brief, world, int(num) - 1)
+    player_input = ''
     while True:
         chapter_before = state.current_chapter if state.turns else -1
         turn = unwrap(next_turn(state, player_input, plugin, use_model))
@@ -396,16 +1518,13 @@ def develop(use_model: str = '') -> None:  # {{{
             print(f'\n--- {state.chapter_titles[-1]} ---')
         print(f'\n{turn.narrative}\n')
         print(f'[Scene: {turn.scene_description}]\n')
-        if state.victory_achieved and not victory_reported:
-            victory_reported = True
-            print('*** You have achieved the win condition! Keep playing if you like. ***\n')
         for i, action in enumerate(turn.quick_actions):
-            print(f'{i + 1}) {action}')
+            print(f'{i + 1}) [{action.kind.value}] {action.text}')
         player_input = input('\nWhat do you do? (number for a quick action, empty to quit): ').strip()
         if not player_input:
             break
         if player_input.isdigit() and 1 <= int(player_input) <= len(turn.quick_actions):
-            player_input = turn.quick_actions[int(player_input) - 1]
+            player_input = turn.quick_actions[int(player_input) - 1].text
 
 
 # }}}
@@ -415,12 +1534,18 @@ def find_tests() -> TestSuite:  # {{{
     import unittest
 
     class FakePlugin:
-        def __init__(self, results: list[StructuredOutputResult]) -> None:
+        def __init__(self, results: list[StructuredOutputResult], streamed_text: str = '') -> None:
             self.results = list(results)
+            self.streamed_text = streamed_text  # reported to on_text in small fragments before the result is returned
             self.calls: list[tuple[str, type, str, str]] = []
 
-        def generate_structured_output(self, prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
+        def generate_structured_output(
+            self, prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None
+        ) -> StructuredOutputResult:
             self.calls.append((prompt, schema, instructions, use_model))
+            if on_text is not None:
+                for i in range(0, len(self.streamed_text), 3):
+                    on_text(self.streamed_text[i : i + 3])
             return self.results.pop(0)
 
     def make_world() -> GeneratedWorld:
@@ -431,36 +1556,47 @@ def find_tests() -> TestSuite:  # {{{
                 PlayerCharacter('Ada', 'a stubborn engineer', 'She built the mist engines.'),
                 PlayerCharacter('Brin', 'a nimble thief', 'He stole the last map.'),
             ),
-            win_condition='Escape the city before the mist swallows it.',
         )
 
-    def make_summary(*events: str) -> StorySummary:
-        return StorySummary(
-            world='A city lost in mist.',
-            major_events=events,
-            characters=(CharacterState('Ada', 'the player', 'alone so far'),),
+    def make_update(*new_events: str, **kw: Any) -> SummaryUpdate:  # noqa: ANN401
+        # An update of the kind the AI sends every turn: what just happened
+        # and the protagonist's new state, with everything else left unchanged.
+        ans = SummaryUpdate(
             current_situation='In the mist.',
+            character_updates=(CharacterDelta(id=PROTAGONIST_ID, current_state='lost in the mist'),),
+            new_major_events=new_events,
             upcoming_events=('The mist thickens.',),
         )
+        return ans._replace(**kw)
+
+    def make_actions(*actions: str | QuickAction) -> tuple[QuickAction, ...]:
+        # Bare strings are convenient for the tests that do not care about the
+        # kinds, they get the catch-all kind.
+        return tuple(a if isinstance(a, QuickAction) else QuickAction(a) for a in actions)
 
     def make_turn(
         narrative: str,
-        *events: str,
+        *new_events: str,
         starts_new_chapter: bool = False,
         chapter_title: str | None = None,
-        win: bool = False,
     ) -> StoryTurn:
         return StoryTurn(
             narrative=narrative,
-            quick_actions=('Look around', 'Call out', 'Run'),
+            quick_actions=(
+                QuickAction('Hide in the doorway', QuickActionKind.cautious),
+                QuickAction('Charge into the mist', QuickActionKind.bold),
+                QuickAction('Call out to whoever is there', QuickActionKind.social),
+            ),
             scene_description=f'A picture of: {narrative}',
-            updated_summary=make_summary(*events),
+            summary_update=make_update(*new_events),
             starts_new_chapter=starts_new_chapter,
             chapter_title=chapter_title,
-            win_condition_met=win,
         )
 
-    def ok(data: GeneratedWorld | StoryTurn) -> StructuredOutputResult:
+    def make_cast() -> GeneratedCast:
+        return GeneratedCast(characters=make_world().characters, npcs=(NonPlayerCharacter('Marlo', 'a mist-runner', 'He grew up in the tunnels.', 'guides'),))
+
+    def ok(data: GeneratedWorld | WorldOutline | GeneratedCast | StoryTurn) -> StructuredOutputResult:
         return StructuredOutputResult(data=data, raw='{"raw": "json"}', cost=0.25, currency='USD', provider='prov', model='mod')
 
     class TestCYOA(unittest.TestCase):
@@ -468,43 +1604,228 @@ def find_tests() -> TestSuite:  # {{{
 
         def test_ai_cyoa_world_generation(self) -> None:
             world = make_world()
-            fake = FakePlugin([ok(world)])
+            outline = WorldOutline(title=world.title, world_description=world.world_description)
+            fake = FakePlugin([ok(outline)])
             res = generate_world('a foggy city', fake)
-            self.assertIs(res.data, world)
+            self.ae(res.data, GeneratedWorld(title=world.title, world_description=world.world_description), 'the cast is generated separately')
             prompt, schema, instructions, use_model = fake.calls[0]
             self.assertIn('a foggy city', prompt)
-            self.assertIs(schema, GeneratedWorld)
-            self.assertIn('win condition', instructions)
+            self.assertIs(schema, WorldOutline)
             res = generate_world('anything', FakePlugin([StructuredOutputResult(exception=ValueError('boom'))]))
             self.assertIsInstance(res.exception, ValueError)
 
+        def test_ai_cyoa_cast_generation(self) -> None:
+            # The cast is generated from the world as the player edited it, so
+            # that the characters fit the world that will actually be played.
+            cast = make_cast()
+            edited = make_world()._replace(characters=(), world_description='A city the player re-wrote.')
+            fake = FakePlugin([ok(cast)])
+            res = generate_cast('a foggy city', edited, fake)
+            self.ae(res.data, cast)
+            prompt, schema, instructions, use_model = fake.calls[0]
+            self.assertIn('A city the player re-wrote.', prompt)
+            self.assertIn('a foggy city', prompt)
+            self.assertIs(schema, GeneratedCast)
+            res = generate_cast('anything', edited, FakePlugin([StructuredOutputResult(exception=ValueError('boom'))]))
+            self.assertIsInstance(res.exception, ValueError)
+
+        def test_ai_cyoa_cast_validation(self) -> None:
+            def generated(cast: GeneratedCast) -> StructuredOutputResult:
+                return generate_cast('a foggy city', make_world(), FakePlugin([ok(cast)]))
+
+            def rejected(cast: GeneratedCast) -> str:
+                res = generated(cast)
+                self.assertIsInstance(res.exception, InvalidAIResponse)
+                self.assertIsNone(res.data)
+                self.ae(res.error_details, '{"raw": "json"}', 'the raw response must be reported for an unusable cast')
+                return str(res.exception)
+
+            def accepted(cast: GeneratedCast) -> GeneratedCast:
+                res = generated(cast)
+                self.assertIsNone(res.exception, f'cast unexpectedly rejected: {res.exception}')
+                assert isinstance(res.data, GeneratedCast)
+                return res.data
+
+            chars = make_cast().characters
+            self.assertIn('playable characters', rejected(make_cast()._replace(characters=())))
+            self.assertIn('playable characters', rejected(make_cast()._replace(characters=chars[:1])))
+            self.assertIn(
+                'playable characters',
+                rejected(make_cast()._replace(characters=(chars[0], chars[1]._replace(backstory='  ')))),
+                'characters with an empty field must not count towards the minimum',
+            )
+            res = generate_cast('a foggy city', make_world(), FakePlugin([StructuredOutputResult(data=None, raw='{}')]))
+            self.assertIsInstance(res.exception, InvalidAIResponse, 'a result with neither data nor an exception must be an error')
+
+            # NPCs are stripped, deduplicated and capped, and the ones that
+            # are unusable or clash with a playable character are dropped
+            npcs = (
+                NonPlayerCharacter(' Marlo ', ' a mist-runner ', ' He grew up in the tunnels. ', ' guides travelers '),
+                NonPlayerCharacter('marlo', 'a duplicate', 'dropped as a duplicate name', ''),
+                NonPlayerCharacter('Ada', 'the player character', 'dropped for clashing with a playable character', ''),
+                NonPlayerCharacter('', 'nameless', 'dropped for having no name', ''),
+                NonPlayerCharacter('Cass', '', 'dropped for having no description', ''),
+                NonPlayerCharacter('Dain', 'a dock warden', 'He keeps the tally of the lost.', ''),
+            )
+            c = accepted(make_cast()._replace(npcs=npcs))
+            self.ae([n.name for n in c.npcs], ['Marlo', 'Dain'])
+            self.ae(c.npcs[0], NonPlayerCharacter('Marlo', 'a mist-runner', 'He grew up in the tunnels.', 'guides travelers'))
+            many = tuple(NonPlayerCharacter(f'npc{i}', 'described', 'with a past', '') for i in range(MAX_GENERATED_NPCS + 5))
+            self.ae(len(accepted(make_cast()._replace(npcs=many)).npcs), MAX_GENERATED_NPCS, 'the number of generated NPCs must be capped')
+            self.ae(accepted(make_cast()._replace(npcs=())).npcs, (), 'a world with no NPCs must be accepted')
+
+        def test_ai_cyoa_initial_summary(self) -> None:
+            # The NPCs generated with the world are in the summary from the
+            # first turn, each with an id of their own.
+            world = make_world()._replace(
+                npcs=(
+                    NonPlayerCharacter('Marlo', 'a mist-runner', 'He grew up in the tunnels.', 'wary of Ada'),
+                    NonPlayerCharacter('Marlo', 'a different Marlo', 'An id clash the AI could produce.', ''),
+                )
+            )
+            summary = initial_summary(world, world.characters[0])
+            self.ae([c.id for c in summary.characters], [PROTAGONIST_ID, 'marlo', 'marlo-2'])
+            self.ae([c.name for c in summary.characters], ['Ada', 'Marlo', 'Marlo'])
+            self.ae(summary.characters[1].relationships, 'wary of Ada')
+            self.ae(summary.characters[1].current_state, NPC_NOT_YET_MET)
+            self.ae(summary.characters[0].current_state, '', 'the player character is in the story from the start')
+            self.ae(initial_summary(make_world(), make_world().characters[0]).characters[0].id, PROTAGONIST_ID)
+
+        def test_ai_cyoa_world_validation(self) -> None:
+            def make_outline() -> WorldOutline:
+                w = make_world()
+                return WorldOutline(title=w.title, world_description=w.world_description)
+
+            def generated(world: WorldOutline) -> StructuredOutputResult:
+                return generate_world('a foggy city', FakePlugin([ok(world)]))
+
+            def rejected(world: WorldOutline) -> str:
+                res = generated(world)
+                self.assertIsInstance(res.exception, InvalidAIResponse)
+                self.assertIsNone(res.data)
+                self.ae(res.error_details, '{"raw": "json"}', 'the raw response must be reported for an unusable world')
+                return str(res.exception)
+
+            def accepted(world: WorldOutline) -> GeneratedWorld:
+                res = generated(world)
+                self.assertIsNone(res.exception, f'world unexpectedly rejected: {res.exception}')
+                assert isinstance(res.data, GeneratedWorld)
+                return res.data
+
+            # A schema conforming but unusable response must be reported as an error
+            self.assertIn('title', rejected(make_outline()._replace(title='  ')))
+            self.assertIn('description', rejected(make_outline()._replace(world_description='\n')))
+            res = generate_world('a foggy city', FakePlugin([StructuredOutputResult(data=None, raw='{}')]))
+            self.assertIsInstance(res.exception, InvalidAIResponse, 'a result with neither data nor an exception must be an error')
+
+            # Text fields are stripped
+            padded = WorldOutline(title='  Mist City \n', world_description=' A city lost in perpetual mist. ')
+            w = accepted(padded)
+            self.ae(w.title, 'Mist City')
+            self.ae(w.world_description, 'A city lost in perpetual mist.')
+            self.ae(w.characters, (), 'the world is generated without a cast')
+            self.ae(w.npcs, ())
+
+        def test_ai_cyoa_art_styles(self) -> None:
+            for table in (ART_STYLES, PACES, TONES, NARRATION_STYLES):
+                keys = [s.key for s in table]
+                self.ae(len(keys), len(set(keys)), f'the style keys of {keys} must be unique')
+                self.assertTrue(all(s.key and s.name for s in table), 'every style must have a key and a human readable name')
+                self.assertIs(style_for_key(table, ''), table[0], 'an unset style must resolve to the default, which is the first entry')
+                self.assertIs(style_for_key(table, 'no-such-style'), table[0], 'an unknown style must resolve to the default')
+            self.assertFalse(ART_STYLES[0].prompt, 'the default art style must not add anything to image prompts')
+            self.assertFalse(TONES[0].prompt, 'the default tone must not add anything to the instructions')
+            self.assertTrue(all(p.prompt for p in PACES), 'the length of a passage must always be specified')
+            self.assertTrue(all(n.prompt for n in NARRATION_STYLES), 'the point of view and tense must always be specified')
+            self.ae(style_for_key(ART_STYLES, 'anime').key, 'anime')
+            w = make_world()
+            c = w.characters[0]
+            prompt = character_portrait_prompt(c, 'anime', w.world_description)
+            self.assertIn(c.name, prompt)
+            self.assertIn(c.description, prompt)
+            self.assertIn(w.world_description, prompt)
+            self.assertIn(style_for_key(ART_STYLES, 'anime').prompt, prompt)
+            self.ae(character_portrait_prompt(c), character_portrait_prompt(c, 'no-such-style'))
+            self.assertNotIn(w.world_description, character_portrait_prompt(c))
+            self.assertIn('image generation', CAST_GENERATION_INSTRUCTIONS, 'character descriptions must be requested to be usable as image prompts')
+            prompt = scene_image_prompt('A misty street.', 'anime')
+            self.assertIn('A misty street.', prompt)
+            self.assertIn(style_for_key(ART_STYLES, 'anime').prompt, prompt)
+            self.assertNotIn(style_for_key(ART_STYLES, 'anime').prompt, scene_image_prompt('A misty street.'))
+
+        def test_ai_cyoa_prose_contract(self) -> None:
+            # The prose contract is stated once, in the instructions, and is
+            # built from the style the player chose, see prose_contract().
+            def instructions(**kw: str) -> str:
+                return turn_instructions(start_game('a foggy city', make_world(), style=StoryStyle(**kw)))
+
+            default = instructions()
+            self.assertIn(PACES[0].prompt, default, 'an unset pace must give the longest passages')
+            self.assertIn(NARRATION_STYLES[0].prompt, default, 'an unset narration must give second person present tense')
+            for t in TONES[1:]:
+                self.assertNotIn(t.prompt, default, 'an unset tone must not impose a register on the story')
+
+            pulpy = instructions(pace='short', tone='comedic', narration='third-past')
+            self.assertIn(style_for_key(PACES, 'short').prompt, pulpy)
+            self.assertIn(style_for_key(TONES, 'comedic').prompt, pulpy)
+            self.assertIn(style_for_key(NARRATION_STYLES, 'third-past').prompt, pulpy)
+            self.assertNotIn(PACES[0].prompt, pulpy, 'the instructions must not ask for two different lengths at once')
+            self.assertNotIn(NARRATION_STYLES[0].prompt, pulpy, 'the instructions must not ask for two different points of view at once')
+            self.ae(pulpy.count('120-250'), 1, 'the length of a passage must be stated exactly once')
+            self.ae(default.count('400-800'), 1, 'the length of a passage must be stated exactly once')
+
+            # The annotations of StoryTurn become the JSON schema sent with
+            # the instructions, so they must not restate any of the contract,
+            # which they would then be able to contradict.
+            narrative_doc = next(f.spec.description for f in spec_for_class(StoryTurn).fields if f.name == 'narrative')
+            for phrase in ('400-800', '120-250', 'second person', 'third person', 'long form', 'Markdown'):
+                self.assertNotIn(phrase, narrative_doc, f'the response schema must not restate the prose contract: {phrase!r}')
+
         def test_ai_cyoa_turn_flow_and_chapters(self) -> None:
-            state = start_game('a foggy city', make_world(), make_world().characters[0])
+            state = start_game('a foggy city', make_world())
             self.ae(state.current_summary.world, state.world.world_description)
             self.ae(state.current_chapter, 0)
             fake = FakePlugin([
                 ok(make_turn('You awaken in the mist.', 'awoke')),
-                ok(make_turn('Shapes loom around you.', 'awoke', 'saw shapes')),
-                ok(make_turn('You descend into the tunnels.', 'awoke', 'saw shapes', 'descended', starts_new_chapter=True, chapter_title='The Descent')),
-                ok(make_turn('The tunnels narrow.', 'awoke', 'saw shapes', 'descended', 'tunnels narrowed')),
+                ok(make_turn('Shapes loom around you.', 'saw shapes')),
+                ok(make_turn('You descend into the tunnels.', 'descended', starts_new_chapter=True, chapter_title='The Descent')),
+                ok(make_turn('The tunnels narrow.', 'tunnels narrowed')),
             ])
             res = next_turn(state, '', fake)
             self.assertIsNone(res.exception)
             prompt, schema, instructions, _um = fake.calls[0]
             self.assertIs(schema, StoryTurn)
-            self.assertIn('Begin the adventure', prompt)
+            self.assertIn('Begin the novel', prompt)
             self.assertIn(state.world.world_description, instructions)
             self.assertIn(state.character.backstory, instructions)
-            self.assertIn(state.world.win_condition, instructions)
+            self.assertIn('new named character', instructions, 'the AI must be told to add a bio for every newly introduced named character')
+            self.assertIn('brief backstory', instructions, "new characters' bios must include a brief backstory")
+            self.assertIn('current_state', instructions, 'the AI must be told to record what is only true right now in current_state')
+            self.assertIn(
+                'Send only what changed',
+                instructions,
+                'the AI must be told to send only what this turn changed, not the whole summary',
+            )
+            self.assertIn(
+                'leave empty keeps the value it already has',
+                instructions,
+                'the AI must be told that a field it leaves empty keeps the value the summary already has',
+            )
+            self.assertIn(str(MAX_MAJOR_EVENTS), instructions, 'the AI must be told the limit it has to consolidate major events to stay under')
+            self.assertIn('Never repeat', instructions, 'the AI must be forbidden from repeating prose it has already written')
+            self.assertIn('400', instructions, 'the AI must be given a concrete length target for passages')
+            self.assertIn('permanent identity', instructions, 'the AI must be told to carry the id of every character in the summary forward unchanged')
             self.ae(len(state.turns), 1)
             self.ae(state.turns[0].chapter, 0)
             self.ae(state.turns[0].raw_response, '{"raw": "json"}')
+            self.ae((state.turns[0].instructions, state.turns[0].prompt), ('', ''), 'what was sent to the AI must not be recorded by default')
             self.ae((state.turns[0].cost, state.turns[0].provider, state.turns[0].model), (0.25, 'prov', 'mod'))
 
             next_turn(state, 'look around', fake)
             prompt = fake.calls[1][0]
-            self.assertIn('Narrator: You awaken in the mist.', prompt)
-            self.assertIn('The player responds: look around', prompt)
+            self.assertIn('You awaken in the mist.', prompt)
+            self.assertNotIn('Narrator:', prompt, 'the chapter prose must be presented as plain prose, not a dialogue transcript')
+            self.assertIn('The reader directs: look around', prompt)
             self.assertIn('awoke', prompt, 'the summary from the previous turn must be sent')
             self.assertNotIn('has not yet begun', prompt, 'the initial summary must have been replaced')
 
@@ -515,8 +1836,13 @@ def find_tests() -> TestSuite:  # {{{
             next_turn(state, 'go deeper', fake)
             prompt = fake.calls[3][0]
             self.assertIn('You descend into the tunnels.', prompt, 'the transcript must contain the current chapter')
-            self.assertNotIn('You awaken in the mist.', prompt, 'the transcript must not contain previous chapters')
-            self.assertNotIn('Shapes loom around you.', prompt, 'the transcript must not contain previous chapters')
+            self.assertIn('closing prose of the previous chapter', prompt, 'a chapter that has only just started must be given a bridge')
+            self.assertIn('Shapes loom around you.', prompt, 'the bridge must contain the passages leading up to the new chapter')
+            self.assertLess(
+                prompt.index('Shapes loom around you.'),
+                prompt.index('You descend into the tunnels.'),
+                'the bridge must come before the prose of the current chapter',
+            )
             self.ae(state.turns[3].chapter, 1)
 
             failing = FakePlugin([StructuredOutputResult(exception=ValueError('boom'), error_details='details')])
@@ -524,25 +1850,284 @@ def find_tests() -> TestSuite:  # {{{
             self.assertIsNotNone(res.exception)
             self.ae(len(state.turns), 4, 'a failed turn must not modify the game state')
 
-        def test_ai_cyoa_win_condition(self) -> None:
-            state = start_game('brief', make_world(), make_world().characters[1])
-            fake = FakePlugin([
-                ok(make_turn('You escape.', 'escaped', win=True)),
-                ok(make_turn('You wander on.', 'escaped', 'wandered')),
-            ])
+            fake = FakePlugin([ok(make_turn('A dragon lands before you.', 'dragon'))])
+            res = next_turn(state, 'ignored', fake, interesting_event=True)
+            self.assertIsNone(res.exception)
+            prompt = fake.calls[0][0]
+            self.assertIn('something unexpected', prompt)
+            self.assertNotIn('ignored', prompt, "an interesting event must not send the player's input to the AI")
+            self.ae(state.turns[-1].player_input, '', 'an interesting event must not record any player input')
+
+        def test_ai_cyoa_streaming_narrative(self) -> None:
+            # Streaming the prose only helps if the AI writes it before the
+            # rest of the turn, which it does in the order of the schema
+            self.ae(spec_for_class(StoryTurn).fields[0].name, 'narrative', 'the narrative must be the first field of StoryTurn so it can be streamed')
+            turn = make_turn('  The mist *parts*.\nA "shape" moves.  ')
+            raw = json.dumps(as_jsonable(turn, spec_for_class(StoryTurn)))
+            state = start_game('a foggy city', make_world())
+            received: list[str] = []
+            res = next_turn(state, 'look', FakePlugin([ok(turn)], streamed_text='```json\n' + raw + '\n```'), on_narrative=received.append)
+            self.assertIsNone(res.exception)
+            self.assertGreater(len(received), 1, 'the prose must be reported as it arrives, not all at once')
+            self.ae(''.join(received), '  The mist *parts*.\nA "shape" moves.  ', 'the streamed prose must not be normalized')
+            self.ae(state.turns[-1].turn.narrative, 'The mist *parts*.\nA "shape" moves.')
+            # without a callback nothing is streamed
+            res = next_turn(state, 'look', FakePlugin([ok(turn)], streamed_text=raw))
+            self.assertIsNone(res.exception)
+
+        def test_ai_cyoa_prose_context(self) -> None:
+            # The prose of the current chapter is sent to the AI, with the
+            # passages before it bridging the gap when a chapter has only just
+            # started, as the AI is told to continue from where the prose ends.
+            state = start_game('a foggy city', make_world())
+
+            def play(narrative: str, new_chapter: bool = False) -> tuple[tuple[str, ...], tuple[str, ...]]:
+                turn = make_turn(narrative, starts_new_chapter=new_chapter, chapter_title='Next' if new_chapter else None)
+                res = next_turn(state, 'go', FakePlugin([ok(turn)]))
+                self.assertIsNone(res.exception, f'turn unexpectedly rejected: {res.exception}')
+                bridge, current = state.prose_context
+                return tuple(t.turn.narrative for t in bridge), tuple(t.turn.narrative for t in current)
+
+            self.ae(state.prose_context, ((), ()), 'a game that has not started has no prose')
+            self.ae(play('one'), ((), ('one',)), 'the first chapter needs no bridge')
+            self.ae(play('two'), ((), ('one', 'two')))
+            self.ae(play('three'), ((), ('one', 'two', 'three')))
+            self.ae(play('four'), ((), ('one', 'two', 'three', 'four')), 'the bridge must not reach back within a chapter')
+            self.ae(play('five', new_chapter=True), (('three', 'four'), ('five',)), 'a chapter that has just started must be bridged')
+            self.ae(play('six'), (('four',), ('five', 'six')), 'the bridge must shrink as the new chapter grows')
+            self.ae(play('seven'), ((), ('five', 'six', 'seven')), 'the bridge must go away once the chapter can stand on its own')
+            self.ae(play('eight', new_chapter=True), (('six', 'seven'), ('eight',)))
+
+        def test_ai_cyoa_interesting_event_pays_off_threads(self) -> None:
+            # The AI is told to spring a surprise, but the summary already
+            # holds the threads it foreshadowed itself, so it is pointed at
+            # them rather than left to invent something unrelated.
+            state = start_game('a foggy city', make_world())
+            fake = FakePlugin([ok(make_turn('You awaken in the mist.', 'awoke')), ok(make_turn('A door opens.'))])
             next_turn(state, '', fake)
-            self.assertTrue(state.victory_achieved)
-            next_turn(state, 'keep going', fake)
-            self.assertIn('already achieved the win condition', fake.calls[1][2])
-            self.assertTrue(state.victory_achieved, 'victory must stay latched even when later turns do not report it')
-            self.assertNotIn('already achieved', fake.calls[0][2])
+            self.ae(state.current_summary.upcoming_events, ('The mist thickens.',))
+            next_turn(state, '', fake, interesting_event=True)
+            prompt = fake.calls[1][0]
+            self.assertIn('something unexpected', prompt)
+            self.assertIn('paying off one of these unresolved threads', prompt)
+            self.assertIn('- The mist thickens.', prompt, 'the unresolved threads must be listed for the AI to choose from')
+
+            # With no threads open there is nothing to pay off and the AI must
+            # not be sent an empty list to work from
+            state = start_game('a foggy city', make_world())
+            fake = FakePlugin([ok(make_turn('You awaken.')._replace(summary_update=make_update(upcoming_events=()))), ok(make_turn('A door opens.'))])
+            next_turn(state, '', fake)
+            self.ae(state.current_summary.upcoming_events, ())
+            next_turn(state, '', fake, interesting_event=True)
+            prompt = fake.calls[1][0]
+            self.assertIn('something unexpected', prompt)
+            self.assertNotIn('unresolved threads', prompt)
+
+        def test_ai_cyoa_quick_actions(self) -> None:
+            # The AI is asked for one action of each requested kind, rather
+            # than for three "distinct" actions, which gets three variations
+            # on the single obvious move.
+            state = start_game('a foggy city', make_world())
+            res = next_turn(state, '', FakePlugin([ok(make_turn('You awaken.'))]))
+            self.assertIsNone(res.exception)
+            instructions = turn_instructions(state)
+            for group in REQUESTED_QUICK_ACTION_KINDS:
+                for kind in group:
+                    self.assertIn(f'"{kind.value}"', instructions, 'every requested kind of action must be named in the instructions')
+                    self.assertIn(QUICK_ACTION_KIND_DESCRIPTIONS[kind], instructions, 'the AI must be told what each kind of action means')
+            self.ae(state.turns[-1].turn.quick_actions[0].kind, QuickActionKind.cautious)
+            self.ae(quick_action_kind_name(QuickActionKind.other), '', 'the catch-all kind must have no name to show the player')
+            self.assertTrue(all(quick_action_kind_name(k) for k in QuickActionKind if k is not QuickActionKind.other))
+
+            def selected(*actions: str | QuickAction) -> tuple[tuple[str, str], ...]:
+                return tuple((a.text, a.kind.value) for a in selected_quick_actions(make_actions(*actions)))
+
+            # Blanks and duplicates are discarded and the text is stripped
+            self.ae(selected(' Run ', 'Run', '', '\n', 'RUN'), (('Run', 'other'),))
+            # An action of every kind offered is preferred over the first few
+            cautious = QuickAction('Wait for them to pass', QuickActionKind.cautious)
+            bold = QuickAction('Kick the door in', QuickActionKind.bold)
+            bold2 = QuickAction('Kick the window in', QuickActionKind.bold)
+            social = QuickAction('Ask them who they are', QuickActionKind.social)
+            self.ae(
+                selected(bold, bold2, cautious, social),
+                (('Kick the door in', 'bold'), ('Wait for them to pass', 'cautious'), ('Ask them who they are', 'social')),
+                'when the AI offers more actions than are shown, one of each kind must be preferred',
+            )
+            self.ae(
+                selected(cautious, bold, social, QuickAction('Search the desk', QuickActionKind.investigate)),
+                (('Wait for them to pass', 'cautious'), ('Kick the door in', 'bold'), ('Ask them who they are', 'social')),
+                'the order the AI put the actions in must be kept',
+            )
+            self.ae(
+                selected(bold, bold2, QuickAction('Kick the wall in', QuickActionKind.bold), 'Something else'),
+                (('Kick the door in', 'bold'), ('Kick the window in', 'bold'), ('Something else', 'other')),
+                'with fewer kinds than actions to show, the leftover slots must be filled in the order the AI gave',
+            )
+
+        def test_ai_cyoa_turn_validation(self) -> None:
+            def played(turn: StoryTurn, state: GameState | None = None) -> tuple[GameState, StructuredOutputResult]:
+                state = state or start_game('a foggy city', make_world())
+                return state, next_turn(state, 'go', FakePlugin([ok(turn)]))
+
+            def rejected(turn: StoryTurn) -> str:
+                state, res = played(turn)
+                self.assertIsInstance(res.exception, InvalidAIResponse)
+                self.assertIsNone(res.data)
+                self.ae(res.error_details, '{"raw": "json"}', 'the raw response must be reported for an unusable turn')
+                self.ae(state.turns, [], 'an unusable turn must not modify the game state')
+                return str(res.exception)
+
+            def accepted(turn: StoryTurn, state: GameState | None = None) -> TurnRecord:
+                state, res = played(turn, state)
+                self.assertIsNone(res.exception, f'turn unexpectedly rejected: {res.exception}')
+                ans = state.turns[-1]
+                self.assertIs(res.data, ans.turn, 'the validated turn must be returned as well as stored')
+                return ans
+
+            # A schema conforming but unusable response must be reported as an error
+            self.assertIn('empty passage', rejected(make_turn('   \n  ')))
+            self.assertIn('quick actions', rejected(make_turn('x')._replace(quick_actions=())))
+            self.assertIn('quick actions', rejected(make_turn('x')._replace(quick_actions=make_actions(' ', '\n'))))
+            state = start_game('a foggy city', make_world())
+            res = next_turn(state, 'go', FakePlugin([StructuredOutputResult(data=None, raw='{}')]))
+            self.assertIsInstance(res.exception, InvalidAIResponse, 'a result with neither data nor an exception must be an error')
+            self.ae(state.turns, [])
+
+            # Text fields are stripped and quick actions are deduplicated and truncated to three
+            turn = accepted(
+                make_turn(' You awaken. ')._replace(
+                    quick_actions=make_actions(' Run ', 'Run', 'Hide', '', 'Shout', 'Wait'),
+                    scene_description='  A misty street.  ',
+                    chapter_title='   ',
+                )
+            ).turn
+            self.ae(turn.narrative, 'You awaken.')
+            self.ae(turn.quick_actions, make_actions('Run', 'Hide', 'Shout'))
+            self.ae(turn.scene_description, 'A misty street.')
+            self.assertIsNone(turn.chapter_title, 'a blank chapter title must be normalized to null')
+            # A missing scene description must not fail an otherwise good turn
+            self.ae(accepted(make_turn('x')._replace(scene_description=' ')).turn.scene_description, '')
+            # Nor must too few quick actions: they are a convenience, the passage of prose is what the player paid for
+            self.ae(
+                accepted(make_turn('x')._replace(quick_actions=make_actions('Look', '  ', 'look'))).turn.quick_actions,
+                make_actions('Look'),
+                'a turn with a single usable quick action must be kept',
+            )
+
+            # An unrepairable summary must fail the turn
+            def with_summary(summary: StorySummary) -> GameState:
+                state = start_game('a foggy city', make_world())
+                state.turns.append(TurnRecord(player_input='', raw_response='', turn=make_turn('x'), summary=summary, chapter=0))
+                return state
+
+            empty = StorySummary(world='', major_events=(), characters=(), current_situation='', upcoming_events=())
+            state = with_summary(empty)
+            res = next_turn(state, 'go', FakePlugin([ok(make_turn('y')._replace(summary_update=make_update()._replace(current_situation='')))]))
+            self.assertIsInstance(res.exception, InvalidAIResponse)
+            self.assertIn('world', str(res.exception))
+            self.ae(len(state.turns), 1, 'an unusable turn must not modify the game state')
+            state = with_summary(empty._replace(world='A city lost in mist.'))
+            res = next_turn(state, 'go', FakePlugin([ok(make_turn('y')._replace(summary_update=make_update()._replace(current_situation='')))]))
+            self.assertIsInstance(res.exception, InvalidAIResponse)
+            self.assertIn('current situation', str(res.exception))
+            state = with_summary(empty._replace(world='A city lost in mist.', current_situation='In the mist.'))
+            res = next_turn(state, 'go', FakePlugin([ok(make_turn('y'))]))
+            self.assertIsInstance(res.exception, InvalidAIResponse)
+            self.assertIn('no characters', str(res.exception), 'an update that leaves the story with no cast at all must fail the turn')
+
+        def test_ai_cyoa_summary_updates(self) -> None:
+            state = start_game('a foggy city', make_world())
+            initial = state.current_summary
+            ada = initial.characters[0]
+
+            def play(update: SummaryUpdate) -> StorySummary:
+                res = next_turn(state, 'go', FakePlugin([ok(make_turn('x')._replace(summary_update=update))]))
+                self.assertIsNone(res.exception, f'turn unexpectedly rejected: {res.exception}')
+                return state.current_summary
+
+            # Everything the update does not mention is carried over from the previous summary
+            s = play(make_update('awoke'))
+            self.ae(s.world, initial.world, 'an empty world must leave the description of the world unchanged')
+            self.ae(s.current_situation, 'In the mist.')
+            self.ae(s.major_events, ('awoke',))
+            self.ae(s.upcoming_events, ('The mist thickens.',))
+            self.ae(
+                s.characters,
+                (ada._replace(current_state='lost in the mist'),),
+                'the fields an update leaves empty must keep the values the character already has',
+            )
+
+            # Major events accumulate rather than being re-sent, and are not duplicated
+            self.ae(play(make_update('saw shapes')).major_events, ('awoke', 'saw shapes'))
+            self.ae(play(make_update('saw shapes')).major_events, ('awoke', 'saw shapes'), 'an event already in the summary must not be added twice')
+            self.ae(play(make_update()).major_events, ('awoke', 'saw shapes'), 'a turn in which nothing important happens must not erase the story memory')
+
+            # A character the update says nothing about is left exactly as they were
+            s = play(make_update(character_updates=()))
+            self.ae(s.characters, (ada._replace(current_state='lost in the mist'),), 'a character the AI does not mention must keep their state')
+
+            # The world and a character's durable fields change only when the update says so
+            s = play(
+                make_update(
+                    world='The mist has lifted.',
+                    character_updates=(CharacterDelta(id=PROTAGONIST_ID, current_state='blinking in the sun', description='a stubborn engineer, now scarred'),),
+                )
+            )
+            self.ae(s.world, 'The mist has lifted.')
+            self.ae(s.characters[0].description, 'a stubborn engineer, now scarred')
+            self.ae(s.characters[0].backstory, ada.backstory, 'a description that changed must not drag the rest of the character with it')
+            self.ae(s.characters[0].current_state, 'blinking in the sun')
+
+            # A new character is added at the end of the cast, one with nothing durable known about them is dropped
+            s = play(
+                make_update(
+                    character_updates=(
+                        CharacterDelta(id='marlo', current_state='waiting at the tunnel mouth', name='Marlo', description='a mist-runner', backstory='a local'),
+                        CharacterDelta(id='ghost', current_state='watching from the roof'),
+                        CharacterDelta(id='', current_state='hiding', name='Nameless friend'),
+                    )
+                )
+            )
+            self.ae(tuple(c.name for c in s.characters), ('Ada', 'Marlo'))
+            self.ae(s.characters[1].relationships, '', 'a new character who has not met anyone yet must be kept')
+
+            # The list of upcoming events is left alone by the passages that change no threads, which is most of them,
+            # and replaced wholesale by those that do, so that resolved threads can leave the summary
+            self.ae(play(make_update(upcoming_events=('Marlo returns', ' Marlo returns '))).upcoming_events, ('Marlo returns',))
+            self.ae(
+                play(make_update(upcoming_events=None)).upcoming_events,
+                ('Marlo returns',),
+                'a passage that neither opens nor resolves a thread must leave the open threads alone',
+            )
+
+            # The AI is told it may leave the field out entirely on the turns that change nothing, so a response without it must parse
+            data = as_jsonable(make_turn('x'), spec_for_class(StoryTurn))
+            del data['summary_update']['upcoming_events']
+            omitted = instantiate(data, spec_for_class(StoryTurn), StoryTurn.__name__).summary_update
+            self.assertIsNone(omitted.upcoming_events, 'an omitted upcoming_events must parse as no change to the threads')
+            self.ae(play(omitted).upcoming_events, ('Marlo returns',), 'a turn that omits upcoming_events must leave the open threads alone')
+
+            self.ae(play(make_update(upcoming_events=())).upcoming_events, (), 'the last unresolved plot thread must be able to leave the summary')
+
+            # The major events are capped, with the AI asked to consolidate the older ones before the cap drops them
+            s = play(make_update(*(f'event {i}' for i in range(MAX_MAJOR_EVENTS + 5))))
+            self.ae(len(s.major_events), MAX_MAJOR_EVENTS, 'the list of major events must be bounded')
+            self.ae(s.major_events[-1], f'event {MAX_MAJOR_EVENTS + 4}')
+            self.assertNotIn('awoke', s.major_events, 'the oldest events must be the ones dropped when the cap is exceeded')
+            s = play(make_update('and then this happened', consolidated_major_events=('everything up to now',)))
+            self.ae(
+                s.major_events,
+                ('everything up to now', 'and then this happened'),
+                'a consolidated list must replace the events already in the summary, with this turn appended to it',
+            )
 
         def test_ai_cyoa_rewind(self) -> None:
-            state = start_game('brief', make_world(), make_world().characters[0])
+            state = start_game('brief', make_world())
             fake = FakePlugin([
                 ok(make_turn('One.', 'one')),
-                ok(make_turn('Two.', 'one', 'two', win=True)),
-                ok(make_turn('Three.', 'one', 'two', 'three', starts_new_chapter=True, chapter_title='Part II')),
+                ok(make_turn('Two.', 'two')),
+                ok(make_turn('Three.', 'three', starts_new_chapter=True, chapter_title='Part II')),
             ])
             for x in ('', 'a', 'b'):
                 next_turn(state, x, fake)
@@ -550,28 +2135,239 @@ def find_tests() -> TestSuite:  # {{{
             rewind(state)
             self.ae(state.current_chapter, 0)
             self.ae(state.current_summary.major_events, ('one', 'two'))
-            self.assertTrue(state.victory_achieved)
             rewind(state)
-            self.assertFalse(state.victory_achieved)
             self.assertRaises(ValueError, rewind, state, 2)
             self.assertRaises(ValueError, rewind, state, 0)
             rewind(state)
             self.ae(state.current_summary, initial_summary(state.world, state.character))
 
         def test_ai_cyoa_serialization(self) -> None:
-            state = start_game('a foggy city', make_world(), make_world().characters[0])
+            style = StoryStyle(art_style='anime', pace='short', tone='comedic', narration='third-past')
+            state = start_game('a foggy city', make_world(), style=style)
             fake = FakePlugin([
                 ok(make_turn('You awaken.', 'awoke')),
-                ok(make_turn('You escape.', 'awoke', 'escaped', starts_new_chapter=True, chapter_title='Freedom', win=True)),
+                ok(make_turn('You escape.', 'escaped', starts_new_chapter=True, chapter_title='Freedom')),
             ])
             next_turn(state, '', fake)
             next_turn(state, 'run', fake)
             restored = deserialize_game(serialize_game(state))
             self.ae(state, restored)
-            self.assertTrue(restored.victory_achieved)
             self.ae(restored.current_chapter, 1)
+            self.ae(restored.style, style)
+
+            # The style fields were added after games were already being
+            # saved, so a game saved without them must load with the styles
+            # the game had before the player could choose them
+            without_style = json.loads(serialize_game(state))
+            for f in StoryStyle._fields:
+                del without_style['game'][f]
+            old = deserialize_game(json.dumps(without_style))
+            self.ae(old.style, StoryStyle())
+            self.ae(turn_instructions(old), turn_instructions(start_game('a foggy city', make_world())))
             self.assertRaises(ValueError, deserialize_game, json.dumps({'version': GAME_SERIALIZATION_VERSION + 1, 'game': {}}))
+            self.assertRaises(ValueError, deserialize_game, json.dumps({'version': 0, 'game': {}}))
+            self.assertRaises(ValueError, deserialize_game, json.dumps({'game': {}}))
             self.assertRaises(ValueError, deserialize_game, json.dumps(['not', 'a', 'game']))
+            bad = json.loads(serialize_game(state))
+            bad['game']['character_index'] = len(state.world.characters)
+            with self.assertRaises(ValueError, msg='an out of range played character index must be rejected'):
+                deserialize_game(json.dumps(bad))
+            self.assertRaises(ValueError, start_game, 'brief', make_world(), len(make_world().characters))
+
+            # Games saved before characters had a current_state must still load
+            data = json.loads(serialize_game(state))
+            for record in data['game']['turns']:
+                for c in record['summary']['characters']:
+                    del c['current_state']
+            restored = deserialize_game(json.dumps(data))
+            self.ae(
+                tuple(c.current_state for c in restored.current_summary.characters),
+                ('',) * len(restored.current_summary.characters),
+                'a character saved without a current_state must load with an empty one',
+            )
+
+        def test_ai_cyoa_serialization_migration(self) -> None:
+            style = StoryStyle(art_style='anime', pace='short', tone='comedic', narration='third-past')
+            state = start_game('a foggy city', make_world(), style=style)
+            fake = FakePlugin([
+                ok(make_turn('You awaken.', 'awoke')),
+                ok(make_turn('You escape.', 'escaped', starts_new_chapter=True, chapter_title='Freedom')),
+            ])
+            next_turn(state, '', fake)
+            next_turn(state, 'run', fake)
+
+            def as_v3() -> str:
+                # A game as version 3 serialized it: the quick actions as bare
+                # strings, without the kind of approach each of them takes.
+                data = json.loads(serialize_game(state))
+                data['version'] = 3
+                for record in data['game']['turns']:
+                    record['turn']['quick_actions'] = [a['text'] for a in record['turn']['quick_actions']]
+                return json.dumps(data)
+
+            restored = deserialize_game(as_v3())
+            self.ae(
+                [tuple(a.text for a in t.turn.quick_actions) for t in restored.turns],
+                [tuple(a.text for a in t.turn.quick_actions) for t in state.turns],
+                'migration must keep the text of every quick action of every turn',
+            )
+            self.ae(
+                {a.kind for t in restored.turns for a in t.turn.quick_actions},
+                {QuickActionKind.other},
+                'a quick action saved without a kind must get the catch-all kind',
+            )
+
+            def as_v2() -> str:
+                # A game as version 2 serialized it: the whole story summary,
+                # returned by the AI on every turn, stored inside the turn.
+                data = json.loads(serialize_game(state))
+                data['version'] = 2
+                for record in data['game']['turns']:
+                    record['turn']['updated_summary'] = record.pop('summary')
+                    del record['turn']['summary_update']
+                return json.dumps(data)
+
+            restored = deserialize_game(as_v2())
+            self.ae([t.summary for t in restored.turns], [t.summary for t in state.turns], 'migration must move the stored summary onto the turn record')
+            self.ae(restored.current_summary, state.current_summary)
+            self.ae(
+                updated_summary(restored.turns[0].turn.summary_update, initial_summary(restored.world, restored.character)),
+                restored.turns[0].summary,
+                'the update synthesized for a migrated turn must merge to exactly the summary that was stored',
+            )
+
+            def as_v1(played: PlayerCharacter) -> str:
+                # A game as version 1 serialized it: a copy of the played
+                # character instead of its index, characters without ids and
+                # the instructions and prompt of every turn.
+                data = json.loads(serialize_game(state))
+                data['version'] = 1
+                game = data['game']
+                del game['character_index']
+                game['character'] = as_jsonable(played, spec_for_class(PlayerCharacter))
+                for record in game['turns']:
+                    record['instructions'] = 'the system prompt of this turn'
+                    record['prompt'] = 'the prompt of this turn, with the whole transcript embedded in it'
+                    record['turn']['updated_summary'] = record.pop('summary')
+                    del record['turn']['summary_update']
+                    for c in record['turn']['updated_summary']['characters']:
+                        del c['id']
+                return json.dumps(data)
+
+            restored = deserialize_game(as_v1(state.character))
+            self.ae(restored.character_index, 0)
+            self.ae(restored.character, state.character)
+            self.ae(restored.world, state.world)
+            self.ae(restored.style, style)
+            self.ae(restored.current_chapter, 1)
+            self.ae(len(restored.turns), len(state.turns))
+            self.ae([(t.instructions, t.prompt) for t in restored.turns], [('', '')] * len(state.turns), 'migration must drop the recorded prompts')
+            self.ae(
+                tuple(c.id for c in restored.current_summary.characters),
+                (PROTAGONIST_ID,),
+                'migration must give the played character a stable id in the summary',
+            )
+            self.ae(
+                tuple(c.id for c in restored.turns[0].summary.characters),
+                (PROTAGONIST_ID,),
+                'every stored summary must be migrated, not just the last one',
+            )
+
+            # An edited played character must still be linked to its world entry by name
+            restored = deserialize_game(as_v1(state.character._replace(description='an edited engineer')))
+            self.ae(restored.character_index, 0)
+            self.ae(restored.character, state.world.characters[0], 'the world entry must win over the stale copy of the played character')
+
+            # A played character that is no longer part of the world must not be lost
+            restored = deserialize_game(as_v1(state.character._replace(name='Zed')))
+            self.ae(restored.character_index, len(state.world.characters))
+            self.ae(restored.character.name, 'Zed')
+            self.ae(len(restored.world.characters), len(state.world.characters) + 1)
+
+        def test_ai_cyoa_character_ids(self) -> None:
+            self.ae(character_id_for_name('  The Stranger '), 'the-stranger')
+            self.ae(character_id_for_name('Ada Lovelace-Smith'), 'ada-lovelace-smith')
+            self.ae(character_id_for_name(' ?! '), 'character')
+            self.ae(character_id_for_name('x' * 40), 'x' * 32)
+            state = start_game('a foggy city', make_world())
+            self.ae(tuple(c.id for c in state.current_summary.characters), (PROTAGONIST_ID,))
+
+            def play(*updates: CharacterDelta) -> tuple[tuple[str, str], ...]:
+                turn = make_turn('x')._replace(summary_update=make_update('awoke', character_updates=updates))
+                res = next_turn(state, 'go', FakePlugin([ok(turn)]))
+                self.assertIsNone(res.exception, f'turn unexpectedly rejected: {res.exception}')
+                return tuple((c.id, c.name) for c in state.current_summary.characters)
+
+            # A character the AI introduces without an id gets one derived from their name
+            self.ae(
+                play(
+                    CharacterDelta(id=PROTAGONIST_ID, current_state='alone'),
+                    CharacterDelta(id='', current_state='watching Ada', name='the stranger', description='a hooded figure', backstory='unknown'),
+                ),
+                ((PROTAGONIST_ID, 'Ada'), ('the-stranger', 'the stranger')),
+            )
+
+            # Renaming a character while carrying their id forward must update their entry, not fork it
+            self.ae(
+                play(CharacterDelta(id='the-stranger', current_state='guiding Ada', name='Marlo')),
+                ((PROTAGONIST_ID, 'Ada'), ('the-stranger', 'Marlo')),
+                'a renamed character must keep their id and their entry',
+            )
+            self.ae(state.current_summary.characters[1].description, 'a hooded figure', 'renaming a character must not disturb the rest of their entry')
+
+            # An id the AI invents for a character that already has one must not fork them either
+            self.ae(
+                play(CharacterDelta(id='marlo', current_state='still guiding Ada', name='Marlo')),
+                ((PROTAGONIST_ID, 'Ada'), ('the-stranger', 'Marlo')),
+                'a character matched by name must keep the id they already have',
+            )
+
+            # A second update for a character already updated this turn must be ignored
+            self.ae(
+                play(
+                    CharacterDelta(id='the-stranger', current_state='at the gate'),
+                    CharacterDelta(id='the-stranger', current_state='somewhere else entirely', name='Not Marlo'),
+                ),
+                ((PROTAGONIST_ID, 'Ada'), ('the-stranger', 'Marlo')),
+            )
+            self.ae(state.current_summary.characters[1].current_state, 'at the gate', 'the first update for a character must win')
+
+            # A new character whose invented id is already taken must not be merged into the character that has it
+            self.ae(
+                play(CharacterDelta(id='', current_state='still hooded', name='The Stranger', description='a different hooded figure', backstory='unknown')),
+                ((PROTAGONIST_ID, 'Ada'), ('the-stranger', 'Marlo'), ('the-stranger-2', 'The Stranger')),
+            )
+
+        def test_ai_cyoa_prompts_are_not_stored(self) -> None:
+            from unittest.mock import patch
+
+            def play_two_turns() -> GameState:
+                state = start_game('a foggy city', make_world())
+                fake = FakePlugin([ok(make_turn('You awaken in the mist.', 'awoke')), ok(make_turn('Shapes loom.', 'awoke', 'loomed'))])
+                next_turn(state, '', fake)
+                next_turn(state, 'look around', fake)
+                return state
+
+            state = play_two_turns()
+            raw = serialize_game(state)
+            records = json.loads(raw)['game']['turns']
+            self.assertNotIn('You awaken in the mist.', json.dumps(records[1]), 'the prose of a turn must not be repeated in the record of every later turn')
+            self.assertNotIn('The prose of the current chapter so far', raw, 'the prompt sent to the AI must not be stored')
+            self.ae([(t.instructions, t.prompt) for t in state.turns], [('', '')] * 2)
+            self.ae(deserialize_game(raw), state)
+
+            # The debug flag records exactly what was sent, at the cost of size
+            with patch('calibre.ai.cyoa.STORE_PROMPTS_IN_TURN_RECORDS', True):
+                recorded = play_two_turns()
+            self.assertIn('novelist', recorded.turns[0].instructions)
+            self.assertIn('You awaken in the mist.', recorded.turns[1].prompt)
+            self.assertGreater(len(serialize_game(recorded)), len(raw))
+            self.ae(deserialize_game(serialize_game(recorded)), recorded, 'a game with the prompts recorded must still round trip')
+
+            # Both are reconstructable from the state, which is why they need not be stored
+            rewind(state)  # back to the state the second turn was played from
+            self.ae(turn_instructions(state), recorded.turns[1].instructions)
+            self.ae(turn_prompt(state, 'look around'), recorded.turns[1].prompt)
 
     return unittest.defaultTestLoader.loadTestsFromTestCase(TestCYOA)
 

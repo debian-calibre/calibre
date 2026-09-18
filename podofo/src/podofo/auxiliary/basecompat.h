@@ -1,15 +1,11 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PODOFO_BASE_COMPAT_H
 #define PODOFO_BASE_COMPAT_H
 
-/**
- * \file base_compat.h Some base platform specific defines
- */
+/// @file base_compat.h Some base platform specific defines
 
  // Declare ssize_t as a signed alternative to size_t,
  // useful for example to provide optional size argument

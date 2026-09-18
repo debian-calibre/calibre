@@ -1,21 +1,20 @@
-/**
- * SPDX-FileCopyrightText: (C) 2010 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2021 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2010 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_FONT_STANDARD14_DATA_H
 #define PDF_FONT_STANDARD14_DATA_H
 
-#include "PdfDeclarationsPrivate.h"
 #include <podofo/main/PdfFontMetricsStandard14.h>
+#include <podofo/auxiliary/Corners.h>
 
 namespace PoDoFo {
 
-struct Standard14FontData
+struct Standard14FontData final
 {
     const unsigned short* Widths;
-    unsigned WidthsSize;
+    unsigned short WidthsSize;
+    PdfFontFileType FileType;
     PdfFontDescriptorFlags Flags;
     uint16_t DefaultWidth;
     PdfFontStretch Stretch;
@@ -29,10 +28,10 @@ struct Standard14FontData
     int16_t StemH;
     int16_t StrikeThroughPos;
     int16_t UnderlinePos;
-    Rect BBox;
+    Corners BBox;
 };
 
-using Std14CPToGIDMap = std::unordered_map<unsigned short, unsigned char>;
+using Std14CPToGIDMap = std::unordered_map<unsigned short, unsigned short>;
 
 std::string_view GetStandard14FontName(PdfStandard14FontType stdFont);
 

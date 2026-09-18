@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfPushButton.h"
@@ -11,14 +9,14 @@
 using namespace std;
 using namespace PoDoFo;
 
-PdfPushButton::PdfPushButton(PdfAcroForm& acroform, const shared_ptr<PdfField>& parent)
-    : PdfButton(acroform, PdfFieldType::PushButton, parent)
+PdfPushButton::PdfPushButton(PdfAcroForm& acroform, shared_ptr<PdfField>&& parent)
+    : PdfButton(acroform, PdfFieldType::PushButton, std::move(parent))
 {
     init();
 }
 
-PdfPushButton::PdfPushButton(PdfAnnotationWidget& widget, const shared_ptr<PdfField>& parent)
-    : PdfButton(widget, PdfFieldType::PushButton, parent)
+PdfPushButton::PdfPushButton(PdfAnnotationWidget& widget, shared_ptr<PdfField>&& parent)
+    : PdfButton(widget, PdfFieldType::PushButton, std::move(parent))
 {
     init();
 }
@@ -32,7 +30,7 @@ PdfPushButton::PdfPushButton(PdfObject& obj, PdfAcroForm* acroform)
 void PdfPushButton::init()
 {
     // make a push button
-    this->SetFieldFlag(static_cast<int>(ePdfButton_PushButton), true);
+    this->SetFieldFlag(static_cast<int>(PdfButton_PushButton), true);
 }
 
 void PdfPushButton::SetRolloverCaption(nullable<const PdfString&> text)

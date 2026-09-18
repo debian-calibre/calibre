@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.14.0\n"
+"Project-Id-Version: calibre 9.15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-28 07:17+0530\n"
+"POT-Creation-Date: 2026-09-18 07:37+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,46 +68,50 @@ msgstr ""
 msgid "Here, the ``@`` operator refers to the attributes of the tag. You can use some of the `XPath built-in functions`_ to perform more sophisticated matching on attribute values."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:76
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:75
+msgid "When XPath expressions are used for conversion options such as chapter detection or the start reading at position, they are evaluated against the *input* document, before calibre flattens the CSS. CSS flattening rewrites class names, so the class names you see in the converted output (things like ``calibre1``) do not exist yet when your expression runs. Copy class names from the input document, not from the converted book. If in doubt, match on tag names and text content instead, as these are not changed by the conversion."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:86
 msgid "Selecting by tag content"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:78
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:88
 msgid "Using XPath, you can even select tags based on the text they contain. The best way to do this is to use the power of *regular expressions* via the built-in function :term:`re:test()`::"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:84
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:94
 msgid "Here the ``.`` operator refers to the contents of the tag, just as the ``@`` operator referred to its attributes."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:90
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:100
 msgid "Sample e-book"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:96
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:106
 msgid "XPath built-in functions"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:99
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:109
 msgid "name()"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:101
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:111
 msgid "The name of the current tag."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:102
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:112
 msgid "contains()"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:104
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:114
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:105
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:115
 msgid "re:test()"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/xpath.rst:107
+#: ../../../home/kovid/work/calibre/manual/xpath.rst:117
 msgid "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches the regular expression `pattern`. A particularly useful flag is ``i``, it makes matching case insensitive. A good primer on the syntax for regular expressions can be found at `regexp syntax <https://docs.python.org/library/re.html>`_"
 msgstr ""

@@ -11,9 +11,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.11.104\n"
+"Project-Id-Version: calibre 9.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:07+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2017-12-15 03:02+0000\n"
 "Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (https://app.transifex.com/calibre/teams/19337/sv/)\n"
@@ -32,8 +32,9 @@ msgid ""
 "This checklist summarizes the most commonly used/hard to remember parts of "
 "the regexp engine available in most parts of calibre."
 msgstr ""
-"Denna checklista sammanfattar de vanligaste/svåra att komma ihåg delar av "
-"regexp-motorn som finns i de flesta delar av calibre."
+"Denna checklista sammanfattar de delar av regexp-motorn som används oftast "
+"eller är svårast att komma ihåg. Motorn finns tillgänglig i de flesta delar "
+"av calibre."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:10
 msgid "Contents"
@@ -48,8 +49,8 @@ msgid ""
 "Character classes are useful to represent different groups of characters, "
 "succinctly."
 msgstr ""
-"Teckenklasser är användbara för att representera olika grupper av tecken, "
-"kortfattat."
+"Teckenklasser är ett kortfattat sätt att representera olika grupper av "
+"tecken."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:18
 msgid "Examples:"
@@ -75,7 +76,7 @@ msgstr "``[a-z]``"
 msgid ""
 "Lowercase letters. Does not include characters with accent mark and "
 "ligatures"
-msgstr "Gemener. Innehåller inte tecken med accentmärke och ligaturer"
+msgstr "Gemener. Omfattar inte bokstäver med accenttecken eller ligaturer"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:27
 msgid "``[a-z0-9]``"
@@ -95,9 +96,9 @@ msgid ""
 "you must put it at the beginning or at the end so as not to confuse it with "
 "the hyphen that specifies a range of characters"
 msgstr ""
-"Versaler eller gemener eller ett streck. För att inkludera bindestreck i en "
-"klass måste du lägga den i början eller i slutet för att inte förvirra den "
-"med bindestrecket som anger ett antal tecken"
+"Versaler, gemener eller ett bindestreck. För att inkludera bindestrecket i "
+"en klass måste du placera det i början eller slutet, så att det inte "
+"förväxlas med bindestrecket som anger ett teckenintervall"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:33
 msgid "``[^0-9]``"
@@ -108,8 +109,8 @@ msgid ""
 "Any character except a digit. The caret (^) placed at the beginning of the "
 "class excludes the characters of the class (complemented class)"
 msgstr ""
-"Alla tecken utom en siffra. Insättningstecknet (^) placerad i början av "
-"klassen exkluderar tecknena i klassen (kompletterad klass)"
+"Ett valfritt tecken utom en siffra. Cirkumflextecknet (^) i början av "
+"klassen utesluter tecknen i klassen (negerad klass)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:36
 msgid "``[[a-z]--[aeiouy]]``"
@@ -120,8 +121,8 @@ msgid ""
 "The lowercase consonants. A class can be included in a class. The characters"
 " ``--`` exclude what follows them"
 msgstr ""
-"Konsonanterna för gemener. En klass kan ingå i en klass. Tecknet ``--`` "
-"exkluderar vad som följer dem"
+"Gemena konsonanter. En klass kan ingå i en annan klass. Tecknen ``--`` "
+"utesluter det som följer efter dem"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:39
 msgid "``[\\w--[\\d_]]``"
@@ -132,8 +133,8 @@ msgid ""
 "All letters (including foreign accented characters). Abbreviated classes can"
 " be used inside a class"
 msgstr ""
-"Alla bokstäver (inklusive utländska accenttecken). Förkortade klasser kan "
-"användas inom en klass"
+"Alla bokstäver (inklusive utländska bokstäver med accenttecken). Förkortade "
+"klasser kan användas inom en klass"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:44
 msgid "Example::"
@@ -157,7 +158,7 @@ msgstr "``\\D``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:57
 msgid "Any non-numeric character (same as ``[^0-9]``)"
-msgstr "Alla icke-numeriska tecken (samma som ``[^0-9]``)"
+msgstr "Ett valfritt icke-numeriskt tecken (samma som ``[^0-9]``)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:59
 msgid "``\\w``"
@@ -168,8 +169,8 @@ msgid ""
 "An alphanumeric character (``[a-zA-Z0-9]``) including characters with accent"
 " mark and ligatures"
 msgstr ""
-"Ett alfanumeriskt tecken (``[a-zA-Z0-9]``) inklusive tecken med accentmärke "
-"och ligaturer"
+"Ett alfanumeriskt tecken (``[a-zA-Z0-9]``), inklusive bokstäver med "
+"accenttecken och ligaturer"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:62
 msgid "``\\W``"
@@ -177,7 +178,7 @@ msgstr "``\\W``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:62
 msgid "Any “non-word” character"
-msgstr "Alla \"icke-ordet\" tecken"
+msgstr "Ett valfritt tecken som inte är ett ordtecken"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
 msgid "``\\s``"
@@ -185,7 +186,7 @@ msgstr "``\\s``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:64
 msgid "Space, non-breaking space, tab, carriage return"
-msgstr "Mellanslag, fast mellanslag, tabb, carriage return"
+msgstr "Mellanslag, fast mellanslag, tabb, vagnretur"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:66
 msgid "``\\S``"
@@ -193,7 +194,7 @@ msgstr "``\\S``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:66
 msgid "Any “non-whitespace” character"
-msgstr "Alla \"icke-whitespace\" tecken"
+msgstr "Ett valfritt tecken som inte är ett blanktecken"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:68
 msgid "``.``"
@@ -204,8 +205,8 @@ msgid ""
 "Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
 "regexp modifier to include the newline character."
 msgstr ""
-"Alla tecken utom nyrad. Använd kryssrutan \"punkta alla\" eller regexp-"
-"modifieraren ``(?s)`` för att inkludera nyradstecken."
+"Ett valfritt tecken utom nyrad. Använd kryssrutan ”Punkt matchar allt” eller"
+" regexp-modifieraren ``(?s)`` för att även matcha nyradstecken."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
 msgid "The quantifiers"
@@ -217,7 +218,7 @@ msgstr "**Kvantifierare**"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:76
 msgid "**Number of occurrences of the expression preceding the quantifier**"
-msgstr "** Antal förekomster av uttrycket som föregår kvantifieraren **"
+msgstr "**Antal förekomster av uttrycket som föregår kvantifieraren**"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:79
 msgid "``?``"
@@ -257,7 +258,8 @@ msgstr "``{min,max}``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:87
 msgid "Number of occurrences between the minimum and maximum values included"
-msgstr "Antal förekomster mellan de minsta och högsta värdena som ingår"
+msgstr ""
+"Antal förekomster mellan minimi- och maximivärdet, inklusive båda gränserna"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:89
 msgid "``{min,}``"
@@ -265,8 +267,7 @@ msgstr "``{min,}``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:89
 msgid "Number of occurrences between the minimum value included and infinity"
-msgstr ""
-"Antal förekomster mellan det minsta inkluderade värdet och oändligheten"
+msgstr "Minst det angivna antalet förekomster, utan övre gräns"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:91
 msgid "``{,max}``"
@@ -274,11 +275,11 @@ msgstr "``{,max}``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:91
 msgid "Number of occurrences between 0 and the maximum value included"
-msgstr "Antal förekomster mellan 0 och det högsta värdet som ingår"
+msgstr "Antal förekomster mellan 0 och maximivärdet, inklusive båda gränserna"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:97
 msgid "Greed"
-msgstr "Girig"
+msgstr "Girighet"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:99
 msgid ""
@@ -287,18 +288,19 @@ msgid ""
 "first. ``?`` follows a quantifier to make it lazy. Avoid putting two in the "
 "same expression, the result can be unpredictable."
 msgstr ""
-"Som standard, med kvantifierare, är den reguljär uttrycksmotorn girig: den "
-"utökar valet så mycket som möjligt. Detta orsakar ofta överraskningar i "
-"början. ``?`` följer en kvantifierare för att göra den lat. Undvik att sätta"
-" två i samma uttryck, resultatet kan vara oförutsägbart."
+"Motorn för reguljära uttryck är som standard girig när kvantifierare "
+"används: den utökar matchningen så långt som möjligt. Detta leder ofta till "
+"överraskningar i början. Sätt ``?`` efter en kvantifierare för att göra den "
+"lat. Undvik att använda två sådana i samma uttryck, eftersom resultatet kan "
+"vara oförutsägbart."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:104
 msgid ""
 "Beware of nesting quantifiers, for example, the pattern ``(a*)*``, as it "
 "exponentially increases processing time."
 msgstr ""
-"Se upp för häckande kvantifierare, till exempel mönstret ``(a*)*`` eftersom "
-"det exponentiellt ökar bearbetningstiden."
+"Se upp med nästlade kvantifierare, till exempel mönstret ``(a*)*``, eftersom"
+" de kan öka bearbetningstiden exponentiellt."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:108
 msgid "Alternation"
@@ -355,15 +357,15 @@ msgstr "``\"Blabla\"\\K|(Blabla)``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:135
 msgid "Anchors"
-msgstr "Ankaren"
+msgstr "Ankare"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:137
 msgid ""
 "An anchor is a way to match a logical location in a string, rather than a "
 "character. The most useful anchors for text processing are:"
 msgstr ""
-"Ett ankare är ett sätt att matcha en logisk plats i en sträng, snarare än "
-"ett tecken. De användbaraste ankare för textbehandling är:"
+"Ett ankare är ett sätt att matcha en logisk position i en sträng i stället "
+"för ett tecken. De användbaraste ankarna för textbehandling är:"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:140
 msgid "``\\b``"
@@ -407,11 +409,11 @@ msgid ""
 "engines, it also allows you to get rid of this limit by writing the "
 "equivalent of a positive lookbehind of variable length."
 msgstr ""
-"Återställer startpositionen för valet till dess position i mönstret. Vissa "
-"regexp-motorer (men inte calibre) tillåter inte lookbehind av varierande "
-"längd, särskilt med kvantifierare. När du kan använda ``\\K`` med dessa "
-"motorer låter det dig också bli av med denna gräns genom att skriva "
-"motsvarande ett positivt lookbehind variabel längd."
+"Återställer matchningens startposition till den aktuella positionen i "
+"mönstret. Vissa regexp-motorer (men inte calibres) tillåter inte lookbehind "
+"av varierande längd, särskilt med kvantifierare. Om dessa motorer stöder "
+"``\\K`` kan du kringgå begränsningen genom att skriva motsvarigheten till en"
+" positiv lookbehind av varierande längd."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:160
 msgid "Groups"
@@ -419,7 +421,7 @@ msgstr "Grupper"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:162
 msgid "``(expression)``"
-msgstr "``(uttryck)``"
+msgstr "``(expression)``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:163
 msgid ""
@@ -462,8 +464,7 @@ msgid ""
 "Branch reset group: the branches of the alternations included in the "
 "expression share the same group numbers"
 msgstr ""
-"Gruppåterställningsgrupp: grenarna för alternationerna som ingår i uttrycket"
-" delar samma gruppnummer"
+"Grenåterställningsgrupp: alternativen i uttrycket delar samma gruppnummer"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:180
 msgid "``(?<name>expression)``"
@@ -475,9 +476,9 @@ msgid ""
 "pattern by ``(?P=name)`` and in the *replace* by ``\\g<name>``. Two "
 "different groups can use the same name."
 msgstr ""
-"Grupp som heter \"name\". Urvalet kan återanropas senare i *sök*-mönstret "
-"med ``(?P=name)`` och i *ersätt* med ``\\g<name>``. Två olika grupper kan "
-"använda samma namn."
+"En grupp med namnet ”name”. Matchningen kan återanvändas senare i "
+"*sökmönstret* med ``(?P=name)`` och i *ersättningsmönstret* med "
+"``\\g<name>``. Två olika grupper kan använda samma namn."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:187
 msgid "Lookarounds"
@@ -522,7 +523,7 @@ msgstr "``?<!``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
 msgid "Negative lookbehind (to be placed before the selection)"
-msgstr "Negativt lookbehind (placeras före markeringen)"
+msgstr "Negativ lookbehind (placeras före markeringen)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:206
 msgid ""
@@ -548,15 +549,15 @@ msgid ""
 "calibre's regexp engine practice, the positive lookbehind behaves in the "
 "same way, and selects only 2, contrary to theory."
 msgstr ""
-"När du letar efter flera matchningar i en sträng, vid startpositionen för "
-"varje matchförsök, kan en lookbehind inspektera tecknen före den aktuella "
-"positionen. Därför, på strängen 123, bör mönstret ``(?<=\\d)\\d`` (en siffra"
-" som föregås av en siffra) i teorin välja 2 och 3. Å andra sidan, "
-"``\\d\\K\\d`` kan bara välja 2, eftersom startpositionen efter det första "
-"valet är omedelbart före 3, och det inte finns tillräckligt med siffror för "
-"en andra match. På samma sätt fångar ``\\d(\\d)`` bara 2. I calibres regexp-"
-"motorövning beter sig det positiva utseendet på samma sätt och väljer endast"
-" 2, i motsats till teorin."
+"När du söker efter flera matchningar i en sträng kan en lookbehind vid varje"
+" matchningsförsök undersöka tecknen före den aktuella startpositionen. I "
+"strängen 123 bör därför mönstret ``(?<=\\d)\\d`` (en siffra som föregås av "
+"en siffra) i teorin matcha 2 och 3. Däremot kan ``\\d\\K\\d`` bara matcha 2,"
+" eftersom startpositionen efter den första matchningen är omedelbart före 3,"
+" och det inte finns tillräckligt med siffror för en andra matchning. På "
+"samma sätt fångar ``\\d(\\d)`` bara 2. I praktiken beter sig positiv "
+"lookbehind på samma sätt i calibres regexp-motor och matchar endast 2, i "
+"motsats till teorin."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:221
 msgid ""
@@ -618,7 +619,7 @@ msgstr "``(?1)``"
 msgid ""
 "Recursion of the only pattern of the numbered capturing group, here group 1"
 msgstr ""
-"Rekursion av det enda mönstret i den numrerade fångstgruppen, här grupp 1"
+"Rekursion av enbart mönstret i den numrerade fångstgruppen, här grupp 1"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:251
 msgid ""
@@ -628,11 +629,11 @@ msgid ""
 "beginning of a new string between double quotation marks, well we know how "
 "to do, and we call ourselves. Then we have a pattern like::"
 msgstr ""
-"Rekursion anropar sig själv. Detta är användbart för balanserade "
-"förfrågningar, till exempel citerade strängar, som kan innehålla inbäddade "
-"citattecken. Således, om vi under bearbetningen av en sträng mellan dubbla "
-"citattecken stöter på början av en ny sträng mellan dubbla citattecken, vet "
-"vi hur vi ska göra, och vi anropar oss själva. Då har vi ett mönster som::"
+"Rekursion innebär att något anropar sig självt. Detta är användbart för att "
+"söka efter balanserade strukturer, till exempel strängar inom citattecken "
+"som kan innehålla andra strängar inom citattecken. Om vi under bearbetningen"
+" av en sträng mellan dubbla citattecken stöter på början av en ny sådan "
+"sträng, kan vi anropa samma mönster igen. Då får vi ett mönster som::"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:259
 msgid ""
@@ -647,12 +648,12 @@ msgid ""
 "This template can also be used to modify pairs of tags that can be embedded,"
 " such as ``<div>`` tags."
 msgstr ""
-"Denna mall kan också användas för att ändra par av taggar som kan bäddas in,"
-" till exempel ``<div>`` taggar."
+"Denna mall kan också användas för att ändra taggpar som kan nästlas, till "
+"exempel ``<div>``-taggar."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:268
 msgid "Special characters"
-msgstr "Speciella tecken"
+msgstr "Specialtecken"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:271
 msgid "**Character**"
@@ -680,7 +681,7 @@ msgstr "``\\x20``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:280
 msgid "(breakable) space"
-msgstr "(brytbart) mellanrum"
+msgstr "(brytbart) mellanslag"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
 msgid "``\\xa0``"
@@ -688,7 +689,7 @@ msgstr "``\\xa0``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
 msgid "no-break space"
-msgstr "icke-brytbart mellanrum"
+msgstr "fast mellanslag"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:288
 msgid "Meta-characters"
@@ -701,17 +702,17 @@ msgid ""
 "(``\\``), to lose their special meaning and become a regular character "
 "again::"
 msgstr ""
-"Metatecken är de som har en speciell betydelse för regexp-motorn. Av dessa "
-"måste tolv föregås av ett escape-tecken, bakstrecket (``\\``), för att "
-"förlora sin speciella mening och bli ett vanligt tecken igen::"
+"Metatecken har en särskild betydelse för regexp-motorn. Av dessa måste tolv "
+"föregås av ett escape-tecken, bakstrecket (``\\``), för att förlora sin "
+"särskilda betydelse och bli vanliga tecken igen::"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:296
 msgid ""
 "Seven other meta-characters do not need to be preceded by a backslash (but "
 "can be without any other consequence)::"
 msgstr ""
-"Sju andra metatecken behöver inte föregås av ett bakstreck (men kan vara "
-"utan någon annan konsekvens)::"
+"Sju andra metatecken behöver inte föregås av ett bakstreck, men kan göra det"
+" utan att betydelsen ändras::"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:302
 msgid ""
@@ -720,10 +721,11 @@ msgid ""
 "status in a class. Outside the class, the dash is a simple literal, the "
 "closing bracket remains a meta-character."
 msgstr ""
-"Specialtecken förlorar sin status om de används i en klass (mellan "
-"hakparenteser ``[]``). Stängningshakparentesen och bindestrecket har en "
-"särskild status i en klass. Utanför klassen är bindestrecket en enkel "
-"bokstav, stängningshakparentesen förblir ett metatecken."
+"Specialtecken förlorar sin särskilda betydelse om de används i en klass "
+"(mellan hakparenteser ``[]``). Den avslutande hakparentesen och "
+"bindestrecket har en särskild status i en klass. Utanför klassen är "
+"bindestrecket ett vanligt tecken, medan den avslutande hakparentesen förblir"
+" ett metatecken."
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:307
 msgid ""
@@ -754,7 +756,7 @@ msgstr "``(?s)``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:318
 msgid "Causes the dot (``.``) to match newline characters as well"
-msgstr "Orsakar punkten (``.``) att matcha nyradstecken också"
+msgstr "Gör att punkten (``.``) även matchar nyradstecken"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:320
 msgid "``(?m)``"

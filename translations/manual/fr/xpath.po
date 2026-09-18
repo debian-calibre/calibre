@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: un_pogaz, 2026\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -113,52 +113,64 @@ msgid ""
 "matching on attribute values."
 msgstr "Ici l'opérateur ``@`` réfère aux attributs de la balise. Vous pouvez utiliser certaines des `Fonctions intégrées XPath`_ pour effectuer des correspondances plus sophistiquées sur les valeurs attribut."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:75
+msgid ""
+"When XPath expressions are used for conversion options such as chapter "
+"detection or the start reading at position, they are evaluated against the "
+"*input* document, before calibre flattens the CSS. CSS flattening rewrites "
+"class names, so the class names you see in the converted output (things like"
+" ``calibre1``) do not exist yet when your expression runs. Copy class names "
+"from the input document, not from the converted book. If in doubt, match on "
+"tag names and text content instead, as these are not changed by the "
+"conversion."
+msgstr "Lorsque des expressions XPath sont utilisées pour des options de conversion telles que la détection des chapitres ou le démarrage de la lecture à une position donnée, elles sont évaluées par rapport au document *d'entrée*, avant que Calibre n'aplatisse le CSS. L'aplatissement du CSS réécrit les noms de classes ; par conséquent, les noms de classes que vous voyez dans le fichier de sortie converti (tels que ``calibre1``) n'existent pas encore au moment où votre expression s'exécute. Copiez les noms de classes à partir du document d’entrée, et non à partir du livre converti. En cas de doute, effectuez plutôt une correspondance sur les noms de balises et le contenu textuel, car ceux-ci ne sont pas modifiés par la conversion."
+
+#: ../../../__w/calibre/calibre/manual/xpath.rst:86
 msgid "Selecting by tag content"
 msgstr "Sélection par contenu de balise"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:88
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "En utilisant XPath, vous pouvez même sélectionner des balises basées sur le texte qu'elles contiennent. La meilleure manière de faire cela est d'utiliser la puissance des *expressions régulières* par l'intermédiaire de la fonction intégrée :term:`re:test()`::"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:94
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "Ici l'opérateur ``.`` réfère au contenu de la balise, tout comme l'opérateur ``@`` réfère à ses attributs."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:100
 msgid "Sample e-book"
 msgstr "Exemple de livre numérique"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:106
 msgid "XPath built-in functions"
 msgstr "Les fonctions XPath intégrées"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:109
 msgid "name()"
 msgstr "name()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:111
 msgid "The name of the current tag."
 msgstr "Le nom de la balise actuelle."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:112
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:114
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "``contains(s1, s2)`` renvoie `true` si s1 contient s2."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:115
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:117
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "

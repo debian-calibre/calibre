@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2005 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2005 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfFontType3.h"
@@ -15,13 +13,13 @@
 using namespace std;
 using namespace PoDoFo;
 
-PdfFontType3::PdfFontType3(PdfDocument& doc, const PdfFontMetricsConstPtr& metrics,
-    const PdfEncoding& encoding)
-    : PdfFontSimple(doc, metrics, encoding)
+PdfFontType3::PdfFontType3(PdfDocument& doc, PdfFontMetricsConstPtr&& metrics,
+        const PdfEncoding& encoding)
+    : PdfFontSimple(doc, PdfFontType::Type3, std::move(metrics), encoding)
 {
 }
 
-PdfFontType PdfFontType3::GetType() const
+bool PdfFontType3::SupportsSubsetting() const
 {
-    return PdfFontType::Type3;
+    return true;
 }

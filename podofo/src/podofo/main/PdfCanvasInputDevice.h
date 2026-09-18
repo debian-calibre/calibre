@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_CANVAS_INPUT_DEVICE_H
 #define PDF_CANVAS_INPUT_DEVICE_H
@@ -16,11 +13,9 @@ namespace PoDoFo {
 class PdfCanvas;
 class PdfObject;
 
-/**
- * There are Pdfs spanning delimiters or begin/end tags into
- * contents streams. Let's create a device correctly spanning
- * I/O reads into these
- */
+/// There are Pdfs spanning delimiters or begin/end tags into
+/// contents streams. Let's create a device correctly spanning
+/// I/O reads into these
 class PODOFO_API PdfCanvasInputDevice final : public InputStreamDevice
 {
 public:

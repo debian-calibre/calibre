@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfStringStream.h"
@@ -36,7 +33,9 @@ PdfStringStream& PdfStringStream::operator<<(double val)
 PdfStringStream& PdfStringStream::operator<<(
     std::ostream& (*pfn)(std::ostream&))
 {
-    pfn(*m_stream);
+    // Note that std::endl will itself append \n character and
+    // the underlying stream won't turn it to \r\n on Windows
+    (void)pfn(*m_stream);
     return *this;
 }
 

@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_FIELD_CHILDREN_COLLECTION_H
 #define PDF_FIELD_CHILDREN_COLLECTION_H
@@ -45,13 +42,13 @@ namespace PoDoFo
     public:
         using FieldList = std::vector<std::shared_ptr<PdfField>>;
 
-        template <typename TObject, typename TListIterator>
+        template <typename TField, typename TListIterator>
         class Iterator final
         {
             friend class PdfFieldChildrenCollectionBase;
         public:
             using difference_type = void;
-            using value_type = TObject*;
+            using value_type = TField*;
             using pointer = void;
             using reference = void;
             using iterator_category = std::forward_iterator_tag;
@@ -74,6 +71,12 @@ namespace PoDoFo
             {
                 m_iterator++;
                 return *this;
+            }
+            Iterator operator++(int)
+            {
+                auto copy = *this;
+                m_iterator++;
+                return copy;
             }
             value_type operator*()
             {
@@ -98,7 +101,7 @@ namespace PoDoFo
 
     private:
         // To be called by PdfField
-        PdfField& AddChild(const std::shared_ptr<PdfField>& field);
+        PdfField& AddChild(std::shared_ptr<PdfField> field);
     private:
         PdfArray* getKidsArray() const;
         void initFields();
@@ -111,7 +114,7 @@ namespace PoDoFo
 
     private:
         FieldList m_Fields;
-        std::unique_ptr<FieldMap> m_fieldMap;
+        FieldMap m_fieldMap;
         PdfField* m_field;
         PdfArray* m_kidsArray;
     };

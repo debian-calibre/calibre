@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2006 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2006 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
 #include "PdfDataContainer.h"
@@ -18,6 +16,8 @@ PdfDataContainer::PdfDataContainer()
 {
 }
 
+PdfDataContainer::~PdfDataContainer() { }
+
 void PdfDataContainer::SetOwner(PdfObject& owner)
 {
     m_Owner = &owner;
@@ -26,7 +26,7 @@ void PdfDataContainer::SetOwner(PdfObject& owner)
 
 void PdfDataContainer::ResetDirty()
 {
-    ResetDirtyInternal();
+    resetDirty();
 }
 
 PdfObject* PdfDataContainer::GetIndirectObject(const PdfReference& ref) const
@@ -59,6 +59,12 @@ bool PdfDataContainer::IsIndirectReferenceAllowed(const PdfObject& obj)
     }
 
     return false;
+}
+
+void PdfDataContainer::AssertMutable() const
+{
+    if (m_Owner != nullptr && m_Owner->IsImmutable())
+        PODOFO_RAISE_ERROR(PdfErrorCode::ChangeOnImmutable);
 }
 
 PdfDocument* PdfDataContainer::GetObjectDocument()

@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:07+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
-"Last-Translator: efef6ec5b435a041fce803c7f8af77d2_2341d43, 2018,2020\n"
+"Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +32,7 @@ msgstr "API-dokumentation för recept"
 
 #: ../../../__w/calibre/calibre/manual/news_recipe.rst:9
 msgid "The API for writing recipes is defined by the :class:`BasicNewsRecipe`"
-msgstr "API:et för skriva recept är definierade av :class:`BasicNewsRecipe`"
+msgstr "API:et för att skriva recept definieras av :class:`BasicNewsRecipe`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe:1
@@ -41,7 +41,7 @@ msgid ""
 "progressively more of the functionality in this class, you can make "
 "progressively more customized/powerful recipes. For a tutorial introduction "
 "to creating recipes, see :doc:`news`."
-msgstr "Grundklass som innehåller logik behövs i alla recept. Genom att åsidosätta gradvis mer av funktionaliteten i den här klassen kan du göra allt mer anpassade/kraftfulla recept. För en handledningsintroduktion till att skapa recept, se :doc:`news`."
+msgstr "Basklass som innehåller den logik som behövs i alla recept. Genom att åsidosätta allt fler funktioner i klassen kan du skapa mer anpassade och kraftfulla recept. En introduktion till att skapa recept finns i :doc:`news`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.adeify_images:1
@@ -74,21 +74,21 @@ msgid ""
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag` and "
 "extract the text from it recursively, including any CDATA sections and alt "
 "tag attributes. Return a possibly empty Unicode string."
-msgstr "Bekväm metod som tar en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_-:code:`Tag` och rekursivt extraherar texten ur den, inklusive eventuella CDATA-avsnitt och alt-attribut. Returnerar en Unicode-sträng som kan vara tom."
+msgstr "Hjälpmetod som tar ett :code:`Tag`-objekt från `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ och rekursivt extraherar texten ur det, inklusive eventuella CDATA-avsnitt och alt-attribut. Returnerar en Unicode-sträng som kan vara tom."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:6
 msgid ""
 "`use_alt`: If `True` try to use the alt attribute for tags that don't have "
 "any textual content"
-msgstr "`use_alt`: Om `True` försök använd alt attribut för taggar som inte har något textinnehåll"
+msgstr "`use_alt`: Om `True`, försök använda alt-attributet för taggar som saknar textinnehåll."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:9
 msgid ""
 "`tag`: `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
-msgstr "`tagg`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
+msgstr "`tag`: `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ :code:`Tag`"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_article:1
@@ -96,14 +96,14 @@ msgid ""
 "Call this method inside any of the preprocess methods to abort the download "
 "for the current article. Useful to skip articles that contain inappropriate "
 "content, such as pure video articles."
-msgstr "Anropa denna metod inuti någon av förbehandlingsmetoderna för att avbryta hämtningen av den aktuella artikeln. Användbart att hoppa över artiklar som innehåller olämpligt innehåll, såsom hela videoklippsartiklar."
+msgstr "Anropa denna metod inifrån någon av förbehandlingsmetoderna för att avbryta hämtningen av den aktuella artikeln. Det är användbart för att hoppa över artiklar med olämpligt innehåll, till exempel artiklar som enbart innehåller video."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.abort_recipe_processing:1
 msgid ""
 "Causes the recipe download system to abort the download of this recipe, "
 "displaying a simple feedback message to the user."
-msgstr "Orsakar att recepthämtningssystemet avbryter hämtningen av detta recept, visning av ett enkelt återkopplingsmeddelande till användaren."
+msgstr "Får recepthämtningssystemet att avbryta hämtningen av receptet och visa ett enkelt meddelande för användaren."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.add_toc_thumbnail:1
@@ -142,7 +142,7 @@ msgstr "Är True om URL:en kommer från en intern länk i en HTML-fil. False om 
 msgid ""
 "Called after all articles have been download. Use it to do any cleanup like "
 "logging out of subscription sites, etc."
-msgstr "Anropas efter alla artiklar har hämtats. Använd den för att göra godtycklig sanering som att logga ut från prenumerationsplatser etc."
+msgstr "Anropas när alla artiklar har hämtats. Använd metoden för avslutande åtgärder, till exempel att logga ut från prenumerationswebbplatser."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:1
@@ -151,7 +151,7 @@ msgid ""
 " since mechanize is not thread safe. The default cloning routines should "
 "capture most browser customization, but if you do something exotic in your "
 "recipe, you should override this method in your recipe and clone manually."
-msgstr "Klona webbläsaren br. Klonade webbläsare används för flertrådade hämtningar, eftersom mechanize (mekanisera) inte är trådsäkert. Standard kloningsrutinerna ska fånga de flesta webbläsaranpassningar, men om du gör något exotiskt i ditt recept, ska du åsidosätta den här metoden i ditt recept och klona manuellt."
+msgstr "Klona webbläsaren br. Klonade webbläsare används för flertrådade hämtningar, eftersom mechanize inte är trådsäkert. Standardrutinerna för kloning bör bevara de flesta webbläsaranpassningar. Om receptet gör något ovanligt bör du åsidosätta metoden i receptet och klona manuellt."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.clone_browser:7
@@ -201,7 +201,7 @@ msgid ""
 "it returns a `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ "
 "browser instance that supports cookies, ignores robots.txt, handles "
 "refreshes and has a random common user agent."
-msgstr "Returnera en webbläsarinstans som används för att hämta dokument från webben. Som standard returnerar den en `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ webbläsarinstans som stöder kakor, ignorerar robots.txt, hanterar uppdateringar och har en slumpmässig gemensam användaragent."
+msgstr "Returnera en webbläsarinstans för att hämta dokument från webben. Som standard returneras en instans av `mechanize <https://mechanize.readthedocs.io/en/latest/>`_ som stöder kakor, ignorerar robots.txt, hanterar siduppdateringar och använder en slumpmässigt vald, vanligt förekommande användaragent."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
@@ -270,7 +270,7 @@ msgstr "Om du anger `articles_are_obfuscated` anropas metoden med varje artikela
 msgid ""
 "This method is typically useful for sites that try to make it difficult to "
 "access article content automatically."
-msgstr "Denna metod är oftast användbart för webbplatser som försöker göra det svårt att komma åt artikelns innehåll automatiskt."
+msgstr "Denna metod är särskilt användbar för webbplatser som försöker försvåra automatisk åtkomst till artikelinnehåll."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_url_specific_delay:1
@@ -296,7 +296,7 @@ msgid ""
 "Convenience method that takes an URL to the index page and returns a "
 "`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ of"
 " it."
-msgstr "Bekväm metod som använder en URL som indexsida och returnerar en `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__ av den."
+msgstr "Hjälpmetod som tar en URL till indexsidan och returnerar ett `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`__-objekt för sidan."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.index_to_soup:5
@@ -308,7 +308,7 @@ msgstr "`url_or_raw`: Antingen en URL eller den hämtade indexsidan som en strä
 msgid ""
 "Return True if the link should be followed or False otherwise. By default, "
 "raises NotImplementedError which causes the downloader to ignore it."
-msgstr "Returnera True om länken ska följas eller False annars. Som standard höjer NotImplementedError som orsakar hämtningen att ignorera det."
+msgstr "Returnera True om länken ska följas, annars False. Som standard utlöses NotImplementedError, vilket får hämtningsfunktionen att ignorera metoden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:5
@@ -318,14 +318,14 @@ msgstr "URL:en som ska följas"
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.is_link_wanted:6
 msgid "The tag from which the URL was derived"
-msgstr "Taggen för vilken URL:en erhölls"
+msgstr "Taggen som URL:en hämtades från"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_feeds:1
 msgid ""
 "Create a list of articles from the list of feeds returned by "
 ":meth:`BasicNewsRecipe.get_feeds`. Return a list of :class:`Feed` objects."
-msgstr "Skapa en lista med artiklar från listan med flöden som returneras av :meth:`BasicNewsRecipe.get_feeds`. returnerar en lista med :class:`Feed` objekt."
+msgstr "Skapa en lista med artiklar från flödena som returneras av :meth:`BasicNewsRecipe.get_feeds`. Returnera en lista med :class:`Feed`-objekt."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:1
@@ -354,7 +354,7 @@ msgstr "Varje lista med artiklar måste innehålla ordböcker av formen::"
 msgid ""
 "For an example, see the recipe for downloading `The Atlantic`. In addition, "
 "you can add 'author' for the author of the article."
-msgstr "Till exempel, se receptet för hämtning av `The Atlantic`. Dessutom kan du lägga till 'författare' till författaren till artikeln."
+msgstr "Ett exempel finns i receptet för att hämta `The Atlantic`. Du kan även lägga till 'author' för artikelns författare."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:26
@@ -382,17 +382,17 @@ msgstr "Ett objekt av klass :class:`calibre.web.feeds.Article`. Om du ändrar sa
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:7
 msgid "Parsed HTML belonging to this article"
-msgstr "Analyserad HTML tillhör den här artikeln"
+msgstr "Analyserad HTML som tillhör denna artikel"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:8
 msgid "True iff the parsed HTML is the first page of the article."
-msgstr "True iff analyserade HTML är den första sidan av artikeln."
+msgstr "True om och endast om den analyserade HTML-koden är artikelns första sida."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:1
 msgid "Run any needed post processing on the parsed downloaded e-book."
-msgstr "Kör någon behövd efterbehandling på den analyserade hämtade e-boken."
+msgstr "Utför den efterbehandling som behövs på den analyserade, hämtade e-boken."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_book:3
@@ -411,14 +411,14 @@ msgid ""
 "after it is parsed for links and images. It can be used to do arbitrarily "
 "powerful post-processing on the :term:`HTML`. It should return `soup` after "
 "processing it."
-msgstr "Denna metod anropas med källan för varje hämtad :term:`HTML`-fil, efter att den har analyserats för länkar och bilder. Den kan användas för att göra godtyckligt kraftfull efterbearbetning på :term:`HTML`. Den bör returnera `soup` efter bearbetatning."
+msgstr "Denna metod anropas med källkoden för varje hämtad :term:`HTML`-fil, efter att den har analyserats för länkar och bilder. Metoden kan användas för valfri avancerad efterbehandling av :term:`HTML`. Den ska returnera `soup` efter bearbetningen."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:6
 msgid ""
 "A `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__"
 "  instance containing the downloaded :term:`HTML`."
-msgstr "En `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instans innehållande hämtad :term:`HTML`."
+msgstr "En instans av `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ som innehåller den hämtade :term:`HTML`-koden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.postprocess_html:7
@@ -432,7 +432,7 @@ msgid ""
 "before it is parsed for links and images. It is called after the cleanup as "
 "specified by remove_tags etc. It can be used to do arbitrarily powerful pre-"
 "processing on the :term:`HTML`. It should return `soup` after processing it."
-msgstr "Denna metod anropas med källan till varje hämtad :term:`HTML`-fil, innan den analyseras för länkar och bilder. Den anropas efter rensningen som specificerats av remove_tags etc. Det kan användas för att göra godtyckligt kraftfull förbearbetning av :term:`HTML`. Det ska returnera `soup` efter bearbetning."
+msgstr "Denna metod anropas med källkoden för varje hämtad :term:`HTML`-fil, innan den analyseras för länkar och bilder. Anropet sker efter den rensning som anges av remove_tags med flera attribut. Metoden kan användas för valfri avancerad förbehandling av :term:`HTML`. Den ska returnera `soup` efter bearbetningen."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_html:7
@@ -442,7 +442,7 @@ msgid ""
 "`soup`: A `BeautifulSoup "
 "<https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instance "
 "containing the downloaded :term:`HTML`."
-msgstr "`soup`: En `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ instans innehållande hämtad :term:`HTML`."
+msgstr "`soup`: En instans av `BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`__ som innehåller den hämtade :term:`HTML`-koden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_image:1
@@ -486,7 +486,7 @@ msgid ""
 "applied. Note that preprocess_regexps will have already been applied. It is "
 "meant to allow the recipe to skip ad pages. If the soup represents an ad "
 "page, return the HTML of the real page. Otherwise return None."
-msgstr "Denna metod anropas med källan till varje hämtad :term:`HTML`-fil, innan någon av rensningsattribut som remove_tags, keep_only_tags tillämpas. Observera att preprocess_regexps kommer redan ha använts. Det är tänkt att låta receptet att hoppa över annonssidor. Om soup är en annonssida, returnera HTML av den verkliga sidan. Annars returneras None."
+msgstr "Denna metod anropas med källkoden för varje hämtad :term:`HTML`-fil, innan rensningsattribut som remove_tags och keep_only_tags tillämpas. Observera att preprocess_regexps redan har tillämpats. Metoden gör att receptet kan hoppa över annonssidor. Om soup representerar en annonssida ska du returnera HTML-koden för den egentliga sidan. Returnera annars None."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:1
@@ -505,7 +505,7 @@ msgstr "`index`: En lista med titlar."
 msgid ""
 "`weights`: A dictionary that maps weights to titles. If any titles in index "
 "are not in weights, they are assumed to have a weight of 0."
-msgstr "`weights`: En ordbok som översätter vikt mot titel. Om något titelindex inte har vikt, antas de ha vikten 0."
+msgstr "`weights`: En ordbok som mappar vikter till titlar. Titlar i index som saknas i weights antas ha vikten 0."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
@@ -521,7 +521,7 @@ msgid ""
 "algorithms from the readability project. Setting this to True, means that "
 "you do not have to worry about cleaning up the downloaded HTML manually "
 "(though manual cleanup will always be superior)."
-msgstr "Extrahera automatiskt all text från hämtade artikelsidor. Använder algoritmerna från läsbarhetsprojektet. Att ställa in detta till True betyder att du inte behöver oroa dig för att städa upp den hämtade HTML-koden manuellt (även om manuell städning alltid kommer att vara överlägsen)."
+msgstr "Extrahera automatiskt all text från hämtade artikelsidor med algoritmer från projektet readability. Om värdet är True behöver du inte rensa den hämtade HTML-koden manuellt, även om manuell rensning alltid ger bättre resultat."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.auto_cleanup_keep:1
@@ -540,7 +540,7 @@ msgid ""
 "requests or 'qt' which uses the Qt Networking backend. Both 'webengine' and "
 "'qt' support HTTP/2, which mechanize does not and are thus harder to "
 "fingerprint for bot protection services."
-msgstr "Den simulerade webbläsarmotorn att använda vid hämtning från servrar. Standard är att använda Python-mekaniserade webbläsarmotor, som stöder inloggning. Men om du inte behöver logga in, överväg att ändra detta till antingen \"webengine\" som använder en faktisk Chromium-webbläsare för att göra nätverksförfrågningarna eller \"qt\" som använder Qt Networking-backend. Både 'webengine' och 'qt' stöder HTTP/2, som mekanisera inte och är därmed svårare att fingeravtrycka för botskyddstjänster."
+msgstr "Den simulerade webbläsarmotor som ska användas vid hämtning från servrar. Som standard används Pythons webbläsarmotor mechanize, som stöder inloggning. Om du inte behöver inloggning kan du överväga 'webengine', som använder en faktisk Chromium-webbläsare för nätverksförfrågningarna, eller 'qt', som använder Qt Networking. Både 'webengine' och 'qt' stöder HTTP/2, vilket mechanize inte gör. De är därför svårare för botskyddstjänster att identifiera genom digitala fingeravtryck."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
@@ -589,7 +589,7 @@ msgid ""
 "Recipe specific options to control the conversion of the downloaded content "
 "into an e-book. These will override any user or plugin specified values, so "
 "only use if absolutely necessary. For example::"
-msgstr "Receptspecifika alternativ för att anpassa konvertering av hämtat innehåll in i en e-bok. Dessa kommer åsidosätta alla användare eller insticksmodul specifika värden, så använd bara om det är absolut nödvändigt. Till exempel::"
+msgstr "Receptspecifika alternativ som styr konverteringen av hämtat innehåll till en e-bok. De åsidosätter alla värden som användaren eller insticksmoduler har angett, så använd dem endast när det är absolut nödvändigt. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.cover_margins:1
@@ -602,7 +602,7 @@ msgid ""
 "15px on the top and bottom. Color names are defined `here "
 "<https://www.imagemagick.org/script/color.php>`_. Note that for some reason,"
 " white does not always work in Windows. Use #ffffff instead"
-msgstr "Som standard används omslagsbilden som returneras av get_cover_url() som omslaget för tidskriften. Att åsidosätta detta i ditt recept instruerar calibre att göra det hämtade omslaget till en ram vars bredd och höjd uttrycks i procent av det hämtade omslaget. cover_margins = (10, 15, '#ffffff') fyller omslaget med en vit marginal 10 pixlar till vänster och höger, 15 pixlar på toppen och botten. Färgnamn definieras på `här <https://www.imagemagick.org/script/color.php>`_. Observera att vit av någon anledning inte alltid fungerar i Windows. Använd i stället #ffffff"
+msgstr "Som standard används omslagsbilden som returneras av get_cover_url() som tidskriftens omslag. Om du åsidosätter detta i receptet placerar calibre det hämtade omslaget i en ram vars bredd och höjd uttrycks i procent av det hämtade omslaget. cover_margins = (10, 15, '#ffffff') lägger till en vit marginal på 10 pixlar till vänster och höger och 15 pixlar upptill och nedtill. Färgnamn definieras `här <https://www.imagemagick.org/script/color.php>`_. Observera att färgnamnet white av någon anledning inte alltid fungerar i Windows. Använd #ffffff i stället."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.delay:1
@@ -610,7 +610,7 @@ msgid ""
 "The default delay between consecutive downloads in seconds. The argument may"
 " be a floating point number to indicate a more precise time. See "
 ":meth:`get_url_specific_delay` to implement per URL delays."
-msgstr "Standardfördröjningen mellan på varandra följande hämtningar i sekunder. Argumentet kan vara ett flyttal för att indikera en mer exakt tid. Se :meth:`get_url_specific_delay` för att implementera förseningar per URL."
+msgstr "Standardfördröjningen i sekunder mellan hämtningar som följer på varandra. Argumentet kan vara ett flyttal för att ange en mer exakt tid. Se :meth:`get_url_specific_delay` för att ange fördröjningar per URL."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.description:1
@@ -627,7 +627,7 @@ msgid ""
 "``cp1252``. If None, try to detect the encoding. If it is a callable, the "
 "callable is called with two arguments: The recipe object and the source to "
 "be decoded. It must return the decoded source."
-msgstr "Ange en åsidosättskodning för webbplatser som har en felaktig teckenuppsättningsspecifikation. Det vanligaste är att ange ``latin1`` och använda ``cp1252``. Om None, försök att identifiera kodningen. Om det är en anropbar, anropas den anropsbara med två argument: Receptobjektet och källan som ska avkodas. Det måste returnera den avkodade källan."
+msgstr "Ange en teckenkodning som åsidosätter webbplatsens när webbplatsen anger fel teckenuppsättning. Det vanligaste är att webbplatsen anger ``latin1`` men använder ``cp1252``. Om värdet är None försöker kodningen identifieras automatiskt. Om värdet är ett anropbart objekt anropas det med två argument: receptobjektet och källkoden som ska avkodas. Det måste returnera den avkodade källkoden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.extra_css:1
@@ -638,14 +638,14 @@ msgid ""
 "is declared using the style attribute on individual :term:`HTML` tags. Note "
 "that if you want to programmatically generate the extra_css override the "
 ":meth:`get_extra_css()` method instead. For example::"
-msgstr "Ange någon extra :term:`CSS` som bör läggas till hämtade :term:`HTML`-filer. Det kommer att införas i `<style>`-taggar, precis före den avslutande `</head>`-taggen därigenom åsidosätts alla :term:`CSS` utom det som deklarerats med hjälp av formatattribut på individuella :term:`HTML`-taggar. Observera att om du vill att programmässigt skapa extra_css åsidosätt :meth:`get_extra_css()` metoden i stället. Till exempel::"
+msgstr "Ange extra :term:`CSS` som ska läggas till i hämtade :term:`HTML`-filer. Koden infogas i `<style>`-taggar strax före den avslutande `</head>`-taggen och åsidosätter därmed all :term:`CSS` utom den som anges med style-attribut på enskilda :term:`HTML`-taggar. Om du vill skapa extra_css programmatiskt ska du i stället åsidosätta metoden :meth:`get_extra_css()`. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.feeds:1
 msgid ""
 "List of feeds to download. Can be either ``[url1, url2, ...]`` or "
 "``[('title1', url1), ('title2', url2),...]``"
-msgstr "Förteckning över flöden att hämtar. Kan vara antingen ``[url1, url2, ...]`` eller ``[('title1', url1), ('title2', url2),...]``"
+msgstr "Lista över flöden som ska hämtas. Kan vara antingen ``[url1, url2, ...]`` eller ``[('title1', url1), ('title2', url2),...]``"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:1
@@ -673,7 +673,7 @@ msgstr "Endast en av :attr:`BasicNewsRecipe.match_regexps` eller :attr:`BasicNew
 msgid ""
 "Set to False if you do not want to use gzipped transfers with the mechanize "
 "browser. Note that some old servers flake out with gzip."
-msgstr "Ställ in på False om du inte vill använda gzippade överföringar med den mekaniserade webbläsaren. Observera att vissa gamla servrar fungerar dåligt med gzip."
+msgstr "Ange False om du inte vill använda gzip-komprimerade överföringar med webbläsaren mechanize. Observera att vissa äldre servrar inte fungerar som de ska med gzip."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:1
@@ -700,7 +700,7 @@ msgid ""
 "specifying a tag see :attr:`BasicNewsRecipe.remove_tags`. If this list is "
 "not empty, then the `<body>` tag will be emptied and re-filled with the tags"
 " that match the entries in this list. For example::"
-msgstr "Håll endast specificerade taggar och deras underkategorier. För formatet för att ange en tagg se :attr:`BasicNewsRecipe.remove_tags`. Om denna lista inte är tom, då blir `<body>` tagg tom och återfylld med taggar som matchar objekt i denna lista. Till exempel::"
+msgstr "Behåll endast de angivna taggarna och deras underordnade element. Formatet för att ange en tagg beskrivs i :attr:`BasicNewsRecipe.remove_tags`. Om listan inte är tom töms `<body>`-taggen och fylls på nytt med de taggar som matchar posterna i listan. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.keep_only_tags:8
@@ -729,7 +729,7 @@ msgid ""
 "List of regular expressions that determines which links to follow. If empty,"
 " it is ignored. Used only if is_link_wanted is not implemented. For "
 "example::"
-msgstr "Lista med reguljära uttryck som avgör vilka länkar att följa. Om den är tom, ignoreras den. Endast användas om is_link_wanted inte implementeras. Till exempel::"
+msgstr "Lista med reguljära uttryck som avgör vilka länkar som ska följas. Listan ignoreras om den är tom. Används endast om is_link_wanted inte har implementerats. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.match_regexps:7
@@ -742,7 +742,7 @@ msgid ""
 "Maximum number of articles to download from each feed. This is primarily "
 "useful for feeds that don't have article dates. For most feeds, you should "
 "use :attr:`BasicNewsRecipe.oldest_article`"
-msgstr "Högsta antal artiklar att hämta från varje flöde. Den är primärt användbar för flöde som inte har artikeldatum. För de flesta flödes, bör du använda :attr:`BasicNewsRecipe.oldest_article`"
+msgstr "Högsta antal artiklar som ska hämtas från varje flöde. Detta är främst användbart för flöden som saknar artikeldatum. För de flesta flöden bör du använda :attr:`BasicNewsRecipe.oldest_article`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.needs_subscription:1
@@ -750,7 +750,7 @@ msgid ""
 "If True the GUI will ask the user for a username and password to use while "
 "downloading. If set to \"optional\" the use of a username and password "
 "becomes optional"
-msgstr "Om True kommer gränssnittet att be användaren om ett användarnamn och lösenord för att använda vid hämtning. Om inställningen är \"frivilligt\" att använda ett användarnamn och lösenord blir tillval"
+msgstr "Om True ber användargränssnittet om ett användarnamn och lösenord för hämtningen. Om värdet är \"optional\" är det valfritt att använda användarnamn och lösenord."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.no_stylesheets:1
@@ -763,7 +763,7 @@ msgstr "Bekväm flagga för att inaktivera laddning av formatmallar för webbpla
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.oldest_article:1
 msgid "Oldest article to download from this news source. In days."
-msgstr "Äldsta artikel att hämtar från denna nyhetskälla. I dagar."
+msgstr "Högsta ålder i dagar för artiklar som ska hämtas från denna nyhetskälla."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:1
@@ -773,7 +773,7 @@ msgid ""
 "first element of the tuple should be a compiled regular expression and the "
 "second a callable that takes a single match object and returns a string to "
 "replace the match. For example::"
-msgstr "Lista med :term:`regexp` substitutionsregler att köras vid hämtning :term:`HTML`. Varje element i listan bör vara en tupel. Första elementet av tupel bör vara ett kompilerat reguljärt uttryck och andra en anropsbar som tar ett matchande objekt och returnerar en sträng för att ersätta träffen. Till exempel::"
+msgstr "Lista med ersättningsregler med :term:`regexp` som ska tillämpas på den hämtade :term:`HTML`-koden. Varje post i listan ska vara en tupel med två element: ett kompilerat reguljärt uttryck och ett anropbart objekt som tar ett matchningsobjekt och returnerar strängen som ska ersätta matchningen. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_regexps:12
@@ -835,7 +835,7 @@ msgstr "Om True tas tomma flöden bort från utmatningen. Det här alternativet 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1
 msgid "Convenient flag to strip all JavaScript tags from the downloaded HTML"
-msgstr "Bekväm flagga för att ta bort alla JavaScript-taggar från den hämtad HTML-koden"
+msgstr "Praktisk flagga för att ta bort alla JavaScript-taggar från den hämtade HTML-koden"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags:1
@@ -858,7 +858,7 @@ msgstr "Alla nycklar är valfria. För en fullständig förklaring av sökkriter
 msgid ""
 "This will remove all `<div class=\"advert\">` tags and all their children "
 "from the downloaded :term:`HTML`."
-msgstr "Detta tar bort alla `<div class=\"advert\">` taggar och deras underkategorier från hämtade :term:`HTML`."
+msgstr "Detta tar bort alla `<div class=\"advert\">`-taggar och deras underordnade element från den hämtade :term:`HTML`-koden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_tags_after:1
@@ -897,7 +897,7 @@ msgid ""
 "article rather than its original web URL. If you set this to True, you might"
 " also need to implement :meth:`canonicalize_internal_url` to work with the "
 "URL scheme of your particular website."
-msgstr "Om den är inställd till True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar ändras till att hänvisa till den hämtade kopian av artikeln i stället för dess ursprungliga URL. Om du ställer in detta till True, kan du också behöva implementera :meth:`canonicalize_internal_url` för att fungera med URL-schemat för din specifika webbplats."
+msgstr "Om True ändras länkar i hämtade artiklar som hänvisar till andra hämtade artiklar så att de hänvisar till den hämtade kopian i stället för artikelns ursprungliga URL. Du kan då också behöva implementera :meth:`canonicalize_internal_url` för att hantera webbplatsens URL-schema."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.reverse_article_order:1
@@ -964,4 +964,4 @@ msgid ""
 " the length of the embedded content. If `None`, then the default guessing is"
 " used. If `True` then the we always assume the feeds has embedded content "
 "and if `False` we always assume the feed does not have embedded content."
-msgstr "Normalt försöker vi uppskatta om ett flöde har hela artiklar inbäddade i den baserat på längden av inbäddat innehåll. Om `None`, sedan standard används gissning. Om `True` då antar vi alltid flöden har inbäddat innehåll och om` False` kan vi alltid utgå från flödet inte har inbäddat innehåll."
+msgstr "Normalt försöker vi avgöra om ett flöde innehåller hela inbäddade artiklar utifrån det inbäddade innehållets längd. Om värdet är `None` används denna standardbedömning. Om värdet är `True` antas flödet alltid ha inbäddat innehåll, och om värdet är `False` antas det alltid sakna inbäddat innehåll."

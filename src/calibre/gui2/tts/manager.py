@@ -175,7 +175,13 @@ class TTSManager(QObject):
     def speak_marked_text(self, marked_text):
         self._stop()
         self.speaking_simple_text = False
-        self.tts.say(self.tracker.parse_marked_text(marked_text))
+        text = self.tracker.parse_marked_text(marked_text)
+        if text.strip():
+            self.tts.say(text)
+        else:
+            # no speakable text, emit the end event so the client knows
+            # speaking is done, see https://bugs.launchpad.net/bugs/2165923
+            self.emit_state_event('end')
 
     @contextmanager
     def resume_after(self):
@@ -250,6 +256,7 @@ class TTSManager(QObject):
             from calibre.gui2.tts.types import widget_parent
 
             error_dialog(widget_parent(self), _('Read aloud failed'), self.tts.error_message(), show=True)
+            self.emit_state_event('cancel')
         elif state is QTextToSpeech.State.Paused:
             self.emit_state_event('pause')
         elif state is QTextToSpeech.State.Speaking:
@@ -264,8 +271,6 @@ class TTSManager(QObject):
                         self.tts.say(text)
                     else:
                         self.emit_state_event('end')
-        elif state is QTextToSpeech.State.Error:
-            self.emit_state_event('cancel')
 
     def _saying(self, offset: int, length: int) -> None:
         if self.speaking_simple_text:

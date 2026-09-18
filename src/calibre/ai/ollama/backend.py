@@ -21,6 +21,7 @@ from calibre.ai import ChatMessage, ChatMessageType, ChatResponse, ResultBlocked
 from calibre.ai.ollama import OllamaAI
 from calibre.ai.prefs import pref_for_provider
 from calibre.ai.structured import (
+    OnText,
     develop_structured_output,
     messages_for_structured_output,
     strict_json_schema,
@@ -30,7 +31,7 @@ from calibre.ai.structured import (
 from calibre.ai.utils import chat_with_error_handler, develop_text_chat, download_data, opener
 from calibre.utils.localization import _
 
-module_version = 2  # needed for live updates
+module_version = 3  # needed for live updates
 
 
 def pref(key: str, defval: Any = None) -> Any:  # noqa: ANN401
@@ -120,8 +121,13 @@ def human_readable_model_name(model_id: str) -> str:
     return model_id
 
 
-@lru_cache(2)
+def configured_model_name(for_image: bool = False) -> str:
+    return '' if for_image else (pref('text_model') or '')
+
+
 def model_choice_for_text() -> Model:
+    # Deliberately not cached so that changes to the preference, including
+    # temporary overrides via override_prefs_for_providers(), take effect.
     return get_available_models()[pref('text_model')]
 
 
@@ -210,17 +216,19 @@ def structured_output_data(messages: Iterable[ChatMessage], model: Model, schema
     return data
 
 
-def generate_structured_output_implementation(prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
+def generate_structured_output_implementation(
+    prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None
+) -> StructuredOutputResult:
     if use_model:
         model = get_available_models()[use_model]
     else:
         model = model_choice_for_text()
     data = structured_output_data(messages_for_structured_output(prompt, instructions), model, schema)
-    return structured_output_from_chat(responses_for_data(data, model), schema, OllamaAI.name)
+    return structured_output_from_chat(responses_for_data(data, model), schema, OllamaAI.name, on_text)
 
 
-def generate_structured_output(prompt: str, schema: type, instructions: str = '', use_model: str = '') -> StructuredOutputResult:
-    return structured_output_with_error_handler(lambda: generate_structured_output_implementation(prompt, schema, instructions, use_model))
+def generate_structured_output(prompt: str, schema: type, instructions: str = '', use_model: str = '', on_text: OnText | None = None) -> StructuredOutputResult:
+    return structured_output_with_error_handler(lambda: generate_structured_output_implementation(prompt, schema, instructions, use_model, on_text))
 
 
 def develop(use_model: str = '', msg: str = '') -> None:

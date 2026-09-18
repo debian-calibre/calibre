@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:07+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -104,7 +104,7 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr "Jag använder sträng här i den mening den används i programspråk: en sträng av ett eller flera tecken, tecken inklusive faktiska tecken, siffror, skiljetecken och s.k. whitespace (radbrytningar, tabulatorer etc.). Observera att i allmänhet anses inte stora och små bokstäver vara samma, alltså \"a\" som ett annat tecken från \"A\" och så vidare. I calibre, är reguljära uttryck skiftlägesokänslig i sökfältet, men inte i konverteringsalternativet. Det finns ett sätt att göra alla reguljära uttryck skiftlägesokänsliga, men vi kommer att diskutera det senare. Det blir komplicerat eftersom reguljära uttryck tillåter variationer i strängar som matchar, så ett uttryck kan matcha flera strängar, vilket är varför folk bryr sig att använda dem. Mer om det om ett tag."
+msgstr "Här använder jag ordet sträng i samma betydelse som i programspråk: en följd av ett eller flera tecken, till exempel bokstäver, siffror, skiljetecken och så kallade blanktecken (radbrytningar, tabulatorer osv.). Observera att stora och små bokstäver vanligtvis räknas som olika tecken: ”a” skiljer sig alltså från ”A” och så vidare. I calibre är reguljära uttryck skiftlägesokänsliga i sökfältet, men inte bland konverteringsalternativen. Det går att göra varje reguljärt uttryck skiftlägesokänsligt, men det återkommer vi till senare. Det blir mer komplicerat eftersom reguljära uttryck tillåter variationer i strängarna de matchar. Ett uttryck kan alltså matcha flera strängar, vilket är själva poängen med att använda dem. Mer om det strax."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
@@ -120,7 +120,7 @@ msgid ""
 "though, that this *only* matches the exact string ``\"Hello, World!\"``, not"
 " e.g. ``\"Hello, wOrld!\"`` or ``\"hello, world!\"`` or any other such "
 "variation."
-msgstr "Tja, det är därför vi är här. För det första är detta det viktigaste konceptet i reguljära uttryck: *En sträng i sig är ett reguljärt uttryck som matchar sig själv*. Det vill säga, om jag ville matcha strängen ``\"Hej, Värld!\"`` genom att använda ett reguljärt uttryck, skulle det reguljära uttrycket för att använda vara ``Hej, Värld!``. Och ja, det är verkligen så enkelt. Du kommer att märka dock att detta *endast* matchar den exakta strängen ``\"Hej, Värld!\"``, inte t.ex. ``\"Hej vÄrlden!\"`` eller ``\"hej, värld!\"`` eller någon annan sådan variation."
+msgstr "Det är därför vi är här. Först det viktigaste begreppet i reguljära uttryck: *En sträng är i sig ett reguljärt uttryck som matchar sig självt*. Om jag vill matcha strängen ``\"Hello, World!\"`` med ett reguljärt uttryck använder jag alltså ``Hello, World!``. Ja, så enkelt är det. Observera dock att detta *endast* matchar den exakta strängen ``\"Hello, World!\"``, inte till exempel ``\"Hello, wOrld!\"`` eller ``\"hello, world!\"`` eller någon annan sådan variant."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
@@ -146,7 +146,7 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr "Nästa är början på riktigt bra grejer. Kom ihåg var jag sa att reguljära uttryck kan matcha flera strängar? Det är här det blir lite mer komplicerat. Säg, som en något mer praktisk övning, e-boken du ville konvertera hade en otäck sidfot som räknar sidor, \"Sida 5 av 423\". Uppenbarligen skulle sidnumret stiga från 1 till 423, så du skulle behöva matcha 423 olika strängar, eller hur? Fel, faktiskt: reguljära uttryck tillåter dig definiera uppsättningar av tecken som matchar: För att definiera en uppsättning, lägger du alla de tecken du vill att ska vara i uppsättningen inom hakparenteser. Så, till exempel uppsättningen ``[abc]`` skulle matcha antingen tecknet \"a\", \"b\" eller \"c\". *Uppsättningarna kommer alltid bara matcha en av karaktärerna i uppsättningen*. De \"förstår\" teckenformattering, det vill säga om du ville matcha mot alla små bokstäver, skulle du använda uppsättningen ``[a-z]`` för gemener och för versaler skulle du använda ``[a-zA-Z]`` osv. Förstår du principen? Så, självklart, med hjälp av uttrycket ``Sida [0-9] av 423`` skulle du kunna matcha de första nio sidorna, vilket minskar uttrycken som behövs för tre: Det andra uttrycket ``Sida [0-9][0-9] av 423`` skulle matcha alla tvåsiffriga sidnummer, och jag är säker på att du kan gissa hur det tredje uttryck skulle se ut. Ja, gå vidare. Skriv ner det."
+msgstr "Nu börjar det bli riktigt användbart. Minns du att reguljära uttryck kan matcha flera strängar? Här blir det lite mer komplicerat. Som ett mer praktiskt exempel kan vi tänka oss att e-boken du vill konvertera har en störande sidfot med sidnummer, till exempel ”Page 5 of 423”. Sidnumret varierar från 1 till 423, så du skulle behöva matcha 423 olika strängar, eller hur? Faktiskt inte: reguljära uttryck låter dig definiera teckenuppsättningar. Du skriver alla tecken som ska ingå i uppsättningen inom hakparenteser. Uppsättningen ``[abc]`` matchar till exempel tecknet ”a”, ”b” eller ”c”. *En teckenuppsättning matchar alltid endast ett av tecknen i uppsättningen*. Den stöder också teckenintervall: ``[a-z]`` matchar gemener och ``[a-zA-Z]`` matchar både gemener och versaler, och så vidare. Förstår du principen? Uttrycket ``Page [0-9] of 423`` matchar de första nio sidorna, vilket minskar antalet uttryck som behövs till tre. Det andra uttrycket, ``Page [0-9][0-9] of 423``, matchar alla tvåsiffriga sidnummer. Du kan säkert gissa hur det tredje uttrycket ska se ut. Prova att skriva ner det."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
@@ -196,7 +196,7 @@ msgid ""
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
 " section. Just note that there quite frequently is more than one way to "
 "write a regular expression."
-msgstr "En kommentar om dessa kvantifierare: De försöker i allmänhet att matcha så mycket text som möjligt, så var försiktig när du använder dem. Detta kallas \"girigt beteende\" - Jag är säker på att du förstår varför. Det blir problematiskt när man, säg, försöker matcha en tagg. Tänk dig, till exempel strängen ``\"<p class=\"calibre2\">Titel här</p>\"`` och låt oss säga att du skulle vilja matcha öppningstaggen (delen mellan det första paret vinkelfästen, lite mer om taggar senare). Man skulle kunna tro att uttrycket ``<p.*>`` skulle matcha den taggen men faktiskt, den matchar hela strängen! (Tecknet \".\" är ett annat specialtecken. Det matchar allt utom radbrytningar, så uttrycket ``.*`` matchar i princip vilken enskild rad som helst. Använd i stället ``<p.*?>`` för att göra kvantifieraren ``\"*\"`` icke-girig. Uttrycket matchar då endast den första öppningstaggen, som avsett. Det finns faktiskt ett annat sätt att åstadkomma detta: Uttrycket ``<p[^>]*>`` matchar denna öppningstagg- du kommer se varför efter nästa avsnitt. Bara konstatera att det ganska ofta finns mer än ett sätt att skriva ett reguljärt uttryck."
+msgstr "En kommentar om dessa kvantifierare: De försöker i allmänhet matcha så mycket text som möjligt, så var försiktig när du använder dem. Detta kallas ”girigt beteende”, och du förstår säkert varför. Det blir problematiskt om du till exempel försöker matcha en tagg. Betrakta strängen ``\"<p class=\"calibre2\">Title here</p>\"`` och anta att du vill matcha öppningstaggen (delen mellan det första paret vinkelparenteser; vi återkommer till taggar senare). Man skulle kunna tro att ``<p.*>`` matchar den taggen, men uttrycket matchar faktiskt hela strängen! (Tecknet ”.” är ett annat specialtecken. Det matchar allt *utom* radbrytningar, så ``.*`` matchar i princip vilken enskild rad som helst.) Använd i stället ``<p.*?>`` för att göra kvantifieraren ``\"*\"`` icke-girig. Då matchas endast den första öppningstaggen, som avsett. Det finns även ett annat sätt: ``<p[^>]*>`` matchar samma öppningstagg. Efter nästa avsnitt förstår du varför. Kom ihåg att det ofta finns flera sätt att skriva ett reguljärt uttryck."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
@@ -261,7 +261,7 @@ msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
-msgstr "\"Whitespace\" är en term för allt som inte kommer att skrivas ut. Dessa tecken inkluderar blanksteg, tabulator, radmatning, formulärmatning, vagnretur, icke-brytande blanksteg etc."
+msgstr "”Blanktecken” är en term för tecken som inte ger något synligt tecken vid utskrift. Dit hör mellanslag, tabulator, radmatning, sidmatning, vagnretur, fast mellanslag med flera."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
@@ -291,7 +291,7 @@ msgstr "Som en sista anmärkning om teckenuppsättningar kan du definiera en upp
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
-msgstr "Men om jag hade några olika strängar jag ville matcha, blir saker komplicerade?"
+msgstr "Men blir det inte komplicerat om jag vill matcha flera olika strängar?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
@@ -307,7 +307,7 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr "Frukta inte, livet är fortfarande bra och enkelt. Tänk på detta exempel: Boken du konverterar har \"Titel\" skrivet på varje udda sida och \"Författare\" skrivet på varje jämn sida. Ser bra i tryck, eller hur? Men i e-böcker är det irriterande. Du kan gruppera hela uttryck i normala parenteser och tecknet ``\"|\"`` låter dig matcha *antingen* uttrycket till höger *eller* det till vänster. Kombinera dem så är du klar. För snabbt för dig? Okej, först och främst grupperar vi uttryck för udda och jämna sidor och på så sätt får ``(Titel)(Författare)`` som våra två nödvändiga uttryck. Nu gör vi det enklare genom att använda det lodräta strecket (``\"|\"`` kallas vertikala stapeltecknet): Om du använder uttrycket ``(Titel|Författare)`` får du antingen en träff för \"Titel\" (på udda sidorna) eller så får du en träff för \"Författare\" (på jämna sidorna). Var det inte lätt?"
+msgstr "Ingen fara, det är fortfarande ganska enkelt. Tänk dig att boken du konverterar har ”Titel” på varje udda sida och ”Författare” på varje jämn sida. Det ser bra ut i tryck, men är irriterande i en e-bok. Du kan gruppera hela uttryck inom vanliga parenteser, och tecknet ``\"|\"`` låter dig matcha *antingen* uttrycket till höger *eller* det till vänster. Kombinera dessa två funktioner, så är du klar. Gick det för fort? Först grupperar vi uttrycken för udda och jämna sidor och får ``(Titel)(Författare)``. Sedan förenklar vi med det lodräta strecket (tecknet ``\"|\"``): Uttrycket ``(Titel|Författare)`` matchar antingen ”Titel” på de udda sidorna eller ”Författare” på de jämna. Visst var det enkelt?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
@@ -417,7 +417,7 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr "(skamlöst hämtat från `denna tråd <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Du måste även ta bort några av taggarna. I det här exemplet rekommenderar jag att du börjar med taggen ``<b class=\"calibre2\">``. Därefter måste uttrycket avslutas med motsvarande sluttagg (öppningstaggar skrivs ``<tag>`` och sluttaggar ``</tag>``), vilket i detta fall helt enkelt är nästa ``</b>``. (Läs en bra HTML-handbok eller fråga i forumet om detta är oklart.) Öppningstaggen kan beskrivas med ``<b.*?>`` och sluttaggen med ``</b>``. Vi skulle alltså kunna ta bort allt mellan taggarna med ``<b.*?>.*?</b>``. Det är dock en dålig idé att använda det uttrycket, eftersom det tar bort allt som omges av <b>-taggar (vilka för övrigt visar den omslutna texten med fetstil), och då riskerar vi att ta bort delar av boken. Ta därför även med början av den omslutna strängen och använd det reguljära uttrycket ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``. Här används ``\\s`` tillsammans med kvantifierare i stället för de uttryckliga blanksteg som syns i strängen, så att eventuella variationer av strängen också fångas. Kontrollera alltid vad calibre tänker ta bort när du provar ett nytt uttryck, så att du inte råkar ta bort något du vill behålla. Om du bara kontrollerar en förekomst kan du missa en felaktig matchning någon annanstans i texten. Observera också att calibre försöker reparera den skadade koden efter borttagningen om du av misstag tar bort fler eller färre taggar än avsett."
+msgstr "(skamlöst hämtat från `denna tråd <https://www.mobileread.com/forums/showthread.php?t=75594>`_). Du måste även ta bort några av taggarna. I det här exemplet rekommenderar jag att du börjar med taggen ``<b class=\"calibre2\">``. Därefter måste uttrycket avslutas med motsvarande sluttagg (öppningstaggar skrivs ``<tag>`` och sluttaggar ``</tag>``), vilket i detta fall helt enkelt är nästa ``</b>``. (Läs en bra HTML-handbok eller fråga i forumet om detta är oklart.) Öppningstaggen kan beskrivas med ``<b.*?>`` och sluttaggen med ``</b>``. Vi skulle alltså kunna ta bort allt mellan taggarna med ``<b.*?>.*?</b>``. Det är dock en dålig idé att använda det uttrycket, eftersom det tar bort allt som omges av <b>-taggar (vilka för övrigt visar den omslutna texten med fetstil), och då riskerar vi att ta bort delar av boken. Ta därför även med början av den omslutna strängen och använd det reguljära uttrycket ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``. Här används ``\\s`` tillsammans med kvantifierare i stället för de uttryckliga blanksteg som syns i strängen, så att eventuella variationer av strängen också fångas. Kontrollera alltid vad calibre tänker ta bort när du provar ett nytt uttryck, så att du inte råkar ta bort något du vill behålla. Om du bara kontrollerar en förekomst kan du missa en felaktig matchning någon annanstans i texten. Observera också att calibre försöker reparera den skadade koden efter borttagningen om du av misstag tar bort fler eller färre taggar än avsett."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
@@ -444,7 +444,7 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr "En annan sak du kan använda reguljära uttryck för är att extrahera metadata från filnamn. Du hittar den här funktionen i delen \"Lägga till böcker\" i inställningarna. Det finns en speciell funktion här: Du kan använda fältnamn för metadatafält, till exempel ``(?P<title>)`` skulle indikera att calibre använder den här delen av strängen som boktitel. De tillåtna fältnamnen listas i fönstren, tillsammans med ett annat bra testfält. Ett exempel: Säg att du vill importera en hel massa filer med namnen ``Klassiska texter: Den gudomliga komedin av Dante Alighieri.mobi``. (Detta finns uppenbarligen redan i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science Fiction-epos: Grundtrilogin av Isaac Asimov.epub``. Detta är uppenbarligen ett namngivningsschema som calibre inte kommer att extrahera någon meningsfull data från - dess standarduttryck för att extrahera metadata är ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här skulle vara ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att du, inuti gruppen för metadatafältet, måste använda uttryck för att beskriva vad fältet faktiskt matchar. Och observera också att när du använder testfältet som calibre tillhandahåller måste du lägga till filändelsen till ditt testfilnamn, annars får du inga matchningar alls, trots att du använder ett fungerande uttryck."
+msgstr "Du kan också använda reguljära uttryck för att extrahera metadata från filnamn. Funktionen finns under ”Lägga till böcker” i inställningarna. Här finns en särskild möjlighet: du kan använda namnen på metadatafält. Till exempel anger ``(?P<title>)`` att calibre ska använda denna del av strängen som boktitel. De tillåtna fältnamnen visas i fönstret tillsammans med ett praktiskt testfält. Anta att du vill importera många filer med namn som ``Classical Texts: The Divine Comedy by Dante Alighieri.mobi`` (som förstås redan finns i ditt bibliotek, eftersom vi alla älskar klassisk italiensk poesi) eller ``Science Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. calibre kan inte extrahera meningsfulla metadata ur dessa namn med standarduttrycket ``(?P<title>.+) - (?P<author>[^_]+)``. Ett reguljärt uttryck som fungerar här är ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Observera att du måste använda uttryck inuti gruppen för metadatafältet för att beskriva vad fältet ska matcha. När du använder calibres testfält måste du även ta med filändelsen i testfilnamnet. Annars får du inga matchningar, även om uttrycket fungerar."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"

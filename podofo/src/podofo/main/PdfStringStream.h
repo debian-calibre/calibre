@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_STRING_STREAM
 #define PDF_STRING_STREAM
@@ -12,10 +9,9 @@
 
 namespace PoDoFo
 {
-    /** A specialized Pdf output string stream
-     * It suplies an iostream-like operator<< interface,
-     * while still inheriting OutputStream
-     */
+    /// A specialized Pdf output string stream
+    /// It supplies an iostream-like operator<< interface,
+    /// while still inheriting OutputStream
     class PODOFO_API PdfStringStream final : public OutputStream
     {
     public:

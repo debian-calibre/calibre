@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_MEMORY_OBJECT_STREAM_H
 #define PDF_MEMORY_OBJECT_STREAM_H
@@ -13,21 +11,20 @@
 
 namespace PoDoFo {
 
-/** A PDF stream can be appended to any PdfObject
- *  and can contain arbitrary data.
- *
- *  A PDF memory stream is held completely in memory.
- *
- *  Most of the time it will contain either drawing commands
- *  to draw onto a page or binary data like a font or an image.
- *
- *  A PdfMemoryObjectStream is implicitly shared and can therefore be copied very quickly.
- */
+/// A PDF stream can be appended to any PdfObject
+/// and can contain arbitrary data.
+///
+/// A PDF memory stream is held completely in memory.
+///
+/// Most of the time it will contain either drawing commands
+/// to draw onto a page or binary data like a font or an image.
+///
+/// A PdfMemoryObjectStream is implicitly shared and can therefore be copied very quickly.
 class PODOFO_API PdfMemoryObjectStream final : public PdfObjectStreamProvider
 {
     friend class PdfObject;
     friend class PdfIndirectObjectList;
-    friend class PdfImmediateWriter;
+    PODOFO_PRIVATE_FRIEND(class PdfImmediateWriter);
 
 private:
     PdfMemoryObjectStream();
@@ -45,7 +42,7 @@ public:
 
     std::unique_ptr<OutputStream> GetOutputStream(PdfObject& obj) override;
 
-    void Write(OutputStream& stream, const PdfStatefulEncrypt& encrypt) override;
+    void Write(OutputStream& stream, const PdfStatefulEncrypt* encrypt) override;
 
     size_t GetLength() const override;
 

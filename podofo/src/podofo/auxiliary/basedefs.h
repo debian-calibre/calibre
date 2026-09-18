@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2005 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2005 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PODOFO_BASE_DEFS_H
 #define PODOFO_BASE_DEFS_H
@@ -40,6 +38,7 @@
 #define PODOFO_IMPORT
 
 #else // PODOFO_SHARED
+
 #ifndef PODOFO_SHARED
 #define PODOFO_SHARED
 #endif
@@ -47,6 +46,7 @@
 #if defined(_MSC_VER)
     #define PODOFO_EXPORT __declspec(dllexport)
     #define PODOFO_IMPORT __declspec(dllimport)
+    #define PODOFO_DEPRECATED
 #else
     // NOTE: In non MSVC compilers https://gcc.gnu.org/wiki/Visibility,
     // it's not necessary to distinct between exporting and importing
@@ -55,6 +55,15 @@
     // the library. The symbol will not be re-exported by other libraries
     #define PODOFO_EXPORT __attribute__ ((visibility("default")))
     #define PODOFO_IMPORT __attribute__ ((visibility("default")))
+    #define PODOFO_DEPRECATED __attribute__((__deprecated__))
+#endif
+
+#if defined(PODOFO_BUILD)
+#define PODOFO_API PODOFO_EXPORT
+#else
+#define PODOFO_API PODOFO_IMPORT
+#endif
+
 #endif
 
 // If detected, undefine some macros that are defined by Windows
@@ -83,34 +92,18 @@
 #endif // DrawText
 #endif
 
-#if defined(PODOFO_BUILD)
-#define PODOFO_API PODOFO_EXPORT
-#else
-#define PODOFO_API PODOFO_IMPORT
-#endif
-
-#endif
-
 // Set up some other compiler-specific but not platform-specific macros
 
-#ifdef __GNU__
-  #define PODOFO_HAS_GCC_ATTRIBUTE_DEPRECATED 1
-#elif defined(__has_attribute)
-  #if __has_attribute(__deprecated__)
-    #define PODOFO_HAS_GCC_ATTRIBUTE_DEPRECATED 1
-  #endif
-#endif
+/// Specify the friend identifier is defined in private symbols only
+#define PODOFO_PRIVATE_FRIEND(identifier)
 
-#ifdef PODOFO_HAS_GCC_ATTRIBUTE_DEPRECATED
-    // gcc (or compat. clang) will issue a warning if a function or variable so annotated is used
-    #define PODOFO_DEPRECATED __attribute__((__deprecated__))
-#else
-    #define PODOFO_DEPRECATED
-#endif
-
-#ifndef PODOFO_UNIT_TEST
-#define PODOFO_UNIT_TEST(classname)
-#endif
+#ifndef PODOFO_3RDPARTY_INTEROP_ENABLED
+/// Define if interoperability with 3rd party APIs (such as
+/// libraries like libxml2, Fontconfig) is enabled. Caution
+/// is needed, as linkage of internally used structures
+/// and user consumed must be the same
+#define PODOFO_3RDPARTY_INTEROP_ENABLED 0
+#endif // PODOFO_3RDPARTY_INTEROP_ENABLED
 
 // Include some useful compatibility defines
 #include "basecompat.h"

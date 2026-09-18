@@ -43,24 +43,25 @@ def get_random_socket_path(name: str, random_suffix: str = '') -> str:
     return os.path.join(base_dir(), f'{name}.sock')
 
 
-def debug(*a, **kw):
+def debug(*a: object, **kw: Any) -> None:  # noqa: ANN401
     kw['file'] = sys.stderr
     kw['flush'] = True
     print(*a, **kw)
 
 
 class SingleObjectProtocol(asyncio.Protocol):
-    def __init__(self, handler_callback: Handler):
+    def __init__(self, handler_callback: Handler) -> None:
         self.handler = handler_callback
-        self.transport = None
-        self.expected_length = None
-        self.task = None
+        self.transport: asyncio.Transport | None = None
+        self.expected_length: int | None = None
+        self.task: asyncio.Task[None] | None = None
         self._buffer = bytearray()
 
-    def connection_made(self, transport):
-        self.transport = transport
+    def connection_made(self, transport: asyncio.BaseTransport) -> None:
+        # asyncio.Protocol is always used with a bi-directional transport
+        self.transport = cast(asyncio.Transport, transport)
 
-    def data_received(self, data):
+    def data_received(self, data: bytes) -> None:
         self._buffer.extend(data)
         if self.expected_length is None and len(self._buffer) > 3:
             header = self._buffer[:4]
@@ -72,14 +73,14 @@ class SingleObjectProtocol(asyncio.Protocol):
             self.expected_length = None
             self.task = asyncio.create_task(self._process_and_respond(complete_data))
 
-    def eof_received(self):
+    def eof_received(self) -> bool:
         if self.task is None:
             payload = {'exception': 'Complete message not received from client'}
             assert self.transport is not None
             self.transport.write(msgpack_dumps(payload))
         return False  # Returning False closes the transport
 
-    async def _process_and_respond(self, data: bytearray):
+    async def _process_and_respond(self, data: bytearray) -> None:
         try:
             data = msgpack_loads(data)
             self._buffer.clear()
@@ -95,12 +96,12 @@ class SingleObjectProtocol(asyncio.Protocol):
             self.transport.close()
 
 
-async def echo(x):
+async def echo(x: Any) -> Any:  # noqa: ANN401
     return x
 
 
 class Server:
-    def __init__(self, platform_implementation: asyncio.Server | list[asyncio.Transport]):
+    def __init__(self, platform_implementation: asyncio.Server | list[asyncio.Transport]) -> None:
         self.platform_implementation = platform_implementation
 
     def close(self) -> None:
@@ -181,7 +182,13 @@ async def no_setup() -> None:
     pass
 
 
-async def handler_with_setup(x: Any, handler: Handler, setup: Callable[[], Awaitable[None]], setup_done: asyncio.Event, setup_lock: asyncio.Lock) -> Any:
+async def handler_with_setup(
+    x: Any,  # noqa: ANN401
+    handler: Handler,
+    setup: Callable[[], Awaitable[None]],
+    setup_done: asyncio.Event,
+    setup_lock: asyncio.Lock,
+) -> Any:  # noqa: ANN401
     if not setup_done.is_set():
         async with setup_lock:
             if not setup_done.is_set():
@@ -232,11 +239,11 @@ async def async_main(
         finalizer()
 
 
-def main(*a, **kw) -> None:
+def main(*a: Any, **kw: Any) -> None:  # noqa: ANN401
     asyncio.run(async_main(*a, **kw))
 
 
-def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = '', input_data: Any = None) -> tuple[str, Callable[[], None]]:
+def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = '', input_data: Any = None) -> tuple[str, Callable[[], int]]:  # noqa: ANN401
     """
     Run the specified handler, delayed_setup and finalizer functions in a worker process, passing input_data (if not None)
     to each function as its first parameter.
@@ -286,7 +293,7 @@ def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = ''
     except Exception:
         raise ValueError(f'Got invalid response from worker process: {path_data}')
 
-    def close_and_reap():
+    def close_and_reap() -> int:
         p.stdin.close()
         return p.wait()
 
@@ -299,7 +306,7 @@ class Response(NamedTuple):
     traceback: str = ''
 
 
-def make_request(worker_path: str, data: Any = None) -> Response:
+def make_request(worker_path: str, data: Any = None) -> Response:  # noqa: ANN401
     "Make a request and get a response from the worker"
     data = msgpack_dumps(data)
     datalen = struct.pack('!I', len(data))

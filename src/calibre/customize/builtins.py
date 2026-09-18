@@ -11,6 +11,7 @@ from calibre.ai.ollama import OllamaAI
 from calibre.ai.open_router import OpenRouterAI
 from calibre.ai.openai import OpenAI
 from calibre.ai.openai_compatible import OpenAICompatible
+from calibre.ai.venice import VeniceAI
 from calibre.constants import ismacos, numeric_version
 from calibre.customize import FileTypePlugin, InterfaceActionBase, MetadataReaderPlugin, MetadataWriterPlugin, PreferencesPlugin, StoreBase
 from calibre.ebooks.html.to_zip import HTML2ZIP
@@ -999,6 +1000,12 @@ class ActionAIGenerateCover(InterfaceActionBase):
     description = _('Generate covers for the books in your calibre library using AI')
 
 
+class ActionCYOA(InterfaceActionBase):
+    name = 'Create your own Adventure'
+    actual_plugin = 'calibre.gui2.actions.cyoa:CYOAAction'
+    description = _('Play a "Create your own Adventure" game, in which the story is written by an AI as you play it')
+
+
 class ActionFetchNews(InterfaceActionBase):
     name = 'Fetch News'
     actual_plugin = 'calibre.gui2.actions.fetch_news:FetchNewsAction'
@@ -1264,6 +1271,7 @@ plugins += [
     ActionPolish,
     ActionLLMBook,
     ActionAIGenerateCover,
+    ActionCYOA,
     ActionShowBookDetails,
     ActionRestart,
     ActionOpenFolder,
@@ -2095,7 +2103,7 @@ plugins += [
 
 # }}}
 
-plugins.extend((OpenRouterAI, GoogleAI, AnthropicAI, OllamaAI, LMStudioAI, OpenAI, OpenAICompatible, GrokAI))
+plugins.extend((OpenRouterAI, GoogleAI, AnthropicAI, OllamaAI, LMStudioAI, OpenAI, OpenAICompatible, GrokAI, VeniceAI))
 
 if __name__ == '__main__':
     # Test load speed

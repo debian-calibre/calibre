@@ -1,5 +1,104 @@
 [
     {
+        "version": "9.15.0",
+        "date": "2026-09-18",
+        "new features": [
+            {
+                "type": "major",
+                "title": "A \"Create your own adventure\" writing game -- interactive storytelling with an AI managing the world you create",
+                "description": "This is a little different from the usual run of calibre features. It started out as a way to test the AI backends in calibre but turned into something fun to use. As always with AI features its completely optional and not even loaded unless you explicitly run it. Go to Preferences->Toolbars & menus and add the \"Create your own Adventure\" to the main toolbar to use it"
+            },
+            {
+                "tickets": [
+                    2167215
+                ],
+                "title": "E-book viewer: Highlights panel: Allow selecting multiple highlights and right clicking to change their style"
+            },
+            {
+                "tickets": [
+                    2167194
+                ],
+                "title": "Cover grid: Allow choosing which corner of the cover emblems are placed on in Preferences->Look & feel->Cover grid->Layout"
+            },
+            {
+                "tickets": [
+                    2166717
+                ],
+                "title": "E-book viewer: An optional button to add to the sidebar to easily switch between saved window sizes, add it by right clicking the sidebar and choosing customize"
+            },
+            {
+                "tickets": [
+                    2159668
+                ],
+                "title": "E-book viewer: When creating highlights with notes, show the notes as a tooltip when the mouse hovers over the highlights. Controlled via the setting to hide mouse over tooltips in the Miscellaneous section of the viewer preferences"
+            },
+            {
+                "title": "A new CLI flag to add and delete a book from a specified path in the system temp dir when running calibre.exe"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2165923
+                ],
+                "title": "E-book viewer: Fix Read Aloud stopping at some full screen images"
+            },
+            {
+                "tickets": [
+                    2165439
+                ],
+                "title": "E-book viewer: In flow mode when using Read Aloud be more robust about keeping the selected text visible"
+            },
+            {
+                "title": "Edit book: fix a regression that caused an error when using the test box in the snippets dialog"
+            },
+            {
+                "title": "Edit book: Preferences: Fix moving and deleting toolbar icons from plugins not working"
+            },
+            {
+                "title": "Fix landmarks being lost when upgrading a book to EPUB 3"
+            },
+            {
+                "title": "DOCX output: preserve hyperlinks across styled text runs"
+            },
+            {
+                "title": "DOCX Input: Fix an error when the input document has numbering without any styles"
+            },
+            {
+                "tickets": [
+                    2167294
+                ],
+                "title": "calibredb embed_metadata: Fix skipping books with no covers"
+            },
+            {
+                "title": "Edit book: Spell check: Fix words with a typographic single apostrophe not being correctly checked"
+            },
+            {
+                "title": "Windows: Fix calibre not starting in Alberta Canada because of a new timezone"
+            },
+            {
+                "title": "Windows: Cover grid: Fix changing the background color not working"
+            },
+            {
+                "title": "Content server: Sanitise supplied conversion options"
+            },
+            {
+                "title": "OpenRouter: Fix models that only output images not text not being listed"
+            }
+        ],
+        "improved recipes": [
+            "The Week",
+            "Bloomberg",
+            "Global Times"
+        ],
+        "new recipes": [
+            {
+                "title": "Briefing Service",
+                "author": "Jordan Shelley"
+            }
+        ]
+    },
+    {
         "version": "9.14.0",
         "date": "2026-08-28",
         "new features": [
@@ -77,7 +176,7 @@
                 "title": "Fix a regression in 9.11 that broke reading metadata from HTML files in builds of calibre with Python runtime assertions enabled"
             },
             {
-                "title": "Edit book: Jump to class: Fix @charset rule causing jump to class to be off-by-one because it uses tiny css which ignores chaset rules while cssutils does not"
+                "title": "Edit book: Jump to class: Fix @charset rule causing jump to class to be off-by-one"
             },
             {
                 "title": "FB2 Input: Only accept known FB2 namespaces to avoid arbitrary file write"

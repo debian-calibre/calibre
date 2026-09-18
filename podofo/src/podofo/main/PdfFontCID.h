@@ -1,8 +1,6 @@
-/**
- * SPDX-FileCopyrightText: (C) 2007 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_FONT_CID_H
 #define PDF_FONT_CID_H
@@ -11,38 +9,38 @@
 
 namespace PoDoFo {
 
-/** A PdfFont that represents a CID-keyed font
- */
-class PdfFontCID : public PdfFont
+/// A PdfFont that represents a CID-keyed font
+class PODOFO_API PdfFontCID : public PdfFont
 {
     friend class PdfFont;
+    friend class PdfFontCIDTrueType;
+    friend class PdfFontCIDCFF;
 
-protected:
-    PdfFontCID(PdfDocument& doc, const PdfFontMetricsConstPtr& metrics,
-        const PdfEncoding& encoding);
+private:
+    PdfFontCID(PdfDocument& doc, PdfFontType type,
+        PdfFontMetricsConstPtr&& metrics, const PdfEncoding& encoding);
 
 public:
     bool SupportsSubsetting() const override;
 
 protected:
     void embedFont() override;
+    void embedFontSubset() override;
     PdfObject* getDescendantFontObject() override;
-    void createWidths(PdfDictionary& fontDict, const CIDToGIDMap& glyphWidths);
-    static CIDToGIDMap getCIDToGIDMapSubset(const UsedGIDsMap& usedGIDs);
-
-private:
-    CIDToGIDMap getIdentityCIDToGIDMap();
+    void createWidths(PdfDictionary& fontDict, const cspan<PdfCharGIDInfo>& infos);
 
 protected:
+    virtual void embedFontFileSubset(const std::vector<PdfCharGIDInfo>& subsetInfos,
+        const PdfCIDSystemInfo& cidInfo) = 0;
     void initImported() override;
 
 protected:
-    PdfObject& GetDescendantFont() { return *m_descendantFont; }
-    PdfObject& GetDescriptor() { return *m_descriptor; }
+    PdfObject& GetDescendantFont() { return *m_DescendantFont; }
+    PdfObject& GetDescriptor() { return *m_Descriptor; }
 
 private:
-    PdfObject* m_descendantFont;
-    PdfObject* m_descriptor;
+    PdfObject* m_DescendantFont;
+    PdfObject* m_Descriptor;
 };
 
 };

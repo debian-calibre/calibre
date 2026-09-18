@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
@@ -40,20 +40,23 @@ calibre\-smtp [options] [from to text]
 .UNINDENT
 .UNINDENT
 .sp
-Skicka e\-post med SMTP\-protokollet. \fBcalibre\-smtp\fP har två utförandelägen. I
-skrivläget anger du från till och text och dessa används för att skapa och sända ett e\-postmeddelande.
-I filterläget läser \fBcalibre\-smtp\fP ett komplett e\-postmeddelande från STDIN och sänder det.
+Skicka e\-post med SMTP\-protokollet. \fBcalibre\-smtp\fP har två arbetslägen. I
+skrivläget anger du from, to och text, som används för att skapa och
+skicka ett e\-postmeddelande. I filterläget läser \fBcalibre\-smtp\fP ett fullständigt
+e\-postmeddelande från STDIN och skickar det.
 .sp
-text är brödtexten i e\-postmeddelandet.
-Om text inte anges läses ett komplett e\-postmeddelande från STDIN.
-från är avsändarens e\-postadress och till är mottagarens e\-postadress. När ett komplett e\-postmeddelande läses från STDIN, används från och till endast i SMTP\-förhandlingen, meddelanderubrikerna ändras inte.
+text är e\-postmeddelandets brödtext.
+Om text inte anges läses ett fullständigt e\-postmeddelande från STDIN.
+from är avsändarens e\-postadress och to är mottagarens e\-postadress.
+När ett fullständigt e\-postmeddelande läses från STDIN används from och to
+endast vid SMTP\-förhandlingen. Meddelandets rubrikfält ändras inte.
 .sp
-När du skickar argument till \fBcalibre\-smtp\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBcalibre\-smtp\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Dela upp och leverera meddelande i bakgrunden. Om du använder det här alternativet bör du också använda \fB\-\-outbox\fP för hantera misslyckade leveranser.
+Starta en underprocess och leverera meddelandet i bakgrunden. Om du använder detta alternativ bör du också använda \fB\-\-outbox\fP för att hantera leveransfel.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -63,7 +66,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Värdnamn av lokalvärden. Används vid anslutning till SMTP\-server.
+Den lokala datorns värdnamn. Används vid anslutning till SMTP\-servern.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -114,7 +117,7 @@ Verifiera inte serverns certifikat när du ansluter med TLS. Detta brukade vara 
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Krypteringsmetod att använda vid anslutning till reläserver. Valen är TLS, SSL och INGEN. Standard är TLS. VARNING: Att välja INGEN är mycket osäkert
+Krypteringsmetod vid anslutning till reläservern. Alternativen är TLS, SSL och NONE. Standard är TLS. VARNING: Att välja NONE är mycket osäkert
 .UNINDENT
 .INDENT 0.0
 .TP

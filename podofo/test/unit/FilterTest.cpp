@@ -1,12 +1,9 @@
-/**
- * Copyright (C) 2007 by Dominik Seichter <domseichter@web.de>
- * Copyright (C) 2021 by Francesco Pretto <ceztko@gmail.com>
- *
- * Licensed under GNU Library General Public 2.0 or later.
- * Some rights reserved. See COPYING, AUTHORS.
- */
+// SPDX-FileCopyrightText: 2007 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: MIT-0
 
 #include <PdfTest.h>
+#include <podofo/private/PdfFilterFactory.h>
 
 using namespace std;
 using namespace PoDoFo;
@@ -24,13 +21,33 @@ const char s_testBuffer2[] = {
     0x00, 0x00, 0x00, 0x00, 0x6B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-TEST_CASE("testFilters")
+TEST_CASE("TestFilters")
 {
     for (unsigned i = 0; i <= (unsigned)PdfFilterType::Crypt; i++)
     {
         testFilter(static_cast<PdfFilterType>(i), { s_testBuffer1.data(), s_testBuffer1.length() });
         testFilter(static_cast<PdfFilterType>(i), { s_testBuffer2, std::size(s_testBuffer2) });
     }
+}
+
+// RunLengthDecode can't encode, so it's never exercised by TestFilters above:
+// decode a stream combining a literal run, a repeat run and a single-byte
+// literal run (control byte 0) directly instead
+TEST_CASE("TestRunLengthDecodeFilter")
+{
+    const char input[] = {
+        0x02, 'A', 'B', 'C',
+        static_cast<char>(0xFE), 'Z',
+        0x00, 'Q',
+        static_cast<char>(0x80),
+    };
+
+    unique_ptr<PdfFilter> filter;
+    REQUIRE(PdfFilterFactory::TryCreate(PdfFilterType::RunLengthDecode, filter));
+
+    charbuff decoded;
+    filter->DecodeTo(decoded, bufferview(input, std::size(input)));
+    REQUIRE(decoded == "ABCZZZQ");
 }
 
 void testFilter(PdfFilterType filterType, const bufferview& view)
@@ -58,11 +75,8 @@ void testFilter(PdfFilterType filterType, const bufferview& view)
             INFO(utls::Format("\t-> Encoding not supported for filter {}.", (unsigned)filterType));
             return;
         }
-        else
-        {
-            e.AddToCallStack(__FILE__, __LINE__);
-            throw e;
-        }
+
+        throw;
     }
 
     INFO("\t-> Testing Decoding");
@@ -77,11 +91,8 @@ void testFilter(PdfFilterType filterType, const bufferview& view)
             INFO(utls::Format("\t-> Decoding not supported for filter {}", (int)filterType));
             return;
         }
-        else
-        {
-            e.AddToCallStack(__FILE__, __LINE__);
-            throw e;
-        }
+
+        throw;
     }
 
     INFO(utls::Format("\t-> Original Data Length: {}", view.size()));

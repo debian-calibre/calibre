@@ -56,7 +56,10 @@ def download_data(url: str, headers: Sequence[tuple[str, str]] = ()) -> bytes:
 
 
 def update_cached_data(path: str, url: str, headers: Sequence[tuple[str, str]] = ()) -> None:
-    raw = download_data(url, headers)
+    try:
+        raw = download_data(url, headers)
+    except HTTPError as e:
+        raise Exception(f'Failed to download AI provider data from {url} with error: {e}') from None
     atomic_write(path, raw)
 
 
@@ -464,6 +467,25 @@ def model_choice_strategy_config_widget(current_val: str = 'medium', parent: QWi
     return ms
 
 
+def model_choice_config_widget(models: Iterable[tuple[str, str]], current_val: str = '', automatic_text: str = '', parent: QWidget | None = None) -> QComboBox:
+    # A combo box for choosing the model to use explicitly. models is a
+    # sequence of (id, name) pairs, in the order they should be displayed.
+    # The first entry, whose data is the empty string, lets the model be
+    # chosen automatically instead. A current_val that is not among models,
+    # for instance because the list of models could not be downloaded, is
+    # added so that the existing setting is never silently discarded.
+    from qt.core import QComboBox
+
+    mc = QComboBox(parent)
+    mc.addItem(automatic_text or _('Automatic (based on model choice strategy)'), '')
+    for model_id, name in models:
+        mc.addItem(name, model_id)
+    if current_val and mc.findData(current_val) < 0:
+        mc.addItem(current_val, current_val)
+    mc.setCurrentIndex(max(0, mc.findData(current_val)))
+    return mc
+
+
 def image_quality_config_widget(current_val: str = 'auto', parent: QWidget | None = None) -> QComboBox:
     from qt.core import QComboBox
 
@@ -594,15 +616,17 @@ def find_tests() -> TestSuite:
             r = p({'choices': [{'delta': {}, 'finish_reason': 'content_filter'}]})[0]
             self.assertIsNotNone(r.exception)
 
-            from calibre.ai.grok.backend import for_assistant
+            from calibre.ai.grok.backend import chat_data, for_assistant
 
             self.assertEqual(for_assistant(ChatMessage(type=ChatMessageType.developer, query='q')), {'role': 'system', 'content': 'q'})
             self.assertRaises(ValueError, for_assistant, ChatMessage(type=ChatMessageType.tool, query='q'))
+            d = chat_data((ChatMessage('q'),), model)
+            self.assertEqual(d['stream_options'], {'include_usage': True}, 'streamed responses must request usage so cost and model are reported')
 
         def test_ai_grok_image_response_parsing(self) -> None:
             from calibre.ai.grok.backend import Model, parse_image_response
 
-            model = Model.from_dict({'id': 'grok-imagine-image-2.0', 'image_price': 4}, generates_images=True)
+            model = Model.from_dict({'id': 'grok-imagine-image-2.0', 'image_price': 400_000_000}, generates_images=True)
             self.assertTrue(model.generates_images)
             d = {'data': [{'b64_json': base64.standard_b64encode(b'image bytes').decode(), 'mime_type': 'image/jpeg'}]}
             res = parse_image_response(d, model)
@@ -615,6 +639,95 @@ def find_tests() -> TestSuite:
             # result so that the cover dialog can show it, rather than raised
             from calibre.ai.grok.backend import generate_image
 
+            res = generate_image('a prompt', source_images=(ImageData(data=b'image bytes'),))
+            self.assertIsInstance(res.exception, ValueError)
+
+        def test_ai_venice_chat_response_parsing(self) -> None:
+            from calibre.ai.venice.backend import Model, as_chat_responses, chat_data, for_assistant, parse_citations
+
+            model = Model.from_dict({
+                'id': 'venice-large',
+                'type': 'text',
+                'created': 0,
+                'model_spec': {
+                    'name': 'Venice Large',
+                    'availableContextTokens': 131072,
+                    'capabilities': {'supportsReasoning': True, 'supportsReasoningEffort': True, 'supportsResponseSchema': True},
+                    'pricing': {'input': {'usd': 2}, 'output': {'usd': 10}},
+                    'traits': ['default'],
+                },
+            })
+            self.assertEqual(model.name, 'Venice Large')
+            self.assertEqual(model.context_length, 131072)
+            self.assertTrue(model.supports_response_schema)
+            self.assertIn('default', model.traits)
+            self.assertFalse(Model.from_dict({'id': 'venice-uncensored'}).supports_response_schema)
+
+            def p(d: dict[str, Any], web_links: tuple[WebLink, ...] = ()) -> list[ChatResponse]:
+                return list(as_chat_responses(d, model, web_links))
+
+            r = p({'id': 'c1', 'choices': [{'delta': {'role': 'assistant', 'content': 'Hello', 'reasoning_content': 'Think'}, 'finish_reason': None}]})[0]
+            self.assertEqual(r.content, 'Hello')
+            self.assertEqual(r.reasoning, 'Think')
+            self.assertEqual(r.id, 'c1')
+            self.assertEqual(r.type, ChatMessageType.assistant)
+            wl = tuple(
+                parse_citations({
+                    'citations': ['https://example.net'],
+                    'venice_parameters': {'web_search_citations': [{'title': 'Example', 'url': 'https://example.com'}]},
+                })
+            )
+            self.assertEqual(
+                wl,
+                (
+                    WebLink(title='https://example.net', uri='https://example.net'),
+                    WebLink(title='Example', uri='https://example.com'),
+                ),
+            )
+            r = p(
+                {
+                    'id': 'c1',
+                    'model': 'venice-large',
+                    'choices': [{'delta': {}, 'finish_reason': 'stop'}],
+                    'usage': {'prompt_tokens': 1_000_000, 'completion_tokens': 1_000_000},
+                },
+                wl,
+            )[-1]
+            self.assertTrue(r.has_metadata)
+            self.assertEqual((r.model, r.currency), ('venice-large', 'USD'))
+            self.assertAlmostEqual(r.cost, 2 + 10)  # $2/M input and $10/M output tokens
+            self.assertEqual(r.web_links, wl)
+            r = p({'choices': [{'delta': {}, 'finish_reason': 'content_filter'}]})[0]
+            self.assertIsNotNone(r.exception)
+
+            self.assertEqual(for_assistant(ChatMessage(type=ChatMessageType.developer, query='q')), {'role': 'system', 'content': 'q'})
+            self.assertRaises(ValueError, for_assistant, ChatMessage(type=ChatMessageType.tool, query='q'))
+            d = chat_data((ChatMessage('q'),), model)
+            self.assertEqual(d['stream_options'], {'include_usage': True}, 'streamed responses must request usage so cost and model are reported')
+            self.assertIs(d['venice_parameters']['include_venice_system_prompt'], False, 'calibre supplies its own system prompts')
+
+        def test_ai_venice_image_response_parsing(self) -> None:
+            from calibre.ai.venice.backend import Model, generate_image, image_generation_data, parse_image_response
+
+            model = Model.from_dict({'id': 'venice-sd35', 'type': 'image', 'created': 0, 'model_spec': {'pricing': {'generation': {'usd': 0.01}}}})
+            self.assertTrue(model.generates_images)
+            d = {'id': 'generate-image-1', 'images': [base64.standard_b64encode(b'image bytes').decode()]}
+            res = parse_image_response(d, model)
+            self.assertEqual(res.image, ImageData(data=b'image bytes', mime_type='image/png'))
+            self.assertEqual((res.cost, res.currency), (0.01, 'USD'))
+            self.assertEqual(res.model, 'venice-sd35')
+            self.assertRaises(ValueError, parse_image_response, {'images': []}, model)
+
+            data = image_generation_data('a prompt', model, ImageGenerationOptions(aspect_ratio='3:4'))
+            self.assertEqual((data['width'], data['height']), (960, 1280))
+            self.assertIs(data['hide_watermark'], True, 'Venice watermarks generated images unless told not to')
+            ar_model = Model.from_dict({'id': 'x', 'type': 'image', 'model_spec': {'constraints': {'aspectRatios': ['1:1', '16:9']}}})
+            data = image_generation_data('a prompt', ar_model, ImageGenerationOptions(aspect_ratio='16:9'))
+            self.assertEqual(data['aspect_ratio'], '16:9')
+            self.assertNotIn('width', data)
+
+            # Venice cannot edit images, check the error is reported via the
+            # result so that the cover dialog can show it, rather than raised
             res = generate_image('a prompt', source_images=(ImageData(data=b'image bytes'),))
             self.assertIsInstance(res.exception, ValueError)
 

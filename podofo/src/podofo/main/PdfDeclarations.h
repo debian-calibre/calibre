@@ -1,23 +1,15 @@
-/**
- * SPDX-FileCopyrightText: (C) 2005 Dominik Seichter <domseichter@web.de>
- * SPDX-FileCopyrightText: (C) 2020 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- */
+// SPDX-FileCopyrightText: 2005 Dominik Seichter <domseichter@web.de>
+// SPDX-FileCopyrightText: 2020 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_DECLARATIONS_H
 #define PDF_DECLARATIONS_H
 
-#ifdef PDF_ERROR_H
-    #error "Don't include PdfDeclarations.h in PdfError.h"
-#endif
-
-/**
- * \file PdfDeclarations.h
- *      This file should be included as the FIRST file in every header of
- *      PoDoFo lib. It includes all standard files, defines some useful
- *      macros, some datatypes and all important enumeration types. On
- *      supporting platforms it will be precompiled to speed compilation.
- */
+/// @file PdfDeclarations.h
+///      This file should be included as the FIRST file in every header of
+///      PoDoFo lib. It includes all standard files, defines some useful
+///      macros, some datatypes and all important enumeration types. On
+///      supporting platforms it will be precompiled to speed compilation.
 
  // Include some base macro definitions
 #include <podofo/auxiliary/basedefs.h>
@@ -26,9 +18,6 @@
 #include <podofo/auxiliary/baseincludes.h>
 
 #include <podofo/auxiliary/Version.h>
-
-// Error Handling Defines
-#include "PdfError.h"
 
 #define FORWARD_DECLARE_FCONFIG()\
 extern "C" {\
@@ -43,31 +32,31 @@ extern "C"\
     typedef struct FT_FaceRec_* FT_Face;\
 }
 
-/**
- * \namespace PoDoFo
- *
- * All classes, functions, types and enums of PoDoFo
- * are members of these namespace.
- *
- * If you use PoDoFo, you might want to add the line:
- *       using namespace PoDoFo;
- * to your application.
- */
+/// @namespace PoDoFo
+///
+/// All classes, functions, types and enums of PoDoFo
+/// are members of these namespace.
+///
+/// If you use PoDoFo, you might want to add the line:
+///       using namespace PoDoFo;
+/// to your application.
 namespace PoDoFo {
 
-// NOTE: This may change in the future
-using Matrix2D = std::array<double, 6>;
-
-/** A backing storage for a CID to GID map
- * \remarks It must preserve ordering
- */
-using CIDToGIDMap = std::map<unsigned, unsigned>;
+/// Used in PoDoFo::LogMessage to specify the log level.
+///
+/// @see PoDoFo::LogMessage
+enum class PdfLogSeverity : uint8_t
+{
+    None = 0,            ///< Logging disabled
+    Error,               ///< Error
+    Warning,             ///< Warning
+    Information,         ///< Information message
+    Debug,               ///< Debug information
+};
 
 // Enums
 
-/**
- * Enum to identify different versions of the PDF file format
- */
+/// Enum to identify different versions of the PDF file format
 enum class PdfVersion : uint8_t
 {
     Unknown = 0,
@@ -82,65 +71,83 @@ enum class PdfVersion : uint8_t
     V2_0 = 20,       ///< PDF 2.0
 };
 
-/** The default PDF Version used by new PDF documents
- *  in PoDoFo.
- */
+/// The default PDF Version used by new PDF documents
+/// in PoDoFo.
 constexpr PdfVersion PdfVersionDefault = PdfVersion::V1_4;
 
 enum class PdfALevel : uint8_t
 {
     Unknown = 0,
+    // ISO 19005-1:2005
     L1B,
     L1A,
+    // ISO 19005-2:2011
     L2B,
     L2A,
     L2U,
+    // ISO 19005-3:2012
     L3B,
     L3A,
     L3U,
+    // ISO 19005-4:2020
+    L4,
     L4E,
     L4F,
 };
 
-enum class PdfStringState : uint8_t
+enum class PdfUALevel : uint8_t
 {
-    RawBuffer,          ///< The string is an unvaluated raw buffer
-    Ascii,              ///< The string use characters that are in both Ascii and PdfDocEncoding charsets
-    PdfDocEncoding,     ///< The string uses characters that are in the whole PdfDocEncoding charset
-    Unicode,            ///< The string uses characters that are in the whole Unicode charset
+    Unknown = 0,
+    L1,         // ISO 14289-1:2014
+    L2,         // ISO 14289-2:2024
+};
+
+enum class PdfStringCharset : uint8_t
+{
+    Unknown = 0,        ///< Unknown charset
+    Ascii,              ///< UTF-8 string that have characters that are in both Ascii and PdfDocEncoding charsets
+    PdfDocEncoding,     ///< UTF-8 string that have characters that are in the whole PdfDocEncoding charset
+    Unicode,            ///< UTF-8 string that have characters that are in the whole Unicode charset
 };
 
 enum class PdfEncodingMapType : uint8_t
 {
-    Indeterminate,              ///< Indeterminate map type, such as identity encodings
-    Simple,                     ///< A legacy encoding, such as built-in or difference
+    Indeterminate = 0,          ///< Indeterminate map type, such as non standard identity encodings
+    Simple,                     ///< A legacy encoding, such as predefined, Type1 font built-in, or difference
     CMap                        ///< A proper CMap encoding or pre-defined CMap names
 };
 
-/**
- * Specify additional options for writing the PDF.
- */
+enum class PdfPredefinedEncodingType : uint8_t
+{
+    Indeterminate = 0,          ///< Indeterminate predefined map type
+    LegacyPredefined,           ///< A legacy predefined encoding, such as "WinAnsiEncoding", "MacRomanEncoding" or "MacExpertEncoding"
+    PredefinedCMap,             ///< A predefined CMap, see ISO 32000-2:2020 "9.7.5.2 Predefined CMaps"
+    IdentityCMap,               ///< A predefined identity CMap that is either "Identity-H" or "Identity-V"
+};
+
+enum class PdfWModeKind : uint8_t
+{
+    Horizontal = 0,
+    Vertical = 1,
+};
+
+/// Specify additional options for writing the PDF.
 enum class PdfWriteFlags
 {
     None = 0,
     Clean = 1,             ///< Create a PDF that is readable in a text editor, i.e. insert spaces and linebreaks between tokens
     NoInlineLiteral = 2,   ///< Don't write spaces before literal types (numerical, references, null)
     NoFlateCompress = 4,
-
-    // NOTE: The following flags are actually never set but
-    // they are kept for documenting some PDF peculiarities
-    // when writing compact code
-    NoPDFAPreserve = 256,    ///< When writing compact (PdfWriteFlags::Clean is unset) code, preserving PDF/A compliance is not required
+    PdfAPreserve = 8,      ///< Preserve PDFA compliance during writing (NOTE: it does not itself convert the document to PDF/A)
+    SkipDelimiters = 16,   ///< Skip delimiters in serialization of strings and outer dictionaries/arrays
 };
 
-/**
- * Every PDF datatype that can occur in a PDF file
- * is referenced by an own enum (e.g. Bool or String).
- *
- * \see PdfVariant
- *
- * Remember to update PdfVariant::GetDataTypeString() when adding members here.
- */
+/// Every PDF datatype that can occur in a PDF file
+/// is referenced by an own enum (e.g. Bool or String).
+///
+/// @see PdfVariant
+///
+/// Remember to update PdfVariant::GetDataTypeString() when adding members here.
 enum class PdfDataType : uint8_t
 {
     Unknown = 0,           ///< The Datatype is unknown. The value is chosen to enable value storage in 8-bit unsigned integer
@@ -154,6 +161,23 @@ enum class PdfDataType : uint8_t
     Null,                  ///< The null datatype is always null
     Reference,             ///< The reference datatype contains references to PDF objects in the PDF file of the form 4 0 R. \see PdfObject
     RawData,               ///< Raw PDF data
+};
+
+enum class PdfTokenType : uint8_t
+{
+    Unknown = 0,
+    Literal,
+    ParenthesisLeft,
+    ParenthesisRight,
+    BraceLeft,
+    BraceRight,
+    AngleBracketLeft,
+    AngleBracketRight,
+    DoubleAngleBracketsLeft,
+    DoubleAngleBracketsRight,
+    SquareBracketLeft,
+    SquareBracketRight,
+    Slash,
 };
 
 enum class PdfTextExtractFlags
@@ -177,12 +201,10 @@ enum class PdfXObjectType : uint8_t
     PostScript,
 };
 
-/**
- * Every filter that can be used to encode a stream
- * in a PDF file is referenced by an own enum value.
- * Common filters are PdfFilterType::FlateDecode (i.e. Zip) or
- * PdfFilterType::ASCIIHexDecode
- */
+/// Every filter that can be used to encode a stream
+/// in a PDF file is referenced by an own enum value.
+/// Common filters are PdfFilterType::FlateDecode (i.e. Zip) or
+/// PdfFilterType::ASCIIHexDecode
 enum class PdfFilterType : uint8_t
 {
     None = 0,                  ///< Do not use any filtering
@@ -198,21 +220,19 @@ enum class PdfFilterType : uint8_t
     Crypt
 };
 
-enum class PdfExportFormat
+enum class PdfExportFormat : uint8_t
 {
     Png = 1,        ///< NOTE: Not yet supported
     Jpeg = 2,
 };
 
-/**
- * Enum for the font descriptor flags
- *
- * See ISO 32000-1:2008 Table 121 — Font flags
- */
+/// Enum for the font descriptor flags
+///
+/// See ISO 32000-1:2008 Table 121 — Font flags
 enum class PdfFontDescriptorFlags : uint32_t
 {
     None        = 0,
-    FixedPitch  = 1 << 0,
+    FixedPitch  = 1 << 0, ///< Also known as monospaced
     Serif       = 1 << 1,
     Symbolic    = 1 << 2, ///< Font contains glyphs outside the Standard Latin character set. It does **not** mean the font is a symbol like font 
     Script      = 1 << 3,
@@ -223,7 +243,7 @@ enum class PdfFontDescriptorFlags : uint32_t
     ForceBold   = 1 << 18, ///< Determine whether bold glyphs shall be painted with extra pixels even
 };
 
-enum class PdfFontStretch
+enum class PdfFontStretch : uint8_t
 {
     Unknown = 0,
     UltraCondensed,
@@ -237,20 +257,19 @@ enum class PdfFontStretch
     UltraExpanded,
 };
 
-/** Enum specifying the type of the font
- *
- * It doesn't necessarily specify the underline font file type,
- * as per the value Standard14. To know that, refer to
- * PdfFontMetrics::GetFontFileType()
- */
+/// Enum specifying the type of the font
+///
+/// It doesn't necessarily specify the underline font file type,
+/// as per the value Standard14. To know that, refer to
+/// PdfFontMetrics::GetFontFileType()
 enum class PdfFontType : uint8_t
 {
     Unknown = 0,
     Type1,
     Type3,
     TrueType,
-    CIDType1,    ///< This is a "CIDFontType0"
-    CIDTrueType, ///< This is a "CIDFontType2"
+    CIDCFF,      ///< This is a "/CIDFontType0" font
+    CIDTrueType, ///< This is a "/CIDFontType2" font
 };
 
 enum class PdfFontFileType : uint8_t
@@ -258,43 +277,41 @@ enum class PdfFontFileType : uint8_t
     // Table 126 – Embedded font organization for various font types
     Unknown = 0,
     Type1,
-    Type1CCF,    ///< Compact Font Representation for /Type1 fonts
-    CIDType1,    ///< This is a Type1 font that can be used only in CID Fonts
+    Type1CFF,       ///< Compact Font representation for a Type1 font, as described by Adobe Technical Note #5176 "The Compact Font Format Specification"
+    CIDKeyedCFF,    ///< A Compact Font representation of a CID keyed font, as described by Adobe Technical Note #5176 "The Compact Font Format Specification"
     Type3,
-    TrueType,
-    OpenType     ///< OpenType font. This is /Subtype "OpenType" for /FontFile3
+    TrueType,       ///< A TrueType/OpenType font that has a "glyf" table
+    OpenTypeCFF     ///< OpenType font with a "CFF"/"CFF2" table, as described in ISO/IEC 14496-22
 };
 
-/** Font style flags used during searches
- */
+/// Font style flags used during searches
 enum class PdfFontStyle : uint8_t
 {
-    Regular = 0,
+    None = 0,
     Italic = 1,
     Bold = 2,
+    // Alias to represent a font with regular style
+    Regular = None,
 };
 
-/** When accessing a glyph, there may be a difference in
- * the glyph ID to retrieve the width or to index it
- * within the font program
- */
+/// When accessing a glyph, there may be a difference in
+/// the glyph ID to retrieve the widths or to index it
+/// within the font program
 enum class PdfGlyphAccess : uint8_t
 {
-    Width = 1,         ///< The glyph is accessed in the widths arrays (/Widths, /W1 keys)
+    ReadMetrics = 1,   ///< The glyph is accessed in the PDF metrics arrays (/Widths, /W keys)
     FontProgram = 2    ///< The glyph is accessed in the font program
 };
 
-/** Flags to control font creation.
- */
-enum class PdfFontAutoSelectBehavior
+/// Flags to control font creation.
+enum class PdfFontAutoSelectBehavior : uint8_t
 {
     None = 0,                   ///< No auto selection
     Standard14 = 1,             ///< Automatically select a Standard14 font if the fontname matches one of them
     Standard14Alt = 2,          ///< Automatically select a Standard14 font if the fontname matches one of them (standard and alternative names)
 };
 
-/** Font init flags
- */
+/// Font init flags
 enum class PdfFontCreateFlags
 {
     None = 0,                 ///< No special settings
@@ -303,18 +320,16 @@ enum class PdfFontCreateFlags
     PreferNonCID = 4,         ///< Prefer non CID, simple fonts (/Type1, /TrueType)
 };
 
-enum class PdfFontMatchBehaviorFlags
+enum class PdfFontMatchBehaviorFlags : uint8_t
 {
     None,
-    NormalizePattern = 1,     ///< Normalize search pattern, removing subset prefixes like "ABCDEF+" and extract flags from it (like ",Bold", "-Italic")
-    MatchPostScriptName = 2,  ///< Match postscript font name. The default is match family name. This search may be more specific
+    NormalizePattern = 1,         ///< Normalize search pattern, removing subset prefixes like "ABCDEF+" and extract flags from it (like ",Bold", "-Italic")
+    SkipMatchPostScriptName = 2,  ///< Skip matching postscript font name
 };
 
-/**
- * Enum for the colorspaces supported
- * by PDF.
- */
-enum class PdfColorSpace : uint8_t
+/// Enum for the colorspaces supported
+/// by PDF.
+enum class PdfColorSpaceType : uint8_t
 {
     Unknown = 0,
     DeviceGray,
@@ -330,7 +345,7 @@ enum class PdfColorSpace : uint8_t
     DeviceN
 };
 
-enum class PdfPixelFormat
+enum class PdfPixelFormat : uint8_t
 {
     Unknown = 0,
     Grayscale,
@@ -342,12 +357,10 @@ enum class PdfPixelFormat
     ABGR,           ///< This is known to be used in JDK BufferedImage.TYPE_4BYTE_ABGR
 };
 
-/**
- * Enum for text rendering mode (Tr)
- *
- * Compare ISO 32000-1:2008, Table 106 "Text rendering modes"
- */
-enum class PdfTextRenderingMode
+/// Enum for text rendering mode (Tr)
+///
+/// Compare ISO 32000-1:2008, Table 106 "Text rendering modes"
+enum class PdfTextRenderingMode : uint8_t
 {
     Fill = 0,                  ///< Default mode, fill text
     Stroke,                    ///< Stroke text
@@ -359,24 +372,20 @@ enum class PdfTextRenderingMode
     AddToClipPath,             ///< Add text to path for clipping
 };
 
-/**
- * Enum for the different stroke styles that can be set
- * when drawing to a PDF file (mostly for line drawing).
- */
-enum class PdfStrokeStyle
+/// Enum for the different stroke styles that can be set
+/// when drawing to a PDF file (mostly for line drawing).
+enum class PdfStrokeStyle : uint8_t
 {
-    Solid,
+    Solid = 1,
     Dash,
     Dot,
     DashDot,
     DashDotDot
 };
 
-/**
- * Enum to specifiy the initial information of the
- * info dictionary.
- */
-enum class PdfInfoInitial
+/// Enum to specify the initial information of the
+/// info dictionary.
+enum class PdfInfoInitial : uint8_t
 {
     None = 0,
     WriteCreationTime = 1,      ///< Write the creation time (current time). Default for new documents
@@ -384,40 +393,32 @@ enum class PdfInfoInitial
     WriteProducer = 4,          ///< Write producer key. Default for new documents
 };
 
-/**
- * Enum for line cap styles when drawing.
- */
-enum class PdfLineCapStyle
+/// Enum for line cap styles when drawing.
+enum class PdfLineCapStyle : uint8_t
 {
     Butt = 0,
     Round = 1,
     Square = 2
 };
 
-/**
- * Enum for line join styles when drawing.
- */
-enum class PdfLineJoinStyle
+/// Enum for line join styles when drawing.
+enum class PdfLineJoinStyle : uint8_t
 {
     Miter = 0,
     Round = 1,
     Bevel = 2
 };
 
-/**
- * Enum for vertical text alignment
- */
-enum class PdfVerticalAlignment
+/// Enum for vertical text alignment
+enum class PdfVerticalAlignment : uint8_t
 {
     Top = 0,
     Center = 1,
     Bottom = 2
 };
 
-/**
- * Enum for text alignment
- */
-enum class PdfHorizontalAlignment
+/// Enum for text alignment
+enum class PdfHorizontalAlignment : uint8_t
 {
     Left = 0,
     Center = 1,
@@ -429,33 +430,58 @@ enum class PdfSaveOptions
     None = 0,
     _Reserved1 = 1,
     _Reserved2 = 2,
+    /// Don't flate compress plain/uncompressed streams
+    /// @remarks Already compressed objects will not be affected
     NoFlateCompress = 4,
     NoCollectGarbage = 8,
-    /**
-     * Don't update the trailer "/Info/ModDate" with current
-     * time and synchronize XMP metadata "/Catalog/Metadata"
-     *
-     * Use this option to produce deterministic PDF output, or
-     * if you want to manually handle the manipulation of the
-     * XMP packet
-     */
+    /// Don't update the trailer "/Info/ModDate" with current
+    /// time and synchronize XMP metadata "/Catalog/Metadata"
+    ///
+    /// Use this option to produce deterministic PDF output, or
+    /// if you want to manually handle the manipulation of the
+    /// XMP packet
     NoMetadataUpdate = 16,
     Clean = 32,
+    /// Save the document on a signing operation, instead of
+    /// performing an incremental update. It has no effect on
+    /// a regular save operation
+    SaveOnSigning = 64,
 
-    /**
-      * \deprecated Use NoMetadataUpdate instead
-      */
+    /// This currently applies only during singing, and allows to
+    /// sign documents with broken xref sections. Use with caution.
+    IgnoreXRefErrors = 128, 
+
+    /// @deprecated Use NoMetadataUpdate instead
     NoModifyDateUpdate = NoMetadataUpdate
 };
 
-/**
- * Enum holding the supported page sizes by PoDoFo.
- * Can be used to construct a Rect structure with
- * measurements of a page object.
- *
- * \see PdfPage
- */
-enum class PdfPageSize
+enum class PdfLoadOptions
+{
+    None = 0,
+    ///< Throw on several PDF syntax violations
+    StrictParsing = 1,
+    ///< Load object streams immediately after parsing cross references sections
+    LoadStreamsEagerly = 2,
+    ///< Skip rebuilding object index on cross reference sections parsing failing
+    SkipXRefRecovery = 4,
+};
+
+enum class PdfAdditionalMetadata : uint8_t
+{
+    PdfAIdAmd = 1,
+    PdfAIdCorr,
+    PdfAIdRev,
+    PdfUAIdAmd,
+    PdfUAIdCorr,
+    PdfUAIdRev,
+};
+
+/// Enum holding the supported page sizes by PoDoFo.
+/// Can be used to construct a Rect structure with
+/// measurements of a page object.
+///
+/// @see PdfPage
+enum class PdfPageSize : uint8_t
 {
     Unknown = 0,
     A0,              ///< DIN A0
@@ -470,36 +496,29 @@ enum class PdfPageSize
     Tabloid,         ///< Tabloid
 };
 
-/**
- * Enum holding the supported of types of "PageModes"
- * that define which (if any) of the "panels" are opened
- * in Acrobat when the document is opened.
- *
- * \see PdfDocument
- */
-enum class PdfPageMode
+/// Enum holding the supported of types of "PageModes"
+/// that define which (if any) of the "panels" are opened
+/// in Acrobat when the document is opened.
+///
+/// @see PdfDocument
+enum class PdfPageMode : uint8_t
 {
-    DontCare,
-    UseNone,
+    UseNone = 1,
     UseThumbs,
-    UseBookmarks,
+    UseOutlines,
     FullScreen,
     UseOC,
     UseAttachments
 };
 
-/**
- * Enum holding the supported of types of "PageLayouts"
- * that define how Acrobat will display the pages in
- * relation to each other
- *
- * \see PdfDocument
- */
-enum class PdfPageLayout
+/// Enum holding the supported of types of "PageLayouts"
+/// that define how Acrobat will display the pages in
+/// relation to each other
+///
+/// @see PdfDocument
+enum class PdfPageLayout : uint8_t
 {
-    Ignore,
-    Default,
-    SinglePage,
+    SinglePage = 1,
     OneColumn,
     TwoColumnLeft,
     TwoColumnRight,
@@ -507,7 +526,7 @@ enum class PdfPageLayout
     TwoPageRight
 };
 
-enum class PdfStandard14FontType
+enum class PdfStandard14FontType : uint8_t
 {
     Unknown = 0,
     TimesRoman,
@@ -526,15 +545,14 @@ enum class PdfStandard14FontType
     ZapfDingbats,
 };
 
-/** The type of the annotation.
- *  PDF supports different annotation types, each of
- *  them has different keys and propeties.
- *
- *  Not all annotation types listed here are supported yet.
- *
- *  Please make also sure that the annotation type you use is
- *  supported by the PDF version you are using.
- */
+/// The type of the annotation.
+/// PDF supports different annotation types, each of
+/// them has different keys and properties.
+///
+/// Not all annotation types listed here are supported yet.
+///
+/// Please make also sure that the annotation type you use is
+/// supported by the PDF version you are using.
 enum class PdfAnnotationType : uint8_t
 {
     Unknown = 0,
@@ -569,10 +587,9 @@ enum class PdfAnnotationType : uint8_t
     Projection,     // PDF 2.0
 };
 
-/** Flags that control the appearance of a PdfAnnotation.
- *  You can OR them together and pass it to
- *  PdfAnnotation::SetFlags.
- */
+/// Flags that control the appearance of a PdfAnnotation.
+/// You can OR them together and pass it to
+/// PdfAnnotation::SetFlags.
 enum class PdfAnnotationFlags : uint32_t
 {
     None = 0x0000,
@@ -588,8 +605,7 @@ enum class PdfAnnotationFlags : uint32_t
     LockedContents = 0x0200,
 };
 
-/** The type of PDF field
- */
+/// The type of PDF field
 enum class PdfFieldType : uint32_t
 {
     Unknown = 0,
@@ -602,15 +618,14 @@ enum class PdfFieldType : uint32_t
     Signature,
 };
 
-/** The possible highlighting modes
- *  for a PdfField. I.e the visual effect
- *  that is to be used when the mouse
- *  button is pressed.
- *
- *  The default value is
- *  PdfHighlightingMode::Invert
- */
-enum class PdfHighlightingMode
+/// The possible highlighting modes
+/// for a PdfField. I.e the visual effect
+/// that is to be used when the mouse
+/// button is pressed.
+///
+/// The default value is
+/// PdfHighlightingMode::Invert
+enum class PdfHighlightingMode : uint8_t
 {
     Unknown = 0,
     None,           ///< Do no highlighting
@@ -626,20 +641,43 @@ enum class PdfFieldFlags : uint8_t
     NoExport = 4
 };
 
-/**
- * Type of the annotation appearance.
- */
-enum class PdfAppearanceType
+/// Type of the annotation appearance.
+enum class PdfAppearanceType : uint8_t
 {
     Normal = 0, ///< Normal appearance
     Rollover,   ///< Rollover appearance; the default is PdfAnnotationAppearance::Normal
     Down        ///< Down appearance; the default is PdfAnnotationAppearance::Normal
 };
 
-/**
- * List of PDF stream content operators
- */
-enum class PdfOperator
+enum class PdfResourceType : uint8_t
+{
+    Unknown = 0,
+    ExtGState,
+    ColorSpace,
+    Pattern,
+    Shading,
+    XObject,
+    Font,
+    Properties
+};
+
+enum class PdfKnownNameTree : uint8_t
+{
+    Unknown = 0,
+    Dests,
+    AP,
+    JavaScript,
+    Pages,
+    Templates,
+    IDS,
+    URLS,
+    EmbeddedFiles,
+    AlternatePresentations,
+    Renditions,
+};
+
+/// List of PDF stream content operators
+enum class PdfOperator : uint8_t
 {
     Unknown = 0,
     // ISO 32008-1:2008 Table 51 – Operator Categories
@@ -734,22 +772,20 @@ enum class PdfOperator
     EX,
 };
 
-/**
- * List of defined Rendering intents
- */
-enum class PdfRenderingIntent
+/// List of defined Rendering intents
+enum class PdfRenderingIntent : uint8_t
 {
+    Unknown = 0,
     AbsoluteColorimetric,
     RelativeColorimetric,
     Perceptual,
     Saturation,
 };
 
-/**
- * List of defined transparency blending modes
- */
-enum class PdfBlendMode
+/// List of defined transparency blending modes
+enum class PdfBlendMode : uint8_t
 {
+    Unknown = 0,
     Normal,
     Multiply,
     Screen,
@@ -768,9 +804,34 @@ enum class PdfBlendMode
     Luminosity,
 };
 
+enum class PdfSignatureType : uint8_t
+{
+    Unknown = 0,
+    PAdES_B = 1,
+    Pkcs7 = 2,
+};
+
+enum class PdfSignatureEncryption : uint8_t
+{
+    Unknown = 0,
+    RSA,
+    ECDSA,
+};
+
+enum class PdfHashingAlgorithm : uint8_t
+{
+    Unknown = 0,
+    SHA256,
+    SHA384,
+    SHA512,
+};
+
+using PdfFilterList = std::vector<PdfFilterType>;
+
 };
 
 ENABLE_BITMASK_OPERATORS(PoDoFo::PdfSaveOptions);
+ENABLE_BITMASK_OPERATORS(PoDoFo::PdfLoadOptions);
 ENABLE_BITMASK_OPERATORS(PoDoFo::PdfWriteFlags);
 ENABLE_BITMASK_OPERATORS(PoDoFo::PdfInfoInitial);
 ENABLE_BITMASK_OPERATORS(PoDoFo::PdfFontStyle);
@@ -782,34 +843,32 @@ ENABLE_BITMASK_OPERATORS(PoDoFo::PdfGlyphAccess);
 ENABLE_BITMASK_OPERATORS(PoDoFo::PdfTextExtractFlags);
 ENABLE_BITMASK_OPERATORS(PoDoFo::PdfAnnotationFlags);
 
-/**
- * \mainpage
- *
- * <b>PoDoFo</b> is a library to work with the PDF file format and includes also a few
- * tools. The name comes from the first letter of PDF (Portable Document
- * Format).
- *
- * The <b>PoDoFo</b> library is a free portable C++ library which includes
- * classes to parse a PDF file and modify its contents into memory. The changes
- * can be written back to disk easily. PoDoFo does not currently provide any
- * rendering facility but the parser could be used to write a PDF viewer.
- * Besides parsing PoDoFo includes also very simple classes to create your
- * own PDF files. All classes are documented so it is easy to start writing
- * your own application using PoDoFo.
- *
- *
- * As of now <b>PoDoFo</b> is available for Unix, Mac OS X and Windows platforms.
- *
- * More information can be found at: https://github.com/podofo/podofo
- *
- * <b>PoDoFo</b> is maintained by Francesco Pretto <ceztko@gmail.com>,
- * and it's based on the work done by Dominik Seichter, Leonard Rosenthol,
- * Craig Ringer and others in the PoDoFo (http://podofo.sourceforge.net/)
- * library.
- *
- * \page Codingstyle (Codingstyle)
- * \verbinclude CODINGSTYLE.txt
- *
- */
+/// @mainpage
+///
+/// PoDoFo is a library to work with the PDF file format and includes also a few
+/// tools. The name comes from the first letter of PDF (Portable Document
+/// Format).
+///
+/// The PoDoFo library is a free portable C++ library which includes
+/// classes to parse a PDF file and modify its contents into memory. The changes
+/// can be written back to disk easily. PoDoFo does not currently provide any
+/// rendering facility but the parser could be used to write a PDF viewer.
+/// Besides parsing PoDoFo includes also very simple classes to create your
+/// own PDF files. All classes are documented so it is easy to start writing
+/// your own application using PoDoFo.
+///
+///
+/// As of now PoDoFo is available for Unix, Mac OS X and Windows platforms.
+///
+/// More information can be found at: https://github.com/podofo/podofo
+///
+/// PoDoFo is maintained by Francesco Pretto <ceztko@gmail.com>,
+/// and it's based on the work done by Dominik Seichter, Leonard Rosenthol,
+/// Craig Ringer and others in the PoDoFo (http://podofo.sourceforge.net/)
+/// library.
+///
+/// @page Codingstyle (Codingstyle)
+/// @verbinclude CODINGSTYLE.txt
+///
 
 #endif // PDF_DECLARATIONS_H

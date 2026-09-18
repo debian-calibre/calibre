@@ -96,15 +96,18 @@ struct ImageHasher {
 typedef std::unordered_map<Image, std::vector<PdfReference>, ImageHasher> image_reference_map;
 
 static unsigned long
-run_one_dedup_pass(PDFDoc *self, hash_cache_map &hash_cache) {
+run_one_dedup_pass(PDFDoc *self, hash_cache_map &hash_cache, unordered_reference_set &removed) {
     unsigned long count = 0;
     PdfIndirectObjectList &objects = self->doc->GetObjects();
     image_reference_map image_map;
 
     for (auto &k : objects) {
         if (!k->IsDictionary()) continue;
+        // duplicates removed in a previous pass remain in memory until they
+        // are garbage collected on save, ignore them
+        if (removed.find(object_as_reference(k)) != removed.end()) continue;
         const PdfDictionary &dict = k->GetDictionary();
-        if (dictionary_has_key_name(dict, PdfName::KeyType, "XObject") && dictionary_has_key_name(dict, PdfName::KeySubtype, "Image")) {
+        if (dictionary_has_key_name(dict, "Type", "XObject") && dictionary_has_key_name(dict, "Subtype", "Image")) {
             Image img(object_as_reference(k), k, hash_cache);
             auto it = image_map.find(img);
             if (it == image_map.end()) {
@@ -119,8 +122,10 @@ run_one_dedup_pass(PDFDoc *self, hash_cache_map &hash_cache) {
             const PdfReference &canonical_ref = x.first.reference();
             for (auto &ref : x.second) {
                 if (ref != canonical_ref) {
+                    // rewriting the references below leaves the duplicate
+                    // unreferenced, so it is garbage collected on save
                     ref_map[ref] = canonical_ref;
-                    objects.RemoveObject(ref).reset();
+                    removed.insert(ref);
                     count++;
                 }
             }
@@ -151,8 +156,8 @@ run_one_dedup_pass(PDFDoc *self, hash_cache_map &hash_cache) {
                 }
                 if (changed) resources.AddKey("XObject", new_xobject);
             } else if (
-                dictionary_has_key_name(dict, PdfName::KeyType, "XObject") && dictionary_has_key_name(dict, PdfName::KeySubtype, "Image") &&
-                dict.HasKey("SMask") && dict.MustGetKey("SMask").IsReference()) {
+                dictionary_has_key_name(dict, "Type", "XObject") && dictionary_has_key_name(dict, "Subtype", "Image") && dict.HasKey("SMask") &&
+                dict.MustGetKey("SMask").IsReference()) {
                 try {
                     const PdfReference &r = ref_map.at(dict.MustGetKey("SMask").GetReference());
                     dict.AddKey("SMask", r);
@@ -167,8 +172,9 @@ static PyObject *
 dedup_images(PDFDoc *self, PyObject *args) {
     unsigned long count = 0;
     hash_cache_map hash_cache;
-    count += run_one_dedup_pass(self, hash_cache);
-    count += run_one_dedup_pass(self, hash_cache);
+    unordered_reference_set removed;
+    count += run_one_dedup_pass(self, hash_cache, removed);
+    count += run_one_dedup_pass(self, hash_cache, removed);
     return Py_BuildValue("k", count);
 }
 

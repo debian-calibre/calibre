@@ -1,8 +1,5 @@
-/**
- * SPDX-FileCopyrightText: (C) 2021 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2021 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #ifndef PDF_ENCODING_H
 #define PDF_ENCODING_H
@@ -10,6 +7,7 @@
 #include "PdfEncodingMap.h"
 #include "PdfString.h"
 #include "PdfObject.h"
+#include "PdfCIDToGIDMap.h"
 
 namespace PoDoFo
 {
@@ -17,15 +15,8 @@ namespace PoDoFo
     class PdfEncoding;
     class PdfFontSimple;
 
-    enum class PdfEncodingExportFlags
-    {
-        None = 0,
-        SkipToUnicode = 1,  ///< Skip exporting a /ToUnicode entry
-    };
-
-    /** A PDF string context to interatively scan a string
-     * and collect both CID and unicode codepoints
-     */
+    /// A PDF string context to iteratively scan a string
+    /// and collect both CID and unicode codepoints
     class PODOFO_API PdfStringScanContext
     {
         friend class PdfEncoding;
@@ -36,10 +27,11 @@ namespace PoDoFo
     public:
         bool IsEndOfString() const;
 
-        /** Advance string reading
-         * \return true if success
-         */
-        bool TryScan(PdfCID& cid, std::string& utf8str, std::vector<codepoint>& codepoints);
+        /// Advance string reading
+        /// @return true if success
+        bool TryScan(PdfCID& cid, std::string& utf8str, CodePointSpan& codepoints);
+
+        bool TryScan(PdfCID& cid, std::string& utf8str, std::vector<unsigned>& positions, CodePointSpan& codepoints);
 
     private:
         std::string_view::iterator m_it;
@@ -49,179 +41,171 @@ namespace PoDoFo
         const PdfEncodingMap* m_toUnicode;
     };
 
-    /**
-     * A PdfEncoding is in PdfFont to transform a text string
-     * into a representation so that it can be displayed in a
-     * PDF file.
-     *
-     * PdfEncoding can also be used to convert strings from a
-     * PDF file back into a PdfString.
-     */
-    class PODOFO_API PdfEncoding
+    /// A PdfEncoding is in PdfFont to transform a text string
+    /// into a representation so that it can be displayed in a
+    /// PDF file.
+    ///
+    /// PdfEncoding can also be used to convert strings from a
+    /// PDF file back into a PdfString.
+    class PODOFO_API PdfEncoding final
     {
         friend class PdfEncodingFactory;
-        friend class PdfEncodingShim;
-        friend class PdfDynamicEncoding;
         friend class PdfFont;
+        friend class PdfFontCID;
+        friend class PdfFontCIDTrueType;
         friend class PdfFontSimple;
 
     public:
-        /** Null encoding
-         */
+        /// Null encoding, when used as an actual encoding a dynamic
+        /// encoding will be constructed instead
         PdfEncoding();
-        PdfEncoding(const PdfEncodingMapConstPtr& encoding, const PdfToUnicodeMapConstPtr& toUnicode = nullptr);
-        virtual ~PdfEncoding();
+        PdfEncoding(PdfEncodingMapConstPtr encoding, PdfToUnicodeMapConstPtr toUnicode = nullptr);
+        PdfEncoding(const PdfEncoding&) = default;
 
     private:
-        PdfEncoding(size_t id, const PdfEncodingMapConstPtr& encoding, const PdfEncodingMapConstPtr& toUnicode = nullptr);
-        PdfEncoding(const PdfObject& fontObj, const PdfEncodingMapConstPtr& encoding, const PdfEncodingMapConstPtr& toUnicode);
+        PdfEncoding(unsigned id, PdfEncodingMapConstPtr&& encoding,
+            PdfEncodingMapConstPtr&& toUnicode);
+        PdfEncoding(unsigned id, bool isObjectLoaded, const PdfEncodingLimits& limits, PdfFont* font,
+            PdfEncodingMapConstPtr&& encoding, PdfEncodingMapConstPtr&& toUnicode,
+            PdfCIDToGIDMapConstPtr&& cidToGidMap);
+
+        /// Create an encoding from object parsed information
+        static PdfEncoding Create(const PdfEncodingLimits& parsedLimits, PdfEncodingMapConstPtr&& encoding,
+            PdfEncodingMapConstPtr&& toUnicode, PdfCIDToGIDMapConstPtr&& cidToGidMap);
+
+        /// Create a proxy encoding with a supplied /ToUnicode map
+        static PdfEncoding Create(const PdfEncoding& ref, PdfToUnicodeMapConstPtr&& toUnicode);
+
+        /// Encoding shim that mocks an existing encoding. Used by PdfFont
+        static std::unique_ptr<PdfEncoding> CreateSchim(const PdfEncoding& encoding, PdfFont& font);
+
+        /// Encoding with an external encoding map storage
+        /// Used by PdfFont in case of dynamic encoding requested
+        static std::unique_ptr<PdfEncoding> CreateDynamicEncoding(std::shared_ptr<PdfCharCodeMap>&& cidMap,
+            std::shared_ptr<PdfCharCodeMap>&& toUnicodeMap, PdfFont& font);
 
     public:
-        /**
-         * \remarks Doesn't throw if conversion failed, totally or partially
-         */
+        /// @remarks Doesn't throw if conversion failed, totally or partially
         std::string ConvertToUtf8(const PdfString& encodedStr) const;
 
-        /**
-         * \remarks Produces a partial result also in case of failure
-         */
+        /// @remarks Produces a partial result also in case of failure
         bool TryConvertToUtf8(const PdfString& encodedStr, std::string& str) const;
 
-        /**
-         * \remarks It throws if conversion failed, totally or partially
-         */
+        /// @remarks It throws if conversion failed, totally or partially
         charbuff ConvertToEncoded(const std::string_view& str) const;
 
         bool TryConvertToEncoded(const std::string_view& str, charbuff& encoded) const;
 
-        /**
-         * \remarks Doesn't throw if conversion failed, totally or partially
-         */
+        /// @remarks Doesn't throw if conversion failed, totally or partially
         std::vector<PdfCID> ConvertToCIDs(const PdfString& encodedStr) const;
 
-        /**
-         * \remarks Produces a partial result also in case of failure
-         */
+        /// @remarks Produces a partial result also in case of failure
         bool TryConvertToCIDs(const PdfString& encodedStr, std::vector<PdfCID>& cids) const;
 
-        /** Get code point from char code unit
-         *
-         * \returns the found code point or U'\0' if missing or
-         *      multiple matched codepoints
-         */
+        /// Get code point from char code unit
+        ///
+        /// @returns the found code point or U'\0' if missing or
+        ///      multiple matched codepoints
         char32_t GetCodePoint(const PdfCharCode& codeUnit) const;
 
-        /** Get code point from char code
-         *
-         * \returns the found code point or U'\0' if missing or
-         *      multiple matched codepoints
-         * \remarks it will iterate available code sizes
-         */
+        /// Get code point from char code
+        ///
+        /// @returns the found code point or U'\0' if missing or
+        ///      multiple matched codepoints
+        /// @remarks it will iterate available code sizes
         char32_t GetCodePoint(unsigned charCode) const;
-
-        void ExportToFont(PdfFont& font, PdfEncodingExportFlags flags = { }) const;
 
         PdfStringScanContext StartStringScan(const PdfString& encodedStr);
 
     public:
-        /** This return the first char code used in the encoding
-         * \remarks Mostly useful for non cid-keyed fonts to export /FirstChar
-         */
+        /// This return the first char code used in the encoding
+        /// @remarks Mostly useful for non cid-keyed fonts to export /FirstChar
         const PdfCharCode& GetFirstChar() const;
 
-        /** This return the last char code used in the encoding
-         * \remarks Mostly useful for non cid-keyed fonts to export /LastChar
-         */
+        /// This return the last char code used in the encoding
+        /// @remarks Mostly useful for non cid-keyed fonts to export /LastChar
         const PdfCharCode& GetLastChar() const;
 
-        /** Return true if the encoding is a dummy null encoding
-         */
+        /// Return true if the encoding is a dummy null encoding
         bool IsNull() const;
 
-        /** Return true if the encoding does CID mapping
-         */
+        /// Return true if the encoding does CID mapping
         bool HasCIDMapping() const;
 
-        /** Return true if the encoding is simple
-         * and has a non-CID mapping /Encoding entry
-         */
+        /// Return true if the encoding is simple
+        /// and has a non-CID mapping /Encoding entry
         bool IsSimpleEncoding() const;
 
-        /** Returns true if /FirstChar and /LastChar were parsed from object
-         */
+        /// Returns true if /FirstChar and /LastChar were parsed from object
         bool HasParsedLimits() const;
 
-        /** Return true if the encoding is a dynamic CID mapping
-         */
-        virtual bool IsDynamicEncoding() const;
+        /// Return true if the encoding is a dynamic CID mapping
+        bool IsDynamicEncoding() const;
 
-        /**
-         * Return an Id to be used in hashed containers.
-         * Id 0 has a special meaning to create a PdfDynamicEncoding
-         *  \see PdfDynamicEncoding
-         */
-        size_t GetId() const { return m_Id; }
+        /// Return an Id to be used in hashed containers
+        unsigned GetId() const { return m_Id; }
 
-        /** Get actual limits of the encoding
-         *
-         * May be the limits inferred from /Encoding or the limits inferred by /FirstChar, /LastChar
-         */
+        /// True if the encoding is constructed from object loaded information
+        bool IsObjectLoaded() const { return m_IsObjectLoaded; }
+
+        /// Get actual limits of the encoding
+        ///
+        /// May be the limits inferred from /Encoding or the limits inferred by /FirstChar, /LastChar
         const PdfEncodingLimits& GetLimits() const;
 
         bool HasValidToUnicodeMap() const;
 
-        /** Get the ToUnicode map, throws if missing
-         */
+        /// Get the ToUnicode map, throws if missing
         const PdfEncodingMap& GetToUnicodeMap() const;
 
-        /** Get the ToUnicode map, fallback to the normal encoding if missing
-         *
-         * \param toUnicode the retrieved map
-         * \return true if the retrieved map is valid, false otherwise
-         */
+        /// Get the ToUnicode map, fallback to the normal encoding if missing
+        ///
+        /// @param toUnicode the retrieved map
+        /// @return true if the retrieved map is valid, false otherwise
         bool GetToUnicodeMapSafe(const PdfEncodingMap*& toUnicode) const;
 
-        /** Get the ToUnicode map, fallback to the normal encoding if missing
-         *
-         * \return the retrieved map
-         * \remark As a general rule, we always use this method when converting encoded -> Unicode
-         */
+        /// Get the ToUnicode map, fallback to the normal encoding if missing
+        ///
+        /// @return the retrieved map
+        /// @remark As a general rule, we always use this method when converting encoded -> Unicode
         const PdfEncodingMap& GetToUnicodeMapSafe() const;
 
-        inline const PdfEncodingMap& GetEncodingMap() const { return *m_Encoding; }
+        const PdfEncodingMap& GetEncodingMap() const { return *m_Encoding; }
 
-        inline const PdfEncodingMapConstPtr GetEncodingMapPtr() const { return m_Encoding; }
+        PdfEncodingMapConstPtr GetEncodingMapPtr() const { return m_Encoding; }
 
-        const PdfEncodingMapConstPtr GetToUnicodeMapPtr() const;
+        PdfEncodingMapConstPtr GetToUnicodeMapPtr() const;
 
     public:
         PdfEncoding& operator=(const PdfEncoding&) = default;
-        PdfEncoding(const PdfEncoding&) = default;
-
-    protected:
-        virtual PdfFont & GetFont() const;
 
     private:
-        // This method is to be called by PdfFont
+        // These methods will be called by PdfFont
+        void ExportToFont(PdfFont& font, const PdfCIDSystemInfo& cidInfo) const;
+        void ExportToFont(PdfFont& font) const;
         bool TryGetCIDId(const PdfCharCode& codeUnit, unsigned& cid) const;
-        static size_t GetNextId();
+        const PdfCIDToGIDMap* GetCIDToGIDMap() const { return m_CIDToGIDMap.get(); }
+
+        static unsigned GetNextId();
 
     private:
-        bool tryExportObjectTo(PdfDictionary& dictionary, bool wantCidMapping) const;
+        void exportToFont(PdfFont& font, const PdfCIDSystemInfo* cidInfo) const;
+        bool tryExportEncodingTo(PdfDictionary& dictionary, bool wantCidMapping) const;
         bool tryConvertEncodedToUtf8(const std::string_view& encoded, std::string& str) const;
         bool tryConvertEncodedToCIDs(const std::string_view& encoded, std::vector<PdfCID>& cids) const;
-        void writeCIDMapping(PdfObject& cmapObj, const PdfFont& font, const std::string_view& baseFont) const;
-        void writeToUnicodeCMap(PdfObject& cmapObj) const;
+        void writeCIDMapping(PdfObject& cmapObj, const PdfFont& font, const PdfCIDSystemInfo& info) const;
+        void writeToUnicodeCMap(PdfObject& cmapObj, const PdfFont& font) const;
         bool tryGetCharCode(PdfFont& font, unsigned gid, const unicodeview& codePoints, PdfCharCode& unit) const;
 
     private:
-        size_t m_Id;
+        unsigned m_Id;
+        bool m_IsObjectLoaded;
+        PdfEncodingLimits m_ParsedLimits;
+        PdfFont* m_Font;
         PdfEncodingMapConstPtr m_Encoding;
         PdfEncodingMapConstPtr m_ToUnicode;
-        PdfEncodingLimits m_ParsedLimits;
+        PdfCIDToGIDMapConstPtr m_CIDToGIDMap;
     };
 }
-
-ENABLE_BITMASK_OPERATORS(PoDoFo::PdfEncodingExportFlags);
 
 #endif // PDF_ENCODING_H

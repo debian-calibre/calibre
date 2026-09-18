@@ -1,9 +1,5 @@
-/**
- * Copyright (C) 2022 by Francesco Pretto <ceztko@gmail.com>
- *
- * Licensed under GNU Library General Public 2.0 or later.
- * Some rights reserved. See COPYING, AUTHORS.
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: MIT-0
 
 #include <PdfTest.h>
 
@@ -12,26 +8,32 @@
 using namespace std;
 using namespace PoDoFo;
 
-static string removeFirstAndLastLine(const string& str);
-
 static void TestNormalizeXMP(string_view filename)
 {
     string sourceXmp;
-    TestUtils::ReadTestInputFile(string(filename) + ".xml", sourceXmp);
+    TestUtils::ReadTestInputFileTo(sourceXmp, string(filename) + ".xml");
 
-    unique_ptr<PdfXMPPacket> packet;
-    auto metadata = PoDoFo::GetXMPMetadata(sourceXmp, packet);
+    auto packet = PdfXMPPacket::Create(sourceXmp);
+    auto metadata = packet->GetMetadata();
     auto normalizedXmp = packet->ToString();
 
     string expectedXmp;
-    TestUtils::ReadTestInputFile(string(filename) + "-Expected.xml", expectedXmp);
-
-    // NOTE: This just fixes tests with last resources as in recent PoDoFo versions
-    // we do better normalization of the XMP packet begin/end tags
-    normalizedXmp = removeFirstAndLastLine(normalizedXmp);
-    expectedXmp = removeFirstAndLastLine(expectedXmp);
+    TestUtils::ReadTestInputFileTo(expectedXmp, string(filename) + "-Expected.xml");
 
     REQUIRE(normalizedXmp == expectedXmp);
+}
+
+TEST_CASE("TestAdditionalXMPMetatadata")
+{
+    string sourceXmp;
+    TestUtils::ReadTestInputFileTo(sourceXmp, "TestXMP5.xml");
+
+    auto packet = PdfXMPPacket::Create(sourceXmp);
+    auto metadata = packet->GetMetadata();
+
+    REQUIRE(metadata.PdfaLevel == PdfALevel::L1B);
+    REQUIRE(metadata.PdfuaLevel == PdfUALevel::L1);
+    REQUIRE(*metadata.GetMetadata(PdfAdditionalMetadata::PdfAIdCorr) == "2:2011");
 }
 
 TEST_CASE("TestNormalizeXMP")
@@ -41,22 +43,138 @@ TEST_CASE("TestNormalizeXMP")
     TestNormalizeXMP("TestXMP7");
 }
 
-string removeFirstAndLastLine(const string& str)
+TEST_CASE("TestPDFA1_PDFUA1")
 {
-    // Trim trailing newlines first
-    size_t end = str.size();
-    while (end > 0 && (str[end - 1] == '\n' || str[end - 1] == '\r'))
-        --end;
-
-    // Work on the trimmed view [0, end)
-    size_t firstNewline = str.find('\n');
-    if (firstNewline == string::npos || firstNewline >= end)
-        return ""; // Only one (non-empty) line
-
-    size_t lastNewline = str.rfind('\n', end - 1);
-
-    if (firstNewline == lastNewline)
-        return ""; // Only two lines, nothing left after removing both
-
-    return str.substr(firstNewline + 1, lastNewline - firstNewline - 1);
+    PdfMemDocument doc;
+    doc.Load(TestUtils::GetTestInputFilePath("blank-pdfa.pdf"));
+    doc.GetMetadata().SetPdfUALevel(PdfUALevel::L1);
+    doc.Save(TestUtils::GetTestOutputFilePath("TestPDFA1_PDFUA1.pdf"));
 }
+
+#if LIBXML_VERSION >= 21500
+
+TEST_CASE("TestPruneInvalid")
+{
+    struct FailedProp
+    {
+        string Name;
+        bool IsDuplicated;
+        bool HasInvalidPrefix;
+    };
+
+    vector<FailedProp> warnings;
+    auto reportWarnings = [&warnings](const PdfXMPProperty& prop) {
+        warnings.push_back(FailedProp{ prop.GetPrefixedName(),
+            prop.IsDuplicated(), prop.HasInvalidPrefix() });
+    };
+
+    string xmp;
+    TestUtils::ReadTestInputFileTo(xmp, "TestXMP1.xml");
+
+    auto packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L1B, reportWarnings);
+    REQUIRE(warnings.size() == 0);
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L2B, reportWarnings);
+    REQUIRE(warnings.size() == 0);
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L4, reportWarnings);
+    REQUIRE(warnings.size() == 0);
+
+    xmp.clear();
+    TestUtils::ReadTestInputFileTo(xmp, "TestXMP1_PDFA4.xml");
+
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L1B, reportWarnings);
+    REQUIRE(warnings.size() == 1);
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L2B, reportWarnings);
+    REQUIRE(warnings.size() == 1);
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L4, reportWarnings);
+    REQUIRE(warnings.size() == 0);
+
+    xmp.clear();
+    TestUtils::ReadTestInputFileTo(xmp, "TestXMP1_PDFA4_Invalid1.xml");
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L4, reportWarnings);
+    REQUIRE(warnings.size() == 1);
+    REQUIRE(warnings[0].Name == "pdf:Trapped");
+    REQUIRE(warnings[0].IsDuplicated);
+
+    xmp.clear();
+    TestUtils::ReadTestInputFileTo(xmp, "TestXMP1_PDFA4_Invalid2.xml");
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L4, reportWarnings);
+    REQUIRE(warnings.size() == 2);
+    REQUIRE(warnings[0].Name == "mypdfaid:part");
+    REQUIRE(warnings[0].HasInvalidPrefix);
+
+    xmp.clear();
+    TestUtils::ReadTestInputFileTo(xmp, "TestXMP8.xml");
+    warnings.clear();
+    packet = PdfXMPPacket::Create(xmp);
+    packet->PruneAndValidate(PdfALevel::L2B, reportWarnings);
+    REQUIRE(warnings.size() == 0);
+
+    string expectedXmp;
+    TestUtils::ReadTestInputFileTo(expectedXmp, "TestXMP8-Expected.xml");
+    packet->ToString(xmp);
+    REQUIRE(xmp == expectedXmp);
+}
+
+static void testPruneInvalid(const fs::path& path, PdfALevel level, const fs::path& refFolder, charbuff& buff1, charbuff& buff2);
+
+TEST_CASE("TestPruneInvalidDataset")
+{
+    charbuff buff1;
+    charbuff buff2;
+    auto srcPath = TestUtils::GetTestInputPath() / "XMP";
+    auto refPath = srcPath / "Ref";
+    fs::create_directories(refPath);
+    for (const auto& entry : fs::directory_iterator(TestUtils::GetTestInputFilePath("XMP")))
+    {
+        testPruneInvalid(entry.path(), PdfALevel::L1B, refPath, buff1, buff2);
+        testPruneInvalid(entry.path(), PdfALevel::L2B, refPath, buff1, buff2);
+    }
+}
+
+void testPruneInvalid(const fs::path& path, PdfALevel level, const fs::path& refFolder, charbuff& buff1, charbuff& buff2)
+{
+    if (path.filename() == "Ref")
+        return;
+
+    utls::ReadTo(buff1, path.u8string());
+    auto packet = PdfXMPPacket::Create(buff1);
+    constexpr bool WriteNormalized = false;
+    if (WriteNormalized)
+    {
+        auto normalizedPath = refFolder / path.stem().u8string().append("_Normalized").append(".xmp");
+        buff1.clear();
+        packet->ToString(buff1);
+        utls::WriteTo(normalizedPath.u8string(), buff1);
+    }
+
+    packet->PruneAndValidate(level);
+    buff1.clear();
+    packet->ToString(buff1);
+
+    auto refPath = refFolder / path.stem().u8string().append("_").append(PoDoFo::ToString(level)).append(".xmp");
+    if (fs::exists(refPath))
+    {
+        utls::ReadTo(buff2, refPath.u8string());
+        REQUIRE(buff1 == buff2);
+    }
+    else
+    {
+        utls::WriteTo(refPath.u8string(), buff1);
+    }
+}
+
+#endif // LIBXML_VERSION >= 21500

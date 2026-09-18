@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "augusti 28, 2026" "9.14.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "september 18, 2026" "9.15.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -60,7 +60,7 @@ Allting efter \fB\-\-\fP skickas till skriptet. Du kan också använda \fBcalibr
 .UNINDENT
 .UNINDENT
 .sp
-När du skickar argument till \fBcalibre\-debug\fP som har blanksteg i dem, bifoga argumenten i citattecken. Till exempel: \(dq/some path/with spaces\(dq
+När du skickar argument som innehåller blanksteg till \fBcalibre\-debug\fP ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .SH [ALTERNATIV]
 .INDENT 0.0
 .TP
@@ -75,7 +75,7 @@ Kör Python\-kod.
 .INDENT 0.0
 .TP
 .B \-\-debug\-device\-driver, \-d
-Felsöker enhetsidentifiering
+Felsök enhetsidentifiering
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -100,7 +100,7 @@ Kör Python\-koden i fil.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Bryt isär boken i den angivna mappen. Användning: \-x file.epub output_dir Exporterar boken som en samling HTML\-filer och metadata som du kan redigera med standard HTML\-redigeringsverktyg. Fungerar med EPUB\-, AZW3\-, HTMLZ\- och DOCX\-filer.
+Packa upp boken i den angivna mappen. Användning: \-x file.epub output_dir Exporterar boken som en samling HTML\-filer och metadata som du kan redigera med vanliga HTML\-redigeringsverktyg. Fungerar med EPUB\-, AZW3\-, HTMLZ\- och DOCX\-filer.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -115,7 +115,7 @@ Kör det grafiska användargränssnittet med felsökning aktiverad. Felsöknings
 .INDENT 0.0
 .TP
 .B \-\-gui\-debug
-Kör det grafiska gränssnittet med felsökningskonsol, loggning till angiven sökväg. Bara för intern användning, använd \-g alternativet för att köra det grafiska gränssnittet i felsökningsläge
+Kör det grafiska gränssnittet med en felsökningskonsol och logga till den angivna sökvägen. Endast för internt bruk; använd alternativet \-g för att köra det grafiska gränssnittet i felsökningsläge
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -125,7 +125,7 @@ visa denna hjälptext och avsluta
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implodera en tidigare exploderad bok. Användning: \-i output_dir file.epub Importerar boken från filerna i output_dir som måste ha skapats av ett tidigare anrop till \fB\-\-explode\-book\fP\&. Var noga med att ange samma filtyp som användes vid exploderande.
+Packa ihop en tidigare uppackad bok. Användning: \-i output_dir file.epub Importerar boken från filerna i output_dir, som måste ha skapats med ett tidigare anrop till \fB\-\-explode\-book\fP\&. Ange samma filtyp som användes vid uppackningen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -150,7 +150,7 @@ Mata ut nödvändiga sökvägar för att anpassa calibre\-miljön
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Kör en insticksmodul som tillhandahåller ett kommandoradsgränssnitt. Till exempel:  calibre\-debug \-r \fB\(dq\fPinsticksmodulsnamn\fB\(dq\fP \fB\-\-\fP fil1 \fB\-\-flagga1\fP Allt efter \fB\-\-\fP kommer att skickas till insticksmodulen som argument.
+Kör en insticksmodul som tillhandahåller ett kommandoradsgränssnitt. Till exempel: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Allt efter \fB\-\-\fP skickas till insticksmodulen som argument.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -165,7 +165,7 @@ Kör inte med DEBUG\-flaggan inställd
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-running\-calibre, \-s
-Orsakar att en körande calibre\-instans avslutas, om någon körs. Observera att om det finns pågående jobb kommer de att avbrytas tyst, så använd med försiktighet.
+Avsluta en calibre\-instans som körs, om det finns någon. Observera att pågående jobb avbryts utan meddelande, så använd med försiktighet.
 .UNINDENT
 .INDENT 0.0
 .TP

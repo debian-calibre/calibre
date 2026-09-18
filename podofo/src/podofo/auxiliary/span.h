@@ -2,19 +2,23 @@
 #define AUX_SPAN_H
 #pragma once
 
-#include "span.hpp"
+#include "podofo_config.h"
+
+#ifdef PODOFO_DEVENDOR_TCBSPAN
+#include <tcb/span.hpp>
+#else
+#include <podofo/3rdparty/span.hpp>
+#endif
 
 namespace PoDoFo
 {
     // https://stackoverflow.com/questions/56845801/what-happened-to-stdcspan
-    /** Constant span
-     */
+    /// Constant span
     template <class T, size_t Extent = tcb::dynamic_extent>
     using cspan = tcb::span<const T, Extent>;
 
-    /** Mutable span
-     */
-    template <class T, size_t Extent = tcb::dynamic_extent, typename std::enable_if<!std::is_const<T>::value, int>::type = 0>
+    /// Mutable span
+    template <class T, size_t Extent = tcb::dynamic_extent, typename std::enable_if<!std::is_const_v<T>, int>::type = 0>
     using mspan = tcb::span<T, Extent>;
 }
 

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:07+0000\n"
+"POT-Creation-Date: 2026-09-16 15:05+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -44,7 +44,7 @@ msgstr "calibre-mallspråket är ett calibre-specifikt språk som används i hel
 msgid ""
 "Specify the folder structure and file names when saving files from the "
 "calibre library to the disk or e-book reader."
-msgstr "Ange mappstruktur och filnamn när du sparar filer från calibre-biblioteket till disken eller e-bokläsenhet."
+msgstr "Ange mappstruktur och filnamn när du sparar filer från calibre-biblioteket till disken eller e-bokläsenheten."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:9
 msgid "Define rules for adding icons and colors to the calibre book list."
@@ -60,7 +60,7 @@ msgstr "Avancerad bibliotekssökning."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:12
 msgid "Advanced metadata search and replace."
-msgstr "Avancerad metadata sök och ersätt."
+msgstr "Avancerad sökning och ersättning av metadata."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:14
 msgid ""
@@ -95,7 +95,7 @@ msgstr "Snedstreck är inte ``malluttryck`` eftersom de inte finns mellan ``{}``
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:31
 msgid "then for \"The Foundation\" the template produces::"
-msgstr "sedan för \"Stiftelsen\" producerar mallen::"
+msgstr "ger mallen följande resultat för ”The Foundation”::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:35
 msgid ""
@@ -169,7 +169,7 @@ msgid ""
 "empty. A common case is ``series`` and ``series_index`` where you want "
 "either nothing or the two values separated by a hyphen. calibre handles this"
 " case using a special ``template expression`` syntax."
-msgstr "Ibland vill man att text bara ska visas i utdata om ett fält inte är tomt. Ett vanligt fall är ``series`` och ``series_index`` där man antingen vill ha ingenting eller att de två värdena ska separeras med ett bindestreck. calibre hanterar detta fall med hjälp av en speciell syntax för ``template expression``."
+msgstr "Ibland vill du att text bara ska visas i utdata om ett fält inte är tomt. Ett vanligt fall är ``series`` och ``series_index``, där du vill ha antingen ingenting eller båda värdena åtskilda av ett bindestreck. calibre hanterar detta med en särskild syntax för ``malluttryck``."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:65
 msgid ""
@@ -200,7 +200,7 @@ msgid ""
 "then the result will be `prefix_textXXXXXsuffix_text`. If ``field`` is empty"
 " (has no value) then the result will be the empty string (nothing) because "
 "the prefix and suffix are ignored. The prefix and suffix can contain blanks."
-msgstr "Detta ``template expression`` säger att om ``field`` har värdet `XXXX` så blir resultatet `prefix_textXXXXXsuffix_text`. Om ``field`` är tomt (har inget värde) blir resultatet en tom sträng (ingenting) eftersom prefixet och suffixet ignoreras. Prefixet och suffixet kan innehålla mellanslag."
+msgstr "Detta ``malluttryck`` anger att om ``field`` har värdet `XXXX` blir resultatet `prefix_textXXXXXsuffix_text`. Om ``field`` är tomt (saknar värde) blir resultatet den tomma strängen, eftersom prefixet och suffixet ignoreras. Prefixet och suffixet kan innehålla mellanslag."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:75
 msgid ""
@@ -212,7 +212,7 @@ msgstr "**Använd inte undermallar (`{ ... }`) eller funktioner (se nedan) i pre
 msgid ""
 "Using this syntax, we can solve the above no-series problem with the "
 "template::"
-msgstr "Med hjälp av denna syntax kan vi lösa ovanstående icke-serier problem med mallen::"
+msgstr "Med denna syntax kan vi lösa problemet ovan när boken saknar serie, med mallen::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:81
 msgid ""
@@ -253,7 +253,7 @@ msgstr "**Formatering**"
 msgid ""
 "Suppose you want the ``series_index`` to be formatted as three digits with "
 "leading zeros. This does the trick:"
-msgstr "Anta att du vill att ``series_index`` ska formateras som tre siffror med inledande nollor. Detta gör tricket:"
+msgstr "Anta att du vill formatera ``series_index`` som tre siffror med inledande nollor. Använd då:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:93
 msgid "``{series_index:0>3s}`` - Three digits with leading zeros"
@@ -273,13 +273,13 @@ msgid ""
 "the decimal points to line up. For example, you might want the indices 1 and"
 " 2.5 to appear as 01.00 and 02.50 so that they will sort correctly on a "
 "device that does lexical sorting. To do this, use:"
-msgstr "Om du använder serieindex med bråkvärden, t.ex. 1,1, kanske du vill att decimaltecken ska hamna i linje. Till exempel kanske du vill att indexen 1 och 2,5 ska visas som 01,00 och 02,50 så att de kommer att sortera korrekt på en enhet som gör lexikal sortering. För att göra detta, använd:"
+msgstr "Om du använder serieindex med decimaler, till exempel 1.1, kanske du vill att decimalpunkterna ska stå under varandra. Du kan till exempel vilja visa indexen 1 och 2.5 som 01.00 och 02.50 så att de sorteras korrekt på en enhet som använder lexikografisk sortering. Använd då:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:101
 msgid ""
 "``{series_index:0>5.2f}`` - Five characters consisting of two digits with "
 "leading zeros, a decimal point, then 2 digits after the decimal point."
-msgstr "``{series_index:0>5.2f}`` - Fem tecken som består av två siffror med inledande nollor, en decimalkomma, sedan 2 siffror efter decimalkomma."
+msgstr "``{series_index:0>5.2f}`` – Fem tecken: två siffror med inledande nollor, en decimalpunkt och två siffror efter decimalpunkten."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:103
 msgid "If you want only the first two letters of the data, use:"
@@ -288,7 +288,7 @@ msgstr "Om du bara vill ha de två första bokstäverna i data, använd:"
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:105
 msgid ""
 "``{author_sort:.2}`` - Only the first two letters of the author sort name"
-msgstr "``{author_sort:.2}`` - Endast de två första bokstäverna i författaren sorterar namn"
+msgstr "``{author_sort:.2}`` – Endast de två första bokstäverna i författarens sorteringsnamn"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:107
 msgid ""
@@ -330,7 +330,7 @@ msgstr "Observera: Du kan inte redigera data som visas i en sammansatt kolumn. R
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:121
 msgid "Templates and plugboards"
-msgstr "Mallar och pluggbrädor"
+msgstr "Mallar och metadatakopplingar"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:123
 msgid ""
@@ -341,7 +341,7 @@ msgid ""
 " language, publisher, tags, title, title_sort. This feature helps people who"
 " want to use different metadata in books on devices to solve sorting or "
 "display issues."
-msgstr "Pluggbrädor används för att ändra metadata som skrivs till böcker vid åtgärderna \"Skicka till enhet\" och \"Spara till disk\". Med en pluggbräda kan du ange en mall som genererar de data som ska skrivas till bokens metadata. Du kan använda pluggbrädor för att ändra följande fält: författare, author_sort, språk, utgivare, taggar, titel och title_sort. Den här funktionen är användbar för personer som vill använda andra metadata i böcker på enheter för att lösa sorterings- eller visningsproblem."
+msgstr "Metadatakopplingar används för att ändra metadata som skrivs till böcker vid åtgärderna ”Skicka till enhet” och ”Spara till disk”. Med en metadatakoppling kan du ange en mall som genererar de data som ska skrivas till bokens metadata. Du kan ändra följande fält: authors, author_sort, language, publisher, tags, title och title_sort. Funktionen är användbar när du vill använda andra metadata i böcker på enheter för att lösa sorterings- eller visningsproblem."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:125
 msgid ""
@@ -352,13 +352,13 @@ msgid ""
 "to change, providing templates to supply the new values. These templates are"
 " `connected` to their destination fields, hence the name `plugboards`. You "
 "can of course use composite columns in these templates."
-msgstr "När du skapar en pluggbräda anger du vilket format och vilken enhet den ska användas för. Det finns en särskild enhet, ``save_to_disk``, som används när format sparas (i stället för att skickas till en enhet). När du har valt format och enhet väljer du vilka metadatafält som ska ändras och anger mallar som tillhandahåller de nya värdena. Mallarna är `anslutna` till sina målfält, därav namnet `pluggbrädor`. Du kan naturligtvis använda sammansatta kolumner i dessa mallar."
+msgstr "När du skapar en metadatakoppling anger du vilket format och vilken enhet den ska användas för. Det finns en särskild enhet, ``save_to_disk``, som används när format sparas (i stället för att skickas till en enhet). När du har valt format och enhet väljer du vilka metadatafält som ska ändras och anger mallar som tillhandahåller de nya värdena. Mallarna är `anslutna` till sina målfält, därav namnet `metadatakopplingar`. Du kan naturligtvis använda sammansatta kolumner i dessa mallar."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:127
 msgid ""
 "Plugboards are quite flexible and can be written in Single Function Mode, "
 "Template Program Mode, General Program Mode, or Python Template mode."
-msgstr "Pluggbrädor är mycket flexibla och kan skrivas i enkelt funktionsläge, mallprogramläge, allmänt programläge eller Python-malläge."
+msgstr "Metadatakopplingar är mycket flexibla och kan skrivas i enkelt funktionsläge, mallprogramläge, allmänt programläge eller Python-malläge."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:129
 msgid ""
@@ -367,29 +367,29 @@ msgid ""
 "for the given format and device. For example, to find the appropriate "
 "plugboard for an EPUB book being sent to an ANDROID device, calibre searches"
 " the plugboards using the following search order:"
-msgstr "När en pluggbräda kan gälla (innehållsserver, spara till disk, eller skicka till enhet), söker calibre de definierade pluggbrädor att välja den rätta för givet format och enhet. Till exempel för att hitta rätt pluggbräda för en EPUB-bok som skickas till en Android-enhet, söker calibre dessa pluggbrädor enligt följande sökordning:"
+msgstr "När en metadatakoppling kan användas (i innehållsservern, vid sparande till disk eller vid sändning till enhet) söker calibre bland de definierade metadatakopplingarna efter den som passar formatet och enheten. För en EPUB-bok som skickas till en Android-enhet används till exempel följande sökordning:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:133
 msgid ""
 "a plugboard with an exact match on format and device, e.g., ``EPUB`` and "
 "``ANDROID``"
-msgstr "en pluggbräda med en exakt matchning på format och enhet, till exempel ``EPUB`` och ``ANDROID``"
+msgstr "en metadatakoppling med en exakt matchning på format och enhet, till exempel ``EPUB`` och ``ANDROID``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:134
 msgid ""
 "a plugboard with an exact match on format and the special ``any device`` "
 "choice, e.g., ``EPUB`` and ``any device``"
-msgstr "en pluggbräda med exakt matchande format och det speciella alternativet ``valfri enhet``, t.ex. ``EPUB`` och ``valfri enhet``"
+msgstr "en metadatakoppling med exakt matchande format och det speciella alternativet ``valfri enhet``, t.ex. ``EPUB`` och ``valfri enhet``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:135
 msgid ""
 "a plugboard with the special ``any format`` choice and an exact match on "
 "device, e.g., ``any format`` and ``ANDROID``"
-msgstr "en pluggbräda med det speciella valet ``valfritt format`` och en exakt matchning på enheten, t.ex. ``valfritt format`` och ``ANDROID``"
+msgstr "en metadatakoppling med det speciella valet ``valfritt format`` och en exakt matchning på enheten, t.ex. ``valfritt format`` och ``ANDROID``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:136
 msgid "a plugboard with ``any format`` and ``any device``"
-msgstr "en pluggbräda med ``valfritt format`` och ``valfri enhet``"
+msgstr "en metadatakoppling med ``valfritt format`` och ``valfri enhet``"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:138
 msgid ""
@@ -420,7 +420,7 @@ msgid ""
 " ``save to disk`` and ``send to device`` to create the file names. Instead, "
 "file names are constructed using the templates entered on the appropriate "
 "preferences window."
-msgstr "Pluggbrädor påverkar metadata som skrivs in i boken när den sparas till disk eller skrivs till enheten. Pluggbrädor påverkar inte metadata som används av ``spara till disk`` och ``skicka till enhet`` för att skapa filnamnen. I stället konstrueras filnamn med hjälp av mallar som anges i lämpliga inställningsfönster."
+msgstr "Metadatakopplingar påverkar metadata som skrivs in i boken när den sparas till disk eller skrivs till enheten. Metadatakopplingar påverkar inte metadata som används av ``spara till disk`` och ``skicka till enhet`` för att skapa filnamnen. I stället konstrueras filnamn med hjälp av mallar som anges i lämpliga inställningsfönster."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:148
 msgid "Using functions in templates - Single Function Mode"
@@ -519,7 +519,7 @@ msgid ""
 "``text_if_empty``. However, because we are using Single Function Mode, we "
 "omit the ``value`` argument, passing only ``text_if_empty``. For example, "
 "this template::"
-msgstr "Du ser att funktionen kräver två argument, ``value`` och ``text_if_empty``. Eftersom vi använder enkelt funktionsläge utelämnar vi dock argumentet ``value`` och skickar endast ``text_if_empty``. Exempelvis visar följande mall::"
+msgstr "Funktionen kräver två argument, ``value`` och ``text_if_empty``. Eftersom vi använder enkelt funktionsläge utelämnar vi dock argumentet ``value`` och skickar endast ``text_if_empty``. Följande mall::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:183
 msgid ""
@@ -1318,7 +1318,7 @@ msgstr "Den resulterande URL:en är::"
 msgid ""
 "Here is an example of the same URL built using the "
 ":ref:``ff_make_url_extended`` function instead of :ref:`ff_strcat`::"
-msgstr "Här är ett exempel på samma URL skapad med funktionen :ref:``ff_make_url_extended`` i stället för :ref:`ff_strcat`::"
+msgstr "Här är ett exempel på samma URL skapad med funktionen :ref:`ff_make_url_extended` i stället för :ref:`ff_strcat`::"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:669
 msgid ""
@@ -1677,7 +1677,7 @@ msgstr ":ref:`ff_virtual_libraries`"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:820
 msgid "Special notes for save/send templates"
-msgstr "Särskilda anvisningar för att spara/skicka mallar"
+msgstr "Särskilda anvisningar för mallar för sparande och sändning"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:822
 msgid ""
@@ -1713,7 +1713,7 @@ msgstr "Funktionen lookup gör det möjligt att utföra ännu mer avancerad bear
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:832
 msgid "To accomplish this, we:"
-msgstr "För att åstadkomma det här, vi:"
+msgstr "För att åstadkomma detta gör vi följande:"
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:834
 msgid ""
@@ -1758,7 +1758,7 @@ msgid ""
 "In a plugboard, you can set a field to empty (or whatever is equivalent to "
 "empty) by using the special template ``{}``. This template will always "
 "evaluate to an empty string."
-msgstr "I en pluggbräda kan du ställa in ett fält till tomt (eller vad som motsvarar tomt) genom att använda den särskilda mallen ``{}``. Den här mallen kommer alltid att utvärderas till en tom sträng."
+msgstr "I en metadatakoppling kan du ställa in ett fält till tomt (eller vad som motsvarar tomt) genom att använda den särskilda mallen ``{}``. Den här mallen kommer alltid att utvärderas till en tom sträng."
 
 #: ../../../__w/calibre/calibre/manual/template_lang.rst:844
 msgid ""

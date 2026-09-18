@@ -1,10 +1,8 @@
-/**
- * SPDX-FileCopyrightText: (C) 2022 Francesco Pretto <ceztko@gmail.com>
- * SPDX-License-Identifier: LGPL-2.0-or-later
- * SPDX-License-Identifier: MPL-2.0
- */
+// SPDX-FileCopyrightText: 2022 Francesco Pretto <ceztko@gmail.com>
+// SPDX-License-Identifier: LGPL-2.0-or-later OR MPL-2.0
 
 #include <podofo/private/PdfDeclarationsPrivate.h>
+#include "podofo/private/OpenSSLInternal.h"
 #include "PdfCommon.h"
 #include "PdfFontManager.h"
 
@@ -34,6 +32,29 @@ PODOFO_EXPORT PdfLogSeverity s_MaxLogSeverity = PdfLogSeverity::Information;
 
 PODOFO_EXPORT LogMessageCallback s_LogMessageCallback;
 
+PODOFO_EXPORT ssl::OpenSSLMain s_SSL;
+
+static unsigned s_MaxObjectCount = (1U << 23) - 1;
+
+#if OPENSSL_VERSION_MAJOR >= 3
+OSSL_LIB_CTX* ssl::Init()
+#else // OPENSSL_VERSION_MAJOR < 3
+void ssl::Init()
+#endif // OPENSSL_VERSION_MAJOR >= 3
+{
+    // Initialize the OpenSSL singleton
+    static struct InitOpenSSL
+    {
+        InitOpenSSL()
+        {
+            s_SSL.Init();
+        }
+    } s_init;
+#if OPENSSL_VERSION_MAJOR >= 3
+    return s_SSL.GetLibCtx();
+#endif // OPENSSL_VERSION_MAJOR >= 3
+}
+
 void PdfCommon::AddFontDirectory(const string_view& path)
 {
     PdfFontManager::AddFontDirectory(path);
@@ -57,6 +78,16 @@ PdfLogSeverity PdfCommon::GetMaxLoggingSeverity()
 bool PdfCommon::IsLoggingSeverityEnabled(PdfLogSeverity logSeverity)
 {
     return logSeverity <= s_MaxLogSeverity;
+}
+
+unsigned PdfCommon::GetMaxObjectCount()
+{
+    return s_MaxObjectCount;
+}
+
+void PdfCommon::SetMaxObjectCount(unsigned maxObjectCount)
+{
+    s_MaxObjectCount = maxObjectCount;
 }
 
 void PdfCommon::SetMaxRecursionDepth(unsigned maxRecursionDepth)

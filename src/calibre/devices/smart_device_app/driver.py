@@ -275,6 +275,8 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
         'SET_CALIBRE_DEVICE_INFO': 1,
         'SET_CALIBRE_DEVICE_NAME': 2,
         'TOTAL_SPACE': 4,
+        'GET_COLLECTIONS': 21,
+        'UPDATE_COLLECTIONS': 22,
     }
     reverse_opcodes = {v: k for k, v in opcodes.items()}
 
@@ -1977,6 +1979,10 @@ class SMART_DEVICE_APP(DeviceConfig, DevicePlugin):
             try:
                 self.listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 set_socket_inherit(self.listen_socket, False)
+                # Allow rebinding to the port even if the previous connection
+                # to a device is still in the TIME_WAIT state, as happens when
+                # the connection is stopped while a device is connected
+                self.listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             except Exception:
                 traceback.print_exc()
                 message = 'creation of listen socket failed'
