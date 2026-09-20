@@ -3,4 +3,4 @@
 # drop unused Python shbang to Lintian clean
 #
 
-1 { s%^#!/usr/bin/env python$%####\n&% }
+1 { s%^#!/usr/bin/env python$%#### &% }
