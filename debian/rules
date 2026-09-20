@@ -101,13 +101,13 @@ calibre_auto_install:
 	rmdir -v debian/tmp/usr/lib/calibre/tinycss/tests/
 #
 #	# Remove source path name from pyuic6 outputs
-	find debian/tmp/usr/lib/calibre/calibre/gui2 -name '*_ui.py' -print | xargs --no-run-if-empty sed --separate --file=debian/remove-ui-basepath.sed --in-place
+	find debian/tmp/usr/lib/calibre/calibre/gui2 -type f -name '*_ui.py' -print | xargs --no-run-if-empty sed --separate --file=debian/remove-ui-basepath.sed --in-place
 #
 #	# Drop unused exec permission
 	chmod -x debian/tmp/usr/lib/calibre/calibre/devices/cli.py
 	chmod -x debian/tmp/usr/lib/calibre/calibre/gui2/fts/search.py
 #	# Remove unused shbang to avoid Lintian warning
-	find debian/tmp/usr/lib/calibre -name '*.py' ! -executable -print | xargs --no-run-if-empty sed --separate --file=debian/drop-python-shbang.sed --in-place
+	find debian/tmp/usr/lib/calibre -type f -name '*.py' ! -executable -print | xargs --no-run-if-empty sed --separate --file=debian/drop-python-shbang.sed --in-place
 
 override_dh_installman:
 	debian/install-manpages.sh
