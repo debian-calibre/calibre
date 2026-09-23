@@ -108,6 +108,7 @@ calibre_auto_install:
 	chmod -x debian/tmp/usr/lib/calibre/calibre/gui2/fts/search.py
 #	# Remove unused shbang to avoid Lintian warning
 	find debian/tmp/usr/lib/calibre -type f -name '*.py' ! -executable -print | xargs --no-run-if-empty sed --separate --file=debian/tools/drop-python-shbang.sed --in-place
+	sed --separate --file=debian/tools/drop-python-shbang.sed --in-place debian/tmp/usr/share/calibre/default_tweaks.py
 
 override_dh_installman:
 	debian/tools/install-manpages.sh
