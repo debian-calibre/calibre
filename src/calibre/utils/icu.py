@@ -5,6 +5,8 @@
 import codecs
 import sys
 import threading
+from functools import lru_cache
+from typing import Literal, overload
 
 from calibre.utils.config_base import prefs, tweaks
 from calibre_extensions import icu as _icu
@@ -61,9 +63,9 @@ def collator(strength=None, numeric=None, ignore_alternate_chars=None, upper_fir
         if tweaks['locale_for_sorting']:
             _locale = tweaks['locale_for_sorting']
         else:
-            from calibre.utils.localization import get_lang
+            from calibre.utils.localization import bcp47_locale_name
 
-            _locale = get_lang()
+            _locale = bcp47_locale_name()
     key = strength, numeric, ignore_alternate_chars, upper_first
     if (ans := thread_local_collator_cache.cache.get(key)) is not None:
         return ans
@@ -92,6 +94,8 @@ def collator(strength=None, numeric=None, ignore_alternate_chars=None, upper_fir
 def change_locale(locale=None):
     global _locale
     _locale = locale
+    _ascii_no_punc_tables.clear()
+    ascii_primary_no_punc_matcher.cache_clear()
     try:
         thread_local_collator_cache.cache.clear()
     except AttributeError:
@@ -236,6 +240,60 @@ primary_no_punc_find = make_two_arg_func(primary_collator_without_punctuation, '
 contains = make_two_arg_func(collator, 'contains')
 primary_contains = make_two_arg_func(primary_collator, 'contains')
 primary_no_punc_contains = make_two_arg_func(primary_collator_without_punctuation, 'contains')
+_ascii_no_punc_tables = {}
+
+
+def _build_ascii_no_punc_table():
+    # Use the collator itself to find out which ASCII characters it ignores
+    # and verify that for ASCII text it otherwise behaves as a simple case
+    # insensitive comparison, which is not true for all locales, for example,
+    # those with contractions such as ch or special casing such as Turkish i.
+    try:
+        if any(len(c) > 1 and c.isascii() for c in contractions()):
+            return None
+        func = primary_collator_without_punctuation().contains
+        # NULL must be included, the collator treats it as ignorable
+        chars = tuple(map(chr, range(128)))
+        ignored = frozenset(c for c in chars if func('ab', f'a{c}b') and func('xy', f'x{c}y'))
+        significant = tuple(c for c in chars if c not in ignored)
+        for a in significant:
+            if not func(a, a):
+                return None
+            for b in significant:
+                if func(a, b) != (a.lower() == b.lower()):
+                    return None
+    except Exception:
+        return None
+    return {ord(c): None for c in ignored}
+
+
+@lru_cache(maxsize=64)
+def ascii_primary_no_punc_matcher(query):
+    """
+    Return a function f(text) that gives the same result as
+    primary_no_punc_contains(query, text) but is much faster. It must be
+    called only with text for which text.isascii() is True. Returns None if no
+    such function exists for this query and the current locale.
+    """
+    if not query.isascii():
+        return None
+    collator()  # sets _locale
+    try:
+        table = _ascii_no_punc_tables[_locale]
+    except KeyError:
+        table = _ascii_no_punc_tables[_locale] = _build_ascii_no_punc_table()
+    if table is None:
+        return None
+    q = query.lower().translate(table)
+    if not q:
+        return None
+
+    def matcher(text):
+        return q in text.lower().translate(table)
+
+    return matcher
+
+
 startswith = make_two_arg_func(collator, 'startswith')
 primary_startswith = make_two_arg_func(primary_collator, 'startswith')
 safe_chr = _icu.chr
@@ -334,6 +392,46 @@ def remove_accents_regex(txt: str) -> str:
 
 
 remove_accents = remove_accents_regex  # more robust and faster
+
+
+@overload
+def visual_to_logical(text: str, want_map: Literal[False] = False) -> str: ...
+
+
+@overload
+def visual_to_logical(text: str, want_map: Literal[True]) -> tuple[str, tuple[int, ...]]: ...
+
+
+def visual_to_logical(text: str, want_map: bool = False) -> str | tuple[str, tuple[int, ...]]:
+    """
+    Convert text that is in visual order, that is, in the order the glyphs are
+    painted from left to right, into logical (storage) order, running the
+    inverse of the Unicode bidirectional algorithm and mirroring characters
+    such as brackets. Text in left-to-right scripts is returned unchanged.
+
+    If want_map is True returns (text, index_map) where index_map[i] is the
+    index in the input of the character at index i of the output, or -1 if
+    there is no such character.
+    """
+    return _icu.bidi_reorder(text, True, want_map)
+
+
+@overload
+def logical_to_visual(text: str, want_map: Literal[False] = False) -> str: ...
+
+
+@overload
+def logical_to_visual(text: str, want_map: Literal[True]) -> tuple[str, tuple[int, ...]]: ...
+
+
+def logical_to_visual(text: str, want_map: bool = False) -> str | tuple[str, tuple[int, ...]]:
+    """
+    Convert text from logical (storage) order into visual order, that is, the
+    order in which the glyphs are painted from left to right. This is what a
+    renderer does when displaying text. See visual_to_logical() for want_map.
+    """
+    return _icu.bidi_reorder(text, False, want_map)
+
 
 ################################################################################
 if __name__ == '__main__':

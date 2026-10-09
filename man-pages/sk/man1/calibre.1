@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "CALIBRE" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 calibre \- calibre
 .INDENT 0.0
@@ -40,28 +40,28 @@ calibre [options] [path_to_ebook or calibre url ...]
 .UNINDENT
 .UNINDENT
 .sp
-Launch the main \fBcalibre\fP Graphical User Interface and optionally add the e\-book at
-path_to_ebook to the database. You can also specify \fBcalibre\fP URLs to perform various
-different actions, than just adding books. For example:
+Spustí hlavné grafické používateľské rozhranie programu \fBcalibre\fP a voliteľne pridá e\-knihu na
+path_to_ebook do databázy. Môžete tiež zadať adresy URL \fBcalibre\fP na vykonanie rôznych
+iných akcií, nielen pridávanie kníh. Napríklad:
 .sp
 \fBcalibre\fP://view\-book/test_library/1842/epub
 .sp
-Will open the book with id 1842 in the EPUB format from the library
-\(dqtest_library\(dq in the \fBcalibre\fP E\-book viewer. Library names are the folder names of the
-libraries with spaces replaced by underscores. A full description of the
-various URL based actions is in the User Manual.
+Otvorí knihu s id 1842 vo formáte EPUB z knižnice
+\(dqtest_library\(dq v prehliadači e\-kníh \fBcalibre\fP\&. Názvy knižníc sú názvy priečinkov
+knižníc, v ktorých sú medzery nahradené podčiarkovníkmi. Úplný popis
+rôznych akcií založených na URL adresách nájdete v používateľskej príručke.
 .sp
-Whenever you pass arguments to \fBcalibre\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBcalibre\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-add\-and\-delete
-Add the book at the specified path to the library and then delete it. Works only for files inside the temporary folder of the system.
+Pridá knihu z uvedenej cesty do knižnice a potom ju odstráni. Funguje len pre súbory vo vnútri dočasného priečinka systému.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+Odpojiť od riadiaceho terminálu, ak nejaký existuje (iba Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -71,7 +71,7 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-ignore\-plugins
-Ignorovať užívateľské zásuvné moduly \- užitočné ak ste nainštalovali modul, ktorý bráni spusteniu Calibre
+Ignorovať užívateľské zásuvné moduly \- užitočné ak ste nainštalovali modul, ktorý bráni spusteniu calibre
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -91,7 +91,7 @@ Spustiť program v systémovej lište.
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Ignored, do not use. Present only for legacy reasons
+Ignorované, nepoužívajte. Prítomné iba z historických dôvodov
 .UNINDENT
 .INDENT 0.0
 .TP

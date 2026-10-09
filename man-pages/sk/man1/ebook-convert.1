@@ -28,33 +28,33 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-convert input_file output_file [options]
+ebook\-convert vstupný_súbor výstupný_súbor [voľby]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Convert an e\-book from one format to another.
+Konvertuje e\-knihu z jedného formátu do druhého.
 .sp
-input_file is the input and output_file is the output. Both must be specified as the first two arguments to the command.
+vstupný_súbor je vstup a výstupný_súbor je výstup. Oba musia byť zadané ako prvé dva argumenty príkazu.
 .sp
-The output e\-book format is guessed from the file extension of output_file. output_file can also be of the special format .EXT where EXT is the output file extension. In this case, the name of the output file is derived from the name of the input file. Note that the filenames must not start with a hyphen. Finally, if output_file has no extension, then it is treated as a folder and an \(dqopen e\-book\(dq (OEB) consisting of HTML files is written to that folder. These files are the files that would normally have been passed to the output plugin.
+Výstupný formát e\-knihy sa odhadne z prípony súboru výstupný_súbor. výstupný_súbor môže mať aj špeciálny formát .EXT, kde EXT je prípona výstupného súboru. V tomto prípade sa názov výstupného súboru odvodí z názvu vstupného súboru. Upozorňujeme, že názvy súborov nesmú začínať pomlčkou. Nakoniec, ak výstupný_súbor nemá príponu, považuje sa za priečinok a do neho sa zapíše „otvorená e\-kniha“ (OEB) pozostávajúca zo súborov HTML. Tieto súbory sú tie, ktoré by sa bežne odovzdali výstupnému doplnku.
 .sp
-After specifying the input and output file you can customize the conversion by specifying various options. The available options depend on the input and output file types. To get help on them specify the input and output file and then use the \-h option.
+Po zadaní vstupného a výstupného súboru môžete konverziu prispôsobiť zadaním rôznych volieb. Dostupné voľby závisia od typov vstupného a výstupného súboru. Pomoc k nim získate zadaním vstupného a výstupného súboru a následným použitím voľby \-h.
 .sp
-For full documentation of the conversion system see
-E\-book conversion \%<#\:conversion>
+Úplnú dokumentáciu ku konverznému systému nájdete na
+Konverzia e\-kníh \%<#\:conversion>
 .sp
-Whenever you pass arguments to \fBebook\-convert\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBebook\-convert\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .sp
-The options and default values for the options change depending on both the
-input and output formats, so you should always check with:
+Voľby a predvolené hodnoty volieb sa menia v závislosti od
+vstupného aj výstupného formátu, takže by ste si mali vždy overiť pomocou:
 .INDENT 0.0
 .INDENT 3.5
 .sp
@@ -64,8 +64,8 @@ ebook\-convert myfile.input_format myfile.output_format \-h
 .UNINDENT
 .UNINDENT
 .sp
-Below are the options that are common to all conversion, followed by the
-options specific to every input and output format.
+Nižšie sú voľby spoločné pre všetky konverzie, nasledované
+voľbami špecifickými pre jednotlivé vstupné a výstupné formáty.
 .INDENT 0.0
 .IP \(bu 2
 VSTUPNÉ NASTAVENIA
@@ -99,12 +99,12 @@ Nastavenie vstupného profilu. Vstupný profil predá konverznému systému konv
 .INDENT 0.0
 .TP
 .B \-\-list\-recipes
-List builtin recipe names. You can create an e\-book from a builtin recipe like this: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
+Zoznam vstavaných názvov receptov. E\-knihu môžete vytvoriť zo vstavaného receptu takto: ebook\-convert \fB\(dq\fPRecipe Name.recipe\fB\(dq\fP output.epub
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-Specify the output profile. The output profile tells the conversion system how to optimize the created document for the specified device. In some cases, an output profile can be used to optimize the output for a particular device, but this is rarely necessary. Choices are:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd, generic_eink_large
+Zadajte výstupný profil. Výstupný profil hovorí konverznému systému, ako optimalizovať vytvorený dokument pre zadané zariadenie. V niektorých prípadoch sa dá výstupný profil použiť na optimalizáciu výstupu pre konkrétne zariadenie, ale to je zriedka potrebné. Možnosti sú:cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet, generic_eink, generic_eink_hd, generic_eink_large
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -125,7 +125,7 @@ Nastavenia, ktoré ovládajú spracovanie výstupných epub súborov
 .INDENT 0.0
 .TP
 .B \-\-dont\-split\-on\-page\-breaks
-Turn off splitting at page breaks. Normally, input files are automatically split at every page break into two files. This gives an output e\-book that can be parsed faster and with less resources. However, splitting is slow and if your source file contains a very large number of page breaks, you should turn off splitting on page breaks.
+Vypne delenie pri zalomeniach strán. Bežne sa vstupné súbory automaticky delia pri každom zalomení strany na dva súbory. Vďaka tomu sa výstupná e\-kniha dá analyzovať rýchlejšie a s menšími nárokmi na zdroje. Delenie je však pomalé, a ak váš zdrojový súbor obsahuje veľmi veľký počet zalomení strán, mali by ste delenie pri zalomeniach strán vypnúť.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -140,7 +140,7 @@ Vložiť vnorený Obsah, ktorý sa zobrazí ako súčasť knižného obsahu.
 .INDENT 0.0
 .TP
 .B \-\-epub\-max\-image\-size
-The maximum image size (width x height). A value of profile means use the screen size from the output profile. A value of none means no maximum size is specified. For example, a value of 100x200 will cause all images to be resized so that their width is no more than 100 pixels and their height is no more than 200 pixels. Note that this only affects the size of the actual image files themselves. Any given image may be rendered at a different size depending on the styling applied to it in the document.
+Maximálna veľkosť obrázka (šírka x výška). Hodnota profile znamená použitie veľkosti obrazovky z výstupného profilu. Hodnota none znamená, že nie je zadaná žiadna maximálna veľkosť. Napríklad hodnota 100x200 spôsobí zmenu veľkosti všetkých obrázkov tak, aby ich šírka nepresahovala 100 pixelov a výška nepresahovala 200 pixelov. Upozorňujeme, že toto ovplyvňuje iba veľkosť samotných súborov obrázkov. Konkrétny obrázok sa môže vykresliť v inej veľkosti v závislosti od štýlov, ktoré sa naň v dokumente uplatňujú.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -155,12 +155,12 @@ Verzia súboru EPUB, ktorý chcete vygenerovať. EPUB 2 je najkompatibilnejší,
 .INDENT 0.0
 .TP
 .B \-\-extract\-to
-Extract the contents of the generated book to the specified folder. The contents of the folder are first deleted, so be careful.
+Extrahovať obsah vygenerovanej knihy do zadaného priečinka. Obsah priečinka sa najprv odstráni, buďte preto opatrní.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-flow\-size
-Split all HTML files larger than this size (in KB). This is necessary as most EPUB readers cannot handle large file sizes. The default of 260KB is the size required for Adobe Digital Editions. Set to 0 to disable size based splitting.
+Rozdelí všetky súbory HTML väčšie ako táto veľkosť (v KB). Toto je potrebné, keďže väčšina čítačiek EPUB nedokáže spracovať veľké veľkosti súborov. Predvolená hodnota 260KB je veľkosť vyžadovaná pre Adobe Digital Editions. Nastavte na 0, ak chcete vypnúť delenie podľa veľkosti.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -185,7 +185,7 @@ Ak je špecifikovaný, výstupný plugin skúsi vytvoriť výstup čitateľný p
 .INDENT 0.0
 .TP
 .B \-\-toc\-title
-Title for any generated inline table of contents.
+Názov pre akýkoľvek generovaný vložený obsah.
 .UNINDENT
 .SH VZHĽAD
 .sp
@@ -193,12 +193,12 @@ Nastavenia výzoru výstupných súborov
 .INDENT 0.0
 .TP
 .B \-\-asciiize
-Transliterate Unicode characters to an ASCII representation. Use with care because this will replace Unicode characters with ASCII. For instance it will replace \fB\(dq\fPPelé\fB\(dq\fP with \fB\(dq\fPPele\fB\(dq\fP\&. Also, note that in cases where there are multiple representations of a character (characters shared by Chinese and Japanese for instance) the representation based on the current calibre interface language will be used.
+Transliteruje znaky Unicode na reprezentáciu ASCII. Používajte opatrne, pretože toto nahradí znaky Unicode znakmi ASCII. Napríklad nahradí \fB\(dq\fPPelé\fB\(dq\fP za \fB\(dq\fPPele\fB\(dq\fP\&. Tiež upozorňujeme, že v prípadoch, kde existuje viacero reprezentácií znaku (znaky zdieľané čínštinou a japončinou napríklad), sa použije reprezentácia založená na aktuálnom jazyku rozhrania calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-base\-font\-size
-The base font size in pts. All font sizes in the produced book will be rescaled based on this size. By choosing a larger size you can make the fonts in the output bigger and vice versa. By default, when the value is zero, the base font size is chosen based on the output profile you chose.
+Základná veľkosť písma v bodoch. Všetky veľkosti písma vo vytvorenej knihe sa prispôsobia na základe tejto veľkosti. Výberom väčšej veľkosti môžete zväčšiť písma vo výstupe a naopak. Predvolene, keď je hodnota nula, sa základná veľkosť písma vyberie na základe zvoleného výstupného profilu.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -213,17 +213,17 @@ Zakázať všetky prepočty veľkosti písma.
 .INDENT 0.0
 .TP
 .B \-\-embed\-all\-fonts
-Embed every font that is referenced in the input document but not already embedded. This will search your system for the fonts, and if found, they will be embedded. Embedding will only work if the format you are converting to supports embedded fonts, such as EPUB, AZW3, DOCX or PDF. Please ensure that you have the proper license for embedding the fonts used in this document.
+Vloží každé písmo, na ktoré sa odkazuje vo vstupnom dokumente, ale ktoré ešte nie je vložené. Toto prehľadá váš systém na písma, a ak sa nájdu, vložia sa. Vkladanie bude fungovať iba vtedy, ak formát, do ktorého konvertujete, podporuje vložené písma, ako je EPUB, AZW3, DOCX alebo PDF. Uistite sa, že máte príslušnú licenciu na vloženie písiem použitých v tomto dokumente.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-font\-family
-Embed the specified font family into the book. This specifies the \fB\(dq\fPbase\fB\(dq\fP font used for the book. If the input document specifies its own fonts, they may override this base font. You can use the filter style information option to remove fonts from the input document. Note that font embedding only works with some output formats, principally EPUB, AZW3 and DOCX.
+Vloží zadanú rodinu písma do knihy. Toto určuje „základné“ písmo použité pre knihu. Ak vstupný dokument zadáva vlastné písma, môžu prepísať toto základné písmo. Na odstránenie písiem zo vstupného dokumentu môžete použiť voľbu na filtrovanie štýlových informácií. Upozorňujeme, že vkladanie písiem funguje iba pri niektorých výstupných formátoch, predovšetkým EPUB, AZW3 a DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-expand\-css
-By default, calibre will use the shorthand form for various CSS properties such as margin, padding, border, etc. This option will cause it to use the full expanded form instead. Note that CSS is always expanded when generating EPUB files with the output profile set to one of the Nook profiles as the Nook cannot handle shorthand CSS.
+Predvolene calibre použije skrátenú formu pre rôzne vlastnosti CSS, ako je margin, padding, border atď. Táto voľba spôsobí, že sa namiesto toho použije plná rozšírená forma. Upozorňujeme, že CSS sa vždy rozšíri pri generovaní súborov EPUB s výstupným profilom nastaveným na jeden z profilov Nook, keďže Nook nedokáže spracovať skrátené CSS.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -253,7 +253,7 @@ Nastaví výšku vložených prázdnych riadkov (v jednotkách em). Výška riad
 .INDENT 0.0
 .TP
 .B \-\-keep\-ligatures
-Preserve ligatures present in the input document. A ligature is a combined character of a pair of characters like ff, fi, fl et cetera. Most readers do not have support for ligatures in their default fonts, so they are unlikely to render correctly. By default, calibre will turn a ligature into the corresponding pair of normal characters. Note that ligatures here mean only unicode ligatures not ligatures created via CSS or font styles. This option will preserve them instead.
+Zachová ligatúry prítomné vo vstupnom dokumente. Ligatúra je spojený znak páru znakov ako ff, fi, fl atď. Väčšina čítačiek nepodporuje ligatúry vo svojich predvolených písmach, takže sa pravdepodobne nezobrazia správne. Predvolene calibre premení ligatúru na zodpovedajúci pár bežných znakov. Upozorňujeme, že ligatúry tu znamenajú iba unicode ligatúry, nie ligatúry vytvorené pomocou CSS alebo štýlov písma. Táto voľba ich namiesto toho zachová.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -268,27 +268,27 @@ Niektoré zle navrhnuté dokumenty použijú tabuľky pre kontrolu rozloženia t
 .INDENT 0.0
 .TP
 .B \-\-margin\-bottom
-Set the bottom margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Nastaví dolný okraj v bodoch. Predvolená hodnota je 5.0. Nastavením na hodnotu menšiu ako nula sa okraj nenastaví (zachová sa nastavenie okraja z pôvodného dokumentu). Poznámka: Formáty orientované na stranu, ako PDF a DOCX, majú vlastné nastavenia okrajov, ktoré majú prednosť.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-left
-Set the left margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Nastaví ľavý okraj v bodoch. Predvolená hodnota je 5.0. Nastavením na hodnotu menšiu ako nula sa okraj nenastaví (zachová sa nastavenie okraja z pôvodného dokumentu). Poznámka: Formáty orientované na stranu, ako PDF a DOCX, majú vlastné nastavenia okrajov, ktoré majú prednosť.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-right
-Set the right margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Nastaví pravý okraj v bodoch. Predvolená hodnota je 5.0. Nastavením na hodnotu menšiu ako nula sa okraj nenastaví (zachová sa nastavenie okraja z pôvodného dokumentu). Poznámka: Formáty orientované na stranu, ako PDF a DOCX, majú vlastné nastavenia okrajov, ktoré majú prednosť.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-margin\-top
-Set the top margin in pts. Default is 5.0. Setting this to less than zero will cause no margin to be set (the margin setting in the original document will be preserved). Note: Page oriented formats such as PDF and DOCX have their own margin settings that take precedence.
+Nastaví horný okraj v bodoch. Predvolená hodnota je 5.0. Nastavením na hodnotu menšiu ako nula sa okraj nenastaví (zachová sa nastavenie okraja z pôvodného dokumentu). Poznámka: Formáty orientované na stranu, ako PDF a DOCX, majú vlastné nastavenia okrajov, ktoré majú prednosť.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-minimum\-line\-height
-Minimálna výška riadka ako percento vypočítanej veľkosti písma prvku. Calibre zaistí, že každý prvok bude mať aspoň túto výšku riadka bez ohľadu na špecifikáciu vstupného dokumentu. Nastavte nulu pro zakázanie. Východzia hodnota je 120%. Ak si nie ste istý, čo robíte, uprednostnite toto nastavenie pred priamym určením výšky riadka. Napríklad dvojnásobné riadkovanie môžete dosiahnuť nastavením hodnoty 240.
+Minimálna výška riadka ako percento vypočítanej veľkosti písma prvku. calibre zaistí, že každý prvok bude mať aspoň túto výšku riadka bez ohľadu na špecifikáciu vstupného dokumentu. Nastavte nulu pre zakázanie. Východzia hodnota je 120%. Ak si nie ste istý, čo robíte, uprednostnite toto nastavenie pred priamym určením výšky riadka. Napríklad dvojnásobné riadkovanie môžete dosiahnuť nastavením hodnoty 240.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -298,27 +298,27 @@ Odstrániť medzery medzi odsekmi. Tiež stanovuje zarážky odsekov 1.5em. Odst
 .INDENT 0.0
 .TP
 .B \-\-remove\-paragraph\-spacing\-indent\-size
-Ak Calibre odstráni prázdne riadky medzi odstavcami, automaticky, pre ľahšie odlíšenie, text odsadí. Táto voľba určuje širku odsadenia (v jednotkách em). Pri nastavení zápornej hodnoty sa použije hodnota odsadenia uvedená vo vstupnom dokumente \- Calibre odsadenie nezmení.
+Ak calibre odstráni prázdne riadky medzi odstavcami, automaticky, pre ľahšie odlíšenie, text odsadí. Táto voľba určuje širku odsadenia (v jednotkách em). Pri nastavení zápornej hodnoty sa použije hodnota odsadenia uvedená vo vstupnom dokumente \- calibre odsadenie nezmení.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation
-Convert plain quotes, dashes and ellipsis to their typographically correct equivalents. For details, see: \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
+Previesť obyčajné úvodzovky, pomlčky a výpustky na ich typograficky správne ekvivalenty. Podrobnosti nájdete v: \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-subset\-embedded\-fonts
-Subset all embedded fonts. Every embedded font is reduced to contain only the glyphs used in this document. This decreases the size of the font files. Useful if you are embedding a particularly large font with lots of unused glyphs.
+Vytvorí podmnožinu všetkých vložených písiem. Každé vložené písmo sa zredukuje tak, aby obsahovalo iba glyfy použité v tomto dokumente. Toto zmenšuje veľkosť súborov písiem. Užitočné, ak vkladáte obzvlášť veľké písmo s množstvom nepoužitých glyfov.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-css\-rules
-Path to a file containing rules to transform the CSS styles in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform styles\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
+Cesta k súboru obsahujúcemu pravidlá na transformáciu štýlov CSS v tejto knihe. Najjednoduchší spôsob, ako takýto súbor vytvoriť, je použiť sprievodcu na vytváranie pravidiel v GUI calibre. Nájdete ho v sekcii „Vzhľad a pocit\->Transformovať štýly“ konverzného dialógu. Po vytvorení pravidiel ich môžete pomocou tlačidla „Exportovať“ uložiť do súboru.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-transform\-html\-rules
-Path to a file containing rules to transform the HTML in this book. The easiest way to create such a file is to use the wizard for creating rules in the calibre GUI. Access it in the \fB\(dq\fPLook & feel\->Transform HTML\fB\(dq\fP section of the conversion dialog. Once you create the rules, you can use the \fB\(dq\fPExport\fB\(dq\fP button to save them to a file.
+Cesta k súboru obsahujúcemu pravidlá na transformáciu HTML v tejto knihe. Najjednoduchší spôsob, ako takýto súbor vytvoriť, je použiť sprievodcu na vytváranie pravidiel v GUI calibre. Nájdete ho v sekcii „Vzhľad a pocit\->Transformovať HTML“ konverzného dialógu. Po vytvorení pravidiel ich môžete pomocou tlačidla „Exportovať“ uložiť do súboru.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -350,7 +350,7 @@ Preklopiť odsadenie z viacerých nedeliteľných medzier do CSS.
 .INDENT 0.0
 .TP
 .B \-\-disable\-format\-scene\-breaks
-Left aligned scene break markers are center aligned. Replace soft scene breaks that use multiple blank lines with horizontal rules.
+Vľavo zarovnané značky oddeľovačov scén sú zarovnané na stred. Nahradiť mäkké oddeľovače scén používajúce viacero prázdnych riadkov vodorovnými čiarami.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -375,7 +375,7 @@ Nezalamovať riadky používajúce interpunkciu a ďalšie formátovacie stopy.
 .INDENT 0.0
 .TP
 .B \-\-enable\-heuristics
-Povoliť heuristické zpracovanie. Aby bolo umožnené akékoľvek heuristické spracovanie, musí byť táto voľba povolená.
+Povoliť heuristické spracovanie. Aby bolo umožnené akékoľvek heuristické spracovanie, musí byť táto voľba povolená.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -393,7 +393,7 @@ Upraviť text a štruktúru dokumentu pomocou určených šablón.
 .INDENT 0.0
 .TP
 .B \-\-search\-replace
-Path to a file containing search and replace regular expressions. The file must contain alternating lines of regular expression followed by replacement pattern (which can be an empty line). The regular expression must be in the Python regex syntax and the file must be UTF\-8 encoded.
+Cesta k súboru obsahujúcemu regulárne výrazy na vyhľadanie a nahradenie. Súbor musí obsahovať striedajúce sa riadky regulárneho výrazu nasledovaného vzorom nahradenia (ktorý môže byť prázdny riadok). Regulárny výraz musí byť v syntaxi regexu Pythonu a súbor musí byť kódovaný v UTF\-8.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -431,12 +431,12 @@ Autodetekcia štruktúry dokumentu.
 .INDENT 0.0
 .TP
 .B \-\-add\-alt\-text\-to\-img
-When an <img> tag has no alt attribute, check the associated image file for metadata that specifies alternate text, and use it to fill in the alt attribute. The alt attribute improves accessibility by providing text descriptions for users who cannot see or fully interpret visual content.
+Ak značka <img> nemá atribút alt, skontroluje sa priradený súbor obrázka na metadáta, ktoré určujú alternatívny text, a použije sa na vyplnenie atribútu alt. Atribút alt zlepšuje prístupnosť poskytnutím textového popisu pre používateľov, ktorí nevidia alebo si nemôžu plne vyložiť vizuálny obsah.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-chapter
-An XPath expression to detect chapter titles. The default is to consider <h1> or <h2> tags that contain the words \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP or \fB\(dq\fPpart\fB\(dq\fP as chapter titles as well as any tags that have class=\fB\(dq\fPchapter\fB\(dq\fP\&. The expression used must evaluate to a list of elements. To disable chapter detection, use the expression \fB\(dq\fP/\fB\(dq\fP\&. See the XPath Tutorial in the calibre User Manual for further help on using this feature.
+Výraz XPath na zisťovanie názvov kapitol. Predvolene sa za názvy kapitol považujú značky <h1> alebo <h2>, ktoré obsahujú slová „chapter“, „book“, „section“, „prologue“, „epilogue“ alebo „part“, ako aj akékoľvek značky s class=\fB\(dq\fPchapter\fB\(dq\fP\&. Použitý výraz musí vyhodnotiť zoznam prvkov. Na vypnutie zisťovania kapitol použite výraz „/“. Ďalšiu pomoc s použitím tejto funkcie nájdete v návode na XPath v používateľskej príručke calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -446,17 +446,17 @@ Nastavenie spôsobu označenia detekovaných kapitol. Hodnota \fB\(dq\fPpagebrea
 .INDENT 0.0
 .TP
 .B \-\-disable\-remove\-fake\-margins
-Niektoré dokumenty špecifikujú okraje stránok určením pravého a ľavého okraja v každom odstavci samostatne. Calibre sa pokúsi takéto okraje nájsť a odstrániť. Niekedy to môže spôsobiť odstránenie aj tých okrajov, ktoré nemali byť odstránené. V takom prípade môžete odstraňovanie okrajov vypnúť.
+Niektoré dokumenty špecifikujú okraje stránok určením pravého a ľavého okraja v každom odstavci samostatne. calibre sa pokúsi takéto okraje nájsť a odstrániť. Niekedy to môže spôsobiť odstránenie aj tých okrajov, ktoré nemali byť odstránené. V takom prípade môžete odstraňovanie okrajov vypnúť.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Insert the book metadata at the start of the book. This is useful if your e\-book reader does not support displaying/searching metadata directly.
+Vložiť metadáta knihy na začiatok knihy. Toto je užitočné, ak vaša čítačka e\-kníh nepodporuje priame zobrazenie/vyhľadávanie metadát.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-page\-breaks\-before
-An XPath expression. Page breaks are inserted before the specified elements. To disable use the expression: /
+Výraz XPath. Zalomenia strán sa vkladajú pred zadané prvky. Na zakázanie použite výraz: /
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -466,12 +466,12 @@ Obálka nájdená v zdrojovom súbore má prednosť pred zvolenou obálkou.
 .INDENT 0.0
 .TP
 .B \-\-remove\-first\-image
-Remove the first image from the input e\-book. Useful if the input document has a cover image that is not identified as a cover. In this case, if you set a cover in calibre, the output document will end up with two cover images if you do not specify this option.
+Odstráni prvý obrázok zo vstupnej e\-knihy. Užitočné, ak vstupný dokument obsahuje obrázok obálky, ktorý nie je označený ako obálka. V tomto prípade, ak nastavíte obálku v calibre, výstupný dokument bude mať dva obrázky obálky, pokiaľ túto voľbu nezadáte.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-An XPath expression to detect the location in the document at which to start reading. Some e\-book reading programs (most prominently the Kindle) use this location as the position at which to open the book. See the XPath tutorial in the calibre User Manual for further help using this feature.
+Výraz XPath na zisťovanie miesta v dokumente, kde sa má začať čítanie. Niektoré programy na čítanie e\-kníh (najmä Kindle) používajú toto miesto ako pozíciu, na ktorej sa kniha otvorí. Ďalšiu pomoc s použitím tejto funkcie nájdete v návode na XPath v používateľskej príručke calibre.
 .UNINDENT
 .SH OBSAH
 .sp
@@ -484,17 +484,17 @@ Povoliť duplicitné položky pri vytváraní obsahu z odkazov vo vstupnom dokum
 .INDENT 0.0
 .TP
 .B \-\-level1\-toc
-Výraz XPath určujúci všetky značky, ktoré by mali byť pridané do Obsahu na prvej úrovni.  Ak je hodnota zadaná, má prednosť pred ostatnými formami autodetekcie. Pozrite si príklady v Školení XPath v Užívateľskej príručke Calibre.
+Výraz XPath určujúci všetky značky, ktoré by mali byť pridané do Obsahu na prvej úrovni.  Ak je hodnota zadaná, má prednosť pred ostatnými formami autodetekcie. Pozrite si príklady v Školení XPath v Užívateľskej príručke calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level2\-toc
-Výraz XPath určujúci všetky značky, ktoré by mali byť pridané do Obsahu na druhej úrovni. Každá položka je pridaná pod predchádzajúcu položku prvej úrovne. Pozrite si príklady v Školení XPath v Užívateľskej príručke Calibre.
+Výraz XPath určujúci všetky značky, ktoré by mali byť pridané do Obsahu na druhej úrovni. Každá položka je pridaná pod predchádzajúcu položku prvej úrovne. Pozrite si príklady v Školení XPath v Užívateľskej príručke calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-level3\-toc
-Výraz XPath určujúci všetky značky, ktoré by mali byť pridané do Obsahu na tretej úrovni. Každá položka je pridaná pod predchádzajúcu položku druhej úrovne. Pozrite si príklady v Školení XPath v Užívateľskej príručke Calibre.
+Výraz XPath určujúci všetky značky, ktoré by mali byť pridané do Obsahu na tretej úrovni. Každá položka je pridaná pod predchádzajúcu položku druhej úrovne. Pozrite si príklady v Školení XPath v Užívateľskej príručke calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -562,7 +562,7 @@ Nastaviť jazyk.
 .INDENT 0.0
 .TP
 .B \-\-pubdate
-Set the publication date (assumed to be in the local timezone, unless the timezone is explicitly specified)
+Nastaviť dátum vydania (predpokladá sa v miestnom časovom pásme, pokiaľ nie je časové pásmo výslovne uvedené)
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -615,12 +615,12 @@ Voľby na pomoc s ladením konverzie.
 .INDENT 0.0
 .TP
 .B \-\-debug\-pipeline, \-d
-Save the output from different stages of the conversion pipeline to the specified folder. Useful if you are unsure at which stage of the conversion process a bug is occurring.
+Uložiť výstup z rôznych fáz konverzného reťazca do zadaného priečinka. Užitočné, ak si nie ste istí, v ktorej fáze konverzného procesu sa vyskytuje chyba.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Level of verbosity. Specify multiple times for greater verbosity. Specifying it twice will result in full verbosity, once medium verbosity and zero times least verbosity.
+Úroveň podrobnosti. Zadajte viackrát pre väčšiu podrobnosť. Dvojité zadanie znamená plnú podrobnosť, jednoduché strednú podrobnosť a bez zadania najnižšiu podrobnosť.
 .UNINDENT
 .SH Author
 Kovid Goyal

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -40,35 +40,39 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-Various command line interfaces useful for debugging calibre. With no options,
-this command starts an embedded Python interpreter. You can also run the main
-calibre GUI, the calibre E\-book viewer and the calibre editor in debug mode.
+Rôzne rozhrania príkazového riadka užitočné na ladenie calibre. Bez volieb
+tento príkaz spustí vstavaný interpreter Pythonu. Môžete tiež spustiť hlavné
+GUI calibre, prehliadač e\-kníh calibre a editor calibre v režime ladenia.
 .sp
-It also contains interfaces to various bits of calibre that do not have
-dedicated command line tools, such as font subsetting, the E\-book diff tool and so
-on.
+Obsahuje aj rozhrania k rôznym častiam calibre, ktoré nemajú
+vyhradené nástroje príkazového riadka, ako je napríklad podmnožina písiem, nástroj na porovnávanie e\-kníh a podobne.
 .sp
-You can also use \fBcalibre\-debug\fP to run standalone scripts. To do that use it like this:
+Pomocou \fBcalibre\-debug\fP môžete tiež spúšťať samostatné skripty. Použite to takto:
 .INDENT 0.0
 .INDENT 3.5
 \fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
 .UNINDENT
 .UNINDENT
 .sp
-Everything after the \fB\-\-\fP is passed to the script. You can also use \fBcalibre\-debug\fP
-as a shebang in scripts, like this:
+Všetko za \fB\-\-\fP sa odovzdá skriptu. \fBcalibre\-debug\fP môžete použiť aj
+ako shebang v skriptoch, takto:
 .INDENT 0.0
 .INDENT 3.5
 #!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
 .UNINDENT
 .UNINDENT
 .sp
-Whenever you pass arguments to \fBcalibre\-debug\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBcalibre\-debug\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
 Vložiť jednoduchý doplnok (napr. doplnok obsahujúci len .py súbor) zadaním cesty ku súboru py, ktorý obsahuje kód doplnku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-clear\-caches
+Vymažte priečinok calibre cache a vymažte stiahnuté Camoufox prehliadače a dáta z Browserforge, ak nejaké sú. Prehliadač Camoufox poskytovaný systémom sa nikdy neodstraňuje.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -83,17 +87,17 @@ Analyzovať chyby pri identifikácii zariadenia
 .INDENT 0.0
 .TP
 .B \-\-default\-programs
-(Od)registrovať Calibre vo východzích programoch Windows. \fB\-\-default\-programs\fP = \fB(register|unregister)\fP
+(Od)registrovať calibre vo východzích programoch Windows. \fB\-\-default\-programs\fP = \fB(register|unregister)\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-diff
-Spustiť rozdielový nástroj Calibre. Napríklad: calibre\-debug \fB\-\-diff\fP súbor1 súbor2
+Spustiť rozdielový nástroj calibre. Napríklad: calibre\-debug \fB\-\-diff\fP súbor1 súbor2
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Launch the calibre \fB\(dq\fPEdit book\fB\(dq\fP tool in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+Spustiť nástroj calibre \fB\(dq\fPUpraviť knihu\fB\(dq\fP v ladiacom režime. Ako pri \-g použite \fB\-\-\fP na odovzdanie argumentov príkazového riadka.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -103,17 +107,17 @@ Spustiť kód jazyka Python v súbore.
 .INDENT 0.0
 .TP
 .B \-\-explode\-book, \-x
-Explode the book into the specified folder. Usage: \-x file.epub output_dir Exports the book as a collection of HTML files and metadata, which you can edit using standard HTML editing tools. Works with EPUB, AZW3, HTMLZ and DOCX files.
+Rozbalí knihu do zadaného priečinka. Použitie: \-x súbor.epub výstupný_priečinok Exportuje knihu ako súbor súborov HTML a metadát, ktoré môžete upravovať pomocou štandardných nástrojov na úpravu HTML. Funguje so súbormi EPUB, AZW3, HTMLZ a DOCX.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-export\-all\-calibre\-data
-Export all calibre data (books/settings/plugins). Normally, you will be asked for the export folder and the libraries to export. You can also specify them as command line arguments to skip the questions. Use absolute paths for the export folder and libraries. The special keyword \fB\(dq\fPall\fB\(dq\fP can be used to export all libraries. Examples:    calibre\-debug \fB\-\-export\-all\-calibre\-data\fP  # for interactive use   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /path/to/empty/export/folder /path/to/library/folder1 /path/to/library2   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /export/folder all  # export all known libraries
+Exportuje všetky údaje calibre (knihy/nastavenia/doplnky). Bežne sa vás opýta na exportný priečinok a knižnice na export. Môžete ich zadať aj ako argumenty príkazového riadka, aby ste sa otázkam vyhli. Pre exportný priečinok a knižnice použite absolútne cesty. Špeciálne kľúčové slovo „all“ sa dá použiť na export všetkých knižníc. Príklady:    calibre\-debug \fB\-\-export\-all\-calibre\-data\fP  # pre interaktívne použitie   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /cesta/k/prázdnemu/exportnému/priečinku /cesta/ku/knižnici/priecinok1 /cesta/ku/knižnici2   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /export/priecinok all  # export všetkých známych knižníc
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-gui, \-g
-Run the GUI with debugging enabled. Debug output is printed to stdout and stderr. To pass command line arguments use \fB\-\-\fP followed by the arguments, for example: calibre\-debug \-g \fB\-\-\fP /path/to/ebook
+Spustí GUI s povoleným ladením. Ladiaci výstup sa vypisuje do stdout a stderr. Na odovzdanie argumentov príkazového riadka použite \fB\-\-\fP nasledované argumentmi, napríklad: calibre\-debug \-g \fB\-\-\fP /cesta/k/eknihe
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -128,12 +132,12 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-implode\-book, \-i
-Implode a previously exploded book. Usage: \-i output_dir file.epub Imports the book from the files in output_dir which must have been created by a previous call to \fB\-\-explode\-book\fP\&. Be sure to specify the same file type as was used when exploding.
+Zabalí predtým rozbalenú knihu. Použitie: \-i výstupný_priečinok súbor.epub Importuje knihu zo súborov vo výstupnom_priečinku, ktoré musia byť vytvorené predchádzajúcim volaním \fB\-\-explode\-book\fP\&. Nezabudnite zadať rovnaký typ súboru, aký sa použil pri rozbaľovaní.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-import\-calibre\-data
-Importovať predtým exportované dáta Calibre
+Importovať predtým exportované dáta calibre
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -148,17 +152,17 @@ Konvertuje zadaný súbor EPUB na KEPUB bez vykonania úplnej konverzie. Presne 
 .INDENT 0.0
 .TP
 .B \-\-paths
-Výstup ciest potrebných pre nastavenie prostredia Calibre
+Výstup ciest potrebných pre nastavenie prostredia calibre
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Run a plugin that provides a command line interface. For example: calibre\-debug \-r \fB\(dq\fPPlugin name\fB\(dq\fP \fB\-\-\fP file1 \fB\-\-option1\fP Everything after the \fB\-\-\fP will be passed to the plugin as arguments.
+Spustí doplnok, ktorý poskytuje rozhranie príkazového riadka. Napríklad: calibre\-debug \-r \fB\(dq\fPNázov doplnku\fB\(dq\fP \fB\-\-\fP súbor1 \fB\-\-volba1\fP Všetko za \fB\-\-\fP sa odovzdá doplnku ako argumenty.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-run\-test, \-t
-Run the named test(s). Use the special value \fB\(dq\fPall\fB\(dq\fP to run all tests. If the test name starts with a period it is assumed to be a module name. If the test name starts with @ it is assumed to be a category name.
+Spustí pomenované testy. Použite špeciálnu hodnotu „all“ na spustenie všetkých testov. Ak názov testu začína bodkou, predpokladá sa, že ide o názov modulu. Ak názov testu začína @, predpokladá sa, že ide o názov kategórie.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -193,7 +197,7 @@ zobraziť verziu programu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-viewer, \-w
-Run the E\-book viewer in debug mode. As with \-g use \fB\-\-\fP to pass command line arguments.
+Spustiť prehliadač e\-kníh v ladiacom režime. Ako pri \-g použite \fB\-\-\fP na odovzdanie argumentov príkazového riadka.
 .UNINDENT
 .SH Author
 Kovid Goyal

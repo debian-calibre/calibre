@@ -1,0 +1,141 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "CALIBRE-SMTP" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+calibre-smtp \- calibre-smtp
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibre\-smtp [opcije] [od ka tekst]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Šalje poštu koristeći SMTP protokol. \fBcalibre\-smtp\fP ima dva režima rada. U režimu sastavljanja navodite pošiljaoca, primaoca i tekst, koji se koriste za kreiranje i slanje poruke e\-pošte. U režimu filtriranja, \fBcalibre\-smtp\fP čita kompletnu poruku e\-pošte sa STDIN\-a i šalje je.
+.sp
+tekst je telo poruke e\-pošte.
+Ako tekst nije naveden, kompletna poruka e\-pošte se čita sa STDIN\-a.
+od je adresa e\-pošte pošiljaoca, a ka je adresa e\-pošte primaoca. Kada se kompletna poruka e\-pošte čita sa STDIN\-a, od i ka se koriste samo u SMTP pregovorima, zaglavlja poruke se ne menjaju.
+.sp
+Kada god prosleđujete argumente programu \fBcalibre\-smtp\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-fork, \-f
+Pokreni proces u pozadini i isporuči poruku. Ako koristite ovu opciju, trebalo bi da koristite i \fB\-\-outbox\fP za rukovanje greškama pri isporuci.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-localhost, \-l
+Ime hosta lokalnog računara. Koristi se pri povezivanju na SMTP server.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-outbox, \-o
+Putanja do maildir fascikle za čuvanje neuspešnih poruka e\-pošte.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout, \-t
+Vremensko ograničenje za povezivanje
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Prikaži više detalja
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SS COMPOSE MAIL
+.sp
+Opcije za sastavljanje e\-pošte. Ignoriše se ako tekst nije naveden
+.INDENT 0.0
+.TP
+.B \-\-attachment, \-a
+Datoteka za prilaganje uz e\-poštu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subject, \-s
+Predmet e\-pošte
+.UNINDENT
+.SS SMTP RELAY
+.sp
+Opcije za korišćenje SMTP relej servera za slanje pošte. calibre će pokušati da pošalje e\-poštu direktno osim ako nije navedeno \-\-relay.
+.INDENT 0.0
+.TP
+.B \-\-cafile
+Putanja do datoteke sa spojenim CA sertifikatima u PEM formatu, koja se koristi za verifikaciju sertifikata servera pri korišćenju TLS\-a. Podrazumevano se koriste sistemski CA sertifikati.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-verify\-server\-certificate
+Ne verifikuj sertifikat servera pri povezivanju koristeći TLS. Ovo je bilo podrazumevano ponašanje u verzijama calibre pre 3.27. Ako koristite relej sa samopotpisanim ili na drugi način nevažećim sertifikatom, možete koristiti ovu opciju da vratite ponašanje pre verzije 3.27
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-encryption\-method, \-e
+Metod enkripcije koji se koristi pri povezivanju na relej. Izbori su TLS, SSL i NONE. Podrazumevano je TLS. UPOZORENJE: Izbor NONE je veoma nesiguran
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-password, \-p
+Lozinka za relej
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+Port za povezivanje na relej server. Podrazumevano se koristi 465 ako je metod enkripcije SSL, a inače 25.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-relay, \-r
+SMTP relej server koji se koristi za slanje pošte.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-username, \-u
+Korisničko ime za relej
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

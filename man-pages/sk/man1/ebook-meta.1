@@ -28,29 +28,29 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-META" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "EBOOK-META" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 ebook-meta \- ebook-meta
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-meta ebook_file [options]
+ebook\-meta súbor_eknihy [voľby]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Read/Write metadata from/to e\-book files.
+Číta/zapisuje metadáta zo/do súborov e\-kníh.
 .sp
-Supported formats for reading metadata: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+Podporované formáty na čítanie metadát: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
 .sp
-Supported formats for writing metadata: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+Podporované formáty na zápis metadát: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
 .sp
-Different file types support different kinds of metadata. If you try to set
-some metadata on a file type that does not support it, the metadata will be
-silently ignored.
+Rôzne typy súborov podporujú rôzne druhy metadát. Ak sa pokúsite nastaviť
+nejaké metadáta na typ súboru, ktorý ich nepodporuje, metadáta sa
+bez upozornenia ignorujú.
 .sp
-Whenever you pass arguments to \fBebook\-meta\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBebook\-meta\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
@@ -90,17 +90,17 @@ Nastaviť dátum publikovania
 .INDENT 0.0
 .TP
 .B \-\-disallow\-rendered\-cover
-For formats like EPUB that use a \fB\(dq\fPdefault cover\fB\(dq\fP of the first page rendered, disallow such default covers
+Pre formáty ako EPUB, ktoré používajú \fB\(dq\fPpredvolenú obálku\fB\(dq\fP prvej vykreslenej strany, zakázať takéto predvolené obálky
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-from\-opf
-Read metadata from the specified OPF file and use it to set metadata in the e\-book. Metadata specified on the command line will override metadata read from the OPF file
+Čítať metadáta zo zadaného súboru OPF a použiť ich na nastavenie metadát v e\-knihe. Metadáta zadané v príkazovom riadku prepíšu metadáta čítané zo súboru OPF
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-get\-cover
-Get the cover from the e\-book and save it at as the specified file.
+Získať obálku z e\-knihy a uložiť ju ako zadaný súbor.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -110,7 +110,7 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-identifier
-Set the identifiers for the book, can be specified multiple times. For example: \fB\-\-identifier\fP uri:https://acme.com \fB\-\-identifier\fP isbn:12345 To remove an identifier, specify no value, \fB\-\-identifier\fP isbn: Note that for EPUB files, an identifier marked as the package identifier cannot be removed.
+Nastaví identifikátory pre knihu, dá sa zadať viackrát. Napríklad: \fB\-\-identifier\fP uri:https://acme.com \fB\-\-identifier\fP isbn:12345 Na odstránenie identifikátora nezadajte hodnotu, \fB\-\-identifier\fP isbn: Upozorňujeme, že pri súboroch EPUB sa identifikátor označený ako identifikátor balíka nedá odstrániť.
 .UNINDENT
 .INDENT 0.0
 .TP

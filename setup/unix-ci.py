@@ -236,14 +236,14 @@ IGNORED_DEPENDENCY_CVES = [
     'CVE-2026-17084',  # idna encoding, unused
     'CVE-2026-15806',  # HTTPPasswordMgr unused
     'CVE-2026-15310',  # DoS in unzip
+    'CVE-2026-87910',  # tarfile extract on systems without links irrelevant
+    'CVE-2026-12345',  # tempfile.TemporaryDirectory cleanup symlink attack
     # libtiff
     'CVE-2025-8851',  # this is erroneously marked as fixed in the database but no release of libtiff has been made with the fix
     # hyphen
     'CVE-2017-1000376',  # false match in the database
     # espeak
     'CVE-2023-4990',  # false match because we currently build with a specific commit pending release of espeak 1.53
-    'CVE-2026-2673',  # openssl fix not released
-    'CVE-2026-14456',  # openssl fix not released
 ]
 IGNORED_DEPENDENCY_PACKAGES = [
     'nodejs',  # only used at build time

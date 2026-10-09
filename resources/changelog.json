@@ -1,12 +1,199 @@
 [
     {
+        "version": "9.16.0",
+        "date": "2026-10-09",
+        "new features": [
+            {
+                "type": "major",
+                "title": "Read aloud: Add the high quality Kokoro voices, which sound much more natural than the Piper voices, especially for English",
+                "description": "To use them, select the Piper backend in the Read aloud configuration and choose one of the Kokoro voices. The voice will be automatically downloaded the first time it is used."
+            },
+            {
+                "type": "major",
+                "title": "News download: Support for downloading news from websites that block automated access by using the camoufox browser",
+                "description": "Some news sites, such as The New York Times, The Economist and The Atlantic, block all lighter weight ways of fetching their pages. Recipes for these sites now use the camoufox browser, which is automatically downloaded the first time such a recipe is run. Recipe authors can use it by setting browser_type = 'camoufox' in their recipes."
+            },
+            {
+                "title": "PDF Input: Support for right-to-left text and better handling of multi-column pages"
+            },
+            {
+                "title": "Add support for reading images in the AVIF format"
+            },
+            {
+                "tickets": [
+                    2144044
+                ],
+                "title": "Tag browser: A new option to sort hierarchical tags that have only children but no actual books as folders, before all other tags at their level"
+            },
+            {
+                "tickets": [
+                    2120771
+                ],
+                "title": "Edit book: Check book: Allow skipping of problems of a particular type"
+            },
+            {
+                "title": "Edit book: ToC View: Indicate what ToC entries, if any, are in the file being currently edited"
+            },
+            {
+                "title": "Edit book: Check book: When auto fixing invalid ids also update CSS selectors"
+            },
+            {
+                "tickets": [
+                    2169454
+                ],
+                "title": "E-book viewer: Add an option to display the immediate parent ToC section in headers/footers"
+            },
+            {
+                "tickets": [
+                    2168471
+                ],
+                "title": "E-book viewer: Allow e-books to store up to 1MB of data persistently"
+            },
+            {
+                "tickets": [
+                    2148707
+                ],
+                "title": "E-book viewer: Print to PDF: Allow specifying margins in metric units"
+            },
+            {
+                "tickets": [
+                    2150408
+                ],
+                "title": "Tag mapper and HTML/CSS transform rules: Add the ability to search the rules"
+            },
+            {
+                "tickets": [
+                    2167642
+                ],
+                "title": "Allow removing individual entries from the search history dropdown"
+            },
+            {
+                "title": "Add a button to Preferences->Look & feel->Main interface to reset the main window layout"
+            },
+            {
+                "title": "Create your own Adventure: Allow exporting and importing saved games"
+            },
+            {
+                "title": "Speed up various operations on large libraries, such as startup, deleting many books, sorting by series, searching and refreshing the Tag browser"
+            },
+            {
+                "tickets": [
+                    2168472
+                ],
+                "title": "Kobo driver: Add support for newer firmware"
+            },
+            {
+                "title": "Windows: Unregister calibre from default programs and clear its caches when uninstalling"
+            },
+            {
+                "title": "DOCX Output: Make images inside links clickable"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2169441
+                ],
+                "title": "EPUB 3 to EPUB 3 conversions: Preserve ids on nav elements so links to them continue to work"
+            },
+            {
+                "tickets": [
+                    2142731
+                ],
+                "title": "PDF Output: Fix some trailing content at the end of individual HTML files being lost when the files use multi column layout"
+            },
+            {
+                "tickets": [
+                    2146979
+                ],
+                "title": "PDF Output: Fix a regression in 9.x that caused conversion of some books with vertical writing to not work correctly"
+            },
+            {
+                "tickets": [
+                    2167710
+                ],
+                "title": "DOCX Output: Fix non-breaking spaces not being preserved"
+            },
+            {
+                "tickets": [
+                    2168996
+                ],
+                "title": "FB2 metadata: Clear series, comments, etc. from the file when they are cleared in calibre"
+            },
+            {
+                "title": "E-book viewer: Fix dark mode theme color overrides conflicting with e-book CSS when the book uses filters to change image colors in dark mode"
+            },
+            {
+                "tickets": [
+                    2169232
+                ],
+                "title": "E-book viewer: Update the \"Pages from paper edition\" value faster"
+            },
+            {
+                "tickets": [
+                    2169575
+                ],
+                "title": "E-book viewer: Fix an error when pressing ctrl+shift"
+            },
+            {
+                "tickets": [
+                    2136805
+                ],
+                "title": "Layout actions: Fix saving/restoring layout not restoring which of the alternate book list visualisations is currently active"
+            },
+            {
+                "tickets": [
+                    2168620
+                ],
+                "title": "Book list: Respect horizontal alignment setting for all icon only column types"
+            },
+            {
+                "title": "Cover grid: Fix one cover being rendered too small in some circumstances"
+            },
+            {
+                "title": "Content server: Various fixes for older browsers when using the book details page in the /mobile view"
+            },
+            {
+                "title": "Content server: Various security hardening fixes"
+            }
+        ],
+        "improved recipes": [
+            "The New York Times",
+            "The Economist (needs subscription)",
+            "The Atlantic",
+            "Reuters",
+            "Heise",
+            "La Jornada",
+            "Naked Capitalism",
+            "The Saturday Paper"
+        ],
+        "new recipes": [
+            {
+                "title": "World Socialist",
+                "author": "Paulb223"
+            },
+            {
+                "title": "Poetry Magazine",
+                "author": "flurbs"
+            },
+            {
+                "title": "The Believer",
+                "author": "flurbs"
+            },
+            {
+                "title": "Respekt",
+                "author": "Vector Rilke"
+            }
+        ]
+    },
+    {
         "version": "9.15.0",
         "date": "2026-09-18",
         "new features": [
             {
                 "type": "major",
                 "title": "A \"Create your own adventure\" writing game -- interactive storytelling with an AI managing the world you create",
-                "description": "This is a little different from the usual run of calibre features. It started out as a way to test the AI backends in calibre but turned into something fun to use. As always with AI features its completely optional and not even loaded unless you explicitly run it. Go to Preferences->Toolbars & menus and add the \"Create your own Adventure\" to the main toolbar to use it"
+                "description": "This is a little different from the usual run of calibre features. It started out as a way to test the AI backends in calibre but turned into something fun to use. As always with AI features its completely optional and not even loaded unless you explicitly run it. Go to Preferences->Toolbars & menus and add the \"Create your own Adventure\" button to the main toolbar to use it"
             },
             {
                 "tickets": [

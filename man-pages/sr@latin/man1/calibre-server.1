@@ -1,0 +1,269 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "CALIBRE-SERVER" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+calibre-server \- calibre-server
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibre\-server [opcije] [putanja do fascikle biblioteke...]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Pokrenite calibre Content server. calibre Content server izlaže vaše
+calibre biblioteke preko interneta. Možete navesti putanju do fascikli
+biblioteka kao argumente za \fBcalibre\-server\fP\&. Ako ne navedete nijednu putanju, koristiće se sve
+biblioteke za koje glavni calibre program zna.
+.sp
+Kada god prosleđujete argumente programu \fBcalibre\-server\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-access\-log
+Putanja do datoteke dnevnika pristupa. Ovaj dnevnik sadrži informacije o klijentima koji se povezuju na server i šalju zahteve. Podrazumevano se ne vodi dnevnik pristupa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ajax\-timeout
+Vreme (u sekundama) čekanja na odgovor od servera prilikom upita.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auth\-mode
+Izaberite tip korišćene autentifikacije.    Podesite režim HTTP autentifikacije koji koristi server. Postavite na \fB\(dq\fPbasic\fB\(dq\fP ako ovaj server postavljate iza SSL proksija. U suprotnom, ostavite ga kao \fB\(dq\fPauto\fB\(dq\fP, što će koristiti \fB\(dq\fPbasic\fB\(dq\fP ako je SSL konfigurisan, inače će koristiti \fB\(dq\fPdigest\fB\(dq\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-auto\-reload
+Automatski ponovo učitaj server kada se izvorni kod promeni. Korisno za razvoj. Takođe bi trebalo da navedete malu vrednost za vremensko ograničenje isključivanja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ban\-after
+Broj neuspešnih prijava za blokiranje.      Broj neuspešnih prijava nakon kojih se IP adresa blokira
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ban\-for
+Blokiraj IP adrese koje imaju ponovljene neuspešne prijave.         Privremeno blokira pristup za IP adrese koje imaju ponovljene neuspešne prijave tokom navedenog broja minuta. Korisno za sprečavanje pokušaja pogađanja lozinki. Ako je postavljeno na nulu, blokiranje se ne vrši.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-list\-mode
+Izaberite podrazumevani režim liste knjiga.         Postavite podrazumevani režim liste knjiga koji će se koristiti za nove korisnike. Pojedinačni korisnici mogu da promene podrazumevanu vrednost u sopstvenim podešavanjima. Podrazumevano se koristi mreža naslovnih strana.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-min\-size
+Minimalna veličina za koju odgovori koriste kompresiju podataka (u bajtovima).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-custom\-list\-template
+Putanja do JSON datoteke koja sadrži šablon za prilagođeni režim liste knjiga. Najlakši način da kreirate takvu datoteku šablona je da odete u Podešavanja\-> Deljenje preko mreže\-> Šablon liste knjiga u calibre\-u, kreirate šablon i izvezete ga.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-daemonize
+Pokreni proces u pozadini kao demon (samo za Linux).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-displayed\-fields
+Ograniči prikazana korisnički definisana polja.     Lista korisnički definisanih polja metapodataka razdvojenih zarezima koja će biti prikazana od strane Content servera u /opds i /mobile prikazima. Ako navedete ovu opciju, sva polja koja nisu na ovoj listi neće biti prikazana. Na primer: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
+Pre\-alokacija soketa, na primer, sa systemd aktivacijom soketa. Ova opcija je podrazumevano omogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-auth, \-\-disable\-auth
+Autentifikacija zasnovana na lozinci za pristup serveru.    Obično je server neograničen, dozvoljavajući svima pristup. Pomoću ove opcije možete ograničiti pristup na unapred definisane korisnike. Ova opcija je podrazumevano onemogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
+Povratak na automatski detektovan interfejs.        Ako iz nekog razloga server ne može da se poveže sa interfejsom navedenim u opciji listen_on, pokušaće da detektuje interfejs koji se povezuje sa spoljnim svetom i poveže se sa njim. Ova opcija je podrazumevano omogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-local\-write, \-\-disable\-local\-write
+Dozvoli neautentifikovane lokalne veze da vrše izmene.      Obično, ako ne uključite autentifikaciju, server radi u režimu samo za čitanje, kako ne bi dozvolio anonimnim korisnicima da vrše izmene u vašim calibre bibliotekama. Ova opcija omogućava svima koji se povezuju sa istog računara na kojem je server pokrenut da vrše izmene. Ovo je korisno ako želite da pokrenete server bez autentifikacije, ali i dalje koristite calibredb za izmene u vašim calibre bibliotekama. Imajte na umu da uključivanje ove opcije znači da bilo koji program koji radi na računaru može da vrši izmene u vašim calibre bibliotekama. Konkretno, veb pregledač Firefox omogućava i proizvoljnim veb lokacijama da to učine. Ova opcija je podrazumevano onemogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
+Zabeleži HTTP 404 (Nije pronađeno) zahteve.         Obično server beleži sve HTTP zahteve za resurse koji nisu pronađeni. Ovo može generisati mnogo neželjenih zapisa u dnevniku ako je vaš server meta botova. Koristite ovu opciju da biste to isključili. Ova opcija je podrazumevano omogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
+Oglašavaj OPDS fidove putem BonJour\-a.      Oglašavaj OPDS fidove putem BonJour servisa, tako da aplikacije za čitanje zasnovane na OPDS\-u mogu automatski da otkriju i povežu se na server. Ova opcija je podrazumevano omogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
+Prenos datoteka bez kopiranja za povećane performanse.      Ovo će koristiti prenos bez kopiranja unutar kernela prilikom slanja datoteka preko mreže, čime se povećavaju performanse. Međutim, to može dovesti do oštećenja datoteka na nekim neispravnim sistemima datoteka. Ako primetite oštećenja pri prenosu datoteka, isključite ovu opciju. Ova opcija je podrazumevano omogućena.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignored\-fields
+Ignorisana korisnički definisana polja metapodataka.        Lista korisnički definisanih polja metapodataka razdvojenih zarezima koja neće biti prikazana od strane Content servera u /opds i /mobile prikazima. Na primer: my_rating,my_tags
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-listen\-on
+Interfejs na kojem se osluškuju veze.       Podrazumevano je osluškivanje na svim dostupnim IPv6 i IPv4 interfejsima. Ovo možete promeniti, na primer, u \fB\(dq\fP127.0.0.1\fB\(dq\fP da biste osluškivali samo IPv4 veze sa lokalnog računara, ili u \fB\(dq\fP0.0.0.0\fB\(dq\fP da biste osluškivali sve dolazne IPv4 veze.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-log
+Putanja do datoteke dnevnika za dnevnik servera. Ovaj dnevnik sadrži informacije o serveru i greške, a ne dnevnike pristupa. Podrazumevano se upisuje u stdout.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-manage\-users
+Upravljajte bazom podataka korisnika kojima je dozvoljeno da se povežu na ovaj server. Možete je koristiti u automatizovanom režimu dodavanjem \-\-. Pogledajte calibre\-server \fB\-\-manage\-users\fP \fB\-\-\fP help za detalje. Pogledajte takođe opciju \fB\-\-userdb\fP\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-header\-line\-size
+Maks. veličina pojedinačnog HTTP zaglavlja (u KB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-job\-time
+Maksimalno vreme za radne procese.  Maksimalna količina vremena koliko radni procesi mogu da rade (u minutima). Postavite na nulu da biste onemogućili ograničenje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-jobs
+Maksimalan broj radnih procesa.     Radni procesi se pokreću po potrebi i koriste se za velike poslove kao što su priprema knjige za pregled, dodavanje knjiga, konverzija itd. Obično se maks. broj takvih procesa zasniva na broju CPU jezgara. To možete kontrolisati ovim podešavanjem.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-log\-size
+Maks. veličina datoteke dnevnika (u MB).    Maksimalna veličina datoteka dnevnika koje generiše server. Kada dnevnik postane veći od ove veličine, automatski se rotira. Postavite na nulu da biste onemogućili rotaciju dnevnika.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-items
+Maksimalan broj knjiga u OPDS fidovima.     Maksimalan broj knjiga koje će server vratiti u jednom OPDS fid\-u za preuzimanje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-opds\-ungrouped\-items
+Maksimalan broj negrupisanih stavki u OPDS fidovima.        Grupiši stavke u kategorije kao što su autor/oznake prema početnom slovu kada postoji više od ovog broja stavki. Postavite na nulu da biste onemogućili.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-request\-body\-size
+Maks. dozvoljena veličina datoteka otpremljenih na server (u MB).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-num\-per\-page
+Broj knjiga za prikaz na jednoj stranici.   Broj knjiga za prikaz na jednoj stranici u pregledaču.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pidfile
+Upiši PID procesa u navedenu datoteku
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-port
+Port na kojem se osluškuju veze.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search\-the\-net\-urls
+Putanja do JSON datoteke koja sadrži URL adrese za funkciju \fB\(dq\fPPretraži internet\fB\(dq\fP\&. Najlakši način da kreirate takvu datoteku je da odete u Podešavanja\-> Deljenje preko mreže\-> Pretraži internet u calibre\-u, kreirate URL adrese i izvezete ih.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-timeout
+Ukupno vreme u sekundama čekanja na čisto gašenje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-certfile
+Putanja do datoteke SSL sertifikata.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ssl\-keyfile
+Putanja do datoteke SSL privatnog ključa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Vreme (u sekundama) nakon kojeg se neaktivna veza zatvara.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-trusted\-ips
+Dozvoli neautentifikovane veze sa određenih IP adresa da vrše izmene.       Obično, ako ne uključite autentifikaciju, server radi u režimu samo za čitanje, kako ne bi dozvolio anonimnim korisnicima da vrše izmene u vašim calibre bibliotekama. Ova opcija omogućava svima koji se povezuju sa navedenih IP adresa da vrše izmene. Mora biti lista adresa ili mrežnih specifikacija razdvojenih zarezima. Ovo je korisno ako želite da pokrenete server bez autentifikacije, ali i dalje koristite calibredb za izmene u vašim calibre bibliotekama. Imajte na umu da uključivanje ove opcije znači da svako ko se povezuje sa navedenih IP adresa može da vrši izmene u vašim calibre bibliotekama.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-url\-prefix
+Prefiks koji se dodaje ispred svih URL\-ova.         Korisno ako želite da pokrenete ovaj server iza reverznog proksija. Na primer, koristite /calibre kao URL prefiks.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-userdb
+Putanja do baze podataka korisnika koja se koristi za autentifikaciju. Baza podataka je SQLite datoteka. Da biste je kreirali, koristite \fB\-\-manage\-users\fP\&. Više o upravljanju korisnicima možete pročitati na: \%<https://\:manual\:.calibre-ebook\:.com/\:server\:.html#\:managing-user-accounts-from-the-command-line-only>
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-worker\-count
+Broj radnih niti korišćenih za obradu zahteva.
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

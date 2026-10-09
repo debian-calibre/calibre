@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Andrei Stepanov, 2026\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -295,6 +295,15 @@ msgstr "Учитывая список авторов, вернуть строк�
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Возвращает сортировку авторов для указанных авторов."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
+msgstr "Вернуть хранилище для конкретной книги (используется для localStorage в просмотрщиках) по указанным book_id, формату, типу пользователя и пользователю, либо None, если хранилище не существует. Хранилище представляет собой словарь вида: {'timestamp': секунды с начала эпохи, 'data': {ключ: значение}}."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -1227,6 +1236,15 @@ msgstr "Восстановить ранее удаленное примечан�
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "Обновить аннотации."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr "Установить хранилище для конкретной книги по указанным book_id, формату, типу пользователя и пользователю, если только существующее хранилище не новее записи. Возвращает хранилище, действующее после обновления. Очистить хранилище можно, передав запись с пустыми данными."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

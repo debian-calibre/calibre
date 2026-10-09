@@ -8,21 +8,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 13:48+0000\n"
-"PO-Revision-Date: 2020-07-03 02:15+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Slovak (http://www.transifex.com/calibre/calibre/language/sk/)\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: vladimirjendrol <vlado@jendrol.sk>, 2020\n"
+"Language-Team: Slovak (http://app.transifex.com/calibre/calibre/language/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:4
+#: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
-msgstr ""
+msgstr "Návod na XPath"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:6
+#: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -31,37 +31,37 @@ msgid ""
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for e-book related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr ""
+msgstr "V tomto návode dostanete jemný úvod do `XPath <https://en.wikipedia.org/wiki/XPath>`_, jazyka dopytov, ktorý možno použiť na výber ľubovoľných častí dokumentov `HTML <https://en.wikipedia.org/wiki/HTML>`_ v calibre. XPath je široko používaný štandard a jeho googlenie vám poskytne tony informácií. Tento návod sa však zameriava na používanie XPath pri úlohách súvisiacich s e-knihami, ako je hľadanie nadpisov kapitol v neštruktúrovanom HTML dokumente."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:16
+#: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
-msgstr ""
+msgstr "Obsah"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:19
+#: ../../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
-msgstr ""
+msgstr "Výber podľa názvu značky"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:21
+#: ../../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr ""
+msgstr "Najjednoduchšou formou výberu je výber značiek podľa názvu. Predpokladajme napríklad, že chcete vybrať všetky značky ``<h2>`` v dokumente. XPath dopyt na to je jednoducho::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:27
+#: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr ""
+msgstr "Predpona `//` znamená *hľadať na ľubovoľnej úrovni dokumentu*. Teraz predpokladajme, že chcete hľadať značky ``<span>``, ktoré sú vnútri značiek ``<a>``. To sa dá dosiahnuť takto::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:33
+#: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr ""
+msgstr "Ak chcete hľadať značky na konkrétnej úrovni dokumentu, zmeňte predponu::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:39
+#: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -69,18 +69,18 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr ""
+msgstr "Toto bude zodpovedať iba ``<p>Veľmi krátka e-kniha na demonštráciu použitia XPath.</p>`` v :ref:`sample_ebook`, ale žiadnym z ostatných značiek ``<p>``. Predpona ``h:`` vo vyššie uvedených príkladoch je potrebná na zhody so značkami XHTML. Dôvodom je, že calibre interne reprezentuje všetok obsah ako XHTML. V XHTML majú značky *mený priestor* a ``h:`` je predpona menného priestoru pre značky HTML."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:45
+#: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
-"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
-" test that is used to select tags. Tests can be arbitrarily powerful and as "
-"this tutorial progresses, you will see more powerful examples. A predicate "
+"we need an XPath construct called *predicate*. A :dfn:`predicate` is simply "
+"a test that is used to select tags. Tests can be arbitrarily powerful and as"
+" this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "Teraz predpokladajme, že chcete vybrať značky ``<h1>`` aj ``<h2>``. Na to potrebujeme konštrukt XPath s názvom *predikát*. :dfn:`Predikát` je jednoducho test, ktorý sa používa na výber značiek. Testy môžu byť ľubovoľne výkonné a ako bude tento návod postupovať, uvidíte výkonnejšie príklady. Predikát sa vytvorí uzavretím testovacieho výrazu do hranatých zátvoriek::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:53
+#: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -90,75 +90,87 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr ""
+msgstr "V tomto výraze XPath je niekoľko nových funkcií. Prvou je použitie zástupného znaku ``*``. Znamená *zhoda s ľubovoľnou značkou*. Teraz sa pozrite na testovací výraz ``name()='h1' or name()='h2'``. :term:`name()` je príkladom *vstavanej funkcie*. Jednoducho sa vyhodnotí na názov značky. Takže pomocou nej môžeme vybrať značky, ktorých názvy sú buď `h1`, alebo `h2`. Všimnite si, že funkcia :term:`name()` ignoruje menné priestory, takže nie je potrebná predpona ``h:``. XPath má niekoľko užitočných vstavaných funkcií. Niekoľko ďalších bude predstavených v tomto návode."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:62
+#: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
-msgstr ""
+msgstr "Výber podľa atribútov"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:64
+#: ../../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr ""
+msgstr "Na výber značiek na základe ich atribútov je potrebné použiť predikáty::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:70
+#: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr ""
+msgstr "Tu operátor ``@`` odkazuje na atribúty značky. Na sofistikovanejšie porovnávanie hodnôt atribútov môžete použiť niektoré z `vstavaných funkcií XPath`_."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:75
+msgid ""
+"When XPath expressions are used for conversion options such as chapter "
+"detection or the start reading at position, they are evaluated against the "
+"*input* document, before calibre flattens the CSS. CSS flattening rewrites "
+"class names, so the class names you see in the converted output (things like"
+" ``calibre1``) do not exist yet when your expression runs. Copy class names "
+"from the input document, not from the converted book. If in doubt, match on "
+"tag names and text content instead, as these are not changed by the "
+"conversion."
+msgstr "Keď sa výrazy XPath používajú na možnosti konverzie, ako je detekcia kapitol alebo pozícia začiatku čítania, vyhodnocujú sa voči *vstupnému* dokumentu, predtým než calibre zploští CSS. Zploštenie CSS prepisuje názvy tried, takže názvy tried, ktoré vidíte vo výstupnom konvertovanom dokumente (napríklad ``calibre1``), ešte neexistujú, keď sa váš výraz spustí. Kopírujte názvy tried zo vstupného dokumentu, nie z konvertovanej knihy. Ak máte pochybnosti, radšej použite zhodu podľa názvov značiek a textového obsahu, pretože tie sa konverziou nemenia."
+
+#: ../../../__w/calibre/calibre/manual/xpath.rst:86
 msgid "Selecting by tag content"
-msgstr ""
+msgstr "Výber podľa obsahu značky"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:88
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr ""
+msgstr "Pomocou XPath môžete vyberať značky dokonca na základe textu, ktorý obsahujú. Najlepším spôsobom, ako to urobiť, je využiť silu *regulárnych výrazov* prostredníctvom vstavanej funkcie :term:`re:test()`::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:94
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr ""
+msgstr "Tu operátor ``.`` odkazuje na obsah značky, rovnako ako operátor ``@`` odkazoval na jej atribúty."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:100
 msgid "Sample e-book"
-msgstr ""
+msgstr "Vzorová e-kniha"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:106
 msgid "XPath built-in functions"
-msgstr ""
+msgstr "Vstavané funkcie XPath"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:109
 msgid "name()"
 msgstr "name()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:111
 msgid "The name of the current tag."
-msgstr ""
+msgstr "Názov aktuálnej značky."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:112
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:114
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
-msgstr ""
+msgstr "``contains(s1, s2)`` vráti `true`, ak s1 obsahuje s2."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:115
 msgid "re:test()"
-msgstr ""
+msgstr "re:test()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:117
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr ""
+msgstr "``re:test(src, pattern, flags)`` vráti `true`, ak reťazec `src` zodpovedá regulárnemu výrazu `pattern`. Obzvlášť užitočný príznak je ``i``, ktorý zabezpečí, že zhoda nerozlišuje veľkosť písmen. Dobrý úvod do syntaxe regulárnych výrazov nájdete na `syntax regulárnych výrazov <https://docs.python.org/library/re.html>`_"

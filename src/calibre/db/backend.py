@@ -22,6 +22,7 @@ from calibre import as_unicode, force_unicode, prints
 from calibre.constants import builtin_colors_light, builtin_decorations, filesystem_encoding, iswindows, plugins, preferred_encoding
 from calibre.db import SPOOL_SIZE, FTSQueryError
 from calibre.db.annotations import annot_db_data, unicode_normalize
+from calibre.db.book_storage import BookStorageEntry, InvalidBookStorage, validate_book_storage
 from calibre.db.constants import (
     BOOK_ID_PATH_TEMPLATE,
     COVER_FILE_NAME,
@@ -45,6 +46,7 @@ from calibre.db.tables import (
     RatingTable,
     SizeTable,
     UUIDTable,
+    read_books_table_columns,
 )
 from calibre.db.utils import atomic_write
 from calibre.ebooks.metadata import author_to_author_sort, title_sort
@@ -73,6 +75,7 @@ from calibre.utils.icu import lower as icu_lower
 from calibre.utils.icu import sort_key
 from calibre.utils.localization import _
 from calibre.utils.resources import get_path as P
+from calibre.utils.stop_gc import stop_gc
 from polyglot.builtins import cmp, reraise
 
 if iswindows:
@@ -314,7 +317,7 @@ def AumSortedConcatenate():
 
     def step(ctxt, ndx, author, sort, link):
         if author is not None:
-            ctxt[ndx] = ':::'.join((author, sort, link))
+            ctxt[ndx] = ':::'.join((author, sort, link))  # noqa: FLY002
 
     def finalize(ctxt):
         try:
@@ -403,14 +406,55 @@ def save_last_read_position_to_cursor(cursor, book_id, fmt, user='_', device='_'
 # }}}
 
 
+# Book storage {{{
+def database_has_book_storage_support(cursor) -> bool:
+    return next(cursor.execute('pragma user_version;'))[0] > 27
+
+
+def book_storage_for_book(cursor, book_id: int, fmt: str, user_type: str = 'local', user: str = 'viewer') -> BookStorageEntry | None:
+    for timestamp, data in cursor.execute(
+        'SELECT timestamp, data FROM book_storage WHERE book=? AND format=? AND user_type=? AND user=?',
+        (book_id, fmt.upper(), user_type, user),
+    ):
+        try:
+            return validate_book_storage({'timestamp': timestamp, 'data': json.loads(data)})
+        except (ValueError, InvalidBookStorage) as err:
+            prints(f'Ignoring invalid book storage for book: {book_id} format: {fmt} with error: {err}', file=sys.stderr)
+    return None
+
+
+def update_book_storage_for_book(cursor, book_id: int, fmt: str, entry: BookStorageEntry, user_type: str = 'local', user: str = 'viewer') -> BookStorageEntry:
+    """
+    Store entry unless the existing storage for the book is newer. Returns
+    whichever entry is stored after the update.
+    """
+    existing = book_storage_for_book(cursor, book_id, fmt, user_type, user)
+    if existing is not None and existing['timestamp'] > entry['timestamp']:
+        return existing
+    cursor.execute(
+        'INSERT OR REPLACE INTO book_storage (book, format, user_type, user, timestamp, data) VALUES (?, ?, ?, ?, ?, ?)',
+        (book_id, fmt.upper(), user_type, user, entry['timestamp'], json.dumps(entry['data'], ensure_ascii=False)),
+    )
+    return entry
+
+
+def save_book_storage_to_cursor(cursor, entry: BookStorageEntry, sync_annots_user: str, book_id: int, book_fmt: str) -> None:
+    update_book_storage_for_book(cursor, book_id, book_fmt, entry)
+    if sync_annots_user:
+        update_book_storage_for_book(cursor, book_id, book_fmt, entry, user_type='web', user=sync_annots_user)
+
+
+# }}}
+
+
 class Connection(apsw.Connection):  # {{{
     BUSY_TIMEOUT = 10000  # milliseconds
 
     def __init__(self, path):
-        from calibre.utils.localization import get_lang
+        from calibre.utils.localization import bcp47_locale_name
         from calibre_extensions.sqlite_extension import set_ui_language
 
-        set_ui_language(get_lang())
+        set_ui_language(bcp47_locale_name())
         super().__init__(path)
         plugins.load_apsw_extension(self, 'sqlite_extension')
         self.fts_dbpath = self.notes_dbpath = None
@@ -421,12 +465,12 @@ class Connection(apsw.Connection):  # {{{
         encoding = next(self.execute('PRAGMA encoding'))[0]
         self.createcollation('PYNOCASE', partial(pynocase, encoding=encoding))
 
-        self.createscalarfunction('title_sort', cast(ScalarProtocol, title_sort))
-        self.createscalarfunction('author_to_author_sort', cast(ScalarProtocol, _author_to_author_sort), 1)
+        self.createscalarfunction('title_sort', cast('ScalarProtocol', title_sort))
+        self.createscalarfunction('author_to_author_sort', cast('ScalarProtocol', _author_to_author_sort), 1)
         self.createscalarfunction('uuid4', lambda *a: str(uuid.uuid4()), 0)
 
         # Dummy functions for dynamically created filters
-        self.createscalarfunction('books_list_filter', cast(ScalarProtocol, lambda x: 1), 1)
+        self.createscalarfunction('books_list_filter', cast('ScalarProtocol', lambda x: 1), 1)
         self.createcollation('icucollate', icu_collator)
 
         # Legacy aggregators (never used) but present for backwards compat
@@ -439,7 +483,7 @@ class Connection(apsw.Connection):  # {{{
 
     def create_dynamic_filter(self, name):
         f = DynamicFilter(name)
-        self.createscalarfunction(name, cast(ScalarProtocol, f), 1)
+        self.createscalarfunction(name, cast('ScalarProtocol', f), 1)
 
     def get(self, *args, **kw):
         ans = self.cursor().execute(*args)
@@ -1741,16 +1785,36 @@ class DB:
         Read all data from the db into the python in-memory tables
         """
 
-        with self.conn:  # Use a single transaction, to ensure nothing modifies the db while we are reading
+        # Reading creates many long lived container objects, none of which are
+        # garbage. Their number grows with the size of the library, and with
+        # the cyclic garbage collector enabled it repeatedly traverses all of
+        # them, which is slow in larger libraries.
+        with self.conn, stop_gc:  # Use a single transaction, to ensure nothing modifies the db while we are reading
+            books_columns = tuple(t for t in self.tables.values() if isinstance(t, OneToOneTable) and t.is_books_table_column)
+            already_read = set(books_columns) if read_books_table_columns(self, books_columns) else set()
+            # The size table is read from the scan of the data table done by
+            # the formats table, so it must be read after it
+            size_table = self.tables['size']
+            already_read.add(size_table)
             for table in self.tables.values():
-                try:
-                    table.read(self)
-                except Exception:
-                    prints('Failed to read table:', table.name)
-                    import pprint
+                if table not in already_read:
+                    self._read_table(table, table.read, self)
+            self._read_table(size_table, self._read_size_table)
 
-                    pprint.pprint(table.metadata)
-                    raise
+    def _read_size_table(self):
+        size_table = self.tables['size']
+        if not size_table.read_from_formats(self.tables['uuid'].book_col_map, self.tables['formats']):
+            size_table.read(self)
+
+    def _read_table(self, table, read, *args):
+        try:
+            read(*args)
+        except Exception:
+            prints('Failed to read table:', table.name)
+            import pprint
+
+            pprint.pprint(table.metadata)
+            raise
 
     def find_path_for_book(self, book_id):
         q = BOOK_ID_PATH_TEMPLATE.format(book_id)
@@ -2621,6 +2685,17 @@ class DB:
         with conn:
             save_annotations_list_to_cursor(conn.cursor(), alist, sync_annots_user, book_id, book_fmt)
 
+    def book_storage_for_book(self, book_id: int, fmt: str, user_type: str, user: str) -> BookStorageEntry | None:
+        return book_storage_for_book(self.conn, book_id, fmt, user_type, user)
+
+    def update_book_storage_for_book(self, book_id: int, fmt: str, entry: BookStorageEntry, user_type: str, user: str) -> BookStorageEntry:
+        with self.conn:
+            return update_book_storage_for_book(self.conn.cursor(), book_id, fmt, entry, user_type, user)
+
+    def save_book_storage(self, book_id: int, book_fmt: str, sync_annots_user: str, entry: BookStorageEntry) -> None:
+        with self.conn:
+            save_book_storage_to_cursor(self.conn.cursor(), entry, sync_annots_user, book_id, book_fmt)
+
     def search_annotations(
         self,
         fts_engine_query,
@@ -2965,14 +3040,29 @@ class DB:
         self.conn  # Connect to the moved metadata.db
         progress(_('Completed'), total, total)
 
-    def _backup_database(self, path, name, extra_sql='', num_of_retries=10):
+    def _backup_database(self, path, name, extra_sql='', num_of_retries=10, busy_timeout=60):
         for retry_count in range(num_of_retries):
             try:
                 with closing(apsw.Connection(path)) as dest_db:
                     with dest_db.backup('main', self.conn, name) as b:
+                        busy_since = None
                         while not b.done:
-                            with suppress(apsw.BusyError):
+                            try:
                                 b.step(128)
+                            except apsw.BusyError as e:
+                                # Locks on some filesystems such as SMB/CIFS
+                                # shares never succeed, so dont retry forever
+                                now = time.monotonic()
+                                if busy_since is None:
+                                    busy_since = now
+                                elif now - busy_since > busy_timeout:
+                                    raise apsw.BusyError(
+                                        f'Could not lock the database at {path} for {busy_timeout} seconds.'
+                                        ' The filesystem it is on probably does not support file locking.'
+                                    ) from e
+                                time.sleep(0.05)
+                            else:
+                                busy_since = None
                     if extra_sql:
                         dest_db.cursor().execute(extra_sql)
                 return
@@ -2989,6 +3079,23 @@ class DB:
                 with suppress(OSError):
                     os.remove(path)
                 time.sleep(0.2)
+
+    @staticmethod
+    def can_use_sqlite_in(base: str) -> bool:
+        import tempfile
+
+        fd, path = tempfile.mkstemp(suffix='-lock-test.db', dir=base)
+        os.close(fd)
+        try:
+            with closing(apsw.Connection(path)) as conn:
+                conn.cursor().execute('BEGIN EXCLUSIVE; CREATE TABLE t(x); COMMIT;')
+        except apsw.Error as e:
+            prints(f'Cannot use SQLite databases in {base} with error: {as_unicode(e)}')
+            return False
+        finally:
+            with suppress(OSError):
+                os.remove(path)
+        return True
 
     def backup_database(self, path):
         self._backup_database(path, 'main', 'DELETE FROM metadata_dirtied; VACUUM;')

@@ -37,7 +37,7 @@ from book_list.search import (
     init as init_search_panel, set_apply_search, tb_config_panel_handler
 )
 from book_list.top_bar import add_button, create_top_bar, set_title_tooltip
-from book_list.ui import query_as_href, set_panel_handler, show_panel
+from book_list.ui import library_data_panel, query_as_href, set_panel_handler, show_panel
 from dom import add_extra_css, build_rule, clear, ensure_id, set_css, svgicon
 from modals import error_dialog
 from session import get_interface_data
@@ -159,8 +159,8 @@ def on_book_click(book_id, evt):
     show_subsequent_panel('book_details', {'book_id': book_id})
 
 
-def create_image(book_id, max_width, max_height, on_load):
-    return thumbnail_cache.get(book_id, max_width, max_height, on_load)
+def create_image(book_id, max_width, max_height, on_load, fill=False):
+    return thumbnail_cache.get(book_id, max_width, max_height, on_load, fill=fill)
 
 
 def render_id(book_id):
@@ -529,7 +529,7 @@ def create_books_list(container):
     q = parse_url_params()
     page_size = clamp(parse_int(q.num, library_data.search_result?.num or 50), 10, 200)
 
-    def go_to_offset(new_offset):
+    def go_to_offset(new_offset, on_done):
         new_offset = max(0, new_offset)
         qq = parse_url_params()
         qq.offset = str(new_offset)
@@ -539,6 +539,8 @@ def create_books_list(container):
             if not ok:
                 error_dialog(_('Could not load books'), _('Failed to load the requested page'))
             update_pager()
+            if on_done:
+                on_done()
         )
 
     def update_pager():
@@ -556,22 +558,32 @@ def create_books_list(container):
         else:
             single_page_count_el.textContent = ''
 
+    def scroll_to_book():
+        if document.getElementById(book_list_data.container_id) is not container:
+            return  # the book list was closed before the page loaded
+        book_id = parse_url_params().book_id
+        if book_id:
+            e = container.querySelector(f'.{ITEM_CLASS_NAME}[data-book-id="{book_id}"]')
+            if e and e.scrollIntoView:
+                e.scrollIntoView(True)
+                # Now scroll extra corresponding to top bar size
+                window.scrollBy(0, -container.offsetTop)
+                return
+        window.scrollTo(0, 0)
+
     update_pager()
     pager.appendChild(top_widget.container)
     populate_book_list_toolbar(top_widget.middle_row, True)
     top_widget.set_middle_row_visibility(top_widget.middle_row.children.length > 0)
 
-    q = parse_url_params()
-    scrolled = False
-    if q.book_id:
-        e = container.querySelector(f'.{ITEM_CLASS_NAME}[data-book-id="{q.book_id}"]')
-        if e and e.scrollIntoView:
-            e.scrollIntoView(True)
-            # Now scroll extra corresponding to top bar size
-            window.scrollBy(0, -container.offsetTop)
-            scrolled = True
-    if not scrolled:
+    initial_offset = max(0, parse_int(q.offset, 0))
+    if initial_offset:
+        # The book to scroll to is on the page at the offset, so scroll once
+        # that page has loaded
         window.scrollTo(0, 0)
+        go_to_offset(initial_offset, scroll_to_book)
+    else:
+        scroll_to_book()
     q = loaded_books_query()
     if not q.search and library_data.search_result.total_num < 1:
         book_list_div.appendChild(E.div(_('No books found'), style='margin: 1ex 0'))
@@ -607,14 +619,6 @@ def check_for_books_loaded():
         return
     clear_book_list_inner(container)
     create_books_list(container)
-    # If the URL specifies an offset, show that page
-    q = parse_url_params()
-    desired_offset = max(0, parse_int(q.offset, 0))
-    if desired_offset:
-        page_size = clamp(parse_int(q.num, library_data.search_result?.num or 50), 10, 200)
-        fetch_books_page(desired_offset, page_size, def (ok):
-            pass
-        )
     if library_data.search_result and jstype(library_data.search_result.num_books_without_search) is 'number':
         set_title_tooltip(this, _('Total number of books: {}').format(library_data.search_result.num_books_without_search))
 
@@ -653,9 +657,6 @@ def change_sort(field, order):
 
 
 def create_sort_panel(container_id):
-    if not library_data.sortable_fields:
-        show_panel('book_list', replace=True)
-        return
     container = document.getElementById(container_id)
     close_action, close_icon = back, 'close'
     if parse_url_params().close_action is 'home':
@@ -702,9 +703,6 @@ set_apply_search(def (query): search(query, True);)
 
 # Virtual libraries {{{
 def create_vl_panel(container_id):
-    if not library_data.sortable_fields:
-        show_panel('book_list', replace=True)
-        return
     container = document.getElementById(container_id)
     create_top_bar(container, title=_('Choose Virtual library…'), icon='back')
     items = []
@@ -727,9 +725,6 @@ def show_vl(vl_name, replace):
 
 # Modes {{{
 def create_mode_panel(container_id):
-    if not library_data.sortable_fields:
-        show_panel('book_list', replace=True)
-        return
     container = document.getElementById(container_id)
     create_top_bar(container, title=_('Choose book list mode…'), icon='back')
     items = []
@@ -753,21 +748,15 @@ def create_mode_panel(container_id):
 # }}}
 
 
-# Adding books {{{
-def create_add_panel(container_id):
-    if not library_data.sortable_fields:
-        show_panel('book_list', replace=True)
-        return
-    add_books_panel(container_id)
-
-# }}}
+def show_book_list(container_id):
+    show_panel('book_list', replace=True)  # shows why loading the books failed
 
 
 def set_panel_handlers():
     set_panel_handler('book_list', init)
-    set_panel_handler('book_list^add', create_add_panel)
-    set_panel_handler('book_list^sort', create_sort_panel)
-    set_panel_handler('book_list^vl', create_vl_panel)
-    set_panel_handler('book_list^search', init_search_panel)
-    set_panel_handler('book_list^choose_mode', create_mode_panel)
+    set_panel_handler('book_list^add', library_data_panel(add_books_panel, show_book_list))
+    set_panel_handler('book_list^sort', library_data_panel(create_sort_panel, show_book_list))
+    set_panel_handler('book_list^vl', library_data_panel(create_vl_panel, show_book_list))
+    set_panel_handler('book_list^search', library_data_panel(init_search_panel, show_book_list))
+    set_panel_handler('book_list^choose_mode', library_data_panel(create_mode_panel, show_book_list))
     set_panel_handler('book_list^search^prefs', tb_config_panel_handler())

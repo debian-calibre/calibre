@@ -27,7 +27,7 @@ from calibre.srv.routes import endpoint, json
 from calibre.srv.utils import get_library_data, get_use_roman
 from calibre.utils.config import prefs, tweaks
 from calibre.utils.icu import numeric_sort_key, sort_key
-from calibre.utils.localization import _, get_lang, lang_code_for_user_manual, lang_map_for_ui, localize_website_link
+from calibre.utils.localization import _, get_lang, lang_code_for_user_manual, lang_map_for_ui, locale_fallbacks, localize_website_link
 from calibre.utils.resources import get_path as P
 from calibre.utils.search_query_parser import ParseException
 from calibre.utils.serialize import json_dumps
@@ -150,13 +150,9 @@ def get_basic_query_data(ctx, rd):
 def get_translations_data() -> bytes | None:
     with zipfile.ZipFile(P('content-server/locales.zip', allow_user_override=False), 'r') as zf:
         names = set(zf.namelist())
-        lang = get_lang()
-        if lang not in names:
-            xlang = lang.split('_')[0].lower()
-            if xlang in names:
-                lang = xlang
-        if lang in names:
-            return zf.open(lang, 'r').read()
+        for lang in locale_fallbacks(get_lang()):
+            if lang in names:
+                return zf.open(lang, 'r').read()
 
 
 _translations_cache: dict | bool | None = None
@@ -584,7 +580,7 @@ def set_session_data(ctx, rd):
         try:
             new_data = load_json_file(rd.request_body_file)
             if not isinstance(new_data, dict):
-                raise Exception('session data must be a dict')
+                raise TypeError('session data must be a dict')
         except Exception as err:
             raise HTTPBadRequest(f'Invalid data: {as_unicode(err)}')
         ud = ctx.user_manager.get_session_data(rd.username)
@@ -670,7 +666,7 @@ def tag_browser(ctx, rd):
     """
     Get the Tag Browser serialized as JSON
     Optional: ?library_id=<default library>&sort_tags_by=name&partition_method=first letter
-              &collapse_at=25&dont_collapse=&hide_empty_categories=&vl=''
+              &collapse_at=25&dont_collapse=&hide_empty_categories=&folders_first=&vl=''
     """
     db, library_id = get_library_data(ctx, rd)[:2]
     opts = categories_settings(rd.query, db, gst_container=tuple)

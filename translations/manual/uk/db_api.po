@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -293,6 +293,15 @@ msgstr "За вказаними списком авторів повертає �
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Повертає режим упорядкування запису автора для вказаних авторів."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
+msgstr "Повертає сховище для конкретної книги (яке використовується для localStorage у засобах перегляду) для вказаних `book_id`, формату, `user_type` та користувача, або ж `None`, якщо таке сховища немає. Сховище являє собою словник такого вигляду: `{'timestamp': кількість секунд від початку епохи, 'data': {ключ: значення}}`."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -1225,6 +1234,15 @@ msgstr "Відновлює раніше замасковану нотатку щ
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "Оновити анотації."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr "Встановити дані сховища для конкретної книги за ідентифікатором `book_id`, формату, типу користувача та користувача, за умови, що наявні дані не є новішими за ті, що передаються. Повертає дані сховища, чинні після оновлення. Щоб очистити сховище, передайте запис із порожніми даними."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

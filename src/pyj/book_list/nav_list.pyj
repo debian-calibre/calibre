@@ -8,11 +8,11 @@ from gettext import gettext as _
 from ajax import ajax
 from book_list.globals import get_session_data
 from book_list.item_list import create_item, create_item_list
-from book_list.library_data import browse_field_for, url_books_query, cover_url, current_library_id
+from book_list.library_data import browse_field_for, url_books_query, thumbnail_url, current_library_id
 from book_list.router import back, update_window_title
 from book_list.theme import get_color
 from book_list.top_bar import create_top_bar
-from book_list.ui import set_panel_handler, show_panel
+from book_list.ui import library_data_panel, set_panel_handler, show_panel
 from dom import add_extra_css, build_rule, clear, svgicon
 from session import get_interface_data
 from utils import parse_url_params
@@ -143,6 +143,7 @@ def tags_cache_key():
         sd.get('collapse_at') + '',
         sd.get('dont_collapse') + '',
         sd.get('hide_empty_categories') + '',
+        sd.get('folders_first') + '',
     ])
 
 
@@ -150,6 +151,7 @@ cached_names = {}
 series_cover_cache = {}
 series_cover_inflight = {}
 SERIES_COVER_CLASSES = ['covers-0', 'covers-1', 'covers-2', 'covers-3', 'covers-4', 'covers-5']
+SERIES_COVER_WIDTH, SERIES_COVER_HEIGHT = 112, 168
 
 
 def series_cover_key(library_id, series_name):
@@ -331,8 +333,8 @@ add_extra_css(def ():
         position='absolute',
         left='50%',
         bottom='12px',
-        width='112px',
-        height='168px',
+        width=f'{SERIES_COVER_WIDTH}px',
+        height=f'{SERIES_COVER_HEIGHT}px',
         object_fit='cover',
         border_radius='12px',
         border='var(--calibre-border-style-subtle)',
@@ -784,7 +786,7 @@ def create_nav_list_panel(container_id):
         query = {'library_id': current_library_id(), 'vl': q.vl or '', 'date_group': group_mode}
         if q.search:
             query.search = q.search
-        for k in 'sort_tags_by partition_method collapse_at dont_collapse hide_empty_categories'.split(' '):
+        for k in 'sort_tags_by partition_method collapse_at dont_collapse hide_empty_categories folders_first'.split(' '):
             query[k] = sd.get(k) + ''
 
         def done(end_type, xhr, ev):
@@ -831,7 +833,7 @@ def create_nav_list_panel(container_id):
             ids = data.search_result?.book_ids or []
             urls = []
             for bid in ids.slice(0, 5):
-                urls.push(cover_url(bid))
+                urls.push(thumbnail_url(bid, SERIES_COVER_WIDTH, SERIES_COVER_HEIGHT, lid, fill=True))
             series_cover_cache[key] = urls
             apply_series_covers(key, urls)
 
@@ -997,4 +999,6 @@ def create_nav_list_panel(container_id):
 
 
 def set_panel_handlers():
-    set_panel_handler('nav_list', create_nav_list_panel)
+    # The browse field names and kinds come from the library data. If loading
+    # it failed the panel still works, using the raw field names.
+    set_panel_handler('nav_list', library_data_panel(create_nav_list_panel, create_nav_list_panel))

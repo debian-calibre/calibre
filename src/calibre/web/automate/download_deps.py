@@ -40,6 +40,7 @@ UPDATE_CHECK_INTERVAL = 24 * 3600  # seconds
 INSTALL_LOCK_TIMEOUT = 3600  # seconds, installing camoufox means downloading hundreds of megabytes
 METADATA_LOCK_TIMEOUT = 120  # seconds
 NETWORK_TIMEOUT = 120  # seconds
+FONT_LISTS_TIMEOUT = 20  # seconds
 
 METADATA_FILE_NAME = 'metadata.json'
 VERSION_PAT = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9._-]*')
@@ -91,13 +92,13 @@ def opener(user_agent: str = f'calibre {__version__}') -> OpenerDirector:
     return ans
 
 
-def download_data(url: str, headers: dict[str, str] | None = None) -> bytes:
-    with opener().open(Request(url, headers=headers or {}), timeout=NETWORK_TIMEOUT) as response:
+def download_data(url: str, headers: dict[str, str] | None = None, timeout: float = NETWORK_TIMEOUT) -> bytes:
+    with opener().open(Request(url, headers=headers or {}), timeout=timeout) as response:
         return response.read()
 
 
-def download_json(url: str, headers: dict[str, str] | None = None) -> Any:  # noqa: ANN401
-    return json.loads(download_data(url, headers))
+def download_json(url: str, headers: dict[str, str] | None = None, timeout: float = NETWORK_TIMEOUT) -> Any:  # noqa: ANN401
+    return json.loads(download_data(url, headers, timeout))
 
 
 def download_file(url: str, dest: str, expected_sha256: str = '') -> None:
@@ -258,8 +259,13 @@ class Installer:
     # Filesystem layout {{{
 
     @property
+    def install_dir(self) -> str:
+        """The directory containing all installed versions, which may not exist."""
+        return os.path.join(install_root(), self.name)
+
+    @property
     def base(self) -> str:
-        ans = os.path.join(install_root(), self.name)
+        ans = self.install_dir
         os.makedirs(ans, exist_ok=True)
         return ans
 
@@ -497,22 +503,106 @@ class Camoufox(Installer):
 camoufox_installer = Camoufox()
 
 
+# Linux distro maintainers can have calibre use a distro provided camoufox
+# instead of downloading it, with: setup.py resources --system-camoufox, which
+# records the paths in the file below, though that is not a good idea, since
+# camoufox needs to be kept up to date to defeat evolving bot detection
+SYSTEM_CAMOUFOX_RESOURCE = 'system-camoufox.json'
+
+
+class SystemCamoufox(NamedTuple):
+    binary: str
+    resource_dir: str
+
+
+def system_camoufox_config_path() -> str:
+    """The path to the file specifying a system camoufox, which may not exist. Overridden in tests."""
+    from calibre.utils.resources import get_path
+
+    return get_path(SYSTEM_CAMOUFOX_RESOURCE, allow_user_override=False)
+
+
+def system_camoufox() -> SystemCamoufox | None:
+    """The system camoufox calibre was built to use, or None if it should download its own."""
+    path = system_camoufox_config_path()
+    try:
+        with open(path, 'rb') as f:
+            raw = f.read()
+    except FileNotFoundError:
+        return None
+    data = json.loads(raw)
+    if not isinstance(data, dict):
+        raise ValueError(f'The system camoufox specification in {path} is not a JSON object')  # noqa: TRY004
+    binary, resource_dir = data.get('binary'), data.get('resource_dir')
+    if not isinstance(binary, str) or not binary or not isinstance(resource_dir, str) or not resource_dir:
+        raise ValueError(f'The system camoufox specification in {path} does not specify both binary and resource_dir')
+    return SystemCamoufox(binary, resource_dir)
+
+
+def system_camoufox_version(sc: SystemCamoufox) -> str:
+    """Read the version of the system camoufox from the application.ini file that is part of every Firefox install."""
+    from configparser import ConfigParser
+
+    for d in (sc.resource_dir, os.path.dirname(sc.binary), os.path.dirname(os.path.realpath(sc.binary))):
+        path = os.path.join(d, 'application.ini')
+        try:
+            with open(path, encoding='utf-8') as f:
+                raw = f.read()
+        except FileNotFoundError:
+            continue
+        cp = ConfigParser(interpolation=None, strict=False)
+        cp.read_string(raw, source=path)
+        version = cp.get('App', 'Version', fallback='').strip()
+        if VERSION_PAT.fullmatch(version) is None:
+            raise ValueError(f'The camoufox application.ini file {path} does not contain a valid version: {version!r}')
+        return version
+    raise ValueError(f'Could not find the application.ini file for the system camoufox at {sc.binary} in {sc.resource_dir}')
+
+
+def camoufox_install(allow_prerelease: bool = False) -> Install:
+    """Return the camoufox install to use, downloading it if needed.
+
+    By default only stable camoufox releases are used, set allow_prerelease to
+    use the newest release, even if it is a pre-release. If calibre was built to
+    use a system camoufox, that is used instead and nothing is downloaded.
+    """
+    if (sc := system_camoufox()) is not None:
+        return Install(sc.binary, system_camoufox_version(sc))
+    return camoufox_installer(allow_prerelease=allow_prerelease)
+
+
 def camoufox_binary(allow_prerelease: bool = False) -> str:
     """Return the full path to the camoufox browser executable, downloading it if needed.
 
-    By default only stable camoufox releases are used, set allow_prerelease to
-    use the newest release, even if it is a pre-release.
+    See :func:`camoufox_install` for the meaning of allow_prerelease.
     """
-    return camoufox_installer(allow_prerelease=allow_prerelease).path
+    return camoufox_install(allow_prerelease=allow_prerelease).path
 
 
 def camoufox_resource_dir(binary_path: str) -> str:
     """The directory containing the resources (fonts, fontconfig, properties.json)
     that go with the camoufox executable at binary_path."""
+    if (sc := system_camoufox()) is not None and sc.binary == binary_path:
+        return sc.resource_dir
     ans = os.path.dirname(binary_path)
     if ismacos:  # binary_path is inside Camoufox.app/Contents/MacOS
         ans = os.path.join(os.path.dirname(ans), 'Resources')
     return ans
+
+
+def camoufox_font_lists(version: str) -> dict[str, list[str]]:
+    """The font families upstream camoufox reports for each OS, keyed by win,
+    mac and lin, for the specified camoufox version. Downloaded from the
+    camoufox source repository, as newer camoufox bundles do not record which
+    fonts belong to which OS, except on Linux."""
+    if VERSION_PAT.fullmatch(version) is None:
+        raise ValueError(f'The version {version!r} of camoufox is not a valid version number')
+    url = f'https://raw.githubusercontent.com/{CAMOUFOX_REPO}/v{version}/pythonlib/camoufox/fonts.json'
+    # A short timeout as this is done when launching the browser
+    data = download_json(url, timeout=FONT_LISTS_TIMEOUT)
+    if not isinstance(data, dict) or not all(isinstance(families, list) and all(isinstance(f, str) for f in families) for families in data.values()):
+        raise ValueError(f'The camoufox font lists downloaded from {url} are not a mapping of OS names to lists of font families')
+    return data
 
 
 # }}}

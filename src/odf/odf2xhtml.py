@@ -972,7 +972,7 @@ dl.notes dd:last-of-type { page-break-after: avoid }
         self.closetag('html')
 
     def s_office_master_styles(self, tag, attrs):
-        """ """
+        pass
 
     def s_office_presentation(self, tag, attrs):
         """For some odd reason, OpenOffice Impress doesn't define a default-style
@@ -1460,7 +1460,7 @@ dl.notes dd:last-of-type { page-break-after: avoid }
         self._wfunc = self.collectnote
 
     def e_text_note_body(self, tag, attrs):
-        self._wfunc = self._orgwfunc
+        self._wfunc = self._orgwfunc  # ty: ignore
         self.notedict[self.currentnote]['body'] = ''.join(self.notebody)
         self.notebody = []
         del self._orgwfunc

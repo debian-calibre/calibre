@@ -339,7 +339,7 @@ def rewrite_links(root, link_repl_func, resolve_base_href=False):
     """
     from css_parser import CSSParser, log, replaceUrls
 
-    log.setLevel(logging.WARN)
+    log.setLevel(logging.WARNING)
     log.raiseExceptions = False
 
     if resolve_base_href:
@@ -407,13 +407,14 @@ JPEG_MIME = types_map['.jpeg']
 PNG_MIME = types_map['.png']
 SVG_MIME = types_map['.svg']
 WEBP_MIME = types_map['.webp']
+AVIF_MIME = types_map['.avif']
 BINARY_MIME = 'application/octet-stream'
 
 XHTML_CSS_NAMESPACE = f'@namespace "{XHTML_NS}";\n'
 
 OEB_STYLES = {CSS_MIME, OEB_CSS_MIME, 'text/x-oeb-css', 'xhtml/css'}
 OEB_DOCS = {XHTML_MIME, 'text/html', OEB_DOC_MIME, 'text/x-oeb-document'}
-OEB_RASTER_IMAGES = {GIF_MIME, JPEG_MIME, PNG_MIME, WEBP_MIME}
+OEB_RASTER_IMAGES = {GIF_MIME, JPEG_MIME, PNG_MIME, WEBP_MIME, AVIF_MIME}
 OEB_IMAGES = {GIF_MIME, JPEG_MIME, PNG_MIME, SVG_MIME}
 
 MS_COVER_TYPE = 'other.ms-coverimage-standard'
@@ -1101,7 +1102,7 @@ class Manifest:
             from css_parser import CSSParser, log, resolveImports
             from css_parser.css import CSSRule
 
-            log.setLevel(logging.WARN)
+            log.setLevel(logging.WARNING)
             log.raiseExceptions = False
             self.oeb.log.debug('Parsing', self.href, '...')
             data = self.oeb.decode(data)
@@ -1267,7 +1268,7 @@ class Manifest:
             path, frag = urldefrag(href)
             if not path:
                 if frag:
-                    return '#'.join((self.href, frag))
+                    return f'{self.href}#{frag}'
                 else:
                     return self.href
             if '/' not in self.href:
@@ -2043,7 +2044,7 @@ class OEBBook:
                     id = elem.get(attr)
                     if not id:
                         continue
-                    href = '#'.join([base, id])
+                    href = f'{base}#{id}'
                     if href in hrefs:
                         playorder[href] = next
                         added = True
@@ -2065,7 +2066,7 @@ class OEBBook:
         head = etree.SubElement(ncx, NCX('head'))
         etree.SubElement(head, NCX('meta'), name='dtb:uid', content=str(self.uid))
         etree.SubElement(head, NCX('meta'), name='dtb:depth', content=str(self.toc.depth()))
-        generator = ''.join(['calibre (', __version__, ')'])
+        generator = f'calibre ({__version__})'
         etree.SubElement(head, NCX('meta'), name='dtb:generator', content=generator)
         etree.SubElement(head, NCX('meta'), name='dtb:totalPageCount', content=str(len(self.pages)))
         maxpnum = etree.SubElement(head, NCX('meta'), name='dtb:maxPageNumber', content='0')
@@ -2140,5 +2141,5 @@ def rel_href(base_href, href):
     relhref = (['..'] * (len(base) - index)) + target[index:]
     relhref = '/'.join(relhref)
     if frag:
-        relhref = '#'.join((relhref, frag))
+        relhref = f'{relhref}#{frag}'
     return relhref

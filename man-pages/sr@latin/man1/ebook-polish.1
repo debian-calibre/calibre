@@ -1,0 +1,141 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "EBOOK-POLISH" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+ebook-polish \- ebook-polish
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+ebook\-polish [opcije] ulazna_datoteka [izlazna_datoteka]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Poliranje knjiga služi da dovede do savršenstva
+vaše pažljivo izrađene e\-knjige.
+.sp
+Poliranje pokušava da minimizuje promene u unutrašnjem kodu vaše e\-knjige.
+Za razliku od konverzije, ono ne spaja CSS, ne preimenuje datoteke, ne menja veličinu
+fontova, ne prilagođava margine, itd. Svaka akcija vrši samo minimalan skup
+promena potrebnih za željeni efekat.
+.sp
+Ovu alatku bi trebalo da koristite kao poslednji korak u procesu kreiranja e\-knjige.
+.sp
+Imajte na umu da poliranje radi samo na datotekama u AZW3 ili EPUB ili KEPUB formatima.
+.sp
+Kada god prosleđujete argumente programu \fBebook\-polish\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-add\-soft\-hyphens, \-H
+Dodaj meke crtice svim rečima u knjizi. Ovo omogućava bolje prikazivanje knjige kada je tekst poravnat, u čitačima koji ne podržavaju prelom reči.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-compress\-images, \-i
+Kompresuj slike u knjizi bez gubitaka, kako bi se smanjila veličina datoteke, bez uticaja na kvalitet slike.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Putanja do slike naslovnice. Menja naslovnicu navedenu u e\-knjizi. Ako naslovnica nije prisutna, ili nije pravilno identifikovana, ubacuje novu naslovnicu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-download\-external\-resources, \-d
+Preuzmi spoljne resurse kao što su slike, stilovi, itd. koji pokazuju na URL\-ove umesto na datoteke u knjizi. Svi takvi resursi biće preuzeti i dodati u knjigu tako da knjiga više ne referencira nikakve spoljne resurse.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-fonts, \-e
+Ugradi sve fontove koji su referencirani u dokumentu, a nisu već ugrađeni. Ovo će pretražiti vaš računar za fontovima, i ako se pronađu, biće ugrađeni u dokument. Molimo vas da se uverite da imate odgovarajuću licencu za ugrađivanje fontova korišćenih u ovom dokumentu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-jacket, \-j
+Umetni stranicu \fB\(dq\fPomot knjige\fB\(dq\fP na početak knjige koja sadrži sve metapodatke knjige kao što su naslov, oznake, autori, serije, komentari, itd. Svaki prethodni omot knjige biće zamenjen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-opf, \-o
+Putanja do OPF datoteke. Metapodaci u knjizi se ažuriraju iz OPF datoteke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-jacket
+Ukloni prethodno umetnutu stranicu omota knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-soft\-hyphens
+Ukloni meke crtice iz celog teksta u knjizi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-unused\-css, \-u
+Ukloni sva nekorišćena CSS pravila iz stilova i <style> oznaka. Neke knjige napravljene iz produkcijskih šablona mogu imati veliki broj dodatnih CSS pravila koja se ne podudaraju ni sa jednim stvarnim sadržajem. Ova dodatna pravila mogu usporiti čitače koji moraju da ih sve raščlane.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation, \-p
+Pretvori obične tekstualne crtice, tri tačke, navodnike, višestruke crtice, itd. u njihove tipografski ispravne ekvivalente. Imajte na umu da algoritam ponekad može generisati netačne rezultate, posebno kada su u pitanju jednostruki navodnici na početku skraćenica.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-fonts, \-f
+Pravljenje podskupa fontova znači smanjivanje ugrađenog fonta tako da sadrži samo znakove iz tog fonta koji su korišćeni u knjizi. Ovo znatno smanjuje veličinu datoteka fontova (prepolovljavanje veličine datoteke fonta je uobičajeno). Na primer, ako knjiga koristi određeni font za naslove, onda će pravljenje podskupa smanjiti taj font tako da sadrži samo znakove prisutne u samim naslovima u knjizi. Ili ako knjiga ugrađuje podebljane i iskošene verzije fonta, ali su podebljani i iskošeni tekstovi relativno retki, ili potpuno odsutni, onda podebljani i iskošeni fontovi mogu biti smanjeni na samo nekoliko znakova ili potpuno uklonjeni. Jedina mana pravljenja podskupa fontova je ta što, ako kasnije odlučite da dodate još teksta u vaše knjige, novododati tekst možda neće biti pokriven podskupom fonta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-upgrade\-book, \-U
+Nadogradi unutrašnje strukture knjige, ako je moguće. Na primer, nadograđuje EPUB 2 knjige u EPUB 3 knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose
+Pravi opširniji izlaz, korisno za otklanjanje grešaka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: un_pogaz, 2025-2026\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -296,6 +296,15 @@ msgstr "En fonction d'une liste d'auteurs, renvoie la chaîne author_sort pour l
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Renvoie la clé de trie d'auteur pour les auteurs spécifiés."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
+msgstr "Retourne l'espace de stockage associé à chaque livre (utilisé pour `localStorage` dans les visionneuses) pour `book_id`, `format`, `user_type` et `user`, ou retourne None si aucun espace de stockage n'existe. L'espace de stockage est un dictionnaire de la forme : {'timestamp': nombre de secondes depuis epoch, 'data': {key: value}}."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -1228,6 +1237,15 @@ msgstr "Annule une note précédemment retirée pour l'élément spécifié. Les
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "Mettre à jour les annotations."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr "Définit l'espace de stockage par livre pour les valeurs spécifiées de `book_id`, `format`, `user_type` et `user`, sauf si le stockage existant est plus récent que l'entrée. Retourne l'espace de stockage en vigueur après la mise à jour. Efface le stockage en transmettant une entrée dont les données sont vides."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

@@ -28,35 +28,35 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SMTP" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "CALIBRE-SMTP" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 calibre-smtp \- calibre-smtp
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-smtp [options] [from to text]
+calibre\-smtp [voľby] [od komu text]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Send mail using the SMTP protocol. \fBcalibre\-smtp\fP has two modes of operation. In the
-compose mode you specify from to and text and these are used to build and
-send an email message. In the filter mode, \fBcalibre\-smtp\fP reads a complete email
-message from STDIN and sends it.
+Odošle poštu pomocou protokolu SMTP. \fBcalibre\-smtp\fP má dva režimy prevádzky. V
+režime skladania zadáte od, komu a text a tieto sa použijú na vytvorenie a
+odoslanie e\-mailovej správy. V režime filtra \fBcalibre\-smtp\fP číta kompletnú e\-mailovú
+správu zo STDIN a odošle ju.
 .sp
-text is the body of the email message.
-If text is not specified, a complete email message is read from STDIN.
-from is the email address of the sender and to is the email address
-of the recipient. When a complete email is read from STDIN, from and to
-are only used in the SMTP negotiation, the message headers are not modified.
+text je telo e\-mailovej správy.
+Ak text nie je zadaný, kompletná e\-mailová správa sa načíta zo STDIN.
+od je e\-mailová adresa odosielateľa a komu je e\-mailová adresa
+príjemcu. Keď sa kompletný e\-mail číta zo STDIN, od a komu
+sa použijú iba pri vyjednávaní SMTP, hlavičky správy sa neupravujú.
 .sp
-Whenever you pass arguments to \fBcalibre\-smtp\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBcalibre\-smtp\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-fork, \-f
-Fork and deliver message in background. If you use this option, you should also use \fB\-\-outbox\fP to handle delivery failures.
+Rozvetviť a doručiť správu na pozadí. Ak použijete túto voľbu, mali by ste tiež použiť \fB\-\-outbox\fP na spracovanie zlyhaní doručenia.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -66,22 +66,22 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-localhost, \-l
-Host name of localhost. Used when connecting to SMTP server.
+Názov hostiteľa localhost. Používa sa pri pripájaní k serveru SMTP.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-outbox, \-o
-Path to maildir folder to store failed email messages in.
+Cesta k priečinku maildir na uloženie neúspešných e\-mailových správ.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-t
-Timeout for connection
+Časový limit pripojenia
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Be more verbose
+Byť podrobnejší
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -90,11 +90,11 @@ zobraziť verziu programu a skončiť
 .UNINDENT
 .SS COMPOSE MAIL
 .sp
-Options to compose an email. Ignored if text is not specified
+Možnosti na vytvorenie e\-mailu. Ignorované, ak nie je zadaný text
 .INDENT 0.0
 .TP
 .B \-\-attachment, \-a
-File to attach to the email
+Súbor na pripojenie k e\-mailu
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -103,41 +103,41 @@ Predmet emailu
 .UNINDENT
 .SS SMTP RELAY
 .sp
-Options to use an SMTP relay server to send mail. calibre will try to send the email directly unless \-\-relay is specified.
+Možnosti na použitie prenosového servera SMTP na odosielanie pošty. calibre sa pokúsi odoslať e\-mail priamo, pokiaľ nie je zadané \-\-relay.
 .INDENT 0.0
 .TP
 .B \-\-cafile
-Path to a file of concatenated CA certificates in PEM format, used to verify the server certificate when using TLS. By default, the system CA certificates are used.
+Cesta k súboru so zreťazenými certifikátmi CA vo formáte PEM, použitá na overenie certifikátu servera pri použití TLS. Predvolene sa používajú systémové certifikáty CA.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-verify\-server\-certificate
-Do not verify the server certificate when connecting using TLS. This used to be the default behavior in calibre versions before 3.27. If you are using a relay with a self\-signed or otherwise invalid certificate, you can use this option to restore the pre 3.27 behavior
+Neoverovať certifikát servera pri pripájaní pomocou TLS. Toto bolo predvolené správanie vo verziách calibre pred 3.27. Ak používate relay so samopodpísaným alebo inak neplatným certifikátom, môžete túto voľbu použiť na obnovenie správania z pred verzie 3.27
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-encryption\-method, \-e
-Encryption method to use when connecting to relay. Choices are TLS, SSL and NONE. Default is TLS. WARNING: Choosing NONE is highly insecure
+Metóda šifrovania na použitie pri pripájaní k relay. Možnosti sú TLS, SSL a NONE. Predvolené je TLS. UPOZORNENIE: Voľba NONE je veľmi nebezpečná
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-password, \-p
-Password for relay
+Heslo pre relay
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-port
-Port to connect to on relay server. Default is to use 465 if encryption method is SSL and 25 otherwise.
+Port na pripojenie k prenosovému serveru. Predvolené je použiť 465, ak je metóda šifrovania SSL, inak 25.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-relay, \-r
-An SMTP relay server to use to send mail.
+Prenosový server SMTP na odosielanie pošty.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-username, \-u
-Username for relay
+Používateľské meno pre relay
 .UNINDENT
 .SH Author
 Kovid Goyal

@@ -31,7 +31,7 @@ sp_counter = 0
 CLASS_NAME = 'book-search-panel'
 add_extra_css(def ():
     sel = '.' + CLASS_NAME + ' '
-    card_bg = 'var(--calibre-surface-1)'
+    card_bg = 'var(--calibre-color-surface-1)'
     card_border = 'var(--calibre-border-style-subtle)'
     style = build_rule(sel,
         padding='0.75rem 1rem 1rem 1rem',
@@ -570,7 +570,7 @@ def refresh():
         state.currently_loading = None
     sd = get_session_data()
     query = {'library_id': current_library_id(), 'vl': current_virtual_library()}
-    for k in 'sort_tags_by partition_method collapse_at dont_collapse hide_empty_categories'.split(' '):
+    for k in 'sort_tags_by partition_method collapse_at dont_collapse hide_empty_categories folders_first'.split(' '):
         query[k] = sd.get(k) + ''
     xhr = ajax('interface-data/tag-browser', on_data_fetched, query=query, bypass_cache=False)
     xhr.send()
@@ -676,6 +676,15 @@ def get_prefs():
                         ' categories might not have values when using Virtual libraries. Checking this'
                         ' box will cause these empty categories to be hidden.'),
         },
+        {
+            'name': 'folders_first',
+            'text': _('Show items with only sub-items first'),
+            'from_storage': def (x): return x.toLowerCase() is 'yes';,
+            'to_storage': def (x): return 'yes' if x else 'no';,
+            'tooltip': _('When checked, items in hierarchical categories that have'
+                        ' no books of their own and only contain sub-items are shown before the other'
+                        ' items, like folders in a file manager, whatever the sort order.'),
+        },
     ]
 
 
@@ -691,9 +700,6 @@ def onkeydown(container_id, close_action, ev):
 
 
 def init(container_id):
-    if not library_data.sortable_fields:
-        show_panel('book_list', replace=True)
-        return
     container = document.getElementById(container_id)
     container.setAttribute('tabindex', '0')
     container.addEventListener('keydown', onkeydown.bind(None, container_id, back), {'passive': False, 'capture': True})

@@ -1,0 +1,207 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "CALIBRE-DEBUG" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+calibre-debug \- calibre-debug
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibre\-debug [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Razni interfejsi komandne linije korisni za debagovanje calibre\-a. Bez opcija,
+ova komanda pokreće ugrađeni Python interpreter. Takođe možete pokrenuti glavni
+calibre GUI, calibre E\-book viewer i calibre editor u režimu za debagovanje.
+.sp
+Takođe sadrži interfejse za razne delove calibre\-a koji nemaju
+namenske alate komandne linije, kao što su podskupovi fontova, alat za poređenje e\-knjiga i tako
+dalje.
+.sp
+Možete takođe koristiti \fBcalibre\-debug\fP za pokretanje samostalnih skripti. Da biste to uradili, koristite ga ovako:
+.INDENT 0.0
+.INDENT 3.5
+\fBcalibre\-debug\fP \-e myscript.py \fB\-\-\fP \fB\-\-option1\fP \fB\-\-option2\fP file1 file2 ...
+.UNINDENT
+.UNINDENT
+.sp
+Sve posle \fB\-\-\fP se prosleđuje skripti. Takođe možete koristiti \fBcalibre\-debug\fP
+kao shebang u skriptama, ovako:
+.INDENT 0.0
+.INDENT 3.5
+#!/usr/bin/env \-S \fBcalibre\-debug\fP \-e \fB\-\-\fP \-\-
+.UNINDENT
+.UNINDENT
+.sp
+Kada god prosleđujete argumente programu \fBcalibre\-debug\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-add\-simple\-plugin
+Dodaj jednostavan priključak (tj. priključak koji se sastoji samo od .py datoteke), navođenjem putanje do py datoteke koja sadrži kôd priključka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-clear\-caches
+Isprazni fasciklu keša programa calibre i obriši preuzeti pregledač Camoufox i podatke programa browserforge, ako postoje. Pregledač Camoufox koji je obezbedio sistem nikada se ne briše.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-command, \-c
+Pokreni Python kôd.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-device\-driver, \-d
+Ispravljanje grešaka u otkrivanju uređaja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-default\-programs
+Registruj (ili odjavi) calibre iz Windows podrazumevanih programa. \fB\-\-default\-programs\fP = \fB(register|unregister)\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-diff
+Pokreni calibre alat za upoređivanje (diff). Na primer: calibre\-debug \fB\-\-diff\fP fajl1 fajl2
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-edit\-book
+Pokrenite calibre alat „Uredi knjigu“ u režimu za otklanjanje grešaka. Kao i kod opcije \-g, koristite \fB\-\-\fP za prosleđivanje argumenata komandne linije.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exec\-file, \-e
+Pokreni Python kôd u datoteci.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-explode\-book, \-x
+Raspakuj knjigu u navedenu fasciklu. Upotreba: \-x datoteka.epub izlazni_direktorijum Izvozi knjigu kao kolekciju HTML datoteka i metapodataka, koje možete uređivati koristeći standardne alate za uređivanje HTML\-a. Radi sa EPUB, AZW3, HTMLZ i DOCX datotekama.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-export\-all\-calibre\-data
+Izvezi sve calibre podatke (knjige/podešavanja/priključke). Obično ćete biti upitani za fasciklu za izvoz i biblioteke za izvoz. Možete ih takođe navesti kao argumente komandne linije da biste preskočili pitanja. Koristite apsolutne putanje za fasciklu za izvoz i biblioteke. Specijalna ključna reč \fB\(dq\fPall\fB\(dq\fP se može koristiti za izvoz svih biblioteka. Primeri:    calibre\-debug \fB\-\-export\-all\-calibre\-data\fP  # za interaktivnu upotrebu   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /putanja/do/prazne/fascikle/za/izvoz /putanja/do/fascikle/biblioteke1 /putanja/do/biblioteke2   calibre\-debug \fB\-\-export\-all\-calibre\-data\fP /fascikla/za/izvoz all  # izvezi sve poznate biblioteke
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui, \-g
+Pokreni GUI sa omogućenim debagovanjem. Izlaz debagovanja se štampa na stdout i stderr. Za prosleđivanje argumenata komandne linije koristite \fB\-\-\fP praćeno argumentima, na primer: calibre\-debug \-g \fB\-\-\fP /putanja/do/eknjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-gui\-debug
+Pokreni GUI sa konzolom za debagovanje, uz beleženje na navedenu putanju. Samo za internu upotrebu, koristite opciju \-g za pokretanje GUI\-ja u režimu za debagovanje
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-implode\-book, \-i
+Spakuj prethodno raspakovanu knjigu. Upotreba: \-i izlazni_direktorijum datoteka.epub Uvozi knjigu iz datoteka u izlazni_direktorijum koje su morale biti kreirane prethodnim pozivom na \fB\-\-explode\-book\fP\&. Obavezno navedite isti tip datoteke koji je korišćen prilikom raspakivanja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-import\-calibre\-data
+Uvezi prethodno izvezene calibre podatke
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-inspect\-mobi, \-m
+Ispitaj MOBI datoteku(e) na navedenoj putanji(ama)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-kepubify
+Konvertuj navedeni EPUB fajl u KEPUB bez obavljanja pune konverzije. Ovo je ono što Kobo drajver radi prilikom slanja fajlova na uređaj.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-paths
+Ispiši putanje neophodne za postavljanje calibre okruženja
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-plugin, \-r
+Pokreni priključak koji pruža interfejs komandne linije. Na primer: calibre\-debug \-r \fB\(dq\fPIme priključka\fB\(dq\fP \fB\-\-\fP fajl1 \fB\-\-opcija1\fP Sve nakon \fB\-\-\fP biće prosleđeno priključku kao argumenti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-test, \-t
+Pokreni navedeni test (ili testove). Koristite specijalnu vrednost \fB\(dq\fPall\fB\(dq\fP za pokretanje svih testova. Ako ime testa počinje tačkom, pretpostavlja se da je to ime modula. Ako ime testa počinje sa @, pretpostavlja se da je to ime kategorije.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-run\-without\-debug
+Ne pokreći sa postavljenom DEBUG zastavicom
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-shutdown\-running\-calibre, \-s
+Zaustavlja procese programa. A ako ima posla u toku, oni će biti poništeni. Pažljivo upotrebite opciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-font, \-f
+Napravi podskup navedenog fonta. Koristite \fB\-\-\fP nakon ove opcije da prosledite opciju programu za pravljenje podskupa fonta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-test\-build
+Testiraj binarne module u izgradnji
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-un\-kepubify
+Konvertuj navedeni KEPUB fajl u EPUB bez obavljanja pune konverzije. Ovo je ono što Kobo drajver radi prilikom uvoza fajlova sa uređaja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-viewer, \-w
+Pokrenite Pregledač e\-knjiga u režimu za otklanjanje grešaka. Kao i kod opcije \-g, koristite \fB\-\-\fP za prosleđivanje argumenata komandne linije.
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

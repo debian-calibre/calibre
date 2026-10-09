@@ -1,0 +1,179 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "EBOOK-META" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+ebook-meta \- ebook-meta
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+ebook\-meta datoteka_e\-knjige [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Čitanje/pisanje metapodataka iz/u datoteke e\-knjiga.
+.sp
+Podržani formati za čitanje metapodataka: azw, azw1, azw3, azw4, cb7, cbc, cbr, cbz, chm, docx, epub, fb2, fbz, html, htmlz, imp, kepub, lit, lrf, lrx, mobi, odt, oebzip, opf, pdb, pdf, pml, pmlz, pobi, prc, rar, rb, rtf, snb, tpz, txt, txtz, updb, zip
+.sp
+Podržani formati za pisanje metapodataka: azw, azw1, azw3, azw4, docx, epub, fb2, fbz, htmlz, kepub, lrf, mobi, odt, pdb, pdf, prc, rtf, tpz, txtz
+.sp
+Različiti tipovi datoteka podržavaju različite vrste metapodataka. Ako pokušate da postavite
+neke metapodatke na tip datoteke koji to ne podržava, metapodaci će biti
+tiho ignorisani.
+.sp
+Kada god prosleđujete argumente programu \fBebook\-meta\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Niz znakova koji će biti korišćen za razvrstavanje po imenu autora. Ako nije naveden, a imena autora jesu, biće automatski određen iz imena autora.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Postavi imena autora. Ako ima više od jednog autora njihova imena treba da budu razdvojena znakom &. Imena autora treba da budu u obliku Ime Prezime.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer, \-k
+Navedi producenta knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-category
+Postavi kategoriju knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments, \-c
+Postavi opis e\-knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Iskoristi ovu datoteku za naslovnu stranu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-date, \-d
+Postavi datum izdavanja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disallow\-rendered\-cover
+Za formate kao što je EPUB koji koriste „podrazumevane korice“ od prve renderovane stranice, onemogući takve podrazumevane korice
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-from\-opf
+Pročitaj metapodatke iz navedene OPF datoteke i koristi ih za postavljanje metapodataka u e\-knjizi. Metapodaci navedeni u komandnoj liniji će zameniti metapodatke pročitane iz OPF datoteke
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-get\-cover
+Preuzmite korice iz e\-knjige i sačuvajte ih kao navedenu datoteku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier
+Postavite identifikatore za knjigu, može se navesti više puta. Na primer: \fB\-\-identifier\fP uri:https://acme.com \fB\-\-identifier\fP isbn:12345 Da biste uklonili identifikator, ne navodite vrednost, \fB\-\-identifier\fP isbn: Imajte na umu da za EPUB datoteke, identifikator označen kao identifikator paketa ne može biti uklonjen.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-index, \-i
+Navedi broj knjige u ovoj seriji.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Navedi ISBN broj knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language, \-l
+Navedi jezik
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-lrf\-bookid
+Postavi BookID u LRF datoteke
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher, \-p
+Postavi izdavača e\-knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating, \-r
+Navedi ocenu. Treba da bude brojčana, između 1 i 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series, \-s
+Postavi seriju kojoj ova e\-knjiga pripada.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Izaberi etikete za knjigu. Lista razdvojena zarezima.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Postavi naslov.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Izdanje naslova koja će biti korišćena za razvrstavanje. Ako nije navedena, a naslov jeste, biće automatski određena iz naslova.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-opf
+Navedi ime OPF datoteke. Metapodaci će biti upisani u ovu OPF datoteku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

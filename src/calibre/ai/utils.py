@@ -22,6 +22,7 @@ from calibre.ai import ChatMessage, ChatMessageType, ChatResponse, Citation, Ima
 from calibre.constants import __version__
 from calibre.customize import AIProviderPlugin
 from calibre.customize.ui import available_ai_provider_plugins
+from calibre.utils.date import local_tz
 from calibre.utils.localization import _, pgettext
 
 if TYPE_CHECKING:
@@ -67,8 +68,8 @@ def schedule_update_of_cached_data(path: str, url: str, headers: Sequence[tuple[
     mtime = 0
     with suppress(OSError):
         mtime = os.path.getmtime(path)
-    modtime = datetime.datetime.fromtimestamp(mtime)
-    current_time = datetime.datetime.now()
+    modtime = datetime.datetime.fromtimestamp(mtime, tz=local_tz)
+    current_time = datetime.datetime.now(local_tz)
     if current_time - modtime < datetime.timedelta(days=1):
         return
     Thread(daemon=True, name='AIDataDownload', target=update_cached_data, args=(path, url, headers)).start()
@@ -578,6 +579,11 @@ def find_tests() -> TestSuite:
             self.assertAlmostEqual(cost, (10 * 5 + 20 * 10 + 1000 * 40) / 1e6)
             cost, currency = image_generation_cost('gpt-image-1-mini', usage)
             self.assertAlmostEqual(cost, (10 * 2 + 20 * 2.5 + 1000 * 8) / 1e6)
+            cost, currency = image_generation_cost('gpt-image-1.5', usage)
+            self.assertAlmostEqual(cost, (10 * 5 + 20 * 8 + 1000 * 32) / 1e6)
+            for model_id in ('gpt-image-2', 'gpt-image-2.5-sunburst'):
+                cost, currency = image_generation_cost(model_id, usage)
+                self.assertAlmostEqual(cost, (10 * 5 + 20 * 8 + 1000 * 30) / 1e6)
 
             d = {'data': [{'b64_json': base64.standard_b64encode(b'image bytes').decode()}], 'usage': usage}
             res = parse_image_response(d, 'gpt-image-1')

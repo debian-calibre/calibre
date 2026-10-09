@@ -6,7 +6,7 @@ import os
 from base64 import standard_b64encode
 from compression import zlib
 from functools import partial
-from http.client import FORBIDDEN, NOT_FOUND, OK
+from http.client import FORBIDDEN, METHOD_NOT_ALLOWED, NOT_FOUND, OK
 from io import BytesIO
 from urllib.parse import quote, urlencode
 
@@ -27,6 +27,43 @@ def make_request(conn, url, headers={}, prefix='/ajax', username=None, password=
     if r.status == OK and data and data[0] in b'{[':
         data = json.loads(data)
     return r, data
+
+
+def gui_tag_browser_tags(library_path: str, folders_first_values: tuple[bool, ...]) -> list[list[tuple[str, list[str]]]]:
+    # Runs in a worker process, see ContentTest.test_tag_browser_folders_first()
+    from calibre.gui2 import config, ensure_app, gprefs
+    from calibre.gui2.tag_browser import model
+    from calibre.library import db as legacy_db
+    from calibre.utils.run_tests import init_env
+
+    init_env()
+    ensure_app()
+
+    class Prefs(dict):
+        # Use the defaults for everything not set here, without changing the
+        # preferences of the user running the tests
+        def __init__(self, fallback, **kw):
+            super().__init__(**kw)
+            self.fallback = fallback
+
+        def __missing__(self, key):
+            return self.fallback[key]
+
+    model.config = Prefs(config, sort_tags_by='name')
+    prefs = Prefs(gprefs, tags_browser_collapse_at=0, tag_browser_folders_first=False)
+    db = legacy_db(library_path)
+    m = model.TagsModel(None, prefs)
+    ans = []
+    try:
+        m.set_database(db)
+        for folders_first in folders_first_values:
+            prefs['tag_browser_folders_first'] = folders_first
+            m.reset_tag_browser()
+            tags = next(c for c in m.root_item.children if c.category_key == 'tags')
+            ans.append([(c.tag.name, [x.tag.name for x in c.children]) for c in tags.children])
+    finally:
+        db.close()
+    return ans
 
 
 class ContentTest(LibraryBaseTest):
@@ -139,6 +176,41 @@ class ContentTest(LibraryBaseTest):
             self.ae(r.status, OK)
             with open(victim, 'rb') as f:
                 self.ae(f.read(), b'outside')
+
+    # }}}
+
+    def test_tag_browser_folders_first(self):  # {{{
+        "Test showing items that only contain sub-items first in the Tag browser"
+        from calibre.utils.ipc.simple_worker import fork_job
+
+        with self.create_server() as server:
+            db = server.handler.router.ctx.library_broker.get(None)
+            db.set_pref('categories_using_hierarchy', ['tags'])
+            # Yak and [X] have no books of their own, Alpha has books and sub-items
+            db.set_field('tags', {1: ['Zebra', '[X].a'], 2: ['[X].b', 'Alpha', 'Alpha.b'], 3: ['Yak.c']})
+            conn = server.connect()
+
+            def server_tags(**query):
+                query.update({'library_id': db.server_library_id, 'sort_tags_by': 'name'})
+                r, data = make_request(conn, '/interface-data/tag-browser?' + urlencode(query), prefix='')
+                self.ae(r.status, OK)
+                items = data['item_map']
+                tags = next(c for c in data['root']['children'] if items[c['id']].get('category') == 'tags')
+                return [(items[c['id']]['name'], [items[x['id']]['name'] for x in c['children']]) for c in tags['children']]
+
+            normal = [('[X]', ['a', 'b']), ('Alpha', ['b']), ('Yak', ['c']), ('Zebra', [])]
+            folders_first = [('[X]', ['a', 'b']), ('Yak', ['c']), ('Alpha', ['b']), ('Zebra', [])]
+            self.ae(server_tags(partition_method='disable'), normal)
+            self.ae(server_tags(partition_method='disable', folders_first='no'), normal)
+            self.ae(server_tags(partition_method='disable', folders_first='yes'), folders_first)
+            # Partitions are not moved, the folders are moved within them
+            r = server_tags(partition_method='first letter', collapse_at='2', folders_first='yes')
+            self.ae([x[0] for x in r], ['[', 'A', 'Y', 'Z'])
+
+            # The GUI Tag browser must give the same results, including when the
+            # setting is changed for an already built tree
+            res = fork_job('calibre.srv.tests.ajax', 'gui_tag_browser_tags', args=(self.library_path, (False, True, False)), no_output=True)['result']
+            self.ae(res, [normal, folders_first, normal])
 
     # }}}
 
@@ -325,9 +397,10 @@ class ContentTest(LibraryBaseTest):
             )
 
             # cdb.py
-            r(url_for('/cdb/cmd', which='list'), status=FORBIDDEN)
-            r(url_for('/cdb/add-book', job_id=1, add_duplicates='n', filename='test.epub'), status=FORBIDDEN)
-            r(url_for('/cdb/delete-books', book_ids='1'), status=FORBIDDEN)
+            r(url_for('/cdb/cmd', which='list'), status=FORBIDDEN, method='POST')
+            r(url_for('/cdb/add-book', job_id=1, add_duplicates='n', filename='test.epub'), status=FORBIDDEN, method='POST')
+            r(url_for('/cdb/delete-books', book_ids='1'), status=FORBIDDEN, method='POST')
+            r(url_for('/cdb/delete-books', book_ids='1'), status=METHOD_NOT_ALLOWED)
 
             # code.py
             def sr(path, **k):
@@ -372,6 +445,70 @@ class ContentTest(LibraryBaseTest):
             ae(set(map(int, data['snippets'])), {1})
 
             # Not going test legacy and opds as they are too painful
+
+    # }}}
+
+    def test_book_storage(self):  # {{{
+        "Test the per book storage endpoints"
+        from http.client import BAD_REQUEST
+
+        ae = self.assertEqual
+
+        with self.create_server() as server:
+            # Storage is not saved on the server for anonymous users
+            db = server.handler.router.ctx.library_broker.get(None)
+            lid = db.server_library_id
+            conn = server.connect()
+            r, data = make_request(conn, f'/book-get-storage/{lid}/1/FMT1', prefix='')
+            ae((r.status, data), (OK, b'null'))
+            r, data = make_request(conn, f'/book-set-storage/{lid}/1/FMT1', prefix='', method='POST', data=b'{"timestamp": 1, "data": {}}')
+            ae(r.status, FORBIDDEN)
+            self.assertIsNone(db.book_storage_for_book(1, 'FMT1', user_type='web', user='*'))
+
+        with self.create_server(auth=True, auth_mode='basic') as server:
+            server.handler.ctx.user_manager.add_user('12', 'test')
+            server.handler.ctx.user_manager.add_user('other', 'test')
+            server.handler.ctx.user_manager.add_user('ro', 'test', readonly=True)
+            db = server.handler.router.ctx.library_broker.get(None)
+            lid = db.server_library_id
+            conn = server.connect()
+
+            def get(book_id=1, fmt='FMT1', username='12', status=OK):
+                r, data = make_request(conn, f'/book-get-storage/{lid}/{book_id}/{fmt}', prefix='', username=username, password='test')
+                ae(r.status, status)
+                return None if data == b'null' else data
+
+            def put(entry, book_id=1, fmt='FMT1', username='12', status=OK):
+                raw = entry if isinstance(entry, bytes) else json.dumps(entry).encode('utf-8')
+                r, data = make_request(conn, f'/book-set-storage/{lid}/{book_id}/{fmt}', prefix='', username=username, password='test', method='POST', data=raw)
+                ae(r.status, status)
+                return data
+
+            self.assertIsNone(get())
+            e1 = {'timestamp': 10.0, 'data': {'key': 'value', 'ü': '\U0001f600'}}
+            ae(put(e1), e1)
+            ae(get(), e1)
+            ae(db.book_storage_for_book(1, 'FMT1', user_type='web', user='12'), e1)
+            # Storage is per user, book and format
+            self.assertIsNone(get(username='other'))
+            self.assertIsNone(get(book_id=2))
+            self.assertIsNone(get(fmt='FMT2'))
+            # Older entries do not overwrite newer ones
+            ae(put({'timestamp': 5, 'data': {'old': 'x'}}), e1)
+            ae(get(), e1)
+            e2 = {'timestamp': 11.0, 'data': {}}
+            ae(put(e2), e2)
+            ae(get(), e2)
+            # Invalid data is rejected
+            put(b'not json', status=BAD_REQUEST)
+            put({'timestamp': 20, 'data': {'a': 1}}, status=BAD_REQUEST)
+            put({'data': {}}, status=BAD_REQUEST)
+            ae(get(), e2)
+            # Read only users cannot write
+            put({'timestamp': 30, 'data': {}}, username='ro', status=FORBIDDEN)
+            # Non-existent books
+            get(book_id=1000, status=NOT_FOUND)
+            put(e1, book_id=1000, status=NOT_FOUND)
 
     # }}}
 

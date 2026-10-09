@@ -28,41 +28,41 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-VIEWER" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "EBOOK-VIEWER" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 ebook-viewer \- ebook-viewer
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-viewer [options] file
+ebook\-viewer [voľby] súbor
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-View an e\-book.
+Zobraziť e\-knihu.
 .sp
-Whenever you pass arguments to \fBebook\-viewer\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBebook\-viewer\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-continue
-Continue reading the last opened book
+Pokračovať v čítaní naposledy otvorenej knihy
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-detach
-Detach from the controlling terminal, if any (Linux only)
+Odpojiť od riadiaceho terminálu, ak nejaký existuje (iba Linux)
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-force\-reload
-Force reload of all opened books
+Vynútiť opätovné načítanie všetkých otvorených kníh
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-full\-screen, \-\-fullscreen, \-f
-If specified, the E\-book viewer window will try to open full screen when started.
+Ak je zadané, okno prehliadača e\-kníh sa pri spustení pokúsi otvoriť na celú obrazovku.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -72,17 +72,17 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-new\-instance
-Open a new viewer window even when the option to use only a single viewer window is set
+Otvoriť nové okno prehliadača, aj keď je nastavená voľba používať iba jedno okno prehliadača
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-open\-at
-The position at which to open the specified book. The position is a location or position you can get by using the Go to\->Location action in the viewer controls. Alternately, you can use the form toc:something and it will open at the location of the first Table of Contents entry that contains the string \fB\(dq\fPsomething\fB\(dq\fP\&. The form toc\-href:something will match the href (internal link destination) of toc nodes. The matching is exact. If you want to match a substring, use the form toc\-href\-contains:something. The form ref:something will use Reference mode references. The form search:something will search for something after opening the book. The form regex:something will search for the regular expression something after opening the book.
+Miesto, na ktorom sa má otvoriť zadaná kniha. Miesto je pozícia alebo miesto, ktoré môžete získať pomocou akcie Prejsť na\->Miesto v ovládacích prvkoch prehliadača. Prípadne môžete použiť formu toc:niečo a otvorí sa na mieste prvej položky obsahu, ktorá obsahuje reťazec „niečo“. Forma toc\-href:niečo bude zodpovedať href (cieľu vnútorného odkazu) uzlov obsahu. Zhoda je presná. Ak chcete zodpovedať podreťazcu, použite formu toc\-href\-contains:niečo. Forma ref:niečo použije odkazy v režime Odkaz. Forma search:niečo vyhľadá niečo po otvorení knihy. Forma regex:niečo vyhľadá regulárny výraz niečo po otvorení knihy.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-raise\-window
-If specified, the E\-book viewer window will try to come to the front when started.
+Ak je zadané, okno prehliadača e\-kníh sa pri spustení pokúsi dostať do popredia.
 .UNINDENT
 .INDENT 0.0
 .TP

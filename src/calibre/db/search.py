@@ -15,8 +15,8 @@ from calibre.constants import DEBUG, preferred_encoding
 from calibre.db.utils import force_to_bool
 from calibre.utils.config_base import prefs
 from calibre.utils.date import UNDEFINED_DATE, dt_as_local, now, parse_date
+from calibre.utils.icu import ascii_primary_no_punc_matcher, primary_contains, primary_no_punc_contains, sort_key
 from calibre.utils.icu import lower as icu_lower
-from calibre.utils.icu import primary_contains, primary_no_punc_contains, sort_key
 from calibre.utils.localization import _, canonicalize_lang, lang_map
 from calibre.utils.search_query_parser import ParseException, SearchQueryParser
 
@@ -61,6 +61,19 @@ def _match(query, value, matchkind, use_primary_find_in_search=True, case_sensit
         internal_match_ok = True
     else:
         internal_match_ok = False
+    if matchkind == CONTAINS_MATCH and not case_sensitive and use_primary_find_in_search:
+        # This is the hot path when searching, so avoid the ICU functions,
+        # which are slow in larger libraries, for ASCII only text
+        ascii_matcher = ascii_primary_no_punc_matcher(query)
+        if ascii_matcher is None:
+            for t in value:
+                if primary_no_punc_contains(query, icu_lower(t)):
+                    return True
+            return False
+        for t in value:
+            if ascii_matcher(t) if t.isascii() else primary_no_punc_contains(query, icu_lower(t)):
+                return True
+        return False
     for t in value:
         if not case_sensitive:
             t = icu_lower(t)
@@ -87,10 +100,8 @@ def _match(query, value, matchkind, use_primary_find_in_search=True, case_sensit
             if primary_contains(query, t):
                 return True
         elif matchkind == CONTAINS_MATCH:
-            if not case_sensitive and use_primary_find_in_search:
-                if primary_no_punc_contains(query, t):
-                    return True
-            elif query in t:
+            # The case insensitive primary match is handled by the fast path above
+            if query in t:
                 return True
     return False
 

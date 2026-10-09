@@ -1,0 +1,96 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "EBOOK-VIEWER" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+ebook-viewer \- ebook-viewer
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+ebook\-viewer [opcije] datoteka
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Pregledajte e\-knjigu.
+.sp
+Kada god prosleđujete argumente programu \fBebook\-viewer\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-continue
+Nastavi čitanje poslednje otvorene knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-detach
+Odvoji od kontrolnog terminala, ako postoji (samo za Linux)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-force\-reload
+Prisilno ponovno učitavanje svih otvorenih knjiga
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-full\-screen, \-\-fullscreen, \-f
+Ako je navedeno, prozor pregledača e\-knjiga će pokušati da se otvori preko celog ekrana pri pokretanju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-new\-instance
+Otvori novi prozor pregledača čak i kada je postavljena opcija za korišćenje samo jednog prozora pregledača
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-open\-at
+Pozicija na kojoj treba otvoriti navedenu knjigu. Pozicija je lokacija ili mesto koje možete dobiti korišćenjem akcije Idi na\->Lokacija u kontrolama pregledača. Alternativno, možete koristiti oblik toc:nešto i otvoriće se na lokaciji prvog unosa u sadržaju koji sadrži nisku \fB\(dq\fPnešto\fB\(dq\fP\&. Oblik toc\-href:nešto će se podudarati sa href\-om (odredište internog linka) toc čvorova. Podudaranje je tačno. Ako želite da se podudarate sa podniskom, koristite oblik toc\-href\-contains:nešto. Oblik ref:nešto će koristiti reference referentnog režima. Oblik search:nešto će pretražiti nešto nakon otvaranja knjige. Oblik regex:nešto će pretražiti regularni izraz nešto nakon otvaranja knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-raise\-window
+Ako je navedeno, prozor pregledača e\-knjiga će pokušati da se prikaže u prvom planu pri pokretanju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.
